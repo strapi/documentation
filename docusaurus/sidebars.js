@@ -238,7 +238,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/backend-customization/examples',
-              label: 'Examples cookbook',
+              label: '️✨ Examples cookbook',
               customProps: {
                 new: true,
               }
