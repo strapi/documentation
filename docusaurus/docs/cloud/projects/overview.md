@@ -10,7 +10,13 @@ sidebar_position: 1
 
 The **Projects** page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 
-![Projects page - List](/img/assets/cloud/project_list.png)
+<ThemedImage
+  alt="Projects page - List"
+  sources={{
+    light: '/img/assets/cloud/project_list.png',
+    dark: '/img/assets/cloud/project_list_DARK.png',
+  }}
+/>
 
 Each project card displays the following information:
 

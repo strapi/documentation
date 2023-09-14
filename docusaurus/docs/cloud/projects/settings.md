@@ -20,7 +20,13 @@ The *General* tab enables you to check and update the following options for the 
 - Debug info: to see the internal project name for the project. This is useful for support purposes.
 - Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
-![Project settings](/img/assets/cloud/settings.png)
+<ThemedImage
+  alt="Project settings page"
+  sources={{
+    light: '/img/assets/cloud/settings.png',
+    dark: '/img/assets/cloud/settings_DARK.png',
+  }}
+/>
 
 ### Modifying GitHub repository branch
 
@@ -82,7 +88,13 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 You can view default values, and create/edit/delete environment variables for your project in the **Variables** tab:
 
-![Project variables](/img/assets/cloud/settings_variables.png)
+<ThemedImage
+  alt="Project variables"
+  sources={{
+    light: '/img/assets/cloud/settings_variables.png',
+    dark: '/img/assets/cloud/settings_variables_DARK.png',
+  }}
+/>
 
 ## Billing
 
@@ -90,4 +102,10 @@ The *Billing* section displays the current subscription plan and included usage 
 
 Use the **Manage subscription** button to change the subscription plan.
 
-![Project billing](/img/assets/cloud/settings_billing.png)
+<ThemedImage
+  alt="Project billing"
+  sources={{
+    light: '/img/assets/cloud/settings_billing.png',
+    dark: '/img/assets/cloud/settings_billing_DARK.png',
+  }}
+/>
