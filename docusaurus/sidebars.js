@@ -258,7 +258,7 @@ const sidebars = {
                 },
                 {
                   type: 'doc',
-                  label: 'Services and Controllers',
+                  label: 'Services, Controllers',
                   id: 'dev-docs/backend-customization/examples/services-and-controllers',
                   customProps: {
                     new: true,
