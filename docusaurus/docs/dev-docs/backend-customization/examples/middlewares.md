@@ -11,7 +11,7 @@ pagination_prev: dev-docs/backend-customization/examples/routes
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any custom middlewares that could use incoming requests and perform some additional logic before the controller code gets executed.
+Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any custom middlewares that could use incoming requests and perform some additional logic before executing the controller code.
 
 There are 2 types of middlewares in Strapi: **route middlewares** control access to a route while **global middlewares** have a wider scope (see [reference documentation for middlewares customization](/dev-docs/backend-customization/middlewares)).
 
@@ -19,7 +19,7 @@ Custom route middlewares could be used instead of policies to control access to 
 
 ## Populating an analytics dashboard in Google Sheets with a custom middleware
 
-In essence, a middleware is something that gets executed in between a request arriving at the server and the controller function getting executed. So, for instance, the middleware is a good place to perform some analytics. 
+In essence, a middleware gets executed between a request arriving at the server and the controller function getting executed. So, for instance, a middleware is a good place to perform some analytics. 
 
 <SideBySideContainer>
 
@@ -44,7 +44,7 @@ Let’s create a rudimentary example of an analytics dashboard made with Google 
 Our goal is to:
 
 - create some utility functions that interact with Google Sheets,
-- create a custom Strapi middleware that will create and/or update an existing Google Sheet document every time we have an incoming request to `/restaurants/:id` of the FoodAdvisor project,
+- create a custom Strapi middleware that will create and/or update an existing Google Sheet document every time we have an incoming request to a Restaurants page of the FoodAdvisor project,
 - and append the middleware to the route where we want it to get executed.
 
 </SideBySideColumn>
