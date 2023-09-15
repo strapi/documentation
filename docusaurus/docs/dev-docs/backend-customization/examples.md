@@ -6,8 +6,6 @@ pagination_prev: dev-docs/backend-customization
 pagination_next: dev-docs/backend-customization/examples/authentication
 ---
 
-import TOCInline from '@theme/TOCInline';
-
 # Backend customization: An examples cookbook using FoodAdvisor
 
 The present section of the documentation is intended to developers who would like to get a deeper understanding of the Strapi back end customization possibilities.
