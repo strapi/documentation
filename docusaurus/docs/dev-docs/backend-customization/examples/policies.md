@@ -14,10 +14,10 @@ This page is part of the back end customization examples cookbook. Please ensure
 
 Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not use any custom policies or route middlewares that could control access to content type endpoints.
 
-In Strapi, controlling access to an endpoint can be done either with a policy or route middleware:
+In Strapi, controlling access to a content-type endpoint can be done either with a policy or route middleware:
 
-- policies are read-only and can only allow a request to pass or return an error,
-- while route middlewares can perform additional business logic.
+- policies are read-only and allow a request to pass or return an error,
+- while route middlewares can perform additional logic.
 
 In our example, let's use a policy.
 
@@ -95,7 +95,7 @@ module.exports = async (policyContext, config, { strapi }) => {
 ```
 
 :::caution
-Policies or route middlewares should be configured in the configuration of a route to actually control access. Read more about routes in the [reference documentation](/dev-docs/backend-customization/routes) or see an example in the [routes cookbook](/dev-docs/backend-customization/examples/routes).
+Policies or route middlewares should be declared in the configuration of a route to actually control access. Read more about routes in the [reference documentation](/dev-docs/backend-customization/routes) or see an example in the [routes cookbook](/dev-docs/backend-customization/examples/routes).
 :::
 
 ## Sending custom errors through policies
@@ -185,7 +185,7 @@ module.exports = async (policyContext, config, { strapi }) => {
 
 <TabItem value="default-error" label="Default error response">
 
-When a policy refuses access to a route and no custom error is thrown, the following response will be sent when trying to query the content-type through the REST API:
+When a policy refuses access to a route and a default error is thrown, the following response will be sent when trying to query the content-type through the REST API:
 
 ```jsx
 {
@@ -228,7 +228,7 @@ When a policy refuses access to a route and the custom policy throws the custom 
 
 ### Using custom errors on the front end
 
-Out of the box, the Next.js-powered front-end website provided with [FoodAdvisor](https://github.com/strapi/foodadvisor) does not display errors or success messages on the frontend when accessing content. For instance, it will not inform the user when adding a new review with a [previously created form](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) is not possible.
+Out of the box, the Next.js-powered front-end website provided with [FoodAdvisor](https://github.com/strapi/foodadvisor) does not display errors or success messages on the front-end website when accessing content. For instance, the website will not inform the user when adding a new review with a [previously created form](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) is not possible.
 
 <SideBySideContainer>
 
@@ -246,13 +246,13 @@ Let's say we want to customize the front end of FoodAdvisor to catch the custom 
 </SideBySideContainer>
 
 Our goal is to:
-- catch the error on the front-end website and display it within a Toast notification,
-- send another toast notification in case the policy allowed the creation of a new review.
+- catch the error on the front-end website and display it within a notification,
+- send another notification in case the policy allows the creation of a new review.
 
 To achieve this, in the `/client` folder of the FoodAdvisor project, you could update the [previously created `new-review` component](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) as follows (modified lines are highlighted):
 
 <details>
-<summary>Example front-end code to display toast notifications for success or custom errors:</summary>
+<summary>Example front-end code to display toast notifications for custom errors or successful review creation:</summary>
 
 ```jsx title=
 import { Button, Input, Textarea } from '@nextui-org/react';
