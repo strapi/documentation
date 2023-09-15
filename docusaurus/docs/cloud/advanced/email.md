@@ -22,7 +22,19 @@ Please be advised that Strapi are unable to provide support for third-party emai
 :::
 
 ## Configuration
-To configure a third-party email provider, in your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
+
+Configuring a third-party email provider for use with Strapi Cloud requires three steps:
+
+1.  Install the provider plugin in your local Strapi project.
+2.  Configure the provider in your local Strapi project.
+3.  Add environment variables to the Strapi Cloud project.
+
+### Install the Provider Plugin
+Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+
+
+### Configure the Provider
+In your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
 
 
 <Tabs groupId="js-ts">
@@ -201,12 +213,11 @@ export default ({ env }) => ({
 </Tabs>
 
 
-:::caution
-The email provider must be installed as a package dependency in your Strapi project. For example, to use the Sendgrid email provider, install the `@strapi/provider-email-sendgrid` package.
-:::
 
-## Strapi Cloud Configuration
-Before pushing changes to GitHub, add environment variables to the Strapi Cloud project:
+:::tip
+Before pushing the above changes to GitHub, add environment variables to the Strapi Cloud project to prevent triggering a rebuild and new deployment of the project before the changes are complete.
+:::
+### Strapi Cloud Configuration
 
 1.  Log into Strapi Cloud and click on the corresponding project on the Projects page.
 2.  Click on the **Settings** tab and choose **Variables** in the left menu.
