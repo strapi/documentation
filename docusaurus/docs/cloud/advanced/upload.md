@@ -73,15 +73,15 @@ upload: {
 </TabItem>
 </Tabs>
 
-
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
-Below are example configurations for the Upload plugins.
-
+**Example:**
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 <Tabs groupId="upload-examples" >
 <TabItem value="cloudinary" label="Cloudinary">
 
-```js
+```js title=./config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   upload: {
@@ -105,7 +105,7 @@ module.exports = ({ env }) => ({
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
 
-```js
+```js title=./config/env/production/plugins.js
 module.exports = ({ env }) => ({
   // ...
   upload: {
@@ -137,6 +137,70 @@ module.exports = ({ env }) => ({
 ```
 </TabItem>
 </Tabs>
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+<Tabs groupId="upload-examples" >
+<TabItem value="cloudinary" label="Cloudinary">
+
+```ts title=./config/env/production/plugins.ts
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'cloudinary',
+      providerOptions: {
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+    },
+  },
+  // ...
+});
+```
+</TabItem >
+<TabItem value="amazon-s3" label="Amazon S3">
+
+```ts title=./config/env/production/plugins.ts
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        baseUrl: env('CDN_URL'),
+        rootPath: env('CDN_ROOT_PATH'),
+        s3Options: {
+          accessKeyId: env('AWS_ACCESS_KEY_ID'),
+          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          region: env('AWS_REGION'),
+          params: {
+            ACL: env('AWS_ACL', 'public-read'),
+            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+    },
+  },
+  // ...
+});
+```
+</TabItem>
+</Tabs>
+</TabItem>
+</Tabs>
+
 
 ## Security Middleware Configuration
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
