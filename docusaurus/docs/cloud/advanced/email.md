@@ -54,7 +54,7 @@ export default ({ env }) => ({
 
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
-Below are example configurations for the Email plugins.
+**Example:**
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 <Tabs groupId="email-examples" >
@@ -213,7 +213,7 @@ Before pushing changes to GitHub, add environment variables to the Strapi Cloud 
 3.  Add the required environment variables specific to the email provider.
 4.  Click **Save**.
 
-Below are the required environment variables for each email provider.clea
+**Example:**
 
 <Tabs groupId="env-var">
 <TabItem value="sendgrid" label="SendGrid">
