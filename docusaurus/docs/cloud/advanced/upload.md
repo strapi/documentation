@@ -18,9 +18,6 @@ Please be advised that Strapi are unable to provide support for third-party uplo
 - Credentials for a third-party upload provider (see [Strapi Market](https://market.strapi.io/providers)).
 
 :::
-
-
-
 ## Configuration
 
 Configuring a third-party upload provider for use with Strapi Cloud requires three steps:
