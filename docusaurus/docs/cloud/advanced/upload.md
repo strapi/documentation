@@ -20,11 +20,12 @@ Please be advised that Strapi are unable to provide support for third-party uplo
 :::
 ## Configuration
 
-Configuring a third-party upload provider for use with Strapi Cloud requires three steps:
+Configuring a third-party upload provider for use with Strapi Cloud requires four steps:
 
 1.  Install the provider plugin in your local Strapi project.
 2.  Configure the provider in your local Strapi project.
-3.  Add environment variables to the Strapi Cloud project.
+3.  Configure the Security Middleware in your local Strapi project.
+4.  Add environment variables to the Strapi Cloud project.
 
 ### Install the Provider Plugin
 Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
@@ -202,19 +203,20 @@ export default ({ env }) => ({
 </Tabs>
 
 
-## Security Middleware Configuration
+### Configure the Security Middleware
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
 To do this in your Strapi project:
 1. Navigate to `./config/middleware.js` or `./config/middleware.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
-Examples of configuring the `contentSecurityPolicy` depending on upload provider:
-
+**Example:**
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 <Tabs groupId="upload-examples" >
 <TabItem value="cloudinary" label="Cloudinary">
 
-```js
+```js title=./config/middleware.js
 module.exports = [
   // ...
   {
@@ -243,7 +245,7 @@ module.exports = [
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
-```js
+```js title=./config/middleware.js
 module.exports = [
   // ...
   {
@@ -277,28 +279,91 @@ module.exports = [
 ```
 </TabItem>
 </Tabs>
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+<Tabs groupId="upload-examples" >
+<TabItem value="cloudinary" label="Cloudinary">
 
+```ts title=./config/middleware.ts
+export default [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'res.cloudinary.com',
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+];
+```
+</TabItem>
+<TabItem value="amazon-s3" label="Amazon S3">
 
+```ts title=./config/middleware.ts
+export default [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  // ...
+];
+```
+</TabItem>
+</Tabs>
+</TabItem>
+</Tabs>
 
-
-
-:::caution
-The upload provider must be installed as a package dependency in your Strapi project. For example, to use the Cloudinary upload provider, install the `@strapi/provider-upload-cloudinary` package.
-
-For specific configuration information, see the [Marketplace](https://market.strapi.io/providers) entry for that provider.
+:::tip
+Before pushing the above changes to GitHub, add environment variables to the Strapi Cloud project to prevent triggering a rebuild and new deployment of the project before the changes are complete.
 :::
-
-
-
-## Strapi Cloud Configuration
-Before pushing changes to GitHub, add environment variables to the Strapi Cloud project:
+### Strapi Cloud Configuration
 
 1.  Log into Strapi Cloud and click on the corresponding project on the Projects page.
 2.  Click on the **Settings** tab and choose **Variables** in the left menu.
 3.  Add the required environment variables specific to the upload provider.
 4.  Click **Save**.
 
-### Cloudinary Example:
+**Example:**
+
+<Tabs groupId="env-var">
+<TabItem value="cloudinary" label="Cloudinary">
 
 | Variable | Value |
 | -------- | ----- |
@@ -306,12 +371,29 @@ Before pushing changes to GitHub, add environment variables to the Strapi Cloud 
 | `CLOUDINARY_KEY` | your_cloudinary_api_key |
 | `CLOUDINARY_SECRET` | your_cloudinary_secret|
 
+
+</TabItem>
+<TabItem value="amazon-s3" label="Amazon S3">
+
+| Variable | Value |
+| -------- | ----- |
+| `AWS_ACCESS_KEY_ID` | your_aws_access_key_id |
+| `AWS_ACCESS_SECRET` | your_aws_access_secret |
+| `AWS_REGION` | your_aws_region |
+| `AWS_BUCKET` | your_aws_bucket |
+| `CDN_URL` | your_cdn_url |
+| `CDN_ROOT_PATH` | your_cdn_root_path |
+
+</TabItem>
+</Tabs>
+
+
 ## Deployment
 
 To deploy the project and utilize the third-party upload provider, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
 
 Once the application finishes building, the project will use the new upload provider.
 
-:::strapi
-For information on creating a custom upload provider, see the [Providers](/dev-docs/providers#creating-providers) documentation.
+:::strapi Custom Provider
+If you want to create a custom upload provider, please refer to the [Providers](/dev-docs/providers#creating-providers) documentation in the Developer Documentation.
 :::
