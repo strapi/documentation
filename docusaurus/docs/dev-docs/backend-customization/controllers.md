@@ -59,6 +59,12 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
+    // validateQuery (optional)
+    // to throw an error on query params that are invalid or the user does not have access to
+    await this.validateQuery(ctx);
+
+    // sanitizeQuery to remove any query params that are invalid or the user does not have access to
+    // It is strongly recommended to use sanitizeQuery even if validateQuery is used
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
@@ -102,8 +108,16 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 
   // Method 3: Replacing a core action with proper sanitization
   async find(ctx) {
+    // validateQuery (optional)
+    // to throw an error on query params that are invalid or the user does not have access to
+    await this.validateQuery(ctx); 
+
+    // sanitizeQuery to remove any query params that are invalid or the user does not have access to
+    // It is strongly recommended to use sanitizeQuery even if validateQuery is used
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
+
+    // sanitizeOutput to ensure the user does not receive any data they do not have access to
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
 
     return this.transformResponse(sanitizedResults, { pagination });
@@ -188,23 +202,29 @@ When a new [content-type](/dev-docs/backend-customization/models#content-types) 
 To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
 :::
 
-### Sanitization in controllers
+### Sanitization and Validation in controllers
 
 :::warning
-As of Strapi v4.8.0 and greater it's strongly recommended you sanitize your incoming request query and parameters utilizing the new `sanitizeQuery` function to prevent leaking of private data.
+It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
 #### Sanitization when utilizing controller factories
 
-Within the Strapi factories there are 3 functions exposed that can be used for sanitization:
+Within the Strapi factories the following functions are exposed that can be used for sanitization and validation:
 
 | Function Name    | Parameters                 | Description                                                                          |
 |------------------|----------------------------|--------------------------------------------------------------------------------------|
 | `sanitizeQuery`  | `ctx`                      | Sanitizes the request query                                                          |
 | `sanitizeOutput` | `entity`/`entities`, `ctx` | Sanitizes the output data where entity/entities should be an object or array of data |
 | `sanitizeInput`  | `data`, `ctx`              | Sanitizes the input data                                                             |
+| `validateQuery`  | `ctx`                      | Validates the request query (throws an error on invalid params)                      |
+| `validateInput`  | `data`, `ctx`              | (EXPERIMENTAL) Validates the input data (throws an error on invalid data)                           |
 
 These functions automatically inherit the sanitization settings from the model and sanitize the data accordingly based on the content-type schema and any of the content API authentication strategies, such as the Users & Permissions plugin or API tokens.
+
+:::warning
+Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use the `@strapi/utils` tools, such as `sanitize.contentAPI.query` described in [Sanitizing Custom Controllers](#sanitize-validate-custom-controllers), or else the result of your query will be sanitized against the wrong model.
+:::
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -215,6 +235,7 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
   async find(ctx) {
+    await this.validateQuery(ctx);
     const sanitizedQueryParams = await this.sanitizeQuery(ctx);
     const { results, pagination } = await strapi.service('api::restaurant.restaurant').find(sanitizedQueryParams);
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
@@ -246,18 +267,20 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </TabItem>
 </Tabs>
 
-#### Sanitization when building custom controllers
+#### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
 
-Within custom controllers, there are 3 primary functions exposed via the `@strapi/utils` package that can be used for sanitization:
+Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
 
-| Function Name       | Parameters                    | Description                                                                                                                            |
-|---------------------|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
-| `contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
-| `contentAPI.query` | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate                                                   |
+| Function Name                | Parameters         | Description                                             |
+|------------------------------|--------------------|---------------------------------------------------------|
+| `sanitize.contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `sanitize.contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
+| `sanitize.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
+| `validate.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
+| `validate.contentAPI.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
 
 :::note
-Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for especially when combining the data from multiple sources.
+Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for, especially when combining the data from multiple sources.
 :::
 
 <Tabs groupId="js-ts">
@@ -265,17 +288,17 @@ Depending on the complexity of your custom controllers, you may need additional 
 
 ```js title="./src/api/restaurant/controllers/restaurant.js"
 
-const { sanitize } = require('@strapi/utils')
-const { contentAPI } = sanitize;
+const { sanitize, validate } = require('@strapi/utils');
 
 module.exports = {
   async findCustom(ctx) {
-    const contentType = strapi.contentType('api::test.test')
-    const sanitizedQueryParams = await contentAPI.query(ctx.query, contentType, ctx.state.auth)
+    const contentType = strapi.contentType('api::test.test');
+    await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
+    const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
 
-    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams)
+    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams);
 
-    return await contentAPI.output(entities, contentType, ctx.state.auth);
+    return await sanitize.contentAPI.output(entities, contentType, { auth: ctx.state.auth });
   }
 }
 ```
@@ -286,17 +309,18 @@ module.exports = {
 
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
-import { sanitize } from '@strapi/utils';
-const { contentAPI } = sanitize;
+import { sanitize, validate } from '@strapi/utils';
 
 export default {
   async findCustom(ctx) {
-    const contentType = strapi.contentType('api::test.test')
-    const sanitizedQueryParams = await contentAPI.query(ctx.query, contentType, ctx.state.auth)
+    const contentType = strapi.contentType('api::test.test');
 
-    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams)
+    await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
+    const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
 
-    return await contentAPI.output(entities, contentType, ctx.state.auth);
+    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams);
+
+    return await contentAPI.output(entities, contentType, { auth: ctx.state.auth });
   }
 }
 ```
