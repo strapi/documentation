@@ -34,7 +34,7 @@ Let's add a basic login page to the front-end, [Next.js](https://nextjs.org/)-po
 
 Our goal is to create a front-end component to:
 
-1. create a Next.js-powered front-end component to show a login form,
+1. to display a login form,
 2. send a request to the `/auth/local` route of the Strapi back-end server to authenticate,
 3. get a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWT),
 4. and store the JWT into the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) property of your browser for later retrieval and authentication of our requests.
