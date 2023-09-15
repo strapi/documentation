@@ -9,9 +9,13 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/upload.html
 
 Strapi Cloud comes with a local upload provider out of the box. However, it can also be configured to utilize a third-party upload provider, if needed.
 
+:::caution
+Please be advised that Strapi are unable to provide support for third-party upload providers.
+:::
+
 :::prerequisites
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for a third-party upload provider (see [Strapi Market](https://market.strapi.io/)).
+- Credentials for a third-party upload provider (see [Strapi Market](https://market.strapi.io/providers)).
 
 :::
 
@@ -25,7 +29,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/).
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
 Below are example configurations for the Upload plugins.
 
@@ -172,7 +176,7 @@ module.exports = [
 :::caution
 The upload provider must be installed as a package dependency in your Strapi project. For example, to use the Cloudinary upload provider, install the `@strapi/provider-upload-cloudinary` package.
 
-For specific configuration information, see the [Marketplace](https://market.strapi.io/) entry for that provider.
+For specific configuration information, see the [Marketplace](https://market.strapi.io/providers) entry for that provider.
 :::
 
 
