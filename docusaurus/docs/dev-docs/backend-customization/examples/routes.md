@@ -12,7 +12,7 @@ pagination_next: dev-docs/backend-customization/examples/middlewares
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not control access to its endpoints.
+Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not control access to its content-type endpoints.
 
 Let's say we [previsouly created a policy](/dev-docs/backend-customization/examples/policies) to restrict access to the "Reviews" content-type to some conditions, for instance to prevent a restaurant's owner to create a review for their restaurants. We must now enable the policy on the route we use to create reviews.
 
