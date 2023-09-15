@@ -31,7 +31,7 @@ Using either `npm` or `yarn`, install the provider plugin in your local Strapi p
 
 
 ### Configure the Provider
->To configure a 3rd-party email provider in your Strapi project, create or edit the plugins configuration file for your production environment ./config/env/production/plugins.js|ts by adding email configuration options as follows:
+>To configure a 3rd-party email provider in your Strapi project, create or edit the plugins configuration file for your production environment ``./config/env/production/plugins.js|ts` by adding email configuration options as follows:
 
 
 
