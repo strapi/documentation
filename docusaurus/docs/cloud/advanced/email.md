@@ -17,7 +17,7 @@ Please be advised that Strapi are unable to provide support for third-party emai
 :::prerequisites
 
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for a third-party email provider (see [Strapi Market](https://market.strapi.io/)).
+- Credentials for a third-party email provider (see [Strapi Market](https://market.strapi.io/providers)).
 
 :::
 
@@ -52,10 +52,10 @@ export default ({ env }) => ({
 
 </Tabs>
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/).
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
 Below are example configurations for the Email plugins.
-<Tabs groupId="js-ts-email">
+<Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 <Tabs groupId="email-examples" >
 <TabItem value="sendgrid" label="Sendgrid">
@@ -213,7 +213,7 @@ Before pushing changes to GitHub, add environment variables to the Strapi Cloud 
 3.  Add the required environment variables specific to the email provider.
 4.  Click **Save**.
 
-Below are the required environment variables for each email provider.
+Below are the required environment variables for each email provider.clea
 
 <Tabs groupId="env-var">
 <TabItem value="sendgrid" label="SendGrid">
