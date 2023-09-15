@@ -14,12 +14,10 @@ Please be advised that Strapi are unable to provide support for third-party emai
 :::
 
 :::prerequisites
-
 - A local Strapi project running on `v4.8.2+`.
 - Credentials for a third-party email provider (see [Strapi Market](https://market.strapi.io/providers)).
 
 :::
-
 ## Configuration
 
 Configuring a third-party email provider for use with Strapi Cloud requires three steps:
@@ -33,7 +31,8 @@ Using either `npm` or `yarn`, install the provider plugin in your local Strapi p
 
 
 ### Configure the Provider
-In your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
+>To configure a 3rd-party email provider in your Strapi project, create or edit the plugins configuration file for your production environment ./config/env/production/plugins.js|ts by adding email configuration options as follows:
+
 
 
 <Tabs groupId="js-ts">
@@ -42,25 +41,36 @@ In your Strapi project, create a `./config/env/production/plugins.js` or `./conf
 ```js title=./config/env/production/plugins.js
 
 module.exports = ({ env }) => ({
-  // ...
-  Required Email Provider Plugin Configuration
-  // ...
+// … some unrelated plugins configuration options
+// highlight-start
+email: {
+   config: {
+      // … provider-specific email configuration options go here
+   }
+// highlight-end
+// … some other unrelated plugins configuration options
+}
 });
 ```
-
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
 ```ts title=./config/env/production/plugins.ts
 
 export default ({ env }) => ({
-  // ...
-  Required Email Provider Plugin Configuration
-  // ...
+// … some unrelated plugins configuration options
+// highlight-start
+email: {
+   config: {
+      // … provider-specific email configuration options go here
+   }
+// highlight-end
+// … some other unrelated plugins configuration options
+}
 });
 ```
-</TabItem>
 
+</TabItem>
 </Tabs>
 
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
