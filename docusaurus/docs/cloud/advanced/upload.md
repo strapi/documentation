@@ -19,16 +19,64 @@ Please be advised that Strapi are unable to provide support for third-party uplo
 
 :::
 
-## Configuration
-To configure a third-party upload provider, in your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
 
-```js
+
+## Configuration
+
+Configuring a third-party upload provider for use with Strapi Cloud requires three steps:
+
+1.  Install the provider plugin in your local Strapi project.
+2.  Configure the provider in your local Strapi project.
+3.  Add environment variables to the Strapi Cloud project.
+
+### Install the Provider Plugin
+Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+
+
+### Configure the Provider
+>To configure a 3rd-party upload provider in your Strapi project, create or edit the plugins configuration file for your production environment `./config/env/production/plugins.js|ts` by adding upload configuration options as follows:
+
+
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title=./config/env/production/plugins.js
+
 module.exports = ({ env }) => ({
-  // ...
-  Required Upload Provider Plugin Configuration
-  // ...
+// … some unrelated plugins configuration options
+// highlight-start
+upload: {
+   config: {
+      // … provider-specific upload configuration options go here
+   }
+// highlight-end
+// … some other unrelated plugins configuration options
+}
 });
 ```
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title=./config/env/production/plugins.ts
+
+export default ({ env }) => ({
+// … some unrelated plugins configuration options
+// highlight-start
+upload: {
+   config: {
+      // … provider-specific upload configuration options go here
+   }
+// highlight-end
+// … some other unrelated plugins configuration options
+}
+});
+```
+
+</TabItem>
+</Tabs>
+
+
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
 Below are example configurations for the Upload plugins.
