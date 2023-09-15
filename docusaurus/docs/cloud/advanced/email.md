@@ -263,6 +263,6 @@ To deploy the project and utilize the third-party email provider, push the chang
 
 Once the application finishes building, the project will use the new email provider.
 
-:::strapi
-For information on creating a custom email provider, see the [Providers](/dev-docs/providers#creating-providers) documentation.
+:::strapi Custom Provider
+If you want to create a custom email provider, please refer to the [Providers](/dev-docs/providers#creating-providers) documentation in the Developer Documentation.
 :::
