@@ -9,7 +9,7 @@ pagination_next: dev-docs/backend-customization/examples/services-and-controller
 # Examples cookbook: Authentication flow with JWT
 
 :::prerequisites
-This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples) before.
+This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
 
 Out of the box, the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any log in functionality. Logging in is done by accessing Strapi's admin panel at [`localhost:1337/admin`](http://localhost:1337/admin`).
