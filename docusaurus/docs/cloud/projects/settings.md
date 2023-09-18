@@ -55,7 +55,13 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 The *Domains* tab enables you to manage domains and connect new ones.
 
-![Domains](/img/assets/cloud/settings_domains.png)
+<ThemedImage
+  alt="Project domains"
+  sources={{
+    light: '/img/assets/cloud/settings_domains.png',
+    dark: '/img/assets/cloud/settings_domains_DARK.png',
+  }}
+/>
 
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 

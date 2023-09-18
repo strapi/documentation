@@ -41,7 +41,13 @@ The project details page displays the following tabs: **Deploys** and [**Setting
 
 The **Overview** tab displays a high detail view of the project, including its configuration, usage, and deployment history.
 
-![Project overview](/img/assets/cloud/overview.png)
+<ThemedImage
+  alt="Project overview"
+  sources={{
+    light: '/img/assets/cloud/overview.png',
+    dark: '/img/assets/cloud/overview_DARK.png',
+  }}
+/>
 
 From this tab you can:
 
@@ -54,7 +60,13 @@ From this tab you can:
 
 The **Deploys** tab displays a chronological list of cards with the details of all historical deployments for the project.
 
-![Project deploys](/img/assets/cloud/deploys.png)
+<ThemedImage
+  alt="Project deploys"
+  sources={{
+    light: '/img/assets/cloud/deploys.png',
+    dark: '/img/assets/cloud/deploys_DARK.png',
+  }}
+/>
 
 Each card displays the following information:
 
