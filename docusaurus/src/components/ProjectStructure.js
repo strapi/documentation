@@ -6,7 +6,7 @@ export default function InteractiveProjectStructure() {
   return (
     <div className="project-structure">
       <Tabs>
-        <TabItem value="js" label="JavaScript">
+        <TabItem value="js" label="JavaScript-based projects">
 
         The following diagram is interactive: you can click on any file or folder name highlighted in purple to go to the corresponding documentation page.<br /><br />
 
@@ -28,7 +28,7 @@ export default function InteractiveProjectStructure() {
       ├──── database<br/>
       │     └──── migrations<br/>
       ├──── node_modules <span className="token comment"># npm packages used by the project</span><br/>
-      ├──── <a href="/dev-docs/configurations/guides/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
+      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
       │     └──── uploads<br/>
       ├──── src<br/>
       │     ├──── admin <span className="token comment"># admin customization files</span><br/>
@@ -56,21 +56,21 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── content-types<br/>
       │     │           │     └──── (content-type-name)<br/>
       │     │           │           └ schema.json<br/>
-      │     │           └ <a href="/dev-docs/plugins/server-api">strapi-server.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a><br/>
       │     ├──── <a href="/dev-docs/configurations/middlewares">middlewares</a><br/>
       │     │     └──── (middleware-name).js<br/>
       │     ├──── <a href="/dev-docs/plugins/developing-plugins">plugins</a> <span className="token comment"># local plugins files</span><br/>
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
-      │     │           │           └ <a href="/dev-docs/plugins/admin-panel-api">index.js</a><br/>
-      │     │           ├──── <a href="/dev-docs/plugins/server-api">server</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/plugins/server-api#content-types">content-types</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/plugins/server-api#controllers">controllers</a><br/>
-      │     │           │     └──── <a href="/dev-docs/plugins/server-api#policies">policies</a><br/>
+      │     │           │           └ <a href="/dev-docs/api/plugins/admin-panel-api">index.js</a><br/>
+      │     │           ├──── <a href="/dev-docs/api/plugins/server-api">server</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api#content-types">content-types</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api#controllers">controllers</a><br/>
+      │     │           │     └──── <a href="/dev-docs/api/plugins/server-api#policies">policies</a><br/>
       │     │           ├ package.json<br/>
-      │     │           ├ <a href="/dev-docs/plugins/admin-panel-api">strapi-admin.js</a><br/>
-      │     │           └ <a href="/dev-docs/plugins/server-api#">strapi-server.js</a><br/>
+      │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a><br/>
       │     ├─── <a href="/dev-docs/backend-customization/policies">policies</a><br/>
       │     └ <a href="/dev-docs/configurations/functions">index.js</a> <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
       ├ <a href="/dev-docs/configurations/environment">.env</a><br/>
@@ -103,7 +103,7 @@ export default function InteractiveProjectStructure() {
       ├──── dist <span className="token comment"># build of the backend</span><br/>
       │     └──── build <span className="token comment"># build of the admin panel</span><br/>
       ├──── node_modules # <span className="token comment">npm packages used by the project</span><br/>
-      ├──── <a href="/dev-docs/configurations/guides/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
+      ├──── <a href="/dev-docs/configurations/public-assets">public</a> <span className="token comment"># files accessible to the outside world</span><br/>
       │     └──── uploads<br/>
       ├──── src<br/>
       │     ├──── admin <span className="token comment"># admin customization files</span><br/>
@@ -133,7 +133,7 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── content-types<br/>
       │     │           │     └──── (content-type-name)<br/>
       │     │           │           └ schema.json<br/>
-      │     │           └ <a href="/dev-docs/api/server-api">strapi-server.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a><br/>
       │     ├──── <a href="/dev-docs/configurations/middlewares">middlewares</a><br/>
       │     │     └──── (middleware-name)<br/>
       │     │           ├ defaults.json<br/>
@@ -142,15 +142,15 @@ export default function InteractiveProjectStructure() {
       │     │     └──── (plugin-name)<br/>
       │     │           ├──── admin<br/>
       │     │           │     └──── src<br/>
-      │     │           │           └ <a href="/dev-docs/plugins/admin-panel-api">index.tsx</a><br/>
+      │     │           │           └ <a href="/dev-docs/api/plugins/admin-panel-api">index.tsx</a><br/>
       │     │           │           └ pluginId.ts<br/>
-      │     │           ├──── <a href="/dev-docs/api/server-api">server</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/api/server-api#content-types">content-types</a><br/>
-      │     │           │     ├──── <a href="/dev-docs/api/server-api#controllers">controllers</a><br/>
-      │     │           │     └──── <a href="/dev-docs/api/server-api#policies">policies</a><br/>
+      │     │           ├──── <a href="/dev-docs/api/plugins/server-api">server</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api#content-types">content-types</a><br/>
+      │     │           │     ├──── <a href="/dev-docs/api/plugins/server-api#controllers">controllers</a><br/>
+      │     │           │     └──── <a href="/dev-docs/api/plugins/server-api#policies">policies</a><br/>
       │     │           ├ package.json<br/>
-      │     │           ├ <a href="/dev-docs/plugins/admin-panel-api">strapi-admin.js</a><br/>
-      │     │           └ <a href="/dev-docs/api/server-api">strapi-server.js</a><br/>
+      │     │           ├ <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a><br/>
+      │     │           └ <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a><br/>
       │     ├─── policies<br/>
       │     └ index.ts <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
       ├ .env<br/>
