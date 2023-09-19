@@ -899,8 +899,8 @@ const sidebars = {
             id: 'dev-docs/configurations'
           },
           items: [
-            'dev-docs/configurations/rbac',
-            'dev-docs/configurations/public-assets',
+            'dev-docs/configurations/guides/rbac',
+            'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
           ]
