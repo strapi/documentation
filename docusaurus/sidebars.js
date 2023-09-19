@@ -42,6 +42,9 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction',
           id: 'dev-docs/setup-deployment',
+          customProps: {
+            new: true,
+          }
         },
         {
           type: 'category',
@@ -66,6 +69,9 @@ const sidebars = {
               type: 'doc',
               label: 'Introduction',
               id: 'dev-docs/configurations',
+              customProps: {
+                updated: true,
+              },
             },
             'dev-docs/configurations/database',
             'dev-docs/configurations/server',
@@ -153,8 +159,11 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction & Concepts',
-          id: 'dev-docs/api/content-api'
+          label: 'Introduction/Concepts',
+          id: 'dev-docs/api/content-api',
+          customProps: {
+            new: true,
+          }
         },
         {
           type: 'category',
@@ -338,8 +347,11 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction & Concepts',
-          id: 'dev-docs/plugins'
+          label: 'Introduction/Concepts',
+          id: 'dev-docs/plugins',
+          customProps: {
+            new: true,
+          }
         },
         {
           type: 'category',
