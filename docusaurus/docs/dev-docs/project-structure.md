@@ -5,7 +5,7 @@ description: Discover the project structure of any default Strapi application.
 
 ---
 
-import InteractiveProjectStructure from '../../src/components/ProjectStructure.js'
+import InteractiveProjectStructure from '@site/src/components/ProjectStructure.js'
 
 # Project structure
 
