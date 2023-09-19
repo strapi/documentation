@@ -1,5 +1,6 @@
 ---
-title: Admin panel
+title: Admin panel configuration
+sidebar_label: Admin panel
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi's admin panel offers a single entry point file for its configuration.
 

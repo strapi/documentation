@@ -1,5 +1,6 @@
 ---
-title: Middlewares
+title: Middlewares configuration
+sidebar_label: Middlewares
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file for its middlewares configurations.
 

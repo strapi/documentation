@@ -1,5 +1,6 @@
 ---
-title: Environment variables
+title: Environment variables configuration
+sidebar_label: Environment variables
 displayed_sidebar: devDocsConfigSidebar
 ---
 
