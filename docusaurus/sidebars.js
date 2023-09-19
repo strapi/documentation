@@ -147,12 +147,12 @@ const sidebars = {
     { // Content APIs
       type: 'category',
       collapsed: false,
-      label: '📦 Content APIs',
+      label: '📦 Content API',
       link: {type: 'doc', id: 'dev-docs/api/content-apis'},
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction & Concepts',
           id: 'dev-docs/api/content-apis'
         },
         {
@@ -308,7 +308,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction & Concepts',
           id: 'dev-docs/customization',
         },
         {
@@ -357,7 +357,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction & Concepts',
           id: 'dev-docs/plugins'
         },
         {
@@ -455,7 +455,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction & Concepts',
           id: 'dev-docs/update-migration'
         },
         'dev-docs/update-version',
@@ -839,8 +839,8 @@ const sidebars = {
   devDocsConfigSidebar: [
     {
       type: 'link',
-      label: '⬅️ Back to Setup & Deployment',
-      href: '/dev-docs/setup-deployment'
+      label: '⬅️ Back to Dev Docs content',
+      href: '/dev-docs/intro'
     },
     {
       type: 'category',
