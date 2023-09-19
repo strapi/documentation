@@ -12,7 +12,7 @@ import BackendIntroCrosslink from '/docs/snippets/backend-custom-intro-crosslink
 :::prerequisites
 Before diving deeper into the Query Engine API documentation, it is recommended that you read the following introductions:
 - the [backend customization introduction](/dev-docs/backend-customization),
-- and the [Content APIs introduction](/dev-docs/api/content-apis).
+- and the [Content APIs introduction](/dev-docs/api/content-api).
 :::
 
 The Strapi backend provides a Query Engine API to interact with the database layer at a lower level. The Query Engine API should mostly be used by plugin developers and developers adding custom business logic to their applications.

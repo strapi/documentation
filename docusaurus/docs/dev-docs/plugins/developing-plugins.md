@@ -77,7 +77,7 @@ During plugin development it is helpful to use the `--watch-admin` flag to toggl
 
 ## Plugin APIs
 
-Strapi provides the following [programmatic APIs](dev-docs/plugins/api) for plugins to hook into some of Strapi's features:
+Strapi provides the following programmatic APIs for plugins to hook into some of Strapi's features:
 
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/dev-docs/plugins/server-api" />

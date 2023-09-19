@@ -12,7 +12,7 @@ import BackendIntroCrosslink from '/docs/snippets/backend-custom-intro-crosslink
 :::prerequisites
 Before diving deeper into the Entity Service API documentation, it is recommended that you read the following introductions:
 - the [backend customization introduction](/dev-docs/backend-customization),
-- and the [Content APIs introduction](/dev-docs/api/content-apis).
+- and the [Content APIs introduction](/dev-docs/api/content-api).
 :::
 
 The Strapi backend provides an Entity Service API, built on top of the [Query Engine API](/dev-docs/api/query-engine/). The Entity Service is the layer that handles Strapi's complex data structures like [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones), and uses the Query Engine API under the hood to execute database queries.

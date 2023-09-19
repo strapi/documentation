@@ -786,7 +786,65 @@ const sidebars = {
 
       ]
     },
-  ]
+  ],
+
+  devDocsConfigSidebar: [
+    {
+      type: 'link',
+      label: '⬅️ Back to Dev Docs content',
+      href: '/dev-docs/intro'
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Configuration',
+      link: {
+        type: 'doc',
+        id: 'dev-docs/configurations',
+      },
+      items: [
+        {
+          type: 'doc',
+          label: 'Introduction',
+          id: 'dev-docs/configurations',
+        },
+        {
+          type: 'category',
+          collapsed: false,
+          label: 'Base configurations',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/configurations'
+          },
+          items: [
+            'dev-docs/configurations/database',
+            'dev-docs/configurations/server',
+            'dev-docs/configurations/admin-panel',
+            'dev-docs/configurations/middlewares',
+            'dev-docs/configurations/api',
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Additional configurations',
+          collapsed: false,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/configurations'
+          },
+          items: [
+            'dev-docs/configurations/plugins',
+            'dev-docs/configurations/typescript',
+            'dev-docs/configurations/api-tokens',
+            'dev-docs/configurations/functions',
+            'dev-docs/configurations/cron',
+            'dev-docs/configurations/environment',
+            'dev-docs/configurations/sso',
+          ]
+        },
+      ]
+    },
+  ],
 };
 
 module.exports = sidebars;
