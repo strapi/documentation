@@ -3,7 +3,6 @@ title: Strapi Content API
 # description: todo
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/setup-deployment
-pagination_next: dev-docs/advanced-features
 ---
 
 # Strapi APIs to access your content

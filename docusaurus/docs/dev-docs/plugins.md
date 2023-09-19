@@ -2,7 +2,6 @@
 title: Plugins
 description: Strapi comes with built-in plugins (i18n, GraphQL, Users & Permissions, Upload, API documentation, and Email) and you can install plugins as npm packages.
 displayed_sidebar: devDocsSidebar
-pagination_prev: dev-docs/advanced-features
 pagination_next: dev-docs/customization
 ---
 
@@ -29,7 +28,3 @@ Choose one of the following documentation sections from the table, depending on 
 | Developer   | Extend an existing plugin to customize it for a specific Strapi project️ | [Dev Docs > Extending plugins](/dev-docs/plugins-extension) |
 
 <br/>
-
-:::tip
-Before browsing or creating plugins, please double-check that Strapi does not already cover your use case with its built-in [advanced features](/dev-docs/advanced-features). Feel free to [submit feedback](https://feedback.strapi.io/) if you'd like some additional features to be included in the core Strapi product.
-:::
