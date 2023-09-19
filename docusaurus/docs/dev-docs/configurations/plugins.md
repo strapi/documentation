@@ -1,6 +1,7 @@
 ---
 title: Plugins configuration
-displayed_sidebar: devDocsSidebar
+sidebar_label: Plugins
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi plugins have a single entry point file to define their configurations.
 
 ---
