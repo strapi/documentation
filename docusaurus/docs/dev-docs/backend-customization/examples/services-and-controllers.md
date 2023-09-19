@@ -404,7 +404,7 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
 
 </TabItem>
 
-<TabItem value="create-and-email" label="Custom controller with both services">
+<TabItem value="create-and-email" label="Custom controller including email service">
 
 ```jsx title="src/api/review/controllers/review.js"
 
