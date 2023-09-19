@@ -28,6 +28,6 @@ Depending on your use case, click on any of the following cards to read detailed
 
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="⟳" title="Updates" description="Read a generic update guide. Useful when there is no breaking change." link="/dev-docs/update-version" />
-<CustomDocCard emoji="⬆️" title="Minor versions migration" description="Read specific guides to handle breaking changes while migrating from Strapi v5.x to Strapi v5.y." link="/dev-docs/migration-guides" />
-<CustomDocCard emoji="⤴️" title="Major version migration" description="Read specific guides to handle breaking changes while migrating from Strapi v4 to Strapi v5." link="/dev-docs/migration/v4-to-v5/introduction" />
+<CustomDocCard emoji="⬆️" title="v5.x migration guides" description="Read specific guides to handle breaking changes while migrating from Strapi v5.x to Strapi v5.y." link="/dev-docs/migration-guides" />
+<CustomDocCard emoji="⤴️" title="v4 to v5 migration guides" description="Read specific guides to handle breaking changes while migrating from Strapi v4 to Strapi v5." link="/dev-docs/migration/v4-to-v5/introduction" />
 </CustomDocCardsWrapper>
