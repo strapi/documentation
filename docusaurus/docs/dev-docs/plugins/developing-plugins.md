@@ -80,8 +80,8 @@ During plugin development it is helpful to use the `--watch-admin` flag to toggl
 Strapi provides the following programmatic APIs for plugins to hook into some of Strapi's features:
 
 <CustomDocCardsWrapper>
-<CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/dev-docs/plugins/server-api" />
-<CustomDocCard emoji="" title="Admin Panel API" description="Use the Admin Panel API to have your plugin interact with the admin panel of Strapi." link="/dev-docs/plugins/admin-panel-api" />
+<CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/dev-docs/api/plugins/server-api" />
+<CustomDocCard emoji="" title="Admin Panel API" description="Use the Admin Panel API to have your plugin interact with the admin panel of Strapi." link="/dev-docs/api/plugins/admin-panel-api" />
 </CustomDocCardsWrapper>
 
 :::strapi Custom fields plugins

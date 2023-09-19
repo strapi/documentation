@@ -206,8 +206,15 @@ const sidebars = {
             'dev-docs/api/query-engine/order-pagination',
           ]
         },
-        'dev-docs/api/plugins/admin-panel-api',
-        'dev-docs/api/plugins/server-api',
+        {
+          type: 'category',
+          label: 'APIs for plugins',
+          collapsed: false,
+          items: [
+            'dev-docs/api/plugins/admin-panel-api',
+            'dev-docs/api/plugins/server-api',
+          ]
+        },
       ]
     },
     {
