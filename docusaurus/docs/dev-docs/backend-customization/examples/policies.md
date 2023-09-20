@@ -44,10 +44,7 @@ Let's say we would like to customize the backend of [FoodAdvisor](https://github
 
 <SubtleCallout title="Related concepts">
 
-Additional reference information can be found in the following pages:
-
-* [Policies](/dev-docs/backend-customization/policies)
-* [Routes](/dev-docs/backend-customization/routes)
+Additional reference information can be found in the [Policies](/dev-docs/backend-customization/policies) and [Routes](/dev-docs/backend-customization/routes) documentation.
 
 </SubtleCallout>
 
@@ -374,8 +371,6 @@ export default NewReview;
 ```
 
 </details>
-
-
 
 <br />
 
