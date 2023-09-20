@@ -25,7 +25,7 @@ In our example, let's use a policy.
 
 **💭 Context:**
 
-Let's say we would like to customize the backend of FoodAdvisor to prevent restaurant owners from creating fake reviews for their businesses using a [form previously created](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) on the front-end website.
+Let's say we would like to customize the backend of [FoodAdvisor](https://github.com/strapi/foodadvisor) to prevent restaurant owners from creating fake reviews for their businesses using a [form previously created](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) on the front-end website.
 
 <SideBySideContainer>
 
