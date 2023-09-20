@@ -7,7 +7,7 @@ description: Strapi plugins have a single entry point file to define their confi
 
 # Plugins configuration
 
-Plugin configurations are stored in `./config/plugins.js` (see [project structure](/dev-docs/project-structure)). Each plugin can be configured with the following available parameters:
+Plugin configurations are stored in `./config/plugins.js|ts` (see [project structure](/dev-docs/project-structure)). Each plugin can be configured with the following available parameters:
 
 | Parameter                  | Description                                                                                                                                                            | Type    |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
