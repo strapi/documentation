@@ -9,7 +9,7 @@
 
 ---
 
-If you are looking for the Strapi code, please see the [Strapi Monorepo](https://github.com/strapi/strapi). This Repo is only for our [documentation](https://docs.strapi.io).
+If you are looking for the Strapi code, please see the [Strapi Monorepo](https://github.com/strapi/strapi). The present repository is only for the official Strapi documentation hosted at [docs.strapi.io](https://docs.strapi.io).
 
 ---
 
