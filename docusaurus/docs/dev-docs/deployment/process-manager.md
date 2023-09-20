@@ -1,11 +1,11 @@
 ---
-title: Process Manager
+title: PM2 Process Manager
 description: How to install and start a Strapi application using a process manager.
 sidebarDepth: 2
 
 ---
 
-# Process manager
+# How to use the PM2 process manager with Strapi
 
 Process managers allow you to keep your Strapi application running and to reload it without downtime. The following documentation uses the [PM2](https://pm2.keymetrics.io/) process manager and describes:
 

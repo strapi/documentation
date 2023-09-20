@@ -1,5 +1,5 @@
 ---
-title: Sentry
+title: Sentry plugin
 displayed_sidebar: devDocsSidebar
 description: Track errors in your Strapi application.
 

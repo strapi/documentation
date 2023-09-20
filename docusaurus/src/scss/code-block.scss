@@ -2,6 +2,7 @@
 
 :root {
   --custom-code-block-background-color: var(--strapi-neutral-1000);
+  --custom-code-block-background-color-highlighted: var(--strapi-neutral-800);
   --custom-code-block-color: var(--strapi-neutral-0);
   --custom-code-block-comment-color: var(--strapi-neutral-400);
   --custom-code-block-key-color: var(--strapi-success-300);
@@ -81,6 +82,10 @@ pre.prism-code {
     background: var(--custom-code-block-background-color);
   }
 
+  [class*="highlighted-line"] {
+    background-color: var(--custom-code-block-background-color-highlighted);
+  }
+
   [class*="codeBlockTitle"],
   pre, pre code {
     --ifm-code-font-size: 81.25%;
@@ -111,9 +116,11 @@ pre.prism-code {
   }
 }
 
+
 /** Dark theme */
 @include dark {
   --custom-code-block-background-color: var(--strapi-neutral-100);
+  --custom-code-block-background-color-highlighted: var(--strapi-neutral-150);
   --custom-code-block-color: var(--strapi-neutral-1000);
   --custom-code-block-punctuation-color: var(--strapi-primary-200);
   --custom-code-block-value-color: var(--strapi-neutral-900);

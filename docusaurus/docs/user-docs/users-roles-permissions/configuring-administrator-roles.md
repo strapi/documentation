@@ -155,7 +155,7 @@ For each permission of each category, a **Settings** button is displayed. It all
 - the administrator must have the same role as the creator.
 
 :::note
-Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/dev-docs/configurations/rbac)).
+Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/dev-docs/configurations/guides/rbac)).
 :::
 
 <ThemedImage

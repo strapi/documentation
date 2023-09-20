@@ -5,7 +5,7 @@ displayed_sidebar: devDocsSidebar
 ---
 import ManagingRelations from '/docs/snippets/managing-relations.md'
 
-# CRUD operations
+# CRUD operations with the Entity Service API
 
 The [Entity Service API](/dev-docs/api/entity-service) is built on top of the the [Query Engine API](/dev-docs/api/query-engine) and uses it to perform CRUD operations on entities.
 

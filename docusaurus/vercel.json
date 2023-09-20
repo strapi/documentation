@@ -11,6 +11,14 @@
 			"source": "/dev-docs/deployment/strapi-cloud",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
+      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
+      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+    },
 		{
 			"source": "/developer-docs",
 			"destination": "/dev-docs"
@@ -137,7 +145,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html",
-			"destination": "/dev-docs/configurations/public-assets"
+			"destination": "/dev-docs/configurations/guides/public-assets"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html",
@@ -393,11 +401,11 @@
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/server.html",
-			"destination": "/dev-docs/api/plugins/server-api"
+			"destination": "/dev-docs/plugins/server-api"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/email.html",
@@ -429,7 +437,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/development/plugins-development.html",
-			"destination": "/dev-docs/plugins-development"
+			"destination": "/dev-docs/plugins/developing-plugins"
 		},
 		{
 			"source": "/developer-docs/latest/development/plugins-extension.html",
@@ -756,48 +764,12 @@
 			"destination": "/dev-docs/migration/v3-to-v4/code-migration"
 		},
 		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.5.1-to-4.6.1.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.5.1-to-4.6.1"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.4.5-to-4.5.1.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.4.5-to-4.5.1"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.4.3-to-4.4.5.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.4.3-to-4.4.5"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.3.6-to-4.3.8.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.3.6-to-4.3.8"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.2.x-to-4.3.x.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.2.x-to-4.3.x"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.1.8-to-4.1.10.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.1.8-to-4.1.10"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.x-to-4.1.8.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.6-to-4.1.8.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.0.6-to-4.1.8"
-		},
-		{
-			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/migration-guide-4.0.0-to-4.0.6.html",
-			"destination": "/dev-docs/migration/v4/migration-guide-4.0.0-to-4.0.6"
-		},
-		{
 			"source": "/dev-docs/api/admin-panel-api",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/dev-docs/api/server-api",
-			"destination": "/dev-docs/api/plugins/server-api"
+			"destination": "/dev-docs/plugins/server-api"
 		},
 		{
 			"source": "/dev-docs/user-docs/settings/managing-global-settings",
@@ -833,15 +805,15 @@
 		},
 		{
 			"source": "/dev-docs/api/plugins/server",
-			"destination": "/dev-docs/api/plugins/server-api"
+			"destination": "/dev-docs/plugins/server-api"
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/dev-docs/api/plugins/admin-panel",
-			"destination": "/dev-docs/api/plugins/admin-panel-api"
+			"destination": "/dev-docs/plugins/admin-panel-api"
 		},
 		{
 			"source": "/developer-docs/latest/development/custom-field.html",

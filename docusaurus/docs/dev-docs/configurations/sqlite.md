@@ -1,8 +1,7 @@
 ---
 title: SQLite
-# displayed_sidebar: devDocsSidebar
 description: Learn how you can use SQLite for your Strapi application.
-
+displayed_sidebar: devDocsConfigSidebar
 ---
 
 # SQLite Installation

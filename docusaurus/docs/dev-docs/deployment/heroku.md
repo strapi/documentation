@@ -5,7 +5,9 @@ displayed_sidebar: devDocsSidebar
 
 ---
 
-# Deploy to Heroku
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+
+# Deploy Strapi to Heroku
 
 The purpose of this guide is to allow users to deploy Strapi applications on Heroku. This guide uses the Heroku CLI tool with a PostgreSQL database provided by Heroku. There are other options for how to deploy to Heroku available in the [Heroku documentation](https://devcenter.heroku.com/categories/data-management).
 
@@ -22,6 +24,8 @@ Prior to starting the deployment process, each user needs:
 - a [Heroku account](https://signup.heroku.com/),
 - [Git version control](https://docs.github.com/en/get-started/quickstart/set-up-git),
 - an existing Strapi application.
+
+<ConsiderStrapiCloud />
 
 ## Setup a Strapi project for deployment
 

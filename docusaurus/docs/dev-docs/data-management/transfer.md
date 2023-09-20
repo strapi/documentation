@@ -19,7 +19,6 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 :::caution
 
 - If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
-- Assets that are contained in the local Media Library provider are transferred to the same provider in the remote instance. This means that if you use the default Media Library locally and an S3 bucket in your remote instance, the `transfer` command does not add assets to your S3 bucket.
 
 :::
 
@@ -80,7 +79,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
   1. Start the Strapi server for the destination instance.
   2. In a new terminal window, navigate to the root directory of the source instance.
-  3. Run the following minimal command to initiate the transfer:
+  3. Run the following minimal command to initiate the transfer, ensuring `destinationURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
     <Tabs groupId="yarn-npm">
 
@@ -111,7 +110,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 1. Start the Strapi server for the source instance.
 2. In a new terminal window, navigate to the root directory of the destination instance.
-3. Run the following minimal command to initiate the transfer:
+  3. Run the following minimal command to initiate the transfer, ensuring `remoteURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
   <Tabs groupId="yarn-npm">
 

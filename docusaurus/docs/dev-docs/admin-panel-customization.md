@@ -519,7 +519,7 @@ The former syntax for `config.theme` without `light` or `dark` keys is deprecate
 
 ### WYSIWYG editor
 
-To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/dev-docs/custom-fields)) or take advantage of the [bootstrap lifecycle](/dev-docs/api/plugins/admin-panel-api#bootstrap) and the [extensions](#extension) system:
+To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/dev-docs/custom-fields)) or take advantage of the [bootstrap lifecycle](/dev-docs/plugins/admin-panel-api#bootstrap) and the [extensions](#extension) system:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -585,7 +585,7 @@ Only `./src/admin/app.js` and the files under the `./src/admin/extensions` folde
 
 There are 2 use cases to extend the admin panel:
 
-- A plugin developer wants to develop a Strapi plugin that extends the admin panel everytime it's installed in any Strapi application. This can be done by taking advantage of the [Admin Panel API](/dev-docs/api/plugins/admin-panel-api).
+- A plugin developer wants to develop a Strapi plugin that extends the admin panel everytime it's installed in any Strapi application. This can be done by taking advantage of the [Admin Panel API](/dev-docs/plugins/admin-panel-api).
 
 - A Strapi user only needs to extend a specific instance of a Strapi application. This can be done by directly updating the `./src/admin/app.js` file, which can import any file located in `./src/admin/extensions`.
 

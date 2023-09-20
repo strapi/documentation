@@ -5,7 +5,7 @@ displayed_sidebar: devDocsSidebar
 ---
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 
-# Ordering & Paginating
+# Ordering and Paginating with the Query Engine API
 
 <RecommendEntityService/>
 

@@ -5,7 +5,7 @@ displayed_sidebar: devDocsSidebar
 ---
 import ManagingRelations from '/docs/snippets/managing-relations.md'
 
-# Single Operations
+# Single Operations with the Query Engine API
 
 ## findOne()
 

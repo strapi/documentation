@@ -1,5 +1,5 @@
 ---
-title: Documentation
+title: Documentation plugin
 displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 ---
@@ -161,7 +161,7 @@ module.exports = {
 
 ### Excluding from generation
 
-To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/api/plugins/admin-panel-api#register).
+To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/plugins/admin-panel-api#register).
 
 :::note
 `excludeFromGeneration` gives more fine-grained control over what is generated.
@@ -198,7 +198,7 @@ If the Documentation plugin fails to generate what you expect, it is possible to
 
 The Documentation plugin exposes an API that allows you to replace what was generated for the following OpenAPI root level keys: `paths`, `tags`, `components` .
 
-To provide an override, use the `registerOverride` function found on the Documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/api/plugins/admin-panel-api#register).
+To provide an override, use the `registerOverride` function found on the Documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/plugins/admin-panel-api#register).
 
 **`registerOverride()`**
 

@@ -1,6 +1,7 @@
 ---
-title: Middlewares
-displayed_sidebar: devDocsSidebar
+title: Middlewares configuration
+sidebar_label: Middlewares
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file for its middlewares configurations.
 
 ---
@@ -123,7 +124,7 @@ Global middlewares can be classified into different types depending on their ori
 | Internal          | Built-in middlewares (i.e. included with Strapi), automatically loaded                                                                                                                                                                  | `strapi::middleware-name`                                                                                            |
 | Application-level | Loaded from the `./src/middlewares` folder                                                                                                                                                                                              | `global::middleware-name`                                                                                            |
 | API-level         | Loaded from the `./src/api/[api-name]/middlewares` folder                                                                                                                                                                               | `api::api-name.middleware-name`                                                                                      |
-| Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/dev-docs/api/plugins/server-api.md#middlewares)                                                                                               | `plugin::plugin-name.middleware-name`                                                                                |
+| Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/dev-docs/plugins/server-api#middlewares)                                                                                               | `plugin::plugin-name.middleware-name`                                                                                |
 | External          | Can be:<ul><li>either node modules installed with [npm](https://www.npmjs.com/search?q=strapi-middleware)</li><li>or local middlewares (i.e. custom middlewares created locally and configured in `./config/middlewares.js`.)</li></ul> | -<br/><br/>As they are directly configured and resolved from the configuration file, they have no naming convention. |
 
 ## Optional configuration

@@ -5,13 +5,17 @@ displayed_sidebar: devDocsSidebar
 
 ---
 
-# Deploy to the DigitalOcean App Platform
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+
+# Deploy Strapi to DigitalOcean App Platform
 
 The purpose of this guide is to allow users to deploy Strapi applications on the DigitalOcean App Platform. This guide uses the PostgreSQL development database provided by DigitalOcean, so applications can be tested in a deployed environment. At the end of the guide there is information on how to connect a Strapi application to a DigitalOcean Managed Database. Additional information about [migrating local database content to a production database](https://docs.digitalocean.com/products/databases/postgresql/how-to/import-databases/) and other deployment topics are provided in the [DigitalOcean documentation](https://docs.digitalocean.com/).
 
 :::caution
 Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues) or [submit a pull request](https://github.com/strapi/documentation/pulls) to improve the documentation.
 :::
+
+<ConsiderStrapiCloud />
 
 ## Prepare the deployment
 

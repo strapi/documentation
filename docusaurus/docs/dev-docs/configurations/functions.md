@@ -1,11 +1,12 @@
 ---
-title: Lifecycle Functions
-displayed_sidebar: devDocsSidebar
+title: Lifecycle functions configuration
+sidebar_label: Lifecycle functions
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
 
 ---
 
-# Functions
+# Lifecycle functions
 
 The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/dev-docs/typescript) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
@@ -155,7 +156,7 @@ It can be used to:
 
 - create an admin user if there isn't one
 - fill the database with some necessary data
-- declare custom conditions for the [Role-Based Access Control (RBAC)](/dev-docs/configurations/rbac) feature
+- declare custom conditions for the [Role-Based Access Control (RBAC)](/dev-docs/configurations/guides/rbac) feature
 
 ## Destroy
 
@@ -164,4 +165,4 @@ The `destroy` function, found in `./src/index.js` (or in `./src/index.ts`), is a
 It can be used to gracefully:
 
 - stop [services](/dev-docs/backend-customization/services) that are running
-- [clean up plugin actions](/dev-docs/api/plugins/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+- [clean up plugin actions](/dev-docs/plugins/server-api#destroy) (e.g. close connections, remove listeners, etc.)
