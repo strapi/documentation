@@ -118,6 +118,20 @@
     --custom-selection-background-color: var(--strapi-primary-700);
     --custom-selection-color: var(--strapi-primary-100);
   }
+
+  &--subtle {
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+    border: solid 1px #8e8ea9;
+    font-size: 90%;
+  }
+}
+
+@media screen and (min-width: 997px) {
+  .sbs-column_src-components-SideBySide-SideBySideColumn-side-by-side-column-module .theme-admonition--subtle {
+    margin-left: 80px;
+  }
 }
 
 /** Dark mode */
