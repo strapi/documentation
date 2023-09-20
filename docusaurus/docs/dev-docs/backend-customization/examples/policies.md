@@ -23,13 +23,16 @@ In our example, let's use a policy.
 
 ## Creating a custom policy
 
+**💭 Context:**
+
 Let's say we would like to customize the backend of FoodAdvisor to prevent restaurant owners from creating fake reviews for their businesses using a [form previously created](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) on the front-end website.
 
 <SideBySideContainer>
 
 <SideBySideColumn>
 
-Our goal is to:
+**🎯 Goals**:
+
 1. Create a new folder for policies to apply only to the "Reviews" collection type.
 2. Create a new policy file.
 3. Use the `findMany()` method from the [Entity Service API](/dev-docs/api/entity-service) to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
@@ -39,15 +42,20 @@ Our goal is to:
 
 <SideBySideColumn>
 
-:::strapi Related concept: Policies, Route Middlewares
-The code presented in this page uses a custom policy to control access to an endpoint's resources. Route middlewares can also be used.
+<SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Policies](/dev-docs/backend-customization/policies) and [Routes](/dev-docs/backend-customization/routes) documentation.
-:::
+Additional reference information can be found in the following pages:
+
+* [Policies](/dev-docs/backend-customization/policies)
+* [Routes](/dev-docs/backend-customization/routes)
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
+
+**🧑‍💻 Code example:**
 
 To achieve this, in the `/api` folder of the FoodAdvisor project, create a new `src/api/review/policies/is-owner-review.js` file with the following code:
 
@@ -100,27 +108,33 @@ Policies or route middlewares should be declared in the configuration of a route
 
 ## Sending custom errors through policies
 
+**💭 Context:**
+
 Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) sends a default error when a policy refuses access to a route. Let's say we want to customize the error sent when the [previously created custom policy](#creating-a-custom-policy) does not allow creating a review.
 
 <SideBySideContainer>
 
 <SideBySideColumn>
 
-Our goal is to configure the custom policy to throw a custom error instead of the default error.
+**🎯 Goal:**
+
+Configure the custom policy to throw a custom error instead of the default error.
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concept: Error handling
-The code presented in this section throws a custom error when access to a route is restricted.
+<SubtleCallout title="Related concept">
 
-Additional information can be found in the [Error handling](/dev-docs/error-handling) documentation.
-:::
+Additional reference information can be found in the [Error handling](/dev-docs/error-handling) page.
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
+
+**🧑‍💻 Code example:**
 
 To achieve this, in the `/api` folder of the FoodAdvisor project, update the [previously created `is-owner-review` custom policy](#creating-a-custom-policy) as follows (highlighted lines are the only modified lines):
 
@@ -228,6 +242,8 @@ When a policy refuses access to a route and the custom policy throws the custom 
 
 ### Using custom errors on the front end
 
+**💭 Context:**
+
 Out of the box, the Next.js-powered front-end website provided with [FoodAdvisor](https://github.com/strapi/foodadvisor) does not display errors or success messages on the front-end website when accessing content. For instance, the website will not inform the user when adding a new review with a [previously created form](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) is not possible.
 
 <SideBySideContainer>
@@ -245,9 +261,12 @@ Let's say we want to customize the front end of FoodAdvisor to catch the custom 
 </SideBySideColumn>
 </SideBySideContainer>
 
-Our goal is to:
-- catch the error on the front-end website and display it within a notification,
-- send another notification in case the policy allows the creation of a new review.
+**🎯 Goals**:
+
+- Catch the error on the front-end website and display it within a notification.
+- Send another notification in case the policy allows the creation of a new review.
+
+**🧑‍💻 Code example:**
 
 To achieve this, in the `/client` folder of the FoodAdvisor project, you could update the [previously created `new-review` component](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) as follows (modified lines are highlighted):
 
