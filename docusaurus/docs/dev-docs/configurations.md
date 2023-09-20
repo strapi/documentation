@@ -16,7 +16,7 @@ The configuration of a Strapi project lives in the `/config` folder:
 
 <ProjectStructureConfigFiles />
 
-<em style={captionStyle}>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/dev-docs/project-structure">project structure page</a> for the full version.</em>
+<em style={captionStyle}>The block above is an excerpt from the project structure. You can click on any file name to read the corresponding documentation. Visit the <a href="/dev-docs/project-structure">project structure page</a> for the full version.</em>
 
 ## Base configurations
 
