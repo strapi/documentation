@@ -335,6 +335,7 @@ const sidebars = {
             'dev-docs/plugins/sentry',
             'dev-docs/plugins/upload',
             'dev-docs/plugins/users-permissions',
+            'dev-docs/plugins/content-source-map',
           ]
     },
     {
