@@ -118,8 +118,7 @@ module.exports = () => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts
-// path: ./config/plugins.ts
+```ts title="./config/plugins.ts"
 
 export default () => ({
   graphql: {
