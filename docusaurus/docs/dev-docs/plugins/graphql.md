@@ -47,7 +47,7 @@ The GraphQL Playground is enabled by default for both the development and stagin
 
 ## Configuration
 
-Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+Plugins configuration are defined in the `config/plugins.js|ts` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
 
 [Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
 
