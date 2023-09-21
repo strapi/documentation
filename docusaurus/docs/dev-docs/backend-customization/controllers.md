@@ -343,6 +343,10 @@ When extending a core controller, you do not need to re-implement any sanitizati
 <details>
 <summary>Collection type examples</summary>
 
+:::tip
+The [backend customization examples cookbook](/dev-docs/backend-customization/examples) shows how you can overwrite a default controller action, for instance for the [`create` action](/dev-docs/backend-customization/examples/services-and-controllers#custom-controller).
+:::
+
 <Tabs>
 <TabItem value="find" label="`find()`">
 
