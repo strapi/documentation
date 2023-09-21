@@ -158,4 +158,8 @@ Once the Content Source Map plugin is installed and configured (see [Developer D
 4. Hover any content highlighted in blue to display an **Open in strapi.io** button.
 5. Click on the **Open in strapi.io** button to jump directly to the corresponding field in the admin panel and edit its content.
 
-<!-- TODO: add light and dark mode GIFs -->
+<figure style={{ width: '100%', margin: '0' }}>
+  <img src="/img/assets/content-manager/content-source-map-live-editing.gif" alt="Visiting a restaurant page updates the Google Sheets spreadsheet" />
+  <em><figcaption style={{ fontSize: '12px' }}>With the Content Source Map plugin and Vercel Visual Editing, clicking on any content highlighted in blue on the front-end website while in Edit mode will directly bring you back to the related field in the Content Manager.</figcaption></em>
+
+</figure>
