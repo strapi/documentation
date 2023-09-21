@@ -183,7 +183,6 @@ Additional information can be found in the [middlewares customization](/dev-docs
 
   module.exports = (config, { strapi }) => {
     return async (context, next) => {
-      console.log('Coming to the middleware');
       // Generating google sheet client
       const { readGoogleSheet, updateoogleSheet, writeGoogleSheet } =
         await createGoogleSheetClient({
