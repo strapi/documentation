@@ -434,6 +434,11 @@ In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor)
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::review.review', ({ strapi }) => ({
+  /**
+   * As the controller action is named
+   * exactly like the original `create` action provided by the core controller, 
+   * it overwrites it.
+   */
   async create(ctx) {
     // Creates the new review using a service
     const newReview = await strapi.service('api::review.review').create(ctx);
@@ -455,8 +460,9 @@ const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::review.review', ({ strapi }) => ({
   /**
-   * As the controller action is named exactly like the original action
-   * provided by the core controller, it overwrites the original 'create' action
+   * As the controller action is named
+   * exactly like the original `create` action provided by the core controller, 
+   * it overwrites it.
    */
   async create(ctx) {
     // Creates the new review using a service
