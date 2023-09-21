@@ -488,7 +488,7 @@ const {
   formats: { prettyPrint, levelFilter },
 } = require('@strapi/logger');
 
-module.exports = {
+module.exports = [
   transports: [
     new winston.transports.Console({
       level: 'http',
@@ -498,7 +498,7 @@ module.exports = {
       ),
     }),
   ],
-};
+];
 ```
 
 </TabItem>
@@ -509,12 +509,9 @@ module.exports = {
 
 'use strict';
 
-const {
-  winston,
-  formats: { prettyPrint, levelFilter },
-} = require('@strapi/logger');
+import { winston, formats: { prettyPrint, levelFilter }} from '@strapi/logger';
 
-export default {
+export default [
   transports: [
     new winston.transports.Console({
       level: 'http',
@@ -524,7 +521,7 @@ export default {
       ),
     }),
   ],
-};
+];
 ```
 
 </TabItem>
