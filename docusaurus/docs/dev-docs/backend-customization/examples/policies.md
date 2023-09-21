@@ -35,7 +35,7 @@ Let's say we would like to customize the backend of [FoodAdvisor](https://github
 
 1. Create a new folder for policies to apply only to the "Reviews" collection type.
 2. Create a new policy file.
-3. Use the `findMany()` method from the [Entity Service API](/dev-docs/api/entity-service) to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
+3. Use the `findMany()` method from the Entity Service API to get information about the owner of a restaurant when the `/reviews` endpoint is reached.
 4. Return an error if the authenticated user is the restaurant's owner, or let the request pass in other cases.
 
 </SideBySideColumn>
@@ -44,7 +44,7 @@ Let's say we would like to customize the backend of [FoodAdvisor](https://github
 
 <SubtleCallout title="Related concepts">
 
-Additional reference information can be found in the [Policies](/dev-docs/backend-customization/policies) and [Routes](/dev-docs/backend-customization/routes) documentation.
+Additional information can be found in the [Policies](/dev-docs/backend-customization/policies), [Routes](/dev-docs/backend-customization/routes), and [Entity Service API](/dev-docs/api/entity-service) documentation.
 
 </SubtleCallout>
 
@@ -54,7 +54,7 @@ Additional reference information can be found in the [Policies](/dev-docs/backen
 
 **🧑‍💻 Code example:**
 
-To achieve this, in the `/api` folder of the FoodAdvisor project, create a new `src/api/review/policies/is-owner-review.js` file with the following code:
+In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, create a new `src/api/review/policies/is-owner-review.js` file with the following code:
 
 ```jsx title="src/api/review/policies/is-owner-review.js"
 
@@ -123,7 +123,7 @@ Configure the custom policy to throw a custom error instead of the default error
 
 <SubtleCallout title="Related concept">
 
-Additional reference information can be found in the [Error handling](/dev-docs/error-handling) page.
+Additional information can be found in the [Error handling](/dev-docs/error-handling) documentation.
 
 </SubtleCallout>
 
@@ -133,7 +133,7 @@ Additional reference information can be found in the [Error handling](/dev-docs/
 
 **🧑‍💻 Code example:**
 
-To achieve this, in the `/api` folder of the FoodAdvisor project, update the [previously created `is-owner-review` custom policy](#creating-a-custom-policy) as follows (highlighted lines are the only modified lines):
+In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, update the [previously created `is-owner-review` custom policy](#creating-a-custom-policy) as follows (highlighted lines are the only modified lines):
 
 ```jsx title="src/api/review/policies/is-owner-review.js" showLineNumbers
 const { errors } = require('@strapi/utils');
@@ -237,6 +237,8 @@ When a policy refuses access to a route and the custom policy throws the custom 
 
 </details>
 
+<br />
+
 ### Using custom errors on the front end
 
 **💭 Context:**
@@ -253,7 +255,10 @@ Let's say we want to customize the front end of FoodAdvisor to catch the custom 
 
 <SideBySideColumn>
 
-![Restaurant owner can't submit reviews](/img/assets/backend-customization/tutorial-owner-cantsubmit.png)
+<figure style={{ width: '100%', margin: '0' }}>
+  <img src="/img/assets/backend-customization/tutorial-owner-cantsubmit.png" alt="Restaurant owner can't submit reviews" />
+  <em><figcaption style={{ fontSize: '12px' }}>When the restaurant's owner tries to submit a new review, a custom error is returned with the REST API response and a toast notification is displayed on the front-end website.</figcaption></em>
+</figure>
 
 </SideBySideColumn>
 </SideBySideContainer>
@@ -265,7 +270,7 @@ Let's say we want to customize the front end of FoodAdvisor to catch the custom 
 
 **🧑‍💻 Code example:**
 
-To achieve this, in the `/client` folder of the FoodAdvisor project, you could update the [previously created `new-review` component](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) as follows (modified lines are highlighted):
+In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could update the [previously created `new-review` component](/dev-docs/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) as follows (modified lines are highlighted):
 
 <details>
 <summary>Example front-end code to display toast notifications for custom errors or successful review creation:</summary>

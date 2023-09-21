@@ -6,11 +6,14 @@ pagination_prev: dev-docs/backend-customization/examples
 pagination_next: dev-docs/backend-customization/examples/services-and-controllers
 ---
 
+
 # Examples cookbook: Authentication flow with JWT
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
+
+**💭 Context:**
 
 Out of the box, the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any log in functionality. Logging in is done by accessing Strapi's admin panel at [`localhost:1337/admin`](http://localhost:1337/admin`).
 
@@ -24,7 +27,11 @@ Let's add a basic login page to the front-end, [Next.js](https://nextjs.org/)-po
 
 <SideBySideColumn>
 
-![Login page](/img/assets/backend-customization/tutorial-auth-flow.png)
+<figure style={{ width: '100%', margin: '0' }}>
+  <img src="/img/assets/backend-customization/tutorial-auth-flow.png" alt="Example login page" />
+  <em><figcaption style={{ fontSize: '12px' }}>A possible example of a login form on the front-end website of FoodAdvisor</figcaption></em>
+</figure>
+
 
 </SideBySideColumn>
 </SideBySideContainer>
@@ -32,7 +39,9 @@ Let's add a basic login page to the front-end, [Next.js](https://nextjs.org/)-po
 <SideBySideContainer>
 <SideBySideColumn>
 
-Our goal is to create a front-end component to:
+**🎯 Goal**:
+
+Create a front-end component to:
 
 1. to display a login form,
 2. send a request to the `/auth/local` route of the Strapi back-end server to authenticate,
@@ -43,16 +52,18 @@ Our goal is to create a front-end component to:
 
 <SideBySideColumn>
 
-:::strapi Related concept: Authentication
-The front-end code presented in this page uses JWT authentication from the Strapi built-in Users & Permissions plugin.
+<SubtleCallout title="Related concept">
 
-Additional information can be found in the [Users & Permissions plugin](/dev-docs/plugins/users-permissions) documentation.
-:::
+Additional information about JWT authentication can be found in the [Users & Permissions plugin](/dev-docs/plugins/users-permissions) documentation.
+
+</SubtleCallout>
 
 </SideBySideColumn>
 </SideBySideContainer>
 
-To achieve this, in the `/client` folder of the FoodAdvisor project, you could create a `pages/auth/login.js` file that contains the following example code.  Highlighted lines show the request sent to the `/auth/local` route provided by Strapi's Users & Permissions plugin:
+**🧑‍💻 Code example:**
+
+To achieve this, in the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could create a `pages/auth/login.js` file that contains the following example code.  Highlighted lines show the request sent to the `/auth/local` route provided by Strapi's Users & Permissions plugin:
 
 ```jsx title="/client/pages/auth/login.js" {21-27}
 

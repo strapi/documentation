@@ -13,11 +13,13 @@ This page is part of the back end customization examples cookbook. Please ensure
 
 Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any custom middlewares that could use incoming requests and perform some additional logic before executing the controller code.
 
-There are 2 types of middlewares in Strapi: **route middlewares** control access to a route while **global middlewares** have a wider scope (see [reference documentation for middlewares customization](/dev-docs/backend-customization/middlewares)).
+There are 2 types of middlewares in Strapi: **route middlewares** control access to a route while **global middlewares** have a wider scope (see reference documentation for [middlewares customization](/dev-docs/backend-customization/middlewares)).
 
 Custom route middlewares could be used instead of policies to control access to an endpoint (see [policies cookbook](/dev-docs/backend-customization/examples/policies)) and could modify the context before passing it down to further core elements of the Strapi server. This page will _not_ cover custom route middlewares but rather illustrate a more elaborated usage for **custom global middlewares**.
 
 ## Populating an analytics dashboard in Google Sheets with a custom middleware
+
+**💭 Context:**
 
 In essence, a middleware gets executed between a request arriving at the server and the controller function getting executed. So, for instance, a middleware is a good place to perform some analytics. 
 
@@ -31,7 +33,10 @@ Let’s create a rudimentary example of an analytics dashboard made with Google 
 
 <SideBySideColumn>
 
-![Google Spreadsheet data](/img/assets/backend-customization/tutorial-spreadsheet-data.png)
+<figure style={{ width: '100%', margin: '0' }}>
+  <img src="/img/assets/backend-customization/custom-global-middleware-in-action.gif" alt="Visiting a restaurant page updates the Google Sheets spreadsheet" />
+  <em><figcaption style={{ fontSize: '12px' }}>Every GET request to a restaurant's page executes the code of a custom middleware, updating a Google Sheets spreadsheet in real-time.</figcaption></em>
+</figure>
 
 </SideBySideColumn>
 
@@ -41,29 +46,29 @@ Let’s create a rudimentary example of an analytics dashboard made with Google 
 
 <SideBySideColumn>
 
-Our goal is to:
+**🎯 Goals**:
 
-- create some utility functions that interact with Google Sheets,
-- create a custom Strapi middleware that will create and/or update an existing Google Sheet document every time we have an incoming request to a Restaurants page of the FoodAdvisor project,
-- and append the middleware to the route where we want it to get executed.
+- Create some utility functions that interact with Google Sheets.
+- Create a custom Strapi middleware that will create and/or update an existing Google Sheet document every time we have an incoming request to a Restaurants page of the FoodAdvisor project.
+- Append the custom middleware to the route where we want it to get executed.
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concept: Middlewares
-The code presented in this section adds a custom middleware to a route.
+<SubtleCallout title="Related concept">
 
-Additional information can be found in the [Middlewares customization](/dev-docs/backend-customization/middlewares) documentation.
-:::
+Additional information can be found in the [middlewares customization](/dev-docs/backend-customization/middlewares) documentation.
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To achieve this:
+**🧑‍💻 Code example:**
 
-1. In the `/api` folder of the FoodAdvisor project, create a `/restaurant/middlewares/utils.js` file with the following code:
+1. In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, create a `/restaurant/middlewares/utils.js` file with the following example code:
 
   <details>
   <summary>Example utility functions that could be used to read, write and update a Google spreadsheet:</summary>
@@ -243,5 +248,3 @@ To achieve this:
   });
   ```
 
-The following video shows how the middleware gets executed in every request, updating the spreadsheet and generating new data: https://www.loom.com/share/ef9aba68923345b39b6c290501c171b2.
-<!-- TODO: embed video instead of linking to Loom — ask Christian  -->

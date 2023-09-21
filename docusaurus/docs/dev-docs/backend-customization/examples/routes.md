@@ -12,6 +12,8 @@ pagination_next: dev-docs/backend-customization/examples/middlewares
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
 
+**💭 Context:**
+
 Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not control access to its content-type endpoints.
 
 Let's say we [previsouly created a policy](/dev-docs/backend-customization/examples/policies) to restrict access to the "Reviews" content-type to some conditions, for instance to prevent a restaurant's owner to create a review for their restaurants. We must now enable the policy on the route we use to create reviews.
@@ -20,10 +22,10 @@ Let's say we [previsouly created a policy](/dev-docs/backend-customization/examp
 
 <SideBySideColumn>
 
-Our goal is to:
+**🎯 Goals**:
 
-- explicitly define a routes configuration for the "Reviews" content-type,
-- configure the route used when creating a review to:
+- Explicitly define a routes configuration for the "Reviews" content-type.
+- Configure the route used when creating a review to:
   - bypass the default Strapi authentication system
   - and restrict access depending on the [previously defined custom policy](/dev-docs/backend-customization/examples/policies).
 
@@ -31,17 +33,19 @@ Our goal is to:
 
 <SideBySideColumn>
 
-:::strapi Related concept: Routes
-The code presented in this section adds a custom policy to a route.
+<SubtleCallout title="Related concept">
 
 Additional information can be found in the [Policies](/dev-docs/backend-customization/policies) and [Routes](/dev-docs/backend-customization/routes) documentation.
-:::
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To achieve this, in the `/api` folder of the FoodAdvisor project, replace the content of the `api/src/api/review/routes/review.js` file with the following code:
+**🧑‍💻 Code example:**
+
+In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, replace the content of the `api/src/api/review/routes/review.js` file with the following code:
 
 ```jsx title="src/api/review/routes/review.js"
 

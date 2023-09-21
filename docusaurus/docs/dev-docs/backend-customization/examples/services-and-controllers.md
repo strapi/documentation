@@ -12,17 +12,29 @@ pagination_next: dev-docs/backend-customization/examples/policies
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
 
+**💭 Context:**
+
 From the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor), you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
 
-In this page we will customize both:
+**🎯 Goals**:
 
-- the [front-end website](#rest-api-queries-from-the-front-end) to add a form allowing website visitors to write a review,
-- and the back-end server of Strapi to leverage custom [services and controllers](#controllers-vs-services) to perform specific actions whenever a review is created.
+This page will teach about the following advanced topics:
+
+| Topic | Section |
+|------|---------|
+| Create a component that interacts with the backend of Strapi | [REST API queries from the front-end](#rest-api-queries-from-the-front-end) |
+| Understand how services and controllers can play together    | [Controllers vs. services](#controllers-vs-services)     |
+| Create custom services | <ul><li>A [custom service](#custom-service-creating-a-review) that only uses the Entity Service API</li><li>Another more [advanced custom service](#custom-service-sending-an-email-to-the-restaurant-owner) that uses both Entity Service API and a Strapi plugin</li></ul> |
+| Use services in a controller | [Custom controller](#custom-controller) |
+
+<br/>
 
 ### REST API queries from the front end
 
 <SideBySideContainer>
 <SideBySideColumn>
+
+**💭 Context:**
 
 Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding content to the "Reviews" collection type through the [Content Manager](/user-docs/content-manager).
 
@@ -32,7 +44,10 @@ Let's add a small front-end component to restaurant pages. This component will a
 
 <SideBySideColumn>
 
-![Writing a review on the front end](/img/assets/backend-customization/tutorial-write-review.png)
+<figure style={{ width: '100%', margin: '0' }}>
+  <img src="/img/assets/backend-customization/tutorial-write-review.png" alt="Writing a review on the front end" />
+  <em><figcaption style={{ fontSize: '12px' }}>A possible example of a form allowing users to submit a new review on a restaurant's page of the front-end website of FoodAdvisor</figcaption></em>
+</figure>
 
 </SideBySideColumn>
 
@@ -41,28 +56,30 @@ Let's add a small front-end component to restaurant pages. This component will a
 <SideBySideContainer>
 <SideBySideColumn>
 
-Our goal is to:
+**🎯 Goals**:
 
-* add a form to write a review,
-* display the form on any restaurants page,
-* send a POST request to Strapi's REST API when the form is submitted,
-* and use the [previously stored JWT](#authentication-flow-with-jwt) to authenticate the request.
+* Add a form to write a review.
+* Display the form on any restaurants page.
+* Send a POST request to Strapi's REST API when the form is submitted.
+* Use the [previously stored JWT](#authentication-flow-with-jwt) to authenticate the request.
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concept: REST API
-The front-end code presented in this page uses [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to reach a content type endpoint on the back-end server of Strapi.
+<SubtleCallout title="Related concept">
 
 Additional information on endpoints for content types can be found in the [REST API](/dev-docs/api/rest#endpoints) documentation.
-:::
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To achieve this, in the `/client` folder of the FoodAdvisor project, you could use the following code examples to:
+**🧑‍💻 Code example:**
+
+In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could use the following code examples to:
 - create a new `pages/restaurant/RestaurantContent/Reviews/new-review.js` file,
 - and update the existing `components/pages/restaurant/RestaurantContent/Reviews/reviews.js`.
 
@@ -172,9 +189,13 @@ To achieve this, in the `/client` folder of the FoodAdvisor project, you could u
 
 </details>
 
+<br />
+
 ### Controllers vs. Services
 
-Controllers could contain any business logic to be executed when the client requests a route. To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegate all the business logic to services.
+Controllers could contain any business logic to be executed when the client requests a route. However, as your code grows bigger and becomes more structured, it is a best practice to split the logic into specific services that do only one thing well, then call the services from controllers.
+
+To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegate all the business logic to services.
 
 Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: when submitting the [previously added review form](#rest-api-queries-from-the-front-end) on the front-end website, Strapi will create a review in the back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
@@ -182,7 +203,11 @@ Let's say we would like to customize the back end of [FoodAdvisor](https://githu
 2. Creating a custom service to [send an email](#custom-service-sending-an-email-to-the-restaurant-owner).
 3. [Customizing the default controller](#custom-controller) provided by Strapi for the Review content-type to use the 2 new services.
 
+<br />
+
 ### Custom service: Creating a review
+
+**💭 Context:**
 
 By default, service files in Strapi includes basic boilerplate code that use the `createCoreService` factory function.
 
@@ -192,29 +217,31 @@ Let's update the existing `review.js` service file for the "Reviews" collection 
 
 <SideBySideColumn>
 
-Our goal is to:
+**🎯 Goals**:
 
-- declare a `create` method,
-- grab [context](/dev-docs/backend-customization/requests-responses) from the request,
-- use the `findMany()` method from the [EntityService API](/dev-docs/api/entity-service) to find a restaurant,
-- use the `create()` method from the EntityService API to append data to the restaurant, [populating](/dev-docs/api/entity-service/populate) the restaurant owner,
-- and return the new review data.
+- Declare a `create` method.
+- Grab context from the request.
+- Use the `findMany()` method from the EntityService API to find a restaurant.
+- Use the `create()` method from the EntityService API to append data to the restaurant, populating the restaurant owner.
+- Return the new review data.
     
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concepts: Services, EntityService API
-The code presented in this section uses one of the possible ways to create a service. The code also illustrates the use of the Entity Service API to query content directly from the back-end server.
+<SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Services](/dev-docs/backend-customization/services) and [EntityService API](/dev-docs/api/entity-service) documentation.
-:::
+Additional information can be found in the [request context](/dev-docs/backend-customization/requests-responses), [services](/dev-docs/backend-customization/services) and [EntityService API](/dev-docs/api/entity-service) documentation.
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To create such a service, in the `/api` folder of the FoodAdvisor project, replace the content of the `src/api/review/services/review.js` file with the following code:
+**🧑‍💻 Code example:**
+
+To create such a service, in the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, replace the content of the `src/api/review/services/review.js` file with the following code:
 
 ```jsx title="src/api/review/services/review.js"
 const { createCoreService } = require('@strapi/strapi').factories;
@@ -263,7 +290,11 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 - The provided example code does not cover error handling. You should consider handling errors, for instance when the restaurant does not exist. Additional information can be found in the [Error handling](/dev-docs/error-handling) documentation.
 :::
 
+<br />
+
 ### Custom Service: Sending an email to the restaurant owner
+
+**💭 Context:**
 
 Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any automated email service feature.
 
@@ -285,7 +316,10 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 
 <SideBySideColumn>
 
-![Email Single Type in Admin Panel](/img/assets/backend-customization/tutorial-single-type.png)
+<figure style={{ width: '100%', margin: '0' }}>
+  <img src="/img/assets/backend-customization/tutorial-single-type.png" alt="Email Single Type in Admin Panel" />
+  <em><figcaption style={{ fontSize: '12px' }}>An Email single type has been created in the admin panel. It contains a "from" field used to define the sender address for the Email plugin.</figcaption></em>
+</figure>
 
 </SideBySideColumn>
 
@@ -294,64 +328,71 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 <SideBySideContainer>
 <SideBySideColumn >
 
-Our goal is to:
-- create a new service file for the "Email" single type,
-- declare a `send()` method for this service,
-- grab the sender address stored in the Email single type using the [Entity Service API](/dev-docs/api/entity-service),
-- use email details (recipient's address, subject, and email body) passed when invoking the service's `send()` method to send an email using the [Email plugin](/dev-docs/plugins/email) and a previously configured [provider](/dev-docs/providers).
+**🎯 Goals**:
+
+- Create a new service file for the "Email" single type,
+- Declare a `send()` method for this service,
+- Grab the sender address stored in the Email single type using the Entity Service API,
+- Use email details (recipient's address, subject, and email body) passed when invoking the service's `send()` method to send an email using the Email plugin and a previously configured provider.
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concepts: Services, EntityService API
-The code presented in this section uses one of the possible ways to create a service. The code also illustrates the use of the Entity Service API to query content directly from the back-end server.
+<SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Services](/dev-docs/backend-customization/services) and [EntityService API](/dev-docs/api/entity-service) documentation.
-:::
+Additional information can be found in the [Services](/dev-docs/backend-customization/services), [Entity Service API](/dev-docs/api/entity-service), [Email plugin](/dev-docs/plugins/email) and [Providers](/dev-docs/providers) documentation.
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To create such a service, in the `/api` folder of the FoodAdvisor project, create a new `src/api/email/services/email.js` file with the following code:
+**🧑‍💻 Code example:**
+
+To create such a service, in the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, create a new `src/api/email/services/email.js` file with the following code:
     
-  ```jsx title="src/api/email/services/email.js"
+```jsx title="src/api/email/services/email.js"
 
-  const { createCoreService } = require('@strapi/strapi').factories;
+const { createCoreService } = require('@strapi/strapi').factories;
 
-  module.exports = createCoreService('api::email.email', ({ strapi }) => ({
-    async send({ to, subject, html }) {
-      /**
-       * Retrieves email configuration data
-       * stored in the Email single type
-       * using the Entity Service API.
-       */
-      const emailConfig = await strapi.entityService.findOne(
-        'api::email.email',
-        1
-      );
+module.exports = createCoreService('api::email.email', ({ strapi }) => ({
+  async send({ to, subject, html }) {
+    /**
+     * Retrieves email configuration data
+     * stored in the Email single type
+     * using the Entity Service API.
+     */
+    const emailConfig = await strapi.entityService.findOne(
+      'api::email.email',
+      1
+    );
 
-      /**
-       * Sends an email using:
-       * - parameters to pass when invoking the service
-       * - the 'from' address previously retrieved with the email configuration
-       */
-      await strapi.plugins['email'].services.email.send({
-        to,
-        subject,
-        html,
-        from: emailConfig.from,
-      });
-    },
-  }));
-  ```
+    /**
+     * Sends an email using:
+     * - parameters to pass when invoking the service
+     * - the 'from' address previously retrieved with the email configuration
+     */
+    await strapi.plugins['email'].services.email.send({
+      to,
+      subject,
+      html,
+      from: emailConfig.from,
+    });
+  },
+}));
+```
 
 :::tip
 In a controller's code, the `send` method from this email service can be called with `strapi.service('api::email.email).send(parameters)` where `parameters` is an object with the email's related information (recipient's address, subject, and email body).
 :::
 
+<br />
+
 ### Custom controller
+
+**💭 Context:**
 
 By default, controllers files in Strapi includes basic boilerplate code that use the `createCoreController` factory function. This exposes basic methods to create, retrieve, update, and delete content when reaching the requested endpoint. The default code for the controllers can be customized to perform any business logic.
 
@@ -360,31 +401,33 @@ Let's customize the default controller for the "Reviews" collection type of [Foo
 <SideBySideContainer>
 <SideBySideColumn>
 
-Our goal is to:
+**🎯 Goals**:
 
-- extend the existing controller for the "Reviews" collection type,
-- declare a custom `create()` method,
-- call previously created service(s),
-- and sanitize the content to be returned.
+- Extend the existing controller for the "Reviews" collection type.
+- Declare a custom `create()` method.
+- Call previously created service(s).
+- Sanitize the content to be returned.
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-:::strapi Related concept: Controllers
-The code presented in this section uses one of the possible ways to customize a controller.
+<SubtleCallout title="Related concept">
 
-Additional information can be found in the [Controllers](/dev-docs/backend-customization/controllers) documentation.
-:::
+Additional information can be found in the [controllers](/dev-docs/backend-customization/controllers) documentation.
+
+</SubtleCallout>
 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
-To achieve this, in the `/api` folder of the FoodAdvisor project, replace the content of the `src/api/review/controllers/review.js` file with one of the following code examples, depending on whether you previously created just [one custom service](#custom-service-creating-a-review) or both custom services for the review creation and the [email notification](#custom-service-sending-an-email-to-the-restaurant-owner):
+**🧑‍💻 Code example:**
+
+In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, replace the content of the `src/api/review/controllers/review.js` file with one of the following code examples, depending on whether you previously created just [one custom service](#custom-service-creating-a-review) or both custom services for the review creation and the [email notification](#custom-service-sending-an-email-to-the-restaurant-owner):
 
 <Tabs>
-<TabItem value="create-only" label="Custom controller with one service">
+<TabItem value="create-only" label="Custom controller without email service">
 
 ```jsx title="src/api/review/controllers/review.js"
 
@@ -404,7 +447,7 @@ module.exports = createCoreController('api::review.review', ({ strapi }) => ({
 
 </TabItem>
 
-<TabItem value="create-and-email" label="Custom controller including email service">
+<TabItem value="create-and-email" label="Custom controller with email service">
 
 ```jsx title="src/api/review/controllers/review.js"
 
