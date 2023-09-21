@@ -203,10 +203,6 @@ Let's say we would like to customize the back end of [FoodAdvisor](https://githu
 2. Creating a custom service to [send an email](#custom-service-sending-an-email-to-the-restaurant-owner).
 3. [Customizing the default controller](#custom-controller) provided by Strapi for the Review content-type to use the 2 new services.
 
-:::info 
-Additional details were given in a [Strapi Development Best Practices video](https://www.youtube.com/watch?v=YIbhKm1o0fE).
-:::
-
 <br />
 
 ### Custom service: Creating a review
