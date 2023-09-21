@@ -628,7 +628,7 @@ export default {
 
 ##### Policies
 
-[Policies](/dev-docs/backend-customization/policies) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key. Only difference between the GraphQL and REST implementation is that the `config` key becomes `options`.
+[Policies](/dev-docs/backend-customization/policies) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key.
 
 The `policies` key is an array accepting a list of policies, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [policies configuration documentation](/dev-docs/backend-customization/routes#policies)).
 
