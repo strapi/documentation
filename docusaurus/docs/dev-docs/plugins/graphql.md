@@ -671,7 +671,7 @@ module.exports = {
             /**
              * Uses a policy already created in Strapi with a custom configuration
              */
-            {name:"api::model.policy-name" options: {/* all config values I want to pass to the strapi middleware */} },
+            {name:"api::model.policy-name", config: {/* all config values I want to pass to the strapi policy */} },
           ],
           auth: false,
         },
