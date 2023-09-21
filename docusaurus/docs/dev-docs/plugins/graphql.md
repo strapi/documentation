@@ -799,7 +799,7 @@ module.exports = {
              * Basic middleware example #5
              * Uses a middleware already created in Strapi with a custom configuration
              */
-            { name: "api::model.middleware-name" options: { /* all config values I want to pass to the strapi middleware */ } },
+            { name: "api::model.middleware-name", options: { /* all config values I want to pass to the strapi middleware */ } },
           ],
           auth: false,
         },
