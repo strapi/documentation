@@ -71,7 +71,7 @@ module.exports = async (policyContext, config, { strapi }) => {
    * using the Entity Service API
    * to retrieve information about the restaurant's owner.
    */ 
-  const filteredRestaurants = await strapi.entityService.findMany(
+  const [restaurant] = await strapi.entityService.findMany(
     'api::restaurant.restaurant',
     {
       filters: {
@@ -80,9 +80,6 @@ module.exports = async (policyContext, config, { strapi }) => {
       populate: ['owner'],
     }
   );
-
-  const restaurant = filteredRestaurants[0];
-
   if (!restaurant) {
     return false;
   }
