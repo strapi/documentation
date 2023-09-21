@@ -711,7 +711,7 @@ export default {
             /**
              * Uses a policy already created in Strapi with a custom configuration
              */
-            {name:"api::model.policy-name" options: {/* all the configuration values to pass to the strapi middleware */} },
+            {name:"api::model.policy-name", config: {/* all the configuration values to pass to the strapi policy */} },
           ],
           auth: false,
         },
