@@ -19,7 +19,6 @@ The Strapi v4.11.4 to v4.14.0 migration guide upgrades v4.11.4 to v4.14.0. Strap
 
 <PluginsCaution components={props.components} />
 
-<!-- TODO: explain what the migration focuses on (i.e. what breaking changes it fixes). -->
 
 ## Upgrading the application dependencies to 4.14.0
 
