@@ -9,7 +9,7 @@ import BuildCommand from '/docs/snippets/build-npm-yarn.md'
 import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 
-# v4.14.0 to v4.14.0 migration guide
+# v4.11.4 to v4.14.0 migration guide
 
 The Strapi v4.11.4 to v4.14.0 migration guide upgrades v4.11.4 to v4.14.0. Strapi v4.14.0 migrated the `strapi/strapi` package to TypeScript and introduced a new `@strapi/typings` package. This migration is required if you have used TypeScript in your project prior to 4.14.0. The migration guide consists of:
 
