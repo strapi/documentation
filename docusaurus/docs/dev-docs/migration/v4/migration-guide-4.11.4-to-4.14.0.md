@@ -1,5 +1,5 @@
 ---
-title: Migrate from 4.14.0 to 4.14.0
+title: Migrate from 4.11.4 to 4.14.0
 displayed_sidebar: devDocsSidebar
 description: Learn how you can migrate your Strapi application from 4.14.0 to 4.14.0.
 ---
