@@ -64,7 +64,7 @@ We recommend using environment variables to configure your application based on 
 
 module.exports = ({ env }) => ({
   host: env('APP_HOST', '0.0.0.0'),
-  port: env.int('NODE_PORT', 1337),
+  port: env.int('PORT', 1337),
 });
 ```
 
@@ -72,7 +72,7 @@ Then you can create a `.env` file or directly set environment variables in your 
 
 ```
 APP_HOST=10.0.0.1
-NODE_PORT=1338
+PORT=1338
 ```
 
 :::tip
