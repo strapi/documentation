@@ -8,7 +8,7 @@ pagination_next: dev-docs/backend-customization/examples/authentication
 
 # Backend customization: An examples cookbook using FoodAdvisor
 
-The present section of the documentation is intended to developers who would like to get a deeper understanding of the Strapi back end customization possibilities.
+The present section of the documentation is intended for developers who would like to get a deeper understanding of the Strapi back end customization possibilities.
 
 The section is a collection of examples that demonstrate how the core components of the back-end server of Strapi can be used in a real-world project, and how a front-end website can interact with the back end of Strapi.
 
