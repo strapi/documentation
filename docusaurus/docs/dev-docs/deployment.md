@@ -63,16 +63,16 @@ We recommend using environment variables to configure your application based on 
 // Path: ./config/server.js
 
 module.exports = ({ env }) => ({
-  host: env('APP_HOST', '0.0.0.0'),
-  port: env.int('NODE_PORT', 1337),
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
 });
 ```
 
 Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
 
 ```
-APP_HOST=10.0.0.1
-NODE_PORT=1338
+HOST=10.0.0.1
+PORT=1338
 ```
 
 :::tip
