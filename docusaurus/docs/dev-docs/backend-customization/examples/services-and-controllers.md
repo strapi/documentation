@@ -12,11 +12,7 @@ pagination_next: dev-docs/backend-customization/examples/policies
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).
 :::
 
-**💭 Context:**
-
 From the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor), you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
-
-**🎯 Goals**:
 
 This page will teach about the following advanced topics:
 
