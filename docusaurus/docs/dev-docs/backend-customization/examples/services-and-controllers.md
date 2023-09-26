@@ -191,7 +191,7 @@ In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvis
 
 Controllers could contain any business logic to be executed when the client requests a route. However, as your code grows bigger and becomes more structured, it is a best practice to split the logic into specific services that do only one thing well, then call the services from controllers.
 
-To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegate all the business logic to services.
+To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegates all the business logic to services.
 
 Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: when submitting the [previously added review form](#rest-api-queries-from-the-front-end) on the front-end website, Strapi will create a review in the back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
