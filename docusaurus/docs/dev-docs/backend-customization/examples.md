@@ -10,7 +10,7 @@ pagination_next: dev-docs/backend-customization/examples/authentication
 
 The present section of the documentation is intended for developers who would like to get a deeper understanding of the Strapi back end customization possibilities.
 
-The section is a collection of examples that demonstrate how the core components of the back-end server of Strapi can be used in a real-world project, and how a front-end website can interact with the back end of Strapi.
+The section is a collection of examples that demonstrate how the core components of the back-end server of Strapi can be used in a real-world project. Front-end code that interacts with the back end may also be part of some examples, but displayed in collapsed blocks by default since front-end code examples are not the main focus of this cookbook.
 
 Examples are meant to extend the features of [FoodAdvisor](https://github.com/strapi/foodadvisor), the official Strapi demo application. FoodAdvisor builds a ready-made restaurants directory powered by a Strapi back end (included in the `/api` folder) and renders a [Next.js](https://nextjs.org/)-powered front-end website (included in the `/client` folder).
 
