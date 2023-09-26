@@ -328,6 +328,7 @@ const sidebars = {
             id: 'dev-docs/plugins',
           },
       items: [
+            'dev-docs/plugins/content-source-map',
             'dev-docs/plugins/documentation',
             'dev-docs/plugins/email',
             'dev-docs/plugins/graphql',
@@ -335,7 +336,6 @@ const sidebars = {
             'dev-docs/plugins/sentry',
             'dev-docs/plugins/upload',
             'dev-docs/plugins/users-permissions',
-            'dev-docs/plugins/content-source-map',
           ]
     },
     {
