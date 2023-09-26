@@ -573,7 +573,7 @@ const sidebars = {
           label: 'Collaboration',
           id: 'cloud/projects/collaboration',
           customProps: {
-            new: true,
+            new: false,
           },
         },
         {
@@ -593,7 +593,7 @@ const sidebars = {
           label: 'Account Settings',
           id: 'cloud/account/settings',
           customProps: {
-            updated: true,
+            updated: false,
           },
         },
       ]
