@@ -6,6 +6,8 @@ displayed_sidebar: userDocsSidebar
 
 ---
 
+import CSMPrereq from '/docs/snippets/content-source-map-requirements.md'
+
 # Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
@@ -147,6 +149,8 @@ Unlike regular fields, the order of the fields and components inside a dynamic f
 :::
 
 ## Editing fields from a front-end website <EnterpriseBadge />
+
+<CSMPrereq />
 
 Strapi's [Content Source Map plugin](/dev-docs/plugins/content-source-map) combined with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) can offer another intuitive editing experience, where you can click on any editable content on the front-end website of a Strapi-based project to directly jump to the corresponding field in Strapi's admin panel.
 

@@ -5,15 +5,15 @@ sidebar_label: Content Source Map
 displayed_sidebar: devDocsSidebar
 ---
 
+import CSMPrereq from '/docs/snippets/content-source-map-requirements.md'
+
 # Content Source Map plugin <EnterpriseBadge />
+
+<CSMPrereq />
 
 The Content Source Map plugin adds content source maps support to a Strapi project.
 
 Content source maps are invisible values that include a link back to the field that generated the content.  When combined with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) feature, content source maps allow navigating directly from the front-end website of a Strapi-based project to the source of a field in Strapi's admin panel, making editing content more intuitive.
-
-:::info
-This plugin requires a Strapi <EnterpriseBadge /> Edition license and only works for projects deployed on [Vercel](https://vercel.com).
-:::
 
 ## Installation
 
