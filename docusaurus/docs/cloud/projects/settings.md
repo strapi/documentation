@@ -20,7 +20,13 @@ The *General* tab enables you to check and update the following options for the 
 - Debug info: to see the internal project name for the project. This is useful for support purposes.
 - Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
-![Project settings](/img/assets/cloud/settings.png)
+<ThemedImage
+  alt="Project settings page"
+  sources={{
+    light: '/img/assets/cloud/settings.png',
+    dark: '/img/assets/cloud/settings_DARK.png',
+  }}
+/>
 
 ### Modifying GitHub repository branch
 
@@ -42,14 +48,20 @@ The GitHub repository branch and base directory for a Strapi Cloud project are b
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
 
 1. In the *Delete project* section of the *General* tab, click on the **Delete project** button.
-2. In the dialog, type `DELETE` in the textbox.
-3. Confirm the deletion of your project by clicking on the **Delete** button.
+2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
+3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
 ## Domains
 
 The *Domains* tab enables you to manage domains and connect new ones.
 
-![Domains](/img/assets/cloud/settings_domains.png)
+<ThemedImage
+  alt="Project domains"
+  sources={{
+    light: '/img/assets/cloud/settings_domains.png',
+    dark: '/img/assets/cloud/settings_domains_DARK.png',
+  }}
+/>
 
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 
@@ -82,7 +94,13 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 You can view default values, and create/edit/delete environment variables for your project in the **Variables** tab:
 
-![Project variables](/img/assets/cloud/settings_variables.png)
+<ThemedImage
+  alt="Project variables"
+  sources={{
+    light: '/img/assets/cloud/settings_variables.png',
+    dark: '/img/assets/cloud/settings_variables_DARK.png',
+  }}
+/>
 
 ## Billing
 
@@ -90,4 +108,10 @@ The *Billing* section displays the current subscription plan and included usage 
 
 Use the **Manage subscription** button to change the subscription plan.
 
-![Project billing](/img/assets/cloud/settings_billing.png)
+<ThemedImage
+  alt="Project billing"
+  sources={{
+    light: '/img/assets/cloud/settings_billing.png',
+    dark: '/img/assets/cloud/settings_billing_DARK.png',
+  }}
+/>

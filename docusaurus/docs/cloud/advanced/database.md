@@ -11,15 +11,12 @@ Strapi Cloud provides a pre-configured PostgreSQL database by default. However, 
 
 :::caution
 While possible, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues (e.g., network latency may impact performance). Strapi cannot provide security or support with configuring external databases.
-
 :::
 
 :::prerequisites
-
 - A local Strapi project running on `v4.8.2+`.
 - Credentials for external database.
 - If using an existing database, the schema must match the Strapi project schema.
-
 :::
 
 ## Configuration
@@ -47,14 +44,19 @@ Before pushing changes, add environment variables to the Strapi Cloud project:
 
 :::caution
 To ensure a smooth deployment, it is recommended to not change the names of the environment variables.
-
 :::
 
 ## Deployment
 
 To deploy the project and utilize the external database, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
 
-![deployment](https://res.cloudinary.com/dz7knyfbp/image/upload/v1681936928/deploy_h49uly.png)
+<ThemedImage
+  alt="Deployment"
+  sources={{
+    light: '/img/assets/cloud/deploy-logs.png',
+    dark: '/img/assets/cloud/deploy-logs_DARK.png',
+  }}
+/>
 
 Once the application finishes building, the project will use the external database.
 
