@@ -53,3 +53,7 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="🔄" title="Integration guides" description="Use 3rd-party technologies to query the Content API from a front-end application." link="/dev-docs/integrations" />
 
 </CustomDocCardsWrapper>
+
+:::tip Plugin APIs
+[Plugins](/dev-docs/plugins) also have their dedicated APIs, useful when developing plugins: the Server API and the Admin Panel API. These APIs are not offered to interact with the Content API, and that's why they are not documented in this section. These plugin-related APIs are offered to build plugins and allow a plugin to interact either with the back-end server of Strapi ([Server API](/dev-docs/api/plugins/server-api) or with the admin panel of Strapi([Admin Panel API](/dev-docs/api/plugins/admin-panel-api)).
+:::
