@@ -55,5 +55,5 @@ This documentation section includes reference information about the following St
 </CustomDocCardsWrapper>
 
 :::note Plugin APIs
-[Plugins](/dev-docs/plugins) also have their dedicated APIs: the Server API and the Admin Panel API. These APIs are not offered to interact with the Content API, and that's why they are not documented in this section. These plugin-related APIs are offered to develop plugins and allow a plugin to interact either with the back-end server of Strapi ([Server API](/dev-docs/api/plugins/server-api)) or with the admin panel of Strapi ([Admin Panel API](/dev-docs/api/plugins/admin-panel-api)).
+[Plugins](/dev-docs/plugins) also have their dedicated APIs: the Server API and the Admin Panel API. These plugin-related APIs are offered to develop plugins and allow a plugin to interact either with the back-end server of Strapi ([Server API](/dev-docs/api/plugins/server-api)) or with the admin panel of Strapi ([Admin Panel API](/dev-docs/api/plugins/admin-panel-api)).
 :::
