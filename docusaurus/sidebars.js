@@ -240,25 +240,16 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/backend-customization',
               label: 'Introduction',
-              customProps: {
-                new: true,
-              },
             },
             {
               type: 'doc',
               id: 'dev-docs/backend-customization/requests-responses',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/backend-customization/routes',
             'dev-docs/backend-customization/policies',
             {
               type: 'doc',
               id: 'dev-docs/backend-customization/middlewares',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/backend-customization/controllers',
             'dev-docs/backend-customization/services',
@@ -605,9 +596,6 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
-          customProps: {
-            updated: true,
-          },
         },
       ],
     },
@@ -676,7 +664,7 @@ const sidebars = {
               label: 'Review Workflows',
               id: 'user-docs/settings/review-workflows',
               customProps: {
-                new: true,
+                updated: true,
               },
             },
             'user-docs/settings/single-sign-on',
