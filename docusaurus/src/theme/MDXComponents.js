@@ -27,6 +27,7 @@ import {
   MultiLanguageSwitcherResponse,
 } from '../components/MultiLanguageSwitcher';
 import { Annotation } from '../components/Annotation';
+import SubtleCallout from '../components/SubtleCallout';
 
 export default {
   // Re-use the default mapping
@@ -54,6 +55,7 @@ export default {
   CustomDocCard,
   CustomDocCardsWrapper,
   InteractiveQueryBuilder,
+  SubtleCallout,
   ThemedImage,
   SideBySideColumn,
   SideBySideContainer,
