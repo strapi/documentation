@@ -240,6 +240,9 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/backend-customization',
               label: 'Introduction',
+              customProps: {
+                updated: true,
+              },
             },
             {
               type: 'doc',
@@ -315,7 +318,14 @@ const sidebars = {
         'dev-docs/plugins-extension',
         'dev-docs/plugins-development',
         'dev-docs/typescript',
-        'dev-docs/custom-fields',
+        {
+          type: 'doc',
+          label: 'Custom fields',
+          id: 'dev-docs/custom-fields',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'doc',
           label: 'Providers',
