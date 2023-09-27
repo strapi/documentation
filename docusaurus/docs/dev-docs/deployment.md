@@ -8,6 +8,7 @@ import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+import CommunityGuides from '/docs/snippets/community-deployment-guides.md'
 
 # Deployment
 
@@ -17,10 +18,6 @@ The following documentation covers how to develop locally with Strapi and deploy
 
 :::callout ☁️ Strapi Cloud
 You can use [Strapi Cloud](/cloud/intro) to quickly deploy and host your project.
-:::
-
-:::strapi Community Guides
-In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
 :::
 
 :::tip
@@ -40,7 +37,7 @@ To provide the best possible environment for Strapi the following requirements a
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):
 
-<HardwareRequire components={props.components} />
+  <HardwareRequire components={props.components} />
 
 - A supported database version:
 <DatabaseRequire components={props.components} />
@@ -51,7 +48,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/dev-d
 
 - A supported operating system:
 
-<OperatingSystemRequire components={props.components} />
+  <OperatingSystemRequire components={props.components} />
 
 ### Application Configuration
 
@@ -59,8 +56,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/dev-d
 
 We recommend using environment variables to configure your application based on the environment, for example:
 
-```js
-// Path: ./config/server.js
+```js title="/config/server.js"
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
@@ -186,8 +182,18 @@ For more information, consult the [TypeScript documentation](/dev-docs/typescrip
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization#deployment).
 
-## Deployment Guides
+## Deployment guides
 
-Manual guides for deployment and optional software:
+Click on any of the following cards to read manual guides for deployment and optional software:
 
-<DocCardList />
+<CustomDocCardsWrapper>
+
+<CustomDocCard emoji="☁️" title="Strapi Cloud" description="Deploy your project to Strapi Cloud." link="/cloud/getting-started/deployment" />
+
+<CustomDocCard emoji="🗃️" title="3rd-party hosting guides" description="Deploy your project to various 3rd-party providers." link="/dev-docs/deployment/hosting-guides" />
+
+<CustomDocCard emoji="➕" title="Optional software guides" description="Compliment or improve the deployment process when using Strapi in a production environment." link="/dev-docs/deployment/optional-software-guides" />
+
+</CustomDocCardsWrapper>
+
+<CommunityGuides />
