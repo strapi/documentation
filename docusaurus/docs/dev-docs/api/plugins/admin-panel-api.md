@@ -1,5 +1,6 @@
 ---
 sidebar_label: Admin Panel API
+pagination_prev: dev-docs/plugins/developing-plugins
 ---
 
 # Admin Panel API for plugins
