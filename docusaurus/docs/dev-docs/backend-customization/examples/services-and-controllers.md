@@ -84,17 +84,10 @@ In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvis
 
 1. Create a new file in the `/client` folder to add a new component for writing reviews with the following code:
 
-  ```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js' showLineNumbers
+  ```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js'
 
   import { Button, Input, Textarea } from '@nextui-org/react';
-  // highlight-start
-  /** 
-   * The form uses the Formik library (https://formik.org/).
-   * Formik should be added to your project's dependencies;
-   * Use yarn or npm to install it and it will be added to your package.json file.
-   */
   import { useFormik } from 'formik';
-  // highlight-end
   import { useRouter } from 'next/router';
   import React from 'react';
   import { getStrapiURL } from '../../../../../utils';
