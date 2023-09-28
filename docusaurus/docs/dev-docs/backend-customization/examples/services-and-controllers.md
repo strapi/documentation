@@ -84,7 +84,7 @@ In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvis
 
 1. Create a new file in the `/client` folder to add a new component for writing reviews with the following code:
 
-  ```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js'
+  ```jsx title='/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js' showLineNumbers
 
   import { Button, Input, Textarea } from '@nextui-org/react';
   // highlight-start
