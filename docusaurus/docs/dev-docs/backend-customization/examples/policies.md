@@ -272,7 +272,7 @@ In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvis
 <details>
 <summary>Example front-end code to display toast notifications for custom errors or successful review creation:</summary>
 
-```jsx title=
+```jsx title="/client/components/pages/restaurant/RestaurantContent/Reviews/new-review.js" showLineNumbers
 import { Button, Input, Textarea } from '@nextui-org/react';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
