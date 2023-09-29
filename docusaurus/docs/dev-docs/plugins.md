@@ -1,33 +1,31 @@
 ---
-title: Strapi plugins - Strapi Developer Docs
+title: Plugins
 description: Strapi comes with built-in plugins (i18n, GraphQL, Users & Permissions, Upload, API documentation, and Email) and you can install plugins as npm packages.
 displayed_sidebar: devDocsSidebar
-
+pagination_prev: dev-docs/backend-customization
+pagination_next: dev-docs/plugins/using-plugins
 ---
 
 # Strapi plugins
 
-Strapi comes with these officially supported plugins:
-
-<DocCardList />
-
-## Automatic plugins discovery
-
-Strapi automatically loads plugins installed with npm. Under the hood, Strapi scans every `package.json` file of the project dependencies, and looks for the following declaration:
-
-```json
-"strapi": {
-  "kind": "plugin"
-}
-```
-
-Installed plugins can also be manually enabled or disabled.
-
-## Manual enabling/disabling
-
-To disable a plugin without uninstalling it, switch its `enabled` key to `false` in the [`/config/plugins.js` file](/dev-docs/configurations/plugins).
-
-:::strapi To go further
-* To know more about plugins installation, see the [User guide](/user-docs/plugins).
-* Existing plugins can be [extended](/dev-docs/plugins-extension), or you can even [create your own](/dev-docs/plugins-development)!
+:::strapi Dev Docs vs. User Guide
+The present section is about the developer-oriented aspects of Strapi plugins. To learn how to install and use plugins from the Strapi admin panel, please read the [User Guide](/user-docs/plugins).
 :::
+
+Strapi's core features can be extended with plugins, and your experience with Strapi plugins will fall under the following 4 use cases:
+
+- You will use one of the  **built-in plugins** officially maintained by Strapi. Some built-in plugins can already be pre-installed when you create a new Strapi project.
+- You might want to browse **3rd-party plugins** for additional features. 3rd-party plugins can be browsed from the admin panel or from the [Marketplace website](https://market.strapi.io) and installed with the command line interface.
+- You might want to **develop your own plugins**. The plugins you develop can be specific to your Strapi project — these plugins are called "local plugins", or can be submitted to the Marketplace if meant to be shared with the Strapi community.
+- You might want to **extend an existing plugin** for a specific Strapi project. With this last use case, please proceed carefully, knowing that extensions might break with future updates from the plugin maintainer.
+
+Choose one of the following documentation sections from the table, depending on your profile and use case:
+
+| As a…       | I want to…    | Recommended section to read |
+|-------------|---------------|-----------------------------|
+| User        | Discover and install built-in and 3rd-party plugins |  [User Guide > Plugins](/user-docs/plugins) |
+| Developer   | Setup, configure, and use Strapi built-in plugins | [Dev Docs > Using plugins](/dev-docs/plugins/using-plugins) |
+| Developer   | Create my own plugin and submit it to the Marketplace | [Dev Docs > Developing plugins](/dev-docs/plugins/developing-plugins) |
+| Developer   | Extend an existing plugin to customize it for a specific Strapi project️ | [Dev Docs > Extending plugins](/dev-docs/plugins-extension) |
+
+<br/>

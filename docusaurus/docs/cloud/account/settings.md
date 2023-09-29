@@ -73,45 +73,55 @@ The *Billing* tab displays your billing information and enables you to update yo
 
 Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
 
-1. Click the **Manage subscriptions** button. A login modal will appear.
-    <img src="/img/assets/cloud/manage-login.png" alt="Manage subscriptions login" width="400px" />
-    
+1. Click the **Manage subscriptions** button. A login modal will appear. 
 
 2. Enter the billing email address associated with your account and click **Continue**. A one-time password will be sent to the email address.
 
-3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** page will appear.
-    <img src="/img/assets/cloud/manage-subscriptions.png" alt="Manage subscriptions" width="400px" />
+3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** modal will appear. From here, you can:
+  
+    - view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription)
+    - view and edit your Account Information: email, password, company name
+    - view and edit your Billing & Shipping Addresses
+    - view and edit your Payment Methods and add new ones
+    - access your Billing History and download your invoices
 
-4. From here you can view and edit your:
-    * Active Subscription
-    * Account Information
-    * Billing & Shipping Addresses
-    * Payment Methods
-    * Billing History
+  <ThemedImage
+    alt="Subscriptions management modal"
+    sources={{
+      light: '/img/assets/cloud/manage-subscriptions.png',
+      dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
+    }}
+  />
 
-#### Active subscription
+### Edit subscription
 
-Click on the active subscription tile to view the details of your subscription:
+From the subscription management modal, you can view and modify any current subscription.
 
-<img src="/img/assets/cloud/subscription-details.png" alt="Active subscription" width="400px" />
+<ThemedImage
+  alt="Subscription edition modal"
+  sources={{
+    light: '/img/assets/cloud/edit-subscription-modal.png',
+    dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
+  }}
+/>
 
-Here you can view your current subscription plan, and any additional add-ons, as well as the monthly billed amount.
+1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as *Account Information*, *Billing & Shipping Addresses*). You will be redirected to your subscription details.
+2. Click on the **Edit Subscription** link.
+3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
+4. If you want to change plan (e.g. from Pro plan to Team plan), click on **Change** and select a new plan.
+5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
 
-You can also:
+### Cancel subscription
 
-* Edit your **Project Name**
-* Update your **Shipping Details**, the mailing/billing address associated with your subscription
-* [Edit your subscription](#edit-subscription)
-* **Cancel Subscription**
+<ThemedImage
+  alt="Subscription cancellation modal"
+  sources={{
+    light: '/img/assets/cloud/cancel-subscription-modal.png',
+    dark: '/img/assets/cloud/cancel-subscription-modal_DARK.png',
+  }}
+/>
 
-##### Edit subscription
-
-Click the **Edit Subscription** button to change your subscription plan or add-ons:
-<img src="/img/assets/cloud/edit-subscription.png" alt="Edit subscription" width="400px" />
-
-Use the **Change** button to select a different subscription plan: either **Pro** or **Team**. 
-
-Use the **Add Addons** buttons to add additional seats to your plan:
-<img src="/img/assets/cloud/add-addons.png" alt="Adding seats" width="400px" />
-
-Click **Update Subscription** to save your changes.
+1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.OO"). You will be redirected to your subscription details.
+2. Click on the **Cancel Subscription** link.
+3. Select the reason of your cancellation from the drop-down menu, and optionally add a comment in the textbox.
+4. Confirm your choice by clicking on the **Confirm Cancellation** button.

@@ -154,6 +154,10 @@ export default factories.createCoreRouter('api::restaurant.restaurant', {
 
 This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/dev-docs/backend-customization/controllers) without authentication.
 
+:::tip
+To see a possible usage for custom routes, read the [routes](/dev-docs/backend-customization/examples/routes) page of the backend customization examples cookbook.
+:::
+
 ### Creating custom routers
 
 Creating custom routers consists in creating a file that exports an array of objects, each object being a route with the following parameters:
