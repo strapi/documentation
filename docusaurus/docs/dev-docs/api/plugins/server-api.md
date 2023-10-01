@@ -266,6 +266,50 @@ module.exports = [
 ];
 ```
 
+It is also possible to combine both admin and content type routes if you need different policies on these. Here is an example on how this can be achieved
+
+```js title="path: ./src/plugins/my-plugin/server/routes/index.js"
+
+module.exports = {
+  admin: require('./admin'),
+  'content-api': require('./content-api'),
+};
+```
+
+```js title="path: ./src/plugins/my-plugin/server/routes/admin/index.js"
+
+module.exports = {
+  type: 'admin',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['policyName'],
+    },
+  }],
+};
+```
+
+
+```js title="path: ./src/plugins/my-plugin/server/routes/content-api/index.js"
+
+module.exports = {
+  type: 'content-api',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['differentPolicyName'],
+    },
+  }],
+};
+```
+
+
+
+
 ### Controllers
 
 An object with the [controllers](/dev-docs/backend-customization/controllers) the plugin provides.
