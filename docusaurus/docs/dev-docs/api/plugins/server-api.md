@@ -36,7 +36,7 @@ This function is called to load the plugin, before the application is [bootstrap
 
 **Example:**
 
-```js title="path ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 module.exports = () => ({
   register({ strapi }) {
@@ -53,7 +53,7 @@ The [bootstrap](/dev-docs/configurations/functions#bootstrap) function is called
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 module.exports = () => ({
   bootstrap({ strapi }) {
@@ -70,7 +70,7 @@ The [destroy](/dev-docs/configurations/functions#destroy) lifecycle function is 
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 module.exports = () => ({
   destroy({ strapi }) {
@@ -92,7 +92,7 @@ module.exports = () => ({
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
 
 const config = require('./config');
 
@@ -117,7 +117,7 @@ Once defined, the configuration can be accessed:
 
 The `cron` object allows you to add cron jobs to the Strapi instance.
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = () => ({
   bootstrap({ strapi }) {
     strapi.cron.add({
@@ -233,7 +233,10 @@ An array of [routes](/dev-docs/backend-customization/routes) configuration.
 
 **Type**: `Object[]`
 
-**Example:**
+**Examples:**
+
+<Tabs>
+<TabItem value="content-api" label="Content API routes only">
 
 ```js title="path: ./src/plugins/my-plugin/strapi-server.js"
 
@@ -266,9 +269,13 @@ module.exports = [
 ];
 ```
 
-It is also possible to combine both admin and content type routes if you need different policies on these. Here is an example on how this can be achieved
+</TabItem>
 
-```js title="path: ./src/plugins/my-plugin/server/routes/index.js"
+<TabItem value="both" label="Content API and admin routes">
+
+It is also possible to combine both admin and Content API routes if you need different policies on these: 
+
+```js title="./src/plugins/my-plugin/server/routes/index.js"
 
 module.exports = {
   admin: require('./admin'),
@@ -276,7 +283,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/admin/index.js"
+```js title="./src/plugins/my-plugin/server/routes/admin/index.js"
 
 module.exports = {
   type: 'admin',
@@ -291,8 +298,7 @@ module.exports = {
 };
 ```
 
-
-```js title="path: ./src/plugins/my-plugin/server/routes/content-api/index.js"
+```js title="./src/plugins/my-plugin/server/routes/content-api/index.js"
 
 module.exports = {
   type: 'content-api',
@@ -307,8 +313,8 @@ module.exports = {
 };
 ```
 
-
-
+</TabItem>
+</Tabs>
 
 ### Controllers
 
@@ -319,14 +325,14 @@ An object with the [controllers](/dev-docs/backend-customization/controllers) th
 **Example:**
 
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const controllers = require('./controllers');
 
@@ -335,7 +341,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/controllers/index.js"
+```js title="./src/plugins/my-plugin/server/controllers/index.js"
 
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
@@ -346,7 +352,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/controllers/controller-a.js"
+```js title="./src/plugins/my-plugin/server/controllers/controller-a.js"
 
 module.exports = ({ strapi }) => ({
   doSomething(ctx) {
@@ -365,14 +371,14 @@ Services should be functions taking `strapi` as a parameter.
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const services = require('./services');
 
@@ -381,7 +387,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/services/index.js"
+```js title="./src/plugins/my-plugin/server/services/index.js"
 
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
@@ -392,7 +398,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/services/service-a.js"
+```js title="./src/plugins/my-plugin/server/services/service-a.js"
 
 module.exports = ({ strapi }) => ({
   someFunction() {
@@ -409,14 +415,14 @@ An object with the [policies](/dev-docs/backend-customization/policies) the plug
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const policies = require('./policies');
 
@@ -425,7 +431,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/policies/index.js"
+```js title="./src/plugins/my-plugin/server/policies/index.js"
 
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
@@ -436,7 +442,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/policies/policy-a.js"
+```js title="./src/plugins/my-plugin/server/policies/policy-a.js"
 
 module.exports = (policyContext, config, { strapi }) => {
     if (ctx.state.user && ctx.state.user.isActive) {
@@ -455,14 +461,14 @@ An object with the [middlewares](/dev-docs/configurations/middlewares) the plugi
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const middlewares = require('./middlewares');
 module.exports = () => ({
@@ -470,7 +476,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/middlewares/index.js"
+```js title="./src/plugins/my-plugin/server/middlewares/index.js"
 
 const middlewareA = require('./middleware-a');
 const middlewareB = require('./middleware-b');
@@ -481,7 +487,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/middlewares/middleware-a.js"
+```js title="./src/plugins/my-plugin/server/middlewares/middleware-a.js"
 
 module.exports = (options, { strapi }) => {
  return async (ctx, next) => {
