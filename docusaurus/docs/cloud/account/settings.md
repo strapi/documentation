@@ -29,9 +29,9 @@ The *General* tab enables you to edit the following details for your account pro
 
 ### Managing connected accounts
 
-You can connect a Google account and a GitHub account to your Strapi Cloud account. Deploying to Strapi Cloud requires that the code of your Strapi application is hosted on GitHub. The _Connected accounts_ section lists accounts that are currently connected to your Strapi Cloud account. From there you can either connect a Google or GitHub account or disconnect from an existing one.
+You can connect a Google account and a GitHub account to your Strapi Cloud account. The _Connected accounts_ section lists accounts that are currently connected to your Strapi Cloud account. From there you can also connect a new Google or GitHub account if one is not already connected.
 
-To connect a new Google or GitHub account, click on the **Connect account** account and follow the next steps on the corresponding website. Click on the three dots next next to an account listed as "Connected" and click on the **Manage on…** button to manage the account on the corresponding website  connected account, or on the **Disconnect** button to disconnect the account.
+To connect a new Google or GitHub account to your Strapi Cloud account, click on the **Connect account** button and follow the next steps on the corresponding website.
 
 ### Deleting Strapi Cloud account
 
