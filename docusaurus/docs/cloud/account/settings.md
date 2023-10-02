@@ -14,7 +14,10 @@ The *Profile* page enables you to manage your account details and preferences. I
 The *General* tab enables you to edit the following details for your account profile:
 
 - Details: to see the name associated with your account.
+- Connected accounts: to manage Google and GitHub accounts connected with your Strapi Cloud account.
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
+
+<!-- TODO: replace with screenshot with connected accounts -->
 
 <ThemedImage
   alt="General tab of Profile page"
@@ -24,18 +27,11 @@ The *General* tab enables you to edit the following details for your account pro
   }}
 />
 
-<!--
-### Modifying profile details
+### Managing connected accounts
 
-1. In the *Details* section of the *General* tab, modify the information of your choice:
+You can connect a Google account and a GitHub account to your Strapi Cloud account. Deploying to Strapi Cloud requires that the code of your Strapi application is hosted on GitHub. The _Connected accounts_ section lists accounts that are currently connected to your Strapi Cloud account. From there you can either connect a Google or GitHub account or disconnect from an existing one.
 
-    | Setting name    | Instructions                                                             |
-    | --------------- | ------------------------------------------------------------------------ |
-    | Name            | Write your full name in the textbox.                                     |
-    | Email           | Write your complete email address in the textbox.                        |
-    
-2. Click on the **Save** button.
--->
+To connect a new Google or GitHub account, click on the **Connect account** account and follow the next steps on the corresponding website. Click on the three dots next next to an account listed as "Connected" and click on the **Manage on…** button to manage the account on the corresponding website  connected account, or on the **Disconnect** button to disconnect the account.
 
 ### Deleting Strapi Cloud account
 
