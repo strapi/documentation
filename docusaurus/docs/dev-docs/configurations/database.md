@@ -1,6 +1,6 @@
 ---
 title: Database
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file to configure its databases.
 
 ---
@@ -33,7 +33,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 | Parameter                                                | Description                                                                                           | Type      | Default |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
-| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                          | `String`  | -       |
+| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql` (or `mysql2`, see [additional details](#alternative-database-driver-packages) | `String`  | -       |
 | `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
