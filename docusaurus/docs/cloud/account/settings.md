@@ -22,8 +22,8 @@ The *General* tab enables you to edit the following details for your account pro
 <ThemedImage
   alt="General tab of Profile page"
   sources={{
-    light: '/img/assets/cloud/account-deletion.png',
-    dark: '/img/assets/cloud/account-deletion_DARK.png',
+    light: '/img/assets/cloud/settings-general.png',
+    dark: '/img/assets/cloud/settings-general_DARK.png',
   }}
 />
 
