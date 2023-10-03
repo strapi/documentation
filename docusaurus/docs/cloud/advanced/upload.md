@@ -309,7 +309,13 @@ export default [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
+          'img-src': [
+            "'self'", 
+            'data:', 
+            'blob:', 
+            'market-assets.strapi.io', 
+            'res.cloudinary.com'
+          ],
           'media-src': [
             "'self'",
             'data:',
