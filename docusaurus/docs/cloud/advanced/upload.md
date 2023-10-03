@@ -14,27 +14,28 @@ Please be advised that Strapi are unable to provide support for third-party uplo
 :::
 
 :::prerequisites
+
 - A local Strapi project running on `v4.8.2+`.
 - Credentials for a third-party upload provider (see [Strapi Market](https://market.strapi.io/providers)).
 
 :::
+
 ## Configuration
 
 Configuring a third-party upload provider for use with Strapi Cloud requires four steps:
 
-1.  Install the provider plugin in your local Strapi project.
-2.  Configure the provider in your local Strapi project.
-3.  Configure the Security Middleware in your local Strapi project.
-4.  Add environment variables to the Strapi Cloud project.
+1. Install the provider plugin in your local Strapi project.
+2. Configure the provider in your local Strapi project.
+3. Configure the Security Middleware in your local Strapi project.
+4. Add environment variables to the Strapi Cloud project.
 
 ### Install the Provider Plugin
+
 Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
-
 ### Configure the Provider
+
 >To configure a 3rd-party upload provider in your Strapi project, create or edit the plugins configuration file for your production environment `./config/env/production/plugins.js|ts` by adding upload configuration options as follows:
-
-
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -53,6 +54,7 @@ upload: {
 }
 });
 ```
+
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
@@ -103,6 +105,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
 
@@ -136,6 +139,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem>
 </Tabs>
 </TabItem>
@@ -164,6 +168,7 @@ export default ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem >
 <TabItem value="amazon-s3" label="Amazon S3">
 
@@ -197,16 +202,18 @@ export default ({ env }) => ({
   // ...
 });
 ```
-</TabItem>
-</Tabs>
-</TabItem>
-</Tabs>
 
+</TabItem>
+</Tabs>
+</TabItem>
+</Tabs>
 
 ### Configure the Security Middleware
+
 Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library.
 
 To do this in your Strapi project:
+
 1. Navigate to `./config/middleware.js` or `./config/middleware.ts` in your Strapi project.
 2. Replace the default `strapi::security` string with the object provided by the upload provider.
 
@@ -226,7 +233,13 @@ module.exports = [
         useDefaults: true,
         directives: {
           'connect-src': ["'self'", 'https:'],
-          'img-src': ["'self'", 'data:', 'blob:', 'market-assets.strapi.io', 'res.cloudinary.com'],
+          'img-src': [
+            "'self'", 
+            'data:', 
+            'blob:', 
+            'market-assets.strapi.io', 
+            'res.cloudinary.com'
+          ],
           'media-src': [
             "'self'",
             'data:',
@@ -242,6 +255,7 @@ module.exports = [
   // ...
 ];
 ```
+
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
@@ -277,6 +291,7 @@ module.exports = [
   // ...
 ];
 ```
+
 </TabItem>
 </Tabs>
 </TabItem>
@@ -310,6 +325,7 @@ export default [
   // ...
 ];
 ```
+
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
@@ -345,6 +361,7 @@ export default [
   // ...
 ];
 ```
+
 </TabItem>
 </Tabs>
 </TabItem>
@@ -353,40 +370,39 @@ export default [
 :::tip
 Before pushing the above changes to GitHub, add environment variables to the Strapi Cloud project to prevent triggering a rebuild and new deployment of the project before the changes are complete.
 :::
+
 ### Strapi Cloud Configuration
 
-1.  Log into Strapi Cloud and click on the corresponding project on the Projects page.
-2.  Click on the **Settings** tab and choose **Variables** in the left menu.
-3.  Add the required environment variables specific to the upload provider.
-4.  Click **Save**.
+1. Log into Strapi Cloud and click on the corresponding project on the Projects page.
+2. Click on the **Settings** tab and choose **Variables** in the left menu.
+3. Add the required environment variables specific to the upload provider.
+4. Click **Save**.
 
 **Example:**
 
 <Tabs groupId="env-var">
 <TabItem value="cloudinary" label="Cloudinary">
 
-| Variable | Value |
-| -------- | ----- |
-| `CLOUDINARY_NAME` | your_cloudinary_name |
-| `CLOUDINARY_KEY` | your_cloudinary_api_key |
-| `CLOUDINARY_SECRET` | your_cloudinary_secret|
-
+| Variable            | Value                   |
+|---------------------|-------------------------|
+| `CLOUDINARY_NAME`   | your_cloudinary_name    |
+| `CLOUDINARY_KEY`    | your_cloudinary_api_key |
+| `CLOUDINARY_SECRET` | your_cloudinary_secret  |
 
 </TabItem>
 <TabItem value="amazon-s3" label="Amazon S3">
 
-| Variable | Value |
-| -------- | ----- |
+| Variable            | Value                  |
+|---------------------|------------------------|
 | `AWS_ACCESS_KEY_ID` | your_aws_access_key_id |
 | `AWS_ACCESS_SECRET` | your_aws_access_secret |
-| `AWS_REGION` | your_aws_region |
-| `AWS_BUCKET` | your_aws_bucket |
-| `CDN_URL` | your_cdn_url |
-| `CDN_ROOT_PATH` | your_cdn_root_path |
+| `AWS_REGION`        | your_aws_region        |
+| `AWS_BUCKET`        | your_aws_bucket        |
+| `CDN_URL`           | your_cdn_url           |
+| `CDN_ROOT_PATH`     | your_cdn_root_path     |
 
 </TabItem>
 </Tabs>
-
 
 ## Deployment
 
