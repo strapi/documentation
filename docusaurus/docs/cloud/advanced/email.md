@@ -25,17 +25,17 @@ Please be advised that Strapi are unable to provide support for third-party emai
 
 Configuring a third-party email provider for use with Strapi Cloud requires three steps:
 
-1.  Install the provider plugin in your local Strapi project.
-2.  Configure the provider in your local Strapi project.
-3.  Add environment variables to the Strapi Cloud project.
+1. Install the provider plugin in your local Strapi project.
+2. Configure the provider in your local Strapi project.
+3. Add environment variables to the Strapi Cloud project.
 
 ### Install the Provider Plugin
+
 Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
-
 ### Configure the Provider
-In your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
 
+In your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -60,6 +60,7 @@ export default ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem>
 
 </Tabs>
@@ -90,6 +91,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem >
 <TabItem value="amazon-ses" label="Amazon SES">
 
@@ -113,6 +115,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem>
 <TabItem value="mailgun" label="Mailgun">
 
@@ -136,6 +139,7 @@ module.exports = ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem>
 </Tabs>
 </TabItem>
@@ -161,6 +165,7 @@ export default ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem >
 <TabItem value="amazon-ses" label="Amazon SES">
 
@@ -184,6 +189,7 @@ export default ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem>
 <TabItem value="mailgun" label="Mailgun">
 
@@ -207,55 +213,52 @@ export default ({ env }) => ({
   // ...
 });
 ```
+
 </TabItem>
 </Tabs>
 </TabItem>
 </Tabs>
-
-
 
 :::tip
 Before pushing the above changes to GitHub, add environment variables to the Strapi Cloud project to prevent triggering a rebuild and new deployment of the project before the changes are complete.
 :::
+
 ### Strapi Cloud Configuration
 
-1.  Log into Strapi Cloud and click on the corresponding project on the Projects page.
-2.  Click on the **Settings** tab and choose **Variables** in the left menu.
-3.  Add the required environment variables specific to the email provider.
-4.  Click **Save**.
+1. Log into Strapi Cloud and click on the corresponding project on the Projects page.
+2. Click on the **Settings** tab and choose **Variables** in the left menu.
+3. Add the required environment variables specific to the email provider.
+4. Click **Save**.
 
 **Example:**
 
 <Tabs groupId="env-var">
 <TabItem value="sendgrid" label="SendGrid">
 
-| Variable | Value |
-| -------- | ----- |
+| Variable           | Value                 |
+|--------------------|-----------------------|
 | `SENDGRID_API_KEY` | your_sendgrid_api_key |
-
 
 </TabItem>
 <TabItem value="amazon-ses" label="Amazon SES">
 
-| Variable | Value |
-| -------- | ----- |
-| `AWS_SES_KEY` | your_aws_ses_key |
+| Variable         | Value               |
+|------------------|---------------------|
+| `AWS_SES_KEY`    | your_aws_ses_key    |
 | `AWS_SES_SECRET` | your_aws_ses_secret |
 
 </TabItem>
 <TabItem value="mailgun" label="Mailgun">
 
-| Variable | Value |
-| -------- | ----- |
+| Variable          | Value                |
+|-------------------|----------------------|
 | `MAILGUN_API_KEY` | your_mailgun_api_key |
-| `MAILGUN_DOMAIN` | your_mailgun_domain |
-| `MAILGUN_URL` | your_mailgun_url |
+| `MAILGUN_DOMAIN`  | your_mailgun_domain  |
+| `MAILGUN_URL`     | your_mailgun_url     |
 
 </TabItem>
 
 </Tabs>
-
-
 
 ## Deployment
 
