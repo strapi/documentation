@@ -714,7 +714,7 @@ const sidebars = {
           label: 'Project Settings',
           id: 'cloud/projects/settings',
           customProps: {
-            updated: true,
+            new: true,
           },
         },
         'cloud/projects/collaboration',
