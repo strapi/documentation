@@ -736,9 +736,13 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "Advanced configuration",
-      items: ["cloud/advanced/database", "cloud/advanced/upload"],
-    },
+      label: 'Advanced configuration',
+      items: [
+        'cloud/advanced/database',
+        'cloud/advanced/email',
+        'cloud/advanced/upload',
+      ]
+    }
   ],
 
   restApiSidebar: [
