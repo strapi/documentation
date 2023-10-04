@@ -1,6 +1,7 @@
 ---
 title: Installation
 description: Learn many different options to install Strapi and getting started on using it.
+pagination_next: dev-docs/installation/cli
 
 ---
 
