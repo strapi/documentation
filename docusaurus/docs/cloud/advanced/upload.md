@@ -22,7 +22,7 @@ Please be advised that Strapi are unable to provide support for third-party uplo
 
 ## Configuration
 
-Configuring a third-party upload provider for use with Strapi Cloud requires four steps:
+Configuring a third-party upload provider for use with Strapi Cloud requires 4 steps:
 
 1. Install the provider plugin in your local Strapi project.
 2. Configure the provider in your local Strapi project.

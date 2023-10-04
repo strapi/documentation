@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/email.html
 
 # Email Provider
 
-Strapi Cloud comes with a basic email provider out of the box. However, you can also configure it to utilize a third-party email provider, if needed.
+Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize a third-party email provider, if needed.
 
 :::caution
 Please be advised that Strapi are unable to provide support for third-party email providers.
@@ -43,9 +43,15 @@ In your Strapi project, create a `./config/env/production/plugins.js` or `./conf
 ```js title=./config/env/production/plugins.js
 
 module.exports = ({ env }) => ({
-  // ...
-  Required Email Provider Plugin Configuration
-  // ...
+  // … some unrelated plugins configuration options
+  // highlight-start
+  email: {
+    config: {
+        // … provider-specific upload configuration options go here
+    }
+  // highlight-end
+  // … some other unrelated plugins configuration options
+  }
 });
 ```
 
@@ -55,9 +61,15 @@ module.exports = ({ env }) => ({
 ```ts title=./config/env/production/plugins.ts
 
 export default ({ env }) => ({
-  // ...
-  Required Email Provider Plugin Configuration
-  // ...
+  // … some unrelated plugins configuration options
+  // highlight-start
+  email: {
+    config: {
+        // … provider-specific upload configuration options go here
+    }
+  // highlight-end
+  // … some other unrelated plugins configuration options
+  }
 });
 ```
 
