@@ -23,7 +23,7 @@ Please be advised that Strapi are unable to provide support for third-party emai
 
 ## Configuration
 
-Configuring a third-party email provider for use with Strapi Cloud requires three steps:
+Configuring a third-party email provider for use with Strapi Cloud requires 3 steps:
 
 1. Install the provider plugin in your local Strapi project.
 2. Configure the provider in your local Strapi project.
