@@ -69,7 +69,7 @@ Results can be paginated using 2 different strategies (see [REST API documentati
 - pagination by page, when defining the `page` and `pageSize` parameters,
 - and pagination by offset, when defining the `start` and `limit` parameters.
 
-2 different functions can be used to paginate results with the Entity Service API, and accept different pagination strategies: `findMany()` and `findPage()`
+2 different functions can be used to paginate results with the Entity Service API and accept different pagination strategies: 
 
 | Function name | Possible pagination method(s)                               |
 | ------------- | ----------------------------------------------------------- |
