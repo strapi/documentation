@@ -739,8 +739,22 @@ const sidebars = {
       label: 'Advanced configuration',
       items: [
         'cloud/advanced/database',
-        'cloud/advanced/email',
-        'cloud/advanced/upload',
+        {
+          type: "doc",
+          id: "cloud/advanced/email",
+          label: "Email provider",
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: "doc",
+          id: "cloud/advanced/upload",
+          label: "Upload provider",
+          customProps: {
+            new: true,
+          },
+        },
       ]
     }
   ],
