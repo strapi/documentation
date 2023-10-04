@@ -49,7 +49,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
-          link: {type: 'doc', id: 'dev-docs/installation'},
           items: [
             {
               type: 'doc',
