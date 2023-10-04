@@ -47,6 +47,94 @@ Stop the server before starting the upgrade.
 If the operation doesn't work, try removing your `yarn.lock` or `package-lock.json`. If that doesn't help, remove the `node_modules` folder as well and try again.
 :::
 
+## Migrate Audit Log Tables (optional & EE only)
+
+:::caution
+This specific section only applies to Strapi Enterprise customers or Cloud customers who have the Audit Logs feature enabled.
+:::
+
+If you updated to v4.6.0 originally and are now updating to v4.6.1 while being a Strapi Enterprise customer, there was a small breaking change with the table names for Audit Logs. This is only relevant if you are using the Audit Logs feature.
+
+Between v4.6.0 and v4.6.1 the Audit log table names changed from `audit_logs` to `strapi_audit_logs` and likewise the link table changed from `audit_logs_user_links` to `strapi_audit_logs_user_links`.
+
+To migrate these tables properly without losing your audit log data:
+
+1. Make a backup of the database in case something unexpected happens.
+2. In the `./database/migrations` folder, create a file named: `2023.02.08T00.00.00.update-audit-logs-tables.js`.
+3. Copy and paste the following code into the previously created file:
+
+```js
+const tables = {
+  auditLogs: {
+    fq: ["audit_logs_created_by_id_fk", "audit_logs_updated_by_id_fk"],
+    indexes: ["audit_logs_created_by_id_fk", "audit_logs_updated_by_id_fk"],
+    tableOld: "audit_logs",
+    tableNew: "strapi_audit_logs",
+  },
+  auditLogsUser: {
+    fq: ["audit_logs_user_links_fk", "audit_logs_user_links_inv_fk"],
+    indexes: ["audit_logs_user_links_fk", "audit_logs_user_links_inv_fk"],
+    tableOld: "audit_logs_user_links",
+    tableNew: "strapi_audit_logs_user_links",
+  },
+};
+
+module.exports = {
+  async up(knex) {
+    // Drop all of the schema entries we cache
+    await knex.from("strapi_database_schema").delete();
+
+    // Rename the auditLog table
+    if (await knex.schema.hasTable(tables.auditLogs.tableOld)) {
+      await knex.schema.renameTable(
+        tables.auditLogs.tableOld,
+        tables.auditLogs.tableNew
+      );
+    }
+
+    // Rename the auditLogUser table
+    if (await knex.schema.hasTable(tables.auditLogsUser.tableOld)) {
+      await knex.schema.renameTable(
+        tables.auditLogsUser.tableOld,
+        tables.auditLogsUser.tableNew
+      );
+    }
+
+    try {
+      // Drop the auditLog table fq and indexes
+      for (const fq of tables.auditLogs.fq) {
+        await knex.schema.alterTable(tables.auditLogs.tableNew, (table) => {
+          table.dropForeign([], fq);
+        });
+      }
+
+      for (const index of tables.auditLogs.indexes) {
+        await knex.schema.alterTable(tables.auditLogs.tableNew, (table) => {
+          table.dropIndex([], index);
+        });
+      }
+
+      // Drop the auditLogUser table fq and indexes
+      for (const fq of tables.auditLogsUser.fq) {
+        await knex.schema.alterTable(tables.auditLogsUser.tableNew, (table) => {
+          table.dropForeign([], fq);
+        });
+      }
+
+      for (const index of tables.auditLogsUser.indexes) {
+        await knex.schema.alterTable(tables.auditLogsUser.tableNew, (table) => {
+          table.dropIndex([], index);
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+};
+```
+
+5. Save the file.
+
 ## Changing the webhooks configuration (optional)
 
 By default, and for backward compatibility reasons, webhooks will receive the entity with its relations populated again. We do recommend to disable this behavior if you were not using it, as it may cause performance issues when having many relations. If you need populated relations in your webhook, we recommend doing a separate query in your webhook listener to fetch the entity only with the necessary data.

@@ -1,6 +1,6 @@
 ---
 title: Environment variables
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 ---
 
 # Environment configuration and variables

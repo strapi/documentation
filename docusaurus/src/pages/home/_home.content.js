@@ -59,16 +59,16 @@ export default {
           to: '/dev-docs/configurations/database',
         },
         {
-          label: 'Deployment guides',
-          to: '/dev-docs/deployment',
-        },
-        {
           label: 'REST API',
           to: '/dev-docs/api/rest',
         },
         {
           label: 'GraphQL API',
           to: '/dev-docs/api/graphql',
+        },
+        {
+          label: 'Back-end customization',
+          to: '/dev-docs/backend-customization',
         },
       ],
     },

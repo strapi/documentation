@@ -1,6 +1,6 @@
 ---
 title: Middlewares
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file for its middlewares configurations.
 
 ---
@@ -488,7 +488,7 @@ const {
   formats: { prettyPrint, levelFilter },
 } = require('@strapi/logger');
 
-module.exports = {
+module.exports = [
   transports: [
     new winston.transports.Console({
       level: 'http',
@@ -498,7 +498,7 @@ module.exports = {
       ),
     }),
   ],
-};
+];
 ```
 
 </TabItem>
@@ -509,21 +509,21 @@ module.exports = {
 
 'use strict';
 
-const {
-  winston,
-  formats: { prettyPrint, levelFilter },
-} = require('@strapi/logger');
+import winston from 'winston';
+import { prettyPrint, levelFilter } from 'winston.format';
 
 export default [
-  transports: [
-    new winston.transports.Console({
-      level: 'http',
-      format: winston.format.combine(
-        levelFilter('http'),
-        prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
-      ),
-    }),
-  ],
+  {
+    transports: [
+      new winston.transports.Console({
+        level: 'http',
+        format: winston.format.combine(
+          levelFilter('http'),
+          prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
+        ),
+      }),
+    ],
+  },
 ];
 ```
 

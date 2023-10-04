@@ -16,7 +16,7 @@ The Email plugin requires a provider and a provider configuration in the `config
 :::
 
 :::note
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/dev-docs/providers) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` (refer to its [README on npm](https://www.npmjs.com/package/sendmail) or change providers. The [Providers](/dev-docs/providers) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
 :::
 
 ## Sending emails with a controller or service

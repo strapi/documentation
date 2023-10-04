@@ -9,9 +9,13 @@ import BackendIntroCrosslink from '/docs/snippets/backend-custom-intro-crosslink
 
 # Entity Service API
 
-The Strapi backend provides an Entity Service API, built on top of the [Query Engine API](/dev-docs/api/query-engine/). The Entity Service is the layer that handles Strapi's complex data structures like [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones), and uses the Query Engine API under the hood to execute database queries.
+:::prerequisites
+Before diving deeper into the Entity Service API documentation, it is recommended that you read the following introductions:
+- the [backend customization introduction](/dev-docs/backend-customization),
+- and the [Content API introduction](/dev-docs/api/content-api).
+:::
 
-<BackendIntroCrosslink components={props.components} />
+The Strapi backend provides an Entity Service API, built on top of the [Query Engine API](/dev-docs/api/query-engine/). The Entity Service is the layer that handles Strapi's complex data structures like [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones), and uses the Query Engine API under the hood to execute database queries.
 
 :::strapi Entity Service API vs. Query Engine API
 <EntityQueryKnex components={props.components} />
@@ -33,7 +37,12 @@ const entry = await strapi.entityService.findOne('api::article.article', 1, {
 
 ## Available operations
 
-The Entity Service API allows:
+The Entity Service API allows the following operations on entities:
 
-- [CRUD operations on entities](/dev-docs/api/entity-service/crud) (e.g. [`findOne`](/dev-docs/api/entity-service/crud#findone), [`findMany`](/dev-docs/api/entity-service/crud#findmany), [`create`](/dev-docs/api/entity-service/crud#create), [`update`](/dev-docs/api/entity-service/crud#update), [`delete`](/dev-docs/api/entity-service/crud#delete)) with the ability to [filter](/dev-docs/api/entity-service/filter), [order and paginate results](/dev-docs/api/entity-service/order-pagination), and [populate relations, components and dynamic zones](/dev-docs/api/entity-service/populate)
-- the [creation and update of components and dynamic zones](/dev-docs/api/entity-service/components-dynamic-zones)
+<CustomDocCardsWrapper>
+<CustomDocCard emoji="" title="CRUD operations" description="Create, read, update, and delete entities with the Entity Service API." link="/dev-docs/api/entity-service/crud" />
+<CustomDocCard emoji="" title="Filters" description="Get exactly what you need by filtering entities with your Entity Service API queries." link="/dev-docs/api/entity-service/filter" />
+<CustomDocCard emoji="" title="Populate" description="Get additional data with your Entity Service API queries by populating relations." link="/dev-docs/api/entity-service/populate" />
+<CustomDocCard emoji="" title="Order & Pagination" description="Sort and paginate the results of your Entity Service API queries." link="/dev-docs/api/entity-service/order-pagination" />
+<CustomDocCard emoji="" title="Components/Dynamic Zones" description="Create and update components and dynamic zones with your Entity Service API queries." link="/dev-docs/api/entity-service/components-dynamic-zones" />
+</CustomDocCardsWrapper>
