@@ -25,6 +25,7 @@ const sidebars = {
         'dev-docs/quick-start',
         'dev-docs/faq',
         'dev-docs/usage-information',
+        'dev-docs/glossary',
       ]
     },
     { // Setup & Deployment
