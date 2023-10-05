@@ -4,7 +4,11 @@ title: Access and cast environment variables
 displayed_sidebar: devDocsConfigSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # How to access and cast environment variables
+
+<NotV5 />
 
 In most use cases there will be different configurations between environments (e.g. database credentials).
 

@@ -5,9 +5,12 @@ toc_max_heading_level: 4
 ---
 
 <!-- not required but if we don't include an import line the 2 JavaScript lines below are interpreted as Markdown text 🤷  -->
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
+
+<NotV5 />
 
 The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 

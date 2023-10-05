@@ -3,9 +3,13 @@ title: Populating
 description: Use Strapi's Query Engine API to populate relations when querying your content.
 displayed_sidebar: devDocsSidebar
 ---
+
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Populating with the Query Engine API
+
+<NotV5 />
 
 <RecommendEntityService/>
 

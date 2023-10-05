@@ -4,7 +4,12 @@ description: Import data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/import.html
 ---
+
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Data import
+
+<NotV5 />
 
 :::strapi v4.6.0 feature
 Data import is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/dev-docs/update-version) to upgrade your application.

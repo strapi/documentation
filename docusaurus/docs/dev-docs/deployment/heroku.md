@@ -6,8 +6,11 @@ displayed_sidebar: devDocsSidebar
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Deploy Strapi to Heroku
+
+<NotV5 />
 
 The purpose of this guide is to allow users to deploy Strapi applications on Heroku. This guide uses the Heroku CLI tool with a PostgreSQL database provided by Heroku. There are other options for how to deploy to Heroku available in the [Heroku documentation](https://devcenter.heroku.com/categories/data-management).
 

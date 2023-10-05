@@ -6,8 +6,11 @@ description: Learn in this guide how to deploy your Strapi application on Micros
 ---
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Deploy Strapi to Azure
+
+<NotV5 />
 
 This is a step-by-step guide for deploying a Strapi project to [Azure](https://azure.microsoft.com/) using Platform-as-a-Service (PaaS). If you're interested in using Infrastructure-as-a-Service (IaaS) refer to [IaaS deployment guide](#iaas-deployment-guide).
 

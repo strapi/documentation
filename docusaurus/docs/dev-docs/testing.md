@@ -3,7 +3,12 @@ title: Testing
 displayed_sidebar: devDocsSidebar
 description: Learn how to test your Strapi application.
 ---
+
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Unit testing
+
+<NotV5 />
 
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 

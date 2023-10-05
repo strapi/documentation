@@ -4,9 +4,11 @@ displayed_sidebar: devDocsConfigSidebar
 description: Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Cron jobs
 
-<!--TODO fix the link in the prereq-->
+<NotV5 />
 
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/dev-docs/configurations/server).

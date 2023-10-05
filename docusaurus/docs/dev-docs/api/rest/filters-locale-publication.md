@@ -8,8 +8,11 @@ displayed_sidebar: restApiSidebar
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Filtering, Locale, and Publication State
+
+<NotV5 />
 
 The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-entries) method.<br/>
 Using optional Strapi features can provide some more filters:

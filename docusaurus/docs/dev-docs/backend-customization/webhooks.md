@@ -4,7 +4,11 @@ displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Webhooks
+
+<NotV5 />
 
 Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third party providers to start some processing (CI, build, deployment ...).
 

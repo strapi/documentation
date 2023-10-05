@@ -5,7 +5,11 @@ description: Integrate Strapi with a multitude of frameworks, frontend or backen
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Integrations
+
+<NotV5 />
 
 Strapi generates an API for you to access your content. But how can you connect a React, Ruby, Gatsby application to it?
 It is important to know what is an API.

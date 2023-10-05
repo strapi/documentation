@@ -25,7 +25,11 @@ sidebarDepth: 3
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Models
+
+<NotV5 />
 
 As Strapi is a headless Content Management System (CMS), creating a data structure for the content is one of the most important aspects of using the software. Models define a representation of the data structure.
 

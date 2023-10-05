@@ -6,9 +6,11 @@ description: Learn in this guide how to deploy your Strapi application on AWS EC
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Amazon AWS
 
+<NotV5 />
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/) inside your [AWS VPC](https://aws.amazon.com/vpc/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 

@@ -5,7 +5,11 @@ description: Track errors in your Strapi application.
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Sentry plugin
+
+<NotV5 />
 
 This plugin enables you to track errors in your Strapi application using [Sentry](https://sentry.io/welcome/).
 

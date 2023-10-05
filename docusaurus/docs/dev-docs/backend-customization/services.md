@@ -6,10 +6,13 @@ displayed_sidebar: devDocsSidebar
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 const imgStyle = {width: '100%', margin: '0'}
 const captionStyle = {fontSize: '12px'}
 
 # Services
+
+<NotV5 />
 
 Services are a set of reusable functions. They are particularly useful to respect the "don’t repeat yourself" (DRY) programming concept and to simplify [controllers](/dev-docs/backend-customization/controllers.md) logic.
 

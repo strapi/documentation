@@ -6,7 +6,11 @@ sidebarDepth: 3
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Server API for plugins
+
+<NotV5 />
 
 A Strapi [plugin](/dev-docs/plugins) can interact with the backend or the [frontend](/dev-docs/plugins/admin-panel-api) of the Strapi application. The Server API is about the backend part.
 

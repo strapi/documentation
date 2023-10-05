@@ -5,7 +5,11 @@ description: The public folder of Strapi is used for static files that you want 
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # How to use public assets with Strapi
+
+<NotV5 />
 
 Public assets are static files (e.g. images, video, CSS files, etc.) that you want to make accessible to the outside world.
 

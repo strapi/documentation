@@ -6,7 +6,11 @@ description: Strapi's admin panel offers a single entry point file for its confi
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Admin panel configuration
+
+<NotV5 />
 
 The `./config/admin.js` is used to define admin panel configuration for the Strapi application.
 

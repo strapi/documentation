@@ -4,7 +4,11 @@ description: Use the REST API to manage the order of relations
 displayed_sidebar: restApiSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Managing relations through the REST API
+
+<NotV5 />
 
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 

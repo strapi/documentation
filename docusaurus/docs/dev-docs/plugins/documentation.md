@@ -4,7 +4,11 @@ displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Documentation plugin
+
+<NotV5 />
 
 The Documentation plugin is useful to document the available endpoints once you created an API.
 

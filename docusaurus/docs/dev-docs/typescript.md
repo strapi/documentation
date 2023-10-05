@@ -5,7 +5,11 @@ description: Learn how you can use Typescript for your Strapi application.
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # TypeScript development
+
+<NotV5 />
 
 TypeScript adds an additional type system layer above JavaScript, which means that existing JavaScript code is also TypeScript code. Strapi supports TypeScript in new projects on v4.3.0 and above. Existing JavaScript projects can [add TypeScript support](#add-typescript-support-to-an-existing-strapi-project) through a conversion procedure. TypeScript-enabled projects allow developing plugins with TypeScript as well as using TypeScript typings.
 

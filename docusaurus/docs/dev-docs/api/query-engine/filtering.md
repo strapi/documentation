@@ -3,9 +3,13 @@ title: Filtering
 description: Use Strapi's Query Engine API to filter the results of your queries.
 displayed_sidebar: devDocsSidebar
 ---
+
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Filtering with the Query Engine API
+
+<NotV5 />
 
 <RecommendEntityService/>
 

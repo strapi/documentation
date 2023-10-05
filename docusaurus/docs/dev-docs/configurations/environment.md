@@ -4,7 +4,11 @@ sidebar_label: Environment variables
 displayed_sidebar: devDocsConfigSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Environment configuration and variables
+
+<NotV5 />
 
 Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values available in your code.
 

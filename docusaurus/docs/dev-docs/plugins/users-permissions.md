@@ -6,7 +6,11 @@ description: Protect your API with a full authentication process based on JWT an
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Users & Permissions plugin
+
+<NotV5 />
 
 This plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API. It also provides an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 

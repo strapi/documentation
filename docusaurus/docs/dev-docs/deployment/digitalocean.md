@@ -6,8 +6,11 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Deploy Strapi to DigitalOcean Droplets
+
+<NotV5 />
 
 This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/). Alternatively, you can also choose to deploy to DigitalOcean's Platform-as-a-Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform) if database-related requirements and budget better fit with your use case.
 

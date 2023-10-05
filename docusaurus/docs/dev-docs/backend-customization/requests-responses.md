@@ -5,10 +5,13 @@ description: Learn more about requests and responses for Strapi, the most popula
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 const imgStyle = {width: '100%', margin: '0'}
 const captionStyle = {fontSize: '12px'}
 
 # Requests and Responses
+
+<NotV5 />
 
 The Strapi back end server is based on [Koa](https://koajs.com/). When you send requests through the [REST API](/dev-docs/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/dev-docs/backend-customization/policies), [controllers](/dev-docs/backend-customization/controllers), [services](/dev-docs/backend-customization/services)).
 

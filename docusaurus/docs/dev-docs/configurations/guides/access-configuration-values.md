@@ -4,7 +4,11 @@ title: Access configuration values from the code
 displayed_sidebar: devDocsConfigSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # How to access to configuration values from the code
+
+<NotV5 />
 
 All the [configuration files](/dev-docs/configurations) are loaded on startup and can be accessed through the `strapi.config` configuration provider.
 

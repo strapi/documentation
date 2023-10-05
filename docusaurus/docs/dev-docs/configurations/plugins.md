@@ -6,7 +6,11 @@ description: Strapi plugins have a single entry point file to define their confi
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Plugins configuration
+
+<NotV5 />
 
 Plugin configurations are stored in `./config/plugins.js` (see [project structure](/dev-docs/project-structure)). Each plugin can be configured with the following available parameters:
 

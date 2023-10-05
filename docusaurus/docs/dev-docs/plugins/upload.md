@@ -4,7 +4,11 @@ displayed_sidebar: devDocsSidebar
 description: Upload any kind of file on your server or external providers.
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Upload plugin
+
+<NotV5 />
 
 The Upload plugin is the backend powering the Media Library plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
 

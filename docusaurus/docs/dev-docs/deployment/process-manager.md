@@ -5,7 +5,11 @@ sidebarDepth: 2
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # How to use the PM2 process manager with Strapi
+
+<NotV5 />
 
 Process managers allow you to keep your Strapi application running and to reload it without downtime. The following documentation uses the [PM2](https://pm2.keymetrics.io/) process manager and describes:
 

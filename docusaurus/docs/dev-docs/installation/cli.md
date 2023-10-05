@@ -6,8 +6,11 @@ description: Fast-track local install for getting Strapi running on your compute
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Installing from CLI
+
+<NotV5 />
 
 Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
 

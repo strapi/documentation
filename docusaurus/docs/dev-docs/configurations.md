@@ -7,10 +7,13 @@ pagination_next: dev-docs/setup-deployment
 ---
 
 import ProjectStructureConfigFiles from '@site/src/components/ProjectStructureConfigFiles'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 const imgStyle = {width: '100%', margin: '0'}
 const captionStyle = {fontSize: '12px'}
 
 # Configuration
+
+<NotV5 />
 
 The configuration of a Strapi project lives in the `/config` folder:
 

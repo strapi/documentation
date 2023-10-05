@@ -9,8 +9,11 @@ pagination_next: dev-docs/api/content-apis
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Quick Start Guide
+
+<NotV5 />
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch.
 

@@ -6,7 +6,11 @@ description: Strapi offers a single entry point file to configure its databases.
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Database configuration
+
+<NotV5 />
 
 The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 

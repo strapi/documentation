@@ -3,7 +3,11 @@ title: GraphQL API
 displayed_sidebar: devDocsSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # GraphQL API
+
+<NotV5 />
 
 :::prerequisites
 To use the GraphQL API, install the [GraphQL](/dev-docs/plugins/graphql.md) plugin.

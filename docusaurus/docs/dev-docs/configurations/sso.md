@@ -6,7 +6,11 @@ description: Strapi's SSO allows you to configure additional sign-in and sign-up
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Single Sign-On <EnterpriseBadge/>
+
+<NotV5 />
 
 Single Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 

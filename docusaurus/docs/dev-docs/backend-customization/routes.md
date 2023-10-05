@@ -5,10 +5,13 @@ displayed_sidebar: devDocsSidebar
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 const imgStyle = {width: '100%', margin: '0'}
 const captionStyle = {fontSize: '12px'}
 
 # Routes
+
+<NotV5 />
 
 Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)). Routes can be [added](#implementation) and configured:
 

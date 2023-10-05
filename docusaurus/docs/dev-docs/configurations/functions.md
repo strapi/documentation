@@ -6,7 +6,11 @@ description: Strapi includes lifecycle functions (e.g. register, bootstrap and d
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Lifecycle functions
+
+<NotV5 />
 
 The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/dev-docs/typescript) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 

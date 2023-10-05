@@ -5,7 +5,11 @@ description: Integrate Strapi with Python.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/python.html
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Getting Started with Python
+
+<NotV5 />
 
 This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 

@@ -5,7 +5,11 @@ displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Developing Strapi plugins
+
+<NotV5 />
 
 :::info
 This section is about developing Strapi plugins to use them as local plugins or to submit them to the Marketplace. Not what you're looking for? Read the [plugins introduction](/dev-docs/plugins) and find your use case and recommended section to read from there.

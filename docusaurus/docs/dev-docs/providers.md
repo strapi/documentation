@@ -4,7 +4,11 @@ description: Install and use providers to extend the functionality of available 
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Providers
+
+<NotV5 />
 
 Certain [plugins](../../../user-docs/plugins) can be extended via the installation and configuration of additional [providers](../../../user-docs/plugins#providers).
 

@@ -6,7 +6,11 @@ canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
 sidebar_position: 2
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Project creation & deployment
+
+<NotV5 />
 
 This is a step-by-step guide for creating and deploying your first project on Strapi Cloud.
 

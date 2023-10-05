@@ -4,7 +4,11 @@ description: Use Strapi's Query Engine API to perform operations on multiple ent
 displayed_sidebar: devDocsSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Bulk Operations with the Query Engine API
+
+<NotV5 />
 
 :::caution
 To avoid performance issues, bulk operations are not allowed on relations.

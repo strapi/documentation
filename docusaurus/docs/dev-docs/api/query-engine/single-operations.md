@@ -3,10 +3,13 @@ title: Single Operations
 description: Use Strapi's Query Engine API to perform operations on single entries.
 displayed_sidebar: devDocsSidebar
 ---
+
 import ManagingRelations from '/docs/snippets/managing-relations.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Single Operations with the Query Engine API
 
+<NotV5 />
 ## findOne()
 
 :::note

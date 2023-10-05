@@ -5,7 +5,11 @@ displayed_sidebar: devDocsConfigSidebar
 description: How to configure Strapi for TypeScript development.
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # TypeScript configuration
+
+<NotV5 />
 
 [TypeScript](/dev-docs/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 

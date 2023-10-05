@@ -6,10 +6,13 @@ displayed_sidebar: devDocsSidebar
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 const imgStyle = {width: '100%', margin: '0'}
 const captionStyle = {fontSize: '12px'}
 
 # Policies
+
+<NotV5 />
 
 Policies are functions that execute specific logic on each request before it reaches the [controller](/dev-docs/backend-customization/controllers). They are mostly used for securing business logic.
 

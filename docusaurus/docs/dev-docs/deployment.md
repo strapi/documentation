@@ -9,8 +9,11 @@ import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
 import CommunityGuides from '/docs/snippets/community-deployment-guides.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Deployment
+
+<NotV5 />
 
 Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider. 
 

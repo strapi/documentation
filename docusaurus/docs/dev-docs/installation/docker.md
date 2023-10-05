@@ -5,8 +5,11 @@ description: Quickly create a Docker container from a local project.
 ---
 
 import DockerEnvTable from '/docs/snippets/docker-env-table.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Running Strapi in a Docker container
+
+<NotV5 />
 
 :::caution
 Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).

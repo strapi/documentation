@@ -4,11 +4,15 @@ displayed_sidebar: devDocsSidebar
 description: The following documentation covers how to update your application to the latest version of Strapi.
 
 ---
+
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 import BuildCommand from '/docs/snippets/build-npm-yarn.md'
 import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Update to a newer Strapi version
+
+<NotV5 />
 
 Strapi periodically releases code improvements through new versions. Updates contain no breaking changes. The present documentation is a generic update guide. The [Updates and Migration introduction](/dev-docs/update-migration) explains the differences between an update and a migration.
 

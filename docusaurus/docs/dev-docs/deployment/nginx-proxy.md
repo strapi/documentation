@@ -8,8 +8,11 @@ description: Learn how you can use a proxy application like Nginx to secure your
 import AdminRedirect from './snippets-proxy/admin-redirect.md'
 import StrapiServer from './snippets-proxy/strapi-server.md'
 import SubfolderSplitWarning from './snippets-proxy/subfolder-split-warning.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Nginx Proxying
+
+<NotV5 />
 
 As Strapi does not handle SSL directly and hosting a Node.js service on the "edge" network is not a secure solution it is recommended that you use some sort of proxy application such as Nginx, Apache, HAProxy, Traefik, or others. The following documentation provides some sample configurations for Nginx, naturally these configs may not suit all environments and you will likely need to adjust them to fit your needs.
 

@@ -6,7 +6,11 @@ description: Strapi offers a single entry point file for its middlewares configu
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Middlewares configuration
+
+<NotV5 />
 
 :::strapi Different types of middlewares
 
