@@ -92,9 +92,13 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 The *Backups* section informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
 
+:::note
+The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+:::
+
 ### Restoring a backup
 
-If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will redirect you to the creation of a ticket for the Strapi support team, who will handle the database restoring request.
+If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
 
 ## Variables
 
