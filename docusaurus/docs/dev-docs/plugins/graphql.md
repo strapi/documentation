@@ -42,7 +42,8 @@ npm run strapi install graphql
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
 
 :::note
-The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+- The GraphQL Playground is enabled by default for both the development and staging environments but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+- If the GraphQL Playground does not appear to be accessible, please ensure that the GraphQL plugin is enabled: `graphql: true` should be added to the `config/plugins.js|ts` configuration file; if not, edit the file to add this line (see [plugins configuration](/dev-docs/configurations/plugins) for more details). 
 :::
 
 ## Configuration
