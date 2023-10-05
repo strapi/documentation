@@ -207,6 +207,7 @@ const sidebars = {
             'dev-docs/integrations/vue-js',
           ]
         },
+        'dev-docs/api/document-service',
         {
           type: 'category',
           label: 'Entity Service API',
