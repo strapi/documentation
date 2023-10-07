@@ -257,9 +257,16 @@ Strapi currently supports `Node.js` `v16.x.x`, `v18.x.x`, and `v20.x.x`. The fol
 
 ```bash title="example using Node.js 20"
 cd ~
-curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get update
 ...
-sudo apt-get install nodejs
+sudo apt-get install -y ca-certificates curl gnupg
+...
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+NODE_MAJOR=20
+sudo apt-get update
+...
+sudo apt-get install nodejs -y
 ...
 node -v && npm -v
 ```
