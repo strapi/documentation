@@ -25,11 +25,6 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 
 Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*. The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
 
-:::note
-Currently all roles using Review Workflows in the Content Manager need to have at least "Read" permission for workflow settings, defined in *Settings > Administration Panel > Roles > Edit a role > Settings > Review Workflows*.
-:::
-
-
 ## Creating or editing a workflow
 
 <ThemedImage
@@ -47,7 +42,7 @@ Currently all roles using Review Workflows in the Content Manager need to have a
     | -------------- | ------------------------------------------------------------------------ |
     | Name           | Write a unique name of workflow.                                         |
     | Content-Types  | (optional) Assign this workflow to one or more existing content-types.   |
-    | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)). |
+    | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
 
 3. Click on the **Save** button. The new workflow will be displayed in the list-view and for every content-type assigned.
 
@@ -63,15 +58,27 @@ To add a new stage in the review workflows:
 1. Click on the **Add new stage** button.
 2. Write the *Stage name*.
 3. Select a *Color*.
-3. Click on the **Save** button.
+4. Select *Roles* that can change the stage, if the entity is currently in that review stage.
+5. Click on the **Save** button.
 
 By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/drag.svg) button.
+
+:::tip
+To set up roles for each stage, you can either click "Apply to all stages" to apply the current roles to all other stages of the workflow or use "Duplicate stage" of the stage context menu.
+:::
+
+
+### Duplicating a stage
+
+1. Click **Duplicate Stage** in the context menu of the stage.
+2. Change the name of the duplicated stage.
+2. Click on the **Save** button.
 
 
 ### Deleting a stage
 
-1. Click on the ![delete button](/img/assets/icons/delete.svg) **Delete** button next to the stage you want to remove.
-2. Click on the **Save** button: a confirmation modal will appear to confirm the deletion.
+1. Click ![Delete](/img/assets/icons/delete.svg) in the context menu of the stage.
+2. Click on the **Save** button: a confirmation modal will appear to confirm the deletion, in case the stage has previously been saved.
 
 If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
 contain at least one stage and therefore it is not possible to delete the last stage.

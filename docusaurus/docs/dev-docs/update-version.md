@@ -2,6 +2,7 @@
 title: Upgrade Strapi version
 displayed_sidebar: devDocsSidebar
 description: The following documentation covers how to upgrade your application to the latest version of Strapi.
+pagination_prev: dev-docs/plugins
 
 ---
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'

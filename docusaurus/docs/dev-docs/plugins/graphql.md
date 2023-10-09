@@ -42,7 +42,8 @@ npm run strapi install graphql
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
 
 :::note
-The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+- The GraphQL Playground is enabled by default for both the development and staging environments but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+- If the GraphQL Playground does not appear to be accessible, please ensure that the GraphQL plugin is enabled: `graphql: true` should be added to the `config/plugins.js|ts` configuration file; if not, edit the file to add this line (see [plugins configuration](/dev-docs/configurations/plugins) for more details). 
 :::
 
 ## Configuration
@@ -639,7 +640,7 @@ The `context` object gives access to:
 * Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
 
 <details>
-<summary> Example of a custom GraphQL policy applied to a resolver </summary>
+<summary> Example of GraphQL policies applied to resolvers</summary>
 
 <Tabs groupId="js-ts">
 
@@ -663,6 +664,15 @@ module.exports = {
                */ 
               return context.parent !== undefined;
             }
+            /**
+             * Uses a policy already created in Strapi.
+             */
+            "api::model.policy-name",
+
+            /**
+             * Uses a policy already created in Strapi with a custom configuration
+             */
+            {name:"api::model.policy-name", config: {/* all config values I want to pass to the strapi policy */} },
           ],
           auth: false,
         },
@@ -694,6 +704,15 @@ export default {
                */ 
               return context.parent !== undefined;
             }
+            /**
+             * Uses a policy already created in Strapi.
+             */
+            "api::model.policy-name",
+
+            /**
+             * Uses a policy already created in Strapi with a custom configuration
+             */
+            {name:"api::model.policy-name", config: {/* all the configuration values to pass to the strapi policy */} },
           ],
           auth: false,
         },
@@ -709,11 +728,11 @@ export default {
 
 </details>
 
-#### Middlewares
+##### Middlewares
 
-[Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key.
+[Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key. The only difference between the GraphQL and REST implementations is that the `config` key becomes `options`.  
 
-The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered policy or an implementation that is passed directly (see [middlewares configuration documentation](/dev-docs/backend-customization/routes#middlewares)).
+The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered middleware or an implementation that is passed directly (see [middlewares configuration documentation](/dev-docs/backend-customization/routes#middlewares)).
 
 Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's [`parent`, `args`, `context` and `info` objects](https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments) as arguments.
 
@@ -722,7 +741,7 @@ Middlewares with GraphQL can even act on nested resolvers, which offer a more gr
 :::
 
 <details>
-<summary> Examples of custom GraphQL middlewares applied to a resolver</summary>
+<summary> Examples of GraphQL middlewares applied to a resolver</summary>
 
 <Tabs groupId="js-ts">
 
@@ -771,6 +790,17 @@ module.exports = {
 
               return resolve(parent, ...rest);
             }
+            /**
+             * Basic middleware example #4
+             * Uses a middleware already created in Strapi.
+             */
+            "api::model.middleware-name",
+
+            /**
+             * Basic middleware example #5
+             * Uses a middleware already created in Strapi with a custom configuration
+             */
+            { name: "api::model.middleware-name", options: { /* all config values I want to pass to the strapi middleware */ } },
           ],
           auth: false,
         },
@@ -827,6 +857,18 @@ export default {
 
               return resolve(parent, ...rest);
             }
+
+            /**
+             * Basic middleware example #4
+             * Uses a middleware already created in Strapi.
+             */
+            "api::model.middleware-name",
+
+            /**
+             * Basic middleware example #5
+             * Uses a middleware already created in Strapi with a custom configuration
+             */
+            {name:"api::model.middleware-name", options: {/* all the configuration values to pass to the middleware */} },
           ],
           auth: false,
         },

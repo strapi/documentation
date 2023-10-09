@@ -75,6 +75,10 @@ export default (policyContext, config, { strapi }) => {
 
 <br/>
 
+:::tip
+To see a possible advanced usage for route policies, read the [policies](/dev-docs/backend-customization/examples/policies) page of the backend customization examples cookbook.
+:::
+
 Policies can be configured using a `config` object:
 
 <Tabs groupId="js-ts">

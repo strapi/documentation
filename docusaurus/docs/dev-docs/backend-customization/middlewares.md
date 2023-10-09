@@ -123,6 +123,10 @@ export default () => {
 
 The GraphQL plugin also allows [implementing custom middlewares](/dev-docs/plugins/graphql#middlewares), with a different syntax.
 
+:::tip
+To see a possible advanced usage for custom global middlewares, read the [middlewares](/dev-docs/backend-customization/examples/middlewares) page of the backend customization examples cookbook.
+:::
+
 ## Usage
 
 Middlewares are called different ways depending on their scope:

@@ -16,6 +16,7 @@ import ColumnLeft from '../components/ColumnLeft';
 import ColumnRight from '../components/ColumnRight';
 import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
+import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, EnterpriseBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
@@ -26,6 +27,7 @@ import {
   MultiLanguageSwitcherResponse,
 } from '../components/MultiLanguageSwitcher';
 import { Annotation } from '../components/Annotation';
+import SubtleCallout from '../components/SubtleCallout';
 
 export default {
   // Re-use the default mapping
@@ -51,7 +53,9 @@ export default {
   ColumnRight,
   FeedbackPlaceholder,
   CustomDocCard,
+  CustomDocCardsWrapper,
   InteractiveQueryBuilder,
+  SubtleCallout,
   ThemedImage,
   SideBySideColumn,
   SideBySideContainer,
