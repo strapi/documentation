@@ -8,7 +8,7 @@ sidebar_position: 1
 
 # Collaboration on projects
 
-Projects are created by a user via their Strapi Cloud account, which is linked to their GitHub account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the Cloud dashboard and collaborate on that project, without the project owner to ever have to share their GitHub credentials.
+Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the Cloud dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
 
 Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the project owner, maintainers:
 
@@ -38,7 +38,7 @@ To invite a new maintainer to collaborate on a project:
 New maintainers will be sent an email containing a link to click on to join the project. Once a project is shared, avatars representing the maintainers will be displayed in the project dashboard next to the **Share** button, to see how many maintainers collaborate on that project and who they are.
 
 :::tip
-Avatars use GitHub profile pictures, but for pending users only initials will be displayed until the activation of the maintainer account. You can hover over an avatar to display the full name of the maintainer.
+Avatars use GitHub or Google profile pictures, but for pending users only initials will be displayed until the activation of the maintainer account. You can hover over an avatar to display the full name of the maintainer.
 :::
 
 ## Managing maintainers

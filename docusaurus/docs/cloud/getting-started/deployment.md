@@ -22,7 +22,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
 1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
 
-2. You are prompted to **Log in with GitHub**. This initial login will create your Strapi Cloud account. Once logged in, you will be redirected to the Strapi Cloud *Projects* page where you can create your first Strapi Cloud project.
+2. You are prompted to **Log in with GitHub** or **Log in with Google**. Choose your provider and log in. This initial login will create your Strapi Cloud account. Once logged in, you will be redirected to the Strapi Cloud *Projects* page where you can create your first Strapi Cloud project.
 
     <ThemedImage
     alt="Strapi Cloud login page"
