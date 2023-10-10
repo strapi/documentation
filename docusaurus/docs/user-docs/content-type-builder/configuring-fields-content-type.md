@@ -18,7 +18,6 @@ Depending on what content-type or component is being created or edited, not all 
 
 <ThemedImage
   alt="Fields selection"
-  width="80%"
   sources={{
     light: '/img/assets/content-type-builder/fields-selection.png',
     dark: '/img/assets/content-type-builder/fields-selection_DARK.png',
