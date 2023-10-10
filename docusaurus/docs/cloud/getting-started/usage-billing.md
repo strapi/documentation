@@ -4,7 +4,7 @@ displayed_sidebar: cloudSidebar
 sidebar_position: 3
 ---
 
-# Usage & Billing
+# Usage & Billing <CloudProBadge /> <CloudTeamBadge />
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and applications. Strapi Cloud offers a free 7-day trial for all new accounts and two paid plans: **Pro** and **Team**.
 
