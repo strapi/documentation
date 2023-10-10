@@ -1,6 +1,6 @@
 ---
 title: Content Source Map plugin
-description: Use the Content Source Map plugin in combination with Vercel Visual Editing to make content edition more intuitive.
+description: Use the Content Source Map plugin with Vercel Visual Editing to enhance the content edition experience.
 sidebar_label: Content Source Map
 displayed_sidebar: devDocsSidebar
 ---
