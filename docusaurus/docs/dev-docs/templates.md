@@ -87,7 +87,7 @@ yarn strapi templates:generate <path>
 <TabItem value="npm" label="NPM">
   
 ```sh
-npx strapi templates:generate [path]
+npx strapi templates:generate <path>
 ```
   
 </TabItem>
