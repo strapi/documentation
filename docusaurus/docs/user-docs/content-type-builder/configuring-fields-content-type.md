@@ -81,7 +81,6 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
 
@@ -89,7 +88,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_richtext.svg" /> Rich Text (Blocks) <BetaBadge />
+### <img width="28" src="/img/assets/icons/ctb_richtextblocks.svg" /> Rich Text (Blocks) <BetaBadge />
 
 The Rich Text (Blocks) field displays an editor with live rendering and various options to manage rich text. This field can be used for long written content, even including images and code.
 
@@ -107,13 +106,8 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
-| Default value  | Write the default value of the Rich Text field.                             |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
-| Maximum length | Tick to define a maximum number of characters allowed.                      |
-| Minimum length | Tick to define a minimum number of characters allowed.                      |
 
 </TabItem>
 
