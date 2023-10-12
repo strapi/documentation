@@ -8,7 +8,7 @@ sidebar_position: 2
 
 # Project Settings
 
-The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 4 tabs available: *General*, *Domains*, *Variables* and *Billing*.
+The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 5 tabs available: *General*, *Domains*, *Backups*, *Variables* and *Billing*.
 
 ## General
 
@@ -87,6 +87,26 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 | Set as default domain     | Tick the box to make the new domain the default one.                      |
 
 3. Click on the **Save** button.
+
+## Backups
+
+The *Backups* section informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
+
+:::note
+The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+:::
+
+<ThemedImage
+  alt="Backups"
+  sources={{
+    light: '/img/assets/cloud/settings_backups.png',
+    dark: '/img/assets/cloud/settings_backups_DARK.png',
+  }}
+/>
+
+### Restoring a backup
+
+If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
 
 ## Variables
 
