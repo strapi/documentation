@@ -96,6 +96,14 @@ The *Backups* section informs you of the status and date of the latest backup of
 The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
 :::
 
+<ThemedImage
+  alt="Backups"
+  sources={{
+    light: '/img/assets/cloud/settings_backups.png',
+    dark: '/img/assets/cloud/settings_backups_DARK.png',
+  }}
+/>
+
 ### Restoring a backup
 
 If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
