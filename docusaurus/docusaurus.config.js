@@ -203,6 +203,10 @@ const config = {
               {
                 label: 'Strapi Cloud',
                 to: '/cloud/intro'
+              },
+              {
+                label: 'v3 Docs (unsupported)',
+                to: 'https://docs-v3.strapi.io'
               }
             ],
           },
