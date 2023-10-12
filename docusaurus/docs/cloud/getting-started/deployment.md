@@ -63,13 +63,37 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
 4. Connect a GitHub repository to your new Strapi Cloud project.
 
-    4.a. Click on the **Connect GitHub repositories** button. You will be redirected to a GitHub modal to authorize Strapi Cloud to access your repository.
-
-    :::tip
-    Connect the GitHub account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    :::strapi Choose your path to create your new Strapi Cloud project!
+    Select one of the tabs below depending on how you wish to proceed:
+    - by using a prebuilt template and creating a new GitHub repository to discover Strapi Cloud easily and quickly *(recommended for new users and beginners)*,
+    - or by using your own, already existing GitHub repository and Strapi project.
     :::
 
-    4.b. Once Strapi Cloud is allowed permission to access the GitHub repositories, go back to the Strapi Cloud project creation interface to select an *Account* and *Repository*. 
+    <Tabs groupId="REPO-OPTIONS">
+
+    <TabItem value="TEMPLATE" label="New repo & prebuilt template ✨">
+
+    4.a. Click on the **Use template** button.
+
+    4.b. In the *Create repository with template* modal, choose:
+    
+    - the GitHub account where the repository will be created
+    - the template to use for the new project (e.g. Blog)
+
+    <ThemedImage
+    alt="Create repo with template modal"
+    width="60%"
+    sources={{
+        light: '/img/assets/cloud/template-modal.png',
+        dark: '/img/assets/cloud/template-modal_DARK.png',
+    }}
+    />
+    
+    4.c. Click on the **Create repository** button. A modal will confirm the creation of the repository.
+
+    4.d. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud access to the newly created repository (more information in the [GitHub documentation](https://docs.github.com/en/apps/overview)).
+
+    4.e. Back in the project creation interface, select your *Account* and the *Repository* you just created.
 
     <ThemedImage
     alt="Selecting GitHub account and repository"
@@ -78,6 +102,32 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
         dark: '/img/assets/cloud/account-repo-selection_DARK.png',
     }}
     />
+
+    </TabItem>
+
+    <TabItem value="OWN-REPO" label="Own existing repo & Strapi project">
+
+    4.a. Click on the **Connect GitHub repositories** button.
+
+    :::tip
+    Connect the GitHub account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    :::
+
+    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud permission to access your repositories (more information in the [GitHub documentation](https://docs.github.com/en/apps/overview)).
+
+    4.c. Back in the project creation interface, select your *Account* and a *Repository*. 
+
+    <ThemedImage
+    alt="Selecting GitHub account and repository"
+    sources={{
+        light: '/img/assets/cloud/account-repo-selection.png',
+        dark: '/img/assets/cloud/account-repo-selection_DARK.png',
+    }}
+    />
+
+    </TabItem>
+
+    </Tabs>
 
 5. Set up your Strapi Cloud project.
 
