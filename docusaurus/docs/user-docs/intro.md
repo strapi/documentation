@@ -5,7 +5,7 @@ sidebar_label: Welcome!
 
 # Welcome to the Strapi User Guide!
 
-This user guide contains the functional documentation related to all features available in the admin panel of your Strapi application.
+This user guide contains the functional documentation related to all features available in the admin panel of your Strapi v4 application.
 
 <ThemedImage
   alt="Homepage of the Admin Panel"
