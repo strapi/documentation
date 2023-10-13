@@ -96,6 +96,10 @@ The *Backups* section informs you of the status and date of the latest backup of
 The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
 :::
 
+:::tip
+For projects created before the release of the Backup feature in October 2023, the first backup will automatically be triggered with the next deployment of the project.
+:::
+
 <ThemedImage
   alt="Backups"
   sources={{
