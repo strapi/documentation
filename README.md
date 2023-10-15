@@ -50,7 +50,7 @@ Technical questions should be asked using the following resources:
 
 Thanks to a continuous integration/continuous delivery workflow, the Strapi documentation can be updated up to several times a day, depending on the number and frequency of contributions. Weekly snapshot [releases](https://github.com/strapi/documentation/releases) happen on Wednesdays and include a list of changes since the latest release.
 
-## Community support
+## Community Support
 
 For general help using Strapi, please refer to [the official Strapi documentation](https://strapi.io/documentation/). For additional help, you can use one of these channels to ask a question:
 
