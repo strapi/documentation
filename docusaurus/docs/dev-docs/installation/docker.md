@@ -12,7 +12,7 @@ import DockerEnvTable from '/docs/snippets/docker-env-table.md'
 Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).
 :::
 
-:::warning
+:::danger
  Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
 :::
 
