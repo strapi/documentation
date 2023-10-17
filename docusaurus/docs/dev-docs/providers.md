@@ -259,7 +259,7 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts
-export default {
+export {
   init(providerOptions) {
     // init your provider if necessary
 
@@ -323,7 +323,7 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts
-export default {
+export {
   init: (providerOptions = {}, settings = {}) => {
     return {
       send: async options => {},
@@ -437,7 +437,7 @@ module.exports = {
 ```ts title="./providers/aws-s3/index.ts"
 // aws-s3 provider
 
-module.exports = {
+export = {
   init: (config) => {
     const s3 = new AWS.S3(config);
 
