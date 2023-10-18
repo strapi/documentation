@@ -1,7 +1,7 @@
-name: Documentation Bug Report
+name: Documentation Issue
 description: Create a report to help us improve the Strapi documentation.
-title: "[Bug]: "
-labels: "type: bug"
+title: ""
+labels: ""
 body:
   - type: input
     attributes:
