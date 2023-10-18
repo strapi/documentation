@@ -1,7 +1,5 @@
 name: Documentation Issue
 description: Create a report to help us improve the Strapi documentation.
-title: ""
-labels: ""
 body:
   - type: input
     attributes:
