@@ -6,6 +6,8 @@ displayed_sidebar: userDocsSidebar
 
 ---
 
+import CSMPrereq from '/docs/snippets/content-source-map-requirements.md'
+
 # Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
@@ -146,3 +148,19 @@ You can also use the keyboard to reorder components: focus the component using T
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
+
+## Editing fields from a front-end website <EnterpriseBadge />
+
+<CSMPrereq />
+
+Strapi's [Content Source Map plugin](/dev-docs/plugins/content-source-map) combined with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) can offer another intuitive editing experience, where you can click on any editable content on the front-end website of a Strapi-based project to directly jump to the corresponding field in Strapi's admin panel.
+
+Once the Content Source Map plugin is installed and configured (see [Developer Docs](/dev-docs/plugins/content-source-map)), you can experience Visual Editing as follows:
+
+1. Visit any preview deployment website hosted on Vercel.
+2. Login using the Vercel Toolbar.
+3. When Content Source Maps are detected on the page, a pencil icon will appear in the Vercel toolbar. Clicking this icon will enable Edit Mode, highlighting all editable fields on the page in blue.
+4. Hover any content highlighted in blue to display an **Open in strapi.io** button.
+5. Click on the **Open in strapi.io** button to jump directly to the corresponding field in the admin panel and edit its content.
+
+![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png)

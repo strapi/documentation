@@ -424,6 +424,14 @@ const sidebars = {
             },
             {
               type: 'doc',
+              label: 'Content Source Map',
+              id: 'dev-docs/plugins/content-source-map',
+              customProps: {
+                new: true,
+              }
+            },
+            {
+              type: 'doc',
               label: 'Documentation',
               id: 'dev-docs/plugins/documentation',
             },
