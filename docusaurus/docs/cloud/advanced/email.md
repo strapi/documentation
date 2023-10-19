@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/email.html
 
 # Email Provider
 
-Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize a third-party email provider, if needed.
+Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize another email provider, if needed.
 
 :::caution
 Please be advised that Strapi are unable to provide support for third-party email providers.
@@ -17,13 +17,13 @@ Please be advised that Strapi are unable to provide support for third-party emai
 :::prerequisites
 
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for a third-party email provider (see [Strapi Market](https://market.strapi.io/providers)).
+- Credentials for another email provider (see [Strapi Market](https://market.strapi.io/providers)).
 
 :::
 
 ## Configuration
 
-Configuring a third-party email provider for use with Strapi Cloud requires 3 steps:
+Configuring another email provider for use with Strapi Cloud requires 3 steps:
 
 1. Install the provider plugin in your local Strapi project.
 2. Configure the provider in your local Strapi project.
@@ -274,7 +274,7 @@ Before pushing the above changes to GitHub, add environment variables to the Str
 
 ## Deployment
 
-To deploy the project and utilize the third-party email provider, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
+To deploy the project and utilize another party email provider, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
 
 Once the application finishes building, the project will use the new email provider.
 
