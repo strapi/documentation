@@ -51,7 +51,7 @@ Strapi only supports the following client values, and will automatically rewrite
 | client       | actual package used |
 | sqlite       | better-sqlite3      |
 | mysql        | mysql2              |
-| postgres     | postgres            |
+| postgres     | pg                  |
 :::
 
 #### Connection parameters
