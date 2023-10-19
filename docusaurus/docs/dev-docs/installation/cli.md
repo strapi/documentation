@@ -20,12 +20,12 @@ Strapi CLI (Command Line Interface) installation scripts are the fastest way to 
 
 A supported database is also required for any Strapi project:
 
-| Database   | Minimum | Recommended |
-|------------|---------|-------------|
-| MySQL      | 5.7.8   | 8.0         |
-| MariaDB    | 10.3    | 10.6        |
-| PostgreSQL | 11.0    | 14.0        |
-| SQLite     | 3       | 3           |
+| Database   | Recommended | Minimum |
+| ---------- | ----------- | ------- |
+| MySQL      | 8.0         | 8.0     |
+| MariaDB    | 10.6        | 10.3    |
+| PostgreSQL | 14.0        | 12.0    |
+| SQLite     | 3           | 3       |
 
 :::caution
 Strapi v4 does not support MongoDB.
