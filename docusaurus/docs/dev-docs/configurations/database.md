@@ -547,5 +547,3 @@ $ \c my_strapi_db_name admin_user
 # Grant schema privileges to the user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
-
-:::
