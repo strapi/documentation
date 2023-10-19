@@ -49,6 +49,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 Strapi only supports the following client values, and will automatically rewrite the 'client' value to the following options before passing the configuration to Knex
 
 | client       | actual package used |
+|----------|----------------------|
 | sqlite       | better-sqlite3      |
 | mysql        | mysql2              |
 | postgres     | pg                  |
