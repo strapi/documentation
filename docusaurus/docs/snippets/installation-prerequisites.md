@@ -1,8 +1,6 @@
 Before installing Strapi, the following requirements must be installed on your computer:
 
-- [Node.js](https://nodejs.org): Only Maintenance and LTS versions are supported (`v16`, `v18`, and `v20`).
-    - Node v18.x is recommended for Strapi `v4.3.9` and above
-    - Node v16.x is recommended for Strapi `v4.0.x` to `v4.3.8`.
+- [Node.js](https://nodejs.org): Only Maintenance and LTS versions are supported (currently `v18` and `v20`). Odd-number releases of Node are not supported (e.g. v19, v21).
 - Your preferred Node.js package manager:
     - [npm](https://docs.npmjs.com/cli/v6/commands/npm-install) (`v6` and above)
     - [yarn](https://yarnpkg.com/getting-started/install)

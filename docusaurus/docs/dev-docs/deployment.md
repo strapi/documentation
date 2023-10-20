@@ -9,6 +9,7 @@ import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
 import CommunityGuides from '/docs/snippets/community-deployment-guides.md'
+import InstallPrereq from '/docs/snippets/installation-prerequisites.md'
 
 # Deployment
 
@@ -32,8 +33,7 @@ Another possible workflow is to first create the data structure locally, push yo
 
 To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
 
-- Node LTS (currently v16, v18, and v20) **Odd-number releases of Node are not supported (e.g. v17, v19).**
-- NPM v6 (or the version shipped with the LTS Node versions)
+<InstallPrereq />
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):
 
