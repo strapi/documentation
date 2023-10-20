@@ -569,7 +569,7 @@
 		},
 		{
 			"source": "/user-docs/latest/plugins/introduction-to-plugins.html",
-			"destination": "/user-docs/plugins/introduction-to-plugins"
+			"destination": "/user-docs/plugins"
 		},
 		{
 			"source": "/user-docs/latest/plugins/installing-plugins-via-marketplace.html",
