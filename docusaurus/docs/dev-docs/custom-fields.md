@@ -254,7 +254,7 @@ export const Input = React.forwardRef((props, ref) => {
 </details>
 
 :::tip
-For a more detailed view of the props provided to the customFields and how they can be used check out the [`ColorPickerInput` file](https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPicker/ColorPickerInput/index.js#L71-L82) in the Strapi codebase.
+For a more detailed view of the props provided to the customFields and how they can be used check out the [`ColorPickerInput` file](https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPickerInput.tsx#L80-L95) in the Strapi codebase.
 :::
 
 ### Options
