@@ -42,8 +42,8 @@ The GitHub repository branch and base directory for a Strapi Cloud project are b
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
 
 1. In the *Delete project* section of the *General* tab, click on the **Delete project** button.
-2. In the dialog, type `DELETE` in the textbox.
-3. Confirm the deletion of your project by clicking on the **Delete** button.
+2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
+3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
 ## Domains
 
