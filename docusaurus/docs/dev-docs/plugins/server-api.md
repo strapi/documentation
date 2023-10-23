@@ -236,7 +236,10 @@ An array of [routes](/dev-docs/backend-customization/routes) configuration.
 
 **Type**: `Object[]`
 
-**Example:**
+**Examples:**
+
+<Tabs>
+<TabItem value="content-api" label="Content API routes only">
 
 ```js title="path: ./src/plugins/my-plugin/strapi-server.js"
 
@@ -268,6 +271,53 @@ module.exports = [
   },
 ];
 ```
+
+</TabItem>
+
+<TabItem value="both" label="Content API and admin routes">
+
+It is also possible to combine both admin and Content API routes if you need different policies on these: 
+
+```js title="./src/plugins/my-plugin/server/routes/index.js"
+
+module.exports = {
+  admin: require('./admin'),
+  'content-api': require('./content-api'),
+};
+```
+
+```js title="./src/plugins/my-plugin/server/routes/admin/index.js"
+
+module.exports = {
+  type: 'admin',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['policyName'],
+    },
+  }],
+};
+```
+
+```js title="./src/plugins/my-plugin/server/routes/content-api/index.js"
+
+module.exports = {
+  type: 'content-api',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['differentPolicyName'],
+    },
+  }],
+};
+```
+
+</TabItem>
+</Tabs>
 
 ### Controllers
 
