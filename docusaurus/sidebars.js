@@ -377,6 +377,11 @@ const sidebars = {
             },
             {
               type: 'doc',
+              label: 'Content Source Map',
+              id: 'dev-docs/plugins/content-source-map',
+            },
+            {
+              type: 'doc',
               label: 'Documentation',
               id: 'dev-docs/plugins/documentation',
             },
