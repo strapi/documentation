@@ -7,13 +7,13 @@ export default function InteractiveProjectStructure() {
         <code>
         . <span className="token comment"># root of the project</span><br/>
         ├──── config<br/>
-        │     ├ <a href="/dev-docs/configurations/api">api.js</a><br/>
-        │     ├ <a href="/dev-docs/configurations/admin-panel">admin.js</a><br/>
-        │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.js</a><br/>
-        │     ├ <a href="/dev-docs/configurations/database#database-configuration">database.js</a><br/>
-        │     ├ <a href="/dev-docs/configurations/middlewares">middlewares.js</a><br/>
-        │     ├ <a href="/dev-docs/configurations/plugins">plugins.js</a><br/>
-        │     └ <a href="/dev-docs/configurations/server#server-configuration">server.js</a><br/>
+        │     ├ <a href="/dev-docs/configurations/api">api.js|ts</a><br/>
+        │     ├ <a href="/dev-docs/configurations/admin-panel">admin.js|ts</a><br/>
+        │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.js|ts</a><br/>
+        │     ├ <a href="/dev-docs/configurations/database#database-configuration">database.js|ts</a><br/>
+        │     ├ <a href="/dev-docs/configurations/middlewares">middlewares.js|ts</a><br/>
+        │     ├ <a href="/dev-docs/configurations/plugins">plugins.js|ts</a><br/>
+        │     └ <a href="/dev-docs/configurations/server#server-configuration">server.js|ts</a><br/>
         </code>
       </pre>
 

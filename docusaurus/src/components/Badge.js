@@ -62,6 +62,25 @@ export function EnterpriseBadge(props) {
   );
 }
 
+export function CloudProBadge(props) {
+  return (
+    <Badge
+      variant="Strapi Cloud Pro"
+      link="https://strapi.io/pricing-cloud"
+      {...props}
+    />
+  );
+}
+
+export function CloudTeamBadge(props) {
+  return (
+    <Badge
+      variant="Strapi Cloud Team"
+      link="https://strapi.io/pricing-cloud"
+      {...props}
+    />
+  );
+}
 
 export function NewBadge(props) {
   return (

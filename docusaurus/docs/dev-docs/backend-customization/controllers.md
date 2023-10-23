@@ -201,6 +201,10 @@ export default {
 When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
+:::tip
+To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+:::
+
 ### Sanitization and Validation in controllers
 
 :::warning
@@ -341,6 +345,10 @@ When extending a core controller, you do not need to re-implement any sanitizati
 
 <details>
 <summary>Collection type examples</summary>
+
+:::tip
+The [backend customization examples cookbook](/dev-docs/backend-customization/examples) shows how you can overwrite a default controller action, for instance for the [`create` action](/dev-docs/backend-customization/examples/services-and-controllers#custom-controller).
+:::
 
 <Tabs>
 <TabItem value="find" label="`find()`">
