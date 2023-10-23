@@ -8,7 +8,7 @@ sidebar_position: 2
 
 # Project Settings
 
-The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 4 tabs available: *General*, *Domains*, *Variables* and *Billing*.
+The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 5 tabs available: *General*, *Domains*, *Backups*, *Variables* and *Billing*.
 
 ## General
 
@@ -20,7 +20,13 @@ The *General* tab enables you to check and update the following options for the 
 - Debug info: to see the internal project name for the project. This is useful for support purposes.
 - Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
-![Project settings](/img/assets/cloud/settings.png)
+<ThemedImage
+  alt="Project settings page"
+  sources={{
+    light: '/img/assets/cloud/settings.png',
+    dark: '/img/assets/cloud/settings_DARK.png',
+  }}
+/>
 
 ### Modifying GitHub repository branch
 
@@ -49,7 +55,13 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 The *Domains* tab enables you to manage domains and connect new ones.
 
-![Domains](/img/assets/cloud/settings_domains.png)
+<ThemedImage
+  alt="Project domains"
+  sources={{
+    light: '/img/assets/cloud/settings_domains.png',
+    dark: '/img/assets/cloud/settings_domains_DARK.png',
+  }}
+/>
 
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 
@@ -76,13 +88,39 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 3. Click on the **Save** button.
 
+## Backups
+
+The *Backups* section informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
+
+:::note
+The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+:::
+
+<ThemedImage
+  alt="Backups"
+  sources={{
+    light: '/img/assets/cloud/settings_backups.png',
+    dark: '/img/assets/cloud/settings_backups_DARK.png',
+  }}
+/>
+
+### Restoring a backup
+
+If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
+
 ## Variables
 
 [Environment variables](../../dev-docs/configurations/environment) are used to configure the environment of your Strapi app, such as the database connection.
 
 You can view default values, and create/edit/delete environment variables for your project in the **Variables** tab:
 
-![Project variables](/img/assets/cloud/settings_variables.png)
+<ThemedImage
+  alt="Project variables"
+  sources={{
+    light: '/img/assets/cloud/settings_variables.png',
+    dark: '/img/assets/cloud/settings_variables_DARK.png',
+  }}
+/>
 
 ## Billing
 
@@ -90,4 +128,10 @@ The *Billing* section displays the current subscription plan and included usage 
 
 Use the **Manage subscription** button to change the subscription plan.
 
-![Project billing](/img/assets/cloud/settings_billing.png)
+<ThemedImage
+  alt="Project billing"
+  sources={{
+    light: '/img/assets/cloud/settings_billing.png',
+    dark: '/img/assets/cloud/settings_billing_DARK.png',
+  }}
+/>
