@@ -12,7 +12,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
-# Draft & Publish always enabled in v5
+# Draft & Publish is always enabled in Strapi v5
 
 In Strapi v5, the Draft & Publish feature is always enabled. <Intro />
 
