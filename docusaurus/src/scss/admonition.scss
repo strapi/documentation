@@ -85,8 +85,7 @@
     --custom-selection-color: var(--strapi-success-100);
   }
 
-  &--caution,
-  &--warning {
+  &--caution {
     --custom-admonition-background-color: var(--strapi-warning-100);
     --custom-admonition-border-color: var(--strapi-warning-500);
     --custom-admonition-code-background-color: var(--strapi-warning-200);
@@ -97,7 +96,8 @@
     --custom-selection-color: var(--strapi-warning-100);
   }
 
-  &--danger {
+  &--danger,
+  &--warning  {
     --custom-admonition-background-color: var(--strapi-danger-100);
     --custom-admonition-border-color: var(--strapi-danger-500);
     --custom-admonition-code-background-color: var(--strapi-danger-200);
