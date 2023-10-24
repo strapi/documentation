@@ -78,3 +78,7 @@ If you don't pay the invoice, the subscription of your project will automaticall
 1. Log into the billing Modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
 2. Go back to the homepage of the billing modal, listing subscriptions and billing options.
 3. Go to *Payment methods* and add a new, working card to pay the invoice. As soon as the invoice is paid, your project will automatically be reactivated.
+
+#### Project suspension for other reasons
+
+If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact Strapi Support.
