@@ -63,10 +63,18 @@ Overages are charged according to the following rates:
 
 ### Project suspension
 
-Projects may end up in a **Suspended** state for various reasons, including violating the [terms of service](https://strapi.io/cloud-legal) or exceeding the limits of your free trial plan. 
+Projects may end up in a **Suspended** state for various reasons, including: not paying the invoice, exceeding the limits of your free trial plan, or violating the [terms of service](https://strapi.io/cloud-legal). 
 
-If your project is suspended, you will no longer be able to access the application or trigger new deployments. You will also be unable to access the Strapi Admin Panel. You can view the status of your project in the [Projects](https://cloud.strapi.io/projects) section of your Strapi Cloud account.
+If your project is suspended, you will no longer be able to access the application or trigger new deployments. You will also be unable to access the Strapi Admin Panel. You can view the status of your project in the [Projects](https://cloud.strapi.io/projects) section of your Strapi Cloud account and you will be notified by email.
 
-Owners of suspended projects will receive an email notification with instructions on how to resolve the issue. If you do not receive an email notification, please contact [Strapi Support](mailto:support@strapi.io).
+:::caution
+If you do not resolve the issue within 10 days, your suspended project will be deleted and all data will be permanently lost.
+:::
 
-If you do not resolve the issue within 10 days, your project will be deleted and all data will be permanently lost.
+#### Project suspension after subscription cancellation
+
+If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see Edit subscription).
+
+1. Log into the billing Modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
+2. Go back to the homepage of the billing modal, listing subscriptions and billing options.
+3. Go to *Payment methods* and add a new, working card to pay the invoice. As soon as the invoice is paid, your project will automatically be reactivated.
