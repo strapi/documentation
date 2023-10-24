@@ -704,10 +704,16 @@ const sidebars = {
           type: "doc",
           id: "cloud/getting-started/deployment",
           customProps: {
+            updated: false,
+          },
+        },,
+        {
+          type: "doc",
+          id: "cloud/getting-started/usage-billing",
+          customProps: {
             updated: true,
           },
         },
-        "cloud/getting-started/usage-billing",
         "cloud/getting-started/caching",
       ],
     },
@@ -752,7 +758,7 @@ const sidebars = {
           id: "cloud/advanced/email",
           label: "Email provider",
           customProps: {
-            new: true,
+            new: false,
           },
         },
         {
@@ -760,7 +766,7 @@ const sidebars = {
           id: "cloud/advanced/upload",
           label: "Upload provider",
           customProps: {
-            new: true,
+            new: false,
           },
         },
       ]
