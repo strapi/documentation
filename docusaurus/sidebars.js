@@ -932,6 +932,10 @@ const sidebars = {
             {
               type: "category",
               label: "Content API",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
               ]
