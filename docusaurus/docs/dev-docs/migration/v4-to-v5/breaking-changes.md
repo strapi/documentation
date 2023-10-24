@@ -1,7 +1,9 @@
 ---
 title: Breaking changes
-# description: todo
+description: View the list of all breaking changes introduced between Strapi v4 and v5.
 displayed_sidebar: devDocsMigrationV5Sidebar
+tags:
+ - breaking-changes
 ---
 
 # Strapi v4 to v5 breaking changes
@@ -21,3 +23,10 @@ The following changes affect the Content API of your Strapi application.
 The following changes affect the `schema.json` file of your content-types:
 
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
+
+## Database
+
+The following changes affect the databases interacting with your Strapi application.
+
+- [MySQL v5 support is dropped](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
+

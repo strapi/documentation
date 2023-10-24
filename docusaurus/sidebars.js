@@ -936,6 +936,13 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
               ]
             },
+            {
+              type: "category",
+              label: "Database",
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported'
+              ]
+            },
           ]
         },
         "dev-docs/migration/v4-to-v5/migration-guides",
