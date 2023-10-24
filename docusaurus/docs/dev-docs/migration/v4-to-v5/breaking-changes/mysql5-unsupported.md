@@ -8,7 +8,11 @@ tags:
  - mysql
 ---
 
+import Intro from '/docs/snippets/breaking-change-page-intro.md'
+
 # MySQL v5 is not supported in Strapi v5 anymore
+
+In Strapi v5, MySQL version 5 is not supported.<Intro />
 
 ## Breaking change description
 
@@ -26,7 +30,8 @@ MySQL v5 was supported.
 
 **In Strapi v5**
 
-MySQL v5 is not supported anymore.
+MySQL v5 is not supported anymore.<br />
+MySQL v8 is the minimum required version (see [CLI installation guide](/dev-docs/installation/cli)).
 
 </SideBySideColumn>
 
@@ -36,6 +41,8 @@ MySQL v5 is not supported anymore.
 
 ## Migration
 
-No manual migration steps required.
-
+<!-- TODO: update this sentence -->
+No manual migration is required for the codebase of your Strapi application.
 Connection information will probably stay the same as in Strapi v4.
+
+However, to use Strapi v5, you must upgrade your MySQL database to version 8.0 (see additional information in the official [MySQL documentation](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/)).
