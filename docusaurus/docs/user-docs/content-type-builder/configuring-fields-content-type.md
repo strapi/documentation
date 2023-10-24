@@ -87,7 +87,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_richtextblocks.svg" /> Rich Text (Blocks) <BetaBadge />
+### <img width="28" src="/img/assets/icons/ctb_richtextblocks.svg" /> Rich Text (Blocks)
 
 The Rich Text (Blocks) field displays an editor with live rendering and various options to manage rich text. This field can be used for long written content, even including images and code.
 
