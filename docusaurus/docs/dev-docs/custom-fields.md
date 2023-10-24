@@ -35,12 +35,12 @@ The `strapi.customFields` object exposes a `register()` method on the `Strapi` i
 
 `strapi.customFields.register()` registers one or several custom field(s) on the server by passing an object (or an array of objects) with the following parameters:
 
-| Parameter                         | Description                                                                 | Type     |
-| --------------------------------- | --------------------------------------------------------------------------- | -------- |
-| `name`                            | The name of the custom field                                                | `String` |
-| `plugin`<br/><br/>(_optional_)    | The name of the plugin creating the custom fields                           | `String` |
-| `type`                            | The data type the custom field will use                                     | `String` |
-| `inputSize`<br/><br/>(_optional_) | Parameters to define the width of a custom field's input in the admin panel | `Object` |
+| Parameter                         | Description                                                                                                                                             | Type     |
+| --------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------| -------- |
+| `name`                            | The name of the custom field                                                                                                                            | `String` |
+| `plugin`<br/><br/>(_optional_)    | The name of the plugin creating the custom fields<br/><br/>❗️ If defined, the `pluginId` value on the admin panel registration must have the same value (see [Registering a custom field in the admin panel](#registering-a-custom-field-in-the-admin-panel)) | `String` |
+| `type`                            | The data type the custom field will use                                                                                                                 | `String` |
+| `inputSize`<br/><br/>(_optional_) | Parameters to define the width of a custom field's input in the admin panel                                                                             | `Object` |
 
 The optional `inputSize` object, when specified, must contain all of the following parameters:
 
@@ -108,16 +108,16 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 
 `app.customFields.register()` registers one or several custom field(s) in the admin panel by passing an object (or an array of objects) with the following parameters:
 
-| Parameter                        | Description                                                                                                                     | Type                                                 |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `name`                           | Name of the custom field                                                                                                        | `String`                                             |
-| `pluginId`<br/><br/>(_optional_) | Name of the plugin creating the custom field                                                                                    | `String`                                             |
-| `type`                           | Existing Strapi data type the custom field will use<br/><br/>❗️ Relations, media, components, or dynamic zones cannot be used. | `String`                                             |
-| `icon`<br/><br/>(_optional_)     | Icon for the custom field                                                                                                       | `React.ComponentType`                                |
-| `intlLabel`                      | Translation for the name                                                                                                        | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
-| `intlDescription`                | Translation for the description                                                                                                 | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
-| `components`                     | Components needed to display the custom field in the Content Manager (see [components](#components))                            |
-| `options`<br/><br/>(_optional_)  | Options to be used by the Content-type Builder (see [options](#options))                                                        | `Object`                                             |
+| Parameter                        | Description                                                                                                                                  | Type                                                 |
+| -------------------------------- |----------------------------------------------------------------------------------------------------------------------------------------------| ---------------------------------------------------- |
+| `name`                           | Name of the custom field                                                                                                                     | `String`                                             |
+| `pluginId`<br/><br/>(_optional_) | Name of the plugin creating the custom field<br/><br/>❗️ If defined, the `plugin` value on the server registration must have the same value (see [Registering a custom field on the server](#registering-a-custom-field-on-the-server))  | `String`                                             |
+| `type`                           | Existing Strapi data type the custom field will use<br/><br/>❗️ Relations, media, components, or dynamic zones cannot be used.               | `String`                                             |
+| `icon`<br/><br/>(_optional_)     | Icon for the custom field                                                                                                                    | `React.ComponentType`                                |
+| `intlLabel`                      | Translation for the name                                                                                                                     | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `intlDescription`                | Translation for the description                                                                                                              | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `components`                     | Components needed to display the custom field in the Content Manager (see [components](#components))                                         |
+| `options`<br/><br/>(_optional_)  | Options to be used by the Content-type Builder (see [options](#options))                                                                     | `Object`                                             |
 
 <details>
 <summary>Example: Registering an example "color" custom field in the admin panel:</summary>
