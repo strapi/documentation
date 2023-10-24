@@ -901,8 +901,46 @@ const sidebars = {
       ]
     },
   ],
-  devDocsPluginsSidebar: [
-
+  devDocsMigrationV5Sidebar: [
+    {
+      type: 'link',
+      label: '⬅️ Back to Dev Docs content',
+      href: '/dev-docs/intro'
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'dev-docs/migration/v4-to-v5/introduction'
+      },
+      label: 'v4 to v5 migration',
+      items: [
+        {
+          type: "doc",
+          label: "Introduction",
+          id: "dev-docs/migration/v4-to-v5/introduction"
+        },
+        {
+          type: "category",
+          label: "Breaking changes",
+          link: {
+            type: "doc",
+            id: "dev-docs/migration/v4-to-v5/breaking-changes",
+          },
+          items: [
+            {
+              type: "category",
+              label: "Content API",
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
+              ]
+            },
+          ]
+        },
+        "dev-docs/migration/v4-to-v5/migration-guides",
+      ]
+    }
   ]
 };
 
