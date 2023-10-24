@@ -28,5 +28,5 @@ The following changes affect the `schema.json` file of your content-types:
 
 The following changes affect the databases interacting with your Strapi application:
 
-- [MySQL v5 support is dropped](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
+- [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 
