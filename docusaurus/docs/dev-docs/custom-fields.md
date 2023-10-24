@@ -38,7 +38,7 @@ The `strapi.customFields` object exposes a `register()` method on the `Strapi` i
 | Parameter                         | Description                                                                                                                                             | Type     |
 | --------------------------------- |---------------------------------------------------------------------------------------------------------------------------------------------------------| -------- |
 | `name`                            | The name of the custom field                                                                                                                            | `String` |
-| `plugin`<br/><br/>(_optional_)    | The name of the plugin creating the custom fields<br/><br/>❗️ If defined, the `pluginId` value on the admin panel registraion must have the same value (see [Registering a custom field in the admin panel](#registering-a-custom-field-in-the-admin-panel)) | `String` |
+| `plugin`<br/><br/>(_optional_)    | The name of the plugin creating the custom fields<br/><br/>❗️ If defined, the `pluginId` value on the admin panel registration must have the same value (see [Registering a custom field in the admin panel](#registering-a-custom-field-in-the-admin-panel)) | `String` |
 | `type`                            | The data type the custom field will use                                                                                                                 | `String` |
 | `inputSize`<br/><br/>(_optional_) | Parameters to define the width of a custom field's input in the admin panel                                                                             | `Object` |
 
