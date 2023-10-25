@@ -46,8 +46,8 @@ To write or edit content:
 Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 :::
 
-:::strapi Experimental: Preview and edit your content live on your website
-By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. Additional documentation will be provided once the plugin is out of beta.  
+:::strapi Preview and edit your content live on your website
+By installing the [Content Source Map plugin](/dev-docs/plugins/content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence.  
 :::
 
 ### Components
