@@ -32,6 +32,7 @@ Content types had a `draftAndPublish` option in their schema. The database schem
 
 **In Strapi v5**
 
+<!-- TODO: update sentence "also will be changing" → define what changed once we know -->
 All content-types now have Draft & publish enabled in the database and in the admin panel interface. The admin panel interface also will be changing.
 
 </SideBySideColumn>
