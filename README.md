@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://strapi.io">
-    <img src="./docusaurus/static/img/logo.png" width="314px" alt="Strapi logo" />
+    <img src="https://docs.strapi.io/img/logo.png" width="314px" alt="Strapi logo" />
   </a>
 </p>
 <h3 align="center">API creation made simple, secure and fast.</h3>
