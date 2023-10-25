@@ -47,7 +47,7 @@ All content-types now have Draft & publish enabled in the database and in the ad
 
 <!-- TODO: add codemod link -->
 <!-- TODO: add link to strapi upgrade CLI tool documentation -->
-- Strapi provides a [codemod](#) to automatically update all the content-type schemas that are detected by the [`strapi upgrade` tool](#).
+- Strapi provides a [codemods](#) to automatically update all the content-type schemas that are detected by the [`strapi upgrade` tool](#).
 - Plugin developers and users with custom content-types should update content-types.
 - A safety net is provided to avoid breaking changes that would force manual intervention and to avoid breaking the whole Strapi plugins ecosystem:
 
@@ -57,7 +57,7 @@ All content-types now have Draft & publish enabled in the database and in the ad
 ### Manual procedure
 
 :::note
-This procedure is only required if the codemod failed to remove the line automatically.
+This procedure is only required if the codemods failed to remove the line automatically.
 :::
 
 To manually update Strapi v4 code to Strapi v5, update the `schema.json` files of your content-types to remove the `draftAndPublish: true` option line:
