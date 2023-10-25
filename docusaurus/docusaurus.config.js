@@ -161,10 +161,36 @@ const config = {
         },
         items: [
           {
-            type: 'doc',
-            docId: 'dev-docs/intro',
+            type: 'dropdown',
             position: 'left',
             label: 'Developer Docs',
+            items: [
+              {
+                type: "doc",
+                label: "Getting Started",
+                docId: "dev-docs/intro",
+              },
+              {
+                type: "doc",
+                label: "Setup & Deployment",
+                docId: "dev-docs/deployment",
+              },
+              {
+                type: "doc",
+                label: "Content APIs",
+                docId: "dev-docs/api/content-apis",
+              },
+              {
+                type: "doc",
+                label: "Advanced Features",
+                docId: "dev-docs/advanced-features",
+              },
+              {
+                type: "doc",
+                label: "Customization",
+                docId: "dev-docs/customization",
+              },
+            ]
           },
           {
             type: 'doc',
