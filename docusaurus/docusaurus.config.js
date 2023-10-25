@@ -1,100 +1,108 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require("prism-react-renderer/themes/github");
+const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Strapi Documentation',
-  tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs.strapi.io/',
-  baseUrl: '/',
-  onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
-  onBrokenMarkdownLinks: 'throw',
-  favicon: 'https://strapi.io/assets/favicon-32x32.png',
+  title: "Strapi Documentation",
+  tagline: "Design APIs fast, manage content easily.",
+  url: "https://docs.strapi.io/",
+  baseUrl: "/",
+  onBrokenLinks: "throw", // replace with 'throw' to stop building if broken links
+  onBrokenMarkdownLinks: "throw",
+  favicon: "https://strapi.io/assets/favicon-32x32.png",
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
   },
 
   markdown: {
     mermaid: true,
   },
 
-  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
+  themes: ["@docusaurus/theme-live-codeblock", "@docusaurus/theme-mermaid"],
 
   scripts: [
     {
-      src:
-        '/js/hotjar.js',
-      type: 'module',
+      src: "/js/hotjar.js",
+      type: "module",
       async: true,
     },
     {
-      src:
-        '/js/particle.js',
-      type: 'module',
+      src: "/js/particle.js",
+      type: "module",
       async: true,
     },
     {
-      src:
-        '/js/firework.js',
-      type: 'module',
+      src: "/js/firework.js",
+      type: "module",
       async: true,
     },
     {
-      src:
-        '/js/ball.js',
-      type: 'module',
+      src: "/js/ball.js",
+      type: "module",
       async: true,
     },
     {
-      src:
-        '/js/bar.js',
-      type: 'module',
+      src: "/js/bar.js",
+      type: "module",
       async: true,
     },
     {
-      src:
-        '/js/game.js',
-      type: 'module',
+      src: "/js/game.js",
+      type: "module",
       async: true,
     },
     {
-      src: '/js/particleProfiles.js',
-      type: 'module',
+      src: "/js/particleProfiles.js",
+      type: "module",
+      async: true,
+    },
+    {
+      src: "https://widget.kapa.ai/kapa-widget.bundle.js",
+      "data-website-id": "25f91eff-f72f-4739-b9dd-e637e89f582c",
+      "data-project-name": "Strapi",
+      /** Need to figure out if we can dynamically change this based on the theme */
+      "data-project-color": "#181826",
+      /** Need theme controls for the dialog box when you open it */
+      /** Need to figure out how we can change the location or embed the button in the header */
+      /** Need to figure out if we can change the style of the button (more rounded and maybe flatter?) */
+      "data-project-logo":
+        "https://avatars.githubusercontent.com/u/19872173?s=280&v=4",
       async: true,
     },
   ],
   presets: [
     [
-      '@docusaurus/preset-classic',
+      "@docusaurus/preset-classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
         docs: {
-          routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
+          routeBasePath: "/",
+          sidebarPath: require.resolve("./sidebars.js"),
+          editUrl:
+            "https://github.com/strapi/documentation/edit/main/docusaurus",
           admonitions: {
-            tag: ':::',
+            tag: ":::",
             keywords: [
               // Admonitions defaults
-              'note',
-              'tip',
-              'info',
-              'caution',
-              'danger',
+              "note",
+              "tip",
+              "info",
+              "caution",
+              "danger",
 
               // Admonitions custom
-              'callout',
-              'prerequisites',
-              'strapi',
-              'warning',
+              "callout",
+              "prerequisites",
+              "strapi",
+              "warning",
             ],
           },
           /**
@@ -108,24 +116,24 @@ const config = {
         // we're using docs-only mode for now — see https://docusaurus.io/docs/docs-introduction
         blog: false,
         theme: {
-          customCss: require.resolve('./src/scss/__index.scss'),
+          customCss: require.resolve("./src/scss/__index.scss"),
         },
       },
     ],
     [
-      'redocusaurus',
+      "redocusaurus",
       {
         // Plugin Options for loading OpenAPI files
         specs: [
           {
-            spec: 'docs/dev-docs/api/openapi.yaml',
-            route: '/openapi/'
+            spec: "docs/dev-docs/api/openapi.yaml",
+            route: "/openapi/",
           },
         ],
         // Theme Options for modifying how redoc renders them
         theme: {
           // Change with your site colors
-          primaryColor: '#4945FF',
+          primaryColor: "#4945FF",
         },
       },
     ],
@@ -135,11 +143,12 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       announcementBar: {
-      id: 'support_us',
-      content: "You're reading a work-in-progress documentation for the upcoming Strapi v5. <a target='_blank' rel='noopener noreferrer' href='#'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
-      backgroundColor: '#F3E5FA',
-      textColor: '#091E42',
-      isCloseable: true,
+        id: "support_us",
+        content:
+          "You're reading a work-in-progress documentation for the upcoming Strapi v5. <a target='_blank' rel='noopener noreferrer' href='#'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
+        backgroundColor: "#F3E5FA",
+        textColor: "#091E42",
+        isCloseable: true,
       },
       docs: {
         sidebar: {
@@ -148,40 +157,40 @@ const config = {
         },
       },
       algolia: {
-        appId: '392RJ63O14',
-        apiKey: '8cf63dc4a24ff4087407f9f5bd188aae',
-        indexName: 'strapiDocsNextstrapiDocsNext',
+        appId: "392RJ63O14",
+        apiKey: "8cf63dc4a24ff4087407f9f5bd188aae",
+        indexName: "strapiDocsNextstrapiDocsNext",
       },
       navbar: {
         hideOnScroll: false,
         logo: {
-          alt: 'Strapi Documentation Logo',
-          src: 'img/logo-beta.png',
-          srcDark: 'img/logo-beta-dark.png',
+          alt: "Strapi Documentation Logo",
+          src: "img/logo-beta.png",
+          srcDark: "img/logo-beta-dark.png",
         },
         items: [
           {
-            type: 'doc',
-            docId: 'dev-docs/intro',
-            position: 'left',
-            label: 'Developer Docs',
+            type: "doc",
+            docId: "dev-docs/intro",
+            position: "left",
+            label: "Developer Docs",
           },
           {
-            type: 'doc',
-            docId: 'user-docs/intro',
-            position: 'left',
-            label: 'User Guide'
+            type: "doc",
+            docId: "user-docs/intro",
+            position: "left",
+            label: "User Guide",
           },
           {
-            type: 'doc',
-            docId: 'cloud/getting-started/intro',
-            position: 'left',
-            label: 'Strapi Cloud'
+            type: "doc",
+            docId: "cloud/getting-started/intro",
+            position: "left",
+            label: "Strapi Cloud",
           },
           {
-            href: 'https://github.com/strapi/documentation',
-            label: 'GitHub',
-            position: 'right',
+            href: "https://github.com/strapi/documentation",
+            label: "GitHub",
+            position: "right",
           },
           // {
           //   type: 'docsVersionDropdown', // temporarily disabled, enable again when adding versioning, see https://tutorial.docusaurus.io/docs/tutorial-extras/manage-docs-versions
@@ -189,57 +198,57 @@ const config = {
         ],
       },
       footer: {
-        style: 'dark',
+        style: "dark",
         links: [
           {
-            title: 'Docs',
+            title: "Docs",
             items: [
               {
-                label: 'Dev Docs',
-                to: '/dev-docs/intro',
+                label: "Dev Docs",
+                to: "/dev-docs/intro",
               },
               {
-                label: 'User Guide',
-                to: '/user-docs/intro',
+                label: "User Guide",
+                to: "/user-docs/intro",
               },
               {
-                label: 'Strapi Cloud',
-                to: '/cloud/intro'
-              }
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Discord',
-                href: 'https://discord.strapi.io/',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/strapijs',
-              },
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/strapi',
+                label: "Strapi Cloud",
+                to: "/cloud/intro",
               },
             ],
           },
           {
-            title: 'More',
+            title: "Community",
             items: [
               {
-                label: 'Blog',
-                to: 'https://strapi.io/blog',
+                label: "Discord",
+                href: "https://discord.strapi.io/",
               },
               {
-                label: 'GitHub',
-                href: 'https://github.com/strapi/documentation',
+                label: "Twitter",
+                href: "https://twitter.com/strapijs",
               },
               {
-                label: 'Strapi.io',
-                href: 'https://strapi.io',
-              }
+                label: "Stack Overflow",
+                href: "https://stackoverflow.com/questions/tagged/strapi",
+              },
+            ],
+          },
+          {
+            title: "More",
+            items: [
+              {
+                label: "Blog",
+                to: "https://strapi.io/blog",
+              },
+              {
+                label: "GitHub",
+                href: "https://github.com/strapi/documentation",
+              },
+              {
+                label: "Strapi.io",
+                href: "https://strapi.io",
+              },
             ],
           },
         ],
@@ -255,13 +264,13 @@ const config = {
 
   plugins: [
     [
-      '@docusaurus/plugin-google-tag-manager',
+      "@docusaurus/plugin-google-tag-manager",
       {
-        containerId: 'GTM-WT49VGT',
+        containerId: "GTM-WT49VGT",
       },
     ],
-    'docusaurus-plugin-sass',
-    'docusaurus-plugin-image-zoom',
+    "docusaurus-plugin-sass",
+    "docusaurus-plugin-image-zoom",
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
