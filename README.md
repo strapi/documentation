@@ -44,7 +44,7 @@ The following are required if you are submitting pull requests to the documentat
 
 Submitting issues help to improve the documentation. If you find incorrect screenshot(s), instructions, or code examples, or if you discover UX/UI bugs on the website, please use our [documentation issue](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report them. To submit an issue:
 
-1. Verify the issue is only with one of the Strapi documentation websites. Product-related issues, missing Strapi features, and any issues not directly related to the documentation should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+1. Verify the issue is only with one of the Strapi documentation websites. Product-related issues, missing Strapi features, and any issues not directly related to the documentation should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository. Updates to blog posts found at [strapi.io/blog](https://strapi.io/blog) are also outside the scope of the present documentation repository; you can either reach the author of the blog post directly or use the [contact form](https://strapi.io/contact) on Strapi's corporate website if you have questions about blog posts.
 2. Follow the issue template and fill out as much information as you can.
   
 Technical questions should be asked using the following resources:
