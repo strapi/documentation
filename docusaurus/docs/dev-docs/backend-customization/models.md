@@ -657,6 +657,8 @@ To configure a content-type lifecycle hook, create a `lifecycles.js` file in the
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 
+#### Declarative usage
+
 <Tabs groupdId="js-ts">
 
 <TabItem value="js" label="JavaScript">
@@ -703,6 +705,8 @@ export default {
 
 </TabItem>
 </Tabs>
+
+#### Programmatic usage
 
 Using the database layer API, it's also possible to register a subscriber and listen to events programmatically:
 
