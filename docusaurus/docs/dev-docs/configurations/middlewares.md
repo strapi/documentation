@@ -519,7 +519,7 @@ const {
   formats: { prettyPrint, levelFilter },
 } = require('@strapi/logger');
 
-export default [
+export default {
   transports: [
     new winston.transports.Console({
       level: 'http',
@@ -529,7 +529,7 @@ export default [
       ),
     }),
   ],
-];
+};
 ```
 
 </TabItem>
