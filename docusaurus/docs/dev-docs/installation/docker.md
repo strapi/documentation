@@ -15,6 +15,10 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).
 :::
 
+:::danger
+ Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
+:::
+
 The following documentation will guide you through building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
 
 Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
