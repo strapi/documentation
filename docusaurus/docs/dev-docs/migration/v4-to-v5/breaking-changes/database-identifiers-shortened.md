@@ -43,7 +43,7 @@ Database identifiers can't be longer than 53 characters and will be shortened.
 
 ### Notes
 
-- A hashing key will be added when shortening database identifiers to avoid conflicts. It will consist in the first 6 characters of SHA-256. For example, `my_very_very_very_very_very_very_very_too_long_identifier_unique` will be shortened to `my_very_very_very_very_very_very_very_very_a2d3x3_unq` in Strapi v5.
+- A hashing key will be added when shortening database identifiers to avoid conflicts. It will consist in the first 6 characters of SHA-256. For example, `my_very_very_very_very_very_very_very_too_long_identifier_unique` will be shortened to `my_very_very_very_very_very_very_very_very_06a6ab_unq` in Strapi v5.
 - Some suffixes will be used:
 
   | Suffix                 | Short version |
