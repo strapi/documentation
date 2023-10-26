@@ -713,7 +713,7 @@ Using the database layer API, it's also possible to register a subscriber and li
 ```js title="./src/index.js"
 module.exports = {
   async bootstrap({ strapi }) {
-// registering a subscriber
+  // registering a subscriber
     strapi.db.lifecycles.subscribe({
       models: [], // optional;
 
