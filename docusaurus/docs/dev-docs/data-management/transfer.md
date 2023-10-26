@@ -33,7 +33,6 @@ The CLI command consists of the following arguments:
 | `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
-| `--throttle`   | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer.                                                   |
 
 :::caution
 Either `--to` or `--from` is required.
@@ -78,10 +77,9 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 <TabItem value="push" label="Push data to remote">
 
-1. Start the Strapi server for the destination instance.
-2. In a new terminal window, navigate to the root directory of the source instance.
-3. Run the following minimal command to initiate the transfer, ensuring `destinationURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
-
+  1. Start the Strapi server for the destination instance.
+  2. In a new terminal window, navigate to the root directory of the source instance.
+  3. Run the following minimal command to initiate the transfer, ensuring `destinationURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
     <Tabs groupId="yarn-npm">
 
@@ -102,9 +100,9 @@ Initiating a data transfer depends on whether you want to push data to a remote 
     </TabItem>
 
     </Tabs>
-
-4. Add the transfer token when prompted to do so.
-5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the remote Strapi assets and its database. Are you sure you want to proceed?"
+  
+  4. Add the transfer token when prompted to do so.
+  5. Answer **Yes** or **No** to the CLI prompt: "The transfer will delete all of the remote Strapi assets and its database. Are you sure you want to proceed?"
 
 </TabItem>
 
@@ -112,23 +110,23 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 1. Start the Strapi server for the source instance.
 2. In a new terminal window, navigate to the root directory of the destination instance.
-3. Run the following minimal command to initiate the transfer, ensuring `remoteURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
+  3. Run the following minimal command to initiate the transfer, ensuring `remoteURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
   <Tabs groupId="yarn-npm">
 
   <TabItem value="yarn" label="yarn">
 
-```bash
-yarn strapi transfer --from remoteURL
-```
+  ```bash
+  yarn strapi transfer --from remoteURL
+  ```
 
   </TabItem>
 
   <TabItem value="npm" label="npm">
 
-```bash
-npm run strapi transfer -- --from remoteURL
-```
+  ```bash
+  npm run strapi transfer -- --from remoteURL
+  ```
 
   </TabItem>
 
