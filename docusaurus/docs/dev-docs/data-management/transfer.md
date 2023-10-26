@@ -25,7 +25,7 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 The CLI command consists of the following arguments:
 
 | Option         | Description                                                                                                                                  |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------|
 | `--to`         | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)            |
 | `‑‑to‑token`   | Transfer token from the Strapi destination instance.                                                                                         |
 | `--from`       | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) |
@@ -33,6 +33,7 @@ The CLI command consists of the following arguments:
 | `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--throttle`   | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer.                                                   |
 
 :::caution
 Either `--to` or `--from` is required.
