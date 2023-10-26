@@ -31,8 +31,7 @@ Database identifiers could be longer than 53 characters, potentially causing iss
 
 **In Strapi v5**
 
-<!-- TODO: update sentence "also will be changing" → define what changed once we know -->
-Database identifiers can't be longer than 53 characters.
+Database identifiers can't be longer than 53 characters and will be shortened.
 
 </SideBySideColumn>
 
@@ -44,7 +43,7 @@ Database identifiers can't be longer than 53 characters.
 
 ### Notes
 
-- A hashing key will be added when shortening database identifiers to avoid conflicts. It will consist in the first 6 characters of SHA-256.
+- A hashing key will be added when shortening database identifiers to avoid conflicts. It will consist in the first 6 characters of SHA-256. For example, `my_very_very_very_very_very_very_very_too_long_identifier_unique` will be shortened to `my_very_very_very_very_very_very_very_very_a2d3x3_unq` in Strapi v5.
 - Some suffixes will be used:
 
   | Suffix                 | Short version |
