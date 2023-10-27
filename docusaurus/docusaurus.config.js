@@ -206,8 +206,12 @@ const config = {
               },
               {
                 label: 'v3 Docs (unsupported)',
-                to: 'https://docs-v3.strapi.io'
-              }
+                href: 'https://docs-v3.strapi.io'
+              },
+              {
+                label: 'Contributor Docs',
+                href: 'https://contributor.strapi.io'
+              },
             ],
           },
           {
