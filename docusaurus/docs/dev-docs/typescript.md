@@ -91,6 +91,10 @@ yarn strapi ts:generate-types --debug #optional flag to display additional loggi
 Types can be automatically generated on server restart by adding `autogenerate: true` to [the `config/typescript.js|ts` configuration file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript).
 :::
 
+:::tip Tip: Using types in your front-end application
+To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution.
+:::
+
 ## Develop a plugin using TypeScript
 
 New plugins can be generated following the [plugins development documentation](/dev-docs/plugins-development). There are 2 important distinctions for TypeScript applications:
