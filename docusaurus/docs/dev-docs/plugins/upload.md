@@ -174,7 +174,7 @@ export default {
 
 ### Upload request timeout
 
-By default, the `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads. To make it possible for users with slow connections to upload large files, it might be required to increase this timeout limit by setting it in the bootstrapi function that runs before strapi gets started.
+By default, the `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads. To make it possible for users with slow connections to upload large files, it might be required to increase this timeout limit by setting it in the bootstrap function that runs before strapi gets started.
 
 
 <Tabs groupId="js-ts">
