@@ -213,6 +213,7 @@ export default {
 
 </TabItem>
 
+</Tabs>
 
 
 ### Responsive Images
