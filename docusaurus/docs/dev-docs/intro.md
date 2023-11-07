@@ -20,11 +20,11 @@ The documentation for Strapi contains 3 main sections, accessible from the top n
 👉 If you're totally new to **Strapi** <Annotation>**💡 Did you know?**<br />The original purpose of the project was to help Boot**strap** your **API**: that's where the Strapi name comes from and how Strapi was created.<br />Now, Strapi is an **open-source headless CMS** that gives developers the freedom to choose their favorite tools and frameworks and allows editors to manage and distribute their content using their application's admin panel. <br />Based on a plugin system, Strapi is a flexible CMS whose admin panel and API are extensible - and which every part is customizable to match any use case. Strapi also has a built-in user system to manage in detail what the administrators and end users have access to.</Annotation> or if you're a developer who'd like to take the most out of Strapi, the Developer Docs are the place to start! We suggest you to:
 
 1. Head over to the [Quick Start](/dev-docs/quick-start) guide.
-2. Continue your journey through the various Developer Docs sections. The ["How to use the Strapi Developer Docs"](#how-to-use-the-strapi-developer-docs) section gives you an overview of the available topics.
+2. Continue your journey through the various Developer Docs sections. The ["What you will learn"](#what-you-will-learn) section gives you an overview of the available topics.
 
-💡 If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo)!
 
-## How to use the Strapi Developer Docs
+
+## What you will learn
 
 :::prerequisites
 Strapi Developer Docs are mostly intended to developers and assumes some prior knowledge of the JavaScript ecosystem.
@@ -57,4 +57,5 @@ Clicking on any of the following cards will direct you to the introduction page 
 :::tip Tips
 - If you already know exactly what you're searching for, use the search bar at the top or navigate using the table of content.
 - If you prefer learning more about Strapi while looking at the project code structure, you can use the interactive [project structure](/dev-docs/project-structure) page.
+- If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo).
 :::
