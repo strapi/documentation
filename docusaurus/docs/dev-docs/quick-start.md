@@ -234,7 +234,6 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 <!-- TODO: uncomment this one when API token page is ready -->
 <!-- - 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API, -->
-- 👉 discover Strapi's [Content APIs](/dev-docs/api/content-apis), 
+- 👉 discover Strapi's [Content APIs](/dev-docs/api/content-apis),
 - 👉 deploy your project on [Strapi Cloud](/cloud/intro),
-- 👉 learn more about [advanced features](/dev-docs/advanced-features) and [plugins](/dev-docs/plugins),
-- 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization).
+- 👉 or simply learn more about everything Strapi has to offer both for [developers](/dev-docs/intro#what-you-will-learn) and [content managers](/user-docs/intro).
