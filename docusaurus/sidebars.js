@@ -24,6 +24,7 @@ const sidebars = {
         'dev-docs/intro',
         'dev-docs/quick-start',
         'dev-docs/faq',
+        'dev-docs/community',
         'dev-docs/usage-information',
         'dev-docs/glossary',
       ]
