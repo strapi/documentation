@@ -57,7 +57,7 @@ Start a Strapi application with autoReload enabled.
 
 Strapi modifies/creates files at runtime and needs to restart when new files are created. To achieve this, `strapi develop` adds a file watcher and restarts the application when necessary.
 
-Strapi also adds middlewares to support HMR (Hot Module Replacement) for the administration panel. This allows you to customize the administration panel without having to restart the application or run a separate server.
+Strapi also adds middlewares to support HMR (Hot Module Replacement) for the administration panel. This allows you to customize the administration panel without having to restart the application or run a separate server. This is only added when you use the `--watch-admin` command.
 
 ```
 strapi develop
@@ -68,10 +68,10 @@ options: [--no-build |--watch-admin |--browser |--debug |--silent]
   Starts your application with the autoReload enabled
 - **strapi develop --open**<br/>
   Starts your application with the autoReload enabled & open your default browser with the administration panel running.
+- **strapi develop --watch-admin**<br/>
+  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel.
 - [DEPRECATED] **strapi develop --no-build**<br/>
   Starts your application with the autoReload enabled and skip the administration panel build process
-- [DEPRECATED] **strapi develop --watch-admin**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel.
 - [DEPRECATED] **strapi develop --watch-admin --browser 'google chrome'**<br/>
   Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
 
