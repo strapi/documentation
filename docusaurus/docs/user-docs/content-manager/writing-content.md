@@ -47,7 +47,7 @@ Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-
 :::
 
 :::tip Preview and edit your content live on your website
-By installing the [Content Source Map plugin](/dev-docs/plugins/content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence.  
+By installing the [Content Source Map plugin](/dev-docs/plugins/content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence or a [Strapi Cloud](https://strapi.io/pricing-cloud) plan.  
 :::
 
 ### Components
