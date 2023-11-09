@@ -2,7 +2,6 @@
 title: TypeScript
 displayed_sidebar: devDocsSidebar
 description: Learn how you can use Typescript for your Strapi application.
-
 ---
 
 # TypeScript development
@@ -48,20 +47,19 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 1. From your code editor, open the `./src/index.ts` file.
 2. In the `register` method, declare the `strapi` argument as of type `Strapi`:
 
-    ```js title=" ./src/index.ts"
+   ```js title=" ./src/index.ts"
+   import { Strapi } from "@strapi/strapi";
 
-    import { Strapi } from '@strapi/strapi';
+   export default {
+     register({ strapi }: { strapi: Strapi }) {
+       // ...
+     },
+   };
+   ```
 
-    export default {
-      register( { strapi }: { strapi: Strapi }) {
-        // ...
-      },
-    };
-    ```
-
-2. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
-3. Choose `runLifecyclesfunctions` from the list.
-4. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
+3. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
+4. Choose `runLifecyclesfunctions` from the list.
+5. When the `strapi.runLifecyclesFunctions` method is added, a list of available lifecycle types (i.e. `register`, `bootstrap` and `destroy`) are returned by the code editor. Use keyboard arrows to choose one of the lifecycles and the code will autocomplete.
 
 ## Generate typings for project schemas
 
@@ -95,6 +93,18 @@ Types can be automatically generated on server restart by adding `autogenerate: 
 To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution.
 :::
 
+### Fix build issues with the Generated Types
+
+The generated types can be excluded so that the Entity Service doesn't use them and falls back on looser types that don't check the actual properties available in the content types.
+To do that, edit the `tsconfig.json` of the strapi project and add `types/generated/**` to the `exclude` array.
+
+However, if you still want to use the generated types on your project but don't want Strapi to use them, a workaround could be to copy those generated types and paste them outside of the `generated` directory (so that they
+aren't overwritten when the types are regenerated) and remove the `declare module '@strapi/types'` on the bottom of the file.
+
+:::warning
+Even though `@strapi/types` is exposed to the user, it's for internal use only. The intentionally exposed types for user usage are in `@strapi/strapi`, and we strongly encourage users to use them.
+:::
+
 ## Develop a plugin using TypeScript
 
 New plugins can be generated following the [plugins development documentation](/dev-docs/plugins-development). There are 2 important distinctions for TypeScript applications:
@@ -115,10 +125,9 @@ To start Strapi programmatically in a TypeScript project the Strapi instance req
 Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
 ```js title="./server.js"
-
-const strapi = require('@strapi/strapi');
-const app = strapi({ distDir: './dist' });
-app.start(); 
+const strapi = require("@strapi/strapi");
+const app = strapi({ distDir: "./dist" });
+app.start();
 ```
 
 ### Use the `strapi.compile()` function
@@ -126,9 +135,9 @@ app.start();
 The `strapi.compile()` function should be mostly used for developing tools that need to start a Strapi instance and detect whether the project includes TypeScript code. `strapi.compile()` automatically detects the project language. If the project code contains any TypeScript code, `strapi.compile()` compiles the code and returns a context with specific values for the directories that Strapi requires:
 
 ```js
-const strapi = require('@strapi/strapi');
+const strapi = require("@strapi/strapi");
 
-strapi.compile().then(appContext => strapi(appContext).start());
+strapi.compile().then((appContext) => strapi(appContext).start());
 ```
 
 ## Add TypeScript support to an existing Strapi project
@@ -140,70 +149,57 @@ TypeScript support can be added to an existing Strapi project using the followin
 1. Add a `tsconfig.json` file at the project root and copy the following code, with the `allowJs` flag, to the file:
 
 ```json title="./tsconfig.json"
-
 {
-    "extends": "@strapi/typescript-utils/tsconfigs/server",
-    "compilerOptions": {
-      "outDir": "dist",
-      "rootDir": ".",
-      "allowJs": true //enables the build without .ts files
-    },
-    "include": [
-      "./",
-      "src/**/*.json"
-    ],
-    "exclude": [
-      "node_modules/",
-      "build/",
-      "dist/",
-      ".cache/",
-      ".tmp/",
-      "src/admin/",
-      "**/*.test.ts",
-      "src/plugins/**"
-    ]
-   
-  }
-  
+  "extends": "@strapi/typescript-utils/tsconfigs/server",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "allowJs": true //enables the build without .ts files
+  },
+  "include": ["./", "src/**/*.json"],
+  "exclude": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    ".cache/",
+    ".tmp/",
+    "src/admin/",
+    "**/*.test.ts",
+    "src/plugins/**"
+  ]
+}
 ```
 
 2. Add a `tsconfig.json` file in the `./src/admin/` directory and copy the following code to the file:
 
 ```json title="./src/admin/tsconfig.json"
-
 {
-    "extends": "@strapi/typescript-utils/tsconfigs/admin",
-    "include": [
-      "../plugins/**/admin/src/**/*",
-      "./"
-    ],
-    "exclude": [
-      "node_modules/",
-      "build/",
-      "dist/",
-      "**/*.test.ts"
-    ]
-  }
-  
+  "extends": "@strapi/typescript-utils/tsconfigs/admin",
+  "include": ["../plugins/**/admin/src/**/*", "./"],
+  "exclude": ["node_modules/", "build/", "dist/", "**/*.test.ts"]
+}
 ```
 
 3. (optional) Delete the `.eslintrc` and `.eslintignore` files from the project root.
 4. Add an additional `'..'` to the `filename` property in the `database.ts` configuration file (only required for SQLite databases):
 
 ```js title="./config/database.ts"
-
-const path = require('path');
+const path = require("path");
 
 module.exports = ({ env }) => ({
   connection: {
-    client: 'sqlite',
+    client: "sqlite",
     connection: {
-      filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
+      filename: path.join(
+        __dirname,
+        "..",
+        "..",
+        env("DATABASE_FILENAME", ".tmp/data.db")
+      ),
     },
     useNullAsDefault: true,
   },
 });
-
 ```
 
 5. Rebuild the admin panel and start the development server:
