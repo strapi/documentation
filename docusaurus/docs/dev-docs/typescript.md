@@ -96,7 +96,23 @@ To use Strapi types in your front-end application, you can [use a workaround](ht
 ### Fix build issues with the Generated Types
 
 The generated types can be excluded so that the Entity Service doesn't use them and falls back on looser types that don't check the actual properties available in the content types.
-To do that, edit the `tsconfig.json` of the strapi project and add `types/generated/**` to the `exclude` array.
+
+To do that, edit the `tsconfig.json` of the Strapi project and add `types/generated/**` to the `exclude` array.
+
+```json title="./tsconfig.json"
+  // ...
+  "exclude": [
+    "node_modules/",
+    "build/",
+    "dist/",
+    ".cache/",
+    ".tmp/",
+    "src/admin/",
+    "**/*.test.ts",
+    "src/plugins/**",
+    "types/generated/**"
+  ]
+  // ...
 
 However, if you still want to use the generated types on your project but don't want Strapi to use them, a workaround could be to copy those generated types and paste them outside of the `generated` directory (so that they
 aren't overwritten when the types are regenerated) and remove the `declare module '@strapi/types'` on the bottom of the file.
