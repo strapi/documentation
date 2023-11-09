@@ -206,6 +206,14 @@ const config = {
                 label: 'Strapi Cloud',
                 to: '/cloud/intro'
               }
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
+              },
+              {
+                label: 'Contributor Docs',
+                href: 'https://contributor.strapi.io'
+              },
             ],
           },
           {
