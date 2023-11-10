@@ -30,3 +30,6 @@ The following changes affect the databases interacting with your Strapi applicat
 
 - [MySQL v5 support is dropped](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 
+## Strapi objects and methods
+
+- [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)

@@ -294,7 +294,6 @@ const sidebars = {
             }
           ],
         },
-        'dev-docs/database-migrations',
         'dev-docs/testing',
         'dev-docs/error-handling',
       ]
@@ -924,6 +923,7 @@ const sidebars = {
         {
           type: "category",
           label: "Breaking changes",
+          collapsed: true,
           link: {
             type: "doc",
             id: "dev-docs/migration/v4-to-v5/breaking-changes",
@@ -931,6 +931,7 @@ const sidebars = {
           items: [
             {
               type: "category",
+              collapsed: false,
               label: "Content API",
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
@@ -939,8 +940,17 @@ const sidebars = {
             {
               type: "category",
               label: "Database",
+              collapsed: false,
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported'
+              ]
+            },
+            {
+              type: "category",
+              label: "Strapi objects and methods",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/fetch'
               ]
             },
           ]
