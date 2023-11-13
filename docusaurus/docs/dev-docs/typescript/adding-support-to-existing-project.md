@@ -73,7 +73,12 @@ TypeScript support can be added to an existing Strapi project using the followin
     connection: {
       client: 'sqlite',
       connection: {
-        filename: path.join(__dirname, '..','..', env('DATABASE_FILENAME', '.tmp/data.db')),
+        filename: path.join(
+          __dirname,
+          "..",
+          "..",
+          env("DATABASE_FILENAME", ".tmp/data.db")
+        ),
       },
       useNullAsDefault: true,
     },
