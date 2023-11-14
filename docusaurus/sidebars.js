@@ -235,14 +235,14 @@ const sidebars = {
         {
           type: "category",
           label: "Back-end customization",
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: "doc",
               id: "dev-docs/backend-customization",
               label: "Introduction",
-              customProps: {
-                updated: true,
-              },
             },
             {
               type: 'doc',
@@ -262,54 +262,39 @@ const sidebars = {
               type: 'category',
               label: '✨ Examples',
               collapsed: true,
+              customProps: {
+                new: true,
+              },
               items: [
                 {
                   type: 'doc',
                   label: 'Introduction',
                   id: 'dev-docs/backend-customization/examples',
-                  customProps: {
-                    new: true,
-                  }
                 },
                 {
                   type: 'doc',
                   label: 'Authentication',
                   id: 'dev-docs/backend-customization/examples/authentication',
-                  customProps: {
-                    new: true,
-                  }
                 },
                 {
                   type: 'doc',
                   label: 'Services, Controllers',
                   id: 'dev-docs/backend-customization/examples/services-and-controllers',
-                  customProps: {
-                    new: true,
-                  }
                 },
                 {
                   type: 'doc',
                   label: 'Policies',
                   id: 'dev-docs/backend-customization/examples/policies',
-                  customProps: {
-                    new: true,
-                  }
                 },
                 {
                   type: 'doc',
                   label: 'Routes',
                   id: 'dev-docs/backend-customization/examples/routes',
-                  customProps: {
-                    new: true,
-                  }
                 },
                 {
                   type: 'doc',
                   label: 'Global middlewares',
                   id: 'dev-docs/backend-customization/examples/middlewares',
-                  customProps: {
-                    new: true,
-                  }
                 },
               ]
             }
@@ -322,9 +307,6 @@ const sidebars = {
           type: 'doc',
           label: 'Custom fields',
           id: 'dev-docs/custom-fields',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: "doc",
@@ -412,6 +394,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Using plugins',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/using-plugins'
