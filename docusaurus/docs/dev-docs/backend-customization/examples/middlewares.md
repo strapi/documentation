@@ -223,7 +223,7 @@ Additional information can be found in the [middlewares customization](/dev-docs
       }
     
       // Call next to continue with the flow and get to the controller
-      next();
+      await next();
     };
   };
   ```
