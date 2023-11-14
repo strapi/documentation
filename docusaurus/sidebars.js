@@ -614,6 +614,7 @@ const sidebars = {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
         },
+        'user-docs/content-manager/adding-content-to-releases',
       ],
     },
     {
