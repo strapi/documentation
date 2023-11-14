@@ -710,14 +710,14 @@ const sidebars = {
           type: "doc",
           id: "cloud/getting-started/deployment",
           customProps: {
-            updated: false,
+            updated: true,
           },
         },,
         {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
           customProps: {
-            updated: true,
+            updated: false,
           },
         },
         "cloud/getting-started/caching",
@@ -734,7 +734,7 @@ const sidebars = {
           label: "Project Settings",
           id: "cloud/projects/settings",
           customProps: {
-            new: true,
+            new: false,
           },
         },
         'cloud/projects/collaboration',
