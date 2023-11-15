@@ -130,7 +130,7 @@ Before configuring any admin panel customization option, make sure to:
 
 - rename the default `app.example.js` file into `app.js`,
 - and create a new `extensions` folder in `./src/admin/`. Strapi projects already contain by default another `extensions` folder in `./src/` but it is for plugins extensions only (see [Plugins extension](/dev-docs/plugins-extension)).
-  :::
+:::
 
 The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
 
