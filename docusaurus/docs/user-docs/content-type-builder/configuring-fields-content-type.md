@@ -113,7 +113,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 </Tabs>
 
 :::strapi React renderer
-If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) <BetaBadge /> to easily render the content in a React frontend.
+If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
 :::
 
 ### <img width="28" src="/img/assets/icons/ctb_number.svg" /> Number
