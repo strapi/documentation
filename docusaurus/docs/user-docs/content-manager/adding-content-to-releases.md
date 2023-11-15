@@ -13,8 +13,6 @@ Using the [Releases](/user-docs/releases/introduction) feature, you can group se
 Before entries can be added to a release, you must create a release from the [Releases](/user-docs/releases/creating-a-release) page.
 :::
 
-<!-- TODO: add introduction -->
-
 ## Adding multiple entries to a release
 
 Multiple entries can be added to a [release](/user-docs/releases/introduction) from the list view of the Content Manager.
