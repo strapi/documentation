@@ -465,6 +465,7 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/plugins/developing-plugins'
             },
+            'dev-docs/plugins/development/create-a-plugin',
             {
               type: 'doc',
               id: 'dev-docs/api/plugins/admin-panel-api',
