@@ -1,6 +1,7 @@
 ---
 title: Plugin creation & setup
 # description: todo
+pagination_next: dev-docs/plugins/development/plugin-structure
 ---
 
 # Plugin creation and setup
