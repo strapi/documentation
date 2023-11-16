@@ -257,6 +257,11 @@ const config = {
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
+      hubspot: {
+        accountId: 6893032,
+        async: false, // OPTIONAL: sets the async attribute on the script tag, defaults to false
+        defer: false, // OPTIONAL: sets the defer attribute on the script tag, defaults to false
+      },
     }),
 
   plugins: [
@@ -266,6 +271,7 @@ const config = {
         containerId: 'GTM-WT49VGT',
       },
     ],
+    'docusaurus-plugin-hubspot',
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
     /**
