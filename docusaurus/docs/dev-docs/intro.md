@@ -57,5 +57,5 @@ Clicking on any of the following cards will direct you to the introduction page 
 :::tip Tips
 - If you already know exactly what you're searching for, use the search bar at the top or navigate using the table of content.
 - If you prefer learning more about Strapi while looking at the project code structure, you can use the interactive [project structure](/dev-docs/project-structure) page.
-- If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo).
+- If demos are more your thing, feel free to watch the [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo).
 :::
