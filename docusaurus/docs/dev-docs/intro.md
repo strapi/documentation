@@ -29,7 +29,7 @@ The documentation for Strapi contains 3 main sections, accessible from the top n
 :::prerequisites
 Strapi Developer Docs are mostly intended to developers and assumes some prior knowledge of the JavaScript ecosystem.
 
-If, while discovering Strapi, you also make your first steps with JavaScript web development, we encourage you to read more about [JavaScript](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics) and [npm](https://docs.npmjs.com/about-npm), and, if applicable to your project, [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html), before diving deeper into the Strapi Developer Docs.
+If you also make your first steps with JavaScript web development while discovering Strapi, we encourage you to read more about [JavaScript](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics) and [npm](https://docs.npmjs.com/about-npm). If applicable to your project, you can also learn about [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) before diving deeper into the Strapi Developer Docs.
 :::
 
 The table of content of the Strapi Developer Docs displays 7 main categories in an order that should correspond to your journey with the product, from the very first steps to the most advanced aspects of Strapi's usage.
