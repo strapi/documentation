@@ -24,6 +24,7 @@ const sidebars = {
         'dev-docs/intro',
         'dev-docs/quick-start',
         'dev-docs/faq',
+        'dev-docs/community',
         'dev-docs/usage-information',
         'dev-docs/glossary',
       ]
@@ -933,6 +934,10 @@ const sidebars = {
               type: "category",
               collapsed: false,
               label: "Content API",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
               ]
@@ -941,8 +946,13 @@ const sidebars = {
               type: "category",
               label: "Database",
               collapsed: false,
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
               items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported'
+                'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
+                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened'
               ]
             },
             {
