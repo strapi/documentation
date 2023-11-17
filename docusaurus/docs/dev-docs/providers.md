@@ -184,6 +184,10 @@ export default ({ env }) => ({
 
 </TabItem>
 
+:::tip Sendmail
+If you prefer to use Sendmail over Sendgrid, please refer to the [`@strapi/provider-email-sendmail`](https://www.npmjs.com/package/@strapi/provider-email-sendmail) documentation.
+:::
+
 </Tabs>
 
 :::note
