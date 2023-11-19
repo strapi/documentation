@@ -113,6 +113,7 @@ To do that, edit the `tsconfig.json` of the Strapi project and add `types/genera
     "types/generated/**"
   ]
   // ...
+```
 
 However, if you still want to use the generated types on your project but don't want Strapi to use them, a workaround could be to copy those generated types and paste them outside of the `generated` directory (so that they
 aren't overwritten when the types are regenerated) and remove the `declare module '@strapi/types'` on the bottom of the file.
