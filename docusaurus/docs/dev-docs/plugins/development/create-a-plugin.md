@@ -8,9 +8,9 @@ pagination_next: dev-docs/plugins/development/plugin-structure
 
 To start developing a Strapi plugin, you need to:
 
-1. create the plugin using the CLI generator,
+1. create the plugin,
 2. enable the plugin,
-3. install dependencies, build Strapi, and start the server(s).
+3. install dependencies, build the admin panel, and start the server(s).
 
 :::prerequisites
 You created a Strapi project.
@@ -45,10 +45,10 @@ More details can be found in the [CLI installation guide](/dev-docs/installation
 
 ## Create the plugin using the CLI generator
 
-To create a Strapi plugin:
+The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
 
 1. Navigate to the root of an existing Strapi project, or create a new one.
-2. Run the corresponding command in a terminal window to start the interactive CLI:
+2. Run the following command in a terminal window to start the interactive CLI:
 
   <Tabs groupId="yarn-npm">
   <Tab value="yarn" label="Yarn">
@@ -115,9 +115,9 @@ To enable a plugin:
 If you plan to use the plugin outside the Strapi project it was created in, move your plugin file outside the Strapi project and change the `resolve` value to the absolute directory path of your plugin.
 :::
 
-## Install dependencies, build Strapi, and start servers
+## Install dependencies, build the admin panel, and start servers
 
-The procedure to install dependencies and build Strapi slighly differs depending on whether you created a vanilla JavaScript-based plugin or a TypeScript-based plugin (see [step 3](#create-the-plugin-using-the-cli-generator) of the CLI generator instructions).
+Once a plugin boilerplate code has been generated and the plugin is enabled, the next steps slighly differ depending on whether you created a vanilla JavaScript-based plugin or a TypeScript-based plugin (see [step 3](#create-the-plugin-using-the-cli-generator) of the CLI generator instructions).
 
 <Tabs groupId="js-ts">
 
@@ -145,7 +145,7 @@ The procedure to install dependencies and build Strapi slighly differs depending
   </Tab>
   </Tabs>
 
-3. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the plugin and start the server(s):
+3. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
   
   <Tabs groupId="yarn-npm">
   <Tab value="yarn" label="Yarn">
@@ -193,7 +193,7 @@ The procedure to install dependencies and build Strapi slighly differs depending
   </Tab>
   </Tabs>
 
-3. Run the following command:
+3. Still in the plugin directory (e.g., `src/plugins/my-plugin`), run the following command:
 
   <Tabs groupId="yarn-npm">
   <Tab value="yarn" label="Yarn">
@@ -215,7 +215,7 @@ The procedure to install dependencies and build Strapi slighly differs depending
 
   This step transpiles the TypeScript files and outputs the JavaScript files to a `dist` directory that is unique to the plugin.
 
-4. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build Strapi and start the server(s):
+4. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
 
   <Tabs groupId="yarn-npm">
   <Tab value="yarn" label="Yarn">
@@ -240,6 +240,12 @@ The procedure to install dependencies and build Strapi slighly differs depending
 </Tab>
 </Tabs>
 
+The `yarn build` command rebuilds the admin panel, and the `yarn develop` command starts the server. You should now be ready to start developing your plugin. You can either jump to the [plugin structure](/dev-docs/plugins/development/plugin-structure) documentation or read the [servers and hot reloading](#servers-and-hot-reloading) section to learn more about different ways to start the server.
+
+:::info Did you know?
+The admin panel needs to be rebuilt after all significant code modifications, and this is achieved by running the `build` command. The `strapi generate plugin` generates boilerplate code that modifies the admin panel, by adding the plugin to the main navigation and including a basic page for your plugin in the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
+:::
+
 ### Servers and hot reloading
 
 Strapi itself is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
@@ -254,7 +260,7 @@ The server can be started in 2 different ways: you can run the backend server on
 
 #### Start only the backend server
 
-Run the following command:
+To start only the backend server, run the following command:
 
 <Tabs groupId="yarn-npm">
 
@@ -280,7 +286,7 @@ This will run the server on `localhost:1337` and only auto-reload when changes a
 
 #### Start both the backend and admin panel servers
 
-If you are doing development on both the `./server` and `./admin` directories, run the following command:
+If you are doing development on both the `/server` and `/admin` directories of your plugin, run the following command:
 
 <Tabs groupId="yarn-npm">
 
@@ -301,4 +307,4 @@ npm run develop -- --watch-admin
 </Tab>
 </Tabs>
 
-This will host the admin panel and server separately. The server will be on `localhost:1337` as always, however the admin panel will now have hot reloading.
+This will run the server on `localhost:1337` and auto-reload when changes are made to the server or the admin panel of Strapi.

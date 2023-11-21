@@ -29,7 +29,7 @@ export function HeadlessCms() {
         <ul>
           <li>a back-end server exposing an API for your content,</li>
           <li>and a graphical user interface, called the admin panel, to manage the content.</li>
-        </ul>The presentation layer of your website powered by Strapi should be handled by another framework, not by Strapi.
+        </ul>The presentation layer of your website or application powered by Strapi should be handled by another framework, not by Strapi.
       </p>
     </Annotation>
   )
