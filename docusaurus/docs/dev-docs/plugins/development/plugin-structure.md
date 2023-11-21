@@ -8,17 +8,33 @@ import InteractivePluginStructure from '@site/src/components/PluginStructure.js'
 
 # Plugin structure
 
-When [creating a plugin with the CLI generator](/dev-docs/plugins/development/create-a-plugin), this is what Strapi will generate for you in the `./src/plugins/my-plugin` folder:
+When [creating a plugin with the CLI generator](/dev-docs/plugins/development/create-a-plugin), Strapi generates the following boilerplate structure for you in the `./src/plugins/my-plugin` folder:
 
 <!-- TODO: double-check that no files or folders are missing from the displayed hierarchy -->
 <InteractivePluginStructure />
 
-A Strapi plugin is divided into 2 parts: the admin panel part (`/admin` folder) and the backend server part (`/server` folder).
+A Strapi plugin is divided into 2 parts, each living in a different folder and offering a different API:
 
-<!-- TODO: improve this below 👇 -->
-<!-- 
-Server plugin
-You can create a plugin that will just use the server part to enhance the API of your application. We can think of a plugin that will have its own visible or invisible content-types, controller actions, and routes that are useful for a specific use case. In such a scenario, you don't need your plugin to have a specific interface in the admin.
+| Plugin part | Description | Folder | API |
+|-------------|------------|--------------|-----|
+| Admin panel | Includes what will be visible in the [admin panel](/user-docs/intro) | `/admin` |[Admin Panel API](/dev-docs/api/plugins/admin-panel-api)|
+| Backend server | Includes what relates to the [backend server](/dev-docs/backend-customization) (content-types, controllers, middlewares, etc.) |`/server` |[Server API](/dev-docs/api/plugins/server-api)|
 
-Admin plugin
-You can create a plugin just to inject some components into the admin. However, just know that you can basically do this by creating an ./src/admin/app.js file, invoking the bootstrap lifecycle function to inject your components: -->
+<br />
+
+:::note Notes about the usefulness of the different parts for your specific use case
+- **Server-only plugin**: You can create a plugin that will just use the server part to enhance the API of your application, for instance, a plugin with its own visible or invisible content-types, controller actions, and routes that are useful for a specific use case. In such a scenario, you don't need your plugin to have an interface in the admin panel.
+
+- **Admin panel plugin vs. application-specific customization**: You can create a plugin to inject some components into the admin panel. However, you can also achieve this by creating a `./src/admin/app.js` file and invoking the `bootstrap` lifecycle function to inject your components. In this case, deciding whether to create a plugin depends on whether you plan to reuse and distribute the code or if it's only useful for a unique Strapi application.
+:::
+
+<br/>
+
+:::strapi What to read next?
+Once you have created a Strapi plugin and understood what the plugin structure is, the next steps of your Strapi plugin development journey will require you to use any of the Strapi plugins APIs to achieve what you have in mind.
+
+The Strapi plugins development documentation offers 2 different resources:
+
+- The reference documentation for the 2 plugin APIs ([Admin Panel API](/user-docs/intro) and [Server API](/dev-docs/api/plugins/server-api)) give you an understanding of what is possible to do with a Strapi plugin.
+- [Guides](/dev-docs/plugins/developing-plugins#guides) cover some specific, use-case based examples.
+:::
