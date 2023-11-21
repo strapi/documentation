@@ -243,7 +243,7 @@ Once a plugin boilerplate code has been generated and the plugin is enabled, the
 The `yarn build` command rebuilds the admin panel, and the `yarn develop` command starts the server. You should now be ready to start developing your plugin. You can either jump to the [plugin structure](/dev-docs/plugins/development/plugin-structure) documentation or read the [servers and hot reloading](#servers-and-hot-reloading) section to learn more about different ways to start the server.
 
 :::info Did you know?
-The admin panel needs to be rebuilt after all significant code modifications, and this is achieved by running the `build` command. The `strapi generate plugin` generates boilerplate code that modifies the admin panel, by adding the plugin to the main navigation and including a basic page for your plugin in the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
+The admin panel needs to be rebuilt after its code has been modified. Rebuilding the admin panel is done by running the `build` command. The `strapi generate plugin` generates boilerplate code that injects some plugin components (menu link, plugin homepage) into the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
 :::
 
 ### Servers and hot reloading
