@@ -56,8 +56,8 @@ export default function InteractivePluginStructure() {
         │   └── <a href="/dev-docs/api/plugins/server-api#register">register.js</a> <span className="token comment"># Function that is called to load the plugin, before bootstrap.</span><br/>
         ├── package.json<br />
         ├── README.md<br />
-        ├── <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a> <span className="token comment"># Entrypoint for the admin panel (front-end)</span><br/>
-        └── <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a> <span className="token comment"># Entrypoint for the server (back-end)</span><br/>
+        ├── <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a> <span className="token comment"># Entrypoint for the admin panel (front end)</span><br/>
+        └── <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a> <span className="token comment"># Entrypoint for the server (back end)</span><br/>
 
         </code>
       </pre>
@@ -116,8 +116,8 @@ export default function InteractivePluginStructure() {
         ├── custom.d.ts <span className="token comment"># Generated types</span><br/>
         ├── package.json<br />
         ├── README.md<br />
-        ├── <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a> <span className="token comment"># Entrypoint for the admin (front-end)</span><br/>
-        ├── <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a> <span className="token comment"># Entrypoint for the server (back-end)</span><br/>
+        ├── <a href="/dev-docs/api/plugins/admin-panel-api">strapi-admin.js</a> <span className="token comment"># Entrypoint for the admin panel (front end)</span><br/>
+        ├── <a href="/dev-docs/api/plugins/server-api">strapi-server.js</a> <span className="token comment"># Entrypoint for the server (back end)</span><br/>
         ├── tsconfig.json <span className="token comment"># TypeScript compiler options for the admin panel part</span><br />
         └── tsconfig.server.json <span className="token comment"># TypeScript compiler options for the server part</span><br />
         </code>
