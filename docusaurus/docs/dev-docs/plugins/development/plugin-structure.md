@@ -17,7 +17,7 @@ A Strapi plugin is divided into 2 parts, each living in a different folder and o
 
 | Plugin part | Description | Folder | API |
 |-------------|------------|--------------|-----|
-| Admin panel | Includes what will be visible in the [admin panel](/user-docs/intro) | `/admin` |[Admin Panel API](/dev-docs/api/plugins/admin-panel-api)|
+| Admin panel | Includes what will be visible in the [admin panel](/user-docs/intro) (components, navigation, settings, etc.) | `/admin` |[Admin Panel API](/dev-docs/api/plugins/admin-panel-api)|
 | Backend server | Includes what relates to the [backend server](/dev-docs/backend-customization) (content-types, controllers, middlewares, etc.) |`/server` |[Server API](/dev-docs/api/plugins/server-api)|
 
 <br />
@@ -31,10 +31,10 @@ A Strapi plugin is divided into 2 parts, each living in a different folder and o
 <br/>
 
 :::strapi What to read next?
-Once you have created a Strapi plugin and understood what the plugin structure is, the next steps of your Strapi plugin development journey will require you to use any of the Strapi plugins APIs to achieve what you have in mind.
+The next steps of your Strapi plugin development journey will require you to use any of the Strapi plugins APIs.
 
-The Strapi plugins development documentation offers 2 different resources:
+2 different types of resources help you understand how to use the plugin APIs:
 
-- The reference documentation for the 2 plugin APIs ([Admin Panel API](/user-docs/intro) and [Server API](/dev-docs/api/plugins/server-api)) give you an understanding of what is possible to do with a Strapi plugin.
+- The reference documentation for the [Admin Panel API](/dev-docs/api/plugins/admin-panel-api) and [Server API](/dev-docs/api/plugins/server-api) give an overview of what is possible to do with a Strapi plugin.
 - [Guides](/dev-docs/plugins/developing-plugins#guides) cover some specific, use-case based examples.
 :::
