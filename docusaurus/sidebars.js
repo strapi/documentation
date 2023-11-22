@@ -479,6 +479,17 @@ const sidebars = {
             },
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
+            {
+              type: 'category',
+              label: 'Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/plugins/developing-plugins',
+              },
+              items: [
+                'dev-docs/plugins/guides/store-and-access-data',
+              ]
+            }
           ]
         }
       ]
