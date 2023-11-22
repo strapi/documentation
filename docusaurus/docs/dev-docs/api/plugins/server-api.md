@@ -3,18 +3,29 @@ title: Server API for plugins
 sidebar_label: Server API
 displayed_sidebar: devDocsSidebar
 description: Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
-sidebarDepth: 3
-
 ---
 
 # Server API for plugins
 
-A Strapi [plugin](/dev-docs/plugins) can interact with the backend or the [frontend](/dev-docs/api/plugins/admin-panel-api) of the Strapi application. The Server API is about the backend part.
+A Strapi [plugin](/dev-docs/plugins) can interact with both the back end and the [front end](/dev-docs/api/plugins/admin-panel-api) of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
 
-Creating and using a plugin interacting with the Server API consists of 2 steps:
+:::prerequisites
+You have [created a Strapi plugin](/dev-docs/plugins/development/create-a-plugin).
+:::
 
-1. Declare and export the plugin interface within the [`strapi-server.js` entry file](#entry-file)
-2. [Use the exported interface](#usage)
+The Server API includes:
+
+- an [entry file](#entry-file) which export the required interface,
+- [lifecycle functions](#lifecycle-functions),
+- a [configuration](#configuration) API,
+- the ability to add [cron](#cron) jobs,
+- and the ability to [customize all elements of the back-end server](#backend-customization).
+
+Once you have declared and exported the plugin interface, you will be able to [use the plugin interface](#usage).
+
+:::note
+The whole code for the server part of your plugin could live in the `/strapi-server.js|ts` or `/server/index.js|ts` file. However, it's recommended to split the code into different folders, just like the [structure](/dev-docs/plugins/development/plugin-structure) created by the `strapi generate plugin` CLI generator command.
+:::
 
 ## Entry file
 
@@ -81,7 +92,7 @@ module.exports = () => ({
 
 ## Configuration
 
-`config` stores the default plugin configuration.
+`config` stores the default plugin configuration. It loads and validates the configuration inputted from the user within the [`./config/plugins.js` configuration file](/dev-docs/configurations/plugins).
 
 **Type**: `Object`
 
@@ -112,6 +123,10 @@ Once defined, the configuration can be accessed:
 
 - with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
 - or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+
+:::tip
+Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.
+:::
 
 ## Cron
 
@@ -154,6 +169,12 @@ strapi.cron.jobs
 ```
 
 ## Backend customization
+
+All elements of the back-end server of Strapi can be customized through a plugin using the Server API.
+
+:::prerequisites
+To better understand this section, ensure you have read through the [back-end customization](/dev-docs/backend-customization) documentation of a Strapi application.
+:::
 
 ### Content-types
 
