@@ -156,10 +156,6 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "📦 APIs",
-      link: {
-        type: 'doc',
-        id: 'dev-docs/api/content-api'
-      },
       items: [
         {
           type: 'doc',
@@ -222,10 +218,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'APIs for plugins',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/plugins/developing-plugins',
-          },
           collapsed: false,
           items: [
             'dev-docs/api/plugins/admin-panel-api',
