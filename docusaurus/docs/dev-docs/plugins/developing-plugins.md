@@ -17,17 +17,20 @@ Strapi allows the development of plugins that work exactly like the built-in plu
 - used as a local plugin, working only with a specific Strapi project,
 - or submitted to the [Marketplace](https://market.strapi.io) to be shared with the community.
 
-The first step to developing a Strapi plugin is to [create it](/dev-docs/plugins/development/create-a-plugin) using the CLI-based generator.
+👉 To start developing a Strapi plugin:
 
-Once you have understood the [structure of a plugin](/dev-docs/plugins/development/plugin-structure), you will be able to leverage the [plugin APIs](#plugin-apis) to add features to your plugin.
+1. [Create a plugin](/dev-docs/plugins/development/create-a-plugin) using the CLI-based generator.
+2. Learn more about the [structure of a plugin](/dev-docs/plugins/development/plugin-structure).
+3. Get an overview of the [plugin APIs](#plugin-apis) to add features to your plugin.
+4. Read some [guides](#guides) based on your use case(s).
 
 ## Plugin APIs
 
 Strapi provides the following programmatic APIs for plugins to hook into some of Strapi's features:
 
 <CustomDocCardsWrapper>
-<CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/dev-docs/api/plugins/server-api" />
 <CustomDocCard emoji="" title="Admin Panel API" description="Use the Admin Panel API to have your plugin interact with the admin panel of Strapi." link="/dev-docs/api/plugins/admin-panel-api" />
+<CustomDocCard emoji="" title="Server API" description="Use the Server API to have your plugin interact with the backend server of Strapi." link="/dev-docs/api/plugins/server-api" />
 </CustomDocCardsWrapper>
 
 :::strapi Custom fields plugins
