@@ -488,6 +488,7 @@ const sidebars = {
               },
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
+                'dev-docs/plugins/guides/pass-data-from-server-to-admin',
               ]
             }
           ]

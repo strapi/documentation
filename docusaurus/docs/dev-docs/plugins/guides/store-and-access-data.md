@@ -31,7 +31,7 @@ npm run strapi generate content-type
 </Tab>
 </Tabs>
 
-The generator CLI is interactive and asks a few questions about the content-type and the attributes it will contain. Answer the first questions, then for the `Where do you want to add this model?` question, choose the `Add model to existing plugin` option.
+The generator CLI is interactive and asks a few questions about the content-type and the attributes it will contain. Answer the first questions, then for the `Where do you want to add this model?` question, choose the `Add model to existing plugin` option and type the name of the related plugin when asked.
 
 <figure style={{width: '100%', margin: '0' }}>
   <img src="/img/assets/development/generate-plugin-content-type.png" alt="Generating a content-type plugin with the CLI" />
@@ -155,7 +155,7 @@ Once you have created a content-type for your plugin, you can create, read, upda
 A plugin can only interact with data from the `/server` folder. If you need to update data from the admin panel, please refer to the [passing data guide](/dev-docs/plugins/guides/pass-data-from-server-to-admin-panel).
 :::
 
-To create, read, update and delete data, you can use either the [Entity Service API](/dev-docs/api/entity-service) or the [Query Engine API](/dev-docs/api/query-engine). While it's recommended to use the Entity Service API, especially if you need access to components or dynamic zones, the Query Engine API is useful if you need unrestricted access to the underlying database.
+To create, read, update, and delete data, you can use either the [Entity Service API](/dev-docs/api/entity-service) or the [Query Engine API](/dev-docs/api/query-engine). While it's recommended to use the Entity Service API, especially if you need access to components or dynamic zones, the Query Engine API is useful if you need unrestricted access to the underlying database.
 
 Use the `plugin::your-plugin-slug.the-plugin-content-type-name` syntax for content-type identifiers in Entity Service and Query Engine API queries.
 

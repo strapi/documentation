@@ -256,7 +256,7 @@ Strapi itself is **headless** <HeadlessCms />. The admin panel is completely sep
 
 ```mermaid
 graph LR
-    A{Server} -->|Axios Instance| B{Admin Panel}
+    A{Server} -->|Axios instance| B{Admin Panel}
     B --> A
 ```
 
