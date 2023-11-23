@@ -37,4 +37,6 @@ Plugins can also be used to add [custom fields](/dev-docs/custom-fields) to Stra
 ## Guides
 
 <CustomDocCard small emoji="💁" title="How to store and access data from a Strapi plugin" description="" link="/dev-docs/plugins/guides/store-and-access-data" />
+<CustomDocCard small emoji="💁" title="How to create a global plugin middleware" description="" link="/dev-docs/plugins/guides/global-plugin-middleware" />
+<CustomDocCard small emoji="💁" title="How to pass data from the backend server to the admin panel with a plugin" description="" link="/dev-docs/plugins/guides/pass-data-from-server-to-admin-panel" />
 <CustomDocCard small emoji="💁" title="How to submit your plugin to the Strapi Marketplace" description="" link="/dev-docs/plugins/guides/marketplace" />
