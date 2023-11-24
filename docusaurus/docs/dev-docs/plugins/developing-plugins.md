@@ -41,11 +41,9 @@ Plugins can also be used to add [custom fields](/dev-docs/custom-fields) to Stra
 
 <CustomDocCard small emoji="💁" title="How to store and access data from a Strapi plugin" description="" link="/dev-docs/plugins/guides/store-and-access-data" />
 <CustomDocCard small emoji="💁" title="How to pass data from the backend server to the admin panel with a plugin" description="" link="/dev-docs/plugins/guides/pass-data-from-server-to-admin" />
-<CustomDocCard small emoji="💁" title="How to create a global plugin middleware" description="" link="/dev-docs/plugins/guides/global-plugin-middleware" />
-<CustomDocCard small emoji="💁" title="How to submit your plugin to the Strapi Marketplace" description="" link="/dev-docs/plugins/guides/marketplace" />
 
 <br />
 
 :::strapi Additional resources
-The Strapi blog includes a [tutorial series](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-generate-a-plugin-1-6) about creating a Strapi v4 'Todo' plugin.
+The Strapi blog features a [tutorial series](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-generate-a-plugin-3-6) about creating a Strapi v4 'Todo' plugin. The [contributors documentation](https://contributor.strapi.io/) can also include additional information useful while developing a Strapi plugin.
 :::
