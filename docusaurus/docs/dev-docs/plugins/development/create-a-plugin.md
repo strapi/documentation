@@ -1,6 +1,6 @@
 ---
 title: Plugin creation & setup
-# description: todo
+description: Learn how to create a Strapi plugin and how to start the development servers
 pagination_next: dev-docs/plugins/development/plugin-structure
 ---
 

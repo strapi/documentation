@@ -1,6 +1,6 @@
 ---
 title: Plugin structure
-# description: todo
+description: Learn more about the structure of a Strapi plugin
 displayed_sidebar: devDocsSidebar
 ---
 

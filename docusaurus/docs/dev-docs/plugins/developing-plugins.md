@@ -1,6 +1,6 @@
 ---
 title: Developing plugins
-# description: todo
+description: Generation introduction about Strapi plugins development
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
 pagination_next: dev-docs/plugins/development/create-a-plugin
