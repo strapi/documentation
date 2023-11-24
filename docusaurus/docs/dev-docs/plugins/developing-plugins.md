@@ -45,5 +45,5 @@ Plugins can also be used to add [custom fields](/dev-docs/custom-fields) to Stra
 <br />
 
 :::strapi Additional resources
-The Strapi blog features a [tutorial series](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-generate-a-plugin-3-6) about creating a Strapi v4 'Todo' plugin. The [contributors documentation](https://contributor.strapi.io/) can also include additional information useful while developing a Strapi plugin.
+The Strapi blog features a [tutorial series](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-server-customization-4-6) about creating a Strapi v4 'Todo' plugin. The [contributors documentation](https://contributor.strapi.io/) can also include additional information useful while developing a Strapi plugin.
 :::
