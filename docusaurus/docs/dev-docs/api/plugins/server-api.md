@@ -482,42 +482,45 @@ An object with the [middlewares](/dev-docs/configurations/middlewares) the plugi
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/server/middlewares/your-middleware.js"
 
-"use strict";
-
-module.exports = require('./server');
-```
-
-```js title="./src/plugins/my-plugin/server/index.js"
-
-const middlewares = require('./middlewares');
-module.exports = () => ({
-  middlewares,
-});
+/** 
+ * The your-middleware.js file 
+ * declares a basic middleware function and exports it.
+ */
+'use strict';
+module.exports = async (ctx, next) => {
+  console.log("your custom logic")
+  await next();
+}
 ```
 
 ```js title="./src/plugins/my-plugin/server/middlewares/index.js"
 
-const middlewareA = require('./middleware-a');
-const middlewareB = require('./middleware-b');
+/**
+ * The middleware function previously created
+ * is imported from its file and
+ * exported by the middlewares index.
+ */
+'use strict';
+const yourMiddleware = require('./your-middleware');
 
 module.exports = {
-  middlewareA,
-  middlewareB,
+  yourMiddleware
 };
 ```
 
-```js title="./src/plugins/my-plugin/server/middlewares/middleware-a.js"
+```js title="./src/plugins/my-plugin/server/register.js"
 
-module.exports = (options, { strapi }) => {
- return async (ctx, next) => {
-    const start = Date.now();
-    await next();
-    const delta = Math.ceil(Date.now() - start);
+/**
+ * The middleware is called from 
+ * the plugin's register lifecycle function.
+ */
+'use strict';
+const middlewares = require('./middlewares');
 
-    strapi.log.http(`${ctx.method} ${ctx.url} (${delta} ms) ${ctx.status}`);
- };
+module.exports = ({ strapi }) => {
+  strapi.server.use(middlewares.yourMiddleware);
 };
 ```
 
