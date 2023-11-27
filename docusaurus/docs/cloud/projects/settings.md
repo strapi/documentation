@@ -110,7 +110,11 @@ For projects created before the release of the Backup feature in October 2023, t
 
 ### Restoring a backup
 
-If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
+If you need to restore a backup of your project:
+
+1. In the *Backups* section, click on the **Restore backup** button.
+2. In the dialog, choose one of the available backups of your project in the *Choose backup* drop-down.
+3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
 
 ## Variables
 
