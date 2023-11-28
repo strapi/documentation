@@ -148,7 +148,7 @@ export default {
       components: {
         Input: async () =>
           import(
-            /* webpackChunkName: "input-component" */ "./admin/src/components/Input"
+            /* webpackChunkName: "input-component" */ "./components/Input"
           ),
       },
       options: {
@@ -219,7 +219,7 @@ import * as React from "react";
 
 import { useIntl } from "react-intl";
 
-export const Input = React.forwardRef((props, ref) => {
+const Input = React.forwardRef((props, ref) => {
   const { attribute, disabled, intlLabel, name, onChange, required, value } =
     props; // these are just some of the props passed by the content-manager
 
@@ -233,7 +233,7 @@ export const Input = React.forwardRef((props, ref) => {
 
   return (
     <label>
-      {intlLabel}
+      {formatMessage(intlLabel)}
       <input
         ref={ref}
         name={name}
@@ -245,6 +245,8 @@ export const Input = React.forwardRef((props, ref) => {
     </label>
   );
 });
+
+export default Input;
 ```
 
 </details>
