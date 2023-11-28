@@ -20,8 +20,12 @@ From a front-end application, your content can be accessed through Strapi's Cont
 
 REST and GraphQL APIs represent the top-level layers of the Content API exposed to external applications. Strapi also provides 2 lower-level APIs:
 
+<!-- TODO: mention Document Service API here and how it will play with, or replace, the Entity Service API -->
+
 - The [Entity Service API](/dev-docs/api/entity-service) is the recommended API to interact with your application's database within the [backend server](/dev-docs/customization) or through [plugins](/dev-docs/plugins). The Entity Service is the layer that handles Strapi's complex data structures like components and dynamic zones, which the lower-level layers are not aware of.
 - The [Query Engine API](/dev-docs/api/query-engine) interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but should be used only if the Entity Service API does not cover your use case.
+
+<!-- TODO: update diagram to mention Document Service API -->
 
 ```mermaid
   flowchart BT
