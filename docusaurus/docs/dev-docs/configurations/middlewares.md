@@ -488,7 +488,7 @@ const {
   formats: { prettyPrint, levelFilter },
 } = require('@strapi/logger');
 
-module.exports = [
+module.exports = {
   transports: [
     new winston.transports.Console({
       level: 'http',
@@ -498,7 +498,7 @@ module.exports = [
       ),
     }),
   ],
-];
+};
 ```
 
 </TabItem>
@@ -512,19 +512,17 @@ module.exports = [
 import winston from 'winston';
 import { prettyPrint, levelFilter } from 'winston.format';
 
-export default [
-  {
-    transports: [
-      new winston.transports.Console({
-        level: 'http',
-        format: winston.format.combine(
-          levelFilter('http'),
-          prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
-        ),
-      }),
-    ],
-  },
-];
+export default {
+  transports: [
+    new winston.transports.Console({
+      level: 'http',
+      format: winston.format.combine(
+        levelFilter('http'),
+        prettyPrint({ timestamps: 'YYYY-MM-DD hh:mm:ss.SSS' })
+      ),
+    }),
+  ],
+};
 ```
 
 </TabItem>
