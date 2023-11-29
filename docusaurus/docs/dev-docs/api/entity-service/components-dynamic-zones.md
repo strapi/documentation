@@ -4,11 +4,11 @@ description: Use Strapi's Entity Service to create and update components and dyn
 displayed_sidebar: devDocsSidebar
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Creating components and dynamic zones with the Entity Service API
 
-<NotV5 />
+<ESdeprecated />
 
 The [Entity Service](/dev-docs/api/entity-service) is the layer that handles [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones) logic. With the Entity Service API, components and dynamic zones can be [created](#creation) and [updated](#update) while creating or updating entries.
 
