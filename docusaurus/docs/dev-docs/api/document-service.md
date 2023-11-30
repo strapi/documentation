@@ -21,7 +21,7 @@ Syntax: `findOne(id: ID, parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to create. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`published` to find only published documents</li><li>`draft` to find only draft documents</li></ul> | `published` | `published` or `draft` |
+| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | `fields` | | | |
 | `populate` | | |
 
@@ -85,8 +85,8 @@ Syntax:  `findFirst(parameters: Params) => Document`
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale`|  Locale of the documents to find. | Default Locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`published` to find only published documents</li><li>`draft` to find only draft documents</li></ul> | Published | `published` or `draft` |
+| `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
+| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | `fields` | | | |
 | `populate` | | |
 
@@ -138,7 +138,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`published` to find only published documents</li><li>`draft` to find only draft documents</li></ul> | `published` | `published` or `draft` |
+| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | `fields` | |
 | `populate` | |
 | `pagination` | |
@@ -334,7 +334,7 @@ Syntax: `update(parameters: Params) => Document`
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to update, defaults to null, which updates all of the locales at once.<br/><br/> It can also be an array of locales | Default locale | String, array of strings, or `null` |
+| `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which updates all of the document locales at once. | Default locale | String, array of strings, or `null` |
 | `filters` |   |     |    |
 | `populate`   |    |    |
 
@@ -413,7 +413,7 @@ delete(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to delete, defaults to null, which deletes the entire document.<br/><br/> It can also be an array of locales | All locales | String or `null` |
+| `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which deletes all of the document locales at once. | `null`<br/>(all locales) | String or `null` |
 | `filters` |   |     |    |
 | `fields`   |    |    |
 | `populate`   |    |    |
@@ -490,8 +490,8 @@ publish(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| locale | Locale of the documents to publish, defaults to the default locale of the application. | All locales | String |
-| `filters` | Filters to use | | |
+| `locale` | Locale of the documents to publish.<br/><br/>If omitted, publishes all document locales. | All locales | String |
+| `filters` | | | |
 | `fields`  | | | |
 | `populate` | | | |
 
@@ -568,8 +568,8 @@ unpublish(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| locale | Locale of the documents to count, defaults to the default locale of the application. | Default locale | String |
-| `filters` | Filters to use | | |
+| `locale` | Locale of the documents to unpublish.<br/><br/>If omitted, unpublishes all document locales. | All locales | String |
+| `filters` | | | |
 | `fields`  | | | |
 | `populate` | | | |
 
@@ -646,8 +646,8 @@ discardDraft(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| locale | Locale of the documents to discard, defaults to discarding all draft locales. | All locales | String |
-| `filters` | Filters to use | | |
+| `locale` | Locale of the documents to discard.<br/><br/>If omitted, discards all draft locales. | All locales | String |
+| `filters` | | | |
 | `fields`  | | | |
 | `populate` | | | |
 
@@ -709,7 +709,7 @@ await documents(uid).unpublish(id, {});
 #### Unpublish document locales with filters
 
 ```js
-// Only Unpublish locales which title is "Ready to unpublish"
+// Only unpublish locales which title is "Ready to unpublish"
 await documents(uid).unpublish(id, filters: {
   title: 'Ready to unpublish'
 });
@@ -726,7 +726,7 @@ Syntax: `count(parameters: Params) => number`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to count, defaults to the default locale of the application. | All locales | String |
-| `status` | Publication status, can be: <ul><li>published to find only published documents (default)</li><li>draft to find only draft documents</li></ul> | Published | `'published'` or `'draft'` |
+| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | `fields` | | | |
 
 ### Examples
