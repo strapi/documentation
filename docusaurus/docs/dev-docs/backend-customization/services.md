@@ -119,8 +119,8 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 </TabItem>
 </Tabs>
 
-:::strapi Entity Service API
-To get started creating your own services, see Strapi's built-in functions in the [Entity Service API](/dev-docs/api/entity-service) documentation.
+:::strapi Document Service API
+To get started creating your own services, see Strapi's built-in functions in the [Document Service API](/dev-docs/api/document-service) documentation.
 :::
 
 <details>

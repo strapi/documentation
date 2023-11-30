@@ -20,9 +20,9 @@ Before diving deeper into the Query Engine API documentation, it is recommended 
 
 The Strapi backend provides a Query Engine API to interact with the database layer at a lower level. The Query Engine API should mostly be used by plugin developers and developers adding custom business logic to their applications.
 
-👉  In most use cases, it's recommended to use the [Entity Service API](/dev-docs/api/entity-service/) instead of the Query Engine API.
+👉  In most use cases, it's recommended to use the [Document Service API](/dev-docs/api/document-service/) instead of the Query Engine API.
 
-:::strapi Entity Service API vs. Query Engine API
+:::strapi Document Service API vs. Query Engine API
 <EntityQueryKnex components={props.components} />
 :::
 

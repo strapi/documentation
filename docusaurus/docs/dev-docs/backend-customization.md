@@ -29,7 +29,7 @@ A request can travel through the Strapi back end as follows:
 3. The request hits a [route](/dev-docs/backend-customization/routes).<br/>By default, Strapi generates route files for all the content-types that you create (see [REST API documentation](/dev-docs/api/rest)), and more routes can be added and configured.
 4. [Route policies](/dev-docs/backend-customization/policies) act as a read-only validation step that can block access to a route. [Route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
-6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure stored in the database.<br />Interacting with the data represented by the models is handled by the [Entity Service](/dev-docs/api/entity-service) and [Query Engine](/dev-docs/api/query-engine).
+6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure stored in the database.<br />Interacting with the data represented by the models is handled by the [Document Service](/dev-docs/api/document-service) and [Query Engine](/dev-docs/api/query-engine).
 7. The server returns a [response](/dev-docs/backend-customization/requests-responses). The response can travel back through route middlewares and global middlewares before being sent.
 
 Both global and route middlewares include an asynchronous callback function, `await next()`. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the back end:
@@ -60,14 +60,14 @@ graph TB
     routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
     controllerA --"Call Service(s)"--> serviceA{{Service}}
     controllerA --"Don't call Service(s)" --> routeMiddlewareB
-    serviceA --"Call Entity Service" --> entityService{{Entity Service}}
-    serviceA --"Don't call Entity Service" --> controllerB
-    entityService --"Call Query Engine"--> queryEngine{{Query Engine}}
-    entityService --"Don't call Query Engine" --> serviceB
+    serviceA --"Call Document Service" --> documentService{{Document Service}}
+    serviceA --"Don't call Document Service" --> controllerB
+    documentService --"Call Query Engine"--> queryEngine{{Query Engine}}
+    documentService --"Don't call Query Engine" --> serviceB
     queryEngine --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
     lifecyclesBefore[/Lifecycle<br> beforeX\] --> database[(Database)]
     database --> lifecyclesAfter[\Lifecycle<br> afterX/]
-    lifecyclesAfter --> serviceB{{"Service<br/>after Entity Service call"}}
+    lifecyclesAfter --> serviceB{{"Service<br/>after Document Service call"}}
     serviceB --> controllerB{{"Controller<br/>after service call"}}
     controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
     routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
@@ -86,7 +86,7 @@ graph TB
     click controllerB "/dev-docs/backend-customization/controllers"
     click serviceA "/dev-docs/backend-customization/services"
     click serviceB "/dev-docs/backend-customization/services"
-    click entityService "/dev-docs/api/entity-service/"
+    click documentService "/dev-docs/api/Document-service/"
     click lifecyclesBefore "/dev-docs/backend-customization/models#lifecycle-hooks"
     click queryEngine "/dev-docs/api/query-engine/"
     click lifecyclesAfter "/dev-docs/backend-customization/models#lifecycle-hooks"

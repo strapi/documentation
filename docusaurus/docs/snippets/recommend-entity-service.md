@@ -1,3 +1,3 @@
-:::strapi Have you considered the Entity Service API?
- The [Entity Service API](/dev-docs/api/entity-service) is the recommended API to interact with your application's database. Only use QueryEngine if EntityService does not cover your use case.
+:::strapi Have you considered the Document Service API?
+ The [Document Service API](/dev-docs/api/document-service) is the recommended API to interact with your application's database. Only use the Query Engine API if the Document Service API does not cover your use case.
 :::
