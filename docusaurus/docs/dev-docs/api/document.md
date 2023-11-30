@@ -32,3 +32,7 @@ A document in Strapi v5 contains all the variations of a unique piece of content
 | Version         | All the content from the `published` version of the "Biscotte restaurant" document |
 | Document locale | All the content for the `'en'` (i.e., English) locale of the published version of the "Biscotte Restaurant" document |
 | Field           | The content of the `description` field for the 'en' locale of the published version of the "Biscotte Restaurant" document |
+
+:::strapi How to request your content?
+The [Document Service API](/dev-docs/api/document-service) handles accessing all the variations of a document.
+:::
