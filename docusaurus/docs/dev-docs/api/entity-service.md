@@ -7,10 +7,11 @@ displayed_sidebar: devDocsSidebar
 import EntityQueryKnex from '/docs/snippets/entity-query-knex.md'
 import BackendIntroCrosslink from '/docs/snippets/backend-custom-intro-crosslink.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Entity Service API
 
-<NotV5 />
+<ESdeprecated />
 
 :::prerequisites
 Before diving deeper into the Entity Service API documentation, it is recommended that you read the following introductions:

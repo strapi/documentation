@@ -209,25 +209,27 @@ const sidebars = {
             'dev-docs/integrations/vue-js',
           ]
         },
-        'dev-docs/api/document-service',
         {
           type: 'category',
-          label: 'Entity Service API',
+          label: 'Document Service API',
           link: {
             type: 'doc',
-            id: 'dev-docs/api/entity-service',
+            id: 'dev-docs/api/document-service'
+          },
+          customProps: {
+            new: true
           },
           items: [
             {
               type: 'doc',
               label: 'Introduction',
-              id: 'dev-docs/api/entity-service',
+              id: 'dev-docs/api/document'
             },
-            'dev-docs/api/entity-service/crud',
-            'dev-docs/api/entity-service/filter',
-            'dev-docs/api/entity-service/populate',
-            'dev-docs/api/entity-service/order-pagination',
-            'dev-docs/api/entity-service/components-dynamic-zones',
+            {
+              type: 'doc',
+              label: 'API reference',
+              id: 'dev-docs/api/document-service'
+            }
           ]
         },
         {

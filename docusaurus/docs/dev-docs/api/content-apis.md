@@ -22,8 +22,8 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
 
 <!-- TODO: mention Document Service API here and how it will play with, or replace, the Entity Service API -->
 
-- The [Entity Service API](/dev-docs/api/entity-service) is the recommended API to interact with your application's database within the [backend server](/dev-docs/customization) or through [plugins](/dev-docs/plugins). The Entity Service is the layer that handles Strapi's complex data structures like components and dynamic zones, which the lower-level layers are not aware of.
-- The [Query Engine API](/dev-docs/api/query-engine) interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but should be used only if the Entity Service API does not cover your use case.
+- The [Document Service API](/dev-docs/api/document-service) is the recommended API to interact with your application's database within the [backend server](/dev-docs/customization) or through [plugins](/dev-docs/plugins). The Document Service is the layer that handles **documents** <DocumentDefinition /> as well as Strapi's complex data structures like components and dynamic zones.
+- The [Query Engine API](/dev-docs/api/query-engine) interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but should be used only if the Document Service API does not cover your use case.
 
 <!-- TODO: update diagram to mention Document Service API -->
 
@@ -32,8 +32,8 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
       database[(Database)] <--> queryEngine[Query Engine API]
       subgraph Strapi backend
           direction BT
-          queryEngine <--> entityService[Entity Service API]
-          entityService <--> content([Your content])
+          queryEngine <--> documentService[Document Service API]
+          documentService <--> content([Your content])
           content <--> rest[REST API]
           content <--> graphql[GraphQL API]
       end
@@ -41,7 +41,7 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
       graphql <==> frontend
       click rest "/dev-docs/api/rest"
       click graphql "/dev-docs/api/graphql"
-      click entityService "/dev-docs/api/entity-service"
+      click documentService "/dev-docs/api/document-service"
       click queryEngine "/dev-docs/api/query-engine"
 ```
 
@@ -55,7 +55,7 @@ This documentation section includes reference information about the following St
 
 <CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/dev-docs/api/graphql" />
 
-<CustomDocCard emoji="🔃" title="Entity Service API" description="Query your data through the backend server or plugins." link="/dev-docs/api/entity-service" />
+<CustomDocCard emoji="🔃" title="Document Service API" description="Query your data through the backend server or plugins." link="/dev-docs/api/document-service" />
 
 <CustomDocCard emoji="🔃" title="Query Engine API" description="Query your data by interacting directly with the database layer." link="/dev-docs/api/query-engine" />
 
