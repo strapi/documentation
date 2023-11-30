@@ -1,6 +1,6 @@
 ---
 title: Document Service API
-# description: todo
+description: The Document Service API is the recommended way to interact with your content from the back-end server or from plugins.
 displayed_sidebar: devDocsSidebar
 ---
 
@@ -725,7 +725,7 @@ Syntax: `count(parameters: Params) => number`
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| locale | Locale of the documents to count, defaults to the default locale of the application. | All locales | String |
+| `locale` | Locale of the documents to count, defaults to the default locale of the application. | All locales | String |
 | `status` | Publication status, can be: <ul><li>published to find only published documents (default)</li><li>draft to find only draft documents</li></ul> | Published | `'published'` or `'draft'` |
 | `fields` | | | |
 
