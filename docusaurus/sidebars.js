@@ -716,7 +716,7 @@ const sidebars = {
         "cloud/projects/overview",
         {
           type: "doc",
-          label: "Project Settings",
+          label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
             new: false,
@@ -733,7 +733,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "Account Management",
+      label: "Account management",
       items: [
         'cloud/account/settings',
       ]
