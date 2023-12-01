@@ -66,7 +66,7 @@ const config = {
     },
     {
       src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-      'data-website-id': '25f91eff-f72f-4739-b9dd-e637e89f582c',
+      'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
       /** Need to figure out if we can dynamically change this based on the theme */
       'data-project-color': '#181826',
