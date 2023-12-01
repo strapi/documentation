@@ -735,7 +735,8 @@ const sidebars = {
       collapsed: false,
       label: "Account management",
       items: [
-        'cloud/account/settings',
+        'cloud/account/account-settings',
+        'cloud/account/account-billing',
       ]
     },
     {
