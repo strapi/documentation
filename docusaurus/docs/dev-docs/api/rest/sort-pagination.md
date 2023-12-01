@@ -198,7 +198,7 @@ To paginate results by page, use the following parameters:
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
 | `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
-| `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
+| `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | true    |
 
 <SideBySideContainer>
 
