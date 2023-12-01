@@ -711,9 +711,10 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "Projects",
+      label: "Projects management",
       items: [
         "cloud/projects/overview",
+        "cloud/projects/deploys",
         {
           type: "doc",
           label: "Project settings",
