@@ -68,13 +68,7 @@ const config = {
       src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
-      /** Need to figure out if we can dynamically change this based on the theme */
-      'data-project-color': '#181826',
-      /** Need theme controls for the dialog box when you open it */
-      /** Need to figure out how we can change the location or embed the button in the header */
-      /** Need to figure out if we can change the style of the button (more rounded and maybe flatter?) */
-      'data-project-logo':
-        'https://avatars.githubusercontent.com/u/19872173?s=280&v=4',
+      'data-button-hide': 'true',
       async: true,
     },
   ],
