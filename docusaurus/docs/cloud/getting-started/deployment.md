@@ -15,7 +15,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
-* Project(s) source code hosted on [GitHub](https://github.com). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
+* Project(s) source code hosted on [GitHub](https://github.com) or [GitLab](https://about.gitlab.com/). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 :::
 
 ## Logging in to Strapi Cloud
@@ -44,7 +44,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     }}
     />
 
-2. You will be redirected to the first project creation interface. This interface contains 3 steps: choosing a plan, connecting a GitHub repository, and setting up the project.
+2. You will be redirected to the first project creation interface. This interface contains 3 steps: choosing a plan, connecting a git repository, and setting up the project.
 
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
@@ -60,12 +60,12 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to create your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
     :::
 
-4. Connect a GitHub repository to your new Strapi Cloud project.
+4. Connect a GitHub or GitLab repository to your new Strapi Cloud project.
 
     :::strapi Choose your path to create your new Strapi Cloud project!
     Select one of the tabs below depending on how you wish to proceed:
-    - by using a prebuilt template and creating a new GitHub repository to discover Strapi Cloud easily and quickly *(recommended for new users and beginners)*,
-    - or by using your own, already existing GitHub repository and Strapi project.
+    - by using a prebuilt template and creating a new repository on GitHub to discover Strapi Cloud easily and quickly *(recommended for new users and beginners — not available on another provider than GitHub)*,
+    - or by using your own, already existing GitHub or GitLab repository and Strapi project.
     :::
 
     <Tabs groupId="REPO-OPTIONS">
@@ -106,18 +106,20 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
     <TabItem value="OWN-REPO" label="Own existing repo & Strapi project">
 
-    4.a. Click on the **Connect GitHub repositories** button.
+    4.a. (optional) Click on the **Switch git provider** button to import your project from another provider. You will then be asked to choose a provider: either GitHub (default) or GitLab.
+    
+    4.b. Click on the **Connect git repositories** button.
 
     :::tip
     Connect the GitHub account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
     :::
 
-    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud permission to access your repositories (more information in the [GitHub documentation](https://docs.github.com/en/apps/overview)).
+    4.c. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and GitLab documentations).
 
-    4.c. Back in the project creation interface, select your *Account* and a *Repository*. 
+    4.d. Back in the project creation interface, select your *Account* and a *Repository*. 
 
     <ThemedImage
-    alt="Selecting GitHub account and repository"
+    alt="Selecting git account and repository"
     sources={{
         light: '/img/assets/cloud/account-repo-selection.png',
         dark: '/img/assets/cloud/account-repo-selection_DARK.png',
