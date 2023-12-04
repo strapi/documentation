@@ -112,7 +112,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     Connect the GitHub or GitLab account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
     :::
 
-    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and GitLab documentations).
+    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and [GitLab](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications) documentations).
 
     4.c. Back in the project creation interface, select your *Account* and a *Repository*. 
 
