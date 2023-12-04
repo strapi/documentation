@@ -62,9 +62,9 @@ strapi().start();
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="path: ./server.js"
-const strapi = require('@strapi/strapi');
-    const app = strapi({ distDir: '<path_to_your_out_dir>' });
-    app.start();
+const strapi = require("@strapi/strapi");
+const app = strapi({ distDir: "./dist" });
+app.start();
 ```
 
 </TabItem>
