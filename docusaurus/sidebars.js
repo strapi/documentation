@@ -267,7 +267,19 @@ const sidebars = {
           id: 'dev-docs/advanced-features',
         },
         'dev-docs/cli',
-        'dev-docs/typescript',
+        {
+          type: 'category',
+          label: 'TypeScript',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/typescript'
+          },
+          items: [
+            'dev-docs/typescript',
+            'dev-docs/typescript/development',
+            'dev-docs/typescript/adding-support-to-existing-project',
+          ]
+        },
         {
           type: 'doc',
           label: 'Providers',
