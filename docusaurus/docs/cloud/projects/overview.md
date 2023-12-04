@@ -101,7 +101,7 @@ The deployment details page displays the following information:
 * **Status**: Whether the project is **Building**, **Deploying**, **Done**, **Cancelled**, **Build failed**, or **Deploy failed**.
 * **Triggered**: When the deployment was triggered.
 * **Deployed In**: The time it took to deploy the project.
-* **Commit**: The commit used for this deployment. Click the commit SHA to view the commit on GitHub.
+* **Commit**: The commit used for this deployment. Click the commit SHA to view the commit on GitHub/GitLab.
 * **Branch**: The branch used for this deployment.
 * **Logs**: The Build, Deploy, and Runtime logs of the deployment. Click the **copy logs** button to copy the log contents.
 
