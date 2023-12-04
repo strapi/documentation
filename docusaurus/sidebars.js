@@ -341,7 +341,7 @@ const sidebars = {
         },
         "dev-docs/database-migrations",
         "dev-docs/error-handling",
-        "dev-docs/testing",
+        // "dev-docs/testing",
         {
           type: "category",
           label: "Integrations",

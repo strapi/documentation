@@ -13,7 +13,8 @@ In this example we will use [Jest](https://jestjs.io/) Testing Framework with a 
 :::
 
 :::caution
-Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
+- Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
+- This page is a work-in-progress and might be outdated. It will be heavily reworked once Strapi v5 is out.
 :::
 
 ## Install test tools
