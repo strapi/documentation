@@ -8,6 +8,8 @@ displayed_sidebar: devDocsSidebar
 
 A document in Strapi v5 contains all the variations of a unique piece of content.
 
+A single type contains a unique document, and a collection type can contain several documents.
+
 ![](/img/assets/apis/document.png)
 
 - A document can have a `published` version and a `draft` **version**.
@@ -18,9 +20,9 @@ A document in Strapi v5 contains all the variations of a unique piece of content
 
 [FoodAdvisor](https://github.com/strapi/foodadvisor), Strapi's official demo application, is a website listing restaurants around the world. FoodAdvisor's content includes multiple content-types:
 
-- The homepage is a single type. A single type includes a unique document.
-- "Restaurants" is a collection type, and each restaurant is represented as a document in Strapi v5.
-- The "Biscotte Restaurant" is a document, and this document can include all of the following content variations:
+- The homepage is a single type, so there's only one document for the homepage.
+- "Restaurants" is a collection type, and each restaurant (i.e., each item from the collection type) is represented as a document in Strapi v5.
+- The "Biscotte Restaurant" is one of the documents from the "Restaurants" collection type. The "Biscotte Restaurant" document can include all of the following content variations:
   - The "Biscotte Restaurant" document has 2 different versions, a published version that can be seen on the website, and a draft version with updates not ready to be published yet.
   - The published version of the "Biscotte Restaurant" document has 3 document locales: one for English, one for French, and one for Spanish.
   - Each document locale of the "Biscotte Restaurant" document includes multiple fields, such as the name of the restaurant, a short description, and opening hours.
