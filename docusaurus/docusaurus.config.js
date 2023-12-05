@@ -68,7 +68,7 @@ const config = {
       src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
-      'data-button-hide': 'true',
+      // 'data-button-hide': 'true',
       async: true,
     },
   ],
