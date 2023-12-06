@@ -71,8 +71,7 @@ npx @strapi/upgrade patch
 
 During the upgrade process, the project dependencies are updated and installed, and the codemods up until the targeted patch are executed (if any).
 
-
-## Running codemods only
+## Run codemods only
 
 Run the upgrade tool with the `codemods` parameter to execute a utility that allows selecting the codemods to be executed. With this command, only the codemods are run, the dependencies are not updated nor installed.
 
