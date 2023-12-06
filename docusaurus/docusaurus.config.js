@@ -65,10 +65,20 @@ const config = {
       async: true,
     },
     {
+      /**
+       * Kapa AI widget script and parameters
+       */
       src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
+      'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
       // 'data-button-hide': 'true',
+      // 'data-project-color': 'rgb(39, 31, 224)',
+      'data-project-color': 'rgb(131,13,226)',
+      'data-button-text-color': '#fff',
+      'data-modal-header-bg-color': '#D9D8FF',
+      'data-switch-show-icons': 'true',
+      'data-switch-color': '#000',
       async: true,
     },
   ],
