@@ -43,7 +43,7 @@ await strapi.documents('api::.articles.articles').findOne(
 
 <Response>
 
-```json
+```js
 {
   id: documentId,
   locale: 'en', // locale=en (default locale) is the default 
@@ -113,7 +113,7 @@ await strapi.documents('api::.articles.articles').findFirst(
 
 <Response>
 
-```json
+```js
 {
   id: documentId,
   locale: 'en', // locale=en (default locale) is the default 
@@ -168,7 +168,7 @@ await strapi.documents('api::.articles.articles').findMany(
 
 <Response>
 
-```json
+```js
 [
   {
     id: documentId,
@@ -289,9 +289,12 @@ strapi.documents.create(
 
 <Response>
 
-```json
+```js
 { 
- id: documentId, locale: 'es', status: 'draft'
+  id: documentId,
+  locale: 'es',
+  status: 'draft',
+  data: { title: "Titulo" }
 } 
 ```
 
@@ -360,10 +363,15 @@ strapi.documents.update(
 
 <Response>
 
-```json
+```js
 { 
   documents: [
-    { id: documentId, locale: 'es', status: 'draft', // … }
+    {
+      id: documentId,
+      locale: 'es',
+      status: 'draft',
+      // …
+    }
   ] 
 } 
 ```
@@ -434,7 +442,7 @@ strapi.documents.delete(documentId, { locale: 'es'} )
 
 <Response>
 
-```json
+```js
 { 
   versions: [
     { id: documentId, locale: 'es', status: 'draft' }
@@ -516,11 +524,15 @@ strapi.documents.publish(
 
 <Response>
 
-```json
+```js
 {
   id: documentId,
   documents: [
-    { id: documentId, locale: 'en', // …}
+    {
+      id: documentId,
+      locale: 'en',
+      // …
+    }
   ]
 }
 ```
@@ -594,11 +606,15 @@ strapi.documents.unpublish(
 
 <Response>
 
-```json
+```js
 {
   id: documentId,
   documents: [
-    { id: documentId, locale: 'en', // …}
+    { 
+      id: documentId,
+      locale: 'en',
+      // …
+    }
   ]
 }
 ```
@@ -666,25 +682,21 @@ strapi.documents.discard(
     locale: 'en' // Discard english locale draft of document
   }
 );
-
-// Response
-{
-  id: documentId,
-  documents: [
-    { id: documentId, locale: 'en', // …}
-  ]
-}
 ```
 
 </Request>
 
 <Response>
 
-```json
+```js
 {
   id: documentId,
   documents: [
-    { id: documentId, locale: 'en', // …}
+    { 
+      id: documentId,
+      locale: 'en',
+      // …
+    }
   ]
 }
 ```
