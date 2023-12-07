@@ -107,7 +107,7 @@ npx @strapi/upgrade codemods --dry
 
 ### Select a path for the Strapi application folder
 
-When passing the `-p` option you can specify in which folder the Strapi application is located.
+When passing the `-p` or `--project-path` option followed by a valid path you can specify in which folder the Strapi application is located.
 
 Example:
 
