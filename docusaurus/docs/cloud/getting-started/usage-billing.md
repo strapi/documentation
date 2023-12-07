@@ -31,7 +31,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 
 Seats represent the maximum number of users that can access the Strapi admin panel. Each plan comes with a default number of seats. 
 
-You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the **Account Settings** (see [Edit subscription](cloud/account/account-billing.md#edit-subscription)).
+You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the **Account Settings** (see [Edit subscription](/cloud/account/account-billing#edit-subscription)).
 
 There is however a maximum number of seats that can be added per plan:
 
@@ -75,7 +75,7 @@ If you do not resolve the issue within 10 days, your suspended project will be d
 
 #### Project suspension after subscription cancellation
 
-If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](https://docs.strapi.io/cloud/account/settings#edit-subscription)).
+If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/settings#edit-subscription)).
 
 1. Log into the billing modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
 2. Go back to the homepage of the billing modal, listing subscriptions and billing options.
