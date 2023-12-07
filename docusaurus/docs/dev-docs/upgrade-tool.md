@@ -152,7 +152,10 @@ npx @strapi/upgrade --silent
 
 When passing the `--help` option (or its `-h` shorthand), help information is displayed, listing the available options:
 
-Example:
+Examples:
+
+<Tabs>
+<Tab value="upgrade" label="General help for the upgrade tool">
 
 ```bash
 $ npx @strapi/upgrade -h
@@ -165,6 +168,27 @@ Options:
   -d, --debug                        Get more logs in debug mode (default: false)
   -s, --silent                       Don't log anything (default: false)
   -p, --project-path <project-path>  Path to the Strapi project
-  -V, --version                      output the version number
+  -V, --version                      Output the version number
   -h, --help                         Print command line options
 ```
+
+</Tab>
+
+<Tab value="major" label="Specific help for upgrade major">
+
+```bash
+$ npx @strapi/upgrade major -h
+Usage: upgrade major [options]
+
+Upgrade to the next available major version of Strapi
+
+Options:
+  -p, --project-path <project-path>  Path to the Strapi project
+  -n, --dry                          Simulate the upgrade without updating any files (default: false)
+  -d, --debug                        Get more logs in debug mode (default: false)
+  -s, --silent                       Don't log anything (default: false)
+  -h, --help                         Display help for command
+```
+
+</Tab>
+</Tabs>
