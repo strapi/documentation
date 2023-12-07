@@ -88,7 +88,7 @@ The `npx @strapi/upgrade` command can accept the following options:
 | [`-n, --dry`](#simulate-the-upgrade-without-updating-any-files-dry-run)  | Simulate the upgrade without updating any files (default: false) |
 | [`-d, --debug`](#get-detailed-debugging-information)                     | Get more logs in debug mode (default: false)                     |
 | [`-s, --silent`](#execute-the-upgrade-silently)                          | Don't log anything (default: false)                              |
-| [`-p, --project-path`](#select-a-path-for-the-strapi-application-folder) | Path to the Strapi project                                       |
+| [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | Path to the Strapi project                                       |
 | [`-V, --version`](#get-the-current-strapi-version)                       | Output the version number                                        |
 | [`-h, --help`](#get-help)                                                | Print command line options                                       |
 
