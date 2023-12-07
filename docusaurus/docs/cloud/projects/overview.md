@@ -29,13 +29,13 @@ Each project card displays the following information:
 
 
 Each project card also displays a menu icon to access the following options:
-* **Visit App**: to go to the application.
-* **Go to Deploys**: to go to the [*Deploys*](/cloud/projects/deploys) page.
-* **Go to Settings**: to go to the [*Settings*](/cloud/projects/settings) page.
+* **Visit App**: to be redirected to the application
+* **Go to Deploys**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
+* **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
 
-## Accessing a project's details
+## Accessing a project's overview
 
-From the Projects page, click on any project card to access the Overview page of your project. It displays all details such as usage and status information and gives access to deployment history and available settings.
+From the Projects page, click on any project card to access the overview of your project. It displays all details such as usage and status information and gives access to deployment history and available settings.
 
 <ThemedImage
   alt="Project overview"
@@ -55,4 +55,3 @@ From the Overview tab, you can:
 You can also navigate to the following other tabs:
 * *Deploys* and *Runtime logs*, to access the project's deploys history and logs (see [Deploys & Runtime logs](/cloud/projects/deploys))
 * *Settings*, to access the project's settings (see [Project settings](/cloud/projects/settings))
-

@@ -715,6 +715,7 @@ const sidebars = {
       items: [
         "cloud/projects/overview",
         "cloud/projects/deploys",
+        "cloud/projects/deploys-history",
         {
           type: "doc",
           label: "Project settings",
