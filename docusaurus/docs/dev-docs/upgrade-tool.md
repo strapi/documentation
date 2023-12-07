@@ -39,7 +39,7 @@ The upgrade tool allows upgrading to a major, minor, or patch version.
 
 ## Upgrade to a major version
 
-Run the upgrade tool with the `major` parameter to upgrade the project to the latest major version of Strapi:
+Run the upgrade tool with the `major` parameter to upgrade the project to the next major version of Strapi:
 
 ```bash
 npx @strapi/upgrade major
