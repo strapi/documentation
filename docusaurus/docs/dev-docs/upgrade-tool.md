@@ -99,10 +99,10 @@ When passing the `--dry-run` option, the codemods are executed without actually 
 Examples:
 
 ```bash
-npx @strapi/upgrade major --dry-run
-npx @strapi/upgrade minor --dry-run
-npx @strapi/upgrade patch --dry-run
-npx @strapi/upgrade codemods --dry-run
+npx @strapi/upgrade major --dry
+npx @strapi/upgrade minor --dry
+npx @strapi/upgrade patch --dry
+npx @strapi/upgrade codemods --dry
 ```
 
 ### Select a path for the Strapi application folder
