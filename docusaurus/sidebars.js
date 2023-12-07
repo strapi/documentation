@@ -234,6 +234,11 @@ const sidebars = {
               type: 'doc',
               label: 'Filters',
               id: 'dev-docs/api/document-service/filters'
+            },
+            {
+              type: 'doc',
+              label: 'Populate',
+              id: 'dev-docs/api/document-service/populate'
             }
           ]
         },
