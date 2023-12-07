@@ -229,6 +229,11 @@ const sidebars = {
               type: 'doc',
               label: 'API reference',
               id: 'dev-docs/api/document-service'
+            },
+            {
+              type: 'doc',
+              label: 'Filters',
+              id: 'dev-docs/api/document-service/filters'
             }
           ]
         },
