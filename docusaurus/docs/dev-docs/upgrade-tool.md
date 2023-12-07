@@ -157,26 +157,27 @@ Examples:
 <Tabs>
 <Tab value="upgrade" label="General help for the upgrade tool">
 
-```bash
+```sh
 $ npx @strapi/upgrade -h
-Usage: upgrade [options]
-
-Upgrade to the desired version
+Usage: upgrade <command> [options]
 
 Options:
-  --dry-run                          Simulate the upgrade without updating any files (default: false)
-  -d, --debug                        Get more logs in debug mode (default: false)
-  -s, --silent                       Don't log anything (default: false)
-  -p, --project-path <project-path>  Path to the Strapi project
-  -V, --version                      Output the version number
-  -h, --help                         Print command line options
+ -V, --version    output the version number
+ -h, --help       Print command line options
+
+Commands:
+ major [options]  Upgrade to the next available major version of Strapi
+ minor [options]  Upgrade to ...
+ patch [options]  Upgrade to ...
+ help [command]   Print options for a specific command
+
 ```
 
 </Tab>
 
 <Tab value="major" label="Specific help for upgrade major">
 
-```bash
+```sh
 $ npx @strapi/upgrade major -h
 Usage: upgrade major [options]
 
