@@ -89,8 +89,15 @@ The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following 
 | [`-d, --debug`](#get-detailed-debugging-information)                     | Get more logs in debug mode (default: false)                     |
 | [`-s, --silent`](#execute-the-upgrade-silently)                          | Don't log anything (default: false)                              |
 | [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | Path to the Strapi project                                       |
-| [`-V, --version`](#get-the-current-strapi-version)                       | Output the version number                                        |
+
+The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
+
+| Option                                                                   | Description                                                      |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [`-V, --version`](#get-the-current-version)                       | Output the version number                                        |
 | [`-h, --help`](#get-help)                                                | Print command line options                                       |
+
+
 
 ### Simulate the upgrade without updating any files (dry run)
 
