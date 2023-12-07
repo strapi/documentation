@@ -121,9 +121,9 @@ Example:
 npx @strapi/upgrade major -p /path/to/the/Strapi/application/folder
 ```
 
-### Get the current Strapi version
+### Get the current version
 
-When passing the `--version` option (or its `-V` shorthand), the current Strapi version is logged.
+When passing the `--version` option (or its `-V` shorthand), the current version of the upgrade tool is logged.
 
 Example:
 
