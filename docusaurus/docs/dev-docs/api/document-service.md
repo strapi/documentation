@@ -87,6 +87,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
 | `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | `fields` | | | |
 | `populate` | | |
 
@@ -139,6 +140,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
 | `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | `fields` | |
 | `populate` | |
 | `pagination` | |
@@ -422,6 +424,7 @@ delete(id: ID, parameters: Params) => {
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which deletes all of the document locales at once. | `null`<br/>(all locales) | String or `null` |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | `filters` |   |     |    |
 | `fields`   |    |    |
 | `populate`   |    |    |
@@ -499,7 +502,7 @@ publish(id: ID, parameters: Params) => {
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to publish.<br/><br/>If omitted, publishes all document locales. | All locales | String |
-| `filters` | | | |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | `fields`  | | | |
 | `populate` | | | |
 
@@ -581,7 +584,7 @@ unpublish(id: ID, parameters: Params) => {
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to unpublish.<br/><br/>If omitted, unpublishes all document locales. | All locales | String |
-| `filters` | | | |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | `fields`  | | | |
 | `populate` | | | |
 
@@ -663,7 +666,7 @@ discardDraft(id: ID, parameters: Params) => {
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to discard.<br/><br/>If omitted, discards all draft locales. | All locales | String |
-| `filters` | | | |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | `fields`  | | | |
 | `populate` | | | |
 
