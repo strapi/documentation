@@ -109,7 +109,6 @@ Examples:
 npx @strapi/upgrade major --dry
 npx @strapi/upgrade minor --dry
 npx @strapi/upgrade patch --dry
-npx @strapi/upgrade codemods --dry
 ```
 
 ### Select a path for the Strapi application folder
