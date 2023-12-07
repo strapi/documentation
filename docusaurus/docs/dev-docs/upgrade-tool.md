@@ -81,7 +81,7 @@ npx @strapi/upgrade codemods
 
 ## Options
 
-The `npx @strapi/upgrade` command can accept the following options:
+The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following options:
 
 | Option                                                                   | Description                                                      |
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
