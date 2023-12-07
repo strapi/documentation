@@ -94,7 +94,7 @@ The `npx @strapi/upgrade` command can accept the following options:
 
 ### Simulate the upgrade without updating any files (dry run)
 
-When passing the `--dry-run` option, the codemods are executed without actually editing the files. This allows simulating the upgrade of the codebase, checking the outcomes without applying any changes:
+When passing the `--dry-run` option, the codemods are executed without actually editing the files. The package.json will not be modified, and the dependencies will not be re-installed. Using this option allows simulating the upgrade of the codebase, checking the outcomes without applying any changes:
 
 Examples:
 
