@@ -22,8 +22,8 @@ Syntax: `findOne(id: ID, parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to create. | Default locale | String or `undefined` |
 | `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
-| `fields` | | | |
-| `populate` | | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -88,8 +88,8 @@ Syntax:  `findFirst(parameters: Params) => Document`
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
 | `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
-| `fields` | | | |
-| `populate` | | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findfirst-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findfirst-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -141,10 +141,10 @@ Syntax: `findMany(parameters: Params) => Document[]`
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
 | `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
-| `fields` | |
-| `populate` | |
-| `pagination` | |
-| `sort` | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findmany-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findmany-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
+| [`pagination`](/dev-docs/api/document-service/sort-pagination#pagination) | [Paginate](/dev-docs/api/document-service/sort-pagination#pagination) results |
+| [`sort`](/dev-docs/api/document-service/sort-pagination#sort) | [Sort](/dev-docs/api/document-service/sort-pagination#sort) results | | | 
 | `_q` | | |
 
 ### Examples
@@ -265,10 +265,9 @@ Syntax: `create(parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to create. | Default locale | String or `undefined` |
-| `fields` | | |
-| `populate` | | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-create-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-create-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-	
 ### Examples
 
 #### Generic example
@@ -340,8 +339,9 @@ Syntax: `update(parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which updates all of the document locales at once. | Default locale | String, array of strings, or `null` |
-| `filters` |   |     |    |
-| `populate`   |    |    |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-update-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-update-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -425,9 +425,8 @@ delete(id: ID, parameters: Params) => {
 |-----------|-------------|---------|------|
 | `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which deletes all of the document locales at once. | `null`<br/>(all locales) | String or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
-| `filters` |   |     |    |
-| `fields`   |    |    |
-| `populate`   |    |    |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-delete-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-delete-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -503,8 +502,8 @@ publish(id: ID, parameters: Params) => {
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to publish.<br/><br/>If omitted, publishes all document locales. | All locales | String |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
-| `fields`  | | | |
-| `populate` | | | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-publish-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-publish-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -585,8 +584,8 @@ unpublish(id: ID, parameters: Params) => {
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to unpublish.<br/><br/>If omitted, unpublishes all document locales. | All locales | String |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
-| `fields`  | | | |
-| `populate` | | | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-unpublish-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-unpublish-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -667,8 +666,8 @@ discardDraft(id: ID, parameters: Params) => {
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to discard.<br/><br/>If omitted, discards all draft locales. | All locales | String |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
-| `fields`  | | | |
-| `populate` | | | |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-discarddraft-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-discarddraft-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -742,7 +741,7 @@ Syntax: `count(parameters: Params) => number`
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to count, defaults to the default locale of the application. | All locales | String |
 | `status` | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
-| `fields` | | | |
+| [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 
 ### Examples
 
