@@ -239,7 +239,17 @@ const sidebars = {
               type: 'doc',
               label: 'Populate',
               id: 'dev-docs/api/document-service/populate'
-            }
+            },
+            {
+              type: 'doc',
+              label: 'Select',
+              id: 'dev-docs/api/document-service/select'
+            },
+            {
+              type: 'doc',
+              label: 'Sort & Pagination',
+              id: 'dev-docs/api/document-service/sort-pagination'
+            },
           ]
         },
         {
