@@ -200,7 +200,7 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 
 </Tabs>
 
-The service is now available through the `strapi.service('api::restaurant.restaurant').sendNewsletter(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
+The service is now available through the `strapi.services('api::restaurant.restaurant').sendNewsletter(...args)` global variable. It can be used in another part of the codebase, like in the following controller:
 
 <Tabs groupId="js-ts">
 
@@ -214,10 +214,10 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
     const { userData } = ctx.body;
 
     // Store the new user in database.
-    const user = await strapi.service('plugin::users-permissions.user').add(userData);
+    const user = await strapi.services('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.services('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
@@ -239,10 +239,10 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
     const { userData } = ctx.body;
 
     // Store the new user in database.
-    const user = await strapi.service('plugin::users-permissions.user').add(userData);
+    const user = await strapi.services('plugin::users-permissions.user').add(userData);
 
     // Send an email to validate his subscriptions.
-    strapi.service('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
+    strapi.services('api::restaurant.restaurant').sendNewsletter('welcome@mysite.com', user.email, 'Welcome', '...');
 
     // Send response to the server.
     ctx.send({
@@ -413,9 +413,9 @@ Once a service is created, it's accessible from [controllers](/dev-docs/backend-
 
 ```js
 // access an API service
-strapi.service('api::apiName.serviceName').FunctionName();
+strapi.services('api::apiName.serviceName').FunctionName();
 // access a plugin service
-strapi.service('plugin::pluginName.serviceName').FunctionName();
+strapi.services('plugin::pluginName.serviceName').FunctionName();
 ```
 
 In the syntax examples above, `serviceName` is the name of the service file for API services or the name used to export the service file to `services/index.js` for plugin services.
