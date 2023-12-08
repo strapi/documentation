@@ -1,13 +1,16 @@
 ---
 title: Using Populate with the Document Service API
-description: Use Strapi's Document Service API to populate or select certain fields.
-sidebarDepth: 3
+description: Use Strapi's Document Service API to populate or select some fields.
 displayed_sidebar: devDocsSidebar
 ---
 
 # Document Service API: Populating fields
 
-By default Strapi will not populate any type of fields. The [Document Service API](/dev-docs/api/document-service) offers the ability to populate results.
+By default the [Document Service API](/dev-docs/api/document-service) does not populate any relations, media fields, components, or dynamic zones. This page describes how to use the populate parameter to [`populate`](#populate) specific fields.
+
+:::tip
+You can also use the `select` parameter to return only specific fields with the query results (see the [`select` parameter](/dev-docs/api/document-service/select) documentation).
+:::
 
 :::caution
 If the Users & Permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
