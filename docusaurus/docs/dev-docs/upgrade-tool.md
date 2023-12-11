@@ -45,7 +45,7 @@ Run the upgrade tool with the `major` parameter to upgrade the project to the ne
 npx @strapi/upgrade major
 ```
 
-During the upgrade process, the application dependencies are updated and installed, and the codemods up until the targeted major version are executed.
+During the upgrade process, the application dependencies are updated and installed, and the related codemods are executed.
 
 :::note
 If your application is not already running the latest minor and patch version in the current major, the `major` upgrade is prevented, and you will first need to upgrade to the latest [minor.patch](#upgrade-to-a-minor-version) version in the current major version. This means that moving from v4.14.4 to v5.0.0 is a 2-step process because the latest v4 version is v4.16.2.
@@ -59,17 +59,17 @@ Run the upgrade tool with the `minor` parameter to upgrade the project to the la
 npx @strapi/upgrade minor
 ```
 
-During the upgrade process, the project dependencies are updated and installed, and the codemods up until the targeted patch are executed (if any).
+During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
 
 ## Upgrade to a patch version
 
-Run the upgrade tool with the `patch` parameter to upgrade the project to the latest major version of Strapi:
+Run the upgrade tool with the `patch` parameter to upgrade the project to the latest patch version in the current minor and major version of Strapi:
 
 ```bash
 npx @strapi/upgrade patch
 ```
 
-During the upgrade process, the project dependencies are updated and installed, and the codemods up until the targeted patch are executed (if any).
+During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
 
 <!-- ## Run codemods only
 
