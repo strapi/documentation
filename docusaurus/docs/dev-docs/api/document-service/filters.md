@@ -46,7 +46,7 @@ Negates the nested condition(s).
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').find({
   filters: {
     title: {
       $not: {
@@ -64,7 +64,7 @@ Attribute equals input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $eq: 'Hello World',
@@ -76,7 +76,7 @@ const entries = await strapi.documentService.findMany('api::article.article', {
 `$eq` can be omitted:
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: 'Hello World',
   },
@@ -90,7 +90,7 @@ Attribute equals input value (case-insensitive).
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $eqi: 'HELLO World',
@@ -106,7 +106,7 @@ Attribute does not equal input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $ne: 'ABCD',
@@ -122,7 +122,7 @@ Attribute does not equal input value (case-insensitive).
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $nei: 'abcd',
@@ -138,7 +138,7 @@ Attribute is contained in the input list.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $in: ['Hello', 'Hola', 'Bonjour'],
@@ -150,7 +150,7 @@ const entries = await strapi.documentService.findMany('api::article.article', {
 `$in` can be omitted when passing an array of values:
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: ['Hello', 'Hola', 'Bonjour'],
   },
@@ -164,7 +164,7 @@ Attribute is not contained in the input list.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notIn: ['Hello', 'Hola', 'Bonjour'],
@@ -180,7 +180,7 @@ Attribute is less than the input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $lt: 10,
@@ -196,7 +196,7 @@ Attribute is less than or equal to the input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $lte: 10,
@@ -212,7 +212,7 @@ Attribute is greater than the input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $gt: 5,
@@ -228,7 +228,7 @@ Attribute is greater than or equal to the input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $gte: 5,
@@ -244,7 +244,7 @@ Attribute is between the 2 input values, boundaries included (e.g., `$between[1,
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     rating: {
       $between: [1, 20],
@@ -260,7 +260,7 @@ Attribute contains the input value (case-sensitive).
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $contains: 'Hello',
@@ -276,7 +276,7 @@ Attribute does not contain the input value (case-sensitive).
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notContains: 'Hello',
@@ -292,7 +292,7 @@ Attribute contains the input value. `$containsi` is not case-sensitive, while [$
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $containsi: 'hello',
@@ -308,7 +308,7 @@ Attribute does not contain the input value. `$notContainsi` is not case-sensitiv
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notContainsi: 'hello',
@@ -324,7 +324,7 @@ Attribute starts with input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $startsWith: 'ABCD',
@@ -340,7 +340,7 @@ Attribute ends with input value.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $endsWith: 'ABCD',
@@ -356,7 +356,7 @@ Attribute is `null`.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $null: true,
@@ -372,7 +372,7 @@ Attribute is not `null`.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $notNull: true,
@@ -390,7 +390,7 @@ All nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $and: [
       {
@@ -407,7 +407,7 @@ const entries = await strapi.documentService.findMany('api::article.article', {
 `$and` will be used implicitly when passing an object with nested conditions:
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: 'Hello World',
     createdAt: { $gt: '2021-11-17T14:28:25.843Z' },
@@ -422,7 +422,7 @@ One or many nested conditions must be `true`.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $or: [
       {
@@ -443,7 +443,7 @@ Negates the nested conditions.
 **Example**
 
 ```js
-const entries = await strapi.documentService.findMany('api::article.article', {
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     $not: {
       title: 'Hello World',
