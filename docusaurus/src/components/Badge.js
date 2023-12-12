@@ -52,6 +52,16 @@ export function BetaBadge(props) {
   );
 }
 
+export function FutureBadge(props) {
+  return (
+    <Badge
+      variant="Future"
+      link="/dev-docs/configurations/future-flags"
+      {...props}
+    />
+  );
+}
+
 export function EnterpriseBadge(props) {
   return (
     <Badge
