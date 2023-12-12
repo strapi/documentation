@@ -302,7 +302,7 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
   "data": {
     "title": "Hello",
     "relation_field_a": 2,
-    "relation_b": [2, 4],
+    "relation_field_b": [2, 4],
   }
 }
 ```
