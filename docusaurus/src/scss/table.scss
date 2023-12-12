@@ -1,6 +1,7 @@
 /** Component: Table */
 table {
   min-width: 100%;
+  overflow: initial; // helps to use <Annotation> component inside a Table
 
   thead {
     --ifm-table-background: transparent;
