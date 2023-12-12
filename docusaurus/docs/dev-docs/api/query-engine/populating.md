@@ -43,24 +43,21 @@ Complex populating can also be achieved by applying `where` filters and select o
 
 ```js
 strapi.db.query('api::article.article').findMany({
-  populate: {
+  where: {
     relationA: {
-      where: {
-        name: {
-          $contains: 'Strapi',
-        },
+      name: {
+        $contains: 'Strapi',
       },
     },
+  },
 
-    repeatableComponent: {
-      select: ['someAttributeName'],
-      orderBy: ['someAttributeName'],
-      populate: {
-        componentRelationA: true,
-      },
+  repeatableComponent: {
+    select: ['someAttributeName'],
+    orderBy: ['someAttributeName'],
+    populate: {
+      componentRelationA: true,
+      dynamiczoneA: true,
     },
-
-    dynamiczoneA: true,
   },
 });
 ```
