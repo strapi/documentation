@@ -86,6 +86,7 @@ const sidebars = {
             'dev-docs/configurations/public-assets',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/rbac',
+            'dev-docs/configurations/future-flags',
           ],
         },
         {
@@ -1026,6 +1027,7 @@ const sidebars = {
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
+            'dev-docs/configurations/future-flags',
           ]
         },
         {

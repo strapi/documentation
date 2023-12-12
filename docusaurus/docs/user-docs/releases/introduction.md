@@ -3,7 +3,7 @@ title: Introduction to Releases
 # description: todo
 ---
 
-# Releases
+# Releases <FutureBadge />
 
 Releases enable content managers to group several entries to publish/unpublish them simultanously. Entries can be grouped by content type or locale, facilitating review and editing before publication.
 
