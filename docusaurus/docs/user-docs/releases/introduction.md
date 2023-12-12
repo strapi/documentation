@@ -3,7 +3,11 @@ title: Introduction to Releases
 # description: todo
 ---
 
-# Releases <FutureBadge />
+# Releases <FutureBadge /> <EnterpriseBadge />
+
+:::strapi Future flag
+Releases is currently only available as an experimental, future flag for <EnterpriseBadge /> users. See [future flags](/dev-docs/configurations/future-flags) documentation for instructions on how to enable a future flag.
+:::
 
 Releases enable content managers to group several entries to publish/unpublish them simultanously. Entries can be grouped by content type or locale, facilitating review and editing before publication.
 
