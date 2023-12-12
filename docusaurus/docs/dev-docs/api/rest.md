@@ -239,7 +239,7 @@ While creating an entry, you can define its relations and their order (see [Mana
 {
   "data": {
     "title": "Hello",
-    "relation_a": 2,
+    "relation_field_a": 2,
     "relation_b": [2, 4],
     "link": {
       "id": 1,
