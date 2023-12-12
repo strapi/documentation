@@ -6,6 +6,7 @@
   --strapi-docs-annotation-toggle-background-active: var(--custom-selection-background-color);
   --strapi-docs-annotation-tooltip-left: calc(var(--ifm-spacing-horizontal) * 2);
   --strapi-docs-annotation-tooltip-right: calc(var(--ifm-spacing-horizontal) * 2);
+  --strapi-docs-annotation-z-index: 20;
 
   position: var(--strapi-docs-annotation-position);
 
@@ -26,7 +27,7 @@
     margin: 0;
     padding: var(--strapi-spacing-2);
     margin: calc(var(--strapi-spacing-1) * -1) calc(var(--strapi-spacing-1) * -0.5);
-    z-index: 20;
+    z-index: var(--strapi-docs-annotation-toggle-z-index, var(--strapi-docs-annotation-z-index));
 
     &:before {
       --strapi-docs-annotation-toggle-background-distance: calc(var(--strapi-spacing-1) / 1.5);
@@ -67,7 +68,7 @@
     top: var(--strapi-docs-annotation-tooltip-top);
     left: var(--strapi-docs-annotation-tooltip-left, var(--ifm-spacing-horizontal));
     right: var(--strapi-docs-annotation-tooltip-right, var(--ifm-spacing-horizontal));
-    z-index: 10;
+    z-index: calc(var(--strapi-docs-annotation-z-index) + 1);
     background: var(--ifm-background-color);
     color: var(--ifm-font-color-base);
     font-size: 90%;
