@@ -449,6 +449,7 @@ DATABASE_PASSWORD=strap1
 DATABASE_SSL=false
 ```
 
+
 </TabItem>
 
 <TabItem value="postgres" label="PostgreSQL">
@@ -478,6 +479,10 @@ DATABASE_FILENAME=.tmp/data.db
 
 </TabItem>
 </Tabs>
+
+:::tip
+If you are getting an `ER_ACCESS_DENIED_ERROR message` and the `DATABASE_PASSWORD` value in your `.env` file includes special characters, try surrounding the password with single quotes. For instance, `DATABASE_PASSWORD=example-i-had-special-chars-like-#` should become `DATABASE_PASSWORD='example-i-had-special-chars-like-#'`.
+:::
 
 ### Environment variables for Strapi applications before `v4.6.2`
 
