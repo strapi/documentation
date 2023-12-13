@@ -8,7 +8,7 @@ description: Enable experimental Strapi features
 
 Some incoming Strapi features are not yet ready to be shipped to all users, but we want to offer community users the opportunity to provide early feedback on these new features or changes.
 
-Such experimental features are indicated by a <FutureBadge /> throughout the documentation and are named **future flags**.
+Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and are named **future flags**.
 :::danger
 Enable and use future flags at your own risk. These features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
 :::
@@ -20,8 +20,8 @@ Future flags can also be utilized for enabling coming breaking changes in upcomi
 To enable a future flag:
 
 0. (_optional_) If the server is running, stop it with `Ctrl-C`.
-1. Open the `config/features.js|ts` file or create it if the file does not exist yet.
-2. The file will export a `future` object with all the future flags to enable. To enable a future flag, add its property (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. 
+1. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable. 
+2. To enable a future flag, add its property (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `contentReleases` future flag:
 
   <Tabs groupId='js-ts'>
 
@@ -30,6 +30,7 @@ To enable a future flag:
   ```ts title="/config/features.ts"
   module.export = ({ env }) => ({
     future: {
+      // You could also simply write: contentReleases: true
       contentReleases: env.bool('STRAPI_FEATURES_FUTURE_CONTENT_RELEASES', false),
     },
   })
@@ -51,6 +52,7 @@ To enable a future flag:
   ```ts title="/config/features.ts"
   export default {
     future: {
+      // You could also simply write: contentReleases: true
       contentReleases: env.bool('STRAPI_FEATURES_FUTURE_CONTENT_RELEASES', false),
     },
   };
