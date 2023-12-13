@@ -20,8 +20,8 @@ Future flags can also be utilized for enabling coming breaking changes in upcomi
 To enable a future flag:
 
 0. (_optional_) If the server is running, stop it with `Ctrl-C`.
-1. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable. 
-2. To enable a future flag, add its property (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `contentReleases` future flag:
+1. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable.
+2. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `contentReleases` future flag:
 
   <Tabs groupId='js-ts'>
 
@@ -102,5 +102,3 @@ The following future flags are currently available and can be used in the `futur
 | Property name     | Related feature                              | Suggested environment variable name       |
 | ----------------- | -------------------------------------------- | ----------------------------------------- |
 | `contentReleases` | [Releases](/user-docs/releases/introduction) | `STRAPI_FEATURES_FUTURE_CONTENT_RELEASES` |
-
-
