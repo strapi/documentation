@@ -19,7 +19,7 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 :::caution
 
 * If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
-* Admin users and API tokens are not exported.
+* Admin users and API tokens are not transferred.
 * Media from a 3rd party provider (e.g., Cloudinary or AWS S3) are not included in the transfer as those files do not exist in the upload folders.
 :::
 
