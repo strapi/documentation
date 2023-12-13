@@ -158,7 +158,7 @@ The `config` object accepts the following parameters:
 ```jsx title="./my-app/src/admin/app.js"
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
-import favicon from "./extensions/favicon.ico";
+import favicon from "./extensions/favicon.png";
 
 export default {
   config: {
@@ -222,7 +222,7 @@ export default {
 ```jsx title="./my-app/src/admin/app.ts"
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
-import favicon from "./extensions/favicon.ico";
+import favicon from "./extensions/favicon.png";
 
 export default {
   config: {
