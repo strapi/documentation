@@ -67,12 +67,14 @@ const config = {
     {
       /**
        * Kapa AI widget script and parameters
+       * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
        */
       src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
       // 'data-button-hide': 'true',
+      'data-modal-disclaimer': 'Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
       async: true,
