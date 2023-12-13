@@ -51,7 +51,7 @@ The `ctx.request` object contains the following parameters:
 | `ctx.request.ips`     | When `X-Forwarded-For` is present and `app.proxy` is enabled, an array of IPs is returned, ordered from upstream to downstream. <br /><br />For example if the value were "client, proxy1, proxy2", you would receive the `["client", "proxy1", "proxy2"]` array. | `Array` |
 | `ctx.request.method`  | Request method (e.g., `GET`, `POST`). | `String` |
 | `ctx.request.origin`  | URL part before the first `/`. | `String` |
-| `ctx.request.params`  | Query parameters sent in the URL.<br /><br/>For example, if the request URL includes includes something like `/restaurants?id`, the `?id` part creates an `id` parameter accessible through `ctx.request.params.id`. | `Object` |
+| `ctx.request.params`  | Parameters sent in the URL.<br /><br/>For example, if the internal URL is `/restaurants/:id`, whatever you replace `:id` in the real request becomes accessible through `ctx.request.params.id`. | `Object` |
 | `ctx.request.path`    | Path of the requested resource, excluding the query parameters. | `String` |
 | `ctx.request.protocol`| Protocol being used (e.g., `https` or `http`). | `String` |
 | `ctx.request.query`   | Strapi-specific [query parameters](#ctxrequestquery). | `Object` |

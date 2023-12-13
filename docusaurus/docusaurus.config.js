@@ -88,8 +88,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/strapi/documentation/edit/main/docusaurus',
+          // TODO: update 'v5/mvp' to v5 once it's on docs-next, and then back to 'main' for the stable release
+          editUrl: 'https://github.com/strapi/documentation/edit/v5/mvp/docusaurus',
           admonitions: {
             tag: ':::',
             keywords: [
@@ -215,7 +215,19 @@ const config = {
               },
               {
                 label: 'Strapi Cloud',
-                to: '/cloud/intro',
+                to: '/cloud/intro'
+              },
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
+              },
+              {
+                label: 'v4 Docs',
+                href: 'https://docs.strapi.io'
+              },
+              {
+                label: 'Contributor Docs',
+                href: 'https://contributor.strapi.io'
               },
             ],
           },

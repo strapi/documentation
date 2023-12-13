@@ -9,16 +9,26 @@
 
 ---
 
-If you are looking for the Strapi code, please see the [Strapi Monorepo](https://github.com/strapi/strapi). This Repo is only for our [documentation](https://docs.strapi.io).
+If you are looking for the Strapi code, please see the [Strapi Monorepo](https://github.com/strapi/strapi). The present repository is only for the official Strapi documentation hosted at [docs.strapi.io](https://docs.strapi.io). Blog articles hosted at [strapi.io/blog](https://strapi.io/blog) and [community content](https://github.com/strapi/community-content) are not covered by the present repository either.
 
 ---
 
-Strapi is a free and open-source headless CMS delivering your content anywhere you need.
+Strapi is a free and open-source headless CMS that delivers your content anywhere you need.
 
 - **Keep control over your data**. With Strapi, you know where your data is stored, and you keep full control at all times.
 - **Self-hosted**. You can host and scale Strapi projects the way you want. You can choose any hosting platform you want: AWS, Netlify, Heroku, a VPS, or a dedicated server. You can scale as you grow, 100% independent.
 - **Database agnostic**. You can choose the database you prefer. Strapi works with SQL databases: PostgreSQL, MySQL, MariaDB, and SQLite.
 - **Customizable**. You can quickly build your logic by fully customizing APIs, routes, or plugins to fit your needs perfectly.
+
+## Documentation websites
+
+The main official Strapi documentation website is hosted at [docs.strapi.io](https://docs.strapi.io).
+
+Additional official Strapi documentation websites cover different content:
+
+- Documentation for the older, unsupported version 3 of Strapi is hosted at [docs-v3.strapi.io](https://docs-v3.strapi.io).
+- Upcoming and/or experimental documentation is hosted at [docs-next.strapi.io](https://docs-next.strapi.io). Starting autumn/winter 2023, this website will include in-progress documentation for Strapi v5.
+- Documentation for contributors, which include more in-depth and experimental content for developers who actively maintain and contribute to Strapi, is hosted at [contributor.strapi.io](https://contributor.strapi.io). This experimental documentation is maintained by Strapi engineers and any issue should be reported to the [`strapi/strapi`](https://github.com/strapi/strapi/issues/new/choose) repository.
 
 ## Contribution requirements
 
@@ -30,21 +40,21 @@ The following are required if you are submitting pull requests to the documentat
 
 👉 For more information on how to contribute, please read our [contribution guide](./CONTRIBUTING.md).
 
-## Requests
+## Issues
 
-Requests for new documentation are highly encouraged, this is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template.
+Submitting issues help to improve the documentation. If you find incorrect screenshot(s), instructions, or code examples, or if you discover UX/UI bugs on the website, please use our [documentation issue](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report them. To submit an issue:
 
-## Bugs
-
-Bug reports help to improve the documentation. Please use our [documentation bug report](https://github.com/strapi/documentation/issues/new?template=BUG_REPORT.yml) template to report documentation bugs. To submit an issue:
-
-1. Verify the issue is only with the Strapi documentation, code issues should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository.
+1. Verify the issue is only with one of the Strapi documentation websites. Product-related issues, missing Strapi features, and any issues not directly related to the documentation should be directed at the main [strapi/strapi](https://github.com/strapi/strapi) repository. Updates to blog posts found at [strapi.io/blog](https://strapi.io/blog) are also outside the scope of the present documentation repository; you can either reach the author of the blog post directly or use the [contact form](https://strapi.io/contact) on Strapi's corporate website if you have questions about blog posts.
 2. Follow the issue template and fill out as much information as you can.
   
 Technical questions should be asked using the following resources:
 
 - Open a Q&A thread on our [official forum](https://forum.strapi.io).
 - Engage with other community members on our [community Discord server](https://discord.strapi.io).
+
+## Requests
+
+Requests for new documentation are highly encouraged. This is not limited to new additions but also changes or more information requested on existing documentation. Please use our [request documentation](https://github.com/strapi/documentation/issues/new?template=DOC_REQUEST.md&title%5B%5D=REQUEST) issue template. These requests will be checked by the Strapi Documentation team then transferred to another internal tool outside GitHub for priorization and subsequent actions.
 
 ## Releases
 

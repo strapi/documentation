@@ -14,7 +14,10 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/) inside your [AWS VPC](https://aws.amazon.com/vpc/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 
-Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start), to use for deploying on AWS. And have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+:::prerequisites
+- You have created a [Strapi project](/dev-docs/quick-start), to use for deploying on AWS.
+- You have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+:::
 
 <ConsiderStrapiCloud />
 
@@ -255,13 +258,20 @@ ubuntu@ip-1.2.3.4:~$
 
 #### 3. Install **Node.js** with **npm**:
 
-Strapi currently supports `Node.js` `v16.x.x`, `v18.x.x`, and `v20.x.x`. The following steps will install Node.js onto your EC2 server.
+The following steps will install Node.js onto your EC2 server.
 
 ```bash title="example using Node.js 20"
 cd ~
-curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get update
 ...
-sudo apt-get install nodejs
+sudo apt-get install -y ca-certificates curl gnupg
+...
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+NODE_MAJOR=20
+sudo apt-get update
+...
+sudo apt-get install nodejs -y
 ...
 node -v && npm -v
 ```
@@ -736,7 +746,7 @@ http
           .digest('hex');
 
       if (req.headers['x-hub-signature'] == sig) {
-        exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
+exec(`cd ${repo} && git pull && NODE_ENV=production npm run build && ${PM2_CMD}`, (error, stdout, stderr) => {
           if (error) {
             console.error(`exec error: ${error}`);
             return;

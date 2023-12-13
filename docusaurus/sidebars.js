@@ -24,6 +24,7 @@ const sidebars = {
         'dev-docs/intro',
         'dev-docs/quick-start',
         'dev-docs/faq',
+        'dev-docs/community',
         'dev-docs/usage-information',
         'dev-docs/glossary',
       ]
@@ -266,7 +267,19 @@ const sidebars = {
           id: 'dev-docs/advanced-features',
         },
         'dev-docs/cli',
-        'dev-docs/typescript',
+        {
+          type: 'category',
+          label: 'TypeScript',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/typescript'
+          },
+          items: [
+            'dev-docs/typescript',
+            'dev-docs/typescript/development',
+            'dev-docs/typescript/adding-support-to-existing-project',
+          ]
+        },
         {
           type: 'doc',
           label: 'Providers',
@@ -932,6 +945,10 @@ const sidebars = {
             {
               type: "category",
               label: "Content API",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
               ]
@@ -939,8 +956,13 @@ const sidebars = {
             {
               type: "category",
               label: "Database",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
               items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported'
+                'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
+                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened'
               ]
             },
           ]

@@ -10,7 +10,13 @@ sidebar_position: 1
 
 The **Projects** page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 
-![Projects page - List](/img/assets/cloud/project_list.png)
+<ThemedImage
+  alt="Projects page - List"
+  sources={{
+    light: '/img/assets/cloud/project_list.png',
+    dark: '/img/assets/cloud/project_list_DARK.png',
+  }}
+/>
 
 Each project card displays the following information:
 
@@ -35,7 +41,13 @@ The project details page displays the following tabs: **Deploys** and [**Setting
 
 The **Overview** tab displays a high detail view of the project, including its configuration, usage, and deployment history.
 
-![Project overview](/img/assets/cloud/overview.png)
+<ThemedImage
+  alt="Project overview"
+  sources={{
+    light: '/img/assets/cloud/overview.png',
+    dark: '/img/assets/cloud/overview_DARK.png',
+  }}
+/>
 
 From this tab you can:
 
@@ -48,7 +60,13 @@ From this tab you can:
 
 The **Deploys** tab displays a chronological list of cards with the details of all historical deployments for the project.
 
-![Project deploys](/img/assets/cloud/deploys.png)
+<ThemedImage
+  alt="Project deploys"
+  sources={{
+    light: '/img/assets/cloud/deploys.png',
+    dark: '/img/assets/cloud/deploys_DARK.png',
+  }}
+/>
 
 Each card displays the following information:
 
@@ -70,7 +88,13 @@ From this page you can also trigger a new deployment, cancel a pending deploymen
 
 From the **Deploys** tab, view the deployment history for this project. Use the **Options** menu (`...`) to access the **Deployment details** page for any deployment.
 
-![Deployment details](/img/assets/cloud/deploy_logs.png)
+<ThemedImage
+  alt="Deployment details"
+  sources={{
+    light: '/img/assets/cloud/deploy_logs.png',
+    dark: '/img/assets/cloud/deploy_logs_DARK.png',
+  }}
+/>
 
 The deployment details page displays the following information:
 
