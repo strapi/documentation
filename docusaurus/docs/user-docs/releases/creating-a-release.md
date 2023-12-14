@@ -1,9 +1,9 @@
 ---
 title: Creating a release
-# description: todo
+description: Instructions to create a release
 ---
 
-# Creating a release
+# Creating a release <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> <CloudProBadge />
 
 The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to group entries.
 

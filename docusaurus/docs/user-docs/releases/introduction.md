@@ -1,11 +1,11 @@
 ---
 title: Introduction to Releases
-# description: todo
+description: Introduction to the Releases plugin that enable content managers to group entries to publish/unpublish simultaneously
 ---
 
-# Releases <FutureBadge /> <EnterpriseBadge />
+# Releases <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge/> <CloudProBadge />
 
-:::strapi Future flag
+:::strapi Experimental feature enabled with a Future flag
 Releases is currently only available as an experimental, future flag for <EnterpriseBadge /> users. See [future flags](/dev-docs/configurations/future-flags) documentation for instructions on how to enable a future flag.
 :::
 
