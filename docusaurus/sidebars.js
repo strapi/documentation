@@ -293,11 +293,6 @@ const sidebars = {
         },
         'dev-docs/typescript',
         {
-          type: 'doc',
-          label: 'Custom fields',
-          id: 'dev-docs/custom-fields',
-        },
-        {
           type: "doc",
           label: "Providers",
           id: "dev-docs/providers",
