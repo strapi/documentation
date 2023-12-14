@@ -16,7 +16,7 @@ Releases enable content managers to group several entries to publish/unpublish t
   alt="List of Releases"
   sources={{
     light: '/img/assets/releases/releases-overview.png',
-    dark: '/img/assets/releases/releases-overview.png',
+    dark: '/img/assets/releases/releases-overview_DARK.png',
   }}
 />
 
@@ -29,7 +29,7 @@ From the Releases view, it is possible to:
 
 <!-- TODO: add numbers to reflect screenshot -->
 - [create a new release](/user-docs/releases/creating-a-release)
-- view active and archived releases
+- view pending and done releases
 - click on a release to [manage its content](/user-docs/releases/managing-a-release)
 
 :::info
