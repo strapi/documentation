@@ -215,15 +215,6 @@ const sidebars = {
             "dev-docs/api/query-engine/order-pagination",
           ],
         },
-        {
-          type: 'category',
-          label: 'APIs for plugins',
-          collapsed: false,
-          items: [
-            'dev-docs/api/plugins/admin-panel-api',
-            'dev-docs/api/plugins/server-api',
-          ]
-        },
       ]
     },
     {
@@ -300,8 +291,6 @@ const sidebars = {
             }
           ]
         },
-        'dev-docs/plugins-extension',
-        'dev-docs/plugins-development',
         'dev-docs/typescript',
         {
           type: 'doc',
