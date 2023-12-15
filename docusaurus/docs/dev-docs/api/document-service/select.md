@@ -20,7 +20,9 @@ To select fields to return while [finding a specific document](/dev-docs/api/doc
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").findOne({
+  fields: ["title", "slug"],
+});
 ```
 
 </Request>
@@ -29,7 +31,9 @@ To select fields to return while [finding a specific document](/dev-docs/api/doc
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  "title": "Test Article",
+  "slug": "test-article"
 }
 ```
 
@@ -44,7 +48,9 @@ To select fields to return while [finding the first document](/dev-docs/api/docu
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").findFirst({
+  fields: ["title", "slug"],
+});
 ```
 
 </Request>
@@ -53,7 +59,9 @@ To select fields to return while [finding the first document](/dev-docs/api/docu
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  "title": "Test Article",
+  "slug": "test-article"
 }
 ```
 
@@ -68,7 +76,9 @@ To select fields to return while [finding documents](/dev-docs/api/document-serv
 <Request title="Example request">
 
 ```js
-
+const documents = await strapi.documents("api::article.article").findMany({
+  fields: ["title", "slug"],
+});
 ```
 
 </Request>
@@ -76,9 +86,14 @@ To select fields to return while [finding documents](/dev-docs/api/document-serv
 <Response title="Example response">
 
 ```json
-{
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article"
+  }
   // ...
-}
+]
 ```
 
 </Response>
@@ -92,7 +107,15 @@ To select fields to return while [creating documents](/dev-docs/api/document-ser
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").create({
+  data: {
+    title: "Test Article",
+    slug: "test-article",
+    body: "Test 1",
+    headerImage: 2,
+  },
+  fields: ["title", "slug"],
+});
 ```
 
 </Request>
@@ -101,7 +124,9 @@ To select fields to return while [creating documents](/dev-docs/api/document-ser
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  "title": "Test Article",
+  "slug": "test-article"
 }
 ```
 
@@ -116,7 +141,13 @@ To select fields to return while [updating documents](/dev-docs/api/document-ser
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").update({
+  id: "cjld2cjxh0000qzrmn831i7rn",
+  data: {
+    title: "Test Article Updated",
+  },
+  fields: ["title"],
+});
 ```
 
 </Request>
@@ -125,7 +156,8 @@ To select fields to return while [updating documents](/dev-docs/api/document-ser
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  "title": "Test Article Updated"
 }
 ```
 
@@ -140,7 +172,10 @@ To select fields to return while [deleting documents](/dev-docs/api/document-ser
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").delete({
+  id: "cjld2cjxh0000qzrmn831i7rn",
+  fields: ["title"],
+});
 ```
 
 </Request>
@@ -149,7 +184,13 @@ To select fields to return while [deleting documents](/dev-docs/api/document-ser
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  // All of the deleted document's versions are returned
+  "versions": [
+    {
+      "title": "Test Article"
+    }
+  ]
 }
 ```
 
@@ -164,7 +205,10 @@ To select fields to return while [publishing documents](/dev-docs/api/document-s
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").publish({
+  id: "cjld2cjxh0000qzrmn831i7rn",
+  fields: ["title"],
+});
 ```
 
 </Request>
@@ -173,7 +217,13 @@ To select fields to return while [publishing documents](/dev-docs/api/document-s
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  // All of the published locale versions are returned
+  "versions": [
+    {
+      "title": "Test Article"
+    }
+  ]
 }
 ```
 
@@ -188,7 +238,10 @@ To select fields to return while [unpublishing documents](/dev-docs/api/document
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").unpublish({
+  id: "cjld2cjxh0000qzrmn831i7rn",
+  fields: ["title"],
+});
 ```
 
 </Request>
@@ -197,7 +250,13 @@ To select fields to return while [unpublishing documents](/dev-docs/api/document
 
 ```json
 {
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  // All of the unpublished locale versions are returned
+  "versions": [
+    {
+      "title": "Test Article"
+    }
+  ]
 }
 ```
 
@@ -212,7 +271,10 @@ To select fields to return while [discarding draft versions of documents](/dev-d
 <Request title="Example request">
 
 ```js
-
+const document = await strapi.documents("api::article.article").discardDraft({
+  id: "cjld2cjxh0000qzrmn831i7rn",
+  fields: ["title"],
+});
 ```
 
 </Request>
@@ -221,31 +283,13 @@ To select fields to return while [discarding draft versions of documents](/dev-d
 
 ```json
 {
-  // ...
-}
-```
-
-</Response>
-</ApiCall>
-
-## Selecting fields with `count()` queries
-
-To select fields to return while [counting documents](/dev-docs/api/document-service#count) with the Document Service API…
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  // ...
+  "id": "cjld2cjxh0000qzrmn831i7rn",
+  // All of the discarded draft versions are returned
+  "versions": [
+    {
+      "title": "Test Article"
+    }
+  ]
 }
 ```
 

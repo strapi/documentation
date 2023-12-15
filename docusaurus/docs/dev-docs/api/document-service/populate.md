@@ -28,7 +28,7 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
 <Request title="Example request">
 
 ```js
-const entries = await strapi.documents("api::article.article").findMany({
+const documents = await strapi.documents("api::article.article").findMany({
   populate: "*",
 });
 ```
@@ -41,7 +41,7 @@ const entries = await strapi.documents("api::article.article").findMany({
 {
   [
     {
-      "id": 1,
+      "id": "cjld2cjxh0000qzrmn831i7rn",
       "title": "Test Article",
       "slug": "test-article",
       "body": "Test 1",
@@ -82,7 +82,7 @@ To populate specific relations one-level deep…
 <Request title="Example request">
 
 ```js
-const entries = await strapi.documents("api::article.article").findMany({
+const documents = await strapi.documents("api::article.article").findMany({
   populate: ["headerImage"],
 });
 ```
@@ -94,7 +94,7 @@ const entries = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": 1,
+    "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1",
@@ -120,7 +120,7 @@ To populate specific relations, 2 levels deep…
 <Request title="Example request">
 
 ```js
-const entries = await strapi.documents("api::article.article").findMany({
+const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     categories: {
       populate: ["articles"],
@@ -136,7 +136,7 @@ const entries = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": 1,
+    "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1",
@@ -174,7 +174,7 @@ Components are populated the same way as relations:
 <Request title="Example request">
 
 ```js
-const entries = await strapi.documents("api::article.article").findMany({
+const documents = await strapi.documents("api::article.article").findMany({
   populate: ["testComp"],
 });
 ```
@@ -186,7 +186,7 @@ const entries = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": 1,
+    "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1",
@@ -212,7 +212,7 @@ In a shared population strategy, apply a unique behavior for all the dynamic zon
 <Request title="Example request">
 
 ```js
-const entries = await strapi.documents("api::article.article").findMany({
+const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: "*",
   },
@@ -226,7 +226,7 @@ const entries = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": 1,
+    "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1",
@@ -263,7 +263,7 @@ With the detailed population strategy, define per-component populate queries usi
 <Request title="Example request">
 
 ```js
-const entries = await strapi.documents("api::article.article").findMany({
+const documents = await strapi.documents("api::article.article").findMany({
   populate: {
     testDZ: {
       on: {
@@ -284,7 +284,7 @@ const entries = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": 1,
+    "id": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1",
