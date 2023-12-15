@@ -1,7 +1,7 @@
 ---
-title: Migrate from 4.14.0 to 4.15.6
+title: Migrate from 4.14.0 to 4.15.5
 displayed_sidebar: devDocsSidebar
-description: Learn how you can migrate your Strapi application from 4.14.0 to 4.15.6.
+description: Learn how you can migrate your Strapi application from 4.14.0 to 4.15.5.
 ---
 
 import PluginsCaution from '/docs/snippets/migrate-plugins-extension-caution.md'
@@ -9,7 +9,7 @@ import BuildCommand from '/docs/snippets/build-npm-yarn.md'
 import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 
-# v4.14.0 to v4.15.6 migration guide
+# v4.14.0 to v4.15.5 migration guide
 
 The present migration guide upgrades Strapi v4.14.0 to v4.15.6. Strapi v4.15.6 updated the [loading order](/dev-docs/configurations/middlewares#loading-order) of the middlewares, ensuring the [`logger` middleware](/dev-docs/configurations/middlewares#logger) is loaded first. The migration guide consists of:
 
@@ -20,21 +20,21 @@ The present migration guide upgrades Strapi v4.14.0 to v4.15.6. Strapi v4.15.6 u
 <PluginsCaution components={props.components} />
 
 
-## Upgrading the application dependencies to 4.15.6
+## Upgrading the application dependencies to 4.15.5
 
 :::prerequisites
 Stop the server before starting the upgrade.
 :::
 
-1. Upgrade all of the Strapi packages in `package.json` to `4.15.6`:
+1. Upgrade all of the Strapi packages in `package.json` to `4.15.5:
 
    ```json title="path: package.json"
    {
      // ...
      "dependencies": {
-       "@strapi/strapi": "4.15.6",
-       "@strapi/plugin-users-permissions": "4.15.6",
-       "@strapi/plugin-i18n": "4.15.6"
+       "@strapi/strapi": "4.15.5",
+       "@strapi/plugin-users-permissions": "4.15.5",
+       "@strapi/plugin-i18n": "4.15.5"
        // ...
      }
    }
