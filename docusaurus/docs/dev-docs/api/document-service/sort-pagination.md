@@ -14,13 +14,15 @@ To sort results returned by the Document Service API, include the `sort` paramet
 
 ### Sort on a single field
 
-To sort on a single field, …
+To order results returned by the Entity Service API, use the sort parameter. Results can be ordered based on a single or on multiple attribute(s) and can also use relational ordering.
 
 <ApiCall noSideBySide>
 <Request title="Example request">
 
 ```js
-
+const documents = await strapi.documents("api::article.article").findMany({
+  sort: "title:asc",
+});
 ```
 
 </Request>
@@ -28,9 +30,23 @@ To sort on a single field, …
 <Response title="Example response">
 
 ```json
-{
-  // …
-}
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article",
+    "body": "Test 1"
+    // ...
+  },
+  {
+    "id": "cjld2cjxh0001qzrm5q1j5q7m",
+    "title": "Test Article 2",
+    "slug": "test-article-2",
+    "body": "Test 2"
+    // ...
+  }
+  // ...
+]
 ```
 
 </Response>
@@ -44,7 +60,9 @@ To sort on multiple fields, …
 <Request title="Example request">
 
 ```js
-
+const documents = await strapi.documents("api::article.article").findMany({
+  sort: [{ title: "asc" }, { slug: "desc" }],
+});
 ```
 
 </Request>
@@ -52,9 +70,23 @@ To sort on multiple fields, …
 <Response title="Example response">
 
 ```json
-{
-  // …
-}
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article",
+    "body": "Test 1"
+    // ...
+  },
+  {
+    "id": "cjld2cjxh0001qzrm5q1j5q7m",
+    "title": "Test Article 2",
+    "slug": "test-article-2",
+    "body": "Test 2"
+    // ...
+  }
+  // ...
+]
 ```
 
 </Response>
@@ -68,7 +100,10 @@ To paginate results…
 <Request title="Example request">
 
 ```js
-
+const documents = await strapi.documents("api::article.article").findMany({
+  limit: 10,
+  start: 0,
+});
 ```
 
 </Request>
@@ -76,9 +111,23 @@ To paginate results…
 <Response title="Example response">
 
 ```json
-{
-  // …
-}
+[
+  {
+    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "title": "Test Article",
+    "slug": "test-article",
+    "body": "Test 1"
+    // ...
+  },
+  {
+    "id": "cjld2cjxh0001qzrm5q1j5q7m",
+    "title": "Test Article 2",
+    "slug": "test-article-2",
+    "body": "Test 2"
+    // ...
+  }
+  // ... (8 more)
+]
 ```
 
 </Response>
