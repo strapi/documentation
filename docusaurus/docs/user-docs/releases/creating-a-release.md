@@ -3,7 +3,7 @@ title: Creating a release
 description: Instructions to create a release
 ---
 
-# Creating a release <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> <CloudProBadge />
+# Creating a release <AlphaBadge /> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> <CloudProBadge />
 
 The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to group entries.
 
@@ -15,6 +15,8 @@ The [Releases](/user-docs/releases/introduction) page allows creating new releas
     dark: '/img/assets/releases/new-release_DARK.png',
   }}
 />
+
+<br /><br />
 
 To create a new release:
 

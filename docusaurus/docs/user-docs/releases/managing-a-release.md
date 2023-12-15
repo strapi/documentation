@@ -3,7 +3,7 @@ title: Managing a release
 # description: todo
 ---
 
-# Managing a release <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> <CloudProBadge />
+# Managing a release <AlphaBadge /> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> <CloudProBadge />
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
@@ -15,6 +15,8 @@ Adding entries to a [release](/user-docs/releases/introduction) allow viewing th
     dark: '/img/assets/releases/release-details_DARK.png',
   }}
 />
+
+<br /><br />
 
 From a release page, you can:
 
