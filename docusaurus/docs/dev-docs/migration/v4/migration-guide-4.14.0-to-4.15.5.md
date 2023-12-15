@@ -26,7 +26,7 @@ The present migration guide upgrades Strapi v4.14.0 to v4.15.5. Strapi v4.15.5 u
 Stop the server before starting the upgrade.
 :::
 
-1. Upgrade all of the Strapi packages in `package.json` to `4.15.5:
+1. Upgrade all of the Strapi packages in `package.json` to 4.15.5:
 
    ```json title="path: package.json"
    {
