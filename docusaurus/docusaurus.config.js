@@ -30,44 +30,53 @@ const config = {
 
   scripts: [
     {
-      src:
-        '/js/hotjar.js',
+      src: '/js/hotjar.js',
       type: 'module',
       async: true,
     },
     {
-      src:
-        '/js/particle.js',
+      src: '/js/particle.js',
       type: 'module',
       async: true,
     },
     {
-      src:
-        '/js/firework.js',
+      src: '/js/firework.js',
       type: 'module',
       async: true,
     },
     {
-      src:
-        '/js/ball.js',
+      src: '/js/ball.js',
       type: 'module',
       async: true,
     },
     {
-      src:
-        '/js/bar.js',
+      src: '/js/bar.js',
       type: 'module',
       async: true,
     },
     {
-      src:
-        '/js/game.js',
+      src: '/js/game.js',
       type: 'module',
       async: true,
     },
     {
       src: '/js/particleProfiles.js',
       type: 'module',
+      async: true,
+    },
+    {
+      /**
+       * Kapa AI widget script and parameters
+       * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
+       */
+      src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+      'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
+      'data-project-name': 'Strapi',
+      'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
+      // 'data-button-hide': 'true',
+      'data-modal-disclaimer': 'Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
+      'data-project-color': '#4945FF',
+      'data-button-bg-color': '#32324D',
       async: true,
     },
   ],
@@ -79,7 +88,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
+          // TODO: update 'v5/mvp' to v5 once it's on docs-next, and then back to 'main' for the stable release
+          editUrl: 'https://github.com/strapi/documentation/edit/v5/mvp/docusaurus',
           admonitions: {
             tag: ':::',
             keywords: [
@@ -119,7 +129,7 @@ const config = {
         specs: [
           {
             spec: 'docs/dev-docs/api/openapi.yaml',
-            route: '/openapi/'
+            route: '/openapi/',
           },
         ],
         // Theme Options for modifying how redoc renders them
@@ -135,11 +145,12 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       announcementBar: {
-      id: 'support_us',
-      content: "You're reading a work-in-progress documentation for the upcoming Strapi v5. <a target='_blank' rel='noopener noreferrer' href='#'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
-      backgroundColor: '#F3E5FA',
-      textColor: '#091E42',
-      isCloseable: true,
+        id: 'support_us',
+        content:
+          "You're reading a work-in-progress documentation for the upcoming Strapi v5. <a target='_blank' rel='noopener noreferrer' href='#'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
+        backgroundColor: '#F3E5FA',
+        textColor: '#091E42',
+        isCloseable: true,
       },
       docs: {
         sidebar: {
@@ -170,13 +181,13 @@ const config = {
             type: 'doc',
             docId: 'user-docs/intro',
             position: 'left',
-            label: 'User Guide'
+            label: 'User Guide',
           },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
-            label: 'Strapi Cloud'
+            label: 'Strapi Cloud',
           },
           {
             href: 'https://github.com/strapi/documentation',
@@ -251,7 +262,7 @@ const config = {
               {
                 label: 'Strapi.io',
                 href: 'https://strapi.io',
-              }
+              },
             ],
           },
         ],

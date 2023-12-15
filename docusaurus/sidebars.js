@@ -289,7 +289,19 @@ const sidebars = {
           id: 'dev-docs/advanced-features',
         },
         'dev-docs/cli',
-        'dev-docs/typescript',
+        {
+          type: 'category',
+          label: 'TypeScript',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/typescript'
+          },
+          items: [
+            'dev-docs/typescript',
+            'dev-docs/typescript/development',
+            'dev-docs/typescript/adding-support-to-existing-project',
+          ]
+        },
         {
           type: 'doc',
           label: 'Providers',
@@ -317,7 +329,6 @@ const sidebars = {
             }
           ],
         },
-        'dev-docs/database-migrations',
         'dev-docs/testing',
         'dev-docs/error-handling',
       ]
@@ -947,6 +958,7 @@ const sidebars = {
         {
           type: "category",
           label: "Breaking changes",
+          collapsed: true,
           link: {
             type: "doc",
             id: "dev-docs/migration/v4-to-v5/breaking-changes",
@@ -954,6 +966,7 @@ const sidebars = {
           items: [
             {
               type: "category",
+              collapsed: false,
               label: "Content API",
               link: {
                 type: 'doc',
@@ -966,6 +979,7 @@ const sidebars = {
             {
               type: "category",
               label: "Database",
+              collapsed: false,
               link: {
                 type: 'doc',
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
@@ -973,6 +987,14 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
                 'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened'
+              ]
+            },
+            {
+              type: "category",
+              label: "Strapi objects and methods",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/fetch'
               ]
             },
           ]
