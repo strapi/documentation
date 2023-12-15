@@ -760,11 +760,27 @@ const enArticles = await strapi.documents('api::article.article').count({ locale
 
 </ApiCall>
 
+#### count draft documents in a specific locale
+
 ```js
-// Count number of draft documents in english
+// Count number of draft documents in English
 strapi.documents(uid).count({ locale: 'en', status: 'draft' })
-// Count number of published documents in fr
+```
+
+#### Count published documents in a specific locale
+
+```js
+// Count number of published documents in French
 strapi.documents(uid).count({ locale: 'fr', status: 'published' })
-// Count number of published documents in english (default locale) that match a title 
+```
+
+#### Count documents with filters
+
+```js
+/**
+ * Count number of published documents (default if status is omitted) 
+ * in English (default locale) 
+ * that match a title 
+ */
 strapi.documents(uid).count({ filters: { title: "V5 is coming" } })`
 ```
