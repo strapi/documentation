@@ -358,7 +358,7 @@ module.exports = ({ env }) => {
 ```ts
 import path from 'path';
 
-export default = ({ env }) => {
+export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
