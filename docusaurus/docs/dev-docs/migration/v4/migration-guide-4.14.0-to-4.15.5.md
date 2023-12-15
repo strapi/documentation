@@ -11,7 +11,7 @@ import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 
 # v4.14.0 to v4.15.5 migration guide
 
-The present migration guide upgrades Strapi v4.14.0 to v4.15.6. Strapi v4.15.6 updated the [loading order](/dev-docs/configurations/middlewares#loading-order) of the middlewares, ensuring the [`logger` middleware](/dev-docs/configurations/middlewares#logger) is loaded first. The migration guide consists of:
+The present migration guide upgrades Strapi v4.14.0 to v4.15.5. Strapi v4.15.5 updated the [loading order](/dev-docs/configurations/middlewares#loading-order) of the middlewares, ensuring the [`logger` middleware](/dev-docs/configurations/middlewares#logger) is loaded first. The migration guide consists of:
 
 - Upgrading the application dependencies
 - Manually updating the loading order of middlewares in the configuration file
