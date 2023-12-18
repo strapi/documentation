@@ -7,9 +7,9 @@ displayed_sidebar: devDocsConfigSidebar
 
 # Features configuration
 
-The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**. 
+The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**.
 
-Some incoming Strapi features are not yet ready to be shipped to all users, but we want to offer community users the opportunity to provide early feedback on these new features or changes.
+Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still  offers community users the opportunity to provide early feedback on these new features or changes.
 
 Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and enabling these features requires enabling the corresponding future flags.
 
