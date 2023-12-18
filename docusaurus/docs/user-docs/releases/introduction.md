@@ -3,15 +3,12 @@ title: Introduction to Releases
 description: Introduction to the Releases plugin that enable content managers to group entries to publish/unpublish simultaneously
 ---
 
-# Releases <AlphaBadge/> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge/>
-
-<SubtleCallout emoji="🧪" title="Experimental feature">
-Releases is currently only available as an experimental, future flag. See <a href="/dev-docs/configurations/features">future flags</a> documentation for instructions on how to enable a future flag.
-</SubtleCallout>
+# Releases <EnterpriseBadge /> <CloudTeamBadge/> <FutureBadge /> <AlphaBadge/>
 
 Releases enable content managers to group several entries to publish/unpublish them simultanously. Entries can be grouped by content type or locale, facilitating review and editing before publication.
 
-<!-- TODO: add actual screenshots for both light and dark modes -->
+Releases is currently only available as an experimental feature. To enable it, set the appropriate future flag. See <a href="/dev-docs/configurations/features">future flags</a> documentation for instructions on how to enable a future flag.
+
 <ThemedImage
   alt="List of Releases"
   sources={{
@@ -19,8 +16,6 @@ Releases enable content managers to group several entries to publish/unpublish t
     dark: '/img/assets/releases/releases-overview_DARK.png',
   }}
 />
-
-<!-- TODO: annotate screenshots to add numbers -->
 
 <!-- TODO: update Releases icon with the neutral version -->
 Administrators can access Releases from ![Releases icon](/img/assets/icons/releases.svg) _Releases_ in the main navigation of the admin panel.
