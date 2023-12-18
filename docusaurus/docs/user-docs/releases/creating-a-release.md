@@ -1,6 +1,6 @@
 ---
 title: Creating a release
-description: Instructions to create a release
+description: Instructions to create a release from the admin panel
 ---
 
 # Creating a release  <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge /> <AlphaBadge />

@@ -1,6 +1,6 @@
 ---
 title: Managing a release
-# description: todo
+description: Instructions on how to manage a Release from the admin panel
 ---
 
 # Managing a release <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge />  <AlphaBadge />

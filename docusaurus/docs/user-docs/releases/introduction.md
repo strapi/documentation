@@ -1,6 +1,6 @@
 ---
 title: Introduction to Releases
-description: Introduction to the Releases plugin that enable content managers to group entries to publish/unpublish simultaneously
+description: Introduction to the Releases feature that enables content managers to organize entries to publish/unpublish simultaneously
 ---
 
 # Releases <EnterpriseBadge /> <CloudTeamBadge/> <FutureBadge /> <AlphaBadge/>
