@@ -1,14 +1,16 @@
 ---
-title: Future flags
+title: Features configuration
 description: Enable experimental Strapi features
-# displayed_sidebar: devDocsConfigSidebar
+displayed_sidebar: devDocsConfigSidebar
 ---
 
-# Future flags
+# Features configuration
+
+The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**. 
 
 Some incoming Strapi features are not yet ready to be shipped to all users, but we want to offer community users the opportunity to provide early feedback on these new features or changes.
 
-Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and enabling these features requires enabling the corresponding **future flags**.
+Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and enabling these features requires enabling the corresponding future flags.
 
 :::danger
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.

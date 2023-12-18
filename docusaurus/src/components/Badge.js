@@ -56,7 +56,7 @@ export function FutureBadge(props) {
   return (
     <Badge
       variant="Future"
-      link="/dev-docs/configurations/future-flags"
+      link="/dev-docs/configurations/features"
       {...props}
     />
   );

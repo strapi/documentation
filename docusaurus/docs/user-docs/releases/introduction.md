@@ -6,7 +6,7 @@ description: Introduction to the Releases plugin that enable content managers to
 # Releases <AlphaBadge/> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge/>
 
 <SubtleCallout emoji="🧪" title="Experimental feature">
-Releases is currently only available as an experimental, future flag. See <a href="/dev-docs/configurations/future-flags">future flags</a> documentation for instructions on how to enable a future flag.
+Releases is currently only available as an experimental, future flag. See <a href="/dev-docs/configurations/features">future flags</a> documentation for instructions on how to enable a future flag.
 </SubtleCallout>
 
 Releases enable content managers to group several entries to publish/unpublish them simultanously. Entries can be grouped by content type or locale, facilitating review and editing before publication.
