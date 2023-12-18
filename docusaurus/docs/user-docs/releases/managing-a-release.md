@@ -61,7 +61,7 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 ## Deleting a release
 
-You can delete a release. Deleting a release will only delete the release itself, but not the content-types included in the release. To delete a release, while on the release page:
+You can delete a release. Deleting a release will only delete the release itself, but not the content-type entries included in the release. To delete a release, while on the release page:
 
 1. Click on the three dots button in the top right corner of the admin panel.
 2. Select ![Delete icon](/img/assets/icons/delete.svg) **Delete**.
