@@ -43,7 +43,7 @@ To add an entry to a release:
 
 1. In the Releases box in the right sidebar, click the **+ Add to release** button.
 2. Select which release to add this entry to.
-3. Decide whether the entry will be published or unpublished when the release is published, then click **Continue**.
+3. Decide whether the entry will be published or unpublished when the release itself is published, then click **Continue**.
 
 ## Removing a single entry from a release
 
