@@ -97,7 +97,7 @@ Developers can use the following APIs to interact with future flags:
 
 - Features configuration is part of the `config` object and can be accessed with `strapi.config.get('features')`.
 
-- The `strapi` object can be used to check if a future flag is enabled, using the following method: `strapi.future.isEnabled('featureName')`.
+- The `strapi` object can be used to check if a future flag is enabled, using the following method: `strapi.features.future.isEnabled('featureName')`.
 
 ## Available future flags
 
