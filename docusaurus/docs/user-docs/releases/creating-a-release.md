@@ -5,7 +5,7 @@ description: Instructions to create a release
 
 # Creating a release <AlphaBadge /> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> 
 
-The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to group entries.
+The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
 <!-- TODO: add actual screenshots for both light and dark modes -->
 <ThemedImage
