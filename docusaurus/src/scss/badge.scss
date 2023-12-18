@@ -39,7 +39,7 @@
   }
 
   &--future {
-    --custom-badge-background-color: rgb(255,230,228);
+    --custom-badge-background-color: var(--strapi-danger-200);
     --custom-badge-color: rgb(219, 0, 22);
   }
 
