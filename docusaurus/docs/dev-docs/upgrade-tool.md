@@ -89,6 +89,7 @@ The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following 
 | [`-d, --debug`](#get-detailed-debugging-information)                     | Get more logs in debug mode (default: false)                     |
 | [`-s, --silent`](#execute-the-upgrade-silently)                          | Don't log anything (default: false)                              |
 | [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | Path to the Strapi project                                       |
+| [`-y, --yes`](#answer-yes-to-every-prompt) | Automatically answer "yes" to every prompt (default: false) |
 
 The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
 
@@ -96,8 +97,6 @@ The following options can be run either with the `npx @strapi/upgrade` command a
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
 | [`-V, --version`](#get-the-current-version)                       | Output the version number                                        |
 | [`-h, --help`](#get-help)                                                | Print command line options                                       |
-
-
 
 ### Simulate the upgrade without updating any files (dry run)
 
@@ -148,6 +147,14 @@ When passing the `--silent` option (or its `-s` shorthand), the tool executes th
 npx @strapi/upgrade --silent
 ```
 
+### Answer yes to every prompt
+
+When passing the `--yes` option (or its `-y` shorthand), the tool automatically answers "yes" to every prompt:
+
+```bash
+npx @strapi/upgrade --yes`
+```
+
 ### Get help
 
 When passing the `--help` option (or its `-h` shorthand), help information is displayed, listing the available options:
@@ -189,6 +196,7 @@ Options:
   -d, --debug                        Get more logs in debug mode (default: false)
   -s, --silent                       Don't log anything (default: false)
   -h, --help                         Display help for command
+  -y, --yes                          Automatically answer yes to every prompt
 ```
 
 </Tab>
