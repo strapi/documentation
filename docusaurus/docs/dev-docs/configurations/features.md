@@ -9,16 +9,16 @@ displayed_sidebar: devDocsConfigSidebar
 
 The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**.
 
-Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still  offers community users the opportunity to provide early feedback on these new features or changes.
+Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback on these new features or changes. With these experimental features, developers have the flexibility to choose and integrate new features & changes into their Strapi applications as they become available in the current major version as well as assist us in shaping these new features.
 
-Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and enabling these features requires enabling the corresponding future flags.
+Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and enabling these features requires enabling the corresponding future flags. Future flags differ from features that are in alpha in that future flags are disabled by default.
 
 :::danger
 Enable future flags at your own risk. Experimental features may be subject to change or removal, may contain breaking changes, may be unstable or not fully ready for use, and some parts may still be under development or using mock data.
 :::
 
 <!-- ! Commented out as not relevant for now -->
-<!-- Future flags can also be utilized for enabling coming breaking changes in upcoming versions (when prefixed by `vX`, with 'X' being the target version). In this scenario, if you decide to enable a future flag for a breaking change, you will need to migrate your application to adapt to this breaking change. -->
+<!-- Future flags can also be utilized for enabling coming breaking changes in upcoming versions (when prefixed by `vX`, with 'X' being the target version). In this scenario, if you decide to enable a future flag for a breaking change, you will need to migrate your application to adapt to this breaking change. Once an unstable feature reaches a stable state, we remove the special prefix and include the feature in the next minor release. At this point, the API's structure remains consistent throughout subsequent minor releases. -->
 
 ## Enabling a future flag
 
@@ -96,9 +96,9 @@ To enable a future flag:
 
 Developers can use the following APIs to interact with future flags:
 
-- Features configuration is part of the `config` object and can be accessed with `strapi.config.get('features')`.
+- Features configuration is part of the `config` object and can be read with `strapi.config.get('features')` or with `strapi.features.config`.
 
-- The `strapi` object can be used to check if a future flag is enabled, using the following method: `strapi.features.future.isEnabled('featureName')`.
+- `strapi.features.future` returns the `isEnabled()` that can be used to determine if a future flag is enabled, using the following method: `strapi.features.future.isEnabled('featureName')`.
 
 ## Available future flags
 
