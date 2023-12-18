@@ -18,7 +18,7 @@ Enable future flags at your own risk. Experimental features may be subject to ch
 :::
 
 <!-- ! Commented out as not relevant for now -->
-<!-- Future flags can also be utilized for enabling coming breaking changes in upcoming versions (when prefixed by `vX`, with 'X' being the target version). In this scenario, if you decide to enable a future flag for a breaking change, you will need to migrate your application to adapt to this breaking change. Once an unstable feature reaches a stable state, we remove the special prefix and include the feature in the next minor release. At this point, the API's structure remains consistent throughout subsequent minor releases. -->
+<!-- Future flags can also be utilized for enabling coming breaking changes in upcoming versions (when prefixed by `vX`, with 'X' being the target version). In this scenario, if you decide to enable a future flag for a breaking change, you will need to migrate your application to adapt to this breaking change. The benefit of this approach however, is that changes can be adopted incrementally as opposed to one large migration when the next major release occurs. Some of these flags may have started out as regular unstable but development showed the need for breaking changes. Finally, the aim of this is to empower developers to be able to smoothly transition to new major versions without the need to modify their existing application code where possible. -->
 
 ## Enabling a future flag
 
