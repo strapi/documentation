@@ -1,5 +1,6 @@
 ---
 title: Features configuration
+sidebar_label: Features
 description: Enable experimental Strapi features
 displayed_sidebar: devDocsConfigSidebar
 ---
