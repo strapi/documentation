@@ -3,7 +3,7 @@ title: Managing a release
 # description: todo
 ---
 
-# Managing a release <AlphaBadge /> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge />
+# Managing a release <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge />  <AlphaBadge />
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 

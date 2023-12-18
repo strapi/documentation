@@ -3,7 +3,7 @@ title: Creating a release
 description: Instructions to create a release
 ---
 
-# Creating a release <AlphaBadge /> <FutureBadge /> <EnterpriseBadge /> <CloudTeamBadge /> 
+# Creating a release  <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge /> <AlphaBadge />
 
 The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
