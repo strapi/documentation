@@ -145,13 +145,12 @@ Once the plugin code has been generated and the plugin is enabled, the next step
   </TabItem>
   </Tabs>
 
-3. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
+3. Navigate back to the Strapi project root with `cd ../../..` and run the following command to build the admin panel and start the server(s):
   
   <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
   
   ```sh
-  yarn build
   yarn develop
   ```
 
@@ -160,7 +159,6 @@ Once the plugin code has been generated and the plugin is enabled, the next step
   <TabItem value="npm" label="NPM">
   
   ```sh
-  npm run build
   npm run develop
   ```
 
@@ -215,13 +213,12 @@ Once the plugin code has been generated and the plugin is enabled, the next step
 
   This step transpiles the TypeScript files and outputs the JavaScript files to a `dist` directory that is unique to the plugin.
 
-4. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
+4. Navigate back to the Strapi project root with `cd ../../..` and run the following command to build the admin panel and start the server(s):
 
   <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
   ```sh
-  yarn build
   yarn develop
   ```
 
@@ -230,7 +227,6 @@ Once the plugin code has been generated and the plugin is enabled, the next step
   <TabItem value="npm" label="NPM">
   
   ```sh
-  npm run build
   npm run develop
   ```
 
