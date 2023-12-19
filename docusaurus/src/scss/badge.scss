@@ -38,6 +38,11 @@
     --custom-badge-color: rgb(160,25,240);
   }
 
+  &--future {
+    --custom-badge-background-color: var(--strapi-danger-200);
+    --custom-badge-color: rgb(219, 0, 22);
+  }
+
   &--enterprise {
     --custom-badge-background-color: rgb(255, 241, 209);
     --custom-badge-color: rgb(229, 136, 41);

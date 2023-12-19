@@ -21,6 +21,7 @@ const sidebars = {
       label: '🚀 Getting Started',
       link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
+        'design-tokens',
         'dev-docs/intro',
         'dev-docs/quick-start',
         'dev-docs/faq',
