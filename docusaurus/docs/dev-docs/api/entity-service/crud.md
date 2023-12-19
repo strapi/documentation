@@ -4,11 +4,11 @@ description: Use Strapi's Entity Service API to perform CRUD (create, read, upda
 displayed_sidebar: devDocsSidebar
 ---
 import ManagingRelations from '/docs/snippets/managing-relations.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # CRUD operations with the Entity Service API
 
-<NotV5 />
+<ESdeprecated />
 
 The [Entity Service API](/dev-docs/api/entity-service) is built on top of the the [Query Engine API](/dev-docs/api/query-engine) and uses it to perform CRUD operations on entities.
 

@@ -374,7 +374,7 @@ throw new PolicyError('Something went wrong', { policy: 'my-policy' });
 
 <TabItem value="Pagination" label="Pagination">
 
-The `PaginationError` class is a specific error class that is typically used when parsing the pagination information from [REST](/dev-docs/api/rest/sort-pagination#pagination), [GraphQL](/dev-docs/api/graphql#pagination), or the [Entity Service](/dev-docs/api/entity-service/order-pagination#pagination). It accepts the following parameters:
+The `PaginationError` class is a specific error class that is typically used when parsing the pagination information from [REST](/dev-docs/api/rest/sort-pagination#pagination), [GraphQL](/dev-docs/api/graphql#pagination), or the [Document Service](/dev-docs/api/document-service). It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |

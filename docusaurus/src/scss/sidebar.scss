@@ -4,7 +4,7 @@ $selector-color-mode-toggle-button: 'button[class*="ColorModeToggle"]';
 $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 :root body {
-  --doc-sidebar-width: 290px;
+  --doc-sidebar-width: 305px;
 }
 
 .navbar-sidebar {
@@ -73,7 +73,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   &__list {
     &-item {
-      font-size: var(--custom-sidebar-menu-list-item-font-size, --strapi-font-size-md);
+      font-size: var(--custom-sidebar-menu-list-item-font-size, --strapi-font-size-sm);
 
       &-collapsible {
         &:hover {
@@ -161,7 +161,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
           > .menu__list-item-collapsible {
             font-weight: 700;
-            font-size: var(--strapi-font-size-md);
+            font-size: var(--strapi-font-size-sm);
           }
         }
       }
@@ -169,7 +169,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       &-category, &-link {
         &-level {
           &-1 {
-            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-md);
+            --custom-sidebar-menu-list-item-font-size: var(--strapi-font-size-sm);
           }
 
           &-2 {

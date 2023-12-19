@@ -160,7 +160,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 /** Responsive */
 @include medium-up {
   .navbar {
-    --custom-navbar-brand-mr: 60px;
+    --custom-navbar-brand-mr: 75px;
     --custom-navbar-items-gap: var(--strapi-spacing-4);
     --custom-navbar-search-button-width: 266px;
 

@@ -10,10 +10,11 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 # Single Operations with the Query Engine API
 
 <NotV5 />
+
 ## findOne()
 
 :::note
- Only use the Query Engine's findOne if the [Entity Service findOne](/dev-docs/api/entity-service/crud#findone) can't cover your use case.
+ Only use the Query Engine's `findOne()` method if the [Document Service's `findOne()`](/dev-docs/api/document-service#findone) method can't cover your use case.
 :::
 Finds the first entry matching the parameters.
 
@@ -42,7 +43,7 @@ const entry = await strapi.db.query('api::blog.article').findOne({
 ## findMany()
 
 :::note
- Only use the Query Engine's findMany if the [Entity Service findMany](/dev-docs/api/entity-service/crud#findmany) can't cover your use case.
+ Only use the Query Engine's `findMany()` method if the [Document Service `findMany()`](/dev-docs/api/document-service#findmany) method can't cover your use case.
 :::
 
 Finds entries matching the parameters.
@@ -58,7 +59,7 @@ Syntax: `findMany(parameters) ⇒ Entry[]`
 | `limit`   | Integer  | Number of entries to return  |
 | `offset`   | Integer  | Number of entries to skip |
 | `orderBy`  | [`OrderByParameter`](/dev-docs/api/query-engine/order-pagination/) | [Order](/dev-docs/api/query-engine/order-pagination/) definition |
-| `populate` | [`PopulateParameter`](/dev-docs/api/query-engine/populating/)      | Relations to [populate](/dev-docs/api/query-engine/populating/)
+| `populate` | [`PopulateParameter`](/dev-docs/api/query-engine/populating/)      | Relations to [populate](/dev-docs/api/query-engine/populating/) |
 
 ### Example
 
@@ -86,8 +87,7 @@ Syntax: `findWithCount(parameters) => [Entry[], number]`
 | `limit`     | Integer    | Number of entries to return    |
 | `offset`   | Integer  | Number of entries to skip  |
 | `orderBy`  | [`OrderByParameter`](/dev-docs/api/query-engine/order-pagination/) | [Order](/dev-docs/api/query-engine/order-pagination/) definition |
-| `populate` | [`PopulateParameter`](/dev-docs/api/query-engine/populating/)      | Relations to [populate](/dev-docs/api/query-engine/populating/)
-|
+| `populate` | [`PopulateParameter`](/dev-docs/api/query-engine/populating/)      | Relations to [populate](/dev-docs/api/query-engine/populating/) |
 
 ### Example
 
@@ -103,7 +103,7 @@ const [entries, count] = await strapi.db.query('api::blog.article').findWithCoun
 ## create()
 
 :::note
- Only use the Query Engine's create if the [Entity Service create](/dev-docs/api/entity-service/crud#create) can't cover your use case.
+ Only use the Query Engine's `create()` method if the [Document Service `create()` method](/dev-docs/api/document-service#create) can't cover your use case.
 :::
 
 Creates one entry and returns it.
@@ -133,7 +133,7 @@ const entry = await strapi.db.query('api::blog.article').create({
 ## update()
 
 :::note
- Only use the Query Engine's update if the [Entity Service update](/dev-docs/api/entity-service/crud#update) can't cover your use case.
+ Only use the Query Engine's `update()` method if the [Document Service `update()`](/dev-docs/api/document-service#update) method can't cover your use case.
 :::
 
 Updates one entry and returns it.
@@ -165,7 +165,7 @@ const entry = await strapi.db.query('api::blog.article').update({
 ## delete()
 
 :::note
- Only use the Query Engine's delete if the [Entity Service delete](/dev-docs/api/entity-service/crud#delete) can't cover your use case.
+ Only use the Query Engine's `delete()` method if the [Document Service `delete()`](/dev-docs/api/document-service#delete) method can't cover your use case.
 :::
 
 Deletes one entry and returns it.

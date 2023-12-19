@@ -4,11 +4,11 @@ description: Use Strapi's Entity Service API to populate relations in your queri
 displayed_sidebar: devDocsSidebar
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 # Populating with the Entity Service API
 
-<NotV5 />
+<ESdeprecated />
 
 The [Entity Service API](/dev-docs/api/entity-service) does not populate relations, components or dynamic zones by default, which means an Entity Service API query that does not use the `populate` parameter will not return information about relations, components, or dynamic zones.
 
