@@ -16,7 +16,8 @@ A single type contains a unique document, and a collection type can contain seve
 - Each published or draft version of a document can have multiple **document locales**.<br/>A document locale includes all the content of a given document version for a specific locale.
 - A document locale can include multiple **fields**.
 
-**Example:** 
+<details>
+<summary>Example:</summary>
 
 [FoodAdvisor](https://github.com/strapi/foodadvisor), Strapi's official demo application, is a website listing restaurants around the world. FoodAdvisor's content includes multiple content-types:
 
@@ -27,6 +28,8 @@ A single type contains a unique document, and a collection type can contain seve
   - The published version of the "Biscotte Restaurant" document has 3 document locales: one for English, one for French, and one for Spanish.
   - Each document locale of the "Biscotte Restaurant" document includes multiple fields, such as the name of the restaurant, a short description, and opening hours.
 
+</details>
+
 | Element         | Example scope: This includes… |
 |-----------------|---------------------------------------|
 | Collection type | All the content from all the documents of the `Restaurants` collection type |
@@ -35,6 +38,6 @@ A single type contains a unique document, and a collection type can contain seve
 | Document locale | All the content for the `'en'` (i.e., English) locale of the published version of the "Biscotte Restaurant" document |
 | Field           | The content of the `description` field for the 'en' locale of the published version of the "Biscotte Restaurant" document |
 
-:::strapi How to request your content?
-The [Document Service API](/dev-docs/api/document-service) handles accessing all the variations of a document.
+:::strapi What's next?
+Once you have understood what a document is, you can use the [Document Service API](/dev-docs/api/document-service) to create, read, update, and delete the variations of a document.
 :::
