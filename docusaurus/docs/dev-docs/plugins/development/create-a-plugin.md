@@ -72,7 +72,7 @@ The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
 
 ## Enable the plugin
 
-Once the `strapi generate plugin` CLI script has finished running, a boilerplate code for the plugin is created, but the plugin is not enabled yet.
+Once the `strapi generate plugin` CLI script has finished running, the minimum required code for the plugin to work is created for you, but the plugin is not enabled yet.
 
 To enable a plugin:
 
@@ -117,7 +117,7 @@ If you plan to use the plugin outside the Strapi project it was created in, move
 
 ## Install dependencies, build the admin panel, and start servers
 
-Once a plugin boilerplate code has been generated and the plugin is enabled, the next steps slighly differ depending on whether you created a vanilla JavaScript-based plugin or a TypeScript-based plugin (see [step 3](#create-the-plugin-using-the-cli-generator) of the CLI generator instructions).
+Once the plugin code has been generated and the plugin is enabled, the next steps slighly differ depending on whether you created a vanilla JavaScript-based plugin or a TypeScript-based plugin (see [step 3](#create-the-plugin-using-the-cli-generator) of the CLI generator instructions).
 
 <Tabs groupId="js-ts">
 
@@ -247,7 +247,7 @@ You can either jump to the [plugin structure](/dev-docs/plugins/development/plug
 :::
 
 :::info Did you know?
-The admin panel needs to be rebuilt after its code has been modified. Rebuilding the admin panel is done by running the `build` command. The `strapi generate plugin` generates boilerplate code that injects some plugin components (menu link, plugin homepage) into the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
+The admin panel needs to be rebuilt after its code has been modified. Rebuilding the admin panel is done by running the `build` command. The `strapi generate plugin` generates code that injects some plugin components (menu link, plugin homepage) into the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
 :::
 
 ### Servers and hot reloading
