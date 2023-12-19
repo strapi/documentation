@@ -7,7 +7,9 @@ displayed_sidebar: devDocsSidebar
 
 # How to store and access data from a Strapi plugin
 
-To store data with a Strapi [plugin](/dev-docs/plugins/developing-plugins), use a plugin content-type. Plugin content-types work exactly like other [content-types](/dev-docs/backend-customization/models). Once the content-type is [created](#create-a-content-type-for-your-plugin), you can start [interacting with the data](#interact-with-data-from-the-plugin).
+[Plugins](/dev-docs/plugins/developing-plugins) in Strapi help you add additional features to the existing core set of built-in features. They can be used to extend the API, customize the admin panel, and more. In many cases, you would like your plugin to store data for later retrieval, and to access this data.
+
+To store data with a Strapi plugin, use a plugin content-type. Plugin content-types work exactly like other [content-types](/dev-docs/backend-customization/models). Once the content-type is [created](#create-a-content-type-for-your-plugin), you can start [interacting with the data](#interact-with-data-from-the-plugin).
 
 ## Create a content-type for your plugin
 
