@@ -7,9 +7,11 @@ displayed_sidebar: devDocsSidebar
 
 # How to pass data from server to admin panel with a Strapi plugin
 
-Strapi is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
+Plugins in Strapi help you add additional features to the existing core set of built-in features. They can be used to extend the API, customize the admin panel, and more. In many cases, you would like your plugin to store data for later retrieval, and to access this data.
 
 When [developing a Strapi plugin](/dev-docs/plugins/developing-plugins) you might want to pass data from the `/server` to the `/admin` folder. Within the `/server` folder you have access to the Strapi object and can do database queries whereas in the `/admin` folder you can't.
+
+Strapi is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
 
 Passing data from the `/server` to the `/admin` folder can be done using the admin panel's Axios instance:
 
