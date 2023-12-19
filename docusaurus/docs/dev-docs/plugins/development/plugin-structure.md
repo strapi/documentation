@@ -10,7 +10,6 @@ import InteractivePluginStructure from '@site/src/components/PluginStructure.js'
 
 When [creating a plugin with the CLI generator](/dev-docs/plugins/development/create-a-plugin), Strapi generates the following boilerplate structure for you in the `./src/plugins/my-plugin` folder:
 
-<!-- TODO: double-check that no files or folders are missing from the displayed hierarchy -->
 <InteractivePluginStructure />
 
 A Strapi plugin is divided into 2 parts, each living in a different folder and offering a different API:
