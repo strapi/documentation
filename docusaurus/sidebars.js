@@ -477,6 +477,7 @@ const sidebars = {
           label: 'Introduction & Concepts',
           id: 'dev-docs/update-migration'
         },
+        'dev-docs/upgrade-tool',
         'dev-docs/update-version',
         {
           type: 'doc',

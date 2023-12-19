@@ -15,19 +15,20 @@ Strapi periodically releases code improvements through new versions. New Strapi 
 
 Whenever a new Strapi version is available, there are 2 possible cases:
 
-| Does the new Strapi version include breaking changes? | The process is a/an… | You should read the…                                    |
-| ----------------------------------------------------- | -------------------- | ------------------------------------------------------- |
-| No                                                    | Update               | Generic [update guide](/dev-docs/update-version)        |
-| Yes                                                   | Migration            | Specific migration guides (see below) |
+| Does the new Strapi version include breaking changes? | The upgrade process is a/an… | You should read the…                               | Can you use the `upgrade` tool? |
+| ----------------------------------------------------- | -----------------------------|--------------------------------------------------- | --------------------------------|
+| No                                                    | Update                       | Generic [update guide](/dev-docs/update-version)   | Yes                             |
+| Yes                                                   | Migration                    | Specific migration guides (see below)              | Yes                             |
 
 There are 2 types of migrations:
 - migrating from a minor version to another minor version (e.g., from v5.x to v5.y)
 - migrating from a major version to another major version (e.g., from v4.x to v5.0)
 
-Depending on your use case, click on any of the following cards to read detailed instructions to update or migrate:
+Depending on your use case, click on any of the following cards to read detailed instructions to upgrade to the desired version:
 
 <CustomDocCardsWrapper>
-<CustomDocCard emoji="⟳" title="Updates" description="Read a generic update guide. Useful when there is no breaking change." link="/dev-docs/update-version" />
+<CustomDocCard emoji="⟳" title="Updates guide" description="Read a generic update guide. Useful when there is no breaking change." link="/dev-docs/update-version" />
+<CustomDocCard emoji="🤖" title="Upgrade tool" description="Learn how to use Strapi's CLI upgrade tool to automatically handle updates & migrations." link="/dev-docs/upgrade-tool" />
 <CustomDocCard emoji="⬆️" title="v5.x migration guides" description="Read specific guides to handle breaking changes while migrating from Strapi v5.x to Strapi v5.y." link="/dev-docs/migration-guides" />
 <CustomDocCard emoji="⤴️" title="v4 to v5 migration guides" description="Read specific guides to handle breaking changes while migrating from Strapi v4 to Strapi v5." link="/dev-docs/migration/v4-to-v5/introduction" />
 </CustomDocCardsWrapper>
