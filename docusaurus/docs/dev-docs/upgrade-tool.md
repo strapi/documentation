@@ -30,7 +30,9 @@ Strapi version numbers respect the [semantic versioning](https://semver.org/) co
 
 The upgrade tool allows upgrading to a major, minor, or patch version.
 
-| The latest Strapi v4 version is v4.16.2 and my Strapi application is currently on… | If I run… | My Strapi application will be upgraded to … |
+What the upgrade tool will do depends on the latest existing version and the command you run. For instance, if the latest Strapi v4 version is v4.16.6:
+
+| My Strapi application is currently on… | If I run… | My Strapi application will be upgraded to … |
 |----|----|----|
 | v4.14.1 | `npx @strapi/upgrade patch` | v4.14.6<br/><br/>(because v4.14.6 is the latest patch version for the v4.14 minor version) |
 | v4.14.1 | `npx @strapi/upgrade minor` | v4.16.2 |
@@ -83,20 +85,20 @@ npx @strapi/upgrade codemods
 
 The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following options:
 
-| Option                                                                   | Description                                                      |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [`-n, --dry`](#simulate-the-upgrade-without-updating-any-files-dry-run)  | Simulate the upgrade without updating any files (default: false) |
-| [`-d, --debug`](#get-detailed-debugging-information)                     | Get more logs in debug mode (default: false)                     |
-| [`-s, --silent`](#execute-the-upgrade-silently)                          | Don't log anything (default: false)                              |
-| [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | Path to the Strapi project                                       |
-| [`-y, --yes`](#answer-yes-to-every-prompt) | Automatically answer "yes" to every prompt (default: false) |
+| Option                                                                                  | Description                                                                     | Default  |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------|----------|
+| [`-n, --dry`](#simulate-the-upgrade-without-updating-any-files-dry-run)                 | [Simulate](#simulate-the-upgrade-without-updating-any-files-dry-run) the upgrade without updating any files | false    |
+| [`-d, --debug`](#get-detailed-debugging-information)                                    | Get [more logs](#get-detailed-debugging-information) in debug mode              | false    |
+| [`-s, --silent`](#execute-the-upgrade-silently)                                         | [Don't log anything](#execute-the-upgrade-silently)                             | false    |
+| [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | [Path](#select-a-path-for-the-strapi-application-folder) to the Strapi project  | -        |
+| [`-y, --yes`](#answer-yes-to-every-prompt)                                              | Automatically [answer "yes"](#answer-yes-to-every-prompt) to every prompt       | false    |
 
 The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
 
 | Option                                                                   | Description                                                      |
 | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [`-V, --version`](#get-the-current-version)                       | Output the version number                                        |
-| [`-h, --help`](#get-help)                                                | Print command line options                                       |
+| [`-V, --version`](#get-the-current-version)                              | Output the [version number](#get-the-current-version)            |
+| [`-h, --help`](#get-help)                                                | [Print](#get-help) command line options                          |
 
 ### Simulate the upgrade without updating any files (dry run)
 
