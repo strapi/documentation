@@ -215,15 +215,6 @@ const sidebars = {
             "dev-docs/api/query-engine/order-pagination",
           ],
         },
-        {
-          type: 'category',
-          label: 'APIs for plugins',
-          collapsed: false,
-          items: [
-            'dev-docs/api/plugins/admin-panel-api',
-            'dev-docs/api/plugins/server-api',
-          ]
-        },
       ]
     },
     {
@@ -300,14 +291,7 @@ const sidebars = {
             }
           ]
         },
-        'dev-docs/plugins-extension',
-        'dev-docs/plugins-development',
         'dev-docs/typescript',
-        {
-          type: 'doc',
-          label: 'Custom fields',
-          id: 'dev-docs/custom-fields',
-        },
         {
           type: "doc",
           label: "Providers",
@@ -465,6 +449,8 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/plugins/developing-plugins'
             },
+            'dev-docs/plugins/development/create-a-plugin',
+            'dev-docs/plugins/development/plugin-structure',
             {
               type: 'doc',
               id: 'dev-docs/api/plugins/admin-panel-api',
@@ -477,6 +463,18 @@ const sidebars = {
             },
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
+            {
+              type: 'category',
+              label: 'Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/plugins/developing-plugins',
+              },
+              items: [
+                'dev-docs/plugins/guides/store-and-access-data',
+                'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+              ]
+            }
           ]
         }
       ]
