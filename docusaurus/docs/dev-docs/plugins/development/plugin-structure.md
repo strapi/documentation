@@ -14,8 +14,8 @@ When [creating a plugin with the CLI generator](/dev-docs/plugins/development/cr
 
 A Strapi plugin is divided into 2 parts, each living in a different folder and offering a different API:
 
-| Plugin part | Description | Folder | API |
-|-------------|------------|--------------|-----|
+| Plugin part | Description | Folder       | API |
+|-------------|-------------|--------------|-----|
 | Admin panel | Includes what will be visible in the [admin panel](/user-docs/intro) (components, navigation, settings, etc.) | `/admin` |[Admin Panel API](/dev-docs/api/plugins/admin-panel-api)|
 | Backend server | Includes what relates to the [backend server](/dev-docs/backend-customization) (content-types, controllers, middlewares, etc.) |`/server` |[Server API](/dev-docs/api/plugins/server-api)|
 
