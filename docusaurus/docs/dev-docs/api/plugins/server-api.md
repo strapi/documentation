@@ -526,9 +526,10 @@ module.exports = ({ strapi }) => {
 
 ## Usage
 
-Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and global getters.
+Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes both top-level getters and global getters:
 
-While top-level getters imply chaining functions, global getters are syntactic sugar that allows direct access using a feature's uid:
+- top-level getters imply chaining functions<br/>(e.g., `strapi.plugin('the-plugin-name').controller('the-controller-name'`),
+- global getters are syntactic sugar that allows direct access using a feature's uid<br/>(e.g., `strapi.controller('plugin::plugin-name.controller-name')`).
 
 ```js
 // Access an API or a plugin controller using a top-level getter 
