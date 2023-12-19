@@ -42,9 +42,6 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction',
           id: 'dev-docs/setup-deployment',
-          customProps: {
-            new: true,
-          }
         },
         {
           type: 'category',
@@ -161,9 +158,6 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction/Concepts',
           id: 'dev-docs/api/content-api',
-          customProps: {
-            new: true,
-          }
         },
         {
           type: 'category',
@@ -245,7 +239,13 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/backend-customization/middlewares',
             },
-            'dev-docs/backend-customization/controllers',
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/controllers',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/backend-customization/services',
             'dev-docs/backend-customization/models',
             'dev-docs/backend-customization/webhooks',
@@ -253,9 +253,6 @@ const sidebars = {
               type: 'category',
               label: '✨ Examples',
               collapsed: true,
-              customProps: {
-                new: true,
-              },
               items: [
                 {
                   type: 'doc',
@@ -371,16 +368,11 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction/Concepts',
           id: 'dev-docs/plugins',
-          customProps: {
-            new: true,
-          }
         },
         {
           type: 'category',
+          collapsed: false,
           label: 'Using plugins',
-          customProps: {
-            updated: true,
-          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/using-plugins'
@@ -395,9 +387,6 @@ const sidebars = {
               type: 'doc',
               label: 'Content Source Map',
               id: 'dev-docs/plugins/content-source-map',
-              customProps: {
-                new: true,
-              }
             },
             {
               type: 'doc',
@@ -439,6 +428,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
+          collapsed: false,
+          customProps: {
+            new: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/developing-plugins',
@@ -465,6 +458,7 @@ const sidebars = {
             'dev-docs/plugins-extension',
             {
               type: 'category',
+              collapsed: false,
               label: 'Guides',
               link: {
                 type: 'doc',
