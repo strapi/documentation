@@ -51,21 +51,21 @@ The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
 2. Run the following command in a terminal window to start the interactive CLI:
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
 
   ```sh
   yarn strapi generate plugin
   ```
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="npm" label="NPM">
+  <TabItem value="npm" label="NPM">
 
   ```sh
   npm run strapi generate plugin
   ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
 4. Choose either `JavaScript` or `TypeScript` for the plugin language.
@@ -121,96 +121,96 @@ Once the plugin code has been generated and the plugin is enabled, the next step
 
 <Tabs groupId="js-ts">
 
-<Tab value="js" label="JavaScript-based plugin">
+<TabItem value="js" label="JavaScript-based plugin">
 
 1. Navigate to the folder of the plugin.<br />If created from a Strapi project using the CLI generator, plugins are located in the `src/plugins` folder (see [project structure](/dev-docs/project-structure)).
 
 2. Run the following command in the newly-created plugin directory to install plugin dependencies:
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
 
   ```sh
   yarn
   ```
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="npm" label="NPM">
+  <TabItem value="npm" label="NPM">
 
   ```sh
   npm install
   ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
 3. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
   
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
   
   ```sh
   yarn build
   yarn develop
   ```
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="npm" label="NPM">
+  <TabItem value="npm" label="NPM">
   
   ```sh
   npm run build
   npm run develop
   ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
-</Tab>
+</TabItem>
 
-<Tab label="TypeScript-based plugin" value="ts">
+<TabItem label="TypeScript-based plugin" value="ts">
 
 1. Navigate to the folder of the plugin.<br />If created from a Strapi project using the CLI generator, plugins are located in the `src/plugins` folder (see [project structure](/dev-docs/project-structure)).
 
 2. Run the following command in the newly-created plugin directory to install plugin dependencies:
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
 
   ```sh
   yarn
   ```
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="npm" label="NPM">
+  <TabItem value="npm" label="NPM">
 
   ```sh
   npm install
   ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
 3. Still in the plugin directory (e.g., `src/plugins/my-plugin`), run the following command:
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
 
   ```sh
   yarn build
   ```
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="npm" label="NPM">
+  <TabItem value="npm" label="NPM">
 
   ```sh
   npm run build
   ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
   This step transpiles the TypeScript files and outputs the JavaScript files to a `dist` directory that is unique to the plugin.
@@ -218,26 +218,26 @@ Once the plugin code has been generated and the plugin is enabled, the next step
 4. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
 
   ```sh
   yarn build
   yarn develop
   ```
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="npm" label="NPM">
+  <TabItem value="npm" label="NPM">
   
   ```sh
   npm run build
   npm run develop
   ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
-</Tab>
+</TabItem>
 </Tabs>
 
 You should now be ready to start developing your plugin.
@@ -268,21 +268,21 @@ To start only the backend server, run the following command:
 
 <Tabs groupId="yarn-npm">
 
-<Tab label="Yarn" value="yarn">
+<TabItem label="Yarn" value="yarn">
 
 ```bash
 yarn develop
 ```
 
-</Tab>
+</TabItem>
 
-<Tab label="NPM" value="npm">
+<TabItem label="NPM" value="npm">
 
 ```bash
 npm run develop
 ```
 
-</Tab>
+</TabItem>
 
 </Tabs>
 
@@ -294,21 +294,21 @@ If you are doing development on both the `/server` and `/admin` directories of y
 
 <Tabs groupId="yarn-npm">
 
-<Tab value="yarn" label="Yarn">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn develop --watch-admin
 ```
 
-</Tab>
+</TabItem>
 
-<Tab value="npm" label="NPM">
+<TabItem value="npm" label="NPM">
 
 ```bash
 npm run develop -- --watch-admin
 ```
 
-</Tab>
+</TabItem>
 </Tabs>
 
 This will run the server on `localhost:1337` and enable hot reloading on both the back-end and front-end servers, i.e.it will auto-reload when changes are made to the server or the admin panel of Strapi.

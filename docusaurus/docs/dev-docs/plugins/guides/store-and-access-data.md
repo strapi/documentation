@@ -14,21 +14,21 @@ To store data with a Strapi [plugin](/dev-docs/plugins/developing-plugins), use 
 To create a content-type with the CLI generator, run the following command in a terminal:
 
 <Tabs groupId="yarn-npm">
-<Tab value="yarn" label="Yarn">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn strapi generate content-type
 ```
 
-</Tab>
+</TabItem>
 
-<Tab value="npm" label="NPM">
+<TabItem value="npm" label="NPM">
 
 ```bash
 npm run strapi generate content-type
 ```
 
-</Tab>
+</TabItem>
 </Tabs>
 
 The generator CLI is interactive and asks a few questions about the content-type and the attributes it will contain. Answer the first questions, then for the `Where do you want to add this model?` question, choose the `Add model to existing plugin` option and type the name of the related plugin when asked.
