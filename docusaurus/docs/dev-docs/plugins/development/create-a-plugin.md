@@ -286,7 +286,7 @@ npm run develop
 
 </Tabs>
 
-This will run the server on `localhost:1337` and only auto-reload when changes are made to the server. If you are only doing development in the `./server` directory of your plugin, this will be faster.
+This will run the server on `localhost:1337` and enable hot reloading only on the back-end server, i.e. it will only auto-reload when changes are made to the server. If you are only doing development in the `./server` directory of your plugin, this will be faster.
 
 #### Start both the backend and admin panel servers
 
@@ -311,4 +311,4 @@ npm run develop -- --watch-admin
 </Tab>
 </Tabs>
 
-This will run the server on `localhost:1337` and auto-reload when changes are made to the server or the admin panel of Strapi.
+This will run the server on `localhost:1337` and enable hot reloading on both the back-end and front-end servers, i.e.it will auto-reload when changes are made to the server or the admin panel of Strapi.
