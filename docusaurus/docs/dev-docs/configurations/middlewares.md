@@ -40,6 +40,7 @@ The `./config/middlewares.js` file exports an array, where order matters and con
 
 module.exports = [
   // The array is pre-populated with internal, built-in middlewares, prefixed by `strapi::`
+  'strapi::logger',
   'strapi::errors',
   'strapi::security',
   'strapi::cors',
@@ -72,7 +73,6 @@ module.exports = [
   },
 
   // remaining internal & built-in middlewares
-  'strapi::logger',
   'strapi::query',
   'strapi::body',
   'strapi::session',
@@ -89,6 +89,7 @@ module.exports = [
 
 export default [
   // The array is pre-populated with internal, built-in middlewares, prefixed by `strapi::`
+  'strapi::logger',
   'strapi::cors',
   'strapi::body',
   'strapi::errors',
