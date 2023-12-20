@@ -405,7 +405,7 @@ The `ForbiddenError` class is a specific error class used when a user either doe
 | --- | --- | --- | --- |
 | `message` | `string` | The error message | `Forbidden access` |
 
-Note: `ForbiddenError` message contents will not be displayed to the Content API and will be returned to the user as an empty `UnauthorizedError`
+Note: `ForbiddenError` message contents will not be displayed to the Content API and will be returned to the user as an empty `ForbiddenError`
 
 ```js
 throw new ForbiddenError('Ah ah ah, you didn\'t say the magic word');
