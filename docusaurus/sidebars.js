@@ -81,6 +81,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/guides/rbac',
+            'dev-docs/configurations/features',
           ],
         },
         {
@@ -543,10 +544,8 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
-          customProps: {
-            updated: true,
-          },
         },
+        'user-docs/content-manager/adding-content-to-releases',
       ],
     },
     {
@@ -570,6 +569,19 @@ const sidebars = {
           dirName: 'user-docs/media-library'
         }
       ]
+    },
+    {
+      type: "category",
+      customProps: {
+        new: true
+      },
+      collapsed: false,
+      label: "Releases",
+      items: [
+        'user-docs/releases/introduction',
+        'user-docs/releases/creating-a-release',
+        'user-docs/releases/managing-a-release',
+      ],
     },
     {
       type: 'category',
@@ -916,6 +928,7 @@ const sidebars = {
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
+            'dev-docs/configurations/features',
           ]
         },
         {

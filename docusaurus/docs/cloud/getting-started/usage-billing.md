@@ -18,6 +18,7 @@ The usage-based pricing for Strapi Cloud is based on the following criteria and 
 | **Assets Bandwidth** | 100GB | 500GB | 1,000GB |
 | **API Requests** | 10,000 | 1,000,000 | 2,000,000 |
 | **Audit Logs** | 7 days retention | N/A | 7 days retention |
+| **Releases** | 3 pending releases | N/A | 3 pending releases |
 
 Where:
 
@@ -26,6 +27,7 @@ Where:
 - **Assets Storage** is the amount of storage used by your assets.
 - **Assets Bandwidth** is the amount of bandwidth used by your assets. 
 - **API Requests** are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
+- **Releases** are the maximum number of pending [releases](/user-docs/releases/introduction) that can be created.
 
 ## Seats management
 
@@ -42,7 +44,7 @@ Each plan has a maximum number of seats that can be added. The maximum number of
 | **Free Trial** | 10 |
 | **Pro** | 30 |
 | **Team** | 50 |
- 
+
 ## Billing
 
 Billing is based on the usage of your Strapi Cloud account and applications. You will be billed monthly for the usage of your account and applications. You can view your usage and billing information in the [Billing](https://cloud.strapi.io/profile/billing) section of your Strapi Cloud account.
