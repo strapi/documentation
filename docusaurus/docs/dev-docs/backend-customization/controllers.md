@@ -95,11 +95,7 @@ module.exports = createCoreController(
      * yourself, so remember to use sanitizers and validators as needed.
      * */
     async healthCheck(ctx) {
-      try {
-        ctx.body = "ok";
-      } catch (err) {
-        ctx.body = err;
-      }
+      ctx.body = "ok";
     },
   })
 );
