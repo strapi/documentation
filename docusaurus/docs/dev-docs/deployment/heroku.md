@@ -168,8 +168,7 @@ npm install pg && npm install pg-connection-string
 </TabItem>
 
 </Tabs>
-    
-   
+
 7. Add `package-lock.json` to the end of the `.gitignore` file at the root of the Strapi project:
 
   ```sh
