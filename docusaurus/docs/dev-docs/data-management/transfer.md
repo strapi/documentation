@@ -37,6 +37,7 @@ The CLI command consists of the following arguments:
 | `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
 
 :::caution
 Either `--to` or `--from` is required.
