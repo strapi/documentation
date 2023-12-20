@@ -604,9 +604,6 @@ const sidebars = {
         {
           type: "doc",
           id: "user-docs/content-manager/writing-content",
-          customProps: {
-            updated: true,
-          },
         },
         "user-docs/content-manager/managing-relational-fields",
         "user-docs/content-manager/translating-content",
