@@ -4,7 +4,7 @@ description: Instructions to include content in a release
 displayed_sidebar: userDocsSidebar
 ---
 
-# Including content in a release  <EnterpriseBadge /> <CloudTeamBadge /> <CloudProBadge /> <FutureBadge /> <AlphaBadge />
+# Including content in a release  <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge /> <AlphaBadge />
 
 Using the [Releases](/user-docs/releases/introduction) feature, you can group several entries to publish them altogether. Adding entries to a release is done from the Content Manager. You can also remove an entry from a release while updating the entry.
 
