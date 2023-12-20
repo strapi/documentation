@@ -61,8 +61,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 3. Choose a plan for your Strapi Cloud project: either Pro, Team, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
     :::note
-    Strapi Cloud offers a free trial for only one project.
-    If you have already used a free trial for a previous project, the option will no longer appear in the plan selection.
+    Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to create your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
     :::
 
 4. Connect a GitHub repository to your new Strapi Cloud project.
@@ -170,6 +169,14 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     :::
 
 ## Setting up billing details
+
+:::strapi No billing step for free trials
+If you chose the free trial, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project. 
+
+During the free trial, will be kept informed of the number of remaining free days. You will then be notified by email and via the Strapi Cloud dashboard whenever it is time to fill in your billing information to move to a paid plan.
+
+👉 Skip to step 5 of the section below to finalise the creation of your project.
+:::
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project creation interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
 
