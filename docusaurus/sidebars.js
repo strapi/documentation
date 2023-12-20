@@ -371,7 +371,6 @@ const sidebars = {
         },
         {
           type: 'category',
-          collapsed: false,
           label: 'Using plugins',
           link: {
             type: 'doc',
@@ -428,7 +427,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
-          collapsed: false,
           customProps: {
             new: true,
           },
@@ -458,7 +456,6 @@ const sidebars = {
             'dev-docs/plugins-extension',
             {
               type: 'category',
-              collapsed: false,
               label: 'Guides',
               link: {
                 type: 'doc',
