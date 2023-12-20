@@ -14,11 +14,11 @@ const imgStyle = {width: '100%', margin: '0' }
 
 The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
-To toggle hot reloading and get errors in the console while developing, start Strapi in front-end development mode by running the application with the `--watch-admin` flag:
+To start your strapi instance with hot reloading while developing, run the following command:
 
 ```bash
 cd my-app # cd into the root directory of the Strapi application project
-strapi develop --watch-admin
+strapi develop
 ```
 
 ## Customization options
@@ -86,6 +86,10 @@ For more advanced settings please see the [admin panel configuration](/dev-docs/
 :::
 
 #### Host and port
+
+:::note
+From 4.15.1 this is now deprecated. The strapi server now supports the live updating of the admin panel in development mode.
+:::
 
 By default, the front end development server runs on `localhost:8000` but this can be modified:
 
