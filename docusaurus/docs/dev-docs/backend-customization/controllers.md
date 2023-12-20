@@ -323,7 +323,7 @@ export default {
 
     const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams);
 
-    return await contentAPI.output(entities, contentType, { auth: ctx.state.auth });
+    return await sanitize.contentAPI.output(entities, contentType, { auth: ctx.state.auth });
   }
 }
 ```
