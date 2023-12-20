@@ -11,7 +11,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 # Project creation & deployment
 
 <NotV5 />
-
 This is a step-by-step guide for creating and deploying your first project on Strapi Cloud.
 
 :::prerequisites
@@ -19,7 +18,8 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
-* Project(s) source code hosted on [GitHub](https://github.com). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
+* Project(s) source code hosted on [GitHub](https://github.com) or [GitLab](https://about.gitlab.com/). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
+* Specifically for GitLab: at least have "[Maintainer](https://docs.gitlab.com/ee/user/permissions.html)" permissions for the project to import on Strapi Cloud.
 :::
 
 ## Logging in to Strapi Cloud
@@ -48,7 +48,7 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     }}
     />
 
-2. You will be redirected to the first project creation interface. This interface contains 3 steps: choosing a plan, connecting a GitHub repository, and setting up the project.
+2. You will be redirected to the first project creation interface. This interface contains 3 steps: choosing a plan, connecting a git repository, and setting up the project.
 
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
@@ -64,19 +64,19 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to create your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
     :::
 
-4. Connect a GitHub repository to your new Strapi Cloud project.
+4. Connect a git repository to your new Strapi Cloud project.
 
     :::strapi Choose your path to create your new Strapi Cloud project!
     Select one of the tabs below depending on how you wish to proceed:
-    - by using a prebuilt template and creating a new GitHub repository to discover Strapi Cloud easily and quickly *(recommended for new users and beginners)*,
-    - or by using your own, already existing GitHub repository and Strapi project.
+    - by using a prebuilt template and creating a new repository on GitHub to discover Strapi Cloud easily and quickly *(recommended for new users and beginners — not available on another provider than GitHub)*,
+    - or by using your own, already existing GitHub or GitLab repository and Strapi project.
     :::
 
     <Tabs groupId="REPO-OPTIONS">
 
     <TabItem value="TEMPLATE" label="New repo & prebuilt template ✨">
 
-    4.a. Click on the **Use template** button.
+    4.a. Click on the **Use template** button. If you are creating a project for the first time, you may first have to select GitHub as git provider and then you will see the option to use a template. 
 
     4.b. In the *Create repository with template* modal, choose:
     
@@ -110,18 +110,18 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
 
     <TabItem value="OWN-REPO" label="Own existing repo & Strapi project">
 
-    4.a. Click on the **Connect GitHub repositories** button.
+    4.a. (optional) If you are creating a project for the first time, you may first have to select a git provider: either GitHub or GitLab. If you already created a project with one git provider, you can afterward create another project using another provider by clicking on the **Switch git provider** button and selecting either GitHub or GitLab.
 
     :::tip
-    Connect the GitHub account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    Connect the GitHub or GitLab account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
     :::
 
-    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud permission to access your repositories (more information in the [GitHub documentation](https://docs.github.com/en/apps/overview)).
+    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and [GitLab](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications) documentations).
 
     4.c. Back in the project creation interface, select your *Account* and a *Repository*. 
 
     <ThemedImage
-    alt="Selecting GitHub account and repository"
+    alt="Selecting git account and repository"
     sources={{
         light: '/img/assets/cloud/account-repo-selection.png',
         dark: '/img/assets/cloud/account-repo-selection_DARK.png',
@@ -139,12 +139,12 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     | Setting name | Instructions                                                                                            |
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Display name | Write the name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`). |
-    | GitHub branch | Choose from the drop-down the default branch to use for this deployment. This uses the [default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) of the repository. |
+    | Git branch   | Choose from the drop-down the default branch to use for this deployment. This uses the default branch of the repository. |
     | Deploy on push | Check the box to automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes. |
     | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be New York in North America (default) or Amsterdam in Europe. |
 
     :::note
-    The GitHub branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the project name and hosting region setting can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the project name and hosting region setting can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
