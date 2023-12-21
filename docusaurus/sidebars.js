@@ -714,8 +714,6 @@ const sidebars = {
       label: "Projects management",
       items: [
         "cloud/projects/overview",
-        "cloud/projects/deploys",
-        "cloud/projects/deploys-history",
         {
           type: "doc",
           label: "Project settings",
@@ -730,6 +728,15 @@ const sidebars = {
           label: "Notifications",
           id: "cloud/projects/notifications",
         },
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Deployments",
+      items: [
+        "cloud/projects/deploys",
+        "cloud/projects/deploys-history",
       ],
     },
     {
