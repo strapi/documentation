@@ -20,7 +20,7 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 
 * If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
 * Admin users and API tokens are not transferred.
-* Media from a 3rd party provider (e.g., Cloudinary or AWS S3) are not included in the transfer as those files do not exist in the upload folders.
+* If you use websockets or Socket.io in your projects, the transfer command will fail. You will need to **temporarily disable websockets or Socket.io** or ensure that your websocket server is running on a different port than the Strapi server, or a on a specific route within Strapi to use the transfer command.
 :::
 
 :::
