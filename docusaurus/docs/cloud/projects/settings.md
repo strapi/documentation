@@ -6,19 +6,21 @@ canonicalUrl: https://docs.strapi.io/cloud/projects/settings.html
 sidebar_position: 2
 ---
 
-# Project Settings
+# Project settings
 
-The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 5 tabs available: *General*, *Domains*, *Backups*, *Variables* and *Billing*.
+From a chosen project's dashboard, the *Settings* tab, located in the header, will redirect you to the *Project Settings* page. It enables you to manage the configurations and settings for your Strapi Cloud project.
+
+There are 5 tabs available: [*General*](#general), [*Domains*](#domains), [*Backups*](#backups), [*Variables*](#variables) and [*Billing*](#billing).
 
 ## General
 
 The *General* tab enables you to check and update the following options for the project:
 
-- Details: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Deployment](/cloud/getting-started/deployment)) and cannot be modified afterwards.
-- Connected Git repository: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)).
-- Selected region: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Deployment](/cloud/getting-started/deployment)) and cannot be modified afterwards.
-- Debug info: to see the internal project name for the project. This is useful for support purposes.
-- Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
+- *Details*: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)).
+- *Selected region*: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+- *Debug info*: to see the internal project name for the project. This is useful for support purposes.
+- *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
 <ThemedImage
   alt="Project settings page"
@@ -114,9 +116,7 @@ If you need to restore a backed up project database, click on the **Contact supp
 
 ## Variables
 
-[Environment variables](../../dev-docs/configurations/environment) are used to configure the environment of your Strapi app, such as the database connection.
-
-You can view default values, and create/edit/delete environment variables for your project in the **Variables** tab:
+[Environment variables](../../dev-docs/configurations/environment) are used to configure the environment of your Strapi application, such as the database connection. In the *Variables* tab, you can view default values, and create/edit/delete environment variables for your project.
 
 <ThemedImage
   alt="Project variables"

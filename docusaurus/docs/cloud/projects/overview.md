@@ -8,7 +8,7 @@ sidebar_position: 1
 
 # Projects overview
 
-The Projects page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
+The *Projects* page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 
 <ThemedImage
   alt="Projects page - List"
@@ -35,7 +35,16 @@ Each project card also displays a menu icon to access the following options:
 
 ## Accessing a project's overview
 
-From the Projects page, click on any project card to access the overview of your project. It displays all details such as usage and status information and gives access to deployment history and available settings.
+From the *Projects* page, click on any project card to access the *Overview* of your project. It displays all details such as usage and status information and gives access to deployment history and available settings.
+
+:::note
+Once you click on a project page, you access the dedicated dashboard for your chosen project. It is by default that you land on the *Overview* tab, however the header of the project's dashboard doesn't change and always offers the following options:
+
+- links to the other available tabs for the project: *Overview*, [*Deploys*](/cloud/projects/deploys), [*Runtime Logs*](/cloud/projects/deploys) and [*Settings*](/cloud/projects/settings)
+- the **Share** button to invite a new maintainer to collaborate on your project — and if the project is already shared: avatars of the maintainers (see [Collaboration](/cloud/projects/collaboration))
+- the **Trigger deploy** button to trigger a new deployment of your project
+- the **Visit app** button to access your application
+:::
 
 <ThemedImage
   alt="Project overview"
@@ -45,13 +54,14 @@ From the Projects page, click on any project card to access the overview of your
   }}
 />
 
-From the Overview tab, you can:
-* view your project's usage (see [Usage](/cloud/getting-started/usage-billing) for more information)
-* view your project's latest deploys (see [Deploys](/cloud/projects/deploys) for more information)
-* invite a new maintainer to collaborate on your project by clicking on the **Share** button (see [Collaboration](/cloud/projects/collaboration) for more information)
-* trigger a new deployment by clicking on the **Trigger deploy** button
-* access your application by clicking on the **Visit app** button
+<!-- Update screenshot -->
 
-You can also navigate to the following other tabs:
-* *Deploys* and *Runtime logs*, to access the project's deploys history and logs (see [Deploys & Runtime logs](/cloud/projects/deploys))
-* *Settings*, to access the project's settings (see [Project settings](/cloud/projects/settings))
+From the *Overview* tab, you can:
+- view a recap of the main settings of your project, such as:
+  - the link to the source repository
+  - the name of the branch
+  - the name of the base directory
+  - the URL and link to the application
+- view your project's usage (see [Usage](/cloud/getting-started/usage-billing) for more information)
+- view your project's latest deploys (see [Deploys](/cloud/projects/deploys) for more information)
+
