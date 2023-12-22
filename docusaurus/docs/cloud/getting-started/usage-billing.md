@@ -8,16 +8,16 @@ sidebar_position: 3
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Pro, Team and Custom (see [Pricing page](https://strapi.io/pricing-cloud)). The usage-based pricing for Strapi Cloud is based on the following criteria and limits:
+Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans: Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The usage-based pricing for Strapi Cloud is based on the following criteria and limits:
 
-| Feature | Free Trial | Pro | Team | Custom |
-| --- | --- | --- | --- | --- |
-| **Seats** | 10 | 10 | 20 | Custom |
-| **Database Entries**  | 100,000 | 100,000 | 1,000,000 | 1,000,000 |
-| **Assets Storage** | 5GB | 150GB | 500GB | 500GB |
-| **Assets Bandwidth** | 100GB | 500GB per month | 1,000GB per month | 1,000GB per month |
-| **API Requests** | 10,000 | 1,000,000 | 2,000,000 | 2,000,000 |
-| **Audit Logs** | 7 days retention | N/A | 7 days retention | Custom |
+| Feature | Free Trial | Pro | Team |
+| --- | --- | --- | --- |
+| **Seats** | 10 | 10 | 20 |
+| **Database Entries**  | 100,000 | 100,000 | 1,000,000 |
+| **Assets Storage** | 5GB | 150GB | 500GB |
+| **Assets Bandwidth** | 100GB | 500GB per month | 1,000GB per month |
+| **API Requests** | 10,000 | 1,000,000 | 2,000,000 |
+| **Audit Logs** | 7 days retention | N/A | 7 days retention |
 
 :::strapi Additional information on Strapi Cloud features
 - Seats are the maximum number of users that can access the Strapi admin panel.
@@ -40,7 +40,6 @@ There is however a maximum number of seats that can be added per plan:
 | **Free Trial** | 10 |
 | **Pro** | 30 |
 | **Team** | 50 |
-| **Custom** | Custom |
 
  
 ## Billing
