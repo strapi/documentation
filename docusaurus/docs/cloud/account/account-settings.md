@@ -14,7 +14,7 @@ The *Profile* page enables you to manage your account details and preferences. I
 The *General* tab enables you to edit the following details for your account profile:
 
 - Details: to see the name associated with your account.
-- Connected accounts: to manage Google and GitHub accounts connected with your Strapi Cloud account.
+- Connected accounts: to manage Google, GitHub and GitLab accounts connected with your Strapi Cloud account.
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
 
 <!-- TODO: replace with screenshot with connected accounts -->
@@ -29,11 +29,11 @@ The *General* tab enables you to edit the following details for your account pro
 
 ### Managing connected accounts
 
-You can connect a Google account and a GitHub account to your Strapi Cloud account. The _Connected accounts_ section lists accounts that are currently connected to your Strapi Cloud account. From there you can also connect a new Google or GitHub account if one is not already connected.
+You can connect a Google, GitLab and GitHub account to your Strapi Cloud account. The _Connected accounts_ section lists accounts that are currently connected to your Strapi Cloud account. From there you can also connect a new Google, GitLab and GitHub account if one is not already connected.
 
-To connect a new Google or GitHub account to your Strapi Cloud account, click on the **Connect account** button and follow the next steps on the corresponding website.
+To connect a new Google, GitLab or GitHub account to your Strapi Cloud account, click on the **Connect account** button and follow the next steps on the corresponding website.
 
-You can also click on the three dots button of a connected account and click on the "Manage on" button to manage your GitHub or Google account directly on the corresponding website.
+You can also click on the three dots button of a connected account and click on the "Manage on" button to manage your GitHub, GitLab or Google account directly on the corresponding website.
 
 ### Deleting Strapi Cloud account
 
