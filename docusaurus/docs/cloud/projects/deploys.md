@@ -6,17 +6,24 @@ canonicalUrl: https://docs.strapi.io/cloud/projects/deploys.html
 sidebar_position: 1
 ---
 
-# Projects deployments
+# Deployments management
 
-Introduction.
+The creation of a new Strapi Cloud project automatically trigger the deployment of that project. After that, deployments can be:
+
+- automatically triggered everytime a new commit is pushed to the branch (see [Project settings](/cloud/projects/settings/modifying-github-repository-branch)),
+- or [manually triggered](#triggering-a-new-deployment) whenever needed.
+
+Ongoing deployments can also be [manually cancelled](#cancelling-a-deployment) if needed.
+
+<!-- Add screenshot here or one in each subsection -->
 
 ## Triggering a new deployment
 
-To trigger a new deployment for your project, click on the **Trigger deploy** button always displayed in the top right corner of the interface. This action will add a new card in the *Deploys* tab, where you can monitor the status and view the deployment logs live (see blabla).
+To trigger a new deployment for your project, click on the **Trigger deploy** button always displayed in the right corner header. This action will add a new card in the *Deploys* tab, where you can monitor the status and view the deployment logs live (see [Deploy history and logs](/cloud/projects/deploys-history)).
 
 ## Cancelling a deployment
 
-If for any reason you want to cancel an ongoing, unfinished deployment:
+If for any reason you want to cancel an ongoing and unfinished deployment:
 
 1. Go to the Log details page of the deployment (see Accessing log details).
 2. Click on the **Cancel deploy** button in the top right corner. The status of the deployment will automatically change to *Cancelled*.

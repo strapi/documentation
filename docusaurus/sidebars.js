@@ -706,6 +706,11 @@ const sidebars = {
           },
         },
         "cloud/getting-started/caching",
+        {
+          type: "doc",
+          label: "Notifications",
+          id: "cloud/projects/notifications",
+        },
       ],
     },
     {
@@ -723,11 +728,7 @@ const sidebars = {
           },
         },
         'cloud/projects/collaboration',
-        {
-          type: "doc",
-          label: "Notifications",
-          id: "cloud/projects/notifications",
-        },
+        'cloud/projects/runtime-logs',
       ],
     },
     {
