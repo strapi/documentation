@@ -28,7 +28,7 @@ Each project card displays the following information:
 * the last deployment date
 
 
-Each project card also displays a menu icon to access the following options:
+Each project card also displays a menu icon <!-- add icon --> to access the following options:
 * **Visit App**: to be redirected to the application
 * **Go to Deploys**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
@@ -37,10 +37,10 @@ Each project card also displays a menu icon to access the following options:
 
 From the *Projects* page, click on any project card to access the *Overview* of your project. It displays all details such as usage and status information and gives access to deployment history and available settings.
 
-:::note
+:::strapi Navigating Strapi Cloud projects dashboards
 Once you click on a project page, you access the dedicated dashboard for your chosen project. It is by default that you land on the *Overview* tab, however the header of the project's dashboard doesn't change and always offers the following options:
 
-- links to the other available tabs for the project: *Overview*, [*Deploys*](/cloud/projects/deploys), [*Runtime Logs*](/cloud/projects/deploys) and [*Settings*](/cloud/projects/settings)
+- links to the other available tabs for the project: *Overview*, [*Deploys*](/cloud/projects/deploys), [*Runtime Logs*](/cloud/projects/runtime-logs) and [*Settings*](/cloud/projects/settings)
 - the **Share** button to invite a new maintainer to collaborate on your project — and if the project is already shared: avatars of the maintainers (see [Collaboration](/cloud/projects/collaboration))
 - the **Trigger deploy** button to trigger a new deployment of your project
 - the **Visit app** button to access your application

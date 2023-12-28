@@ -8,7 +8,7 @@ sidebar_position: 1
 
 # Collaboration on projects
 
-Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the Cloud dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
+Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the project dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
 
 Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the project owner, maintainers:
 
@@ -28,14 +28,14 @@ Users invited to collaborate on a project, called maintainers, do not have the s
 
 To invite a new maintainer to collaborate on a project:
 
-1. Go to the *Overview* tab of your project dashboard.
-2. Click on the **Share** button in the top right hand corner.
+1. From the *Projects* page, click on the project of your choice to be redirected to its dashboard.
+2. Click on the **Share** button located in the dashboard's header.
 3. In the *Share [project name]* dialog, type the email address of the person to invite in the textbox. A dropdown indicating "Invite [email address]" should appear.
 4. Click on the dropdown: the email address should be displayed in a purple box right below the textbox.
 5. (optional) Repeat steps 3 and 4 to invite more people. Email addresses can only entered one by one but invites can be sent to several email addresses at the same time.
 6. Click on the **Send** button.
 
-New maintainers will be sent an email containing a link to click on to join the project. Once a project is shared, avatars representing the maintainers will be displayed in the project dashboard next to the **Share** button, to see how many maintainers collaborate on that project and who they are.
+New maintainers will be sent an email containing a link to click on to join the project. Once a project is shared, avatars representing the maintainers will be displayed in the project dashboard's header, next to the **Share** button, to see how many maintainers collaborate on that project and who they are.
 
 :::tip
 Avatars use GitHub, Google or GitLab profile pictures, but for pending users only initials will be displayed until the activation of the maintainer account. You can hover over an avatar to display the full name of the maintainer.
@@ -64,7 +64,7 @@ For Expired statuses, it is possible to send another invitation email by clickin
 
 To revoke a maintainer's access to the project dashboard:
 
-1. Click on the **Share** button in the project dashboard.
+1. Click on the **Share** button in the project dashboard's header.
 2. In the list of *People with access*, find the maintainer whose access to revoke and click on the **Manage** button.
 3. Click on the **Revoke** button.
 4. In the confirmation dialog, click again on the **Revoke** button.

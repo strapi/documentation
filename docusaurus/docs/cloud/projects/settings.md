@@ -17,7 +17,7 @@ There are 5 tabs available: [*General*](#general), [*Domains*](#domains), [*Back
 The *General* tab enables you to check and update the following options for the project:
 
 - *Details*: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
-- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)).
+- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Selected region*: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
 - *Debug info*: to see the internal project name for the project. This is useful for support purposes.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
@@ -41,7 +41,7 @@ The GitHub repository branch and base directory for a Strapi Cloud project are b
     | --------------- | ------------------------------------------------------------------------ |
     | Selected branch | Choose a branch from the drop-down list.                                 |
     | Base directory  | Write the path of the base directory in the textbox.                     |
-    | Deploy the project on every commit pushed to this branch | Check the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. |
+    | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 3. Click on the **Save** button.
 
@@ -92,7 +92,7 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 ## Backups
 
-The *Backups* section informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
+The *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
 
 :::note
 The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
@@ -112,11 +112,11 @@ For projects created before the release of the Backup feature in October 2023, t
 
 ### Restoring a backup
 
-If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* section. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
+If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* tab. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
 
 ## Variables
 
-[Environment variables](../../dev-docs/configurations/environment) are used to configure the environment of your Strapi application, such as the database connection. In the *Variables* tab, you can view default values, and create/edit/delete environment variables for your project.
+Environment variables (more information in the [Developer Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
 <ThemedImage
   alt="Project variables"
@@ -126,11 +126,19 @@ If you need to restore a backed up project database, click on the **Contact supp
   }}
 />
 
+In the *Variables* tab, you can:
+- click the **Add variable** button to create a new variable
+- edit any variable, each being composed of a *Name* and a *Value*
+- click the ![Delete icon](/img/assets/icons/delete.svg) delete button associated with any variable to delete it
+- click the **Save** button to save any change made on the page
+
 ## Billing
 
-The *Billing* section displays the current subscription plan and included usage for the project.
+The *Billing* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and [have a detailed look at its usage](#viewing-and-filtering-project-usage).
 
-Use the **Manage subscription** button to change the subscription plan.
+:::tip
+In the Usage section of the *Billing* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
+:::
 
 <ThemedImage
   alt="Project billing"
@@ -139,3 +147,7 @@ Use the **Manage subscription** button to change the subscription plan.
     dark: '/img/assets/cloud/settings_billing_DARK.png',
   }}
 />
+
+### Managing project's subscription
+
+Using the **Manage subscriptions** button, you can view and manage your project's subscription. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
