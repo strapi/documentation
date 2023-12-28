@@ -7,14 +7,16 @@ canonicalUrl: https://docs.strapi.io/cloud/account/account-settings.html
 
 # Profile settings
 
-The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**. There are 3 tabs available in the *Profile* interface: *General*, *Preferences* and *Billing* (the latter is documented in Account billing).
+The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**.
+
+There are 3 tabs available in the *Profile* interface: [*General*](#general), [*Preferences*](#preferences) and *Billing* (the latter is documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
 
 ## General
 
 The *General* tab enables you to edit the following details for your account profile:
 
 - Details: to see the name associated with your account.
-- Connected accounts: to manage Google, GitHub and GitLab accounts connected with your Strapi Cloud account.
+- Connected accounts: to manage Google, GitHub and GitLab accounts connected with your Strapi Cloud account (see [Managing connected accounts](#managing-connected-accounts)).
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
 
 <!-- TODO: replace with screenshot with connected accounts -->
