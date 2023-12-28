@@ -52,7 +52,7 @@ In the *Deploy details* section of the *Log details* page is displayed the follo
 - *Commit*: the commit <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
 - *Branch*: the branch used for this deployment
 
-In the *Logs* section of the *Log details* page you can click on the arrow buttons to show or hide the build and deploy logs of the deployment.
+In the *Logs* section of the *Log details* page you can click on the arrow buttons <!-- add icons --> to show or hide the build and deploy logs of the deployment.
 
 :::tip
 Click the <!-- add icon --> **Copy to clipboard** button to copy the log contents.

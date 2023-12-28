@@ -19,13 +19,13 @@ Ongoing deployments can also be [manually cancelled](#cancelling-a-deployment) i
 
 ## Triggering a new deployment
 
-To trigger a new deployment for your project, click on the **Trigger deploy** button always displayed in the right corner header. This action will add a new card in the *Deploys* tab, where you can monitor the status and view the deployment logs live (see [Deploy history and logs](/cloud/projects/deploys-history)).
+To manually trigger a new deployment for your project, click on the **Trigger deploy** button always displayed in the right corner of a project dashboard's header. This action will add a new card in the *Deploys* tab, where you can monitor the status and view the deployment logs live (see [Deploy history and logs](/cloud/projects/deploys-history)).
 
 ## Cancelling a deployment
 
 If for any reason you want to cancel an ongoing and unfinished deployment:
 
-1. Go to the Log details page of the deployment (see Accessing log details).
+1. Go to the *Log details* page of the deployment (see [Accessing log details](/cloud/projects/deploys-history#accessing-deployment-details--logs)).
 2. Click on the **Cancel deploy** button in the top right corner. The status of the deployment will automatically change to *Cancelled*.
 
 :::tip
