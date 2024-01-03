@@ -116,6 +116,10 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
 :::
 
+:::strapi Vue renderer
+If using the Blocks editor, you can use [Vue Strapi Blocks Renderer](https://github.com/niklasfjeldberg/vue-strapi-blocks-renderer) to easily render the content in a Vue frontend.
+:::
+
 ### <img width="28" src="/img/assets/icons/ctb_number.svg" /> Number
 
 The Number field displays a field for any kind of number: integer, decimal and float.
