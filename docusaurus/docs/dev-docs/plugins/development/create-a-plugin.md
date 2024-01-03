@@ -14,6 +14,7 @@ To start developing a Strapi plugin, you need to:
 
 :::prerequisites
 You created a Strapi project.
+
 <details>
 <summary>Use the CLI to create a project:</summary>
 
@@ -40,6 +41,7 @@ npx create-strapi-app@latest my-project --quickstart
 </Tabs>
 
 More details can be found in the [CLI installation guide](/dev-docs/installation/cli).
+
 </details>
 :::
 
@@ -50,23 +52,23 @@ The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
 1. Navigate to the root of an existing Strapi project, or create a new one.
 2. Run the following command in a terminal window to start the interactive CLI:
 
-  <Tabs groupId="yarn-npm">
+<Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
-  ```sh
+```sh
   yarn strapi generate plugin
-  ```
+```
 
   </TabItem>
 
   <TabItem value="npm" label="NPM">
 
-  ```sh
-  npm run strapi generate plugin
-  ```
+```sh
+npm run strapi generate plugin
+```
 
   </TabItem>
-  </Tabs>
+</Tabs>
 
 4. Choose either `JavaScript` or `TypeScript` for the plugin language.
 
@@ -79,37 +81,38 @@ To enable a plugin:
 1. If it does not exist already, create the **plugins configuration file** <PluginsConfigurationFile /> file at the root of the Strapi project.
 2. Enable the plugin by adding the following code to the plugins configuration file:
 
-  <Tabs>
+<Tabs>
   <TabItem value="js" label="JavaScript">
 
-  ```js title="./config/plugins.js"
-  module.exports = {
-    // ...
-    "my-plugin": { // name of your plugin, kebab-cased
-      enabled: true,
-      resolve: "./src/plugins/my-plugin", // path to the plugin folder
-    },
-    // ...
-  };
-  ```
+```js title="./config/plugins.js"
+module.exports = {
+  // ...
+  "my-plugin": {
+    // name of your plugin, kebab-cased
+    enabled: true,
+    resolve: "./src/plugins/my-plugin", // path to the plugin folder
+  },
+  // ...
+};
+```
 
   </TabItem>
 
   <TabItem value="ts" label="TypeScript">
 
-  ```js title=./config/plugins.ts
-  export default {
-    // ...
-    "my-plugin": {
-      enabled: true,
-      resolve: "./src/plugins/my-plugin", // path to plugin folder
-    },
-    // ...
-  };
-  ```
+```js title=./config/plugins.ts
+export default {
+  // ...
+  "my-plugin": {
+    enabled: true,
+    resolve: "./src/plugins/my-plugin", // path to plugin folder
+  },
+  // ...
+};
+```
 
   </TabItem>
-  </Tabs>
+</Tabs>
 
 :::tip
 If you plan to use the plugin outside the Strapi project it was created in, move your plugin file outside the Strapi project and change the `resolve` value to the absolute directory path of your plugin.
@@ -127,43 +130,43 @@ Once the plugin code has been generated and the plugin is enabled, the next step
 
 2. Run the following command in the newly-created plugin directory to install plugin dependencies:
 
-  <Tabs groupId="yarn-npm">
+<Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
-  ```sh
-  yarn
-  ```
+```sh
+yarn
+```
 
   </TabItem>
 
   <TabItem value="npm" label="NPM">
 
-  ```sh
-  npm install
-  ```
+```sh
+npm install
+```
 
   </TabItem>
-  </Tabs>
+</Tabs>
 
 3. Navigate back to the Strapi project root with `cd ../../..` and run the following command to build the admin panel and start the server(s):
-  
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-  
-  ```sh
-  yarn develop
-  ```
 
-  </TabItem>
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-  <TabItem value="npm" label="NPM">
-  
-  ```sh
-  npm run develop
-  ```
+```sh
+yarn develop
+```
 
-  </TabItem>
-  </Tabs>
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```sh
+npm run develop
+```
+
+</TabItem>
+</Tabs>
 
 </TabItem>
 
@@ -173,65 +176,65 @@ Once the plugin code has been generated and the plugin is enabled, the next step
 
 2. Run the following command in the newly-created plugin directory to install plugin dependencies:
 
-  <Tabs groupId="yarn-npm">
+<Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
-  ```sh
-  yarn
-  ```
+```sh
+yarn
+```
 
   </TabItem>
 
   <TabItem value="npm" label="NPM">
 
-  ```sh
-  npm install
-  ```
+```sh
+npm install
+```
 
   </TabItem>
-  </Tabs>
+</Tabs>
 
 3. Still in the plugin directory (e.g., `src/plugins/my-plugin`), run the following command:
 
-  <Tabs groupId="yarn-npm">
+<Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
-  ```sh
-  yarn build
-  ```
+```sh
+yarn build
+```
 
   </TabItem>
 
   <TabItem value="npm" label="NPM">
 
-  ```sh
-  npm run build
-  ```
+```sh
+npm run build
+```
 
   </TabItem>
-  </Tabs>
+</Tabs>
 
-  This step transpiles the TypeScript files and outputs the JavaScript files to a `dist` directory that is unique to the plugin.
+This step transpiles the TypeScript files and outputs the JavaScript files to a `dist` directory that is unique to the plugin.
 
 4. Navigate back to the Strapi project root with `cd ../../..` and run the following command to build the admin panel and start the server(s):
 
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-  ```sh
-  yarn develop
-  ```
+```sh
+yarn develop
+```
 
-  </TabItem>
+</TabItem>
 
-  <TabItem value="npm" label="NPM">
-  
-  ```sh
-  npm run develop
-  ```
+<TabItem value="npm" label="NPM">
 
-  </TabItem>
-  </Tabs>
+```sh
+npm run develop
+```
+
+</TabItem>
+</Tabs>
 
 </TabItem>
 </Tabs>
@@ -240,10 +243,6 @@ You should now be ready to start developing your plugin.
 
 :::strapi What to read next?
 You can either jump to the [plugin structure](/dev-docs/plugins/development/plugin-structure) documentation or read the [servers and hot reloading](#servers-and-hot-reloading) section to learn more about different ways to start the server.
-:::
-
-:::info Did you know?
-The admin panel needs to be rebuilt after its code has been modified. Rebuilding the admin panel is done by running the `build` command. The `strapi generate plugin` generates code that injects some plugin components (menu link, plugin homepage) into the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
 :::
 
 ### Servers and hot reloading
