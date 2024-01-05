@@ -14,4 +14,10 @@ From a chosen project's dashboard, the *Runtime logs* tab, located in the header
 The *Runtime logs* are only accessible once the project is successfully deployed.
 :::
 
-<!-- add screenshot of runtime logs -->
+<ThemedImage
+  alt="Runtime logs"
+  sources={{
+    light: '/img/assets/cloud/runtime-logs.png',
+    dark: '/img/assets/cloud/runtime-logs_DARK.png',
+  }}
+/>

@@ -40,8 +40,8 @@ From the *Deploys* tab, you can click on the **See logs** button <!-- add icon -
 <ThemedImage
   alt="Deployment details"
   sources={{
-    light: '/img/assets/cloud/deploy_logs.png',
-    dark: '/img/assets/cloud/deploy_logs_DARK.png',
+    light: '/img/assets/cloud/deploy-logs.png',
+    dark: '/img/assets/cloud/deploy-logs_DARK.png',
   }}
 />
 
