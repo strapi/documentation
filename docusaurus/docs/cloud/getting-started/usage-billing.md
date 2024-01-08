@@ -72,7 +72,7 @@ If your project is suspended, you will no longer be able to access the applicati
 You can view the status of your project in the [Projects](https://cloud.strapi.io/projects) section of your Strapi Cloud account and you will be notified by email.
 
 :::warning
-If you do not resolve the issue within 10 days, your suspended project will be deleted and all data will be permanently lost.
+If you do not resolve the issue within 30 days, your suspended project will be deleted and all data will be permanently lost. To avoid this situation, you will be sent an email when your project becomes suspended, then another email every week to remind you to solve the issue. The last email will be sent to you the day before the deletion of the project.
 :::
 
 #### Project suspension after subscription cancellation
