@@ -538,7 +538,7 @@ Email templates should be edited through the admin panel, using the [Users and P
 
 ## Bundlers (experimental)
 
-We offer two different bundlers to be used with your Strapi app, [webpack](#webpack) and [vite](#vite).
+2 different bundlers can be used with your Strapi application, [webpack](#webpack) and [vite](#vite).
 
 ### Webpack
 
