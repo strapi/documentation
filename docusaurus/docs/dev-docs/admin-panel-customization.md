@@ -586,7 +586,7 @@ export default (config, webpack) => {
 
 ### Vite
 
-:::warning
+:::caution
 This is considered experimental. Please report any issues you encounter.
 :::
 
