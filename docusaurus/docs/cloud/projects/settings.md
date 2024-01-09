@@ -30,11 +30,11 @@ The *General* tab enables you to check and update the following options for the 
   }}
 />
 
-### Modifying GitHub repository branch
+### Modifying git repository branch
 
-The GitHub repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
+The GitHub or Gitlab repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
 
-1. In the *Connected Git repository* section of the *General* tab, click on the **Edit** button.
+1. In the *Connected git repository* section of the *General* tab, click on the **Edit** button.
 2. In the *Edit Git settings* dialog, edit the available options of your choice:
 
     | Setting name    | Instructions                                                             |

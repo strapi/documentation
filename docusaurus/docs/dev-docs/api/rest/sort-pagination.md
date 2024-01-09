@@ -188,8 +188,7 @@ Queries can accept `pagination` parameters. Results can be paginated:
 Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
 :::
 
-<SideBySideContainer>
-<SideBySideColumn>
+
 
 ### Pagination by page
 
@@ -199,7 +198,15 @@ To paginate results by page, use the following parameters:
 | ----------------------- | ------- | ------------------------------------------------------------------------- | ------- |
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
 | `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
-| `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
+| `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | true    |
+
+<SideBySideContainer>
+
+<SideBySideColumn>
+
+**Example:**
+
+Using the `pagination[page]` and `pagination[pageSize]` parameters you can get results paginated by page:
 
 </SideBySideColumn>
 
@@ -257,8 +264,6 @@ await request(`/api/articles?${query}`);
 </SideBySideColumn>
 </SideBySideContainer>
 
-<SideBySideContainer>
-<SideBySideColumn>
 
 ### Pagination by offset
 
@@ -273,6 +278,13 @@ To paginate results by offset, use the following parameters:
 :::tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+**Example:**
+
+Using the `pagination[start]` and `pagination[limit]` parameters you can get results paginated by offset:
 
 </SideBySideColumn>
 

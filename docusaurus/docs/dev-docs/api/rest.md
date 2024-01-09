@@ -14,7 +14,7 @@ All content types are private by default and need to be either made public or qu
 :::
 
 :::caution
-The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/dev-docs/api/rest/populate-select) to populate specific fields.
+The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/dev-docs/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
 ## Endpoints
@@ -239,8 +239,8 @@ While creating an entry, you can define its relations and their order (see [Mana
 {
   "data": {
     "title": "Hello",
-    "relation": 2,
-    "relations": [2, 4],
+    "relation_field_a": 2,
+    "relation_field_b": [2, 4],
     "link": {
       "id": 1,
       "type": "abc"
@@ -301,8 +301,8 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 {
   "data": {
     "title": "Hello",
-    "relation": 2,
-    "relations": [2, 4],
+    "relation_field_a": 2,
+    "relation_field_b": [2, 4],
   }
 }
 ```

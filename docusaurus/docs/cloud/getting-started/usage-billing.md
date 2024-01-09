@@ -18,6 +18,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans:
 | **Assets Bandwidth** | 100GB | 500GB per month | 1,000GB per month |
 | **API Requests** | 10,000 | 1,000,000 | 2,000,000 |
 | **Audit Logs** | 7 days retention | N/A | 7 days retention |
+| **Releases** | 3 pending releases | N/A | 3 pending releases |
 
 :::strapi Additional information on Strapi Cloud features
 - Seats are the maximum number of users that can access the Strapi admin panel.
@@ -25,6 +26,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans:
 - Assets storage is the amount of storage used by your assets.
 - Assets bandwidth is the amount of bandwidth used by your assets.
 - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
+- Releases are the maximum number of pending [releases](/user-docs/releases/introduction) that can be created.
 :::
 
 ## Seats management

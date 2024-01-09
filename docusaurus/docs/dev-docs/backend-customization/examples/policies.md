@@ -168,17 +168,23 @@ module.exports = async (policyContext, config, { strapi }) => {
   /**
    * If the user submitting the request is the restaurant's owner,
    * we don't allow the review creation.
-   */ 
+   */
   if (user.id === restaurant.owner.id) {
     // highlight-start
     /**
      * Throws a custom policy error
      * instead of just returning false
      * (which would result into a generic Policy Error).
-     */ 
-    throw new PolicyError('The owner of the restaurant cannot submit reviews', {
-      errCode: 'RESTAURANT_OWNER_REVIEW', // can be useful for identifying different errors on the front end
-    });
+     */
+    const error = new ApplicationError(
+      "The owner of the restaurant cannot submit reviews",
+      {
+        policy: "is-owner-review",
+        errCode: "RESTAURANT_OWNER_REVIEW", // can be useful for identifying different errors on the front end
+      }
+    );
+    error.name = "OwnerReviewError";
+    throw error;
     // highlight-end
   }
 
@@ -200,7 +206,7 @@ When a policy refuses access to a route and a default error is thrown, the follo
   "data": null,
   "error": {
       "status": 403,
-      "name": "PolicyError",
+      "name": "ForbiddenError",
       "message": "Policy Failed",
       "details": {}
   }
@@ -213,12 +219,14 @@ When a policy refuses access to a route and a default error is thrown, the follo
 
 When a policy refuses access to a route and the custom policy throws the custom error defined in the code example above, the following response will be sent when trying to query the content-type through the REST API:
 
+Note that because `ForbiddenError` (403) is always replaced with a generic message, we used an `ApplicationError` (400) to send the custom message.
+
 ```jsx
 {
   "data": null,
   "error": {
-    "status": 403,
-    "name": "PolicyError",
+    "status": 400,
+    "name": "OwnerReviewError",
     "message": "The owner of the restaurant cannot submit reviews",
     "details": {
         "policy": "is-owner-review",

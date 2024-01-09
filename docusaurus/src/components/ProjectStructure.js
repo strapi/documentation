@@ -14,7 +14,10 @@ export default function InteractiveProjectStructure() {
         <code>
       . <span className="token comment"># root of the application</span><br/>
 
-      ├──── .cache <span className="token comment"># files used to build the admin panel</span><br/>
+      ├──── .strapi <span className="token comment"># auto-generated folder — do not update manually</span><br/>
+      │     └──── client <span className="token comment"># files used by bundlers to render the application</span><br/>
+      │           ├ index.html <br/>
+      │           └ app.js <br/>
       ├──── .tmp<br/>
       ├──── <a href="/dev-docs/admin-panel-customization#build">build</a> <span className="token comment"># build of the admin panel</span><br/>
       ├──── config <span className="token comment"># API configurations</span><br/>
@@ -88,7 +91,10 @@ export default function InteractiveProjectStructure() {
         <code>
       . <span className="token comment"># root of the application</span><br/>
 
-      ├──── .cache <span className="token comment"># files used to build the admin panel</span><br/>
+      ├──── .strapi <span className="token comment"># auto-generated folder — do not update manually</span><br/>
+      │     └──── client <span className="token comment"># files used by bundlers to render the application</span><br/>
+      │           ├ index.html <br/>
+      │           └ app.js <br/>
       ├──── .tmp<br/>
       ├──── config <span className="token comment"># API configurations</span><br/>
       │     ├ <a href="/dev-docs/configurations/api">api.ts</a><br/>
