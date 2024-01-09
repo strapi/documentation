@@ -79,7 +79,7 @@ strapi develop
 You should never use this command to run a Strapi application in production.
 :::
 
-:::warning
+:::caution
 Using the `vite` option as a bundler is considered experimental.
 :::
 
