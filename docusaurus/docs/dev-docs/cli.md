@@ -108,7 +108,7 @@ strapi build
 | `--sourcemaps`      |   -    | Produce sourcemaps (default: false)                                                      |
 | `--stats`           |   -    | Print build statistics to the console (default: false)                                   |
 
-:::warning
+:::caution
 Using the `vite` option as a bundler is considered experimental.
 :::
 
