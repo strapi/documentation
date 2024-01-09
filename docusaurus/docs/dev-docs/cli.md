@@ -65,7 +65,7 @@ strapi develop
 
 | Option             |  Type  | Description                                                                                                      |
 | ------------------ | :----: | ---------------------------------------------------------------------------------------------------------------- |
-| `--bundler`        | string | Specifies the bundler you'd like to use, either `webpack` or `vite` (default: `webpack`)                         |
+| `--bundler`        | string | Specifies the bundler to use, either `webpack` or `vite` (default: `webpack`)                         |
 | `-d, --debug`      |   -    | Enable debugging mode with verbose logs (default: false)                                                         |
 | `--ignore-prompts` |   -    | Ignore all prompts (default: false)                                                                              |
 | `--open`           |   -    | Open the admin in your browser (default: true)                                                                   |
