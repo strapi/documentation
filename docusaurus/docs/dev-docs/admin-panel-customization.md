@@ -10,7 +10,7 @@ import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.m
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
 
-The admin panel is a React based SPA (single-page-application). It encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
+The admin panel is a React-based single-page application. It encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
 To start your strapi instance with hot reloading while developing, run the following command:
 
