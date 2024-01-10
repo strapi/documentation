@@ -35,10 +35,9 @@ You can rename a release. To do so, while on a release page:
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
 
-<!-- TODO: re-add when implemented -->
-<!-- ## Choose how entries are grouped
+## Choose how entries are grouped
 
-A release page can display entries either grouped by locales or by content-type. To change how entries are grouped, click the **Group by …** dropdown and select an option from the list. -->
+A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
 
 <!-- TODO: add screenshot? -->
 
