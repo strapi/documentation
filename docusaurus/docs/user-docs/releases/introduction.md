@@ -7,7 +7,6 @@ description: Introduction to the Releases feature that enables content managers 
 
 Releases enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
 
-Entries can be grouped by content type, locale, or action type (publish or unpublish) facilitating review and editing before publication.
 
 Releases is currently only available as an experimental feature. To enable it, set the appropriate future flag. See <a href="/dev-docs/configurations/features">future flags</a> documentation for instructions on how to enable a future flag.
 
