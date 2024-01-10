@@ -3,7 +3,7 @@ title: Introduction to Releases
 description: Introduction to the Releases feature that enables content managers to organize entries to publish/unpublish simultaneously
 ---
 
-# Releases <EnterpriseBadge /> <CloudTeamBadge/> <FutureBadge /> <AlphaBadge/>
+# Releases <EnterpriseBadge /> <CloudTeamBadge/> <FutureBadge /> <BetaBadge/>
 
 Releases enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
 

@@ -3,7 +3,7 @@ title: Creating a release
 description: Instructions to create a release from the admin panel
 ---
 
-# Creating a release  <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge /> <AlphaBadge />
+# Creating a release  <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge /> <BetaBadge />
 
 The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
