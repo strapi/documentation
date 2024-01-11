@@ -63,17 +63,17 @@ Strapi also adds middlewares to support HMR (Hot Module Replacement) for the adm
 strapi develop
 ```
 
-| Option             |  Type  | Description                                                                                                      |
-| ------------------ | :----: | ---------------------------------------------------------------------------------------------------------------- |
-| `--bundler`        | string | Specifies the bundler to use, either `webpack` or `vite` (default: `webpack`)                         |
-| `-d, --debug`      |   -    | Enable debugging mode with verbose logs (default: false)                                                         |
-| `--ignore-prompts` |   -    | Ignore all prompts (default: false)                                                                              |
-| `--open`           |   -    | Open the admin in your browser (default: true)                                                                   |
-| `--polling`        |   -    | Watch for file changes in network directories (default: false)                                                   |
-| `--silent`         |   -    | Don't log anything (default: false)                                                                              |
-| `--watch-admin`    |   -    | Watch the admin panel for hot changes (default: false)                                                           |
-| `--no-build`       |   -    | [DEPRECATED] Starts your application with the autoReload enabled and skip the administration panel build process |
-| `--browser`        | string | [DEPRECATED] Provide a browser name to use instead of the default one                                            |
+| Option             | Type   | Description                                                                                                      | Default   |
+| ------------------ | :----: | ---------------------------------------------------------------------------------------------------------------- | --------- |
+| `--bundler`        | string | Specifies the bundler to use, either `webpack` or `vite`x                                                        | `webpack` |
+| `-d, --debug`      | -      | Enable debugging mode with verbose logs                                                                          | false     |
+| `--ignore-prompts` | -      | Ignore all prompts                                                                                               | false     |
+| `--open`           | -      | Open the admin in your browser (default: true)                                                                   | false     |
+| `--polling`        | -      | Watch for file changes in network directories                                                                    | false     |
+| `--silent`         | -      | Don't log anything                                                                                               | false     |
+| `--watch-admin`    | -      | Watch the admin panel for hot changes                                                                            | false     |
+| `--no-build`       | -      | [DEPRECATED] Starts your application with the autoReload enabled and skip the administration panel build process | -         |
+| `--browser`        | string | [DEPRECATED] Provide a browser name to use instead of the default one                                            | -         |
 
 :::warning
 You should never use this command to run a Strapi application in production.
@@ -98,15 +98,15 @@ Builds your admin panel.
 strapi build
 ```
 
-| Option              |  Type  | Description                                                                              |
-| ------------------- | :----: | ---------------------------------------------------------------------------------------- |
-| `--bundler`         | string | Specifies the bundler you'd like to use, either `webpack` or `vite` (default: `webpack`) |
-| `-d, --debug`       |   -    | Enable debugging mode with verbose logs (default: false)                                 |
-| `--minify`          |   -    | Minify the output (default: true)                                                        |
-| `--no-optimization` |   -    | [DEPRECATED]: use minify instead                                                         |
-| `--silent`          |   -    | Don't log anything (default: false)                                                      |
-| `--sourcemaps`      |   -    | Produce sourcemaps (default: false)                                                      |
-| `--stats`           |   -    | Print build statistics to the console (default: false)                                   |
+| Option              | Type   | Description                                                         | Default   |
+| ------------------- | :----: | ------------------------------------------------------------------- | --------- |
+| `--bundler`         | string | Specifies the bundler you'd like to use, either `webpack` or `vite` | `webpack` |
+| `-d, --debug`       | -      | Enable debugging mode with verbose logs                             | false     |
+| `--minify`          | -      | Minify the output                                                   | true      |
+| `--no-optimization` | -      | [DEPRECATED]: use minify instead                                    | -         |
+| `--silent`          | -      | Don't log anything                                                  | false     |
+| `--sourcemaps`      | -      | Produce sourcemaps                                                  | false     |
+| `--stats`           | -      | Print build statistics to the console                               | false     |
 
 :::caution
 Using the `vite` option as a bundler is considered experimental.
