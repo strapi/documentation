@@ -17,7 +17,7 @@ There are 5 tabs available: [*General*](#general), [*Domains*](#domains), [*Back
 The *General* tab enables you to check and update the following options for the project:
 
 - *Details*: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
-- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-git-repository-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Selected region*: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
 - *Debug info*: to see the internal project name for the project. This is useful for support purposes.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
