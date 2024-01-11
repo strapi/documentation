@@ -3,9 +3,6 @@ title: Managing a release
 description: Instructions on how to manage a Release from the admin panel
 ---
 
-:::callout 🚧 Beta feature
-Availaible in 4.18.0-beta
-:::
 
 # Managing a release <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge />  <BetaBadge />
 
@@ -41,9 +38,11 @@ You can rename a release. To do so, while on a release page:
 
 ## Choose how entries are grouped
 
-A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
+:::callout 🚧 Beta feature
+Grouping is only available in Strapi v4.18.0-beta.
+:::
 
-<!-- TODO: add screenshot? -->
+A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
 
 ## Publish or unpublish entries
 
