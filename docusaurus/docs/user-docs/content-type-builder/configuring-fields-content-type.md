@@ -112,8 +112,14 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 </Tabs>
 
-:::strapi React renderer
-If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
+:::Strapi Frontend Renderer
+
+When leveraging the Blocks editor within Strapi, it is highly advisable to complement your workflow with the following tools for seamless content rendering on the frontend:
+
+* [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) - The official React library designed for optimal integration.
+* [Vue Strapi Blocks Renderer](https://github.com/niklasfjeldberg/vue-strapi-blocks-renderer) - A community-backed library, serving as a backport for the Vue framework.
+
+Enhance your development experience with these libraries to unlock the full potential of the Strapi Blocks editor.
 :::
 
 ### <img width="28" src="/img/assets/icons/ctb_number.svg" /> Number
