@@ -112,7 +112,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 </Tabs>
 
-:::Strapi Frontend Renderer
+:::strapi Frontend Renderer
 
 When leveraging the Blocks editor within Strapi, it is highly advisable to complement your workflow with the following tools for seamless content rendering on the frontend:
 
