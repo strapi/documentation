@@ -40,7 +40,7 @@ You can rename a release. To do so, while on a release page:
 
 :::callout 🚧 Beta feature
 Use the following command to install the latest version of this feature:
-npx create-strapi-app@beta
+`npx create-strapi-app@beta`
 :::
 
 A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
