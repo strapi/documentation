@@ -134,7 +134,7 @@ In the *Variables* tab, you can:
 
 ## Billing
 
-The *Billing* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and [have a detailed look at its usage](#viewing-and-filtering-project-usage).
+The *Billing* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and have a detailed look at its usage.
 
 :::tip
 In the Usage section of the *Billing* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
