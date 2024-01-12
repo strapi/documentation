@@ -28,7 +28,7 @@ Each project card displays the following information:
 * the last deployment date
 
 
-Each project card also displays a menu icon <!-- add icon --> to access the following options:
+Each project card also displays a ![Menu icon](/img/assets/icons/More.svg) menu icon to access the following options:
 * **Visit App**: to be redirected to the application
 * **Go to Deploys**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page

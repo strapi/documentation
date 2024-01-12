@@ -35,7 +35,7 @@ Each card displays the following information:
 
 ## Accessing deployment details & logs
 
-From the *Deploys* tab, you can click on the **See logs** button <!-- add icon --> of any chosen deployment card to be redirected to the *Log details*. It contains the deployment's details logs.
+From the *Deploys* tab, you can click on the ![See logs button](/img/assets/icons/Eye.svg) **See logs** button of any chosen deployment card to be redirected to the *Log details*. It contains the deployment's details logs.
 
 <ThemedImage
   alt="Deployment details"
@@ -52,8 +52,8 @@ In the *Deploy details* section of the *Log details* page is displayed the follo
 - *Commit*: the commit <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
 - *Branch*: the branch used for this deployment
 
-In the *Logs* section of the *Log details* page you can click on the arrow buttons <!-- add icons --> to show or hide the build and deploy logs of the deployment.
+In the *Logs* section of the *Log details* page you can click on the arrow buttons ![Down arrow](/img/assets/icons/ONHOLDCarretDown.svg) ![Up arrow](/img/assets/icons/ONHOLDCarretUp.svg) to show or hide the build and deploy logs of the deployment.
 
 :::tip
-Click the <!-- add icon --> **Copy to clipboard** button to copy the log contents.
+Click the ![Copy button](/img/assets/icons/duplicate.svg) **Copy to clipboard** button to copy the log contents.
 :::
