@@ -54,8 +54,6 @@ Once you click on a project page, you access the dedicated dashboard for your ch
   }}
 />
 
-<!-- Update screenshot -->
-
 From the *Overview* tab, you can:
 - view a recap of the main settings of your project, such as:
   - the link to the source repository

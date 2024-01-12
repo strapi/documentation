@@ -19,8 +19,6 @@ The *General* tab enables you to edit the following details for your account pro
 - Connected accounts: to manage Google, GitHub and GitLab accounts connected with your Strapi Cloud account (see [Managing connected accounts](#managing-connected-accounts)).
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
 
-<!-- TODO: replace with screenshot with connected accounts -->
-
 <ThemedImage
   alt="General tab of Profile page"
   sources={{
