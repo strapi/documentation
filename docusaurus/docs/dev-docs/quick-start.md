@@ -12,10 +12,12 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
-Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch.
+Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud.
 
 :::prerequisites
 <InstallPrerequisites components={props.components} />
+
+You will also need a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
 :::
 
 ## 🚀 Part A: Create a new project with Strapi
@@ -89,7 +91,7 @@ Your restaurants directory will eventually include many restaurants, so we need 
 5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
-8. Choose the Rich text field.
+8. Choose the Rich text (Markdown) field down in the list.
 9. Type `Description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
@@ -225,6 +227,64 @@ Now your content is created, published, and you have permissions to request it t
 Keep on creating amazing content!
 :::
 
+## ☁️ Part C: Deploy to Strapi Cloud
+
+Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to do this is to use Strapi Cloud. You will need to host your project on an online repository — we will use GitHub.
+
+### Step 1: Host the code of your Strapi project on GitHub
+
+Create a new repository and push the code of your Strapi project to this repository. If you're not already familiar with GitHub, the togglable content below should get you started 👇
+
+<details>
+<summary>Click me to view the steps required to push your Strapi project code to GitHub:</summary>
+
+1. In the terminal, ensure you are still in the `my-project` folder that hosts the Strapi project we created. If you followed this tutorial closely so far, we should still be there.
+2. Run the `git add .` command to add all modified files to the git index.
+3. Run the `git commit -m "Initial commit"` command to create a commit with all the added changes.
+4. Log in into your GitHub account and [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories). Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
+5. Go back to the terminal and push your local repository to GitHub:
+
+  a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your actual GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
+
+  b. Run the `git push --set-upstream origin main` command to finally push the commit to your GitHub repository.
+
+</details>
+
+### Step 2: Create a Strapi Cloud account
+
+1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
+2. Click the **Continue with GitHub** button and log in with the GitHub account where your Strapi project's repository is hosted.
+
+### Step 3: Create a new Strapi Cloud project with your GitHub repository
+
+You should now see the Strapi Cloud dashboard. This is where you manage your Strapi projects hosted on Strapi Cloud.
+
+<!-- TODO: add dark mode image -->
+<ThemedImage
+  alt="Strapi Cloud dashboard"
+  sources={{
+    light: '/img/assets/quick-start-guide/qsg-strapi-cloud-1.png',
+    dark: '/img/assets/quick-start-guide/qsg-strapi-cloud-1_DARK.png',
+  }}
+/>
+
+1. Click the **+ Create project** button.
+2. Select the 14-days free trial.
+3. Scroll down, and in the "Import git repository section", choose the appropriate Account and Repository from the list (for instance, Account: `yourname`, Repository: `my-first-strapi-project`).
+4. Scroll down further, and in the "Setup" section, give your project a Display name (for instance `my-first-strapi-project`) and leave the other options unchanged.
+5. Click **Create project** at the bottom of the page.
+
+Your Strapi project should be deployed within minutes. 🚀 Once it's done, you'll be able to log into your deployed Strapi project by clicking the **Visit app** button in the top right corner.
+
+:::callout 🥳 CONGRATULATIONS!  
+Now your project is hosted on Strapi Cloud and accessible online.
+:::
+
+:::note Notes
+* Accounts created for your Strapi Cloud project are different from the ones created in the local project on your machine, so you don't have to reuse the same credentials.
+* The database for your Strapi Cloud project and your local project are different. This means that when the Strapi Cloud project is created, the Content-Type Builder contains your data structure, but the Content Manager will not contain any actual data. You can either recreate your content manually or use Strapi's data management feature to [transfer your content](/dev-docs/data-management/transfer) from the local instance to the Strapi Cloud instance.
+:::
+
 ## ⏩ What to do next?
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
@@ -232,5 +292,6 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 <!-- TODO: uncomment this one when API token page is ready -->
 <!-- - 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API, -->
 - 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,
-- 👉 deploy your project on [Strapi Cloud](/cloud/intro),
-- 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization).
+- 👉 learn more about Strapi features by browsing the [User Guide](/user-docs/intro),
+- 👉 discover more about Strapi Cloud by reading the [Cloud documentation](/cloud/intro),
+- 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.
