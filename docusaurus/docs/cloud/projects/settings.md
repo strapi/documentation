@@ -17,7 +17,7 @@ There are 5 tabs available: [*General*](#general), [*Domains*](#domains), [*Back
 The *General* tab enables you to check and update the following options for the project:
 
 - *Details*: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
-- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-git-repository-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Selected region*: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
 - *Debug info*: to see the internal project name for the project. This is useful for support purposes.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
@@ -30,11 +30,11 @@ The *General* tab enables you to check and update the following options for the 
   }}
 />
 
-### Modifying GitHub repository branch
+### Modifying git repository branch
 
-The GitHub repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
+The GitHub or Gitlab repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
 
-1. In the *Connected Git repository* section of the *General* tab, click on the **Edit** button.
+1. In the *Connected git repository* section of the *General* tab, click on the **Edit** button.
 2. In the *Edit Git settings* dialog, edit the available options of your choice:
 
     | Setting name    | Instructions                                                             |
@@ -134,7 +134,7 @@ In the *Variables* tab, you can:
 
 ## Billing
 
-The *Billing* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and [have a detailed look at its usage](#viewing-and-filtering-project-usage).
+The *Billing* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and have a detailed look at its usage.
 
 :::tip
 In the Usage section of the *Billing* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.

@@ -403,6 +403,10 @@ async delete(params) {
 
 </details>
 
+:::note
+The `find()` method from core services can use both types of pagination, by page of by offset (see [REST API](/dev-docs/api/rest/sort-pagination#pagination)).
+:::
+
 ## Usage
 
 Once a service is created, it's accessible from [controllers](/dev-docs/backend-customization/controllers.md) or from other services:

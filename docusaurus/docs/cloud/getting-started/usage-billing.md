@@ -18,6 +18,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans:
 | **Assets Bandwidth** | 100GB | 500GB per month | 1,000GB per month |
 | **API Requests** | 10,000 | 1,000,000 | 2,000,000 |
 | **Audit Logs** | 7 days retention | N/A | 7 days retention |
+| **Releases** | 3 pending releases | N/A | 3 pending releases |
 
 :::strapi Additional information on Strapi Cloud features
 - Seats are the maximum number of users that can access the Strapi admin panel.
@@ -25,6 +26,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans:
 - Assets storage is the amount of storage used by your assets.
 - Assets bandwidth is the amount of bandwidth used by your assets.
 - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
+- Releases are the maximum number of pending [releases](/user-docs/releases/introduction) that can be created.
 :::
 
 ## Seats management
@@ -74,7 +76,7 @@ If you do not resolve the issue within 10 days, your suspended project will be d
 
 #### Project suspension after subscription cancellation
 
-If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/settings#edit-subscription)).
+If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/account-billing#edit-subscription)).
 
 1. Log into the billing modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
 2. Go back to the homepage of the billing modal, listing subscriptions and billing options.
