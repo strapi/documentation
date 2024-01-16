@@ -20,6 +20,7 @@ The *General* tab enables you to check and update the following options for the 
 - *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-git-repository-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Selected region*: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
 - *Debug info*: to see the internal project name for the project. This is useful for support purposes.
+- *Node version*: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
 <ThemedImage
@@ -44,6 +45,15 @@ The GitHub or Gitlab repository branch and base directory for a Strapi Cloud pro
     | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 3. Click on the **Save** button.
+
+### Modifying Node version
+
+The project's Node version is first chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)), through the advanced settings. It is possible to switch to another Node version afterwards.
+
+1. In the *Node version* section of the *General* tab, click on the **Edit** button.
+2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
+3. Click on the **Save** button.
+4. Click on the **Trigger deploy** button in the right corner of the project's header. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
 
 ### Deleting Strapi Cloud project
 
