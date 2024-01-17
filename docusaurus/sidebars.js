@@ -706,23 +706,6 @@ const sidebars = {
           },
         },
         "cloud/getting-started/caching",
-      ],
-    },
-    {
-      type: "category",
-      collapsed: false,
-      label: "Projects",
-      items: [
-        "cloud/projects/overview",
-        {
-          type: "doc",
-          label: "Project Settings",
-          id: "cloud/projects/settings",
-          customProps: {
-            new: false,
-          },
-        },
-        'cloud/projects/collaboration',
         {
           type: "doc",
           label: "Notifications",
@@ -733,9 +716,37 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "Account Management",
+      label: "Projects management",
       items: [
-        'cloud/account/settings',
+        "cloud/projects/overview",
+        {
+          type: "doc",
+          label: "Project settings",
+          id: "cloud/projects/settings",
+          customProps: {
+            new: false,
+          },
+        },
+        'cloud/projects/collaboration',
+        'cloud/projects/runtime-logs',
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Deployments",
+      items: [
+        "cloud/projects/deploys",
+        "cloud/projects/deploys-history",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Account management",
+      items: [
+        'cloud/account/account-settings',
+        'cloud/account/account-billing',
       ]
     },
     {

@@ -31,7 +31,7 @@ From a release page, you can:
 
 You can rename a release. To do so, while on a release page:
 
-1. Click on the ![More icon](/img/assets/icons/more.svg) button in the top right corner of the admin panel.
+1. Click on the ![More icon](/img/assets/icons/More.svg) button in the top right corner of the admin panel.
 2. Select ![Edit icon](/img/assets/icons/edit.svg) **Edit**.
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
@@ -66,6 +66,6 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 You can delete a release. Deleting a release will only delete the release itself, but not the content-type entries included in the release. To delete a release, while on the release page:
 
-1. Click on the ![More icon](/img/assets/icons/more.svg) button in the top right corner of the admin panel.
+1. Click on the ![More icon](/img/assets/icons/More.svg) button in the top right corner of the admin panel.
 2. Select ![Delete icon](/img/assets/icons/delete.svg) **Delete**.
 3. In the confirmation dialog, click ![Delete icon](/img/assets/icons/delete.svg) **Confirm**.
