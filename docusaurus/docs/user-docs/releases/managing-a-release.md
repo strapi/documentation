@@ -40,11 +40,11 @@ You can rename a release. To do so, while on a release page:
 
 A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
 
-## Publish or unpublish entries
+## Publishing or unpublishing entries
 
 A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
 
-<!-- TODO: re-add when implemented -->
+## Removing entries from a release
 <!-- ## Remove entries from a release
 
 Entries can be removed from a release. To do so, click the three dots **…** at the end of the line of an entry and select the **Remove from release** button. -->
