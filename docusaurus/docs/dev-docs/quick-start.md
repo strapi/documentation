@@ -259,6 +259,8 @@ Create a new repository and push the code of your Strapi project to this reposit
 
 You should now see the Strapi Cloud dashboard. This is where you manage your Strapi projects hosted on Strapi Cloud.
 
+We will create a new Strapi Cloud project by importing the local Strapi project you have just pushed to a GitHub repository.
+
 <!-- TODO: add dark mode image -->
 <ThemedImage
   alt="Strapi Cloud dashboard"
