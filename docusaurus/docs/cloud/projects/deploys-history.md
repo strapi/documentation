@@ -49,7 +49,7 @@ In the *Deploy details* section of the *Log details* page is displayed the follo
 - *Status*, which can be *Building*, *Deploying*, *Done*, *Cancelled*, *Build failed*, or *Deploy failed*
 - *Maintenance*: when the deployment occured
 - *Deployed in*: the amount of time the deployment took
-- *Commit*: the commit <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
+- *Commit*: the commit SHA <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
 - *Branch*: the branch used for this deployment
 
 In the *Logs* section of the *Log details* page you can click on the arrow buttons ![Down arrow](/img/assets/icons/ONHOLDCarretDown.svg) ![Up arrow](/img/assets/icons/ONHOLDCarretUp.svg) to show or hide the build and deploy logs of the deployment.
