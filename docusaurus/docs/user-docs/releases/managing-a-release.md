@@ -47,7 +47,7 @@ A release includes multiple entries. You can set the state of each entry with th
 ## Removing entries from a release
 <!-- ## Remove entries from a release
 
-Entries can be removed from a release. To do so, click the three dots **…** at the end of the line of an entry and select the **Remove from release** button. -->
+Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/more.svg) at the end of the line of an entry and select the **Remove from release** button.
 
 ## Publishing a release
 
