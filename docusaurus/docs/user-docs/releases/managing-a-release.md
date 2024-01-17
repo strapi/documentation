@@ -4,7 +4,7 @@ description: Instructions on how to manage a Release from the admin panel
 ---
 
 
-# Managing a release <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge />  <BetaBadge />
+# Managing a release <EnterpriseBadge /> <CloudTeamBadge />
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
