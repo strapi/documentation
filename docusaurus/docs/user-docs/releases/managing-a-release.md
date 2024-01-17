@@ -53,6 +53,10 @@ Entries can be removed from a release. To do so, click the ![More icon](/img/ass
 
 Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously. To publish a release, click the **Publish** button in the top right corner of the admin panel.
 
+:::note
+If a validation error occurs in the status of an entry, you will need to fix this before being able to publish the release. This usually happens when a required field is empty in a given entry.
+:::
+
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
 :::
