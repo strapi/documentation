@@ -26,7 +26,7 @@ To create a new release:
 
 Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).
 
-<!-- TODO: for later, when multiple addition is implemented -->
+<!-- TODO: for later, when multiple addition is implemented, probably in 4.20 -->
 <!-- 
 Adding entries to a release must be done from the Content Manager:
 

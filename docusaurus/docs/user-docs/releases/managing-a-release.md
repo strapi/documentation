@@ -45,7 +45,6 @@ A release page can display entries either grouped by locale, content-type, or ac
 A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
 
 ## Removing entries from a release
-<!-- ## Remove entries from a release
 
 Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/more.svg) at the end of the line of an entry and select the **Remove from release** button.
 
