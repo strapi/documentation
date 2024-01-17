@@ -7,9 +7,13 @@ canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
 
 # Account billing details
 
-Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can view and modify the billing details set for the account. This information will by default be reused for every new project created with your Strapi Cloud account.
+Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the *Billing* tab.
 
-The *Billing* tab displays your billing information and enables you to update your payment method.
+The *Billing* tab displays and enables you to modify the billing details and payment method set for the account. This information will by default be reused for every new project created with your Strapi Cloud account.
+
+:::note
+The Payment method section can only be accessible once the mandatory fields of the Billing details section have been filled in.
+:::
 
 <ThemedImage
   alt="Billing tab of Profile page"
