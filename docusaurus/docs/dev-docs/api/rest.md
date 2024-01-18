@@ -85,6 +85,10 @@ For each Content-Type, the following endpoints are automatically generated:
 [Components](/dev-docs/backend-customization/models#components) don't have API endpoints.
 :::
 
+:::tip
+API endpoints are prefixed with `/api` by default. This can be changed by setting a different value for the `rest.prefix` configuration parameter (see [API calls configuration](/dev-docs/configurations/api)).
+:::
+
 ## Requests
 
 Requests return a response as an object which usually includes the following keys:

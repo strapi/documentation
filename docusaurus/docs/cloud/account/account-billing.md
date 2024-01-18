@@ -1,63 +1,19 @@
 ---
-title: Account Settings
+title: Account billing details
 displayed_sidebar: cloudSidebar
-description: View and manage your projects on Strapi Cloud.
-canonicalUrl: https://docs.strapi.io/cloud/account/settings.html
+description: Manage billing details for Strapi Cloud account.
+canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
 ---
 
-# Account profile
+# Account billing details
 
-The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**. There are 3 tabs available in the *Profile* interface: *General*, *Preferences* and *Billing*.
+Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the *Billing* tab.
 
-## General
+The *Billing* tab displays and enables you to modify the billing details and payment method set for the account. This information will by default be reused for every new project created with your Strapi Cloud account.
 
-The *General* tab enables you to edit the following details for your account profile:
-
-- Details: to see the name associated with your account.
-- Connected accounts: to manage Google and GitHub accounts connected with your Strapi Cloud account.
-- Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
-
-<!-- TODO: replace with screenshot with connected accounts -->
-
-<ThemedImage
-  alt="General tab of Profile page"
-  sources={{
-    light: '/img/assets/cloud/settings-general.png',
-    dark: '/img/assets/cloud/settings-general_DARK.png',
-  }}
-/>
-
-### Managing connected accounts
-
-You can connect a Google account and a GitHub account to your Strapi Cloud account. The _Connected accounts_ section lists accounts that are currently connected to your Strapi Cloud account. From there you can also connect a new Google or GitHub account if one is not already connected.
-
-To connect a new Google or GitHub account to your Strapi Cloud account, click on the **Connect account** button and follow the next steps on the corresponding website.
-
-You can also click on the three dots button of a connected account and click on the "Manage on" button to manage your GitHub or Google account directly on the corresponding website.
-
-### Deleting Strapi Cloud account
-
-You can delete your Strapi Cloud account, but it will be permanent and irreversible. All associated projects and their data will be deleted as well and the subscriptions for the projects will automatically be canceled.
-
-1. In the *Delete account* section of the *General* tab, click on the **Delete account** button.
-2. In the dialog, type `DELETE` in the textbox.
-3. Confirm the deletion of your account by clicking on the **Delete** button.
-
-## Preferences
-
-The *Preferences* tab enables you to choose the appearance of your Strapi Cloud dashboard: either the Light or Dark theme.
-
-<ThemedImage
-  alt="Preferences tab of Profile page"
-  sources={{
-    light: '/img/assets/cloud/account-preferences.png',
-    dark: '/img/assets/cloud/account-preferences_DARK.png',
-  }}
-/>
-
-## Billing
-
-The *Billing* tab displays your billing information and enables you to update your payment method.
+:::note
+The Payment method section can only be accessible once the mandatory fields of the Billing details section have been filled in.
+:::
 
 <ThemedImage
   alt="Billing tab of Profile page"
@@ -67,7 +23,7 @@ The *Billing* tab displays your billing information and enables you to update yo
   }}
 />
 
-### Managing subscriptions
+## Managing subscriptions
 
 Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
 
@@ -91,7 +47,7 @@ Using the **Manage subscriptions** button, you can view and manage your subscrip
     }}
   />
 
-### Edit subscription
+## Edit subscription
 
 From the subscription management modal, you can view and modify any current subscription.
 
@@ -109,7 +65,7 @@ From the subscription management modal, you can view and modify any current subs
 4. If you want to change plan (e.g. from Pro plan to Team plan), click on **Change** and select a new plan.
 5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
 
-### Cancel subscription
+## Cancel subscription
 
 <ThemedImage
   alt="Subscription cancellation modal"

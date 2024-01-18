@@ -63,6 +63,10 @@ Additional information about JWT authentication can be found in the [Users & Per
 
 **🧑‍💻 Code example:**
 
+:::prerequisites
+The code example in this section uses the [formik](https://formik.org/) package. Install it using `yarn add formik` or `npm install formik` and restart the dev server.
+:::
+
 To achieve this, in the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could create a `pages/auth/login.js` file that contains the following example code.  Highlighted lines show the request sent to the `/auth/local` route provided by Strapi's Users & Permissions plugin:
 
 ```jsx title="/client/pages/auth/login.js" {21-27}

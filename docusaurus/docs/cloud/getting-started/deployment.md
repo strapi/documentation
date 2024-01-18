@@ -1,5 +1,5 @@
 ---
-title: Project Creation
+title: Project creation
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
@@ -157,7 +157,8 @@ Before you can deploy your Strapi application on Strapi Cloud, you need to have 
     | Setting name | Instructions                                                                                            |
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Base directory | Write the name of the directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo. |
-    | Variables    | Click on **Add variable** to add environment variables used to configure your Strapi app (see [Environment variables](/dev-docs/configurations/environment/) for more information). You can also add environment variables to your Strapi application by adding a `.env` file to the root of your Strapi app directory. The environment variables defined in the `.env` file will be used by Strapi Cloud. |
+    | Environment variables | Click on **Add variable** to add environment variables used to configure your Strapi app (see [Environment variables](/dev-docs/configurations/environment/) for more information). You can also add environment variables to your Strapi application by adding a `.env` file to the root of your Strapi app directory. The environment variables defined in the `.env` file will be used by Strapi Cloud. |
+    | Node version | Choose a Node version from the drop-down. Default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
 
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default one used by Strapi Cloud (see [database configuration](/dev-docs/configurations/database#environment-variables-in-database-configurations) for more details). If you would like to revert and use Strapi's default database again, you have to remove your `DATABASE_` environment variables (no automatic migration implied).
