@@ -35,7 +35,7 @@ To add entries to a release:
   }}
 />
 
-## Adding a single entry to a release
+## Adding an entry to a release
 
 An entry can be added to a [release](/user-docs/releases/introduction) while editing it from the edit view of the Content Manager. Only collection type entries can be added to a release, not single type entries.
 
@@ -45,7 +45,7 @@ To add an entry to a release:
 2. Select which release to add this entry to.
 3. Decide whether the entry will be published or unpublished when the release itself is published, then click **Continue**.
 
-## Removing a single entry from a release
+## Removing an entry from a release
 
 An entry can be removed from a [release](/user-docs/releases/introduction) while editing it from the edit view of the Content Manager.
 
