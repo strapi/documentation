@@ -88,7 +88,7 @@ You can pass configuration to the middleware directly by setting it in the [`bod
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./config/middlewares.js"
 
@@ -111,7 +111,7 @@ module.exports = [
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```js title="path: ./config/middlewares.ts"
 
@@ -140,7 +140,7 @@ In addition to the middleware configuration, you can pass the `sizeLimit`, which
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./config/plugins.js"
 
@@ -156,7 +156,7 @@ module.exports = {
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```js title="path: ./config/plugins.ts"
 
@@ -182,7 +182,7 @@ An alternate method is to set the `requestTimeout` value in the `bootstrap` func
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./index.js"
 
@@ -199,7 +199,7 @@ module.exports = {
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```ts title="path: ./index.ts"
 
@@ -233,7 +233,7 @@ These sizes can be overridden in `./config/plugins.js`:
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./config/plugins.js"
 
@@ -254,7 +254,7 @@ module.exports = ({ env }) => ({
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```js title="path: ./config/plugins.ts"
 
