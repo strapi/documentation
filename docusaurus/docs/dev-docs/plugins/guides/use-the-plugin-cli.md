@@ -17,7 +17,7 @@ As opposed to the `strapi generate plugin` command (see [plugin creation and set
 
 The present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin. If you already have an existing plugin, you can instead retrofit the plugin setup to utilise the Plugin CLI commands (please refer to the [Plugin CLI reference](/dev-docs/plugins/development/plugin-cli) for a full list of available commands).
 
-## Getting started with the plugin CLI
+## Getting started with the Plugin CLI
 
 :::note
 This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#working-with-the-plugin-cli-in-a-monorepo-environment) the steps are exactly the same.
