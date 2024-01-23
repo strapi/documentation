@@ -1,5 +1,4 @@
 /**
- * Creating a sidebar enables you to:
  - create an ordered group of docs
  - render a sidebar for each doc of that group
  - provide next/previous navigation
@@ -42,9 +41,6 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction',
           id: 'dev-docs/setup-deployment',
-          customProps: {
-            new: true,
-          }
         },
         {
           type: 'category',
@@ -87,6 +83,7 @@ const sidebars = {
             'dev-docs/configurations/public-assets',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/rbac',
+            'dev-docs/configurations/features',
           ],
         },
         {
@@ -161,9 +158,6 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction/Concepts',
           id: 'dev-docs/api/content-api',
-          customProps: {
-            new: true,
-          }
         },
         {
           type: 'category',
@@ -215,15 +209,6 @@ const sidebars = {
             "dev-docs/api/query-engine/order-pagination",
           ],
         },
-        {
-          type: 'category',
-          label: 'APIs for plugins',
-          collapsed: false,
-          items: [
-            'dev-docs/api/plugins/admin-panel-api',
-            'dev-docs/api/plugins/server-api',
-          ]
-        },
       ]
     },
     {
@@ -254,7 +239,13 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/backend-customization/middlewares',
             },
-            'dev-docs/backend-customization/controllers',
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/controllers',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/backend-customization/services',
             'dev-docs/backend-customization/models',
             'dev-docs/backend-customization/webhooks',
@@ -262,9 +253,6 @@ const sidebars = {
               type: 'category',
               label: '✨ Examples',
               collapsed: true,
-              customProps: {
-                new: true,
-              },
               items: [
                 {
                   type: 'doc',
@@ -300,14 +288,7 @@ const sidebars = {
             }
           ]
         },
-        'dev-docs/plugins-extension',
-        'dev-docs/plugins-development',
         'dev-docs/typescript',
-        {
-          type: 'doc',
-          label: 'Custom fields',
-          id: 'dev-docs/custom-fields',
-        },
         {
           type: "doc",
           label: "Providers",
@@ -341,7 +322,7 @@ const sidebars = {
         },
         "dev-docs/database-migrations",
         "dev-docs/error-handling",
-        "dev-docs/testing",
+        // "dev-docs/testing",
         {
           type: "category",
           label: "Integrations",
@@ -387,16 +368,10 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction/Concepts',
           id: 'dev-docs/plugins',
-          customProps: {
-            new: true,
-          }
         },
         {
           type: 'category',
           label: 'Using plugins',
-          customProps: {
-            updated: true,
-          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/using-plugins'
@@ -411,9 +386,6 @@ const sidebars = {
               type: 'doc',
               label: 'Content Source Map',
               id: 'dev-docs/plugins/content-source-map',
-              customProps: {
-                new: true,
-              }
             },
             {
               type: 'doc',
@@ -455,6 +427,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
+          customProps: {
+            new: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/developing-plugins',
@@ -465,6 +440,8 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/plugins/developing-plugins'
             },
+            'dev-docs/plugins/development/create-a-plugin',
+            'dev-docs/plugins/development/plugin-structure',
             {
               type: 'doc',
               id: 'dev-docs/api/plugins/admin-panel-api',
@@ -477,6 +454,18 @@ const sidebars = {
             },
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
+            {
+              type: 'category',
+              label: 'Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/plugins/developing-plugins',
+              },
+              items: [
+                'dev-docs/plugins/guides/store-and-access-data',
+                'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+              ]
+            }
           ]
         }
       ]
@@ -589,9 +578,6 @@ const sidebars = {
         {
           type: "doc",
           id: "user-docs/content-manager/writing-content",
-          customProps: {
-            updated: true,
-          },
         },
         "user-docs/content-manager/managing-relational-fields",
         "user-docs/content-manager/translating-content",
@@ -600,6 +586,7 @@ const sidebars = {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
         },
+        'user-docs/content-manager/adding-content-to-releases',
       ],
     },
     {
@@ -628,6 +615,19 @@ const sidebars = {
           type: "autogenerated",
           dirName: "user-docs/media-library",
         },
+      ],
+    },
+    {
+      type: "category",
+      customProps: {
+        new: true
+      },
+      collapsed: false,
+      label: "Releases",
+      items: [
+        'user-docs/releases/introduction',
+        'user-docs/releases/creating-a-release',
+        'user-docs/releases/managing-a-release',
       ],
     },
     {
@@ -706,23 +706,6 @@ const sidebars = {
           },
         },
         "cloud/getting-started/caching",
-      ],
-    },
-    {
-      type: "category",
-      collapsed: false,
-      label: "Projects",
-      items: [
-        "cloud/projects/overview",
-        {
-          type: "doc",
-          label: "Project Settings",
-          id: "cloud/projects/settings",
-          customProps: {
-            new: false,
-          },
-        },
-        'cloud/projects/collaboration',
         {
           type: "doc",
           label: "Notifications",
@@ -733,9 +716,37 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "Account Management",
+      label: "Projects management",
       items: [
-        'cloud/account/settings',
+        "cloud/projects/overview",
+        {
+          type: "doc",
+          label: "Project settings",
+          id: "cloud/projects/settings",
+          customProps: {
+            new: false,
+          },
+        },
+        'cloud/projects/collaboration',
+        'cloud/projects/runtime-logs',
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Deployments",
+      items: [
+        "cloud/projects/deploys",
+        "cloud/projects/deploys-history",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Account management",
+      items: [
+        'cloud/account/account-settings',
+        'cloud/account/account-billing',
       ]
     },
     {
@@ -998,6 +1009,7 @@ const sidebars = {
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
+            'dev-docs/configurations/features',
           ]
         },
         {

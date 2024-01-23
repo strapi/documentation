@@ -83,7 +83,7 @@ General settings for the model can be configured with the following parameters:
 | `kind`<br /><br />_Optional,<br/>only for content-types_ | String | Defines if the content-type is:<ul><li>a collection type (`collectionType`)</li><li>or a single type (`singleType`)</li></ul> |
 
 ```json
-// ./api/[api-name]/content-types/restaurant/schema.json
+// ./src/api/[api-name]/content-types/restaurant/schema.json
 
 {
   "kind": "collectionType",
@@ -653,7 +653,7 @@ Lifecycle hooks are functions that take an `event` parameter, an object with the
 
 ### Declarative and programmatic usage
 
-To configure a content-type lifecycle hook, create a `lifecycles.js` file in the `./api/[api-name]/content-types/[content-type-name]/` folder.
+To configure a content-type lifecycle hook, create a `lifecycles.js` file in the `./src/api/[api-name]/content-types/[content-type-name]/` folder.
 
 Each event listener is called sequentially. They can be synchronous or asynchronous.
 

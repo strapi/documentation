@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Caching for App Performance'
+sidebar_label: 'Caching for app performance'
 displayed_sidebar: cloudSidebar
 sidebar_position: 4
 ---

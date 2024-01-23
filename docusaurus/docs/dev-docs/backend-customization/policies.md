@@ -205,7 +205,7 @@ module.exports = {
           The `isAuthenticated` policy prodived with the `users-permissions` plugin 
           is executed before the `find` action in the `Restaurant.js` controller.
         */
-        policies: ['plugins::users-permissions.isAuthenticated']
+        policies: ['plugin::users-permissions.isAuthenticated']
       }
     }
   ]
@@ -229,7 +229,7 @@ export default {
           The `isAuthenticated` policy prodived with the `users-permissions` plugin 
           is executed before the `find` action in the `Restaurant.js` controller.
         */
-        policies: ['plugins::users-permissions.isAuthenticated']
+        policies: ['plugin::users-permissions.isAuthenticated']
       }
     }
   ]
