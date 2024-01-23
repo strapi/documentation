@@ -106,6 +106,8 @@ The *Backups* tab informs you of the status and date of the latest backup of you
 
 :::note
 The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+
+Note also that only project owners can restore a backup. Maintainers have access to the *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
 :::
 
 :::tip
