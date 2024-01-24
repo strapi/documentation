@@ -164,7 +164,7 @@ When passing the `--help` option (or its `-h` shorthand), help information is di
 Examples:
 
 <Tabs>
-<Tab value="upgrade" label="General help for the upgrade tool">
+<TabItem value="upgrade" label="General help for the upgrade tool">
 
 ```sh
 $ npx @strapi/upgrade -h
@@ -182,9 +182,9 @@ Commands:
 
 ```
 
-</Tab>
+</TabItem>
 
-<Tab value="major" label="Specific help for upgrade major">
+<TabItem value="major" label="Specific help for upgrade major">
 
 ```sh
 $ npx @strapi/upgrade major -h
@@ -201,5 +201,5 @@ Options:
   -y, --yes                          Automatically answer yes to every prompt
 ```
 
-</Tab>
+</TabItem>
 </Tabs>

@@ -30,7 +30,7 @@ To enable a future flag:
 
   <Tabs groupId='js-ts'>
 
-  <Tab value="js" label="JavaScript">
+  <TabItem value="js" label="JavaScript">
 
   ```ts title="/config/features.ts"
   module.export = ({ env }) => ({
@@ -50,9 +50,9 @@ To enable a future flag:
 
   If your environment file does not include this value, the `contentReleases` future flag property value  will default to `false` and the experimental feature will not be enabled.
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="ts" label="TypeScript">
+  <TabItem value="ts" label="TypeScript">
 
   ```ts title="/config/features.ts"
   export default {
@@ -71,25 +71,25 @@ To enable a future flag:
 
   If your environment file does not include this value, the `contentReleases` future flag property value will default to `false` and the experimental feature will not be enabled.
 
-  </Tab>
+  </TabItem>
   </Tabs> 
 
 4. Rebuild the admin panel and restart the server:
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
   
     ```sh
       yarn develop
     ```
-  </Tab>
-  <Tab value="npm" label="NPM">
+  </TabItem>
+  <TabItem value="npm" label="NPM">
 
     ```sh
       npm run develop
     ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
 ## Future flags API
