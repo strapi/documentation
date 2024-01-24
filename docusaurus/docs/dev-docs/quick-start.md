@@ -37,7 +37,7 @@ Run the following command in a terminal:
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn create strapi-app my-project --quickstart
@@ -45,7 +45,7 @@ yarn create strapi-app my-project --quickstart
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
 
 ```bash
 npx create-strapi-app@latest my-project --quickstart
