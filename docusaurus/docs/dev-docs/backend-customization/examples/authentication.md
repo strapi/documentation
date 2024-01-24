@@ -65,6 +65,8 @@ Additional information about JWT authentication can be found in the [Users & Per
 
 To achieve this, in the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could create a `pages/auth/login.js` file that contains the following example code.  Highlighted lines show the request sent to the `/auth/local` route provided by Strapi's Users & Permissions plugin:
 
+This file uses the formik package - install it using `yarn add formik` and restart the dev server.
+
 ```jsx title="/client/pages/auth/login.js" {21-27}
 
 import React from 'react';
