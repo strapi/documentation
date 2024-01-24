@@ -184,6 +184,8 @@ Create a new GitHub repository and push the code of your Strapi project to this 
 
   b. Run the `git push --set-upstream origin main` command to finally push the commit to your GitHub repository.
 
+Additional information about using git with the command line interface can be found in the [official GitHub documentation](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git).
+
 </details>
 
 </details>
