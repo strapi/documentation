@@ -19,7 +19,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
-You will also need a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
+You will also need to [install `git`](https://github.com/git-guides/install-git), and to have a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
 :::
 
 ## 🚀 Part A: Create a new project with Strapi
