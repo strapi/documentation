@@ -647,58 +647,91 @@ const sidebars = {
   ],
   cloudSidebar: [
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Getting Started',
+      label: "Getting Started",
       items: [
-        'cloud/getting-started/intro',
+        "cloud/getting-started/intro",
         {
-          type: 'doc',
-          id: 'cloud/getting-started/deployment',
+          type: "doc",
+          id: "cloud/getting-started/deployment",
           customProps: {
             updated: true,
           },
+        },,
+        {
+          type: "doc",
+          id: "cloud/getting-started/usage-billing",
+          customProps: {
+            updated: false,
+          },
         },
-        'cloud/getting-started/usage-billing',
-        'cloud/getting-started/caching',
-      ]
+        "cloud/getting-started/caching",
+        {
+          type: "doc",
+          label: "Notifications",
+          id: "cloud/projects/notifications",
+        },
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Projects',
+      label: "Projects management",
       items: [
-        'cloud/projects/overview',
+        "cloud/projects/overview",
         {
-          type: 'doc',
-          label: 'Project Settings',
-          id: 'cloud/projects/settings',
+          type: "doc",
+          label: "Project settings",
+          id: "cloud/projects/settings",
           customProps: {
-            updated: true,
+            new: false,
           },
         },
         'cloud/projects/collaboration',
-        {
-          type: 'doc',
-          label: 'Notifications',
-          id: 'cloud/projects/notifications',
-        },
-      ]
+        'cloud/projects/runtime-logs',
+      ],
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Account Management',
+      label: "Deployments",
       items: [
-        'cloud/account/settings',
+        "cloud/projects/deploys",
+        "cloud/projects/deploys-history",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Account management",
+      items: [
+        'cloud/account/account-settings',
+        'cloud/account/account-billing',
       ]
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
       label: 'Advanced configuration',
       items: [
         'cloud/advanced/database',
+        {
+          type: "doc",
+          id: "cloud/advanced/email",
+          label: "Email provider",
+          customProps: {
+            new: false,
+          },
+        },
+        {
+          type: "doc",
+          id: "cloud/advanced/upload",
+          label: "Upload provider",
+          customProps: {
+            new: false,
+          },
+        },
       ]
     }
   ],

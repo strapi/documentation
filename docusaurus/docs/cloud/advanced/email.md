@@ -77,6 +77,10 @@ export default ({ env }) => ({
 
 </Tabs>
 
+:::caution
+The file structure must match the above path exactly, or the configuration will not be applied to Strapi Cloud.
+:::
+
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 
 **Example:**
