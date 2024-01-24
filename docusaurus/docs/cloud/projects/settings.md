@@ -106,6 +106,8 @@ The *Backups* tab informs you of the status and date of the latest backup of you
 
 :::note
 The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+
+Note also that only project owners can restore a backup. Maintainers have access to the *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
 :::
 
 :::tip
@@ -122,7 +124,11 @@ For projects created before the release of the Backup feature in October 2023, t
 
 ### Restoring a backup
 
-If you need to restore a backed up project database, click on the **Contact support for restoring procedures** link in the *Backups* tab. This link will open your defaut email application and create an email to `support@strapi.io`. The Strapi support team, who will receive the database restoring request, will handle it.
+If you need to restore a backup of your project:
+
+1. In the *Backups* section, click on the **Restore backup** button.
+2. In the dialog, choose one of the available backups of your project in the *Choose backup* drop-down.
+3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
 
 ## Variables
 
@@ -161,3 +167,4 @@ In the Usage section of the *Billing* tab, you can see the current monthly usage
 ### Managing project's subscription
 
 Using the **Manage subscriptions** button, you can view and manage your project's subscription. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
+ 
