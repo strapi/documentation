@@ -72,7 +72,13 @@ By completing the form, you create your own account. Once done, you become the f
 
 You now have access to the [admin panel](http://localhost:1337/admin):
 
-![Admin panel screenshot: dashboard](/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel.png)
+<ThemedImage
+alt="Admin panel screenshot: dashboard"
+sources={{
+    light: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel.png',
+    dark: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel_DARK.png',
+}}
+/>
 
 </details>
 
