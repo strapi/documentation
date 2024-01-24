@@ -174,10 +174,11 @@ Create a new GitHub repository and push the code of your Strapi project to this 
 <summary>Click me to view the steps required to push your Strapi project code to GitHub:</summary>
 
 1. In the terminal, ensure you are still in the `my-project` folder that hosts the Strapi project we created. If you followed this tutorial closely so far, we should still be there.
-2. Run the `git add .` command to add all modified files to the git index.
-3. Run the `git commit -m "Initial commit"` command to create a commit with all the added changes.
-4. Log in into your GitHub account and [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories). Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
-5. Go back to the terminal and push your local repository to GitHub:
+2. Run the `git init` command to initialize git for this folder.
+3. Run the `git add .` command to add all modified files to the git index.
+4. Run the `git commit -m "Initial commit"` command to create a commit with all the added changes.
+5. Log in into your GitHub account and [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories). Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
+6. Go back to the terminal and push your local repository to GitHub:
 
   a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your actual GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
 
