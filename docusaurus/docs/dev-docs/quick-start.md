@@ -214,7 +214,7 @@ We will create a new Strapi Cloud project by importing the local Strapi project 
 />
 
 1. Click the **+ Create project** button.
-2. Select the 14-days free trial.
+2. Select the free trial plan.
 3. Scroll down, and in the "Import git repository section", choose the appropriate Account and Repository from the list (for instance, Account: `yourname`, Repository: `my-first-strapi-project`).
 4. Scroll down further, and in the "Setup" section, give your project a Display name (for instance `my-first-strapi-project`) and leave the other options unchanged.
 5. Click **Create project** at the bottom of the page.
