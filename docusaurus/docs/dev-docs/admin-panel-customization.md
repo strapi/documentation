@@ -477,7 +477,7 @@ To replace the favicon, use the following procedure:
 
     ```js title="./src/admin/app.js"
 
-    import favicon from './extensions/favicon.png';
+    import favicon from '../extensions/favicon.png';
 
     export default {
       config: {
