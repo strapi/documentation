@@ -227,11 +227,6 @@ Your Strapi project should be deployed within minutes. 🚀 Once it's done, you'
 Now your project is hosted on Strapi Cloud and accessible online. You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
 :::
 
-<!-- :::note 
-Accounts created for your Strapi Cloud project are different from the ones created in the local project on your machine, so you don't have to reuse the same credentials.
-* The database for your Strapi Cloud project and your local project are different. This means that when the Strapi Cloud project is created, the Content-Type Builder contains your data structure, but the Content Manager will not contain any actual data. You can either recreate your content manually or use Strapi's data management feature to [transfer your content](/dev-docs/data-management/transfer) from the local instance to the Strapi Cloud instance.
-::: -->
-
 ## 📝 Part D: Add content to your Strapi Cloud project with the Content Manager
 
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
@@ -404,8 +399,6 @@ The databases for your Strapi Cloud project and your local project are different
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-<!-- TODO: uncomment this one when API token page is ready -->
-<!-- - 👉 [create an API token](/user-docs/settings/managing-global-settings#managing-api-tokens) to restrict access to your API, -->
 - 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,
 - 👉 learn more about Strapi features by browsing the [User Guide](/user-docs/intro),
 - 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.
