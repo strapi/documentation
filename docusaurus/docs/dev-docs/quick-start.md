@@ -115,7 +115,7 @@ Your restaurants directory will eventually include many restaurants, so we need 
 5. Type `Name` in the _Name_ field.
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
-8. Choose the Rich text (Markdown) field down in the list.
+8. Choose the Rich text (Blocks) field in the list.
 9. Type `Description` under the _Name_ field, then click **Finish**.
 10. Finally, click **Save** and wait for Strapi to restart.
 
