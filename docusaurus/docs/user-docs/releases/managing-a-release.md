@@ -4,7 +4,7 @@ description: Instructions on how to manage a Release from the admin panel
 ---
 
 
-# Managing a release <EnterpriseBadge /> <CloudTeamBadge /> <FutureBadge />  <BetaBadge />
+# Managing a release <EnterpriseBadge /> <CloudTeamBadge />
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
@@ -36,27 +36,29 @@ You can rename a release. To do so, while on a release page:
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
 
-## Choose how entries are grouped
-
-:::callout 🚧 Beta feature
-Use the following command to install the latest version of this feature:
-`npx create-strapi-app@beta`
-:::
+## Choosing how entries are grouped
 
 A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
 
-## Publish or unpublish entries
+## Publishing or unpublishing entries
 
 A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
 
-<!-- TODO: re-add when implemented -->
-<!-- ## Remove entries from a release
+## Removing entries from a release
 
-Entries can be removed from a release. To do so, click the three dots **…** at the end of the line of an entry and select the **Remove from release** button. -->
+Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/more.svg) at the end of the line of an entry and select the **Remove from release** button.
 
 ## Publishing a release
 
 Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously. To publish a release, click the **Publish** button in the top right corner of the admin panel.
+
+The _Status_ column displays the status of each entry:
+
+   - ![Success icon](/img/assets/icons/CheckCircle.svg) Already published: the entry is already published and publishing the release will not affect this entry 
+   - ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish: the entry is ready to  be published with the release
+   - ![Fail icon](/img/assets/icons/CrossCircle.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. 
+   
+If some of your entries have a ![Fail icon](/img/assets/icons/CrossCircle.svg) status, click the ![More icon](/img/assets/icons/more.svg) and the **Edit the entry** button to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
 
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
