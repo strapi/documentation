@@ -465,6 +465,8 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/plugins/developing-plugins'
             },
+            'dev-docs/plugins/development/create-a-plugin',
+            'dev-docs/plugins/development/plugin-structure',
             {
               type: 'doc',
               id: 'dev-docs/plugins/admin-panel-api',
@@ -478,9 +480,16 @@ const sidebars = {
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
             {
-              type: 'doc',
-              label: 'Marketplace submission',
-              id: 'dev-docs/plugins/guides/marketplace',
+              type: 'category',
+              label: 'Guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/plugins/developing-plugins',
+              },
+              items: [
+                'dev-docs/plugins/guides/store-and-access-data',
+                'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+              ]
             }
           ]
         }

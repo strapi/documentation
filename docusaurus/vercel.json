@@ -169,7 +169,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html",
-			"destination": "/dev-docs/configurations/rbac"
+			"destination": "/dev-docs/configurations/guides/rbac"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html",
