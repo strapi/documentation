@@ -83,7 +83,7 @@ const sidebars = {
             'dev-docs/configurations/public-assets',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/rbac',
-            'dev-docs/configurations/features',
+            // 'dev-docs/configurations/features',
           ],
         },
         {
