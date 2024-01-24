@@ -149,7 +149,13 @@ It would help getting a bit more organized if our restaurants directory had some
 8. Choose the Relation field.
 9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/quick-start-guide/icon_manytomany.png). The text should read `Categories has and belongs to many Restaurants`.
 
-![Admin Panel screenshot: relations](/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png)
+<ThemedImage
+alt="Admin Panel screenshot: relations"
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct.png',
+  dark: '/img/assets/quick-start-guide/qsg-handson-part2-02-collection_ct_DARK.png',
+}}
+/>
 
 11. Finally, click **Finish**, then the **Save** button, and wait for Strapi to restart.
 
@@ -204,7 +210,6 @@ You should now see the Strapi Cloud dashboard. This is where you manage your Str
 
 We will create a new Strapi Cloud project by importing the local Strapi project you have just pushed to a GitHub repository:
 
-<!-- TODO: add dark mode image -->
 <ThemedImage
   alt="Strapi Cloud dashboard"
   sources={{
@@ -242,7 +247,13 @@ Now that your Strapi Cloud project is created, let's in into the project:
 3. Click the **Visit app** button.
 4. In the new page that opens, complete the form to create the first administrator user of this Strapi Cloud project.
 
-![GIF: First login on a Strapi Cloud project](/img/assets/quick-start-guide/qsg-first-login-cloud.gif)
+<ThemedImage
+alt=""
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-first-login-cloud.gif',
+  dark: '/img/assets/quick-start-guide/qsg-first-login-cloud_DARK.gif'
+}}
+/>
 
 Logged in into our first Strapi Cloud project, we will now add data from there.
 
@@ -272,7 +283,13 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
 5. Click **Save**.
 
-![Screenshot: Biscotte Restaurant in Content Manager](/img/assets/quick-start-guide/qsg-handson-part2-03-restaurant.png)
+<ThemedImage
+alt="Screenshot: Biscotte Restaurant in Content Manager"
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-handson-part2-03-restaurant.png',
+  dark: '/img/assets/quick-start-guide/qsg-handson-part2-03-restaurant_DARK.png',
+}}
+/>
 
 The restaurant is now listed in the _Collection types - Restaurant_ view of the ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager_.
 
@@ -291,7 +308,12 @@ Let's go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.
 4. Go back to _Collection types - Category_, then click again on **Create new entry**.  
 5. Type `Brunch` in the _Name_ field, then click **Save**.
 
-![GIF: Add Categories](/img/assets/quick-start-guide/qsg-handson-categories.gif)
+<ThemedImage
+alt="GIF: Add Categories"
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-handson-categories.gif',
+  dark: '/img/assets/quick-start-guide/qsg-handson-categories_DARK.gif',
+}}/>
 
 The "French Food" and "Brunch" categories are now listed in the _Collection types - Category_ view of the ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager_.
 
@@ -318,7 +340,12 @@ We have just added a restaurant and 2 categories. We now have enough content to 
 7. Repeat with _Category_: click the checkboxes next to **find** and **findOne**.
 8. Finally, click **Save**.
 
-![Screenshot: Public Role in Users & Permissions plugin](/img/assets/quick-start-guide/qsg-handson-part2-04-roles.png)
+<ThemedImage
+alt="Screenshot: Public Role in Users & Permissions plugin"
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-handson-part2-04-roles.png',
+  dark: '/img/assets/quick-start-guide/qsg-handson-part2-04-roles_DARK.png'
+}}/>
 
 </details>
 
@@ -339,7 +366,13 @@ Then, go back to the Categories list and repeat for the "French Food" category.
 
 Finally, to publish your favorite restaurant, go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types - Restaurant_, click the "Biscotte Restaurant" entry, and **Publish** it.
 
-![GIF: Publish content](/img/assets/quick-start-guide/qsg-handson-publish.gif)
+<ThemedImage
+alt="GIF: Publish content"
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-handson-publish.gif',
+  dark: '/img/assets/quick-start-guide/qsg-handson-publish_DARK.gif'
+}}
+/>
 
 </details>
 
