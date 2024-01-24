@@ -98,7 +98,7 @@ First we will build a data structure for your content. This can only be done whi
 If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
-The Content-Type Builder plugin helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
+The Content-Type Builder helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
 
 <details style={detailsStyle}>
 
@@ -108,7 +108,7 @@ The Content-Type Builder plugin helps you create your data structure. When creat
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to Plugins ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
@@ -139,7 +139,7 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-1. Go to Plugins ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
