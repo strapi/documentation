@@ -33,3 +33,10 @@ details.alert {
     text-decoration: var(--ifm-link-decoration);
   }
 }
+
+@include dark {
+  details a {
+    color: var(--strapi-primary-500);
+    font-weight: 700;
+  }
+}
