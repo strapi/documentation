@@ -246,6 +246,8 @@ Now that your Strapi Cloud project is created, let's log in into the project:
 3. Click the **Visit app** button.
 4. In the new page that opens, complete the form to create the first administrator user of this Strapi Cloud project.
 
+Logged in into our first Strapi Cloud project, we will now add data from there.
+
 <ThemedImage
 alt=""
 sources={{
@@ -253,8 +255,6 @@ sources={{
   dark: '/img/assets/quick-start-guide/qsg-first-login-cloud_DARK.gif'
 }}
 />
-
-Logged in into our first Strapi Cloud project, we will now add data from there.
 
 <details>
 <summary>ℹ️ Additional information and tips about users and Strapi Cloud projects:</summary>
