@@ -176,7 +176,7 @@ Now that your beautiful first Strapi project is working locally, it's time for t
 Create a new GitHub repository and push the code of your Strapi project to this repository. If you're not already familiar with GitHub, the togglable content below should get you started 👇
 
 <details>
-<summary>Click me to view the steps required to push your Strapi project code to GitHub:</summary>
+<summary>Steps required to push your Strapi project code to GitHub:</summary>
 
 1. In the terminal, ensure you are still in the `my-project` folder that hosts the Strapi project we created. If you followed this tutorial closely so far, we should still be there.
 2. Run the `git init` command to initialize git for this folder.
