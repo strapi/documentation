@@ -240,7 +240,7 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 
 ### Step 1: Log in to the admin panel of your new Strapi Cloud project
 
-Now that your Strapi Cloud project is created, let's in into the project:
+Now that your Strapi Cloud project is created, let's log in into the project:
 
 1. From your [Strapi Cloud dashboard](https://cloud.strapi.io/projects), click the `my-first-strapi-project` project.
 3. Click the **Visit app** button.
