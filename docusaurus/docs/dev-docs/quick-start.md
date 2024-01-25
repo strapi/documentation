@@ -330,7 +330,7 @@ Now, we will add a category to a restaurant:
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
-1. Click on _General ![Settings icon](/img/assets/quick-start-guide/icons/settings.svg) Settings_ at the bottom of the main navigation.
+1. Click on _![Settings icon](/img/assets/quick-start-guide/icons/settings.svg) Settings_ at the bottom of the main navigation.
 2. Under _Users & Permissions Plugin_, choose _Roles_.
 3. Click the **Public** role.
 4. Scroll down under _Permissions_.
