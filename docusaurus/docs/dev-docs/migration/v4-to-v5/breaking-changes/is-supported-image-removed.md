@@ -1,6 +1,6 @@
 ---
 title: The isSupportedImage method is removed in Strapi 5
-description: Database identifiers are shortened in Strapi v5 and can't be longer than 53 characters to avoid issues with identifiers that are too long.
+description: The `isSupportedImage` method is removed in Strapi 5. Users should use `isImage` or `isOptimizableImage` instead.
 sidebar_label: isSupportedImage removed
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
