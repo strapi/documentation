@@ -34,3 +34,7 @@ The following changes affect the databases interacting with your Strapi applicat
 ## Strapi objects and methods
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
+
+## Dependencies
+
+- [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
