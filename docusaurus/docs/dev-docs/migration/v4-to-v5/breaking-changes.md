@@ -3,7 +3,7 @@ title: Breaking changes
 description: View the list of all breaking changes introduced between Strapi v4 and v5.
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
- - breaking-changes
+ - breaking changes
 ---
 
 # Strapi v4 to v5 breaking changes
@@ -34,3 +34,4 @@ The following changes affect the databases interacting with your Strapi applicat
 ## Strapi objects and methods
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
+- [The `isSupportedImage` method is removed](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
