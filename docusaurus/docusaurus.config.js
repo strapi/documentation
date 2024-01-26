@@ -255,7 +255,8 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
+        // selector: '.markdown :not(em) > img', // disabled to ensure it works with themed images
+        // We also have a bug with images embedded in details blocks, see https://github.com/gabrielcsapo/docusaurus-plugin-image-zoom/issues/27
       },
       hubspot: {
         accountId: 6893032,
