@@ -1,7 +1,7 @@
 ---
-title: Strapi 5 uses React Router DOM 6
+title: The isSupportedImage method is removed in Strapi 5
 description: Database identifiers are shortened in Strapi v5 and can't be longer than 53 characters to avoid issues with identifiers that are too long.
-sidebar_label: Database identifiers shortened
+sidebar_label: isSupportedImage removed
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
