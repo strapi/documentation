@@ -24,6 +24,10 @@ The following changes affect the `schema.json` file of your content-types:
 
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
 
+### i18n
+
+* [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)
+
 ## Database
 
 The following changes affect the databases interacting with your Strapi application:
