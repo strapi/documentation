@@ -34,6 +34,7 @@ The following changes affect the databases interacting with your Strapi applicat
 ## Strapi objects and methods
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
+- [`strapiFactory` should be used in imports instead of the whole `strapi` object](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports)
 
 ## Dependencies
 
