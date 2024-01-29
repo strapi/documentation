@@ -26,34 +26,18 @@ To pass options with `npm` use the syntax: `npm run strapi <command> -- --<optio
 To pass options with `yarn` use the syntax: `yarn run strapi <command> --<option>`
 :::
 
-## strapi new
+<details>
+<summary>ℹ️ Strapi v4 CLI commands removed from Strapi 5:</summary>
 
-Create a new project.
+The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin` commands from Strapi v4 have been removed in Strapi 5:
 
-```bash
-strapi new <name>
+| Strapi v4 command | Strapi 5 equivalent |
+|-------------------|---------------------|
+| `strapi install [plugin]` |  Use the npx command corresponding to the plugin (found on the Marketplace, see [User Guide](/user-docs/plugins/installing-plugins-via-marketplace)) |
+| `strapi new`      | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/dev-docs/installation/cli)) |
+| `strapi watch-admin` | `yarn develop` or `npm run develop` always start the Strapi server in "watch-admin" mode |
 
-options: [--no-run|--use-npm|--debug|--quickstart|--dbclient=<dbclient> --dbhost=<dbhost> --dbport=<dbport> --dbname=<dbname> --dbusername=<dbusername> --dbpassword=<dbpassword> --dbssl=<dbssl> --dbauth=<dbauth> --dbforce]
-```
-
-- **strapi new &#60;name&#62;**<br/>
-  Generates a new project called **&#60;name&#62;** and installs the default plugins through the npm registry.
-
-- **strapi new &#60;name&#62; --debug**<br/>
-  Will display the full error message if one is fired during the database connection.
-
-- **strapi new &#60;name&#62; --quickstart**<br/>
-  Use the quickstart system to create your app.
-
-- **strapi new &#60;name&#62; --quickstart --no-run**<br/>
-  Use the quickstart system to create your app, and do not start the application after creation.
-
-- **strapi new &#60;name&#62; --dbclient=&#60;dbclient&#62; --dbhost=&#60;dbhost&#62; --dbport=&#60;dbport&#62; --dbname=&#60;dbname&#62; --dbusername=&#60;dbusername&#62; --dbpassword=&#60;dbpassword&#62; --dbssl=&#60;dbssl&#62; --dbauth=&#60;dbauth&#62; --dbforce**<br/>
-
-  Generates a new project called **&#60;name&#62;** and skip the interactive database configuration and initialize with these options.
-
-  - **&#60;dbclient&#62;** can be `postgres`, `mysql`.
-  - **--dbforce** Allows you to overwrite content if the provided database is not empty. Only available for `postgres`, `mysql`, and is optional.
+</details>
 
 ## strapi develop
 
@@ -65,7 +49,7 @@ Strapi modifies/creates files at runtime and needs to restart when new files are
 
 Strapi also adds middlewares to support HMR (Hot Module Replacement) for the administration panel. This allows you to customize the administration panel without having to restart the application or run a separate server.
 
-```
+```shell
 strapi develop
 options: [--no-build |--watch-admin |--browser |--debug |--silent]
 ```
@@ -106,19 +90,6 @@ strapi build
 | `--silent`          |  -   | Don't log anything (default: false)                      |
 | `--sourcemaps`      |  -   | Produce sourcemaps (default: false)                      |
 | `--stats`           |  -   | Print build statistics to the console (default: false)   |
-
-## strapi watch-admin
-
-:::note
-This has been deprecated, the admin panel is watched as part of the `develop` command.
-:::
-
-Starts the admin server. Strapi should already be running with `strapi develop`.
-
-```sh
-strapi watch-admin
-options: [--browser <name>]
-```
 
 ## strapi export
 
@@ -431,48 +402,6 @@ Display a list of all the registered [services](/dev-docs/backend-customization/
 ```bash
 strapi services:list
 ```
-
-## strapi install
-
-Install a plugin in the project.
-
-```console
-strapi install <name>
-```
-
-- **strapi install &#60;name&#62;**<br/>
-  Installs a plugin called **&#60;name&#62;**.
-
-  Example: `strapi install graphql` will install the plugin `@strapi/plugin-graphql`
-
-:::caution
-Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
-:::
-
-## strapi uninstall
-
-Uninstall a plugin from the project.
-
-```bash
-strapi uninstall <name>
-
-options [--delete-files]
-```
-
-- **strapi uninstall &#60;name&#62;**<br/>
-  Uninstalls a plugin called **&#60;name&#62;**.
-
-  Example: `strapi uninstall graphql` will remove the plugin `@strapi/plugin-graphql`
-
-- **strapi uninstall &#60;name&#62; --delete-files**<br/>
-  Uninstalls a plugin called **&#60;name&#62;** and removes the files in `./extensions/name/`
-
-  Example: `strapi uninstall graphql --delete-files` will remove the plugin `@strapi/plugin-graphql` and all the files in `./extensions/graphql`
-
-:::caution
-- In addition to the `uninstall` command you need to remove the plugin configuration from `./config/plugins.js`.
-- Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
-:::
 
 ## strapi telemetry:disable
 
