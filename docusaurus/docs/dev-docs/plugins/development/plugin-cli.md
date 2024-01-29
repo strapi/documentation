@@ -1,6 +1,6 @@
 ---
-title: Plugin CLI (experimental)
-description: Learn how to create a plugin with our new dedicated CLI commands
+title: Plugin CLI
+description: Reference documentation for Strapi's Plugin CLI commands
 displayed_sidebar: devDocsSidebar
 ---
 
