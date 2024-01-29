@@ -1050,7 +1050,8 @@ const sidebars = {
               label: "Strapi objects and methods",
               collapsed: false,
               items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/fetch'
+                'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
+                'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
               ]
             },
           ]

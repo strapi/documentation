@@ -3,7 +3,7 @@ title: Breaking changes
 description: View the list of all breaking changes introduced between Strapi v4 and v5.
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
- - breaking-changes
+ - breaking changes
 ---
 
 # Strapi v4 to v5 breaking changes
@@ -38,3 +38,4 @@ The following changes affect the databases interacting with your Strapi applicat
 ## Dependencies
 
 - [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
+- [The `isSupportedImage` method is removed](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
