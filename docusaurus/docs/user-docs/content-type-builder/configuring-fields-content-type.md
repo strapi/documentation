@@ -24,6 +24,10 @@ Depending on what content-type or component is being created or edited, not all 
   }}
 />
 
+:::caution
+Never name a custom attribute `locale` because it could interfere with, and break, the [i18n](/user-docs/settings/internationalization) feature.
+:::
+
 ## Regular fields
 
 ### <img width="28" src="/img/assets/icons/ctb_text.svg" /> Text
