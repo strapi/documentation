@@ -2,7 +2,7 @@
 title: Using Strapi plugins
 description: todo
 displayed_sidebar: devDocsSidebar
-pagination_next: dev-docs/plugins/documentation
+pagination_next: dev-docs/plugins/content-source-map
 ---
 
 # Using Strapi built-in plugins
