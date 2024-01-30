@@ -25,7 +25,7 @@ Depending on what content-type or component is being created or edited, not all 
 />
 
 :::caution
-Never name a custom attribute `locale` because it could interfere with, and break, the [i18n](/user-docs/settings/internationalization) feature.
+Never name a field `locale` because it could interfere with, and break, the [i18n](/user-docs/settings/internationalization) feature.
 :::
 
 ## Regular fields
