@@ -11,6 +11,8 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
+<!-- ! This breaking change is more "internal" and should only affect users that deeply customize Strapi. -->
+
 # Internationalization (i18n) is now part of the strapi core 
 
 Internationalization (i18n) is now part of the Strapi core and no longer a plugin, and this impacts how some parameters are sent and accessed.
