@@ -24,10 +24,6 @@ The following changes affect the `schema.json` file of your content-types:
 
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
 
-### i18n
-
-* [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)
-
 ## Database
 
 The following changes affect the databases interacting with your Strapi application:
@@ -44,3 +40,9 @@ The following changes affect the databases interacting with your Strapi applicat
 
 - [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
 - [The `isSupportedImage` method is removed](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
+
+## Internal changes
+
+The following changes should only affect users who deeply customize Strapi.
+
+* [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)
