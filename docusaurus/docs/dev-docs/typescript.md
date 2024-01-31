@@ -90,7 +90,7 @@ For JavaScript projects, automatic types generation can be turned off (see [`con
 :::
 
 :::tip Tip: Using types in your front-end application
-To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution.
+To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution, and you will find additional information in [this blog article](https://strapi.io/blog/improve-your-frontend-experience-with-strapi-types-and-type-script).
 :::
 
 ### Fix build issues with the Generated Types
