@@ -74,7 +74,7 @@ const config = {
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
       // 'data-button-hide': 'true',
-      'data-modal-disclaimer': 'Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
+      'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
       async: true,
