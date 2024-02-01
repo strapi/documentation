@@ -1056,6 +1056,14 @@ const sidebars = {
             },
             {
               type: "category",
+              label: "Content Manager",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state',
+              ]
+            },
+            {
+              type: "category",
               label: "Internal changes",
               collapsed: false,
               items: [
