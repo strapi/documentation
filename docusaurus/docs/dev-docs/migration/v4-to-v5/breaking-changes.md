@@ -35,8 +35,15 @@ The following changes affect the databases interacting with your Strapi applicat
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
 - [`strapiFactory` should be used in imports instead of the whole `strapi` object](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports)
+- [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
 
 ## Dependencies
 
 - [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
 - [The `isSupportedImage` method is removed](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
+
+## Internal changes
+
+The following changes should only affect users who deeply customize Strapi.
+
+* [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)

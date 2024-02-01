@@ -1,3 +1,3 @@
 :::caution
-The content of this page has not been updated to Strapi v5 yet.
+The content of this page might not be fully up-to-date with Strapi 5 yet.
 :::

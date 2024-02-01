@@ -14,7 +14,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Draft & Publish is always enabled in Strapi v5
 
-In Strapi v5, the Draft & Publish feature is always enabled. <Intro />
+In Strapi 5, the Draft & Publish feature is always enabled. <Intro />
 
 ## Breaking change description
 
@@ -30,7 +30,7 @@ Content types had a `draftAndPublish` option in their schema. The database schem
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 <!-- TODO: update sentence "also will be changing" → define what changed once we know -->
 All content-types now have Draft & publish enabled in the database and in the admin panel interface. The admin panel interface also will be changing.

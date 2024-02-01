@@ -12,7 +12,7 @@ import Intro from '/docs/snippets/breaking-change-page-intro.md'
 
 # MySQL v5 is not supported in Strapi v5 anymore
 
-In Strapi v5, MySQL version 5 is not supported.<Intro />
+In Strapi 5, MySQL version 5 is not supported.<Intro />
 
 ## Breaking change description
 
@@ -28,7 +28,7 @@ MySQL v5 was supported.
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 MySQL v5 is not supported anymore.<br />
 MySQL v8 is the minimum required version (see [CLI installation guide](/dev-docs/installation/cli)).

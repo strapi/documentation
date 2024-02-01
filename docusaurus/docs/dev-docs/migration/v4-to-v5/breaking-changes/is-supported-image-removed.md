@@ -31,7 +31,7 @@ The `isSupportedImage` method is supported, but deprecated.
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 The `isSupportedImage` method is removed.
 

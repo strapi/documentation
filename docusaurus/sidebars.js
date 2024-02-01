@@ -1054,6 +1054,14 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
               ]
             },
+            {
+              type: "category",
+              label: "Internal changes",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale',
+              ]
+            },
           ]
         },
         "dev-docs/migration/v4-to-v5/migration-guides",
