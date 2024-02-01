@@ -6,7 +6,7 @@ tags:
  - breaking changes
 ---
 
-# Strapi v4 to v5 breaking changes
+# Strapi v4 to Strapi 5 breaking changes
 
 :::callout 🚧  Work in progress
 This page is a work-in-progress and the list of breaking changes will grow over time.
