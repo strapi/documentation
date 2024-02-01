@@ -1047,6 +1047,18 @@ const sidebars = {
             },
             {
               type: "category",
+              collapsed: false,
+              label: "Plugins and their configuration",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields'
+              ]
+            },
+            {
+              type: "category",
               label: "Strapi objects and methods",
               collapsed: false,
               items: [
