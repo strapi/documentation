@@ -13,7 +13,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # `strapi.fetch` uses the native `fetch()` API
 
-In Strapi v5, the `strapi.fetch` object is now wrapping node Fetch API instead of node-fetch.
+In Strapi 5, the `strapi.fetch` object is now wrapping node Fetch API instead of node-fetch.
 
 ## Breaking change description
 
@@ -29,7 +29,7 @@ Strapi.fetch wrapped node-fetch’s `fetch()` and accepted the same parameters.
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 The `node-fetch` module is not used anymore. `strapi.fetch` calls the native `fetch()` method.
 
@@ -65,7 +65,7 @@ strapi.fetch(url, {
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 ```tsx
 strapi.fetch(url, {

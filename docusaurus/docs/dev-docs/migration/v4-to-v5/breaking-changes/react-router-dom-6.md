@@ -32,7 +32,7 @@ Strapi 5 uses react-router-dom v6. This impacts the links added to [settings](/d
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 - Strapi v5 uses react-router-dom v6.
 - When adding settings or menu links, the `to` property should now be a **relative path**.
