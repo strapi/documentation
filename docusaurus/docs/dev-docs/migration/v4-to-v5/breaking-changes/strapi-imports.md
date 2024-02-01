@@ -1,7 +1,7 @@
 ---
-title: Strapi 5  React Router DOM 6
-description: .
-sidebar_label: strapiFactory
+title: Strapi imports
+description: In Strapi 5, strapiFactory should be used in imports.
+sidebar_label: Use strapiFactory in imports
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
@@ -11,11 +11,11 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
-# `strapiFactory` should be used in imports instead of the whole `strapi` object
+# `strapiFactory` should be used in imports
 
-<!-- TODO: update intro once I know more -->
+In Strapi 5, import `strapiFactory` instead of `strapi`.
 
- <Intro />
+<Intro />
 
 ## Breaking change description
 
@@ -25,17 +25,23 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 **In Strapi v4**
 
-<!-- TODO: update description -->
-Factory functions are directly included in the `strapi` object.
+Imports are done as follows:
+
+```js
+import strapi from '@strapi/strapi';
+```
 
 </SideBySideColumn>
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
-<!-- TODO: update description -->
-The core object handling factory functions is `strapiFactory` from the `@strapi/strapi` package.
+Imports are done as follows:
+
+```js
+import { strapiFactory } from '@strapi/strapi'; 
+```
 
 </SideBySideColumn>
 

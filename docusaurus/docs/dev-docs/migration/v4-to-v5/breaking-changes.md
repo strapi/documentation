@@ -34,7 +34,7 @@ The following changes affect the databases interacting with your Strapi applicat
 ## Strapi objects and methods
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
-- [`strapiFactory` should be used in imports instead of the whole `strapi` object](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports)
+- [`strapiFactory` should be used in main imports](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports)
 - [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
 
 ## Dependencies
