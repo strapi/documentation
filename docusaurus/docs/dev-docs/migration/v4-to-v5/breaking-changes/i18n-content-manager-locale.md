@@ -33,7 +33,7 @@ Content Manager sends the following parameter when accessing a locale: `plugins[
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 The parameter sent to the Content Manager is now just `locale`.
 
