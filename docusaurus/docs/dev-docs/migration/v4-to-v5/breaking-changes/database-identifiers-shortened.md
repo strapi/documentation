@@ -13,7 +13,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Database identifiers shortened in v5
 
-In Strapi v5, database identifiers can't be longer than 53 characters. <Intro />
+In Strapi 5, database identifiers can't be longer than 53 characters. <Intro />
 
 ## Breaking change description
 
@@ -29,7 +29,7 @@ Database identifiers could be longer than 53 characters, potentially causing iss
 
 <SideBySideColumn>
 
-**In Strapi v5**
+**In Strapi 5**
 
 Database identifiers can't be longer than 53 characters and will be shortened.
 
