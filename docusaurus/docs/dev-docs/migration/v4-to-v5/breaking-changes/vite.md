@@ -1,7 +1,7 @@
 ---
 title: Vite is the default bundler
 description: In Strapi 5, Vite is the default bundler and replaces webpack.
-sidebar_label: Vite bundling
+sidebar_label: Vite as default bundler
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
