@@ -1029,7 +1029,8 @@ const sidebars = {
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
               },
               items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
+                'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
+                'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
               ]
             },
             {

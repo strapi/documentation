@@ -24,6 +24,10 @@ The following changes affect the `schema.json` file of your content-types:
 
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
 
+### Filtering and sorting
+
+* [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id)
+
 ## Database
 
 The following changes affect the databases interacting with your Strapi application:
