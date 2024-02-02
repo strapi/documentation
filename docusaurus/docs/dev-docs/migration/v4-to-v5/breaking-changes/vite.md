@@ -12,7 +12,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
-# Vite is the default bundler
+# Vite is the default bundler in Strapi 5
 
 In Strapi 5, Vite is the default bundler.
 
