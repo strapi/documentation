@@ -38,6 +38,7 @@ The following changes affect the databases interacting with your Strapi applicat
 
 ## Dependencies
 
+- [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite)
 - [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
 
 ## Internal changes

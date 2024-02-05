@@ -1056,6 +1056,15 @@ const sidebars = {
             },
             {
               type: "category",
+              label: "Dependencies",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/vite',
+                'dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6',
+              ]
+            },
+            {
+              type: "category",
               label: "Internal changes",
               collapsed: false,
               items: [
