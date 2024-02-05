@@ -1060,6 +1060,15 @@ const sidebars = {
               collapsed: false,
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state',
+              ],
+            },
+            {
+              type: "category",
+              label: "Dependencies",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/vite',
+                'dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6',
               ]
             },
             {
