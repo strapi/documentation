@@ -1,9 +1,9 @@
 ---
-title: Azure Deployment 
+title: Azure Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
-
 ---
+
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
 
@@ -13,11 +13,10 @@ This is a step-by-step guide for deploying a Strapi project to [Azure](https://a
 
 :::prerequisites
 
-* You should have created a [Strapi project](/dev-docs/quick-start).
-* You have should read through the [configuration documentation](/dev-docs/deployment#application-configuration).
-* You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
-:::
-
+- You should have created a [Strapi project](/dev-docs/quick-start).
+- You have should read through the [configuration documentation](/dev-docs/deployment#application-configuration).
+- You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+  :::
 
 <ConsiderStrapiCloud />
 
@@ -25,9 +24,9 @@ This is a step-by-step guide for deploying a Strapi project to [Azure](https://a
 
 There are 3 ways which you can deploy the Azure resources:
 
-* via the [Azure Portal](#creating-resources-via-the-azure-portal),
-* via the [Azure CLI](#creating-resources-via-the-azure-cli),
-* or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
+- via the [Azure Portal](#creating-resources-via-the-azure-portal),
+- via the [Azure CLI](#creating-resources-via-the-azure-cli),
+- or via an [Azure Resource Manager template](#deploy-with-an-azure-resource-manager-template).
 
 When Strapi is running in a PaaS hosting model, a custom storage provider will be required to avoid the transient disk of the PaaS model, [which is covered towards the end](#configure-strapi-for-azure-appservice).
 
@@ -66,10 +65,10 @@ In this section we'll use the Azure Portal to create the required resources to h
 
 10. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
 
-   - _Name_ - `my-strapi-app`
-   - _Region_ - Select an appropriate region
-   - _Performance_ - `Standard`
-   - _Redundancy_ - Select the appropriate level of redundancy for your files
+- _Name_ - `my-strapi-app`
+- _Region_ - Select an appropriate region
+- _Performance_ - `Standard`
+- _Redundancy_ - Select the appropriate level of redundancy for your files
 
 11. Click **Review + create** then **Create**
 
@@ -79,11 +78,11 @@ In this section we'll use the Azure Portal to create the required resources to h
 
 14. Ensure the _Subscription_ and _Resource Group_ are correct, then provide the following configuration for the storage account:
 
-   - _Name_ - `my-strapi-db`
-   - _Data source_ - `None` (unless you're wanting to import from a backup)
-   - _Location_ - Select an appropriate region
-   - _Version_ - `5.7`
-   - _Compute + storage_ - Select an appropriate scale for your requirements (Basic is adequate for many Strapi workloads)
+- _Name_ - `my-strapi-db`
+- _Data source_ - `None` (unless you're wanting to import from a backup)
+- _Location_ - Select an appropriate region
+- _Version_ - `5.7`
+- _Compute + storage_ - Select an appropriate scale for your requirements (Basic is adequate for many Strapi workloads)
 
 15. Enter a username and password for the _Administrator account_, click **Review + create** then **Create**.
 
@@ -211,9 +210,10 @@ To start the Node.js application, AppService will run the `npm start` command. A
 Databases can be on a [Azure Virtual Machine](https://azure.microsoft.com/services/virtual-machines/), hosted externally as a service, or via the [Azure Managed Databases](https://azure.microsoft.com/services/postgresql/).
 
 :::prerequisites
-* You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
-* An SSH key to access the virtual machine
-:::
+
+- You must have an [Azure account](https://azure.microsoft.com/free/) before doing these steps.
+- An SSH key to access the virtual machine
+  :::
 
 ### Create a Virtual Machine
 
@@ -318,7 +318,7 @@ After you login via SSH we need to update the container and install any packages
 
 - libpng-dev
 - build-essential
-- nodejs (v12 thus we will use an external apt repo)
+- nodejs (v18 thus we will use an external apt repo)
 - yarn (optional but recommended)
 
 First we need to update existing packages, you will use the apt package manager to do this:
@@ -337,18 +337,16 @@ sudo apt install libpng-dev build-essential -y
 For Node.js it is recommended you use the [official source](https://github.com/nodesource/distributions/blob/master/README.md#debinstall), per the instructions we will use the following commands:
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt install nodejs -y
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
 ```
 
-Likewise for Yarn we will use the instructions from the [Yarn documentation](https://classic.yarnpkg.com/en/docs/install/#debian-stable):
+Likewise for Yarn we will use the instructions from the [Yarn documentation](https://yarnpkg.com/getting-started/install):
 
 ```bash
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
-sudo apt update
-sudo apt install yarn -y
+corepack enable
+yarn set version stable
+yarn install
 ```
 
 To verify you have everything installed properly you can run the following:
@@ -395,7 +393,6 @@ For Azure managed databases you can use the following:
 Likewise you can use any of the following installed locally on the virtual machine:
 
 <DatabaseRequire components={props.components} />
-
 
 In our example we will be using MariaDB 10.4 LTS using the MariaDB apt repo. Per the [documentation](https://downloads.mariadb.org/mariadb/repositories/#distro=Ubuntu&distro_release=bionic--ubuntu_bionic&mirror=digitalocean-sfo&version=10.4) we will use the following commands:
 
@@ -496,18 +493,17 @@ Using the following example we will remove any private information:
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="path: /srv/strapi/mystrapiapp/config/database.js"
-
 module.exports = ({ env }) => ({
   connection: {
-    client: 'mysql',
+    client: "mysql",
     connection: {
-      host: env('DB_HOST'),
-      port: env.int('DB_PORT'),
-      database: env('DB_NAME'),
-      user: env('DB_USER'),
-      password: env('DB_PASS'),
+      host: env("DB_HOST"),
+      port: env.int("DB_PORT"),
+      database: env("DB_NAME"),
+      user: env("DB_USER"),
+      password: env("DB_PASS"),
       ssl: {
-        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+        rejectUnauthorized: env.bool("DATABASE_SSL_SELF", false), // For self-signed certificates
       },
     },
     debug: false,
@@ -520,18 +516,17 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="path: /srv/strapi/mystrapiapp/config/database.ts"
-
-  export default ({ env }) => ({
+export default ({ env }) => ({
   connection: {
-    client: 'mysql',
+    client: "mysql",
     connection: {
-      host: env('DB_HOST'),
-      port: env.int('DB_PORT'),
-      database: env('DB_NAME'),
-      user: env('DB_USER'),
-      password: env('DB_PASS'),
+      host: env("DB_HOST"),
+      port: env.int("DB_PORT"),
+      database: env("DB_NAME"),
+      user: env("DB_USER"),
+      password: env("DB_PASS"),
       ssl: {
-        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+        rejectUnauthorized: env.bool("DATABASE_SSL_SELF", false), // For self-signed certificates
       },
     },
     debug: false,
@@ -542,7 +537,6 @@ module.exports = ({ env }) => ({
 </TabItem>
 
 </Tabs>
-
 
 #### 3. Installing PM2 and running Strapi as a service
 
@@ -593,18 +587,18 @@ Replace the boilerplate information with something like the following:
 module.exports = {
   apps: [
     {
-      name: 'strapi-dev',
-      cwd: '/srv/strapi/mystrapiapp',
-      script: 'npm',
-      args: 'start',
+      name: "strapi-dev",
+      cwd: "/srv/strapi/mystrapiapp",
+      script: "npm",
+      args: "start",
       env: {
-        NODE_ENV: 'development',
-        DB_HOST: 'localhost',
-        DB_PORT: '5432',
-        DB_NAME: 'strapi_dev',
-        DB_USER: 'strapi',
-        DB_PASS: 'mysecurepassword',
-        JWT_SECRET: 'aSecretKey',
+        NODE_ENV: "development",
+        DB_HOST: "localhost",
+        DB_PORT: "5432",
+        DB_NAME: "strapi_dev",
+        DB_USER: "strapi",
+        DB_PASS: "mysecurepassword",
+        JWT_SECRET: "aSecretKey",
       },
     },
   ],
