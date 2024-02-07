@@ -318,7 +318,7 @@ After you login via SSH we need to update the container and install any packages
 
 - libpng-dev
 - build-essential
-- nodejs (v18 thus we will use an external apt repo)
+- nodejs (v20 thus we will use an external apt repo)
 - yarn (optional but recommended)
 
 First we need to update existing packages, you will use the apt package manager to do this:
