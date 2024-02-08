@@ -17,6 +17,7 @@ This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v
 ## Content API
 
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
+* [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service)
 
 ## Database
 
