@@ -9,6 +9,7 @@ tags:
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
+import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
 # No `findPage()` in Document Service API
 
@@ -53,5 +54,9 @@ strapi.documents("api::article.article").findMany({
 
 ## Migration
 
-<!-- TODO: update this part — will there be a codemod? -->
+<MigrationIntro />
 
+### Manual migration
+
+<!-- TODO: update this part — will there be a codemod? -->
+In your custom code, replace any occurences of the Entity Service API's `findPage()` method by the `findMany()` method from the Document Service API.
