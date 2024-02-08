@@ -116,6 +116,19 @@ module.exports = ({ env }) => ({
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },
+  transfer: {
+    remote: {
+      enabled: false, 
+    },
+  },
+  logger: {
+    updates: {
+      enabled: false,
+    },
+    startup: {
+      enabled: false,
+    },
+  },
 });
 ```
 
@@ -137,6 +150,19 @@ export default ({ env }) => ({
   proxy: env.bool('IS_PROXIED', true),
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
+  },
+  transfer: {
+    remote: {
+      enabled: false, 
+    },
+  },
+  logger: {
+    updates: {
+      enabled: false,
+    },
+    startup: {
+      enabled: false,
+    },
   },
 });
 ```
