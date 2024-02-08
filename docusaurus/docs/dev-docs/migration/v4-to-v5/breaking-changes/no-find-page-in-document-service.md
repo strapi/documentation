@@ -1,6 +1,6 @@
 ---
 title: No findPage() in Document Service API
-description: MySQL v5 is not supported in Strapi v5 anymore.
+description: In Strapi 5, the Entity Service API is deprecated, and for the findPage() method you should use the Document Service API's findMany() method instead.
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
@@ -50,8 +50,6 @@ strapi.documents("api::article.article").findMany({
 </SideBySideColumn>
 
 </SideBySideContainer>
-
-<br />
 
 ## Migration
 
