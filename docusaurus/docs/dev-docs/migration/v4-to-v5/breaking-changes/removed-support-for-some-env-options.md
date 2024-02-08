@@ -25,7 +25,7 @@ In Strapi 5, some configuration options that were only handled by environment va
 
 **In Strapi v4**
 
-The following list of configurations were only available from the environment:
+The following list of configurations are only available from the environment:
 
 - `STRAPI_DISABLE_REMOTE_DATA_TRANSFER`
 - `STRAPI_DISABLE_UPDATE_NOTIFICATION`
