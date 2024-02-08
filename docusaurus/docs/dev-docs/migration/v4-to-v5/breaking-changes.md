@@ -14,6 +14,10 @@ This page is a work-in-progress and the list of breaking changes will grow over 
 
 This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v5/introduction) and lists all the breaking changes introduced in Strapi v5.
 
+## Configuration
+
+* [Configuration filenames should meet strict requirements](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
+
 ## Content API
 
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
