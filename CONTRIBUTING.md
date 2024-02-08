@@ -45,7 +45,7 @@ The Strapi Documentation team has created a complete style guide for you to make
 
 💁 While writing, please consider the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) that the Strapi Documentation team will use to assess the quality and consistency of the contribution. 😊
 
-**Important:** If you are using an automatic formatter in your editor, please disable it as it could add unnecessary changes to the repository.
+**Important:** If you use an automatic formatter in your code editor, please disable it as it could add unnecessary changes to the your pull request.
 
 ### Working locally: Set up the project
 
