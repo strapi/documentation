@@ -14,7 +14,7 @@ import Intro from '/docs/snippets/breaking-change-page-intro.md'
 
 # Some `env`-only configuration options are handled by the server configuration
 
-In Strapi 5, some configuration options that were only handled by environment variables are now handled in the [server configuration](/dev-docs/configurations/server) file.
+In Strapi 5, some configuration options that were only handled by environment variables in Strapi v4 are now handled in the [server configuration](/dev-docs/configurations/server) file.
 <Intro />
 
 ## Breaking change description
