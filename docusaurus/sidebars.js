@@ -538,7 +538,18 @@ const sidebars = {
     },
   ],
   userDocsSidebar: [
-    'user-docs/intro',
+    {
+      type: "category",
+      customProps: {
+        updated: true
+      },
+      collapsed: false,
+      label: "Getting Started",
+      items: [
+        'user-docs/intro',
+        
+      ],
+    },
     {
       type: 'category',
       collapsed: false,
