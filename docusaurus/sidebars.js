@@ -552,7 +552,11 @@ const sidebars = {
       },
       collapsed: false,
       label: 'Getting Started',
-      items: ['user-docs/intro', 'user-docs/getting-started/core-concepts'],
+      items: [
+        'user-docs/intro',
+        'user-docs/getting-started/core-concepts',
+        'user-docs/getting-started/setting-up-admin',
+      ],
     },
     {
       type: 'category',
