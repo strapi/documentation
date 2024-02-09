@@ -25,6 +25,12 @@ This user guide contains the functional documentation related to all features av
   }}
 />
 
+Clicking on any of the following cards will direct you to the introduction page for the category, with additional details and concepts:
+
+<CustomDocCardsWrapper>
+  <CustomDocCard emoji="📝" title="Content Manager" description="Create, Manage and Publish Content Types" link="/user-docs/content-manager" />
+</CustomDocCardsWrapper>
+
 Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
 
 - **Development, Staging or Production Environment** <br/> When you start working on your application, it is in a development environment, which is the status for the content structure and application configuration. After deploying your application, it is in production or staging environment. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-type Builder. In this user guide the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
