@@ -552,7 +552,7 @@ const sidebars = {
       },
       collapsed: false,
       label: 'Getting Started',
-      items: ['user-docs/intro'],
+      items: ['user-docs/intro', 'user-docs/getting-started/core-concepts'],
     },
     {
       type: 'category',
@@ -560,7 +560,7 @@ const sidebars = {
       label: 'Content Manager',
       link: {
         type: 'doc',
-        id: 'user-docs/content-manager',
+        id: 'user-docs/content-manager/introduction-to-content-manager',
       },
       items: [
         {
