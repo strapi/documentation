@@ -78,8 +78,8 @@ async function strapiParticles() {
     score.innerText = "Score: 0";
     function setupDom() {
       document.querySelector(".navbar__items").appendChild(score);
-      // change all h1 tags to say "Strapi Breakout - Press Enter To Start"
-      document.querySelectorAll("h1").forEach((h1) => {
+      const h1 = document.querySelector("h1");
+      if (h1) {
         h1.setAttribute("data-original-text", h1.innerText); // Store the original text
         h1.innerText = "Strapi Breakout"; // Change the text
       
@@ -87,13 +87,13 @@ async function strapiParticles() {
         const h2 = document.createElement("h2");
         h2.innerText = "Press Enter to Start \n Press Esc to Exit";
       
-        // Check if the next sibling is a valid reference for insertBefore, otherwise appendChild
-        if (h1.parentNode && (h1.nextSibling || h1.nextSibling === null)) {
+        // Insert the h2 element after the h1
+        if (h1.nextSibling) {
           h1.parentNode.insertBefore(h2, h1.nextSibling);
-        } else if (h1.parentNode) {
+        } else {
           h1.parentNode.appendChild(h2);
         }
-      });
+      }
       //store the original title in the data-original-title attribute
       document.ogTitle = document.title;
       // animate document title with a marquee saying "Strapi Breakout" with padding
@@ -250,18 +250,19 @@ async function strapiParticles() {
   function resetDom() {
 
     document.getElementById("breakout-score")?.remove();
-    document.querySelectorAll("h1").forEach((h1) => {
+    const h1 = document.querySelector("h1");
+    if (h1) {
       const nextElement = h1.nextSibling;
-      // Ensure the nextElement is the one we added and a valid child before removing
+      // Ensure nextElement is the h2 we added before removing it
       if (nextElement && nextElement.tagName === "H2" && h1.parentNode.contains(nextElement)) {
         h1.parentNode.removeChild(nextElement);
       }
-      // Reset h1 text
+      // Reset the h1 text to its original
       const originalText = h1.getAttribute("data-original-text");
       if (originalText) {
         h1.innerText = originalText;
       }
-    });
+    }
     // stop animating title
     clearInterval(titleInterval);
     // set back to the original title
