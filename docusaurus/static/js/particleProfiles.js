@@ -86,7 +86,11 @@ async function strapiParticles() {
         // add smaller instructions below in an h2
         const h2 = document.createElement("h2");
         h2.innerText = "Press Enter to Start \n Press Esc to Exit";
-        h1.parentNode.insertBefore(h2, h1.nextSibling);
+        if (h1.nextSibling) {
+          h1.parentNode.insertBefore(h2, h1.nextSibling);
+        } else {
+          h1.parentNode.appendChild(h2);
+        }
       });
       //store the original title in the data-original-title attribute
       document.ogTitle = document.title;
@@ -247,8 +251,11 @@ async function strapiParticles() {
     document.querySelectorAll("h1").forEach((h1) => {
       // set back to the original text
       h1.innerText = h1.getAttribute("data-original-text");
-      // remove the h2
-      h1.parentNode.removeChild(h1.nextSibling);
+      // check and remove the h2 if it exists
+      const nextElement = h1.nextSibling;
+      if (nextElement && nextElement.tagName === "H2") {
+        h1.parentNode.removeChild(nextElement);
+      }
     });
     // stop animating title
     clearInterval(titleInterval);
