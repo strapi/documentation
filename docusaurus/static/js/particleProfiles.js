@@ -80,15 +80,17 @@ async function strapiParticles() {
       document.querySelector(".navbar__items").appendChild(score);
       // change all h1 tags to say "Strapi Breakout - Press Enter To Start"
       document.querySelectorAll("h1").forEach((h1) => {
-        // store the original text in the data-original-text attribute
-        h1.setAttribute("data-original-text", h1.innerText);
-        h1.innerText = "Strapi Breakout";
-        // add smaller instructions below in an h2
+        h1.setAttribute("data-original-text", h1.innerText); // Store the original text
+        h1.innerText = "Strapi Breakout"; // Change the text
+      
+        // Create the h2 element for instructions
         const h2 = document.createElement("h2");
         h2.innerText = "Press Enter to Start \n Press Esc to Exit";
-        if (h1.nextSibling) {
+      
+        // Check if the next sibling is a valid reference for insertBefore, otherwise appendChild
+        if (h1.parentNode && (h1.nextSibling || h1.nextSibling === null)) {
           h1.parentNode.insertBefore(h2, h1.nextSibling);
-        } else {
+        } else if (h1.parentNode) {
           h1.parentNode.appendChild(h2);
         }
       });
@@ -249,12 +251,15 @@ async function strapiParticles() {
 
     document.getElementById("breakout-score")?.remove();
     document.querySelectorAll("h1").forEach((h1) => {
-      // set back to the original text
-      h1.innerText = h1.getAttribute("data-original-text");
-      // check and remove the h2 if it exists
       const nextElement = h1.nextSibling;
-      if (nextElement && nextElement.tagName === "H2") {
+      // Ensure the nextElement is the one we added and a valid child before removing
+      if (nextElement && nextElement.tagName === "H2" && h1.parentNode.contains(nextElement)) {
         h1.parentNode.removeChild(nextElement);
+      }
+      // Reset h1 text
+      const originalText = h1.getAttribute("data-original-text");
+      if (originalText) {
+        h1.innerText = originalText;
       }
     });
     // stop animating title
