@@ -8,17 +8,20 @@ sidebar_position: 3
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans: Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The usage-based pricing for Strapi Cloud is based on the following criteria and limits:
+Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The usage-based pricing for Strapi Cloud is based on the following criteria and limits:
 
-| Feature | Free Trial | Pro | Team |
-| --- | --- | --- | --- |
-| **Seats** | 10 | 10 | 20 |
-| **Database Entries**  | 100,000 | 100,000 | 1,000,000 |
-| **Assets Storage** | 5GB | 150GB | 500GB |
-| **Assets Bandwidth** | 100GB | 500GB per month | 1,000GB per month |
-| **API Requests** | 10,000 | 1,000,000 | 2,000,000 |
-| **Audit Logs** | 7 days retention | N/A | 7 days retention |
-| **Releases** | 3 pending releases | N/A | 3 pending releases |
+| Feature | Free Trial | Developer | Pro | Team |
+| --- | --- | --- | --- | --- |
+| **Seats** | 10 | 1 | 5 | 10 |
+| **Database Entries**  | 1,000 | 1,000 | 100,000 | 1,000,000 |
+| **Assets Storage** | 5GB | 15GB | 150GB | 500GB |
+| **Assets Bandwidth** | 50GB | 50GB per month | 500GB per month | 1,000GB per month |
+| **API Requests** | 10,000 | 100,000 | 1,000,000 | 2,000,000 |
+|  |  |  |  |  |
+| **Audit Logs** | 7 days retention | N/A | N/A | 7 days retention |
+| **Content History** | 90 days | N/A | 30 days | 90 days |
+| **Releases** | 3 pending releases | N/A | N/A | 3 pending releases |
+| **Review Workflows** | up to 2 | N/A | N/A | up to 2 |
 
 :::strapi Additional information on Strapi Cloud features
 - Seats are the maximum number of users that can access the Strapi admin panel.
@@ -26,7 +29,10 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 2 paid plans:
 - Assets storage is the amount of storage used by your assets.
 - Assets bandwidth is the amount of bandwidth used by your assets.
 - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
-- Releases are the maximum number of pending [releases](/user-docs/releases/introduction) that can be created.
+- Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see User Guide for more information about Audit Logs).
+- Content History refers the maximum number of days for which history is retained.
+- Releases refers to the maximum number of pending releases that can be created (see [User Guide](/user-docs/releases/introduction) for more information about Releases).
+- Review Workflows refers to the maximum number of workflows that can be created and used (see User Guide for more information about Review Workflows).
 :::
 
 ## Seats management
@@ -40,7 +46,8 @@ There is however a maximum number of seats that can be added per plan:
 | Plan | Maximum Seats |
 | --- | --- |
 | **Free Trial** | 10 |
-| **Pro** | 30 |
+| **Developer** | 3 |
+| **Pro** | 20 |
 | **Team** | 50 |
 
  
