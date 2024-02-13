@@ -166,5 +166,5 @@ In the Usage section of the *Billing* tab, you can see the current monthly usage
 
 ### Managing project's subscription
 
-Using the **Manage subscriptions** button, you can view your current project's subscription, and manage it: meaning either upgrade or downgrade to another plan. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
+Using the **Manage subscriptions** button, you can view your current project's subscription, manage it and upgrade or downgrade to another plan. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
  
