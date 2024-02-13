@@ -52,7 +52,7 @@ Using the **Manage subscriptions** button, you can view and manage your subscrip
 From the subscription management modal, you can view and modify any current subscription. This includes upgrading or downgrading to another plan.
 
 :::caution
-If you choose to downgrade to another plan but your current usage exceeds the limits of that plan, you are taking the risk of getting charged for the overages. You may also lose access to some features. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
+If you choose to downgrade to another plan but your current usage exceeds the limits of that plan, you are taking the risk of getting charged for the overages. Not also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
 :::
 
 <ThemedImage
