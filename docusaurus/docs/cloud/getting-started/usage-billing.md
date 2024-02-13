@@ -19,7 +19,6 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 | **API Requests** | 10,000 | 100,000 | 1,000,000 | 2,000,000 |
 |  |  |  |  |  |
 | **Audit Logs** | 7 days retention | N/A | N/A | 7 days retention |
-| **Content History** | 90 days | N/A | 30 days | 90 days |
 | **Releases** | 3 pending releases | N/A | N/A | 3 pending releases |
 | **Review Workflows** | up to 2 | N/A | N/A | up to 2 |
 
@@ -29,10 +28,9 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 - Assets storage is the amount of storage used by your assets.
 - Assets bandwidth is the amount of bandwidth used by your assets.
 - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
-- Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see User Guide for more information about Audit Logs).
-- Content History refers the maximum number of days for which history is retained.
+- Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [User Guide](/user-docs/settings/audit-logs) for more information about Audit Logs).
 - Releases refers to the maximum number of pending releases that can be created (see [User Guide](/user-docs/releases/introduction) for more information about Releases).
-- Review Workflows refers to the maximum number of workflows that can be created and used (see User Guide for more information about Review Workflows).
+- Review Workflows refers to the maximum number of workflows that can be created and used (see [User Guide](/user-docs/settings/review-workflows]) for more information about Review Workflows).
 :::
 
 ## Seats management
