@@ -28,9 +28,9 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 - Assets storage is the amount of storage used by your assets.
 - Assets bandwidth is the amount of bandwidth used by your assets.
 - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
-- Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [User Guide](/user-docs/settings/audit-logs) for more information about Audit Logs).
-- Releases refers to the maximum number of pending releases that can be created (see [User Guide](/user-docs/releases/introduction) for more information about Releases).
-- Review Workflows refers to the maximum number of workflows that can be created and used (see [User Guide](/user-docs/settings/review-workflows]) for more information about Review Workflows).
+- Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/user-docs/settings/audit-logs) for more information).
+- Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
+- Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/user-docs/settings/review-workflows]) for more information).
 :::
 
 ## Seats management
