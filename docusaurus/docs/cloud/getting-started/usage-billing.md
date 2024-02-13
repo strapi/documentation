@@ -64,8 +64,8 @@ Overages are charged according to the following rates:
 | Feature | Rate |
 | --- | --- |
 | **API Requests** | $1.50 / 25k requests |
-| **Asset Bandwidth** | $25.00 / 100GB |
-| **Asset Storage** | $2.00/GB per month |
+| **Asset Bandwidth** | $30.00 / 100GB |
+| **Asset Storage** | $0.50/GB per month |
 
 ### Project suspension
 
