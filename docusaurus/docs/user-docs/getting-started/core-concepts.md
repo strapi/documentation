@@ -1,5 +1,5 @@
 ---
-title: Core Concepts
+title: User Guide Fundamentals
 displayed_sidebar: userDocsSidebar
 description: Key Concepts to keep in mind
 ---

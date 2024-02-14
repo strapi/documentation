@@ -4,6 +4,8 @@ displayed_sidebar: userDocsSidebar
 description: How to setup your Strapi Admin Panel
 ---
 
+Before going over individual features on the Admin Panel, we recommend the following steps to set up and configure your Strapi Dashboard correctly. After set up is completeted you can access the admin panel via the URL provided during set up.
+
 ## Accessing the admin panel
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end users of your Strapi application.

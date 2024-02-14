@@ -27,10 +27,10 @@ sources={{
   }}
 />
 
-If you are not wondering how to log into your admin panel, we suggest you to:
+If you are not sure how to log into your admin panel, we suggest you to:
 
 1. Head over to the [Setting up Admin Panel](/user-docs/getting-started/setting-up-admin) guide.
-2. Continue your journey through the various User Guide sections. The ["What you will learn"](#what-you-will-find-here) section gives you an overview of the available topics.
+2. Continue your journey through the various User Guide sections. The ["What you will find here"](#what-you-will-find-here) section gives you an overview of the available topics.
 
 ## What you will find here
 
@@ -39,7 +39,7 @@ The table of content in this User Guide displays 7 main sections as seen on the 
 Clicking on any of the following cards will direct you to the introduction page for the category, with additional details and concepts:
 
 <CustomDocCardsWrapper>
-  <CustomDocCard emoji="📝" title="Content Manager" description="Create, Manage and Publish Content Types" link="/user-docs/content-manager" />
+  <CustomDocCard emoji="📝" title="Content Manager" description="Mangae all content" link="/user-docs/content-manager" />
   <CustomDocCard emoji="📚" title="Content Type Builder" description="Create, Manage and Publish Content Types" link="/user-docs/content-type-builder" />
   <CustomDocCard emoji="🗃️" title="Media Library" description="Stores all media files like images and videos" link="/user-docs/media-library" />
   <CustomDocCard emoji="📅" title="Releases" description="Discover new features" link="/user-docs/releases/introduction" />
@@ -52,4 +52,3 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 If you have any trouble with your Strapi experience, you can reach us through [GitHub](https://github.com/strapi/) or our [forum](https://forum.strapi.io/)! The Strapi Community and Strapi team are always available to answer your questions or help you with anything!
 
-:::
