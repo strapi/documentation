@@ -82,4 +82,4 @@ To change the password of your account:
 
 Congratulations on being a new Strapi user! You're now ready to discover all the features and options that Strapi has to offer!
 
-Head back to the [Welcome Page](/user-docs/getting-started/setting-up-admin).
+Head back to the [Welcome Page](../intro.md).
