@@ -567,7 +567,19 @@ const sidebars = {
   ],
 
   userDocsSidebar: [
-    "user-docs/intro",
+      {
+      type: "category",
+      customProps: {
+        updated: true
+      },
+      collapsed: false,
+      label: 'Getting Started',
+      items: [
+        'user-docs/intro',
+        'user-docs/getting-started/user-guide-fundamentals',
+        'user-docs/getting-started/setting-up-admin-panel',
+      ],
+    },
     {
       type: "category",
       collapsed: false,
