@@ -43,12 +43,11 @@ Clicking on any of the following cards will direct you to the introduction page 
   <CustomDocCard emoji="📚" title="Content Type Builder" description="Create, Manage and Publish Content Types" link="/user-docs/content-type-builder" />
   <CustomDocCard emoji="🗃️" title="Media Library" description="Stores all media files like images and videos" link="/user-docs/media-library" />
   <CustomDocCard emoji="📅" title="Releases" description="Discover new features" link="/user-docs/releases/introduction" />
-  <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Define what each user can do" />
-  <CustomDocCard emoji="🔗" title="Plugins" description="Gives you access to a Variety plugins" link="user-docs/plugins" />
-  <CustomDocCard emoji="⚙️" title="General Settings" description="All you need to set up" link="user-docs/settings/configuring-users-permissions-plugin-settings" />
+  <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Define what each user can do" link="/user-docs/users-roles-permissions"/>
+  <CustomDocCard emoji="🔗" title="Plugins" description="Gives you access to a Variety plugins" link="/user-docs/plugins/strapi-plugins" />
+  <CustomDocCard emoji="⚙️" title="General Settings" description="All you need to set up" link="/user-docs/settings/configuring-users-permissions-plugin-settings" />
 </CustomDocCardsWrapper>
 
 :::strapi Welcome to the Strapi community!
 
 If you have any trouble with your Strapi experience, you can reach us through [GitHub](https://github.com/strapi/) or our [forum](https://forum.strapi.io/)! The Strapi Community and Strapi team are always available to answer your questions or help you with anything!
-

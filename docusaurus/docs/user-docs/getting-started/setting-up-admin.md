@@ -15,8 +15,8 @@ In order to access the admin panel, your Strapi application must be launched, an
 :::
 
 <ThemedImage
-  alt="Login page"
-  sources={{
+alt="Login page"
+sources={{
     light: '/img/assets/getting-started/login-page-sso.png',
     dark: '/img/assets/getting-started/login-page_DARK.png',
   }}
@@ -39,8 +39,8 @@ To do so, in the login page of your Strapi application, click on a chosen provid
 If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information, such as name, username, email or password. You can also choose the language of the interface for your Strapi application.
 
 <ThemedImage
-  alt="Homepage of the Admin Panel"
-  sources={{
+alt="Homepage of the Admin Panel"
+sources={{
     light: '/img/assets/getting-started/user-information-profile.png',
     dark: '/img/assets/getting-started/user-information-profile_DARK.png',
   }}
@@ -52,14 +52,14 @@ To modify your user information:
 2. In the drop-down menu, click on **Profile**.
 3. Modify the information of your choice:
 
-| Profile & Experience  | Instructions                                                                                            |
-| --------------------- | ------------------------------------------------------------------------------------------------------- |
-| First name            | Write your first name in the textbox.                                                                   |
-| Last name             | Write your last name in the textbox.                                                                    |
-| Email                 | Write your complete email address in the textbox.                                                       |
-| Username              | (optional) Write a username in the textbox.                                                             |
-| Interface language    | Among the drop-down list, choose a language for your Strapi application interface.                      |
-| Interface mode        | Among the drop-down list, choose a mode for your Strapi application interface: either "Light mode" or "Dark mode". Note that by default, the chosen mode for a Strapi application is based on the browser's mode. |
+| Profile & Experience | Instructions                                                                                                                                                                                                      |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| First name           | Write your first name in the textbox.                                                                                                                                                                             |
+| Last name            | Write your last name in the textbox.                                                                                                                                                                              |
+| Email                | Write your complete email address in the textbox.                                                                                                                                                                 |
+| Username             | (optional) Write a username in the textbox.                                                                                                                                                                       |
+| Interface language   | Among the drop-down list, choose a language for your Strapi application interface.                                                                                                                                |
+| Interface mode       | Among the drop-down list, choose a mode for your Strapi application interface: either "Light mode" or "Dark mode". Note that by default, the chosen mode for a Strapi application is based on the browser's mode. |
 
 4. Click on the **Save** button.
 
@@ -70,17 +70,16 @@ To change the password of your account:
 1. Go to your administrator profile.
 2. Fill in the password-related options:
 
-| Password modification |                                                                                                         |
-| --------------------- | ------------------------------------------------------------------------------------------------------- |
+| Password modification |                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | Current password      | Write your current password in the textbox. <br/> 💡 You can click on the eye icon for the password to be shown. |
 | Password              | Write the new password in the textbox. <br/> 💡 You can click on the eye icon for the password to be shown.      |
 | Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the eye icon for the password to be shown. |
 
 3. Click on the **Save** button.
 
-
 ---
 
 Congratulations on being a new Strapi user! You're now ready to discover all the features and options that Strapi has to offer!
 
-
+Head back to the [Welcome Page](/user-docs/getting-started/setting-up-admin).
