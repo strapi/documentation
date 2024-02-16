@@ -479,7 +479,7 @@ options [--delete-files]
 
 - In addition to the `uninstall` command you need to remove the plugin configuration from `./config/plugins.js`.
 - Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
-  :::
+:::
 
 ## strapi telemetry:disable
 

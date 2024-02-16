@@ -13,6 +13,12 @@ In most cases, the controllers will contain the bulk of a project's business log
   <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
+<br/>
+
+:::caution
+Before deciding to customize core controllers, please consider creating custom route middlewares (see [routes documentation](/dev-docs/backend-customization/routes)).
+:::
+
 ## Implementation
 
 Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
@@ -421,6 +427,8 @@ An action from a core controller can be replaced entirely by [creating a custom 
 :::tip
 When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
 :::
+
+
 
 <details>
 <summary>Collection type examples</summary>
