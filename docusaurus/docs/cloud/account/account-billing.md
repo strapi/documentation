@@ -62,7 +62,7 @@ sources={{
 1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as _Account Information_, _Billing & Shipping Addresses_). You will be redirected to your subscription details.
 2. Click on the **Edit Subscription** link.
 3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
-4. If you want to change plan (e.g. from <CloudProBadge /> plan to <CloudTeamBadge /> plan or from <CloudProBadge /> plan to <CloudDevBadge /> plan), click on **Change** and select a new plan.
+4. If you want to change plan (e.g. from Pro plan to Team plan), click on **Change** and select a new plan.
 5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
 
 ## Cancel subscription
