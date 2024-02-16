@@ -49,7 +49,11 @@ Using the **Manage subscriptions** button, you can view and manage your subscrip
 
 ## Edit subscription
 
-From the subscription management modal, you can view and modify any current subscription.
+From the subscription management modal, you can view and modify any current subscription. This includes upgrading or downgrading to another plan.
+
+:::caution
+If you choose to downgrade to another plan but your current usage exceeds the limits of that plan, you are taking the risk of getting charged for the overages. Not also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
+:::
 
 <ThemedImage
   alt="Subscription edition modal"
@@ -62,7 +66,7 @@ From the subscription management modal, you can view and modify any current subs
 1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as *Account Information*, *Billing & Shipping Addresses*). You will be redirected to your subscription details.
 2. Click on the **Edit Subscription** link.
 3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
-4. If you want to change plan (e.g. from Pro plan to Team plan), click on **Change** and select a new plan.
+4. If you want to change plan, whether it is a plan upgrade or a downgrade (e.g. from Pro plan to Team plan, or from Pro plan to Developer plan), click on **Change** and select a new plan.
 5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
 
 ## Cancel subscription
