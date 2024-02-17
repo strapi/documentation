@@ -86,7 +86,7 @@ To start PM2 and your application from a terminal you should start PM2 and pass 
 <TabItem value="yarn" label="yarn">
 
 ```bash
-pm2 start yarn --name app -- start
+pm2 start yarn --name your-app-name -- start
 
 ```
 
@@ -95,7 +95,7 @@ pm2 start yarn --name app -- start
 <TabItem value="npm" label="npm">
 
 ```bash
-pm2 start npm --name app -- run start
+pm2 start npm --name your-app-name -- run start
 
 ```
 
