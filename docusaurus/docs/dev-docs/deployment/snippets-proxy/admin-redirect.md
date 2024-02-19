@@ -9,7 +9,7 @@ This sample configuration expects that the admin panel is accessible on `/admin`
 ```js title="./config/middlewares.js"
 module.exports = ({ env }) => [
 	// ...
-	{ resolve: './src/middlewares/admin-redirect' },
+	{ resolve: '../src/middlewares/admin-redirect' },
 ];
 
 ```

@@ -1,7 +1,7 @@
 ---
 title: TypeScript
 displayed_sidebar: devDocsSidebar
-description: Learn how you can use Typescript for your Strapi application.
+description: Learn how you can use TypeScript for your Strapi application.
 ---
 
 # TypeScript development

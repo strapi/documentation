@@ -105,7 +105,7 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 The *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
 
 :::note
-The backup feature is not available for Strapi Cloud projects using the free trial. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
 
 Note also that only project owners can restore a backup. Maintainers have access to the *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
 :::
@@ -166,5 +166,5 @@ In the Usage section of the *Billing* tab, you can see the current monthly usage
 
 ### Managing project's subscription
 
-Using the **Manage subscriptions** button, you can view and manage your project's subscription. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
+Using the **Manage subscriptions** button, you can view your current project's subscription, manage it and upgrade or downgrade to another plan. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
  

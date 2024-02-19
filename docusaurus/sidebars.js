@@ -384,11 +384,6 @@ const sidebars = {
             },
             {
               type: 'doc',
-              label: 'Content Source Map',
-              id: 'dev-docs/plugins/content-source-map',
-            },
-            {
-              type: 'doc',
               label: 'Documentation',
               id: 'dev-docs/plugins/documentation',
             },
@@ -714,7 +709,7 @@ const sidebars = {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
           customProps: {
-            updated: false,
+            updated: true,
           },
         },
         "cloud/getting-started/caching",
@@ -736,7 +731,7 @@ const sidebars = {
           label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
-            new: false,
+            updated: true,
           },
         },
         'cloud/projects/collaboration',
@@ -758,7 +753,14 @@ const sidebars = {
       label: "Account management",
       items: [
         'cloud/account/account-settings',
-        'cloud/account/account-billing',
+        {
+          type: "doc",
+          id: "cloud/account/account-billing",
+          label: "Account billing details",
+          customProps: {
+            updated: true,
+          },
+        },
       ]
     },
     {
