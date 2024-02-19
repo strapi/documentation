@@ -14,23 +14,21 @@ This page is a work-in-progress and the list of breaking changes will grow over 
 
 This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v5/introduction) and lists all the breaking changes introduced in Strapi v5.
 
+## Configuration
+
+* [Some `env`-only configuration options are handled by the server configuration](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
+* [Configuration filenames should meet strict requirements](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
+
 ## Content API
 
-The following changes affect the Content API of your Strapi application:
-
-### Schemas
-
-The following changes affect the `schema.json` file of your content-types:
-
 * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled)
+* [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service)
 
 ### Filtering and sorting
 
 * [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id)
 
 ## Database
-
-The following changes affect the databases interacting with your Strapi application:
 
 - [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 - [Database identifiers can't be longer than 53 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
@@ -42,6 +40,7 @@ The following changes affect the databases interacting with your Strapi applicat
 
 ## Dependencies
 
+- [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite)
 - [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
 
 ## Internal changes

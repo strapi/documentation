@@ -1023,6 +1023,19 @@ const sidebars = {
             {
               type: "category",
               collapsed: false,
+              label: "Configuration",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options'
+                'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
+              ]
+            },
+            {
+              type: "category",
+              collapsed: false,
               label: "Content API",
               link: {
                 type: 'doc',
@@ -1031,6 +1044,7 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
                 'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
+                'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
               ]
             },
             {
@@ -1053,6 +1067,15 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
                 'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
+              ]
+            },
+            {
+              type: "category",
+              label: "Dependencies",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/vite',
+                'dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6',
               ]
             },
             {
