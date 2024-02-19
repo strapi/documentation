@@ -31,12 +31,29 @@ The *General* tab enables you to check and update the following options for the 
   }}
 />
 
-### Modifying git repository branch
+### Modifying git repository & branch
 
-The GitHub or Gitlab repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
+The GitHub or Gitlab repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be modified via the project's settings.
 
-1. In the *Connected git repository* section of the *General* tab, click on the **Edit** button.
-2. In the *Edit Git settings* dialog, edit the available options of your choice:
+#### Updating repository
+
+1. In the *Connected git repository* section of the *General* tab, click on the **Update repository** button.
+2. In the *Update repository* dialog, either update the repository from the same git provider, or switch to another git provider:
+
+  - If updating the repository from the same git provider: fill in the 3 settings below:
+
+    | Setting name    | Instructions                                                             |
+    | --------------- | ------------------------------------------------------------------------ |
+    | Account         | Choose an account from the drop-down list.                               |
+    | Repository      | Choose a repository from the drop-down list.                             |
+    | Selected branch | Choose a branch from the drop-down list.                                 |
+
+3. Click on the **Save** button.
+
+#### Editing branch
+
+1. In the *Connected git repository* section of the *General* tab, click on the **Edit branch** button.
+2. In the *Edit branch* dialog, edit the settings below:
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
