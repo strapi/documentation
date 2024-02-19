@@ -23,7 +23,7 @@ Strapi 5 has strict requirements on the configuration filenames allowed to be lo
 
 **In Strapi v4**
 
-Every `.js` and `.json` file in the `/config/` folder of a Strapi project is loaded into `strapi.config`.
+Every `.js`, `.ts`, and `.json` file in the `/config/` folder of a Strapi project is loaded into `strapi.config`.
 
 For example if there is a file called `/config/my-custom-config.js` it is loaded and accessible from `strapi.config.get('my-custom-config.someProperty')`.
 
