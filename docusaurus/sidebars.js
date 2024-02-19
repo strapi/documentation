@@ -1030,6 +1030,7 @@ const sidebars = {
               },
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options'
+                'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
               ]
             },
             {
@@ -1041,7 +1042,8 @@ const sidebars = {
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
               },
               items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled'
+                'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
+                'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
               ]
             },
             {
