@@ -60,14 +60,13 @@ In Strapi 5 filenames for configuration files should comply to these requirement
     - `strapi`
     - `middleware`
     - `telemetry`
-    - Any properties found in the `rootConfig`:
-        - `launchedAt`
-        - `serveAdminPanel`
-        - `autoReload`
-        - `environment`
-        - `packageJsonStrapi`
-        - `info`
-        - `autoReload`
+    - `launchedAt`
+    - `serveAdminPanel`
+    - `autoReload`
+    - `environment`
+    - `packageJsonStrapi`
+    - `info`
+    - `autoReload`
 - It is advised to use only alphanumeric characters (`a-zA-Z0-9`).
 - All internal Strapi configurations (see the list of files in [configurations](/dev-docs/configurations)) must conform to the known structure of those configuration files (i.e., no custom fields should be added to the existing files).
 
