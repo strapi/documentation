@@ -1,5 +1,5 @@
 ---
-title: User Guide Fundamentals
+title: User Guide fundamentals
 displayed_sidebar: userDocsSidebar
 description: Here are some concepts to keep in mind
 ---

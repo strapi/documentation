@@ -1,11 +1,11 @@
 ---
-title: Setting Up Admin Panel
+title: Setting up the admin panel
 displayed_sidebar: userDocsSidebar
 description: How to setup your Strapi Admin Panel
 ---
 
 
-Before going over individual features on the Admin Panel, we recommend the following steps to set up and configure your Strapi Dashboard correctly. After set up is completeted you can access the admin panel via the URL provided during set up.
+Before going over individual features on the Admin Panel, we recommend the following steps to set up and configure your Strapi Dashboard correctly. Once you complete the setup, you can access the admin panel through the provided URL.
 
 
 ## Accessing the admin panel
