@@ -23,6 +23,7 @@ Changes to the `server.js` file require rebuilding the admin panel. After saving
 The `./config/server.js` file can include the following parameters:
 
 <!-- TODO: add admin jwt config option -->
+<!-- TODO: sort options alphabetically in the table below  -->
 
 | Parameter                          | Description                                                                                                                                                                                                                                                                                                                                                                 | Type              | Default             |
 |------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|---------------------|
@@ -42,6 +43,10 @@ The `./config/server.js` file can include the following parameters:
 | `webhooks.populateRelations`       | Enable or disable receiving populated relations in webhooks              | boolean           | `true`              |
 | `http`                             | Configuration of the http server used by Strapi                                                                                                                                                                                                                                                                                                                   | object            |                     |
 | `http.serverOptions`               | Options passed to http `createServer`                            | [http.serverOptions](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)            | {}          |
+| `transfer.remote.enabled`             | Toggle the ability to use the [transfer feature](/dev-docs/data-management#transfer-data-using-the-cli-tool)  | boolean | `true` |
+| `logger.startup.enabled`              | Toggle the the startup message in the terminal | boolean | `true` |
+| `logger.updates.enabled`              | Toggle the notification message about updating strapi in the terminal   | boolean | `true` |
+
 
 ## Configurations
 
@@ -111,6 +116,19 @@ module.exports = ({ env }) => ({
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },
+  transfer: {
+    remote: {
+      enabled: false, 
+    },
+  },
+  logger: {
+    updates: {
+      enabled: false,
+    },
+    startup: {
+      enabled: false,
+    },
+  },
 });
 ```
 
@@ -132,6 +150,19 @@ export default ({ env }) => ({
   proxy: env.bool('IS_PROXIED', true),
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
+  },
+  transfer: {
+    remote: {
+      enabled: false, 
+    },
+  },
+  logger: {
+    updates: {
+      enabled: false,
+    },
+    startup: {
+      enabled: false,
+    },
   },
 });
 ```
