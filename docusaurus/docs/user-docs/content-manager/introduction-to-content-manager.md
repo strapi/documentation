@@ -9,7 +9,7 @@ description: Introduction to the Content Manager which allows to write content f
 
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
+The Content Manager is a core feature of Strapi. It is always enabled by default and cannot be disabled. It is accessible both when the application is in a development and production environment.
 
 The Content Manager is accessible from ![Content icon](/img/assets/icons/content.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
@@ -25,6 +25,7 @@ For each available collection type multiple entries can be created which is why 
 
 The list view of a collection type displays all entries created for that collection type.
 
+<!-- TODO: update screenshot and don't forget to annotate with (6) and (7) -->
 <ThemedImage
   alt="List view of a collection type in the Content Manager"
   sources={{
@@ -37,9 +38,16 @@ From the list view, it is possible to:
 
 - create a new entry (1),
 - make a textual search (2) or set filters (3) to find specific entries,
-- if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
+- if the [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, filter by locale to display only the entries translated in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
-- edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) an entry,
+- see the status of each entry (6):
+  - an entry is <span style={{color:"#5cb176"}}>_Published_</span> if you previously published it and there are no pending draft changes saved,
+  - an entry is <span style={{color:"#ac73e6"}}>_Modified_</span> if you previously published it, made some changes to the draft version and saved these changes but have not published them yet,
+  - an entry is in <span style={{color:"#7b79ff"}}>_Draft_</span> status if it has never been published yet,
+- perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/more.svg) (7) at the end of the line:
+  - edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
+  - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/cross-circle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/cross-circle.svg) or discard its changes, 
+  - if the [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale
 - select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publish-and-unpublish-), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
 
 :::tip
@@ -50,6 +58,7 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 Right above the list view table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
+<!-- TODO: update screenshot (3 dots instead of dedicated icons on each line) -->
 <ThemedImage
   alt="Filters in the Content Manager"
   sources={{
@@ -88,6 +97,7 @@ Above the list view table, on the right, a settings button ![Cog icon](/img/asse
 Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/cog.svg) and clicking on the **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
+<!-- TODO: possibly update screenshot (3 dots instead of dedicated icons on each line) -->
 <ThemedImage
   alt="Displayed fields in the settings of a list view in the Content Manager"
   sources={{
