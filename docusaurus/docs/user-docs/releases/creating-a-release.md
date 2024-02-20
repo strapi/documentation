@@ -21,7 +21,8 @@ To create a new release:
 
 1. Click the **+ New Release** button in the upper right corner of the Releases page.  
 2. Give the release a name.
-3. Click the **Continue** button.
+3. (_optional_) If you want to schedule the release publication instead of publishing it manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication.
+4. Click the **Continue** button.
 
 Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).
 
