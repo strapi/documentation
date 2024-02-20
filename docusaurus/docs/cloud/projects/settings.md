@@ -38,6 +38,10 @@ The GitHub or Gitlab repository, branch and base directory for a Strapi Cloud pr
 - update the project's repository or switch to another git provider (see [Updating repository](#updating-repository)),
 - edit the project's branch, base directory and deploy on push setting (see [Editing branch](#editing-branch)).
 
+:::caution
+Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
+:::
+
 #### Updating repository
 
 1. In the *Connected git repository* section of the *General* tab, click on the **Update repository** button.
