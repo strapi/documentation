@@ -72,6 +72,10 @@ The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
 
 4. Choose either `JavaScript` or `TypeScript` for the plugin language.
 
+:::callout 🚧 Experimental plugin CLI
+Strapi now also offers a [plugin CLI](/dev-docs/plugins/development/plugin-cli), but use it at your own risk as it's still experimental.
+:::
+
 ## Enable the plugin
 
 Once the `strapi generate plugin` CLI script has finished running, the minimum required code for the plugin to work is created for you, but the plugin is not enabled yet.
