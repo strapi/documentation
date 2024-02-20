@@ -447,6 +447,7 @@ const sidebars = {
               id: 'dev-docs/api/plugins/server-api',
               label: 'Server API',
             },
+            'dev-docs/plugins/development/plugin-cli',
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
             {
@@ -459,6 +460,13 @@ const sidebars = {
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+                {
+                  type: 'doc',
+                  id: 'dev-docs/plugins/guides/use-the-plugin-cli',
+                  customProps: {
+                    new: true,
+                  }
+                }
               ]
             }
           ]
