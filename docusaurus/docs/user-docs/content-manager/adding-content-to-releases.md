@@ -25,7 +25,7 @@ To add entries to a release:
 3. Select which release to add these entries to.
 4. Decide whether these entries will be published or unpublished when the release is published, then click **Continue**. -->
 
-<!-- TODO: add screenshot -->
+<!-- TODO: update screenshot -->
 
 <ThemedImage
   alt="Including content in a release"
