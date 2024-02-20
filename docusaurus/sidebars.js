@@ -542,6 +542,10 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'user-docs/content-manager/introduction-to-content-manager'
+      },
       label: 'Content Manager',
       items: [
         'user-docs/content-manager/introduction-to-content-manager',
