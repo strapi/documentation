@@ -46,8 +46,8 @@ From the list view, it is possible to:
   - an entry is in <span style={{color:"#7b79ff"}}>_Draft_</span> status if it has never been published yet,
 - perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/more.svg) (7) at the end of the line:
   - edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
-  - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/cross-circle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/cross-circle.svg) or discard its changes, 
-  - if the [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale
+  - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/cross-circle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/cross-circle.svg) or discard its changes,
+  - if [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale
 - select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publish-and-unpublish-), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
 
 :::tip
