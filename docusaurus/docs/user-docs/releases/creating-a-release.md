@@ -7,7 +7,6 @@ description: Instructions to create a release from the admin panel
 
 The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
-<!-- TODO: add actual screenshots for both light and dark modes -->
 <ThemedImage
   alt="Adding a new release"
   sources={{
