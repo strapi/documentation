@@ -42,14 +42,15 @@ While editing an entry, you can see 2 tabs:
 
 #### Publishing a draft
 
-To publish a draft, click on the **Publish** button in the top right corner of the content editor.
+To publish a draft, click on the **Publish** button in the _Document_ box on the right of the content editor.
 
 :::caution
 Before publishing a draft, make sure it doesn't have relations with other non-published content, otherwise some of the content may not be available through the API.
 :::
 
-When a content is not a draft anymore, but has been published, it is indicated on the right of the interface, above the Information box.
+When a published version of an entry is available, it can be found in the Published tab. All the fields from the Published tab are disabled.
 
+<!-- TODO: replace screenshots -->
 <ThemedImage
   alt="Editing published version"
   sources={{
