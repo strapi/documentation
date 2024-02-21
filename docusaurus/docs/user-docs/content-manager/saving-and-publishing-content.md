@@ -25,11 +25,11 @@ Your content can have 3 statuses:
   
 In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.
 
-<!-- TODO: update screenshot -->
+<!-- TODO: update screenshots -->
 <ThemedImage
   alt="Editing draft version"
   sources={{
-    light: '/img/assets/content-manager/editing_draft_version2.png',
+    light: '/img/assets/content-manager/editing_draft_version3.png',
     dark: '/img/assets/content-manager/editing_draft_version2_DARK.png',
   }}
 />
@@ -58,13 +58,13 @@ To publish a draft, click on the **Publish** button in the _Document_ box on the
 Before publishing a draft, make sure it doesn't have relations with other non-published content, otherwise some of the content may not be available through the API.
 :::
 
-When a published version of an entry is available, it can be found in the Published tab. All the fields from the Published tab are disabled.
+When a published version of an entry is available, it can be found in the Published tab.
 
 <!-- TODO: replace screenshots -->
 <ThemedImage
   alt="Editing published version"
   sources={{
-    light: '/img/assets/content-manager/editing_published_version2.png',
+    light: '/img/assets/content-manager/editing_published_version3.png',
     dark: '/img/assets/content-manager/editing_published_version2_DARK.png',
   }}
 />
@@ -126,13 +126,15 @@ To unpublish several entries at the same time:
 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
 
-1. In the edit view of the entry, click on the **Delete this entry** button, located at the bottom of the right side of the interface.
+1. In the edit view of the entry, click on ![More icon](/img/assets/icons/more.svg) at the top right of the interface, and click the **Delete document** button.
 2. In the window that pops up, click on the **Confirm** button to confirm the deletion.
 
 :::tip
-You can delete entries from the list view of a collection type, by clicking on the delete button ![Delete icon](/img/assets/icons/delete.svg) on the right side of the entry's record in the table. <br /> You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table.
+You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/more.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/delete.svg) **Delete document** button.
+<!-- TODO: Commented out since it's not currently testable and only planned for stable release -->
+<!-- You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table. If [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type, the confirmation dialog box asks whether you want to delete only the current locales for the document, or the whole documents including all their locales. -->
 :::
 
-:::caution
+<!-- :::caution
 If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, entries can only be deleted one locale at the time.
-:::
+::: -->
