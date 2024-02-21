@@ -70,7 +70,7 @@ To set a new filter:
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. Enter the value(s) of the condition in the remaining textbox.
-6. Click on the **Add filter** button.
+5. Click on the **Add filter** button.
 
 :::note
 When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/clear.svg).
