@@ -31,7 +31,12 @@ In the Content Manager edit view (the view you see when editing an entry), you c
   }}
 />
 
-By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button on the top right corner of the edit view, until they are ready to be published.
+By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button on the right of the edit view, until they are ready to be published.
+
+While editing an entry, you can see 2 tabs:
+
+- the _Draft_ tab is where you can edit your content,
+- the _Published_ tab is a read-only tab where edition of all fields is disabled; it only exists to show what is the content of fields in the published version.
 
 ### Publishing and unpublishing
 
