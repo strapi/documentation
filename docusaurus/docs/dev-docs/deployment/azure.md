@@ -337,18 +337,16 @@ sudo apt install libpng-dev build-essential -y
 For Node.js it is recommended you use the [official source](https://github.com/nodesource/distributions/blob/master/README.md#debinstall), per the instructions we will use the following commands:
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt install nodejs -y
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&\
+sudo apt-get install -y nodejs
 ```
 
-Likewise for Yarn we will use the instructions from the [Yarn documentation](https://classic.yarnpkg.com/en/docs/install/#debian-stable):
+Likewise for Yarn we will use the instructions from the [Yarn documentation](https://yarnpkg.com/getting-started/install):
 
 ```bash
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
-sudo apt update
-sudo apt install yarn -y
+corepack enable
+yarn set version stable
+yarn install
 ```
 
 To verify you have everything installed properly you can run the following:
