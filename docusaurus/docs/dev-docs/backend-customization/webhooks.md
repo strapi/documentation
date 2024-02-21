@@ -197,6 +197,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
 | [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [Review Workflows](/user-docs/settings/review-workflows)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
+| [`releases.publish`](#releasespublish-) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi and the <CloudTeamBadge /> plan for Strapi Cloud. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
@@ -517,3 +518,29 @@ In Strapi v4.11.4 the webhook payload has the following structure:
 
 </details>
 :::
+
+### `releases.publish` <EnterpriseBadge/><CloudTeamBadge/>
+
+The event is triggered when a [release](/user-docs/releases/introduction) is published.
+
+**Example payload**
+
+```json
+
+{
+  "event": "releases.publish",
+  "createdAt": "2024-02-21T16:45:36.877Z",
+  "isPublished": true,
+  "release": {
+    "id": 2,
+    "name": "Fall Winter highlights",
+    "releasedAt": "2024-02-21T16:45:36.873Z",
+    "scheduledAt": null,
+    "timezone": null,
+    "createdAt": "2024-02-21T15:16:22.555Z",
+    "updatedAt": "2024-02-21T16:45:36.875Z",
+    "actions": {
+      "count": 1
+    }
+  }
+}
