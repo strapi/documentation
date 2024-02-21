@@ -53,7 +53,13 @@ const sidebars = {
               id: 'dev-docs/installation',
             },
             "dev-docs/installation/cli",
-            "dev-docs/installation/docker",
+            {
+                type: 'doc',
+                id: "dev-docs/installation/docker",
+                customProps: {
+                    updated: true
+                },
+            },
           ],
         },
         'dev-docs/project-structure',
@@ -447,7 +453,13 @@ const sidebars = {
               id: 'dev-docs/api/plugins/server-api',
               label: 'Server API',
             },
-            'dev-docs/plugins/development/plugin-cli',
+            {
+                type: 'doc',
+                id: 'dev-docs/plugins/development/plugin-cli',
+                customProps: {
+                    new: true
+                }
+            },
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
             {
