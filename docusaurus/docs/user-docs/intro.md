@@ -30,7 +30,7 @@ sources={{
 If you are not sure where to begin on this User Guide, we suggest you to:
 
 1. Go through the [User Guide Fundamentals](/user-docs/getting-started/user-guide-fundamentals).
-2. Head over to the [Setting up Admin Panel](/user-docs/getting-started/setting-up-admin-panel) guide.
+2. Follow the [Setting up the Admin Panel](/user-docs/getting-started/setting-up-admin-panel) guide.
 3. Continue your journey through the various User Guide sections. The ["What you will find here"](#what-you-will-find-here) section gives you an overview of the available topics.
 
 ## What you will find here
@@ -46,7 +46,7 @@ Clicking on any of the following cards will direct you to the introductory page 
   <CustomDocCard emoji="📅" title="Releases" description="Arrange entries into containers for publishing and unpublishing actions." />
   <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/user-docs/users-roles-permissions"/>
   <CustomDocCard emoji="🔗" title="Plugins" description="Find additional functionalities to extend and customize your applications." link="/user-docs/plugins/strapi-plugins" />
-  <CustomDocCard emoji="⚙️" title="General Settings" description="Access features needed set up your Strapi dashboard" link="/user-docs/settings/configuring-users-permissions-plugin-settings" />
+  <CustomDocCard emoji="⚙️" title="General Settings" description="Access features needed set up your Strapi dashboard" link="/user-docs/settings/introduction" />
 </CustomDocCardsWrapper>
 
 :::strapi Welcome to the Strapi community!
