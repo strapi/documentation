@@ -51,9 +51,10 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 :::
 
-:::strapi Experimental: Preview and edit your content live on your website
+<!-- !Disabled and commented out for now -->
+<!-- :::strapi Experimental: Preview and edit your content live on your website
 By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. Additional documentation will be provided once the plugin is out of beta.  
-:::
+::: -->
 
 ### Components
 
@@ -154,7 +155,8 @@ You can also use the keyboard to reorder components: focus the component using T
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
 
-## Editing fields from a front-end website <EnterpriseBadge />
+<!-- !Disabled and commented out for now -->
+<!-- ## Editing fields from a front-end website <EnterpriseBadge />
 
 <CSMPrereq />
 
@@ -168,4 +170,4 @@ Once the Content Source Map plugin is installed and configured (see [Developer D
 4. Hover any content highlighted in blue to display an **Open in strapi.io** button.
 5. Click on the **Open in strapi.io** button to jump directly to the corresponding field in the admin panel and edit its content.
 
-![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png)
+![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png) -->
