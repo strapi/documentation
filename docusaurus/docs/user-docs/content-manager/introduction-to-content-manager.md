@@ -40,10 +40,7 @@ From the list view, it is possible to:
 - make a textual search (2) or set filters (3) to find specific entries,
 - if the [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, filter by locale to display only the entries translated in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
-- see the status of each entry (6):
-  - an entry is <span style={{color:"#5cb176"}}>_Published_</span> if you previously published it and there are no pending draft changes saved,
-  - an entry is <span style={{color:"#ac73e6"}}>_Modified_</span> if you previously published it, made some changes to the draft version and saved these changes but have not published them yet,
-  - an entry is in <span style={{color:"#7b79ff"}}>_Draft_</span> status if it has never been published yet,
+- if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, see the status of each entry (6),
 - perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/more.svg) (7) at the end of the line:
   - edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
   - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/cross-circle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/cross-circle.svg) or discard its changes,
