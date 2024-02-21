@@ -83,7 +83,13 @@ const sidebars = {
             'dev-docs/configurations/public-assets',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/rbac',
-            // 'dev-docs/configurations/features',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/features',
+              customProps: {
+                updated: true,
+              }
+            },
           ],
         },
         {
@@ -1011,7 +1017,13 @@ const sidebars = {
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
-            'dev-docs/configurations/features',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/features',
+              customProps: {
+                updated: true
+              }
+            }
           ]
         },
         {
