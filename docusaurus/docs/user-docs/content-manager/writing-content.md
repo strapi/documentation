@@ -28,6 +28,10 @@ To write or edit content:
 1. Access the edit view of your collection type or single type.
 2. Write your content, following the available field schema. You can refer to the table below for more information and instructions on how to fill up each field type.
 
+:::info
+If Draft & Publish is enabled for your content-type (it's enabled by default), the fields work the same way whether you are editing the draft or published version. See [Saving, publishing, and deleting content](/user-docs/content-manager/saving-and-publishing-content) for more information about the Draft & Publish feature.
+:::
+
 | Field name  | Instructions                                                                                                                                                                                                                                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
