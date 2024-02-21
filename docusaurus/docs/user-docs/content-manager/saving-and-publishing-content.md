@@ -15,10 +15,13 @@ Strapi allows you to manage your content throughout its whole lifecycle, whether
 The possibility to manage drafts for contents comes from the Draft & Publish feature. This feature is enabled by default, but it can be disabled for any content-type from the Content-type Builder. If you disabled the Draft & Publish feature, saving your content means saving and publishing at the same time.
 :::
 
-Your contents can have 3 statuses:
-  - an entry is <span style={{color:"#5cb176"}}>_Published_</span> if you previously published it and there are no pending draft changes saved,
-  - an entry is <span style={{color:"#ac73e6"}}>_Modified_</span> if you previously published it, made some changes to the draft version and saved these changes, but have not published the changes yet,
-  - an entry is in <span style={{color:"#7b79ff"}}>_Draft_</span> status if it has never been published yet.
+Your content can have 3 statuses:
+
+| Status name | Description |
+|------------|--------------|
+| <span style={{color:"#5cb176"}}>_Published_</span> | The content was previously published.<br/>There are no pending draft changes saved. |
+| <span style={{color:"#ac73e6"}}>_Modified_</span> | The content was previously published.<br/>You made some changes to the draft version and saved these changes, but the changes have not been published yet. |
+| <span style={{color:"#7b79ff"}}>_Draft_</span> | The content has never been published yet. |
   
 In the Content Manager edit view (the view you see when editing an entry), you can see the current status indicated at the top of the interface, just below the entry title.
 
