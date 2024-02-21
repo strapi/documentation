@@ -23,7 +23,7 @@ Your content can have 3 statuses:
 | <span style={{color:"#ac73e6"}}>_Modified_</span> | The content was previously published.<br/>You made some changes to the draft version and saved these changes, but the changes have not been published yet. |
 | <span style={{color:"#7b79ff"}}>_Draft_</span> | The content has never been published yet. |
   
-In the Content Manager edit view (the view you see when editing an entry), you can see the current status indicated at the top of the interface, just below the entry title.
+In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.
 
 <!-- TODO: update screenshot -->
 <ThemedImage
