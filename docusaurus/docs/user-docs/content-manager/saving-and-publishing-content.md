@@ -75,7 +75,7 @@ To schedule publication, i.e., convert a draft to a published entry at a given d
 
 #### Unpublishing content
 
-Published contents can be unpublished, switching back to being drafts again.
+Published contents can be unpublished. If a draft version also exists, you can decide what to do with both the draft and published content.
 
 To unpublish content:
 
@@ -83,7 +83,7 @@ To unpublish content:
 2.  In the Confirmation dialog that opens, you can choose to:
     - **Unpublish and keep last draft**, so that all the content you currently have in the Draft tab is preserved, but the all the content from the Published tab is definitely gone
     - **Unpublish and replace last draft** to discard any existing content in the Draft tab and replace it with the content of all fields from the Published tab
-3. Click **Confirm** with your choice. The desired changes will be applied to both the Draft and Published tabs and the new status of the entry will also be reflected below the entry title.
+3. Click **Confirm**. The desired changes will be applied to both the Draft and Published tabs and the new status of the entry will also be reflected below the entry title.
 
 <!-- TODO: add screenshot? -->
 
@@ -99,16 +99,18 @@ If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-inter
 
 #### Bulk publishing drafts
 
+<!-- TODO: Check if bulk publish is impacted and update text and screenshots where necessary -->
+
 To publish several entries at the same time:
 
 1. From the list view of the Content Manager, select your entries to publish by ticking the box on the left side of the entries' record.
 2. Click on the **Publish** button located above the header of the table.
-3. In the *Publish entries* dialog, check the list of selected entries and their status:
+3. In the _Publish entries_ dialog, check the list of selected entries and their status:
 
    - ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish: the entry can be published
    - ![Fail icon](/img/assets/icons/CrossCircle.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
 
-4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/CrossCircle.svg) status, click the ![Edit icon](/img/assets/icons/edit.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the *Publish entries* dialog as you fix the various entries issues.
+4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/CrossCircle.svg) status, click the ![Edit icon](/img/assets/icons/edit.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
 5. Click the **Publish** button.
 6. In the confirmation dialog box, confirm your choice by clicking again on the **Publish** button.
 
