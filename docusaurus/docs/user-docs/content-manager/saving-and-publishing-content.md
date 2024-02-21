@@ -55,7 +55,15 @@ To schedule publication, i.e. convert a draft to a published entry at a given da
 
 Published contents can be unpublished, switching back to being drafts again.
 
-To unpublish content, click on the **Unpublish** button in the top right corner of the content editor.
+To unpublish content:
+
+1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/more.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
+2.  In the Confirmation dialog that opens, you can choose to:
+    - **Unpublish and keep last draft**, so that all the content you currently have in the Draft tab is preserved, but the all the content from the Published tab is definitely gone
+    - **Unpublish and replace last draft** to discard any existing content in the Draft tab and replace it with the content of all fields from the Published tab
+3. Click **Confirm** with your choice. The desired changes will be applied to both the Draft and Published tabs and the new status of the entry will also be reflected below the entry title.
+
+<!-- TODO: add screenshot? -->
 
 ### Bulk publishing and unpublishing
 
