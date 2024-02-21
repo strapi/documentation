@@ -45,6 +45,12 @@ To add an entry to a release:
 2. Select which release to add this entry to.
 3. Decide whether the entry will be published or unpublished when the release itself is published, then click **Continue**.
 
+The Releases box in the right sidebar should show which release(s) the entry is included in.
+
+:::info
+If [Releases scheduling](/user-docs/releases/managing-a-release#scheduling-a-release-) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
+:::
+
 ## Removing an entry from a release
 
 An entry can be removed from a [release](/user-docs/releases/introduction) while editing it from the edit view of the Content Manager.
