@@ -4,7 +4,7 @@ description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
 ---
 
-The _Settings_ feature allows an administrator to adjust all ![Settings icon](/img/assets/icons/settings.svg) _Settings_ from the main navigation of the admin panel, which is divided into divided into 4 sub sections:
+The _Settings_ feature allows an administrator to adjust all ![Settings icon](/img/assets/icons/settings.svg) _Settings_ from the main navigation of the admin panel, which is divided into 4 sub sections:
 
 - _Global Settings_
 - _Administration panel_
@@ -21,7 +21,7 @@ sources={{
 
 ## Global Settings
 
-The _Global Settings_ Settings in Strapi allows administrators to configure logo in the _Overview & Custom Logo_ interface, manage _API Token_, manage _Media Library_, configure _Internationalization_ locales and configure _Single Sign-On_ and _Webhooks_.
+The _Global Settings_ in Strapi allows administrators to configure logo in the _Overview & Custom Logo_ interface, manage _API Token_, manage _Media Library_, configure _Internationalization_ locales and configure _Single Sign-On_ and _Webhooks_.
 
 ## Administration Panel
 
@@ -29,15 +29,15 @@ The _Administration Panel_ Settings in Strapi allows administrators to configure
 
 ### Roles
 
-The _Role_ editing interface allows administrators to edit the details of an administrator role and configure its permissions in detail. It can be accessed from _Administration panel_ > _Roles_ by clicking on the edit button (see [Configuring Administrator Roles](/user-docs/users-roles-permissions/configuring-administrator-roles)).
+The _Role_ interface allows administrators to edit the details of an administrator role and configure its permissions in detail. It can be accessed from _Administration panel_ > _Roles_ (see [Configuring Administrator Roles](/user-docs/users-roles-permissions/configuring-administrator-roles)).
 
 ### Users
 
-The _Users_ interface allows administrators to edit the details of an end-users role and configure its permissions in detail. It can be accessed from _Administration panel_ > _Users_ by clicking the edit button.
+The _Users_ interface allows administrators to edit the details of an end-users role and configure its permissions in detail. It can be accessed from _Administration panel_ > _Users_.
 
 ## Email plugin
 
-Administrators must configure a provider and its corresponding settings in the config/plugins.js or config/plugins.ts file to use the _Email plugin_ Settings. By default, Strapi uses **Sendmail** as the email provider, which is suitable for local development but requires further configuration for production environments. See the [Developer Documentation](/dev-docs/plugins/email) for more details.
+Administrators must configure an email provider and its corresponding settings in the config/plugins.js or config/plugins.ts file to use the _Email plugin_ Settings. By default, Strapi uses **Sendmail** as the email provider, which is suitable for local development but requires further configuration for production environments. See the [Developer Documentation](/dev-docs/plugins/email) for more details.
 
 ## Users & Permission plugin
 
