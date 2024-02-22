@@ -246,10 +246,6 @@ You should now be ready to start developing your plugin.
 You can either jump to the [plugin structure](/dev-docs/plugins/development/plugin-structure) documentation or read the [servers and hot reloading](#servers-and-hot-reloading) section to learn more about different ways to start the server.
 :::
 
-:::info Did you know?
-The admin panel needs to be rebuilt after its code has been modified. Rebuilding the admin panel is done by running the `build` command. The `strapi generate plugin` generates code that injects some plugin components (menu link, plugin homepage) into the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
-:::
-
 ### Servers and hot reloading
 
 Strapi itself is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
