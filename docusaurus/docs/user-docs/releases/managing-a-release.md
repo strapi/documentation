@@ -42,7 +42,7 @@ You can rename a release. To do so, while on a release page:
 Scheduling a release is an experimental feature and currently requires enabling the proper `contentReleasesScheduling` future flag in your configuration file (see [Developer Docs](/dev-docs/configurations/features) for details).
 :::
 
-Releases can be [published manually](#publishing-a-release) or scheduled to be automatically published at a given date and time.
+Releases can be [published manually](#publishing-a-release) or scheduled to be automatically published at a given date and time, with the timezone of your choice.
 
 You can schedule a release:
 - when [creating the release](/user-docs/releases/creating-a-release),
