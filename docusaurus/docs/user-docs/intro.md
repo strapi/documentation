@@ -42,7 +42,7 @@ Clicking on any of the following cards will direct you to the introductory page 
 <CustomDocCardsWrapper>
   <CustomDocCard emoji="📝" title="Content Manager" description="Manage and publish all content types created with the Content-type Builder." link="/user-docs/content-manager" />
   <CustomDocCard emoji="📚" title="Content Type Builder" description="Create, Manage and Publish Content Types including collection types." link="/user-docs/content-type-builder" />
-  <CustomDocCard emoji="🗃️" title="Media Library" description="Access all assets, upload assets, configure the view, and manage folders." link="/user-docs/media-library" />
+  <CustomDocCard emoji="🗃️" title="Media Library" description="Upload and manage all assets and organize them into folders." link="/user-docs/media-library" />
   <CustomDocCard emoji="📅" title="Releases" description="Arrange entries into containers for publishing and unpublishing actions." />
   <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/user-docs/users-roles-permissions"/>
   <CustomDocCard emoji="🔗" title="Plugins" description="Find additional functionalities to extend and customize your applications." link="/user-docs/plugins/strapi-plugins" />
