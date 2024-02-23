@@ -46,7 +46,7 @@ Clicking on any of the following cards will direct you to the introductory page 
   <CustomDocCard emoji="📅" title="Releases" description="Arrange entries into containers for publishing and unpublishing actions." />
   <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/user-docs/users-roles-permissions"/>
   <CustomDocCard emoji="🔗" title="Plugins" description="Find additional functionalities to extend and customize your applications." link="/user-docs/plugins/strapi-plugins" />
-  <CustomDocCard emoji="⚙️" title="General Settings" description="Access features needed set up your Strapi dashboard" link="/user-docs/settings/introduction" />
+  <CustomDocCard emoji="⚙️" title="General Settings" description="Access features needed set up your Strapi dashboard." link="/user-docs/settings/introduction" />
 </CustomDocCardsWrapper>
 
 :::strapi Welcome to the Strapi community!
