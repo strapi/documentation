@@ -32,6 +32,18 @@ The redux store can fire the following actions:
 - `'ContentManager/App/GET_INIT_DATA’`
 - `'ContentManager/App/SET_INIT_DATA’`
 
+The payload nests attributes inside the `data` object. For instance, for the `SET_INIT_DATA` action, the payload is of the following format:
+
+```json
+  data: {
+    authorizedCollectionTypeLinks: ContentManagerAppState['collectionTypeLinks'];
+    authorizedSingleTypeLinks: ContentManagerAppState['singleTypeLinks'];
+    components: ContentManagerAppState['components'];
+    contentTypeSchemas: ContentManagerAppState['models'];
+    fieldSizes: ContentManagerAppState['fieldSizes'];
+  };
+```
+
 </SideBySideColumn>
 
 <SideBySideColumn>
@@ -42,6 +54,18 @@ The redux store no longer fires the following actions:
 
 - `'ContentManager/App/RESET_INIT_DATA’`
 - `'ContentManager/App/GET_INIT_DATA’`
+
+The payload data does not nest attributes within a `data` object anymore. For instance, for the `SET_INIT_DATA` action, the payload is of the following format:
+
+```json
+{
+  authorizedCollectionTypeLinks: ContentManagerAppState['collectionTypeLinks'];
+  authorizedSingleTypeLinks: ContentManagerAppState['singleTypeLinks'];
+  components: ContentManagerAppState['components'];
+  contentTypeSchemas: ContentManagerAppState['models'];
+  fieldSizes: ContentManagerAppState['fieldSizes'];
+}
+```
 
 </SideBySideColumn>
 
@@ -54,3 +78,5 @@ The redux store no longer fires the following actions:
 ### Manual procedure
 
 The redux store in Strapi 5 continues to fire `'ContentManager/App/SET_INIT_DATA’`, so users should instead listen for this action in their middlewares only.
+
+Additionally, adjustments to your custom code might need to be done based on the new payload format.
