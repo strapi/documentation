@@ -53,7 +53,13 @@ const sidebars = {
               id: "dev-docs/installation",
             },
             "dev-docs/installation/cli",
-            "dev-docs/installation/docker",
+            {
+                type: 'doc',
+                id: "dev-docs/installation/docker",
+                customProps: {
+                    updated: true
+                },
+            },
           ],
         },
         "dev-docs/project-structure",
@@ -450,6 +456,15 @@ const sidebars = {
             "dev-docs/custom-fields",
             "dev-docs/plugins-extension",
             {
+                type: 'doc',
+                id: 'dev-docs/plugins/development/plugin-cli',
+                customProps: {
+                    new: true
+                }
+            },
+            'dev-docs/custom-fields',
+            'dev-docs/plugins-extension',
+            {
               type: "category",
               label: "Guides",
               link: {
@@ -457,13 +472,20 @@ const sidebars = {
                 id: "dev-docs/plugins/developing-plugins",
               },
               items: [
-                "dev-docs/plugins/guides/store-and-access-data",
-                "dev-docs/plugins/guides/pass-data-from-server-to-admin",
-              ],
-            },
-          ],
-        },
-      ],
+                'dev-docs/plugins/guides/store-and-access-data',
+                'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+                {
+                  type: 'doc',
+                  id: 'dev-docs/plugins/guides/use-the-plugin-cli',
+                  customProps: {
+                    new: true,
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       type: "category",

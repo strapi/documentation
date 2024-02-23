@@ -31,16 +31,40 @@ The *General* tab enables you to check and update the following options for the 
   }}
 />
 
-### Modifying git repository branch
+### Modifying git repository & branch
 
-The GitHub or Gitlab repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the project's settings.
+The GitHub or Gitlab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to:
 
-1. In the *Connected git repository* section of the *General* tab, click on the **Edit** button.
-2. In the *Edit Git settings* dialog, edit the available options of your choice:
+- update the project's repository or switch to another git provider (see [Updating repository](#updating-repository)),
+- edit the project's branch, base directory and deploy on push setting (see [Editing branch](#editing-branch)).
+
+:::caution
+Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
+:::
+
+#### Updating repository
+
+1. In the *Connected git repository* section of the *General* tab, click on the **Update repository** button.
+2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch to GitHub/GitLab** button at the bottom of the *Update repository* dialog. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository dialog*.
+3. In the *Update repository* dialog, fill in the 3 available settings:
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
-    | Selected branch | Choose a branch from the drop-down list.                                 |
+    | Account         | Choose an account from the drop-down list.                               |
+    | Repository      | Choose a repository from the drop-down list.                             |
+    | Git branch      | Choose a branch from the drop-down list.                                 |
+
+4. Click on the **Save** button.
+5. In the confirmation dialog, confirm your changes by clicking on the **Relink repository** button.
+
+#### Editing branch
+
+1. In the *Connected git repository* section of the *General* tab, click on the **Edit branch** button.
+2. In the *Edit branch* dialog, edit the settings below:
+
+    | Setting name    | Instructions                                                             |
+    | --------------- | ------------------------------------------------------------------------ |
+    | Git branch      | Choose a branch from the drop-down list.                                 |
     | Base directory  | Write the path of the base directory in the textbox.                     |
     | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
