@@ -335,7 +335,7 @@ Sample `.dockerignore`:
 .env
 build/
 node_modules/
-# Ingoring folders that might be used in starter templates
+# Ignoring folders that might be used in starter templates
 data/
 backup/
 ```
