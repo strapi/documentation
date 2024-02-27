@@ -557,6 +557,9 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
+          customProps: {
+            updated: true,
+          }
         },
         'user-docs/content-manager/adding-content-to-releases',
       ],
@@ -585,9 +588,6 @@ const sidebars = {
     },
     {
       type: "category",
-      customProps: {
-        new: true
-      },
       collapsed: false,
       label: "Releases",
       items: [
@@ -638,9 +638,6 @@ const sidebars = {
               type: 'doc',
               label: 'Review Workflows',
               id: 'user-docs/settings/review-workflows',
-              customProps: {
-                new: true,
-              },
             },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
