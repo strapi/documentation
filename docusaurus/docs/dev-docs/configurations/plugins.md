@@ -86,7 +86,7 @@ If no specific configuration is required, a plugin can also be declared with the
 
 ## GraphQL configuration
 
-The [GraphQL plugin](/dev-docs/plugins/graphql) has the following specific configuration options that should be declared in a `graphql.config` object. All parameters are optional:
+The [GraphQL plugin](/dev-docs/plugins/graphql) has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
 
 | Parameter          | Description                                                                                                                                                   | Type    | Default |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
@@ -99,6 +99,8 @@ The [GraphQL plugin](/dev-docs/plugins/graphql) has the following specific confi
 | `maxLimit`         | Maximum value for [the `pagination[limit]` parameter](/dev-docs/api/graphql#pagination-by-offset) used in API calls                                                                                                              | Integer  | `-1`    |
 | `playgroundAlways` | Whether the playground should be publicly exposed.<br/><br/>Enabled by default in if `NODE_ENV` is set to `development`.                                        | Boolean | `false`  |
 | `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on models should be created automatically (see [Shadow CRUD documentation](/dev-docs/plugins/graphql#shadow-crud)). | Boolean | `true` |
+
+**Example custom configuration**:
 
 <Tabs groupId="js-ts">
 
