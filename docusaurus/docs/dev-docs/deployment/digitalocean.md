@@ -144,7 +144,7 @@ Note the database name, username and password for later use.
 
 :::prerequisites
 - You must have `git` [installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-- Git should be [initialized](https://git-scm.com/docs/git-init) for your previsouly created Strapi project.
+- Git should be [initialized](https://git-scm.com/docs/git-init) for your previously created Strapi project.
 :::
 
 1. Replace the content of the `config/database.js` with the following:

@@ -828,7 +828,7 @@ The use of `ngrok` is not needed.
   - Client ID: `<Your Auth0 Client ID>`
   - Client Secret: `<Your Auth0 Client Secret>`
   - Subdomain: `<Your Auth0 tenant url>`, example it is the part in bold in the following url: https://**my-tenant.eu**.auth0.com/
-  - The redirect URL to your front-end app: `http://localhost:3000/connect/auth0`
+  - The redirect URL to your front-end app: `http://localhost:3000/connect/auth0/redirect`
 
 </TabItem>
 

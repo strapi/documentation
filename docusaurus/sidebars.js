@@ -53,7 +53,13 @@ const sidebars = {
               id: 'dev-docs/installation',
             },
             "dev-docs/installation/cli",
-            "dev-docs/installation/docker",
+            {
+                type: 'doc',
+                id: "dev-docs/installation/docker",
+                customProps: {
+                    updated: true
+                },
+            },
           ],
         },
         'dev-docs/project-structure',
@@ -74,7 +80,13 @@ const sidebars = {
             'dev-docs/configurations/admin-panel',
             'dev-docs/configurations/middlewares',
             'dev-docs/configurations/api',
-            'dev-docs/configurations/plugins',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/plugins',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
             'dev-docs/configurations/functions',
@@ -447,6 +459,13 @@ const sidebars = {
               id: 'dev-docs/api/plugins/server-api',
               label: 'Server API',
             },
+            {
+                type: 'doc',
+                id: 'dev-docs/plugins/development/plugin-cli',
+                customProps: {
+                    new: true
+                }
+            },
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
             {
@@ -459,6 +478,13 @@ const sidebars = {
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+                {
+                  type: 'doc',
+                  id: 'dev-docs/plugins/guides/use-the-plugin-cli',
+                  customProps: {
+                    new: true,
+                  }
+                }
               ]
             }
           ]
@@ -1004,7 +1030,13 @@ const sidebars = {
             id: 'dev-docs/configurations'
           },
           items: [
-            'dev-docs/configurations/plugins',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/plugins',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
             'dev-docs/configurations/functions',

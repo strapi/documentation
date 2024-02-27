@@ -68,7 +68,7 @@ strapi develop
 | `--bundler`        | string | Specifies the bundler to use, either `webpack` or `vite`x                                                        | `webpack` |
 | `-d, --debug`      | -      | Enable debugging mode with verbose logs                                                                          | false     |
 | `--ignore-prompts` | -      | Ignore all prompts                                                                                               | false     |
-| `--open`           | -      | Open the admin in your browser (default: true)                                                                   | false     |
+| `--open`           | -      | Open the admin in your browser                                                                                   | true      |
 | `--polling`        | -      | Watch for file changes in network directories                                                                    | false     |
 | `--silent`         | -      | Don't log anything                                                                                               | false     |
 | `--watch-admin`    | -      | Watch the admin panel for hot changes                                                                            | false     |
