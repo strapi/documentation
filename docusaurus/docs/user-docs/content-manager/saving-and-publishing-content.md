@@ -87,7 +87,8 @@ To unpublish content:
 
 <!-- TODO: add screenshot? -->
 
-### Bulk publishing and unpublishing
+<!-- TODO: uncomment once doable again in Strapi 5 -->
+<!-- ### Bulk publishing and unpublishing
 
 Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
 
@@ -98,8 +99,6 @@ If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-inter
 ![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
 
 #### Bulk publishing drafts
-
-<!-- TODO: Check if bulk publish is impacted and update text and screenshots where necessary -->
 
 To publish several entries at the same time:
 
