@@ -119,17 +119,17 @@ To unpublish several entries at the same time:
 
 1. From the list view of the Content Manager, select your entries to unpublish by ticking the box on the left side of the entries' record.
 2. Click on the **Unpublish** button located above the header of the table.
-3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button.
+3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button. -->
 
 ## Deleting content
 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
 
-1. In the edit view of the entry, click on ![More icon](/img/assets/icons/more.svg) at the top right of the interface, and click the **Delete document** button.
+1. In the edit view of the entry, click on ![More icon](/img/assets/icons/more.svg) at the top right of the interface, and click the **Delete document** button.<br/>If Internationalization is enabled for the content-type, you can also choose to delete only the currently selected locale by clicking on the **Delete locale** button.
 2. In the window that pops up, click on the **Confirm** button to confirm the deletion.
 
 :::tip
-You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/more.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/delete.svg) **Delete document** button.
+You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/more.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/delete.svg) **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
 <!-- TODO: Commented out since it's not currently testable and only planned for stable release -->
 <!-- You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table. If [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type, the confirmation dialog box asks whether you want to delete only the current locales for the document, or the whole documents including all their locales. -->
 :::
