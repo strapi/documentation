@@ -618,12 +618,16 @@ There is no limit on the number of levels that can be populated. However, the mo
 
 The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various levels of relations between content-types. For instance, an `article` content-type includes a relation with the `category` content-type, but a `category` can also be assigned to any `restaurant` content-type.
 
-It is therefore possible, with a single `GET` request to `/api/articles`, to include information about the `category` an article belongs to, but also about the various restaurants belonging to the same `category`. As an example, let's compare the responses returned with `populate[0]=category` (1-level deep) and `populate[category][populate][0]=restaurants` (2-level deep):
+It is therefore possible, with a single `GET` request to `/api/articles`, to include information about the `category` an article belongs to, but also about the various restaurants belonging to the same `category`.
+
+As an example, let's compare the responses returned with `populate[0]=category` (1 level deep) and `populate[category][populate][0]=restaurants` (2 levels deep):
 
 <SideBySideContainer>
 <SideBySideColumn>
 
-When we only populate one level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
+**1 level deep**
+
+When we only populate 1 level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -747,6 +751,8 @@ When we only populate one level deep, asking for the categories associated to ar
 </SideBySideColumn>
 
 <SideBySideColumn>
+
+**2 levels deep**
 
 When we populate 2 levels deep, asking for the categories associated to articles, but also for restaurants associated to these categories, we can get the following example response.
 
