@@ -43,7 +43,7 @@ module.exports = ({ env }) => ({
   },
 
   // disable a plugin
-  myotherplugin: {
+  'my-other-plugin': {
     enabled: false, // plugin installed but disabled
   },
 });
@@ -70,7 +70,7 @@ export default ({ env }) => ({
   },
 
   // disable a plugin
-  myotherplugin: {
+  'my-other-plugin': {
     enabled: false, // plugin installed but disabled
   },
 });
