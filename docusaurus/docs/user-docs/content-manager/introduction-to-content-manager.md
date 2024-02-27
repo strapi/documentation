@@ -59,8 +59,8 @@ Right above the list view table, on the left side of the interface, a **Filters*
 <ThemedImage
   alt="Filters in the Content Manager"
   sources={{
-    light: '/img/assets/content-manager/content-manager_filters.png',
-    dark: '/img/assets/content-manager/content-manager_filters_DARK.png',
+    light: '/img/assets/content-manager/content-manager_filters2.png',
+    dark: '/img/assets/content-manager/content-manager_filters2_DARK.png',
   }}
 />
 
