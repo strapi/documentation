@@ -9,122 +9,54 @@ import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
-# REST API: Population & Field Selection
+# How to use `populate` with the REST API to include additional fields with your response
 
-The [REST API](/dev-docs/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
+When querying content-types with Strapi's [REST API](/dev-docs/api/rest), by default, reponses do not include any relations, media fields, components, or dynamic zones.
 
-:::tip
-<QsIntroFull />
-:::
-
-<SideBySideContainer>
-<SideBySideColumn>
-
-## Field selection
-
-Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/dev-docs/backend-customization/models#model-attributes) are returned:
-
-- string types: string, text, richtext, enumeration, email, password, and uid,
-- date types: date, time, datetime, and timestamp,
-- number types: integer, biginteger, float, and decimal,
-- generic types: boolean, array, and JSON.
-
-Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
-
-:::tip
-By default, fields are selected except relations, media, dynamic zones, and components, but you can specify a wildcard `*` instead of an array.
-:::
-
-</SideBySideColumn>
-<SideBySideColumn>
-
-<br />
-<br />
-<ApiCall noSideBySide>
-<Request title="Example request: Return only title and body fields">
-
-`GET /api/users?fields[0]=title&fields[1]=body`
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "attributes": {
-        "title": "test1",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-</Response>
-</ApiCall>
-
-<details>
-<summary><QsForQueryTitle/></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    fields: ['title', 'body'],
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
-await request(`/api/users?${query}`);
-```
-
-</details>
-
-</SideBySideColumn>
-</SideBySideContainer>
-
-## Population
-
-The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types:
-
-- [relations & media fields](#relations--media-fields)
-- [components & dynamic zones](#components--dynamic-zones)
-- [creator fields](#populating-createdby-and-updatedby)
-
-It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population.
+👉 _Populating_ in the context of the Strapi REST API means including additional content with your response by returning more fields than the ones returned by default. You use the [`populate` parameter](#population) to achieve this.
 
 :::caution
 The `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated (see [User Guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role) for additional information on how to enable `find` permissions for content-types).
 :::
 
-:::note
-It's currently not possible to return just an array of ids with a request. 
-:::
+<!-- :::tip
+<QsIntroFull />
+::: -->
 
-### Relations & Media fields
+<!-- The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types:
 
-Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples.
+- [relations & media fields](#relations--media-fields)
+- [components & dynamic zones](#components--dynamic-zones)
+- [creator fields](#populating-createdby-and-updatedby)
 
-#### Populate 1 level for all relations
+It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population. -->
 
-To populate one-level deep for all relations, use the `*` wildcard in combination with the `populate` parameter.
+## Populate relations & media fields
+
+Queries without the `populate` parameter will not return any relations or media fields.
+
+When you want to populate content, several options are available:
+
+- populate 1 level deep for all existing relations, used to retrieve media fields for instance,
+- populate 1 level deep for some relations,
+- populate several levels deep for some relations (explicit populate)
+
+### Populate 1 level for all relations
+
+To populate media fields, you can for instance populate 1 level deep for all relations. This is done by adding the `populate=*` parameter to your query.
 
 **Example with FoodAdvisor:**
 
 <SideBySideContainer>
 <SideBySideColumn>
 
-Without the populate parameter, a `GET` request to `/api/articles` to the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application only returns the "first-level" attributes:
+**Without `populate`**
+
+Without the populate parameter, a `GET` request to `/api/articles` to the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application only returns the "first-level" attributes.
+
+The following example is the full response for all 4 `articles` content-types found in the FoodAdvisor database.
+
+Notice how the response only includes the `title`, `slug`, `createdAt`, `updatedAt`, `publishedAt`, and `locale` fields, and the field content of the article as handled by the CKEditor plugin (`ckeditor_content`, truncated for brevity):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -206,9 +138,17 @@ Without the populate parameter, a `GET` request to `/api/articles` to the server
 
 <SideBySideColumn>
 
+**With `populate=*`**
+
 With the `populate=*` parameter, a `GET` request to `/api/articles` to the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes all first-level relations in the response.
 
-Scroll down to see that the response size is much bigger, and note the following example only shows in full what is returned for the first article (`id: 1`) whereas the example response without the `populate` parameter showed the full response content for the 4 published articles:
+The following example is the full response for the first of all 4 `articles` content-types found in the FoodAdvisor database (the content of articles with ids 2, 3, and 4 is truncated for brevity).
+
+Scroll down to see that the response size is much bigger. The response now includes additional fields such as:
+* the `image` field (which stores all information about the article cover, including all its different formats), 
+* the `blocks` and `seo` fields which are additional content related to specific Strapi features or plugins,
+* the `category` relation and its fields,
+* and even some information about the articles translated in other languages as shown by the `localizations` object.
 
 <br />
 <ApiCall noSideBySide>
@@ -370,7 +310,7 @@ Scroll down to see that the response size is much bigger, and note the following
 </Response>
 </ApiCall>
 
-<details>
+<!-- <details>
 <summary><QsForQueryTitle/></summary>
 
 <QsForQueryBody />
@@ -389,22 +329,36 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
-</details>
+</details> -->
 
 </SideBySideColumn>
 </SideBySideContainer>
 
-#### Populate 1 level
+### Populate 1 level for specific relations
 
-To populate only specific relations one-level deep, use one of the following method:
+To populate only specific relations one-level deep, use the populate parameter as an array and put the relation name inside.
 
-- Use the populate parameter as an array and put the relation name inside.
-- Use the populate parameter as an object (using [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), i.e., with square brackets `[]`)) and put the relation name as a key with one of the following values: `true, false, t, f, 1, 0`.
+Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), i.e., with square brackets `[]`)), this would look like the following:
+
+`populate[0]=your-relation-name`
+
+**Example with FoodAdvisor:**
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+**Without `populate`**
+
+Without the populate parameter, a `GET` request to `/api/articles` to the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application only returns the "first-level" attributes.
+
+The following example is the full response for all 4 `articles` content-types found in the FoodAdvisor database.
+
+Notice how the response only includes the `title`, `slug`, `createdAt`, `updatedAt`, `publishedAt`, and `locale` fields, and the field content of the article as handled by the CKEditor plugin (`ckeditor_content`, truncated for brevity):
 
 <ApiCall noSideBySide>
-<Request title="Example request: populate categories">
+<Request title="Example request">
 
-`GET /api/articles?populate[0]=categories`
+`GET /api/articles`
 
 </Request>
 
@@ -416,24 +370,191 @@ To populate only specific relations one-level deep, use one of the following met
     {
       "id": 1,
       "attributes": {
-        "title": "Test Article",
-        // ...
-        "categories": {
-          "data": [
-            {
-              "id": 1,
-              "attributes": {
-                "name": "Food"
-                // ...
-              }
+        "title": "Here's why you have to try basque cuisine, according to a basque chef",
+        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+        "createdAt": "2021-11-09T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:57:19.584Z",
+        "publishedAt": "2022-09-22T09:30:00.208Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "What are chinese hamburgers and why aren't you eating them?",
+        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+        "createdAt": "2021-11-11T13:33:19.948Z",
+        "updatedAt": "2023-06-01T14:32:50.984Z",
+        "publishedAt": "2022-09-22T12:36:48.312Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+      }
+    },
+    {
+      "id": 3,
+      "attributes": {
+        "title": "7 Places worth visiting for the food alone",
+        "slug": "7-places-worth-visiting-for-the-food-alone",
+        "createdAt": "2021-11-12T13:33:19.948Z",
+        "updatedAt": "2023-06-02T11:30:00.075Z",
+        "publishedAt": "2023-06-02T11:30:00.075Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+      }
+    },
+    {
+      "id": 4,
+      "attributes": {
+        "title": "If you don't finish your plate in these countries, you might offend someone",
+        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+        "createdAt": "2021-11-15T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:59:35.148Z",
+        "publishedAt": "2022-09-22T12:35:53.899Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+}
+```
+
+</Response>
+</ApiCall>
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+**With `populate[0]=category`**
+
+With the `populate[0]=category` added to the `GET` request to `/api/articles` to the server, we are explicitly asking to include some information about the `category` content-type, which is a relation field that links the `articles` and the `category` content-types.
+
+The following example is the full response for all 4 `articles` content-types found in the FoodAdvisor database.
+
+Notice that the response now includes additional lines with the `category` field for each article (see highlighted lines):
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+`GET /api/articles?populate[0]=category`
+
+</Request>
+
+<Response title="Example response">
+
+```json {13-23,36-46,59-69,82-92}
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Here's why you have to try basque cuisine, according to a basque chef",
+        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+        "createdAt": "2021-11-09T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:57:19.584Z",
+        "publishedAt": "2022-09-22T09:30:00.208Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 4,
+            "attributes": {
+              "name": "European",
+              "slug": "european",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
             }
-          ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "What are chinese hamburgers and why aren't you eating them?",
+        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+        "createdAt": "2021-11-11T13:33:19.948Z",
+        "updatedAt": "2023-06-01T14:32:50.984Z",
+        "publishedAt": "2022-09-22T12:36:48.312Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 13,
+            "attributes": {
+              "name": "Chinese",
+              "slug": "chinese",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "attributes": {
+        "title": "7 Places worth visiting for the food alone",
+        "slug": "7-places-worth-visiting-for-the-food-alone",
+        "createdAt": "2021-11-12T13:33:19.948Z",
+        "updatedAt": "2023-06-02T11:30:00.075Z",
+        "publishedAt": "2023-06-02T11:30:00.075Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 3,
+            "attributes": {
+              "name": "International",
+              "slug": "international",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "attributes": {
+        "title": "If you don't finish your plate in these countries, you might offend someone",
+        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+        "createdAt": "2021-11-15T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:59:35.148Z",
+        "publishedAt": "2022-09-22T12:35:53.899Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 3,
+            "attributes": {
+              "name": "International",
+              "slug": "international",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
+            }
+          }
         }
       }
     }
   ],
   "meta": {
-    // ...
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
   }
 }
 ```
@@ -441,7 +562,7 @@ To populate only specific relations one-level deep, use one of the following met
 </Response>
 </ApiCall>
 
-<details>
+<!-- <details>
 <summary><QsForQueryTitle/></summary>
 
 <QsForQueryBody />
@@ -477,50 +598,132 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
-</details>
+</details> -->
+</SideBySideColumn>
+</SideBySideContainer>
 
-#### Populate 2 levels
+### Populate 2 levels
 
-To populate specific relations, one or several levels deep, use the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets) (i.e., with square brackets `[]`) for fields names in combination with the `populate` parameter.
+It is also possible to populate specific relations several levels deep.
 
-<br/>
+Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), (i.e., with square brackets `[]`)), for instance if you want to populate a relation nested inside another relation, this would look like the following:
+
+`populate[first-level-relation-to-populate][populate][0]=second-level-relation-to-populate`
 
 :::note
 There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::
 
-<ApiCall noSideBySide>
-<Request title="Example request: populate author and author.company">
+**Example with FoodAdvisor:**
 
-`GET /api/articles?populate[author][populate][0]=company`
+The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various levels of relations between content-types. For instance, an `article` content-type includes a relation with the `category` content-type, but a `category` can also be assigned to any `restaurant` content-type.
+
+It is therefore possible, with a single `GET` request to `/api/articles`, to include information about the `category` an article belongs to, but also about the various restaurants belonging to the same `category`. As an example, let's compare the responses returned with `populate[0]=category` (1-level deep) and `populate[category][populate][0]=restaurants` (2-level deep):
+
+<SideBySideContainer>
+<SideBySideColumn>
+
+When we only populate one level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+`GET /api/articles?populate[0]=category`
 
 </Request>
 
 <Response title="Example response">
 
-```json
+```json {13-23,36-46,59-69,82-92}
 {
   "data": [
     {
       "id": 1,
       "attributes": {
-        "title": "Test Article",
-        // ...
-        "author": {
+        "title": "Here's why you have to try basque cuisine, according to a basque chef",
+        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+        "createdAt": "2021-11-09T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:57:19.584Z",
+        "publishedAt": "2022-09-22T09:30:00.208Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
           "data": {
-            "id": 1,
+            "id": 4,
             "attributes": {
-              "name": "Kai Doe",
-              // ...
-              "company": {
-                "data": {
-                  "id": 1,
-                  "attributes": {
-                    "name": "Strapi"
-                    // ...
-                  }
-                }
-              }
+              "name": "European",
+              "slug": "european",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "title": "What are chinese hamburgers and why aren't you eating them?",
+        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+        "createdAt": "2021-11-11T13:33:19.948Z",
+        "updatedAt": "2023-06-01T14:32:50.984Z",
+        "publishedAt": "2022-09-22T12:36:48.312Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 13,
+            "attributes": {
+              "name": "Chinese",
+              "slug": "chinese",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "attributes": {
+        "title": "7 Places worth visiting for the food alone",
+        "slug": "7-places-worth-visiting-for-the-food-alone",
+        "createdAt": "2021-11-12T13:33:19.948Z",
+        "updatedAt": "2023-06-02T11:30:00.075Z",
+        "publishedAt": "2023-06-02T11:30:00.075Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 3,
+            "attributes": {
+              "name": "International",
+              "slug": "international",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "attributes": {
+        "title": "If you don't finish your plate in these countries, you might offend someone",
+        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+        "createdAt": "2021-11-15T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:59:35.148Z",
+        "publishedAt": "2022-09-22T12:35:53.899Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 3,
+            "attributes": {
+              "name": "International",
+              "slug": "international",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z"
             }
           }
         }
@@ -528,7 +731,12 @@ There is no limit on the number of levels that can be populated. However, the mo
     }
   ],
   "meta": {
-    // ...
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
   }
 }
 ```
@@ -536,7 +744,116 @@ There is no limit on the number of levels that can be populated. However, the mo
 </Response>
 </ApiCall>
 
-<details>
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+When we populate 2 levels deep, asking for the categories associated to articles, but also for restaurants associated to these categories, we can get the following example response.
+
+Notice that we now have the `restaurants` relation field included with the response inside the `category` relation (see highlighted lines):
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+`GET /api/articles?populate[category][populate][0]=restaurants`
+
+</Request>
+
+<Response title="Example response">
+
+```json {13-56}
+{{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Here's why you have to try basque cuisine, according to a basque chef",
+        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+        "createdAt": "2021-11-09T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:57:19.584Z",
+        "publishedAt": "2022-09-22T09:30:00.208Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "category": {
+          "data": {
+            "id": 4,
+            "attributes": {
+              "name": "European",
+              "slug": "european",
+              "createdAt": "2021-11-09T13:33:20.123Z",
+              "updatedAt": "2021-11-09T13:33:20.123Z",
+              "restaurants": {
+                "data": [
+                  {
+                    "id": 1,
+                    "attributes": {
+                      "name": "Mint Lounge",
+                      "slug": "mint-lounge",
+                      "price": "p3",
+                      "createdAt": "2021-11-09T14:07:47.125Z",
+                      "updatedAt": "2021-11-23T16:41:30.504Z",
+                      "publishedAt": "2021-11-23T16:41:30.501Z",
+                      "locale": "en"
+                    }
+                  },
+                  {
+                    "id": 9,
+                    // truncated content
+                  },
+                  {
+                    "id": 10,
+                    // truncated content
+                  },
+                  {
+                    "id": 12,
+                    // truncated content
+                  },
+                  {
+                    "id": 21,
+                    // truncated content
+                  },
+                  {
+                    "id": 26,
+                    // truncated content
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      // truncated content
+    },
+    {
+      "id": 3,
+      // truncated content
+    },
+    {
+      "id": 4,
+      // truncated content
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+</SideBySideColumn>
+</SideBySideContainer>
+
+<!-- <details>
 <summary><QsForQueryTitle/></summary>
 
 <QsForQueryBody />
@@ -558,7 +875,7 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
-</details>
+</details> -->
 
 ### Components & Dynamic Zones
 
