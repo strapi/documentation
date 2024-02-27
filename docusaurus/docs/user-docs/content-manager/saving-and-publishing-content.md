@@ -19,9 +19,9 @@ Your content can have 3 statuses:
 
 | Status name | Description |
 |------------|--------------|
-| <span style={{color:"#5cb176"}}>_Published_</span> | The content was previously published.<br/>There are no pending draft changes saved. |
-| <span style={{color:"#ac73e6"}}>_Modified_</span> | The content was previously published.<br/>You made some changes to the draft version and saved these changes, but the changes have not been published yet. |
-| <span style={{color:"#7b79ff"}}>_Draft_</span> | The content has never been published yet. |
+| <span style={{color:"#5cb176"}}>Published</span> | The content was previously published.<br/>There are no pending draft changes saved. |
+| <span style={{color:"#ac73e6"}}>Modified</span> | The content was previously published.<br/>You made some changes to the draft version and saved these changes, but the changes have not been published yet. |
+| <span style={{color:"#7b79ff"}}>Draft</span> | The content has never been published yet. |
   
 In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.
 
