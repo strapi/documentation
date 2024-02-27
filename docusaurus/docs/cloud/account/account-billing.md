@@ -16,11 +16,11 @@ The Payment method section can only be accessible once the mandatory fields of t
 :::
 
 <ThemedImage
-alt="Billing tab of Profile page"
-sources={{
-    light: '/img/assets/cloud/account-billing2.png',
-    dark: '/img/assets/cloud/account-billing2_DARK.png',
-  }}
+  alt="Billing tab of Profile page"
+  sources={{
+      light: '/img/assets/cloud/account-billing2.png',
+      dark: '/img/assets/cloud/account-billing2_DARK.png',
+    }}
 />
 
 ## Managing subscriptions
@@ -40,11 +40,11 @@ Using the **Manage subscriptions** button, you can view and manage your subscrip
    - access your Billing History and download your invoices
 
 <ThemedImage
-alt="Subscriptions management modal"
-sources={{
-      light: '/img/assets/cloud/manage-subscriptions.png',
-      dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
-    }}
+  alt="Subscriptions management modal"
+  sources={{
+        light: '/img/assets/cloud/manage-subscriptions.png',
+        dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
+      }}
 />
 
 ## Edit subscription
@@ -56,11 +56,11 @@ If you choose to downgrade to another plan but your current usage exceeds the li
 :::
 
 <ThemedImage
-alt="Subscription edition modal"
-sources={{
-    light: '/img/assets/cloud/edit-subscription-modal.png',
-    dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
-  }}
+  alt="Subscription edition modal"
+  sources={{
+      light: '/img/assets/cloud/edit-subscription-modal.png',
+      dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
+    }}
 />
 
 1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as _Account Information_, _Billing & Shipping Addresses_). You will be redirected to your subscription details.
@@ -72,11 +72,11 @@ sources={{
 ## Cancel subscription
 
 <ThemedImage
-alt="Subscription cancellation modal"
-sources={{
+  alt="Subscription cancellation modal"
+  sources={{
     light: '/img/assets/cloud/cancel-subscription-modal.png',
     dark: '/img/assets/cloud/cancel-subscription-modal_DARK.png',
-  }}
+    }}
 />
 
 1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.OO"). You will be redirected to your subscription details.
