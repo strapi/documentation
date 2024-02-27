@@ -80,7 +80,13 @@ const sidebars = {
             'dev-docs/configurations/admin-panel',
             'dev-docs/configurations/middlewares',
             'dev-docs/configurations/api',
-            'dev-docs/configurations/plugins',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/plugins',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
             'dev-docs/configurations/functions',
@@ -1024,7 +1030,13 @@ const sidebars = {
             id: 'dev-docs/configurations'
           },
           items: [
-            'dev-docs/configurations/plugins',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/plugins',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
             'dev-docs/configurations/functions',
