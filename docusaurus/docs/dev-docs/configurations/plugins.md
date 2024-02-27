@@ -8,13 +8,19 @@ description: Strapi plugins have a single entry point file to define their confi
 
 # Plugins configuration
 
-Plugin configurations are stored in `./config/plugins.js|ts` (see [project structure](/dev-docs/project-structure)). Each plugin can be configured with the following available parameters:
+Plugin configurations are stored in `/config/plugins.js|ts` (see [project structure](/dev-docs/project-structure)). Each plugin can be configured with the following available parameters:
 
 | Parameter                  | Description                                                                                                                                                            | Type    |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `enabled`                  | Enable (`true`) or disable (`false`) an installed plugin                                                                                                               | Boolean |
 | `config`<br/><br/>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/dev-docs/api/plugins/server-api#configuration)) | Object  |
 | `resolve`<br/> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
+
+:::note
+Some features of Strapi are provided by plugins and the following plugins can also have specific configuration options: [GraphQL](#graphql-configuration) and [Upload](#upload-configuration).
+:::
+
+**Basic example custom configuration for plugins:**
 
 <Tabs groupId="js-ts">
 
