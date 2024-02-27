@@ -6,8 +6,6 @@ displayed_sidebar: userDocsSidebar
 
 ---
 
-import CSMPrereq from '/docs/snippets/content-source-map-requirements.md'
-
 # Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
@@ -16,8 +14,8 @@ In Strapi, writing content consists in filling up fields, which are meant to con
 <ThemedImage
   alt="Edit view to write content"
   sources={{
-    light: '/img/assets/content-manager/edit-view2.png',
-    dark: '/img/assets/content-manager/edit-view2_DARK.png',
+    light: '/img/assets/content-manager/edit-view3.png',
+    dark: '/img/assets/content-manager/edit-view3_DARK.png',
   }}
 />
 
