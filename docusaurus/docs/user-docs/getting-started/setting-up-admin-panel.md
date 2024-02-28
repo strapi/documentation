@@ -5,7 +5,7 @@ description: How to setup your Strapi Admin Panel
 ---
 
 
-Before going over individual features on the Admin Panel, we recommend the following steps to set up and configure your Strapi Dashboard correctly. Once you complete the setup, you can access the admin panel through the provided URL.
+Before going over individual features, we recommend the following steps to set up and configure your Strapi admin panel correctly. Once you complete the setup, you can access the admin panel through the provided URL.
 
 
 ## Accessing the admin panel
@@ -107,4 +107,4 @@ To change the password of your account:
 Congratulations on being a new Strapi user! You're now ready to discover all the features and options that Strapi has to offer!
 
 
-Head back to the [Welcome Page](../intro.md).
+
