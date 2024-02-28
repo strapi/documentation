@@ -17,7 +17,7 @@ The documentation for Strapi contains 3 main sections, accessible from the top n
 
 This user guide contains the functional documentation related to all features available in the main navigation of your Strapi application.
 
-Once you have logged in, you can access your Strapi dashboard:
+Once you have logged in, you can access your Strapi admin panel:
 
 <ThemedImage
 alt="Homepage of the Admin Panel"
@@ -29,8 +29,8 @@ sources={{
 
 If you are not sure where to begin on this User Guide, we suggest you to:
 
-1. Go through the [User Guide Fundamentals](/user-docs/getting-started/user-guide-fundamentals).
-2. Follow the [Setting up the Admin Panel](/user-docs/getting-started/setting-up-admin-panel) guide.
+1. Go through the [User Guide fundamentals](/user-docs/getting-started/user-guide-fundamentals).
+2. Follow the [Setting up the admin panel](/user-docs/getting-started/setting-up-admin-panel) guide.
 3. Continue your journey through the various User Guide sections. The ["What you will find here"](#what-you-will-find-here) section gives you an overview of the available topics.
 
 ## What you will find here

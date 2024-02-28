@@ -4,7 +4,7 @@ description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
 ---
 
-The _Settings_ feature allows an administrator to adjust all ![Settings icon](/img/assets/icons/settings.svg) _Settings_ from the main navigation of the admin panel, which is divided into 4 sub sections:
+The ![Settings icon](/img/assets/icons/settings.svg) _Settings_ section in the main navigation of the admin panel allows an administrator to adjust various settings for the project. It is divided into 4 sub sections:
 
 - _Global Settings_
 - _Administration panel_
