@@ -124,7 +124,7 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 3. Click on the **Save** button.
 
-## Backups <CloudProBadge /> <CloudTeamBadge /> <CloudDevBadge />
+## Backups <CloudDevBadge /> <CloudProBadge /> <CloudTeamBadge />
 
 The *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
 
