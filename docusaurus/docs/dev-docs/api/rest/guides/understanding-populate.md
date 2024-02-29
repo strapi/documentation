@@ -1,7 +1,6 @@
 ---
-title: Populate and Select
-description: Use Strapi's REST API to populate or select certain fields.
-sidebarDepth: 3
+title: Understanding populate
+description: Learn what populating means and how you can use the populate parameter in your REST API queries to add additional fields to your responses.
 displayed_sidebar: restApiSidebar
 toc_max_heading_level: 4
 ---
@@ -10,47 +9,26 @@ import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
-# How to use `populate` with the REST API to include additional fields with your response
+# 🧠 Understanding the `populate` parameter for the REST API
 
 When querying content-types with Strapi's [REST API](/dev-docs/api/rest), by default, reponses do not include any relations, media fields, components, or dynamic zones.
 
 Populating in the context of the Strapi REST API means including additional content with your response by returning more fields than the ones returned by default. You use the [`populate` parameter](#population) to achieve this.
 
-:::caution
-The `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated (see [User Guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role) for additional information on how to enable `find` permissions for content-types).
+:::info
+Throughout this guide, examples are built with real data queried from the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application. To test examples by yourself, setup FoodAdvisor, start the server in the `/api/` folder, and ensure that proper `find` permissions are given for the queried content-types before sending your queries.
 :::
 
-<!-- :::tip
-<QsIntroFull />
-::: -->
-
-<!-- The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types:
-
-- [relations & media fields](#relations--media-fields)
-- [components & dynamic zones](#components--dynamic-zones)
-- [creator fields](#populating-createdby-and-updatedby)
-
-It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) among various other operators to have much more control over the population. -->
-
-When you want to populate content, 2 options are available:
-
-- Populate everything, i.e. relations, media fields, components and dynamic zones. For relations, this will only work 1 level deep.
-- Explicitly populate some fields and relations, 1 or several levels deep.
-
-Throughout this guide, we will consider an advanced data structure such as the one found with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application. The following diagrams show a simplified version of the available data in FoodAdvisor, and how different uses of `populate` can return different data:
-
-![Diagram with populate use cases with FoodAdvisor data](/img/assets/rest-api/populate-foodadvisor-diagram1.png)
-
-![Diagram with populate use cases with FoodAdvisor data](/img/assets/rest-api/populate-foodadvisor-diagram2.png)
-
-All of the use cases illustrated in the diagrams are covered in this guide:
+The present guide will cover detailed explanations for the following use cases:
 
 - populate [all fields and relations, 1 level deep](#populate-all-fields-and-relations-1-level-deep),
-- populate [some fields and relations, 1 level deep](#populate-1-level-for-specific-relations),
-- populate [some fields and relations, 2 level deep](#populate-2-levels).
+- populate [some fields and relations, 1 level deep](#populate-1-level-deep-for-specific-relations),
+- populate [some fields and relations, several levels deep](#populate-several-levels-deep-for-specific-relations),
+- populate [components](#populate-components),
+- populate [dynamic zones](#populate-dynamic-zones),
 
-:::info
-Examples in this guide are built with real data queried from the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application. To test these yourself, setup FoodAdvisor, start the server in the `/api/` folder, and ensure that proper `find` permissions are given for the queried content-types before sending your queries.
+:::strapi Advanced use case: Populating creator fields
+In addition to the various ways of using the `populate` parameter in your queries, you can also build a custom controller as a workaround to populate creator fields (e.g., `createdBy` and `updatedBy`). This is explained in the dedicated [How to populate creator fields](/dev-docs/api/rest/guides/populate-creator-fields) guide.
 :::
 
 ## Populate all fields and relations, 1 level deep
@@ -60,6 +38,8 @@ You can return all relations, media fields, components and dynamic zones with a 
 To populate everything 1 level deep, add the `populate=*` parameter to your query.
 
 Let's compare and explain what happens with and without this query parameter:
+
+![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram1.png)
 
 <SideBySideContainer>
 <SideBySideColumn>
@@ -154,15 +134,19 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
 
 **With `populate=*`**
 
-With the `populate=*` parameter, a `GET` request to `/api/articles` returns all media fields, first-level relations, components and dynamic zones in the response.
+With the `populate=*` parameter, a `GET` request to `/api/articles` also returns all media fields, first-level relations, components and dynamic zones.
 
 The following example is the full response for the first of all 4 `articles` content-types found in the FoodAdvisor database (the content of articles with ids 2, 3, and 4 is truncated for brevity).
 
 Scroll down to see that the response size is much bigger than without populate. The response now includes additional fields such as:
-* the `image` field (which stores all information about the article cover, including all its different formats), 
-* the `blocks` and `seo` fields which are additional content related to specific Strapi features or plugins,
+* the `image` media field (which stores all information about the article cover, including all its different formats), 
+* the first-level fields of the `blocks` dynamic zone and the `seo` component,
 * the `category` relation and its fields,
-* and even some information about the articles translated in other languages as shown by the `localizations` object.
+* and even some information about the articles translated in other languages, as shown by the `localizations` object.
+
+:::tip
+To populate deeply nested comments, see the [populate components](#populate-components) section.
+:::
 
 <br />
 <ApiCall noSideBySide>
@@ -324,41 +308,78 @@ Scroll down to see that the response size is much bigger than without populate. 
 </Response>
 </ApiCall>
 
-<!-- <details>
-<summary><QsForQueryTitle/></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    populate: '*',
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
-await request(`/api/articles?${query}`);
-```
-
-</details> -->
-
 </SideBySideColumn>
 </SideBySideContainer>
 
 ## Populate specific relations and fields
 
-You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and content-types to populate. Relations and fields populated this way can be 1 or several levels deep.
+You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and content-types to populate.
 
-### Populate 1 level for specific relations
+Relations and fields populated this way can be 1 or several levels deep. The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
 
-To populate only specific relations 1 level deep, use the populate parameter as an array and put the relation name inside.
+![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram2.png)
 
-Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets) (i.e., with square brackets `[]`), the parameter syntax would look like the following:
+Depending on your data structure, you might get similar data presented in different ways with different queries. For instance, the FoodAdvisor example application includes the article, category, and restaurant content-types that are all in relation to each other in different ways. This means that if you want to get data about the 3 content-types in a single GET request, you have 2 options:
 
-`populate[0]=your-relation-name`
+- query articles and populate categories, plus populate the nested relation between categories and restaurants ([2 levels deep population](#populate-several-levels-deep-for-specific-relations))
+- query categories and populate both articles and restaurants because categories have a 1st level relation with the 2 other content-types ([1 level deep](#populate-1-level-deep-for-specific-relations))
+
+This is illustrated by the following diagram:
+
+![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram3.png)
+
+<details>
+<summary>Populate as an object vs. populate as an array: Using the interactive query builder</summary>
+
+The syntax for advanced query parameters can be quite complex to build manually. We recommend you use our [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to generate the URL. By using this tool, it will be easier to visually understand the differences between different queries and different ways of populating.
+
+For instance, populating 2 levels deep implies using populate as an object, while populating several relations 1 level deep implies using populate as an array:
+
+<Columns>
+<ColumnLeft>
+
+Populate as an object<br/>(for populating several levels deep):
+
+```json
+{
+  populate: {
+    category: {
+      populate: ['restaurants'],
+    },
+  },
+}
+```
+
+</ColumnLeft>
+<ColumnRight>
+
+Populate as an array<br/>(for populating many relations 1 level deep)
+
+```json
+{
+  populate: [ 
+    'articles',
+    'restaurants'
+  ],
+}
+
+```
+
+</ColumnRight>
+</Columns>
+
+</details>
+
+### Populate 1 level deep for specific relations
+
+You can populate specific relations 1 level deep by using the populate parameter as an array.
+
+Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets) (i.e., with square brackets `[]`), the parameter syntaxes to populate 1 level deep would look like the following:
+
+| How many relations to populate | Syntax example    |
+|-------------------------------|--------------------|
+| Only 1 relation |  `populate[0]=a-relation-name`   |
+| Several relations | `populate[0]=relation-name&populate[1]=another-relation-name&populate[2]=yet-another-relation-name` |
 
 Let's compare and explain what happens with and without such a query parameter:
 
@@ -582,49 +603,16 @@ Notice that the response now includes additional lines with the `category` field
 </Response>
 </ApiCall>
 
-<!-- <details>
-<summary><QsForQueryTitle/></summary>
-
-<QsForQueryBody />
-
-```js
-// Array method
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    populate: ['categories'],
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-await request(`/api/articles?${query}`);
-```
-
-```js
-// Object method
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    populate: {
-      categories: true
-    }
-  },
-  {
-    encodeValuesOnly: true // prettify URL
-  }
-);
-
-await request(`/api/articles?${query}`);
-```
-
-</details> -->
 </SideBySideColumn>
 </SideBySideContainer>
 
-### Populate several levels for specific relations
+### Populate several levels deep for specific relations
 
-You can also populate specific relations several levels deep.
+You can also populate specific relations several levels deep. For instance, when you populate a relation which itself populates another relation, you are populating 2 levels deep. This is the example we will cover.
+
+:::caution
+There is no limit on the number of levels that can be populated. However, the deeper the populates, the more the request will take time to be performed.
+:::
 
 Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), (i.e., with square brackets `[]`), for instance if you want to populate a relation nested inside another relation, the parameter syntax would look like the following:
 
@@ -643,10 +631,6 @@ The syntax for advanced query parameters can be quite complex to build manually.
 }
 ```
 
-:::
-
-:::caution
-There is no limit on the number of levels that can be populated. However, the more nested populates there are, the more the request will take time to be performed.
 :::
 
 The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various levels of relations between content-types. For instance:
@@ -897,9 +881,9 @@ Notice that we now have the `restaurants` relation field included with the respo
 
 ### Populate components
 
-Components and dynamic zones are not included in responses by default. You need to explicitly ask for each dynamic zones, components, and nested fields.
+Components and dynamic zones are not included in responses by default and you need to explicitly populate each dynamic zones, components, and their nested components.
 
-Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), (i.e., with square brackets `[]`), you need to pass all elements in an array. Nested fields can also be passed, and the parameter syntax could look like the following:
+Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), (i.e., with square brackets `[]`), you need to pass all elements in a `populate` array. Nested fields can also be passed, and the parameter syntax could look like the following:
 
 `populate[0]=a-first-field&populate[1]=a-second-field&populate[2]=a-third-field&populate[3]=a-third-field.a-nested-field&populate[4]=a-third-field.a-nested-component.a-nested-field-within-the-component`
 
@@ -1081,10 +1065,12 @@ Notice that we now have the `metaSocial`-related data included with the response
 ### Populate dynamic zones
 
 Dynamic zones are highly dynamic content structures by essence.
-When populating dynamic zones, you can choose between:
+When populating dynamic zones, you can choose between the following 2 strategies:
 
-- a [shared population strategy](#shared-population-strategy), applying a unique behavior for all the dynamic zone's components,
-- or a [detailed population strategy](#detailed-population-strategy), where you explicitly define what to populate with the response.
+| Strategy name                                        | Use case                                             |
+| ---------------------------------------------------- | ------------------------------------------------------------- |
+| [Shared population](#shared-population-strategy)     | Apply a unique behavior to all the dynamic zone's components. |
+| [Detailed population](#detailed-population-strategy) | Explicitly define what to populate with the response.         |
 
 #### Shared population strategy
 
@@ -1099,7 +1085,7 @@ The syntax for advanced query parameters can be quite complex to build manually.
 {
   populate: {
     blocks: { // asking to populate the blocks dynamic zone
-      populate: '*' // applying a shared population strategy, populating all first-level fields in all components
+      populate: '*' // populating all first-level fields in all components
     }
   },
 }
@@ -1107,16 +1093,25 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 :::
 
-<ApiCall noSideBySide>
-<Request title="Example request for shared populate strategy">
+Let's compare and explain the responses returned with `populate[0]=blocks` (only populating the dynamic zone) and `populate[blocks][populate]=*` (populating the dynamic zone and applying a shared population strategy to all its nested components):
 
-`GET /api/articles?populate[blocks][populate]=*`
+<SideBySideContainer>
+<SideBySideColumn>
+
+**Populating only the dynamic zone**
+
+When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `blocks` dynamic zone and the 2 components it includes:
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+`GET /api/articles?populate[0]=blocks`
 
 </Request>
 
-<Response title="Example response for shared populate strategy">
+<Response title="Example response">
 
-```json
+```json {13-26}
 {
   "data": [
     {
@@ -1132,16 +1127,7 @@ The syntax for advanced query parameters can be quite complex to build manually.
         "blocks": [
           {
             "id": 2,
-            "__component": "blocks.related-articles",
-            "header": {
-              "id": 2,
-              "theme": "primary",
-              "label": "More, I want more!",
-              "title": "Similar articles"
-            },
-            "articles": {
-              // …
-            }
+            "__component": "blocks.related-articles"
           },
           {
             "id": 2,
@@ -1156,84 +1142,15 @@ The syntax for advanced query parameters can be quite complex to build manually.
     },
     {
       "id": 2,
-      "attributes": {
-        "title": "What are chinese hamburgers and why aren't you eating them?",
-        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-        "createdAt": "2021-11-11T13:33:19.948Z",
-        "updatedAt": "2023-06-01T14:32:50.984Z",
-        "publishedAt": "2022-09-22T12:36:48.312Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "blocks": [
-          {
-            "id": 4,
-            "__component": "blocks.related-articles",
-            "header": null,
-            "articles": {
-              "data": [
-                {
-                  "id": 1,
-                  "attributes": {
-                    "title": "Here's why you have to try basque cuisine, according to a basque chef",
-                    "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-                    "createdAt": "2021-11-09T13:33:19.948Z",
-                    "updatedAt": "2023-06-02T10:57:19.584Z",
-                    "publishedAt": "2022-09-22T09:30:00.208Z",
-                    "locale": "en",
-                    "ckeditor_content": "…" // truncated content
-                  }
-                },
-                // … 
-              ]
-            }
-          }
-        ]
-      }
+      // …
     },
     {
       "id": 3,
-      "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "blocks": [
-          {
-            "id": 1,
-            "__component": "blocks.related-articles",
-            "header": {
-              "id": 1,
-              "theme": "primary",
-              "label": "More, I want more!",
-              "title": "Similar articles"
-            },
-            "articles": {
-              // …
-            }
-          },
-          {
-            "id": 1,
-            "__component": "blocks.faq",
-            "title": "Frequently asked questions",
-            "theme": "muted"
-          },
-          {
-            "id": 1,
-            "__component": "blocks.cta-command-line",
-            "theme": "secondary",
-            "title": "Want to give it a try with a brand new project?",
-            "text": "Up & running in seconds 🚀",
-            "commandLine": "npx create-strapi-app my-project --quickstart"
-          }
-        ]
-      }
+      // …
     },
     {
       "id": 4,
-      // truncated content
+      // …
     }
   ],
   "meta": {
@@ -1249,6 +1166,129 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 </Response>
 </ApiCall>
+
+</SideBySideColumn>
+
+<SideBySideColumn>
+
+**Populating the dynamic zone and applying a shared strategy to its components**
+
+When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations, as shown in the highlighted lines of the following example response:
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+`GET /api/articles?populate[blocks][populate]=*`
+
+</Request>
+
+<Response>
+
+```json {13-63}
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "title": "Here's why you have to try basque cuisine, according to a basque chef",
+        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+        "createdAt": "2021-11-09T13:33:19.948Z",
+        "updatedAt": "2023-06-02T10:57:19.584Z",
+        "publishedAt": "2022-09-22T09:30:00.208Z",
+        "locale": "en",
+        "ckeditor_content": "…", // truncated content
+        "blocks": [
+          {
+            "id": 2,
+            "__component": "blocks.related-articles",
+            "header": {
+              "id": 2,
+              "theme": "primary",
+              "label": "More, I want more!",
+              "title": "Similar articles"
+            },
+            "articles": {
+              "data": [
+                {
+                  "id": 2,
+                  "attributes": {
+                    "title": "What are chinese hamburgers and why aren't you eating them?",
+                    "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+                    "createdAt": "2021-11-11T13:33:19.948Z",
+                    "updatedAt": "2023-06-01T14:32:50.984Z",
+                    "publishedAt": "2022-09-22T12:36:48.312Z",
+                    "locale": "en",
+                    "ckeditor_content": "…", // truncated content
+                  }
+                },
+                {
+                  "id": 3,
+                  "attributes": {
+                    "title": "7 Places worth visiting for the food alone",
+                    "slug": "7-places-worth-visiting-for-the-food-alone",
+                    "createdAt": "2021-11-12T13:33:19.948Z",
+                    "updatedAt": "2023-06-02T11:30:00.075Z",
+                    "publishedAt": "2023-06-02T11:30:00.075Z",
+                    "locale": "en",
+                    "ckeditor_content": "…", // truncated content
+                  }
+                },
+                {
+                  "id": 4,
+                  "attributes": {
+                    "title": "If you don't finish your plate in these countries, you might offend someone",
+                    "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+                    "createdAt": "2021-11-15T13:33:19.948Z",
+                    "updatedAt": "2023-06-02T10:59:35.148Z",
+                    "publishedAt": "2022-09-22T12:35:53.899Z",
+                    "locale": "en",
+                    "ckeditor_content": "…", // truncated content
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": 2,
+            "__component": "blocks.cta-command-line",
+            "theme": "primary",
+            "title": "Want to give a try to a Strapi starter?",
+            "text": "❤️",
+            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      // …
+    },
+    {
+      "id": 3,
+      // … 
+    },
+    {
+      "id": 4,
+      // …
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+</SideBySideColumn>
+
+</SideBySideContainer>
 
 #### Detailed population strategy
 
@@ -1332,216 +1372,3 @@ await request(`/api/articles?${query}`);
 
 </details>
 
-### Populating createdBy and updatedBy
-
-The creator fields `createdBy` and `updatedBy` are removed from the REST API response by default. The `createdBy` and `updatedBy` fields can be returned in the REST API by activating the `populateCreatorFields` parameter at the content-type level.
-
-To add `createdBy` and `updatedBy` to the API response:
-
-1. Open the content-type `schema.json` file.
-2. Add `"populateCreatorFields": true` to the `options` object:
-
-  ```json
-  "options": {
-      "draftAndPublish": true,
-      "populateCreatorFields": true
-    },
-  ```
-
-3. Save the `schema.json`.
-4. Open the controller `[collection-name].js` file inside the corresponding API request.
-5. Add the following piece of code, and make sure you replace the `[collection-name].js` with proper collection name:
-
-  ```js
-  'use strict';
-  /**
-   *  [collection-name] controller
-   */
-  const { createCoreController } = require('@strapi/strapi').factories;
-  module.exports = createCoreController('api::[collection-name].[collection-name]', ({ strapi }) => ({
-    async find(ctx) {
-      // Calling the default core action
-      const { data, meta } = await super.find(ctx);
-      const query = strapi.db.query('api::[collection-name].[collection-name]');
-      await Promise.all(
-        data.map(async (item, index) => {
-          const foundItem = await query.findOne({
-            where: {
-              id: item.id,
-            },
-            populate: ['createdBy', 'updatedBy'],
-          });
-
-          data[index].attributes.createdBy = {
-            id: foundItem.createdBy.id,
-            firstname: foundItem.createdBy.firstname,
-            lastname: foundItem.createdBy.lastname,
-          };
-          data[index].attributes.updatedBy = {
-            id: foundItem.updatedBy.id,
-            firstname: foundItem.updatedBy.firstname,
-            lastname: foundItem.updatedBy.lastname,
-          };
-        })
-      );
-      return { data, meta };
-    },
-  }));
-  ```
-
-REST API requests using the `populate` parameter that include the `createdBy` or `updatedBy` fields will now populate these fields.
-
-:::note
-
-The `populateCreatorFields` property is not available to the GraphQL API.
-:::
-
-### Combining Population with other operators
-
-By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters-locale-publication), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
-
-:::caution
-The population and pagination operators cannot be combined.
-:::
-
-#### Populate with field selection
-
-`fields` and `populate` can be combined.
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?fields[0]=title&fields[1]=slug&populate[headerImage][fields][0]=name&populate[headerImage][fields][1]=url`
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        "headerImage": {
-          "data": {
-            "id": 1,
-            "attributes": {
-              "name": "17520.jpg",
-              "url": "/uploads/17520_73c601c014.jpg"
-            }
-          }
-        }
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-</Response>
-</ApiCall>
-
-<details>
-<summary><QsForQueryTitle/></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    fields: ['title', 'slug'],
-    populate: {
-      headerImage: {
-        fields: ['name', 'url'],
-      },
-    },
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
-await request(`/api/articles?${query}`);
-```
-
-</details>
-
-#### Populate with filtering
-
-`filters` and `populate` can be combined.
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        // ...
-        "categories": {
-          "data": [
-            {
-              "id": 2,
-              "attributes": {
-                "name": "Cars"
-                // ...
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-</Response>
-</ApiCall>
-
-<details>
-<summary><QsForQueryTitle/></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    populate: {
-      categories: {
-        sort: ['name:asc'],
-        filters: {
-          name: {
-            $eq: 'Cars',
-          },
-        },
-      },
-    },
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
-await request(`/api/articles?${query}`);
-```
-
-</details>

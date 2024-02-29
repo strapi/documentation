@@ -1,5 +1,5 @@
 ---
-title: REST API
+title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 displayed_sidebar: restApiSidebar
 

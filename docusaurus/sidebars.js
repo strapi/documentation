@@ -812,7 +812,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "REST API",
+      label: "REST API reference",
       items: [
         {
           type: "category",
@@ -892,6 +892,7 @@ const sidebars = {
               label: "Combining populate with other operators",
               href: "/dev-docs/api/rest/populate-select#combining-population-with-other-operators",
             },
+
           ],
         },
         {
@@ -983,6 +984,26 @@ const sidebars = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Rest API guides",
+      link: {
+        type: 'doc',
+        id: 'dev-docs/api/rest/guides/intro',
+      },
+      items: [
+        {
+          type: "doc",
+          label: "Understanding populate",
+          id: 'dev-docs/api/rest/guides/understanding-populate',
+        },
+        {
+          type: "doc",
+          label: "How to populate creator fields",
+          id: 'dev-docs/api/rest/guides/populate-creator-fields',
+        },
+      ],
+    }
   ],
 
   devDocsConfigSidebar: [
