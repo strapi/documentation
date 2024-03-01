@@ -187,7 +187,6 @@ const sidebars = {
             {
               type: 'doc',
               id: "dev-docs/api/rest/populate-select",
-              // label: "Populate and Select",
               customProps: {
                 updated: true,
               },
@@ -892,18 +891,8 @@ const sidebars = {
             },
             {
               type: "link",
-              label: "Populate Relations & Media Fields",
-              href: "/dev-docs/api/rest/populate-select#relations--media-fields",
-            },
-            {
-              type: "link",
-              label: "Populate Components & Dynamic Zones",
-              href: "/dev-docs/api/rest/populate-select#components--dynamic-zones",
-            },
-            {
-              type: "link",
-              label: "Populating createdBy and updatedBy",
-              href: "/dev-docs/api/rest/populate-select#populating-createdby-and-updatedby",
+              label: "Populate",
+              href: "/dev-docs/api/rest/populate-select#population",
             },
             {
               type: "link",
