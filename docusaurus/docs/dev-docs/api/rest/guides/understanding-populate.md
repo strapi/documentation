@@ -21,7 +21,7 @@ Throughout this guide, examples are built with real data queried from the server
 
 The present guide will cover detailed explanations for the following use cases:
 
-- populate [all fields and relations, 1 level deep](#populate-all-fields-and-relations-1-level-deep),
+- populate [all fields and relations, 1 level deep](#populate-all-relations-and-fields-1-level-deep),
 - populate [some fields and relations, 1 level deep](#populate-1-level-deep-for-specific-relations),
 - populate [some fields and relations, several levels deep](#populate-several-levels-deep-for-specific-relations),
 - populate [components](#populate-components),
@@ -31,15 +31,17 @@ The present guide will cover detailed explanations for the following use cases:
 In addition to the various ways of using the `populate` parameter in your queries, you can also build a custom controller as a workaround to populate creator fields (e.g., `createdBy` and `updatedBy`). This is explained in the dedicated [How to populate creator fields](/dev-docs/api/rest/guides/populate-creator-fields) guide.
 :::
 
-## Populate all fields and relations, 1 level deep
+## Populate all relations and fields, 1 level deep
 
 You can return all relations, media fields, components and dynamic zones with a single query. For relations, this will only work 1 level deep, to prevent performance issues and long response times.
 
 To populate everything 1 level deep, add the `populate=*` parameter to your query.
 
-Let's compare and explain what happens with and without this query parameter:
+The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application with and without populating everything 1 level deep:
 
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram1.png)
+
+Let's compare and explain what happens with and without this query parameter:
 
 <SideBySideContainer>
 <SideBySideColumn>
@@ -48,7 +50,7 @@ Let's compare and explain what happens with and without this query parameter:
 
 Without the populate parameter, a `GET` request to `/api/articles` only returns the default attributes and does not return any media fields, relations, components or dynamic zones.
 
-The following example is the full response for all 4 `articles` content-types found in the FoodAdvisor database.
+The following example is the full response for all 4 entries from the `articles` content-types.
 
 Notice how the response only includes the `title`, `slug`, `createdAt`, `updatedAt`, `publishedAt`, and `locale` fields, and the field content of the article as handled by the CKEditor plugin (`ckeditor_content`, truncated for brevity):
 
@@ -136,9 +138,9 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
 
 With the `populate=*` parameter, a `GET` request to `/api/articles` also returns all media fields, first-level relations, components and dynamic zones.
 
-The following example is the full response for the first of all 4 `articles` content-types found in the FoodAdvisor database (the content of articles with ids 2, 3, and 4 is truncated for brevity).
+The following example is the full response for the first of all 4 entries from the `articles` content-types (the data from articles with ids 2, 3, and 4 is truncated for brevity).
 
-Scroll down to see that the response size is much bigger than without populate. The response now includes additional fields such as:
+Scroll down to see that the response size is much bigger than without populate. The response now includes additional fields (see highlighted lines) such as:
 * the `image` media field (which stores all information about the article cover, including all its different formats), 
 * the first-level fields of the `blocks` dynamic zone and the `seo` component,
 * the `category` relation and its fields,
@@ -158,7 +160,7 @@ To populate deeply nested comments, see the [populate components](#populate-comp
 
 <Response title="Example response">
 
-```json
+```json {13-122}
 {
   "data": [
     {
@@ -313,32 +315,35 @@ To populate deeply nested comments, see the [populate components](#populate-comp
 
 ## Populate specific relations and fields
 
-You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and content-types to populate.
+You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and relations to populate.
 
-Relations and fields populated this way can be 1 or several levels deep. The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
+Relations and fields populated this way can be 1 or several level(s) deep. The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
 
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram2.png)
 
+<SubtleCallout emoji="🤓" title="Different populating strategies for similar results">
 Depending on your data structure, you might get similar data presented in different ways with different queries. For instance, the FoodAdvisor example application includes the article, category, and restaurant content-types that are all in relation to each other in different ways. This means that if you want to get data about the 3 content-types in a single GET request, you have 2 options:
 
 - query articles and populate categories, plus populate the nested relation between categories and restaurants ([2 levels deep population](#populate-several-levels-deep-for-specific-relations))
 - query categories and populate both articles and restaurants because categories have a 1st level relation with the 2 other content-types ([1 level deep](#populate-1-level-deep-for-specific-relations))
 
-This is illustrated by the following diagram:
+The 2 different strategies are illustrated in the following diagram:
 
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram3.png)
+
+</SubtleCallout>
 
 <details>
 <summary>Populate as an object vs. populate as an array: Using the interactive query builder</summary>
 
-The syntax for advanced query parameters can be quite complex to build manually. We recommend you use our [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to generate the URL. By using this tool, it will be easier to visually understand the differences between different queries and different ways of populating.
+The syntax for advanced query parameters can be quite complex to build manually. We recommend you use our [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to generate the URL.
 
-For instance, populating 2 levels deep implies using populate as an object, while populating several relations 1 level deep implies using populate as an array:
+Using this tool, you will write clean and readable requests in a familiar (JavaScript) format, which should help you understand the differences between different queries and different ways of populating. For instance, populating 2 levels deep implies using populate as an object, while populating several relations 1 level deep implies using populate as an array:
 
 <Columns>
 <ColumnLeft>
 
-Populate as an object<br/>(for populating several levels deep):
+Populate as an object<br/>(to populate 1 relation several levels deep):
 
 ```json
 {
@@ -353,7 +358,7 @@ Populate as an object<br/>(for populating several levels deep):
 </ColumnLeft>
 <ColumnRight>
 
-Populate as an array<br/>(for populating many relations 1 level deep)
+Populate as an array<br/>(to populate many relations 1 level deep)
 
 ```json
 {
@@ -381,18 +386,18 @@ Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/
 | Only 1 relation |  `populate[0]=a-relation-name`   |
 | Several relations | `populate[0]=relation-name&populate[1]=another-relation-name&populate[2]=yet-another-relation-name` |
 
-Let's compare and explain what happens with and without such a query parameter:
+Let's compare and explain what happens with and without populating relations 1 level deep when sending queries to the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
 
 <SideBySideContainer>
 <SideBySideColumn>
 
 **Without `populate`**
 
-Without the populate parameter, a `GET` request to `/api/articles` only returns the default attributes and does not return any media fields, relations, components or dynamic zones.
+Without the populate parameter, a `GET` request to `/api/articles` only returns the default attributes.
 
-The following example is the full response for all 4 `articles` content-types found in the FoodAdvisor database.
+The following example is the full response for all 4 entries from the `articles` content-type.
 
-Notice that the response does not include any relation:
+Notice that the response does not include any media fields, relations, components or dynamic zones:
 
 <br/>
 
@@ -478,11 +483,11 @@ Notice that the response does not include any relation:
 
 **With `populate[0]=category`**
 
-With the `populate[0]=category` added to the request, we explicitly ask to include some information about `category`, which is a relation field that links the `articles` and the `category` content-types.
+With `populate[0]=category` added to the request, we explicitly ask to include some information about `category`, which is a relation field that links the `articles` and the `categories` content-types.
 
-The following example is the full response for all 4 `articles` content-types found in the FoodAdvisor database.
+The following example is the full response for all 4 entries from the `articles` content-type.
 
-Notice that the response now includes additional lines with the `category` field for each article (see highlighted lines):
+Notice that the response now includes additional data with the `category` field for each article (see highlighted lines):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -608,7 +613,7 @@ Notice that the response now includes additional lines with the `category` field
 
 ### Populate several levels deep for specific relations
 
-You can also populate specific relations several levels deep. For instance, when you populate a relation which itself populates another relation, you are populating 2 levels deep. This is the example we will cover.
+You can also populate specific relations several levels deep. For instance, when you populate a relation which itself populates another relation, you are populating 2 levels deep. Populating 2 levels deep is the example covered in this guide.
 
 :::caution
 There is no limit on the number of levels that can be populated. However, the deeper the populates, the more the request will take time to be performed.
@@ -640,7 +645,7 @@ The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application inc
 
 With a single `GET` request to `/api/articles` and the appropriate populate parameters, you can return information about articles, restaurants, and categories simultaneously.
 
-Let's compare and explain the responses returned with `populate[0]=category` (1 level deep) and `populate[category][populate][0]=restaurants` (2 levels deep):
+Let's compare and explain the responses returned with `populate[0]=category` (1 level deep) and `populate[category][populate][0]=restaurants` (2 levels deep) when sending queries to FoodAdvisor:
 
 <SideBySideContainer>
 <SideBySideColumn>
@@ -904,9 +909,11 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various components and even components nested inside other components. For instance:
 
-- an `article` content-type includes a `seo` component,
-- the `seo` component includes a nested, repeatable `metaSocial` component,
-- and the `metaSocial` component itself has several fields, including an `image` media field.
+- an `article` content-type includes a `seo` component (1),
+- the `seo` component includes a nested, repeatable `metaSocial` component (2),
+- and the `metaSocial` component itself has several fields, including an `image` media field (3).
+
+![FoodAdvisor's SEO component structure in the Content-Type Builder](/img/assets/rest-api/ctb-article-components-structure.png)
 
 By default, none of these fields or components are included in the response of a `GET` request to `/api/articles`. But with the appropriate populate parameters, you can return all of them in a single request.
 
@@ -917,7 +924,9 @@ Let's compare and explain the responses returned with `populate[0]=seo` (1st lev
 
 **1st level component**
 
-When we only populate the `seo` component, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `seo` component. Notice there's no mention of the `metaSocial` component nested within the `seo` component:
+When we only populate the `seo` component, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `seo` component.
+
+Notice there's no mention of the `metaSocial` component nested within the `seo` component:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -988,7 +997,7 @@ When we only populate the `seo` component, we go only 1 level deep, and we can g
 
 When we populate 2 levels deep, asking both for the `seo` component and the `metaSocial` component nested inside `seo`, we can get the following example response.
 
-Notice that we now have the `metaSocial`-related data included with the response (see highlighted lines):
+Notice that we now have the `metaSocial` component-related data included with the response (see highlighted lines):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
