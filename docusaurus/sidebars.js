@@ -174,6 +174,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: "doc",
@@ -181,11 +184,26 @@ const sidebars = {
               label: "Introduction",
             },
             "dev-docs/api/rest/parameters",
-            "dev-docs/api/rest/populate-select",
+            {
+              type: 'doc',
+              id: "dev-docs/api/rest/populate-select",
+              // label: "Populate and Select",
+              customProps: {
+                updated: true,
+              },
+            },
             "dev-docs/api/rest/filters-locale-publication",
             "dev-docs/api/rest/sort-pagination",
             "dev-docs/api/rest/relations",
             "dev-docs/api/rest/interactive-query-builder",
+            {
+              type: "doc",
+              id: "dev-docs/api/rest/guides/intro",
+              label: "Guides",
+              customProps: {
+                new: true,
+              }
+            }
           ],
         },
         "dev-docs/api/graphql",
@@ -988,6 +1006,9 @@ const sidebars = {
       type: "category",
       label: "Rest API guides",
       collapsed: false,
+      customProps: {
+        new: true,
+      },
       link: {
         type: 'doc',
         id: 'dev-docs/api/rest/guides/intro',
