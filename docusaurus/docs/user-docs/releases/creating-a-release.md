@@ -5,9 +5,9 @@ description: Instructions to create a release from the admin panel
 
 # Creating a release  <EnterpriseBadge /> <CloudTeamBadge />
 
-The [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
+The ![Releases icon](/img/assets/icons/releases.svg) [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
-<!-- TODO: add actual screenshots for both light and dark modes -->
+<!-- TODO: update screenshot to show scheduling -->
 <ThemedImage
   alt="Adding a new release"
   sources={{
@@ -22,7 +22,8 @@ To create a new release:
 
 1. Click the **+ New Release** button in the upper right corner of the Releases page.  
 2. Give the release a name.
-3. Click the **Continue** button.
+3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication. Scheduling is currently a <FutureBadge /> feature (see [scheduling a release](/user-docs/releases/managing-a-release#scheduling-a-release-) for details).
+4. Click the **Continue** button.
 
 Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).
 
