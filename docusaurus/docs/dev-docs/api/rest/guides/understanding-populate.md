@@ -1083,7 +1083,7 @@ When populating dynamic zones, you can choose between the following 2 strategies
 
 #### Shared population strategy
 
-With the shared population strategy, you apply the same population to all the components of a dynamic zones.
+With the shared population strategy, you apply the same population to all the components of a dynamic zone.
 
 For instance, in the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
 
