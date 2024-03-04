@@ -20,7 +20,7 @@ To start your strapi instance with hot reloading while developing, run the follo
 
 ```bash
 cd my-app # cd into the root directory of the Strapi application project
-strapi develop --watch-admin
+strapi develop
 ```
 
 ## Customization options
@@ -100,8 +100,8 @@ module.exports = ({ env }) => ({
 
 ```js title="./config/admin.js"
 module.exports = ({ env }) => ({
-  host: "my-host", // only used along with `strapi develop --watch-admin` command
-  port: 3000, // only used along with `strapi develop --watch-admin` command
+  host: "my-host",
+  port: 3000,
 });
 ```
 
@@ -118,8 +118,8 @@ export default ({ env }) => ({
 
 ```js title="./config/admin.ts"
 export default ({ env }) => ({
-  host: "my-host", // only used along with `strapi develop --watch-admin` command
-  port: 3000, // only used along with `strapi develop --watch-admin` command
+  host: "my-host",
+  port: 3000,
 });
 ```
 
@@ -597,7 +597,7 @@ This is considered experimental. Please report any issues you encounter.
 To use `vite` as a bundler you will need to pass it as an option to the `strapi develop` command:
 
 ```bash
-strapi develop --watch-admin --bundler=vite
+strapi develop --bundler=vite
 ```
 
 To extend the usage of `vite`, define a function that extends its configuration inside `./my-app/src/admin/vite.config.[js|ts]`:
