@@ -293,7 +293,7 @@ If you are doing development on both the `/server` and `/admin` directories of y
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn develop --watch-admin
+yarn develop
 ```
 
 </TabItem>
@@ -301,7 +301,7 @@ yarn develop --watch-admin
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm run develop -- --watch-admin
+npm run develop
 ```
 
 </TabItem>

@@ -64,10 +64,6 @@ Strapi provides a [command line interface (CLI)](/dev-docs/cli) for creating plu
 
 Plugins created using the preceding directions are located in the `plugins` directory of the application (see [project structure](/dev-docs/project-structure)).
 
-:::note
-During plugin development it is helpful to use the `--watch-admin` flag to toggle hot reloading of the admin panel. See the [Admin panel customization](/dev-docs/admin-panel-customization) documentation for more details. (TypeScript specific) While developing your plugin, you can run `yarn develop --watch-admin` or `npm run develop -- --watch-admin` in the plugin directory to watch the changes to the TypeScript server files.
-:::
-
 :::tip
 Check [this blog post](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-publish-on-npm-6-6) to learn how to publish your Strapi plugin on npm.
 :::

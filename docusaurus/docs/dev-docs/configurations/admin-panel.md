@@ -35,8 +35,8 @@ The `./config/admin.js` file can include the following parameters:
 | `url`                             | Url of your admin panel. Default value: `/admin`. Note: If the url is relative, it will be concatenated with `url`.                                                                                | string        | `/admin`                                                                                                                            |
 | `autoOpen`                        | Enable or disable administration opening on start.                                                                                                                                                 | boolean       | `true`                                                                                                                              |
 | `watchIgnoreFiles`                | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`).                                        | array(string) | `[]`                                                                                                                                |
-| `host`                            | Use a different host for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                      | string        | `localhost`                                                                                                                         |
-| `port`                            | Use a different port for the admin panel. Only used along with `strapi develop --watch-admin`                                                                                                      | string        | `8000`                                                                                                                              |
+| `host`                            | Use a different host for the admin panel. | string        | `localhost`                                                                                                                         |
+| `port`                            | Use a different port for the admin panel.                                                                                                       | string        | `8000`                                                                                                                              |
 | `serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served, see [defaultIndex option](/dev-docs/configurations/middlewares)                                            | boolean       | `true`                                                                                                                              |
 | `forgotPassword`                  | Settings to customize the forgot password email (see [Forgot Password Email](/dev-docs/admin-panel-customization#forgotten-password-email))                                                        | object        | {}                                                                                                                                  |
 | `forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/dev-docs/plugins/email#using-the-sendtemplatedemail-function)                                                                                         | object        | [Default template](https://github.com/strapi/strapi/blob/main/packages/core/admin/server/config/email-templates/forgot-password.js) |
@@ -160,8 +160,8 @@ module.exports = ({ env }) => ({
     './my-custom-folder', // Folder
     './scripts/someScript.sh', // File
   ],
-  host: 'localhost', // Only used for --watch-admin
-  port: 8003, // Only used for --watch-admin
+  host: 'localhost',
+  port: 8003,
   serveAdminPanel: env.bool('SERVE_ADMIN', true),
   forgotPassword: {
     from: 'no-reply@example.com',
@@ -215,8 +215,8 @@ export default ({ env }) => ({
     './my-custom-folder', // Folder
     './scripts/someScript.sh', // File
   ],
-  host: 'localhost', // Only used for --watch-admin
-  port: 8003, // Only used for --watch-admin
+  host: 'localhost',
+  port: 8003,
   serveAdminPanel: env.bool('SERVE_ADMIN', true),
   forgotPassword: {
     from: 'no-reply@example.com',
