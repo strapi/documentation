@@ -169,6 +169,13 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
+          customProps: {
+            updated: true,
+          },
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/rest'
+          },
           items: [
             {
               type: 'doc',
