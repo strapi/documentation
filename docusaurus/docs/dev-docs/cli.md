@@ -35,7 +35,7 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 |-------------------|---------------------|
 | `strapi install [plugin]` |  Use the npx command corresponding to the plugin (found on the Marketplace, see [User Guide](/user-docs/plugins/installing-plugins-via-marketplace)) |
 | `strapi new`      | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/dev-docs/installation/cli)) |
-| `strapi watch-admin` | `yarn develop` or `npm run develop` always start the Strapi server in "watch-admin" mode |
+| `strapi watch-admin` | `yarn develop` or `npm run develop` always start the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
 
 </details>
 
@@ -43,7 +43,7 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 **Alias**: `dev`
 
-Start a Strapi application with autoReload enabled.
+Start a Strapi application with auto-reloading enabled.
 
 Strapi modifies/creates files at runtime and needs to restart when new files are created. To achieve this, `strapi develop` adds a file watcher and restarts the application when necessary.
 
@@ -51,17 +51,19 @@ Strapi also adds middlewares to support HMR (Hot Module Replacement) for the adm
 
 ```shell
 strapi develop
-options: [--no-build |--watch-admin |--browser |--debug |--silent]
+options: [--no-build |--no-watch-admin |--browser |--debug |--silent]
 ```
 
 - **strapi develop --open**<br/>
-  Starts your application with the autoReload enabled & open your default browser with the administration panel running.
+  Starts your application with auto-reloading enabled & open your default browser with the administration panel running.
+- **strapi develop --no-watch-admin**<br/>
+  Prevents the server from auto-reload when changes are made to the admin panel code.
 - [DEPRECATED] **strapi develop --no-build**<br/>
-  Starts your application with the autoReload enabled and skip the administration panel build process
+  Starts your application with the auto-reloading enabled and skip the administration panel build process
 - [DEPRECATED] **strapi develop --watch-admin**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel.
+  Starts your application with the auto-reloading enabled and the front-end development server. It allows you to customize the administration panel.
 - [DEPRECATED] **strapi develop --watch-admin --browser 'google chrome'**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
+  Starts your application with the auto-reloading enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
 
 :::warning
 You should never use this command to run a Strapi application in production.
@@ -69,7 +71,7 @@ You should never use this command to run a Strapi application in production.
 
 ## strapi start
 
-Start a Strapi application with autoReload disabled.
+Start a Strapi application with auto-reloading disabled.
 
 This command is to run a Strapi application without restarts and file writes, primarily for use in production.
 Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/dev-docs/configurations/environment.md#strapi-s-environment-variables) to customize the application start.
