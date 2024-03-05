@@ -1,7 +1,7 @@
 ---
 title: Strapi 5 uses React Router DOM 6
-description: Database identifiers are shortened in Strapi v5 and can't be longer than 53 characters to avoid issues with identifiers that are too long.
-sidebar_label: Database identifiers shortened
+description: Strapi 5 uses react-router-dom v6. This impacts the links added to Global Settings or to the Menu using the Admin Panel API.
+sidebar_label: React Router DOM 6
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
