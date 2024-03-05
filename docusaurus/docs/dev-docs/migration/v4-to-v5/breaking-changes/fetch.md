@@ -1,6 +1,6 @@
 ---
 title: strapi.fetch uses native fetch() API
-description: Draft & Publish is always enabled in Strapi v5 and this is reflected in the Content API models.
+description: In Strapi 5, the `strapi.fetch` object is now wrapping node Fetch API instead of node-fetch.
 sidebar_label: strapi.fetch uses native fetch()
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
