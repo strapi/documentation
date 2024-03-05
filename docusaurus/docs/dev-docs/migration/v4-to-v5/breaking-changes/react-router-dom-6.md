@@ -13,9 +13,9 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
-# Database identifiers shortened in v5
+# Strapi users `react-router-dom` v6
 
-Strapi 5 uses react-router-dom v6. This impacts the links added to [settings](/dev-docs/plugins/admin-panel-api#settings-api) or to the [menu](/dev-docs/plugins/admin-panel-api#menu-api) using the Admin Panel API.
+Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-dom) v6. This impacts the links added to [settings](/dev-docs/plugins/admin-panel-api#settings-api) or to the [menu](/dev-docs/plugins/admin-panel-api#menu-api) using the Admin Panel API.
 
  <Intro />
 
