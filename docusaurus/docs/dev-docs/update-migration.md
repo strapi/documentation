@@ -15,10 +15,10 @@ Strapi periodically releases code improvements through new versions. New Strapi 
 
 Whenever a new Strapi version is available, there are 2 possible cases:
 
-| Does the new Strapi version include breaking changes? | The upgrade process is a/an… | You should read the…                               | Can you use the `upgrade` tool? |
-| ----------------------------------------------------- | -----------------------------|--------------------------------------------------- | --------------------------------|
-| No                                                    | Update                       | Generic [update guide](/dev-docs/update-version)   | Yes                             |
-| Yes                                                   | Migration                    | Specific migration guides (see below)              | Yes                             |
+| Does the new Strapi version include breaking changes? | The upgrade process is a/an… | Can you use the `upgrade` tool? | Additional information         |
+| ----------------------------------------------------- | ---------------------------- | ------------------------------- | ------------------------------------------------ |
+| No                                                    | Update                       | Yes                             | See generic [update guide](/dev-docs/update-version) |
+| Yes                                                   | Migration                    | Yes                             | See specific migration guides (see below)            |
 
 There are 2 types of migrations:
 - migrating from a minor version to another minor version (e.g., from v5.x to v5.y)
