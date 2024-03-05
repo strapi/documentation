@@ -300,7 +300,13 @@ const sidebars = {
             new: true,
           },
         },
-        'dev-docs/cli',
+        {
+          type: 'doc',
+          id: 'dev-docs/cli',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'category',
           label: 'TypeScript',
