@@ -317,7 +317,7 @@ To populate deeply nested comments, see the [populate components](#populate-comp
 
 You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and relations to populate.
 
-Relations and fields populated this way can be 1 or several level(s) deep. The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
+Relations and fields populated this way can be 1 or several levels deep. The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
 
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram2.png)
 
