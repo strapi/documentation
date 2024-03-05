@@ -21,12 +21,17 @@ const sidebars = {
       label: '🚀 Getting Started',
       link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
-        'dev-docs/intro',
+        {
+          type: 'doc',
+          id: 'dev-docs/intro',
+          customProps: {
+            updated: true,
+          },
+        },
         'dev-docs/quick-start',
         'dev-docs/faq',
         'dev-docs/community',
         'dev-docs/usage-information',
-        'dev-docs/glossary',
       ]
     },
     { // Setup & Deployment
@@ -156,7 +161,10 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Introduction & Concepts',
-          id: 'dev-docs/api/content-apis'
+          id: 'dev-docs/api/content-apis',
+          customProps: {
+            updated: true,
+          },
         },
         {
           type: 'category',
@@ -176,40 +184,40 @@ const sidebars = {
           ]
         },
         'dev-docs/api/graphql',
-        {
-          type: 'category',
-          label: 'Integrations',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/integrations',
-          },
-          items: [
-            {
-              type:'doc',
-              id: 'dev-docs/integrations',
-              label: 'Introduction',
-            },
-            'dev-docs/integrations/11ty',
-            'dev-docs/integrations/angular',
-            'dev-docs/integrations/dart',
-            'dev-docs/integrations/flutter',
-            'dev-docs/integrations/gatsby',
-            'dev-docs/integrations/gridsome',
-            'dev-docs/integrations/go',
-            'dev-docs/integrations/graphql',
-            'dev-docs/integrations/jekyll',
-            'dev-docs/integrations/laravel',
-            'dev-docs/integrations/next-js',
-            'dev-docs/integrations/nuxt-js',
-            'dev-docs/integrations/php',
-            'dev-docs/integrations/python',
-            'dev-docs/integrations/react',
-            'dev-docs/integrations/ruby',
-            'dev-docs/integrations/sapper',
-            'dev-docs/integrations/svelte',
-            'dev-docs/integrations/vue-js',
-          ]
-        },
+        // {
+        //   type: 'category',
+        //   label: 'Integrations',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'dev-docs/integrations',
+        //   },
+        //   items: [
+        //     {
+        //       type:'doc',
+        //       id: 'dev-docs/integrations',
+        //       label: 'Introduction',
+        //     },
+        //     'dev-docs/integrations/11ty',
+        //     'dev-docs/integrations/angular',
+        //     'dev-docs/integrations/dart',
+        //     'dev-docs/integrations/flutter',
+        //     'dev-docs/integrations/gatsby',
+        //     'dev-docs/integrations/gridsome',
+        //     'dev-docs/integrations/go',
+        //     'dev-docs/integrations/graphql',
+        //     'dev-docs/integrations/jekyll',
+        //     'dev-docs/integrations/laravel',
+        //     'dev-docs/integrations/next-js',
+        //     'dev-docs/integrations/nuxt-js',
+        //     'dev-docs/integrations/php',
+        //     'dev-docs/integrations/python',
+        //     'dev-docs/integrations/react',
+        //     'dev-docs/integrations/ruby',
+        //     'dev-docs/integrations/sapper',
+        //     'dev-docs/integrations/svelte',
+        //     'dev-docs/integrations/vue-js',
+        //   ]
+        // },
         {
           type: 'category',
           label: 'Document Service API',
@@ -288,6 +296,9 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction',
           id: 'dev-docs/advanced-features',
+          customProps: {
+            new: true,
+          },
         },
         'dev-docs/cli',
         {
@@ -347,6 +358,9 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction & Concepts',
           id: 'dev-docs/customization',
+          customProps: {
+            new: true,
+          },
         },
         {
           type: 'category',
@@ -360,16 +374,10 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/backend-customization',
               label: 'Introduction',
-              customProps: {
-                new: true,
-              },
             },
             {
               type: 'doc',
               id: 'dev-docs/backend-customization/requests-responses',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/backend-customization/routes',
             'dev-docs/backend-customization/policies',
@@ -508,9 +516,18 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Introduction & Concepts',
-          id: 'dev-docs/update-migration'
+          id: 'dev-docs/update-migration',
+          customProps: {
+            new: true,
+          },
         },
-        'dev-docs/upgrade-tool',
+        {
+          type: 'doc',
+          id: 'dev-docs/upgrade-tool',
+          customProps: {
+            new: true,
+          },
+        },
         'dev-docs/update-version',
         {
           type: 'doc',
@@ -525,6 +542,9 @@ const sidebars = {
             id: 'dev-docs/migration/v4-to-v5/introduction'
           },
           label: 'v4 to v5 migration guides',
+          customProps: {
+            new: true,
+          },
           items: [
             {
               type: 'doc',
@@ -554,6 +574,9 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
+          // customProps: {
+          //   updated: true,
+          // },
         },
         'user-docs/content-manager/adding-content-to-releases',
       ],
@@ -582,9 +605,6 @@ const sidebars = {
     },
     {
       type: "category",
-      customProps: {
-        new: true
-      },
       collapsed: false,
       label: "Releases",
       items: [
@@ -635,9 +655,6 @@ const sidebars = {
               type: 'doc',
               label: 'Review Workflows',
               id: 'user-docs/settings/review-workflows',
-              customProps: {
-                new: true,
-              },
             },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
