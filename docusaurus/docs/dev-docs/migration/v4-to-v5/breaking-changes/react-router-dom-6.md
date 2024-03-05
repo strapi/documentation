@@ -6,6 +6,8 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - react-router
+ - dependencies
+ - front end
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

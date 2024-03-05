@@ -7,6 +7,7 @@ tags:
  - breaking changes
  - vite
  - front end
+ - dependencies
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
