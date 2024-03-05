@@ -542,65 +542,13 @@ export default {
 
 Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates).
 
-## Bundlers (experimental)
+## Bundlers
 
-2 different bundlers can be used with your Strapi application, [webpack](#webpack) and [vite](#vite).
-
-### Webpack
-
-In v4 this is the defacto bundler that Strapi uses to build the admin panel.
-
-:::prerequisites
-Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
-:::
-
-In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.[js|ts]`:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="./my-app/src/admin/webpack.config.js"
-module.exports = (config, webpack) => {
-  // Note: we provide webpack above so you should not `require` it
-
-  // Perform customizations to webpack config
-  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-
-  // Important: return the modified config
-  return config;
-};
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="./my-app/src/admin/webpack.config.ts"
-export default (config, webpack) => {
-  // Note: we provide webpack above so you should not `require` it
-
-  // Perform customizations to webpack config
-  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-
-  // Important: return the modified config
-  return config;
-};
-```
-
-</TabItem>
-</Tabs>
+2 different bundlers can be used with your Strapi application, [vite](#vite) (the default one) and [webpack](#webpack).
 
 ### Vite
 
-:::caution
-This is considered experimental. Please report any issues you encounter.
-:::
-
-To use `vite` as a bundler you will need to pass it as an option to the `strapi develop` command:
-
-```bash
-strapi develop --bundler=vite
-```
+In Strapi 5, Vite is the default bundler that Strapi uses to build the admin panel. `vite` will therefore be used by default when you run the `strapi develop` command.
 
 To extend the usage of `vite`, define a function that extends its configuration inside `./my-app/src/admin/vite.config.[js|ts]`:
 
@@ -638,6 +586,54 @@ export default (config) => {
       },
     },
   });
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Webpack
+
+In Strapi 5, the default bundler is Vite. To use `webpack` as a bundler you will need to pass it as an option to the `strapi develop` command:
+
+```bash
+strapi develop --bundler=webpack
+```
+
+:::prerequisites
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
+:::
+
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.[js|ts]`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./my-app/src/admin/webpack.config.js"
+module.exports = (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+  // Important: return the modified config
+  return config;
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./my-app/src/admin/webpack.config.ts"
+export default (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+  // Important: return the modified config
+  return config;
 };
 ```
 
