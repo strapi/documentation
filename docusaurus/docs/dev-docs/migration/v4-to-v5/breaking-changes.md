@@ -34,6 +34,10 @@ This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
 - [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
 
+## Content Manager
+
+- [The `ContentManagerAppState` redux is modified](/dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state)
+
 ## Dependencies
 
 - [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite)
