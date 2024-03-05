@@ -35,7 +35,7 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 |-------------------|---------------------|
 | `strapi install [plugin]` |  Use the npx command corresponding to the plugin (found on the Marketplace, see [User Guide](/user-docs/plugins/installing-plugins-via-marketplace)) |
 | `strapi new`      | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/dev-docs/installation/cli)) |
-| `strapi watch-admin` | `yarn develop` or `npm run develop` always start the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
+| `strapi watch-admin` | `yarn develop` or `npm run develop` always starts the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
 
 </details>
 
