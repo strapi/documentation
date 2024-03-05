@@ -25,7 +25,7 @@ To add entries to a release:
 3. Select which release to add these entries to.
 4. Decide whether these entries will be published or unpublished when the release is published, then click **Continue**. -->
 
-<!-- TODO: add screenshot -->
+<!-- TODO: update screenshot -->
 
 <ThemedImage
   alt="Including content in a release"
@@ -44,6 +44,12 @@ To add an entry to a release:
 1. In the Releases box in the right sidebar, click the **+ Add to release** button.
 2. Select which release to add this entry to.
 3. Decide whether the entry will be published or unpublished when the release itself is published, then click **Continue**.
+
+The Releases box in the right sidebar should show which release(s) the entry is included in.
+
+:::info
+If [Releases scheduling](/user-docs/releases/managing-a-release#scheduling-a-release-) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
+:::
 
 ## Removing an entry from a release
 

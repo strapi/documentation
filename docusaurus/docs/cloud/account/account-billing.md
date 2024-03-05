@@ -5,7 +5,7 @@ description: Manage billing details for Strapi Cloud account.
 canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
 ---
 
-# Account billing details
+# Account billing details 
 
 Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the *Billing* tab.
 
@@ -18,34 +18,34 @@ The Payment method section can only be accessible once the mandatory fields of t
 <ThemedImage
   alt="Billing tab of Profile page"
   sources={{
-    light: '/img/assets/cloud/account-billing2.png',
-    dark: '/img/assets/cloud/account-billing2_DARK.png',
-  }}
+      light: '/img/assets/cloud/account-billing2.png',
+      dark: '/img/assets/cloud/account-billing2_DARK.png',
+    }}
 />
 
 ## Managing subscriptions
 
 Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
 
-1. Click the **Manage subscriptions** button. A login modal will appear. 
+1. Click the **Manage subscriptions** button. A login modal will appear.
 
 2. Enter the billing email address associated with your account and click **Continue**. A one-time password will be sent to the email address.
 
 3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** modal will appear. From here, you can:
-  
-    - view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription)
-    - view and edit your Account Information: email, password, company name
-    - view and edit your Billing & Shipping Addresses
-    - view and edit your Payment Methods and add new ones
-    - access your Billing History and download your invoices
 
-  <ThemedImage
-    alt="Subscriptions management modal"
-    sources={{
-      light: '/img/assets/cloud/manage-subscriptions.png',
-      dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
-    }}
-  />
+   - view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription)
+   - view and edit your Account Information: email, password, company name
+   - view and edit your Billing & Shipping Addresses
+   - view and edit your Payment Methods and add new ones
+   - access your Billing History and download your invoices
+
+<ThemedImage
+  alt="Subscriptions management modal"
+  sources={{
+        light: '/img/assets/cloud/manage-subscriptions.png',
+        dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
+      }}
+/>
 
 ## Edit subscription
 
@@ -58,12 +58,12 @@ If you choose to downgrade to another plan but your current usage exceeds the li
 <ThemedImage
   alt="Subscription edition modal"
   sources={{
-    light: '/img/assets/cloud/edit-subscription-modal.png',
-    dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
-  }}
+      light: '/img/assets/cloud/edit-subscription-modal.png',
+      dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
+    }}
 />
 
-1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as *Account Information*, *Billing & Shipping Addresses*). You will be redirected to your subscription details.
+1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as _Account Information_, _Billing & Shipping Addresses_). You will be redirected to your subscription details.
 2. Click on the **Edit Subscription** link.
 3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
 4. If you want to change plan, whether it is a plan upgrade or a downgrade (e.g. from Pro plan to Team plan, or from Pro plan to Developer plan), click on **Change** and select a new plan.
@@ -76,7 +76,7 @@ If you choose to downgrade to another plan but your current usage exceeds the li
   sources={{
     light: '/img/assets/cloud/cancel-subscription-modal.png',
     dark: '/img/assets/cloud/cancel-subscription-modal_DARK.png',
-  }}
+    }}
 />
 
 1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.OO"). You will be redirected to your subscription details.
