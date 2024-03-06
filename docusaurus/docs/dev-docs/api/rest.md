@@ -18,7 +18,7 @@ The REST API by default does not populate any relations, media fields, component
 :::
 
 :::strapi Upload plugin API
-The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library) has a different API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
+The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library)) has a different API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
 :::
 
 ## Endpoints
