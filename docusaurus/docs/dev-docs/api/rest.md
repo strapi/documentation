@@ -17,6 +17,10 @@ All content types are private by default and need to be either made public or qu
 The REST API by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/dev-docs/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
+:::strapi Upload plugin API
+The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library) has a different API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
+:::
+
 ## Endpoints
 
 For each Content-Type, the following endpoints are automatically generated:
