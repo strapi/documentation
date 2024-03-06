@@ -44,9 +44,9 @@ By default, fields are selected except relations, media, dynamic zones, and comp
 <br />
 <br />
 <ApiCall noSideBySide>
-<Request title="Example request: Return only title and body fields">
+<Request title="Example request: Return only name and description fields">
 
-`GET /api/users?fields[0]=title&fields[1]=body`
+`GET /api/restaurants?fields[0]=name&fields[1]=description`
 
 </Request>
 
@@ -56,15 +56,30 @@ By default, fields are selected except relations, media, dynamic zones, and comp
 {
   "data": [
     {
-      "id": 1,
-      "attributes": {
-        "title": "test1",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      }
-    }
+      "id": 4,
+      "Name": "Pizzeria Arrivederci",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+            }
+          ]
+        }
+      ],
+      "documentId": "lr5wju2og49bf820kj9kz8c3"
+    },
+    // …
   ],
   "meta": {
-    // ...
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
   }
 }
 ```
@@ -81,7 +96,7 @@ By default, fields are selected except relations, media, dynamic zones, and comp
 const qs = require('qs');
 const query = qs.stringify(
   {
-    fields: ['title', 'body'],
+    fields: ['name', 'description'],
   },
   {
     encodeValuesOnly: true, // prettify URL
@@ -95,7 +110,6 @@ await request(`/api/users?${query}`);
 
 </SideBySideColumn>
 </SideBySideContainer>
-
 
 ## Population
 
@@ -147,35 +161,41 @@ To populate one-level deep for all relations, use the `*` wildcard in combinatio
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        "body": "Test 1",
-        // ...
-        "headerImage": {
-          "data": {
-            "id": 1,
-            "attributes": {
-              "name": "17520.jpg",
-              "alternativeText": "17520.jpg",
-              "formats": {
-                // ...
-              }
-              // ...
-            }
-          }
-        },
-        "author": {
-          // ...
-        },
-        "categories": {
+      "documentId": "lr5wju2og49bf820kj9kz8c3",
+      "Title": "Test Article",
+      "Body": [
+        // …
+      ],
+      "createdAt": "2024-03-06T14:33:10.606Z",
+      "updatedAt": "2024-03-06T14:33:25.006Z",
+      "publishedAt": "2024-03-06T14:33:25.018Z",
+      "locale": "en",
+      // ...
+      "headerImage": { // media field, not populated by default
+        "id": 1,
+        "documentId": "n25l8xdwhepu5exhrx5amwoh",
+        "name": "17520.jpg",
+        "alternativeText": "17520.jpg",
+        "formats": {
           // ...
         }
+        // ...
+      }
+      "author": { // relation, not populated by default
+        // ...
+      },
+      "categories": { // relation, not populated by default
+        // ...
       }
     }
   ],
   "meta": {
-    // ...
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
   }
 }
 ```
@@ -235,20 +255,14 @@ To populate only specific relations one-level deep, use one of the following met
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Test Article",
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      // ...
+      "categories": {
+        "id": 1,
+        "documentId": "n25l8xdwhepu5exhrx5amwoh",
+        "name": "Food"
         // ...
-        "categories": {
-          "data": [
-            {
-              "id": 1,
-              "attributes": {
-                "name": "Food"
-                // ...
-              }
-            }
-          ]
-        }
       }
     }
   ],
@@ -333,26 +347,19 @@ There is no limit on the number of levels that can be populated. However, the mo
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Test Article",
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      // ...
+      "author": {
+        "id": 1,
+        "documentId": "z89hlka8dh7lfa9ahlkdazu",
+        "name": "Kai Doe",
         // ...
-        "author": {
-          "data": {
-            "id": 1,
-            "attributes": {
-              "name": "Kai Doe",
-              // ...
-              "company": {
-                "data": {
-                  "id": 1,
-                  "attributes": {
-                    "name": "Strapi"
-                    // ...
-                  }
-                }
-              }
-            }
-          }
+        "company": {
+          "id": 1,
+          "documentId": "h780jfiahcn76Fghcbalka3",
+          "name": "Strapi"
+          // ...
         }
       }
     }
@@ -429,37 +436,38 @@ The easiest way to build complex queries with multiple-level population is to us
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        // ...
-        "seoData": {
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      // …
+      "seoData": {
+        "id": 1,
+        "documentId": "xc8yf6klanc8hldancale74o",
+        "metaTitle": "Test Article",
+        // …
+        "sharedImage": {
           "id": 1,
-          "metaTitle": "Test Article",
-          // ...
-          "sharedImage": {
-            "id": 1,
-            "alt": "starSky",
-            "media": {
-              "data": [
-                {
-                  "id": 1,
-                  "attributes": {
-                    "name": "17520.jpg",
-                    "formats": {
-                      // ...
-                    },
-                    // ...
-                  }
-                }
-              ]
-            }
+          "documentId": "hcalkhz7cg6gdbgai8ch12jn",
+          "alt": "starSky",
+          "media": {
+            "data": [
+              {
+                "id": 1,
+                "documentId": "jmljadz8caljk9blk1cnlauq",
+                "name": "17520.jpg",
+                "formats": {
+                  // …
+                },
+                 // …
+              }
+            ]
           }
         }
       }
     }
+    // …
   ],
   "meta": {
-    // ...
+    // …
 }
 ```
 
@@ -522,22 +530,25 @@ In a shared population strategy, apply a unique behavior for all the dynamic zon
   "data": [
     {
       "id": 1,
-      "attributes": {
+      "documentId": "h90lgohlzfpjf3bvan72mzll"
         "testString": "test1",
         // ...
         "testDZ": [
           {
             "id": 3,
+            "documentId": "7afjn7werkkcz7hl2rn24x6q",
             "__component": "test.test-compo",
             "testString": "test1",
             "testNestedCompo": {
               "id": 3,
+              "documentId": "hm2djv4ftwshlxdow91al75f",
               "testNestedString": "testNested1"
                         },
             "otherField": "test"
           },
           {
             "id": 1,
+            "documentId": "4b79w1xuyp6w7k2x5dafpohz",
             "__component": "test.test-compo2",
             "testInt": 1,
             "otherField": "test"
@@ -606,25 +617,26 @@ With the detailed population strategy, define per-component populate queries usi
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "testString": "test1",
-        // ...
-        "testDZ": [
-          {
-            "id": 3,
-            "__component": "test.test-compo",
-            "testString": "test1",
-            "testNestedCompo": {
-              "testNestedString": "testNested1"
-            }
-          },
-          {
-            "id": 1,
-            "__component": "test.test-compo2",
-            "testInt": 1
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "testString": "test1",
+      // ...
+      "testDZ": [
+        {
+          "id": 3,
+          "documentId": "wfk4xarf2va8mwgbd329weeb",
+          "__component": "test.test-compo",
+          "testString": "test1",
+          "testNestedCompo": {
+            "testNestedString": "testNested1"
           }
-        ]
-      }
+        },
+        {
+          "id": 1,
+          "documentId": "ftel41x02w2yl6pylqvltx1k",
+          "__component": "test.test-compo2",
+          "testInt": 1
+        }
+      ]
     }
   ],
   "meta": {
@@ -770,18 +782,14 @@ The population and pagination operators cannot be combined.
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        "headerImage": {
-          "data": {
-            "id": 1,
-            "attributes": {
-              "name": "17520.jpg",
-              "url": "/uploads/17520_73c601c014.jpg"
-            }
-          }
-        }
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      "slug": "test-article",
+      "headerImage": {
+        "id": 1,
+        "documentId": "cf07g1dbusqr8mzmlbqvlegx",
+        "name": "17520.jpg",
+        "url": "/uploads/17520_73c601c014.jpg"
       }
     }
   ],
@@ -849,20 +857,18 @@ await request(`/api/articles?${query}`);
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        // ...
-        "categories": {
-          "data": [
-            {
-              "id": 2,
-              "attributes": {
-                "name": "Cars"
-                // ...
-              }
-            }
-          ]
-        }
+      "documentId": "h90lgohlzfpjf3bvan72mzll",
+      "title": "Test Article",
+      // ...
+      "categories": {
+        "data": [
+          {
+            "id": 2,
+            "documentId": "kjkhff4e269a50b4vi16stst",
+            "name": "Cars"
+            // ...
+          }
+        ]
       }
     }
   ],
