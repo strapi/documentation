@@ -889,8 +889,8 @@ const sidebars = {
             },
             {
               type: 'link',
-              label: 'Publication state',
-              href: '/dev-docs/api/rest/filters-locale-publication#publication-state',
+              label: 'Status',
+              href: '/dev-docs/api/rest/filters-locale-publication#status',
             },
           ],
         },

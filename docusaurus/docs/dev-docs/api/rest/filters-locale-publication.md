@@ -86,18 +86,28 @@ You can use the `$eq` filter operator to find an exact match.
 <Response title="Example response">
 
 ```json
-[
-  {
-    "id": 1,
-    "username": "John",
-    "email": "john@test.com",
-    "provider": "local",
-    "confirmed": true,
-    "blocked": false,
-    "createdAt": "2021-12-03T20:08:17.740Z",
-    "updatedAt": "2021-12-03T20:08:17.740Z"
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "username": "John",
+      "email": "john@test.com",
+      "provider": "local",
+      "confirmed": true,
+      "blocked": false,
+      "createdAt": "2021-12-03T20:08:17.740Z",
+      "updatedAt": "2021-12-03T20:08:17.740Z"
+    }
+  ],
+  "meta": {
+  "pagination": {
+    "page": 1,
+    "pageSize": 25,
+    "pageCount": 1,
+    "total": 1
   }
-]
+}
 ```
 
 </Response>
@@ -144,7 +154,7 @@ You can use the `$in` filter operator with an array of values to find multiple e
 <ApiCall>
 <Request title="Find multiple restaurants with ids 3, 6, 8">
 
-`GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
+`GET /api/restaurants?filters[id][$in][0]=6&filters[id][$in][1]=8`
 
 </Request>
 
@@ -154,26 +164,17 @@ You can use the `$in` filter operator with an array of values to find multiple e
 {
   "data": [
     {
-      "id": 3,
-      "attributes": {
-        "name": "test3",
-        // ...
-      }
-    },
-    {
       "id": 6,
-      "attributes": {
-        "name": "test6",
-        // ...
-      }
+      "documentId": "ethwxjxtvuxl89jq720e38uk",
+      "name": "test6",
+      // ...
     },
     {
       "id": 8,
-      "attributes": {
-        "name": "test8",
-        // ...
-      }
-    }
+      "documentId": "cf07g1dbusqr8mzmlbqvlegx",
+      "name": "test8",
+      // ...
+    },
   ],
   "meta": {
     // ...
@@ -235,19 +236,17 @@ Complex filtering is combining multiple filters using advanced methods such as c
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "name": "test1",
-        "date": "2020-01-01",
-        // ...
-      }
+      "documentId": "rxngxzclq0zdaqtvz67hj38d",
+      "name": "test1",
+      "date": "2020-01-01",
+      // ...
     },
     {
       "id": 2,
-      "attributes": {
-        "name": "test2",
-        "date": "2020-01-02",
-        // ...
-      }
+      "documentId": "kjkhff4e269a50b4vi16stst",
+      "name": "test2",
+      "date": "2020-01-02",
+      // ...
     }
   ],
   "meta": {
@@ -341,19 +340,17 @@ Deep filtering is filtering on a relation's fields.
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "name": "GORDON RAMSAY STEAK",
-        "stars": 5
-        // ...
-      }
+      "documentId": "cvsz61qg33rtyv1qljb1nrtg",
+      "name": "GORDON RAMSAY STEAK",
+      "stars": 5
+      // ...
     },
     {
       "id": 2,
-      "attributes": {
-        "name": "GORDON RAMSAY BURGER",
-        "stars": 5
-        // ...
-      }
+      "documentId": "uh17h7ibw0g8thit6ivi71d8",
+      "name": "GORDON RAMSAY BURGER",
+      "stars": 5
+      // ...
     }
   ],
   "meta": {
@@ -394,7 +391,6 @@ await request(`/api/restaurants?${query}`);
 </SideBySideColumn>
 </SideBySideContainer>
 
-
 ## Locale
 
 :::prerequisites
@@ -408,16 +404,24 @@ The `locale` API parameter can be used to get entries from a specific locale (se
 <SideBySideContainer>
 <SideBySideColumn>
 
-## Publication State
+## Status
 
 :::prerequisites
 The [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature should be enabled.
 :::
 
-Queries can accept a `publicationState` parameter to fetch entries based on their publication state:
+Queries can accept a `status` parameter to fetch documents based on their status:
 
-- `live`: returns only published entries (default)
-- `preview`: returns both draft entries & published entries
+- `published`: returns only the published version of documents (default)
+- `draft`: returns only the draft version of documents
+
+:::tip
+In the response data, the `publishedAt` field is `null` for drafts.
+:::
+
+:::note
+Since published versions are returned by default, passing no status parameter is equivalent to passing `status=published`.
+:::
 
 </SideBySideColumn>
 
@@ -426,35 +430,46 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 <br /><br />
 
 <ApiCall>
-<Request title="Get both published and draft articles">
+<Request title="Get draft versions of restaurants">
 
-`GET /api/articles?publicationState=preview`
+`GET /api/articles?status=draft`
 
 </Request>
 <Response title="Example response">
 
-```json
+```json {21}
 {
   "data": [
+    // …
     {
-      "id": 1,
-      "attributes": {
-        "title": "This a Draft",
-        "publishedAt": null
-        // ...
-      }
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "This is the draft version."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
     },
-    {
-      "id": 2,
-      "attributes": {
-        "title": "This is Live",
-        "publishedAt": "2021-12-03T20:08:17.740Z"
-        // ...
-      }
-    }
+    // …
   ],
   "meta": {
-    // ...
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 4
+    }
   }
 }
 ```
@@ -470,7 +485,7 @@ Queries can accept a `publicationState` parameter to fetch entries based on thei
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  publicationState: 'preview',
+  status: 'draft',
 }, {
   encodeValuesOnly: true, // prettify URL
 });
@@ -482,30 +497,3 @@ await request(`/api/articles?${query}`);
 
 </SideBySideColumn>
 </SideBySideContainer>
-
-:::tip
-To retrieve only draft entries, combine the `preview` publication state and the `publishedAt` fields:
-
-`GET /api/articles?publicationState=preview&filters[publishedAt][$null]=true`
-
-<details>
-<summary><QsForQueryTitle /></summary>
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  publicationState: 'preview',
-  filters: {
-    publishedAt: {
-      $null: true,
-    },
-  },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/articles?${query}`);
-```
-
-</details>
-:::
