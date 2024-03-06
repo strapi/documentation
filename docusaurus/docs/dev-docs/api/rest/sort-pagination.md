@@ -22,7 +22,6 @@ Entries that are returned by queries to the [REST API](/dev-docs/api/rest) can b
 
 :::
 
-
 ## Sorting
 
 Queries can accept a `sort` parameter that allows sorting on one or multiple fields with the following syntaxes:
@@ -51,7 +50,7 @@ You can sort by multiple fields by passing fields in a `sort` array.
 <ApiCall>
 <Request title="Example request: Sort using 2 fields">
 
-`GET /api/articles?sort[0]=title&sort[1]=slug`
+`GET /api/restaurants?sort[0]=Description&sort[1]=Name`
 
 </Request>
 
@@ -61,24 +60,43 @@ You can sort by multiple fields by passing fields in a `sort` array.
 {
   "data": [
     {
-      "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        // ...
-      }
+      "id": 9,
+      "documentId": "hgv1vny5cebq2l3czil1rpb3",
+      "Name": "BMK Paris Bamako",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "A very short description goes here."
+            }
+          ]
+        }
+      ],
+      // …
     },
     {
-      "id": 2,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article-1",
-        // ...
-      }
-    }
+      "id": 8,
+      "documentId": "flzc8qrarj19ee0luix8knxn",
+      "Name": "Restaurant D",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "A very short description goes here."
+            }
+          ]
+        }
+      ],
+      // …
+    },
+   // … 
   ],
   "meta": {
-    // ...
+    // …
   }
 }
 ```
@@ -94,12 +112,12 @@ You can sort by multiple fields by passing fields in a `sort` array.
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  sort: ['title', 'slug'],
+  sort: ['Description', 'Name'],
 }, {
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 </details>
@@ -123,7 +141,7 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 <ApiCall>
 <Request title="Example request: Sort using 2 fields and set the order">
 
-`GET /api/articles?sort[0]=title:asc&sort[1]=slug:desc`
+`GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc`
 
 </Request>
 
@@ -133,24 +151,43 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 {
   "data": [
     {
-      "id": 2,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article-1",
-        // ...
-      }
+      "id": 8,
+      "documentId": "flzc8qrarj19ee0luix8knxn",
+      "Name": "Restaurant D",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "A very short description goes here."
+            }
+          ]
+        }
+      ],
+      // …
     },
     {
-      "id": 1,
-      "attributes": {
-        "title": "Test Article",
-        "slug": "test-article",
-        // ...
-      }
-    }
+      "id": 9,
+      "documentId": "hgv1vny5cebq2l3czil1rpb3",
+      "Name": "BMK Paris Bamako",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "A very short description goes here."
+            }
+          ]
+        }
+      ],
+      // …
+    },
+    // …
   ],
   "meta": {
-    // ...
+    // …
   }
 }
 ```
@@ -167,12 +204,12 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 ```js
 const qs = require('qs');
 const query = qs.stringify({
-  sort: ['title:asc', 'slug:desc'],
+  sort: ['Description:asc', 'Name:desc'],
 }, {
   encodeValuesOnly: true, // prettify URL
 });
 
-await request(`/api/articles?${query}`);
+await request(`/api/restaurants?${query}`);
 ```
 
 </details>
@@ -191,9 +228,6 @@ Queries can accept `pagination` parameters. Results can be paginated:
 Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
 :::
 
-<SideBySideContainer>
-<SideBySideColumn>
-
 ### Pagination by page
 
 To paginate results by page, use the following parameters:
@@ -203,11 +237,6 @@ To paginate results by page, use the following parameters:
 | `pagination[page]`      | Integer | Page number                                                               | 1       |
 | `pagination[pageSize]`  | Integer | Page size                                                                 | 25      |
 | `pagination[withCount]` | Boolean | Adds the total numbers of entries and the number of pages to the response | True    |
-
-</SideBySideColumn>
-
-<SideBySideColumn>
-<br />
 
 <ApiCall>
 <Request title="Example request: Return only 10 entries on page 1">
@@ -257,12 +286,6 @@ await request(`/api/articles?${query}`);
 
 </details>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
-<SideBySideContainer>
-<SideBySideColumn>
-
 ### Pagination by offset
 
 To paginate results by offset, use the following parameters:
@@ -276,11 +299,6 @@ To paginate results by offset, use the following parameters:
 :::tip
 The default and maximum values for `pagination[limit]` can be [configured in the `./config/api.js`](/dev-docs/configurations/api) file with the `api.rest.defaultLimit` and `api.rest.maxLimit` keys.
 :::
-
-</SideBySideColumn>
-
-<SideBySideColumn>
-<br />
 
 <ApiCall>
 <Request title="Example request: Return only the first 10 entries using offset">
@@ -329,6 +347,3 @@ await request(`/api/articles?${query}`);
 ```
 
 </details>
-
-</SideBySideColumn>
-</SideBySideContainer>
