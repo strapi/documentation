@@ -167,7 +167,7 @@ In Strapi 5 the response format has been flattened, and attributes are directly 
 {
   "data": [
     {
-      "id": "ki4nauivfnyofrkpetg58mx4",
+      "documentId": "ki4nauivfnyofrkpetg58mx4",
       "Name": "BMK Paris-Bamako",
       "Description": null,
       "createdAt": "2024-02-27T11:09:52.131Z",
@@ -176,7 +176,7 @@ In Strapi 5 the response format has been flattened, and attributes are directly 
       "locale": "en"
     },
     {
-      "id": "j964065dnjrdr4u89weh79xl",
+      "documentId": "j964065dnjrdr4u89weh79xl",
       "Name": "Pizzeria Arrivederci",
       "Description": [
         {
@@ -243,7 +243,7 @@ In Strapi 5, a specific document is reached by its `documentId` (string), not by
 ```json
 {
   "data": {
-    "id": "j964065dnjrdr4u89weh79xl",
+    "documentId": "j964065dnjrdr4u89weh79xl",
     "Name": "Pizzeria Arrivederci",
     "Description": [
       {
@@ -324,7 +324,7 @@ While creating an entry, you can define its relations and their order (see [Mana
 ```json
 {
   "data": {
-    "id": "bw64dnu97i56nq85106yt4du",
+    "documentId": "bw64dnu97i56nq85106yt4du",
     "Name": "Restaurant D",
     "Description": [
       {
@@ -406,7 +406,7 @@ Send a `null` value to clear fields.
 ```json
 {
   "data": {
-    "id": "ki4nauivfnyofrkpetg58mx4",
+    "documentId": "ki4nauivfnyofrkpetg58mx4",
     "Name": "BMK Paris Bamako",
     "Description": [
       {
