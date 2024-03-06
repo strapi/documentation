@@ -36,7 +36,7 @@ You can rename a release. To do so, while on a release page:
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
 
-## Scheduling a release <FutureBadge /><AlphaBadge />
+## Scheduling a release <FutureBadge /><BetaBadge />
 
 :::callout 🚧 Experimental feature
 Scheduling a release is an experimental feature and currently requires enabling the proper `contentReleasesScheduling` future flag in your configuration file (see [Developer Docs](/dev-docs/configurations/features) for details).
