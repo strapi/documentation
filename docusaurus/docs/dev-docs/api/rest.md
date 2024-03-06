@@ -116,14 +116,18 @@ The following endpoint examples are taken from the [FoodAdvisor](https://github.
 ## Requests
 
 :::strapi Strapi 5 vs. Strapi v4
-In Strapi 5, the response format has been flattened, which means attributes are no longer nested in a `data.attributes` object and are directly accessible at the first level of the `data` object (e.g., a content-type's "title" attribute is accessed with `data.title`).
+Strapi 5's Content API includes 2 major differences with Strapi v4:
+
+- The response format has been flattened, which means attributes are no longer nested in a `data.attributes` object and are directly accessible at the first level of the `data` object (e.g., a content-type's "title" attribute is accessed with `data.title`).
+- Strapi 5 now uses **documents** <DocumentDefinition/> and documents are accessed by their `documentId`.
 :::
 
 Requests return a response as an object which usually includes the following keys:
 
 - `data`: the response data itself, which could be:
   - a single entry, as an object with the following keys:
-    - `documentId` (string)
+    - `id` (integer)
+    - `documentId` (string), which is the unique identifier to use when querying a given document,
     - the attributes (each attribute's type depends on the attribute, see [models attributes](/dev-docs/backend-customization/models#model-attributes) documentation for details)
     - `meta` (object)
   - a list of entries, as an array of objects
@@ -167,31 +171,33 @@ In Strapi 5 the response format has been flattened, and attributes are directly 
 {
   "data": [
     {
-      "documentId": "ki4nauivfnyofrkpetg58mx4",
-      "Name": "BMK Paris-Bamako",
+      "id": 2,
+      "documentId": "hgv1vny5cebq2l3czil1rpb3",
+      "Name": "BMK Paris Bamako",
       "Description": null,
-      "createdAt": "2024-02-27T11:09:52.131Z",
-      "updatedAt": "2024-02-27T11:09:52.131Z",
-      "publishedAt": "2024-02-27T11:09:52.137Z",
+      "createdAt": "2024-03-06T13:42:05.098Z",
+      "updatedAt": "2024-03-06T13:42:05.098Z",
+      "publishedAt": "2024-03-06T13:42:05.103Z",
       "locale": "en"
     },
     {
-      "documentId": "j964065dnjrdr4u89weh79xl",
-      "Name": "Pizzeria Arrivederci",
+      "id": 4,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
       "Description": [
         {
           "type": "paragraph",
           "children": [
             {
               "type": "text",
-              "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
             }
           ]
         }
       ],
-      "createdAt": "2024-02-27T10:19:04.953Z",
-      "updatedAt": "2024-03-05T15:52:05.591Z",
-      "publishedAt": "2024-03-05T15:52:05.600Z",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T13:43:30.172Z",
+      "publishedAt": "2024-03-06T13:43:30.175Z",
       "locale": "en"
     }
   ],
@@ -223,7 +229,7 @@ In Strapi 5 the response format has been flattened, and attributes are directly 
 Returns an entry by `documentId`.
 
 :::strapi Strapi 5 vs. Strapi v4
-In Strapi 5, a specific document is reached by its `documentId` (string), not by an `id` (number).
+In Strapi 5, a specific document is reached by its `documentId`.
 :::
 
 </SideBySideColumn>
@@ -243,15 +249,16 @@ In Strapi 5, a specific document is reached by its `documentId` (string), not by
 ```json
 {
   "data": {
-    "documentId": "j964065dnjrdr4u89weh79xl",
-    "Name": "Pizzeria Arrivederci",
+    "id": 6,
+    "documentId": "znrlzntu9ei5onjvwfaalu2v",
+    "Name": "Biscotte Restaurant",
     "Description": [
       {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "text": "Specialized in pizza, we invite you to rediscover our classics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine bassics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
           }
         ]
       }
@@ -378,7 +385,7 @@ Send a `null` value to clear fields.
 
 <Request title="Example request">
 
-`PUT http://localhost:1337/api/restaurants/ki4nauivfnyofrkpetg58mx4`
+`PUT http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3`
 
 ```json
 { 
@@ -406,7 +413,8 @@ Send a `null` value to clear fields.
 ```json
 {
   "data": {
-    "documentId": "ki4nauivfnyofrkpetg58mx4",
+    "id": 9,
+    "documentId": "hgv1vny5cebq2l3czil1rpb3",
     "Name": "BMK Paris Bamako",
     "Description": [
       {
@@ -419,9 +427,9 @@ Send a `null` value to clear fields.
         ]
       }
     ],
-    "createdAt": "2024-03-05T16:52:54.255Z",
-    "updatedAt": "2024-03-05T16:52:54.255Z",
-    "publishedAt": "2024-03-05T16:52:54.250Z",
+    "createdAt": "2024-03-06T13:42:05.098Z",
+    "updatedAt": "2024-03-06T14:16:56.883Z",
+    "publishedAt": "2024-03-06T14:16:56.895Z",
     "locale": "en"
   },
   "meta": {}
