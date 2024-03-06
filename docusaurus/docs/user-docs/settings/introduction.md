@@ -4,7 +4,7 @@ description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
 ---
 
-The ![Settings icon](/img/assets/icons/settings.svg) _Settings_ section in the main navigation of the admin panel  includes all the required set-up information that determines how an administrator interacts with and manages their Strapi application. 
+The ![Settings icon](/img/assets/icons/settings.svg) _Settings_ section in the main navigation of the admin panel includes all the required set-up information that determines how an administrator interacts with and manages their Strapi application. 
 
 <ThemedImage
 alt="Custom logo settings"
