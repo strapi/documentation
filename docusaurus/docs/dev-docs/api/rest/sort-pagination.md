@@ -12,8 +12,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Sort & Pagination
 
-<NotV5 />
-
 Entries that are returned by queries to the [REST API](/dev-docs/api/rest) can be sorted and paginated.
 
 :::tip

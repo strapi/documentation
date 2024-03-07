@@ -5,12 +5,9 @@ description: Use API parameters to refine your Strapi REST API queries.
 next: ./filtering-locale-publication.md
 ---
 
-import QsIntroShort from '/docs/snippets/qs-intro-short.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API parameters
-
-<NotV5 />
 
 API parameters can be used with the [REST API](/dev-docs/api/rest) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.
 

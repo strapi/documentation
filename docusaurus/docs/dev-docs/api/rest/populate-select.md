@@ -12,8 +12,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Population & Field Selection
 
-<NotV5 />
-
 The [REST API](/dev-docs/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
 
 :::tip
