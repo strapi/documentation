@@ -9,8 +9,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API
 
-<NotV5 />
-
 The REST API allows accessing the [content-types](/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
 :::note
