@@ -542,7 +542,7 @@ const sidebars = {
         // },
         {
           type: 'category',
-          collapsed: true,
+          collapsed: false,
           link: {
             type: 'doc',
             id: 'dev-docs/migration/v4-to-v5/introduction'
