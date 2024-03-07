@@ -49,7 +49,7 @@ sources={{
 
 <Tabs groupId="collection-single">
 
-<TabItem value="collection-type" label="Collection type">
+<TabItem value="collection" label="Collection type">
 
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
@@ -61,7 +61,7 @@ sources={{
 
 </TabItem>
 
-<TabItem value="single-type" label="Single type">
+<TabItem value="single" label="Single type">
 
 | Method   | URL                   | Description                                |
 | -------- | --------------------- | ------------------------------------------ |
@@ -81,7 +81,7 @@ The following endpoint examples are taken from the [FoodAdvisor](https://github.
 
 <Tabs groupId="collection-single">
 
-<TabItem value="collection-type" label="Collection type">
+<TabItem value="collection" label="Collection type">
 
 `Restaurant` **Content type**
 
@@ -95,7 +95,7 @@ The following endpoint examples are taken from the [FoodAdvisor](https://github.
 
 </TabItem>
 
-<TabItem value="single-type" label="Single type">
+<TabItem value="single" label="Single type">
 
 `Homepage` **Content type**
 
