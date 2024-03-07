@@ -535,11 +535,11 @@ const sidebars = {
           },
         },
         'dev-docs/update-version',
-        {
-          type: 'doc',
-          label: 'v5.x migration guides',
-          id: 'dev-docs/migration-guides',
-        },
+        // {
+        //   type: 'doc',
+        //   label: 'v5.x migration guides',
+        //   id: 'dev-docs/migration-guides',
+        // },
         {
           type: 'category',
           collapsed: true,
