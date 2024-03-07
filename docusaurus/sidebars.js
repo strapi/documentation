@@ -885,7 +885,7 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/api/rest/filters-locale-publication#locale',
+              href: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
             },
             {
               type: 'link',
