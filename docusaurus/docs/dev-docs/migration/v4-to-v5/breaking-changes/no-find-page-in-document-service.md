@@ -4,8 +4,9 @@ description: In Strapi 5, the Entity Service API is deprecated, and for the find
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
- - document service
- - entity service
+ - Document Service API
+ - Entity Service API
+ - Content API
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
