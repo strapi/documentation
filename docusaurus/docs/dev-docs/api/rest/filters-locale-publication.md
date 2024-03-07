@@ -395,11 +395,11 @@ await request(`/api/restaurants?${query}`);
 
 :::prerequisites
 
-- The [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) should be installed.
+- The [Internationalization (i18n) feature](/dev-docs/plugins/i18n.md) should be installed.
 - [Localization should be enabled for the content-type](/user-docs/content-type-builder/creating-new-content-type.md#creating-a-new-content-type).
 :::
 
-The `locale` API parameter can be used to get entries from a specific locale (see [i18n plugin documentation](/dev-docs/plugins/i18n.md#getting-localized-entries-with-the-locale-parameter)).
+The `locale` API parameter can be used to work with entries from a specific locale (see [Internationalization documentation](/dev-docs/plugins/i18n.md#usage-with-the-rest-api)).
 
 <SideBySideContainer>
 <SideBySideColumn>
