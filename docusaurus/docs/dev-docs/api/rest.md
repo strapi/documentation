@@ -9,8 +9,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API
 
-<NotV5 />
-
 The REST API allows accessing the [content-types](/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
 :::note
@@ -25,9 +23,31 @@ The REST API by default does not populate any relations, media fields, component
 
 For each Content-Type, the following endpoints are automatically generated:
 
+<details>
+<summary>Plural API ID vs. Singular API ID:</summary>
+In the following tables:
+
+- `:singularApiId` refers to the value of the "API ID (Singular)" field of the content-type,
+- and `:pluralApiId` refers to the value of the "API ID (Plural)" field of the content-type.
+
+These values are defined when creating a content-type in the Content-Type Builder, and can be found while editing a content-type in the admin panel (see [User Guide](/user-docs/content-type-builder/creating-new-content-type)). For instance, by default, for an "Article" content-type:
+
+- `:singularApiId` will be `article`
+- `:pluralApiId` will be `articles`
+
+<ThemedImage
+alt="Screenshot of the Content-Type Builder to retrieve singular and plural API IDs"
+sources={{
+  light: '/img/assets/rest-api/plural-api-id.png',
+  dark: '/img/assets/rest-api/plural-api-id_DARK.png'
+}}
+/>
+
+</details>
+
 <Tabs groupId="collection-single">
 
-<TabItem value="collection-type" label="Collection type">
+<TabItem value="collection" label="Collection type">
 
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
@@ -39,7 +59,7 @@ For each Content-Type, the following endpoints are automatically generated:
 
 </TabItem>
 
-<TabItem value="single-type" label="Single type">
+<TabItem value="single" label="Single type">
 
 | Method   | URL                   | Description                                |
 | -------- | --------------------- | ------------------------------------------ |
@@ -53,11 +73,13 @@ For each Content-Type, the following endpoints are automatically generated:
 
 <details>
 
-<summary>Examples:</summary>
+<summary>Real-world examples of endpoints:</summary>
+
+The following endpoint examples are taken from the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
 
 <Tabs groupId="collection-single">
 
-<TabItem value="collection-type" label="Collection type">
+<TabItem value="collection" label="Collection type">
 
 `Restaurant` **Content type**
 
@@ -65,13 +87,13 @@ For each Content-Type, the following endpoints are automatically generated:
 | ------ | ------------------------ | ------------------------- |
 | GET    | `/api/restaurants`       | Get a list of restaurants |
 | POST   | `/api/restaurants`       | Create a restaurant       |
-| GET    | `/api/restaurants/:id`   | Get a specific restaurant |
-| DELETE | `/api/restaurants/:id`   | Delete a restaurant       |
-| PUT    | `/api/restaurants/:id`   | Update a restaurant       |
+| GET    | `/api/restaurants/:documentId`   | Get a specific restaurant |
+| DELETE | `/api/restaurants/:documentId`   | Delete a restaurant       |
+| PUT    | `/api/restaurants/:documentId`   | Update a restaurant       |
 
 </TabItem>
 
-<TabItem value="single-type" label="Single type">
+<TabItem value="single" label="Single type">
 
 `Homepage` **Content type**
 
@@ -91,12 +113,20 @@ For each Content-Type, the following endpoints are automatically generated:
 
 ## Requests
 
+:::strapi Strapi 5 vs. Strapi v4
+Strapi 5's Content API includes 2 major differences with Strapi v4:
+
+- The response format has been flattened, which means attributes are no longer nested in a `data.attributes` object and are directly accessible at the first level of the `data` object (e.g., a content-type's "title" attribute is accessed with `data.title`).
+- Strapi 5 now uses **documents** <DocumentDefinition/> and documents are accessed by their `documentId`.
+:::
+
 Requests return a response as an object which usually includes the following keys:
 
 - `data`: the response data itself, which could be:
   - a single entry, as an object with the following keys:
-    - `id` (number)
-    - `attributes` (object)
+    - `id` (integer)
+    - `documentId` (string), which is the unique identifier to use when querying a given document,
+    - the attributes (each attribute's type depends on the attribute, see [models attributes](/dev-docs/backend-customization/models#model-attributes) documentation for details)
     - `meta` (object)
   - a list of entries, as an array of objects
   - a custom response
@@ -117,6 +147,10 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 Returns entries matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
 
+:::strapi Strapi 5 vs. Strapi 4
+In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
+:::
+
 </SideBySideColumn>
 
 <SideBySideColumn>
@@ -135,29 +169,45 @@ Returns entries matching the query filters (see [API parameters](/dev-docs/api/r
 {
   "data": [
     {
-      "id": 1,
-      "attributes": {
-        "title": "Restaurant A",
-        "description": "Restaurant A's description"
-      },
-      "meta": {
-        "availableLocales": []
-      }
+      "id": 2,
+      "documentId": "hgv1vny5cebq2l3czil1rpb3",
+      "Name": "BMK Paris Bamako",
+      "Description": null,
+      "createdAt": "2024-03-06T13:42:05.098Z",
+      "updatedAt": "2024-03-06T13:42:05.098Z",
+      "publishedAt": "2024-03-06T13:42:05.103Z",
+      "locale": "en"
     },
     {
-      "id": 2,
-      "attributes": {
-        "title": "Restaurant B",
-        "description": "Restaurant B's description"
-      },
-      "meta": {
-        "availableLocales": []
-      }
-    },
+      "id": 4,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T13:43:30.172Z",
+      "publishedAt": "2024-03-06T13:43:30.175Z",
+      "locale": "en"
+    }
   ],
-  "meta": {}
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
+  }
 }
-
 ```
 
 </Response>
@@ -174,7 +224,11 @@ Returns entries matching the query filters (see [API parameters](/dev-docs/api/r
 
 ### Get an entry
 
-Returns an entry by `id`.
+Returns an entry by `documentId`.
+
+:::strapi Strapi 5 vs. Strapi v4
+In Strapi 5, a specific document is reached by its `documentId`.
+:::
 
 </SideBySideColumn>
 
@@ -184,7 +238,7 @@ Returns an entry by `id`.
 
 <Request title="Example request">
 
-`GET http://localhost:1337/api/restaurants/1`
+`GET http://localhost:1337/api/restaurants/j964065dnjrdr4u89weh79xl`
 
 </Request>
 
@@ -193,14 +247,24 @@ Returns an entry by `id`.
 ```json
 {
   "data": {
-    "id": 1,
-    "attributes": {
-      "title": "Restaurant A",
-      "description": "Restaurant A's description"
-    },
-    "meta": {
-      "availableLocales": []
-    }
+    "id": 6,
+    "documentId": "znrlzntu9ei5onjvwfaalu2v",
+    "Name": "Biscotte Restaurant",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine bassics, such as 4 Formaggi or Calzone, and our original creations such as Do Luigi or Nduja."
+          }
+        ]
+      }
+    ],
+    "createdAt": "2024-02-27T10:19:04.953Z",
+    "updatedAt": "2024-03-05T15:52:05.591Z",
+    "publishedAt": "2024-03-05T15:52:05.600Z",
+    "locale": "en"
   },
   "meta": {}
 }
@@ -240,15 +304,20 @@ While creating an entry, you can define its relations and their order (see [Mana
 `POST http://localhost:1337/api/restaurants`
 
 ```json
-{
+{ 
   "data": {
-    "title": "Hello",
-    "relation_field_a": 2,
-    "relation_field_b": [2, 4],
-    "link": {
-      "id": 1,
-      "type": "abc"
-    }
+    "Name": "Restaurant D",
+    "Description": [ // uses the "Rich text (blocks)" field type
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "A very short description goes here."
+          }
+        ]
+      }
+    ]
   }
 }
 ```
@@ -260,9 +329,23 @@ While creating an entry, you can define its relations and their order (see [Mana
 ```json
 {
   "data": {
-    "id": 1,
-    "attributes": { … },
-    "meta": {}
+    "documentId": "bw64dnu97i56nq85106yt4du",
+    "Name": "Restaurant D",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "A very short description goes here."
+          }
+        ]
+      }
+    ],
+    "createdAt": "2024-03-05T16:44:47.689Z",
+    "updatedAt": "2024-03-05T16:44:47.689Z",
+    "publishedAt": "2024-03-05T16:44:47.687Z",
+    "locale": "en"
   },
   "meta": {}
 }
@@ -284,9 +367,10 @@ While creating an entry, you can define its relations and their order (see [Mana
 
 Partially updates an entry by `id` and returns its value.
 
-Fields that aren't sent in the query are not changed in the database. Send a `null` value to clear fields.
+Send a `null` value to clear fields.
 
 :::note NOTES
+* Even unmodified fields must be included in the request's body.
 * Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n#updating-an-entry).
 * While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
@@ -299,14 +383,23 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 
 <Request title="Example request">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/hgv1vny5cebq2l3czil1rpb3`
 
 ```json
-{
+{ 
   "data": {
-    "title": "Hello",
-    "relation_field_a": 2,
-    "relations_field_b": [2, 4],
+    "Name": "BMK Paris Bamako", // we didn't change this field but still need to include it
+    "Description": [ // uses the "Rich text (blocks)" field type
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "A very short description goes here."
+          }
+        ]
+      }
+    ]
   }
 }
 ```
@@ -318,9 +411,24 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 ```json
 {
   "data": {
-    "id": 1,
-    "attributes": {},
-    "meta": {}
+    "id": 9,
+    "documentId": "hgv1vny5cebq2l3czil1rpb3",
+    "Name": "BMK Paris Bamako",
+    "Description": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "A very short description goes here."
+          }
+        ]
+      }
+    ],
+    "createdAt": "2024-03-06T13:42:05.098Z",
+    "updatedAt": "2024-03-06T14:16:56.883Z",
+    "publishedAt": "2024-03-06T14:16:56.895Z",
+    "locale": "en"
   },
   "meta": {}
 }
@@ -339,7 +447,10 @@ Fields that aren't sent in the query are not changed in the database. Send a `nu
 
 ### Delete an entry
 
-Deletes an entry by `id` and returns its value.
+Deletes a document.
+
+`DELETE` requests only send a 204 HTTP status code on success and do not return any data in the response body.
+
 </SideBySideColumn>
 
 <SideBySideColumn>
@@ -347,24 +458,9 @@ Deletes an entry by `id` and returns its value.
 
 <Request title="Example request">
 
-`DELETE http://localhost:1337/api/restaurants/1`
+`DELETE http://localhost:1337/api/restaurants/bw64dnu97i56nq85106yt4du`
 
 </Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": {
-    "id": 1,
-    "attributes": {},
-    "meta": {}
-  },
-  "meta": {}
-}
-```
-
-</Response>
 
 </ApiCall>
 

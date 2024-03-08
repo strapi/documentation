@@ -169,6 +169,13 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
+          customProps: {
+            updated: true,
+          },
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/rest'
+          },
           items: [
             {
               type: 'doc',
@@ -878,12 +885,12 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/api/rest/filters-locale-publication#locale',
+              href: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
             },
             {
               type: 'link',
-              label: 'Publication state',
-              href: '/dev-docs/api/rest/filters-locale-publication#publication-state',
+              label: 'Status',
+              href: '/dev-docs/api/rest/filters-locale-publication#status',
             },
           ],
         },
@@ -1066,6 +1073,9 @@ const sidebars = {
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
               },
               items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/new-response-format',
+                'dev-docs/migration/v4-to-v5/breaking-changes/use-document-id',
+                'dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed',
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
               ]
