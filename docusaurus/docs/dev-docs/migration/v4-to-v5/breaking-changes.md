@@ -36,6 +36,10 @@ This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v
 - [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 - [Database identifiers can't be longer than 53 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
 
+## Plugins and their configuration
+
+- [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields)
+
 ## Strapi objects and methods
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
