@@ -688,6 +688,14 @@ const sidebars = {
         "cloud/getting-started/intro",
         {
           type: "doc",
+          label: "Cloud fundamentals",
+          id: "cloud/getting-started/cloud-fundamentals",
+          customProps: {
+            new: true,
+          },
+        },
+        {
+          type: "doc",
           id: "cloud/getting-started/deployment",
           customProps: {
             updated: true,

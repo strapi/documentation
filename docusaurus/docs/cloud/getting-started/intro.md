@@ -25,14 +25,14 @@ Strapi Cloud is a hosting platform that allows you to deploy your Strapi applica
 
 Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
 
-<!--:::note
-For enterprise support, please see our [Enterprise Support platform](https://support.strapi.io/support/home). Please note that you will need to have an active enterprise license to place tickets.
-:::-->
-
 ## What you will find here
 
 :::prerequisites
-The typical workflow, which is recommended by the Strapi team, is to create your Strapi application locally (v4.8.2 or later), extend the application with plugins or custom code, version the application's codebase through your git provider (GitHub or GitLab), and then deploy the application with Strapi Cloud.
+The typical workflow, which is recommended by the Strapi team, is:
+1. Create your Strapi application locally (v4.8.2 or later).
+2. Optionally, extend the application with plugins or custom code.
+3. Version the application's codebase through your git provider (GitHub or GitLab).
+4. Deploy the application with Strapi Cloud.
 :::
 
 The Strapi Cloud documentation that you are currently reading is organised in topics in a order that should correspond to your journey with the product. The following cards, on which you can click, will redirect you to the main topics and steps of your Strapi Cloud journey.
