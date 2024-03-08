@@ -6,7 +6,7 @@ tags:
  - breaking changes
 ---
 
-# Strapi v4 to v5 breaking changes
+# Strapi v4 to Strapi 5 breaking changes
 
 :::callout 🚧  Work in progress
 This page is a work-in-progress and the list of breaking changes will grow over time.
@@ -45,6 +45,7 @@ This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
 - [`strapiFactory` should be used in main imports](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports)
 - [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
+- [`Strapi` is a subclass of `Container`](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-container)
 
 ## Content Manager
 
