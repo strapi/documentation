@@ -55,7 +55,7 @@ The content-types use the following files:
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/dev-docs/project-structure)).
 
 :::note
-In [TypeScript](/dev-docs/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command.
+In [TypeScript](/dev-docs/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command: `npm run strapi ts:generate-types`
 :::
 
 ### Components
