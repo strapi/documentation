@@ -621,7 +621,7 @@ async create(ctx) {
       },
     },
     files: file,
-  });Ï
+  });
 
   // ...
 
