@@ -599,7 +599,7 @@ const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
 
 ```
 
-### Upload single file from api controller
+### Upload single file from an API controller
 
 Add a file to Media Library from the backend.
 
