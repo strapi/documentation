@@ -190,7 +190,13 @@ const sidebars = {
             'dev-docs/api/rest/interactive-query-builder',
           ]
         },
-        'dev-docs/api/graphql',
+        {
+          type: 'doc',
+          id: 'dev-docs/api/graphql',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'category',
           label: 'Integrations',

@@ -10,7 +10,25 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 <NotV5 />
 
 :::prerequisites
-To use the GraphQL API, install the [GraphQL](/dev-docs/plugins/graphql.md) plugin.
+To use the GraphQL API, install the [GraphQL](/dev-docs/plugins/graphql.md) plugin:
+
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```sh
+yarn add @strapi/plugin-graphql
+```
+
+</TabItem>
+<TabItem value="npm" label="NPM">
+
+```sh
+npm install @strapi/plugin-graphql
+```
+
+</TabItem>
+
+</Tabs>
 :::
 
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
@@ -23,7 +41,6 @@ Responses are unified with the GraphQL API in that:
 - queries and mutations that return i️nformation for multiple entries mainly use a `XxxEntityResponseCollection` type, which includes `meta` information (with [pagination](#pagination)) in addition to the data itself
 
 Responses can also include an `error` (see [error handling documentation](/dev-docs/error-handling.md)).
-
 
 ```graphql title="Example: Response formats for queries and mutations with an example 'Article' content-type"
 type ArticleEntityResponse {
@@ -57,23 +74,13 @@ We assume that the [Shadow CRUD](/dev-docs/plugins/graphql#shadow-crud) feature 
 
 Single entries can be found by their `id`.
 
-
 ```graphql title="Example query: Find the entry with id 1"
-query {
-  document(id: 1) {
-    data {
-      id
-      attributes {
-        title
-        categories {
-          data {
-            id
-            attributes {
-              name
-            }
-          }
-        }
-      }
+{
+  document(documentId: a1b2c3d4e5d6f7g8h9i0jkl) {
+    title
+    categories {
+      documentId
+      name
     }
   }
 }
@@ -81,31 +88,16 @@ query {
 
 ### Fetch multiple entries
 
-```graphql title="Example query: Find all documents and populate 'categories' relation with the 'name' attribute"
-query {
-  documents {
-    data {
-      id
-      attributes {
-        title
-        categories {
-          data {
-            id
-            attributes {
-                name
-            }
-          }
-        }
-      }
-    }
-    meta {
-      pagination {
-        page
-        pageSize
-        total
-        pageCount
-      }
-    }
+```graphql title="Example query: Find all documents"
+restaurants {
+  documentId
+  title
+  xToManyRelation {
+    documentId
+  }
+  xToOneRelation {
+    documentId
+    field
   }
 }
 ```
@@ -115,16 +107,12 @@ query {
 Dynamic zones are union types in graphql so you need to use fragments to query the fields.
 
 ```graphql
-query {
+{
   restaurants {
-    data {
-      attributes {
-        dynamiczone {
-          __typename
-          ...on ComponentDefaultClosingperiod {
-            label
-          }
-        }
+    dynamiczone {
+      __typename
+      ...on ComponentDefaultClosingperiod {
+        label
       }
     }
   }
@@ -139,13 +127,9 @@ Mutations in GraphQL are used to modify data (e.g. create, update, delete data).
 
 ```graphql
 mutation createArticle {
-  createArticle(data: { title: "Hello"}) {
-    data {
-      id
-      attributes {
-        title
-      }
-    }
+  createArticle({ title: "Hello"}) {
+    documentId
+    title
   }
 }
 ```
@@ -155,29 +139,18 @@ The implementation of the mutations also supports relational attributes. For exa
 ```graphql
 mutation {
   createUser(
-    data: {
-      username: "John"
-      email: "john@doe.com"
-      restaurants: ["1", "2"]
-    }
+    username: "John"
+    email: "john@doe.com"
+    restaurants: ["a1b2c3d4e5d6f7g8h9i0jkl", "m9n8o7p6q5r4s3t2u1v0wxyz"]
   ) {
-    data {
-      id
-      attributes {
-        username
-        email
-        restaurants {
-          data {
-            id 
-            attributes {
-              name
-              description
-              price
-            }
-          }
-        }
-      }
-    }
+  documentId
+  username
+  email
+  restaurants {
+    documentId 
+    name
+    description
+    price
   }
 }
 ```
@@ -186,13 +159,9 @@ mutation {
 
 ```graphql
 mutation updateArticle {
-  updateArticle(id: "1", data: { title: "Hello" }) {
-    data {
-      id
-      attributes {
-        title
-      }
-    }
+  updateArticle(documentId: "a1b2c3d4e5d6f7g8h9i0jkl", { title: "Hello" }) {
+    documentId
+    title
   }
 }
 ```
@@ -202,24 +171,13 @@ You can also update relational attributes by passing an ID or an array of IDs (d
 ```graphql
 mutation {
   updateRestaurant(
-    id: "5b5b27f8164f75c29c728110"
-    data: {
-      chef: "1" // User ID
-    }
+    documentId: "a1b2c3d4e5d6f7g8h9i0jkl"
+    chef: "m9n8o7p6q5r4s3t2u1v0wxyz1" // User ID
   }) {
-    data {
-      id
-      attributes {
-        chef {
-          data {
-            attributes {
-              username
-              email
-            }
-          }
-        }
-      }
-    }
+  id
+  chef {
+    username
+    email
   }
 }
 ```
@@ -228,13 +186,9 @@ mutation {
 
 ```graphql
 mutation deleteArticle {
-  deleteArticle(id: 1) {
-    data {
-      id
-      attributes {
-        title
-      }
-    }
+  deleteArticle(documentId: a1b2c3d4e5d6f7g8h9i0jkl) {
+    documentId
+    title
   }
 }
 ```
@@ -272,13 +226,10 @@ The following operators are available:
 | `or`           | Logical `or`                       |
 | `not`          | Logical `not`                      |
 
-
 ```graphql title="Example query with filters"
 {
   documents(filters: { name: { eq: "test" }, or: [{ price: { gt: 10 }}, { title: { startsWith: "Book" }}] }) {
-    data {
-      id
-    }
+    documentId
   }
 }
 ```
@@ -295,9 +246,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 ```graphql title="Example request: Sorting on title by ascending order"
 {
   documents(sort: "title") {
-    data {
-      id
-    }
+    documentId
   }
 }
 ```
@@ -305,9 +254,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 ```graphql title="Example request: Sorting on title by descending order"
 {
   documents(sort: "title:desc") {
-    data {
-      id
-    }
+    documentId
   }
 }
 ```
@@ -315,9 +262,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 ```graphql title="Example request: Sorting on title by ascending order, then on price by descending order"
 {
   documents(sort: ["title:asc", "price:desc"]) {
-    data {
-      id
-    }
+    documentId
   }
 }
 ```
@@ -340,9 +285,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 ```graphql title="Example query: Pagination by page"
 {
   documents(pagination: { page: 1, pageSize: 10 }) {
-    data {
-      id
-    }
+    documentId
     meta {
       pagination {
         page
@@ -365,9 +308,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 ```graphql title="Example query: Pagination by offset"
 {
   documents(pagination: { start: 20, limit: 30 }) {
-    data {
-      id
-    }
+    documentId
     meta {
       pagination {
         start
