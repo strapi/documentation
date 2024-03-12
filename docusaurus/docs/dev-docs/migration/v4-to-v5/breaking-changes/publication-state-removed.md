@@ -18,7 +18,7 @@ import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # `publicationState` is removed and replaced by `status`
 
-In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and-publishing-content) has been reworked, and the [REST API](/dev-docs/api/rest/filters-locale-publication#status) accepts a new `status` parameter.
+In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and-publishing-content) has been reworked, and the Content API, including [REST API](/dev-docs/api/rest/filters-locale-publication#status), [GraphQL API](/dev-docs/api/graphql), and [Document Service API](/dev-docs/api/document-service) accept a new `status` parameter.
 
 <Intro />
 
