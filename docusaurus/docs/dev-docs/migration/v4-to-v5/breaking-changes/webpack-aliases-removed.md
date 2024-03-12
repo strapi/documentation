@@ -6,6 +6,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - dependencies
+ - webpack
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
@@ -51,6 +52,8 @@ In Strapi v5, webpack aliases are removed ensuring better compatibility and redu
 
 
 ### Manual procedure
+
+To migrate to Strapi 5:
 
 - Identify any configuration files (e.g., webpack configuration) that referenced the now-removed Webpack aliases in Strapi v4.
 - Ensure that any references to Webpack aliases in the code are replaced with appropriate imports or paths.
