@@ -13,7 +13,9 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Webpack Aliases are removed
 
-You can smoothly transition your Strapi project from v4 to v5, ensuring better compatibility and reduced dependency conflicts. <Intro />
+In Strapi v5, webpack aliases are removed ensuring better compatibility and reduced dependency conflicts. 
+
+<Intro />
 
 ## Breaking change description
 
