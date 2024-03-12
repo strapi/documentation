@@ -21,12 +21,17 @@ const sidebars = {
       label: '🚀 Getting Started',
       link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
-        'dev-docs/intro',
+        {
+          type: 'doc',
+          id: 'dev-docs/intro',
+          customProps: {
+            updated: true,
+          },
+        },
         'dev-docs/quick-start',
         'dev-docs/faq',
         'dev-docs/community',
         'dev-docs/usage-information',
-        'dev-docs/glossary',
       ]
     },
     { // Setup & Deployment
@@ -156,11 +161,21 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Introduction & Concepts',
-          id: 'dev-docs/api/content-apis'
+          id: 'dev-docs/api/content-apis',
+          customProps: {
+            updated: true,
+          },
         },
         {
           type: 'category',
           label: 'REST API',
+          customProps: {
+            updated: true,
+          },
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/rest'
+          },
           items: [
             {
               type: 'doc',
@@ -288,8 +303,17 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction',
           id: 'dev-docs/advanced-features',
+          customProps: {
+            new: true,
+          },
         },
-        'dev-docs/cli',
+        {
+          type: 'doc',
+          id: 'dev-docs/cli',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'category',
           label: 'TypeScript',
@@ -347,6 +371,9 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction & Concepts',
           id: 'dev-docs/customization',
+          customProps: {
+            new: true,
+          },
         },
         {
           type: 'category',
@@ -360,16 +387,10 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/backend-customization',
               label: 'Introduction',
-              customProps: {
-                new: true,
-              },
             },
             {
               type: 'doc',
               id: 'dev-docs/backend-customization/requests-responses',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/backend-customization/routes',
             'dev-docs/backend-customization/policies',
@@ -489,6 +510,7 @@ const sidebars = {
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+                'dev-docs/plugins/guides/use-the-plugin-cli',
               ]
             }
           ]
@@ -507,23 +529,35 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Introduction & Concepts',
-          id: 'dev-docs/update-migration'
+          id: 'dev-docs/update-migration',
+          customProps: {
+            new: true,
+          },
         },
-        'dev-docs/upgrade-tool',
-        'dev-docs/update-version',
         {
           type: 'doc',
-          label: 'v5.x migration guides',
-          id: 'dev-docs/migration-guides',
+          id: 'dev-docs/upgrade-tool',
+          customProps: {
+            new: true,
+          },
         },
+        'dev-docs/update-version',
+        // {
+        //   type: 'doc',
+        //   label: 'v5.x migration guides',
+        //   id: 'dev-docs/migration-guides',
+        // },
         {
           type: 'category',
-          collapsed: true,
+          collapsed: false,
           link: {
             type: 'doc',
             id: 'dev-docs/migration/v4-to-v5/introduction'
           },
           label: 'v4 to v5 migration guides',
+          customProps: {
+            new: true,
+          },
           items: [
             {
               type: 'doc',
@@ -855,12 +889,12 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/api/rest/filters-locale-publication#locale',
+              href: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
             },
             {
               type: 'link',
-              label: 'Publication state',
-              href: '/dev-docs/api/rest/filters-locale-publication#publication-state',
+              label: 'Status',
+              href: '/dev-docs/api/rest/filters-locale-publication#status',
             },
           ],
         },
@@ -1043,7 +1077,11 @@ const sidebars = {
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
               },
               items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/new-response-format',
+                'dev-docs/migration/v4-to-v5/breaking-changes/use-document-id',
+                'dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed',
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
+                'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
               ]
             },
@@ -1062,12 +1100,34 @@ const sidebars = {
             },
             {
               type: "category",
+              collapsed: false,
+              label: "Plugins and their configuration",
+              link: {
+                type: 'doc',
+                id: "dev-docs/migration/v4-to-v5/breaking-changes"
+              },
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields'
+              ]
+            },
+            {
+              type: "category",
               label: "Strapi objects and methods",
               collapsed: false,
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
+                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports',
                 'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
+                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container',
               ]
+            },
+            {
+              type: "category",
+              label: "Content Manager",
+              collapsed: false,
+              items: [
+                'dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state',
+              ],
             },
             {
               type: "category",

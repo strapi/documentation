@@ -76,6 +76,15 @@ pre.prism-code {
   }
 }
 
+.api-call {
+  .theme-code-block {
+    [class*="highlighted-line"] {
+      // background-color: var(--custom-code-block-background-color-highlighted);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
 .theme-code-block {
   &[class*="codeBlockContainer"],
   [class*="codeBlockContainer"] {

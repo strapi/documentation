@@ -394,13 +394,22 @@ Try it now! The result should be similar to the example response below 👇.
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "name": "Biscotte Restaurant",
-        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-        "createdAt": "2021-11-18T13:34:53.885Z",
-        "updatedAt": "2021-11-18T13:59:05.035Z",
-        "publishedAt": "2021-11-18T13:59:05.033Z"
-      }
+      "documentId": "hm2djv4ftwshlxdow91al75f",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2021-11-18T13:34:53.885Z",
+      "updatedAt": "2021-11-18T13:59:05.035Z",
+      "publishedAt": "2021-11-18T13:59:05.033Z"
     }
   ],
   "meta": {

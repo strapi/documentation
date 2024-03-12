@@ -4,13 +4,10 @@ description: The administration panel of Strapi can be customized according to y
 toc_max_heading_level: 4
 ---
 
-<!-- not required but if we don't include an import line the 2 JavaScript lines below are interpreted as Markdown text 🤷  -->
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
-
-# Admin panel customization 
 
 <NotV5 />
 
@@ -22,6 +19,10 @@ To start your strapi instance with hot reloading while developing, run the follo
 cd my-app # cd into the root directory of the Strapi application project
 strapi develop
 ```
+
+:::note
+In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `strapi develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
+:::
 
 ## Customization options
 
@@ -235,7 +236,9 @@ export default {
     },
     // Replace the favicon
     head: {
-      favicon: favicon,
+      // Try to change the origin favicon.png file in the
+      // root of strapi project if this config don't work.
+      favicon: favicon, 
     },
     // Add a new locale, other than 'en'
     locales: ["fr", "de"],
@@ -540,65 +543,13 @@ export default {
 
 Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates).
 
-## Bundlers (experimental)
+## Bundlers
 
-2 different bundlers can be used with your Strapi application, [webpack](#webpack) and [vite](#vite).
-
-### Webpack
-
-In v4 this is the defacto bundler that Strapi uses to build the admin panel.
-
-:::prerequisites
-Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
-:::
-
-In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.[js|ts]`:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="./my-app/src/admin/webpack.config.js"
-module.exports = (config, webpack) => {
-  // Note: we provide webpack above so you should not `require` it
-
-  // Perform customizations to webpack config
-  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-
-  // Important: return the modified config
-  return config;
-};
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="./my-app/src/admin/webpack.config.ts"
-export default (config, webpack) => {
-  // Note: we provide webpack above so you should not `require` it
-
-  // Perform customizations to webpack config
-  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
-
-  // Important: return the modified config
-  return config;
-};
-```
-
-</TabItem>
-</Tabs>
+2 different bundlers can be used with your Strapi application, [vite](#vite) (the default one) and [webpack](#webpack).
 
 ### Vite
 
-:::caution
-This is considered experimental. Please report any issues you encounter.
-:::
-
-To use `vite` as a bundler you will need to pass it as an option to the `strapi develop` command:
-
-```bash
-strapi develop --bundler=vite
-```
+In Strapi 5, Vite is the default bundler that Strapi uses to build the admin panel. `vite` will therefore be used by default when you run the `strapi develop` command.
 
 To extend the usage of `vite`, define a function that extends its configuration inside `./my-app/src/admin/vite.config.[js|ts]`:
 
@@ -636,6 +587,54 @@ export default (config) => {
       },
     },
   });
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Webpack
+
+In Strapi 5, the default bundler is Vite. To use `webpack` as a bundler you will need to pass it as an option to the `strapi develop` command:
+
+```bash
+strapi develop --bundler=webpack
+```
+
+:::prerequisites
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
+:::
+
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.[js|ts]`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./my-app/src/admin/webpack.config.js"
+module.exports = (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+  // Important: return the modified config
+  return config;
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./my-app/src/admin/webpack.config.ts"
+export default (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+  // Important: return the modified config
+  return config;
 };
 ```
 

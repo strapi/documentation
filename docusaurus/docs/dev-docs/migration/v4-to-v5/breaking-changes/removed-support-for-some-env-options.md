@@ -11,6 +11,7 @@ tags:
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
+import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
 # Some `env`-only configuration options are handled by the server configuration
 
