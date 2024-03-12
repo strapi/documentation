@@ -3,6 +3,11 @@
 			"source": "/cloud",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/test-integrations",
+      "destination": "https://strapi.io/integrations",
+      "permament": true
+    },
 		{
 			"source": "/cloud/",
 			"destination": "/cloud/intro"
