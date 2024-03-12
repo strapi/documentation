@@ -4,8 +4,8 @@
 			"destination": "/cloud/intro"
 		},
     {
-      "source": "/test-integrations",
-      "destination": "https://strapi.io/integrations",
+      "source": "/dev-docs/integrations/next-js",
+      "destination": "https://strapi.io/integrations/nextjs-cms",
       "permanent": true
     },
 		{
