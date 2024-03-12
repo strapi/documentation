@@ -11,7 +11,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
-# Strict requirements for configuration files
+# Strapi Server log level configuration
 
 You can adjust the server log level in the configuration to control how much detail you see in your server logs. If you want to see more or less verbose logs in your server logs, this feature allows you to customize it according to your needs.
 
@@ -25,7 +25,7 @@ You can adjust the server log level in the configuration to control how much det
 
 **In Strapi v4**
 
-The log level defaults to `silly`, which meant that every log was shown, providing the most detailed information.
+The log level defaults to `silly`, which means that every log is shown, providing the most detailed information.
 
 </SideBySideColumn>
 
