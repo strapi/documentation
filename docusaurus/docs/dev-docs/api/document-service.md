@@ -12,16 +12,16 @@ With the Document Service API, you can also [count](#count) documents and perfor
 
 ## `findOne()`
 
-Find a document matching the id and parameters.
+Find a document matching the documentId and parameters.
 
-Syntax: `findOne(id: ID, parameters: Params) => Document`
+Syntax: `findOne(documentId: ID, parameters: Params) => Document`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to create. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#find-one) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
@@ -31,10 +31,10 @@ Syntax: `findOne(id: ID, parameters: Params) => Document`
 
 <ApiCall>
 
-<Request title="Find document by id">
+<Request title="Find document by documentId">
 
 ```js
-await strapi.documents('api::.articles.articles').findOne(
+await strapi.documents('api::articles.articles').findOne(
   documentId,
 )
 ```
@@ -45,7 +45,7 @@ await strapi.documents('api::.articles.articles').findOne(
 
 ```js
 {
-  id: documentId,
+  documentId: documentId,
   locale: 'en', // locale=en (default locale) is the default 
   status: 'draft', 
   // …
@@ -63,16 +63,16 @@ If no locale and no published status is specified in the parameters, `findOne()`
 
 ```js
 // Returns the published variation of the document for the default locale
-await documents(uid).findOne(id);
+await documents('api:articles.articles').findOne(documentId);
 
 // Returns the same result as the code above
-await documents(uid).findOne(id, { locale: "en", status: "published" })
+await documents('api:articles.articles').findOne(documentId, { locale: "en", status: "published" })
 ```
 
 #### Find a specific locale of a document
 
 ```js
-await documents(uid).findOne(id, { locale: 'fr' });
+await documents('api:articles.articles').findOne(documentId, { locale: 'fr' });
 ```
 
 ## `findFirst()`
@@ -86,10 +86,10 @@ Syntax:  `findFirst(parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#find-first) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findfirst-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findfirst-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
-| [`populate`](/dev-docs/api/document-service/populate)<Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/dev-docs/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi data structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/dev-docs/api/content-apis) and [backend customization](/dev-docs/backend-customization) introductions.</Annotation> | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
@@ -116,7 +116,7 @@ await strapi.documents('api::.articles.articles').findFirst(
 
 ```js
 {
-  id: documentId,
+  documentId: documentId,
   locale: 'en', // locale=en (default locale) is the default 
   status: 'draft', 
   title: "V5 is coming"
@@ -139,7 +139,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#find-many) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findmany-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findmany-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -173,7 +173,7 @@ await strapi.documents('api::.articles.articles').findMany(
 ```js
 [
   {
-    id: documentId,
+    documentId: documentId,
     locale: 'en', // locale=en (default locale) is the default 
     status: 'draft', 
     title: "V5 is coming"
@@ -190,8 +190,8 @@ await strapi.documents('api::.articles.articles').findMany(
 #### Find `fr` version of all documents that have a `fr` locale available
 
 ```js
-await documents(uid).findMany({ locale: 'fr' }); // Defaults to status: published
-await documents(uid).findMany(); // Defaults to default locale  and published status
+await documents('api:articles.articles').findMany({ locale: 'fr' }); // Defaults to status: published
+await documents('api:articles.articles').findMany(); // Defaults to default locale  and published status
 ```
 
 <details>
@@ -220,14 +220,14 @@ Given the following 4 documents that have various locales:
 <!-- #### Find ‘fr’ version of all documents with fallback on default (en)
 
 ```js
-await documents(uid).findMany({ locale: 'fr', fallbackLocales: ['en'] } );
+await documents('api:articles.articles').findMany({ locale: 'fr', fallbackLocales: ['en'] } );
 ``` -->
 
 <!-- TODO: To be completed post v5 GA -->
 <!-- #### Find sibling locales for one or many documents
 
 ```js
-await documents(uid).findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
+await documents('api:articles.articles').findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
 // Option of response forma for this case 
 {
   data: {
@@ -240,7 +240,7 @@ await documents(uid).findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
 }
 
 
-await documents(uid).findMany({ locale: ['en', 'it'] } );
+await documents('api:articles.articles').findMany({ locale: ['en', 'it'] } );
 // Option of response format for this case 
 {
   data: {
@@ -292,7 +292,7 @@ strapi.documents.create(
 
 ```js
 { 
-  id: documentId,
+  documentId: documentId,
   locale: 'es',
   status: 'draft',
   data: { title: "Titulo" }
@@ -306,26 +306,26 @@ strapi.documents.create(
 #### Create document with specific locale
 
 ```js
-await documents(uid).create({locale: 'fr', data: {}})
+await documents('api:articles.articles').create({locale: 'fr', data: {}})
 ```
 
 #### Create document with default locale
 
 ```js
-await documents(uid).create({data: {}}
+await documents('api:articles.articles').create({data: {}}
 ```
 
 #### Create document draft
 
 ```js
-await documents(uid).create({data: {}}
+await documents('api:articles.articles').create({data: {}}
 ```
 
 #### Auto publish document
 
 ```js
 // Creates the document in draft, and publishes it afterwards
-await documents(uid).create({autoPublish: true, data: {}}
+await documents('api:articles.articles').create({autoPublish: true, data: {}}
 ```
 
 ## `update()`
@@ -369,7 +369,7 @@ strapi.documents.update(
 { 
   documents: [
     {
-      id: documentId,
+      documentId: documentId,
       locale: 'es',
       status: 'draft',
       // …
@@ -386,23 +386,23 @@ strapi.documents.update(
 
 ```js
 // Updates the default locale by default
-await documents(uid).update(docId, {locale: ['es', 'en'], data: {name: "updatedName" }}
+await documents('api:articles.articles').update(documentId, {locale: ['es', 'en'], data: {name: "updatedName" }}
 ```
 
 #### Update a given document locale
 
 ```js
-await documents(uid).update(docId, {locale: 'en', data: {name: "updatedName" }}
+await documents('api:articles.articles').update(documentId, {locale: 'en', data: {name: "updatedName" }}
 
 // Updates default locale
-await documents(uid).update(docId, {data: {name: "updatedName" }}
+await documents('api:articles.articles').update(documentId, {data: {name: "updatedName" }}
 ```
 
 #### Auto publish document when updating
 
 ```js
 // Creates the document in draft, and publishes it afterwards
-await documents(uid).update(documentId, {autoPublish: true, data: {}}
+await documents('api:articles.articles').update(documentId, {autoPublish: true, data: {}}
 
 ```
 
@@ -413,7 +413,7 @@ Deletes one document, or a specific locale of it.
 Syntax:
 
 ```js
-delete(id: ID, parameters: Params) => { 
+delete(documentId: ID, parameters: Params) => { 
   versions: Document[], 
   errors: Errors[]  // Errors occurred when deleting documents
 }
@@ -447,8 +447,8 @@ strapi.documents.delete(documentId, { locale: 'es'} )
 ```js
 { 
   versions: [
-    { id: documentId, locale: 'es', status: 'draft' }
-    { id: documentId, locale: 'es', status: 'published' }
+    { documentId: documentId, locale: 'es', status: 'draft' }
+    { documentId: documentId, locale: 'es', status: 'published' }
   ] 
 } 
 ```
@@ -462,21 +462,21 @@ strapi.documents.delete(documentId, { locale: 'es'} )
 ```js
 // This would remove the entire document by default
 // All its locales and versions
-await documents(uid).delete(id, {});
+await documents('api:articles.articles').delete(documentId, {});
 ```
 
 #### Delete a single locale
 
 ```js
 // Removes the english locale (both its draft and published versions)
-await documents(uid).delete(id, { locale: 'en' });
+await documents('api:articles.articles').delete(documentId, { locale: 'en' });
 ```
 
 #### Delete a document with filters
 
 ```js
 // Removes the english locale (both its draft and published versions)
-await documents(uid).delete(id, { filters: { title: 'V5 is coming' } });
+await documents('api:articles.articles').delete(documentId, { filters: { title: 'V5 is coming' } });
 ```
 
 :::caution
@@ -490,8 +490,8 @@ Publishes one or multiple locales of a document.
 Syntax:
 
 ```js
-publish(id: ID, parameters: Params) => { 
-  id: string, 
+publish(documentId: ID, parameters: Params) => { 
+  documentId: string, 
   versions: Document[]  // Published versions
 }
 ```
@@ -528,7 +528,7 @@ strapi.documents.publish(
 
 ```js
 {
-  id: documentId,
+  documentId: documentId,
   documents: [
     {
       id: documentId,
@@ -546,21 +546,21 @@ strapi.documents.publish(
 #### Publish a document locale
 
 ```js
-await documents(uid).publish(id, { locale: 'en' });
+await documents('api:articles.articles').publish(documentId, { locale: 'en' });
 ```
 
 #### Publish all document locales
 
 ```js
 // Publishes all by default
-await documents(uid).publish(id);
+await documents('api:articles.articles').publish(documentId);
 ```
 
 #### Publish document locales with filters
 
 ```js
 // Only publish locales which title is "Ready to publish"
-await documents(uid).publish(id, filters: {
+await documents('api:articles.articles').publish(documentId, filters: {
   title: 'Ready to publish'
 });
 ```
@@ -572,8 +572,8 @@ Unpublishes one or multiple locales of a document.
 Syntax:
 
 ```js
-unpublish(id: ID, parameters: Params) => { 
-  id: string, 
+unpublish(documentId: ID, parameters: Params) => { 
+  documentId: string, 
   versions: Document[]  // Unpublished versions
 }
 ```
@@ -610,10 +610,10 @@ strapi.documents.unpublish(
 
 ```js
 {
-  id: documentId,
+  documentId: documentId,
   documents: [
     { 
-      id: documentId,
+      documentId: documentId,
       locale: 'en',
       // …
     }
@@ -628,21 +628,21 @@ strapi.documents.unpublish(
 #### Unpublish a document locale
 
 ```js
-await documents(uid).publish(id, { locale: 'en' });
+await documents('api:articles.articles').publish(documentId, { locale: 'en' });
 ```
 
 #### Unpublish all document locales
 
 ```js
 // Unpublishes all by default
-await documents(uid).unpublish(id, {});
+await documents('api:articles.articles').unpublish(documentId, {});
 ```
 
 #### Unpublish document locales with filters
 
 ```js
 // Only Unpublish locales which title is "Ready to unpublish"
-await documents(uid).unpublish(id, filters: {
+await documents('api:articles.articles').unpublish(documentId, filters: {
   title: 'Ready to unpublish'
 });
 ```
@@ -654,8 +654,8 @@ Discards draft data and overrides it with the published version.
 Syntax:
 
 ```js
-discardDraft(id: ID, parameters: Params) => { 
-  id: string, 
+discardDraft(documentId: ID, parameters: Params) => { 
+  documentId: string, 
   versions: Document[]  // New drafts
 }
 ```
@@ -692,7 +692,7 @@ strapi.documents.discard(
 
 ```js
 {
-  id: documentId,
+  documentId: documentId,
   documents: [
     { 
       id: documentId,
@@ -710,21 +710,21 @@ strapi.documents.discard(
 #### Unpublish a document locale
 
 ```js
-await documents(uid).publish(id, { locale: 'en' });
+await documents('api:articles.articles').publish(documentId, { locale: 'en' });
 ```
 
 #### Unpublish all document locales
 
 ```js
 // Unpublishes all by default
-await documents(uid).unpublish(id, {});
+await documents('api:articles.articles').unpublish(documentId, {});
 ```
 
 #### Unpublish document locales with filters
 
 ```js
 // Only unpublish locales which title is "Ready to unpublish"
-await documents(uid).unpublish(id, filters: {
+await documents('api:articles.articles').unpublish(documentId, filters: {
   title: 'Ready to unpublish'
 });
 ```
@@ -740,7 +740,7 @@ Syntax: `count(parameters: Params) => number`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `locale` | Locale of the documents to count, defaults to the default locale of the application. | All locales | String |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#count) | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 
 ### Examples
@@ -749,7 +749,7 @@ Syntax: `count(parameters: Params) => number`
 
 <ApiCall>
 
-<Request title="Find document by id">
+<Request title="Find document by documentId">
 
 ```js
 const enArticles = await strapi.documents('api::article.article').count({ locale: 'en' })
@@ -764,14 +764,14 @@ const enArticles = await strapi.documents('api::article.article').count({ locale
 
 ```js
 // Count number of draft documents in English
-strapi.documents(uid).count({ locale: 'en', status: 'draft' })
+strapi.documents('api:articles.articles').count({ locale: 'en', status: 'draft' })
 ```
 
 #### Count published documents in a specific locale
 
 ```js
 // Count number of published documents in French
-strapi.documents(uid).count({ locale: 'fr', status: 'published' })
+strapi.documents('api:articles.articles').count({ locale: 'fr', status: 'published' })
 ```
 
 #### Count documents with filters
@@ -782,5 +782,5 @@ strapi.documents(uid).count({ locale: 'fr', status: 'published' })
  * in English (default locale) 
  * that match a title 
  */
-strapi.documents(uid).count({ filters: { title: "V5 is coming" } })`
+strapi.documents('api:articles.articles').count({ filters: { title: "V5 is coming" } })`
 ```
