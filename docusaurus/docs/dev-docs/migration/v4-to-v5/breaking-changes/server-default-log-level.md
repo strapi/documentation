@@ -46,7 +46,7 @@ The log level defaults to `info`. This means that `silly`and `debug` level logs 
 
 ### Notes
 
-- The log level can be configured either in the `server.js` file as described in the following Manual migration section, or as described in the [middlewares configuration documentation](/dev-docs/configurations/middlewares#logger).
+- The log level can be configured either in the `server.js` file as described in the following Manual migration section, or as described in the [middlewares configuration](/dev-docs/configurations/middlewares#logger) documentation.
 
 
 ### Manual migration
