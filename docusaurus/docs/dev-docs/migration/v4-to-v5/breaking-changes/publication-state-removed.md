@@ -7,6 +7,8 @@ tags:
  - breaking changes
  - Content API
  - Entity Service API
+ - GraphQL API
+ - Document Service API
  - Draft & Publish
 ---
 
