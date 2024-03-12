@@ -29,9 +29,9 @@ Using the **Manage subscriptions** button, you can view and manage your subscrip
 
 1. Click the **Manage subscriptions** button. A login modal will appear.
 
-2. Enter the billing email address associated with your account and click **Continue**. A one-time password will be sent to the email address.
+2. Enter the billing email address associated with your account and click **Continue**.
 
-3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** modal will appear. From here, you can:
+3. The **Manage Subscriptions** modal will appear. From here, you can:
 
    - view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription)
    - view and edit your Account Information: email, password, company name
