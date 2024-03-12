@@ -1064,7 +1064,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
                 {
                   type: 'doc',
-                  label: 'Server log level configuration',
+                  label: 'Server log level is `info`',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
                   customProps: {
                     new: true,
