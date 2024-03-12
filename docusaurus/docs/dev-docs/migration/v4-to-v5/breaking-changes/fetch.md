@@ -10,10 +10,15 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # `strapi.fetch` uses the native `fetch()` API
 
 In Strapi 5, the `strapi.fetch` object is now wrapping node Fetch API instead of node-fetch.
+
+<Intro />
+
+<YesPlugins />
 
 ## Breaking change description
 

@@ -10,12 +10,15 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # `strapiFactory` should be used in imports
 
 In Strapi 5, import `strapiFactory` instead of `strapi`.
 
 <Intro />
+
+<YesPlugins />
 
 ## Breaking change description
 

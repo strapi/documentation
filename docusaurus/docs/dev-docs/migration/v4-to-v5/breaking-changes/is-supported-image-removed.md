@@ -10,12 +10,15 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # The `isSupportedImage` method is removed
 
 The `isSupportedImage` method has been issuing a deprecation warning ever since v4, and is finally being removed in Strapi 5.
 
  <Intro />
+
+<YesPlugins />
 
 ## Breaking change description
 
