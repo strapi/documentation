@@ -26,7 +26,6 @@ For each available collection type multiple entries can be created which is why 
 
 The list view of a collection type displays all entries created for that collection type.
 
-<!-- TODO: update screenshot and don't forget to annotate with (6) and (7) -->
 <ThemedImage
   alt="List view of a collection type in the Content Manager"
   sources={{
@@ -56,7 +55,6 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 Right above the list view table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
-<!-- TODO: update screenshot (3 dots instead of dedicated icons on each line) -->
 <ThemedImage
   alt="Filters in the Content Manager"
   sources={{
@@ -95,7 +93,6 @@ Above the list view table, on the right, a settings button ![Cog icon](/img/asse
 Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/cog.svg) and clicking on the **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
-<!-- TODO: possibly update screenshot (3 dots instead of dedicated icons on each line) -->
 <ThemedImage
   alt="Displayed fields in the settings of a list view in the Content Manager"
   sources={{

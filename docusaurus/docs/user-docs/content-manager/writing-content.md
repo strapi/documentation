@@ -10,7 +10,6 @@ displayed_sidebar: userDocsSidebar
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
 
-<!-- TODO: update screenshot to show the Draft and Published tabs -->
 <ThemedImage
   alt="Edit view to write content"
   sources={{

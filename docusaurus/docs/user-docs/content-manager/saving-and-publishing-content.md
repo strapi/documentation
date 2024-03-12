@@ -25,7 +25,6 @@ Your content can have 3 statuses:
   
 In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.
 
-<!-- TODO: update screenshots -->
 <ThemedImage
   alt="Editing draft version"
   sources={{
@@ -60,7 +59,6 @@ Before publishing a draft, make sure it doesn't have relations with other non-pu
 
 When a published version of an entry is available, it can be found in the Published tab.
 
-<!-- TODO: replace screenshots -->
 <ThemedImage
   alt="Editing published version"
   sources={{
@@ -80,12 +78,18 @@ Published contents can be unpublished. If a draft version also exists, you can d
 To unpublish content:
 
 1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/more.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
-2.  In the Confirmation dialog that opens, you can choose to:
+2. In the Confirmation dialog that opens, you can choose to:
     - **Unpublish and keep last draft**, so that all the content you currently have in the Draft tab is preserved, but the all the content from the Published tab is definitely gone
     - **Unpublish and replace last draft** to discard any existing content in the Draft tab and replace it with the content of all fields from the Published tab
 3. Click **Confirm**. The desired changes will be applied to both the Draft and Published tabs and the new status of the entry will also be reflected below the entry title.
 
-<!-- TODO: add screenshot? -->
+<ThemedImage
+  alt="Unpublish a document"
+  sources={{
+    light: '/img/assets/content-manager/content-manager_unpublish.png',
+    dark: '/img/assets/content-manager/content-manager_unpublish_DARK.png',
+  }}
+/>
 
 <!-- TODO: uncomment once doable again in Strapi 5 -->
 <!-- ### Bulk publishing and unpublishing
