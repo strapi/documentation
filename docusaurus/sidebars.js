@@ -1062,6 +1062,14 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options',
                 'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
+                {
+                  type: 'doc',
+                  label: 'Server log level configuration',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
+                  customProps: {
+                    new: true,
+                  },
+                },
               ]
             },
             {
