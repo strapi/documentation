@@ -46,7 +46,7 @@ In Strapi v5, webpack aliases are removed ensuring better compatibility and redu
 
 ### Notes
 
-- If you encounter issues with third-party plugins, we recommend opening an issue on the respective plugin's repository. Encourage them to add their dependencies to their `package.json` file to resolve compatibility issues.
+- If you encounter issues with third-party plugins, we recommend opening an issue on the respective plugin's repository. Encourage the plugin maintainers to add their dependencies to their `package.json` file to resolve compatibility issues.
 
 - If you encounter issues with local plugins, you can fix them by amending the `resolve` option in your chosen bundler.
 
