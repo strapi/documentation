@@ -6,7 +6,7 @@
     {
       "source": "/test-integrations",
       "destination": "https://strapi.io/integrations",
-      "permament": true
+      "permanent": true
     },
 		{
 			"source": "/cloud/",
