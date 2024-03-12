@@ -29,13 +29,13 @@ In the Content Manager edit view (the view you see when editing an entry), the c
   alt="Editing draft version"
   sources={{
     light: '/img/assets/content-manager/editing_draft_version3.png',
-    dark: '/img/assets/content-manager/editing_draft_version2_DARK.png',
+    dark: '/img/assets/content-manager/editing_draft_version3_DARK.png',
   }}
 />
 
 ### Working with drafts
 
-While editing an entry, you can see 2 tabs:
+While editing a document, you can see 2 tabs:
 
 - The _Draft_ tab is where you can edit your content.
 - The _Published_ tab is a read-only tab where edition of all fields is disabled. The _Published_ tab only exists to show what is the content of fields in the published version.
@@ -49,21 +49,28 @@ Once you made changes to a draft, you have 3 possible options, all available in 
 
 ### Publishing and unpublishing
 
+While editing a document, you can decide to publish a draft or unpublish previously published content.
+
 #### Publishing a draft
 
 To publish a draft, click on the **Publish** button in the _Document_ box on the right of the content editor.
+
+After a draft is published:
+
+- The content of the _Draft_ and _Published_ tabs should be exactly the same (but the _Published_ tab remains read-only).
+- The status, below the document's title, will switch to "Published".
 
 :::caution
 Before publishing a draft, make sure it doesn't have relations with other non-published content, otherwise some of the content may not be available through the API.
 :::
 
-When a published version of an entry is available, it can be found in the Published tab.
+When a document has both a draft and a published version available, the published version can be found in the _Published_ tab. If the document has only a draft version, you can not click on the _Published_ tab.
 
 <ThemedImage
   alt="Editing published version"
   sources={{
     light: '/img/assets/content-manager/editing_published_version3.png',
-    dark: '/img/assets/content-manager/editing_published_version2_DARK.png',
+    dark: '/img/assets/content-manager/editing_published_version3_DARK.png',
   }}
 />
 
@@ -73,15 +80,17 @@ To schedule publication, i.e., convert a draft to a published entry at a given d
 
 #### Unpublishing content
 
-Published contents can be unpublished. If a draft version also exists, you can decide what to do with both the draft and published content.
+Previously published content can be unpublished.
 
-To unpublish content:
+To unpublish content,  from the _Draft_ tab, click on ![More icon](/img/assets/icons/more.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
+
+If the draft version of the document contains content different from the published version, you can decide what to do with both content when unpublishing:
 
 1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/more.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
 2. In the Confirmation dialog that opens, you can choose to:
-    - **Unpublish and keep last draft**, so that all the content you currently have in the Draft tab is preserved, but the all the content from the Published tab is definitely gone
-    - **Unpublish and replace last draft** to discard any existing content in the Draft tab and replace it with the content of all fields from the Published tab
-3. Click **Confirm**. The desired changes will be applied to both the Draft and Published tabs and the new status of the entry will also be reflected below the entry title.
+    - **Unpublish and keep last draft**, so that all the content you currently have in the _Draft_ tab is preserved, but the all the content from the _Published_ tab is definitely gone
+    - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab
+3. Click **Confirm**. The desired changes will be applied to both the _Draft_ and _Published_ tabs and the new status of the entry will also be reflected below the entry title.
 
 <ThemedImage
   alt="Unpublish a document"
