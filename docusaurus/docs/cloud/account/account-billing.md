@@ -25,19 +25,13 @@ The Payment method section can only be accessible once the mandatory fields of t
 
 ## Managing subscriptions
 
-Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
+Using the **Manage subscriptions** button in the *Billing* tab, you can:
 
-1. Click the **Manage subscriptions** button. A login modal will appear.
-
-2. Enter the billing email address associated with your account and click **Continue**.
-
-3. The **Manage Subscriptions** modal will appear. From here, you can:
-
-   - view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription)
-   - view and edit your Account Information: email, password, company name
-   - view and edit your Billing & Shipping Addresses
-   - view and edit your Payment Methods and add new ones
-   - access your Billing History and download your invoices
+- view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription),
+- view and edit your Account Information: email, password and company name,
+- view and edit your Billing & Shipping Addresses,
+- view and edit your Payment Methods and add new ones,
+- access your Billing History and download your invoices.
 
 <ThemedImage
   alt="Subscriptions management modal"
