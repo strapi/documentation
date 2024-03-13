@@ -179,6 +179,8 @@ const sidebars = {
           id: "dev-docs/api/content-api",
         },
         {
+          type: "category",
+          label: "REST API",
           items: [
             {
               type: "doc",
