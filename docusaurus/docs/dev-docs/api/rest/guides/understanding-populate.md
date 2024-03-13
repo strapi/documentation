@@ -27,6 +27,10 @@ The present guide will cover detailed explanations for the following use cases:
 - populate [components](#populate-components),
 - populate [dynamic zones](#populate-dynamic-zones).
 
+:::info 
+Populating several levels deep is often called "deep populate".
+:::
+
 :::strapi Advanced use case: Populating creator fields
 In addition to the various ways of using the `populate` parameter in your queries, you can also build a custom controller as a workaround to populate creator fields (e.g., `createdBy` and `updatedBy`). This is explained in the dedicated [How to populate creator fields](/dev-docs/api/rest/guides/populate-creator-fields) guide.
 :::
@@ -140,7 +144,7 @@ Scroll down to see that the response size is much bigger than without populate. 
 * and even some information about the articles translated in other languages, as shown by the `localizations` object.
 
 :::tip
-To populate deeply nested comments, see the [populate components](#populate-components) section.
+To populate deeply nested components, see the [populate components](#populate-components) section.
 :::
 
 <br />
