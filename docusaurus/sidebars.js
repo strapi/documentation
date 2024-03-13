@@ -179,8 +179,6 @@ const sidebars = {
           id: "dev-docs/api/content-api",
         },
         {
-          type: "category",
-          label: "REST API",
           items: [
             {
               type: "doc",
@@ -188,11 +186,25 @@ const sidebars = {
               label: "Introduction",
             },
             "dev-docs/api/rest/parameters",
-            "dev-docs/api/rest/populate-select",
+            {
+              type: 'doc',
+              id: "dev-docs/api/rest/populate-select",
+              customProps: {
+                updated: true,
+              },
+            },
             "dev-docs/api/rest/filters-locale-publication",
             "dev-docs/api/rest/sort-pagination",
             "dev-docs/api/rest/relations",
             "dev-docs/api/rest/interactive-query-builder",
+            {
+              type: "doc",
+              id: "dev-docs/api/rest/guides/intro",
+              label: "Guides",
+              customProps: {
+                new: true,
+              }
+            }
           ],
         },
         "dev-docs/api/graphql",
@@ -847,7 +859,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "REST API",
+      label: "REST API reference",
       items: [
         {
           type: "category",
@@ -909,24 +921,15 @@ const sidebars = {
             },
             {
               type: "link",
-              label: "Populate Relations & Media Fields",
-              href: "/dev-docs/api/rest/populate-select#relations--media-fields",
-            },
-            {
-              type: "link",
-              label: "Populate Components & Dynamic Zones",
-              href: "/dev-docs/api/rest/populate-select#components--dynamic-zones",
-            },
-            {
-              type: "link",
-              label: "Populating createdBy and updatedBy",
-              href: "/dev-docs/api/rest/populate-select#populating-createdby-and-updatedby",
+              label: "Populate",
+              href: "/dev-docs/api/rest/populate-select#population",
             },
             {
               type: "link",
               label: "Combining populate with other operators",
               href: "/dev-docs/api/rest/populate-select#combining-population-with-other-operators",
             },
+
           ],
         },
         {
@@ -1018,6 +1021,30 @@ const sidebars = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Rest API guides",
+      collapsed: false,
+      customProps: {
+        new: true,
+      },
+      link: {
+        type: 'doc',
+        id: 'dev-docs/api/rest/guides/intro',
+      },
+      items: [
+        {
+          type: "doc",
+          label: "Understanding populate",
+          id: 'dev-docs/api/rest/guides/understanding-populate',
+        },
+        {
+          type: "doc",
+          label: "How to populate creator fields",
+          id: 'dev-docs/api/rest/guides/populate-creator-fields',
+        },
+      ],
+    }
   ],
 
   devDocsConfigSidebar: [
