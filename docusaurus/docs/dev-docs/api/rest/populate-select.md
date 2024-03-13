@@ -97,13 +97,15 @@ await request(`/api/users?${query}`);
 
 The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types.
 
+The `populate` parameter can be used alone or [in combination with with multiple operators](#combining-population-with-other-operators) to have much more control over the population.
+
 :::caution
 The `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated (see [User Guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role) for additional information on how to enable `find` permissions for content-types).
 :::
 
-It is also possible to [combine population with multiple operators](#combining-population-with-other-operators) to have much more control over the population.
-
+:::note
 It's currently not possible to return just an array of ids with a request.
+:::
 
 :::strapi Populating guides
 

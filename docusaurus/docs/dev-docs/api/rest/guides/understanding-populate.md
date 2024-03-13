@@ -2,7 +2,7 @@
 title: Understanding populate
 description: Learn what populating means and how you can use the populate parameter in your REST API queries to add additional fields to your responses.
 displayed_sidebar: restApiSidebar
-toc_max_heading_level: 4
+toc_max_heading_level: 6
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
@@ -43,10 +43,7 @@ The following diagram compares data returned by the [FoodAdvisor](https://github
 
 Let's compare and explain what happens with and without this query parameter:
 
-<SideBySideContainer>
-<SideBySideColumn>
-
-**Without `populate`**
+### Example: Without `populate`
 
 Without the populate parameter, a `GET` request to `/api/articles` only returns the default attributes and does not return any media fields, relations, components or dynamic zones.
 
@@ -130,11 +127,7 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
-**With `populate=*`**
+### Example: With `populate=*`
 
 With the `populate=*` parameter, a `GET` request to `/api/articles` also returns all media fields, first-level relations, components and dynamic zones.
 
@@ -310,9 +303,6 @@ To populate deeply nested comments, see the [populate components](#populate-comp
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
 ## Populate specific relations and fields
 
 You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and relations to populate.
@@ -388,10 +378,7 @@ Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/
 
 Let's compare and explain what happens with and without populating relations 1 level deep when sending queries to the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
 
-<SideBySideContainer>
-<SideBySideColumn>
-
-**Without `populate`**
+#### Example: Without `populate`
 
 Without the populate parameter, a `GET` request to `/api/articles` only returns the default attributes.
 
@@ -477,11 +464,7 @@ Notice that the response does not include any media fields, relations, component
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
-**With `populate[0]=category`**
+#### Example: With `populate[0]=category`
 
 With `populate[0]=category` added to the request, we explicitly ask to include some information about `category`, which is a relation field that links the `articles` and the `categories` content-types.
 
@@ -608,9 +591,6 @@ Notice that the response now includes additional data with the `category` field 
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
 ### Populate several levels deep for specific relations
 
 You can also populate specific relations several levels deep. For instance, when you populate a relation which itself populates another relation, you are populating 2 levels deep. Populating 2 levels deep is the example covered in this guide.
@@ -647,10 +627,7 @@ With a single `GET` request to `/api/articles` and the appropriate populate para
 
 Let's compare and explain the responses returned with `populate[0]=category` (1 level deep) and `populate[category][populate][0]=restaurants` (2 levels deep) when sending queries to FoodAdvisor:
 
-<SideBySideContainer>
-<SideBySideColumn>
-
-**1 level deep**
+#### Example: With 1-level deep population
 
 When we only populate 1 level deep, asking for the categories associated to articles, we can get the following example response (highlighted lines show the `category` relations field):
 
@@ -773,11 +750,7 @@ When we only populate 1 level deep, asking for the categories associated to arti
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
-**2 levels deep**
+#### Example: With 2-level deep population
 
 When we populate 2 levels deep, asking for the categories associated to articles, but also for restaurants associated to these categories, we can get the following example response.
 
@@ -881,9 +854,6 @@ Notice that we now have the `restaurants` relation field included with the respo
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
 ### Populate components
 
 Components and dynamic zones are not included in responses by default and you need to explicitly populate each dynamic zones, components, and their nested components.
@@ -919,10 +889,7 @@ By default, none of these fields or components are included in the response of a
 
 Let's compare and explain the responses returned with `populate[0]=seo` (1st level component) and `populate[0]=seo&populate[1]=seo.metaSocial` (2nd level component nested within the 1st level component):
 
-<SideBySideContainer>
-<SideBySideColumn>
-
-**1st level component**
+#### Example: Only 1st level component
 
 When we only populate the `seo` component, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `seo` component.
 
@@ -989,11 +956,7 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
-**1st level and 2nd level component**
+#### Example: 1st level and 2nd level component
 
 When we populate 2 levels deep, asking both for the `seo` component and the `metaSocial` component nested inside `seo`, we can get the following example response.
 
@@ -1068,9 +1031,6 @@ Notice that we now have the `metaSocial` component-related data included with th
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
 ### Populate dynamic zones
 
 Dynamic zones are highly dynamic content structures by essence.
@@ -1111,10 +1071,7 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 Let's compare and explain the responses returned with `populate[0]=blocks` (only populating the dynamic zone) and `populate[blocks][populate]=*` (populating the dynamic zone and applying a shared population strategy to all its components):
 
-<SideBySideContainer>
-<SideBySideColumn>
-
-**Populating only the dynamic zone**
+##### Example: Populating only the dynamic zone
 
 When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we can get the following example response. Highlighted lines show the `blocks` dynamic zone and the 2 components it includes:
 
@@ -1183,11 +1140,7 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
-**Populating the dynamic zone and applying a shared strategy to its components**
+##### Example: Populating the dynamic zone and applying a shared strategy to its components
 
 When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations, as shown in the highlighted lines of the following example response:
 
@@ -1302,10 +1255,6 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-</SideBySideContainer>
-
 #### Detailed population strategy
 
 With the detailed population strategy, you can define per-component populate queries using the `on` property.
@@ -1348,10 +1297,7 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 Let's compare and explain the responses returned with some examples of a shared population strategy and a detailed population strategy:
 
-<SideBySideContainer>
-<SideBySideColumn>
-
-**Shared population strategy**
+##### Example: Shared population strategy
 
 When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations.
 
@@ -1512,11 +1458,7 @@ Highlighted lines show that the response include the `articles` first-level rela
 </Response>
 </ApiCall>
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
-**Detailed population strategy**
+##### Example: Detailed population strategy
 
 When we populate the `blocks` dynamic zone and apply a detailed population strategy, we explicitly define which data to populate.
 
@@ -1647,7 +1589,3 @@ In the following example response, highlighted lines show differences with the s
 </Response>
 
 </ApiCall>
-
-</SideBySideColumn>
-
-</SideBySideContainer>
