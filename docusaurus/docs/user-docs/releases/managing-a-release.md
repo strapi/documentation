@@ -36,6 +36,33 @@ You can rename a release. To do so, while on a release page:
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
 
+## Scheduling a release <FutureBadge /><BetaBadge />
+
+:::callout 🚧 Experimental feature
+Scheduling a release is an experimental feature and currently requires enabling the proper `contentReleasesScheduling` future flag in your configuration file (see [Developer Docs](/dev-docs/configurations/features) for details).
+:::
+
+Releases can be [published manually](#publishing-a-release) or scheduled to be automatically published at a given date and time, with the timezone of your choice.
+
+You can schedule a release:
+- when [creating the release](/user-docs/releases/creating-a-release),
+- or once the release is already created, by editing it.
+
+To schedule an existing release, while on a release page:
+1. Click on the ![More icon](/img/assets/icons/more.svg) button in the top right corner of the admin panel.
+2. Select ![Edit icon](/img/assets/icons/edit.svg) **Edit**.
+3. In the modal, check the **Schedule release** checkbox.
+4. Select a date, time, and timezone for the release to be published.
+5. Click **Save**.
+
+<ThemedImage
+  alt="Release scheduling"
+  sources={{
+    light: '/img/assets/releases/release-scheduling.png',
+    dark: '/img/assets/releases/release-scheduling_DARK.png',
+  }}
+/>
+
 ## Choosing how entries are grouped
 
 A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
@@ -43,6 +70,10 @@ A release page can display entries either grouped by locale, content-type, or ac
 ## Publishing or unpublishing entries
 
 A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
+
+:::caution
+Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
+:::
 
 ## Removing entries from a release
 
