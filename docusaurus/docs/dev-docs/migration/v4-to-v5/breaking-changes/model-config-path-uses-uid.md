@@ -5,7 +5,7 @@ sidebar_label: Model config path uses uid
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
- - database
+ - configuration
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
