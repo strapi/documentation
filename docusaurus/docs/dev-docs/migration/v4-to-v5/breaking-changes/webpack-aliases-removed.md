@@ -26,7 +26,7 @@ In Strapi v5, webpack aliases are removed ensuring better compatibility and redu
 
 **In Strapi v4**
 
-- We maintained a specific list of dependencies that were aliased in webpack configuration. This ensured that plugins consistently used our versions of certain libraries like the design-system. <br/> <br/> However, this approach led to many bugs.
+- We maintained a specific list of dependencies that were aliased in webpack configuration. This ensured that plugins consistently used our versions of certain libraries like the design-system.
 
 </SideBySideColumn>
 
