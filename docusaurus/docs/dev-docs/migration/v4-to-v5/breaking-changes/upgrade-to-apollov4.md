@@ -16,7 +16,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Apollo Server v3 upgraded to Apollo Server v4
 
-Strapi 5 has strict requirements on the configuration filenames allowed to be loaded.
+Strapi 5 has some changes for user code that relied on specific versions.
 <Intro />
 
 ## Breaking change description
