@@ -1079,6 +1079,14 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
                 'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
+                {
+                  type: 'doc',
+                  label: 'Upgrade to Apollo Server v4',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
+                  customProps: {
+                    new: true,
+                  },
+                },
               ]
             },
             {
