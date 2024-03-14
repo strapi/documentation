@@ -564,7 +564,14 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/migration/v4-to-v5/introduction'
             },
-            'dev-docs/migration/v4-to-v5/breaking-changes',
+            {
+              type: 'doc',
+              label: 'Breaking Changes',
+              id: 'dev-docs/migration/v4-to-v5/breaking-changes',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/migration/v4-to-v5/migration-guides',
           ]
         }
@@ -1062,6 +1069,22 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options',
                 'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
+                {
+                  type: 'doc',
+                  label: 'Server log level is `info`',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
+                  customProps: {
+                    new: true,
+                  },
+                },
+                {
+                  type: 'doc',
+                  label: 'Model config path uses uid',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
+                  customProps: {
+                    new: true,
+                  },
+                }
               ]
             },
             {
@@ -1132,6 +1155,14 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/vite',
                 'dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6',
+                {
+                  type: 'doc',
+                  label: 'Webpack Aliases Removed',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed',
+                  customProps: {
+                    new: true,
+                  },
+                },
               ]
             },
             {
