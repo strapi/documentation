@@ -2,6 +2,7 @@
 title: Documents
 description: Learn what a Document is in Strapi v5
 displayed_sidebar: devDocsSidebar
+pagination_prev: dev-docs/api/content-api
 ---
 
 # Documents
@@ -31,7 +32,7 @@ Depending on which features are enabled for the content-type, such as [Internati
 
 </TabItem>
 
-<TabItem value="i18n-and-dandp" label="i18n + Draft & Publish enabled">
+<TabItem value="i18n-and-dandp" label="i18n + Draft & Publish enabled" default>
 
 ![](/img/assets/apis/document-i18n-d_and_p.png)
 
@@ -64,8 +65,14 @@ Depending on which features are enabled for the content-type, such as [Internati
 :::strapi API to query documents data
 To interact with documents or the data they represent:
 
-  - From the backend (for instance, from controllers, services, and plugins), use the [Document Service API](/dev-docs/api/document-service) to create, read, update, and delete the variations of a document.
-  - From the frontend, query your data using the [REST API](/dev-docs/api/rest) or the [GraphQL API](/dev-docs/api/graphql).
+  - From the back-end server (for instance, from controllers, services, and the back-end part of plugins), use the [Document Service API](/dev-docs/api/document-service).
+  - From the front-end part of your application, query your data using the [REST API](/dev-docs/api/rest) or the [GraphQL API](/dev-docs/api/graphql).
 
 For additional information about the APIs, please refer to the [Content API introduction](/dev-docs/api/content-api).
+:::
+
+:::info Default version in returned results
+An important difference between the back-end and front-end APIs is about the default version returned when no parameter is passed:
+- The Document Service API returns the draft version by default,
+- while REST and GraphQL APIs return the published version by default.
 :::

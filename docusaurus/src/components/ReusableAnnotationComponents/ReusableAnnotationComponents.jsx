@@ -39,7 +39,7 @@ export function DocumentDefinition() {
   return (
     <Annotation>
       <p>
-        A Document in Strapi v5 contains all the variations (e.g., locales, draft and published versions) of a unique piece of content.
+        A Document in Strapi 5 contains all the variations (e.g., locales, draft and published versions) of a unique piece of content.
       </p>
       <p>
         More details can be found in the <a href="/dev-docs/api/document">Documents</a> introduction.
