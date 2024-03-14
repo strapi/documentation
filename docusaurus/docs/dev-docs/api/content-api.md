@@ -1,5 +1,5 @@
 ---
-title: Strapi Content API
+title: Content API
 # description: todo
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/setup-deployment
