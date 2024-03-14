@@ -1070,6 +1070,14 @@ const sidebars = {
                     new: true,
                   },
                 },
+                {
+                  type: 'doc',
+                  label: 'Model config path uses uid',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
+                  customProps: {
+                    new: true,
+                  },
+                }
               ]
             },
             {

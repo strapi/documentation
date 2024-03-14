@@ -19,6 +19,7 @@ This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v
 * [Some `env`-only configuration options are handled by the server configuration](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
 * [Configuration filenames should meet strict requirements](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 * [Server log level is `info`](/dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level)
+* [Model config path uses uid instead of dot notation](/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid)
 
 ## Content API
 
