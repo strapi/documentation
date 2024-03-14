@@ -1064,6 +1064,14 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
                 {
                   type: 'doc',
+                  label: 'Server log level is `info`',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
+                  customProps: {
+                    new: true,
+                  },
+                },
+                {
+                  type: 'doc',
                   label: 'Model config path uses uid',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
                   customProps: {
