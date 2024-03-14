@@ -40,7 +40,7 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 <CustomDocCard emoji="⚙️" title="Setup & Deployment" description="Install, configure, and deploy Strapi." link="/dev-docs/setup-deployment" />
 
-<CustomDocCard emoji="📦" title="APIs" description="Query your content with REST, GraphQL, and Strapi's lower-level APIs." link="/dev-docs/api/content-apis" />
+<CustomDocCard emoji="📦" title="APIs" description="Query your content with REST, GraphQL, and Strapi's lower-level APIs." link="/dev-docs/api/content-api" />
 
 <CustomDocCard emoji="🔧" title="Advanced features" description="Use built-in Strapi features for advanced use cases." link="/dev-docs/advanced-features" />
 

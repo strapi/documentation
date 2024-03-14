@@ -156,12 +156,12 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '📦 Content API',
-      link: {type: 'doc', id: 'dev-docs/api/content-apis'},
+      link: {type: 'doc', id: 'dev-docs/api/content-api'},
       items: [
         {
           type: 'doc',
           label: 'Introduction & Concepts',
-          id: 'dev-docs/api/content-apis',
+          id: 'dev-docs/api/content-api',
           customProps: {
             updated: true,
           },
