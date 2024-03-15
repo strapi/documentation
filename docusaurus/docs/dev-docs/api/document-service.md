@@ -471,6 +471,8 @@ await strapi.documents('api::restaurant.restaurant').delete(
 
 </Request>
 
+The response returns the number of deleted entries (e.g., `{ deletedEntries: 3 }`).
+
 <!-- ! not working -->
 <!-- #### Delete a document with filters
 
