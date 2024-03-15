@@ -12,7 +12,7 @@ By default the [Document Service API](/dev-docs/api/document-service) returns th
 Passing `{ status: 'draft' }` to a Document Service API query returns the same results as not passing any `status` parameter.
 :::
 
-## Get the published version with `findOne()` queries {#find-one}
+## Get the published version with `findOne()` {#find-one}
 
 `findOne()` queries return the draft version of a document by default.
 
@@ -47,7 +47,7 @@ await strapi.documents('api::restaurant.restaurant').findOne(
 
 </ApiCall>
 
-## Get the published version with `findFirst()` queries {#find-first}
+## Get the published version with `findFirst()` {#find-first}
 
 `findFirst()` queries return the draft version of a document by default.
 
@@ -78,7 +78,7 @@ const document = await strapi.documents("api::article.article").findFirst({
 </Response>
 </ApiCall>
 
-## Get the published version with `findMany()` queries {#find-many}
+## Get the published version with `findMany()` {#find-many}
 
 `findMany()` queries return the draft version of documents by default.
 
@@ -112,7 +112,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-## `count()` only draft or published versions {#count}
+## `count()` only published versions {#count}
 
 To take into account only draft or published versions of documents while [counting documents](/dev-docs/api/document-service#count) with the Document Service API, pass the corresponding `status` parameter:
 
