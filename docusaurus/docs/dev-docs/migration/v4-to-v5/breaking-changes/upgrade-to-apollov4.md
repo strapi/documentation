@@ -13,11 +13,15 @@ tags:
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # Apollo Server v3 upgraded to Apollo Server v4
 
 Strapi 5 has some changes for user code that relied on specific versions.
+
 <Intro />
+
+<YesPlugins />
 
 ## Breaking change description
 
@@ -41,30 +45,21 @@ Apollo Server v4 for the GraphQL server and graphql ^16 for the GraphQL module.
 
 </SideBySideContainer>
 
-:::callout
-Strapi automatically sets `status400ForVariableCoercionErrors: true` in the Apollo Server configuration due to a breaking change introduced by Apollo in v4. This behavior will be the default again in Apollo v5.
-:::
-
-:::callout
-We upgraded the package graphql from ^15 to ^16, and only one version can be included in any project. Therefore, user code or plugins relying on graphql:15 need to use the same version range as Strapi.
-:::
-
 ## Migration
 
 <MigrationIntro />
 
 ### Notes
-
-- The migration process for user code and configuration is too complicated for Strapi to cover completely. 
-- For detailed instrustion consult the Apollo v4 migration documentation.
-- To the following Manual migration section contains some key changes relevant to Strapi users.
+- Strapi automatically sets `status400ForVariableCoercionErrors: true` in the Apollo Server configuration due to a breaking change introduced by Apollo in v4. This behavior will be the default again in Apollo v5.
+- We upgraded the package graphql from ^15 to ^16, and only one version can be included in any project. Therefore, user code or plugins relying on graphql:15 need to use the same version range as Strapi.
+- For guidance on upgrading to Apollo Server v4, please refer to the following Manual migration section. For more detailed information, consult the Apollo v4 migration documentation.
 
 ### Manual migration
 
 To migrate to Strapi 5:
 
-- Multipart messages (file uploads) now require the `x-apollo-operation-name` header to be set or the new protection disabled by adding `csrfPrevention: false` to the GraphQL plugin configuration.
-- `ApolloError` has been replaced with `GraphQLError`.
-- Some root level config options like `formatResponse` have been removed and replaced with plugin hooks in the plugins array.
-- The modules config option is removed and split into `typeDefs` and `resolvers`.
-- `debug` is replaced with `includeStacktraceInErrorResponses`.
+- Set the `x-apollo-operation-name` header or disable the new protection by adding `csrfPrevention: false` to the GraphQL plugin configuration for multipart messages (file uploads).
+- Replace `ApolloError` with `GraphQLError`.
+- Remove root level configuration options like `formatResponse` and replace them with plugin hooks in the plugins array.
+- Remove the modules configuration option and split it into `typeDefs` and `resolvers`.
+- Replace `debug` with `includeStacktraceInErrorResponses`.
