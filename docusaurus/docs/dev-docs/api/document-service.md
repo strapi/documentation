@@ -373,7 +373,7 @@ await strapi.documents('api::restaurant.restaurant').create({
 
 Updates document versions and returns them.
 
-Syntax: `update(parameters: Params) => Document`
+Syntax: `update(documentId: ID, parameters: Params) => Document`
 
 ### Parameters
 
