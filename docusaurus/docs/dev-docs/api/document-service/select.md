@@ -12,7 +12,7 @@ By default the [Document Service API](/dev-docs/api/document-service) returns al
 You can also use the `populate` parameter to populate relations, media fields, components, or dynamic zones (see the [`populate` parameter](/dev-docs/api/document-service/populate) documentation).
 :::
 
-## Selecting fields with `findOne()` queries
+## Select fields with `findOne()` queries
 
 To select fields to return while [finding a specific document](/dev-docs/api/document-service#findone) with the Document Service API:
 
@@ -40,9 +40,9 @@ const document = await strapi.documents("api::article.article").findOne({
 </Response>
 </ApiCall>
 
-## Selecting fields with `findFirst()` queries
+## Select fields with `findFirst()` queries
 
-To select fields to return while [finding the first document](/dev-docs/api/document-service#findfirst) matching the parameters:
+To select fields to return while [finding the first document](/dev-docs/api/document-service#findfirst) matching the parameters with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -68,9 +68,9 @@ const document = await strapi.documents("api::article.article").findFirst({
 </Response>
 </ApiCall>
 
-## Selecting fields with `findMany()` queries
+## Select fields with `findMany()` queries
 
-To select fields to return while [finding documents](/dev-docs/api/document-service#findmany):
+To select fields to return while [finding documents](/dev-docs/api/document-service#findmany) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -99,9 +99,9 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-## Selecting fields with `create()` queries
+## Select fields with `create()` queries
 
-To select fields to return while [creating documents](/dev-docs/api/document-service#create):
+To select fields to return while [creating documents](/dev-docs/api/document-service#create) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -133,9 +133,9 @@ const document = await strapi.documents("api::article.article").create({
 </Response>
 </ApiCall>
 
-## Selecting fields with `update()` queries
+## Select fields with `update()` queries
 
-To select fields to return while [updating documents](/dev-docs/api/document-service#update):
+To select fields to return while [updating documents](/dev-docs/api/document-service#update) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -164,9 +164,9 @@ const document = await strapi.documents("api::article.article").update({
 </Response>
 </ApiCall>
 
-## Selecting fields with `delete()` queries
+## Select fields with `delete()` queries
 
-To select fields to return while [deleting documents](/dev-docs/api/document-service#delete):
+To select fields to return while [deleting documents](/dev-docs/api/document-service#delete) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -197,9 +197,9 @@ const document = await strapi.documents("api::article.article").delete({
 </Response>
 </ApiCall>
 
-## Selecting fields with `publish()` queries
+## Select fields with `publish()` queries
 
-To select fields to return while [publishing documents](/dev-docs/api/document-service#publish):
+To select fields to return while [publishing documents](/dev-docs/api/document-service#publish) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -230,9 +230,9 @@ const document = await strapi.documents("api::article.article").publish({
 </Response>
 </ApiCall>
 
-## Selecting fields with `unpublish()` queries
+## Select fields with `unpublish()` queries
 
-To select fields to return while [unpublishing documents](/dev-docs/api/document-service#unpublish):
+To select fields to return while [unpublishing documents](/dev-docs/api/document-service#unpublish) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -263,7 +263,7 @@ const document = await strapi.documents("api::article.article").unpublish({
 </Response>
 </ApiCall>
 
-## Selecting fields with `discardDraft()` queries
+## Select fields with `discardDraft()` queries
 
 To select fields to return while [discarding draft versions of documents](/dev-docs/api/document-service#discarddraft) with the Document Service API:
 
