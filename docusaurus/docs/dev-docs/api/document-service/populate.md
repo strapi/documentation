@@ -16,6 +16,8 @@ You can also use the `select` parameter to return only specific fields with the 
 If the Users & Permissions plugin is installed, the `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated.
 :::
 
+<!-- TODO: add link to populate guides (even if REST API, the same logic still applies) -->
+
 ## Relations and media fields
 
 Queries can accept a `populate` parameter to explicitly define which fields to populate, with the following syntax option examples.
@@ -74,9 +76,9 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-### Populate 1 level
+### Populate 1 level for specific relations
 
-To populate specific relations one-level deep…
+To populate specific relations one-level deep, pass the relation names in a `populate` array:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -112,9 +114,9 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-### Populate 2 levels
+### Populate several levels deep for specific relations
 
-To populate specific relations, 2 levels deep…
+To populate specific relations several levels deep, use the object format with `populate`:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -308,31 +310,9 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-To populate the `createdBy` and `updatedBy` fields, …
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-{
-  // ...
-}
-```
-
-</Response>
-</ApiCall>
-
 ## Populating with `create()`
 
-To populate while creating documents
+To populate while creating documents:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -372,7 +352,7 @@ strapi.documents("api::article.article").create({
 
 ## Populating with `update()`
 
-To populate while updating documents…
+To populate while updating documents:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -409,7 +389,7 @@ strapi.documents("api::article.article").update("cjld2cjxh0000qzrmn831i7rn", {
 
 ## Populating with `publish()`
 
-To populate while publishing documents (same behavior with `unpublish()` and `discardDraft()`)…
+To populate while publishing documents (same behavior with `unpublish()` and `discardDraft()`):
 
 <ApiCall noSideBySide>
 <Request title="Example request">

@@ -238,12 +238,12 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction & Concepts',
               id: 'dev-docs/api/document'
             },
             {
               type: 'doc',
-              label: 'API reference',
+              label: 'Available methods',
               id: 'dev-docs/api/document-service'
             },
             {
@@ -265,6 +265,16 @@ const sidebars = {
               type: 'doc',
               label: 'Sort & Pagination',
               id: 'dev-docs/api/document-service/sort-pagination'
+            },
+            {
+              type: 'doc',
+              label: 'Locale',
+              id: 'dev-docs/api/document-service/locale'
+            },
+            {
+              type: 'doc',
+              label: 'Status',
+              id: 'dev-docs/api/document-service/status'
             },
           ]
         },

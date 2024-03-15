@@ -29,11 +29,11 @@ const document = await strapi.documents("api::article.article").findOne({
 
 <Response title="Example response">
 
-```json
+```js
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
-  "title": "Test Article",
-  "slug": "test-article"
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
+  title: "Test Article",
+  slug: "test-article"
 }
 ```
 
@@ -42,7 +42,7 @@ const document = await strapi.documents("api::article.article").findOne({
 
 ## Selecting fields with `findFirst()` queries
 
-To select fields to return while [finding the first document](/dev-docs/api/document-service#findfirst) matching the parameters…
+To select fields to return while [finding the first document](/dev-docs/api/document-service#findfirst) matching the parameters:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -57,11 +57,11 @@ const document = await strapi.documents("api::article.article").findFirst({
 
 <Response title="Example response">
 
-```json
+```js
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
-  "title": "Test Article",
-  "slug": "test-article"
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
+  title: "Test Article",
+  slug: "test-article" …
 }
 ```
 
@@ -70,7 +70,7 @@ const document = await strapi.documents("api::article.article").findFirst({
 
 ## Selecting fields with `findMany()` queries
 
-To select fields to return while [finding documents](/dev-docs/api/document-service#findmany)…
+To select fields to return while [finding documents](/dev-docs/api/document-service#findmany):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -85,12 +85,12 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 <Response title="Example response">
 
-```json
+```js
 [
   {
-    "id": "cjld2cjxh0000qzrmn831i7rn",
-    "title": "Test Article",
-    "slug": "test-article"
+    documentId: "cjld2cjxh0000qzrmn831i7rn",
+    title: "Test Article",
+    slug: "test-article"
   }
   // ...
 ]
@@ -101,7 +101,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ## Selecting fields with `create()` queries
 
-To select fields to return while [creating documents](/dev-docs/api/document-service#create)…
+To select fields to return while [creating documents](/dev-docs/api/document-service#create):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -122,11 +122,11 @@ const document = await strapi.documents("api::article.article").create({
 
 <Response title="Example response">
 
-```json
+```js
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
-  "title": "Test Article",
-  "slug": "test-article"
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
+  title: "Test Article",
+  slug: "test-article"
 }
 ```
 
@@ -135,7 +135,7 @@ const document = await strapi.documents("api::article.article").create({
 
 ## Selecting fields with `update()` queries
 
-To select fields to return while [updating documents](/dev-docs/api/document-service#update)…
+To select fields to return while [updating documents](/dev-docs/api/document-service#update):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -154,10 +154,10 @@ const document = await strapi.documents("api::article.article").update({
 
 <Response title="Example response">
 
-```json
+```js
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
-  "title": "Test Article Updated"
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
+  title: "Test Article Updated"
 }
 ```
 
@@ -166,7 +166,7 @@ const document = await strapi.documents("api::article.article").update({
 
 ## Selecting fields with `delete()` queries
 
-To select fields to return while [deleting documents](/dev-docs/api/document-service#delete)…
+To select fields to return while [deleting documents](/dev-docs/api/document-service#delete):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -184,7 +184,7 @@ const document = await strapi.documents("api::article.article").delete({
 
 ```json
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   // All of the deleted document's versions are returned
   "versions": [
     {
@@ -199,7 +199,7 @@ const document = await strapi.documents("api::article.article").delete({
 
 ## Selecting fields with `publish()` queries
 
-To select fields to return while [publishing documents](/dev-docs/api/document-service#publish)…
+To select fields to return while [publishing documents](/dev-docs/api/document-service#publish):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -217,7 +217,7 @@ const document = await strapi.documents("api::article.article").publish({
 
 ```json
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   // All of the published locale versions are returned
   "versions": [
     {
@@ -232,7 +232,7 @@ const document = await strapi.documents("api::article.article").publish({
 
 ## Selecting fields with `unpublish()` queries
 
-To select fields to return while [unpublishing documents](/dev-docs/api/document-service#unpublish)…
+To select fields to return while [unpublishing documents](/dev-docs/api/document-service#unpublish):
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -250,7 +250,7 @@ const document = await strapi.documents("api::article.article").unpublish({
 
 ```json
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   // All of the unpublished locale versions are returned
   "versions": [
     {
@@ -265,7 +265,7 @@ const document = await strapi.documents("api::article.article").unpublish({
 
 ## Selecting fields with `discardDraft()` queries
 
-To select fields to return while [discarding draft versions of documents](/dev-docs/api/document-service#discarddraft) with the Document Service API…
+To select fields to return while [discarding draft versions of documents](/dev-docs/api/document-service#discarddraft) with the Document Service API:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -283,7 +283,7 @@ const document = await strapi.documents("api::article.article").discardDraft({
 
 ```json
 {
-  "id": "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   // All of the discarded draft versions are returned
   "versions": [
     {
