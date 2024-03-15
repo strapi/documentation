@@ -62,7 +62,7 @@ Depending on which features are enabled for the content-type, such as [Internati
 
 </details>
 
-:::strapi API to query documents data
+:::strapi APIs to query documents data
 To interact with documents or the data they represent:
 
   - From the back-end server (for instance, from controllers, services, and the back-end part of plugins), use the [Document Service API](/dev-docs/api/document-service).
