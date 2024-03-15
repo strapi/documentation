@@ -6,7 +6,11 @@ displayed_sidebar: devDocsSidebar
 
 # Document Service API: Usage with Draft & Publish
 
-By default the [Document Service API](/dev-docs/api/document-service) returns the draft version of a document when the [Internationalization (i18n)](/dev-docs/plugins/i18n) feature is enabled. This page describes how to use the `status` parameter to return either the draft or the published version of a document
+By default the [Document Service API](/dev-docs/api/document-service) returns the draft version of a document when the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature is enabled. This page describes how to use the `status` parameter to return the published version of a document. 
+
+:::note
+Passing `{ status: 'draft' }` to a Document Service API query returns the same results as not passing any `status` parameter.
+:::
 
 ## Get the published version with `findOne()` queries {#find-one}
 
