@@ -1,7 +1,6 @@
 ---
 title: Document Service API
 description: The Document Service API is the recommended way to interact with your content from the back-end server or from plugins.
-toc_max_heading_level: 4
 displayed_sidebar: devDocsSidebar
 ---
 
