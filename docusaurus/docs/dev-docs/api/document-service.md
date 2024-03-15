@@ -443,7 +443,7 @@ Syntax:
 
 ```js
 delete(documentId: ID, parameters: Params) => { 
-  versions: Document[], 
+  deletedEntries: Number, 
   errors: Errors[]  // Errors occurred when deleting documents
 }
 ```
