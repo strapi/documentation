@@ -10,8 +10,8 @@ Releases enables content managers to organize entries into containers that can p
 <ThemedImage
   alt="List of Releases"
   sources={{
-    light: '/img/assets/releases/releases-overview2.png',
-    dark: '/img/assets/releases/releases-overview2_DARK.png',
+    light: '/img/assets/releases/releases-overview.png',
+    dark: '/img/assets/releases/releases-overview_DARK.png',
   }}
 />
 
