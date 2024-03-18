@@ -4,12 +4,13 @@ sidebar_position: 1
 displayed_sidebar: userDocsSidebar
 slug: /user-docs/content-manager
 description: Introduction to the Content Manager which allows to write content for collection types and single types.
+pagination_next: user-docs/content-manager/configuring-view-of-content-type
 
 ---
 
 # Introduction to the Content Manager
 
-The Content Manager is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
+The Content Manager is a core feature of Strapi. It is always enabled by default and cannot be disabled. It is accessible both when the application is in a development and production environment.
 
 The Content Manager is accessible from ![Content icon](/img/assets/icons/content.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
@@ -37,9 +38,13 @@ From the list view, it is possible to:
 
 - create a new entry (1),
 - make a textual search (2) or set filters (3) to find specific entries,
-- if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
+- if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, filter by locale to display only the entries [translated](/user-docs/content-manager/translating-content) in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
-- edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) an entry,
+- if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, see the status of each entry (6),
+- perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/more.svg) (7) at the end of the line:
+  - edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
+  - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/cross-circle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/cross-circle.svg) or discard its changes,
+  - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale,
 - select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publish-and-unpublish-), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
 
 :::tip
@@ -53,8 +58,8 @@ Right above the list view table, on the left side of the interface, a **Filters*
 <ThemedImage
   alt="Filters in the Content Manager"
   sources={{
-    light: '/img/assets/content-manager/content-manager_filters.png',
-    dark: '/img/assets/content-manager/content-manager_filters_DARK.png',
+    light: '/img/assets/content-manager/content-manager_filters2.png',
+    dark: '/img/assets/content-manager/content-manager_filters2_DARK.png',
   }}
 />
 
@@ -64,7 +69,7 @@ To set a new filter:
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. Enter the value(s) of the condition in the remaining textbox.
-6. Click on the **Add filter** button.
+5. Click on the **Add filter** button.
 
 :::note
 When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/clear.svg).

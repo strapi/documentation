@@ -593,6 +593,10 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'user-docs/content-manager/introduction-to-content-manager'
+      },
       label: 'Content Manager',
       items: [
         'user-docs/content-manager/introduction-to-content-manager',
@@ -604,9 +608,9 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
-          // customProps: {
-          //   updated: true,
-          // },
+          customProps: {
+            updated: true,
+          }
         },
         'user-docs/content-manager/adding-content-to-releases',
       ],

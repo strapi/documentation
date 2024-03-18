@@ -6,8 +6,6 @@ displayed_sidebar: userDocsSidebar
 
 ---
 
-import CSMPrereq from '/docs/snippets/content-source-map-requirements.md'
-
 # Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
@@ -15,8 +13,8 @@ In Strapi, writing content consists in filling up fields, which are meant to con
 <ThemedImage
   alt="Edit view to write content"
   sources={{
-    light: '/img/assets/content-manager/edit-view2.png',
-    dark: '/img/assets/content-manager/edit-view2_DARK.png',
+    light: '/img/assets/content-manager/edit-view3.png',
+    dark: '/img/assets/content-manager/edit-view3_DARK.png',
   }}
 />
 
@@ -26,6 +24,10 @@ To write or edit content:
 
 1. Access the edit view of your collection type or single type.
 2. Write your content, following the available field schema. You can refer to the table below for more information and instructions on how to fill up each field type.
+
+:::info
+If Draft & Publish is enabled for your content-type (it's enabled by default), the fields work the same way whether you are editing the draft or published version. See [Saving, publishing, and deleting content](/user-docs/content-manager/saving-and-publishing-content) for more information about the Draft & Publish feature.
+:::
 
 | Field name  | Instructions                                                                                                                                                                                                                                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -46,9 +48,10 @@ To write or edit content:
 Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 :::
 
-:::strapi Experimental: Preview and edit your content live on your website
+<!-- !Disabled and commented out for now -->
+<!-- :::strapi Experimental: Preview and edit your content live on your website
 By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. Additional documentation will be provided once the plugin is out of beta.  
-:::
+::: -->
 
 ### Components
 
@@ -149,7 +152,8 @@ You can also use the keyboard to reorder components: focus the component using T
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
 
-## Editing fields from a front-end website <EnterpriseBadge />
+<!-- !Disabled and commented out for now -->
+<!-- ## Editing fields from a front-end website <EnterpriseBadge />
 
 <CSMPrereq />
 
@@ -163,4 +167,4 @@ Once the Content Source Map plugin is installed and configured (see [Developer D
 4. Hover any content highlighted in blue to display an **Open in strapi.io** button.
 5. Click on the **Open in strapi.io** button to jump directly to the corresponding field in the admin panel and edit its content.
 
-![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png)
+![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png) -->
