@@ -4,6 +4,8 @@ displayed_sidebar: devDocsSidebar
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+const captionStyle = {fontSize: '12px'}
+const imgStyle = {width: '100%', margin: '0' }
 
 # GraphQL API
 
@@ -33,74 +35,81 @@ npm install @strapi/plugin-graphql
 
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
-## Unified response format
-
-Responses are unified with the GraphQL API in that:
-
-- queries and mutations that return information for a single entry mainly use a `XxxEntityResponse` type
-- queries and mutations that return i️nformation for multiple entries mainly use a `XxxEntityResponseCollection` type, which includes `meta` information (with [pagination](#pagination)) in addition to the data itself
-
-Responses can also include an `error` (see [error handling documentation](/dev-docs/error-handling.md)).
-
-```graphql title="Example: Response formats for queries and mutations with an example 'Article' content-type"
-type ArticleEntityResponse {
-    data: ArticleEntity
-}
-
-type ArticleEntityResponseCollection {
-    data: [ArticleEntityResponse!]!
-    meta: ResponseCollectionMeta!
-}
-
-query {
-    article(...): ArticleEntityResponse # find one
-    articles(...): ArticleEntityResponseCollection # find many
-}
-
-mutation {
-    createArticle(...): ArticleEntityResponse # create
-    updateArticle(...): ArticleEntityResponse # update
-    deleteArticle(...): ArticleEntityResponse # delete
-}
-```
-
 ## Queries
 
-Queries in GraphQL are used to fetch data without modifying it.
+When a content-type is added to your project, 2 generated GraphQL queries are added to your schema, named after the content-type's singular and plural API IDs, as in the following example:
 
-We assume that the [Shadow CRUD](/dev-docs/plugins/graphql#shadow-crud) feature is enabled. For each model, the GraphQL plugin auto-generates queries and mutations that mimics basic CRUD operations (findMany, findOne, create, update, delete).
+| Content-type display name | Singular API ID | Plural API ID |
+|---------------------------|-----------------|---------------|
+| Restaurant                | `restaurant`    | `restaurants` |
+
+<details>
+<summary>How to find a content-type's singular and plural API IDs:</summary>
+
+<figure style={imgStyle}>
+  <img src="/img/assets/apis/singular-and-plural-api-ids.png" alt="Screenshot of Content-Type Builder showing how to find the singular and plural API IDs for a content-type" />
+  <em><figcaption style={captionStyle}>Singular and plural API IDs for a content-type are, by default, derived from its display name and can be found in the <a href="/user-docs/content-type-builder/creating-new-content-type">Content-Type Builder</a> when creating or editing a content-type. You can define custom API IDs while creating the content-type, but these can not modified afterwards.</figcaption></em>
+</figure>
+
+</details>
 
 ### Fetch a single entry
 
-Single entries can be found by their `id`.
+Documents <DocumentDefinition/> can be fetched by their `documentId`.
 
-```graphql title="Example query: Find the entry with id 1"
+```graphql title="Example query: Find a restaurant with its documentId"
 {
-  document(documentId: a1b2c3d4e5d6f7g8h9i0jkl) {
-    title
-    categories {
-      documentId
-      name
-    }
+  restaurant(documentId: "a1b2c3d4e5d6f7g8h9i0jkl") {
+    name
+    description
   }
 }
 ```
 
 ### Fetch multiple entries
 
-```graphql title="Example query: Find all documents"
+To fetch multiple entries you can use simple flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+
+<Tabs groupId="simple-relay">
+
+<Tab value="simple" label="Simple queries">
+
+To fetch multiple entries you can use simple queries like the following:
+
+```graphql title="Example query: Find all restaurants"
 restaurants {
   documentId
   title
-  xToManyRelation {
-    documentId
-  }
-  xToOneRelation {
-    documentId
-    field
+}
+```
+
+</Tab>
+
+<Tab value="flat" label="Relay-style queries">
+
+Relay-style queries can be used to fetch multiple entries and return meta information:
+
+```graphql title="Example query: Find all restaurants"
+{
+  restaurants_connection {
+    nodes {
+      documentId
+      name
+    }
+    pageInfo {
+      pageSize
+      page
+      pageCount
+      total
+    }
   }
 }
 ```
+
+</Tab>
+
+</Tabs>
+
 
 ### Fetch dynamic zone data
 
