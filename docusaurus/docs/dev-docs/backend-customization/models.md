@@ -620,7 +620,7 @@ Lifecycles hooks are not triggered when using directly the [knex](https://knexjs
 :::
 
 :::tip
-Check our [error handling](/dev-docs/error-handling#services-and-models-lifecycles) documentation to resolve any errors you may encounter while using the lifecycle hooks.
+Please refer to the [error handling](/dev-docs/error-handling#services-and-models-lifecycles) documentation to learn how to throw errors from lifecycle hooks.
 :::
 
 ### Available lifecycle events
