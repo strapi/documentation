@@ -8,7 +8,7 @@ sidebar_position: 3
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The usage-based pricing for Strapi Cloud is based on the following criteria and limits:
+Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
 
 | Feature | Free Trial | Developer | Pro | Team |
 | --- | --- | --- | --- | --- |
@@ -21,16 +21,21 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 | **Audit Logs** | 7 days retention | N/A | N/A | 7 days retention |
 | **Releases** | 3 pending releases | N/A | N/A | 3 pending releases |
 | **Review Workflows** | up to 2 | N/A | N/A | up to 2 |
+|  |  |  |  |  |
+| **Backups** | N/A | N/A | Weekly | Weekly |
 
-:::strapi Additional information on Strapi Cloud features
-- Seats are the maximum number of users that can access the Strapi admin panel.
-- Database entries are the number of entries in your database.
-- Assets storage is the amount of storage used by your assets.
-- Assets bandwidth is the amount of bandwidth used by your assets.
-- API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
-- Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/user-docs/settings/audit-logs) for more information).
-- Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
-- Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/user-docs/settings/review-workflows) for more information).
+:::strapi Additional information on usage and features
+- General features & usage:
+  - Seats are the maximum number of users that can access the Strapi admin panel.
+  - Database entries are the number of entries in your database.
+  - Assets storage is the amount of storage used by your assets.
+  - Assets bandwidth is the amount of bandwidth used by your assets.
+  - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
+- CMS features:
+  - Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/user-docs/settings/audit-logs) for more information).
+  - Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
+  - Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/user-docs/settings/review-workflows) for more information).
+- Cloud specific feature: Backups refers to the automatic backups of Strapi Cloud projects (see [dedicated page in Cloud documentation](/cloud/projects/settings#backups) for more information).
 :::
 
 ## Seats management
