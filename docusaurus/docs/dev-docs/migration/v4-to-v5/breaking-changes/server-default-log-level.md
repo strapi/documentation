@@ -1,6 +1,6 @@
 ---
-title: Server log level is `info`
-description: Strapi 5 allows users greater control over the level of detail in of their server logs
+title: Server log level is `http`
+description: The default log level of the middleware logger in Strapi 5 is 'http'.
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
@@ -34,7 +34,7 @@ The log level defaults to `silly`, which means that every log is shown, providin
 
 **In Strapi 5**
 
-The log level defaults to `info`. This means that `silly`and `debug` level logs are hidden by default, offering a less verbose log output.
+The log level defaults to `http`. This means that `silly`and `debug` level logs are hidden by default, offering a less verbose log output.
 
 </SideBySideColumn>
 
