@@ -35,6 +35,10 @@ npm install @strapi/plugin-graphql
 
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
+:::note
+The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/dev-docs/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types.
+:::
+
 ## Queries
 
 Queries in GraphQL are used to fetch data without modifying it.
