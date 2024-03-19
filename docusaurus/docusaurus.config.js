@@ -203,20 +203,8 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Additional resources',
             items: [
-              {
-                label: 'Dev Docs',
-                to: '/dev-docs/intro',
-              },
-              {
-                label: 'User Guide',
-                to: '/user-docs/intro',
-              },
-              {
-                label: 'Strapi Cloud',
-                to: '/cloud/intro'
-              },
               {
                 label: 'v3 Docs (unsupported)',
                 href: 'https://docs-v3.strapi.io'
