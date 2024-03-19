@@ -272,7 +272,7 @@ This does not work:
 
 Media fields content is fetched just like other attributes.
 
-For instance, in the following example, we fetch the `url` attribute value for each `cover` media field attached to each document from the "Restaurants" content-type:
+The following example fetches the `url` attribute value for each `cover` media field attached to each document from the "Restaurants" content-type:
 
 ```graphql
 {
@@ -337,7 +337,7 @@ For now, `pageInfo` only works for documents. Future implementations of Strapi m
 
 Components content is fetched just like other attributes.
 
-For instance, in the following example, we fetch the `label`, `start_date`, and `end_date` attributes values for each `closingPeriod` component added to each document from the "Restaurants" content-type:
+The following example fetches the `label`, `start_date`, and `end_date` attributes values for each `closingPeriod` component added to each document from the "Restaurants" content-type:
 
 ```graphql
 {
@@ -355,7 +355,7 @@ For instance, in the following example, we fetch the `label`, `start_date`, and 
 
 Dynamic zones are union types in GraphQL so you need to use [fragments](https://www.apollographql.com/docs/react/data/fragments/) (i.e., with `...on`) to query the fields, passing the component name (with the `ComponentCategoryComponentname` syntax) to [`__typename`](https://www.apollographql.com/docs/apollo-server/schema/schema/#the-__typename-field):
 
-The following example shows how to query data for the `label` attribute of a "Closingperiod" component from the "Default" components category that can be added to the "dz" dynamic zone:
+The following example fetches data for the `label` attribute of a "Closingperiod" component from the "Default" components category that can be added to the "dz" dynamic zone:
 
 ```graphql
 {
