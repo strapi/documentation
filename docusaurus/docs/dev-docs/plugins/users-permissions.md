@@ -882,7 +882,7 @@ The use of `ngrok` is not needed.
 
 - Visit your Keycloak admin dashboard
 - If you don't already have a realm, you'll want to create one
-- In Clients section of your realm, create a new client
+- In the Clients section of your realm, create a new client
 - Under the capability config, ensure you set `Client Authentication` to on to ensure you can create a private key
 - Under the access settings, ensure you set the following values:
   - **Valid redirect URIs**: `http://localhost:1337/api/connect/keycloak/callback` and `http://localhost:1337/api/connect/keycloak`
