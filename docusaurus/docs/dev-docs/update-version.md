@@ -2,7 +2,7 @@
 title: Generic update guide
 displayed_sidebar: devDocsSidebar
 description: The following documentation covers how to update your application to the latest version of Strapi.
-
+unlisted: true
 ---
 
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'

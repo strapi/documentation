@@ -544,7 +544,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction & Concepts',
+          label: 'Introduction',
           id: 'dev-docs/update-migration',
           customProps: {
             new: true,
@@ -557,7 +557,7 @@ const sidebars = {
             new: true,
           },
         },
-        'dev-docs/update-version',
+        // 'dev-docs/update-version',
         // {
         //   type: 'doc',
         //   label: 'v5.x migration guides',
