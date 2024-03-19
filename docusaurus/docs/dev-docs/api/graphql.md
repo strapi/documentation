@@ -36,7 +36,7 @@ npm install @strapi/plugin-graphql
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
 :::note
-The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/dev-docs/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types.
+The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/dev-docs/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
 ## Queries
@@ -377,13 +377,13 @@ For instance, for a "Restaurant" content-type, the following mutations are gener
 
 ### Create a new document
 
-When creating new documents <DocumentDefinition/>, the `data` argument will have an associated input type that is specific to your content-type.
+When creating new documents <DocumentDefinition/>, the `info` argument will have an associated input type that is specific to your content-type.
 
 For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
 
 | Mutation           | Argument         | Input type         |
 |--------------------|------------------|--------------------|
-| `createRestaurant` | `data`           | `RestaurantInput!` |
+| `createRestaurant` | `info`           | `RestaurantInput!` |
 
 The following example creates a new document for the "Restaurant" content-type and returns its `name` and `documentId`:
 
@@ -475,6 +475,73 @@ mutation DeleteRestaurant {
   }
 }
 ```
+
+### Mutations on media files
+
+:::caution
+Currently, mutations on media fields use Strapi v4 `id`, not Strapi 5 `documentId`, as unique identifiers for media files.
+:::
+
+Media fields mutations use files `id`. However, GraphQL API queries in Strapi 5 do not return `id` anymore. Media files `id` can be found:
+
+- either in the [Media Library](/user-docs/media-library) from the admin panel,
+
+  <ThemedImage
+    alt="Media Library screenshot highlighting how to find a media file id"
+    sources={{
+      light: '/img/assets/apis/media-field-id.png',
+      dark: '/img/assets/apis/media-field-id.png'
+    }}
+  />
+
+- or by sending REST API `GET` requests that [populate media files](/dev-docs/api/rest/populate-select#relations--media-fields), because REST API requests currently return both `id` and `documentId` for media files.
+
+#### Update an uploaded media file
+
+When updating an uploaded media file, pass the media's `id` (not its `documentId`) and the `info` object containing new content. The `info` argument will has an associated input type that is specific to media files.
+
+For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
+
+| Mutation           | Argument         | Input type         |
+|--------------------|------------------|--------------------|
+| `updateUploadFile` | `info`           | `FileInfoInput!`   |
+
+For instance, the following example updates the `alternativeText` attribute for a media file whose `id` is 3:
+
+```graphql
+mutation Mutation($updateUploadFileId: ID!, $info: FileInfoInput) {
+  updateUploadFile(
+    id: 3,
+    info: {
+      alternativeText: "New alt text"
+    }
+  ) {
+    documentId
+    url
+    alternativeText
+  }
+}
+```
+
+:::tip
+If upload mutations return a forbidden access error, ensure proper permissions are set for the Upload plugin (see [User Guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role)).
+:::
+
+#### Delete an uploaded media file
+
+When deleting an uploaded media file, pass the media's `id` (not its `documentId`).
+
+```graphql title="Example: Delete the media file with id 4"
+mutation DeleteUploadFile($deleteUploadFileId: ID!) {
+  deleteUploadFile(id: 4) {
+    documentId # return its documentId
+  }
+}
+```
+
+:::tip
+If upload mutations return a forbidden access error, ensure proper permissions are set for the Upload plugin (see [User Guide](/user-docs/users-roles-permissions/configuring-end-users-roles#editing-a-role)).
+:::
 
 ## Filters
 
