@@ -75,13 +75,13 @@ Documents <DocumentDefinition/> can be fetched by their `documentId`.
 
 ### Fetch multiple documents
 
-To fetch multiple documents <DocumentDefinition/> you can use simple flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+To fetch multiple documents <DocumentDefinition/> you can use simple, flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
 
-<Tabs groupId="simple-relay">
+<Tabs groupId="flat-relay">
 
-<Tab value="simple" label="Simple queries">
+<Tab value="flat" label="Flat queries">
 
-To fetch multiple documents you can use simple queries like the following:
+To fetch multiple documents you can use flat queries like the following:
 
 ```graphql title="Example query: Find all restaurants"
 restaurants {
@@ -92,7 +92,7 @@ restaurants {
 
 </Tab>
 
-<Tab value="flat" label="Relay-style queries">
+<Tab value="relay" label="Relay-style queries">
 
 Relay-style queries can be used to fetch multiple documents and return meta information:
 
@@ -119,11 +119,11 @@ Relay-style queries can be used to fetch multiple documents and return meta info
 
 #### Fetch relations
 
-You can ask to include relation data in your simple queries or in your [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+You can ask to include relation data in your flat queries or in your [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
 
-<Tabs groupId="simple-relay">
+<Tabs groupId="flat-relay">
 
-<Tab value="simple" label="Simple queries">
+<Tab value="flat" label="Flat queries">
 
 The following example fetches all documents from the "Restaurant" content-type, and for each of them, also returns some fields for the many-to-many relation with the "Category" content-type:
 
@@ -144,7 +144,7 @@ The following example fetches all documents from the "Restaurant" content-type, 
 
 </Tab>
 
-<Tab value="flat" label="Relay-style queries">
+<Tab value="relay" label="Relay-style queries">
 
 The following example fetches all documents from the "Restaurant" content-type using a Relay-style query, and for each restaurant, also returns some fields for the many-to-many relation with the "Category" content-type:
 
@@ -271,11 +271,11 @@ For instance, in the following example, we fetch the `url` attribute value for e
 }
 ```
 
-For multiple media fields, you can use simple queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+For multiple media fields, you can use flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
 
-<Tabs groupId="simple-relay">
+<Tabs groupId="flat-relay">
 
-<Tab value="simple" label="Simple queries">
+<Tab value="flat" label="Flat queries">
 
 The following example fetches some attributes from the `images` multiple media field found in the "Restaurant" content-type:
 
@@ -294,7 +294,7 @@ The following example fetches some attributes from the `images` multiple media f
 
 </Tab>
 
-<Tab value="flat" label="Relay-style queries">
+<Tab value="relay" label="Relay-style queries">
 
 The following example fetches some attributes from the `images` multiple media field found in the "Restaurant" content-type using a Relay-style query:
 
@@ -526,26 +526,31 @@ Queries can accept a `sort` parameter with the following syntax:
 
 The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
 
-```graphql title="Example request: Sorting on title by ascending order"
+```graphql title="Example: Fetch and sorton name by ascending order"
 {
-  documents(sort: "title") {
+  restaurants(sort: "name") {
     documentId
+    name
   }
 }
 ```
 
-```graphql title="Example request: Sorting on title by descending order"
+```graphql title="Example: Fetch and sort on average price by descending order"
 {
-  documents(sort: "title:desc") {
+  restaurants(sort: "averagePrice:desc") {
     documentId
+    name
+    averagePrice
   }
 }
 ```
 
-```graphql title="Example request: Sorting on title by ascending order, then on price by descending order"
+```graphql title="Example: Fetch and sort on title by ascending order, then on average price by descending order"
 {
-  documents(sort: ["title:asc", "price:desc"]) {
+  restaurants(sort: ["name:asc", "averagePrice:desc"]) {
     documentId
+    name
+    averagePrice
   }
 }
 ```
@@ -567,7 +572,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 
 ```graphql title="Example query: Pagination by page"
 {
-  documents(pagination: { page: 1, pageSize: 10 }) {
+  restaurants(pagination: { page: 1, pageSize: 10 }) {
     documentId
     meta {
       pagination {
