@@ -536,7 +536,7 @@ Queries can accept a `sort` parameter with the following syntax:
 
 The sorting order can be defined with `:asc` (ascending order, default, can be omitted) or `:desc` (for descending order).
 
-```graphql title="Example: Fetch and sorton name by ascending order"
+```graphql title="Example: Fetch and sort on name by ascending order"
 {
   restaurants(sort: "name") {
     documentId
