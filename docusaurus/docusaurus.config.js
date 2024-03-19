@@ -120,6 +120,12 @@ const config = {
         theme: {
           customCss: require.resolve('./src/scss/__index.scss'),
         },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        },
       },
     ],
     [
