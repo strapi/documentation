@@ -318,9 +318,11 @@ export default ({ env }) => ({
 
 </div>
 
-:::note
-[Folders](/user-docs/media-library/organizing-assets-with-folders) are an admin panel feature and are not part of the REST or the GraphQL API. Files uploaded through the REST or GraphQL API are located in the automatically created "API Uploads" folder.
+:::note Notes
+* [Folders](/user-docs/media-library/organizing-assets-with-folders) are an admin panel feature and are not part of the REST or the GraphQL API. Files uploaded through the REST or GraphQL API are located in the automatically created "API Uploads" folder.
+* The Upload plugin does not support the GraphQL API. Use the `POST /upload` endpoint for all file uploads and use the returned info to link to it in content types.
 :::
+
 
 ## Examples
 
