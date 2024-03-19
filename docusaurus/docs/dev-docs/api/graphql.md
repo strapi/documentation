@@ -557,30 +557,31 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 
 ## Pagination
 
-Queries can accept a `pagination` parameter. Results can be paginated either by page or by offset.
+[Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries can accept a `pagination` parameter. Results can be paginated either by page or by offset.
 
 :::note
-Pagination methods can not be mixed. Always use either `page` with `pageSize` **or** `start` with `limit`.
+Pagination methods can not be mixed. Always use either `page` with `pageSize` or `start` with `limit`.
 :::
 
 ### Pagination by page
 
 | Parameter              | Description | Default |
 | ---------------------- | ----------- | ------- |
-| `pagination[page]`     | Page number | 1       |
-| `pagination[pageSize]` | Page size   | 10      |
+| `pagination.page`      | Page number | 1       |
+| `pagination.pageSize`  | Page size   | 10      |
 
 ```graphql title="Example query: Pagination by page"
 {
-  restaurants(pagination: { page: 1, pageSize: 10 }) {
-    documentId
-    meta {
-      pagination {
-        page
-        pageSize
-        pageCount
-        total
-      }
+  restaurants_connection(pagination: { page: 1, pageSize: 10 }) {
+    nodes {
+      documentId
+      name
+    }
+    pageInfo {
+      page
+      pageSize
+      pageCount
+      total
     }
   }
 }
@@ -588,25 +589,28 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` **
 
 ### Pagination by offset
 
-| Parameter           | Description                  | Default | Maximum |
-| ------------------- | ---------------------------- | ------- | ------- |
-| `pagination[start]` | Start value                  | 0       | -       |
-| `pagination[limit]` | Number of entities to return | 10      | -1      |
+| Parameter          | Description                  | Default | Maximum |
+| ------------------ | ---------------------------- | ------- | ------- |
+| `pagination.start` | Start value                  | 0       | -       |
+| `pagination.limit` | Number of entities to return | 10      | -1      |
 
 ```graphql title="Example query: Pagination by offset"
 {
-  documents(pagination: { start: 20, limit: 30 }) {
-    documentId
-    meta {
-      pagination {
-        start
-        limit
-      }
+  restaurants_connection(pagination: { start: 10, limit: 19 }) {
+    nodes {
+      documentId
+      name
+    }
+    pageInfo {
+      page
+      pageSize
+      pageCount
+      total
     }
   }
 }
 ```
 
 :::tip
-The default and maximum values for `pagination[limit]` can be [configured in the `./config/plugins.js`](/dev-docs/configurations/plugins#graphql-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
+The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/dev-docs/configurations/plugins#graphql-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::
