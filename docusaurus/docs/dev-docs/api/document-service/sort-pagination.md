@@ -14,7 +14,7 @@ To sort results returned by the Document Service API, include the `sort` paramet
 
 ### Sort on a single field
 
-To order results returned by the Entity Service API, use the sort parameter. Results can be ordered based on a single or on multiple attribute(s) and can also use relational ordering.
+To sort results based on a single field:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -32,14 +32,14 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
     // ...
   },
   {
-    "id": "cjld2cjxh0001qzrm5q1j5q7m",
+    "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
@@ -54,7 +54,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ### Sort on multiple fields
 
-To sort on multiple fields, …
+To sort on multiple fields, pass them all in an array:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -72,14 +72,14 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
     // ...
   },
   {
-    "id": "cjld2cjxh0001qzrm5q1j5q7m",
+    "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
@@ -94,7 +94,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 
 ## Pagination
 
-To paginate results…
+To paginate results, pass the `limit` and `start` parameters:
 
 <ApiCall noSideBySide>
 <Request title="Example request">
@@ -113,14 +113,14 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```json
 [
   {
-    "id": "cjld2cjxh0000qzrmn831i7rn",
+    "documentId": "cjld2cjxh0000qzrmn831i7rn",
     "title": "Test Article",
     "slug": "test-article",
     "body": "Test 1"
     // ...
   },
   {
-    "id": "cjld2cjxh0001qzrm5q1j5q7m",
+    "documentId": "cjld2cjxh0001qzrm5q1j5q7m",
     "title": "Test Article 2",
     "slug": "test-article-2",
     "body": "Test 2"
