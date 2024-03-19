@@ -14,6 +14,12 @@ This page is a work-in-progress and the list of breaking changes is not 100% fin
 
 This page lists all the breaking changes introduced in Strapi 5.
 
+:::danger
+It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
+
+The beta version of Strapi 5 is not meant to be used in production yet.
+:::
+
 ## Configuration
 
 * [Some `env`-only configuration options are handled by the server configuration](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
