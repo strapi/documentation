@@ -420,7 +420,13 @@ mutation CreateCategory {
 
 ### Update an existing entry
 
-When updating an existing document <DocumentDefinition/>, pass the `documentId` and the `data` object containing new content.
+When updating an existing document <DocumentDefinition/>, pass the `documentId` and the `data` object containing new content. The `data` argument will have an associated input type that is specific to your content-type.
+
+For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
+
+| Mutation           | Argument         | Input type         |
+|--------------------|------------------|--------------------|
+| `updateRestaurant` | `data`           | `RestaurantInput!` |
 
 For instance, the following example updates an existing document from the "Restaurants" content-type and give it a new name:
 
