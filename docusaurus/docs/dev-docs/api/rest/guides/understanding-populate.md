@@ -11,7 +11,7 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # 🧠 Understanding the `populate` parameter for the REST API
 
-When querying content-types with Strapi's [REST API](/dev-docs/api/rest), by default, reponses do not include any relations, media fields, components, or dynamic zones.
+When querying content-types with Strapi's [REST API](/dev-docs/api/rest), by default, responses only include top-level fields and do not include any relations, media fields, components, or dynamic zones.
 
 Populating in the context of the Strapi REST API means including additional content with your response by returning more fields than the ones returned by default. You use the [`populate` parameter](#population) to achieve this.
 
