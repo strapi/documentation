@@ -27,7 +27,7 @@ To get started with GraphQL in your application, please install the plugin first
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi install graphql
+yarn add @strapi/plugin-graphql
 ```
 
 </TabItem>
@@ -35,7 +35,7 @@ yarn strapi install graphql
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi install graphql
+npm install @strapi/plugin-graphql
 ```
 
 </TabItem>

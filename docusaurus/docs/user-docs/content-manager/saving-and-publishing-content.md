@@ -12,7 +12,7 @@ Strapi allows you to manage your content throughout its whole lifecycle, whether
 ## Saving & publishing content
 
 :::caution
-The possibility to manage drafts for contents comes from the Draft & Publish feature. This feature is enabled by default, but it can be disabled for any content-type from the Content-type Builder. If you disabled the Draft & Publish feature, saving your content means saving and publishing at the same time.
+The possibility to manage drafts for contents comes from the Draft & Publish feature. This feature is activated by default, but it can be deactivated for any content-type from the Content-type Builder (see [advanced settings for content-types](/user-docs/content-type-builder/managing-content-types#advanced-settings)). If you disabled the Draft & Publish feature, saving your content means saving and publishing at the same time.
 :::
 
 Your content can have 3 statuses:

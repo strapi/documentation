@@ -65,8 +65,8 @@ The **Advanced Settings** tab allows to edit the following properties of the con
   }}
 />
 
-* **Draft & Publish**: Enable the draft and publish feature for the content-type or component. It is disabled by default.
-* **Internationalization**: Enable the internationalization feature for the content-type or component. It is disabled by default.
+* **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
+* **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
 * **Review workflows**: Enable the [Review Workflows](/user-docs/settings/review-workflows) <EnterpriseBadge /> feature for the content-type. It is disabled by default.
 
 ## Deleting content-types

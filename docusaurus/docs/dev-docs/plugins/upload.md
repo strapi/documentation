@@ -319,8 +319,8 @@ export default ({ env }) => ({
 </div>
 
 :::note Notes
-* [Folders](/user-docs/media-library/organizing-assets-with-folders) are an admin panel feature and are not part of the REST or the GraphQL API. Files uploaded through the REST or GraphQL API are located in the automatically created "API Uploads" folder.
-* The Upload plugin does not support the GraphQL API. Use the `POST /upload` endpoint for all file uploads and use the returned info to link to it in content types.
+- [Folders](/user-docs/media-library/organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
+- The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/user-docs/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/dev-docs/api/graphql#mutations-on-media-files) for details).
 :::
 
 
