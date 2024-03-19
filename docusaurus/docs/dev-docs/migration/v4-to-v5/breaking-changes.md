@@ -12,7 +12,7 @@ tags:
 This page is a work-in-progress and the list of breaking changes is not 100% final yet.
 :::
 
-This page is part of the [Strapi v4 to v5 migration](/dev-docs/migration/v4-to-v5/introduction) and lists all the breaking changes introduced in Strapi v5.
+This page lists all the breaking changes introduced in Strapi 5.
 
 ## Configuration
 

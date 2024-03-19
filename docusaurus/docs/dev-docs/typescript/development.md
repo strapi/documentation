@@ -3,7 +3,11 @@ title: TypeScript development
 # description: todo
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # TypeScript Development with Strapi 
+
+<NotV5/>
 
 While developing a [TypeScript](/dev-docs/typescript)-based application with Strapi, you can:
 

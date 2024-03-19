@@ -570,16 +570,16 @@ const sidebars = {
             type: 'doc',
             id: 'dev-docs/migration/v4-to-v5/introduction'
           },
-          label: 'v4 to v5 migration guides',
+          label: 'Migrate to Strapi 5',
           customProps: {
             new: true,
           },
           items: [
-            {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/migration/v4-to-v5/introduction'
-            },
+            // {
+            //   type: 'doc',
+            //   label: 'Introduction',
+            //   id: 'dev-docs/migration/v4-to-v5/introduction'
+            // },
             {
               type: 'doc',
               label: 'Breaking Changes',
@@ -588,7 +588,7 @@ const sidebars = {
                 updated: true,
               },
             },
-            'dev-docs/migration/v4-to-v5/migration-guides',
+            // 'dev-docs/migration/v4-to-v5/migration-guides',
           ]
         }
       ],
@@ -1062,13 +1062,14 @@ const sidebars = {
         type: 'doc',
         id: 'dev-docs/migration/v4-to-v5/introduction'
       },
-      label: 'v4 to v5 migration',
+      label: 'Migrate to Strapi 5',
       items: [
-        {
-          type: "doc",
-          label: "Introduction",
-          id: "dev-docs/migration/v4-to-v5/introduction"
-        },
+        // {
+        //   type: "doc",
+        //   label: "Introduction",
+        //   id: "dev-docs/migration/v4-to-v5/introduction"
+        // },
+        'dev-docs/upgrade-tool',
         {
           type: "category",
           label: "Breaking changes",
@@ -1078,6 +1079,11 @@ const sidebars = {
             id: "dev-docs/migration/v4-to-v5/breaking-changes",
           },
           items: [
+            {
+              type: "doc",
+              id: 'dev-docs/migration/v4-to-v5/breaking-changes',
+              label: 'Index',
+            },
             {
               type: "category",
               collapsed: false,
@@ -1091,19 +1097,13 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
                 {
                   type: 'doc',
-                  label: 'Server log level is `info`',
+                  label: 'Server log level is `http`',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
-                  customProps: {
-                    new: true,
-                  },
                 },
                 {
                   type: 'doc',
                   label: 'Model config path uses uid',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
-                  customProps: {
-                    new: true,
-                  },
                 }
               ]
             },
@@ -1197,7 +1197,7 @@ const sidebars = {
             },
           ]
         },
-        "dev-docs/migration/v4-to-v5/migration-guides",
+        // "dev-docs/migration/v4-to-v5/migration-guides",
       ]
     }
   ]

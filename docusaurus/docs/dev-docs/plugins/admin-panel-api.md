@@ -4,7 +4,11 @@ pagination_prev: dev-docs/plugins/development/plugin-structure
 toc_max_heading_level: 4
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Admin Panel API for plugins
+
+<NotV5/>
 
 A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/plugins/server-api) and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
 
