@@ -37,23 +37,30 @@ The GraphQL API allows performing queries and mutations to interact with the [co
 
 ## Queries
 
-When a content-type is added to your project, 2 generated GraphQL queries are added to your schema, named after the content-type's singular and plural API IDs, as in the following example:
+Queries in GraphQL are used to fetch data without modifying it.
+
+When a content-type is added to your project, 2 automatically generated GraphQL queries are added to your schema, named after the content-type's singular and plural API IDs, as in the following example:
 
 | Content-type display name | Singular API ID | Plural API ID |
 |---------------------------|-----------------|---------------|
 | Restaurant                | `restaurant`    | `restaurants` |
 
 <details>
-<summary>How to find a content-type's singular and plural API IDs:</summary>
+<summary>Singular API ID vs. Plural API ID:</summary>
 
-<figure style={imgStyle}>
-  <img src="/img/assets/apis/singular-and-plural-api-ids.png" alt="Screenshot of Content-Type Builder showing how to find the singular and plural API IDs for a content-type" />
-  <em><figcaption style={captionStyle}>Singular and plural API IDs for a content-type are, by default, derived from its display name and can be found in the <a href="/user-docs/content-type-builder/creating-new-content-type">Content-Type Builder</a> when creating or editing a content-type. You can define custom API IDs while creating the content-type, but these can not modified afterwards.</figcaption></em>
-</figure>
+Singular API ID and Plural API ID values are defined when creating a content-type in the Content-Type Builder, and can be found while editing a content-type in the admin panel (see [User Guide](/user-docs/content-type-builder/creating-new-content-type)). You can define custom API IDs while creating the content-type, but these can not modified afterwards.
+
+<ThemedImage
+alt="Screenshot of the Content-Type Builder to retrieve singular and plural API IDs"
+sources={{
+  light: '/img/assets/apis/singular-and-plural-api-ids.png',
+  dark: '/img/assets/apis/singular-and-plural-api-ids_DARK.png',
+}}
+/>
 
 </details>
 
-### Fetch a single entry
+### Fetch a single document
 
 Documents <DocumentDefinition/> can be fetched by their `documentId`.
 
@@ -66,15 +73,15 @@ Documents <DocumentDefinition/> can be fetched by their `documentId`.
 }
 ```
 
-### Fetch multiple entries
+### Fetch multiple documents
 
-To fetch multiple entries you can use simple flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+To fetch multiple documents <DocumentDefinition/> you can use simple flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
 
 <Tabs groupId="simple-relay">
 
 <Tab value="simple" label="Simple queries">
 
-To fetch multiple entries you can use simple queries like the following:
+To fetch multiple documents you can use simple queries like the following:
 
 ```graphql title="Example query: Find all restaurants"
 restaurants {
@@ -87,7 +94,7 @@ restaurants {
 
 <Tab value="flat" label="Relay-style queries">
 
-Relay-style queries can be used to fetch multiple entries and return meta information:
+Relay-style queries can be used to fetch multiple documents and return meta information:
 
 ```graphql title="Example query: Find all restaurants"
 {
@@ -110,17 +117,239 @@ Relay-style queries can be used to fetch multiple entries and return meta inform
 
 </Tabs>
 
+#### Fetch relations
 
-### Fetch dynamic zone data
+You can ask to include relation data in your simple queries or in your [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
 
-Dynamic zones are union types in graphql so you need to use fragments to query the fields.
+<Tabs groupId="simple-relay">
+
+<Tab value="simple" label="Simple queries">
+
+The following example fetches all documents from the "Restaurant" content-type, and for each of them, also returns some fields for the many-to-many relation with the "Category" content-type:
+
+```graphql title="Example query: Find all restaurants and their associated categories"
+{
+  restaurants {
+    documentId
+    name
+    description
+    # categories is a many-to-many relation
+    categories {
+      documentId
+      name
+    }
+  }
+}
+```
+
+</Tab>
+
+<Tab value="flat" label="Relay-style queries">
+
+The following example fetches all documents from the "Restaurant" content-type using a Relay-style query, and for each restaurant, also returns some fields for the many-to-many relation with the "Category" content-type:
+
+```graphql title="Example query: Find all restaurants and their associated categories"
+{
+  restaurants_connection {
+    nodes {
+      documentId
+      name
+      description
+      # categories is a many-to-many relation
+      categories_connection {
+        nodes {
+          documentId
+          name
+        } 
+      }
+    }
+    pageInfo {
+      page
+      pageCount
+      pageSize
+      total
+    }
+  }
+}
+```
+
+:::info
+For now, `pageInfo` only works for documents at the first level. Future implementations of Strapi might implement `pageInfo` for relations.
+
+<details>
+<summary>Possible use cases for <code>pageInfo</code>:</summary>
+
+<Columns>
+<ColumnLeft>
+This works:
+
+```graphql
+{
+  restaurants_connection {
+    nodes {
+      documentId
+      name
+      description
+      # many-to-many relation
+      categories_connection {
+        nodes {
+          documentId
+          name
+        } 
+      }
+    }
+    pageInfo {
+      page
+      pageCount
+      pageSize
+      total
+    }
+  }
+}
+```
+
+</ColumnLeft>
+<ColumnRight>
+This does not work:
+
+```graphql {13-19}
+{
+  restaurants_connection {
+    nodes {
+      documentId
+      name
+      description
+      # many-to-many relation
+      categories_connection {
+        nodes {
+          documentId
+          name
+        }
+        # not supported
+        pageInfo {
+          page
+          pageCount
+          pageSize
+          total
+        }
+      }
+    }
+    pageInfo {
+      page
+      pageCount
+      pageSize
+      total
+    }
+  }
+}}
+```
+
+</ColumnRight>
+</Columns>
+</details>
+
+:::
+
+</Tab>
+
+</Tabs>
+
+### Fetch media fields
+
+Media fields content is fetched just like other attributes.
+
+For instance, in the following example, we fetch the `url` attribute value for each `cover` media field attached to each document from the "Restaurants" content-type:
 
 ```graphql
 {
   restaurants {
-    dynamiczone {
+    images {
+      documentId
+      url
+    }
+  }
+}
+```
+
+For multiple media fields, you can use simple queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+
+<Tabs groupId="simple-relay">
+
+<Tab value="simple" label="Simple queries">
+
+The following example fetches some attributes from the `images` multiple media field found in the "Restaurant" content-type:
+
+```graphql
+{
+  restaurants {
+    images_connection {
+      nodes {
+        documentId
+        url
+      }
+    }
+  }
+}
+```
+
+</Tab>
+
+<Tab value="flat" label="Relay-style queries">
+
+The following example fetches some attributes from the `images` multiple media field found in the "Restaurant" content-type using a Relay-style query:
+
+```graphql
+{
+  restaurants {
+    images_connection {
+      nodes {
+        documentId
+        url
+      }
+    }
+  }
+}
+```
+
+:::info
+For now, `pageInfo` only works for documents. Future implementations of Strapi might implement `pageInfo` for the media fields `_connection` too.
+:::
+
+</Tab>
+
+</Tabs>
+
+### Fetch components
+
+Components content is fetched just like other attributes.
+
+For instance, in the following example, we fetch the `label`, `start_date`, and `end_date` attributes values for each `closingPeriod` component added to each document from the "Restaurants" content-type:
+
+```graphql
+{
+  restaurants {
+    closingPeriod {
+      label
+      start_date
+      end_date
+    }
+  }
+}
+```
+
+### Fetch dynamic zone data
+
+Dynamic zones are union types in GraphQL so you need to use [fragments](https://www.apollographql.com/docs/react/data/fragments/) (i.e., with `...on`) to query the fields, passing the component name (with the `ComponentCategoryComponentname` syntax) to [`__typename`](https://www.apollographql.com/docs/apollo-server/schema/schema/#the-__typename-field):
+
+The following example shows how to query data for the `label` attribute of a "Closingperiod" component from the "Default" components category that can be added to the "dz" dynamic zone:
+
+```graphql
+{
+  restaurants {
+    dz {
       __typename
       ...on ComponentDefaultClosingperiod {
+        # define which attributes to return for the component
         label
       }
     }
@@ -130,85 +359,121 @@ Dynamic zones are union types in graphql so you need to use fragments to query t
 
 ## Mutations
 
-Mutations in GraphQL are used to modify data (e.g. create, update, delete data).
+Mutations in GraphQL are used to modify data (e.g. create, update, and delete data).
+
+When a content-type is added to your project, 3 automatically generated GraphQL mutations to create, update, and delete documents <DocumentDefinition/> are added to your schema.
+
+For instance, for a "Restaurant" content-type, the following mutations are generated:
+
+| Use case                                    | Singular API ID     |
+|---------------------------------------------|---------------------|
+| Create a new "Restaurant" document          | `createRestaurant`  |
+| Update an existing "Restaurant" restaurant  | `updateRestaurant`  |
+| Delete an existing "Restaurant" restaurant  | `deleteRestaurant`  |
 
 ### Create a new entry
 
+When creating new documents <DocumentDefinition/>, the `data` argument will have an associated input type that is specific to your content-type.
+
+For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
+
+| Mutation           | Argument         | Input type         |
+|--------------------|------------------|--------------------|
+| `createRestaurant` | `data`           | `RestaurantInput!` |
+
+The following example creates a new document for the "Restaurant" content-type and returns its `name` and `documentId`:
+
 ```graphql
-mutation createArticle {
-  createArticle({ title: "Hello"}) {
+mutation CreateRestaurant($data: RestaurantInput!) {
+  createRestaurant(data: {
+    name: "Pizzeria Arrivederci"
+  }) {
+    name
     documentId
-    title
   }
 }
 ```
 
-The implementation of the mutations also supports relational attributes. For example, you can create a new `User` and attach many `Restaurant` to it by writing your query like this:
+When creating a new document, a `documentId` is automatically generated.
+
+The implementation of the mutations also supports relational attributes. For example, you can create a new "Category" and attach many "Restaurants" (using their `documentId`) to it by writing your query like follows:
 
 ```graphql
-mutation {
-  createUser(
-    username: "John"
-    email: "john@doe.com"
-    restaurants: ["a1b2c3d4e5d6f7g8h9i0jkl", "m9n8o7p6q5r4s3t2u1v0wxyz"]
-  ) {
-  documentId
-  username
-  email
-  restaurants {
-    documentId 
-    name
-    description
-    price
+mutation CreateCategory {
+  createCategory(data: { 
+    Name: "Italian Food"
+    restaurants: ["a1b2c3d4e5d6f7g8h9i0jkl", "bf97tfdumkcc8ptahkng4puo"]
+  }) {
+    documentId
+    Name
+    restaurants {
+      documentId
+      name
+    }
   }
 }
 ```
 
 ### Update an existing entry
 
-```graphql
-mutation updateArticle {
-  updateArticle(documentId: "a1b2c3d4e5d6f7g8h9i0jkl", { title: "Hello" }) {
-    documentId
-    title
-  }
-}
-```
+When updating an existing document <DocumentDefinition/>, pass the `documentId` and the `data` object containing new content.
 
-You can also update relational attributes by passing an ID or an array of IDs (depending on the relationship).
+For instance, the following example updates an existing document from the "Restaurants" content-type and give it a new name:
 
 ```graphql
-mutation {
+mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
   updateRestaurant(
-    documentId: "a1b2c3d4e5d6f7g8h9i0jkl"
-    chef: "m9n8o7p6q5r4s3t2u1v0wxyz1" // User ID
-  }) {
-  id
-  chef {
-    username
-    email
+    documentId: "bf97tfdumkcc8ptahkng4puo",
+    data: { name: "Pizzeria Amore" }
+  ) {
+    documentId
+    name
   }
 }
 ```
 
-### Delete an entry
+#### Update relations
+
+You can update relational attributes by passing a `documentId` or an array of `documentId` (depending on the relation type).
+
+For instance, the following example updates a document from the "Restaurant" content-type and adds a relation to a document from the "Category" content-type through the `categories` relation field:
 
 ```graphql
-mutation deleteArticle {
-  deleteArticle(documentId: a1b2c3d4e5d6f7g8h9i0jkl) {
+mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
+  updateRestaurant(
+    documentId: "slwsiopkelrpxpvpc27953je",
+    data: { categories: ["kbbvj00fjiqoaj85vmylwi17"] }
+  ) {
     documentId
-    title
+    name
+    categories {
+      documentId
+      Name
+    }
+  }
+}
+```
+
+### Delete a document
+
+To delete a document <DocumentDefinition/>, pass its `documentId`:
+
+```graphql
+mutation deleteRestaurant {
+  deleteRestaurant(documentId: "a1b2c3d4e5d6f7g8h9i0jkl") {
+    documentId
   }
 }
 ```
 
 ## Filters
 
+<!-- TODO: create examples for every filter and expand this into a section -->
 Queries can accept a `filters` parameter with the following syntax:
 
 `filters: { field: { operator: value } }`
 
-Logical operators (`and`, `or`, `not`) can also be used and accept arrays of objects.
+Multiple filters can be combined together, and logical operators (`and`, `or`, `not`) can also be used and accept arrays of objects.
 
 The following operators are available:
 
@@ -235,10 +500,19 @@ The following operators are available:
 | `or`           | Logical `or`                       |
 | `not`          | Logical `not`                      |
 
-```graphql title="Example query with filters"
+```graphql title="Example with advanced filters: Fetch pizzerias with an averagePrice lower than 20"
 {
-  documents(filters: { name: { eq: "test" }, or: [{ price: { gt: 10 }}, { title: { startsWith: "Book" }}] }) {
+  restaurants(
+    filters: { 
+      averagePrice: { lt: 20 },
+      or: [
+        { name: { eq: "Pizzeria" }}
+        { name: { startsWith: "Pizzeria" }}
+      ]}
+    ) {
     documentId
+    name
+    averagePrice
   }
 }
 ```
