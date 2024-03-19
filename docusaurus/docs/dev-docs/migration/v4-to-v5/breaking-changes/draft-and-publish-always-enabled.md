@@ -3,6 +3,7 @@ title: Draft & Publish always enabled in v5
 description: Draft & Publish is always enabled in Strapi v5 and this is reflected in the Content API models.
 sidebar_label: Draft & Publish always enabled
 displayed_sidebar: devDocsMigrationV5Sidebar
+unlisted: true
 tags:
  - breaking changes
  - Content API
