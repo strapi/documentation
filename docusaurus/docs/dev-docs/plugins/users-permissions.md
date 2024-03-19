@@ -888,7 +888,7 @@ The use of `ngrok` is not needed.
   - **Valid redirect URIs**: `http://localhost:1337/api/connect/keycloak/callback` and `http://localhost:1337/api/connect/keycloak`
   - **Allowed Web Origins**: `http://localhost:3000` and `http://localhost:1337`
 - In the Client Scopes section, ensure you have the `email` and `profile` scopes set to default
-- In the Client Scopes section ensure you have the `openid` scope set to default, if you don't have this you will need to manually create it in the global Client Scopes
+- In the Client Scopes section, ensure you have the `openid` scope set to default, if you don't have this you will need to manually create it in the global Client Scopes
 
 <h4 id="keycloak-strapi-config">Strapi configuration</h4>
 
