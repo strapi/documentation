@@ -1123,6 +1123,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
+                'dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved',
                 'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
               ]
             },
@@ -1181,9 +1182,6 @@ const sidebars = {
                   type: 'doc',
                   label: 'Webpack Aliases Removed',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed',
-                  customProps: {
-                    new: true,
-                  },
                 },
               ]
             },
