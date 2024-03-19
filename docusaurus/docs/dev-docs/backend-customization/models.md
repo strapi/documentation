@@ -619,6 +619,10 @@ Lifecycle hooks can be customized declaratively or programmatically.
 Lifecycles hooks are not triggered when using directly the [knex](https://knexjs.org/) library instead of Strapi functions.
 :::
 
+:::tip
+Please refer to the [error handling](/dev-docs/error-handling#services-and-models-lifecycles) documentation to learn how to throw errors from lifecycle hooks.
+:::
+
 ### Available lifecycle events
 
 The following lifecycle events are available:
