@@ -375,7 +375,7 @@ For instance, for a "Restaurant" content-type, the following mutations are gener
 | Update an existing "Restaurant" restaurant  | `updateRestaurant`  |
 | Delete an existing "Restaurant" restaurant  | `deleteRestaurant`  |
 
-### Create a new entry
+### Create a new document
 
 When creating new documents <DocumentDefinition/>, the `data` argument will have an associated input type that is specific to your content-type.
 
@@ -418,7 +418,7 @@ mutation CreateCategory {
 }
 ```
 
-### Update an existing entry
+### Update an existing document
 
 When updating an existing document <DocumentDefinition/>, pass the `documentId` and the `data` object containing new content. The `data` argument will have an associated input type that is specific to your content-type.
 
@@ -469,7 +469,7 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
 To delete a document <DocumentDefinition/>, pass its `documentId`:
 
 ```graphql
-mutation deleteRestaurant {
+mutation DeleteRestaurant {
   deleteRestaurant(documentId: "a1b2c3d4e5d6f7g8h9i0jkl") {
     documentId
   }
