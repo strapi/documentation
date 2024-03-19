@@ -9,7 +9,7 @@ const imgStyle = {width: '100%', margin: '0' }
 
 # GraphQL API
 
-<NotV5 />
+The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
 :::prerequisites
 To use the GraphQL API, install the [GraphQL](/dev-docs/plugins/graphql.md) plugin:
@@ -33,10 +33,22 @@ npm install @strapi/plugin-graphql
 </Tabs>
 :::
 
-The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
 :::note
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/dev-docs/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
+:::
+
+:::tip Tip: Use the GraphQL playground
+Once installed, the GraphQL playground is accessible at the `/graphql` URL and can be used to interactively build your queries and mutations and read documentation tailored to your content-types:
+
+<ThemedImage
+  alt="GraphQL playground use example"
+  sources={{
+    light:'/img/assets/apis/use-graphql-playground.gif',
+    dark:'/img/assets/apis/use-graphql-playground_DARK.gif',
+  }}
+/>
+
 :::
 
 ## Queries
