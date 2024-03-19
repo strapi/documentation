@@ -18,6 +18,12 @@ The [REST API](/dev-docs/api/rest) by default does not populate any relations, m
 <QsIntroFull />
 :::
 
+:::callout 🏗 Work-in-progress
+Strapi v4 docs very recently included a more extensive description of how to use the `populate` parameter, including an [extensive API reference](https://docs.strapi.io/dev-docs/api/rest/populate-select#population) and [additional guides](https://docs.strapi.io/dev-docs/api/rest/guides/intro). These v4 pages are currently being ported and adapted to Strapi 5 docs so that examples reflect the new data response format.
+
+In the meantime, you can trust the content of the present page as accurate as it already reflects the new Strapi 5, flattened response format (see [breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format) and [REST API introduction](/dev-docs/api/rest#requests) for details); the present page is just not as complete as its v4 equivalent yet.
+:::
+
 <SideBySideContainer>
 <SideBySideColumn>
 
