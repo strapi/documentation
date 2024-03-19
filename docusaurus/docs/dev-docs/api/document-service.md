@@ -4,38 +4,43 @@ description: The Document Service API is the recommended way to interact with yo
 displayed_sidebar: devDocsSidebar
 ---
 
-# Document Service API
+# Document Service API <BetaBadge />
 
-The Document Service API is built on top of the **Query Engine API** <Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/dev-docs/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi data structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/dev-docs/api/content-apis) and [backend customization](/dev-docs/backend-customization) introductions.</Annotation> and used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** <DocumentDefinition />.
+The Document Service API is built on top of the **Query Engine API** <Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/dev-docs/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi data structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/dev-docs/api/content-api) and [backend customization](/dev-docs/backend-customization) introductions.</Annotation> and used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** <DocumentDefinition />.
 
-With the Document Service API, you can also [count](#count) documents and perform Strapi-specific features such as [publishing](#publish) and [unpublishing](#unpublish) documents and [discarding drafts](#discarddraft).
+With the Document Service API, you can also [count](#count) documents and, if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type, perform Strapi-specific features such as [publishing](#publish)/[unpublishing](#unpublish) documents and [discarding drafts](#discarddraft).
+
+:::strapi Entity Service API is deprecated in Strapi 5
+<!-- TODO: update this link to start with docs-v4 once stable is out -->
+The Document Service API is meant to replace the [Entity Service API used in Strapi v4](https://docs.strapi.io/dev-docs/api/entity-service)).
+:::
 
 ## `findOne()`
 
-Find a document matching the id and parameters.
+Find a document matching the passed `documentId` and parameters.
 
-Syntax: `findOne(id: ID, parameters: Params) => Document`
+Syntax: `findOne(documentId: ID, parameters: Params) => Document`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale`|  Locale of the documents to create. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
-| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`locale`](/dev-docs/api/document-service/locale#find-one)|  Locale of the documents to create. | Default locale | String or `undefined` |
+| [`status`](/dev-docs/api/document-service/status#find-one) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+### Example
 
-#### Generic example
+If only a `documentId` is passed without any other parameters, `findOne()` returns the draft version of a document in the default locale:
 
 <ApiCall>
 
-<Request title="Find document by id">
+<Request title="Find a document by passing its documentId">
 
 ```js
-await strapi.documents('api::.articles.articles').findOne(
-  documentId,
+await strapi.documents('api:restaurant.restaurant').findOne(
+  'a1b2c3d4e5f6g7h8i9j0klm'
 )
 ```
 
@@ -43,37 +48,19 @@ await strapi.documents('api::.articles.articles').findOne(
 
 <Response>
 
-```js
+```js {4,5}
 {
-  id: documentId,
-  locale: 'en', // locale=en (default locale) is the default 
-  status: 'draft', 
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  publishedAt: null, // draft version (default)
+  locale: "en", // default locale
   // …
 }
-
 ```
 
 </Response>
 
 </ApiCall>
-
-#### Find the default locale of a document
-
-If no locale and no published status is specified in the parameters, `findOne()` returns the published variation of the document for the default locale (i.e., English).
-
-```js
-// Returns the published variation of the document for the default locale
-await documents(uid).findOne(id);
-
-// Returns the same result as the code above
-await documents(uid).findOne(id, { locale: "en", status: "published" })
-```
-
-#### Find a specific locale of a document
-
-```js
-await documents(uid).findOne(id, { locale: 'fr' });
-```
 
 ## `findFirst()`
 
@@ -85,26 +72,61 @@ Syntax:  `findFirst(parameters: Params) => Document`
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`locale`](/dev-docs/api/document-service/locale#find-first) |  Locale of the documents to find. | Default locale | String or `undefined` |
+| [`status`](/dev-docs/api/document-service/status#find-first) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findfirst-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findfirst-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
-| [`populate`](/dev-docs/api/document-service/populate)<Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/dev-docs/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi data structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/dev-docs/api/content-apis) and [backend customization](/dev-docs/backend-customization) introductions.</Annotation> | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
+| [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Examples
 
 #### Generic example
+
+By default, `findFirst()` returns the draft version, in the default locale, of the first document for the passed unique identifier (collection type id or single type id):
+
+<ApiCall>
+
+<Request title="Find the first document">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findFirst()
+```
+
+</Request>
+
+<Response>
+
+```js
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Restaurant Biscotte",
+  publishedAt: null,
+  locale: "en"
+  // …
+}
+```
+
+</Response>
+
+</ApiCall>
+
+#### Find the first document matching parameters
+
+Pass some parameters to `findFirst()` to return the first document matching them.
+
+If no `locale` or `status` parameters are passed, results return the draft version for the default locale:
 
 <ApiCall>
 
 <Request title="Find the first document that matches the defined filters">
 
 ```js
-await strapi.documents('api::.articles.articles').findFirst(
-  documentId,
+await strapi.documents('api::restaurant.restaurant').findFirst(
   {
-    filters: {  
-      title: "V5 is coming"
+    filters: {
+      name: {
+        $startsWith: "Pizzeria"
+      }
     }
   }
 )
@@ -116,10 +138,10 @@ await strapi.documents('api::.articles.articles').findFirst(
 
 ```js
 {
-  id: documentId,
-  locale: 'en', // locale=en (default locale) is the default 
-  status: 'draft', 
-  title: "V5 is coming"
+  documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+  name: "Pizzeria Arrivederci",
+  publishedAt: null,
+  locale: "en"
   // …
 }
 ```
@@ -138,29 +160,72 @@ Syntax: `findMany(parameters: Params) => Document[]`
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale`|  Locale of the documents to find. | Default locale | String or `undefined` |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`locale`](/dev-docs/api/document-service/locale#find-many) |  Locale of the documents to find. | Default locale | String or `undefined` |
+| [`status`](/dev-docs/api/document-service/status#find-many) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findmany-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findmany-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 | [`pagination`](/dev-docs/api/document-service/sort-pagination#pagination) | [Paginate](/dev-docs/api/document-service/sort-pagination#pagination) results |
 | [`sort`](/dev-docs/api/document-service/sort-pagination#sort) | [Sort](/dev-docs/api/document-service/sort-pagination#sort) results | | | 
-| `_q` | | |
 
 ### Examples
 
 #### Generic example
+
+When no parameter is passed, `findMany()` returns the draft version in the default locale for each document:
 
 <ApiCall>
 
 <Request title="Find documents that match a specific filter">
 
 ```js
-await strapi.documents('api::.articles.articles').findMany(
-  documentId,
+await strapi.documents('api::restaurant.restaurant').findMany()
+```
+
+</Request>
+
+<Response>
+
+```js {5,6}
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: null, // draft version (default)
+    locale: "en" // default locale
+    // …
+  },
+  {
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    name: "Pizzeria Arrivederci",
+    publishedAt: null,
+    locale: "en"
+    // …
+  },
+]
+```
+
+</Response>
+
+</ApiCall>
+
+#### Find documents matching parameters
+
+Available filters are detailed in the [filters](/dev-docs/api/document-service/filters) page of the Document Service API reference.
+
+If no `locale` or `status` parameters are passed, results return the draft version for the default locale:
+
+<ApiCall>
+
+<Request title="Find documents that match a specific filter">
+
+```js
+await strapi.documents('api::restaurant.restaurant').findMany(
   {
     filters: {  
-      title: "V5 is coming"
+      name: {
+        $startsWith: 'Pizzeria'
+      }
     }
   }
 )
@@ -173,10 +238,10 @@ await strapi.documents('api::.articles.articles').findMany(
 ```js
 [
   {
-    id: documentId,
-    locale: 'en', // locale=en (default locale) is the default 
-    status: 'draft', 
-    title: "V5 is coming"
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    name: "Pizzeria Arrivederci",
+    locale: "en", // default locale
+    publishedAt: null, // draft version (default)
     // …
   }, 
   // …
@@ -187,47 +252,18 @@ await strapi.documents('api::.articles.articles').findMany(
 
 </ApiCall>
 
-#### Find `fr` version of all documents that have a `fr` locale available
-
-```js
-await documents(uid).findMany({ locale: 'fr' }); // Defaults to status: published
-await documents(uid).findMany(); // Defaults to default locale  and published status
-```
-
-<details>
-<summary>Result:</summary>
-
-Given the following 4 documents that have various locales:
-
-- Document A:
-    - en
-    - `fr`
-    - it
-- Document B:
-    - en
-    - it
-- Document C:
-    - `fr`
-- Document D:
-    - `fr`
-    - it
-
-`findMany({ locale: 'fr' })` would only return the documents that have the `‘fr’` version, that is documents A, C, and D.
-
-</details>
-
 <!-- TODO: To be completed post v5 GA -->
 <!-- #### Find ‘fr’ version of all documents with fallback on default (en)
 
 ```js
-await documents(uid).findMany({ locale: 'fr', fallbackLocales: ['en'] } );
+await documents('api:restaurant.restaurant').findMany({ locale: 'fr', fallbackLocales: ['en'] } );
 ``` -->
 
 <!-- TODO: To be completed post v5 GA -->
 <!-- #### Find sibling locales for one or many documents
 
 ```js
-await documents(uid).findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
+await documents('api:restaurant.restaurant').findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
 // Option of response forma for this case 
 {
   data: {
@@ -240,7 +276,7 @@ await documents(uid).findMany({ locale: 'fr', populateLocales: ['en', 'it'] } );
 }
 
 
-await documents(uid).findMany({ locale: ['en', 'it'] } );
+await documents('api:restaurant.restaurant').findMany({ locale: ['en', 'it'] } );
 // Option of response format for this case 
 {
   data: {
@@ -258,13 +294,15 @@ await documents(uid).findMany({ locale: ['en', 'it'] } );
 
 Creates a drafted document and returns it.
 
+Pass fields for the content to create in a `data` object.
+
 Syntax: `create(parameters: Params) => Document`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to create. | Default locale | String or `undefined` |
+| [`locale`](/dev-docs/api/document-service/locale#create) | Locale of the documents to create. | Default locale | String or `undefined` |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-create-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-create-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
@@ -272,18 +310,18 @@ Syntax: `create(parameters: Params) => Document`
 
 #### Generic example
 
+If no `locale` parameter is passed, `create()` creates the draft version of the document for the default locale:
+
 <ApiCall>
 
-<Request title="Update spanish draft locale of a document">
+<Request title="Create a new 'Restaurant B' document">
 
 ```js
-strapi.documents.create(
-  documentId, 
-  { 
-    locale: 'es' // defaults to default locale
-    data: { title: "Título" }
-  } 
-)
+await strapi.documents('api::restaurant.restaurant').create({
+  data: {
+    name: 'Restaurant B'
+  }
+})
 ```
 
 </Request>
@@ -291,73 +329,87 @@ strapi.documents.create(
 <Response>
 
 ```js
-{ 
-  id: documentId,
-  locale: 'es',
-  status: 'draft',
-  data: { title: "Titulo" }
-} 
+{
+  documentId: "ln1gkzs6ojl9d707xn6v86mw",
+  name: "Restaurant B",
+  publishedAt: null,
+  locale: "en",
+}
 ```
 
 </Response>
-
 </ApiCall>
 
-#### Create document with specific locale
+#### Auto-publish a document
+
+To automatically publish a document while creating it, add `status: 'published'` to parameters passed to `create()`:
+
+<ApiCall>
+
+<Request>
 
 ```js
-await documents(uid).create({locale: 'fr', data: {}})
+await strapi.documents('api::restaurant.restaurant').create({
+  data: {
+    name: "New Restaurant",
+  },
+  status: 'published',
+})
 ```
 
-#### Create document with default locale
+</Request>
 
-```js
-await documents(uid).create({data: {}}
+<Response>
+
+```js {5}
+{
+  documentId: "d41r46wac4xix5vpba7561at",
+  name: "New Restaurant",
+  publishedAt: "2024-03-14T17:29:03.399Z",
+  locale: "en" // default locale
+  // …
+}
 ```
 
-#### Create document draft
-
-```js
-await documents(uid).create({data: {}}
-```
-
-#### Auto publish document
-
-```js
-// Creates the document in draft, and publishes it afterwards
-await documents(uid).create({autoPublish: true, data: {}}
-```
+</Response>
+</ApiCall>
 
 ## `update()`
 
-Updates document versions and returns them
+Updates document versions and returns them.
 
-Syntax: `update(parameters: Params) => Document`
+Syntax: `update(documentId: ID, parameters: Params) => Document`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which updates all of the document locales at once. | Default locale | String, array of strings, or `null` |
+| [`locale`](/dev-docs/api/document-service/locale#update) | Locale of the document to update. | Default locale | String or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-update-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-update-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+:::tip
+Published versions are read-only, so you can not technically update the published version of a document.
+To update a document and publish the new version right away, you can:
 
-#### Generic example
+- update its draft version with `update()`, then [publish it](#publish) with `publish()`,
+- or directly add `status: 'published'` along with the other parameters passed to `update()`.
+
+:::
+
+### Example
+
+If no `locale` parameter is passed, `update()` updates the document for the default locale:
 
 <ApiCall>
 
-<Request title="Update spanish draft locale of a document">
+<Request>
 
 ```js
-strapi.documents.update(
-  documentId, 
-  { 
-    locale: 'es'
-    data: { title: "Título" }
-  } 
+await strapi.documents('api::restaurant.restaurant').update(
+  'a1b2c3d4e5f6g7h8i9j0klm', // documentId
+  { data: { name: "New restaurant name" }} 
 )
 ```
 
@@ -365,46 +417,27 @@ strapi.documents.update(
 
 <Response>
 
-```js
-{ 
-  documents: [
-    {
-      id: documentId,
-      locale: 'es',
-      status: 'draft',
-      // …
-    }
-  ] 
-} 
+```js {3}
+{
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  name: "New restaurant name",
+  locale: "en",
+  publishedAt: null, // draft
+  // …
+}
 ```
 
 </Response>
 
 </ApiCall>
 
-#### Update many document locales
+<!-- ! not working -->
+<!-- #### Update many document locales
 
 ```js
 // Updates the default locale by default
-await documents(uid).update(docId, {locale: ['es', 'en'], data: {name: "updatedName" }}
-```
-
-#### Update a given document locale
-
-```js
-await documents(uid).update(docId, {locale: 'en', data: {name: "updatedName" }}
-
-// Updates default locale
-await documents(uid).update(docId, {data: {name: "updatedName" }}
-```
-
-#### Auto publish document when updating
-
-```js
-// Creates the document in draft, and publishes it afterwards
-await documents(uid).update(documentId, {autoPublish: true, data: {}}
-
-```
+await documents('api:restaurant.restaurant').update(documentId, {locale: ['es', 'en'], data: {name: "updatedName" }}
+``` -->
 
 ## `delete()`
 
@@ -413,8 +446,8 @@ Deletes one document, or a specific locale of it.
 Syntax:
 
 ```js
-delete(id: ID, parameters: Params) => { 
-  versions: Document[], 
+delete(documentId: ID, parameters: Params) => { 
+  deletedEntries: Number, 
   errors: Errors[]  // Errors occurred when deleting documents
 }
 ```
@@ -423,75 +456,55 @@ delete(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of array of locales of the documents to update.<br/><br/>Defaults to `null`, which deletes all of the document locales at once. | `null`<br/>(all locales) | String or `null` |
+| [`locale`](/dev-docs/api/document-service/locale#delete) | Locale version of the document to delete. | `null`<br/>(deletes only the default locale) | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-delete-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-delete-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+### Example
 
-#### Generic example
+If no `locale` parameter is passed, `delete()` only deletes the default locale version of a document. This deletes both the draft and published versions:
 
-<ApiCall>
-
-<Request title="Delete spanish locale of a document">
+<Request>
 
 ```js
-strapi.documents.delete(documentId, { locale: 'es'} )
+await strapi.documents('api::restaurant.restaurant').delete(
+  'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
+)
 ```
 
 </Request>
 
-<Response>
+The response returns the number of deleted entries (e.g., `{ deletedEntries: 3 }`).
+
+<!-- ! not working -->
+<!-- #### Delete a document with filters
+
+To delete documents matching parameters, pass these parameters to `delete()`.
+
+If no `locale` parameter is passed, it will delete only the default locale version:
+
+<Request>
 
 ```js
-{ 
-  versions: [
-    { id: documentId, locale: 'es', status: 'draft' }
-    { id: documentId, locale: 'es', status: 'published' }
-  ] 
-} 
+await strapi.documents('api::restaurant.restaurant').delete(
+  { filters: { name: { $startsWith: 'Pizzeria' }}}
+)
 ```
 
-</Response>
-
-</ApiCall>
-
-#### Delete an entire document
-
-```js
-// This would remove the entire document by default
-// All its locales and versions
-await documents(uid).delete(id, {});
-```
-
-#### Delete a single locale
-
-```js
-// Removes the english locale (both its draft and published versions)
-await documents(uid).delete(id, { locale: 'en' });
-```
-
-#### Delete a document with filters
-
-```js
-// Removes the english locale (both its draft and published versions)
-await documents(uid).delete(id, { filters: { title: 'V5 is coming' } });
-```
-
-:::caution
-When deleting, if matched entries delete only the draft version , it will also delete the published version.
-:::
+</Request> -->
 
 ## `publish()`
 
 Publishes one or multiple locales of a document.
 
+This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
+
 Syntax:
 
 ```js
-publish(id: ID, parameters: Params) => { 
-  id: string, 
+publish(documentId: ID, parameters: Params) => { 
+  documentId: string, 
   versions: Document[]  // Published versions
 }
 ```
@@ -500,25 +513,22 @@ publish(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to publish.<br/><br/>If omitted, publishes all document locales. | All locales | String |
+| [`locale`](/dev-docs/api/document-service/locale#publish) | Locale of the documents to publish. | Only the default locale | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-publish-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-publish-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+### Example
 
-#### Generic example
+If no `locale` parameter is passed, `publish()` only publishes the default locale version of the document:
 
 <ApiCall>
 
-<Request title="Publish english locale of document
-">
+<Request>
 
 ```js
-strapi.documents.publish(
-  documentId, 
-  // Publish english locale of document
-  { locale: 'en' }
+await strapi.documents('api::restaurant.restaurant').publish(
+  'a1b2c3d4e5f6g7h8i9j0klm', 
 );
 ```
 
@@ -526,13 +536,14 @@ strapi.documents.publish(
 
 <Response>
 
-```js
+```js {6}
 {
-  id: documentId,
-  documents: [
+  versions: [
     {
-      id: documentId,
-      locale: 'en',
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
       // …
     }
   ]
@@ -543,37 +554,27 @@ strapi.documents.publish(
 
 </ApiCall>
 
-#### Publish a document locale
+<!-- ! not working -->
+<!-- #### Publish document locales with filters
 
 ```js
-await documents(uid).publish(id, { locale: 'en' });
-```
-
-#### Publish all document locales
-
-```js
-// Publishes all by default
-await documents(uid).publish(id);
-```
-
-#### Publish document locales with filters
-
-```js
-// Only publish locales which title is "Ready to publish"
-await documents(uid).publish(id, filters: {
-  title: 'Ready to publish'
-});
-```
+// Only publish locales with title is "Ready to publish"
+await strapi.documents('api::restaurant.restaurant').publish(
+  { filters: { title: 'Ready to publish' }}
+);
+``` -->
 
 ## `unpublish()`
 
-Unpublishes one or multiple locales of a document.
+Unpublishes one or all locale versions of a document, and returns how many locale versions were unpublished.
+
+This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
 Syntax:
 
 ```js
-unpublish(id: ID, parameters: Params) => { 
-  id: string, 
+unpublish(documentId: ID, parameters: Params) => { 
+  documentId: string, 
   versions: Document[]  // Unpublished versions
 }
 ```
@@ -582,25 +583,22 @@ unpublish(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to unpublish.<br/><br/>If omitted, unpublishes all document locales. | All locales | String |
+| [`locale`](/dev-docs/api/document-service/locale#unpublish) | Locale of the documents to unpublish. | Only the default locale | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-unpublish-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-unpublish-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+### Example
 
-#### Generic example
+If no `locale` parameter is passed, `unpublish()` only unpublishes the default locale version of the document:
 
 <ApiCall>
 
-<Request title="Find document by id">
+<Request>
 
 ```js
-strapi.documents.unpublish(
-  documentId, 
-  {
-    locale: 'en' // Unpublish english locale of document
-  }
+await strapi.documents('api::restaurant.restaurant').unpublish(
+  'a1b2c3d4e5f6g7h8i9j0klm', 
 );
 ```
 
@@ -610,14 +608,7 @@ strapi.documents.unpublish(
 
 ```js
 {
-  id: documentId,
-  documents: [
-    { 
-      id: documentId,
-      locale: 'en',
-      // …
-    }
-  ]
+  versions: 1
 }
 ```
 
@@ -625,37 +616,17 @@ strapi.documents.unpublish(
 
 </ApiCall>
 
-#### Unpublish a document locale
-
-```js
-await documents(uid).publish(id, { locale: 'en' });
-```
-
-#### Unpublish all document locales
-
-```js
-// Unpublishes all by default
-await documents(uid).unpublish(id, {});
-```
-
-#### Unpublish document locales with filters
-
-```js
-// Only Unpublish locales which title is "Ready to unpublish"
-await documents(uid).unpublish(id, filters: {
-  title: 'Ready to unpublish'
-});
-```
-
 ## `discardDraft()`
 
 Discards draft data and overrides it with the published version.
 
+This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
+
 Syntax:
 
 ```js
-discardDraft(id: ID, parameters: Params) => { 
-  id: string, 
+discardDraft(documentId: ID, parameters: Params) => { 
+  documentId: string, 
   versions: Document[]  // New drafts
 }
 ```
@@ -664,25 +635,22 @@ discardDraft(id: ID, parameters: Params) => {
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to discard.<br/><br/>If omitted, discards all draft locales. | All locales | String |
+| [`locale`](/dev-docs/api/document-service/locale#discard-draft) | Locale of the documents to discard. | Only the default locale. | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-discarddraft-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-discarddraft-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+### Example
 
-#### Generic example
+If no `locale` parameter is passed, `discardDraft()` discards draft data and overrides it with the published version only for the default locale:
 
 <ApiCall>
 
-<Request title="Find document by id">
+<Request title="Discard draft for the default locale of a document">
 
 ```js
 strapi.documents.discard(
-  documentId, 
-  {
-    locale: 'en' // Discard english locale draft of document
-  }
+  'a1b2c3d4e5f6g7h8i9j0klm', 
 );
 ```
 
@@ -692,11 +660,12 @@ strapi.documents.discard(
 
 ```js
 {
-  id: documentId,
-  documents: [
-    { 
-      id: documentId,
-      locale: 'en',
+  versions: [
+    {
+      documentId: "lviw819d5htwvga8s3kovdij",
+      name: "Biscotte Restaurant",
+      publishedAt: null,
+      locale: "en"
       // …
     }
   ]
@@ -707,80 +676,68 @@ strapi.documents.discard(
 
 </ApiCall>
 
-#### Unpublish a document locale
-
-```js
-await documents(uid).publish(id, { locale: 'en' });
-```
-
-#### Unpublish all document locales
-
-```js
-// Unpublishes all by default
-await documents(uid).unpublish(id, {});
-```
-
-#### Unpublish document locales with filters
-
-```js
-// Only unpublish locales which title is "Ready to unpublish"
-await documents(uid).unpublish(id, filters: {
-  title: 'Ready to unpublish'
-});
-```
-
 ## `count()`
 
-Count the number of documents that match the provided filters.
+Count the number of documents that match the provided parameters.
 
-Syntax: `count(parameters: Params) => number` 
+Syntax: `count(parameters: Params) => number`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
-| `locale` | Locale of the documents to count, defaults to the default locale of the application. | All locales | String |
-| `status` | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find only draft documents</li></ul> | `'published'` | `'published'` or `'draft'` |
+| [`locale`](/dev-docs/api/document-service/locale#count) | Locale of the documents to count | Default locale | String or `null` |
+| [`status`](/dev-docs/api/document-service/status#count) | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
+
+:::note
+Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
+
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+:::
 
 ### Examples
 
 #### Generic example
 
+If no parameter is passed, the `count()` method the total number of documents for the default locale:
 <ApiCall>
 
-<Request title="Find document by id">
+<Request>
 
 ```js
-const enArticles = await strapi.documents('api::article.article').count({ locale: 'en' })
-// enArticles = 2 
+await strapi.documents('api::restaurant.restaurant').count()
 ```
 
 </Request>
 
 </ApiCall>
 
-#### count draft documents in a specific locale
+#### Count published documents
+
+To count only published documents, pass `status: 'published'` along with other parameters to the `count()` method.
+
+If no `locale` parameter is passed, documents are counted for the default locale.
+
+<Request>
 
 ```js
-// Count number of draft documents in English
-strapi.documents(uid).count({ locale: 'en', status: 'draft' })
+strapi.documents('api::restaurant.restaurant').count({ status: 'published' })
 ```
 
-#### Count published documents in a specific locale
-
-```js
-// Count number of published documents in French
-strapi.documents(uid).count({ locale: 'fr', status: 'published' })
-```
+</Request>
 
 #### Count documents with filters
 
+Any [filters](/dev-docs/api/document-service/filters) can be passed to the `count()` method.
+
+If no `locale` and no `status` parameter is passed, draft documents (which is the total of available documents for the locale since even published documents are counted as having a draft version) are counted only for the default locale:
+
 ```js
 /**
- * Count number of published documents (default if status is omitted) 
+ * Count number of draft documents (default if status is omitted) 
  * in English (default locale) 
- * that match a title 
+ * whose name starts with 'Pizzeria'
  */
-strapi.documents(uid).count({ filters: { title: "V5 is coming" } })`
+strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $startsWith: "Pizzeria" }}})`
 ```

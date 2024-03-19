@@ -3,7 +3,7 @@ title: Setup and Deployment
 displayed_sidebar: devDocsSidebar
 # description: todo
 pagination_prev: dev-docs/intro
-pagination_next: dev-docs/api/content-apis
+pagination_next: dev-docs/api/content-api
 ---
 
 # Installation, Configuration, and Deployment

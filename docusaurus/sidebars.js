@@ -156,12 +156,12 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '📦 Content API',
-      link: {type: 'doc', id: 'dev-docs/api/content-apis'},
+      link: {type: 'doc', id: 'dev-docs/api/content-api'},
       items: [
         {
           type: 'doc',
           label: 'Introduction & Concepts',
-          id: 'dev-docs/api/content-apis',
+          id: 'dev-docs/api/content-api',
           customProps: {
             updated: true,
           },
@@ -244,12 +244,12 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction & Concepts',
               id: 'dev-docs/api/document'
             },
             {
               type: 'doc',
-              label: 'API reference',
+              label: 'Available methods',
               id: 'dev-docs/api/document-service'
             },
             {
@@ -271,6 +271,16 @@ const sidebars = {
               type: 'doc',
               label: 'Sort & Pagination',
               id: 'dev-docs/api/document-service/sort-pagination'
+            },
+            {
+              type: 'doc',
+              label: 'Locale',
+              id: 'dev-docs/api/document-service/locale'
+            },
+            {
+              type: 'doc',
+              label: 'Status',
+              id: 'dev-docs/api/document-service/status'
             },
           ]
         },
@@ -570,7 +580,14 @@ const sidebars = {
               label: 'Introduction',
               id: 'dev-docs/migration/v4-to-v5/introduction'
             },
-            'dev-docs/migration/v4-to-v5/breaking-changes',
+            {
+              type: 'doc',
+              label: 'Breaking Changes',
+              id: 'dev-docs/migration/v4-to-v5/breaking-changes',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/migration/v4-to-v5/migration-guides',
           ]
         }
@@ -582,6 +599,10 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'user-docs/content-manager/introduction-to-content-manager'
+      },
       label: 'Content Manager',
       items: [
         'user-docs/content-manager/introduction-to-content-manager',
@@ -593,9 +614,9 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
-          // customProps: {
-          //   updated: true,
-          // },
+          customProps: {
+            updated: true,
+          }
         },
         'user-docs/content-manager/adding-content-to-releases',
       ],
@@ -1068,6 +1089,22 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options',
                 'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
+                {
+                  type: 'doc',
+                  label: 'Server log level is `info`',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
+                  customProps: {
+                    new: true,
+                  },
+                },
+                {
+                  type: 'doc',
+                  label: 'Model config path uses uid',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
+                  customProps: {
+                    new: true,
+                  },
+                }
               ]
             },
             {
@@ -1085,6 +1122,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
                 'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
+                'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
               ]
             },
             {
@@ -1138,6 +1176,14 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/vite',
                 'dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6',
+                {
+                  type: 'doc',
+                  label: 'Webpack Aliases Removed',
+                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed',
+                  customProps: {
+                    new: true,
+                  },
+                },
               ]
             },
             {
