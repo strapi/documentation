@@ -51,11 +51,11 @@ sources={{
 
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
-| `GET`    | `/api/:pluralApiId`             | [Get a list of entries](#get-entries) |
-| `POST`   | `/api/:pluralApiId`             | [Create an entry](#create-an-entry)   |
-| `GET`    | `/api/:pluralApiId/:documentId` | [Get an entry](#get-an-entry)         |
-| `PUT`    | `/api/:pluralApiId/:documentId` | [Update an entry](#update-an-entry)   |
-| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete an entry](#delete-an-entry)   |
+| `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-documents) |
+| `POST`   | `/api/:pluralApiId`             | [Create a document](#create-an-entry)   |
+| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get-an-entry)         |
+| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update-an-entry)   |
+| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete-an-entry)   |
 
 </TabItem>
 
@@ -63,9 +63,9 @@ sources={{
 
 | Method   | URL                   | Description                                |
 | -------- | --------------------- | ------------------------------------------ |
-| `GET`    | `/api/:singularApiId` | [Get an entry](#get-an-entry)              |
-| `PUT`    | `/api/:singularApiId` | [Update/Create an entry](#update-an-entry) |
-| `DELETE` | `/api/:singularApiId` | [Delete an entry](#delete-an-entry)        |
+| `GET`    | `/api/:singularApiId` | [Get a document](#get-an-entry)              |
+| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update-an-entry) |
+| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete-an-entry)        |
 
 </TabItem>
 
@@ -123,12 +123,12 @@ Strapi 5's Content API includes 2 major differences with Strapi v4:
 Requests return a response as an object which usually includes the following keys:
 
 - `data`: the response data itself, which could be:
-  - a single entry, as an object with the following keys:
+  - a single document, as an object with the following keys:
     - `id` (integer)
     - `documentId` (string), which is the unique identifier to use when querying a given document,
     - the attributes (each attribute's type depends on the attribute, see [models attributes](/dev-docs/backend-customization/models#model-attributes) documentation for details)
     - `meta` (object)
-  - a list of entries, as an array of objects
+  - a list of documents, as an array of objects
   - a custom response
 
 - `meta` (object): information about pagination, publication state, available locales, etc.
@@ -143,9 +143,9 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 <SideBySideColumn>
 
-### Get entries
+### Get documents
 
-Returns entries matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
+Returns documents matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
 
 :::strapi Strapi 5 vs. Strapi 4
 In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
@@ -222,9 +222,9 @@ In Strapi 5 the response format has been flattened, and attributes are directly 
 
 <SideBySideColumn>
 
-### Get an entry
+### Get a document
 
-Returns an entry by `documentId`.
+Returns a document by `documentId`.
 
 :::strapi Strapi 5 vs. Strapi v4
 In Strapi 5, a specific document is reached by its `documentId`.
@@ -283,14 +283,14 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 <SideBySideColumn>
 
-### Create an entry
+### Create a document
 
-Creates an entry and returns its value.
+Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized entries](/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
 
 :::note
-While creating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
+While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
 
 </SideBySideColumn>
@@ -363,16 +363,16 @@ While creating an entry, you can define its relations and their order (see [Mana
 
 <SideBySideColumn>
 
-### Update an entry
+### Update a document
 
-Partially updates an entry by `id` and returns its value.
+Partially updates a document by `id` and returns its value.
 
 Send a `null` value to clear fields.
 
 :::note NOTES
 * Even unmodified fields must be included in the request's body.
-* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of an entry](/dev-docs/plugins/i18n#updating-an-entry).
-* While updating an entry, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
+* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/plugins/i18n#updating-an-entry).
+* While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
 
 </SideBySideColumn>
@@ -445,7 +445,7 @@ Send a `null` value to clear fields.
 
 <SideBySideColumn>
 
-### Delete an entry
+### Delete a document
 
 Deletes a document.
 
