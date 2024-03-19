@@ -33,12 +33,6 @@ npm install @strapi/plugin-graphql
 </Tabs>
 :::
 
-
-:::note
-The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/dev-docs/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
-:::
-
-:::tip Tip: Use the GraphQL playground
 Once installed, the GraphQL playground is accessible at the `/graphql` URL and can be used to interactively build your queries and mutations and read documentation tailored to your content-types:
 
 <ThemedImage
@@ -49,6 +43,10 @@ Once installed, the GraphQL playground is accessible at the `/graphql` URL and c
   }}
 />
 
+<br/>
+
+:::note No GraphQL API to upload media files
+The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/dev-docs/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
 ## Queries
@@ -373,6 +371,30 @@ The following example shows how to query data for the `label` attribute of a "Cl
 }
 ```
 
+### Fetch draft or published versions
+
+If the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature is enabled for the content-type, you can add a `status` parameter to queries to fetch draft or published versions of documents <DocumentDefinition/>:
+
+```graphql title="Example: Fetch draft versions of documents"
+query Query($status: PublicationStatus) {
+  restaurants(status: DRAFT) {
+    documentId
+    name
+    publishedAt # should return null
+  }
+}
+```
+
+```graphql title="Example: Fetch published versions of documents"
+query Query($status: PublicationStatus) {
+  restaurants(status: PUBLISHED) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
 ## Mutations
 
 Mutations in GraphQL are used to modify data (e.g. create, update, and delete data).
@@ -495,6 +517,10 @@ mutation DeleteRestaurant {
   }
 }
 ```
+
+:::tip
+If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/plugins/i18n#delete-a-locale-for-a-document)).
+:::
 
 ### Mutations on media files
 
