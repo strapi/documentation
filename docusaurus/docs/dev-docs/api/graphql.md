@@ -389,13 +389,13 @@ For instance, for a "Restaurant" content-type, the following mutations are gener
 
 ### Create a new document
 
-When creating new documents <DocumentDefinition/>, the `info` argument will have an associated input type that is specific to your content-type.
+When creating new documents <DocumentDefinition/>, the `data` argument will have an associated input type that is specific to your content-type.
 
 For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
 
 | Mutation           | Argument         | Input type         |
 |--------------------|------------------|--------------------|
-| `createRestaurant` | `info`           | `RestaurantInput!` |
+| `createRestaurant` | `data`           | `RestaurantInput!` |
 
 The following example creates a new document for the "Restaurant" content-type and returns its `name` and `documentId`:
 
@@ -430,6 +430,10 @@ mutation CreateCategory {
 }
 ```
 
+:::tip
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#create-a-new-localized-document)).
+:::
+
 ### Update an existing document
 
 When updating an existing document <DocumentDefinition/>, pass the `documentId` and the `data` object containing new content. The `data` argument will have an associated input type that is specific to your content-type.
@@ -453,6 +457,10 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
   }
 }
 ```
+
+:::tip
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#update-a-document-for-a-specific-locale)).
+:::
 
 #### Update relations
 
