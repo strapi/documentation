@@ -1164,7 +1164,7 @@ const sidebars = {
             },
             {
               type: "category",
-              label: "Strapi objects and methods",
+              label: "Strapi objects, methods, and packages",
               collapsed: false,
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
