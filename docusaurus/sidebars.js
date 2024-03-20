@@ -29,7 +29,13 @@ const sidebars = {
           },
         },
         'dev-docs/quick-start',
-        'dev-docs/whats-new',
+        {
+          type: 'doc',
+          id: 'dev-docs/whats-new',
+          customProps: {
+            new: true
+          }
+        },
         'dev-docs/faq',
         'dev-docs/community',
         'dev-docs/usage-information',
