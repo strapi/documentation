@@ -12,6 +12,12 @@ tags:
 This document has been written incrementally to help developers migrate their strapi plugins & applications to _not_ use the `helper-plugin` package.
 It is written in alphabetical order grouped by domain based on _every_ export that existed in the aforementioned package.
 
+:::danger
+It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
+
+The beta version of Strapi 5 is not meant to be used in production yet.
+:::
+
 ## Components
 
 ### AnErrorOccurred
