@@ -585,7 +585,7 @@ const sidebars = {
               label: 'Breaking Changes',
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
               customProps: {
-                updated: true,
+                new: true,
               },
             },
             // 'dev-docs/migration/v4-to-v5/migration-guides',
@@ -1104,7 +1104,8 @@ const sidebars = {
                   type: 'doc',
                   label: 'Model config path uses uid',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
-                }
+                },
+                'dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations',
               ]
             },
             {
@@ -1124,6 +1125,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
                 'dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved',
+                'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
               ]
             },

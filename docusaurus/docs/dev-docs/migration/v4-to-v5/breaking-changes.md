@@ -26,6 +26,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 * [Configuration filenames should meet strict requirements](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 * [Server log level is `info`](/dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level)
 * [Model config path uses uid instead of dot notation](/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid)
+* [The `webhooks.populateRelations` server configuration is removed](/dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations)
 
 ## Content API
 
@@ -37,7 +38,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 * [The `localizations` field does not exist anymore](/dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field)
 * [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id)
 * [The `locale` attribute name is reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved)
-* [Apollo Server v3 upgraded to Apollo Server v4](/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4)
+* [Components and dynamic zones do not return an `id` with REST API requests](/dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id)
 
 ## Database
 
@@ -64,6 +65,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 - [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite)
 - [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
 - [Webpack Aliases are removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed)
+- [Apollo Server v3 upgraded to Apollo Server v4](/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4)
 
 
 ## Internal changes

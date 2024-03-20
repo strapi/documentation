@@ -1,7 +1,7 @@
 ---
 title: Locale attribute name reserved
 description: In Strapi 5, the 'locale' attribute name is reserved, and all custom fields also named 'locale' should be renamed before migrating to prevent data loss.
-sidebar_label: Sidebar label
+sidebar_label: locale attribute name reserved
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
