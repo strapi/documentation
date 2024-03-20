@@ -15,6 +15,6 @@ Strapi 5 beta brings many new features and improvements, and this page quickly h
 
 👀 There might be much more: new or updated pages are identified in the table of contents with <ThemedImage alt="new badge" sources={{light:'/img/assets/new-badge.png', dark:'/img/assets/new-badge_DARK.png'}} /> or <ThemedImage alt="updated badge" sources={{light:'/img/assets/updated-badge.png', dark:'/img/assets/updated-badge_DARK.png'}} /> badges.
 
-➕ You will also soon find more official guides and more references to external resources throughout (contributor documentation, design system documentation, and blog articles).
+➕ You will also soon find more official guides and more references to external resources (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
 
 🤖 Also, last but not least, you might have noticed a shiny new **Ask AI** button at the bottom of the page! Click on it and ask your questions. It keeps the context of previous answers so you can ask follow-up questions as long as you don't close the popup.
