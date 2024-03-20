@@ -78,7 +78,7 @@ The response of components and dynamic zones in the REST API does not contain an
   * The REST API response returns the published version, so using the `id` would resort to trying to update the draft version of a component or dynamic zone with the unique identifier of its published version, which is not possible.
   * Trying to partially update a component will result in the following error: `Some of the provided components in component are not related to the entity`.
 
-* This breaking change only affects the REST API, not the [Document Service API](/dev-docs/rest/document-service), because the Document Service API returns the draft version of a document by default. This also makes it possible to partially update a component or dynamic zone in the Content Manager.
+* This breaking change only affects the REST API, not the [Document Service API](/dev-docs/api/document-service), because the Document Service API returns the draft version of a document by default. This also makes it possible to partially update a component or dynamic zone in the Content Manager.
 
 ### Manual procedure
 
