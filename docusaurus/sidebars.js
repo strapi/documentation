@@ -1132,7 +1132,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
                 'dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved',
                 'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id',
-                'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
+                'dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-rewritten',
               ]
             },
             {
@@ -1194,6 +1194,7 @@ const sidebars = {
                   label: 'Webpack Aliases Removed',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed',
                 },
+                'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
               ]
             },
             {

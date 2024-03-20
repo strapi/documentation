@@ -39,6 +39,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 * [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id)
 * [The `locale` attribute name is reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved)
 * [Components and dynamic zones do not return an `id` with REST API requests](/dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id)
+* [The GraphQL API has been completely rewritten](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-rewritten)
 
 ## Database
 
