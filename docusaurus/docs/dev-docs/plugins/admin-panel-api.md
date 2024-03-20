@@ -616,52 +616,109 @@ export default {
 
 </details>
 
-#### Predefined hook
+#### Predefined hooks
 
-Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/intro).
+Strapi includes a predefined `Admin/CM/pages/ListView/inject-column-in-table` hook that can be used to add or mutate a column of the List View of the [Content Manager](/user-docs/intro):
 
-<details>
-<summary>Example: 'Admin/CM/pages/ListView/inject-column-in-table' hook, as used by the Internationalization plugin to add the 'Content available in' column</summary>
+```jsx
+runHookWaterfall(INJECT_COLUMN_IN_TABLE, {
+	displayedHeaders: ListFieldLayout[],
+	layout: ListFieldLayout,
+});
+```
 
-```jsx title="./plugins/my-plugin/admin/src/index.js"
-import get from 'lodash/get';
-import cellFormatter from './components/cellFormatter';
+```tsx
+interface ListFieldLayout {
+  /**
+   * The attribute data from the content-type's schema for the field
+   */
+  attribute: Attribute.Any | { type: 'custom' };
+  /**
+   * Typically used by plugins to render a custom cell
+   */
+  cellFormatter?: (
+    data: Document,
+    header: Omit<ListFieldLayout, 'cellFormatter'>,
+    { collectionType, model }: { collectionType: string; model: string }
+  ) => React.ReactNode;
+  label: string | MessageDescriptor;
+  /**
+   * the name of the attribute we use to display the actual name e.g. relations
+   * are just ids, so we use the mainField to display something meaninginful by
+   * looking at the target's schema
+   */
+  mainField?: string;
+  name: string;
+  searchable?: boolean;
+  sortable?: boolean;
+}
 
-export default {
-  bootstrap(app) {
-    app.registerHook(
-      'Admin/CM/pages/ListView/inject-column-in-table',
-      ({ displayedHeaders, layout }) => {
-        const isFieldLocalized = get(
-          layout,
-          'contentType.pluginOptions.i18n.localized',
-          false
-        );
-        if (!isFieldLocalized) {
-          return { displayedHeaders, layout };
-        }
-        return {
-          layout,
-          displayedHeaders: [
-            ...displayedHeaders,
-            {
-              key: '__locale_key__', // Needed for the table
-              fieldSchema: { type: 'string' }, // Schema of the attribute
-              metadatas: {
-                label: 'Content available in', // Label of the header,
-                sortable: true | false, // Define if the column is sortable
-              }, // Metadatas for the label
-              // Name of the key in the data we will display
-              name: 'locales',
-              // Custom renderer: props => Object.keys(props).map(key => <p key={key}>key</p>)
-              cellFormatter,
-            },
-          ],
-        };
-      }
-    );
-  },
+interface ListLayout {
+  layout: ListFieldLayout[];
+  components?: never;
+  metadatas: {
+    [K in keyof Contracts.ContentTypes.Metadatas]: Contracts.ContentTypes.Metadatas[K]['list'];
+  };
+  options: LayoutOptions;
+  settings: LayoutSettings;
+}
+
+type LayoutOptions = Schema['options'] & Schema['pluginOptions'] & object;
+
+interface LayoutSettings extends Contracts.ContentTypes.Settings {
+  displayName?: string;
+  icon?: never;
 }
 ```
 
-</details>
+Strapi also includes a `Admin/CM/pages/EditView/mutate-edit-view-layout` hook that can be used to mutate the Edit View  of the [Content Manager](/user-docs/intro):
+
+```tsx
+interface EditLayout {
+  layout: Array<Array<EditFieldLayout[]>>;
+  components: {
+    [uid: string]: {
+      layout: Array<EditFieldLayout[]>;
+      settings: Contracts.Components.ComponentConfiguration['settings'] & {
+        displayName?: string;
+        icon?: string;
+      };
+    };
+  };
+  metadatas: {
+    [K in keyof Contracts.ContentTypes.Metadatas]: Contracts.ContentTypes.Metadatas[K]['edit'];
+  };
+  options: LayoutOptions;
+  settings: LayoutSettings;
+}
+
+interface EditFieldSharedProps extends Omit<InputProps, 'hint' | 'type'> {
+  hint?: string;
+  mainField?: string;
+  size: number;
+  unique?: boolean;
+  visible?: boolean;
+}
+
+/**
+ * Map over all the types in Attribute Types and use that to create a union of new types where the attribute type
+ * is under the property attribute and the type is under the property type.
+ */
+type EditFieldLayout = {
+  [K in Attribute.Kind]: EditFieldSharedProps & {
+    attribute: Extract<Attribute.Any, { type: K }>;
+    type: K;
+  };
+}[Attribute.Kind];
+
+type LayoutOptions = Schema['options'] & Schema['pluginOptions'] & object;
+
+interface LayoutSettings extends Contracts.ContentTypes.Settings {
+  displayName?: string;
+  icon?: never;
+}
+```
+
+:::note
+`EditViewLayout` and `ListViewLayout` are parts of the `useDocumentLayout` hook (see [source code](https://github.com/strapi/strapi/blob/v5/main/packages/core/admin/admin/src/content-manager/hooks/useDocumentLayout.ts)).
+:::
