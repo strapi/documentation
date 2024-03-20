@@ -29,6 +29,7 @@ const sidebars = {
           },
         },
         'dev-docs/quick-start',
+        'dev-docs/whats-new',
         'dev-docs/faq',
         'dev-docs/community',
         'dev-docs/usage-information',
