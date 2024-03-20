@@ -1171,6 +1171,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports',
                 'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
                 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container',
+                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored',
               ]
             },
             {
