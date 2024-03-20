@@ -48,7 +48,7 @@ The `content-manager_editViewLayoutManager` and `content-manager_listViewLayoutM
 
 ### Notes
 
-Additional information about hooks can be found in the [Admin Panel API for plugins](/dev-docs/api/plugins/admin-panel-api#hooks-api) documentation.
+Additional information about hooks can be found in the [Admin Panel API for plugins](/dev-docs/plugins/admin-panel-api#hooks-api) documentation.
 
 ### Manual procedure
 
