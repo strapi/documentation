@@ -52,6 +52,16 @@ export function BetaBadge(props) {
   );
 }
 
+export function FutureBadge(props) {
+  return (
+    <Badge
+      variant="Future"
+      link="/dev-docs/configurations/features"
+      {...props}
+    />
+  );
+}
+
 export function EnterpriseBadge(props) {
   return (
     <Badge
@@ -62,11 +72,49 @@ export function EnterpriseBadge(props) {
   );
 }
 
+export function CloudProBadge(props) {
+  return (
+    <Badge
+      variant="Strapi Cloud Pro"
+      link="https://strapi.io/pricing-cloud"
+      {...props}
+    />
+  );
+}
+
+export function CloudTeamBadge(props) {
+  return (
+    <Badge
+      variant="Strapi Cloud Team"
+      link="https://strapi.io/pricing-cloud"
+      {...props}
+    />
+  );
+}
+export function CloudDevBadge(props) {
+  return (
+    <Badge
+      variant="Strapi Cloud Dev"
+      link="https://strapi.io/pricing-cloud"
+      {...props}
+    />
+  );
+}
 
 export function NewBadge(props) {
   return (
     <Badge
       variant="New ✨"
+      {...props}
+    />
+  );
+}
+
+
+export function UpdatedBadge(props) {
+  return (
+    <Badge
+      variant="Updated ️🖌"
       {...props}
     />
   );

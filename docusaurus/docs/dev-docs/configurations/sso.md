@@ -1,6 +1,6 @@
 ---
-title: SSO
-displayed_sidebar: devDocsSidebar
+title: Single Sign-on (SSO)
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 ---
@@ -767,10 +767,6 @@ npm install --save passport-keycloak-oauth2-oidc
 
 </Tabs>
 
-:::caution
-When setting the `OKTA_DOMAIN` environment variable, make sure to include the protocol (e.g. `https://example.okta.com`). If you do not, you will end up in a redirect loop.
-:::
-
 <details>
   <summary>Configuration example for Keycloak (OpenID Connect):</summary>
   <div>
@@ -892,6 +888,11 @@ npm install --save passport-okta-oauth20
 </TabItem>
 
 </Tabs>
+
+:::caution
+When setting the `OKTA_DOMAIN` environment variable, make sure to include the protocol (e.g. `https://example.okta.com`). If you do not, you will end up in a redirect loop.
+:::
+
 <details>
   <summary>Configuration example for Okta:</summary>
   <div>

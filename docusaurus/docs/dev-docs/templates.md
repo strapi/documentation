@@ -79,22 +79,23 @@ This structure can be created manually or automatically generated with the [`str
 <TabItem value="yarn" label="Yarn">
 
 ```sh
-yarn strapi templates:generate <path>
+yarn strapi templates:generate [path]
 ```
 
 </TabItem>
 
 <TabItem value="npm" label="NPM">
-  
+
 ```sh
 npx strapi templates:generate [path]
 ```
-  
+
 </TabItem>
 
-</Tabs>
+</Tabs> 
 
 The repository root can contain any other files or directories desired, but must include the `template` directory, `package.json` file, and `template.json` file at a minimum.
+
 
 #### `template` directory
 

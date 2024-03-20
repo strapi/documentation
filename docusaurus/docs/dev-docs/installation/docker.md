@@ -12,6 +12,10 @@ import DockerEnvTable from '/docs/snippets/docker-env-table.md'
 Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).
 :::
 
+:::danger
+Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
+:::
+
 The following documentation will guide you through building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
 
 Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
@@ -55,12 +59,13 @@ Sample `Dockerfile`:
 ```dockerfile title="./Dockerfile"
 FROM node:18-alpine
 # Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
+RUN yarn global add node-gyp
 RUN yarn config set network-timeout 600000 -g && yarn install
 ENV PATH /opt/node_modules/.bin:$PATH
 
@@ -80,12 +85,13 @@ CMD ["yarn", "develop"]
 ```dockerfile title="./Dockerfile"
 FROM node:18-alpine
 # Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
+RUN npm install -g node-gyp
 RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install
 ENV PATH /opt/node_modules/.bin:$PATH
 
@@ -316,6 +322,40 @@ networks:
 
 </Tabs>
 
+### (Optional) .dockerignore
+
+When building Docker images, it's essential to include only the files necessary for running the application inside the container. This is where the `.dockerignore` file comes into play. Similar to how `.gitignore` works for Git, specifying files and directories that should not be tracked or uploaded, `.dockerignore` tells Docker which files and directories to ignore when building an image.
+
+Sample `.dockerignore`:
+
+```bash
+.tmp/
+.cache/
+.git/
+.env
+build/
+node_modules/
+# Ignoring folders that might be used in starter templates
+data/
+backup/
+```
+
+#### Why Use .dockerignore?
+
+Including unnecessary files in a Docker build context can significantly slow down the build process. By excluding files and directories like .tmp, .cache, .git, build, node_modules, and .env through .dockerignore, the amount of data sent to the Docker daemon is reduced. This leads to faster build times since Docker has fewer files to process and include in the image.
+
+#### Security
+
+Excluding files and directories can also enhance the security of the Docker image. Sensitive files, such as `.env`, which might contain environment-specific secrets or credentials, should not be included in Docker images. This prevents accidental exposure of sensitive information.
+
+#### Cleaner Images
+
+A Docker image cluttered with unnecessary files can lead to potential confusion and issues, especially when the image is shared across teams or used in production. By keeping the image clean and focused only on the essentials, it becomes easier to maintain and troubleshoot.
+
+#### Reduced Image Size
+
+Smaller Docker images are more efficient to store, transfer, and launch. By excluding non-essential files, the final image size can be significantly reduced, leading to quicker pull and start times, especially in distributed and cloud environments.
+
 ## Production Environments
 
 The Docker image in production is different from the one used in development/staging environments because of the differences in the admin build process in addition to the command used to run the application. Typical production environments will use a reverse proxy to serve the application and the admin panel. The Docker image is built with the production build of the admin panel and the command used to run the application is `strapi start`.
@@ -334,12 +374,12 @@ The following `Dockerfile` can be used to build a production Docker image for a 
 ```dockerfile title="./Dockerfile.prod"
 # Creating multi-stage build for production
 FROM node:18-alpine as build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
+ENV NODE_ENV=production
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
+RUN yarn global add node-gyp
 RUN yarn config set network-timeout 600000 -g && yarn install --production
 ENV PATH /opt/node_modules/.bin:$PATH
 WORKDIR /opt/app
@@ -349,8 +389,7 @@ RUN yarn build
 # Creating final production image
 FROM node:18-alpine
 RUN apk add --no-cache vips-dev
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=production
 WORKDIR /opt/
 COPY --from=build /opt/node_modules ./node_modules
 WORKDIR /opt/app
@@ -370,13 +409,14 @@ CMD ["yarn", "start"]
 ```dockerfile title="./Dockerfile.prod"
 # Creating multi-stage build for production
 FROM node:18-alpine as build
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev > /dev/null 2>&1
+RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 COPY package.json package-lock.json ./
-RUN npm config set network-timeout 600000 -g && npm install --only=production
+RUN npm install -g node-gyp
+RUN npm config set fetch-retry-maxtimeout 600000 -g && npm install --only=production
 ENV PATH /opt/node_modules/.bin:$PATH
 WORKDIR /opt/app
 COPY . .

@@ -1,19 +1,31 @@
 ---
 title: Server API for plugins
+sidebar_label: Server API
 displayed_sidebar: devDocsSidebar
 description: Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
-sidebarDepth: 3
-
 ---
 
 # Server API for plugins
 
-A Strapi [plugin](/dev-docs/plugins) can interact with the backend or the [frontend](/dev-docs/api/plugins/admin-panel-api) of the Strapi application. The Server API is about the backend part.
+A Strapi [plugin](/dev-docs/plugins) can interact with both the back end and the [front end](/dev-docs/api/plugins/admin-panel-api) of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
 
-Creating and using a plugin interacting with the Server API consists of 2 steps:
+:::prerequisites
+You have [created a Strapi plugin](/dev-docs/plugins/development/create-a-plugin).
+:::
 
-1. Declare and export the plugin interface within the [`strapi-server.js` entry file](#entry-file)
-2. [Use the exported interface](#usage)
+The Server API includes:
+
+- an [entry file](#entry-file) which export the required interface,
+- [lifecycle functions](#lifecycle-functions),
+- a [configuration](#configuration) API,
+- the ability to add [cron](#cron) jobs,
+- and the ability to [customize all elements of the back-end server](#backend-customization).
+
+Once you have declared and exported the plugin interface, you will be able to [use the plugin interface](#usage).
+
+:::note
+The whole code for the server part of your plugin could live in the `/strapi-server.js|ts` or `/server/index.js|ts` file. However, it's recommended to split the code into different folders, just like the [structure](/dev-docs/plugins/development/plugin-structure) created by the `strapi generate plugin` CLI generator command.
+:::
 
 ## Entry file
 
@@ -35,7 +47,7 @@ This function is called to load the plugin, before the application is [bootstrap
 
 **Example:**
 
-```js title="path ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 module.exports = () => ({
   register({ strapi }) {
@@ -52,7 +64,7 @@ The [bootstrap](/dev-docs/configurations/functions#bootstrap) function is called
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 module.exports = () => ({
   bootstrap({ strapi }) {
@@ -69,7 +81,7 @@ The [destroy](/dev-docs/configurations/functions#destroy) lifecycle function is 
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 module.exports = () => ({
   destroy({ strapi }) {
@@ -80,7 +92,7 @@ module.exports = () => ({
 
 ## Configuration
 
-`config` stores the default plugin configuration.
+`config` stores the default plugin configuration. It loads and validates the configuration inputted from the user within the [`./config/plugins.js` configuration file](/dev-docs/configurations/plugins).
 
 **Type**: `Object`
 
@@ -91,7 +103,7 @@ module.exports = () => ({
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
 
 const config = require('./config');
 
@@ -112,11 +124,15 @@ Once defined, the configuration can be accessed:
 - with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
 - or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
 
+:::tip
+Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.
+:::
+
 ## Cron
 
 The `cron` object allows you to add cron jobs to the Strapi instance.
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 module.exports = () => ({
   bootstrap({ strapi }) {
     strapi.cron.add({
@@ -153,6 +169,12 @@ strapi.cron.jobs
 ```
 
 ## Backend customization
+
+All elements of the back-end server of Strapi can be customized through a plugin using the Server API.
+
+:::prerequisites
+To better understand this section, ensure you have read through the [back-end customization](/dev-docs/backend-customization) documentation of a Strapi application.
+:::
 
 ### Content-types
 
@@ -232,7 +254,10 @@ An array of [routes](/dev-docs/backend-customization/routes) configuration.
 
 **Type**: `Object[]`
 
-**Example:**
+**Examples:**
+
+<Tabs>
+<TabItem value="content-api" label="Content API routes only">
 
 ```js title="path: ./src/plugins/my-plugin/strapi-server.js"
 
@@ -265,6 +290,53 @@ module.exports = [
 ];
 ```
 
+</TabItem>
+
+<TabItem value="both" label="Content API and admin routes">
+
+It is also possible to combine both admin and Content API routes if you need different policies on these: 
+
+```js title="./src/plugins/my-plugin/server/routes/index.js"
+
+module.exports = {
+  admin: require('./admin'),
+  'content-api': require('./content-api'),
+};
+```
+
+```js title="./src/plugins/my-plugin/server/routes/admin/index.js"
+
+module.exports = {
+  type: 'admin',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['policyName'],
+    },
+  }],
+};
+```
+
+```js title="./src/plugins/my-plugin/server/routes/content-api/index.js"
+
+module.exports = {
+  type: 'content-api',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['differentPolicyName'],
+    },
+  }],
+};
+```
+
+</TabItem>
+</Tabs>
+
 ### Controllers
 
 An object with the [controllers](/dev-docs/backend-customization/controllers) the plugin provides.
@@ -274,14 +346,14 @@ An object with the [controllers](/dev-docs/backend-customization/controllers) th
 **Example:**
 
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const controllers = require('./controllers');
 
@@ -290,7 +362,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/controllers/index.js"
+```js title="./src/plugins/my-plugin/server/controllers/index.js"
 
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
@@ -301,7 +373,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/controllers/controller-a.js"
+```js title="./src/plugins/my-plugin/server/controllers/controller-a.js"
 
 module.exports = ({ strapi }) => ({
   doSomething(ctx) {
@@ -320,14 +392,14 @@ Services should be functions taking `strapi` as a parameter.
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const services = require('./services');
 
@@ -336,7 +408,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/services/index.js"
+```js title="./src/plugins/my-plugin/server/services/index.js"
 
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
@@ -347,7 +419,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/services/service-a.js"
+```js title="./src/plugins/my-plugin/server/services/service-a.js"
 
 module.exports = ({ strapi }) => ({
   someFunction() {
@@ -364,14 +436,14 @@ An object with the [policies](/dev-docs/backend-customization/policies) the plug
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/strapi-server.js"
 
 "use strict";
 
 module.exports = require('./server');
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/index.js"
 
 const policies = require('./policies');
 
@@ -380,7 +452,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/policies/index.js"
+```js title="./src/plugins/my-plugin/server/policies/index.js"
 
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
@@ -391,7 +463,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/policies/policy-a.js"
+```js title="./src/plugins/my-plugin/server/policies/policy-a.js"
 
 module.exports = (policyContext, config, { strapi }) => {
     if (ctx.state.user && ctx.state.user.isActive) {
@@ -410,50 +482,54 @@ An object with the [middlewares](/dev-docs/configurations/middlewares) the plugi
 
 **Example:**
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+```js title="./src/plugins/my-plugin/server/middlewares/your-middleware.js"
 
-"use strict";
-
-module.exports = require('./server');
+/** 
+ * The your-middleware.js file 
+ * declares a basic middleware function and exports it.
+ */
+'use strict';
+module.exports = async (ctx, next) => {
+  console.log("your custom logic")
+  await next();
+}
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="./src/plugins/my-plugin/server/middlewares/index.js"
 
-const middlewares = require('./middlewares');
-module.exports = () => ({
-  middlewares,
-});
-```
-
-```js title="path: ./src/plugins/my-plugin/server/middlewares/index.js"
-
-const middlewareA = require('./middleware-a');
-const middlewareB = require('./middleware-b');
+/**
+ * The middleware function previously created
+ * is imported from its file and
+ * exported by the middlewares index.
+ */
+'use strict';
+const yourMiddleware = require('./your-middleware');
 
 module.exports = {
-  middlewareA,
-  middlewareB,
+  yourMiddleware
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/middlewares/middleware-a.js"
+```js title="./src/plugins/my-plugin/server/register.js"
 
-module.exports = (options, { strapi }) => {
- return async (ctx, next) => {
-    const start = Date.now();
-    await next();
-    const delta = Math.ceil(Date.now() - start);
+/**
+ * The middleware is called from 
+ * the plugin's register lifecycle function.
+ */
+'use strict';
+const middlewares = require('./middlewares');
 
-    strapi.log.http(`${ctx.method} ${ctx.url} (${delta} ms) ${ctx.status}`);
- };
+module.exports = ({ strapi }) => {
+  strapi.server.use(middlewares.yourMiddleware);
 };
 ```
 
 ## Usage
 
-Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes top-level getters and global getters.
+Once a plugin is exported and loaded into Strapi, its features are accessible in the code through getters. The Strapi instance (`strapi`) exposes both top-level getters and global getters:
 
-While top-level getters imply chaining functions, global getters are syntactic sugar that allows direct access using a feature's uid:
+- top-level getters imply chaining functions<br/>(e.g., `strapi.plugin('the-plugin-name').controller('the-controller-name'`),
+- global getters are syntactic sugar that allows direct access using a feature's uid<br/>(e.g., `strapi.controller('plugin::plugin-name.controller-name')`).
 
 ```js
 // Access an API or a plugin controller using a top-level getter 

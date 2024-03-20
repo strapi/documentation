@@ -1,6 +1,6 @@
 ---
 title: Database
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file to configure its databases.
 
 ---
@@ -33,7 +33,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 | Parameter                                                | Description                                                                                           | Type      | Default |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
-| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                          | `String`  | -       |
+| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql` (or `mysql2`, see [additional details](#alternative-database-driver-packages) | `String`  | -       |
 | `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
@@ -50,7 +50,7 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 
 | Parameter  | Description                                                                                                                   | Type                  |
 |------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
+| `connectionString`| [Database connection string](#database-connections-using-connectionstring). When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in Strapi v4.6.2+**           | `String`                  |
 | `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
 | `port`     | Database port                                                                                                                 | `Integer`             |
 | `database` | Database name.                                                                                                                | `String`              |
@@ -358,7 +358,7 @@ module.exports = ({ env }) => {
 ```ts
 import path from 'path';
 
-export default = ({ env }) => {
+export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -449,6 +449,7 @@ DATABASE_PASSWORD=strap1
 DATABASE_SSL=false
 ```
 
+
 </TabItem>
 
 <TabItem value="postgres" label="PostgreSQL">
@@ -478,6 +479,10 @@ DATABASE_FILENAME=.tmp/data.db
 
 </TabItem>
 </Tabs>
+
+:::tip
+If you are getting an `ER_ACCESS_DENIED_ERROR message` and the `DATABASE_PASSWORD` value in your `.env` file includes special characters, try surrounding the password with single quotes. For instance, `DATABASE_PASSWORD=example-i-had-special-chars-like-#` should become `DATABASE_PASSWORD='example-i-had-special-chars-like-#'`.
+:::
 
 ### Environment variables for Strapi applications before `v4.6.2`
 

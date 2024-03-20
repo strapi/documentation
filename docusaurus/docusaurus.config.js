@@ -203,7 +203,15 @@ const config = {
               {
                 label: 'Strapi Cloud',
                 to: '/cloud/intro'
-              }
+              },
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
+              },
+              {
+                label: 'Contributor Docs',
+                href: 'https://contributor.strapi.io'
+              },
             ],
           },
           {
@@ -247,7 +255,13 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
+        // selector: '.markdown :not(em) > img', // disabled to ensure it works with themed images
+        // We also have a bug with images embedded in details blocks, see https://github.com/gabrielcsapo/docusaurus-plugin-image-zoom/issues/27
+      },
+      hubspot: {
+        accountId: 6893032,
+        async: false, // OPTIONAL: sets the async attribute on the script tag, defaults to false
+        defer: false, // OPTIONAL: sets the defer attribute on the script tag, defaults to false
       },
     }),
 
@@ -258,6 +272,7 @@ const config = {
         containerId: 'GTM-WT49VGT',
       },
     ],
+    'docusaurus-plugin-hubspot',
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
     /**

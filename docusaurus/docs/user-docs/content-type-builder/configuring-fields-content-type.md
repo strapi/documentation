@@ -18,12 +18,15 @@ Depending on what content-type or component is being created or edited, not all 
 
 <ThemedImage
   alt="Fields selection"
-  width="80%"
   sources={{
     light: '/img/assets/content-type-builder/fields-selection.png',
     dark: '/img/assets/content-type-builder/fields-selection_DARK.png',
   }}
 />
+
+:::caution
+Never name a field `locale` because it could interfere with, and break, the [i18n](/user-docs/settings/internationalization) feature.
+:::
 
 ## Regular fields
 
@@ -59,17 +62,17 @@ The Text field displays a textbox that can contain small text. This field can be
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_richtext.svg" /> Rich Text
+### <img width="28" src="/img/assets/icons/ctb_richtext.svg" /> Rich Text (Markdown)
 
-The Rich Text field displays an editor with formatting options to manage rich text. This field can be used for long written content.
+The Rich Text (Markdown) field displays an editor with basic formatting options to manage rich text written in Markdown. This field can be used for long written content.
 
 <Tabs>
 
 <TabItem value="base" label="Base settings">
 
-| Setting name | Instructions                           |
-|--------------|----------------------------------------|
-| Name         | Write the name of the Rich Text field. |
+| Setting name | Instructions                                      |
+|--------------|---------------------------------------------------|
+| Name         | Write the name of the Rich Text (Markdown) field. |
 
 </TabItem>
 
@@ -81,13 +84,41 @@ The Rich Text field displays an editor with formatting options to manage rich te
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
 
 </TabItem>
 
 </Tabs>
+
+### <img width="28" src="/img/assets/icons/ctb_richtextblocks.svg" /> Rich Text (Blocks)
+
+The Rich Text (Blocks) field displays an editor with live rendering and various options to manage rich text. This field can be used for long written content, even including images and code.
+
+<Tabs>
+
+<TabItem value="base" label="Base settings">
+
+| Setting name | Instructions                                    |
+|--------------|-------------------------------------------------|
+| Name         | Write the name of the Rich Text (Blocks) field. |
+
+</TabItem>
+
+<TabItem value="advanced" label="Advanced settings">
+
+| Setting name   | Instructions                                                                |
+|----------------|-----------------------------------------------------------------------------|
+| Private field  | Tick to make the field private and prevent it from being found via the API. |
+| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
+
+</TabItem>
+
+</Tabs>
+
+:::strapi Front-end renderers
+If using the Blocks editor, we recommend that you also use the official [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to render the content in a React frontend. Other community-supported renderers are also available on [npm](https://www.npmjs.com/search?q=strapi%20blocks%20renderer).
+:::
 
 ### <img width="28" src="/img/assets/icons/ctb_number.svg" /> Number
 

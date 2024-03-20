@@ -5,6 +5,8 @@ description: Learn in this guide how to deploy your Strapi application on Digita
 
 ---
 
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+
 # DigitalOcean Droplets
 
 This is a step-by-step guide for deploying a Strapi project to a [DigitalOcean Droplet](https://www.digitalocean.com/docs/droplets/). Alternatively, you can also choose to deploy to DigitalOcean's Platform-as-a-Service (PaaS) called [App Platform](/dev-docs/deployment/digitalocean-app-platform) if database-related requirements and budget better fit with your use case.
@@ -20,6 +22,8 @@ This guide covers hosting the database on a DigitalOcean Droplet. Another option
 :::caution
 When creating your Strapi project, don't use the `--quickstart` flag as the quick start installation uses SQLite, which is not desired for remote hosting.
 :::
+
+<ConsiderStrapiCloud />
 
 ### Create a "Droplet"
 
@@ -140,7 +144,7 @@ Note the database name, username and password for later use.
 
 :::prerequisites
 - You must have `git` [installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-- Git should be [initialized](https://git-scm.com/docs/git-init) for your previsouly created Strapi project.
+- Git should be [initialized](https://git-scm.com/docs/git-init) for your previously created Strapi project.
 :::
 
 1. Replace the content of the `config/database.js` with the following:
@@ -448,7 +452,7 @@ More information can be found on webhooks in general in the [GitHub documentatio
               .digest('hex');
 
           if (req.headers['x-hub-signature'] == sig) {
-            exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
+            exec(`cd ${repo} && git pull && NODE_ENV=production npm run build && ${PM2_CMD}`, (error, stdout, stderr) => {
               if (error) {
                 console.error(`exec error: ${error}`);
                 return;

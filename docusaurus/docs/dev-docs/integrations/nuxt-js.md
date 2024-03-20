@@ -332,6 +332,7 @@ const createRestaurant = async () => {
     name: name.value,
     description: description.value
   })
+}
 </script>
 ```
 

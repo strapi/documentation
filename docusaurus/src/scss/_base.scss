@@ -10,7 +10,7 @@
 }
 
 main {
-  article:first-child:not(.col),
+  article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
     --custom-main-px: var(--strapi-spacing-0);
     --custom-main-width: 683px;

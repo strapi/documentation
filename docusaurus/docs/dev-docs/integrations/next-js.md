@@ -60,6 +60,10 @@ No installation needed.
 
 </Tabs>
 
+:::tip
+If you're getting `localhost` errors with Axios, but your requests work fine by replacing localhost with 127.0.0.1, please ensure this is not a CORS issue (see additional details in the [axios GitHub](https://github.com/axios/axios/issues/4837#issuecomment-1198487683)).
+:::
+
 ## GET Request your collection type
 
 Execute a `GET` request on the `restaurant` collection type in order to fetch all your restaurants.

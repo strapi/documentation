@@ -64,7 +64,22 @@ strapi.entityService.findMany('api::article.article', {
 
 ## Pagination
 
-To paginate results returned by the Entity Service API, you can use the `start` and `limit` parameters:
+Results can be paginated using 2 different strategies (see [REST API documentation](/dev-docs/api/rest/sort-pagination#pagination) for more details):
+
+- pagination by page, when defining the `page` and `pageSize` parameters,
+- and pagination by offset, when defining the `start` and `limit` parameters.
+
+2 different functions can be used to paginate results with the Entity Service API and accept different pagination strategies: 
+
+| Function name | Possible pagination method(s)                               |
+| ------------- | ----------------------------------------------------------- |
+| `findMany()`  | Offset pagination only                                      |
+| `findPage()`  | <ul><li>Offset pagination</li><li>Page pagination</li></ul> |
+
+<Tabs>
+<TabItem value="find-many" label="findMany()">
+
+`findMany()` should only be used with offset pagination:
 
 ```js
 strapi.entityService.findMany('api::article.article', {
@@ -73,11 +88,35 @@ strapi.entityService.findMany('api::article.article', {
 });
 ```
 
-You may instead use the `page` and `pageSize` parameters:
+</TabItem>
+<TabItem value="find-page" label="findPage()">
+
+`findPage()` accepts both offset and page pagination, provided you use only one pagination strategy per query:
+
+<Tabs>
+<TabItem value="offset-pagination" label="Offset pagination">
 
 ```js
-strapi.entityService.findMany('api::article.article', {
+strapi.entityService.findPage('api::article.article', {
+  start: 10,
+  limit: 15,
+});
+```
+
+</TabItem>
+
+<TabItem value="page-pagination" label="Page pagination">
+
+```js
+strapi.entityService.findPage('api::article.article', {
   page: 1,
   pageSize: 15,
 });
 ```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+</Tabs>

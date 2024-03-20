@@ -45,6 +45,8 @@ The Strapi Documentation team has created a complete style guide for you to make
 
 💁 While writing, please consider the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) that the Strapi Documentation team will use to assess the quality and consistency of the contribution. 😊
 
+**Important:** If you use an automatic formatter in your code editor (e.g., Prettier), **please disable it** as it could add unnecessary changes to your pull request or cause rendering issues because some Markdown formatting is based on whitespace.
+
 ### Working locally: Set up the project
 
 To set up the Docusaurus project on your machine, perform the following steps from a terminal instance:

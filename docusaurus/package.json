@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "4.12.0",
+  "version": "4.20.5",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -22,6 +22,7 @@
     "@docusaurus/theme-mermaid": "2.4.0",
     "@mdx-js/react": "^1.6.22",
     "clsx": "^1.2.1",
+    "docusaurus-plugin-hubspot": "^1.0.1",
     "docusaurus-plugin-image-zoom": "^0.1.1",
     "docusaurus-plugin-sass": "^0.2.3",
     "embla-carousel-autoplay": "^7.1.0",

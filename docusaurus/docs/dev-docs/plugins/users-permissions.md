@@ -201,9 +201,56 @@ Setting JWT expiry for more than 30 days is **not recommended** due to security 
 
 ### Registration
 
-Creates a new user in the database with a default role as 'registered'.
+#### Configuration
+
+If you have added any additional fields to your user model that need to be accepted on registration, they need to be added to the list of allowed fields in the `register` configuration option, otherwise they will not be accepted.
+
+For example, if you have added a field called "nickname" that you wish to accept from the API on user registration:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/plugins.js"
+module.exports = ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/plugins.ts"
+export default ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
 
 #### Usage
+
+Creates a new user in the database with a default role as 'registered'.
 
 ```js
 import axios from 'axios';
@@ -249,7 +296,7 @@ Let's say that:
 7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/api/auth/github/callback?access_token=eyfvg` that returns the Strapi user profile with its `jwt`. <br/> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address).
 8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
-An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react).
+An example of a frontend app that handles this flow can be found here: [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react).
 
 #### Setting up the server url
 
@@ -296,7 +343,7 @@ Later you will give this url to your provider. <br/> For development, some provi
 
 Instead of a generic explanation we decided to show an example for each provider.
 
-In the following examples, the frontend app will be the [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react). <br/>
+In the following examples, the frontend app will be the [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react). <br/>
 It (the frontend app) will be running on `http://localhost:3000`. <br/>
 Strapi (the backend) will be running on `http://localhost:1337`.
 
@@ -313,7 +360,7 @@ Use `ngrok` to serve the backend app.
 ngrok http 1337
 ```
 
-Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
+Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok url.
 
 <h4 id="github-config">Github configuration</h4>
 
@@ -349,7 +396,7 @@ Use `ngrok` to serve the backend app.
 ngrok http 1337
 ```
 
-Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
+Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok url.
 
 <h4 id="facebook-config">Facebook configuration</h4>
 
@@ -450,7 +497,7 @@ The use of `ngrok` is not needed.
   - **Client ID**: fill in the **App client id** (`5bd7a786qdupjmi0b3s10vegdt`)
   - **Client Secret**: fill in the **App client secret** (`19c5c78dsfsdfssfsdfhpdb4nkpb145vesdfdsfsffgh7vwd6g45jlipbpb`)
   - **Host URI (Subdomain)**: fill in the URL value that you copied earlier (`myapp67b50345-67b50b17-local.auth.eu-central-1.amazoncognito.com`)
-  - **The redirect URL to your front-end app**: if you are using strapi react-login [https://github.com/strapi/strapi-examples/tree/master/login-react/](https://github.com/strapi/strapi-examples/tree/master/login-react/) use `http://localhost:3000/connect/cognito/redirect` but if you do not yet have a front-end app to test your Cognito configuration you can then use the following URL `http://localhost:1337/api/auth/cognito/callback`
+  - **The redirect URL to your front-end app**: if you are using strapi react-login [https://github.com/strapi/strapi-examples/tree/master/examples/login-react/](https://github.com/strapi/strapi-examples/tree/master/examples/login-react/) use `http://localhost:3000/connect/cognito/redirect` but if you do not yet have a front-end app to test your Cognito configuration you can then use the following URL `http://localhost:1337/api/auth/cognito/callback`
 
 </TabItem>
 
@@ -465,7 +512,7 @@ Use `ngrok` to serve the backend app.
 ngrok http 1337
 ```
 
-Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
+Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok url.
 
 <h4 id="twitter-config">Twitter configuration</h4>
 
@@ -568,7 +615,7 @@ Use `ngrok` to serve the backend app.
 ngrok http 1337
 ```
 
-Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
+Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok url.
 
 <h4 id="instagram-config">Instagram configuration</h4>
 
@@ -781,7 +828,7 @@ The use of `ngrok` is not needed.
   - Client ID: `<Your Auth0 Client ID>`
   - Client Secret: `<Your Auth0 Client Secret>`
   - Subdomain: `<Your Auth0 tenant url>`, example it is the part in bold in the following url: https://**my-tenant.eu**.auth0.com/
-  - The redirect URL to your front-end app: `http://localhost:3000/connect/auth0`
+  - The redirect URL to your front-end app: `http://localhost:3000/connect/auth0/redirect`
 
 </TabItem>
 
@@ -796,7 +843,7 @@ Use `ngrok` to serve the backend app.
 ngrok http 1337
 ```
 
-Don't forget to update the server url in the Strapi config file `./config/server.js` and the server URL in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok URL.
+Don't forget to update the server url in the Strapi config file `./config/server.js` and the server URL in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok URL.
 
 <h4 id="patreon-config">Patreon configuration</h4>
 
@@ -826,7 +873,7 @@ Version 2 is probably the best choice. See their
 </Tabs>
 
 Your configuration is done.
-Launch the backend and the [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react), go to `http://localhost:3000` and try to connect to the provider your configured.
+Launch the backend and the [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react), go to `http://localhost:3000` and try to connect to the provider your configured.
 
 #### Setup the frontend
 

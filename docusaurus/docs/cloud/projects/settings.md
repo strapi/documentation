@@ -1,55 +1,103 @@
 ---
-title: Project Settings
+title: Project settings
 displayed_sidebar: cloudSidebar
 description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/settings.html
 sidebar_position: 2
 ---
 
-# Project Settings
+# Project settings
 
-The *Project Settings* page enables you to manage the configuration and settings for of Strapi Cloud project. There are 4 tabs available: *General*, *Domains*, *Variables* and *Billing*.
+From a chosen project's dashboard, the *Settings* tab, located in the header, will redirect you to the *Project Settings* page. It enables you to manage the configurations and settings for your Strapi Cloud project.
+
+There are 5 tabs available: [*General*](#general), [*Domains*](#domains), [*Backups*](#backups), [*Variables*](#variables) and [*Billing*](#billing).
 
 ## General
 
 The *General* tab enables you to check and update the following options for the project:
 
-- Details: to modify the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name cannot be edited after creation.
-- Connected Git repository: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-github-repository-branch)).
-- Selected region: to see the hosting region of the project.
-- Debug info: to see the internal project name for the project. This is useful for support purposes.
-- Delete project: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
+- *Details*: to see the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+- *Connected Git repository*: to change the branch of the GitHub repository used for your project (see [Modifying GitHub repository branch](#modifying-git-repository-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Selected region*: to see the hosting region of the project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+- *Debug info*: to see the internal project name for the project. This is useful for support purposes.
+- *Node version*: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
+- *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
-![Project settings](/img/assets/cloud/settings.png)
+<ThemedImage
+  alt="Project settings page"
+  sources={{
+    light: '/img/assets/cloud/settings.png',
+    dark: '/img/assets/cloud/settings_DARK.png',
+  }}
+/>
 
-### Modifying GitHub repository branch
+### Modifying git repository & branch
 
-The GitHub repository branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). Both can afterwards be edited via the account settings.
+The GitHub or Gitlab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to:
 
-1. In the *Connected Git repository* section of the *General* tab, click on the **Edit** button.
-2. In the *Edit Git settings* dialog, edit the available options of your choice:
+- update the project's repository or switch to another git provider (see [Updating repository](#updating-repository)),
+- edit the project's branch, base directory and deploy on push setting (see [Editing branch](#editing-branch)).
+
+:::caution
+Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
+:::
+
+#### Updating repository
+
+1. In the *Connected git repository* section of the *General* tab, click on the **Update repository** button.
+2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch to GitHub/GitLab** button at the bottom of the *Update repository* dialog. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository dialog*.
+3. In the *Update repository* dialog, fill in the 3 available settings:
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
-    | Selected branch | Choose a branch from the drop-down list.                                 |
+    | Account         | Choose an account from the drop-down list.                               |
+    | Repository      | Choose a repository from the drop-down list.                             |
+    | Git branch      | Choose a branch from the drop-down list.                                 |
+
+4. Click on the **Save** button.
+5. In the confirmation dialog, confirm your changes by clicking on the **Relink repository** button.
+
+#### Editing branch
+
+1. In the *Connected git repository* section of the *General* tab, click on the **Edit branch** button.
+2. In the *Edit branch* dialog, edit the settings below:
+
+    | Setting name    | Instructions                                                             |
+    | --------------- | ------------------------------------------------------------------------ |
+    | Git branch      | Choose a branch from the drop-down list.                                 |
     | Base directory  | Write the path of the base directory in the textbox.                     |
-    | Deploy the project on every commit pushed to this branch | Check the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. |
+    | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 3. Click on the **Save** button.
+
+### Modifying Node version
+
+The project's Node version is first chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)), through the advanced settings. It is possible to switch to another Node version afterwards.
+
+1. In the *Node version* section of the *General* tab, click on the **Edit** button.
+2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
+3. Click on the **Save** button.
+4. Click on the **Trigger deploy** button in the right corner of the project's header. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
 
 ### Deleting Strapi Cloud project
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
 
 1. In the *Delete project* section of the *General* tab, click on the **Delete project** button.
-2. In the dialog, type `DELETE` in the textbox.
-3. Confirm the deletion of your project by clicking on the **Delete** button.
+2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
+3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
 ## Domains
 
 The *Domains* tab enables you to manage domains and connect new ones.
 
-![Domains](/img/assets/cloud/settings_domains.png)
+<ThemedImage
+  alt="Project domains"
+  sources={{
+    light: '/img/assets/cloud/settings_domains.png',
+    dark: '/img/assets/cloud/settings_domains_DARK.png',
+  }}
+/>
 
 All existing domains for your Strapi Cloud project are listed in the *Domains* tab. For each domain, you can:
 
@@ -76,18 +124,71 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 3. Click on the **Save** button.
 
+## Backups <CloudProBadge /> <CloudTeamBadge />
+
+The *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
+
+:::note
+The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+
+Note also that only project owners can restore a backup. Maintainers have access to the *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
+:::
+
+:::tip
+For projects created before the release of the Backup feature in October 2023, the first backup will automatically be triggered with the next deployment of the project.
+:::
+
+<ThemedImage
+  alt="Backups"
+  sources={{
+    light: '/img/assets/cloud/settings_backups.png',
+    dark: '/img/assets/cloud/settings_backups_DARK.png',
+  }}
+/>
+
+### Restoring a backup
+
+If you need to restore a backup of your project:
+
+1. In the *Backups* section, click on the **Restore backup** button.
+2. In the dialog, choose one of the available backups of your project in the *Choose backup* drop-down.
+3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
+
 ## Variables
 
-[Environment variables](../../dev-docs/configurations/environment) are used to configure the environment of your Strapi app, such as the database connection.
+Environment variables (more information in the [Developer Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
-You can view default values, and create/edit/delete environment variables for your project in the **Variables** tab:
+<ThemedImage
+  alt="Project variables"
+  sources={{
+    light: '/img/assets/cloud/settings_variables.png',
+    dark: '/img/assets/cloud/settings_variables_DARK.png',
+  }}
+/>
 
-![Project variables](/img/assets/cloud/settings_variables.png)
+In the *Variables* tab, you can:
+- click the **Add variable** button to create a new variable
+- edit any variable, each being composed of a *Name* and a *Value*
+- click the ![Delete icon](/img/assets/icons/delete.svg) delete button associated with any variable to delete it
+- click the **Save** button to save any change made on the page
 
 ## Billing
 
-The *Billing* section displays the current subscription plan and included usage for the project.
+The *Billing* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and have a detailed look at its usage.
 
-Use the **Manage subscription** button to change the subscription plan.
+:::tip
+In the Usage section of the *Billing* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
+:::
 
-![Project billing](/img/assets/cloud/settings_billing.png)
+<ThemedImage
+  alt="Project billing"
+  sources={{
+    light: '/img/assets/cloud/settings_billing.png',
+    dark: '/img/assets/cloud/settings_billing_DARK.png',
+  }}
+/>
+
+### Managing project's subscription
+
+Using the **Manage subscriptions** button, you can view your current project's subscription, manage it and upgrade or downgrade to another plan. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
+ 

@@ -145,6 +145,7 @@ See the [default error classes](#default-error-classes) section for more informa
 
 <details>
 <summary>Example: Throwing an error in a service</summary>
+
 This example shows wrapping a [core service](/dev-docs/backend-customization/services#extending-core-services) and doing a custom validation on the `create` method:
 
 <Tabs groupId="js-ts">
@@ -404,6 +405,8 @@ The `ForbiddenError` class is a specific error class used when a user either doe
 | --- | --- | --- | --- |
 | `message` | `string` | The error message | `Forbidden access` |
 
+Note: `ForbiddenError` message contents will not be displayed to the Content API and will be returned to the user as an empty `ForbiddenError`
+
 ```js
 throw new ForbiddenError('Ah ah ah, you didn\'t say the magic word');
 ```
@@ -417,6 +420,8 @@ The `UnauthorizedError` class is a specific error class used when a user doesn't
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
 | `message` | `string` | The error message | `Unauthorized` |
+
+Note: `UnauthorizedError` message contents will not be displayed to the Content API and will be returned to the user as an empty `UnauthorizedError`
 
 ```js
 throw new UnauthorizedError('You shall not pass!');
@@ -464,6 +469,8 @@ The `PolicyError` class is a specific error designed to be used with [route poli
 ```js
 throw new PolicyError('Something went wrong', { policy: 'my-policy' });
 ```
+
+Note: Because `PolicyError` extends `ForbiddenError`, it will not be displayed to the Content API and will be returned to the user as an empty `ForbiddenError` and you will need to use a different error type in your policy if you want it to be visible in the Content API.
 
 </TabItem>
 

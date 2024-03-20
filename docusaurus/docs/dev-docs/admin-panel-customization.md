@@ -5,13 +5,14 @@ toc_max_heading_level: 4
 ---
 
 <!-- not required but if we don't include an import line the 2 JavaScript lines below are interpreted as Markdown text 🤷  -->
+
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
 
-The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
+The admin panel is a React-based single-page application. It encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
-To toggle hot reloading and get errors in the console while developing, start Strapi in front-end development mode by running the application with the `--watch-admin` flag:
+To start your strapi instance with hot reloading while developing, run the following command:
 
 ```bash
 cd my-app # cd into the root directory of the Strapi application project
@@ -26,7 +27,6 @@ Customizing the admin panel is helpful to better reflect your brand identity or 
 - The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, extending the theme, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
 - The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
 - The [email templates](#email-templates) should be customized using the Users and Permissions plugin.
-- The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
 
 ### Access URL
 
@@ -40,19 +40,16 @@ To make the admin panel accessible from `http://localhost:1337/dashboard`, use t
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
 });
 ```
 
 ```js title="./config/admin.js"
-
 module.exports = ({ env }) => ({
-  url: '/dashboard',
-})
+  url: "/dashboard",
+});
 ```
 
 </TabItem>
@@ -60,19 +57,16 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
 });
 ```
 
 ```js title="./config/admin.ts"
-
 export default ({ env }) => ({
-  url: '/dashboard',
-})
+  url: "/dashboard",
+});
 ```
 
 </TabItem>
@@ -84,26 +78,27 @@ For more advanced settings please see the [admin panel configuration](/dev-docs/
 
 #### Host and port
 
+:::note
+From 4.15.1 this is now deprecated. The strapi server now supports the live updating of the admin panel in development mode.
+:::
+
 By default, the front end development server runs on `localhost:8000` but this can be modified:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
 });
 ```
 
 ```js title="./config/admin.js"
-
 module.exports = ({ env }) => ({
-  host: 'my-host', // only used along with `strapi develop --watch-admin` command
+  host: "my-host", // only used along with `strapi develop --watch-admin` command
   port: 3000, // only used along with `strapi develop --watch-admin` command
 });
-
 ```
 
 </TabItem>
@@ -111,20 +106,17 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
 });
 ```
 
 ```js title="./config/admin.ts"
-
 export default ({ env }) => ({
-  host: 'my-host', // only used along with `strapi develop --watch-admin` command
+  host: "my-host", // only used along with `strapi develop --watch-admin` command
   port: 3000, // only used along with `strapi develop --watch-admin` command
 });
-
 ```
 
 </TabItem>
@@ -145,16 +137,16 @@ Any file used by the `config` object (e.g. a custom logo) should be placed in a 
 
 The `config` object accepts the following parameters:
 
-| Parameter       | Type             | Description                                                                                                                                   |
-| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `auth`          | Object           | Accepts a `logo` key to replace the default Strapi [logo](#logos) on login screen                                                    |
-| `head`          | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#favicon)                                                        |
-| `locales`       | Array of Strings | Defines availables locales (see [updating locales](#locales)) |
-| `translations`  | Object           | [Extends the translations](#extending-translations)                                                                                                                       |
-| `menu`          | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                                           |
-| `theme.light` and `theme.dark` | Object           | [Overwrite theme properties](#theme-extension) for Light and Dark modes                                                         |
-| `tutorials`     | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
-| `notifications` | Object           | Accepts the `releases` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications)          |
+| Parameter                      | Type             | Description                                                                                                           |
+| ------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `auth`                         | Object           | Accepts a `logo` key to replace the default Strapi [logo](#logos) on login screen                                     |
+| `head`                         | Object           | Accepts a `favicon` key to replace the default Strapi [favicon](#favicon)                                             |
+| `locales`                      | Array of Strings | Defines availables locales (see [updating locales](#locales))                                                         |
+| `translations`                 | Object           | [Extends the translations](#extending-translations)                                                                   |
+| `menu`                         | Object           | Accepts the `logo` key to change the [logo](#logos) in the main navigation                                            |
+| `theme.light` and `theme.dark` | Object           | [Overwrite theme properties](#theme-extension) for Light and Dark modes                                               |
+| `tutorials`                    | Boolean          | Toggles [displaying the video tutorials](#tutorial-videos)                                                            |
+| `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications) |
 
 <details>
 <summary>Example of a custom configuration for the admin panel</summary>
@@ -163,10 +155,9 @@ The `config` object accepts the following parameters:
 <TabItem value="js" label="JavaScript">
 
 ```jsx title="./my-app/src/admin/app.js"
-
-import AuthLogo from './extensions/my-logo.png';
-import MenuLogo from './extensions/logo.png';
-import favicon from './extensions/favicon.ico';
+import AuthLogo from "./extensions/my-logo.png";
+import MenuLogo from "./extensions/logo.png";
+import favicon from "./extensions/favicon.png";
 
 export default {
   config: {
@@ -174,12 +165,12 @@ export default {
     auth: {
       logo: AuthLogo,
     },
-   // Replace the favicon
+    // Replace the favicon
     head: {
       favicon: favicon,
     },
     // Add a new locale, other than 'en'
-    locales: ['fr', 'de'],
+    locales: ["fr", "de"],
     // Replace the Strapi logo in the main navigation
     menu: {
       logo: MenuLogo,
@@ -189,39 +180,38 @@ export default {
       // overwrite light theme properties
       light: {
         colors: {
-          primary100: '#f6ecfc',
-          primary200: '#e0c1f4',
-          primary500: '#ac73e6',
-          primary600: '#9736e8',
-          primary700: '#8312d1',
-          danger700: '#b72b1a'
+          primary100: "#f6ecfc",
+          primary200: "#e0c1f4",
+          primary500: "#ac73e6",
+          primary600: "#9736e8",
+          primary700: "#8312d1",
+          danger700: "#b72b1a",
         },
       },
 
       // overwrite dark theme properties
       dark: {
-         // ...
-      }
+        // ...
+      },
     },
     // Extend the translations
     translations: {
       fr: {
-        'Auth.form.email.label': 'test',
-        Users: 'Utilisateurs',
-        City: 'CITY (FRENCH)',
+        "Auth.form.email.label": "test",
+        Users: "Utilisateurs",
+        City: "CITY (FRENCH)",
         // Customize the label of the Content Manager table.
-        Id: 'ID french',
+        Id: "ID french",
       },
     },
-   // Disable video tutorials
+    // Disable video tutorials
     tutorials: false,
-   // Disable notifications about new Strapi releases
+    // Disable notifications about new Strapi releases
     notifications: { releases: false },
   },
 
   bootstrap() {},
 };
-
 ```
 
 </TabItem>
@@ -229,10 +219,9 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```jsx title="./my-app/src/admin/app.ts"
-
-import AuthLogo from './extensions/my-logo.png';
-import MenuLogo from './extensions/logo.png';
-import favicon from './extensions/favicon.ico';
+import AuthLogo from "./extensions/my-logo.png";
+import MenuLogo from "./extensions/logo.png";
+import favicon from "./extensions/favicon.png";
 
 export default {
   config: {
@@ -240,12 +229,12 @@ export default {
     auth: {
       logo: AuthLogo,
     },
-   // Replace the favicon
+    // Replace the favicon
     head: {
       favicon: favicon,
     },
     // Add a new locale, other than 'en'
-    locales: ['fr', 'de'],
+    locales: ["fr", "de"],
     // Replace the Strapi logo in the main navigation
     menu: {
       logo: MenuLogo,
@@ -253,33 +242,32 @@ export default {
     // Override or extend the theme
     theme: {
       colors: {
-        primary100: '#f6ecfc',
-        primary200: '#e0c1f4',
-        primary500: '#ac73e6',
-        primary600: '#9736e8',
-        primary700: '#8312d1',
-        danger700: '#b72b1a'
+        primary100: "#f6ecfc",
+        primary200: "#e0c1f4",
+        primary500: "#ac73e6",
+        primary600: "#9736e8",
+        primary700: "#8312d1",
+        danger700: "#b72b1a",
       },
     },
     // Extend the translations
     translations: {
       fr: {
-        'Auth.form.email.label': 'test',
-        Users: 'Utilisateurs',
-        City: 'CITY (FRENCH)',
+        "Auth.form.email.label": "test",
+        Users: "Utilisateurs",
+        City: "CITY (FRENCH)",
         // Customize the label of the Content Manager table.
-        Id: 'ID french',
+        Id: "ID french",
       },
     },
-   // Disable video tutorials
+    // Disable video tutorials
     tutorials: false,
-   // Disable notifications about new Strapi releases
+    // Disable notifications about new Strapi releases
     notifications: { releases: false },
   },
 
   bootstrap() {},
 };
-
 ```
 
 </TabItem>
@@ -295,13 +283,12 @@ To update the list of available locales in the admin panel, use the `config.loca
 <TabItem value="js" label="JavaScript">
 
 ```jsx title="./my-app/src/admin/app.js"
-
 export default {
   config: {
-    locales: ['ru', 'zh']
+    locales: ["ru", "zh"],
   },
   bootstrap() {},
-}
+};
 ```
 
 </TabItem>
@@ -309,13 +296,12 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```jsx title="./my-app/src/admin/app.ts"
-
 export default {
   config: {
-    locales: ['ru', 'zh']
+    locales: ["ru", "zh"],
   },
   bootstrap() {},
-}
+};
 ```
 
 </TabItem>
@@ -336,17 +322,16 @@ Translation key/value pairs are declared in `@strapi/admin/admin/src/translation
 <TabItem value="js" label="JavaScript">
 
 ```js title="./my-app/src/admin/app.js"
-
 export default {
   config: {
-    locales: ['fr'],
+    locales: ["fr"],
     translations: {
       fr: {
-        'Auth.form.email.label': 'test',
-        Users: 'Utilisateurs',
-        City: 'CITY (FRENCH)',
+        "Auth.form.email.label": "test",
+        Users: "Utilisateurs",
+        City: "CITY (FRENCH)",
         // Customize the label of the Content Manager table.
-        Id: 'ID french',
+        Id: "ID french",
       },
     },
   },
@@ -359,17 +344,16 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./my-app/src/admin/app.ts"
-
 export default {
   config: {
-    locales: ['fr'],
+    locales: ["fr"],
     translations: {
       fr: {
-        'Auth.form.email.label': 'test',
-        Users: 'Utilisateurs',
-        City: 'CITY (FRENCH)',
+        "Auth.form.email.label": "test",
+        Users: "Utilisateurs",
+        City: "CITY (FRENCH)",
         // Customize the label of the Content Manager table.
-        Id: 'ID french',
+        Id: "ID french",
       },
     },
   },
@@ -386,13 +370,12 @@ A plugin's key/value pairs are declared independently in the plugin's files at `
 <TabItem value="js" label="JavaScript">
 
 ```js title="./my-app/src/admin/app.js"
-
 export default {
   config: {
-    locales: ['fr'],
+    locales: ["fr"],
     translations: {
       fr: {
-        'Auth.form.email.label': 'test',
+        "Auth.form.email.label": "test",
         // Translate a plugin's key/value pair by adding the plugin's name as a prefix
         // In this case, we translate the "plugin.name" key of plugin "content-type-builder"
         "content-type-builder.plugin.name": "Constructeur de Type-Contenu",
@@ -408,13 +391,12 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./my-app/src/admin/app.ts"
-
 export default {
   config: {
-    locales: ['fr'],
+    locales: ["fr"],
     translations: {
       fr: {
-        'Auth.form.email.label': 'test',
+        "Auth.form.email.label": "test",
         // Translate a plugin's key/value pair by adding the plugin's name as a prefix
         // In this case, we translate the "plugin.name" key of plugin "content-type-builder"
         "content-type-builder.plugin.name": "Constructeur de Type-Contenu",
@@ -465,22 +447,21 @@ To replace the favicon, use the following procedure:
 
 1. (_optional_) Create a `./src/admin/extensions/` folder if the folder does not already exist.
 2. Upload your favicon into `./src/admin/extensions/`.
-3. Replace the existing **favicon.ico** file at the Strapi application root with a custom `favicon.ico` file.
+3. Replace the existing **favicon.png|ico** file at the Strapi application root with a custom `favicon.png|ico` file.
 4. Update `./src/admin/app.js` with the following:
 
-    ```js title="./src/admin/app.js"
+   ```js title="./src/admin/app.js"
+   import favicon from "../extensions/favicon.png";
 
-    import favicon from './extensions/favicon.png';
-
-    export default {
-      config: {
-        // replace favicon with a custom icon
-        head: {
-          favicon: favicon,
-        },
-      }
-    }
-    ```
+   export default {
+     config: {
+       // replace favicon with a custom icon
+       head: {
+         favicon: favicon,
+       },
+     },
+   };
+   ```
 
 5. Rebuild, launch and revisit your Strapi app by running `yarn build && yarn develop` in the terminal.
 
@@ -525,12 +506,11 @@ To change the current WYSIWYG, you can install a [third-party plugin](https://ma
 <TabItem value="js" label="JavaScript">
 
 ```js title="./src/admin/app.js"
-
-import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
+import MyNewWYSIGWYG from "./extensions/components/MyNewWYSIGWYG"; // this file contains the logic for your new WYSIWYG
 
 export default {
   bootstrap(app) {
-    app.addFields({ type: 'wysiwyg', Component: MyNewWYSIGWYG });
+    app.addFields({ type: "wysiwyg", Component: MyNewWYSIGWYG });
   },
 };
 ```
@@ -540,12 +520,11 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./src/admin/app.ts"
-
-import MyNewWYSIGWYG from './extensions/components/MyNewWYSIGWYG' // this file contains the logic for your new WYSIWYG
+import MyNewWYSIGWYG from "./extensions/components/MyNewWYSIGWYG"; // this file contains the logic for your new WYSIWYG
 
 export default {
   bootstrap(app) {
-    app.addFields({ type: 'wysiwyg', Component: MyNewWYSIGWYG });
+    app.addFields({ type: "wysiwyg", Component: MyNewWYSIGWYG });
   },
 };
 ```
@@ -557,15 +536,24 @@ export default {
 
 Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates).
 
-### Webpack configuration
+## Bundlers (experimental)
+
+2 different bundlers can be used with your Strapi application, [webpack](#webpack) and [vite](#vite).
+
+### Webpack
+
+In v4 this is the defacto bundler that Strapi uses to build the admin panel.
 
 :::prerequisites
-Make sure to rename the default `webpack.config.example.js` file into `webpack.config.js` before customizing webpack.
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
 :::
 
-In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.[js|ts]`:
 
-```js
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./my-app/src/admin/webpack.config.js"
 module.exports = (config, webpack) => {
   // Note: we provide webpack above so you should not `require` it
 
@@ -577,9 +565,78 @@ module.exports = (config, webpack) => {
 };
 ```
 
-:::note
-Only `./src/admin/app.js` and the files under the `./src/admin/extensions` folder are being watched by the webpack dev server.
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./my-app/src/admin/webpack.config.ts"
+export default (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+  // Important: return the modified config
+  return config;
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Vite
+
+:::caution
+This is considered experimental. Please report any issues you encounter.
 :::
+
+To use `vite` as a bundler you will need to pass it as an option to the `strapi develop` command:
+
+```bash
+strapi develop --watch-admin --bundler=vite
+```
+
+To extend the usage of `vite`, define a function that extends its configuration inside `./my-app/src/admin/vite.config.[js|ts]`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./my-app/src/admin/vite.config.js"
+const { mergeConfig } = require("vite");
+
+module.exports = (config) => {
+  // Important: always return the modified config
+  return mergeConfig(config, {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  });
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./my-app/src/admin/vite,config.ts"
+import { mergeConfig } from "vite";
+
+export default (config) => {
+  // Important: always return the modified config
+  return mergeConfig(config, {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  });
+};
+```
+
+</TabItem>
+</Tabs>
 
 ## Extension
 
@@ -593,8 +650,8 @@ There are 2 use cases to extend the admin panel:
 
 The administration is a React front-end application calling an API. The front end and the back end are independent and can be deployed on different servers, which brings us to different scenarios:
 
-* Deploy the entire project on the same server.
-* Deploy the administration panel on a server (AWS S3, Azure, etc) different from the API server.
+- Deploy the entire project on the same server.
+- Deploy the administration panel on a server (AWS S3, Azure, etc) different from the API server.
 
 Build configurations differ for each case.
 
@@ -646,18 +703,16 @@ To deploy the front end and the back end on different servers, use the following
 <TabItem value="js" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'http://yourbackend.com',
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
+  url: "http://yourbackend.com",
 });
 ```
 
 ```js title="./config/admin.js"
-
 module.exports = ({ env }) => ({
-  url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
+  url: "/", // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
   serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
 });
 ```
@@ -667,18 +722,16 @@ module.exports = ({ env }) => ({
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default ({ env }) => ({
-  host: env('HOST', '0.0.0.0'),
-  port: env.int('PORT', 1337),
-  url: 'http://yourbackend.com',
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
+  url: "http://yourbackend.com",
 });
 ```
 
 ```js title="./config/admin.ts"
-
 export default ({ env }) => ({
-  url: '/', // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
+  url: "/", // Note: The administration will be accessible from the root of the domain (ex: http://yourfrontend.com/)
   serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
 });
 ```

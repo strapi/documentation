@@ -85,8 +85,7 @@
     --custom-selection-color: var(--strapi-success-100);
   }
 
-  &--caution,
-  &--warning {
+  &--caution {
     --custom-admonition-background-color: var(--strapi-warning-100);
     --custom-admonition-border-color: var(--strapi-warning-500);
     --custom-admonition-code-background-color: var(--strapi-warning-200);
@@ -97,7 +96,8 @@
     --custom-selection-color: var(--strapi-warning-100);
   }
 
-  &--danger {
+  &--danger,
+  &--warning  {
     --custom-admonition-background-color: var(--strapi-danger-100);
     --custom-admonition-border-color: var(--strapi-danger-500);
     --custom-admonition-code-background-color: var(--strapi-danger-200);
@@ -117,6 +117,20 @@
 
     --custom-selection-background-color: var(--strapi-primary-700);
     --custom-selection-color: var(--strapi-primary-100);
+  }
+
+  &--subtle {
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+    border: solid 1px var(--strapi-neutral-500);
+    font-size: 90%;
+  }
+}
+
+@media screen and (min-width: 997px) {
+  [class*="sbs-column"]:nth-of-type(2) .theme-admonition--subtle {
+    margin-left: 80px;
   }
 }
 

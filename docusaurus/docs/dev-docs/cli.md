@@ -2,8 +2,6 @@
 title: Command Line Interface
 displayed_sidebar: devDocsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
-
-
 ---
 
 # Command Line Interface (CLI)
@@ -59,22 +57,30 @@ Start a Strapi application with autoReload enabled.
 
 Strapi modifies/creates files at runtime and needs to restart when new files are created. To achieve this, `strapi develop` adds a file watcher and restarts the application when necessary.
 
-```
+Strapi also adds middlewares to support HMR (Hot Module Replacement) for the administration panel. This allows you to customize the administration panel without having to restart the application or run a separate server. This is only added when you use the `--watch-admin` command.
+
+```bash
 strapi develop
-options: [--no-build |--watch-admin |--browser ]
 ```
 
-- **strapi develop**<br/>
-  Starts your application with the autoReload enabled
-- **strapi develop --no-build**<br/>
-  Starts your application with the autoReload enabled and skip the administration panel build process
-- **strapi develop --watch-admin**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel.
-- **strapi develop --watch-admin --browser 'google chrome'**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
+| Option             | Type   | Description                                                                                                      | Default   |
+| ------------------ | :----: | ---------------------------------------------------------------------------------------------------------------- | --------- |
+| `--bundler`        | string | Specifies the bundler to use, either `webpack` or `vite`x                                                        | `webpack` |
+| `-d, --debug`      | -      | Enable debugging mode with verbose logs                                                                          | false     |
+| `--ignore-prompts` | -      | Ignore all prompts                                                                                               | false     |
+| `--open`           | -      | Open the admin in your browser                                                                                   | true      |
+| `--polling`        | -      | Watch for file changes in network directories                                                                    | false     |
+| `--silent`         | -      | Don't log anything                                                                                               | false     |
+| `--watch-admin`    | -      | Watch the admin panel for hot changes                                                                            | false     |
+| `--no-build`       | -      | [DEPRECATED] Starts your application with the autoReload enabled and skip the administration panel build process | -         |
+| `--browser`        | string | [DEPRECATED] Provide a browser name to use instead of the default one                                            | -         |
 
 :::warning
 You should never use this command to run a Strapi application in production.
+:::
+
+:::caution
+Using the `vite` option as a bundler is considered experimental.
 :::
 
 ## strapi start
@@ -90,16 +96,27 @@ Builds your admin panel.
 
 ```bash
 strapi build
-
-options: [--no-optimization]
 ```
 
-- **strapi build**<br/>
-  Builds the administration panel and delete the previous build and .cache folders
-- **strapi build --no-optimization**<br/>
-  Builds the administration panel without minimizing the assets. The build duration is faster.
+| Option              | Type   | Description                                                         | Default   |
+| ------------------- | :----: | ------------------------------------------------------------------- | --------- |
+| `--bundler`         | string | Specifies the bundler you'd like to use, either `webpack` or `vite` | `webpack` |
+| `-d, --debug`       | -      | Enable debugging mode with verbose logs                             | false     |
+| `--minify`          | -      | Minify the output                                                   | true      |
+| `--no-optimization` | -      | [DEPRECATED]: use minify instead                                    | -         |
+| `--silent`          | -      | Don't log anything                                                  | false     |
+| `--sourcemaps`      | -      | Produce sourcemaps                                                  | false     |
+| `--stats`           | -      | Print build statistics to the console                               | false     |
+
+:::caution
+Using the `vite` option as a bundler is considered experimental.
+:::
 
 ## strapi watch-admin
+
+:::note
+This has been deprecated, the admin panel is watched as part of the `develop` command.
+:::
 
 Starts the admin server. Strapi should already be running with `strapi develop`.
 
@@ -118,24 +135,24 @@ strapi export
 
 The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
 
-| Option           | Type    | Description                                                                                                  |
-|------------------|:-------:|--------------------------------------------------------------------------------------------------------------|
-| `‑‑no‑encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
-| `‑‑no‑compress`    |     -    | Disables file compression.                                                                                |
-| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
-| `-f`, <br/>`--file`| string   | Specifies the export filename. Do not include a file extension.                                           |
-| `--exclude`        | string   | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |
-| `--only`           | string   | Include only these data. The available types are: `content`, `files`, and `config`.                       |
-| `-h`, <br/>`--help`|     -    | Displays help for the `strapi export` command.                                                            |
+| Option              |  Type  | Description                                                                                                                |
+| ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
+| `‑‑no‑encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
+| `‑‑no‑compress`     |   -    | Disables file compression.                                                                                                 |
+| `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
+| `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
+| `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
+| `--only`            | string | Include only these data. The available types are: `content`, `files`, and `config`.                                        |
+| `-h`, <br/>`--help` |   -    | Displays help for the `strapi export` command.                                                                             |
 
 **Examples**
 
 ```bash title="Examples of strapi export:"
 # export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
-strapi export -f myData 
+strapi export -f myData
 
 # export your data without encryption.
-strapi export --no-encrypt  
+strapi export --no-encrypt
 ```
 
 ## strapi import
@@ -146,17 +163,17 @@ strapi export --no-encrypt
 strapi import
 ```
 
-| Option             | Type   | Description                                                                   |
-|--------------------|--------|-------------------------------------------------------------------------------|
-| `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
-| `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help`         |    -    | Display the `strapi import` help commands.                               |
+| Option         | Type   | Description                                                               |
+| -------------- | ------ | ------------------------------------------------------------------------- |
+| `-k,` `--key`  | string | Provide the encryption key in the command instead of a subsequent prompt. |
+| `-f`, `--file` | string | Path and filename with extension for the data to be imported.             |
+| `-h`, `--help` | -      | Display the `strapi import` help commands.                                |
 
 **Examples**
 
 ```bash title="Example of strapi import:"
 
-# import your data with the default parameters and pass an encryption key: 
+# import your data with the default parameters and pass an encryption key:
 strapi import -f your-filepath-and-filename --key my-key
 ```
 
@@ -285,6 +302,7 @@ When running the restore command, you can choose from three different strategies
 
 Creates an administrator.
 Administrator's first name, last name, email, and password can be:
+
 - passed as options
 - or set interactively if you call the command without passing any option.
 
@@ -458,6 +476,7 @@ options [--delete-files]
   Example: `strapi uninstall graphql --delete-files` will remove the plugin `@strapi/plugin-graphql` and all the files in `./extensions/graphql`
 
 :::caution
+
 - In addition to the `uninstall` command you need to remove the plugin configuration from `./config/plugins.js`.
 - Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
 :::

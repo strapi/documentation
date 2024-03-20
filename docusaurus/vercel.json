@@ -11,6 +11,14 @@
 			"source": "/dev-docs/deployment/strapi-cloud",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
+      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
+      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+    },
 		{
 			"source": "/developer-docs",
 			"destination": "/dev-docs"
@@ -561,7 +569,11 @@
 		},
 		{
 			"source": "/user-docs/latest/plugins/introduction-to-plugins.html",
-			"destination": "/user-docs/plugins/introduction-to-plugins"
+			"destination": "/user-docs/plugins"
+		},
+    {
+			"source": "/user-docs/plugins/introduction-to-plugins",
+			"destination": "/user-docs/plugins"
 		},
 		{
 			"source": "/user-docs/latest/plugins/installing-plugins-via-marketplace.html",

@@ -8,7 +8,7 @@ description: Upload any kind of file on your server or external providers.
 
 The Upload plugin is the backend powering the Media Library plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
 
-By default Strapi provides a [provider](/dev-docs/providers) that uploads files to a local directory. Additional providers are available should you want to upload your files to another location.
+By default Strapi provides a [provider](/dev-docs/providers) that uploads files to a local directory, which by default will be `public/uploads/` in your Strapi project. Additional providers are available should you want to upload your files to another location.
 
 The providers maintained by Strapi include:
 
@@ -84,7 +84,7 @@ You can pass configuration to the middleware directly by setting it in the [`bod
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./config/middlewares.js"
 
@@ -107,7 +107,7 @@ module.exports = [
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```js title="path: ./config/middlewares.ts"
 
@@ -136,7 +136,7 @@ In addition to the middleware configuration, you can pass the `sizeLimit`, which
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./config/plugins.js"
 
@@ -152,7 +152,7 @@ module.exports = {
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```js title="path: ./config/plugins.ts"
 
@@ -160,9 +160,7 @@ export default {
   // ...
   upload: {
     config: {
-      providerOptions: {
-        sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
-      }
+      sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
     }
   }
 };
@@ -171,6 +169,51 @@ export default {
 </TabItem>
 
 </Tabs>
+
+### Upload request timeout
+
+By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads. To make it possible for users with slow internet connection to upload large files, it might be required to increase this timeout limit. The recommended way to do it is by setting the `http.serverOptions.requestTimeout` parameter in the `config/server.js|ts` file (see [server configuration](/dev-docs/configurations/server).
+An alternate method is to set the `requestTimeout` value in the `bootstrap` function that runs before Strapi gets started. This is useful in cases where it needs to change programmatically — for example, to temporarily disable and re-enable it:
+
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="path: ./index.js"
+
+module.exports = {
+
+  //...
+
+  bootstrap({ strapi }) {
+    // Set the requestTimeout to 1,800,000 milliseconds (30 minutes):
+    strapi.server.httpServer.requestTimeout = 30 * 60 * 1000;
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="path: ./index.ts"
+
+export default {
+
+  //...
+
+  bootstrap({ strapi }) {
+    // Set the requestTimeout to 1,800,000 milliseconds (30 minutes):
+    strapi.server.httpServer.requestTimeout = 30 * 60 * 1000;
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
 
 ### Responsive Images
 
@@ -186,7 +229,7 @@ These sizes can be overridden in `./config/plugins.js`:
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JAVASCRIPT">
+<TabItem value="javascript" label="JavaScript">
 
 ```js title="path: ./config/plugins.js"
 
@@ -207,7 +250,7 @@ module.exports = ({ env }) => ({
 
 </TabItem>
 
-<TabItem value="typescript" label="TYPESCRIPT">
+<TabItem value="typescript" label="TypeScript">
 
 ```js title="path: ./config/plugins.ts"
 
@@ -554,4 +597,33 @@ const response = await fetch(`http://localhost:1337/api/upload?id=${fileId}`, {
   body: form,
 });
 
+```
+
+### Upload single file from an API controller
+
+Add a file to Media Library from the backend.
+
+```js
+async create(ctx) {
+
+  // ...
+
+  const { body, files } = ctx.request;
+
+  const file = files["files.uploadedFile"];
+
+  const createdFiles = await strapi.plugins.upload.services.upload.upload({
+    data: {
+      fileInfo: {
+        name: "Name",
+        caption: "Caption",
+        alternativeText: "Alternative Text",
+      },
+    },
+    files: file,
+  });
+
+  // ...
+
+},
 ```

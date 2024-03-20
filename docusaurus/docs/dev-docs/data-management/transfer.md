@@ -18,15 +18,15 @@ The `strapi transfer` command streams your data from one Strapi instance to anot
 
 :::caution
 
-- If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
-- Assets that are contained in the local Media Library provider are transferred to the same provider in the remote instance. This means that if you use the default Media Library locally and an S3 bucket in your remote instance, the `transfer` command does not add assets to your S3 bucket.
-
+* If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.
+* Admin users and API tokens are not transferred.
+* If you use websockets or Socket.io in your projects, the transfer command will fail. You will need to **temporarily disable websockets or Socket.io** or ensure that your websocket server is running on a different port than the Strapi server, or a on a specific route within Strapi to use the transfer command.
 :::
 
 The CLI command consists of the following arguments:
 
 | Option         | Description                                                                                                                                  |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------|
 | `--to`         | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)            |
 | `‑‑to‑token`   | Transfer token from the Strapi destination instance.                                                                                         |
 | `--from`       | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from (e.g., `--from https://my-beautiful-strapi-website/admin`) |
@@ -34,6 +34,7 @@ The CLI command consists of the following arguments:
 | `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--throttle`   | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer.                                                   |
 
 :::caution
 Either `--to` or `--from` is required.
@@ -80,7 +81,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
   1. Start the Strapi server for the destination instance.
   2. In a new terminal window, navigate to the root directory of the source instance.
-  3. Run the following minimal command to initiate the transfer:
+  3. Run the following minimal command to initiate the transfer, ensuring `destinationURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
     <Tabs groupId="yarn-npm">
 
@@ -111,7 +112,7 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 1. Start the Strapi server for the source instance.
 2. In a new terminal window, navigate to the root directory of the destination instance.
-3. Run the following minimal command to initiate the transfer:
+  3. Run the following minimal command to initiate the transfer, ensuring `remoteURL` is the full URL to the admin panel (i.e., the URL includes the `/admin` part):
 
   <Tabs groupId="yarn-npm">
 

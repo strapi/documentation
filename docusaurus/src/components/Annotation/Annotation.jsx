@@ -92,6 +92,7 @@ export function Annotation({ children, id, width = 320 }) {
         style={{
           '--strapi-docs-annotation-toggle-icon-rotation': open ? '0deg' : undefined,
           '--strapi-docs-annotation-toggle-background': open ? 'var(--strapi-docs-annotation-toggle-background-active)' : undefined,
+          '--strapi-docs-annotation-toggle-z-index': open ? 'calc(var(--strapi-docs-annotation-z-index) + 2)' : undefined,
         }}
       >
         <svg

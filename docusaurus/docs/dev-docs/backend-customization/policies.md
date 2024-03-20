@@ -75,6 +75,10 @@ export default (policyContext, config, { strapi }) => {
 
 <br/>
 
+:::tip
+To see a possible advanced usage for route policies, read the [policies](/dev-docs/backend-customization/examples/policies) page of the backend customization examples cookbook.
+:::
+
 Policies can be configured using a `config` object:
 
 <Tabs groupId="js-ts">
@@ -201,7 +205,7 @@ module.exports = {
           The `isAuthenticated` policy prodived with the `users-permissions` plugin 
           is executed before the `find` action in the `Restaurant.js` controller.
         */
-        policies: ['plugins::users-permissions.isAuthenticated']
+        policies: ['plugin::users-permissions.isAuthenticated']
       }
     }
   ]
@@ -225,7 +229,7 @@ export default {
           The `isAuthenticated` policy prodived with the `users-permissions` plugin 
           is executed before the `find` action in the `Restaurant.js` controller.
         */
-        policies: ['plugins::users-permissions.isAuthenticated']
+        policies: ['plugin::users-permissions.isAuthenticated']
       }
     }
   ]

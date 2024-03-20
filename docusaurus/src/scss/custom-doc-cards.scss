@@ -1,0 +1,46 @@
+/** Component: CustomDocCardWrapper */
+
+.custom-cards-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  max-width: 715px;
+  justify-content: flex-start;
+
+  .custom-doc-card {
+    max-width: 320px;
+    width: 320px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+
+    a {
+      height: 170px;
+    }
+
+  }
+}
+
+/** Component: CustomDocCard */
+.custom-doc-card {
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    .cardTitle {
+      color: var(--strapi-primary-600);
+    }
+  }
+
+  .text--truncate.cardDescription {
+    // cancel --truncate styles since we can't remove the' class
+    overflow: auto;
+    white-space: normal;
+  }
+}
+
+.custom-doc-card--small {
+  .cardTitle {
+    margin-bottom: 0;
+  }
+}

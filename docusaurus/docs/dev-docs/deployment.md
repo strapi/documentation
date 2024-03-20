@@ -7,6 +7,9 @@ description: Learn how to develop locally with Strapi and deploy Strapi with var
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+import CommunityGuides from '/docs/snippets/community-deployment-guides.md'
+import InstallPrereq from '/docs/snippets/installation-prerequisites.md'
 
 # Deployment
 
@@ -15,11 +18,7 @@ Strapi provides many deployment options for your project or application. Your St
 The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
 :::callout ☁️ Strapi Cloud
-Don't want to deploy Strapi by yourself? Use [Strapi Cloud](/cloud/intro) to easily deploy and host your project.
-:::
-
-:::strapi Community Guides
-In addition to the official deployment guides maintained by Strapi that are found here, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28).
+You can use [Strapi Cloud](/cloud/intro) to quickly deploy and host your project.
 :::
 
 :::tip
@@ -34,12 +33,11 @@ Another possible workflow is to first create the data structure locally, push yo
 
 To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
 
-- Node LTS (v14 or v16) **Odd-number releases of Node are not supported (e.g. v13, v15).**
-- NPM v6 (or the version shipped with the LTS Node versions)
+<InstallPrereq />
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):
 
-<HardwareRequire components={props.components} />
+  <HardwareRequire components={props.components} />
 
 - A supported database version:
 <DatabaseRequire components={props.components} />
@@ -50,7 +48,7 @@ Deploying databases along with Strapi is covered in the [databases guide](/dev-d
 
 - A supported operating system:
 
-<OperatingSystemRequire components={props.components} />
+  <OperatingSystemRequire components={props.components} />
 
 ### Application Configuration
 
@@ -58,20 +56,19 @@ Deploying databases along with Strapi is covered in the [databases guide](/dev-d
 
 We recommend using environment variables to configure your application based on the environment, for example:
 
-```js
-// Path: ./config/server.js
+```js title="/config/server.js"
 
 module.exports = ({ env }) => ({
-  host: env('APP_HOST', '0.0.0.0'),
-  port: env.int('NODE_PORT', 1337),
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
 });
 ```
 
 Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
 
 ```
-APP_HOST=10.0.0.1
-NODE_PORT=1338
+HOST=10.0.0.1
+PORT=1338
 ```
 
 :::tip
@@ -185,8 +182,18 @@ For more information, consult the [TypeScript documentation](/dev-docs/typescrip
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization#deployment).
 
-## Deployment Guides
+## Deployment guides
 
-Manual guides for deployment and optional software:
+Click on any of the following cards to read manual guides for deployment and optional software:
 
-<DocCardList />
+<CustomDocCardsWrapper>
+
+<CustomDocCard emoji="☁️" title="Strapi Cloud" description="Deploy your project to Strapi Cloud." link="/cloud/getting-started/deployment" />
+
+<CustomDocCard emoji="🗃️" title="3rd-party hosting guides" description="Deploy your project to various 3rd-party providers." link="/dev-docs/deployment/hosting-guides" />
+
+<CustomDocCard emoji="➕" title="Optional software guides" description="Compliment or improve the deployment process when using Strapi in a production environment." link="/dev-docs/deployment/optional-software-guides" />
+
+</CustomDocCardsWrapper>
+
+<CommunityGuides />

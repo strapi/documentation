@@ -5,11 +5,18 @@ description: Learn in this guide how to deploy your Strapi application on AWS EC
 
 ---
 
+import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
+
 # Amazon AWS
 
 This is a step-by-step guide for deploying a Strapi project to [Amazon AWS EC2](https://aws.amazon.com/ec2/) inside your [AWS VPC](https://aws.amazon.com/vpc/). This guide will connect to an [Amazon AWS RDS](https://aws.amazon.com/rds/) for managing and hosting the database. Optionally, this guide will show you how to connect host and serve images on [Amazon AWS S3](https://aws.amazon.com/s3/).
 
-Prior to starting this guide, you should have created a [Strapi project](/dev-docs/quick-start), to use for deploying on AWS. And have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+:::prerequisites
+- You have created a [Strapi project](/dev-docs/quick-start), to use for deploying on AWS.
+- You have read through the [configuration](/dev-docs/deployment#application-configuration) section.
+:::
+
+<ConsiderStrapiCloud />
 
 ### Amazon AWS Install Requirements and creating an IAM non-root user
 
@@ -248,18 +255,25 @@ ubuntu@ip-1.2.3.4:~$
 
 #### 3. Install **Node.js** with **npm**:
 
-Strapi currently supports `Node.js` `v14.x.x`, `v16.x.x`, and `v18.x.x`. The following steps will install Node.js onto your EC2 server.
+The following steps will install Node.js onto your EC2 server.
 
-```bash title="example using Node.js 14"
+```bash title="example using Node.js 20"
 cd ~
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get update
 ...
-sudo apt-get install nodejs
+sudo apt-get install -y ca-certificates curl gnupg
+...
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+NODE_MAJOR=20
+sudo apt-get update
+...
+sudo apt-get install nodejs -y
 ...
 node -v && npm -v
 ```
 
-The last command `node -v && npm -v` should output two versions numbers, eg. `v14.x.x, 6.x.x`.
+The last command `node -v && npm -v` should output two versions numbers, eg. `v20.x.x, 6.x.x`.
 
 #### 4. Create and change npm's default directory.
 
@@ -406,12 +420,14 @@ module.exports = ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
-        accessKeyId: env('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env('AWS_ACCESS_SECRET'),
-        region: env('AWS_REGION'),
-        params: {
+        s3Options: {
+          accessKeyId: env('AWS_ACCESS_KEY_ID'),
+          secretAccessKey: env('AWS_ACCESS_SECRET'),
+          region: env('AWS_REGION'),
+          params: {
             Bucket: env('AWS_BUCKET_NAME'),
-        },
+          },
+        }
       },
       // These parameters could solve issues with ACL public-read access — see [this issue](https://github.com/strapi/strapi/issues/5868) for details
       actionOptions: {
@@ -437,12 +453,14 @@ export default ({ env }) => ({
       config: {
           provider: 'aws-s3',
           providerOptions: {
-              accessKeyId: env('AWS_ACCESS_KEY_ID'),
-              secretAccessKey: env('AWS_ACCESS_SECRET'),
-              region: env('AWS_REGION'),
-              params: {
-                  Bucket: env('AWS_BUCKET_NAME'),
-              },
+              s3Options: {
+                  accessKeyId: env('AWS_ACCESS_KEY_ID'),
+                  secretAccessKey: env('AWS_ACCESS_SECRET'),
+                  region: env('AWS_REGION'),
+                  params: {
+                    Bucket: env('AWS_BUCKET_NAME'),
+                  },
+              }
           },
       },
   }
@@ -725,7 +743,7 @@ http
           .digest('hex');
 
       if (req.headers['x-hub-signature'] == sig) {
-        exec(`cd ${repo} && git pull && ${PM2_CMD}`, (error, stdout, stderr) => {
+        exec(`cd ${repo} && git pull && NODE_ENV=production npm run build && ${PM2_CMD}`, (error, stdout, stderr) => {
           if (error) {
             console.error(`exec error: ${error}`);
             return;

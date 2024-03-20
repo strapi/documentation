@@ -24,4 +24,19 @@ details.alert {
 
     margin-top: 0;
   }
+
+  a {
+    color: var(--custom-code-color);
+  }
+
+  a:hover {
+    text-decoration: var(--ifm-link-decoration);
+  }
+}
+
+@include dark {
+  details a {
+    color: var(--strapi-primary-500);
+    font-weight: 700;
+  }
 }

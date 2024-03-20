@@ -1,21 +1,28 @@
+---
+sidebar_label: Admin Panel API
+pagination_prev: dev-docs/plugins/development/plugin-structure
+toc_max_heading_level: 4
+---
+
 # Admin Panel API for plugins
 
-A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/api/plugins/server-api) or the front end of the Strapi app. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
+A Strapi [plugin](/dev-docs/plugins) can interact with both the [back end](/dev-docs/api/plugins/server-api) and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/user-docs/intro).
 
 The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
 
-To create a plugin that interacts with the Admin Panel API:
+:::prerequisites
+You have [created a Strapi plugin](/dev-docs/plugins/development/create-a-plugin).
+:::
 
-1. Create an [entry file](#entry-file).
-2. Within this file, declare and export a plugin interface that uses the [available actions](#available-actions).
-3. Require this plugin interface in a `strapi-admin.js` file at the root of the plugin package folder:
+The Admin Panel API includes:
 
-  ```js title="[plugin-name]/strapi-admin.js"
+- an [entry file](#entry-file) which exports the required interface,
+- [lifecycle functions](#lifecycle-functions) and the `registerTrad()` [async function](#async-function),
+- and several [specific APIs](#available-actions) for your plugin to interact with the admin panel.
 
-  'use strict';
-
-  module.exports = require('./admin/src').default;
-  ```
+:::note
+The whole code for the admin panel part of your plugin could live in the `/strapi-admin.js|ts` or `/admin/src/index.js|ts` file. However, it's recommended to split the code into different folders, just like the [structure](/dev-docs/plugins/development/plugin-structure) created by the `strapi generate plugin` CLI generator command.
+:::
 
 ## Entry file
 
