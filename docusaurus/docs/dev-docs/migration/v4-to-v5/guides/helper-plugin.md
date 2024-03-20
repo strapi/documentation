@@ -80,7 +80,7 @@ import { ConfirmDialog } from '@strapi/helper-plugin';
 import { ConfirmDialog } from '@strapi/strapi/admin';
 ```
 
-Please see the documentation for the `ConfirmDialog` component for more information.
+Please see the contributors [documentation for the `ConfirmDialog` component](https://v5.contributor.strapi.io/exports/modules#confirmdialog) for more information.
 
 ### ContentBox
 
@@ -119,7 +119,7 @@ import { EmptyStateLayout } from '@strapi/design-system';
 ```
 
 :::note
-The props will be different. Please refer to the documentation for the `EmptyStateLayout` component.
+The props will be different. Please refer to the Strapi Design System [documentation for the `EmptyStateLayout` component](https://design-system-git-main-strapijs.vercel.app/?path=/docs/design-system-components-emptystatelayout--docs).
 :::
 
 ### FilterListURLQuery
@@ -175,7 +175,7 @@ import { Form } from '@strapi/helper-plugin';
 import { Form } from '@strapi/strapi/admin';
 ```
 
-Users should note that any use of the Formik library will no longer work and instead should look at the documentation for the `Form` component.
+Users should note that any use of the Formik library will no longer work and instead should look at the contributors [documentation for the `Form` component](https://v5.contributor.strapi.io/exports/modules#form).
 
 ### GenericInput
 
@@ -189,7 +189,7 @@ import { GenericInput } from '@strapi/helper-plugin';
 import { InputRenderer } from '@strapi/strapi/admin';
 ```
 
-Note, that the `InputRenderer` component has a different API, and you should refer to the documentation for the `InputRenderer` component.
+Note, that the `InputRenderer` component has a different API, and you should refer to the [documentation for the `InputRenderer` component](https://v5.contributor.strapi.io/exports/modules#inputrenderer).
 
 ### InjectionZone
 
@@ -340,7 +340,7 @@ const MyComponent = () => {
 };
 ```
 
-Note, there were some slightly behavioural changes i.e. the PageSize won't render if the lowest pageSize is 10 but you only have 9 entries. Due to the refactor some props will have moved and changed, please look at the documentation for the Pagination component for more info.
+Note, there were some slightly behavioural changes i.e. the PageSize won't render if the lowest pageSize is 10 but you only have 9 entries. Due to the refactor some props will have moved and changed, please look at the contributors [documentation for the Pagination component](https://v5.contributor.strapi.io/exports/modules#table) for more information.
 
 ### PaginationURLQueryProps
 
@@ -362,7 +362,7 @@ const MyComponent = () => {
 };
 ```
 
-Note, there were some slightly behavioural changes i.e. the Links won't render if there are less than 2 pages. Due to the refactor some props will have moved and changed, please look at the documentation for the Pagination component for more info.
+Note, there were some slightly behavioural changes i.e. the Links won't render if there are less than 2 pages. Due to the refactor some props will have moved and changed, please look at the [documentation for the Pagination component](https://v5.contributor.strapi.io/exports/modules#table) for more information.
 
 ### ReactSelect
 
@@ -413,7 +413,7 @@ import { Table } from '@strapi/strapi/admin';
 ```
 
 :::note
-Some of the props have changed, please refer to the documentation for the `Table` component.
+Some of the props have changed, please refer to the contributors [documentation for the `Table` component](https://v5.contributor.strapi.io/exports/modules#table).
 :::
 
 ## Content Manager
