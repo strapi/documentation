@@ -7,10 +7,10 @@ tags:
   - plugins development
 ---
 
-# `helper-plugin` migration guide
+# `helper-plugin` migration reference
 
-This document has been written incrementally to help developers migrate their strapi plugins & applications to _not_ use the `helper-plugin` package.
-It is written in alphabetical order grouped by domain based on _every_ export that existed in the aforementioned package.
+This document has been written to help developers migrate their strapi plugins and applications to _not_ use the `helper-plugin` package.
+It lists every export that existed in the `helper-plugin` package, in alphabetical order and grouped by domain.
 
 :::danger
 It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
