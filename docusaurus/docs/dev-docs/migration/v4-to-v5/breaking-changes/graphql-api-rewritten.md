@@ -21,9 +21,7 @@ In Strapi 5, the GraphQL API has been rewritten. It handles the new, flattened r
 
 <YesPlugin />
 
-## Breaking change description
-
-### List of changes
+## List of changes
 
 | Topic                        |  Description of the changes |
 |------------------------------|-----------------------------------------------------------------------------------------------------|
