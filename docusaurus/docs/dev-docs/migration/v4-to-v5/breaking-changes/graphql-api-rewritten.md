@@ -25,7 +25,7 @@ In Strapi 5, the GraphQL API has been rewritten. It handles the new, flattened r
 
 ### List of changes
 
-| Element                      |  Description of the change |
+| Topic                        |  Description of the changes |
 |------------------------------|-----------------------------------------------------------------------------------------------------|
 | File upload support          | <ul><li>Removed `uploadFile` `uploadFiles` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed wrongly expose `folder` queries & mutations</li><li>Removed `createUploadFile` mutation as it was not supposed to work</li></ul> |
 | Internationalization support | Removed the `createXXLocalization` mutations in favor of being able to update any locale from the main `updateXXX` mutation |
