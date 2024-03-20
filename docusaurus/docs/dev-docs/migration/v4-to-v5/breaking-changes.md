@@ -45,16 +45,17 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 - [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 - [Database identifiers can't be longer than 53 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
 
-## Plugins and their configuration
+## Plugins, plugins configuration, and plugins development
 
 - [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields)
+- [`Strapi` is a subclass of `Container`](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-container)
+- [The helper-plugin is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated)
 
-## Strapi objects, methods, and hooks
+## Strapi objects and methods
 
 - [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch)
 - [`strapiFactory` should be used in main imports](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports)
 - [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
-- [`Strapi` is a subclass of `Container`](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-container)
 - [The `EditViewLayout` and `ListViewLayout` have been rewritten](/dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten)
 
 ## Content Manager

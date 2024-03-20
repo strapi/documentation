@@ -972,7 +972,6 @@ const sidebars = {
             },
           ]
         },
-
       ]
     },
   ],
@@ -1145,13 +1144,15 @@ const sidebars = {
             {
               type: "category",
               collapsed: false,
-              label: "Plugins and their configuration",
+              label: "Plugins",
               link: {
                 type: 'doc',
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
               },
               items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields'
+                'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields',
+                'dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten',
+                'dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated',
               ]
             },
             {
@@ -1163,7 +1164,6 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports',
                 'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
                 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container',
-                'dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten'
               ]
             },
             {
