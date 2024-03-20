@@ -224,7 +224,7 @@ const config = {
                 href: 'https://contributor.strapi.io'
               },
               {
-                label: 'Strapi Design System's,
+                label: 'Strapi Design System',
                 href: 'https://design-system.strapi.io/'
               },
             ],
