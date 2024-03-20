@@ -590,6 +590,7 @@ const sidebars = {
             },
             {
               type: 'category',
+              collapsed: false,
               label: 'Guides',
               items: [
                 'dev-docs/migration/v4-to-v5/guides/helper-plugin'

@@ -7,7 +7,7 @@ tags:
   - plugins development
 ---
 
-# Helper-plugin migration guide
+# `helper-plugin` migration guide
 
 This document has been written incrementally to help developers migrate their strapi plugins & applications to _not_ use the `helper-plugin` package.
 It is written in alphabetical order grouped by domain based on _every_ export that existed in the aforementioned package.

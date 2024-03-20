@@ -1,19 +1,22 @@
 ---
-title: Breaking change title
+title: helper-plugin deprecated
 description: Breaking change description
-sidebar_label: Sidebar label
+sidebar_label: helper-plugin deprecated
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
+ - plugins development
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
-# Title
+# `helper-plugin` deprecated
 
-short description <Intro />
+In Strapi 5, the `helper-plugin` is deprecated. A whole migration guide is available for plugin developers.
+
+ <Intro />
 
 <YesPlugin />
 
