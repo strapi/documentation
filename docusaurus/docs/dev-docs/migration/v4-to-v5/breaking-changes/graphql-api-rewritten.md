@@ -32,6 +32,8 @@ In Strapi 5, the GraphQL API has been rewritten. It handles the new, flattened r
 | Draft & Publish support      | Removed `publicationState` in favor of `status` to align with the new Draft & Publish behavior |
 | Schema changes               | <ul><li>Simplified the basic queries with no `meta`/`pagination`</li><li>Introduced `Connection` to add pagination</li></ul> |
 
+For an extensive description of the new Strapi 5 GraphQL API, please refer to the [GraphQL API](/dev-docs/api/graphql) reference documentation.
+
 ## Migration
 
 To gradually convert to the new GraphQL API format, follow these steps:
