@@ -223,6 +223,10 @@ const config = {
                 label: 'Contributor Docs',
                 href: 'https://contributor.strapi.io'
               },
+              {
+                label: 'Strapi Design System's,
+                href: 'https://design-system.strapi.io/'
+              },
             ],
           },
           {
