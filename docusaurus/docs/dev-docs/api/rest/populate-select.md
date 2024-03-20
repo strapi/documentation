@@ -114,6 +114,7 @@ The [REST API guides](/dev-docs/api/rest/guides/intro) section includes more det
 - The [Understanding populate](/dev-docs/api/rest/guides/understanding-populate) guide explains in details how populate works, with diagrams, comparisons, and real-world examples.
 - The [How to populate creator fields](/dev-docs/api/rest/guides/populate-creator-fields) guide provides step-by-step instructions on how to add `createdBy` and `updatedBy` fields to your queries responses.
 
+The Strapi Blog also includes a tutorial on [how to populate and filter data with your queries](https://strapi.io/blog/demystifying-strapi-s-populate-and-filtering).
 :::
 
 The following table sums up possible populate use cases and their associated parameter syntaxes, and links to sections of the Understanding populate guide which includes more detailed explanations:
