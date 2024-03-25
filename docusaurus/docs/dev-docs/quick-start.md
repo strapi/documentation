@@ -35,25 +35,9 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
 Run the following command in a terminal:
 
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="Yarn">
-
-```bash
-yarn create strapi-app@beta my-project --quickstart
-```
-
-</TabItem>
-
-<TabItem value="npm" label="NPM">
-
 ```bash
 npx create-strapi-app@beta my-project --quickstart
 ```
-
-</TabItem>
-
-</Tabs>
 
 :::info
 The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
