@@ -728,10 +728,7 @@ const sidebars = {
         {
           type: "doc",
           id: "cloud/getting-started/deployment",
-          customProps: {
-            updated: true,
-          },
-        },,
+        },
         {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
@@ -757,9 +754,6 @@ const sidebars = {
           type: "doc",
           label: "Project settings",
           id: "cloud/projects/settings",
-          customProps: {
-            new: false,
-          },
         },
         'cloud/projects/collaboration',
         'cloud/projects/runtime-logs',
@@ -793,17 +787,11 @@ const sidebars = {
           type: "doc",
           id: "cloud/advanced/email",
           label: "Email provider",
-          customProps: {
-            new: false,
-          },
         },
         {
           type: "doc",
           id: "cloud/advanced/upload",
           label: "Upload provider",
-          customProps: {
-            new: false,
-          },
         },
       ]
     }
