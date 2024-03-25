@@ -32,6 +32,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'dev-docs/whats-new',
+          label: "What's new?",
           customProps: {
             new: true
           }
