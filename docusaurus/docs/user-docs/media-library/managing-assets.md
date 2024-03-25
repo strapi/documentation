@@ -4,7 +4,11 @@ description: Instructions on how to manage assets uploaded to the Media Library,
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Managing individual assets
+
+<NotV5/>
 
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped. To manage an asset, click on its Edit ![Edit icon](/img/assets/icons/edit.svg) button.
 

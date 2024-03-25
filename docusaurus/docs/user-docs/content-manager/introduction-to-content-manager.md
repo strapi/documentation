@@ -8,7 +8,11 @@ pagination_next: user-docs/content-manager/configuring-view-of-content-type
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Introduction to the Content Manager
+
+<NotV5 />
 
 The Content Manager is a core feature of Strapi. It is always enabled by default and cannot be disabled. It is accessible both when the application is in a development and production environment.
 

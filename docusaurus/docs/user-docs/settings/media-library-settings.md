@@ -3,7 +3,11 @@ sidebar_position: 3
 title: Media Library
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Configuring the Media Library
+
+<NotV5/>
 
 The [Media Library](/user-docs/media-library) displays all assets uploaded in the Strapi application. The Media Library settings allow controlling the format, file size, and orientation of uploaded assets. Those settings can be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Media Library*.
 

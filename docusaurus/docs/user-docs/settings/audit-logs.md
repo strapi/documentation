@@ -4,11 +4,11 @@ description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
 
-:::info
-Audit Logs is an <EnterpriseBadge />-only feature.
-:::
+<NotV5/>
 
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 

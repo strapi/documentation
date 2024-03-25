@@ -5,7 +5,11 @@ description: Instructions on how to use folders in the Media Library, including 
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Organizing assets with folders
+
+<NotV5/>
 
 Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/user-docs/content-manager/writing-content).
 

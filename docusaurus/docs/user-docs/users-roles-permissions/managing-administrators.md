@@ -4,7 +4,11 @@ displayed_sidebar: userDocsSidebar
 sidebar_position: 3
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Managing administrator accounts
+
+<NotV5/>
 
 Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the section of the ![Settings icon](/img/assets/icons/settings.svg) _Settings_ sub navigation.
 

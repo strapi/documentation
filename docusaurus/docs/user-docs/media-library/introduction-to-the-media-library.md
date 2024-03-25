@@ -6,7 +6,11 @@ description: Introduction to the Media Library which allows to display and manag
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Introduction to the Media Library
+
+<NotV5/>
 
 The Media Library is a Strapi plugin that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
 

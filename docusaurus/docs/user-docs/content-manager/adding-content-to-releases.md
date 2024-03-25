@@ -4,7 +4,11 @@ description: Instructions to include content in a release
 displayed_sidebar: userDocsSidebar
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Including content in a release  <EnterpriseBadge /> <CloudTeamBadge />
+
+<NotV5 />
 
 Using the [Releases](/user-docs/releases/introduction) feature, you can group several entries to publish them altogether. Adding entries to a release is done from the Content Manager. You can also remove an entry from a release while updating the entry.
 

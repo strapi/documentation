@@ -3,7 +3,11 @@ sidebar_position: 3
 title: Overview & Custom logo
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Customizing the logo
+
+<NotV5/>
 
 The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Overview*.
 

@@ -1,4 +1,13 @@
+---
+title: Managing content-types
+description: Learn how to manager your content-types in Strapi 5
+---
+
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Managing content-types
+
+<NotV5/>
 
 :::note development-only
 The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.

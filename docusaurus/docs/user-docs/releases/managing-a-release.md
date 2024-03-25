@@ -3,8 +3,11 @@ title: Managing a release
 description: Instructions on how to manage a Release from the admin panel
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Managing a release <EnterpriseBadge /> <CloudTeamBadge />
+
+<NotV5/>
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 

@@ -3,7 +3,11 @@ sidebar_position: 3
 title: API tokens
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Managing API tokens
+
+<NotV5/>
 
 :::prerequisites
 * Administrators can create, read, update, or delete API tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).

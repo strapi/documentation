@@ -5,11 +5,7 @@ sidebarDepth: 0
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Collected Usage Information
-
-<NotV5 />
 
 We are committed to providing a solution, with Strapi, that exceeds the expectations of the users and community. We are also committed to continuing to develop and make Strapi even better than it is today. To that end, Strapi contains a feature in which non-sensitive data is collected. This data is collectively aggregated for all our users, which when taken together give us a better global understanding of how users are interacting and using Strapi. We will never share the data collected in any way that would identify our Customers or their users; if shared, this data will always be anonymous.
 

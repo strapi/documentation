@@ -3,7 +3,11 @@ sidebar_position: 1
 slug: /user-docs/content-type-builder
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Introduction to the Content-type Builder
+
+<NotV5/>
 
 The Content-type Builder is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deactivated. The Content-type Builder is however only accessible when the application is in a development environment.
 

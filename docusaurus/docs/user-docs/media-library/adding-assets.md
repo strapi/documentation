@@ -4,7 +4,11 @@ description: Instructions to add assets to the Media Library
 
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Adding assets
+
+<NotV5/>
 
 The Media Library displays all assets uploaded in the application, either via the [Media Library](/user-docs/media-library) or the [Content Manager](/user-docs/content-manager/writing-content.md#filling-up-fields) when managing a media field.
 
