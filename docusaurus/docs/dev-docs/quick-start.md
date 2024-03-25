@@ -40,7 +40,7 @@ Run the following command in a terminal:
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn create strapi-app my-project --quickstart
+yarn create strapi-app@beta my-project --quickstart
 ```
 
 </TabItem>
@@ -48,7 +48,7 @@ yarn create strapi-app my-project --quickstart
 <TabItem value="npm" label="NPM">
 
 ```bash
-npx create-strapi-app@latest my-project --quickstart
+npx create-strapi-app@beta my-project --quickstart
 ```
 
 </TabItem>
