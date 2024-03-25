@@ -132,13 +132,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // announcementBar: {
-      //   id: 'support_us',
-      //   content: "We're rebuilding our documentation from the ground up (see <a href='/'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
-      //   backgroundColor: '#F3E5FA',
-      //   textColor: '#091E42',
-      //   isCloseable: true,
-      // },
+      announcementBar: {
+        id: 'strapi5docs',
+        content:
+          "Strapi 5 is now in public beta! 🚀 Read the Strapi 5 beta docs at <a href='https://docs-next.strapi.io'>docs-next.strapi.io</a>",
+        backgroundColor: 'rgb(236, 235, 255)',
+        textColor: '#091E42',
+        isCloseable: true,
+      },
       docs: {
         sidebar: {
           hideable: true,
