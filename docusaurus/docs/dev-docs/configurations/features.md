@@ -102,8 +102,10 @@ Developers can use the following APIs to interact with future flags:
 
 ## Available future flags
 
-The following future flags are currently available and can be used in the `future` object of the `config/features` configuration file:
+There are currently no available future flags. This section will be updated once new experimental features are available for testing.
+
+<!-- The following future flags are currently available and can be used in the `future` object of the `config/features` configuration file:
 
 | Property name     | Related feature                              | Suggested environment variable name       |
 | ----------------- | -------------------------------------------- | ----------------------------------------- |
-| `contentReleasesScheduling` | [Releases Scheduling](/user-docs/releases/managing-a-release#scheduling-a-release-) | `STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING` |
+| `contentReleasesScheduling` | [Releases Scheduling](/user-docs/releases/managing-a-release#scheduling-a-release-) | `STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING` | -->
