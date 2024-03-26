@@ -1,7 +1,7 @@
 ---
-title: The GraphQL API has been rewritten
+title: The GraphQL API has been updated
 description: Breaking change description
-sidebar_label: GraphQL API rewritten
+sidebar_label: GraphQL API updated
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
@@ -15,7 +15,7 @@ import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # The GraphQL API has been rewritten
 
-In Strapi 5, the GraphQL API has been rewritten. It handles the new, flattened response format (see [related breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format.md)), and can also now accept [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries.
+In Strapi 5, the GraphQL API has been updated. It handles the new, flattened response format (see [related breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format.md)), and can also now accept [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries.
 
 <Intro />
 
@@ -25,7 +25,7 @@ In Strapi 5, the GraphQL API has been rewritten. It handles the new, flattened r
 
 | Topic                        |  Description of the changes |
 |------------------------------|-----------------------------------------------------------------------------------------------------|
-| File upload support          | <ul><li>Removed `uploadFile` `uploadFiles` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed wrongly expose `folder` queries & mutations</li><li>Removed `createUploadFile` mutation as it was not supposed to work</li></ul> |
+| File upload support          | <ul><li>Removed `uploadFile` `uploadFiles` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed `folder` queries & mutations</li><li>Removed `createUploadFile` mutation</li></ul> |
 | Internationalization support | Removed the `createXXLocalization` mutations in favor of being able to update any locale from the main `updateXXX` mutation |
 | Draft & Publish support      | Removed `publicationState` in favor of `status` to align with the new Draft & Publish behavior |
 | Schema changes               | <ul><li>Simplified the basic queries with no `meta`/`pagination`</li><li>Introduced `Connection` to add pagination</li></ul> |

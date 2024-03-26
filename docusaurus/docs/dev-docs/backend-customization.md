@@ -86,7 +86,7 @@ graph TB
     click controllerB "/dev-docs/backend-customization/controllers"
     click serviceA "/dev-docs/backend-customization/services"
     click serviceB "/dev-docs/backend-customization/services"
-    click documentService "/dev-docs/api/Document-service/"
+    click documentService "/dev-docs/api/document-service"
     click lifecyclesBefore "/dev-docs/backend-customization/models#lifecycle-hooks"
     click queryEngine "/dev-docs/api/query-engine/"
     click lifecyclesAfter "/dev-docs/backend-customization/models#lifecycle-hooks"
