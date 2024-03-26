@@ -3,6 +3,7 @@ title: Components and dynamic zones do not return an id
 description: Breaking change description
 sidebar_label: Components and dynamic zones do not return an id
 displayed_sidebar: devDocsMigrationV5Sidebar
+unlisted: true
 tags:
  - breaking changes
  - content API

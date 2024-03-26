@@ -3,6 +3,7 @@ title: Strapi imports
 description: In Strapi 5, strapiFactory should be used in imports.
 sidebar_label: Use strapiFactory in imports
 displayed_sidebar: devDocsMigrationV5Sidebar
+unlisted: true
 tags:
  - breaking changes
  - strapiFactory

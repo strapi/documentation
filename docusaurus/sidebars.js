@@ -1122,12 +1122,11 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/new-response-format',
                 'dev-docs/migration/v4-to-v5/breaking-changes/use-document-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed',
-                // 'dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled',
                 'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
                 'dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved',
-                'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id',
+                // 'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id', // not implemented yet
                 'dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated',
               ]
             },
@@ -1164,9 +1163,9 @@ const sidebars = {
               collapsed: false,
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
-                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports',
+                // 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports', // might change
                 'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
-                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container',
+                // 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container', // might change
               ]
             },
             {
