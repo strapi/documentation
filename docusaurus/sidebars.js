@@ -512,6 +512,7 @@ const sidebars = {
             },
             'dev-docs/plugins/development/create-a-plugin',
             'dev-docs/plugins/development/plugin-structure',
+            'dev-docs/plugins/development/plugin-cli',
             {
               type: 'doc',
               id: 'dev-docs/plugins/admin-panel-api',
