@@ -6,7 +6,7 @@ sidebar_position: 2
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" />
+# Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <CloudTeamBadge/>
 
 <NotV5/>
 

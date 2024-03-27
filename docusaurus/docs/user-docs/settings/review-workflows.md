@@ -5,7 +5,7 @@ description: Managing your review workflows and stages in Strapi.
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# Managing Review Workflows <EnterpriseBadge />
+# Managing Review Workflows <EnterpriseBadge /> <CloudTeamBadge/>
 
 <NotV5/>
 
