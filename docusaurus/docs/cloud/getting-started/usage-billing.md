@@ -62,7 +62,7 @@ Billing is based on the usage of your Strapi Cloud account and projects. You wil
 
 If you exceed the limits of your plan for API Requests, Asset Bandwidth, or Asset Storage, you will be charged for the corresponding overages. 
 
-For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period. Overages are not prorated and are charged in full.
+For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
 
 Overages are charged according to the following rates:
 
@@ -70,7 +70,7 @@ Overages are charged according to the following rates:
 | --- | --- |
 | **API Requests** | $1.50 / 25k requests |
 | **Asset Bandwidth** | $30.00 / 100GB |
-| **Asset Storage** | $0.60/GB per month |
+| **Asset Storage** | $0.60 / GB per month |
 
 ### Project suspension
 
