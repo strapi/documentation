@@ -258,8 +258,9 @@ export default {
 When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
-:::tip
-To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+:::tip Tips
+- To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+- If you want to implement unit testing to your controllers, this [blog post](https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest) should get you covered.
 :::
 
 ### Sanitization and Validation in controllers
