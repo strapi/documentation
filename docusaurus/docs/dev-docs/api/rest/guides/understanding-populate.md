@@ -8,8 +8,21 @@ toc_max_heading_level: 6
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # 🧠 Understanding the `populate` parameter for the REST API
+
+:::note Note: Example responses might differ from your experience
+
+The content of this page might not be fully up-to-date with Strapi 5 yet:
+
+- All the conceptual information and explanations are correct and up-to-date.
+- However, in the examples, the response content might be slightly different.
+
+Examples will be fully up-to-date _after_ the Strapi 5.0.0 (stable version) release and as soon as the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application is upgraded to Strapi 5.
+
+However, having slightly different response examples should not prevent you from grasping the essential concepts taught in this page.
+:::
 
 When querying content-types with Strapi's [REST API](/dev-docs/api/rest), by default, responses only include top-level fields and do not include any relations, media fields, components, or dynamic zones.
 
@@ -27,7 +40,7 @@ The present guide will cover detailed explanations for the following use cases:
 - populate [components](#populate-components),
 - populate [dynamic zones](#populate-dynamic-zones).
 
-:::info 
+:::info
 Populating several levels deep is often called "deep populate".
 :::
 
@@ -69,51 +82,47 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": // truncated content
-      }
+      "documentId": "t3q2i3v1z2j7o8p6d0o4xxg",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": // truncated content
     },
     {
       "id": 2,
-      "attributes": {
-        "title": "What are chinese hamburgers and why aren't you eating them?",
-        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-        "createdAt": "2021-11-11T13:33:19.948Z",
-        "updatedAt": "2023-06-01T14:32:50.984Z",
-        "publishedAt": "2022-09-22T12:36:48.312Z",
-        "locale": "en",
-        "ckeditor_content": // truncated content
-      }
+      "documentId": "k2r5l0i9g3u2j3b4p7f0sed",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": // truncated content
     },
     {
       "id": 3,
-      "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": // truncated content
-      }
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah"
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": // truncated content
     },
     {
       "id": 4,
-      "attributes": {
-        "title": "If you don't finish your plate in these countries, you might offend someone",
-        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-        "createdAt": "2021-11-15T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:59:35.148Z",
-        "publishedAt": "2022-09-22T12:35:53.899Z",
-        "locale": "en",
-        "ckeditor_content": // truncated content
-      }
+      "documentId": "d5m4b6z6g5d9e3v1k9n5gbn",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": // truncated content
     }
   ],
   "meta": {
@@ -162,68 +171,67 @@ To populate deeply nested components, see the [populate components](#populate-co
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": // truncated content
-        "image": {
-          "data": {
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": // truncated content
+      "image": {
+        "data": {
             "id": 12,
-            "attributes": {
-              "name": "Basque dish",
-              "alternativeText": "Basque dish",
-              "caption": "Basque dish",
-              "width": 758,
-              "height": 506,
-              "formats": {
-                "thumbnail": {
-                  "name": "thumbnail_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
-                  "hash": "thumbnail_basque_cuisine_17fa4567e0_f033424240",
-                  "ext": ".jpeg",
-                  "mime": "image/jpeg",
-                  "width": 234,
-                  "height": 156,
-                  "size": 11.31,
-                  "path": null,
-                  "url": "/uploads/thumbnail_basque_cuisine_17fa4567e0_f033424240.jpeg"
-                },
-                "medium": {
-                  "name": "medium_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
-                  "hash": "medium_basque_cuisine_17fa4567e0_f033424240",
-                  "ext": ".jpeg",
-                  "mime": "image/jpeg",
-                  "width": 750,
-                  "height": 501,
-                  "size": 82.09,
-                  "path": null,
-                  "url": "/uploads/medium_basque_cuisine_17fa4567e0_f033424240.jpeg"
-                },
-                "small": {
-                  "name": "small_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
-                  "hash": "small_basque_cuisine_17fa4567e0_f033424240",
-                  "ext": ".jpeg",
-                  "mime": "image/jpeg",
-                  "width": 500,
-                  "height": 334,
-                  "size": 41.03,
-                  "path": null,
-                  "url": "/uploads/small_basque_cuisine_17fa4567e0_f033424240.jpeg"
-                }
+            "documentId": "o5d4b0l4p8l4o4k5n1l3rxa",
+            "name": "Basque dish",
+            "alternativeText": "Basque dish",
+            "caption": "Basque dish",
+            "width": 758,
+            "height": 506,
+            "formats": {
+              "thumbnail": {
+                "name": "thumbnail_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
+                "hash": "thumbnail_basque_cuisine_17fa4567e0_f033424240",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "width": 234,
+                "height": 156,
+                "size": 11.31,
+                "path": null,
+                "url": "/uploads/thumbnail_basque_cuisine_17fa4567e0_f033424240.jpeg"
               },
-              "hash": "basque_cuisine_17fa4567e0_f033424240",
-              "ext": ".jpeg",
-              "mime": "image/jpeg",
-              "size": 58.209999999999994,
-              "url": "/uploads/basque_cuisine_17fa4567e0_f033424240.jpeg",
-              "previewUrl": null,
-              "provider": "local",
-              "provider_metadata": null,
-              "createdAt": "2021-11-23T14:05:33.460Z",
-              "updatedAt": "2021-11-23T14:05:46.084Z"
+              "medium": {
+                "name": "medium_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
+                "hash": "medium_basque_cuisine_17fa4567e0_f033424240",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "width": 750,
+                "height": 501,
+                "size": 82.09,
+                "path": null,
+                "url": "/uploads/medium_basque_cuisine_17fa4567e0_f033424240.jpeg"
+              },
+              "small": {
+                "name": "small_https://4d40-2a01-cb00-c8b-1800-7cbb-7da-ea9d-2011.ngrok.io/uploads/basque_cuisine_17fa4567e0.jpeg",
+                "hash": "small_basque_cuisine_17fa4567e0_f033424240",
+                "ext": ".jpeg",
+                "mime": "image/jpeg",
+                "width": 500,
+                "height": 334,
+                "size": 41.03,
+                "path": null,
+                "url": "/uploads/small_basque_cuisine_17fa4567e0_f033424240.jpeg"
+              }
+            },
+            "hash": "basque_cuisine_17fa4567e0_f033424240",
+            "ext": ".jpeg",
+            "mime": "image/jpeg",
+            "size": 58.209999999999994,
+            "url": "/uploads/basque_cuisine_17fa4567e0_f033424240.jpeg",
+            "previewUrl": null,
+            "provider": "local",
+            "provider_metadata": null,
+            "createdAt": "2021-11-23T14:05:33.460Z",
+            "updatedAt": "2021-11-23T14:05:46.084Z"
             }
           }
         },
@@ -234,6 +242,7 @@ To populate deeply nested components, see the [populate components](#populate-co
           },
           {
             "id": 2,
+            "documentId": "w8r5k8o8v0t9l9e0d7y6vco",
             "__component": "blocks.cta-command-line",
             "theme": "primary",
             "title": "Want to give a try to a Strapi starter?",
@@ -243,6 +252,7 @@ To populate deeply nested components, see the [populate components](#populate-co
         ],
         "seo": {
           "id": 1,
+          "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
           "metaTitle": "Articles - FoodAdvisor",
           "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
           "keywords": "food",
@@ -254,27 +264,25 @@ To populate deeply nested components, see the [populate components](#populate-co
         "category": {
           "data": {
             "id": 4,
-            "attributes": {
-              "name": "European",
-              "slug": "european",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
+            "documentId": "t1t3d9k6n1k5a6r8l7f8rox",
+            "name": "European",
+            "slug": "european",
+            "createdAt": "2021-11-09T13:33:20.123Z",
+            "updatedAt": "2021-11-09T13:33:20.123Z"
           }
         },
         "localizations": {
           "data": [
             {
               "id": 10,
-              "attributes": {
-                "title": "Voici pourquoi il faut essayer la cuisine basque, selon un chef basque",
-                "slug": "voici-pourquoi-il-faut-essayer-la-cuisine-basque-selon-un-chef-basque",
-                "createdAt": "2021-11-18T13:33:19.948Z",
-                "updatedAt": "2023-06-02T10:57:19.606Z",
-                "publishedAt": "2022-09-22T13:00:00.069Z",
-                "locale": "fr-FR",
-                "ckeditor_content": // truncated content
-              }
+              "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
+              "title": "Voici pourquoi il faut essayer la cuisine basque, selon un chef basque",
+              "slug": "voici-pourquoi-il-faut-essayer-la-cuisine-basque-selon-un-chef-basque",
+              "createdAt": "2021-11-18T13:33:19.948Z",
+              "updatedAt": "2023-06-02T10:57:19.606Z",
+              "publishedAt": "2022-09-22T13:00:00.069Z",
+              "locale": "fr-FR",
+              "ckeditor_content": // truncated content
             }
           ]
         }
@@ -406,51 +414,47 @@ Notice that the response does not include any media fields, relations, component
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-      }
+      "documentId": "x2m0d7d9o4m2z3u2r2l9yes",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
     },
     {
       "id": 2,
-      "attributes": {
-        "title": "What are chinese hamburgers and why aren't you eating them?",
-        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-        "createdAt": "2021-11-11T13:33:19.948Z",
-        "updatedAt": "2023-06-01T14:32:50.984Z",
-        "publishedAt": "2022-09-22T12:36:48.312Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-      }
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
     },
     {
       "id": 3,
-      "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-      }
+      "documentId": "o5d4b0l4p8l4o4k5n1l3rxa",
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
     },
     {
       "id": 4,
-      "attributes": {
-        "title": "If you don't finish your plate in these countries, you might offend someone",
-        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-        "createdAt": "2021-11-15T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:59:35.148Z",
-        "publishedAt": "2022-09-22T12:35:53.899Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-      }
+      "documentId": "t3q2i3v1z2j7o8p6d0o4xxg",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
     }
   ],
   "meta": {
@@ -490,93 +494,84 @@ Notice that the response now includes additional data with the `category` field 
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 4,
-            "attributes": {
-              "name": "European",
-              "slug": "european",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "w8r5k8o8v0t9l9e0d7y6vco",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 4,
+          "documentId": "u6x8u7o7j5q1l5y3t8j9yxi",
+          "name": "European",
+          "slug": "european",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     },
     {
       "id": 2,
-      "attributes": {
-        "title": "What are chinese hamburgers and why aren't you eating them?",
-        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-        "createdAt": "2021-11-11T13:33:19.948Z",
-        "updatedAt": "2023-06-01T14:32:50.984Z",
-        "publishedAt": "2022-09-22T12:36:48.312Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 13,
-            "attributes": {
-              "name": "Chinese",
-              "slug": "chinese",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "k6m6l9q0n6v9z2m3i0z5jah",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 13,
+          "documentId": "x2m0d7d9o4m2z3u2r2l9yes",
+          "name": "Chinese",
+          "slug": "chinese",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     },
     {
       "id": 3,
-      "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 3,
-            "attributes": {
-              "name": "International",
-              "slug": "international",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "h7c8d0u3i3q5v1j3j3r4cxf",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     },
     {
       "id": 4,
-      "attributes": {
-        "title": "If you don't finish your plate in these countries, you might offend someone",
-        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-        "createdAt": "2021-11-15T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:59:35.148Z",
-        "publishedAt": "2022-09-22T12:35:53.899Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 3,
-            "attributes": {
-              "name": "International",
-              "slug": "international",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "t1t3d9k6n1k5a6r8l7f8rox",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "u6x8u7o7j5q1l5y3t8j9yxi",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     }
@@ -649,93 +644,84 @@ When we only populate 1 level deep, asking for the categories associated to arti
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 4,
-            "attributes": {
-              "name": "European",
-              "slug": "european",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "9ih6hy1bnma3q3066kdwt3",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 4,
+          "name": "European",
+          "slug": "european",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     },
     {
       "id": 2,
-      "attributes": {
-        "title": "What are chinese hamburgers and why aren't you eating them?",
-        "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-        "createdAt": "2021-11-11T13:33:19.948Z",
-        "updatedAt": "2023-06-01T14:32:50.984Z",
-        "publishedAt": "2022-09-22T12:36:48.312Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 13,
-            "attributes": {
-              "name": "Chinese",
-              "slug": "chinese",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "sen6qfgxcac13pwchf8xbu",
+      "title": "What are chinese hamburgers and why aren't you eating them?",
+      "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+      "createdAt": "2021-11-11T13:33:19.948Z",
+      "updatedAt": "2023-06-01T14:32:50.984Z",
+      "publishedAt": "2022-09-22T12:36:48.312Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 13,
+          "documentId": "r3rhzcxd7gjx07vkq3pia5",
+          "name": "Chinese",
+          "slug": "chinese",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     },
     {
       "id": 3,
-      "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 3,
-            "attributes": {
-              "name": "International",
-              "slug": "international",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "s9uu7rkukhfcsmj2e60b67",
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "4sevz15w6bdol6y4t8kblk",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     },
     {
       "id": 4,
-      "attributes": {
-        "title": "If you don't finish your plate in these countries, you might offend someone",
-        "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-        "createdAt": "2021-11-15T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:59:35.148Z",
-        "publishedAt": "2022-09-22T12:35:53.899Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 3,
-            "attributes": {
-              "name": "International",
-              "slug": "international",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z"
-            }
-          }
+      "documentId": "iy5ifm3xj8q0t8vlq6l23h",
+      "title": "If you don't finish your plate in these countries, you might offend someone",
+      "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+      "createdAt": "2021-11-15T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:59:35.148Z",
+      "publishedAt": "2022-09-22T12:35:53.899Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 3,
+          "documentId": "0eor603u8qej933maphdv3",
+          "name": "International",
+          "slug": "international",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z"
         }
       }
     }
@@ -774,6 +760,7 @@ Notice that we now have the `restaurants` relation field included with the respo
   "data": [
     {
       "id": 1,
+      "documentId": "iy5ifm3xj8q0t8vlq6l23h",
       "attributes": {
         "title": "Here's why you have to try basque cuisine, according to a basque chef",
         "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
@@ -785,47 +772,44 @@ Notice that we now have the `restaurants` relation field included with the respo
         "category": {
           "data": {
             "id": 4,
-            "attributes": {
-              "name": "European",
-              "slug": "european",
-              "createdAt": "2021-11-09T13:33:20.123Z",
-              "updatedAt": "2021-11-09T13:33:20.123Z",
-              "restaurants": {
-                "data": [
-                  {
-                    "id": 1,
-                    "attributes": {
-                      "name": "Mint Lounge",
-                      "slug": "mint-lounge",
-                      "price": "p3",
-                      "createdAt": "2021-11-09T14:07:47.125Z",
-                      "updatedAt": "2021-11-23T16:41:30.504Z",
-                      "publishedAt": "2021-11-23T16:41:30.501Z",
-                      "locale": "en"
-                    }
-                  },
-                  {
-                    "id": 9,
-                    // truncated content
-                  },
-                  {
-                    "id": 10,
-                    // truncated content
-                  },
-                  {
-                    "id": 12,
-                    // truncated content
-                  },
-                  {
-                    "id": 21,
-                    // truncated content
-                  },
-                  {
-                    "id": 26,
-                    // truncated content
-                  }
-                ]
-              }
+            "name": "European",
+            "slug": "european",
+            "createdAt": "2021-11-09T13:33:20.123Z",
+            "updatedAt": "2021-11-09T13:33:20.123Z",
+            "restaurants": {
+              "data": [
+                {
+                  "id": 1,
+                  "documentId": "ozlqrdxpnjb7wtvf6lp74v",
+                  "name": "Mint Lounge",
+                  "slug": "mint-lounge",
+                  "price": "p3",
+                  "createdAt": "2021-11-09T14:07:47.125Z",
+                  "updatedAt": "2021-11-23T16:41:30.504Z",
+                  "publishedAt": "2021-11-23T16:41:30.501Z",
+                  "locale": "en"
+                },
+                {
+                  "id": 9,
+                  // truncated content
+                },
+                {
+                  "id": 10,
+                  // truncated content
+                },
+                {
+                  "id": 12,
+                  // truncated content
+                },
+                {
+                  "id": 21,
+                  // truncated content
+                },
+                {
+                  "id": 26,
+                  // truncated content
+                }
+              ]
             }
           }
         }
@@ -913,24 +897,24 @@ Notice there's no mention of the `metaSocial` component nested within the `seo` 
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "seo": {
-          "id": 1,
-          "metaTitle": "Articles - FoodAdvisor",
-          "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
-          "keywords": "food",
-          "metaRobots": null,
-          "structuredData": null,
-          "metaViewport": null,
-          "canonicalURL": null
-        }
+      "documentId": "md60m5cy3dula5g87x1uar",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "seo": {
+        "id": 1,
+        "documentId": "kqcwhq6hes25kt9ebj8x7j",
+        "metaTitle": "Articles - FoodAdvisor",
+        "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
+        "keywords": "food",
+        "metaRobots": null,
+        "structuredData": null,
+        "metaViewport": null,
+        "canonicalURL": null
       }
     },
     {
@@ -980,32 +964,33 @@ Notice that we now have the `metaSocial` component-related data included with th
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "seo": {
-          "id": 1,
-          "metaTitle": "Articles - FoodAdvisor",
-          "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
-          "keywords": "food",
-          "metaRobots": null,
-          "structuredData": null,
-          "metaViewport": null,
-          "canonicalURL": null,
-          "metaSocial": [
-            {
-              "id": 1,
-              "socialNetwork": "Facebook",
-              "title": "Browse our best articles about food and restaurants ",
-              "description": "Discover our articles about food, restaurants, bars and more!"
-            }
-          ]
-        }
+      "documentId": "c2imt19iywk27hl2ftph7s",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "seo": {
+        "id": 1,
+        "documentId": "e8cnux5ejxyqrejd5addfv",
+        "metaTitle": "Articles - FoodAdvisor",
+        "metaDescription": "Discover our articles about food, restaurants, bars and more! - FoodAdvisor",
+        "keywords": "food",
+        "metaRobots": null,
+        "structuredData": null,
+        "metaViewport": null,
+        "canonicalURL": null,
+        "metaSocial": [
+          {
+            "id": 1,
+            "documentId": "ks7xsp9fewoi0qljcz9qa0",
+            "socialNetwork": "Facebook",
+            "title": "Browse our best articles about food and restaurants ",
+            "description": "Discover our articles about food, restaurants, bars and more!"
+          }
+        ]
       }
     },
     {
@@ -1093,29 +1078,30 @@ When we only populate the `blocks` dynamic zone, we go only 1 level deep, and we
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…" // truncated content
-        "blocks": [
-          {
-            "id": 2,
-            "__component": "blocks.related-articles"
-          },
-          {
-            "id": 2,
-            "__component": "blocks.cta-command-line",
-            "theme": "primary",
-            "title": "Want to give a try to a Strapi starter?",
-            "text": "❤️",
-            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
-          }
-        ]
-      }
+      "documentId": "e8cnux5ejxyqrejd5addfv",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…" // truncated content
+      "blocks": [
+        {
+          "id": 2,
+          "documentId": "it9bbhcgc6mcfsqas7h1dp",
+          "__component": "blocks.related-articles"
+        },
+        {
+          "id": 2,
+          "documentId": "ugagwkoce7uqb0k2yof4lz",
+          "__component": "blocks.cta-command-line",
+          "theme": "primary",
+          "title": "Want to give a try to a Strapi starter?",
+          "text": "❤️",
+          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+        }
+      ]
     },
     {
       "id": 2,
@@ -1162,75 +1148,74 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "blocks": [
-          {
+      "documentId": "c14dwiff3b4os6gs4yyrag",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "blocks": [
+        {
+          "id": 2,
+          "documentId": "lu16w9g4jri8ppiukg542j",
+          "__component": "blocks.related-articles",
+          "header": {
             "id": 2,
-            "__component": "blocks.related-articles",
-            "header": {
-              "id": 2,
-              "theme": "primary",
-              "label": "More, I want more!",
-              "title": "Similar articles"
-            },
-            "articles": {
-              "data": [
-                {
-                  "id": 2,
-                  "attributes": {
-                    "title": "What are chinese hamburgers and why aren't you eating them?",
-                    "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-                    "createdAt": "2021-11-11T13:33:19.948Z",
-                    "updatedAt": "2023-06-01T14:32:50.984Z",
-                    "publishedAt": "2022-09-22T12:36:48.312Z",
-                    "locale": "en",
-                    "ckeditor_content": "…", // truncated content
-                  }
-                },
-                {
-                  "id": 3,
-                  "attributes": {
-                    "title": "7 Places worth visiting for the food alone",
-                    "slug": "7-places-worth-visiting-for-the-food-alone",
-                    "createdAt": "2021-11-12T13:33:19.948Z",
-                    "updatedAt": "2023-06-02T11:30:00.075Z",
-                    "publishedAt": "2023-06-02T11:30:00.075Z",
-                    "locale": "en",
-                    "ckeditor_content": "…", // truncated content
-                  }
-                },
-                {
-                  "id": 4,
-                  "attributes": {
-                    "title": "If you don't finish your plate in these countries, you might offend someone",
-                    "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
-                    "createdAt": "2021-11-15T13:33:19.948Z",
-                    "updatedAt": "2023-06-02T10:59:35.148Z",
-                    "publishedAt": "2022-09-22T12:35:53.899Z",
-                    "locale": "en",
-                    "ckeditor_content": "…", // truncated content
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "id": 2,
-            "__component": "blocks.cta-command-line",
+            "documentId": "c2imt19iywk27hl2ftph7s",
             "theme": "primary",
-            "title": "Want to give a try to a Strapi starter?",
-            "text": "❤️",
-            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+            "label": "More, I want more!",
+            "title": "Similar articles"
+          },
+          "articles": {
+            "data": [
+              {
+                "id": 2,
+                "documentId": "isn91s2bxk3jib97evvjni",
+                "title": "What are chinese hamburgers and why aren't you eating them?",
+                "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+                "createdAt": "2021-11-11T13:33:19.948Z",
+                "updatedAt": "2023-06-01T14:32:50.984Z",
+                "publishedAt": "2022-09-22T12:36:48.312Z",
+                "locale": "en",
+                "ckeditor_content": "…", // truncated content
+              },
+              {
+                "id": 3,
+                "documentId": "yz6lg7tp5ph8dr79gidoyl",
+                "title": "7 Places worth visiting for the food alone",
+                "slug": "7-places-worth-visiting-for-the-food-alone",
+                "createdAt": "2021-11-12T13:33:19.948Z",
+                "updatedAt": "2023-06-02T11:30:00.075Z",
+                "publishedAt": "2023-06-02T11:30:00.075Z",
+                "locale": "en",
+                "ckeditor_content": "…", // truncated content
+              },
+              {
+                "id": 4,
+                "documentId": "z5jnfvyuj07fogzh1kcbd3",
+                "title": "If you don't finish your plate in these countries, you might offend someone",
+                "slug": "if-you-don-t-finish-your-plate-in-these-countries-you-might-offend-someone",
+                "createdAt": "2021-11-15T13:33:19.948Z",
+                "updatedAt": "2023-06-02T10:59:35.148Z",
+                "publishedAt": "2022-09-22T12:35:53.899Z",
+                "locale": "en",
+                "ckeditor_content": "…", // truncated content
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "id": 2,
+          "documentId": "vpihrdqj5984k8ynrc39p0",
+          "__component": "blocks.cta-command-line",
+          "theme": "primary",
+          "title": "Want to give a try to a Strapi starter?",
+          "text": "❤️",
+          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+        }
+      ]
     },
     {
       "id": 2,
@@ -1322,125 +1307,131 @@ Highlighted lines show that the response include the `articles` first-level rela
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "blocks": [
-          {
+      "documentId": "md60m5cy3dula5g87x1uar",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "blocks": [
+        {
+          "id": 2,
+          "documentId": "jz2yd53om690vdbp3vgj4t",
+          "__component": "blocks.related-articles",
+          "header": {
             "id": 2,
-            "__component": "blocks.related-articles",
-            "header": {
-              "id": 2,
-              "theme": "primary",
-              "label": "More, I want more!",
-              "title": "Similar articles"
-            },
-            "articles": {
-              "data": [
-                {
-                  "id": 2,
-                  "attributes": {
-                    "title": "What are chinese hamburgers and why aren't you eating them?",
-                    "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-                    "createdAt": "2021-11-11T13:33:19.948Z",
-                    "updatedAt": "2023-06-01T14:32:50.984Z",
-                    "publishedAt": "2022-09-22T12:36:48.312Z",
-                    "locale": "en",
-                    "ckeditor_content": "…", // truncated content
-                  }
-                },
-                {
-                  "id": 3,
-                  // …
-                },
-                {
-                  "id": 4,
-                  // …
-                }
-              ]
-            }
-          },
-          {
-            "id": 2,
-            "__component": "blocks.cta-command-line",
             "theme": "primary",
-            "title": "Want to give a try to a Strapi starter?",
-            "text": "❤️",
-            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+            "label": "More, I want more!",
+            "title": "Similar articles"
+          },
+          "articles": {
+            "data": [
+              {
+                "id": 2,
+                "attributes": {
+                  "title": "What are chinese hamburgers and why aren't you eating them?",
+                  "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+                  "createdAt": "2021-11-11T13:33:19.948Z",
+                  "updatedAt": "2023-06-01T14:32:50.984Z",
+                  "publishedAt": "2022-09-22T12:36:48.312Z",
+                  "locale": "en",
+                  "ckeditor_content": "…", // truncated content
+                }
+              },
+              {
+                "id": 3,
+                // …
+              },
+              {
+                "id": 4,
+                // …
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "id": 2,
+          "__component": "blocks.cta-command-line",
+          "theme": "primary",
+          "title": "Want to give a try to a Strapi starter?",
+          "text": "❤️",
+          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+        }
+      ]
     },
     {
       "id": 2,
+      "documentId": "v6vkdzyl14khxjhkwqkuny",
       // …
     },
     {
       "id": 3,
+      "documentId": "v6vkdzyl14khxjhkwqkuny",
       "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "blocks": [
-          {
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "blocks": [
+        {
+          "id": 1,
+          "documentId": "lu16w9g4jri8ppiukg542j",
+          "__component": "blocks.related-articles",
+          "header": {
             "id": 1,
-            "__component": "blocks.related-articles",
-            "header": {
-              "id": 1,
-              "theme": "primary",
-              "label": "More, I want more!",
-              "title": "Similar articles"
-            },
-            "articles": {
-              "data": [
-                {
-                  "id": 1,
-                  "attributes": {
-                    "title": "Here's why you have to try basque cuisine, according to a basque chef",
-                    "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-                    "createdAt": "2021-11-09T13:33:19.948Z",
-                    "updatedAt": "2023-06-02T10:57:19.584Z",
-                    "publishedAt": "2022-09-22T09:30:00.208Z",
-                    "locale": "en",
-                    "ckeditor_content": "…", // truncated content
-                  }
-                },
-                {
-                  "id": 2,
-                  // …  
-                },
-                {
-                  "id": 4,
-                  // …
+            "documentId": "c2imt19iywk27hl2ftph7s",
+            "theme": "primary",
+            "label": "More, I want more!",
+            "title": "Similar articles"
+          },
+          "articles": {
+            "data": [
+              {
+                "id": 1,
+                "documentId": "h9x7sir188co1s2fq5jbj2",
+                "attributes": {
+                  "title": "Here's why you have to try basque cuisine, according to a basque chef",
+                  "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+                  "createdAt": "2021-11-09T13:33:19.948Z",
+                  "updatedAt": "2023-06-02T10:57:19.584Z",
+                  "publishedAt": "2022-09-22T09:30:00.208Z",
+                  "locale": "en",
+                  "ckeditor_content": "…", // truncated content
                 }
-              ]
-            }
-          },
-          {
-            "id": 1,
-            "__component": "blocks.faq",
-            "title": "Frequently asked questions",
-            "theme": "muted"
-          },
-          {
-            "id": 1,
-            "__component": "blocks.cta-command-line",
-            "theme": "secondary",
-            "title": "Want to give it a try with a brand new project?",
-            "text": "Up & running in seconds 🚀",
-            "commandLine": "npx create-strapi-app my-project --quickstart"
+              },
+              {
+                "id": 2,
+                // …  
+              },
+              {
+                "id": 4,
+                // …
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "id": 1,
+          "documentId": "pfcpzcsizcq9z8hrrktw2o",
+          "__component": "blocks.faq",
+          "title": "Frequently asked questions",
+          "theme": "muted"
+        },
+        {
+          "id": 1,
+          "documentId": "hew8bftptk6ut3g919ses7",
+          "__component": "blocks.cta-command-line",
+          "theme": "secondary",
+          "title": "Want to give it a try with a brand new project?",
+          "text": "Up & running in seconds 🚀",
+          "commandLine": "npx create-strapi-app my-project --quickstart"
+        }
+      ]
     },
     {
       "id": 4,
@@ -1487,59 +1478,58 @@ In the following example response, highlighted lines show differences with the s
   "data": [
     {
       "id": 1,
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "blocks": [
-          {
-            "id": 2,
-            "__component": "blocks.related-articles",
-            "articles": {
-              "data": [
-                {
-                  "id": 2,
-                  "attributes": {
-                    "title": "What are chinese hamburgers and why aren't you eating them?",
-                    "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-                    "createdAt": "2021-11-11T13:33:19.948Z",
-                    "updatedAt": "2023-06-01T14:32:50.984Z",
-                    "publishedAt": "2022-09-22T12:36:48.312Z",
-                    "locale": "en",
-                    "ckeditor_content": "…", // truncated content
-                    "image": {
-                      "data": {
-                          // …
-                        }
-                      }
+      "documentId": "it9bbhcgc6mcfsqas7h1dp",
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "blocks": [
+        {
+          "id": 2,
+          "documentId": "e8cnux5ejxyqrejd5addfv",
+          "__component": "blocks.related-articles",
+          "articles": {
+            "data": [
+              {
+                "id": 2,
+                "documentId": "wkgojrcg5bkz8teqx1foz7",
+                "title": "What are chinese hamburgers and why aren't you eating them?",
+                "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
+                "createdAt": "2021-11-11T13:33:19.948Z",
+                "updatedAt": "2023-06-01T14:32:50.984Z",
+                "publishedAt": "2022-09-22T12:36:48.312Z",
+                "locale": "en",
+                "ckeditor_content": "…", // truncated content
+                "image": {
+                  "data": {
+                      // …
                     }
                   }
-                },
-                {
-                  "id": 3,
-                  // …
-                },
-                {
-                  "id": 4,
-                  // …
                 }
-              ]
-            }
-          },
-          {
-            "id": 2,
-            "__component": "blocks.cta-command-line",
-            "theme": "primary",
-            "title": "Want to give a try to a Strapi starter?",
-            "text": "❤️",
-            "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+              },
+              {
+                "id": 3,
+                // …
+              },
+              {
+                "id": 4,
+                // …
+              }
+            ]
           }
-        ]
-      }
+        },
+        {
+          "id": 2,
+          "__component": "blocks.cta-command-line",
+          "theme": "primary",
+          "title": "Want to give a try to a Strapi starter?",
+          "text": "❤️",
+          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
+        }
+      ]
     },
     {
       "id": 2,
@@ -1547,32 +1537,33 @@ In the following example response, highlighted lines show differences with the s
     },
     {
       "id": 3,
-      "attributes": {
-        "title": "7 Places worth visiting for the food alone",
-        "slug": "7-places-worth-visiting-for-the-food-alone",
-        "createdAt": "2021-11-12T13:33:19.948Z",
-        "updatedAt": "2023-06-02T11:30:00.075Z",
-        "publishedAt": "2023-06-02T11:30:00.075Z",
-        "locale": "en",
-        "ckeditor_content": "<blockquote><p>There is no love sincerer than the love of food&nbsp;</p></blockquote><p>said George Bernard Shaw, and let us also add that there's arguably no better way to explore a culture than to eat voraciously while traveling. Yes, there are many five-star restaurants worth booking an entire trip for, but it's equally important to savor classic treats from across the world.</p><h3>Paella in Valencia, Spain</h3><figure class=\"image image-style-side image_resized\" style=\"width:25%;\"><img src=\"/uploads/5b9eeba22100003000c61e59_9098d9fb0a_176b2163c1_4b0b601b3c.jpeg\" alt=\"Paella in Valencia\"></figure><p>It’s this classic rice-based dish that first pops to mind when thinking of Spanish gastronomy. For the best there is, head to the source: Valencia. And don’t forget to scrape the bottom of the pan for heavenly bites of crunchy rice, or socarrat: the most flavorful arroz ever to land on your palate.</p><p>&nbsp;</p><h3>&nbsp;</h3><h3>&nbsp;</h3><h3>Nasi Lemak in Malaysia</h3><figure class=\"image image_resized\" style=\"width:50%;\"><img src=\"/uploads/5b9eeba22400005100542e38_cf4839f0ad_84f89b8451_742b9a1759.jpeg\" alt=\"Nasi Lemak\"></figure><p>Malaysia’s national dish, nasi lemak is a fragrant coconut-milk rice mixture, served with sambal sauce, fried crispy anchovies, toasted peanuts, and cucumber and cooked with screw pine (pandan) leaves. Available on almost every street corner, this much-loved classic hits all the notes.</p><h3>Pintxos in San Sebastián, Spain</h3><p><img class=\"image_resized\" style=\"width:25%;\" src=\"/uploads/5b9eeba32500003500370d46_7d51fc80cd_783924b96a_bdc848856f.jpeg\" alt=\"Pintxos in San Sebastián\"></p><p>Among the most highly ranked cities for Michelin-starred restaurants, San Sebastián boasts pintxos (the equivalent of small tapas) with über-creative takes on classics and beyond. Spain’s haute cuisine shines in this culinary paradise on the Basque coast.</p><h3>&nbsp;</h3><h3>Pastel de Nata in Lisbon</h3><figure class=\"image image-style-side image_resized\" style=\"width:25%;\"><img src=\"/uploads/5b9eeba53c00005b000abbf4_be4ab6d075_e909882796_3908e6e816.jpeg\" alt=\"Pastel de Nata\"></figure><p>The most iconic Portuguese pastry, the <a href=\"http://www.bbc.com/travel/story/20111107-a-bit-of-history-in-every-sweet-bite\">pastel de nata</a> is a sublime custard tart with hints of lemon, cinnamon, and vanilla. Buttery goodness in the middle, crunchy sweetness on top—what’s not to love?</p><h3>&nbsp;</h3><h3>&nbsp;</h3><h3>&nbsp;</h3><h3>Mole in Puebla, Mexico</h3><p><img class=\"image_resized\" style=\"width:25%;\" src=\"/uploads/5b9eeba62100003100c61e5b_d99dbc2910_75979ebd04_7afc2d1a5c.jpeg\" alt=\"Mole in Puebla\"></p><p>Mole, a specialty in the Mexican city of Puebla, is a labor of love. The spicy-sweet combination of this rich, chocolate-colored sauce takes arduous preparation and packs ingredients such as ancho chiles, spices like anise and coriander, sesame seeds, almonds, peanuts, stale bread, brown sugar, raisins, chocolate, and ripe plantains. The culminating dish is fit for the gods.</p><h3>Sichuan Hot Pot in China</h3><p><img class=\"image_resized\" style=\"width:50%;\" src=\"/uploads/5b9eeba82200005600da3822_01759bd55b_b46108e1aa_a310f83ff9.jpeg\" alt=\"Sichuan Hot Pot\"></p><p>This isn’t for the faint of heart. But if you’re an extreme spice lover, you’ll welcome the tears that come from the hot pot’s perfect nexus of pain and pleasure.</p><h3>Tagine in Morocco</h3><p><img class=\"image_resized\" style=\"width:50%;\" src=\"/uploads/5b9eeba93c000032000abbf6_12bb2e5346_9e0dac4fca_73bf6480cb.jpeg\" alt=\"Tagine in Morocco\"></p><p>This slow-cooked savory stew, typically made with sliced meat, poultry, or fish and lots of herbs and spices, is true Moroccan soul food. Cooked for hours in a clay cooking pot with a conical lid (known as a tagine), this irresistible dish is served with couscous or bread and can be found all over Morocco.</p>",
-        "blocks": [
-          {
-            "id": 1,
-            "__component": "blocks.related-articles",
-            "articles": {
-              // …
-            }
-          },
-          {
-            "id": 1,
-            "__component": "blocks.cta-command-line",
-            "theme": "secondary",
-            "title": "Want to give it a try with a brand new project?",
-            "text": "Up & running in seconds 🚀",
-            "commandLine": "npx create-strapi-app my-project --quickstart"
+      "documentId": "z5jnfvyuj07fogzh1kcbd3",
+      "title": "7 Places worth visiting for the food alone",
+      "slug": "7-places-worth-visiting-for-the-food-alone",
+      "createdAt": "2021-11-12T13:33:19.948Z",
+      "updatedAt": "2023-06-02T11:30:00.075Z",
+      "publishedAt": "2023-06-02T11:30:00.075Z",
+      "locale": "en",
+      "ckeditor_content": "…", // … truncated content
+      "blocks": [
+        {
+          "id": 1,
+          "documentId": "ks7xsp9fewoi0qljcz9qa0",
+          "__component": "blocks.related-articles",
+          "articles": {
+            // …
           }
-        ]
-      }
+        },
+        {
+          "id": 1,
+          "documentId": "c2imt19iywk27hl2ftph7s",
+          "__component": "blocks.cta-command-line",
+          "theme": "secondary",
+          "title": "Want to give it a try with a brand new project?",
+          "text": "Up & running in seconds 🚀",
+          "commandLine": "npx create-strapi-app my-project --quickstart"
+        }
+      ]
     },
     {
       "id": 4,
