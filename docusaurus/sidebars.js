@@ -611,7 +611,16 @@ const sidebars = {
     },
   ],
   userDocsSidebar: [
-    'user-docs/intro',
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Getting Started',
+      items: [
+        'user-docs/intro',
+        'user-docs/getting-started/user-guide-fundamentals',
+        'user-docs/getting-started/setting-up-admin-panel',
+      ],
+    },
     {
       type: 'category',
       collapsed: false,
@@ -696,6 +705,7 @@ const sidebars = {
       collapsed: false,
       label: 'General Settings',
       items: [
+       'user-docs/settings/introduction',
        'user-docs/settings/configuring-users-permissions-plugin-settings',
        'user-docs/settings/audit-logs',
         {
