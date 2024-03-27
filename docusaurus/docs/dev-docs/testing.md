@@ -2,6 +2,7 @@
 title: Testing
 displayed_sidebar: devDocsSidebar
 description: Learn how to test your Strapi application.
+unlisted: true
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
@@ -12,10 +13,8 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 
-:::tip
 In this example we will use [Jest](https://jestjs.io/) Testing Framework with a focus on simplicity and
 [Supertest](https://github.com/visionmedia/supertest) Super-agent driven library for testing node.js HTTP servers using a fluent API.
-:::
 
 :::caution
 Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
