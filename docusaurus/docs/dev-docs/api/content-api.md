@@ -58,11 +58,3 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="🔄" title="Integration guides" description="Use 3rd-party technologies to query the Content API from a front-end application." link="/dev-docs/integrations" />
 
 </CustomDocCardsWrapper>
-
-## Guides
-
-The following guides could help you solve specific use cases when using the Content API:
-
-<CustomDocCard small emoji="💁" title="How to authenticate a REST API request" link="/dev-docs/api/guides/how-to-authenticate-a-rest-api-request" />
-
-<CustomDocCard small emoji="💁" title="How to populate content with the REST API" link="/dev-docs/api/guides/how-to-populate-content-with-the-rest-api" />

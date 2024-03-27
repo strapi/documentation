@@ -1,15 +1,15 @@
 ---
-title: REST API
+title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 displayed_sidebar: restApiSidebar
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
-# REST API
+# REST API reference
 
 The REST API allows accessing the [content-types](/dev-docs/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/dev-docs/api/rest/parameters) can be used when querying API endpoints to refine the results.
+
+This section of the documentation is for the REST API reference. We also have [guides](/dev-docs/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
 All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/dev-docs/quick-start#step-3-set-roles--permissions), the user guide for the [Users & Permissions plugin](/user-docs/users-roles-permissions/configuring-end-users-roles), and [API tokens configuration documentation](/dev-docs/configurations/api-tokens) for more details.

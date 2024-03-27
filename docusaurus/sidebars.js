@@ -830,28 +830,28 @@ const sidebars = {
             },
             {
               type: 'link',
-              label: 'Get entries',
-              href: '/dev-docs/api/rest#get-entries'
+              label: 'Get documents',
+              href: '/dev-docs/api/rest#get-documents'
             },
             {
               type: 'link',
-              label: 'Get an entry',
-              href: '/dev-docs/api/rest#get-an-entry'
+              label: 'Get a document',
+              href: '/dev-docs/api/rest#get-a-document'
             },
             {
               type: 'link',
-              label: 'Create an entry',
-              href: '/dev-docs/api/rest#create-an-entry'
+              label: 'Create a document',
+              href: '/dev-docs/api/rest#create-a-document'
             },
             {
               type: 'link',
-              label: 'Update an entry',
-              href: '/dev-docs/api/rest#update-an-entry'
+              label: 'Update a document',
+              href: '/dev-docs/api/rest#update-a-document'
             },
             {
               type: 'link',
-              label: 'Delete an entry',
-              href: '/dev-docs/api/rest#delete-an-entry'
+              label: 'Delete a document',
+              href: '/dev-docs/api/rest#delete-a-document'
             },
           ]
         },
