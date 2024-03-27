@@ -48,11 +48,6 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 :::
 
-<!-- !Disabled and commented out for now -->
-<!-- :::strapi Experimental: Preview and edit your content live on your website
-By installing the experimental [Content Source Map](https://www.npmjs.com/package/@strapi/plugin-content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence and some good understanding of how Strapi plugins and configurations work. Additional documentation will be provided once the plugin is out of beta.  
-::: -->
-
 ### Components
 
 Components are a combination of several fields, which are grouped together in the edit view. Writing their content works exactly like for independent fields, but there are some specificities to components.
@@ -151,20 +146,3 @@ You can also use the keyboard to reorder components: focus the component using T
 :::note
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
-
-<!-- !Disabled and commented out for now -->
-<!-- ## Editing fields from a front-end website <EnterpriseBadge />
-
-<CSMPrereq />
-
-Strapi's [Content Source Map plugin](/dev-docs/plugins/content-source-map) combined with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) can offer another intuitive editing experience, where you can click on any editable content on the front-end website of a Strapi-based project to directly jump to the corresponding field in Strapi's admin panel.
-
-Once the Content Source Map plugin is installed and configured (see [Developer Docs](/dev-docs/plugins/content-source-map)), you can experience Visual Editing as follows:
-
-1. Visit any preview deployment website hosted on Vercel.
-2. Login using the Vercel Toolbar.
-3. When Content Source Maps are detected on the page, a pencil icon will appear in the Vercel toolbar. Clicking this icon will enable Edit Mode, highlighting all editable fields on the page in blue.
-4. Hover any content highlighted in blue to display an **Open in strapi.io** button.
-5. Click on the **Open in strapi.io** button to jump directly to the corresponding field in the admin panel and edit its content.
-
-![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png) -->
