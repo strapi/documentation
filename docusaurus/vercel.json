@@ -3,6 +3,11 @@
 			"source": "/cloud",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/dev-docs/integrations/next-js",
+      "destination": "https://strapi.io/integrations/nextjs-cms",
+      "permanent": true
+    },
 		{
 			"source": "/cloud/",
 			"destination": "/cloud/intro"
