@@ -972,9 +972,6 @@ const sidebars = {
       type: "category",
       label: "Rest API guides",
       collapsed: false,
-      customProps: {
-        new: true,
-      },
       link: {
         type: 'doc',
         id: 'dev-docs/api/rest/guides/intro',
