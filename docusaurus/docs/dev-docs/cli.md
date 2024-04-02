@@ -430,10 +430,6 @@ strapi hooks:list
 
 Display a list of all the registered [controllers](/dev-docs/backend-customization/controllers.md).
 
-```bash
-strapi controllers:list
-```
-
 ## strapi services:list
 
 Display a list of all the registered [services](/dev-docs/backend-customization/services.md).
