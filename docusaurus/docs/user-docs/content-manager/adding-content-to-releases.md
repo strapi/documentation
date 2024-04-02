@@ -13,8 +13,7 @@ Using the [Releases](/user-docs/releases/introduction) feature, you can group se
 - Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
 :::
 
-<!-- TODO: re-add when implemented -->
-<!-- ## Adding multiple entries to a release
+## Adding multiple entries to a release
 
 Multiple entries can be added to a [release](/user-docs/releases/introduction) from the list view of the Content Manager.
 
@@ -23,7 +22,7 @@ To add entries to a release:
 1. From the list view of the Content Manager, select which entries you want to add by ticking the box on the left side of the entries' record.
 2. Click on the **Add to release** button located above the header of the table.
 3. Select which release to add these entries to.
-4. Decide whether these entries will be published or unpublished when the release is published, then click **Continue**. -->
+4. Decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
 
 <!-- TODO: update screenshot -->
 
