@@ -35,3 +35,6 @@ A variety of media types and extensions are supported by the Media Library:
 | Audio      | - MP3<br />- WAV<br />- OGG                                         |
 | File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
 
+:::note
+Images added to the Media Library will be stored in the `/public/uploads` folder of your Strapi application.
+:::
