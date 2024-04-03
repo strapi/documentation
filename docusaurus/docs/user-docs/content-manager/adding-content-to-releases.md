@@ -21,16 +21,16 @@ To add entries to a release:
 
 1. From the list view of the Content Manager, select which entries you want to add by ticking the box on the left side of the entries' record.
 2. Click on the **Add to release** button located above the header of the table.
-3. Select which release to add these entries to.
-4. Decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
+3. In the modal, select which release to add these entries to.
+4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
 
 <!-- TODO: update screenshot -->
 
 <ThemedImage
   alt="Including content in a release"
   sources={{
-    light: '/img/assets/releases/release-cm-edit-view.png',
-    dark: '/img/assets/releases/release-cm-edit-view_DARK.png',
+    light: '/img/assets/releases/releases-cm-list-view.png',
+    dark: '/img/assets/releases/releases-cm-list-view_DARK.png',
   }}
 />
 
