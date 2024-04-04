@@ -58,6 +58,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 <!-- - [`Strapi` is a subclass of `Container`](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-container) might change -->
 - [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
 - [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored)
+- [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service)
 
 ## Content Manager
 
