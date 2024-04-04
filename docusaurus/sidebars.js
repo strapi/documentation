@@ -1202,6 +1202,7 @@ const sidebars = {
                   label: 'Webpack Aliases Removed',
                   id: 'dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed',
                 },
+                'dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6',
                 'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
               ]
             },

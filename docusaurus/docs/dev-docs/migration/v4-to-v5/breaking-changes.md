@@ -68,7 +68,8 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 ## Dependencies
 
 - [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite)
-- [Strapi 5 uses react-router-dom v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
+- [Strapi 5 uses `react-router-dom` v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6)
+- [Strapi 5 uses `koa-body` v6](/dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6)
 - [Webpack Aliases are removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed)
 - [Apollo Server v3 upgraded to Apollo Server v4](/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4)
 
