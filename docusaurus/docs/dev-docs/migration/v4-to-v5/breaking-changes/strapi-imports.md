@@ -1,6 +1,6 @@
 ---
-title: Strapi imports
-description: In Strapi 5, strapiFactory should be used in imports.
+title: Strapi factories import have been updated
+description: In Strapi 5, the way 
 sidebar_label: Use strapiFactory in imports
 displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true
@@ -13,9 +13,9 @@ import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
-# `strapiFactory` should be used in imports
+# Strapi factories import have been updated
 
-In Strapi 5, import `strapiFactory` instead of `strapi`.
+In Strapi 5, strapi factories import have been updated
 
 <Intro />
 
@@ -23,38 +23,77 @@ In Strapi 5, import `strapiFactory` instead of `strapi`.
 
 ## Breaking change description
 
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 **In Strapi v4**
 
 Imports are done as follows:
 
-```js
-import strapi from '@strapi/strapi';
-```
+* using the application init function:
 
-</SideBySideColumn>
+  ```js
+  import strapi from '@strapi/strapi'; 
+  // or
+  const strapi = require('@strapi/strapi');
 
-<SideBySideColumn>
+  strapi();
+  ```
+
+* using the factories:
+  
+  ```js
+  import strapiDefault from '@strapi/strapi';
+  // or
+  import { factories } from '@strapi/strapi';
+  // or
+  const { factories } = require('@strapi/strapi');
+  // or
+  const { createCoreService } = require('@strapi/strapi').factories;
+  // or
+  const strapi = require('@strapi/strapi');
+
+  strapiDefault.factories.createCoreService(); // this is not possible anymore in v5
+  strapi.factories.createCoreService();
+  factories.createCoreService();
+  createCoreService();
+  ```
 
 **In Strapi 5**
 
 Imports are done as follows:
 
-```js
-import { strapiFactory } from '@strapi/strapi'; 
-```
+* using the application init function
 
-</SideBySideColumn>
+  ```js
+  import { createStrapi } from '@strapi/strapi'; 
+  const { createStrapi } = require('@strapi/strapi');
+  const strapi = require('@strapi/strapi');
 
-</SideBySideContainer>
+  strapi.createStrapi();
+  ```
+
+* using the factories:
+  
+  ```js
+  // Using the factories
+  import { factories } from '@strapi/strapi';
+  // or
+  const { factories } = require('@strapi/strapi');
+  // or
+  const { createCoreService } = require('@strapi/strapi').factories;
+  // or
+  const strapi = require('@strapi/strapi');
+
+  strapi.factories.createCoreService();
+  factories.createCoreService();
+  createCoreService();
+
+  // The recommended way is
+  const { factories } = require('@strapi/strapi');
+  import { factories } from '@strapi/strapi';
+
+  factories.createCoreService();
+  ```
 
 ## Migration
 
-<MigrationIntro />
-
-### Manual procedure
-
-Replace `import strapi from '@strapi/strapi'` code with `import { strapiFactory } from '@strapi/strapi';`.
+- The [upgrade tool](/dev-docs/upgrade-tool) converts the application instantiation with a codemod.
+- The factories pattern that were removed will not be converted automatically.
