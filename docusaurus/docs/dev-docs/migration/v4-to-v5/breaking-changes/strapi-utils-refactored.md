@@ -42,6 +42,8 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
 |  `pipeAsync`               | Moved to  `async.pipe` |
 |  `mapAsync`                | Moved to  `async.map` |
 |  `reduceAsync`             | Moved to  `async.reduce` |
+| `convertQueryParams`       | Replaced (see [additional notes](#additional-notes)). |
+| `validate` and `sanitize`  | Updated  (see [additional notes](#additional-notes)). |
 | `getCommonBeginning`       | Removed |
 | <ul><li>`getConfigUrls`</li><li>`getAbsoluteAdminUrl`</li><li>`getAbsoluteServerUrl`</li></ul> | Removed |
 | `forEachAsync`             | Removed |
@@ -54,4 +56,40 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
 
 - `arrays` utils: To use these new utils:
   1. Import them in your code with `import { arrays, dates, strings, objects } from '@strapi/utils';`.
-  2.  Use them, for instance as `arrays.includesString` or `strings.isEqual`.
+  2. Use them, for instance as `arrays.includesString` or `strings.isEqual`.
+
+- `convertQueryParams` is replaced:
+
+  ```js
+  // Strapi v4
+  import { convertQueryParams } from '@strapi/utils';
+
+  convertQueryParams.convertSortQueryParams(...); // now private function to simplify the api
+  convertQueryParams.convertStartQueryParams(...); // now private function to simplify the api
+  convertQueryParams.convertLimitQueryParams(...); // now private function to simplify the api
+  convertQueryParams.convertPopulateQueryParams(...); // now private function to simplify the api
+  convertQueryParams.convertFiltersQueryParams(...); // now private function to simplify the api
+  convertQueryParams.convertFieldsQueryParams(...); // now private function to simplify the api
+  convertQueryParams.convertPublicationStateParams(...); // now private function to simplify the api
+
+  convertQueryParams.transformParamsToQuery(...); // becomes the example below
+
+  // Strapi 5 
+  // Those utils required the strapi app context, so we decided to expose a strapi service for it
+  strapi.get('query-params').transform();
+  ```
+
+- `validate` and `sanitize` are now part of the `strapi.contentAPI` functions:
+
+  ```js
+  // Strapi v4
+  import { validate, sanitize } from '@strapi/utils';
+
+  validate.contentAPI.xxx();
+  sanitize.contentAPI.xxx();
+
+  // Strapi 5
+  // Those methods require the strapi app context
+  strapi.contentAPI.sanitize.xxx();
+  strapi.contentAPI.validate.xxx();
+  ```
