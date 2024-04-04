@@ -1166,6 +1166,7 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields',
                 'dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated',
+                'dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component',
               ]
             },
             {

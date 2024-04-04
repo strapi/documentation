@@ -123,7 +123,7 @@ module.exports = () => {
     // ...
     bootstrap(app) {
       // execute some bootstrap code
-      app.injectContentManagerComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
+      app.getPlugin('content-manager').injectComponent('editView', 'right-links', { name: 'my-compo', Component: () => 'my-compo' })
     },
   };
 };
@@ -410,9 +410,9 @@ To create a custom injection zone, declare it as a `<InjectionZone />` React com
 A plugin has 2 different ways of injecting a component:
 
 * to inject a component from a plugin into another plugin's injection zones, use the `injectComponent()` function
-* to specifically inject a component into one of the Content Manager's [predefined injection zones](#using-predefined-injection-zones), use the `injectContentManagerComponent()` function instead
+* to specifically inject a component into one of the Content Manager's [predefined injection zones](#using-predefined-injection-zones), use the `getPlugin('content-manager').injectComponent()` function instead
 
-Both the `injectComponent()` and `injectContentManagerComponent()` methods accept the following arguments:
+Both the `injectComponent()` and `getPlugin('content-manager').injectComponent()` methods accept the following arguments:
 
 | Argument        | Type   | Description                                                                                                                                                                   |
 | --------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -427,7 +427,7 @@ Both the `injectComponent()` and `injectContentManagerComponent()` methods accep
 
 export default {
   bootstrap(app) {
-    app.injectContentManagerComponent('editView', 'informations', {
+    app.getPlugin('content-manager').injectComponent()('editView', 'informations', {
       name: 'my-plugin-my-compo',
       Component: () => 'my-compo',
     });
