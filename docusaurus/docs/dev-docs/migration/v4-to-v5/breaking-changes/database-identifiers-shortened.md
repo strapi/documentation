@@ -23,7 +23,7 @@ In Strapi 5, database identifiers can't be longer than 53 characters. <Intro />
 
 **In Strapi v4**
 
-Database identifiers could be longer than 53 characters, potentially causing issues with some databases.
+Database identifiers could be longer than 55 characters, potentially causing issues with some databases.
 
 </SideBySideColumn>
 
@@ -31,7 +31,7 @@ Database identifiers could be longer than 53 characters, potentially causing iss
 
 **In Strapi 5**
 
-Database identifiers can't be longer than 53 characters and will be shortened.
+Database identifiers can't be longer than 55 characters and will be shortened.
 
 </SideBySideColumn>
 
@@ -43,28 +43,28 @@ Database identifiers can't be longer than 53 characters and will be shortened.
 
 ### Notes
 
-- A hashing key will be added when shortening database identifiers to avoid conflicts. It will consist in the first 6 characters of SHA-256. For example, `my_very_very_very_very_very_very_very_too_long_identifier_unique` will be shortened to `my_very_very_very_very_very_very_very_very_06a6ab_unq` in Strapi v5.
+- A hashing key will be added when shortening database identifiers to avoid conflicts. It will consist in the first 6 characters of SHA-256. For example, `my_very_very_very_very_very_very_very_too_long_identifier_unique` will be shortened to `my_very_very_very_very_very_very_very_very_a2dx3_uq` in Strapi v5.
 - Some suffixes will be used:
 
   | Suffix                 | Short version |
   | ---------------------- | ------------- |
-  | `fk`                   | `fk`          |
-  | `unique`               | `unq`         |
-  | `primary`              | `pk`          |
-  | `index`                | `idx`         |
+  | `component_type_index` | `cmpix`       |
   | `component`            | `cmp`         |
   | `components`           | `cmps`        |
-  | `component_type_index` | `cmpix`       |
   | `entity_fk`            | `etfk`        |
   | `field_index`          | `flix`        |
-  | `order`                | `ord`         |
-  | `order_fk`             | `ofk`         |
-  | `order_inv_fk`         | `oifk`        |
-  | `order_index`          | `oidx`        |
-  | `inv_fk`               | `ifk`         |
-  | `morphs`               | `mph`         |
-  | `links`                | `lnk`         |
+  | `fk`                   | `fk`          |
   | `id_column_index`      | `idix`        |
+  | `index`                | `idx`         |
+  | `inv_fk`               | `ifk`         |
+  | `links`                | `lnk`         |
+  | `morphs`               | `mph`         |
+  | `order_fk`             | `ofk`         |
+  | `order_index`          | `oidx`        |
+  | `order_inv_fk`         | `oifk`        |
+  | `order`                | `ord`         |
+  | `primary`              | `pk`          |
+  | `unique`               | `uq`         |
 
 ### Manual procedure
 
