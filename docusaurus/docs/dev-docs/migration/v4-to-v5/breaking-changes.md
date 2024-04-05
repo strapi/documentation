@@ -44,7 +44,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 ## Database
 
 - [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
-- [Database identifiers can't be longer than 53 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
+- [Database identifiers can't be longer than 55 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
 
 ## Plugins, plugins configuration, and plugins development
 
