@@ -23,10 +23,10 @@ To return the published version while [finding a specific document](/dev-docs/ap
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').findOne(
-  'a1b2c3d4e5f6g7h8i9j0klm',
-  { status: 'published' }
-);
+await strapi.documents('api::restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  status: 'published'
+});
 ```
 
 </Request>

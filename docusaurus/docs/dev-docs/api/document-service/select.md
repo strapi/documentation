@@ -142,7 +142,7 @@ To select fields to return while [updating documents](/dev-docs/api/document-ser
 
 ```js
 const document = await strapi.documents("api::article.article").update({
-  "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   data: {
     title: "Test Article Updated",
   },
@@ -173,7 +173,7 @@ To select fields to return while [deleting documents](/dev-docs/api/document-ser
 
 ```js
 const document = await strapi.documents("api::article.article").delete({
-  "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["title"],
 });
 ```
@@ -206,7 +206,7 @@ To select fields to return while [publishing documents](/dev-docs/api/document-s
 
 ```js
 const document = await strapi.documents("api::article.article").publish({
-  "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["title"],
 });
 ```
@@ -239,7 +239,7 @@ To select fields to return while [unpublishing documents](/dev-docs/api/document
 
 ```js
 const document = await strapi.documents("api::article.article").unpublish({
-  "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["title"],
 });
 ```
@@ -272,7 +272,7 @@ To select fields to return while [discarding draft versions of documents](/dev-d
 
 ```js
 const document = await strapi.documents("api::article.article").discardDraft({
-  "cjld2cjxh0000qzrmn831i7rn",
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   fields: ["title"],
 });
 ```
