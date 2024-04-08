@@ -2,7 +2,16 @@
 title: Nginx Proxying
 displayed_sidebar: devDocsSidebar
 description: Learn how you can use a proxy application like Nginx to secure your Strapi application.
-
+tags:
+- guides
+- middlewares
+- Nginx proxying
+- Nginx upstream configuration
+- Nginx virtual host configuration
+- optional software guides
+- proxying
+- Strapi server
+- subdomain
 ---
 
 import AdminRedirect from './snippets-proxy/admin-redirect.md'

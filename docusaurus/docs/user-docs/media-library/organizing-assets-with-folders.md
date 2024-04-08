@@ -2,7 +2,14 @@
 title: Organizing assets with folders
 displayed_sidebar: userDocsSidebar
 description: Instructions on how to use folders in the Media Library, including adding, editing, and deleting folders, and browsing their content.
-
+tags:
+- admin panel
+- Content Manager
+- Content-type
+- Content-type Builder
+- folders
+- media library
+- Users, Roles & Permissions
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

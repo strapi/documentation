@@ -2,6 +2,15 @@
 title: Plugin creation & setup
 description: Learn how to create a Strapi plugin and how to start the development servers
 pagination_next: dev-docs/plugins/development/plugin-structure
+tags:
+- admin panel
+- Command Line Interface (CLI)
+- Command Line Interface (CLI) generator
+- hot reloading
+- plugins
+- plugins development
+- server
+- Strapi project
 ---
 
 # Plugin creation and setup

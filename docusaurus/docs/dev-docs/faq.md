@@ -1,6 +1,22 @@
 ---
 title: FAQ
 description: Find some answers and solutions to most common issues that you may experience when working with Strapi.
+tags:
+- content-type
+- admin panel
+- deployment
+- migration
+- Content Manager 
+- serverless environment
+- PaaS
+- plugins
+- dynamic zones
+- UUID
+- default ID type
+- default ID name
+- SSL
+- Strapi project 
+- typescript
 
 ---
 

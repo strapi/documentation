@@ -2,6 +2,11 @@
 title: Access configuration values from the code
 # description: todo
 displayed_sidebar: devDocsConfigSidebar
+tags:
+- configuration
+- configuration files
+- configuration guide
+- dot notation
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

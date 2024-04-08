@@ -3,6 +3,11 @@ title: Updates and Migrations
 # description: todo
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
+tags:
+- migration
+- upgrades
+- upgrade tool
+- Strapi version 
 ---
 
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'

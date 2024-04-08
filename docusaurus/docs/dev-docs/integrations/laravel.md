@@ -2,7 +2,16 @@
 title: Laravel
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Laravel.
-
+tags:
+- Laravel
+- Laravel native HTTP client
+- Laravel-Strapi Laravel Package
+- collection type
+- collection type by field
+- GET request
+- integration
+- integration guide
+- single type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

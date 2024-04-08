@@ -3,7 +3,17 @@ title: Users & Permissions plugin
 displayed_sidebar: devDocsSidebar
 toc_max_heading_level: 4
 description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
-
+tags:
+- authenticated role
+- JSON Web Tokens (JWT)
+- JWT configuration
+- keycloak
+- ngrok
+- plugins
+- provider
+- public role
+- Strapi configuration
+- Users & Permissions plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

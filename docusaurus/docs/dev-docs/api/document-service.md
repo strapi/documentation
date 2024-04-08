@@ -2,6 +2,15 @@
 title: Document Service API
 description: The Document Service API is the recommended way to interact with your content from the back-end server or from plugins.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- Content-type
+- Documents
+- documentId
+- Document Service API
+- Entity Service API
+- Query Engine API
 ---
 
 # Document Service API <BetaBadge />

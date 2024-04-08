@@ -4,6 +4,10 @@ displayed_sidebar: cloudSidebar
 description: View your notifications on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/notifications
 sidebar_position: 3
+tags:
+- notifications
+- Strapi Cloud
+- Strapi Cloud project
 ---
 
 # Notifications

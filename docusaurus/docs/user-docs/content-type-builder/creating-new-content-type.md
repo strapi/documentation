@@ -1,5 +1,11 @@
 ---
 sidebar_position: 2
+tags:
+- collection type
+- components
+- Content-type
+- Content-type Builder
+- single type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

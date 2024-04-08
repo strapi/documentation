@@ -2,6 +2,12 @@
 sidebar_label: 'Usage & Billing'
 displayed_sidebar: cloudSidebar
 sidebar_position: 3
+tags:
+- billing details
+- overages
+- project suspension
+- seats management
+- Strapi Cloud
 ---
 
 # Usage & Billing

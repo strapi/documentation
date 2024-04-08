@@ -4,6 +4,14 @@ displayed_sidebar: devDocsSidebar
 # description: todo
 pagination_prev: dev-docs/intro
 pagination_next: dev-docs/api/content-api
+tags:
+- introduction
+- concepts
+- setup and deployment
+- installation 
+- configuration
+- deployment
+
 ---
 
 # Installation, Configuration, and Deployment

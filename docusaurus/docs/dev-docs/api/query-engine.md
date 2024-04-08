@@ -2,6 +2,12 @@
 title: Query Engine API
 description: Strapi provides a Query Engine API to give unrestricted internal access to the database layer at a lower level.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- introduction
+- single operators
+- Query Engine API
 ---
 
 import EntityQueryKnex from '/docs/snippets/entity-query-knex.md'

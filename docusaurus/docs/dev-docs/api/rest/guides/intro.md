@@ -4,6 +4,15 @@ description: Deep dive into some specific REST API topics using guides that exte
 displayed_sidebar: restApiSidebar
 pagination_prev: dev-docs/api/rest
 pagination_next: dev-docs/api/rest/guides/understanding-populate
+tags:
+- API
+- API endpoints
+- API parameters
+- Content API
+- guides
+- REST API
+- REST API guides
+
 ---
 
 # REST API Guides

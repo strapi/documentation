@@ -3,6 +3,15 @@ title: How to pass data from server to admin panel with a Strapi plugin
 description: Learn how to pass data from server to admin panel with a Strapi plugin
 sidebar_label: Pass data from server to admin
 displayed_sidebar: devDocsSidebar
+tags:
+- admin panel
+- admin routes 
+- content-type
+- guides
+- plugins
+- server
+- Strapi plugin
+- Strapi plugin guide
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

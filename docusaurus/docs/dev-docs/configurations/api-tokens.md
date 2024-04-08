@@ -3,6 +3,16 @@ title: API tokens configuration
 sidebar_label: API tokens
 displayed_sidebar: devDocsConfigSidebar
 description: Using API tokens allows executing a request on Strapi's REST API endpoints as an authenticated user.
+tags:
+- admin panel
+- additional configuration
+- API token
+- configuration
+- endpoints
+- GraphQL API
+- request
+- REST
+- REST API
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

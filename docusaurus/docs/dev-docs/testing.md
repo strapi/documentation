@@ -3,6 +3,14 @@ title: Testing
 displayed_sidebar: devDocsSidebar
 description: Learn how to test your Strapi application.
 unlisted: true
+tags:
+- auth endpoint controller
+- environment
+- Supertest
+- sqlite3
+- jest
+- test 
+- test tools
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

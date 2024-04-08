@@ -2,7 +2,17 @@
 title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 displayed_sidebar: restApiSidebar
-
+tags:
+- API
+- API endpoints
+- API parameters
+- API response
+- Content API
+- documentId
+- Documents
+- plural API ID
+- REST API
+- singular API ID
 ---
 
 # REST API reference

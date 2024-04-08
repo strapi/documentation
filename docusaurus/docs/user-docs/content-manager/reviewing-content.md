@@ -1,6 +1,13 @@
 ---
 title: Reviewing content
 description: Using review workflows to manage content throughout the content creation process.
+tags:
+- assignee
+- Content Manager
+- Content-type
+- Enterprise feature
+- review stage
+- review workflows
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

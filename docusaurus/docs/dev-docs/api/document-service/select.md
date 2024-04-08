@@ -2,6 +2,20 @@
 title: Using Select with the Document Service API
 description: Use Strapi's Document Service API to select the fields to return with your queries.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- create()
+- delete()
+- Document Service API
+- discardDraft()
+- findOne()
+- findMany()
+- findFirst()
+- publish()
+- select
+- update()
+- unpublish()
 ---
 
 # Document Service API: Selecting fields

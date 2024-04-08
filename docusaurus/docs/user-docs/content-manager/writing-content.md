@@ -3,7 +3,13 @@ title: Writing Content
 description: Instructions to write content by filling up fields that are meant to contain specific content (e.g. text, numbers, media etc.).
 sidebar_position: 3
 displayed_sidebar: userDocsSidebar
-
+tags:
+- Content-type Builder
+- collection type
+- components
+- fields
+- dynamic zones
+- single type
 ---
 
 # Writing content

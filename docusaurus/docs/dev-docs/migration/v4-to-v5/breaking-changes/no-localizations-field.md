@@ -6,7 +6,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - Content API
- - i18n
+ - Internationalization (i18n)
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

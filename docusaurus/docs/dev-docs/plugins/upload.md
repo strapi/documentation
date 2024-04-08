@@ -2,6 +2,15 @@
 title: Upload plugin
 displayed_sidebar: devDocsSidebar
 description: Upload any kind of file on your server or external providers.
+tags:
+- Amazon AWS S3
+- Cloudinary
+- localServer
+- provider
+- plugins
+- Upload plugin
+- endpoints
+
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

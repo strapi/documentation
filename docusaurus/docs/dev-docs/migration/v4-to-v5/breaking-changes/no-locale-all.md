@@ -6,7 +6,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - locale
- - i18n
+ - Internationalization (i18n)
  - content API
  - REST API
 ---

@@ -3,7 +3,14 @@ title: Translating content
 displayed_sidebar: userDocsSidebar
 description: Instructions to translate content in various locales with i18n plugin.
 sidebar_position: 5
-
+tags:
+- collection type
+- components
+- Content-type Builder
+- Content-type
+- dynamic zones
+- Internationalization (i18n)
+- single type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

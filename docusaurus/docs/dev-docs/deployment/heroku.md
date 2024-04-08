@@ -2,7 +2,17 @@
 title: Heroku
 description: Learn in this guide how to deploy your Strapi application on Heroku.
 displayed_sidebar: devDocsSidebar
-
+tags:
+- 3rd party hosting guides
+- Amazon AWS S3
+- Cloudinary
+- deployment guides
+- git repository
+- git version control
+- guides
+- Heroku
+- Strapi Cloud
+- Strapi project
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'

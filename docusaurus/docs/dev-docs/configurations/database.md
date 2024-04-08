@@ -3,7 +3,15 @@ title: Database configuration
 sidebar_label: Database
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file to configure its databases.
-
+tags:
+- base configuration
+- configuration
+- connection string
+- database
+- database connection
+- database connection parameters
+- database settings
+- databases installation guides
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

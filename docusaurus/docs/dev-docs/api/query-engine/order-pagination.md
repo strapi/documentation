@@ -2,6 +2,13 @@
 title: Ordering & Pagination
 description: Use Strapi's Query Engine API to order and paginate the results of your queries.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- orderBy
+- order
+- pagination
+- Query Engine API
 ---
 
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'

@@ -1,6 +1,23 @@
 ---
 title: Back-end customization
 description: All elements of Strapi's back end, like routes, policies, middlewares, controllers, services, models, requests, responses, and webhooks, can be customized.
+tags:
+- backend 
+- backend customization
+- backend server
+- Content-type Builder 
+- Content Manager
+- controllers
+- customization
+- Document Service API 
+- global middlewares
+- GraphQL API
+- HTTP server
+- middlewares
+- Query Engine API
+- REST API 
+- route middlewares
+- server
 ---
 
 # Back-end customization

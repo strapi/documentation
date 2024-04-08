@@ -3,6 +3,17 @@ title: GraphQL plugin
 displayed_sidebar: devDocsSidebar
 toc_max_heading_level: 5
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
+tags:
+- admin panel 
+- API token
+- Apollo Server 
+- getters
+- GraphQL API
+- GraphQL plugin
+- policies
+- plugins 
+- middlewares
+- Users & Permissions plugin
 
 ---
 

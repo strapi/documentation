@@ -4,6 +4,20 @@ title: Customization
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/advanced-features
 pagination_next: dev-docs/plugins
+tags:
+- admin panel
+- admin panel customization
+- backend 
+- backend customization
+- backend server
+- concepts
+- Content-type Builder 
+- Content Manager
+- customization
+- front end
+- graphical user interface (GUI)
+- introduction
+- server
 ---
 
 # Customization

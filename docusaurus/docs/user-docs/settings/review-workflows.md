@@ -1,6 +1,11 @@
 ---
 title: Review Workflows
 description: Managing your review workflows and stages in Strapi.
+tags:
+- admin panel
+- review workflows
+- Enterprise feature
+- Sloud Cloud
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

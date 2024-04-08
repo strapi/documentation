@@ -1,6 +1,10 @@
 ---
 sidebar_position: 3
 title: Media Library
+tags:
+- admin panel
+- media library
+- plugins
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -2,6 +2,13 @@
 title: Hosting Guides
 description: Learn in this guide how to deploy your Strapi application.
 displayed_sidebar: devDocsSidebar
+tags:
+- 3rd party hosting guides
+- deployment 
+- deployment guides
+- guides
+- Strapi Cloud
+- Strapi project
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'

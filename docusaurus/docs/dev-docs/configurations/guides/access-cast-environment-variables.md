@@ -2,6 +2,14 @@
 title: Access and cast environment variables
 # description: todo
 displayed_sidebar: devDocsConfigSidebar
+tags:
+- casting values
+- configuration
+- configuration files
+- configuration guide
+- database credentials
+- environment 
+- environment variables
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

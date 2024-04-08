@@ -4,6 +4,14 @@ title: Content API
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/setup-deployment
 pagination_next: dev-docs/advanced-features
+tags:
+- concepts
+- Document Service API
+- GraphQL
+- GraphQL API
+- introduction
+- Query Engine API
+- Rest API
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

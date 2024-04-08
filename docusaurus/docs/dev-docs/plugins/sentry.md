@@ -2,7 +2,13 @@
 title: Sentry plugin
 displayed_sidebar: devDocsSidebar
 description: Track errors in your Strapi application.
-
+tags:
+- environment
+- environment configuration
+- global Sentry service
+- Sentry
+- Sentry plugin
+- Strapi application
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -1,6 +1,14 @@
 ---
 title: Managing content-types
 description: Learn how to manager your content-types in Strapi 5
+tags:
+- collection type
+- components
+- Content Manager
+- Content-type
+- Content-type Builder
+- fields
+- single type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

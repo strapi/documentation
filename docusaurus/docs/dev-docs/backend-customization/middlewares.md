@@ -1,5 +1,18 @@
 ---
 title: Middlewares
+tags:
+- backend 
+- backend customization
+- backend server
+- controller
+- global middlewares
+- is-owner policy
+- middlewares
+- middlewares customization
+- REST API 
+- route middlewares
+- routes
+- server
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'

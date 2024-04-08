@@ -1,3 +1,16 @@
+---
+tags:
+- open source
+- contribution
+- community
+- support
+- feature request
+- bug report
+- pull request
+---
+
+
+
 # Community & Support 
 
 Strapi is an open-source project (see [LICENSE](https://github.com/strapi/strapi/blob/master/LICENSE) file for more information). The core project, as well as the documentation and any related tool can be found in the [Strapi](https://github.com/strapi) GitHub organization.

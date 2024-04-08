@@ -3,7 +3,15 @@ title: Server configuration
 sidebar_label: Server
 description: Strapi offers a single entry point file for its server configuration.
 displayed_sidebar: devDocsConfigSidebar
-
+tags:
+- app keys
+- base configuration
+- configuration
+- cron job
+- environment configuration
+- host
+- port
+- server
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

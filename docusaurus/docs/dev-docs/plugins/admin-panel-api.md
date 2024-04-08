@@ -2,6 +2,23 @@
 sidebar_label: Admin Panel API
 pagination_prev: dev-docs/plugins/development/plugin-structure
 toc_max_heading_level: 4
+tags:
+- admin panel
+- admin panel API
+- asynchronous function
+- backend 
+- bootstrap function
+- backend server
+- hooks API
+- Injection Zones API
+- lifecycle function
+- plugins
+- plugins development
+- register function
+- reducers API
+- redux
+- server
+- Strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

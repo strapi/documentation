@@ -5,7 +5,12 @@ displayed_sidebar: userDocsSidebar
 slug: /user-docs/content-manager
 description: Introduction to the Content Manager which allows to write content for collection types and single types.
 pagination_next: user-docs/content-manager/configuring-view-of-content-type
-
+tags:
+- Content Manager
+- Content-type Builder
+- collection type
+- single type
+- introduction
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

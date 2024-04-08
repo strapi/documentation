@@ -1,6 +1,17 @@
 ---
 title: How to populate creator fields
 description: Learn how to populate creator fields such as createdBy and updatedBy by creating a custom controller that leverages the populate parameter.
+tags:
+- API
+- Content API
+- Content-type
+- createdBy
+- guides
+- populate
+- populateCreatorFields
+- REST API
+- REST API guides
+- updatedBy
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

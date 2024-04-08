@@ -1,6 +1,12 @@
 ---
 title: Creating a release
 description: Instructions to create a release from the admin panel
+tags:
+- admin panel
+- Enterprise feature
+- future flag
+- Releases feature
+- Strapi Cloud
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -3,6 +3,13 @@ title: How to use the Plugin CLI to build and publish a Strapi plugin
 description: Learn how to use the Plugin CLI to build and publish a Strapi plugin
 sidebar_label: Use the Plugin CLI
 displayed_sidebar: devDocsSidebar
+tags:
+- guides
+- plugins
+- plugin CLI
+- Strapi plugin
+- Strapi plugin guide
+- Strapi project
 ---
 
 # How to use the Plugin CLI to create and publish a Strapi plugin

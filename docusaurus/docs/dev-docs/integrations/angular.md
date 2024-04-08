@@ -2,6 +2,15 @@
 title: Angular
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Angular.
+tags:
+- Angular
+- collection type
+- GET request
+- HTTP client
+- integration
+- integration guide
+- POST request
+- PUT request
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

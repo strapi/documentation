@@ -1,6 +1,12 @@
 ---
 title: Introduction to Releases
 description: Introduction to the Releases feature that enables content managers to organize entries to publish/unpublish simultaneously
+tags:
+- admin panel
+- Enterprise feature
+- introduction
+- Releases feature
+- Strapi Cloud
 ---
 
 # Releases <EnterpriseBadge /> <CloudTeamBadge/>

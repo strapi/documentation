@@ -1,3 +1,19 @@
+---
+tags:
+- backend 
+- backend customization
+- backend server
+- controller
+- createCoreController
+- core controllers
+- REST API 
+- response
+- routes
+- sanitizeQuery function
+- server
+- strapi-utils
+- validateQuery function
+---
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 const imgStyle = {width: '100%', margin: '0'}

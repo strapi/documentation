@@ -3,7 +3,16 @@ title: Middlewares configuration
 sidebar_label: Middlewares
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file for its middlewares configurations.
-
+tags:
+- base configuration
+- configuration
+- configuration options
+- global middlewares
+- internal middleware
+- middlewares
+- middleware customization
+- middleware type
+- route middlewares
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

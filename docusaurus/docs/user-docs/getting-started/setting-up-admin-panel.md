@@ -2,6 +2,10 @@
 title: Setting up the admin panel
 displayed_sidebar: userDocsSidebar
 description: How to setup your Strapi Admin Panel
+tags:
+- admin panel
+- administrator
+- password
 ---
 
 

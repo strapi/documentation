@@ -4,6 +4,12 @@ title: Advanced features
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/api/content-api
 pagination_next: dev-docs/customization
+tags:
+- backend 
+- backend server
+- database
+- plugins
+- typescript
 ---
 
 # Advanced features

@@ -2,7 +2,12 @@
 title: Configuring views of a content-type
 description: Instructions to configure the edit view and list view of a content-type in a Strapi application.
 sidebar_position: 2
-
+tags:
+- Content Manager
+- Content-type 
+- Content-type views
+- Content-type list view
+- Content-type edit view
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

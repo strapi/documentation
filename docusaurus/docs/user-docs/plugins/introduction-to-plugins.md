@@ -1,6 +1,15 @@
 ---
 sidebar_position: 1
 slug: /user-docs/plugins
+tags:
+- Content Manager
+- Content-type
+- Content-type Builder
+- introduction
+- plugins
+- provider
+- media library
+- upload plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

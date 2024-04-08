@@ -3,6 +3,15 @@ title: Understanding populate
 description: Learn what populating means and how you can use the populate parameter in your REST API queries to add additional fields to your responses.
 displayed_sidebar: restApiSidebar
 toc_max_heading_level: 6
+tags:
+- API
+- components
+- Content API
+- dynamic zones
+- guides
+- populate
+- REST API
+- REST API guides
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'

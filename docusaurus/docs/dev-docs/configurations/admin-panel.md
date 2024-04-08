@@ -3,7 +3,14 @@ title: Admin panel configuration
 sidebar_label: Admin panel
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi's admin panel offers a single entry point file for its configuration.
-
+tags:
+- admin panel
+- API token
+- authentication
+- base configuration
+- configuration
+- full configuration
+- minimal configuration
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

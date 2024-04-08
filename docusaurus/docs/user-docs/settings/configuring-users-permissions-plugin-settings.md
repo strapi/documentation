@@ -1,5 +1,9 @@
 ---
 sidebar_position: 2
+tags:
+- Users & Permissions plugin
+- provider
+- Email plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

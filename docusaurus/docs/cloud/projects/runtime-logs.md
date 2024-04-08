@@ -4,6 +4,10 @@ displayed_sidebar: cloudSidebar
 description: View runtime logs of Strapi Cloud project.
 canonicalUrl: https://docs.strapi.io/cloud/projects/runtime-logs.html
 sidebar_position: 1
+tags:
+- runtime logs
+- Strapi Cloud
+- Strapi project
 ---
 
 # Runtime logs

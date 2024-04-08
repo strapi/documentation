@@ -1,6 +1,12 @@
 ---
 sidebar_position: 3
 title: Single Sign-On
+tags:
+- admin panel
+- Enterprise feature
+- Single Sign-On (SSO)
+- sign- in
+- sign- out
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
