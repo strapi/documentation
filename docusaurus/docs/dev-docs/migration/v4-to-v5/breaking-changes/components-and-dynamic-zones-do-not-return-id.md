@@ -1,6 +1,6 @@
 ---
 title: Components and dynamic zones do not return an id 
-description: Breaking change description
+description: In Strapi 5, components and dynamic zones do not return an `id` with REST API requests so it's not possible to partially update them.
 sidebar_label: Components and dynamic zones do not return an id
 displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true
