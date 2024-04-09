@@ -1,6 +1,6 @@
 ---
 title: Strapi factories import have been updated
-description: In Strapi 5, the way 
+description: In Strapi 5, the way import are done, through the application init function or through factories, has been updated.
 sidebar_label: Use strapiFactory in imports
 displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true
@@ -15,7 +15,7 @@ import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # Strapi factories import have been updated
 
-In Strapi 5, strapi factories import have been updated
+In Strapi 5, strapi factories import have been updated.
 
 <Intro />
 
