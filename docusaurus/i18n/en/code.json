@@ -1,13 +1,6 @@
-{
+{ 
   "theme.common.editThisPage": {
     "message": "Contribute to this page on GitHub ✍️",
     "description": "The link label to edit the current page"
   }
 }
-
-// Other options
-// Join page's evolution - submit your PR!
-// Contribute to this page - submit your PR!
-// Refine this page - submit your PR!
-// Enhance this page - submit your PR!
-// Contribute on GitHub
