@@ -829,6 +829,21 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      label: "Command Line Interface",
+      items: [
+        {
+          type: "doc",
+          id: "cloud/cli/cloud-cli",
+          label: "Strapi Cloud CLI",
+          customProps: {
+            new: true,
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
       label: "Advanced configuration",
       items: [
         "cloud/advanced/database",
