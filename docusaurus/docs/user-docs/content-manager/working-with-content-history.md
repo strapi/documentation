@@ -51,7 +51,6 @@ To restore a version:
 3. Click the **Restore** button.
 4. In the _Confirmation_ window, click **Restore**.  
 
-<!-- TODO: replace this GIF from Figma with a real GIF, for both light and dark modes -->
 <ThemedImage
 alt="Restoring a previous version"
 sources={{
