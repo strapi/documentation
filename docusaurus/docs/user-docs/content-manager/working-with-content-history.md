@@ -15,7 +15,7 @@ The Content History feature of the Content Manager gives you the ability to brow
 alt="Accessing the Content History of a document"
 sources={{
   light:'/img/assets/content-manager/accessing-content-history.png',
-  dark:'/img/assets/content-manager/accessing-content-history.png',
+  dark:'/img/assets/content-manager/accessing-content-history_DARK.png',
 }}
 />
 
@@ -28,18 +28,16 @@ To browse Content History, while editing a document in the Content Manager, clic
 - The sidebar on the right lists the total number of versions available, and for each version, the date and time when the version was created, the user who created it, and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content) for more information about document statuses).
 - The main view on the left lists the fields and their content for the version selected in the sidebar on the right.
 
-<!-- TODO: create a dark mode version -->
-<!-- TODO: update the GIF so we can see the restore button -->
 <ThemedImage
 alt="Accessing the Content History of a document"
 sources={{
   light:'/img/assets/content-manager/browsing-content-history.gif',
-  dark:'/img/assets/content-manager/browsing-content-history.gif',
+  dark:'/img/assets/content-manager/browsing-content-history_DARK.gif',
 }}
 />
 
 :::note
-The main view of Content History clearly states whether a field was inexistent, deleted, or renamed in other versions of the content-type. Fields that are unknown for the selected version will be displayed under an _Uknown fields_ heading below the other fields.
+The main view of Content History clearly states whether a field was inexistent, deleted, or renamed in other versions of the content-type. Fields that are unknown for the selected version will be displayed under an _Unknown fields_ heading below the other fields.
 :::
 
 ## Restoring a previous version
@@ -58,7 +56,7 @@ To restore a version:
 alt="Restoring a previous version"
 sources={{
   light:'/img/assets/content-manager/restoring-version.gif',
-  dark:'/img/assets/content-manager/restoring-version.gif',
+  dark:'/img/assets/content-manager/restoring-version_DARK.gif',
 }}
 />
 
