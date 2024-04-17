@@ -14,7 +14,7 @@ import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
 
 # Only the `better-sqlite3` package is supported for the sqlite client
 
-Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`
+Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
 
 <Intro />
 
