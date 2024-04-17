@@ -6,7 +6,13 @@ sidebar_position: 3
 
 # Command Line Interface (CLI)
 
-Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a project that is not stored in a git repository.
+Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a project that is not stored in a git repository. The CLI works with both the `yarn` and `npm` package managers.
+
+The Cloud CLI is designed as a CLI-only experience, meaning that users who wish to use Strapi Cloud to deploy their project via the CLI will have to mostly stick to using the CLI (e.g. if you login via the CLI you must logout via the CLI as well, your project deployed with the CLI can only be redeployed via the CLI etc.).
+
+:::note
+It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
+:::
 
 :::prerequisites
 To be able to fully use the Strapi Cloud CLI, make sure to fit the following prerequisites:
@@ -17,15 +23,21 @@ To be able to fully use the Strapi Cloud CLI, make sure to fit the following pre
 
 ## strapi login
 
+**Alias:** `strapi cloud:login`
+
 Log in Strapi Cloud.
 
 ```bash
 strapi login
 ```
 
-This command automatically opens a browser window to access and log into the Strapi Cloud dashboard. If the browser window doesn't automatically open, the terminal will display a clickable link to the dashboard as well as a code to enter manually.
+This command automatically opens a browser window to log into Strapi Cloud via Google, GitHub or GitLab. Once the browser window confirms successful login, it can be safely closed.
+
+If the browser window doesn't automatically open, the terminal will display a clickable link as well as a code to enter manually.
 
 ## strapi deploy
+
+**Alias:** `strapi cloud:deploy`
 
 Deploy a new project (< 100MB), not stored in a git repository, in Strapi Cloud.
 
@@ -41,7 +53,17 @@ Once the project is first deployed on Strapi Cloud via the CLI, the `deploy` com
 The `deploy` command can only be used by new users who have never created a Strapi Cloud project, and for which the free trial is still available. Once a project is deployed with the CLI, it isn't possible to deploy another project on the same Strapi Cloud account via the CLI.
 :::
 
+:::note
+Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a repository and which was deployed via the CLI.
+
+- Some areas in the dashboard that are usually reserved to display information about the git provider will be blank.
+- Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since you can only redeploy your project using the CLI.
+- Options such as environment variables, and features like the logs, are not available for CLI-created projects. <!-- to be confirmed -->
+:::
+
 ## strapi logout
+
+**Alias:** `strapi cloud:logout`
 
 Log out of Strapi Cloud.
 
@@ -49,4 +71,4 @@ Log out of Strapi Cloud.
 strapi logout
 ```
 
-This command logs you out of the Strapi Cloud dashboard. Once the `logout` command is run, the terminal will display a confirmation message that you were successfully logged out, and you will not be able to use the `deploy` command anymore.
+This command logs you out of Strapi Cloud. Once the `logout` command is run, the terminal will display a confirmation message that you were successfully logged out, and you will not be able to use the `deploy` command anymore.
