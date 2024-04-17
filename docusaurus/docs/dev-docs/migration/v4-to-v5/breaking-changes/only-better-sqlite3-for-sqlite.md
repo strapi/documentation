@@ -48,7 +48,7 @@ The database configuration `client` option for SQLite database only accepts `sql
 
 ### Notes
 
-Strapi 5 uses the `better-sqlite3` package for SQLite databases under the hood. Knex rewrites the `sqlite` option as `better-sqlite3`.
+Strapi 5 uses the `better-sqlite3` package for SQLite databases under the hood and rewrites the `sqlite` option as `better-sqlite3` for Knex.
 
 ### Manual procedure
 
