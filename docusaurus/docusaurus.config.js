@@ -179,15 +179,21 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'dev-docs/intro',
+            docId: 'dev-docs/quick-start',
             position: 'left',
-            label: 'Developer Docs',
+            label: 'Quick Start Guide',
           },
           {
             type: 'doc',
             docId: 'user-docs/intro',
             position: 'left',
             label: 'User Guide',
+          },
+          {
+            type: 'doc',
+            docId: 'dev-docs/intro',
+            position: 'left',
+            label: 'Developer Docs',
           },
           {
             type: 'doc',
