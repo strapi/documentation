@@ -2,24 +2,23 @@ import React from 'react';
 
 export default {
   page: {
-    title: 'Strapi’s documentation',
+    title: 'Strapi 5 Documentation',
     description: 'Get set up in minutes to build any projects in hours instead of weeks.',
   },
   carousel: [
     {
       backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
       variant: 'cloud',
-      title: 'Strapi Cloud',
+      title: 'Strapi Cloud CLI',
       description: (
         <>
-          {'Learn more on the '}
-          <a href="https://strapi.io/cloud" target="_blank">product page</a>
-          {', or start a '}
-          <a href="https://cloud.strapi.io/" target="_blank">free trial</a> today!
+          {'Learn how to deploy your project on '}
+          <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
+          {' directly from the CLI!'}
         </>
       ),
       button: {
-        label: 'Strapi Cloud docs',
+        label: 'Cloud CLI docs',
         decorative: '☁️',
         to: '/cloud/intro',
       },
@@ -40,6 +39,19 @@ export default {
         to: '/dev-docs/quick-start',
       },
     },
+    {
+      title: 'Learn what’s new in Strapi 5',
+      description: (
+        <>
+          {'Have a quick tour of the new and updated features available in the Strapi 5 documentation'}
+        </>
+      ),
+      button: {
+        label: 'What’s new?',
+        decorative: '✨',
+        to: '/dev-docs/whats-new',
+      },
+    },
   ],
   categories: [
     {
@@ -51,14 +63,6 @@ export default {
       linksIconColor: 'green',
       links: [
         {
-          label: 'Installation guides',
-          to: '/dev-docs/installation',
-        },
-        {
-          label: 'Database configuration',
-          to: '/dev-docs/configurations/database',
-        },
-        {
           label: 'REST API',
           to: '/dev-docs/api/rest',
         },
@@ -67,8 +71,16 @@ export default {
           to: '/dev-docs/api/graphql',
         },
         {
-          label: 'Back-end customization',
-          to: '/dev-docs/backend-customization',
+          label: 'Document Service API',
+          to: '/dev-docs/api/document-service',
+        },
+        {
+          label: 'Plugin CLI',
+          to: '/dev-docs/plugins/guides/use-the-plugin-cli',
+        },
+        {
+          label: 'Migration from v4',
+          to: '/dev-docs/migration/v4-to-v5/introduction',
         },
       ],
     },
@@ -81,24 +93,54 @@ export default {
       linksIconColor: 'blue',
       links: [
         {
-          label: 'Getting started in the admin panel',
-          to: '/user-docs/intro#accessing-the-admin-panel',
-        },
-        {
           label: 'Creating content-types',
           to: '/user-docs/content-type-builder/creating-new-content-type',
-        },
-        {
-          label: 'Configuring content-types fields',
-          to: '/user-docs/content-type-builder/configuring-fields-content-type',
         },
         {
           label: 'Writing content',
           to: '/user-docs/content-manager/writing-content',
         },
         {
+          label: 'Drafting & publishing content',
+          to: '/user-docs/content-manager/saving-and-publishing-content',
+        },
+        {
+          label: 'Organizing content into releases',
+          to: '/user-docs/releases/introduction',
+        },
+        {
           label: 'Setting up the admin panel',
-          to: '/user-docs/settings/admin-panel',
+          to: '/user-docs/settings/introduction',
+        },
+      ],
+    },
+    {
+      cardLink: '/dev-docs/intro',
+      cardTitle: 'Cloud Documentation',
+      cardDescription: 'Learn how to deploy and manage projects on Strapi Cloud',
+      cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,
+      linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
+      linksIconColor: 'purple',
+      links: [
+        {
+          label: 'Project creation',
+          to: '/cloud/getting-started/deployment',
+        },
+        {
+          label: 'Usage & Billing',
+          to: '/cloud/getting-started/usage-billing',
+        },
+        {
+          label: 'Project settings',
+          to: '/cloud/projects/settings',
+        },
+        {
+          label: 'Deployments management',
+          to: '/cloud/projects/deploys',
+        },
+        {
+          label: 'Profile settings',
+          to: '/cloud/account/account-settings',
         },
       ],
     },

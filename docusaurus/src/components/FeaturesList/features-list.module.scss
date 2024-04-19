@@ -50,6 +50,12 @@
         --strapi-features-list-item-icon-color: var(--strapi-success-500);
       }
 
+      &--purple {
+        --strapi-features-list-item-icon-background-color: var(--strapi-alternative-100);
+        --strapi-features-list-item-icon-border-color: var(--strapi-alternative-150);
+        --strapi-features-list-item-icon-color: var(--strapi-alternative-500);
+      }
+
       svg {
         height: var(--strapi-features-list-item-icon-size);
         width: var(--strapi-features-list-item-icon-size);
@@ -82,6 +88,11 @@
         &--green {
           --strapi-features-list-item-icon-background-color: var(--strapi-success-500);
           --strapi-features-list-item-icon-border-color: var(--strapi-success-600);
+        }
+
+        &--purple {
+          --strapi-features-list-item-icon-background-color: var(--strapi-alternative-500);
+          --strapi-features-list-item-icon-border-color: var(--strapi-alternative-600);
         }
       }
     }
