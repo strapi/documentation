@@ -75,9 +75,6 @@ module.exports = {
 
 </details>
 
-
-## Additional considerations
-
 ### Using Strapi Instance for migrations
 
 :::danger
