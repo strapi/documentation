@@ -9,12 +9,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # How to use the Plugin CLI to create and publish a Strapi plugin
 
-<NotV5/>
-
-:::caution
-The Plugin CLI is currently experimental.
-:::
-
 The Plugin CLI is set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
 
 As opposed to the `strapi generate plugin` command (see [plugin creation and setup](/dev-docs/plugins/development/create-a-plugin)) you do not need to set up a Strapi project to use the Plugin CLI.
