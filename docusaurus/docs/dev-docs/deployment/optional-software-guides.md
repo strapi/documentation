@@ -7,7 +7,6 @@ tags:
 - introduction
 - optional software guides
 - production environment
-- Strapi project
 ---
 # Optional Software Guides
 

@@ -3,7 +3,7 @@ sidebar_position: 3
 title: API tokens
 tags:
 - API Token
-- REST 
+- REST API
 - GraphQL API
 ---
 

@@ -9,9 +9,7 @@ tags:
 - admin panel
 - configuration
 - Enterprise feature
-- sign-in
-- sign-up
-- SSO configuration
+- SSO 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

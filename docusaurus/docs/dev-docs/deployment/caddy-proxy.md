@@ -10,7 +10,6 @@ tags:
 - middlewares
 - optional software guides
 - proxying
-- Strapi server
 - subdomain
 ---
 

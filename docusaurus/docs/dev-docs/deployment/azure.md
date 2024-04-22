@@ -3,15 +3,12 @@ title: Azure Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
 tags:
-- 3rd party hosting guides
-- application configuration
-- Azure
-- Azure resource manager template
-- Azure virtual machine
-- deployment guides
+- deployment 
 - guides
-- Paas Model
-- PM2
+- MySQL
+- Paas 
+- process manager
+- project creation
 - postgreSQL
 - Strapi Cloud
 ---

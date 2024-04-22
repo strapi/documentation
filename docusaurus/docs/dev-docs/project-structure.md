@@ -3,10 +3,7 @@ title: Project structure
 displayed_sidebar: devDocsSidebar
 description: Discover the project structure of any default Strapi application.
 tags:
-- setup and deployment
 - project structure
-- Strapi project
-- starter CLI
 - typescript
 ---
 

@@ -5,11 +5,8 @@ description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/overview.html
 sidebar_position: 1
 tags:
-- project name
-- project overview
 - project status
 - Strapi Cloud
-- Strapi project
 ---
 
 # Projects overview

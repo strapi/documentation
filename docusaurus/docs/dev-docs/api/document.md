@@ -7,7 +7,6 @@ tags:
 - API
 - concepts
 - Content API
-- Content-type
 - Document Service API
 - Draft & Publish
 - Internationalization (i18n)

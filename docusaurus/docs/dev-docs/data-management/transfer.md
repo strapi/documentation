@@ -7,7 +7,7 @@ tags:
 - data management system
 - data transfer
 - strapi transfer
-- environment variables
+- environment 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

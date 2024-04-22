@@ -5,7 +5,7 @@ tags:
 - admin panel
 - review workflows
 - Enterprise feature
-- Sloud Cloud
+- Strapi Cloud
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -5,7 +5,6 @@ displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/advanced-features
 pagination_next: dev-docs/customization
 tags:
-- 3rd-party plugins 
 - admin panel
 - concepts 
 - plugins 

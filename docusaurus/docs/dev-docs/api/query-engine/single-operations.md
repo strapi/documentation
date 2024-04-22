@@ -6,12 +6,11 @@ tags:
 - API
 - Content API
 - create()
-- delete()
+- deleting content
 - findOne()
 - findMany()
 - findWithCount()
 - Query Engine API
-- single operators
 - update()
 ---
 

@@ -8,9 +8,6 @@ tags:
 - Document Service API 
 - sort
 - pagination
-- Sort on multiple fields
-- Sort on single field
-
 ---
 
 # Document Service API: Sorting and paginating results

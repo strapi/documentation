@@ -6,13 +6,11 @@ description: In Strapi, RBAC is an approach to restricting access to some featur
 tags:
 - administrator
 - admin panel
-- condition handler
 - configuration
 - configuration guide
 - guides
 - RBAC (Role-Based Access Control)
-- Registering condition
-- roles and permissions
+- Users, Roles & Permissions
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

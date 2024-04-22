@@ -9,8 +9,8 @@ tags:
 - authentication
 - base configuration
 - configuration
-- full configuration
 - minimal configuration
+- password
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

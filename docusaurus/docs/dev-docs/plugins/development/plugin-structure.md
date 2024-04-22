@@ -4,17 +4,12 @@ description: Learn more about the structure of a Strapi plugin
 displayed_sidebar: devDocsSidebar
 tags:
 - admin panel
-- admin panel plugin
 - Command Line Interface (CLI)
-- Command Line Interface (CLI) generator
 - backend server
 - plugins
 - plugins development
 - plugins structure
-- server
 - server-only plugin
-- Strapi project
-
 ---
 
 import InteractivePluginStructure from '@site/src/components/PluginStructure.js'

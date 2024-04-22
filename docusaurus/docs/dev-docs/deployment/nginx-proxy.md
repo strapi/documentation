@@ -5,12 +5,8 @@ description: Learn how you can use a proxy application like Nginx to secure your
 tags:
 - guides
 - middlewares
-- Nginx proxying
-- Nginx upstream configuration
-- Nginx virtual host configuration
 - optional software guides
 - proxying
-- Strapi server
 - subdomain
 ---
 

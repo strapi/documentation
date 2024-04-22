@@ -15,7 +15,6 @@ tags:
 - default ID type
 - default ID name
 - SSL
-- Strapi project 
 - typescript
 
 ---

@@ -4,8 +4,6 @@ displayed_sidebar: userDocsSidebar
 description: Instructions on how to use folders in the Media Library, including adding, editing, and deleting folders, and browsing their content.
 tags:
 - admin panel
-- Content Manager
-- Content-type
 - Content-type Builder
 - folders
 - media library

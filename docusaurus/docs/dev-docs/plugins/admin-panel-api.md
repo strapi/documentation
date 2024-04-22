@@ -4,11 +4,9 @@ pagination_prev: dev-docs/plugins/development/plugin-structure
 toc_max_heading_level: 4
 tags:
 - admin panel
-- admin panel API
+- plugin APIs
 - asynchronous function
-- backend 
 - bootstrap function
-- backend server
 - hooks API
 - Injection Zones API
 - lifecycle function
@@ -17,7 +15,6 @@ tags:
 - register function
 - reducers API
 - redux
-- server
 - Strapi plugin
 ---
 

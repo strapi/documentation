@@ -7,7 +7,6 @@ tags:
 - collection type
 - components
 - Content-type Builder
-- Content-type
 - dynamic zones
 - Internationalization (i18n)
 - single type

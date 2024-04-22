@@ -6,10 +6,6 @@ tags:
 - admin panel 
 - admin panel customization
 - deployment
-- front end
-- server
-- vite
-- WYSIWYG editor
 - webpack
 
 ---

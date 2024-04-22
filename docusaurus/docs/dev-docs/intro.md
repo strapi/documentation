@@ -6,7 +6,6 @@ sidebar_position: 1
 tags:
  - introduction
  - concepts
- - developer docs
 ---
 
 # Welcome to the Strapi Developer Docs!

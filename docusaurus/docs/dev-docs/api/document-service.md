@@ -5,11 +5,9 @@ displayed_sidebar: devDocsSidebar
 tags:
 - API
 - Content API
-- Content-type
 - Documents
 - documentId
 - Document Service API
-- Entity Service API
 - Query Engine API
 ---
 

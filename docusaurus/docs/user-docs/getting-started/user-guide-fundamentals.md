@@ -3,7 +3,6 @@ title: User Guide fundamentals
 displayed_sidebar: userDocsSidebar
 description: Here are some concepts to keep in mind
 tags:
-- user guide fundamentals
 - concepts
 - environment
 - Strapi version

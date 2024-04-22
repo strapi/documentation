@@ -3,8 +3,7 @@ title: Plugins extension
 displayed_sidebar: devDocsSidebar
 tags:
 - bootstrap function
-- content-type
-- controller
+- controllers
 - middlewares
 - policies
 - plugins

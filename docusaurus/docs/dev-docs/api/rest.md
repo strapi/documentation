@@ -4,9 +4,6 @@ description: Interact with your Content-Types using the REST API endpoints Strap
 displayed_sidebar: restApiSidebar
 tags:
 - API
-- API endpoints
-- API parameters
-- API response
 - Content API
 - documentId
 - Documents

@@ -3,12 +3,7 @@ title: Gridsome
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Gridsome.
 tags:
-- Gridsome
-- configure Gridsome 
 - collection type
-- GET request
-- integration
-- integration guide
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

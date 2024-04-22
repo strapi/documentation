@@ -3,7 +3,6 @@ sidebar_position: 1
 slug: /user-docs/plugins
 tags:
 - Content Manager
-- Content-type
 - Content-type Builder
 - introduction
 - plugins

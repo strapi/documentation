@@ -5,8 +5,7 @@ displayed_sidebar: devDocsSidebar
 tags:
 - API
 - Content API
-- orderBy
-- order
+- sort
 - pagination
 - Query Engine API
 ---

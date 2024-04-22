@@ -7,7 +7,6 @@ tags:
 - minor version
 - patch version
 - semantic versioning
-- Strapi application
 - upgrade tool
 - version types
 ---

@@ -3,13 +3,11 @@ title: Relations
 description: Use the REST API to manage the order of relations
 displayed_sidebar: restApiSidebar
 tags:
-- API
-- connect
+- API 
+- relations
 - Content API
-- Content-type
 - disconnect
 - REST API
-- set
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

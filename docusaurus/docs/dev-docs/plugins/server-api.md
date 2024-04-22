@@ -4,7 +4,7 @@ sidebar_label: Server API
 displayed_sidebar: devDocsSidebar
 description: Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 tags:
-- Server API
+- plugin APIs
 - lifecycle function
 - register function
 - bootstrap function
@@ -12,7 +12,6 @@ tags:
 - configuration
 - cron job
 - backend customization
-- Content-type
 - routes
 - controllers
 - services

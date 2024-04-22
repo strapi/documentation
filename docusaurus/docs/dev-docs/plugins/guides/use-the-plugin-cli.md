@@ -7,9 +7,8 @@ tags:
 - guides
 - plugins
 - plugin CLI
+- plugins development guides
 - Strapi plugin
-- Strapi plugin guide
-- Strapi project
 ---
 
 # How to use the Plugin CLI to create and publish a Strapi plugin

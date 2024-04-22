@@ -4,7 +4,6 @@ title: Migrating from Strapi v4 to v5
 unlisted: true
 tags:
 - breaking changes
-- Strapi 5
 - upgrade tool
 ---
 

@@ -3,15 +3,11 @@ title: Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
 tags:
-- 3rd party hosting guides
-- advanced configuration
-- application configuration
 - database deployment
 - deployment
-- deployment guides
+- project creation
 - hosting provider
 - hosting server
-- Strapi Cloud
 ---
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'

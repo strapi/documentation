@@ -3,7 +3,6 @@ sidebar_label: 'Caching for app performance'
 displayed_sidebar: cloudSidebar
 sidebar_position: 4
 tags:
-- Cache-control header
 - caching
 - Content Delivery Network (CDN) caching
 - Strapi Cloud

@@ -7,9 +7,8 @@ tags:
 - Content API
 - createMany()
 - count()
-- deleteMany()
+- deleting content
 - Query Engine API
-- bulk operators
 - updateMany()
 ---
 

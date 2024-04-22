@@ -6,7 +6,6 @@ tags:
  - breaking changes
  - configuration
  - middlewares
- - server
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

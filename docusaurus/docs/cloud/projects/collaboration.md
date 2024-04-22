@@ -5,7 +5,6 @@ description: Share your projects on Strapi Cloud to collaborate with others.
 canonicalUrl: https://docs.strapi.io/cloud/projects/collaboration.md
 sidebar_position: 1
 tags:
-- project collaboration
 - maintainers
 - Strapi Cloud
 - Strapi Cloud project

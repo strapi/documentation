@@ -4,11 +4,7 @@ description: How to install and start a Strapi application using a process manag
 sidebarDepth: 2
 tags:
 - configure PM2
-- install PM2
-- PM2
 - process manager
-- start PM2
-
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

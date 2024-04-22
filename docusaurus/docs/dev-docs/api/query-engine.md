@@ -6,7 +6,6 @@ tags:
 - API
 - Content API
 - introduction
-- single operators
 - Query Engine API
 ---
 

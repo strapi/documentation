@@ -1,6 +1,5 @@
 ---
 tags:
-- open source
 - contribution
 - community
 - support

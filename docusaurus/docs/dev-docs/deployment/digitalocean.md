@@ -3,19 +3,11 @@ title: DigitalOcean Droplet Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on DigitalOcean Droplets.
 tags:
-- 3rd party hosting guides
-- database configuration
-- deployment guides
-- DigitalOcean
-- git repository
+- deployment 
+- project creation
 - guides
-- Nginx web server
+- nginx 
 - PostgreSQL
-- production server
-- Strapi Cloud
-- Strapi project
-- webhook
-
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'

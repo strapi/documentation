@@ -4,7 +4,6 @@ description: This document provides information about the filters available in t
 displayed_sidebar: devDocsSidebar
 tags:
 - API
-- attribute operators
 - Content API
 - Document Service API
 - filters

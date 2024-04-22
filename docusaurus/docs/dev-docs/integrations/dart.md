@@ -3,14 +3,7 @@ title: Dart
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Dart.
 tags:
-- Dart
-- Dart file
 - collection type
-- GET request
-- HTTP client
-- integration
-- integration guide
-- POST request
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

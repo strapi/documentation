@@ -9,11 +9,11 @@ tags:
 - Apollo Server 
 - getters
 - GraphQL API
-- GraphQL plugin
+- GraphQL 
 - policies
 - plugins 
 - middlewares
-- Users & Permissions plugin
+- Users, Roles & Permissions
 
 ---
 

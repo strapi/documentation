@@ -6,10 +6,6 @@ tags:
 - additional configuration
 - configuration
 - environment
-- environment configuration
-- environment utility
-- environment variables
-- static configuration
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

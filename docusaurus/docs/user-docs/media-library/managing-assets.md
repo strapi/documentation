@@ -4,10 +4,8 @@ description: Instructions on how to manage assets uploaded to the Media Library,
 tags:
 - admin panel
 - Content Manager
-- Content-type
 - Content-type Builder
 - images
-- individual assets
 - media library
 ---
 

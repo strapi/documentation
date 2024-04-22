@@ -3,12 +3,10 @@ title: Saving, publishing, and deleting content
 description: Instructions to manage content throughout its whole lifecycle, from the draft version to the deletion of the obsolete content.
 toc_max_heading_level: 4
 tags:
-- Content-type
 - Content-type Builder
 - deleting content
 - Draft & Publish
 - publishing a draft
-- publishing and unpublishing
 - unpublishing content
 ---
 

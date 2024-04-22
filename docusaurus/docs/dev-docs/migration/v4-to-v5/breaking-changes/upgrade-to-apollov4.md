@@ -8,6 +8,7 @@ tags:
  - Content API
  - GraphQL
  - GraphQL API
+ - Apollo Server
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'

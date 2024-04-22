@@ -6,7 +6,6 @@ title: Quick Start Guide - Strapi Developer Docs
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
 tags:
  - guides
- - Strapi project
  - Content-type Builder
  - collection type
  - Content Manager

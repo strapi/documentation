@@ -6,8 +6,8 @@ canonicalUrl: https://docs.strapi.io/cloud/advanced/database.html
 tags:
 - configuration
 - database
-- database configuration
 - deployment
+- PostgreSQL
 - Strapi Cloud
 - Strapi Cloud project
 ---

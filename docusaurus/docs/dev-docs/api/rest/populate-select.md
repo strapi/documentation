@@ -5,11 +5,8 @@ sidebarDepth: 3
 displayed_sidebar: restApiSidebar
 tags:
 - API
-- API endpoints
 - Content API
-- Content-type
 - Combining operators
-- fields
 - find
 - populate
 - REST API

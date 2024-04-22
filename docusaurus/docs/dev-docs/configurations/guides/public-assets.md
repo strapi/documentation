@@ -7,7 +7,6 @@ tags:
 - configuration
 - configuration guide
 - guides
-- public
 - public assets
 ---
 

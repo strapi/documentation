@@ -4,9 +4,7 @@ description: Learn many different options to install Strapi and getting started 
 tags:
 - introduction
 - installation
-- strapi project
-- Docker
-- CLI
+- Command Line Interface (CLI)
 
 ---
 

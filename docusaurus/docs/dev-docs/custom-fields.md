@@ -10,7 +10,6 @@ tags:
 - Content Manager 
 - custom fields
 - register function
-- server
 ---
 
 import CustomFieldRequiresPlugin from '/docs/snippets/custom-field-requires-plugin.md'

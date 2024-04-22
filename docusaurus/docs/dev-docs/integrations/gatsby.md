@@ -3,12 +3,7 @@ title: Gatsby
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Gatsby.
 tags:
-- Gatsby
 - collection type
-- configure Gatsby
-- GET request
-- integration
-- integration guide
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

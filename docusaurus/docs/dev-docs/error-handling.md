@@ -3,11 +3,12 @@ title: Error handling
 displayed_sidebar: devDocsSidebar
 description: With Strapi's error handling feature it's easy to send and receive errors in your application.
 tags:
+- ctx
 - GraphQL API
 - GraphQL errorsa
 - policies
 - middlewares
-- REST 
+- REST API
 - REST errors
 - throw errors
 - strapi-utils

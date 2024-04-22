@@ -1,6 +1,5 @@
 ---
 tags:
-- Strapi 5
 - Draft & Publish
 - documents
 - Document Service API

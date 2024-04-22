@@ -6,9 +6,6 @@ tags:
 - additional configuration
 - configuration
 - cron job
-- cron task
-- key format
-- object format
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

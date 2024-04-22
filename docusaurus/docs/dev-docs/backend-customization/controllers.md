@@ -1,16 +1,14 @@
 ---
-tags:
-- backend 
+tags: 
 - backend customization
 - backend server
-- controller
+- controllers
 - createCoreController
 - core controllers
+- ctx
 - REST API 
-- response
 - routes
 - sanitizeQuery function
-- server
 - strapi-utils
 - validateQuery function
 ---

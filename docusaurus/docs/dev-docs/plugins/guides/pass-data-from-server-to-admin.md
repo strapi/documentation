@@ -9,9 +9,8 @@ tags:
 - content-type
 - guides
 - plugins
-- server
 - Strapi plugin
-- Strapi plugin guide
+- plugins development guides
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

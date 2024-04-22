@@ -3,15 +3,7 @@ title: Nuxt
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Nuxt 3.
 tags:
-- Nuxt 3
 - collection type
-- DELETE request
-- GET request
-- HTTP client
-- integration
-- integration guide
-- POST request
-- PUT request
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

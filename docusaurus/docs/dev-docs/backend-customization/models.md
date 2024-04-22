@@ -24,7 +24,6 @@ _tags: [
 sidebarDepth: 3
 tags:
 - admin panel
-- backend 
 - backend customization
 - backend server
 - content-type
@@ -33,7 +32,6 @@ tags:
 - model schema
 - lifecycle hooks
 - REST API 
-- server
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

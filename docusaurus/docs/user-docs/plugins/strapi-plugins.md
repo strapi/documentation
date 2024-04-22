@@ -2,14 +2,13 @@
 title: Strapi plugins
 sidebar_position: 3
 tags:
-- Content-type
 - Content Manager
-- Internationalization plugin
+- Internationalization (i18n)
 - plugins
 - provider
 - marketplace
 - upload plugin
-- Users & Permissions plugin
+- Users, Roles & Permissions
 - Sentry
 - Strapi plugin
 ---

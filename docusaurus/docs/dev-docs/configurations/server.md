@@ -8,10 +8,8 @@ tags:
 - base configuration
 - configuration
 - cron job
-- environment configuration
 - host
 - port
-- server
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -4,8 +4,7 @@ displayed_sidebar: devDocsSidebar
 description: Send email from your server or externals providers.
 tags:
 - admin panel
-- backend
-- controller 
+- controllers 
 - email plugin
 - lifecycle hooks
 - plugins 

@@ -4,7 +4,6 @@ description: todo
 displayed_sidebar: devDocsSidebar
 pagination_next: dev-docs/plugins/documentation
 tags:
-- 3rd-party plugins 
 - admin panel
 - plugins 
 - introduction

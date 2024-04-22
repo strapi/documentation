@@ -8,7 +8,6 @@ tags:
 - bootstrap function
 - configuration
 - destroy function
-- function
 - lifecycle function
 - register function
 - synchronous function

@@ -3,11 +3,7 @@ title: GraphQL
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with GraphQL.
 tags:
-- GraphQL
-- GraphQL plugin
 - collection type
-- integration
-- integration guide
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

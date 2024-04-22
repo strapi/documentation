@@ -7,7 +7,6 @@ sidebar_position: 1
 tags:
 - runtime logs
 - Strapi Cloud
-- Strapi project
 ---
 
 # Runtime logs

@@ -6,7 +6,7 @@ tags:
 - API
 - Content API
 - create()
-- delete()
+- deleting content
 - Document Service API
 - discardDraft()
 - findOne()
@@ -15,7 +15,7 @@ tags:
 - publish()
 - select
 - update()
-- unpublish()
+- unpublishing content
 ---
 
 # Document Service API: Selecting fields

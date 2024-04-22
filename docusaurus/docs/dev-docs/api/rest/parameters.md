@@ -5,7 +5,6 @@ description: Use API parameters to refine your Strapi REST API queries.
 next: ./filtering-locale-publication.md
 tags:
 - API
-- API parameters
 - Content API
 - filters
 - locale

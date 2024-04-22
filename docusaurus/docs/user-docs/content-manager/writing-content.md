@@ -7,9 +7,9 @@ tags:
 - Content-type Builder
 - collection type
 - components
-- fields
 - dynamic zones
 - single type
+- password
 ---
 
 # Writing content

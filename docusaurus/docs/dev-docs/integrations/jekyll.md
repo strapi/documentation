@@ -3,13 +3,7 @@ title: Jekyll
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Jekyll.
 tags:
-- Jekyll
-- Jekyll app
-- configure Jekyll 
 - collection type
-- GET request
-- integration
-- integration guide
 
 ---
 

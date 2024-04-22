@@ -7,10 +7,9 @@ sidebar_position: 2
 tags:
 - billing details
 - deployment
-- deployment guides
-- environment variables
+- project creation
+- environment 
 - general deployment guidelines
-- git repository
 - Strapi Cloud
 - Strapi Cloud plan
 ---

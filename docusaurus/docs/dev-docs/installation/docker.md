@@ -4,11 +4,8 @@ displayed_sidebar: devDocsSidebar
 description: Quickly create a Docker container from a local project.
 tags:
 - installation
-- Docker
-- environment variables
-- Docker compose
-- Dockerfile
-- Docker registry
+- environment 
+- MySQL
 ---
 
 import DockerEnvTable from '/docs/snippets/docker-env-table.md'

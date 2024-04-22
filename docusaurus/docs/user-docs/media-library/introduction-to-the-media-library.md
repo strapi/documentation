@@ -5,8 +5,6 @@ sidebar_position: 1
 description: Introduction to the Media Library which allows to display and manage all assets uploaded in the application.
 tags:
 - admin panel
-- Content Manager
-- Content-type
 - Content-type Builder
 - filters
 - introduction

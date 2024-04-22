@@ -7,7 +7,6 @@ pagination_next: dev-docs/api/content-api
 tags:
 - introduction
 - concepts
-- setup and deployment
 - installation 
 - configuration
 - deployment

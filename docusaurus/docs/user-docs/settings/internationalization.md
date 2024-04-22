@@ -3,7 +3,6 @@ sidebar_position: 3
 title: Internationalization
 tags:
 - admin panel
-- Internationalization plugin 
 - Internationalization (i18n)
 - plugins
 ---

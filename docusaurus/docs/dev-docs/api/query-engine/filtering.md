@@ -4,12 +4,10 @@ description: Use Strapi's Query Engine API to filter the results of your queries
 displayed_sidebar: devDocsSidebar
 tags:
 - API
-- attribute operators
 - Content API
-- filtering
+- filters
 - logical operators
 - Query Engine API
-
 ---
 
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'

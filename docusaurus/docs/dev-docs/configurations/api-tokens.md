@@ -8,10 +8,7 @@ tags:
 - additional configuration
 - API token
 - configuration
-- endpoints
 - GraphQL API
-- request
-- REST
 - REST API
 ---
 

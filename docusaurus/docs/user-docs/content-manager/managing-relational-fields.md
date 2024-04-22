@@ -4,14 +4,10 @@ description: Instructions to manage relation-type fields, called "relational fie
 sidebar_position: 4
 tags:
 - Content-type Builder
-- Content-type
 - collection type
 - components
-- fields
 - relations
-- relational fields
 - one-choice relational fields
-- multiple-choice relational fields
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -8,8 +8,8 @@ tags:
 - guides
 - plugins
 - plugins development
+- plugins development guides
 - Strapi plugin
-- Strapi plugin guide
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -10,7 +10,6 @@ tags:
 - deep filtering
 - filters
 - find
-- Get entries
 - interactive query builder
 - locale
 - REST API

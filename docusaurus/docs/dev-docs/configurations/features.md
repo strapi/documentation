@@ -5,12 +5,9 @@ description: Enable experimental Strapi features
 displayed_sidebar: devDocsConfigSidebar
 tags:
 - additional configuration
-- community
 - configuration
-- features 
 - features configuration
 - future flag
-- future flags API
 ---
 
 # Features configuration

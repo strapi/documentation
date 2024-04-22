@@ -5,12 +5,12 @@ displayed_sidebar: devDocsConfigSidebar
 description: Strapi offers a single entry point file for its middlewares configurations.
 tags:
 - base configuration
+- body middleware
 - configuration
-- configuration options
 - global middlewares
 - internal middleware
 - middlewares
-- middleware customization
+- middlewares customization
 - middleware type
 - route middlewares
 ---

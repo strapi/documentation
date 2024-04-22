@@ -13,6 +13,7 @@ tags:
 - pagination
 - pagination by offset
 - pagination by page
+- plural API ID
 - REST API
 - sort
 ---

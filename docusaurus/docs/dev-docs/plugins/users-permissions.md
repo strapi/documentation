@@ -12,8 +12,8 @@ tags:
 - plugins
 - provider
 - public role
-- Strapi configuration
-- Users & Permissions plugin
+- password
+- Users, Roles & Permissions 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

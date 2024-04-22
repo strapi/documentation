@@ -4,7 +4,6 @@ description: Learn how to populate creator fields such as createdBy and updatedB
 tags:
 - API
 - Content API
-- Content-type
 - createdBy
 - guides
 - populate

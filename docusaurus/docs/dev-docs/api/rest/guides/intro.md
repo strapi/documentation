@@ -6,8 +6,6 @@ pagination_prev: dev-docs/api/rest
 pagination_next: dev-docs/api/rest/guides/understanding-populate
 tags:
 - API
-- API endpoints
-- API parameters
 - Content API
 - guides
 - REST API

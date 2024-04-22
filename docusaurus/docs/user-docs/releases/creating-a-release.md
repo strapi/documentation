@@ -4,7 +4,6 @@ description: Instructions to create a release from the admin panel
 tags:
 - admin panel
 - Enterprise feature
-- future flag
 - Releases feature
 - Strapi Cloud
 ---

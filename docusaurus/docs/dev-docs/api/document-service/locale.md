@@ -7,7 +7,7 @@ tags:
 - Content API
 - create()
 - count()
-- delete()
+- deleting content
 - Document Service API
 - discardDraft()
 - findOne()
@@ -16,7 +16,7 @@ tags:
 - locale
 - publish()
 - update()
-- unpublish()
+- unpublishing content
 ---
 
 # Document Service API: Using the `locale` parameter

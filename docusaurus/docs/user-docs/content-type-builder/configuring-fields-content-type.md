@@ -7,8 +7,8 @@ tags:
 - Content-type
 - Content-type Builder
 - dynamic zones
-- fields
 - single type
+- password
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

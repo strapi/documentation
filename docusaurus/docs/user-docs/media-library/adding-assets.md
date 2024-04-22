@@ -5,7 +5,6 @@ tags:
 - admin panel
 - add new assets
 - Content Manager
-- Content-type
 - Content-type Builder
 - media library
 ---
