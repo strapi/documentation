@@ -7,6 +7,19 @@ export default {
   },
   carousel: [
     {
+      title: 'Learn what’s new in Strapi 5',
+      description: (
+        <>
+          {'Have a quick tour of the new and updated features available in the Strapi 5 documentation!'}
+        </>
+      ),
+      button: {
+        label: 'What’s new?',
+        decorative: '✨',
+        to: '/dev-docs/whats-new',
+      },
+    },
+    {
       backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
       variant: 'cloud',
       title: 'Strapi Cloud CLI',
@@ -39,24 +52,41 @@ export default {
         to: '/dev-docs/quick-start',
       },
     },
-    {
-      title: 'Learn what’s new in Strapi 5',
-      description: (
-        <>
-          {'Have a quick tour of the new and updated features available in the Strapi 5 documentation'}
-        </>
-      ),
-      button: {
-        label: 'What’s new?',
-        decorative: '✨',
-        to: '/dev-docs/whats-new',
-      },
-    },
   ],
   categories: [
     {
+      cardLink: '/user-docs/intro',
+      cardTitle: 'User Guide',
+      cardDescription: 'Get the most out of the admin panel with our user guide',
+      cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
+      linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
+      linksIconColor: 'blue',
+      links: [
+        {
+          label: 'Content-Types Builder',
+          to: '/user-docs/content-type-builder/creating-new-content-type',
+        },
+        {
+          label: 'Content Manager',
+          to: '/user-docs/content-manager/writing-content',
+        },
+        {
+          label: 'Draft & Publish',
+          to: '/user-docs/content-manager/saving-and-publishing-content',
+        },
+        {
+          label: 'Releases',
+          to: '/user-docs/releases/introduction',
+        },
+        {
+          label: 'Settings',
+          to: '/user-docs/settings/introduction',
+        },
+      ],
+    },
+    {
       cardLink: '/dev-docs/intro',
-      cardTitle: 'Developer Documentation',
+      cardTitle: 'Developer Docs',
       cardDescription: 'All you need to get your project up-and-running, and become a Strapi expert',
       cardImgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
       linksIconSrc: require('@site/static/img/assets/icons/code.svg').default,
@@ -81,36 +111,6 @@ export default {
         {
           label: 'Migration from v4',
           to: '/dev-docs/migration/v4-to-v5/introduction',
-        },
-      ],
-    },
-    {
-      cardLink: '/user-docs/intro',
-      cardTitle: 'User Guide',
-      cardDescription: 'Get the most out of the admin panel with our user guide',
-      cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
-      linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
-      linksIconColor: 'blue',
-      links: [
-        {
-          label: 'Creating content-types',
-          to: '/user-docs/content-type-builder/creating-new-content-type',
-        },
-        {
-          label: 'Writing content',
-          to: '/user-docs/content-manager/writing-content',
-        },
-        {
-          label: 'Drafting & publishing content',
-          to: '/user-docs/content-manager/saving-and-publishing-content',
-        },
-        {
-          label: 'Organizing content into releases',
-          to: '/user-docs/releases/introduction',
-        },
-        {
-          label: 'Setting up the admin panel',
-          to: '/user-docs/settings/introduction',
         },
       ],
     },
