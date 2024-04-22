@@ -1,17 +1,21 @@
 ---
-title: Project creation
+title: Cloud dashboard
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
 sidebar_position: 2
 ---
 
-# Project creation & deployment
+# Project creation & deployment via the Cloud dashboard
 
-This is a step-by-step guide for creating and deploying your first project on Strapi Cloud.
+This is a step-by-step guide for creating and deploying your first project on Strapi Cloud, using the Cloud dashboard.
+
+:::strapi Cloud dashboard VS Cloud CLI
+This guide only focuses on deploying a project using the user interface (called "Cloud dashboard"). If you prefer to deploy your project via your terminal using the Cloud Command Line Interface, please refer to the [dedicated step-by-step guide](/cloud/getting-started/deployment-cli).
+:::
 
 :::prerequisites
-Before you can deploy your Strapi application on Strapi Cloud, you need to have the following prerequisites:
+Before you can deploy your Strapi application on Strapi Cloud using the Cloud dashboard, you need to have the following prerequisites:
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
@@ -197,3 +201,11 @@ During the free trial, will be kept informed of the number of remaining free day
 :::caution
 Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
 :::
+
+## ⏩ What to do next?
+
+Now that you have deployed your project via the Cloud dashboard, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
+
+- If you chose the free trial during your first project creation, make sure to fill in your [billing information](/cloud/account/account-billing) afterward to prevent your project from being suspended at the end of the trial period.
+- Invite other users to [collaborate on your project](/cloud/projects/collaboration).
+- Check out the [deployments management documentation](/cloud/projects/deploys) to learn how to trigger new deployments for your project.
