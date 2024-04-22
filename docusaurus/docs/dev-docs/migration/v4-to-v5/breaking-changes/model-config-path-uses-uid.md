@@ -22,10 +22,6 @@ In Strapi 5, to retrieve config values you will need to use `config.get('plugin:
 
 ## Breaking change description
 
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 **In Strapi v4**
 
 Models are added to the configuration using `.` notation as follows:
@@ -37,10 +33,6 @@ if ( strapi.config.has('plugin.upload.somesetting') ) {
 }
 ```
 
-</SideBySideColumn>
-
-<SideBySideColumn>
-
 **In Strapi 5**
 
 Models are added to the configuration using `::` replacing `.` notation as follows:
@@ -50,10 +42,6 @@ if ( strapi.config.has('plugin::upload.somesetting') ) {
   strapi.config.set('plugin::upload.somesetting', false);
 }
 ```
-
-</SideBySideColumn>
-
-</SideBySideContainer>
 
 ## Migration
 

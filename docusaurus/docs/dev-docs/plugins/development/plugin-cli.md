@@ -10,7 +10,11 @@ tags:
 - strapi plugin
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Plugin CLI reference
+
+<NotV5/>
 
 :::caution
 The Plugin CLI is currently experimental.

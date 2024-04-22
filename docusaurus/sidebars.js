@@ -627,7 +627,13 @@ const sidebars = {
       items: [
         'user-docs/content-manager/introduction-to-content-manager',
         'user-docs/content-manager/configuring-view-of-content-type',
-        'user-docs/content-manager/writing-content',
+        {
+          type: 'doc',
+          id: 'user-docs/content-manager/working-with-content-history',
+          // customProps: {
+          //   new: true,
+          // }
+        },
         'user-docs/content-manager/managing-relational-fields',
         'user-docs/content-manager/translating-content',
         'user-docs/content-manager/reviewing-content',
@@ -1152,7 +1158,8 @@ const sidebars = {
               },
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
-                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened'
+                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened',
+                'dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite',
               ]
             },
             {

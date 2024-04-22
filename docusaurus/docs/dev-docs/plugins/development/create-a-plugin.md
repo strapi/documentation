@@ -10,7 +10,11 @@ tags:
 - plugins development
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Plugin creation and setup
+
+<NotV5/>
 
 To start developing a Strapi plugin, you need to:
 

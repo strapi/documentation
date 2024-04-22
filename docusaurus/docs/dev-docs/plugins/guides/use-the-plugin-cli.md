@@ -11,7 +11,11 @@ tags:
 - Strapi plugin
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # How to use the Plugin CLI to create and publish a Strapi plugin
+
+<NotV5/>
 
 :::caution
 The Plugin CLI is currently experimental.

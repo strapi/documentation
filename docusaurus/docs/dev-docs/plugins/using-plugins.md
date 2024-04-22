@@ -1,6 +1,6 @@
 ---
 title: Using Strapi plugins
-description: todo
+description: Learn more about Strapi built-in plugins and how to use them from a developer perspective.
 displayed_sidebar: devDocsSidebar
 pagination_next: dev-docs/plugins/documentation
 tags:

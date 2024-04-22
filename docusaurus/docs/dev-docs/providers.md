@@ -268,7 +268,7 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts
-export {
+export default {
   init(providerOptions) {
     // init your provider if necessary
 

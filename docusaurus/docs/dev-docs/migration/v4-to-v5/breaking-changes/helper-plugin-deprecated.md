@@ -1,6 +1,6 @@
 ---
 title: helper-plugin deprecated
-description: Breaking change description
+description: In Strapi 5, the `helper-plugin` is deprecated. A whole migration reference is available for plugin developers.
 sidebar_label: helper-plugin deprecated
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
