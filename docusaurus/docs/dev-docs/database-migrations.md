@@ -80,7 +80,9 @@ module.exports = {
 
 ### Using Strapi Instance for migrations
 
+:::danger
 If a user opts not to use Knex directly for migrations and instead utilizes the Strapi instance, it is important to wrap the migration code with `strapi.db.transaction()`. Failure to do so may result in migrations not rolling back if an error occurs.
+:::
 
 <details>
 <summary>Example of migration file with Strapi instance</summary>
