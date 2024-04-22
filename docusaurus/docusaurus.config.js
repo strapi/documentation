@@ -199,7 +199,7 @@ const config = {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
-            label: 'Strapi Cloud',
+            label: 'Cloud Documentation',
           },
           {
             href: 'https://github.com/strapi/documentation',
