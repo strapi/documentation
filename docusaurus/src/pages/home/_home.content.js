@@ -44,20 +44,12 @@ export default {
   categories: [
     {
       cardLink: '/dev-docs/intro',
-      cardTitle: 'Developer Documentation',
+      cardTitle: 'Developer Docs',
       cardDescription: 'All you need to get your project up-and-running, and become a Strapi expert',
       cardImgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
       linksIconSrc: require('@site/static/img/assets/icons/code.svg').default,
       linksIconColor: 'green',
       links: [
-        {
-          label: 'Installation guides',
-          to: '/dev-docs/installation',
-        },
-        {
-          label: 'Database configuration',
-          to: '/dev-docs/configurations/database',
-        },
         {
           label: 'REST API',
           to: '/dev-docs/api/rest',
@@ -67,8 +59,16 @@ export default {
           to: '/dev-docs/api/graphql',
         },
         {
-          label: 'Back-end customization',
-          to: '/dev-docs/backend-customization',
+          label: 'Document Service API',
+          to: '/dev-docs/api/document-service',
+        },
+        {
+          label: 'Plugin CLI',
+          to: '/dev-docs/plugins/guides/use-the-plugin-cli',
+        },
+        {
+          label: 'Migration from v4',
+          to: '/dev-docs/migration/v4-to-v5/introduction',
         },
       ],
     },
