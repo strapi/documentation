@@ -1,5 +1,5 @@
 ---
-title: Cloud CLI
+title: with Cloud CLI
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application via the CLI.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment-cli.html
@@ -10,9 +10,11 @@ sidebar_position: 2
 
 This is a step-by-step guide for creating and deploying your first project on Strapi Cloud, using the Command Line Interface.
 
+<!--
 :::strapi Cloud dashboard VS Cloud CLI
 This guide only focuses on deploying a project using the Cloud Command Line Interface. If you prefer to deploy your project via the user interface (called "Cloud dashboard"), please refer to the [dedicated step-by-step guide](/cloud/getting-started/deployment).
 :::
+-->
 
 :::prerequisites
 Before you can deploy your Strapi application on Strapi Cloud using the Command Line Interface, you need to have the following prerequisites:

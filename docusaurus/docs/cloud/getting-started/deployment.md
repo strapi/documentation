@@ -1,5 +1,5 @@
 ---
-title: Cloud dashboard
+title: with Cloud dashboard
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
@@ -10,9 +10,11 @@ sidebar_position: 2
 
 This is a step-by-step guide for creating and deploying your first project on Strapi Cloud, using the Cloud dashboard.
 
+<!-- 
 :::strapi Cloud dashboard VS Cloud CLI
 This guide only focuses on deploying a project using the user interface (called "Cloud dashboard"). If you prefer to deploy your project via your terminal using the Cloud Command Line Interface, please refer to the [dedicated step-by-step guide](/cloud/getting-started/deployment-cli).
 :::
+-->
 
 :::prerequisites
 Before you can deploy your Strapi application on Strapi Cloud using the Cloud dashboard, you need to have the following prerequisites:
