@@ -379,7 +379,7 @@ await strapi.documents('api::restaurant.restaurant').create({
 
 Updates document versions and returns them.
 
-Syntax: `update(parameters: Params) => Document`
+Syntax: `update(parameters: Params) => Promise<Document>`
 
 ### Parameters
 
@@ -445,14 +445,7 @@ await documents('api:restaurant.restaurant').update(documentId, {locale: ['es', 
 
 Deletes one document, or a specific locale of it.
 
-Syntax:
-
-```js
-delete(parameters: Params) => { 
-  deletedEntries: Number, 
-  errors: Errors[]  // Errors occurred when deleting documents
-}
-```
+Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
@@ -478,7 +471,25 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 </Request>
 
-The response returns the number of deleted entries (e.g., `{ deletedEntries: 3 }`).
+
+<Response>
+
+```js {6}
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  entires: [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
+      // …
+    }
+  ]
+}
+```
+
+</Response>
 
 <!-- ! not working -->
 <!-- #### Delete a document with filters
@@ -503,14 +514,7 @@ Publishes one or multiple locales of a document.
 
 This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
-Syntax:
-
-```js
-publish(parameters: Params) => { 
-  documentId: string, 
-  versions: Document[]  // Published versions
-}
-```
+Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
@@ -542,7 +546,8 @@ await strapi.documents('api::restaurant.restaurant').publish({
 
 ```js {6}
 {
-  versions: [
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  entires: [
     {
       "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
       "name": "Biscotte Restaurant",
@@ -574,14 +579,7 @@ Unpublishes one or all locale versions of a document, and returns how many local
 
 This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
-Syntax:
-
-```js
-unpublish(parameters: Params) => { 
-  documentId: string, 
-  versions: Document[]  // Unpublished versions
-}
-```
+Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
@@ -613,7 +611,16 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 ```js
 {
-  versions: 1
+  documentId: "lviw819d5htwvga8s3kovdij",
+  entries: [
+    {
+      documentId: "lviw819d5htwvga8s3kovdij",
+      name: "Biscotte Restaurant",
+      publishedAt: null,
+      locale: "en"
+      // …
+    }
+  ]
 }
 ```
 
@@ -627,14 +634,7 @@ Discards draft data and overrides it with the published version.
 
 This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
-Syntax:
-
-```js
-discardDraft(parameters: Params) => { 
-  documentId: string, 
-  versions: Document[]  // New drafts
-}
-```
+Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
@@ -666,7 +666,8 @@ strapi.documents.discard({
 
 ```js
 {
-  versions: [
+  documentId: "lviw819d5htwvga8s3kovdij",
+  entries: [
     {
       documentId: "lviw819d5htwvga8s3kovdij",
       name: "Biscotte Restaurant",
