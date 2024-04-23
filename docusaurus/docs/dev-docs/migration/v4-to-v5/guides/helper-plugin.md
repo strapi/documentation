@@ -3,6 +3,7 @@ title: Helper-plugin migration reference
 description: Learn how to migrate your Strapi plugins and applications to not use the `helper-plugin` package.
 tags:
   - migration
+  - migration guides
   - helper-plugin
   - plugins development
 ---

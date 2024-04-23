@@ -1,6 +1,10 @@
 ---
 sidebar_position: 3
 title: Transfer tokens
+tags:
+- admin panel
+- API Token
+- transfer tokens
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

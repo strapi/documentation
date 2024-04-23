@@ -2,7 +2,12 @@
 title: Managing relational fields
 description: Instructions to manage relation-type fields, called "relational fields", which establish a relation between two content-types.
 sidebar_position: 4
-
+tags:
+- Content-type Builder
+- collection type
+- components
+- relations
+- one-choice relational fields
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

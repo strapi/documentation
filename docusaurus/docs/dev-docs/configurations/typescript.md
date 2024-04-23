@@ -3,6 +3,11 @@ title: TypeScript configuration
 sidebar_label: TypeScript
 displayed_sidebar: devDocsConfigSidebar
 description: How to configure Strapi for TypeScript development.
+tags:
+- additional configuration
+- configuration
+- types
+- typescript
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

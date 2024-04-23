@@ -5,7 +5,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - database
- - mysql
+ - MySQL
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

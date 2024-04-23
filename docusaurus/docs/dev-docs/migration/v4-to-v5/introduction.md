@@ -2,6 +2,9 @@
 title: Migrating from Strapi v4 to v5
 # description: todo
 unlisted: true
+tags:
+- breaking changes
+- upgrade tool
 ---
 
 # Migrating from Strapi v4 to Strapi 5

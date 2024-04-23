@@ -2,6 +2,11 @@
 title: Adding TypeScript support 
 description: Learn how to add TypeScript support to an existing Strapi project.
 pagination_previous: dev-docs/typescript/development
+tags:
+- allowJs flag
+- typescript
+- tsconfig.json file
+- project structure
 ---
 
 # Adding TypeScript support to existing Strapi projects

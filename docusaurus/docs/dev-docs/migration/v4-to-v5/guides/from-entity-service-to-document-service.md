@@ -4,6 +4,7 @@ description: Learn how to transition from the Entity Service API of Strapi v4 to
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
 - migration
+- migration guides
 - document service API
 ---
 

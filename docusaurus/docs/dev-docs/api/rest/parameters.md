@@ -3,6 +3,15 @@ title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
 
 next: ./filtering-locale-publication.md
+tags:
+- API
+- Content API
+- filters
+- locale
+- populate
+- REST API
+- sort
+- status
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

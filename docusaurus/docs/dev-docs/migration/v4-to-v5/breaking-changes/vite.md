@@ -5,8 +5,6 @@ sidebar_label: Vite as default bundler
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
- - vite
- - front end
  - dependencies
 ---
 

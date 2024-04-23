@@ -2,8 +2,15 @@
 title: Command Line Interface
 displayed_sidebar: devDocsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
-
-
+tags:
+- Command Line Interface (CLI)
+- strapi develop
+- strapi start
+- strapi build
+- strapi export
+- strapi import
+- strapi transfer
+- strapi report
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -6,8 +6,7 @@ sidebar_label: Env options moved to server configuration
 tags:
  - breaking changes
  - configuration
- - environment variables
- - server
+ - environment 
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

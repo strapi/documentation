@@ -4,6 +4,12 @@ displayed_sidebar: cloudSidebar
 description: Manage your projects's deploys.
 canonicalUrl: https://docs.strapi.io/cloud/projects/deploys.html
 sidebar_position: 1
+tags:
+- deployment
+- project settings
+- deploy, history and logs
+- Strapi Cloud
+- Strapi Cloud project
 ---
 
 # Deployments management

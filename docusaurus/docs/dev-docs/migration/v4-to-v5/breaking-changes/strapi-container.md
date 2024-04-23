@@ -6,7 +6,6 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true
 tags:
  - breaking changes
- - strapi container
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

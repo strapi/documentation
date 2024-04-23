@@ -3,6 +3,11 @@ title: Data transfer
 description: Transfer data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/transfer.html
+tags:
+- data management system
+- data transfer
+- strapi transfer
+- environment 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

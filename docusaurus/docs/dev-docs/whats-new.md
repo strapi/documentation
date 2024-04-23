@@ -1,4 +1,13 @@
-
+---
+tags:
+- Draft & Publish
+- documents
+- Document Service API
+- REST API
+- GraphQL API 
+- upgrade tool
+- breaking changes
+---
 # What's new in Strapi 5 docs beta?
 
 Strapi 5 beta brings many new features and improvements, and this page quickly highlights the most important documentation changes.

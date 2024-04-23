@@ -2,6 +2,12 @@
 title: Plugin CLI
 description: Reference documentation for Strapi's Plugin CLI commands
 displayed_sidebar: devDocsSidebar
+tags:
+- backend server
+- plugin CLI
+- plugins
+- plugins development
+- strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

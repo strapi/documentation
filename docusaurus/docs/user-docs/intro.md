@@ -1,6 +1,10 @@
 ---
 displayed_sidebar: userDocsSidebar
 sidebar_label: Welcome!
+tags:
+- admin panel
+- guides
+- introduction
 ---
 
 # Welcome to the Strapi User Guide!

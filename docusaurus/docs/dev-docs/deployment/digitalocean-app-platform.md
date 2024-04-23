@@ -2,7 +2,11 @@
 title: DigitalOcean App Platform
 description: Learn in this guide how to deploy your Strapi application on DigitalOcean App Platform.
 displayed_sidebar: devDocsSidebar
-
+tags:
+- deployment 
+- project creation
+- guides
+- PostgreSQL
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'

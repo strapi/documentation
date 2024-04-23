@@ -3,6 +3,14 @@ title: Documents
 description: Learn what a Document is in Strapi v5
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/api/content-api
+tags:
+- API
+- concepts
+- Content API
+- Document Service API
+- Draft & Publish
+- Internationalization (i18n)
+- introduction
 ---
 
 # Documents

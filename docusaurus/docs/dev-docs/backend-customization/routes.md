@@ -2,6 +2,18 @@
 title: Routes
 description: Strapi routes handle requests to your content and are auto-generated for your content-types. Routes can be customized according to your needs.
 displayed_sidebar: devDocsSidebar
+tags:
+- backend customization
+- backend server
+- controllers
+- core routers
+- custom routers
+- ctx
+- middlewares
+- policies
+- public routes
+- REST API 
+- routes
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'

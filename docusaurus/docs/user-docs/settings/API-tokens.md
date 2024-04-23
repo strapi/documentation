@@ -1,6 +1,10 @@
 ---
 sidebar_position: 3
 title: API tokens
+tags:
+- API Token
+- REST API
+- GraphQL API
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

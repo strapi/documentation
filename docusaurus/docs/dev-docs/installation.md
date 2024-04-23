@@ -1,6 +1,10 @@
 ---
 title: Installation
 description: Learn many different options to install Strapi and getting started on using it.
+tags:
+- introduction
+- installation
+- Command Line Interface (CLI)
 
 ---
 

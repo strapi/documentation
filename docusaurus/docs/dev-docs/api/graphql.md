@@ -1,6 +1,21 @@
 ---
 title: GraphQL API
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- Documents
+- documentId
+- filters
+- GraphQL
+- GraphQL API
+- mutation
+- pagination
+- pagination by offset
+- pagination by page
+- plural API ID
+- REST API
+- sort
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

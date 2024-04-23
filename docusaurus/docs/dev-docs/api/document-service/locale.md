@@ -2,6 +2,21 @@
 title: Using the locale parameter with the Document Service API
 description: Use Strapi's Document Service API to work with locale versions with your queries.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- create()
+- count()
+- deleting content
+- Document Service API
+- discardDraft()
+- findOne()
+- findMany()
+- findFirst()
+- locale
+- publish()
+- update()
+- unpublishing content
 ---
 
 # Document Service API: Using the `locale` parameter

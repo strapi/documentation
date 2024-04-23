@@ -2,7 +2,8 @@
 title: Dart
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Dart.
-
+tags:
+- collection type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -2,6 +2,11 @@
 title: Installing Plugins via the Marketplace
 displayed_sidebar: userDocsSidebar
 sidebar_position: 2
+tags:
+- plugins
+- provider
+- marketplace
+- upload plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

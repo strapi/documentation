@@ -2,6 +2,16 @@
 title: Single Operations
 description: Use Strapi's Query Engine API to perform operations on single entries.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- create()
+- deleting content
+- findOne()
+- findMany()
+- findWithCount()
+- Query Engine API
+- update()
 ---
 
 import ManagingRelations from '/docs/snippets/managing-relations.md'

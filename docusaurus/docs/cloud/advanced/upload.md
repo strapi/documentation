@@ -3,6 +3,15 @@ title: Upload Provider
 displayed_sidebar: cloudSidebar
 description: Configure Strapi Cloud to use a third-party upload provider.
 canonicalUrl: https://docs.strapi.io/cloud/advanced/upload.html
+tags:
+- configuration
+- upload provider
+- provider
+- plugins
+- middlewares
+- Strapi Cloud
+- Strapi Cloud configuration
+- Strapi Cloud project
 ---
 
 # Upload Provider

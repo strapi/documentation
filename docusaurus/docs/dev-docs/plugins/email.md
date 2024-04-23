@@ -2,7 +2,15 @@
 title: Email plugin
 displayed_sidebar: devDocsSidebar
 description: Send email from your server or externals providers.
-
+tags:
+- admin panel
+- controllers 
+- email plugin
+- lifecycle hooks
+- plugins 
+- services
+- send() function
+- sendTemplatedEmail() function
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

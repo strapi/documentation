@@ -4,6 +4,12 @@ description: Strapi comes with built-in plugins (i18n, GraphQL, Users & Permissi
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/advanced-features
 pagination_next: dev-docs/customization
+tags:
+- admin panel
+- concepts 
+- plugins 
+- introduction
+- Strapi plugin
 ---
 
 # Strapi plugins

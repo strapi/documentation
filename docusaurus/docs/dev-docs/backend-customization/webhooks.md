@@ -2,6 +2,15 @@
 title: Webhooks
 displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
+tags:
+- backend customization
+- backend server
+- defaultHeaders
+- Headers
+- lifecycle hooks
+- payload
+- REST API 
+- webhooks
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
@@ -208,7 +217,7 @@ By default Strapi webhooks can be triggered by the following events:
 ## Payloads
 
 :::tip NOTE
-Private fields and passwords are not sent in the payload.
+Private fields and s are not sent in the payload.
 :::
 
 ### Headers

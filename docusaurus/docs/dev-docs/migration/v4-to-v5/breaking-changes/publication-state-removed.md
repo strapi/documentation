@@ -6,7 +6,6 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - Content API
- - Entity Service API
  - GraphQL API
  - Document Service API
  - Draft & Publish

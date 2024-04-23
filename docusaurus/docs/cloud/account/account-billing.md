@@ -3,6 +3,13 @@ title: Account billing details
 displayed_sidebar: cloudSidebar
 description: Manage billing details for Strapi Cloud account.
 canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
+tags:
+- billing details
+- cancel subscription
+- edit subscription
+- manage subscription
+- Strapi Cloud
+- Strapi Cloud project
 ---
 
 # Account billing details

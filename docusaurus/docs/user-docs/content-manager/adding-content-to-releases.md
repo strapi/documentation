@@ -2,6 +2,11 @@
 title: Including content in a release
 description: Instructions to include content in a release
 displayed_sidebar: userDocsSidebar
+tags:
+- admin panel
+- Enterprise feature
+- releases feature
+- Strapi Cloud
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

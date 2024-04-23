@@ -2,6 +2,11 @@
 title: Optional Software Guides
 description: Learn how to use proxy and process managers in your deployed Strapi application .
 displayed_sidebar: devDocsSidebar
+tags:
+- guides
+- introduction
+- optional software guides
+- production environment
 ---
 # Optional Software Guides
 

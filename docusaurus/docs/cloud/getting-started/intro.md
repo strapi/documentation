@@ -3,6 +3,10 @@ sidebar_label: 'Introduction'
 displayed_sidebar: cloudSidebar
 slug: /cloud/intro
 sidebar_position: 1
+tags:
+- introduction
+- deployment
+- Strapi Cloud
 ---
 
 # Welcome to the Strapi Cloud Docs!

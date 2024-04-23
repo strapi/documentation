@@ -2,7 +2,13 @@
 title: Services
 description: Strapi services are a set of reusable functions, useful to simplify controllers logic.
 displayed_sidebar: devDocsSidebar
-
+tags:
+- backend customization
+- backend server
+- controllers
+- createCoreService 
+- services
+- REST API 
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'

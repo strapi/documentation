@@ -2,7 +2,9 @@
 title: Laravel
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Laravel.
-
+tags:
+- collection type
+- single type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -2,6 +2,11 @@
 title: Interactive Query Builder
 description: Use an interactive tool that leverages the querystring library to build your query URL
 displayed_sidebar: restApiSidebar
+tags:
+- Content API
+- interactive query builder
+- REST API
+- qs library
 ---
 
 # Build your query URL with Strapi's interactive tool
