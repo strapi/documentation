@@ -3,17 +3,17 @@ title: Command Line Interface
 displayed_sidebar: devDocsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 tags:
-- Command Line Interface (CLI)
-- strapi develop
-- strapi start
-- strapi build
-- strapi export
-- strapi import
-- strapi transfer
-- strapi report
+  - Command Line Interface (CLI)
+  - strapi develop
+  - strapi start
+  - strapi build
+  - strapi export
+  - strapi import
+  - strapi transfer
+  - strapi report
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
 
 # Command Line Interface (CLI)
 
@@ -38,11 +38,11 @@ To pass options with `yarn` use the syntax: `yarn run strapi <command> --<option
 
 The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin` commands from Strapi v4 have been removed in Strapi 5:
 
-| Strapi v4 command | Strapi 5 equivalent |
-|-------------------|---------------------|
-| `strapi install [plugin]` |  Use the npx command corresponding to the plugin (found on the Marketplace, see [User Guide](/user-docs/plugins/installing-plugins-via-marketplace)) |
-| `strapi new`      | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/dev-docs/installation/cli)) |
-| `strapi watch-admin` | `yarn develop` or `npm run develop` always starts the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
+| Strapi v4 command         | Strapi 5 equivalent                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [User Guide](/user-docs/plugins/installing-plugins-via-marketplace))                                                |
+| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/dev-docs/installation/cli))                                                                   |
+| `strapi watch-admin`      | `yarn develop` or `npm run develop` always starts the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
 
 </details>
 
@@ -110,24 +110,24 @@ strapi export
 
 The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
 
-| Option           | Type    | Description                                                                                                  |
-|------------------|:-------:|--------------------------------------------------------------------------------------------------------------|
-| `‑‑no‑encrypt`     |     -    | Disables file encryption and disables the `key` option.                                                   |
-| `‑‑no‑compress`    |     -    | Disables file compression.                                                                                |
-| `-k`, <br/>`--key`            | string  | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
-| `-f`, <br/>`--file`| string   | Specifies the export filename. Do not include a file extension.                                           |
-| `--exclude`        | string   | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`. |
-| `--only`           | string   | Include only these data. The available types are: `content`, `files`, and `config`.                       |
-| `-h`, <br/>`--help`|     -    | Displays help for the `strapi export` command.                                                            |
+| Option              |  Type  | Description                                                                                                                |
+| ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
+| `‑‑no‑encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
+| `‑‑no‑compress`     |   -    | Disables file compression.                                                                                                 |
+| `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
+| `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
+| `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
+| `--only`            | string | Include only these data. The available types are: `content`, `files`, and `config`.                                        |
+| `-h`, <br/>`--help` |   -    | Displays help for the `strapi export` command.                                                                             |
 
 **Examples**
 
 ```bash title="Examples of strapi export:"
 # export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
-strapi export -f myData 
+strapi export -f myData
 
 # export your data without encryption.
-strapi export --no-encrypt  
+strapi export --no-encrypt
 ```
 
 ## strapi import
@@ -138,17 +138,17 @@ strapi export --no-encrypt
 strapi import
 ```
 
-| Option             | Type   | Description                                                                   |
-|--------------------|--------|-------------------------------------------------------------------------------|
-| `-k,` `--key`          | string | Provide the encryption key in the command instead of a subsequent prompt. |
-| `-f`, `--file`         | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help`         |    -    | Display the `strapi import` help commands.                               |
+| Option         | Type   | Description                                                               |
+| -------------- | ------ | ------------------------------------------------------------------------- |
+| `-k,` `--key`  | string | Provide the encryption key in the command instead of a subsequent prompt. |
+| `-f`, `--file` | string | Path and filename with extension for the data to be imported.             |
+| `-h`, `--help` | -      | Display the `strapi import` help commands.                                |
 
 **Examples**
 
 ```bash title="Example of strapi import:"
 
-# import your data with the default parameters and pass an encryption key: 
+# import your data with the default parameters and pass an encryption key:
 strapi import -f your-filepath-and-filename --key my-key
 ```
 
@@ -277,6 +277,7 @@ When running the restore command, you can choose from three different strategies
 
 Creates an administrator.
 Administrator's first name, last name, email, and password can be:
+
 - passed as options
 - or set interactively if you call the command without passing any option.
 
@@ -349,10 +350,9 @@ strapi ts:generate-types
 ```
 
 - **strapi ts:generate-types --debug**<br />
-  [DEPRECATED] **strapi ts:generate-types --verbose**<br/>
   Generate typings with the debug mode enabled, displaying a detailed table of the generated schemas.
 - **strapi ts:generate-types --silent** or **strapi ts:generate-types -s**<br/>
-  Generate typings with the silent mode enabled, completely removing all the logs in the terminal. Cannot be combined with `verbose` or `debug`
+  Generate typings with the silent mode enabled, completely removing all the logs in the terminal. Cannot be combined with `debug`
 - **strapi ts:generate-types --out-dir &#60;path&#62;** or **strapi ts:generate-types -o &#60;path&#62;**<br/>
   Generate typings specifying the output directory in which the file will be created.
 
