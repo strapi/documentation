@@ -52,7 +52,6 @@ Generaly speaking you should register your middlewares during the Strapi registr
 
 #### Users
 
-`./src/index.js`
 
 ```js title="/src/index.js"
 module.exports = {
