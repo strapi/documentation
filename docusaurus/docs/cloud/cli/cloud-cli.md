@@ -14,15 +14,6 @@ The Cloud CLI is designed as a CLI-only experience, meaning that users who wish 
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
 :::
 
-<!-- Do we need to repeat the prerequisites here?
-:::prerequisites
-To be able to fully use the Strapi Cloud CLI, make sure to fit the following prerequisites:
-- Have a Google, GitHub or GitLab account, to be able to log into Strapi Cloud.
-- Have an already created Strapi project, stored locally, to be able to deploy it with the CLI. The project must be less than 100MB. All CLI commands must be run from the folder of that Strapi project.
-- Have available storage in your hard drive where the temporary folder of your operating system is stored.
-:::
--->
-
 ## strapi login
 
 **Alias:** `strapi cloud:login`
