@@ -6,7 +6,7 @@ sidebar_position: 3
 
 # Command Line Interface (CLI)
 
-Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a project that is not stored in a git repository. The CLI works with both the `yarn` and `npm` package managers.
+Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a project that is not hosted on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
 
 The Cloud CLI is designed as a CLI-only experience, meaning that users who wish to use Strapi Cloud to deploy their project with the CLI will have to mostly stick to using the CLI (e.g. if you login with the CLI you must logout with the CLI as well, your project deployed with the CLI can only be redeployed with the CLI etc.).
 
@@ -32,13 +32,13 @@ If the browser window doesn't automatically open, the terminal will display a cl
 
 **Alias:** `strapi cloud:deploy`
 
-Deploy a new project (< 100MB), not stored in a git repository, in Strapi Cloud.
+Deploy a new project (< 100MB), not already hosted on a remote git repository, in Strapi Cloud.
 
 ```bash
 strapi deploy
 ```
 
-This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to store it on a git repository beforehand. The terminal will display a progress bar until the project is successfully deployed on Strapi Cloud.
+This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand. The terminal will display a progress bar until the project is successfully deployed on Strapi Cloud.
 
 Once the project is first deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
 
@@ -47,7 +47,7 @@ The `deploy` command can only be used by new users who have never created a Stra
 :::
 
 :::note
-Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a repository and which was deployed with the CLI.
+Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a remote repository and which was deployed with the CLI.
 
 - Some areas in the dashboard that are usually reserved to display information about the git provider will be blank.
 - Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since you can only redeploy your project using the CLI.
