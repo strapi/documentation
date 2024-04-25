@@ -6,9 +6,9 @@ canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
 sidebar_position: 2
 ---
 
-# Project creation & deployment via the Cloud dashboard
+# Project deployment with the Cloud dashboard
 
-This is a step-by-step guide for creating and deploying your first project on Strapi Cloud, using the Cloud dashboard.
+This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Cloud dashboard.
 
 <!-- 
 :::strapi Cloud dashboard VS Cloud CLI
@@ -39,7 +39,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-## Creating a project
+## Deploying a project
 
 1. From the *Projects* page, click the **Create project** button.
 
@@ -51,7 +51,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-2. You will be redirected to the first project creation interface. This interface contains 3 steps: choosing a plan, connecting a git repository, and setting up the project.
+2. You will be redirected to the first project deployment interface. This interface contains 3 steps: choosing a plan, connecting a git repository, and setting up the project.
 
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
@@ -64,12 +64,12 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 3. Choose a plan for your Strapi Cloud project: either Developer, Pro, Team, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
     :::note
-    Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to create your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
+    Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
     :::
 
 4. Connect a git repository to your new Strapi Cloud project.
 
-    :::strapi Choose your path to create your new Strapi Cloud project!
+    :::strapi Choose your path for your new Strapi Cloud project!
     Select one of the tabs below depending on how you wish to proceed:
     - by using a prebuilt template and creating a new repository on GitHub to discover Strapi Cloud easily and quickly *(recommended for new users and beginners — not available on another provider than GitHub)*,
     - or by using your own, already existing GitHub or GitLab repository and Strapi project.
@@ -79,7 +79,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     <TabItem value="TEMPLATE" label="New repo & prebuilt template ✨">
 
-    4.a. Click on the **Use template** button. If you are creating a project for the first time, you may first have to select GitHub as git provider and then you will see the option to use a template. 
+    4.a. Click on the **Use template** button. If you are deploying a project for the first time, you may first have to select GitHub as git provider and then you will see the option to use a template. 
 
     4.b. In the *Create repository with template* modal, choose:
     
@@ -99,7 +99,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     4.d. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud access to the newly created repository (more information in the [GitHub documentation](https://docs.github.com/en/apps/overview)).
 
-    4.e. Back in the project creation interface, select your *Account* and the *Repository* you just created.
+    4.e. Back in the project deployment interface, select your *Account* and the *Repository* you just created.
 
     <ThemedImage
     alt="Selecting GitHub account and repository"
@@ -113,7 +113,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     <TabItem value="OWN-REPO" label="Own existing repo & Strapi project">
 
-    4.a. (optional) If you are creating a project for the first time, you may first have to select a git provider: either GitHub or GitLab. If you already created a project with one git provider, you can afterward create another project using another provider by clicking on the **Switch git provider** button and selecting either GitHub or GitLab.
+    4.a. (optional) If you are deploying a project for the first time, you may first have to select a git provider: either GitHub or GitLab. If you already deployed a project with one git provider, you can afterward deploy another project using another provider by clicking on the **Switch git provider** button and selecting either GitHub or GitLab.
 
     :::tip
     Connect the GitHub or GitLab account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
@@ -121,7 +121,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and [GitLab](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications) documentations).
 
-    4.c. Back in the project creation interface, select your *Account* and a *Repository*. 
+    4.c. Back in the project deployment interface, select your *Account* and a *Repository*. 
 
     <ThemedImage
     alt="Selecting git account and repository"
@@ -182,7 +182,7 @@ During the free trial, will be kept informed of the number of remaining free day
 👉 Skip to step 5 of the section below to finalise the creation of your project.
 :::
 
-1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project creation interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
+1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
 
     <ThemedImage
     alt="Payment & Billing"
@@ -198,7 +198,7 @@ During the free trial, will be kept informed of the number of remaining free day
 
 4. Check your invoice which informs you of what should be paid now and the following month. Optionally, you can enter a *Discount code* if you have one.
 
-5. Click on the **Create project** button to finalize the creation of your new Strapi Cloud project. An initial deployment will automatically be triggered and you will be redirected to the *Projects* page.
+5. Click on the **Create project** button to finalize the deployment of your new Strapi Cloud project. An initial deployment will automatically be triggered and you will be redirected to the *Projects* page.
 
 :::caution
 Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
@@ -208,6 +208,6 @@ Create your Admin user after the initial deployment is complete. Do not share yo
 
 Now that you have deployed your project via the Cloud dashboard, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
 
-- If you chose the free trial during your first project creation, make sure to fill in your [billing information](/cloud/account/account-billing) afterward to prevent your project from being suspended at the end of the trial period.
+- If you chose the free trial during your first project deployment, make sure to fill in your [billing information](/cloud/account/account-billing) afterward to prevent your project from being suspended at the end of the trial period.
 - Invite other users to [collaborate on your project](/cloud/projects/collaboration).
 - Check out the [deployments management documentation](/cloud/projects/deploys) to learn how to trigger new deployments for your project.

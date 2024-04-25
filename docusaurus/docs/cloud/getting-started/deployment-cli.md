@@ -6,9 +6,9 @@ canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment-cli.html
 sidebar_position: 2
 ---
 
-# Project creation & deployment via the Command Line Interface (CLI)
+# Project deployment with the Command Line Interface (CLI)
 
-This is a step-by-step guide for creating and deploying your first project on Strapi Cloud, using the Command Line Interface.
+This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Command Line Interface.
 
 <!--
 :::strapi Cloud dashboard VS Cloud CLI
@@ -19,7 +19,7 @@ This guide only focuses on deploying a project using the Cloud Command Line Inte
 :::prerequisites
 Before you can deploy your Strapi application on Strapi Cloud using the Command Line Interface, you need to have the following prerequisites:
 
-- Be a first-time Strapi Cloud user: you must never have created and deployed a project with Strapi Cloud before, and your free trial must still be available.
+- Be a first-time Strapi Cloud user: you must never have deployed a project with Strapi Cloud before, and your free trial must still be available.
 - Have a Google, GitHub or GitLab account.
 - Have an already created Strapi project, stored locally. The project must be less than 100MB.
 - Have available storage in your hard drive where the temporary folder of your operating system is stored.
