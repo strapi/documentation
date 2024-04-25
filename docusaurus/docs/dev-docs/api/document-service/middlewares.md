@@ -52,8 +52,9 @@ Generaly speaking you should register your middlewares during the Strapi registr
 
 #### Users
 
+The middleware must be registered in the general `register()` lifecycle method:
 
-```js title="/src/index.js"
+```js title="/src/index.js|ts"
 module.exports = {
   register({ strapi }) {
     strapi.documents.use((context, next) => {
@@ -69,9 +70,9 @@ module.exports = {
 
 #### Plugin developers
 
-`./strapi-server.js`
+The middleware must be registered in the plugin's `register()` lifecycle method:
 
-```js
+```js title="/(plugin-root-folder)/strapi-server.js|ts"
 module.exports = {
   register({ strapi }) {
     strapi.documents.use((context, next) => {
@@ -89,8 +90,6 @@ module.exports = {
 
 When implementing a middleware, always return the response from `next()`.
 Failing to do this will break the Strapi application.
-
-- Return the response from `next()`
 
 ### Examples
 
@@ -110,7 +109,7 @@ strapi.documents.use((context, next) => {
 
   const result = await next();
 
-  // do sth with the result before returning it
+  // do something with the result before returning it
   return result
 });
 ```

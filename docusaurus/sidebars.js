@@ -290,6 +290,11 @@ const sidebars = {
               label: 'Status',
               id: 'dev-docs/api/document-service/status'
             },
+            {
+              type: 'doc',
+              label: 'Middlewares',
+              id: 'dev-docs/api/document-service/middlewares'
+            },
           ]
         },
         {

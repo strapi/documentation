@@ -39,7 +39,7 @@ export function DocumentDefinition() {
   return (
     <Annotation>
       <p>
-        A Document in Strapi 5 contains all the variations (e.g., locales, draft and published versions) of a unique piece of content.
+        A document in Strapi 5 is an API-only concept which represents all the variations of content (for different locales, for the draft and published versions) for a given entry found in the Content Manager.
       </p>
       <p>
         More details can be found in the <a href="/dev-docs/api/document">Documents</a> introduction.
