@@ -88,7 +88,8 @@ module.exports = {
 
 ## Implementing a middleware
 
-When implementing a middleware there is only one rule you should follow to avoid breaking your application or a user application:
+When implementing a middleware, always return the response from `next()`.
+Failing to do this will break the Strapi application.
 
 - Return the response from `next()`
 
