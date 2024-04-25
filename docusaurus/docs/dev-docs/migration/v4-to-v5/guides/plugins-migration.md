@@ -9,7 +9,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 This page is a work-in-progress and some links are currently missing.
 :::
 
-The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to migrate your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and link to additional resources where necessary.
+The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to migrate your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
 
 ## Back-end changes
 
