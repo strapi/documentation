@@ -32,10 +32,10 @@ If a `locale` is passed, the [`findOne()` method](/dev-docs/api/document-service
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').findOne(
-  'a1b2c3d4e5f6g7h8i9j0klm',
-  { locale: 'fr' }
-);
+await strapi.documents('api::restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  locale: 'fr',
+});
 ```
 
 </Request>
@@ -66,9 +66,9 @@ To return a specific locale while [finding the first document](/dev-docs/api/doc
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").findFirst(
-  { locale: 'fr' },
-);
+const document = await strapi.documents('api::article.article').findFirst({
+  locale: 'fr',
+});
 ```
 
 </Request>
@@ -78,7 +78,7 @@ const document = await strapi.documents("api::article.article").findFirst(
 ```json
 {
   "documentId": "cjld2cjxh0000qzrmn831i7rn",
-  "title": "Test Article",
+  "title": "Test Article"
   // …
 }
 ```
@@ -98,7 +98,7 @@ If no `status` parameter is passed, the `draft` versions are returned by default
 <Request>
 
 ```js
- // Defaults to status: draft
+// Defaults to status: draft
 await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
 ```
 
@@ -109,14 +109,14 @@ await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
 ```js {6}
 [
   {
-    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-    name: "Restaurant Biscotte",
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+    name: 'Restaurant Biscotte',
     publishedAt: null,
-    locale: "fr"
+    locale: 'fr',
     // …
   },
   // …
-]
+];
 ```
 
 </Response>
@@ -128,17 +128,17 @@ await strapi.documents('api::restaurant.restaurant').findMany({ locale: 'fr' });
 Given the following 4 documents that have various locales:
 
 - Document A:
-    - en
-    - `fr`
-    - it
+  - en
+  - `fr`
+  - it
 - Document B:
-    - en
-    - it
+  - en
+  - it
 - Document C:
-    - `fr`
+  - `fr`
 - Document D:
-    - `fr`
-    - it
+  - `fr`
+  - it
 
 `findMany({ locale: 'fr' })` would only return the draft version of the documents that have a `‘fr’` locale version, that is documents A, C, and D.
 
@@ -153,7 +153,7 @@ To create a document for specific locale, pass the `locale` as a parameter to th
 <Request title="Create the Spanish draft locale of a document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').create({ 
+await strapi.documents('api::restaurant.restaurant').create({
   locale: 'es' // if not passed, the draft is created for the default locale
   data: { name: 'Restaurante B' }
 })
@@ -170,7 +170,7 @@ await strapi.documents('api::restaurant.restaurant').create({
   publishedAt: null,
   locale: "es"
   // …
-} 
+}
 ```
 
 </Response>
@@ -186,13 +186,11 @@ To update only a specific locale version of a document, pass the `locale` parame
 <Request title="Update the Spanish locale of a document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').update(
-  'a1b2c3d4e5f6g7h8i9j0klm', // documentId
-  { 
-    locale: "es",
-    data: { name: "Nuevo nombre del restaurante" }
-  } 
-)
+await strapi.documents('api::restaurant.restaurant').update({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  locale: 'es',
+  data: { name: 'Nuevo nombre del restaurante' },
+});
 ```
 
 </Request>
@@ -224,10 +222,10 @@ To delete a specific locale version of a document:
 <Request title="Delete the Spanish locale of a document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').delete(
-  'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
-  { locale: 'es' }
-)
+await strapi.documents('api::restaurant.restaurant').delete({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
+  locale: 'es',
+});
 ```
 
 </Request>
@@ -239,10 +237,10 @@ The `*` wildcard is supported by the `locale` parameter and can be used to delet
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').delete(
-  'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
-  { locale: '*' } // for all existing locales
-)
+await strapi.documents('api::restaurant.restaurant').delete({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
+  locale: '*',
+}); // for all existing locales
 ```
 
 </Request>
@@ -260,10 +258,10 @@ To publish a specific locale version of a document:
 <Request title="Publish the French locale of document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').publish(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-  { locale: 'fr' }
-);
+await strapi.documents('api::restaurant.restaurant').publish({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  locale: 'fr',
+});
 ```
 
 </Request>
@@ -274,13 +272,13 @@ await strapi.documents('api::restaurant.restaurant').publish(
 {
   versions: [
     {
-      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-      name: "Restaurant Biscotte",
-      publishedAt: "2024-03-14T18:38:05.674Z",
-      locale: "fr"
+      documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+      name: 'Restaurant Biscotte',
+      publishedAt: '2024-03-14T18:38:05.674Z',
+      locale: 'fr',
       // …
-    }
-  ]
+    },
+  ];
 }
 ```
 
@@ -297,10 +295,9 @@ The `*` wildcard is supported by the `locale` parameter to publish all locale ve
 <Request title="Publish all locales of a document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').publish(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-  { locale: '*' }
-);
+await strapi
+  .documents('api::restaurant.restaurant')
+  .publish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
 </Request>
@@ -349,10 +346,9 @@ To unpublish a specific locale version of a document, pass the `locale` as a par
 <Request title="Unpublish the French locale version of document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').unpublish(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-  { locale: 'fr' }
-);
+await strapi
+  .documents('api::restaurant.restaurant')
+  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
 ```
 
 </Request>
@@ -361,7 +357,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish(
 
 ```js
 {
-  versions: 1
+  versions: 1;
 }
 ```
 
@@ -378,10 +374,9 @@ The `*` wildcard is supported by the `locale` parameter, to unpublish all locale
 <Request title="Unpublish all locale versions of a document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').unpublish(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-  { locale: '*' }
-);
+await strapi
+  .documents('api::restaurant.restaurant')
+  .unpublish({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
 </Request>
@@ -390,7 +385,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish(
 
 ```js
 {
-  versions: 3
+  versions: 3;
 }
 ```
 
@@ -402,9 +397,9 @@ await strapi.documents('api::restaurant.restaurant').unpublish(
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").unpublish({
-  id: "cjld2cjxh0000qzrmn831i7rn",
-  fields: ["title"],
+const document = await strapi.documents('api::article.article').unpublish({
+  documentId: 'cjld2cjxh0000qzrmn831i7rn',
+  fields: ['title'],
 });
 ```
 
@@ -440,10 +435,9 @@ To discard draft data for a specific locale version of a document and override i
 <Request title="Discard draft for the French locale version of document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').discardDraft(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-  { locale: 'fr' }
-);
+await strapi
+  .documents('api::restaurant.restaurant')
+  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: 'fr' });
 ```
 
 </Request>
@@ -454,13 +448,13 @@ await strapi.documents('api::restaurant.restaurant').discardDraft(
 {
   versions: [
     {
-      documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-      name: "Restaurant Biscotte",
+      documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+      name: 'Restaurant Biscotte',
       publishedAt: null,
-      locale: "fr"
+      locale: 'fr',
       // …
-    }
-  ]
+    },
+  ];
 }
 ```
 
@@ -477,10 +471,9 @@ The `*` wildcard is supported by the `locale` parameter, to discard draft data f
 <Request title="Discard drafts for all locale versions of a document">
 
 ```js
-await strapi.documents('api::restaurant.restaurant').discardDraft(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-  { locale: '*' }
-);
+await strapi
+  .documents('api::restaurant.restaurant')
+  .discardDraft({ documentId: 'a1b2c3d4e5f6g7h8i9j0klm', locale: '*' });
 ```
 
 </Request>
@@ -491,27 +484,27 @@ await strapi.documents('api::restaurant.restaurant').discardDraft(
 {
   versions: [
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
-      "name": "Biscotte Restaurant",
-      "publishedAt": null,
-      "locale": "en"
+      documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+      name: 'Biscotte Restaurant',
+      publishedAt: null,
+      locale: 'en',
       // …
     },
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
-      "name": "Restaurant Biscotte",
-      "publishedAt": null,
-      "locale": "fr"
+      documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+      name: 'Restaurant Biscotte',
+      publishedAt: null,
+      locale: 'fr',
       // …
     },
     {
-      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
-      "name": "Biscotte Restaurante",
-      "publishedAt": null,
-      "locale": "es"
+      documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+      name: 'Biscotte Restaurante',
+      publishedAt: null,
+      locale: 'es',
       // …
-    }
-  ]
+    },
+  ];
 }
 ```
 
@@ -527,5 +520,5 @@ If no `status` parameter is passed, draft documents are counted (which is the to
 
 ```js
 // Count number of published documents in French
-strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' })
+strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' });
 ```
