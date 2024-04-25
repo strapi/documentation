@@ -1,5 +1,5 @@
 ---
-title: Plugins migration reference
+title: Plugins migration summary
 displayed_sidebar: devDocsMigrationV5Sidebar
 ---
 
