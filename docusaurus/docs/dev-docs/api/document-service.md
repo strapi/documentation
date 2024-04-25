@@ -547,7 +547,7 @@ await strapi.documents('api::restaurant.restaurant').publish({
 ```js {6}
 {
   documentId: "a1b2c3d4e5f6g7h8i9j0klm",
-  entires: [
+  entries: [
     {
       "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
       "name": "Biscotte Restaurant",
