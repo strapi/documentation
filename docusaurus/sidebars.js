@@ -599,10 +599,16 @@ const sidebars = {
             },
             {
               type: 'category',
-              collapsed: false,
+              collapsed: true,
               label: 'Guides',
+              customProps: {
+                new: true,
+              },
               items: [
-                'dev-docs/migration/v4-to-v5/guides/helper-plugin'
+                'dev-docs/migration/v4-to-v5/guides/introduction',
+                'dev-docs/migration/v4-to-v5/guides/plugins-migration',
+                'dev-docs/migration/v4-to-v5/guides/helper-plugin',
+                'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
               ],
             },
           ]
