@@ -56,7 +56,7 @@ The `deploy` command can only be used by new users who have never created a Stra
 :::
 
 :::note
-Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a repository and which was deployed with the CLI.
+Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a remote repository and which was deployed with the CLI.
 
 - Some areas in the dashboard that are usually reserved to display information about the git provider will be blank.
 - Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since you can only redeploy your project using the CLI.
