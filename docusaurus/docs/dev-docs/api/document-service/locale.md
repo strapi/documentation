@@ -172,7 +172,7 @@ To update only a specific locale version of a document, pass the `locale` parame
 
 ```js
 await strapi.documents('api::restaurant.restaurant').update({
-  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   locale: 'es',
   data: { name: 'Nuevo nombre del restaurante' },
 });
