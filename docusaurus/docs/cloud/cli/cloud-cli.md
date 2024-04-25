@@ -41,7 +41,7 @@ If the browser window doesn't automatically open, the terminal will display a cl
 
 **Alias:** `strapi cloud:deploy`
 
-Deploy a new project (< 100MB), not stored in a git repository, in Strapi Cloud.
+Deploy a new project (< 100MB), not already hosted on a remote git repository, in Strapi Cloud.
 
 ```bash
 strapi deploy
