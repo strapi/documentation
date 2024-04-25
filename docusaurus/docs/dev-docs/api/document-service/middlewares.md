@@ -54,7 +54,7 @@ Generaly speaking you should register your middlewares during the Strapi registr
 
 `./src/index.js`
 
-```js
+```js title="/src/index.js"
 module.exports = {
   register({ strapi }) {
     strapi.documents.use((context, next) => {
