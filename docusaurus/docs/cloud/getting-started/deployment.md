@@ -51,7 +51,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-2. You will be redirected to the first project deployment interface. This interface contains 3 steps: choosing a plan, connecting a git repository, and setting up the project.
+2. You will be redirected to the first project deployment interface. This interface contains 3 steps: choosing a plan, connecting a remote git repository, and setting up the project.
 
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
