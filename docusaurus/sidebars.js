@@ -1232,7 +1232,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Migration guides',
+          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/guides/introduction' },
           items: [
+            'dev-docs/migration/v4-to-v5/guides/introduction',
+            'dev-docs/migration/v4-to-v5/guides/plugins-migration',
             'dev-docs/migration/v4-to-v5/guides/helper-plugin',
             'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
           ]
