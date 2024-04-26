@@ -11,14 +11,15 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import PartialCodemods from '/docs/snippets/breaking-change-partially-handled-by-codemod.md'
 
 # Model config path uses uid instead of dot notation
 
 In Strapi 5, to retrieve config values you will need to use `config.get('plugin::upload.myconfigval')` or `config.get('api::myapi.myconfigval')`
 
 <Intro />
-
 <YesPlugins />
+<PartialCodemods />
 
 ## Breaking change description
 
@@ -55,11 +56,8 @@ if ( strapi.config.has('plugin::upload.somesetting') ) {
 
 - A codemod has been created to assist in refactoring the strings in user code, replacing `plugin.` or `api.` with `plugin::` and `api::`.
 
-
-
 ### Manual procedure
 
 A codemod will automatically handle the change in most cases.
 
 In cases were the codemod does not automatically handle the change, users will need to manually replace all their strings to target the new config paths.
-

@@ -12,12 +12,14 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The `locale` attribute name is reserved in Strapi 5
 
 In Strapi 5, the `locale` attribute name is reserved, and all custom fields also named `locale` should be renamed before migrating to prevent data loss.<Intro />
 
-<YesPlugin />
+<YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

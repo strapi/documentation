@@ -10,6 +10,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The `EditViewLayout` and `ListViewLayout` have been rewritten
 
@@ -17,7 +18,8 @@ In Strapi 5, some admin panel hooks have been removed from the Redux store and a
 
 <Intro />
 
-<YesPlugin />
+<YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

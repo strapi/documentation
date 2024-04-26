@@ -5,16 +5,21 @@ sidebar_label: No webhooks.populateRelations configuration
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
+ - webhooks
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The `webhooks.populateRelations` server configuration is removed
 
 In Strapi 5, webhooks have been refactored and the `webhook.populateRelations` option will become redundant. This might affect lifecycles expecting the returned relations of create, update and delete to be populated.
 
 <Intro />
+<YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

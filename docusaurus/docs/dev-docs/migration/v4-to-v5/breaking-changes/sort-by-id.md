@@ -11,14 +11,15 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Sorting by `id` is no longer possible to sort by chronological order in Strapi 5
 
 In Strapi 5, sorting by `id` to sort by chronological order is no longer possible since [documents](/dev-docs/api/document) use an uuid.
 
 <Intro />
-
 <YesPlugins />
+<YesCodemods />
 
 ## Breaking change description
 

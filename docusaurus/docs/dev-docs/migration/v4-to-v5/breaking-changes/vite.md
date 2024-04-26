@@ -11,14 +11,15 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Vite is the default bundler in Strapi 5
 
 In Strapi 5, Vite is the default bundler.
 
 <Intro />
-
 <YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

@@ -11,14 +11,15 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
+import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Only the `better-sqlite3` package is supported for the sqlite client
 
 Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
 
 <Intro />
-
 <NoPlugins/>
+<YesCodemods />
 
 ## Breaking change description
 

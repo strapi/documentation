@@ -50,7 +50,7 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 ## Plugins, plugins configuration, and plugins development
 
 - [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields)
-- [The helper-plugin is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated)
+- [The `helper-plugin` is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated)
 - [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component)
 
 ## Strapi objects, methods, and packages

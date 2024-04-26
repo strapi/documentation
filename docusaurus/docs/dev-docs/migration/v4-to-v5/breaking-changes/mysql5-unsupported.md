@@ -9,10 +9,15 @@ tags:
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
+import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # MySQL v5 is not supported in Strapi v5 anymore
 
-In Strapi 5, MySQL version 5 is not supported.<Intro />
+In Strapi 5, MySQL version 5 is not supported.
+<Intro />
+<NoPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

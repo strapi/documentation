@@ -11,6 +11,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # `strapi-utils` refactored
 
@@ -18,7 +19,8 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
 
 <Intro />
 
-<YesPlugin />
+<YesPlugins />
+<NoCodemods />
 
 ## List of changes
 

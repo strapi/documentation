@@ -12,6 +12,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Strapi users `react-router-dom` v6
 
@@ -20,6 +21,7 @@ Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-do
  <Intro />
 
 <YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

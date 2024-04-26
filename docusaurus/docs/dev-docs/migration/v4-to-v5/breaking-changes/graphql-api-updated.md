@@ -12,6 +12,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The GraphQL API has been updated
 
@@ -19,7 +20,8 @@ In Strapi 5, the GraphQL API has been updated. It handles the new, flattened res
 
 <Intro />
 
-<YesPlugin />
+<YesPlugins />
+<NoCodemods />
 
 ## List of changes
 

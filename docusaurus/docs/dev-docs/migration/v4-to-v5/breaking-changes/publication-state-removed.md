@@ -14,6 +14,8 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
+
 
 # `publicationState` is removed and replaced by `status`
 
@@ -22,6 +24,7 @@ In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and
 <Intro />
 
 <YesPlugins />
+<YesCodemods />
 
 ## Breaking change description
 
@@ -59,7 +62,7 @@ In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and
 
 There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
 
-### Migration procedure 
+### Migration procedure
 
 <!-- TODO: to be confirmed -->
 A codemod will automatically handle the change.
