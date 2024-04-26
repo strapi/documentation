@@ -59,7 +59,6 @@ In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and
 
 There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
 
-### Migration procedure 
+### Migration procedure
 
-<!-- TODO: to be confirmed -->
-A codemod will automatically handle the change.
+No manual migration is required. A codemod will automatically handle the change (see [Entity Service to Document Service migration reference](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service) for additional details).
