@@ -2,24 +2,36 @@ import React from 'react';
 
 export default {
   page: {
-    title: 'Strapi’s documentation',
+    title: 'Strapi 5 Documentation',
     description: 'Get set up in minutes to build any projects in hours instead of weeks.',
   },
   carousel: [
     {
-      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
-      variant: 'cloud',
-      title: 'Strapi Cloud',
+      title: 'Learn what’s new in Strapi 5',
       description: (
         <>
-          {'Learn more on the '}
-          <a href="https://strapi.io/cloud" target="_blank">product page</a>
-          {', or start a '}
-          <a href="https://cloud.strapi.io/" target="_blank">free trial</a> today!
+          {'Have a quick tour of the new and updated features available in the Strapi 5 documentation!'}
         </>
       ),
       button: {
-        label: 'Strapi Cloud docs',
+        label: 'What’s new?',
+        decorative: '✨',
+        to: '/dev-docs/whats-new',
+      },
+    },
+    {
+      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
+      variant: 'cloud',
+      title: 'Strapi Cloud CLI',
+      description: (
+        <>
+          {'Learn how to deploy your project on '}
+          <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
+          {' directly from the CLI!'}
+        </>
+      ),
+      button: {
+        label: 'Cloud CLI docs',
         decorative: '☁️',
         to: '/cloud/intro',
       },
@@ -42,6 +54,36 @@ export default {
     },
   ],
   categories: [
+    {
+      cardLink: '/user-docs/intro',
+      cardTitle: 'User Guide',
+      cardDescription: 'Get the most out of the admin panel with our user guide',
+      cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
+      linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
+      linksIconColor: 'blue',
+      links: [
+        {
+          label: 'Content-Types Builder',
+          to: '/user-docs/content-type-builder/creating-new-content-type',
+        },
+        {
+          label: 'Content Manager',
+          to: '/user-docs/content-manager/writing-content',
+        },
+        {
+          label: 'Draft & Publish',
+          to: '/user-docs/content-manager/saving-and-publishing-content',
+        },
+        {
+          label: 'Releases',
+          to: '/user-docs/releases/introduction',
+        },
+        {
+          label: 'Settings',
+          to: '/user-docs/settings/introduction',
+        },
+      ],
+    },
     {
       cardLink: '/dev-docs/intro',
       cardTitle: 'Developer Docs',
@@ -73,32 +115,32 @@ export default {
       ],
     },
     {
-      cardLink: '/user-docs/intro',
-      cardTitle: 'User Guide',
-      cardDescription: 'Get the most out of the admin panel with our user guide',
-      cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
-      linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
-      linksIconColor: 'blue',
+      cardLink: '/dev-docs/intro',
+      cardTitle: 'Cloud Documentation',
+      cardDescription: 'Learn how to deploy and manage projects on Strapi Cloud',
+      cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,
+      linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
+      linksIconColor: 'purple',
       links: [
         {
-          label: 'Getting started in the admin panel',
-          to: '/user-docs/intro#accessing-the-admin-panel',
+          label: 'Project creation',
+          to: '/cloud/getting-started/deployment',
         },
         {
-          label: 'Creating content-types',
-          to: '/user-docs/content-type-builder/creating-new-content-type',
+          label: 'Usage & Billing',
+          to: '/cloud/getting-started/usage-billing',
         },
         {
-          label: 'Configuring content-types fields',
-          to: '/user-docs/content-type-builder/configuring-fields-content-type',
+          label: 'Project settings',
+          to: '/cloud/projects/settings',
         },
         {
-          label: 'Writing content',
-          to: '/user-docs/content-manager/writing-content',
+          label: 'Deployments management',
+          to: '/cloud/projects/deploys',
         },
         {
-          label: 'Setting up the admin panel',
-          to: '/user-docs/settings/admin-panel',
+          label: 'Profile settings',
+          to: '/cloud/account/account-settings',
         },
       ],
     },
