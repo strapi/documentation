@@ -12,7 +12,7 @@ tags:
 
 In Strapi 5, the [Document Service API](/dev-docs/api/document-service) replaces the Entity Service API from Strapi v4. The present page is intended to give developers an idea of how to migrate away from the Entity Service API, by describing which changes in custom code will be handled by codemods from the [upgrade tool](/dev-docs/upgrade-tool) and which will have to be handled manually.
 
-## Changes handled by the upgrade tool
+## Migration using the upgrade tool
 
 When using the [upgrade tool](/dev-docs/upgrade-tool), a codemod is run and handles some parts of the `entityService` migration.
 
@@ -20,14 +20,22 @@ When using the [upgrade tool](/dev-docs/upgrade-tool), a codemod is run and hand
 The codemod is only changing the function calls and some parameters. This can not be considered as a complete migration as the codemod will never be able to convert an `entityId` into a `documentId`.
 :::
 
-When using the codemod from the upgrade tool:
+### Codemod scope
 
-- The code structure is automatically migrated.
-- `publicationState` is automatically transformed into `status`
+The following list explains what is automatically handled by the codemod (✅), what is not handled by the codemod and must be handled 100% manually (❌) and what will still require manual intervention after the codemod has run (🚧):
 
-The following examples show how the codemod from the upgrade tool updates the code from various function calls.
+| Topic | Handled by the codemod? | Manual steps to perform |
+|-------|------------------------|--------------------------|
+| Code structure | ✅ Yes          | Nothing.<br/>The code structure is automatically migrated. |
+| `publicationState` removed in favor of [`status`](/dev-docs/api/document-service/status) | ✅ Yes | Nothing.<br/>The codemod automatically transforms it. | 
+| Usage of `documentId` instead of the Strapi v4 unique identifiers | 🚧 Partially:<ul><li>The codemod adds the new `documentId` property to your code, since `documentId` is the new unique identifier to use in Strapi 5.</li><li>But the actual `documentId` value can not be guessed, so after the codemod has run, you will find `__TODO__` placeholder values in your code.</li></ul> | 👉  `__TODO__` placeholder values need to be manually updated.<br/><br/>For instance, you might change<br/>`documentId: "__TODO__"`<br/>to something like<br/>`documentId: "ln1gkzs6ojl9d707xn6v86mw"`.
+| Update of `published_at` to trigger publication | ❌ Not handled.<br/> | 👉 Update your code to use the new [`publish()`](/dev-docs/api/document-service#publish), [`unpublish()`](/dev-docs/api/document-service#publish), and [`discardDraft()`](/dev-docs/api/document-service#publish) methods of the Document Service API instead. |
 
-### `findOne`
+### Examples of function calls migration
+
+The following examples show how the codemod from the upgrade tool updates the code for various function calls.
+
+#### `findOne`
 
 <Columns>
 <ColumnLeft>
@@ -56,7 +64,7 @@ strapi.documents(uid).findOne({
 
 </Columns>
 
-### `findMany`
+#### `findMany`
 
 <Columns>
 <ColumnLeft>
@@ -88,7 +96,7 @@ strapi.documents(uid).findMany({
 </ColumnRight>
 </Columns>
 
-### `create`
+#### `create`
 
 <Columns>
 <ColumnLeft>
@@ -121,7 +129,7 @@ strapi.documents(uid).create({
 </ColumnRight>
 </Columns>
 
-### `update`
+#### `update`
 
 <Columns>
 <ColumnLeft>
@@ -156,7 +164,7 @@ strapi.documents(uid).update({
 </ColumnRight>
 </Columns>
 
-### `delete`
+#### `delete`
 
 <Columns>
 <ColumnLeft>
@@ -183,7 +191,7 @@ strapi.documents(uid).delete({
 </ColumnRight>
 </Columns>
 
-### `count`
+#### `count`
 
 <Columns>
 <ColumnLeft>
@@ -206,67 +214,49 @@ strapi.documents(uid).count();
 </ColumnRight>
 </Columns>
 
+## Manual migration
 
+- Users who prefer to manually migrate can do so by replicating what the codemod does (see [codemod scope](#codemod-scope) and [function calls examples](#function-calls-migration-examples) for reference).
 
-## Changes to handle manually
+- Plugin developers who use Entity Service decorators in their code must replace them by Document Service middlewares. The following example gives you an idea of how they work, and additional information can be found in the dedicated [Document Service middlewares documentation](/dev-docs/api/document-service/middlewares):
 
-- We cannot guess the document id so we add a `__TODO__` to make it easily searchable and replacable by users
-- Previsouly they where changing the published_at to publish now they have to use the publis/unpublish/discardraft methods and we cannot auto migrate that
+  **In Strapi v4:**
 
-***
+  ```tsx
+  strapi.entityService.decorate((service) => {
 
-- The delete function returns a list of entries affected (multiple locales can be deleted at once) before it was just returning the deleted entry
+    return Object.assign(service, {
+    
+      findOne(entityId, params = {}) {
+        // e.g., exclude soft deleted content
+        params.filters = { ...params.filters, deletedAt: { $notNull: true } } 
+        return service.findOne(entityId, params)
+      }
+    });
+  })
+  ```
 
-Depending on where we run that code they might have already access to the documentId after migrating (e.g when using the core services 
+  **In Strapi 5**
 
-**Manual migration**
+  ```tsx
+  strapi.documents.use((ctx, next) => {
+    if (ctx.uid !== "api::my-content-type.my-content-type") {
+      return next();
+    }
+    
+    if (ctx.action === 'findOne') {
+      // customization
+      ctx.params.filters = { ...params.filters, deletedAt: { $notNull: true } } 
+      const res = await next();
+      // do something with the response if you want
+      return res;
+    }
+    
+    return next();
+  });
+  ```
 
----
+* Update your custom code for `findMany()` on single types, taking into account that:
 
-- User can manually do the migration the codemod operates too if they prefer it.
-- If they where using other non-documented methods they will have to refactor their code to use doc service methods
-
-**Decorators (For plugin developers)**
-
-- The entity service decorators have been replaced by the document service middlewares
-
-**Before**
-
-```tsx
-strapi.entityService.decorate((service) => {
-
-	return Object.assign(service, {
-	
-		findOne(entityId, params = {}) {
-			// e.g soft exclude soft deleted content
-			params.filters = { ...params.filters, deletedAt: { $notNull: true } } 
-			return service.findOne(entityId, params)
-		}
-	});
-})
-```
-
-**After** (full doc in the doc-service documentation)
-
-```tsx
-strapi.documents.use((ctx, next) => {
-	if (ctx.uid !== "api::myct.myct") {
-		return next();
-	}
-	
-	if (ctx.action === 'findOne') {
-		// customization
-		ctx.params.filters = { ...params.filters, deletedAt: { $notNull: true } } 
-		const res = await next();
-		// do sth with the res if you want
-		return res;
-	}
-	
-	return next();
-});
-```
-
-**SingleTypes**
-
-- In v4 the findMany function was returning a single item when called for a single type.
-- In v5 the findMany is generic and only returns arrays. user will have to extra the 1st item from the array
+  - In Strapi v4, the `findMany()` function returns a single item when called on a single type.
+  - In Strapi 5, the `findMany()` function is generic and always returns arrays, whether called on a single type or on a collection type. To get data for a single type with a `findMany()` call, extract the first item from the returned array.
