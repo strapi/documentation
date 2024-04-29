@@ -8,9 +8,13 @@ tags:
 - document service API
 ---
 
+import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
+
 # Entity Service API to Document Service API migration reference
 
 In Strapi 5, the [Document Service API](/dev-docs/api/document-service) replaces the Entity Service API from Strapi v4. The present page is intended to give developers an idea of how to migrate away from the Entity Service API, by describing which changes in custom code will be handled by codemods from the [upgrade tool](/dev-docs/upgrade-tool) and which will have to be handled manually.
+
+<DoNotMigrateYet />
 
 ## Migration using the upgrade tool
 

@@ -11,6 +11,8 @@ tags:
 - version types
 ---
 
+import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
+
 # Upgrade tool
 
 The upgrade tool assists Strapi users in upgrading their Strapi application dependencies and code to a specific version.
@@ -19,11 +21,8 @@ Running the upgrade tool triggers the update of the application dependencies, th
 
 The upgrade tool is a Strapi package and can be run from the CLI.
 
-:::danger
-It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
+<DoNotMigrateYet />
 
-The beta version of Strapi 5 is not meant to be used in production yet.
-:::
 
 ## Version types
 

@@ -6,6 +6,8 @@ tags:
  - breaking changes
 ---
 
+import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
+
 # Strapi v4 to Strapi 5 breaking changes
 
 :::callout 🚧  Work in progress
@@ -14,11 +16,7 @@ This page is a work-in-progress and the list of breaking changes is not 100% fin
 
 This page lists all the breaking changes introduced in Strapi 5.
 
-:::danger
-It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
-
-The beta version of Strapi 5 is not meant to be used in production yet.
-:::
+<DoNotMigrateYet />
 
 ## Configuration
 
