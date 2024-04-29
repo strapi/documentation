@@ -11,11 +11,9 @@ import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # Migrating from Strapi v4 to Strapi 5
 
-The latest major version of Strapi is v5. Migrating from Strapi v4 to v5 includes handling breaking changes and specific migration steps.
+The latest major version of Strapi is Strapi 5. The [upgrade tool](/dev-docs/upgrade-tool) and its codemods should automate some parts of the migration from v4 to Strapi 5. Additional information is also given below about breaking changes and dedicated migration resources for specific topics.
 
 <DoNotMigrateYet />
-
-The [upgrade tool](/dev-docs/upgrade-tool) and its codemods should automate some parts of the migration from v4 to Strapi 5. Additional information is also given below about breaking changes and dedicated migration resources for specific topics.
 
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="" title="Use the upgrade tool" description="Learn how you can use the CLI upgrade tool to migrate from v4 to Strapi 5." link="/dev-docs/upgrade-tool" />
