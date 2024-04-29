@@ -13,7 +13,7 @@
 		},
     {
       "source": "/developer-docs/latest/getting-started/quick-start.html%23_1-install-strapi-and-create-a-new-project",
-      "destination": "/dev-docs/quick-start",
+      "destination": "/dev-docs/quick-start"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
