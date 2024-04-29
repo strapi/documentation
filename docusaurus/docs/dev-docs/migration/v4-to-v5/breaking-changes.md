@@ -65,6 +65,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 
 - [The `ContentManagerAppState` redux is modified](/dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state)
 - [The `EditViewLayout` and `ListViewLayout` have been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten)
+- [The Admin Panel RBAC redux store has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated)
 
 ## Dependencies
 
