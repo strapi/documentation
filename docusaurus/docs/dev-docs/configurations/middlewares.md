@@ -671,7 +671,6 @@ The `public` middleware is a static file serving middleware, based on [koa-stati
 | Option         | Description                                         | Type      | Default value |
 |----------------|-----------------------------------------------------|-----------|---------------|
 | `maxAge`       | Cache-control max-age directive, in milliseconds    | `Integer` | `60000`       |
-| `defaultIndex` | Display default index page at `/` and `/index.html` | `Boolean` | `true`        |
 
 :::tip
 You can customize the path of the public folder by editing the [server configuration file](/dev-docs/configurations/server.md#available-options).

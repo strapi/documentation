@@ -25,6 +25,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 * [Server log level is `http`](/dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level)
 * [Model config path uses uid instead of dot notation](/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid)
 * [The `webhooks.populateRelations` server configuration is removed](/dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations)
+* [The `defaultIndex` option is removed from the `public` middleware](/dev-docs/migration/v4-to-v5/breaking-changes/default-index-removed)
 
 ## Content API
 

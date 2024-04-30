@@ -13,12 +13,16 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
-<!-- # Strapi 5 has a new, flattened response format for API calls -->
+# Strapi 5 has a new, flattened response format for API calls
 
-In Strapi 5, the response format has been simplified and flattened. <Intro />
+In Strapi 5, the response format has been simplified and flattened.
+
+<Intro />
 
 <YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 
@@ -61,9 +65,9 @@ The Content API returns all the attributes of requested content wrapped inside a
 
 **In Strapi 5**
 
-The Content API returns attributes of requested content without wrapping them in an attributes object:
+The Content API returns attributes of requested content without wrapping them in an attributes object, and a `documentId` is used instead of an `id`:
 
-```json
+```json {4}
 {
   "data": {
     // system fields
@@ -93,5 +97,10 @@ The Content API returns attributes of requested content without wrapping them in
 
 ## Migration
 
-<!-- TODO: to be confirmed -->
-A codemod will automatically handle the change.
+### Notes
+
+To use the Strapi v4 response format, set the following header: `Strapi-Response-Format: v4`. 
+
+### Manual procedure
+
+Ensure your API calls take into account the new response format, or set the optional header to keep on using the Strapi v4 response format (see [notes](#notes)).
