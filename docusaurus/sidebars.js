@@ -1173,6 +1173,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
                 'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened',
                 'dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite',
+                'dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql',
               ]
             },
             {

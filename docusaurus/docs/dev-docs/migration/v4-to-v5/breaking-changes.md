@@ -45,7 +45,8 @@ This page lists all the breaking changes introduced in Strapi 5.
 
 - [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 - [Database identifiers can't be longer than 55 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
-- [Only the `better-sqlite3` package is supported for the sqlite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
+- [Only the `better-sqlite3` package is supported for the SQLite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
+- [Only the `mysql2` package is supported for the MySQL client](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql)
 
 ## Plugins and providers
 

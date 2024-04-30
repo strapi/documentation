@@ -9,6 +9,7 @@ tags:
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
+import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
 import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
@@ -27,7 +28,7 @@ In Strapi 5, MySQL version 5 is not supported.
 
 **In Strapi v4**
 
-MySQL v5 was supported.
+MySQL v5 is supported.
 
 </SideBySideColumn>
 
@@ -36,7 +37,7 @@ MySQL v5 was supported.
 **In Strapi 5**
 
 MySQL v5 is not supported anymore.<br />
-MySQL v8 is the minimum required version (see [CLI installation guide](/dev-docs/installation/cli)).
+MySQL v8 is the minimum required version.
 
 </SideBySideColumn>
 
@@ -46,7 +47,15 @@ MySQL v8 is the minimum required version (see [CLI installation guide](/dev-docs
 
 ## Migration
 
-<!-- TODO: update this sentence -->
+<MigrationIntro />
+
+### Notes
+
+* The [CLI installation guide](/dev-docs/installation/cli) lists the databases supported by Strapi 5.
+* Please also consider that only the `mysql2` package can be used with Strapi 5 for MySQL databases (see the [related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql)).
+
+### Migration procedure
+
 No manual migration is required for the codebase of your Strapi application.
 Connection information will probably stay the same as in Strapi v4.
 

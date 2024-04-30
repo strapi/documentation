@@ -46,7 +46,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 | Parameter                                                | Description                                                                                           | Type      | Default |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
-| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql`.                          | `String`  | -       |
+| `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>`sqlite` for SQLite databases</li><li>`postgres` for PostgreSQL databases</li><li>`mysql` for MySQL databases</li></ul> | `String`  | -       |
 | `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
@@ -54,13 +54,13 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 | `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
 
 :::note
-Strapi only supports the following client values, and will automatically rewrite the 'client' value to the following options before passing the configuration to Knex
+Strapi only supports the following client values, and will automatically rewrite the `client` value to the following options before passing the configuration to Knex:
 
-| client       | actual package used |
-|----------|----------------------|
-| sqlite       | better-sqlite3      |
-| mysql        | mysql2              |
-| postgres     | pg                  |
+| `client` value | Actual package used                                             |
+|----------------|-----------------------------------------------------------------|
+| sqlite         | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3)  |
+| mysql          | [mysql2](https://www.npmjs.com/package/mysql2)                  |
+| postgres       | [pg](https://www.npmjs.com/package/pg)                          |
 :::
 
 #### Connection parameters

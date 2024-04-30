@@ -1,13 +1,13 @@
 ---
-title: Only the `better-sqlite3` package is supported for the SQLite client
-description: In Strapi 5, 
-sidebar_label: Only better-sqlite3 for sqlite 
+title: Only the mysql2 package is supported for the MySQL client
+description: In Strapi 5, only the mysql2 package is supported for MySQL databases, which is 
+sidebar_label: Only mysql2 for MySQL 
 displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true
 tags:
  - breaking changes
  - database
- - PostgreSQL
+ - MySQL
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
@@ -15,9 +15,9 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
 import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
-# Only the `better-sqlite3` package is supported for the SQLite client
+# Only the `mysql2` package is supported for the MySQL client
 
-Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
+Strapi 5 can only use the `mysql2` package for MySQL databases, and the `client` value for it must be set to `mysql`.
 
 <Intro />
 <NoPlugins/>
@@ -31,7 +31,7 @@ Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the
 
 **In Strapi v4**
 
-The database configuration `client` option for SQLite databases accepts several values such as `sqlite3`, `vscode/sqlite3`, `sqlite-legacy`, and `better-sqlite3`.
+The database configuration `client` option for MySQL databases accepts several values such as `mysql` and `mysql2`.
 
 </SideBySideColumn>
 
@@ -39,7 +39,7 @@ The database configuration `client` option for SQLite databases accepts several 
 
 **In Strapi 5**
 
-The database configuration `client` option for SQLite database only accepts `sqlite`.
+The database configuration `client` option for MySQL database only accepts `mysql`.
 
 </SideBySideColumn>
 
@@ -51,14 +51,10 @@ The database configuration `client` option for SQLite database only accepts `sql
 
 ### Notes
 
-* Strapi 5 uses the `better-sqlite3` package for SQLite databases under the hood and rewrites the `sqlite` option as `better-sqlite3` for Knex.
+* Strapi 5 uses the `mysql2` package for SQLite databases under the hood and rewrites the `mysql` option as `mysql2` for Knex.
 * Additional information about database clients and configuration can be found in the [database configuration](/dev-docs/configurations/database) documentation.
+* Please also consider that MySQL v8 is the minimum required version for Strapi 5 (see the [related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)).
 
 ### Manual procedure
 
 No manual migration should be required as codemods from the [upgrade tool](/dev-docs/upgrade-tool) will handle this change.
-
-In case you want to manually migrate, run the following commands in the terminal:
-
-1. Run `yarn remove sqlite3` to remove the sqlite 3 package.
-2. Run `yarn add better-sqlite3` to install the `better-sqlite3` package.
