@@ -46,11 +46,12 @@ This page lists all the breaking changes introduced in Strapi 5.
 - [Database identifiers can't be longer than 55 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
 - [Only the `better-sqlite3` package is supported for the sqlite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
 
-## Plugins, plugins configuration, and plugins development
+## Plugins and providers
 
 - [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields)
 - [The `helper-plugin` is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated)
 - [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component)
+- [Some Mailgun provider legacy variables are not supported](/dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables)
 
 ## Strapi objects, methods, and packages
 
@@ -74,7 +75,6 @@ This page lists all the breaking changes introduced in Strapi 5.
 - [Strapi 5 uses `koa-body` v6](/dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6)
 - [Webpack Aliases are removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed)
 - [Apollo Server v3 upgraded to Apollo Server v4](/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4)
-
 
 ## Internal changes
 

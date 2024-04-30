@@ -1177,7 +1177,7 @@ const sidebars = {
             {
               type: "category",
               collapsed: false,
-              label: "Plugins",
+              label: "Plugins and providers",
               link: {
                 type: 'doc',
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
@@ -1186,6 +1186,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields',
                 'dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated',
                 'dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component',
+                'dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables',
               ]
             },
             {
