@@ -609,7 +609,7 @@ Lifecycles hooks are not triggered when using directly the [knex](https://knexjs
 :::
 
 :::strapi Document Service API
-The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks).
+The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks). Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method.
 :::
 
 ### Available lifecycle events
