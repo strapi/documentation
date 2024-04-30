@@ -1208,6 +1208,7 @@ const sidebars = {
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state',
                 'dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten',
+                'dev-docs/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated',
               ],
             },
             {
