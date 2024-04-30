@@ -7,6 +7,10 @@
 			"source": "/cloud/",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/developer-docs/latest/getting-started/quick-start.html%23_1-install-strapi-and-create-a-new-project",
+      "destination": "/dev-docs/quick-start"
+    },
 		{
 			"source": "/dev-docs/deployment/strapi-cloud",
 			"destination": "/cloud/intro"
