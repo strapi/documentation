@@ -1,26 +1,6 @@
 ---
 title: Models
 description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
-_tags: [
-  "beforeCreate",
-  "beforeCreateMany",
-	"afterCreate",
-	"afterCreateMany",
-	"beforeUpdate",
-	"beforeUpdateMany",
-	"afterUpdate",
-	"afterUpdateMany",
-	"beforeDelete",
-	"beforeDeleteMany",
-  "afterDelete",
-	"afterDeleteMany",
-	"beforeCount",
-	"afterCount",
-	"beforeFindOne",
-	"afterFindOne",
-	"beforeFindMany",
-	"afterFindMany"
-]
 sidebarDepth: 3
 tags:
 - admin panel
@@ -626,6 +606,10 @@ Lifecycle hooks can be customized declaratively or programmatically.
 
 :::caution
 Lifecycles hooks are not triggered when using directly the [knex](https://knexjs.org/) library instead of Strapi functions.
+:::
+
+:::strapi Document Service API
+The Document Service API triggers various lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks).
 :::
 
 ### Available lifecycle events
