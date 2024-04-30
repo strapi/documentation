@@ -35,7 +35,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 <!-- * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled) -->
 * [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service)
 * [The `localizations` field does not exist anymore](/dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field)
-* [The `locale` attribute name is reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved)
+* [Some attributes and content-types names are reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved)
 <!-- * [Components and dynamic zones do not return an `id` with REST API requests](/dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id) not implemented yet -->
 * [The GraphQL API has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated)
 * [The Entity Service API is deprecated and replaced by the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated)
