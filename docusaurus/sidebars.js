@@ -1158,6 +1158,7 @@ const sidebars = {
                 // 'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id', // not implemented yet
                 'dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated',
                 'dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated',
+                'dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation',
               ]
             },
             {
