@@ -113,3 +113,9 @@ strapi.documents.use((context, next) => {
   return result
 });
 ```
+
+<br/>
+
+:::strapi Lifecycle hooks
+The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks).
+:::
