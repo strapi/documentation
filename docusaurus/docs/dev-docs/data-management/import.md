@@ -41,9 +41,10 @@ The following documentation details the available options to customize your data
 - Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
 
 :::
+
 ## Specify the import file
 
-To import data into a Strapi instance use the `strapi import` command in the project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you are prompted for the encryption key before the import starts.
+To import data into a Strapi instance use the `strapi import` command in the destination project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you are prompted for the encryption key before the import starts.
 
 ### Example: Minimum command to import data from a file in the Strapi project root
 
@@ -52,7 +53,7 @@ To import data into a Strapi instance use the `strapi import` command in the pro
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz.enc
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc
 ```
 
 </TabItem>
@@ -60,7 +61,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi import -- -f export_20221213105643.tar.gz.enc
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc
 ```
 
 </TabItem>
@@ -78,7 +79,7 @@ If you are importing data from an encrypted file the encryption key can be passe
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </TabItem>
@@ -86,7 +87,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --key my-encryption-key
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi import -- -f export_20221213105643.tar.gz.enc --key my-encryption-key
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --key my-encryption-key
 ```
 
 </TabItem>
@@ -104,7 +105,7 @@ When using the `strapi import` command, you are required to confirm that the imp
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
 </TabItem>
@@ -112,7 +113,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --force --key my-encrypti
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi import -- -f export_20221213105643.tar.gz.enc --force --key my-encryption-key
+npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --force --key my-encryption-key
 ```
 
 </TabItem>
@@ -138,7 +139,7 @@ Media such as images consist of the file (asset) and the entity in the database.
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </TabItem>
@@ -146,7 +147,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --exclude files
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -- -f export_20221213105643.tar.gz.enc --exclude files
+npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --exclude files
 ```
 
 </TabItem>
@@ -168,7 +169,7 @@ Media such as images consist of the file (asset) and the entity in the database.
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi import -f export_20221213105643.tar.gz.enc --only config
+yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
 ```
 
 </TabItem>
@@ -176,7 +177,7 @@ yarn strapi import -f export_20221213105643.tar.gz.enc --only config
 <TabItem value="npm" label="npm">
 
 ```bash
-npm strapi import -- -f export_20221213105643.tar.gz.enc --only config
+npm strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc --only config
 ```
 
 </TabItem>
