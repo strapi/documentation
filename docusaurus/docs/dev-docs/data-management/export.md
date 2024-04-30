@@ -3,6 +3,16 @@ title: Data export
 description: Export data using the Strapi CLI
 displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/export.html
+tags:
+- configure data encryption
+- data management system
+- data export
+- disable data compression
+- exclude option
+- metadata.json file
+- relations
+- strapi export
+- tar.gz.enc file 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

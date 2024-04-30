@@ -2,6 +2,12 @@
 title: Admin panel customization
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
 toc_max_heading_level: 4
+tags:
+- admin panel 
+- admin panel customization
+- deployment
+- webpack
+
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -2,7 +2,11 @@
 title: HAProxy Proxying
 displayed_sidebar: devDocsSidebar
 description: Learn how you can use a proxy application like HAProxy to secure your Strapi application.
-
+tags:
+- guides
+- middlewares
+- optional software guides
+- proxying
 ---
 
 import AdminRedirect from './snippets-proxy/admin-redirect.md'

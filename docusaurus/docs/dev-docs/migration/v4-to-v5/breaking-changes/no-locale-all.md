@@ -6,7 +6,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - locale
- - i18n
+ - Internationalization (i18n)
  - content API
  - REST API
 ---
@@ -14,6 +14,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # `locale=all` can not be used to get all entries in all locales
 
@@ -21,7 +22,8 @@ In Strapi 5, it's no longer possible to get all localized versions of a content 
 
 <Intro />
 
-<YesPlugin />
+<YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

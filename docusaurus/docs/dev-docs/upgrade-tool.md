@@ -2,7 +2,16 @@
 title: Upgrade tool
 description: The Strapi upgrade tool is a CLI command that helps automatically upgrading to a new Strapi version.
 displayed_sidebar: devDocsSidebar
+tags:
+- major version
+- minor version
+- patch version
+- semantic versioning
+- upgrade tool
+- version types
 ---
+
+import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # Upgrade tool
 
@@ -12,11 +21,8 @@ Running the upgrade tool triggers the update of the application dependencies, th
 
 The upgrade tool is a Strapi package and can be run from the CLI.
 
-:::danger
-It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
+<DoNotMigrateYet />
 
-The beta version of Strapi 5 is not meant to be used in production yet.
-:::
 
 ## Version types
 

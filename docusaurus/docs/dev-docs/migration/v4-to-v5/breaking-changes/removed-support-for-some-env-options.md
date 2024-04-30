@@ -6,17 +6,21 @@ sidebar_label: Env options moved to server configuration
 tags:
  - breaking changes
  - configuration
- - environment variables
- - server
+ - environment 
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
+
 
 # Some `env`-only configuration options are handled by the server configuration
 
 In Strapi 5, some configuration options that were only handled by environment variables in Strapi v4 are now handled in the [server configuration](/dev-docs/configurations/server) file.
 <Intro />
+<NoPlugins />
+<NoCodemods />
 
 ## Breaking change description
 

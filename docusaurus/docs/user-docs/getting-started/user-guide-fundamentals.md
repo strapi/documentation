@@ -2,6 +2,15 @@
 title: User Guide fundamentals
 displayed_sidebar: userDocsSidebar
 description: Here are some concepts to keep in mind
+tags:
+- concepts
+- environment
+- Strapi version
+- license 
+- Strapi Cloud plan
+- future flag
+- roles and permissions
+- admin panel
 ---
 
 Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.

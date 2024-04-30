@@ -2,6 +2,15 @@
 title: Lifecycle Functions
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
+tags:
+- additional configuration
+- asynchronous function
+- bootstrap function
+- configuration
+- destroy function
+- lifecycle function
+- register function
+- synchronous function
 
 ---
 

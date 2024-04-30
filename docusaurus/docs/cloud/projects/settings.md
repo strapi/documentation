@@ -4,6 +4,11 @@ displayed_sidebar: cloudSidebar
 description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/settings.html
 sidebar_position: 2
+tags:
+- project settings
+- project  subscription
+- Strapi Cloud
+- Strapi Cloud project
 ---
 
 # Project settings

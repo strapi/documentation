@@ -2,7 +2,13 @@
 title: Integrations
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with a multitude of frameworks, frontend or backend programming languages.
-
+tags:
+- API
+- REST API 
+- frameworks
+- introduction
+- integration
+- integration guide
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

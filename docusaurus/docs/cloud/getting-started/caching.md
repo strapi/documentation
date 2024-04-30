@@ -2,6 +2,10 @@
 sidebar_label: 'Caching for app performance'
 displayed_sidebar: cloudSidebar
 sidebar_position: 4
+tags:
+- caching
+- Content Delivery Network (CDN) caching
+- Strapi Cloud
 ---
 
 # Caching & Performance

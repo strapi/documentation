@@ -3,17 +3,17 @@ title: How to use the Plugin CLI to build and publish a Strapi plugin
 description: Learn how to use the Plugin CLI to build and publish a Strapi plugin
 sidebar_label: Use the Plugin CLI
 displayed_sidebar: devDocsSidebar
+tags:
+- guides
+- plugins
+- plugin CLI
+- plugins development guides
+- Strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # How to use the Plugin CLI to create and publish a Strapi plugin
-
-<NotV5/>
-
-:::caution
-The Plugin CLI is currently experimental.
-:::
 
 The Plugin CLI is set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
 

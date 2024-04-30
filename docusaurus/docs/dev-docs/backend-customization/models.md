@@ -22,7 +22,16 @@ _tags: [
 	"afterFindMany"
 ]
 sidebarDepth: 3
-
+tags:
+- admin panel
+- backend customization
+- backend server
+- content-type
+- Content-type Builder
+- models
+- model schema
+- lifecycle hooks
+- REST API 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -2,6 +2,12 @@
 title: Relations
 description: Use the REST API to manage the order of relations
 displayed_sidebar: restApiSidebar
+tags:
+- API 
+- relations
+- Content API
+- disconnect
+- REST API
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

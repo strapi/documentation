@@ -2,6 +2,15 @@
 title: Using Populate with the Document Service API
 description: Use Strapi's Document Service API to populate or select some fields.
 displayed_sidebar: devDocsSidebar
+tags:
+- Components
+- Content API
+- Document Service API
+- dynamic zones
+- populate
+- Populating with create()
+- Populating with publish()
+- Populating with update()
 ---
 
 # Document Service API: Populating fields

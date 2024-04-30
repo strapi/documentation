@@ -1,6 +1,11 @@
 ---
 title: Providers
 description: Install and use providers to extend the functionality of available plugins.
+tags:
+- environment
+- provider
+- local providers
+- private providers
 
 ---
 
@@ -263,7 +268,7 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts
-export {
+export default {
   init(providerOptions) {
     // init your provider if necessary
 

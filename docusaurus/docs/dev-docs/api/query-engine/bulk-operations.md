@@ -2,6 +2,14 @@
 title: Bulk Operations
 description: Use Strapi's Query Engine API to perform operations on multiple entries.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- createMany()
+- count()
+- deleting content
+- Query Engine API
+- updateMany()
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -1,5 +1,14 @@
 ---
 sidebar_position: 3
+tags:
+- collection type
+- components
+- Content Manager
+- Content-type
+- Content-type Builder
+- dynamic zones
+- single type
+- password
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

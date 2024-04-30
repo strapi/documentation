@@ -2,6 +2,12 @@
 title: Viewing Audit Logs 
 description: Reviewing the audit logs in Strapi.
 sidebar_position: 2
+tags:
+- audit logs
+- admin panel
+- Enterprise feature
+- payload
+- Strapi Cloud
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

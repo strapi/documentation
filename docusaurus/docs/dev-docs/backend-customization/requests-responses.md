@@ -1,7 +1,11 @@
 ---
 title: Requests and Responses 
 description: Learn more about requests and responses for Strapi, the most popular headless CMS.
-
+tags:
+- backend customization
+- backend server
+- ctx
+- REST API 
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'

@@ -179,9 +179,9 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'dev-docs/intro',
+            docId: 'dev-docs/quick-start',
             position: 'left',
-            label: 'Developer Docs',
+            label: 'Quick Start Guide',
           },
           {
             type: 'doc',
@@ -191,9 +191,15 @@ const config = {
           },
           {
             type: 'doc',
+            docId: 'dev-docs/intro',
+            position: 'left',
+            label: 'Developer Docs',
+          },
+          {
+            type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
-            label: 'Strapi Cloud',
+            label: 'Cloud Documentation',
           },
           {
             href: 'https://github.com/strapi/documentation',

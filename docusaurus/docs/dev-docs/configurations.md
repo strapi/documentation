@@ -4,6 +4,11 @@ description: Learn how you can manage and customize the configuration of your St
 displayed_sidebar: devDocsConfigSidebar
 pagination_prev: dev-docs/installation
 pagination_next: dev-docs/setup-deployment
+tags:
+- introduction
+- configuration
+- base configuration 
+- additional configuration 
 ---
 
 import ProjectStructureConfigFiles from '@site/src/components/ProjectStructureConfigFiles'

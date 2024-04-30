@@ -2,6 +2,13 @@
 title: Document Service API
 description: The Document Service API is the recommended way to interact with your content from the back-end server or from plugins.
 displayed_sidebar: devDocsSidebar
+tags:
+- API
+- Content API
+- Documents
+- documentId
+- Document Service API
+- Query Engine API
 ---
 
 # Document Service API <BetaBadge />
@@ -19,12 +26,13 @@ The Document Service API is meant to replace the [Entity Service API used in Str
 
 Find a document matching the passed `documentId` and parameters.
 
-Syntax: `findOne(documentId: ID, parameters: Params) => Document`
+Syntax: `findOne(parameters: Params) => Document`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
+| `documentId` | Document id | | `ID` |
 | [`locale`](/dev-docs/api/document-service/locale#find-one)|  Locale of the documents to create. | Default locale | String or `undefined` |
 | [`status`](/dev-docs/api/document-service/status#find-one) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-findone-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
@@ -39,9 +47,9 @@ If only a `documentId` is passed without any other parameters, `findOne()` retur
 <Request title="Find a document by passing its documentId">
 
 ```js
-await strapi.documents('api:restaurant.restaurant').findOne(
-  'a1b2c3d4e5f6g7h8i9j0klm'
-)
+await strapi.documents('api:restaurant.restaurant').findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm'
+})
 ```
 
 </Request>
@@ -378,12 +386,13 @@ await strapi.documents('api::restaurant.restaurant').create({
 
 Updates document versions and returns them.
 
-Syntax: `update(documentId: ID, parameters: Params) => Document`
+Syntax: `update(parameters: Params) => Promise<Document>`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
+| `documentId` | Document id | | `ID` |
 | [`locale`](/dev-docs/api/document-service/locale#update) | Locale of the document to update. | Default locale | String or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-update-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-update-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
@@ -407,10 +416,10 @@ If no `locale` parameter is passed, `update()` updates the document for the defa
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').update(
-  'a1b2c3d4e5f6g7h8i9j0klm', // documentId
-  { data: { name: "New restaurant name" }} 
-)
+await strapi.documents('api::restaurant.restaurant').update({ 
+    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+    data: { name: "New restaurant name" }
+})
 ```
 
 </Request>
@@ -443,19 +452,13 @@ await documents('api:restaurant.restaurant').update(documentId, {locale: ['es', 
 
 Deletes one document, or a specific locale of it.
 
-Syntax:
-
-```js
-delete(documentId: ID, parameters: Params) => { 
-  deletedEntries: Number, 
-  errors: Errors[]  // Errors occurred when deleting documents
-}
-```
+Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
+| `documentId`| Document id | | `ID`|
 | [`locale`](/dev-docs/api/document-service/locale#delete) | Locale version of the document to delete. | `null`<br/>(deletes only the default locale) | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-delete-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-delete-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
@@ -468,14 +471,32 @@ If no `locale` parameter is passed, `delete()` only deletes the default locale v
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').delete(
-  'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
-)
+await strapi.documents('api::restaurant.restaurant').delete({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', // documentId,
+})
 ```
 
 </Request>
 
-The response returns the number of deleted entries (e.g., `{ deletedEntries: 3 }`).
+
+<Response>
+
+```js {6}
+{
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  entries: [
+    {
+      "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+      "name": "Biscotte Restaurant",
+      "publishedAt": "2024-03-14T18:30:48.870Z",
+      "locale": "en"
+      // …
+    }
+  ]
+}
+```
+
+</Response>
 
 <!-- ! not working -->
 <!-- #### Delete a document with filters
@@ -500,19 +521,13 @@ Publishes one or multiple locales of a document.
 
 This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
-Syntax:
-
-```js
-publish(documentId: ID, parameters: Params) => { 
-  documentId: string, 
-  versions: Document[]  // Published versions
-}
-```
+Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
+| `documentId`| Document id | | `ID`|
 | [`locale`](/dev-docs/api/document-service/locale#publish) | Locale of the documents to publish. | Only the default locale | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-publish-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-publish-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
@@ -527,9 +542,9 @@ If no `locale` parameter is passed, `publish()` only publishes the default local
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').publish(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-);
+await strapi.documents('api::restaurant.restaurant').publish({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+});
 ```
 
 </Request>
@@ -538,7 +553,8 @@ await strapi.documents('api::restaurant.restaurant').publish(
 
 ```js {6}
 {
-  versions: [
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  entries: [
     {
       "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
       "name": "Biscotte Restaurant",
@@ -570,19 +586,13 @@ Unpublishes one or all locale versions of a document, and returns how many local
 
 This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
-Syntax:
-
-```js
-unpublish(documentId: ID, parameters: Params) => { 
-  documentId: string, 
-  versions: Document[]  // Unpublished versions
-}
-```
+Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
+| `documentId`| Document id | | `ID`|
 | [`locale`](/dev-docs/api/document-service/locale#unpublish) | Locale of the documents to unpublish. | Only the default locale | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-unpublish-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-unpublish-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
@@ -597,9 +607,9 @@ If no `locale` parameter is passed, `unpublish()` only unpublishes the default l
 <Request>
 
 ```js
-await strapi.documents('api::restaurant.restaurant').unpublish(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-);
+await strapi.documents('api::restaurant.restaurant').unpublish({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm' 
+});
 ```
 
 </Request>
@@ -608,7 +618,16 @@ await strapi.documents('api::restaurant.restaurant').unpublish(
 
 ```js
 {
-  versions: 1
+  documentId: "lviw819d5htwvga8s3kovdij",
+  entries: [
+    {
+      documentId: "lviw819d5htwvga8s3kovdij",
+      name: "Biscotte Restaurant",
+      publishedAt: null,
+      locale: "en"
+      // …
+    }
+  ]
 }
 ```
 
@@ -622,19 +641,13 @@ Discards draft data and overrides it with the published version.
 
 This method is only available if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled on the content-type.
 
-Syntax:
-
-```js
-discardDraft(documentId: ID, parameters: Params) => { 
-  documentId: string, 
-  versions: Document[]  // New drafts
-}
-```
+Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
 ### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
+| `documentId`| Document id | | `ID`|
 | [`locale`](/dev-docs/api/document-service/locale#discard-draft) | Locale of the documents to discard. | Only the default locale. | String, `'*'`, or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/select#selecting-fields-with-discarddraft-queries)   | [Select fields](/dev-docs/api/document-service/select#selecting-fields-with-discarddraft-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
@@ -649,9 +662,9 @@ If no `locale` parameter is passed, `discardDraft()` discards draft data and ove
 <Request title="Discard draft for the default locale of a document">
 
 ```js
-strapi.documents.discard(
-  'a1b2c3d4e5f6g7h8i9j0klm', 
-);
+strapi.documents.discard({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
+});
 ```
 
 </Request>
@@ -660,7 +673,8 @@ strapi.documents.discard(
 
 ```js
 {
-  versions: [
+  documentId: "lviw819d5htwvga8s3kovdij",
+  entries: [
     {
       documentId: "lviw819d5htwvga8s3kovdij",
       name: "Biscotte Restaurant",

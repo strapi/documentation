@@ -5,7 +5,7 @@ sidebar_label: i18n part of strapi core
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
- - i18n
+ - Internationalization (i18n)
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

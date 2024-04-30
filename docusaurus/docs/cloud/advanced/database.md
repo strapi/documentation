@@ -3,6 +3,13 @@ title: Database
 displayed_sidebar: cloudSidebar
 description: Configure your own database on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/advanced/database.html
+tags:
+- configuration
+- database
+- deployment
+- PostgreSQL
+- Strapi Cloud
+- Strapi Cloud project
 ---
 
 # Database

@@ -141,7 +141,7 @@ export default function PageHome() {
                     key={`pageHomeCategoryItem${categoryItemIndex}`}
                     className={clsx(
                       'col',
-                      'col--6',
+                      'col--4',
                       styles.home__categories__item,
                     )}
                   >

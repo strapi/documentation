@@ -6,6 +6,8 @@ tags:
  - breaking changes
 ---
 
+import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
+
 # Strapi v4 to Strapi 5 breaking changes
 
 :::callout 🚧  Work in progress
@@ -14,11 +16,7 @@ This page is a work-in-progress and the list of breaking changes is not 100% fin
 
 This page lists all the breaking changes introduced in Strapi 5.
 
-:::danger
-It is currently strongly advised that you refrain from migrating from Strapi v4 to Strapi 5, especially in a production environment.
-
-The beta version of Strapi 5 is not meant to be used in production yet.
-:::
+<DoNotMigrateYet />
 
 ## Configuration
 
@@ -37,20 +35,25 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 <!-- * [Draft & Publish is always enabled](/dev-docs/migration/v4-to-v5/breaking-changes/draft-and-publish-always-enabled) -->
 * [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service)
 * [The `localizations` field does not exist anymore](/dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field)
-* [The `locale` attribute name is reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved)
+* [Some attributes and content-types names are reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved)
 <!-- * [Components and dynamic zones do not return an `id` with REST API requests](/dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id) not implemented yet -->
 * [The GraphQL API has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated)
+* [The Entity Service API is deprecated and replaced by the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated)
+* [REST API input is validated by default in controllers](/dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation)
 
 ## Database
 
 - [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
 - [Database identifiers can't be longer than 55 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened)
+- [Only the `better-sqlite3` package is supported for the SQLite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
+- [Only the `mysql2` package is supported for the MySQL client](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql)
 
-## Plugins, plugins configuration, and plugins development
+## Plugins and providers
 
 - [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields)
-- [The helper-plugin is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated)
+- [The `helper-plugin` is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated)
 - [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component)
+- [Some Mailgun provider legacy variables are not supported](/dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables)
 
 ## Strapi objects, methods, and packages
 
@@ -74,7 +77,6 @@ The beta version of Strapi 5 is not meant to be used in production yet.
 - [Strapi 5 uses `koa-body` v6](/dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6)
 - [Webpack Aliases are removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed)
 - [Apollo Server v3 upgraded to Apollo Server v4](/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4)
-
 
 ## Internal changes
 

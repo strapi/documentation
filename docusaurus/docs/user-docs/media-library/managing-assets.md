@@ -1,7 +1,12 @@
 ---
 title: Managing individual assets
 description: Instructions on how to manage assets uploaded to the Media Library, including editing, moving, and deleting assets, and cropping images.
-
+tags:
+- admin panel
+- Content Manager
+- Content-type Builder
+- images
+- media library
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

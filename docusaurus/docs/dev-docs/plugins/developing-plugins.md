@@ -4,6 +4,12 @@ description: Generation introduction about Strapi plugins development
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
 pagination_next: dev-docs/plugins/development/create-a-plugin
+tags:
+- admin panel API
+- introduction
+- plugin APIs
+- plugins development
+- server API
 ---
 
 # Developing Strapi plugins

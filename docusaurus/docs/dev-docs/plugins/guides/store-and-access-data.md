@@ -3,6 +3,13 @@ title: How to store and access data from a Strapi plugin
 description: Learn how to store and access data from a Strapi plugin
 sidebar_label: Store and access data
 displayed_sidebar: devDocsSidebar
+tags:
+- content-type
+- guides
+- plugins
+- plugins development
+- plugins development guides
+- Strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

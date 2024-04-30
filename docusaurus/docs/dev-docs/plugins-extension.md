@@ -1,6 +1,15 @@
 ---
 title: Plugins extension
 displayed_sidebar: devDocsSidebar
+tags:
+- bootstrap function
+- controllers
+- middlewares
+- policies
+- plugins
+- plugins development
+- register function 
+- services
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

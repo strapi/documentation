@@ -6,7 +6,6 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - Content API
- - Entity Service API
  - GraphQL API
  - Document Service API
  - Draft & Publish
@@ -15,6 +14,8 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
+
 
 # `publicationState` is removed and replaced by `status`
 
@@ -23,6 +24,7 @@ In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and
 <Intro />
 
 <YesPlugins />
+<YesCodemods />
 
 ## Breaking change description
 
@@ -60,7 +62,7 @@ In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and
 
 There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
 
-### Migration procedure 
+### Migration procedure
 
-<!-- TODO: to be confirmed -->
-A codemod will automatically handle the change.
+* API calls initiated from the front end (REST API, GraphQL API) that used `publicationState` need to be manually updated.
+* If `publicationState` is used in your custom back-end code with the Entity Service API in Strapi v4, a codemod will automatically handle the change for Strapi 5 (see [Entity Service to Document Service migration reference](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service) for additional details).

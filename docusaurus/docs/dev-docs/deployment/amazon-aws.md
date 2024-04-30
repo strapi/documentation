@@ -2,7 +2,14 @@
 title: AWS Deployment
 displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on AWS EC2, host your database on AWS RDS and upload your assets on AWS S3.
-
+tags:
+- administrator
+- deployment 
+- guides
+- nginx 
+- process manager
+- project creation
+- PostgreSQL
 ---
 
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'

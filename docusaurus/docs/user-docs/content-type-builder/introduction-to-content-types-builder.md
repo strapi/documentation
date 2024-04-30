@@ -1,6 +1,13 @@
 ---
 sidebar_position: 1
 slug: /user-docs/content-type-builder
+tags:
+- collection type
+- components
+- Content-type
+- Content-type Builder
+- introduction
+- single type 
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -7,11 +7,13 @@ tags:
  - breaking changes
  - body middleware
  - dependencies
+ - ctx
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Strapi users `react-router-dom` v6
 
@@ -20,6 +22,7 @@ Strapi 5 uses [`koa-body`](https://github.com/koajs/koa-body) v6, which updates 
  <Intro />
 
 <YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 
@@ -70,4 +73,4 @@ A user might still create custom endpoints and handle files with the `ctx` objec
 
 ### Manual procedure
 
-Users will have to manually update the properties used in their custom code, referring to the official `koa-body` and `formidable` documentations.
+Users need to manually update the properties used in their custom code, referring to the official [`koa-body`](https://github.com/koajs/koa-body) and [`formidable`](https://github.com/node-formidable/formidable) documentations.

@@ -1,6 +1,16 @@
 ---
 title: Strapi plugins
 sidebar_position: 3
+tags:
+- Content Manager
+- Internationalization (i18n)
+- plugins
+- provider
+- marketplace
+- upload plugin
+- Users, Roles & Permissions
+- Sentry
+- Strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

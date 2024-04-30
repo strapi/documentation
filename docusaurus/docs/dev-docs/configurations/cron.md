@@ -2,6 +2,10 @@
 title: CRON jobs
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
+tags:
+- additional configuration
+- configuration
+- cron job
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

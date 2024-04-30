@@ -4,6 +4,15 @@ description: Learn how to authenticate use custom services and controllers using
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/backend-customization/examples/authentication
 pagination_next: dev-docs/backend-customization/examples/policies
+tags:
+- backend customization
+- backend server
+- controllers
+- custom controllers
+- custom services
+- ctx
+- REST API 
+- services
 ---
 
 # Examples cookbook: Custom services and controllers

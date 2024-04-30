@@ -2,7 +2,15 @@
 title: Azure Deployment 
 displayed_sidebar: devDocsSidebar
 description: Learn in this guide how to deploy your Strapi application on Microsoft Azure.
-
+tags:
+- deployment 
+- guides
+- MySQL
+- Paas 
+- process manager
+- project creation
+- postgreSQL
+- Strapi Cloud
 ---
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'

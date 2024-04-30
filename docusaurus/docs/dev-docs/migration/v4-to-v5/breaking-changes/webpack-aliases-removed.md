@@ -11,12 +11,16 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
+import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
+import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # Webpack Aliases are removed
 
-In Strapi v5, webpack aliases are removed ensuring better compatibility and reduced dependency conflicts. 
+In Strapi v5, webpack aliases are removed ensuring better compatibility and reduced dependency conflicts.
 
 <Intro />
+<YesPlugins />
+<NoCodemods />
 
 ## Breaking change description
 
@@ -26,7 +30,7 @@ In Strapi v5, webpack aliases are removed ensuring better compatibility and redu
 
 **In Strapi v4**
 
-- We maintained a specific list of dependencies that were aliased in webpack configuration. This ensured that plugins consistently used our versions of certain libraries like the design-system.
+Strapi maintains a specific list of dependencies that are aliased in webpack configuration. This ensures that plugins consistently use Strapi versions of certain libraries like the design-system.
 
 </SideBySideColumn>
 
@@ -34,7 +38,7 @@ In Strapi v5, webpack aliases are removed ensuring better compatibility and redu
 
 **In Strapi 5**
 
-- In Strapi v5, we have simplified the aliasing process. Now, we only alias essential dependencies like `react`, `react-dom`, `react-router-dom`, and `styled-components`.
+The aliasing process is simplified. Only essential dependencies like `react`, `react-dom`, `react-router-dom`, and `styled-components` are aliased.
 
 </SideBySideColumn>
 
@@ -46,10 +50,9 @@ In Strapi v5, webpack aliases are removed ensuring better compatibility and redu
 
 ### Notes
 
-- If you encounter issues with third-party plugins, we recommend opening an issue on the respective plugin's repository. Encourage the plugin maintainers to add their dependencies to their `package.json` file to resolve compatibility issues.
+- If you encounter issues with 3rd-party plugins, it's recommended you open an issue on the respective plugin's repository. Encourage the plugin maintainers to add their dependencies to their `package.json` file to resolve compatibility issues.
 
 - If you encounter issues with local plugins, you can fix them by amending the `resolve` option in your chosen bundler.
-
 
 ### Manual procedure
 

@@ -1,7 +1,12 @@
 ---
 title: Adding assets
 description: Instructions to add assets to the Media Library
-
+tags:
+- admin panel
+- add new assets
+- Content Manager
+- Content-type Builder
+- media library
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

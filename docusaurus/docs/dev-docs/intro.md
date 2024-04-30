@@ -3,6 +3,9 @@ sidebar_label: 'Introduction'
 displayed_sidebar: devDocsSidebar
 slug: /dev-docs/intro
 sidebar_position: 1
+tags:
+ - introduction
+ - concepts
 ---
 
 # Welcome to the Strapi Developer Docs!

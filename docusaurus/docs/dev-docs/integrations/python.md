@@ -3,6 +3,8 @@ title: Python
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Python.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/developer-resources/content-api/integrations/python.html
+tags:
+- collection type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

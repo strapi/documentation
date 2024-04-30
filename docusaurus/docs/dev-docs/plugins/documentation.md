@@ -2,6 +2,15 @@
 title: Documentation plugin
 displayed_sidebar: devDocsSidebar
 description: By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
+tags:
+- admin panel 
+- excludeFromGeneration function
+- OpenAPI specification
+- override service 
+- pluginOrigin 
+- plugins 
+- register function
+- Swagger UI
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

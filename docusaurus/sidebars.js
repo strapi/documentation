@@ -290,6 +290,11 @@ const sidebars = {
               label: 'Status',
               id: 'dev-docs/api/document-service/status'
             },
+            {
+              type: 'doc',
+              label: 'Middlewares',
+              id: 'dev-docs/api/document-service/middlewares'
+            },
           ]
         },
         {
@@ -594,10 +599,16 @@ const sidebars = {
             },
             {
               type: 'category',
-              collapsed: false,
+              collapsed: true,
               label: 'Guides',
+              customProps: {
+                new: true,
+              },
               items: [
-                'dev-docs/migration/v4-to-v5/guides/helper-plugin'
+                'dev-docs/migration/v4-to-v5/guides/introduction',
+                'dev-docs/migration/v4-to-v5/guides/plugins-migration',
+                'dev-docs/migration/v4-to-v5/guides/helper-plugin',
+                'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
               ],
             },
           ]
@@ -627,7 +638,13 @@ const sidebars = {
       items: [
         'user-docs/content-manager/introduction-to-content-manager',
         'user-docs/content-manager/configuring-view-of-content-type',
-        'user-docs/content-manager/writing-content',
+        {
+          type: 'doc',
+          id: 'user-docs/content-manager/working-with-content-history',
+          // customProps: {
+          //   new: true,
+          // }
+        },
         'user-docs/content-manager/managing-relational-fields',
         'user-docs/content-manager/translating-content',
         'user-docs/content-manager/reviewing-content',
@@ -1137,9 +1154,11 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
                 'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
-                'dev-docs/migration/v4-to-v5/breaking-changes/locale-attribute-reserved',
+                'dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved',
                 // 'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id', // not implemented yet
                 'dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated',
+                'dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated',
+                'dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation',
               ]
             },
             {
@@ -1152,13 +1171,15 @@ const sidebars = {
               },
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
-                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened'
+                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened',
+                'dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite',
+                'dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql',
               ]
             },
             {
               type: "category",
               collapsed: false,
-              label: "Plugins",
+              label: "Plugins and providers",
               link: {
                 type: 'doc',
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
@@ -1167,6 +1188,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields',
                 'dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated',
                 'dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component',
+                'dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables',
               ]
             },
             {
@@ -1221,7 +1243,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Migration guides',
+          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/guides/introduction' },
           items: [
+            'dev-docs/migration/v4-to-v5/guides/introduction',
+            'dev-docs/migration/v4-to-v5/guides/plugins-migration',
             'dev-docs/migration/v4-to-v5/guides/helper-plugin',
             'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
           ]

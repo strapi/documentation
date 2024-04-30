@@ -3,6 +3,12 @@ title: Introduction to the Media Library
 slug: /user-docs/media-library
 sidebar_position: 1
 description: Introduction to the Media Library which allows to display and manage all assets uploaded in the application.
+tags:
+- admin panel
+- Content-type Builder
+- filters
+- introduction
+- media library
 
 ---
 

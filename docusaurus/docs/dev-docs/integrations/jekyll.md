@@ -2,6 +2,8 @@
 title: Jekyll
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Jekyll.
+tags:
+- collection type
 
 ---
 

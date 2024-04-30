@@ -2,7 +2,15 @@
 title: Caddy Proxying
 displayed_sidebar: devDocsSidebar
 description: Learn how you can use a proxy application like Caddy to secure your Strapi application.
-
+tags:
+- admin panel
+- domain
+- caddy proxying
+- guides
+- middlewares
+- optional software guides
+- proxying
+- subdomain
 ---
 
 import AdminRedirect from './snippets-proxy/admin-redirect.md'

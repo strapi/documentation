@@ -2,7 +2,12 @@
 title: CLI
 displayed_sidebar: devDocsSidebar
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
-
+tags:
+- installation
+- Command Line Interface (CLI)
+- database
+- MySQL
+- PostgreSQL
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'

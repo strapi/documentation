@@ -4,6 +4,13 @@ displayed_sidebar: devDocsSidebar
 sidebar_position: 2
 title: Quick Start Guide - Strapi Developer Docs
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
+tags:
+ - guides
+ - Content-type Builder
+ - collection type
+ - Content Manager
+ - Strapi Cloud
+
 # next: ./troubleshooting
 
 ---

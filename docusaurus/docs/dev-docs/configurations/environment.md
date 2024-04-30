@@ -2,6 +2,10 @@
 title: Environment variables configuration
 sidebar_label: Environment variables
 displayed_sidebar: devDocsConfigSidebar
+tags:
+- additional configuration
+- configuration
+- environment
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

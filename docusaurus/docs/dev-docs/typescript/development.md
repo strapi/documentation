@@ -1,6 +1,12 @@
 ---
 title: TypeScript development
 # description: todo
+tags:
+- strapi() factory
+- strapi.compile() function
+- typescript
+- plugins development
+
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

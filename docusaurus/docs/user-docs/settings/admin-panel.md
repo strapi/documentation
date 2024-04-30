@@ -1,6 +1,9 @@
 ---
 sidebar_position: 3
 title: Overview & Custom logo
+tags:
+- admin panel
+- company logo
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

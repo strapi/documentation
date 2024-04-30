@@ -1,6 +1,11 @@
 ---
 title: Managing a release
 description: Instructions on how to manage a Release from the admin panel
+tags:
+- admin panel
+- Enterprise feature
+- Releases feature
+- Strapi Cloud
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

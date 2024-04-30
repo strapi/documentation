@@ -2,6 +2,14 @@
 title: Plugin structure
 description: Learn more about the structure of a Strapi plugin
 displayed_sidebar: devDocsSidebar
+tags:
+- admin panel
+- Command Line Interface (CLI)
+- backend server
+- plugins
+- plugins development
+- plugins structure
+- server-only plugin
 ---
 
 import InteractivePluginStructure from '@site/src/components/PluginStructure.js'
