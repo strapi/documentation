@@ -225,6 +225,17 @@ To see a possible advanced usage for custom controllers, read the [services and 
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
+Sanitization means that the object is “cleaned” and returned.
+
+Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
+
+In Strapi 5, both query parameters and input data (i.e., create and update body data) are validated. Any create and update data requests with the following invalid input will throw a `400 Bad Request` error:
+
+- relations the user do not have permission to create
+- unrecognized values that are not present on a schema
+- non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
+- the `id` field (other than for connecting relations) which attempts to set or update the `id` of an object
+
 #### Sanitization when utilizing controller factories
 
 Within the Strapi factories the following functions are exposed that can be used for sanitization and validation:

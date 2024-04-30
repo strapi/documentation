@@ -39,6 +39,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 <!-- * [Components and dynamic zones do not return an `id` with REST API requests](/dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id) not implemented yet -->
 * [The GraphQL API has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated)
 * [The Entity Service API is deprecated and replaced by the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated)
+* [REST API input is validated by default in controllers](/dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation)
 
 ## Database
 
