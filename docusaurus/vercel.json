@@ -12,6 +12,10 @@
 			"destination": "/cloud/intro"
 		},
     {
+      "source": "/user-docs/intro%23using-sso-for-authentication-",
+      "destination": "/user-docs/getting-started/setting-up-admin-panel#using-sso-for-authentication-"
+    },
+    {
       "source": "/developer-docs/latest/getting-started/quick-start.html%23_1-install-strapi-and-create-a-new-project",
       "destination": "/dev-docs/quick-start"
     },
