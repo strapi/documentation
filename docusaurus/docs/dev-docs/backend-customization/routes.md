@@ -462,7 +462,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::apiName.controllerName.functionName',
       config: {
         middlewares: [
           // point to a registered middleware
@@ -493,7 +493,7 @@ export default  {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::apiName.controllerName.functionName',
       config: {
         middlewares: [
           // point to a registered middleware
@@ -582,7 +582,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::apiName.controllerName.functionName',
       config: {
         auth: false,
       },
@@ -602,7 +602,7 @@ export default  {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::apiName.controllerName.functionName',
       config: {
         auth: false,
       },
