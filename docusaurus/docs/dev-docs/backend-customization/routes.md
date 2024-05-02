@@ -582,7 +582,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'api::apiName.controllerName.functionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         auth: false,
       },
