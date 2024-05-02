@@ -5,13 +5,13 @@ const ScreenshotNumberReference = ({ number }) => {
     <span
       style={{
         display: 'inline-block',
-        width: '2rem',
-        height: '2rem',
+        width: '1.5rem',
+        height: '1.5rem',
         borderRadius: '50%',
         backgroundColor: '#4743FF',
         color: '#fff', 
         textAlign: 'center',
-        fontSize: '1rem',
+        fontSize: '.8rem',
         fontWeight: 'bold',
         padding: '0.1rem',
       }}

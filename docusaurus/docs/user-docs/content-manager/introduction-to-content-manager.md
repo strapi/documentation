@@ -6,6 +6,7 @@ slug: /user-docs/content-manager
 description: Introduction to the Content Manager which allows to write content for collection types and single types.
 
 ---
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Introduction to the Content Manager
 
@@ -35,7 +36,7 @@ The list view of a collection type displays all entries created for that collect
 
 From the list view, it is possible to:
 
-- create a new entry (1),
+- create a new entry <ScreenshotNumberReference number="1" />,
 - make a textual search (2) or set filters (3) to find specific entries,
 - if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, filter by locale to display only the entries translated in a chosen locale (4),
 - configure the fields displayed in the table of the list view (5),
