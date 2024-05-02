@@ -350,7 +350,7 @@ export default {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-scoped route
       config: {
         policies: [
           // point to a registered policy
