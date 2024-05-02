@@ -493,7 +493,7 @@ export default  {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'api::apiName.controllerName.functionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-scoped route
       config: {
         middlewares: [
           // point to a registered middleware
