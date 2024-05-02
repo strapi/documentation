@@ -21,6 +21,7 @@ import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/I
 import { AlphaBadge, BetaBadge, EnterpriseBadge, FutureBadge, CloudProBadge, CloudTeamBadge, CloudDevBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
+import ScreenshotNumberReference from '../components/ScreenshotNumberReference';
 import {
   MultiLanguageSwitcher,
   MultiLanguageSwitcherRequest,
@@ -62,6 +63,7 @@ export default {
   InteractiveQueryBuilder,
   SubtleCallout,
   ThemedImage,
+  ScreenshotNumberReference,
   SideBySideColumn,
   SideBySideContainer,
   MultiLanguageSwitcher,
