@@ -12,32 +12,48 @@ tags:
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# Managing relations through the REST API
-
-<NotV5 />
+# Managing relations with API requests
 
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 
-Relations between content-types can be managed through the [admin panel](/user-docs/content-manager/managing-relational-fields#managing-multiple-choices-relational-fields) or through [REST](/dev-docs/api/rest) requests sent to the Content API.
+Relations between content-types can be managed through the [admin panel](/user-docs/content-manager/managing-relational-fields#managing-multiple-choices-relational-fields) or through [REST API](/dev-docs/api/rest) or [Document Service API](/dev-docs/api/document-service) requests.
 
 Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
 
-|  Parameter name | Description | Type of update |
-|-----------------|------------------|----------------|
-| [`connect`](#connect)       | Connects new entities.<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial
-| [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial
-| [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full
+|  Parameter name         | Description | Type of update |
+|-------------------------|-------------|----------------|
+| [`connect`](#connect)   | Connects new entities.<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial |
+| [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial |
+| [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
+
+:::note
+When [Internationalization (i18n)](/user-docs/content-manager/translating-content) is enabled on the content-type, you can also pass a locale to set relations for a specific locale, as in this Document Service API example:
+
+```js
+await strapi.documents('api::restaurant.restaurant').update({ 
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  locale: 'fr',
+  data: { 
+    category: {
+      connect: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv']
+    }
+  }
+})
+```
+
+If no locale is passed, the default locale will be assumed.
+:::
 
 ## `connect`
 
 Using `connect` in the body of a request performs a partial update, connecting the specified relations.
 
-`connect` accepts either a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
+`connect` accepts either a shorthand or a longhand syntax:
 
 | Syntax type | Syntax example |
 | ------------|----------------|
-| shorthand   | `connect: [2, 4]`
-| longhand    | ```connect: [{ id: 2 }, { id: 4 }]``` |
+| shorthand   | `connect: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv']` |
+| longhand    | ```connect: [{ documentId: 'z0y2x4w6v8u1t3s5r7q9onm' }, { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }]``` |
 
 You can also use the longhand syntax to [reorder relations](#relations-reordering).
 
@@ -51,18 +67,18 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 
 <TabItem value="shorthand" label="Shorthand syntax example">
 
-Sending the following request updates the `restaurant` entity with `id` `1`, using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
+Sending the following request updates a `restaurant`, identified by its `documnentId` `a1b2c3d4e5f6g7h8i9j0klm`. The request uses the `categories` attribute to connect the restaurant with 2 categories identified by their `documentId`:
 
 <MultiLanguageSwitcher title="Example request using the shorthand syntax">
 <MultiLanguageSwitcherRequest language="REST">
 
-`PUT` `http://localhost:1337/api/restaurants/1`
+`PUT` `http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
-      connect: [2, 4]
+      connect: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv']
     }
   }
 }
@@ -76,13 +92,13 @@ Sending the following request updates the `restaurant` entity with `id` `1`, usi
 const fetch = require('node-fetch');
 
 const response = await fetch(
-  'http://localhost:1337/api/restaurants/1',
+  'http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm',
   {
     method: 'put',
     body: {
       data: {
         categories: {
-          connect: [2, 4]
+          connect: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv']
         }
       }
     }
@@ -97,20 +113,20 @@ const response = await fetch(
 
 <TabItem value="longhand" label="Longhand syntax example">
 
-Sending the following request updates the `restaurant` entity with `id` `1`, using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
+Sending the following request updates a `restaurant`, identified by its `documnentId` `a1b2c3d4e5f6g7h8i9j0klm`. The request uses the `categories` attribute to connect the restaurant with 2 categories identified by their `documentId`:
 
 <MultiLanguageSwitcher title="Example request using the longhand syntax">
 <MultiLanguageSwitcherRequest language="REST">
 
-`PUT` `http://localhost:1337/api/restaurants/1`
+`PUT` `http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
       connect: [
-        { id: 2 },
-        { id: 4 }
+        { documentId: 'z0y2x4w6v8u1t3s5r7q9onm' },
+        { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }
       ]
     }
   }
@@ -125,15 +141,15 @@ Sending the following request updates the `restaurant` entity with `id` `1`, usi
 const fetch = require('node-fetch');
 
 const response = await fetch(
-  'http://localhost:1337/api/restaurants/1',
+  'http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm',
   {
     method: 'put',
     body: {
       data: {
         categories: {
           connect: [
-            { id: 2 },
-            { id: 4 }
+            { documentId: 'z0y2x4w6v8u1t3s5r7q9onm' },
+            { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }
           ]
         }
       }
@@ -152,18 +168,18 @@ const response = await fetch(
 
 Positional arguments can be passed to the longhand syntax of `connect` to define the order of relations.
 
-The longhand syntax accepts an array of objects, each object containing the `id` of the entry to be connected and an optional `position` object to define where to connect the relation.
+The longhand syntax accepts an array of objects, each object containing the `documentId` of the entry to be connected and an optional `position` object to define where to connect the relation.
 
 :::note Different syntaxes for different relations
-The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 2 } }`, see [REST API documentation](/dev-docs/api/rest#requests)).
+The syntaxes described in this documentation are useful for one-to-many, many-to-many and many-ways relations.<br />For one-to-one, many-to-one and one-way relations, the syntaxes are also supported but only the last relation will be used, so it's preferable to use a shorter format (e.g.: `{ data: { category: 'a1b2c3d4e5f6g7h8i9j0klm' } }`, see [REST API documentation](/dev-docs/api/rest#requests)).
 :::
 
 To define the `position` for a relation, pass one of the following 4 different positional attributes:
 
 | Parameter name and syntax | Description                                                            | Type       |
 | ------------------------- | ---------------------------------------------------------------------- | ---------- |
-| `before: id`              | Positions the relation before the given `id`.                          | Entry `id` |
-| `after: id`               | Positions the relation after the given `id`.                           | Entry `id` |
+| `before: documentId`      | Positions the relation before the given `documentId`.                  | `documentId` (string) |
+| `after: documentId`       | Positions the relation after the given `documentId`.                   | `documentId` (string) |
 | `start: true`             | Positions the relation at the start of the existing list of relations. | Boolean    |
 | `end: true`               | Positions the relation at the end of the existing list of relations.   | Boolean    |
 
@@ -183,25 +199,25 @@ The same relation should not be connected more than once, otherwise it would ret
 
 Consider the following record in the database:
 
-```json
+```js
 categories: [
-  { id: 1 }
-  { id: 2 }
+  { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }
+  { documentId: 'z0y2x4w6v8u1t3s5r7q9onm' }
 ]
 ```
 
-Sending the following request updates the `restaurant` entity with `id` `1`, connecting a relation of entity with `id` `3` for the `categories` attribute and positioning it before the entity with `id` `2`:
+Sending the following request updates a `restaurant`, identified by its `documentId` `a1b2c3d4e5f6g7h8i9j0klm`, connecting a relation of entity with a `documentId` of `ma12bc34de56fg78hi90jkl` for the `categories` attribute and positioning it before the entity with `documentId` `z0y2x4w6v8u1t3s5r7q9onm`:
 
 <Request title="Example request to update the position of one relation">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
       connect: [
-        { id: 3, position: { before: 2 } },
+        { documentId: 'ma12bc34de56fg78hi90jkl', position: { before: 'z0y2x4w6v8u1t3s5r7q9onm' } },
       ]
     }
   }
@@ -215,10 +231,10 @@ Sending the following request updates the `restaurant` entity with `id` `1`, con
 
 Consider the following record in the database:
 
-```json
+```js
 categories: [
-  { id: 1 }
-  { id: 2 }
+  { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }
+  { documentId: 'z0y2x4w6v8u1t3s5r7q9onm' }
 ]
 ```
 
@@ -226,18 +242,18 @@ Sending the following example in the request body of a PUT request updates multi
 
 <Request title="Example request to reorder several relations">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
       connect: [
-        { id: 6, position: { after: 1} },
-        { id: 7, position: { before: 2 } },
-        { id: 8, position: { end: true } },
-        { id: 9 },
-        { id: 10, position: { start: true } },
+        { id: '6u86wkc6x3parjd4emikhmx', position: { after: 'j9k8l7m6n5o4p3q2r1s0tuv'} },
+        { id: '3r1wkvyjwv0b9b36s7hzpxl', position: { before: 'z0y2x4w6v8u1t3s5r7q9onm' } },
+        { id: 'rkyqa499i84197l29sbmwzl', position: { end: true } },
+        { id: 'srkvrr77k96o44d9v6ef1vu' },
+        { id: 'nyk7047azdgbtjqhl7btuxw', position: { start: true } },
       ]
     }
   }
@@ -246,17 +262,17 @@ Sending the following example in the request body of a PUT request updates multi
 
 </Request>
 
-Omitting the `position` argument (as in `id: 9`) defaults to `position: { end: true }`. All other relations are positioned relative to another existing `id` (using `after` or `before`) or relative to the list of relations (using `start` or `end`). Operations are treated sequentially in the order defined in the `connect` array, so the resulting database record will be the following:
+Omitting the `position` argument (as in `documentId: 'srkvrr77k96o44d9v6ef1vu9'`) defaults to `position: { end: true }`. All other relations are positioned relative to another existing `id` (using `after` or `before`) or relative to the list of relations (using `start` or `end`). Operations are treated sequentially in the order defined in the `connect` array, so the resulting database record will be the following:
 
-```json
+```js
 categories: [
-  { id: 10 },
-  { id: 1 },
-  { id: 6 },
-  { id: 7 },
-  { id: 2 },
-  { id: 8 },
-  { id: 9 }
+  { id: 'nyk7047azdgbtjqhl7btuxw' },
+  { id: 'j9k8l7m6n5o4p3q2r1s0tuv' },
+  { id: '6u86wkc6x3parjd4emikhmx6' },
+  { id: '3r1wkvyjwv0b9b36s7hzpxl7' },
+  { id: 'a1b2c3d4e5f6g7h8i9j0klm' },
+  { id: 'rkyqa499i84197l29sbmwzl' },
+  { id: 'srkvrr77k96o44d9v6ef1vu9' }
 ]
 ```
 
@@ -268,12 +284,12 @@ categories: [
 
 Using `disconnect` in the body of a request performs a partial update, disconnecting the specified relations.
 
-`disconnect` accepts either a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
+`disconnect` accepts either a shorthand or a longhand syntax:
 
 | Syntax type | Syntax example |
 | ------------|----------------|
-| shorthand   | `disconnect: [2, 4]`
-| longhand    | ```disconnect: [{ id: 2 }, { id: 4 }]``` |
+| shorthand   | `disconnect: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv']`
+| longhand    | ```disconnect: [{ documentId: 'z0y2x4w6v8u1t3s5r7q9onm' }, { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }]``` |
 
 `disconnect` can be used in combination with [`connect`](#connect).
 
@@ -283,17 +299,17 @@ Using `disconnect` in the body of a request performs a partial update, disconnec
 
 <TabItem value="shorthand" label="Shorthand syntax example">
 
-Sending the following request updates the `restaurant` entity with `id` `1`, disconnecting the relations with entities with `id` `2` and `4`:
+Sending the following request updates a `restaurant`, identified by its `documentId` `a1b2c3d4e5f6g7h8i9j0klm`, disconnecting the relations with 2 entries identified by their `documentId`:
 
 <Request title="Example request using the shorthand syntax">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
-      disconnect: [2, 4],
+      disconnect: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv'],
     }
   }
 }
@@ -305,19 +321,19 @@ Sending the following request updates the `restaurant` entity with `id` `1`, dis
 
 <TabItem value="longhand" label="Longhand syntax example">
 
-Sending the following request updates the `restaurant` entity with `id` `1`, disconnecting the relations with entities with `id` `2` and `4`:
+Sending the following request updates a `restaurant`, identified by its `documentId` `a1b2c3d4e5f6g7h8i9j0klm`, disconnecting the relations with 2 entries identified by their `documentId`:
 
 <Request title="Example request using the longhand syntax">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
       disconnect: [
-        { id: 2 },
-        { id: 4 }
+        { documentId: 'z0y2x4w6v8u1t3s5r7q9onm' },
+        { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }
       ],
     }
   }
@@ -333,21 +349,21 @@ Sending the following request updates the `restaurant` entity with `id` `1`, dis
 
 Using `set` performs a full update, replacing all existing relations with the ones specified, in the order specified.
 
-`set` accepts a shorthand or a longhand syntax. In the following examples, numbers refers to entity ids:
+`set` accepts a shorthand or a longhand syntax:
 
 | Syntax type | Syntax example                  |
 | ----------- | ------------------------------- |
-| shorthand   | `set: [2, 4]`                   |
-| longhand    | ```set: [{ id: 2 }, { id: 4 }]``` |
+| shorthand   | `set: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv']`                   |
+| longhand    | ```set: [{ documentId: 'z0y2x4w6v8u1t3s5r7q9onm' }, { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }]``` |
 
 As `set` replaces all existing relations, it should not be used in combination with other parameters. To perform a partial update, use [`connect`](#connect) and [`disconnect`](#disconnect).
 
 :::note Omitting set
 Omitting any parameter is equivalent to using `set`.<br/>For instance, the following 3 syntaxes are all equivalent:
 
-- `data: { categories: set: [{ id: 2 }, { id: 4 }] }}`
-- `data: { categories: set: [2, 4] }}`
-- `data: { categories: [2, 4] }` (as used in the [REST API documentation](/dev-docs/api/rest#update-an-entry))
+- `data: { categories: set: [{ documentId: 'z0y2x4w6v8u1t3s5r7q9onm' }, { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }] }}`
+- `data: { categories: set: ['z0y2x4w6v8u1t3s5r7q9onm2', 'j9k8l7m6n5o4p3q2r1s0tuv'] }}`
+- `data: { categories: ['z0y2x4w6v8u1t3s5r7q9onm2', 'j9k8l7m6n5o4p3q2r1s0tuv'] }`
 
 :::
 
@@ -355,17 +371,17 @@ Omitting any parameter is equivalent to using `set`.<br/>For instance, the follo
 
 <TabItem value="shorthand" label="Shorthand syntax example">
 
-Sending the following request updates the `restaurant` entity with `id` `1`, replacing all previously existing relations and using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
+Sending the following request updates a `restaurant`, identified by its `documentId` `a1b2c3d4e5f6g7h8i9j0klm`, replacing all previously existing relations and using the `categories` attribute to connect 2 categories identified by their `documentId`:
 
 <Request title="Example request using the shorthand syntax with set">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
-      set: [2, 4],
+      set: ['z0y2x4w6v8u1t3s5r7q9onm', 'j9k8l7m6n5o4p3q2r1s0tuv4'],
     }
   }
 }
@@ -377,19 +393,19 @@ Sending the following request updates the `restaurant` entity with `id` `1`, rep
 
 <TabItem value="longhand" label="Longhand syntax example">
 
-Sending the following request updates the `restaurant` entity with `id` `1`, replacing all previously existing relations and using the `categories` attribute to connect the entity with entities with `id` `2` and `4`:
+Sending the following request updates a `restaurant`, identified by its `documentId` `a1b2c3d4e5f6g7h8i9j0klm`, replacing all previously existing relations and using the `categories` attribute to connect 2 categories identified by their `documentId`:
 
 <Request title="Example request using the longhand syntax with set">
 
-`PUT http://localhost:1337/api/restaurants/1`
+`PUT http://localhost:1337/api/restaurants/a1b2c3d4e5f6g7h8i9j0klm`
 
-```json
+```js
 {
   data: {
     categories: {
       set: [
-        { id: 2 },
-        { id: 4 }
+        { documentId: 'z0y2x4w6v8u1t3s5r7q9onm' },
+        { documentId: 'j9k8l7m6n5o4p3q2r1s0tuv' }
       ],
     }
   }
