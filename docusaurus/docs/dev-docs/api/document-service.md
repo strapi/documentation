@@ -8,7 +8,6 @@ tags:
 - Documents
 - documentId
 - Document Service API
-- Query Engine API
 ---
 
 # Document Service API <BetaBadge />
@@ -20,6 +19,10 @@ With the Document Service API, you can also [count](#count) documents and, if [D
 :::strapi Entity Service API is deprecated in Strapi 5
 <!-- TODO: update this link to start with docs-v4 once stable is out -->
 The Document Service API is meant to replace the Entity Service API used in Strapi v4 ([see Strapi v4 documentation](https://docs.strapi.io/dev-docs/api/entity-service)). Additional information on how to transition away from the Entity Service API to the Document Service API can be found in the related [migration reference](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service).
+:::
+
+:::note
+Relations can also be connected, disconnected, and set through the Document Service API just like with the REST API (see the [REST API relations documentation](/dev-docs/api/rest/relations) for examples).
 :::
 
 ## `findOne()`
