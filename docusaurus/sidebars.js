@@ -388,6 +388,7 @@ const sidebars = {
             }
           ],
         },
+        'dev-docs/database-migrations',
         'dev-docs/testing',
         'dev-docs/error-handling',
       ]
