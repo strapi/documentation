@@ -16,6 +16,8 @@ const summaryStyle = {fontSize: '18px'}
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
+*Estimated completion time: 15-20 minutes*
+
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
@@ -31,9 +33,6 @@ Follow the steps below by clicking on the togglable content to read more instruc
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 1: Run the installation script</summary>
 
-:::strapi 
-Estimated time to complete this step: **10** minutes
-:::
 ### Step 1: Run the installation script
 
 Run the following command in a terminal:
@@ -67,9 +66,6 @@ The `quick start` installation sets up Strapi with a SQLite database. Other data
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Register the first local administrator user</summary>
 
-:::strapi 
-Estimated time to complete this step: **4** minutes
-:::
 
 ### Step 2: Register the first local administrator user
 
@@ -111,9 +107,6 @@ The Content-Type Builder helps you create your data structure. When creating an 
 
 <summary style={summaryStyle}>Step 1: Create a "Restaurant" collection type</summary>
 
-:::strapi 
-Estimated time to complete this step: **6** minutes
-:::
 
 ### Step 1: Create a "Restaurant" collection type
 
@@ -145,9 +138,6 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Create a "Category" collection type</summary>
 
-:::strapi 
-Estimated time to complete this step: **6** minutes
-:::
 
 ### Step 2: Create a "Category" collection type
 
@@ -186,9 +176,6 @@ Now that your beautiful first Strapi project is working locally, it's time for t
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 1: Host the code of your Strapi project on GitHub</summary>
 
-:::strapi 
-Estimated time to complete this step: **5** minutes
-:::
 
 ### Step 1: Host the code of your Strapi project on GitHub
 
@@ -217,9 +204,6 @@ Additional information about using git with the command line interface can be fo
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Create a Strapi Cloud account and a new Strapi Cloud project</summary>
 
-:::strapi 
-Estimated time to complete this step: **3** minutes
-:::
 
 ### Step 2: Create a Strapi Cloud account and a new Strapi Cloud project
 
@@ -261,10 +245,6 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
 
-:::strapi 
-Estimated time to complete this step: **4** minutes
-:::
-
 ### Step 1: Log in to the admin panel of your new Strapi Cloud project
 
 Now that your Strapi Cloud project is created, let's log in into the project:
@@ -301,9 +281,6 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Create an entry for the "Restaurant" collection type</summary>
 
-:::strapi 
-Estimated time to complete this step: **6** minutes
-:::
 
 ### Step 2: Create an entry for the "Restaurant" collection type
 
@@ -327,10 +304,6 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 3: Add Categories</summary>
-
-:::strapi 
-Estimated time to complete this step: **6** minutes
-:::
 
 #### Step 3: Add Categories
 
@@ -361,10 +334,6 @@ Now, we will add a category to a restaurant:
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 4: Set Roles & Permissions</summary>
 
-:::strapi 
-Estimated time to complete this step: **4** minutes
-:::
-
 ### Step 4: Set Roles & Permissions
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
@@ -390,9 +359,6 @@ sources={{
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 5: Publish the content</summary>
 
-:::strapi 
-Estimated time to complete this step: **4** minutes
-::: 
 ### Step 5: Publish the content
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
@@ -420,9 +386,6 @@ sources={{
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 6: Use the API</summary>
 
-:::strapi 
-Estimated time to complete this step: **3** minutes
-:::
 ### Step 6: Use the API
 
 OK dear gourmet, we have just finished creating our content and making it accessible through the API. You can give yourself a pat on the back — but you have yet to see the final result of your hard work.
