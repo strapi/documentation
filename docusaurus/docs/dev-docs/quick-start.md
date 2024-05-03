@@ -16,6 +16,8 @@ const summaryStyle = {fontSize: '18px'}
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
+*Estimated completion time: 15-20 minutes*
+
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
@@ -64,6 +66,7 @@ The `quick start` installation sets up Strapi with a SQLite database. Other data
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Register the first local administrator user</summary>
 
+
 ### Step 2: Register the first local administrator user
 
 Once the installation is complete, your browser automatically opens a new tab.
@@ -78,7 +81,7 @@ sources={{
     light: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel.png',
     dark: '/img/assets/quick-start-guide/qsg-handson-part1-01-admin_panel_DARK.png',
 }}
-/>
+/> 
 
 </details>
 
@@ -103,6 +106,7 @@ The Content-Type Builder helps you create your data structure. When creating an 
 <details style={detailsStyle}>
 
 <summary style={summaryStyle}>Step 1: Create a "Restaurant" collection type</summary>
+
 
 ### Step 1: Create a "Restaurant" collection type
 
@@ -133,6 +137,7 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Create a "Category" collection type</summary>
+
 
 ### Step 2: Create a "Category" collection type
 
@@ -171,6 +176,7 @@ Now that your beautiful first Strapi project is working locally, it's time for t
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 1: Host the code of your Strapi project on GitHub</summary>
 
+
 ### Step 1: Host the code of your Strapi project on GitHub
 
 Create a new GitHub repository and push the code of your Strapi project to this repository. If you're not already familiar with GitHub, the togglable content below should get you started 👇
@@ -197,6 +203,7 @@ Additional information about using git with the command line interface can be fo
 
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Create a Strapi Cloud account and a new Strapi Cloud project</summary>
+
 
 ### Step 2: Create a Strapi Cloud account and a new Strapi Cloud project
 
@@ -273,6 +280,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 <details style={detailsStyle}>
 <summary style={summaryStyle}>Step 2: Create an entry for the "Restaurant" collection type</summary>
+
 
 ### Step 2: Create an entry for the "Restaurant" collection type
 
