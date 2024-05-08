@@ -620,7 +620,7 @@ module.exports = (config) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./my-app/src/admin/vite,config.ts"
+```ts title="./my-app/src/admin/vite.config.ts"
 import { mergeConfig } from "vite";
 
 export default (config) => {
