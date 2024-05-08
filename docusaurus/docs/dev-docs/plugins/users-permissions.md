@@ -1266,3 +1266,45 @@ export default {
 :::tip
 You can learn more about configuration [here](/dev-docs/configurations).
 :::
+
+### Creating a custom callback validator
+
+By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
+
+<ThemedImage
+  alt="Users & Permissions configuration"
+  sources={{
+      light: '/img/assets/users-permissions/sso-config-custom-validator_DARK.png',
+      dark: '/img/assets/users-permissions/sso-config-custom-validator_DARK.png'
+    }}
+/>
+
+If you need to configure a custom handler to accept other URLs, you can create a callback `validate` function in your plugins.js for the â€˜users-permissionsâ€™ plugin.
+
+```tsx title="/config/plugins.js|ts"
+  // ... other plugins configuration ...
+  // Users & Permissions configuration
+  'users-permissions': {
+    enabled: true,
+    config: {
+      callback: {
+        validate: (cbUrl, options) => {
+		      // cbUrl is where Strapi is being asked to redirect the auth info
+		      // that was received from the provider to
+		      
+		      // in this case, we will only validate that the 
+		      // if using a base url, you should always include the trailing slash
+		      // although in real-world usage you should also include the full paths
+          if (cbUrl.startsWith('https://myproxy.mysite.com/') || 
+              cbUrl.startsWith('https://mysite.com/')) {
+            return;
+          }
+
+					// Note that you MUST throw an error to fail validation
+					// return values are not checked
+          throw new Error('Invalid callback url');
+        },
+      },
+    },
+  },
+```
