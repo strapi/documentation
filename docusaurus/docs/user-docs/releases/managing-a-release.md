@@ -3,6 +3,7 @@ title: Managing a release
 description: Instructions on how to manage a Release from the admin panel
 ---
 
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Managing a release <EnterpriseBadge /> <CloudTeamBadge />
 
@@ -20,11 +21,11 @@ Adding entries to a [release](/user-docs/releases/introduction) allow viewing th
 
 From a release page, you can:
 
-- edit the name of the release or delete the release (1)
-- manually publish the release (2),
-- adjust the view to display entries grouped either by locale, content-type, or action (publish/unpublish) (3),
-- decide whether individual items included to the releases will be published or unpublished with the release (4).
-- edit a specific entry or remove it from the release (5).
+- edit the name of the release or delete the release <ScreenshotNumberReference number="1" />
+- manually publish the release <ScreenshotNumberReference number="2" />,
+- adjust the view to display entries grouped either by locale, content-type, or action (publish/unpublish) <ScreenshotNumberReference number="3" />,
+- decide whether individual items included to the releases will be published or unpublished with the release <ScreenshotNumberReference number="4" />.
+- edit a specific entry or remove it from the release <ScreenshotNumberReference number="5" />.
 
 ## Editing a release
 
