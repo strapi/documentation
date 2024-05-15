@@ -39,7 +39,7 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          label: "Introduction",
+          label: "Introduction to Setup & Deployment",
           id: "dev-docs/setup-deployment",
         },
         {
@@ -49,7 +49,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to installation",
               id: "dev-docs/installation",
             },
             "dev-docs/installation/cli",
@@ -115,7 +115,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to deployment",
               id: "dev-docs/deployment",
             },
             {
@@ -134,7 +134,7 @@ const sidebars = {
               items: [
                 {
                   type: "doc",
-                  label: "Introduction",
+                  label: "Introduction to hosting guides",
                   id: "dev-docs/deployment/hosting-guides",
                 },
                 "dev-docs/deployment/amazon-aws",
@@ -155,7 +155,7 @@ const sidebars = {
               items: [
                 {
                   type: "doc",
-                  label: "Introduction",
+                  label: "Introduction to optional guides",
                   id: "dev-docs/deployment/optional-software-guides",
                 },
                 "dev-docs/deployment/caddy-proxy",
@@ -175,7 +175,7 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          label: "Introduction/Concepts",
+          label: "APIs Introduction/Concepts",
           id: "dev-docs/api/content-api",
         },
         {
@@ -185,7 +185,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/rest",
-              label: "Introduction",
+              label: "Introduction to REST APIs",
             },
             "dev-docs/api/rest/parameters",
             {
@@ -217,7 +217,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/entity-service",
-              label: "Introduction",
+              label: "Introduction to entity service",
             },
             "dev-docs/api/entity-service/crud",
             "dev-docs/api/entity-service/filter",
@@ -233,7 +233,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/query-engine",
-              label: "Introduction",
+              label: "Introduction to query engine",
             },
             "dev-docs/api/query-engine/single-operations",
             "dev-docs/api/query-engine/bulk-operations",
@@ -260,7 +260,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/backend-customization",
-              label: "Introduction",
+              label: "Introduction to backend customization",
             },
             {
               type: "doc",
@@ -341,7 +341,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to data management",
               id: "dev-docs/data-management",
             },
             "dev-docs/data-management/export",
@@ -362,7 +362,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to integrations",
               id: "dev-docs/integrations",
             },
             "dev-docs/integrations/11ty",
@@ -399,7 +399,7 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          label: "Introduction/Concepts",
+          label: "Plugins Introduction/Concepts",
           id: "dev-docs/plugins",
         },
         {
@@ -412,7 +412,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to using Plugins",
               id: "dev-docs/plugins/using-plugins",
             },
             {
@@ -465,7 +465,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction developing Plugins",
               id: "dev-docs/plugins/developing-plugins",
             },
             "dev-docs/plugins/development/create-a-plugin",
@@ -1066,7 +1066,7 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          label: "Introduction",
+          label: "Introduction to configuration",
           id: "dev-docs/configurations",
         },
         {
