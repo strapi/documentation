@@ -7,7 +7,7 @@ tags:
  - Content History
 ---
 
-# Working with Content History <BetaBadge/>
+# Working with Content History <Enterprise badge/> <BetaBadge/>
 
 The Content History feature of the Content Manager gives you the ability to browse and restore previous versions of documents created with the Content Manager.
 
