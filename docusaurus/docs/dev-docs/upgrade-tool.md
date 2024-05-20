@@ -85,13 +85,27 @@ npx @strapi/upgrade patch
 
 During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
 
-<!-- ## Run codemods only
+## Run codemods only
 
 Run the upgrade tool with the `codemods` parameter to execute a utility that allows selecting the codemods to be executed. With this command, only the codemods are run, the dependencies are not updated nor installed.
 
+If you just wish to view a list of the available codemods, use the `ls` command:
+
 ```bash
-npx @strapi/upgrade codemods
-``` -->
+npx @strapi/upgrade codemods ls
+```
+
+To select from a list of available codemods and run them, use the `run` command:
+
+```bash
+npx @strapi/upgrade codemods run
+```
+
+To run only a specific codemod, use `run` followed by a UID found from the `ls` command:
+
+```bash
+npx @strapi/upgrade codemods run 5.0.0-strapi-codemod-uid
+```
 
 ## Options
 
