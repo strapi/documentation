@@ -233,7 +233,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/query-engine",
-              label: "Introduction to query engine",
+              label: "Introduction to Query Engine API",
             },
             "dev-docs/api/query-engine/single-operations",
             "dev-docs/api/query-engine/bulk-operations",
