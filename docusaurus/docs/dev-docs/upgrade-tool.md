@@ -89,7 +89,7 @@ During the upgrade process, the project dependencies are updated and installed, 
 
 Run the upgrade tool with the `codemods` parameter to execute a utility that allows selecting the codemods to be executed. With this command, only the codemods are run, the dependencies are not updated nor installed.
 
-If you just wish to view a list of the available codemods, use the `ls` command:
+To view a list of the available codemods, use the `ls` command:
 
 ```bash
 npx @strapi/upgrade codemods ls
