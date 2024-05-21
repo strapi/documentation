@@ -4,14 +4,14 @@ description: Learn how to use the Plugin CLI to build and publish a Strapi plugi
 sidebar_label: Use the Plugin CLI
 displayed_sidebar: devDocsSidebar
 tags:
-- guides
-- plugins
-- plugin CLI
-- plugins development guides
-- Strapi plugin
+  - guides
+  - plugins
+  - plugin CLI
+  - plugins development guides
+  - Strapi plugin
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
 
 # How to use the Plugin CLI to create and publish a Strapi plugin
 
@@ -36,7 +36,7 @@ To create your plugin, ensure you are in the parent directory of where you want 
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn dlx @strapi/strapi plugin:init my-strapi-plugin
+yarn dlx @strapi/sdk-plugin init my-strapi-plugin
 ```
 
 </TabItem>
@@ -44,7 +44,7 @@ yarn dlx @strapi/strapi plugin:init my-strapi-plugin
 <TabItem value="npm" label="NPM">
 
 ```bash
-npx @strapi/strapi plugin:init my-strapi-plugin
+npx @strapi/sdk-plugin:init my-strapi-plugin
 ```
 
 </TabItem>
