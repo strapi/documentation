@@ -217,7 +217,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/entity-service",
-              label: "Introduction to entity service",
+              label: "Introduction to Entity Service API",
             },
             "dev-docs/api/entity-service/crud",
             "dev-docs/api/entity-service/filter",
