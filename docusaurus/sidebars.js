@@ -412,7 +412,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction to using Plugins",
+              label: "Introduction to using plugins",
               id: "dev-docs/plugins/using-plugins",
             },
             {
