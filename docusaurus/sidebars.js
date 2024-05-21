@@ -465,7 +465,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction developing plugins",
+              label: "Introduction to developing plugins",
               id: "dev-docs/plugins/developing-plugins",
             },
             "dev-docs/plugins/development/create-a-plugin",
