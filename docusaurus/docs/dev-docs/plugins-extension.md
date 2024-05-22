@@ -58,7 +58,7 @@ The final schema of the content-types depends on the following loading order:
 
 1. the content-types of the original plugin,
 2. the content-types overridden by the declarations in the [schema](/dev-docs/backend-customization/models#model-schema) defined in `./src/extensions/plugin-name/content-types/content-type-name/schema.json`
-3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/dev-docs/api/plugins/server-api#content-types)
+3. the content-types declarations in the [`content-types` key exported from `strapi-server.js|ts`](/dev-docs/plugins/server-api#content-types)
 4. the content-types declarations in the [`register()` function](/dev-docs/configurations/functions#register) of the Strapi application
 
 To overwrite a plugin's [content-types](/dev-docs/backend-customization/models):
@@ -90,7 +90,7 @@ To extend a plugin's server interface using the `./src/extensions` folder:
 
 1. _(optional)_ Create the `./src/extensions` folder at the root of the app, if the folder does not already exist.
 2. Create a subfolder with the same name as the plugin to be extended.
-3. Create a `strapi-server.js|ts` file to extend a plugin's back end using the [Server API](/dev-docs/api/plugins/server-api).
+3. Create a `strapi-server.js|ts` file to extend a plugin's back end using the [Server API](/dev-docs/plugins/server-api).
 4. Within this file, define and export a function. The function receives the `plugin` interface as an argument so it can be extended.
 
 <details>
@@ -116,7 +116,7 @@ module.exports = (plugin) => {
 
 ### Within the register and bootstrap functions
 
-To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/dev-docs/configurations/functions) of the whole project, and access the interface programmatically with [getters](/dev-docs/api/plugins/server-api#usage).
+To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/dev-docs/configurations/functions) of the whole project, and access the interface programmatically with [getters](/dev-docs/plugins/server-api#usage).
 
 <details>
 <summary>Example of extending a plugin's content-type within ./src/index.js|ts</summary>
