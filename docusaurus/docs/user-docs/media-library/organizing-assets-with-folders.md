@@ -11,6 +11,7 @@ tags:
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Organizing assets with folders
 
@@ -28,9 +29,9 @@ Folders follow the permission system of assets (see [Users, Roles & Permissions]
 
 By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
-- the folder title and breadcrumbs to navigate to a parent folder (1)
-- the subfolders (2) the current folder contains
-- all assets (3) from this folder
+- the folder title and breadcrumbs to navigate to a parent folder <ScreenshotNumberReference number="1" />
+- the subfolders <ScreenshotNumberReference number="2" /> the current folder contains
+- all assets <ScreenshotNumberReference number="3" /> from this folder
 
 <ThemedImage
   alt="Media library one folder deep, with back button and updated folder title"

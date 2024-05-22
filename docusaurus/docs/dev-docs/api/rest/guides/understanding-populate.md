@@ -18,6 +18,7 @@ import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # 🧠 Understanding the `populate` parameter for the REST API
 
@@ -876,9 +877,9 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various components and even components nested inside other components. For instance:
 
-- an `article` content-type includes a `seo` component (1),
-- the `seo` component includes a nested, repeatable `metaSocial` component (2),
-- and the `metaSocial` component itself has several fields, including an `image` media field (3).
+- an `article` content-type includes a `seo` component <ScreenshotNumberReference number="1" />,
+- the `seo` component includes a nested, repeatable `metaSocial` component <ScreenshotNumberReference number="2" />,
+- and the `metaSocial` component itself has several fields, including an `image` media field <ScreenshotNumberReference number="3" />.
 
 ![FoodAdvisor's SEO component structure in the Content-Type Builder](/img/assets/rest-api/ctb-article-components-structure.png)
 
@@ -1045,8 +1046,8 @@ With the shared population strategy, you apply the same population to all the co
 
 For instance, in the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
 
-- A `blocks` dynamic zone exists the `article` content-type (1).
-- The dynamic zone includes 3 different components: `relatedArticles` (2), `faq` (3), and `CtaCommandLine` (4). All components have a different data structure containing various fields.
+- A `blocks` dynamic zone exists the `article` content-type <ScreenshotNumberReference number="1" />.
+- The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different data structure containing various fields.
 
 ![FoodAdvisor's 'blocks' dynamic zone structure in the Content-Type Builder](/img/assets/rest-api/ctb-blocks-dynamic-zone-structure.png)
 
@@ -1259,9 +1260,9 @@ With the detailed population strategy, you can define per-component populate que
 
 For instance, in the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
 
-- A `blocks` dynamic zone exists the `article` content-type (1).
-- The dynamic zone includes 3 different components: `relatedArticles` (2), `faq` (3), and `CtaCommandLine` (4). All components have a different data structure containing various fields.
-- The `relatedArticles` component has an `articles` relation (5) with the article content-type.
+- A `blocks` dynamic zone exists the `article` content-type <ScreenshotNumberReference number="1" />.
+- The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different data structure containing various fields.
+- The `relatedArticles` component has an `articles` relation <ScreenshotNumberReference number="5" /> with the article content-type.
 
 ![FoodAdvisor's 'blocks' dynamic zone structure in the Content-Type Builder](/img/assets/rest-api/ctb-blocks-dynamic-zone-structure-2.png)
 
