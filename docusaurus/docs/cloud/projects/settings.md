@@ -53,6 +53,7 @@ Updating the git repository could result in the loss of the project and its data
     | Account         | Choose an account from the drop-down list.                               |
     | Repository      | Choose a repository from the drop-down list.                             |
     | Git branch      | Choose a branch from the drop-down list.                                 |
+    | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 4. Click on the **Save** button.
 5. In the confirmation dialog, confirm your changes by clicking on the **Relink repository** button.
