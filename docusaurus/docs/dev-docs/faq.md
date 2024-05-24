@@ -111,7 +111,7 @@ TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code ex
 Before trying the fix below, ensure you've executed your package manager's install command in your project.
 :::
 
-Strapi in its current version necessitates dependency hoisting.
+Strapi in its current version requires dependency hoisting.
 
 By default, most package managers enable hoisting, however, if it's not functioning as expected, you can try enforcing it via your package manager's configuration.
 
