@@ -44,40 +44,41 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 ### `connection` configuration object
 
-| Parameter                                                | Description                                                                                           | Type      | Default |
-|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
-| `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>`sqlite` for SQLite databases</li><li>`postgres` for PostgreSQL databases</li><li>`mysql` for MySQL databases</li></ul> | `String`  | -       |
-| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
-| `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
-| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
-| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
-| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
+| Parameter                                                | Description                                                                                                                                                                                                                                                               | Type      | Default |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
+| `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>`sqlite` for SQLite databases</li><li>`postgres` for PostgreSQL databases</li><li>`mysql` for MySQL databases</li><li>`cockroachdb` for CockroachDB databases (Experimental)</li></ul> | `String`  | -       |
+| `connection`                                             | Database [connection information](#connection-parameters)                                                                                                                                                                                                                 | `Object`  | -       |
+| `debug`                                                  | Show database exchanges and errors.                                                                                                                                                                                                                                       | `Boolean` | `false` |
+| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                                                                                                                                                                                             | `Boolean` | `true`  |
+| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                                                                                                                                                                                     | `Object`  | -       |
+| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds)                                                                                                                                                                     | `Integer` | `60000` |
 
 :::note
 Strapi only supports the following client values, and will automatically rewrite the `client` value to the following options before passing the configuration to Knex:
 
-| `client` value | Actual package used                                             |
-|----------------|-----------------------------------------------------------------|
-| sqlite         | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3)  |
-| mysql          | [mysql2](https://www.npmjs.com/package/mysql2)                  |
-| postgres       | [pg](https://www.npmjs.com/package/pg)                          |
+| `client` value         | Actual package used                                            |
+| ---------------------- | -------------------------------------------------------------- |
+| sqlite                 | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3) |
+| mysql                  | [mysql2](https://www.npmjs.com/package/mysql2)                 |
+| postgres & cockroachdb | [pg](https://www.npmjs.com/package/pg)                         |
+
 :::
 
 #### Connection parameters
 
 The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
 
-| Parameter  | Description                                                                                                                   | Type                  |
-|------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
-| `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
-| `port`     | Database port                                                                                                                 | `Integer`             |
-| `database` | Database name.                                                                                                                | `String`              |
-| `user`     | Username used to establish the connection                                                                                     | `String`              |
-| `password` | Password used to establish the connection                                                                                     | `String`              |
-| `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
-| `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
-| `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+| Parameter          | Description                                                                                                                                                             | Type                  |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `connectionString` | Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+** | `String`              |
+| `host`             | Database host name. Default value: `localhost`.                                                                                                                         | `String`              |
+| `port`             | Database port                                                                                                                                                           | `Integer`             |
+| `database`         | Database name.                                                                                                                                                          | `String`              |
+| `user`             | Username used to establish the connection                                                                                                                               | `String`              |
+| `password`         | Password used to establish the connection                                                                                                                               | `String`              |
+| `timezone`         | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php)                                           | `String`              |
+| `schema`           | Set the default database schema. **Used only for Postgres DB.**                                                                                                         | `String`              |
+| `ssl`              | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                                                                   | `Boolean` or `Object` |
 
 :::note
 Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
@@ -243,6 +244,34 @@ export default ({ env }) => ({
 
 </TabItem>
 </Tabs>
+
+</TabItem>
+
+<TabItem value="CockroachDB" label="CockroachDB">
+
+:::danger
+CockroachDB is currently experimental and should not be used in production.
+:::
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'cockroachdb',
+    connection: {
+      host: env('DATABASE_HOST', '127.0.0.1'),
+      port: env.int('DATABASE_PORT', 26257),
+      database: env('DATABASE_NAME', 'strapi'),
+      user: env('DATABASE_USERNAME', 'strapi'),
+      password: env('DATABASE_PASSWORD', 'strapi'),
+      schema: env('DATABASE_SCHEMA', 'public'), // Not required
+      ssl: {
+        rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false), // For self-signed certificates
+      },
+    },
+    debug: false,
+  },
+});
+```
 
 </TabItem>
 </Tabs>
