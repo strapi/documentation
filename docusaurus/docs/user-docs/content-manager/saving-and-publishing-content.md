@@ -105,8 +105,7 @@ If the draft version of the document contains content different from the publish
   }}
 />
 
-<!-- TODO: uncomment once doable again in Strapi 5 -->
-<!-- ### Bulk publishing and unpublishing
+### Bulk publishing and unpublishing
 
 Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
 
@@ -137,7 +136,7 @@ To unpublish several entries at the same time:
 
 1. From the list view of the Content Manager, select your entries to unpublish by ticking the box on the left side of the entries' record.
 2. Click on the **Unpublish** button located above the header of the table.
-3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button. -->
+3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button.
 
 ## Deleting content
 
