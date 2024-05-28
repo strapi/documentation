@@ -10,7 +10,11 @@ tags:
 - unpublishing content
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Saving, publishing and deleting content
+
+<NotV5/>
 
 Strapi allows you to manage your content throughout its whole lifecycle, whether you are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
 
@@ -113,6 +117,7 @@ Selecting multiple entries from the Content Manager's list view will display add
 If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
+<!-- TODO: update screenshot -->
 ![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
 
 #### Bulk publishing drafts
