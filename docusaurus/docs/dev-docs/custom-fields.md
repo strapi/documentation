@@ -59,8 +59,11 @@ The optional `inputSize` object, when specified, must contain all of the followi
 | `default`     | The default size in columns that the input field will occupy in the 12-column grid in the admin panel.<br/>The value can either be `4`, `6`, `8` or `12`. | `Integer` |
 | `isResizable` | Whether the input can be resized or not                                                                                                                   | `Boolean` |
 
-:::note
-Currently, custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization#model-attributes) documentation. Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, cannot be used in custom fields.
+:::note Current limitations
+Currently:
+* Custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization#model-attributes) documentation. 
+* You also cannot modify an existing data type.
+* Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, cannot be used in custom fields.
 :::
 
 <details>
