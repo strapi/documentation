@@ -60,7 +60,8 @@ Strapi only supports the following client values, and will automatically rewrite
 | ---------------------- | -------------------------------------------------------------- |
 | sqlite                 | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3) |
 | mysql                  | [mysql2](https://www.npmjs.com/package/mysql2)                 |
-| postgres & cockroachdb | [pg](https://www.npmjs.com/package/pg)                         |
+| postgres        | [pg](https://www.npmjs.com/package/pg)                     |
+| cockroachdb | [pg](https://www.npmjs.com/package/pg)                     |  
 
 :::
 
