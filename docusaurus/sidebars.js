@@ -142,6 +142,7 @@ const sidebars = {
                 "dev-docs/deployment/digitalocean-app-platform",
                 "dev-docs/deployment/digitalocean",
                 "dev-docs/deployment/heroku",
+                "dev-docs/deployment/koyeb",
               ],
             },
             {
