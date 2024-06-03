@@ -44,11 +44,13 @@ npx run strapi login
 </TabItem>
 </Tabs>
 
-4. In the browser window that opens automatically, choose whether to login via Google, GitHub or GitLab. The window should confirm the successful login soon after.
+4. In the browser window that opens automatically, confirm that the code displayed is the same as the one written in the terminal message.
+
+5. Still in the browser window, choose whether to login via Google, GitHub or GitLab. The window should confirm the successful login soon after.
 
 ## Deploying your project
 
-1. Still from your terminal and still from the folder of your Strapi project, enter the following command to deploy the project:
+1. From your terminal, still from the folder of your Strapi project, enter the following command to deploy the project:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">

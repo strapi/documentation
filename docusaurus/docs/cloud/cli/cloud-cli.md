@@ -24,9 +24,9 @@ Log in Strapi Cloud.
 strapi login
 ```
 
-This command automatically opens a browser window to log into Strapi Cloud via Google, GitHub or GitLab. Once the browser window confirms successful login, it can be safely closed.
+This command automatically opens a browser window to first ask you to confirm that the codes displayed in both the browser window and the terminal are the same. Then you will be able to log into Strapi Cloud via Google, GitHub or GitLab. Once the browser window confirms successful login, it can be safely closed.
 
-If the browser window doesn't automatically open, the terminal will display a clickable link as well as a code to enter manually.
+If the browser window doesn't automatically open, the terminal will display a clickable link as well as the code to enter manually.
 
 ## strapi deploy
 
