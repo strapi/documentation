@@ -32,13 +32,13 @@ If the browser window doesn't automatically open, the terminal will display a cl
 
 **Alias:** `strapi cloud:deploy`
 
-Deploy a new project (< 100MB), not already hosted on a remote git repository, in Strapi Cloud.
+Deploy a new local project (< 100MB) in Strapi Cloud.
 
 ```bash
 strapi deploy
 ```
 
-This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand. The terminal will display a progress bar until the project is successfully deployed on Strapi Cloud.
+This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand. The terminal will inform you when the project is successfully deployed on Strapi Cloud.
 
 Once the project is first deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
 
