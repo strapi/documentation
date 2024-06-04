@@ -229,7 +229,7 @@ Now your project is hosted on Strapi Cloud and accessible online. You can learn 
 :::
 
 :::tip
-Feel free to play with the Content-Type Builder even further and add more fields to your content-types or create new content-types. Anytime you make such changes, deploy them again on Strapi Cloud, by simply running the appropriate `deploy` command, and see your hosted project updated within a few minutes. Magical, isn't it? 🪄
+Feel free to play with the Content-Type Builder even further and add more fields to your content-types or create new content-types. Anytime you make such changes, deploy them again on Strapi Cloud, by running the appropriate `deploy` command, and see your hosted project updated within a few minutes. Magical, isn't it? 🪄
 :::
 
 ## 📝 Part D: Add content to your Strapi Cloud project with the Content Manager
