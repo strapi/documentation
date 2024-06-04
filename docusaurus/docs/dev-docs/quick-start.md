@@ -73,7 +73,7 @@ As you will see in the terminal, your project is now building locally and also g
 
 :::info
 * The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
-* The folder of your project will include a `.strapi-cloud.json` file that will be used to link the local Strapi project on your machine to the Strapi Cloud project.
+* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi Cloud project.
 :::
 
 </details>
