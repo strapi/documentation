@@ -91,7 +91,7 @@ Experimental Strapi versions are released every Tuesday through Saturday at midn
 Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
 
-### Self-hosting your Strapi project
+### Skipping the Strapi Cloud login step
 
 When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free, 14-day trial [Strapi Cloud](/cloud/intro#what-is-strapi-cloud) project as described in the [Quick Start Guide](/dev-docs/quick-start).
 
