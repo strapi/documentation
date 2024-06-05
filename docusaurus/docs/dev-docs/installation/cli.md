@@ -109,7 +109,7 @@ If you're not already familiar with GitHub, the togglable content below should g
 5. Log in to your GitHub account and [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories). Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
 6. Go back to the terminal and push your local repository to GitHub:
 
-  a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your actual GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
+  a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your own GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
 
   b. Run the `git push --set-upstream origin main` command to finally push the commit to your GitHub repository.
 
