@@ -93,7 +93,7 @@ Please use these experimental builds at your own risk. It is not recommended to 
 
 ### Self-hosting your Strapi project
 
-When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free, 14-day trial [Strapi Cloud](/cloud/intro#what-is-strapi-cloud) account as described in the [Quick Start Guide](/dev-docs/quick-start).
+When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free, 14-day trial [Strapi Cloud](/cloud/intro#what-is-strapi-cloud) project as described in the [Quick Start Guide](/dev-docs/quick-start).
 
 If you prefer hosting the project by yourself, use the arrow keys to select `Skip`. The script will resume and create a local project. To deploy this project and host it online, you will then have to host the project's code on a repository (e.g., on GitHub) before following a [3rd-party deployment guide](/dev-docs/deployment).
 
