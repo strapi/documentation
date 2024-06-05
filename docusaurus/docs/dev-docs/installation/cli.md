@@ -99,7 +99,7 @@ If you prefer skipping this Strapi Cloud login part, use the arrow keys to selec
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following a [3rd-party deployment guide](/dev-docs/deployment),
 - or use the [Cloud CLI](/cloud/cli/cloud-cli) commands to login to Strapi Cloud and deploy your project there.
 
-If you're not already familiar with GitHub, the togglable content below should get you started 👇
+If you want to host your project yourself and are not already familiar with GitHub, the togglable content below should get you started👇.
 
 <details>
 <summary>Steps required to push your Strapi project code to GitHub:</summary>
