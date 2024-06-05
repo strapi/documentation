@@ -210,7 +210,7 @@ To deploy your project on Strapi Cloud, in your terminal:
 
     </Tabs>
 
-Within a few moments, the script will get your local project hosted on Strapi Cloud. 🚀 
+Within a few moments, your local project will be hosted on Strapi Cloud. 🚀 
 
 Once it's done, the terminal will provide you a clickable link that starts with `https://cloud.strapi.io/projects`. Click on the link, or copy and paste it in your browser address bar, to visit the page.
 
