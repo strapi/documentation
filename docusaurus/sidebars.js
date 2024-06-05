@@ -739,6 +739,7 @@ const sidebars = {
             'user-docs/settings/API-tokens',
             'user-docs/settings/internationalization',
             'user-docs/settings/media-library-settings',
+            'user-docs/settings/releases',
             {
               type: 'doc',
               label: 'Review Workflows',
