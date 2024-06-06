@@ -82,23 +82,23 @@ and
 These callouts are provided with our Docusaurus theme.
 
 :::info
-This is an info callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is an info callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 :::note
-This is a note callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is a note callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 :::tip
-This is a tip callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is a tip callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 :::caution
-This is a caution callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is a caution callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 :::danger
-This is a danger callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is a danger callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 ### Custom callouts
