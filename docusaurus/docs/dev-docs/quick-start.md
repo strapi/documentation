@@ -203,7 +203,7 @@ To deploy your project on Strapi Cloud, in your terminal:
     <TabItem value="npm" label="NPM">
 
       ```sh
-      npx @strapi/strapi deploy
+      npm run strapi deploy
       ```
 
     </TabItem>
