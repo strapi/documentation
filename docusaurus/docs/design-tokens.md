@@ -121,10 +121,6 @@ This is a default callout with a title. It does not show any emoji by default, b
 This is a prerequisites callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
-:::info
-This is an info callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
-:::
-
 :::strapi
 This is a strapi callout with its default emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
@@ -157,7 +153,7 @@ This is the main column. Its content is sticky. Try to scroll the page and see w
 It can contain whatever you want:
 
 :::info
-This is an info callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is an info callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 </SideBySideColumn>
