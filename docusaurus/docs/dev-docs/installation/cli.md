@@ -79,7 +79,7 @@ The above installation guide only covers the basic installation option using the
 - `--typescript`/`--ts`: Create a project in [TypeScript](/dev-docs/typescript).
 - `--no-run`: Prevent Strapi from automatically starting the server (useful in combination with `--quickstart`).
 
-<!-- TODO: update with the flag to bypass the Cloud login -->
+- `--skip-cloud`: Automatically answers "Skip" to the Login/Signup question, which prevents the installation script from login into Strapi Cloud (useful in combination with `--quickstart`).
 
 For more information on available flags, see our [CLI documentation](/dev-docs/cli).
 
