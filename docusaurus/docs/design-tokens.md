@@ -118,15 +118,15 @@ This is a default callout with a title. It does not show any emoji by default, b
 :::
 
 :::prerequisites
-This is a prerequisites callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is a prerequisites callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 :::info
-This is an info callout with its default title and emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is an info callout with its default title and emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 :::strapi
-This is a strapi callout with its default emoji. It does not show any emoji by default. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
+This is a strapi callout with its default emoji. Qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.
 :::
 
 ## Custom layout components
