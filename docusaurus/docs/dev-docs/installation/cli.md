@@ -79,6 +79,14 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </TabItem>
 
+    <TabItem value="pnpm" label="pnpm">
+
+    ```bash
+    pnpm create strapi
+    ```
+    
+    </TabItem>
+
     </Tabs>
 
 2. Type the name of your project. If you press `Enter` instead of typing something, the default `my-strapi-project` name will be used.
