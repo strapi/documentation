@@ -33,7 +33,7 @@ A supported database is also required for any Strapi project:
 | SQLite     | 3           | 3       |
 
 :::caution
-Strapi v4 does not support MongoDB.
+Strapi does not support MongoDB.
 :::
 
 ## Creating a Strapi project
