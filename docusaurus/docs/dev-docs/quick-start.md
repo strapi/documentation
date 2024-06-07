@@ -35,18 +35,18 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     <Tabs groupId="yarn-npm">
 
-    <TabItem value="yarn" label="Yarn">
-
-    ```bash
-    yarn create strapi-app my-strapi-project --quickstart
-    ```
-
-    </TabItem>
-
     <TabItem value="npm" label="NPM">
 
     ```bash
     npx create-strapi-app@latest my-strapi-project --quickstart
+    ```
+
+    </TabItem>
+
+    <TabItem value="yarn" label="Yarn">
+
+    ```bash
+    yarn create strapi-app my-strapi-project --quickstart
     ```
 
     </TabItem>
