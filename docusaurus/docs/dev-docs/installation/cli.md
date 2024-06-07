@@ -44,57 +44,87 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     <Tabs groupId="yarn-npm">
 
-    <TabItem value="yarn" label="Yarn">
-
-    ```bash
-    yarn create strapi-app my-project
-    # 'yarn create' creates a new project
-    # 'strapi-app' is the Strapi package
-    # 'my-project' is the name of your Strapi project
-    ```
-    
-    </TabItem>
-
     <TabItem value="npm" label="NPM">
 
     ```bash
-    npx create-strapi-app@latest my-project
-    # 'npx' runs a command from an npm package
-    # 'create-strapi-app' is the Strapi package
-    # '@latest' indicates that the latest version of Strapi is used
-    # 'my-project' is the name of your Strapi project
+    npx create-strapi@latest
     ```
+
+    <details>
+    <summary>Additional explanations for the command:</summary>
+
+    * `npx` runs a command from a npm package
+    * `create-strapi` is the Strapi package
+    * `@latest` indicates that the latest version of Strapi is used
     
+    <br/>
+
+    Instead of npx, the traditional npm command can be used too, with `npm create strapi@latest`.
+
+    Please note the additional dash between create and strapi when using npx: `npx create-strapi` vs. `npm create strapi`.
+    </details>
+    
+    </TabItem>
+
+    <TabItem value="yarn" label="Yarn">
+
+    ```bash
+    yarn create strapi
+   
+    ```
+
+    :::note
+    Yarn does not support passing the version tag such as `@latest`, as opposed to npm. If you experience unexpected results with yarn and the latest version of Strapi is not installed, you might need to [run the `yarn cache clean` command](https://yarnpkg.com/cli/cache/clean) to clean your Yarn cache.
+    :::
+
     </TabItem>
 
     </Tabs>
 
-2. Choose an installation type:
+2. Type the name of your project. If you press `Enter` instead of typing something, the default `my-strapi-project` name will be used.
 
-   - `Quickstart (recommended)`, which uses the default database (SQLite)
-   - `Custom (manual settings)`, which allows to choose your preferred database
+    :::tip
+    This question can be skipped by passing the project name to the command at step 1 (e.g., `npx create-strapi@latest my-strapi-project`).
+    :::
 
-3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
+3. Choose whether you want to use TypeScript or not, by typing `y` for yes or `n` for no, then pressing `Enter`.<br/>If you press `Enter` without typing anything, as "yes" is the default selected option, it will create a TypeScript project.
 
-4. (Custom installation type only) Name your project's database.
+4. Choose whether you want to use the default database type (SQLite) or not, by typing `y` for "yes" or `n` for "no", then pressing `Enter`.<br/>If you press `Enter` without typing anything, as "yes" is the default selected option, it will create a project with a SQLite database.
+
+5. _(optional)_ If you answered `n` for "no" to the previous (default database) question, the CLI will ask for more questions about the database:
+
+    * Use arrow keys to select the database type you want, then press `Enter`.
+    * Give the database a name, define the database host address and port, define the database admin username and password, and define whether the database will use a SSL connection.<br/>For any of these questions, if you press `Enter` without typing anything, the default value (indicated in parentheses in the terminal output) will be used.
+
+Once all questions have been answered, the script will start creating the Strapi project.
 
 ### CLI installation options
 
 The above installation guide only covers the basic installation option using the CLI. There are other options that can be used when creating a new Strapi project, for example:
 
-- `--quickstart`: Directly create the project in quickstart mode.
-- `--template`: Create a project with pre-made Strapi configurations (see [Templates](/dev-docs/templates)).
-- `--typescript`/`--ts`: Create a project in [TypeScript](/dev-docs/typescript).
-- `--no-run`: Prevent Strapi from automatically starting the server (useful in combination with `--quickstart`).
+| Option | Description |
+|--------|---------------------------------------------------------|
+| `--no-run` | Do not start the application after it is created |
+| `--ts`<br/>`--typescript` | Initialize the project with TypeScript (default) |
+| `--js`<br/>`--javascript` | Initialize the project with JavaScript  |
+| `--use-npm` | Force the usage of [npm](https://www.npmjs.com/) as the project package manager |
+| `--use-yarn` | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager |
+| `--use-pnpm` | Force the usage of [pnpm](https://pnpm.io/) as the project package manager |
+| `--template` | Create a project with pre-made Strapi configurations (see [Templates](/dev-docs/templates)). |
+| `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
+| `--dbhost <dbhost>` | Define the database host to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--dbport <dbport>` | Define the database port to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--dbname <dbname>` | Define the database name to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--dbusername <dbusername>` | Define the database username to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--dbpassword <dbpassword>` | Define the database password to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--dbssl <dbssl>` | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default) |
+| `--dbfile <dbfile>` | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--quickstart` | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. |
 
-For more information on available flags, see our [CLI documentation](/dev-docs/cli).
-
-Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
-
-:::tip
-Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
-
-Please use these experimental builds at your own risk. It is not recommended to use them in production.
+:::note Notes
+* If you do not pass a `--use-yarn|npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
+* For additional information about database configuration, please refer to the [database configuration documentation](/dev-docs/configurations/database#configuration-structure).
+* Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
 
 ## Running Strapi
