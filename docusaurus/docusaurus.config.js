@@ -280,7 +280,7 @@ const config = {
       "posthog-docusaurus",
       {
         apiKey: "phc_DETCfjmHIm184mceL8duwutdQgOnVTZSC59xontNRWN",
-        appUrl: "https://us.i.posthog.com", // optional, defaults to "https://us.i.posthog.com"
+        appUrl: "https://eu.i.posthog.com", // optional, defaults to "https://us.i.posthog.com"
         enableInDevelopment: false, // optional
       },
     ],
