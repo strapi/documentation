@@ -280,6 +280,40 @@ categories: [
 
 </Tabs>
 
+### Edge cases: Draft & Publish or i18n disabled
+
+When some built-in features of Strapi 5 are disabled for a content-type, such as [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) and [Internationalization (i18)](/user-docs/content-manager/translating-content), the `connect` parameter might be used differently:
+
+**Relation from a `Category` with i18n _off_ to an `Article` with i18n _on_:**
+
+In this situation you can select which locale you are connecting to:
+
+```js
+data: {
+    categories: {
+      connect: [
+        { documentId: 'z0y2x4w6v8u1t3s5r7q9onm', locale: 'en' },
+        // Connect to the same document id but with a different locale 👇
+        { documentId: 'z0y2x4w6v8u1t3s5r7q9onm', locale: 'fr' },
+      ]
+   }
+}
+```
+
+**Relation from a `Category` with Draft & Publish _off_ to an `Article` with Draft & Publish _on_:**
+
+```js
+data: {
+  categories: {
+    connect: [
+      { documentId: 'z0y2x4w6v8u1t3s5r7q9onm', status: 'draft' },
+      // Connect to the same document id but with different publication states 👇
+      { documentId: 'z0y2x4w6v8u1t3s5r7q9onm', status: 'published' },
+    ]
+  }
+}
+```
+
 ## `disconnect`
 
 Using `disconnect` in the body of a request performs a partial update, disconnecting the specified relations.
