@@ -10,7 +10,11 @@ tags:
 - unpublishing content
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Saving, publishing and deleting content
+
+<NotV5/>
 
 Strapi allows you to manage your content throughout its whole lifecycle, whether you are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
 
@@ -105,8 +109,7 @@ If the draft version of the document contains content different from the publish
   }}
 />
 
-<!-- TODO: uncomment once doable again in Strapi 5 -->
-<!-- ### Bulk publishing and unpublishing
+### Bulk publishing and unpublishing
 
 Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
 
@@ -114,6 +117,7 @@ Selecting multiple entries from the Content Manager's list view will display add
 If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
+<!-- TODO: update screenshot -->
 ![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
 
 #### Bulk publishing drafts
@@ -137,7 +141,7 @@ To unpublish several entries at the same time:
 
 1. From the list view of the Content Manager, select your entries to unpublish by ticking the box on the left side of the entries' record.
 2. Click on the **Unpublish** button located above the header of the table.
-3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button. -->
+3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button.
 
 ## Deleting content
 

@@ -105,6 +105,19 @@ Due to these two issues, it is recommended you use a proxy application such as [
 
 TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/dev-docs/typescript.md).
 
+## How to fix the build error `Error: Cannot find module @strapi/XXX`
+
+:::caution
+Before trying the fix below, ensure you've executed your package manager's install command in your project.
+:::
+
+Strapi in its current version requires dependency hoisting.
+
+By default, most package managers enable hoisting, however, if it's not functioning as expected, you can try enforcing it via your package manager's configuration.
+
+- If you are using npm or pnpm: Add `hoist=true` to your project's `.npmrc` file. Learn more about this from the [official pnpm documentation](https://pnpm.io/npmrc#hoist)
+- If you are using Yarn: Set `nmHoistingLimits` in your `.yarnrc` file. More details can be found in the [Yarn official documentation](https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits)
+
 ## Is X feature available yet?
 
 You can see the [public roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.

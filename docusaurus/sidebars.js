@@ -53,7 +53,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction to Setup & Deployment',
           id: 'dev-docs/setup-deployment',
         },
         {
@@ -63,7 +63,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to installation',
               id: 'dev-docs/installation',
             },
             'dev-docs/installation/cli',
@@ -77,7 +77,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to configuration',
               id: 'dev-docs/configurations',
             },
             'dev-docs/configurations/database',
@@ -107,7 +107,7 @@ const sidebars = {
           items: [
            {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to deployment',
               id: 'dev-docs/deployment',
             },
             {
@@ -126,7 +126,7 @@ const sidebars = {
               items: [
                 {
                   type: 'doc',
-                  label: 'Introduction',
+                  label: 'Introduction to hosting guides',
                   id: 'dev-docs/deployment/hosting-guides',
                 },
                 'dev-docs/deployment/amazon-aws',
@@ -147,7 +147,7 @@ const sidebars = {
               items: [
                 {
                   type: 'doc',
-                  label: 'Introduction',
+                  label: 'Introduction to optional guides',
                   id: 'dev-docs/deployment/optional-software-guides',
                 },
                 'dev-docs/deployment/caddy-proxy',
@@ -168,7 +168,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction & Concepts',
+          label: 'APIs Introduction & Concepts',
           id: 'dev-docs/api/content-api',
           customProps: {
             updated: true,
@@ -188,7 +188,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/api/rest',
-              label: 'Introduction',
+              label: 'Introduction to REST APIs',
             },
             'dev-docs/api/rest/parameters',
             'dev-docs/api/rest/populate-select',
@@ -216,7 +216,7 @@ const sidebars = {
             {
               type:'doc',
               id: 'dev-docs/integrations',
-              label: 'Introduction',
+              label: 'Introduction to integrations',
             },
             'dev-docs/integrations/11ty',
             'dev-docs/integrations/angular',
@@ -312,7 +312,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to Query Engine API',
               id: 'dev-docs/api/query-engine',
             },
             'dev-docs/api/query-engine/single-operations',
@@ -335,7 +335,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction to advanced features',
           id: 'dev-docs/advanced-features',
           customProps: {
             new: true,
@@ -376,7 +376,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to data management',
               id: 'dev-docs/data-management',
             },
             'dev-docs/data-management/export',
@@ -388,6 +388,8 @@ const sidebars = {
             }
           ],
         },
+        'dev-docs/database-migrations',
+        'dev-docs/database-transactions',
         'dev-docs/testing',
         'dev-docs/error-handling',
       ]
@@ -403,7 +405,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction & Concepts',
+          label: 'Customization Introduction & Concepts',
           id: 'dev-docs/customization',
           customProps: {
             new: true,
@@ -420,7 +422,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/backend-customization',
-              label: 'Introduction',
+              label: 'Introduction to backend customization',
             },
             {
               type: 'doc',
@@ -449,7 +451,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction & Concepts',
+          label: 'Plugins Introduction & Concepts',
           id: 'dev-docs/plugins'
         },
         {
@@ -462,7 +464,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to using plugins',
               id: 'dev-docs/plugins/using-plugins'
             },
             {
@@ -512,7 +514,7 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
+              label: 'Introduction to developing plugins',
               id: 'dev-docs/plugins/developing-plugins'
             },
             'dev-docs/plugins/development/create-a-plugin',
@@ -558,7 +560,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction to update migration',
           id: 'dev-docs/update-migration',
           customProps: {
             new: true,
@@ -610,7 +612,11 @@ const sidebars = {
                 new: true,
               },
               items: [
-                'dev-docs/migration/v4-to-v5/guides/introduction',
+                {
+                  type: 'doc',
+                  label: 'Introduction to migration guides',
+                  id: 'dev-docs/migration/v4-to-v5/introduction'
+                },
                 'dev-docs/migration/v4-to-v5/guides/plugins-migration',
                 'dev-docs/migration/v4-to-v5/guides/helper-plugin',
                 'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
@@ -1029,7 +1035,7 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Introduction',
+          label: 'Introduction to configurations',
           id: 'dev-docs/configurations',
         },
         {

@@ -866,7 +866,7 @@ module.exports = [
   {
     name: 'strapi::session',
     config: {
-      rolling: true
+      rolling: true,
       renew: true
     },
   },
@@ -885,7 +885,7 @@ export default [
   {
     name: 'strapi::session',
     config: {
-      rolling: true
+      rolling: true,
       renew: true
     },
   },

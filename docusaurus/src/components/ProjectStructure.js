@@ -129,7 +129,6 @@ export default function InteractiveProjectStructure() {
       │     │           ├──── <a href="/dev-docs/backend-customization/routes">routes</a><br/>
       │     │           ├──── <a href="/dev-docs/backend-customization/services">services</a><br/>
       │     │           └ index.ts<br/>
-      │     │
       │     ├──── <a href="/dev-docs/backend-customization/models">components</a><br/>
       │     │     └──── (category-name)<br/>
       │     │           ├ (componentA).json<br/>

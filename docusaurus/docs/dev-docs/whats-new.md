@@ -14,6 +14,8 @@ Strapi 5 beta brings many new features and improvements, and this page quickly h
 
 🧑‍🎨 The [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature has been fully reworked. When Draft & Publish is enabled, the Content Manager edit view shows 2 different tabs, one for the draft version and one for the published version, and both can handle different content.
 
+🧙‍♀️ The new [Content History](/user-docs/content-manager/working-with-content-history) feature allows you to view and restore previous versions of your content from the Content Manager.
+
 🧑‍🏫 Strapi 5 now use [documents](/dev-docs/api/document) and introduces a new [Document Service API](/dev-docs/api/document-service) to replace the Entity Service API from v4, leveraging the new Draft & Publish system and paving the way for more upcoming features.
 
 🕵️ The [REST API](/dev-docs/api/rest) and [GraphQL API](/dev-docs/api/graphql) have been updated, with a simplified response data format for both and partial support for Relay-style queries for GraphQL.

@@ -10,6 +10,7 @@ tags:
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Managing individual assets
 
@@ -29,13 +30,13 @@ Clicking on the edit ![Edit icon](/img/assets/icons/edit.svg) button of an asset
   }}
 />
 
-- On the left, above the preview of the asset, control buttons (1) allow performing various actions:
+- On the left, above the preview of the asset, control buttons <ScreenshotNumberReference number="1" /> allow performing various actions:
   - click on the delete button ![Delete icon](/img/assets/icons/delete.svg) to delete the asset,
   - click on the download button ![Download icon](/img/assets/icons/download.svg) to download the asset,
   - click on the copy link button ![Copy link icon](/img/assets/icons/link.svg) to copy the asset's link to the clipboard,
   - optionally, click on the crop button ![Copy link icon](/img/assets/icons/crop.svg) to enter cropping mode for the image (see [cropping images](#cropping-images)).
-- On the right, meta data for the asset is displayed at the top of the window (2) and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Asset location_ (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders.md)) for the asset (3).
-- At the bottom, the **Replace Media** button (4) can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
+- On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Asset location_ (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders.md)) for the asset <ScreenshotNumberReference number="3" />.
+- At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
 
 ## Moving assets
 
