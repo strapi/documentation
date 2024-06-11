@@ -55,9 +55,9 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
 2. The terminal will invite you to create a Strapi Cloud account and start a free, 14-day trial. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
 
-3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.<br/>Alternatively, if a browser tab did not automatically open, copy and paste the link from the terminal and type the confirmation code into the form if it's not pre-filled already, then click **Confirm**.
+3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 
-4. Still in the browser tab, click **Continue with GitHub**. If you are not already logged in into GitHub with your current browser session, you might be redirected to a GitHub login page. 
+4. Still in the browser tab, click **Continue with GitHub**. If you are not already logged in into GitHub with your current browser session, you might be redirected to a GitHub login page.
 
 5. Once logged in, the browser will display a "Congratulations, you're all set!" message and you can safely close the browser tab and get back to the terminal.
 
