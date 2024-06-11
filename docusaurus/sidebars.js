@@ -389,6 +389,7 @@ const sidebars = {
           ],
         },
         'dev-docs/database-migrations',
+        'dev-docs/database-transactions',
         'dev-docs/testing',
         'dev-docs/error-handling',
       ]

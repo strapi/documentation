@@ -27,6 +27,8 @@ Strapi provides advanced built-in features for developers who'd like to get the 
 
 <CustomDocCard title="Database migrations" description="Manage database migrations operations." link="/dev-docs/database-migrations" />
 
+<CustomDocCard title="Database transactions" description="Use an API to wrap a set of operations in a transaction that ensures the integrity of data." link="/dev-docs/database-transactions" />
+
 <CustomDocCard title="Unit testing" description="Run basic unit tests for a Strapi project." link="/dev-docs/testing" />
 
 <CustomDocCard title="Error handling" description="Handle errors received through REST and GraphQL requests, or throw errors through the backend server." link="/dev-docs/error-handling" />
