@@ -15,7 +15,7 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 - with [policies](#policies), which are a way to block access to a route,
 - and with [middlewares](#middlewares), which are a way to control and change the request flow and the request itself.
 
-Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/dev-docs/backend-customization/controllers)).
+Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/dev-docs/backend-customization/controllers)). To view all existing routes and their hierarchal order, you can run `yarn strapi routes:list` (see [CLI reference](/dev-docs/cli)).
 
 <figure style={imgStyle}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
@@ -319,7 +319,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         policies: [
           // point to a registered policy
@@ -350,7 +350,7 @@ export default {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         policies: [
           // point to a registered policy
@@ -462,7 +462,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         middlewares: [
           // point to a registered middleware
@@ -493,7 +493,7 @@ export default  {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         middlewares: [
           // point to a registered middleware
@@ -582,7 +582,7 @@ module.exports = {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         auth: false,
       },
@@ -602,7 +602,7 @@ export default  {
     {
       method: 'GET',
       path: '/articles/customRoute',
-      handler: 'controllerName.actionName',
+      handler: 'api::api-name.controllerName.functionName', // or 'plugin::plugin-name.controllerName.functionName' for a plugin-specific controller
       config: {
         auth: false,
       },

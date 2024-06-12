@@ -17,6 +17,10 @@ Contributing to the Strapi documentation implies 2 steps:
 
 2. [Submit a pull request](#-pull-requests) for review.
 
+***
+*Please note*: The Strapi Documentation team is currently not accepting new deployment or integration guides. These guides will soon be moved to another resource and probably only maintained by the Strapi Community while the Strapi Documentation team will focus on documenting only core Strapi products and features. Thank you for your understanding 🙏
+***
+
 ## 🦖 Docusaurus
 
 Strapi’s documentation is built with the React- and Markdown-based [Docusaurus](https://docusaurus.io) framework.

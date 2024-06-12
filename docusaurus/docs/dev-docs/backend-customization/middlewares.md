@@ -196,7 +196,7 @@ Proper implementation largely depends on your project's needs and custom code, b
     };
   ```
 
-7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the methods (`create`, `read`, `update`, `delete`) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET (i.e., `read` method) and POST (i.e., `create` method) requests to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` method) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
+7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the methods (`find`, `findOne`, `read`, `update`, `delete`) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET (i.e., `find` and `findOne` methods) and POST (i.e., `create` method) requests to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` method) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
 
     ```js title="src/api/restaurant/routes/restaurant.js"
 

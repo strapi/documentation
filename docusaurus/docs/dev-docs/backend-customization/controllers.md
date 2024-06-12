@@ -265,6 +265,15 @@ When a new [content-type](/dev-docs/backend-customization/models#content-types) 
 
 ### Sanitization and Validation in controllers
 
+Sanitization means that the object is “cleaned” and returned.
+
+Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
+
+In Strapi:
+
+- validation is applied on query parameters, 
+- and only sanitization is applied to input data (create and update body data).
+
 :::warning
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::

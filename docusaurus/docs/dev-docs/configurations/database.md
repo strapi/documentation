@@ -33,7 +33,7 @@ The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 
 
 | Parameter                                                | Description                                                                                           | Type      | Default |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
-| `client`                                                 | Database client to create the connection. `sqlite` or `postgres` or `mysql` (or `mysql2`, see [additional details](#alternative-database-driver-packages) | `String`  | -       |
+| `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>For SQLite databases:<ul><li>`sqlite3`</li><li>`better-sqlite3`</li></ul></li><li>For PostgreSQL databases: `postgres`</li><li>For MySQL databases:<ul><li>`mysql`</li><li>`mysql2` (see [additional details](#alternative-database-driver-packages))</li></ul></li></ul> | `String`  | -       |
 | `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
@@ -550,5 +550,5 @@ $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 In addition to `client` values of '[postgres](https://www.npmjs.com/package/pg)', 'sqlite', and '[mysql](https://www.npmjs.com/package/mysql)', Strapi also allows a `client` value of '[mysql2](https://www.npmjs.com/package/mysql2)' for those who install and wish to use that package.
 
 :::note
-`mysql2` is required for the `caching_sha2_password` auth method used by default in MySQL v8+. If you receive an `"ER_NOT_SUPPORTED_AUTH_MODE"` error when using the `mysql` driver, try adding the `mysql2` package to your project. You should then remove the deprecated `connectionString` parameter from your connection configuration in favor of the `username` and `password` values.
+`mysql2` is required for the `caching_sha2_password` auth method used by default in MySQL v8+. If you receive an `"ER_NOT_SUPPORTED_AUTH_MODE"` error when using the `mysql` driver, try adding the `mysql2` package to your project. You should then remove the deprecated `connectionString` parameter from your connection configuration in favor of the `user` and `password` values.
 :::

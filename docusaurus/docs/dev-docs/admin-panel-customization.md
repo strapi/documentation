@@ -451,7 +451,7 @@ To replace the favicon, use the following procedure:
 4. Update `./src/admin/app.js` with the following:
 
    ```js title="./src/admin/app.js"
-   import favicon from "../extensions/favicon.png";
+   import favicon from "./extensions/favicon.png";
 
    export default {
      config: {
@@ -620,7 +620,7 @@ module.exports = (config) => {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./my-app/src/admin/vite,config.ts"
+```ts title="./my-app/src/admin/vite.config.ts"
 import { mergeConfig } from "vite";
 
 export default (config) => {

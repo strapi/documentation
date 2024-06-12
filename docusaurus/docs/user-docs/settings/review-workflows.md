@@ -5,10 +5,6 @@ description: Managing your review workflows and stages in Strapi.
 
 # Managing Review Workflows <EnterpriseBadge /> <CloudTeamBadge/>
 
-:::info
-Review Workflows is an <EnterpriseBadge />-only feature.
-:::
-
 The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
 <ThemedImage
