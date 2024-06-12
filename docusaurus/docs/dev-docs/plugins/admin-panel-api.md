@@ -202,6 +202,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
+
 :::tip Replacing the WYSIWYG
 The WYSIWYG editor can be replaced by taking advantage of [custom fields](/dev-docs/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
 :::
@@ -223,6 +224,8 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                      |
 | `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
+| `position`    | Integer          | Position in the menu      |
+| `licenseOnly` | Boolean | If set to `true`, adds a lightning ⚡️ icon next to the icon or menu entry to indicate that the feature or plugin requires a paid license.<br/>(Defaults to `false`) |
 
 :::note
 `intlLabel.id` are ids used in translation files (`[plugin-name]/admin/src/translations/[language].json`)
@@ -244,6 +247,8 @@ export default {
       },
       Component: () => 'My plugin',
       permissions: [], // permissions to apply to the link
+      position: 3, // position in the menu
+      licenseOnly: true, // mark the feature as a paid one not available in your license
     });
     app.registerPlugin({ ... });
   },
@@ -271,6 +276,7 @@ All functions accept links as objects with the following parameters:
 | `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                       |
 | `permissions` | Array of Objects | Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                          |
+| `licenseOnly` | Boolean | If set to `true`, adds a lightning ⚡️ icon next to the icon or menu entry to indicate that the feature or plugin requires a paid license.<br/>(Defaults to `false`) |
 
 #### createSettingSection()
 
@@ -348,7 +354,8 @@ export default {
 				id: String,
 				to: String,
 				Component: myComponent,
-				permissions: Object[]
+				permissions: Object[],
+        licenseOnly: true, // mark the feature as a paid one not available in your license
 			}
     )
   }
@@ -383,7 +390,8 @@ export default {
           id: String,
           to: String,
           Component: myComponent,
-          permissions: Object[]
+          permissions: Object[],
+          licenseOnly: true, // mark the feature as a paid one not available in your license
         }]
     )
   }
