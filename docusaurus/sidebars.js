@@ -1192,7 +1192,7 @@ const sidebars = {
             {
               type: "category",
               collapsed: false,
-              label: "Plugins and providers",
+              label: "Plugins, providers, and admin panel customization",
               link: {
                 type: 'doc',
                 id: "dev-docs/migration/v4-to-v5/breaking-changes"
@@ -1202,11 +1202,12 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated',
                 'dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component',
                 'dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables',
+                'dev-docs/migration/v4-to-v5/breaking-changes/license-only',
               ]
             },
             {
               type: "category",
-              label: "Strapi objects, methods, and packages",
+              label: "Strapi objects, methods, packages, and back-end cutomization",
               collapsed: false,
               items: [
                 'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
@@ -1215,6 +1216,7 @@ const sidebars = {
                 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored',
                 // 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container', // might change
                 'dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service',
+                'dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale',
               ]
             },
             {
@@ -1241,14 +1243,6 @@ const sidebars = {
                 },
                 'dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6',
                 'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
-              ]
-            },
-            {
-              type: "category",
-              label: "Internal changes",
-              collapsed: false,
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale',
               ]
             },
           ]
