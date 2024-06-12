@@ -10,6 +10,8 @@ tags:
 - hooks API
 - Injection Zones API
 - lifecycle function
+- menu
+- settings
 - plugins
 - plugins development
 - register function
