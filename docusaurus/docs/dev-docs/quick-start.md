@@ -16,12 +16,10 @@ const summaryStyle = {fontSize: '18px'}
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
-*Estimated completion time: 15-20 minutes*
+*Estimated completion time: 5-10 minutes*
 
 :::prerequisites
 <InstallPrerequisites components={props.components} />
-
-You will also need to [install `git`](https://github.com/git-guides/install-git) and to have a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
 :::
 
 ## 🚀 Part A: Create a new project with Strapi
@@ -31,34 +29,53 @@ We will first create a new Strapi project on your machine by running a command i
 Follow the steps below by clicking on the togglable content to read more instructions.
 
 <details style={detailsStyle}>
-<summary style={summaryStyle}>Step 1: Run the installation script</summary>
+<summary style={summaryStyle}>Step 1: Run the installation script and create a Strapi Cloud account</summary>
 
-### Step 1: Run the installation script
+### Step 1: Run the installation script and create a Strapi Cloud account
 
-Run the following command in a terminal:
+1. Run the following command in a terminal:
 
-<Tabs groupId="yarn-npm">
+    <Tabs groupId="yarn-npm">
 
-<TabItem value="npm" label="NPM">
+    <TabItem value="npm" label="NPM">
 
-```bash
-npx create-strapi-app@latest my-project --quickstart
-```
+    ```bash
+    npx create-strapi-app@latest my-strapi-project --quickstart
+    ```
 
-</TabItem>
+    </TabItem>
 
-<TabItem value="yarn" label="Yarn">
+    <TabItem value="yarn" label="Yarn">
 
-```bash
-yarn create strapi-app my-project --quickstart
-```
+    ```bash
+    yarn create strapi-app my-strapi-project --quickstart
+    ```
 
-</TabItem>
+    </TabItem>
 
-</Tabs>
+    </Tabs>
+
+2. The terminal will invite you to create a Strapi Cloud account and start a free, 14-day trial. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+
+3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
+
+4. Still in the browser tab, click **Continue with GitHub**. If you are not already logged in into GitHub with your current browser session, you might be redirected to a GitHub login page.
+
+5. Once logged in, the browser will display a "Congratulations, you're all set!" message and you can safely close the browser tab and get back to the terminal.
+
+<ThemedImage
+  alt="Login GIF"
+  sources={{
+    light: '/img/assets/quick-start-guide/qsg-cloud-login.gif',
+    dark: '/img/assets/quick-start-guide/qsg-cloud-login.gif',
+  }}
+/>
+
+As you will see in the terminal, your project is now building locally and also getting ready to be deployed on Strapi Cloud later.
 
 :::info
-The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
+* The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
+* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi Cloud project.
 :::
 
 </details>
@@ -98,7 +115,7 @@ The admin panel of a local Strapi project runs at [http://localhost:1337/admin](
 First we will build a data structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
 
 :::tip TIP
-If the server is not already running, in your terminal, `cd` into the `my-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
+If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
 The Content-Type Builder helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
@@ -171,71 +188,53 @@ You have just created a basic data structure for your Strapi project! You can ke
 
 ## ☁️ Part C: Deploy to Strapi Cloud
 
-Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud. Before deploying to Strapi Cloud, you will need to host your Strapi project on an online repository — we will use GitHub.
+Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud: Deploying your project on Strapi Cloud is done with a single command! 🚀
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 1: Host the code of your Strapi project on GitHub</summary>
+To deploy your project on Strapi Cloud, in your terminal:
 
+1. If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press `Ctrl-C` to stop the server.
+2. Ensure you are in the folder of your Strapi project (if needed, run for instance `cd my-strapi-project` to reach this folder), and run the following command:
 
-### Step 1: Host the code of your Strapi project on GitHub
+    <Tabs groupId="yarn-npm">
 
-Create a new GitHub repository and push the code of your Strapi project to this repository. If you're not already familiar with GitHub, the togglable content below should get you started 👇
+    <TabItem value="yarn" label="Yarn">
 
-<details>
-<summary>Steps required to push your Strapi project code to GitHub:</summary>
+      ```sh
+      yarn strapi deploy
+      ```
 
-1. In the terminal, ensure you are still in the `my-project` folder that hosts the Strapi project we created. If you followed this tutorial closely so far, we should still be there.
-2. Run the `git init` command to initialize git for this folder.
-3. Run the `git add .` command to add all modified files to the git index.
-4. Run the `git commit -m "Initial commit"` command to create a commit with all the added changes.
-5. Log in into your GitHub account and [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories). Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
-6. Go back to the terminal and push your local repository to GitHub:
+    </TabItem>
 
-  a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your actual GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
+    <TabItem value="npm" label="NPM">
 
-  b. Run the `git push --set-upstream origin main` command to finally push the commit to your GitHub repository.
+      ```sh
+      npm run strapi deploy
+      ```
 
-Additional information about using git with the command line interface can be found in the [official GitHub documentation](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git).
+    </TabItem>
 
-</details>
+    </Tabs>
 
-</details>
+Within a few moments, your local project will be hosted on Strapi Cloud. 🚀 
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 2: Create a Strapi Cloud account and a new Strapi Cloud project</summary>
+Once it's done, the terminal will provide you a clickable link that starts with `https://cloud.strapi.io/projects`. Click on the link, or copy and paste it in your browser address bar, to visit the page.
 
-
-### Step 2: Create a Strapi Cloud account and a new Strapi Cloud project
-
-To create a new Strapi Cloud account:
-
-1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
-2. Click the **Continue with GitHub** button and log in with the GitHub account where your Strapi project's repository is hosted.
-
-You should now see the Strapi Cloud dashboard. This is where you manage your Strapi projects hosted on Strapi Cloud.
-
-We will create a new Strapi Cloud project by importing the local Strapi project you have just pushed to a GitHub repository:
+You will see the Strapi Cloud project we've just created, `my-strapi-project`, visible in the Strapi Cloud dashboard. Click the **Visit app** button in the top right corner to access your deployed Strapi project.
 
 <ThemedImage
-  alt="Strapi Cloud dashboard"
-  sources={{
-    light: '/img/assets/quick-start-guide/qsg-strapi-cloud-1.png',
-    dark: '/img/assets/quick-start-guide/qsg-strapi-cloud-1_DARK.png',
-  }}
+alt="Visit Strapi Cloud App GIF"
+sources={{
+  light: '/img/assets/quick-start-guide/qsg-visit-cloud-app.gif',
+  dark: '/img/assets/quick-start-guide/qsg-visit-cloud-app_DARK.gif',
+}}
 />
-
-1. Click the **+ Create project** button.
-2. Select the free trial plan.
-3. Scroll down, and in the "Import git repository section", choose the appropriate Account and Repository from the list (for instance, Account: `yourname`, Repository: `my-first-strapi-project`).
-4. Scroll down further, and in the "Setup" section, give your project a Display name (for instance `my-first-strapi-project`) and leave the other options unchanged.
-5. Click **Create project** at the bottom of the page.
-
-Your Strapi project should be deployed within minutes. 🚀 Once it's done, you'll be able to log into your deployed Strapi project by clicking the **Visit app** button in the top right corner.
-
-</details>
 
 :::callout 🥳 CONGRATULATIONS!  
 Now your project is hosted on Strapi Cloud and accessible online. You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
+:::
+
+:::tip
+Feel free to play with the Content-Type Builder even further and add more fields to your content-types or create new content-types. Anytime you make such changes, deploy them again on Strapi Cloud, by running the appropriate `deploy` command, and see your hosted project updated within a few minutes. Magical, isn't it? 🪄
 :::
 
 ## 📝 Part D: Add content to your Strapi Cloud project with the Content Manager
@@ -249,7 +248,7 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
-1. From your [Strapi Cloud dashboard](https://cloud.strapi.io/projects), click the `my-first-strapi-project` project.
+1. From your [Strapi Cloud dashboard](https://cloud.strapi.io/projects), click the `my-strapi-project` project.
 3. Click the **Visit app** button.
 4. In the new page that opens, complete the form to create the first administrator user of this Strapi Cloud project.
 
@@ -441,4 +440,5 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 - 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,
 - 👉 learn more about Strapi features by browsing the [User Guide](/user-docs/intro),
+- 👉 learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),
 - 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.
