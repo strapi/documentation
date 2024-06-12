@@ -23,7 +23,14 @@ const sidebars = {
       label: "🚀 Getting Started",
       items: [
         "dev-docs/intro",
-        "dev-docs/quick-start",
+        {
+          type: "doc",
+          label: "Quick Start Guide",
+          id: "dev-docs/quick-start",
+          customProps: {
+            updated: true,
+          },
+        },
         "dev-docs/faq",
         "dev-docs/usage-information",
       ],
