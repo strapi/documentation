@@ -552,33 +552,24 @@ const sidebars = {
     { // Update & Migration
       type: 'category',
       collapsed: false,
-      label: '♻️ Updates and Migrations',
+      label: '♻️ Upgrades',
+      customProps: {
+        new: true,
+      },
       link: {
         type: 'doc',
-        id: 'dev-docs/update-migration',
+        id: 'dev-docs/upgrades',
       },
       items: [
         {
           type: 'doc',
-          label: 'Introduction to update migration',
-          id: 'dev-docs/update-migration',
-          customProps: {
-            new: true,
-          },
+          label: 'Introduction to upgrades',
+          id: 'dev-docs/upgrades',
         },
         {
           type: 'doc',
           id: 'dev-docs/upgrade-tool',
-          customProps: {
-            new: true,
-          },
         },
-        // 'dev-docs/update-version',
-        // {
-        //   type: 'doc',
-        //   label: 'v5.x migration guides',
-        //   id: 'dev-docs/migration-guides',
-        // },
         {
           type: 'category',
           collapsed: false,
@@ -586,30 +577,25 @@ const sidebars = {
             type: 'doc',
             id: 'dev-docs/migration/v4-to-v5/introduction'
           },
-          label: 'Migrate to Strapi 5',
-          customProps: {
-            new: true,
-          },
+          label: 'Upgrade to Strapi 5',
           items: [
-            // {
-            //   type: 'doc',
-            //   label: 'Introduction',
-            //   id: 'dev-docs/migration/v4-to-v5/introduction'
-            // },
             {
               type: 'doc',
-              label: 'Breaking Changes',
+              label: 'Introduction',
+              id: 'dev-docs/migration/v4-to-v5/introduction'
+            },
+            {
+              type: 'doc',
+              label: 'Breaking changes list',
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
-              customProps: {
-                new: true,
-              },
             },
             {
               type: 'category',
               collapsed: true,
-              label: 'Guides',
-              customProps: {
-                new: true,
+              label: 'Additional guides',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/migration/v4-to-v5/guides/introduction'
               },
               items: [
                 {
@@ -1104,13 +1090,13 @@ const sidebars = {
         type: 'doc',
         id: 'dev-docs/migration/v4-to-v5/introduction'
       },
-      label: 'Migrate to Strapi 5',
+      label: 'Upgrade to Strapi 5',
       items: [
-        // {
-        //   type: "doc",
-        //   label: "Introduction",
-        //   id: "dev-docs/migration/v4-to-v5/introduction"
-        // },
+        {
+          type: "doc",
+          label: "Introduction",
+          id: "dev-docs/migration/v4-to-v5/introduction"
+        },
         'dev-docs/upgrade-tool',
         {
           type: "category",
