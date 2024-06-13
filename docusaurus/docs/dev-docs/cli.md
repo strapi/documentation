@@ -442,7 +442,8 @@ strapi console
 
 ## strapi version
 
-Print the current globally installed Strapi version.
+Print the currently installed Strapi version.
+It will output the current globally installed version if this command is strapi is installed globally, or the current version of Strapi within a Strapi project if the command is run from a given folder containing a Strapi project.
 
 ```bash
 strapi version
