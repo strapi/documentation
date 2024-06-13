@@ -393,7 +393,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/update-migration-guides/update-version.html",
-			"destination": "/dev-docs/update-version"
+			"destination": "/dev-docs/upgrade-tool"
 		},
 		{
 			"source": "/developer-docs/latest/update-migration-guides/migration-guides.html",
