@@ -47,3 +47,13 @@ export function DocumentDefinition() {
     </Annotation>
   )
 }
+
+export function Codemods() {
+  return (
+    <Annotation>
+      <p>
+        Codemods are automated tools used for large-scale code modifications, especially useful for refactoring, adapting to API changes, or applying coding style updates. They enable precise and programmable alterations to source code.
+      </p>
+    </Annotation>
+  )
+}
