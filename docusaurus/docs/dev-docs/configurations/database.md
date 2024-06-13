@@ -502,7 +502,7 @@ DATABASE_FILENAME=.tmp/data.db
 
 If you started your project with a version prior to `v4.6.2` you can convert your `database.js|database.ts` configuration file following this procedure:
 
-1. Update your application to `v4.6.2` or a later version. See the [Updates and Migrations](/dev-docs/migration-guides) section for any breaking changes that require specific fixes.
+1. Update your application to `v4.6.2` or a later version. See the [upgrades](/dev-docs/upgrades) documentation.
 2. Replace the contents of your `./config/database.js` or `./config/database.ts` file with the preceding JavaScript or TypeScript code.
 3. Add the environment variables from the preceding code example to your `.env` file.
 4. (_optional_) Add additional environment variables such as `DATABASE_URL` and the properties of the `ssl` object.

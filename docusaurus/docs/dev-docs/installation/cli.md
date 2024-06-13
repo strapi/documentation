@@ -142,7 +142,8 @@ When the installation script runs, the terminal will first ask you if you want t
 
 If you prefer skipping this Strapi Cloud login part, use the arrow keys to select `Skip`. The script will resume and create a local project. To deploy this project and host it online, you could later choose to:
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following a [3rd-party deployment guide](/dev-docs/deployment),
-- or use the [Cloud CLI](/cloud/cli/cloud-cli) commands to login to Strapi Cloud and deploy your project there.
+<!-- TODO: add Cloud CLI once documentation is ported to Strapi 5 -->
+- or use the [Cloud CLI](#) commands to login to Strapi Cloud and deploy your project there.
 
 If you want to host your project yourself and are not already familiar with GitHub, the following togglable content should get you started👇.
 
