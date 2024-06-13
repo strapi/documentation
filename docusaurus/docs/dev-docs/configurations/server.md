@@ -4,15 +4,15 @@ sidebar_label: Server
 description: Strapi offers a single entry point file for its server configuration.
 displayed_sidebar: devDocsConfigSidebar
 tags:
-- app keys
-- base configuration
-- configuration
-- cron job
-- host
-- port
+  - app keys
+  - base configuration
+  - configuration
+  - cron job
+  - host
+  - port
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
 
 # Server configuration
 
@@ -31,27 +31,30 @@ The `./config/server.js` file can include the following parameters:
 <!-- TODO: add admin jwt config option -->
 <!-- TODO: sort options alphabetically in the table below  -->
 
-| Parameter                          | Description                                                                                                                                                                                                                                                                                                                                                                 | Type              | Default             |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|---------------------|
-| `host`<br/><br/>❗️ _Mandatory_     | Host name                                                                                                                                                                                                                                                                                                                                                                   | string            | `localhost`         |
-| `port`<br/><br/>❗️ _Mandatory_     | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer           | `1337`              |
-| `app.keys`<br/><br/>❗️ _Mandatory_ | Declare session keys (based on [Koa session](https://github.com/koajs/session/blob/master/Readme.md)), which is used by the `session` middleware for the Users & Permissions plugin and the Documentation plugin.                                                                                                                                                           | array of strings            | `undefined`         |
-| `socket`                           | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g [Heroku nginx buildpack](https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode)) | string \| integer | `/tmp/nginx.socket` |
-| `emitErrors`                       | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean           | `false`             |
-| `url`                              | Public url of the server. Required for many different features (ex: reset password, third login providers etc.). Also enables proxy support such as Apache or Nginx, example: `https://mywebsite.com/api`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however recommended.                                | string            | `''`                |
-| `proxy`                            | Set the koa variable `app.proxy`. When `true`, proxy header fields will be trusted.                                                                                                                                                                                                                                                                                         | boolean           | `false`             |
-| `globalProxy`                      | Defines the proxy agent for all external requests made within `strapi.fetch` method (used for licenses check, telemetry and webhooks). To be used if the Strapi project is behind a forward proxy.                                                                                                                                                                          | string            |                     |
-| `cron`                             | Cron configuration (powered by [`node-schedule`](https://github.com/node-schedule/node-schedule))                                                                                                                                                                                                                                                                           | object            |                     |
-| `cron.enabled`                     | Enable or disable [CRON jobs](/dev-docs/configurations/cron.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                         | boolean           | `false`             |
-| `cron.tasks`                       | Declare [CRON jobs](/dev-docs/configurations/cron.md) to be run at specific dates.                                                                                                                                                                                                                                                                                          | object            |                     |
-| `dirs`                             | Path configuration of different directories Strapi uses.                                                                                                                                                                                                                                                                                                                    | object            |                     |
-| `dirs.public`                      | Customize the path of the public folder.                                                                                                                                                                                                                                                                                                                                    | string            | `./public`          |
-| `http`                             | Configuration of the http server used by Strapi                                                                                                                                                                                                                                                                                                                   | object            |                     |
-| `http.serverOptions`               | Options passed to http `createServer`                            | [http.serverOptions](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)            | {}          |
-| `transfer.remote.enabled`             | Toggle the ability to use the [transfer feature](/dev-docs/data-management#transfer-data-using-the-cli-tool)  | boolean | `true` |
-| `logger.startup.enabled`              | Toggle the the startup message in the terminal | boolean | `true` |
-| `logger.updates.enabled`              | Toggle the notification message about updating strapi in the terminal   | boolean | `true` |
-
+| Parameter                           | Description                                                                                                                                                                                                                                                                                                                                                                 | Type                                                                                              | Default             |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------- |
+| `host`<br/><br/>❗️ _Mandatory_     | Host name                                                                                                                                                                                                                                                                                                                                                                   | string                                                                                            | `localhost`         |
+| `port`<br/><br/>❗️ _Mandatory_     | Port on which the server should be running.                                                                                                                                                                                                                                                                                                                                 | integer                                                                                           | `1337`              |
+| `app.keys`<br/><br/>❗️ _Mandatory_ | Declare session keys (based on [Koa session](https://github.com/koajs/session/blob/master/Readme.md)), which is used by the `session` middleware for the Users & Permissions plugin and the Documentation plugin.                                                                                                                                                           | array of strings                                                                                  | `undefined`         |
+| `socket`                            | Listens on a socket. Host and port are cosmetic when this option is provided and likewise use `url` to generate proper urls when using this option. This option is useful for running a server without exposing a port and using proxy servers on the same machine (e.g [Heroku nginx buildpack](https://github.com/heroku/heroku-buildpack-nginx#requirements-proxy-mode)) | string \| integer                                                                                 | `/tmp/nginx.socket` |
+| `emitErrors`                        | Enable errors to be emitted to `koa` when they happen in order to attach custom logic or use error reporting services.                                                                                                                                                                                                                                                      | boolean                                                                                           | `false`             |
+| `url`                               | Public url of the server. Required for many different features (ex: reset password, third login providers etc.). Also enables proxy support such as Apache or Nginx, example: `https://mywebsite.com/api`. The url can be relative, if so, it is used with `http://${host}:${port}` as the base url. An absolute url is however recommended.                                | string                                                                                            | `''`                |
+| `proxy`                             | Proxy configuration                                                                                                                                                                                                                                                                                                                                                         | object                                                                                            |                     |
+| `proxy.global`                      | Defines the proxy agent for all external requests. To be used if the Strapi project is behind a forward proxy.                                                                                                                                                                                                                                                              | string                                                                                            |                     |
+| `proxy.fetch`                       | The proxy for all requests made within `strapi.fetch` (used for licenses check, telemetry and webhooks)                                                                                                                                                                                                                                                                     | string \| [ProxyAgent.Options](https://github.com/nodejs/undici/blob/main/types/proxy-agent.d.ts) |                     |
+| `proxy.http`                        | The proxy for all (non-fetch) http requests                                                                                                                                                                                                                                                                                                                                 | string                                                                                            |                     |
+| `proxy.https`                       | The proxy for all (non-fetch) https requests                                                                                                                                                                                                                                                                                                                                | string                                                                                            |                     |
+| `proxy.koa`                         | Set the koa variable `app.proxy`. When `true`, proxy header fields will be trusted.                                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
+| `cron`                              | Cron configuration (powered by [`node-schedule`](https://github.com/node-schedule/node-schedule))                                                                                                                                                                                                                                                                           | object                                                                                            |                     |
+| `cron.enabled`                      | Enable or disable [CRON jobs](/dev-docs/configurations/cron.md) to schedule jobs at specific dates.                                                                                                                                                                                                                                                                         | boolean                                                                                           | `false`             |
+| `cron.tasks`                        | Declare [CRON jobs](/dev-docs/configurations/cron.md) to be run at specific dates.                                                                                                                                                                                                                                                                                          | object                                                                                            |                     |
+| `dirs`                              | Path configuration of different directories Strapi uses.                                                                                                                                                                                                                                                                                                                    | object                                                                                            |                     |
+| `dirs.public`                       | Customize the path of the public folder.                                                                                                                                                                                                                                                                                                                                    | string                                                                                            | `./public`          |
+| `http`                              | Configuration of the http server used by Strapi                                                                                                                                                                                                                                                                                                                             | object                                                                                            |                     |
+| `http.serverOptions`                | Options passed to http `createServer`                                                                                                                                                                                                                                                                                                                                       | [http.serverOptions](https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener)    | {}                  |
+| `transfer.remote.enabled`           | Toggle the ability to use the [transfer feature](/dev-docs/data-management#transfer-data-using-the-cli-tool)                                                                                                                                                                                                                                                                | boolean                                                                                           | `true`              |
+| `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
+| `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 
 ## Configurations
 
@@ -69,7 +72,6 @@ The default configuration created with any new project should at least include t
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -84,7 +86,6 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/server.ts"
-
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -107,7 +108,6 @@ The following is an example of a full configuration file. Not all of these keys 
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/server.js"
-
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -123,7 +123,7 @@ module.exports = ({ env }) => ({
   },
   transfer: {
     remote: {
-      enabled: false, 
+      enabled: false,
     },
   },
   logger: {
@@ -142,7 +142,6 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```js title="./config/server.ts"
-
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -158,7 +157,7 @@ export default ({ env }) => ({
   },
   transfer: {
     remote: {
-      enabled: false, 
+      enabled: false,
     },
   },
   logger: {
