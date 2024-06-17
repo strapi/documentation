@@ -62,7 +62,7 @@ The latest version number of Strapi v4 that was released by the Strapi core team
     ```
 
     The command will execute:
-    * the update and installation of the dependencies of Strapi 5.
+    * the update and installation of the dependencies of Strapi 5,
     * and the codemods provided to fill the breaking changes that come with Strapi 5.
 
 2. Run the application with `yarn develop` or `npm run develop` to adapt the database to the latest breaking changes.
@@ -85,7 +85,7 @@ The latest version number of Strapi v4 that was released by the Strapi core team
     ```
 
     The command will execute:
-    * the update and installation of the dependencies of Strapi 5.
+    * the update and installation of the dependencies of Strapi 5,
     * and the codemods provided to fill the breaking changes that come with Strapi 5.
 
 3. Run the application with `yarn develop` or `npm run develop` to adapt the database to the latest breaking changes.
