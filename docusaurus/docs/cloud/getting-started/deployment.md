@@ -59,7 +59,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     :::note Notes
     - Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
-    - You can not upload HTML files to Strapi Cloud during your free trial.
+    - You can't upload HTML files to Strapi Cloud during your free trial.
     :::
 
 4. Connect a git repository to your new Strapi Cloud project.
