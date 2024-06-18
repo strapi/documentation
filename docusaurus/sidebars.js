@@ -819,7 +819,7 @@ const sidebars = {
         {
           type: "doc",
           id: "cloud/account/account-billing",
-          label: "Account billing details",
+          label: "Account billing & invoices",
           customProps: {
             updated: true,
           },

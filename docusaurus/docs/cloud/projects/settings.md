@@ -243,9 +243,18 @@ To downgrade your current plan to a lower one:
 
 ## Invoices
 
-The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status. 
+The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
+
+Invoices can have any of the 3 following statuses:
+
+- Paid: the invoice has been paid, no additional action is required.
+- Payment pending: the invoice is not complete or validated yet <!-- need more info: what can the user do if the invoice is in "payment pending"? -->
+- Payment due: the invoice didn't go through and needs to be fixed <!-- need more info: is the project automatically suspended? what can the user do? -->
 
 :::tip
-Click the ![download icon](/img/assets/icons/download.svg) icon to download your invoice.
+Click the ![download icon](/img/assets/icons/download.svg) icon to download an invoice.
 :::
 
+:::strapi Invoices are also available in your profile settings.
+In the *Profile > Invoices* tab, you will find the complete list of invoices for all your projects. Feel free to check the [dedicated documentation](/cloud/account/account-billing#account-invoices).
+:::
