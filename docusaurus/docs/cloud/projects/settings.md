@@ -31,6 +31,7 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab enables you to c
 - *Node version*: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
+<!-- Update screenshot
 <ThemedImage
   alt="Project settings page"
   sources={{
@@ -38,6 +39,7 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab enables you to c
     dark: '/img/assets/cloud/settings_DARK.png',
   }}
 />
+-->
 
 ### Modifying git repository & branch
 
@@ -110,6 +112,7 @@ Note also that only project owners can restore a backup. Maintainers have access
 For projects created before the release of the Backup feature in October 2023, the first backup will automatically be triggered with the next deployment of the project.
 :::
 
+<!-- Update screenshot
 <ThemedImage
   alt="Backups"
   sources={{
@@ -117,6 +120,7 @@ For projects created before the release of the Backup feature in October 2023, t
     dark: '/img/assets/cloud/settings_backups_DARK.png',
   }}
 />
+-->
 
 ### Restoring a backup
 
@@ -167,6 +171,7 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 Environment variables (more information in the [Developer Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
+<!-- Update screenshot
 <ThemedImage
   alt="Project variables"
   sources={{
@@ -174,6 +179,7 @@ Environment variables (more information in the [Developer Documentation](../../d
     dark: '/img/assets/cloud/settings_variables_DARK.png',
   }}
 />
+-->
 
 In the ![Variables icon](/img/assets/icons/code2.svg) *Variables* tab, you can:
 - click the **Add variable** button to create a new variable
@@ -189,6 +195,7 @@ The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* 
 In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
 :::
 
+<!-- Update screenshot
 <ThemedImage
   alt="Project billing"
   sources={{
@@ -196,6 +203,7 @@ In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard
     dark: '/img/assets/cloud/settings_billing_DARK.png',
   }}
 />
+-->
 
 ### Managing project's subscription
 
@@ -208,6 +216,8 @@ The ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab displays an over
 :::note
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Usage & Billing](/cloud/getting-started/usage-billing).
 :::
+
+<!-- Add screenshot -->
 
 ### Upgrading to another plan
 
@@ -244,6 +254,8 @@ To downgrade your current plan to a lower one:
 ## Invoices
 
 The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
+
+<!-- Add screenshot -->
 
 Invoices can have any of the 3 following statuses:
 
