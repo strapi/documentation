@@ -15,7 +15,7 @@ There are 7 tabs available:
 - ![General icon](/img/assets/icons/Faders.svg) [*General*](#general),
 - ![Backups icon](/img/assets/icons/ArrowClockwise.svg) [*Backups*](#backups),
 - ![Domains icon](/img/assets/icons/Browsers.svg) [*Domains*](#domains),
-- ![Variables icon](/img/assets/icons/Faders.svg) [*Variables*](#variables),
+- ![Variables icon](/img/assets/icons/code2.svg) [*Variables*](#variables),
 - ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) [*Billing & Usage*](#billing--usage),
 - ![Plans icon](/img/assets/icons/MapTrifold.svg) [Plans](#plans),
 - and ![Invoices icon](/img/assets/icons/Invoice.svg) [Invoices](#invoices).
@@ -175,7 +175,7 @@ Environment variables (more information in the [Developer Documentation](../../d
   }}
 />
 
-In the ![Variables icon](/img/assets/icons/Faders.svg) *Variables* tab, you can:
+In the ![Variables icon](/img/assets/icons/code2.svg) *Variables* tab, you can:
 - click the **Add variable** button to create a new variable
 - edit any variable, each being composed of a *Name* and a *Value*
 - click the ![Delete icon](/img/assets/icons/delete.svg) delete button associated with any variable to delete it
@@ -203,7 +203,7 @@ Using the **Manage subscriptions** button, you can view your current project's s
 
 ## Plans
 
-The ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab displays an overview of the available Strapi Cloud plans to allow you to upgrade or downgrade from your plan to another.
+The ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
 
 :::note
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Usage & Billing](/cloud/getting-started/usage-billing).
@@ -224,3 +224,67 @@ The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the 
 :::tip
 Click the [download] icon to download your invoice.
 :::
+
+
+
+
+
+
+<!-- 
+
+## Managing subscriptions
+
+Using the **Manage subscriptions** button in the *Billing* tab, you can:
+
+- view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription),
+- view and edit your Account Information: email, password and company name,
+- view and edit your Billing & Shipping Addresses,
+- view and edit your Payment Methods and add new ones,
+- access your Billing History and download your invoices.
+
+<ThemedImage
+  alt="Subscriptions management modal"
+  sources={{
+        light: '/img/assets/cloud/manage-subscriptions.png',
+        dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
+      }}
+/>
+
+## Edit subscription
+
+From the subscription management modal, you can view and modify any current subscription. This includes upgrading or downgrading to another plan.
+
+:::caution
+If you choose to downgrade to another plan but your current usage exceeds the limits of that plan, you are taking the risk of getting charged for the overages. Not also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
+:::
+
+<ThemedImage
+  alt="Subscription edition modal"
+  sources={{
+      light: '/img/assets/cloud/edit-subscription-modal.png',
+      dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
+    }}
+/>
+
+1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as _Account Information_, _Billing & Shipping Addresses_). You will be redirected to your subscription details.
+2. Click on the **Edit Subscription** link.
+3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
+4. If you want to change plan, whether it is a plan upgrade or a downgrade (e.g. from Pro plan to Team plan, or from Pro plan to Developer plan), click on **Change** and select a new plan.
+5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
+
+## Cancel subscription
+
+<ThemedImage
+  alt="Subscription cancellation modal"
+  sources={{
+    light: '/img/assets/cloud/cancel-subscription-modal.png',
+    dark: '/img/assets/cloud/cancel-subscription-modal_DARK.png',
+    }}
+/>
+
+1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.OO"). You will be redirected to your subscription details.
+2. Click on the **Cancel Subscription** link.
+3. Select the reason of your cancellation from the drop-down menu, and optionally add a comment in the textbox.
+4. Confirm your choice by clicking on the **Confirm Cancellation** button.
+
+-->
