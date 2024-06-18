@@ -232,7 +232,7 @@ To upgrade your current plan to a higher one:
 Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Team plan to the Pro plan on June 18th, your project will remain on the Team plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your usage exceeds the maximum allowed by the plan you are downgrading to, your subscription and projet will be suspended. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. Note also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
 :::
 
 To downgrade your current plan to a lower one:
@@ -246,69 +246,6 @@ To downgrade your current plan to a lower one:
 The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status. 
 
 :::tip
-Click the [download] icon to download your invoice.
+Click the ![download icon](/img/assets/icons/download.svg) icon to download your invoice.
 :::
 
-
-
-
-
-
-<!-- 
-
-## Managing subscriptions
-
-Using the **Manage subscriptions** button in the *Billing* tab, you can:
-
-- view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription),
-- view and edit your Account Information: email, password and company name,
-- view and edit your Billing & Shipping Addresses,
-- view and edit your Payment Methods and add new ones,
-- access your Billing History and download your invoices.
-
-<ThemedImage
-  alt="Subscriptions management modal"
-  sources={{
-        light: '/img/assets/cloud/manage-subscriptions.png',
-        dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
-      }}
-/>
-
-## Edit subscription
-
-From the subscription management modal, you can view and modify any current subscription. This includes upgrading or downgrading to another plan.
-
-:::caution
-If you choose to downgrade to another plan but your current usage exceeds the limits of that plan, you are taking the risk of getting charged for the overages. Not also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
-:::
-
-<ThemedImage
-  alt="Subscription edition modal"
-  sources={{
-      light: '/img/assets/cloud/edit-subscription-modal.png',
-      dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
-    }}
-/>
-
-1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as _Account Information_, _Billing & Shipping Addresses_). You will be redirected to your subscription details.
-2. Click on the **Edit Subscription** link.
-3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
-4. If you want to change plan, whether it is a plan upgrade or a downgrade (e.g. from Pro plan to Team plan, or from Pro plan to Developer plan), click on **Change** and select a new plan.
-5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
-
-## Cancel subscription
-
-<ThemedImage
-  alt="Subscription cancellation modal"
-  sources={{
-    light: '/img/assets/cloud/cancel-subscription-modal.png',
-    dark: '/img/assets/cloud/cancel-subscription-modal_DARK.png',
-    }}
-/>
-
-1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.OO"). You will be redirected to your subscription details.
-2. Click on the **Cancel Subscription** link.
-3. Select the reason of your cancellation from the drop-down menu, and optionally add a comment in the textbox.
-4. Confirm your choice by clicking on the **Confirm Cancellation** button.
-
--->

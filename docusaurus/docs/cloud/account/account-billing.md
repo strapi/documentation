@@ -7,7 +7,7 @@ canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
 
 # Account billing details 
 
-Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the *Billing* tab. It displays and enables you to modify the billing details and payment method set for the account. This information will by default be reused for every new project created with your Strapi Cloud account.
+Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab. It displays and enables you to modify the billing details and payment method set for the account. This information will by default be reused for every new project created with your Strapi Cloud account.
 
 <ThemedImage
   alt="Billing tab of Profile page"
@@ -19,15 +19,15 @@ Through the *Profile* page, accessible by clicking on your profile picture on th
 
 ## Managing your payment method
 
-The *Payment method* section of the *Billing* tab allows you to manage the credit cards that can be used for the Strapi Cloud projects. 
+The *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab allows you to manage the credit cards that can be used for the Strapi Cloud projects. 
 
 :::note
-The Payment method section can only be accessible once the mandatory fields of the Billing details section have been filled in.
+The Payment method section can only be accessible once the mandatory fields of the *Billing details* section have been filled in.
 :::
 
 ### Adding a new credit card
 
-1. In the *Payment method* section of the *Billing* tab, click on the **Add card** button.
+1. In the *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab, click on the **Add card** button.
 2. Fill in the following fields:
 
 | Field name | Description |
