@@ -189,10 +189,12 @@ In the ![Variables icon](/img/assets/icons/code2.svg) *Variables* tab, you can:
 
 ## Billing & Usage
 
-The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab displays all information on the current subscription plan and included usage for the project. Through this tab, you can [manage the subscription of your project](#managing-projects-subscription) and have a detailed look at its usage.
+The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab displays all information on the current subscription plan and included usage for the project, and allows to have a detailed look at the usage. Through this tab, you can also [manage the number of seats for your project](#managing-projects-number-of-seats).
 
 :::tip
 In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
+
+Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab to advise which plan you could switch to.s
 :::
 
 <!-- Update screenshot
@@ -205,16 +207,21 @@ In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard
 />
 -->
 
-### Managing project's subscription
+### Managing project's number of seats
 
-Using the **Manage subscriptions** button, you can view your current project's subscription, manage it and upgrade or downgrade to another plan. Please refer to [Account management > Account billing details](/cloud/account/account-billing) for the full documentation of the subscription management modal.
+You can manually add more seats or lower the number of seats for your project without necessarily upgrading or downgrading to another plan (see [full documentation on seats management](/cloud/getting-started/usage-billing#seats-management)).
+
+To manage your project's number of seats:
+
+1. In the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
+2. <!-- to be completed whenever possible to test -->
 
 ## Plans
 
 The ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
 
 :::note
-If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Usage & Billing](/cloud/getting-started/usage-billing).
+If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
 :::
 
 <!-- Add screenshot -->
@@ -242,7 +249,7 @@ To upgrade your current plan to a higher one:
 Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Team plan to the Pro plan on June 18th, your project will remain on the Team plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. Note also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. Note also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 :::
 
 To downgrade your current plan to a lower one:
