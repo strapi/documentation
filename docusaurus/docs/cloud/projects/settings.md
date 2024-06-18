@@ -211,11 +211,35 @@ If you are using the free trial, the *Plan* tab shows a countdown of how many da
 
 ### Upgrading to another plan
 
-tbd
+Strapi Cloud plan upgrades to another, higher plan are immediate and can be managed for each project via the project settings.
+
+:::note
+When using the free trial, the buttons to upgrade to another plan are greyed out and unusable until you have filled in your billing information. Please refer to [Account billing details](/cloud/account/account-billing) for more information.
+:::
+
+To upgrade your current plan to a higher one:
+
+1. In the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab of your project's settings, click on the **Upgrade** button of the plan you want to upgrade to.
+2. In the window that opens, check the payment details that indicate how much you will have to pay immediately after confirming the upgrade, and the available options.
+
+   a. (optional) Click the **Edit** button to select another payment method.
+   b. (optional) Click **I have a discount code**, enter your discount code in the field, and click on the **Apply** button.
+
+3. Click on the **Upgrade to [plan name]** button to confirm the upgrade of your Strapi project to another plan.
 
 ### Downgrading to another plan
 
-tbd
+Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Team plan to the Pro plan on June 18th, your project will remain on the Team plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
+
+:::caution
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your usage exceeds the maximum allowed by the plan you are downgrading to, your subscription and projet will be suspended. Please refer to [Usage & Billing](/cloud/getting-started/usage-billing) for more information.
+:::
+
+To downgrade your current plan to a lower one:
+
+1. In the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab of your project's settings, click on the **Downgrade** button of the plan you want to downgrade to.
+2. In the window that opens, check the information related to downgrading.
+3. Click on the **Downgrade** button to confirm the downgrade of your Strapi project's plan.
 
 ## Invoices
 
