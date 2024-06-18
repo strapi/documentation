@@ -24,7 +24,7 @@ The latest version number of Strapi that was released by the Strapi core team ca
 When a new version of Strapi is released, you might want to upgrade, and the present page serves as an entry point for information about upgrading.
 
 <details>
-<summary>How to find my current Strapi version number?</summary>
+<summary>How can I find my current Strapi version number?</summary>
 
 You can find the current version number of your Strapi application:
 
