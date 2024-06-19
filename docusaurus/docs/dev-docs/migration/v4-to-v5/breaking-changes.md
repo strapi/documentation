@@ -66,7 +66,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 - [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed)
 - [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored)
 - [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service)
-* [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)
+- [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)
 
 ## Content Manager
 
