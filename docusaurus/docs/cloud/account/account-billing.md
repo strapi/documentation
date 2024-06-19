@@ -5,6 +5,8 @@ description: Manage billing details and invoices for Strapi Cloud account.
 canonicalUrl: https://docs.strapi.io/cloud/account/account-billing.html
 ---
 
+import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
+
 # Account billing & invoices 
 
 Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the [![Billing icon](/img/assets/icons/CreditCard.svg) *Billing*](#account-billing) and [![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices*](#account-invoices) tabs.
@@ -61,10 +63,10 @@ You cannot delete the primary card as at least one credit card must be available
 
 The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the complete list of invoices for all your Strapi Cloud projects.
 
+<InvoiceStatus components={props.components} />
+
 :::strapi Invoices are also available per project.
 In the *Settings > Invoices* tab of any project, you will find the invoices for that project only. Feel free to check the [dedicated documentation](/cloud/projects/settings#invoices).
 :::
-
-<!-- Add snippet of statuses explanations -->
 
 <!-- Add screenshot of Profile > Invoices tab -->
