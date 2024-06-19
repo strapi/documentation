@@ -211,10 +211,18 @@ Note also that if your usage indicates that another subscription plan would fit 
 
 You can manually add more seats or lower the number of seats for your project without necessarily upgrading or downgrading to another plan (see [full documentation on seats management](/cloud/getting-started/usage-billing#seats-management)).
 
-To manage your project's number of seats:
+#### Adding more seats for the project
 
 1. In the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
-2. <!-- to be completed whenever possible to test -->
+2. In the window that opens, select with the drop-down the number of *Additional seats* of your choice. The cost of the additional seats is automatically calculated and displayed in the window.
+3. (optional) Click **I have a discount code**, enter your discount code in the field, and click on the **Apply** button.
+4. Click the **Save** button to confirm. You will automatically be billed with the payment method defined in your profile.
+
+#### Removing seats from the project
+
+1. In the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
+2. In the window that opens, select with the drop-down the number of *Billed seats* you want to keep.
+3. Click the **Save button** to confirm. The new, lower number of seats will not be effective until the next month.
 
 ## Plans
 
