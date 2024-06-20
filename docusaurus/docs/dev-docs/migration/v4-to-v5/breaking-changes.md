@@ -26,6 +26,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 * [Model config path uses uid instead of dot notation](/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid)
 * [The `webhooks.populateRelations` server configuration is removed](/dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations)
 * [The `defaultIndex` option is removed from the `public` middleware](/dev-docs/migration/v4-to-v5/breaking-changes/default-index-removed)
+* [Server proxy configuration options are grouped under the `server.proxy` object](/dev-docs/migration/v4-to-v5/breaking-changes/server-proxy)
 
 ## Content API
 
