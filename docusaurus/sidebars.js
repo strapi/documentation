@@ -1149,6 +1149,7 @@ const sidebars = {
                 },
                 'dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations',
                 'dev-docs/migration/v4-to-v5/breaking-changes/default-index-removed',
+                'dev-docs/migration/v4-to-v5/breaking-changes/server-proxy',
               ]
             },
             {
