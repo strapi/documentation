@@ -11,7 +11,11 @@ tags:
 - Strapi Cloud project
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Project settings
+
+<NotV5/>
 
 From a chosen project's dashboard, the *Settings* tab, located in the header, will redirect you to the *Project Settings* page. It enables you to manage the configurations and settings for your Strapi Cloud project.
 

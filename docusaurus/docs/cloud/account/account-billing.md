@@ -12,7 +12,11 @@ tags:
 - Strapi Cloud project
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Account billing details
+
+<NotV5/>
 
 Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the *Billing* tab.
 

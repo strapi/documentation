@@ -14,7 +14,11 @@ tags:
 - Strapi Cloud plan
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Project creation & deployment
+
+<NotV5/>
 
 This is a step-by-step guide for creating and deploying your first project on Strapi Cloud.
 

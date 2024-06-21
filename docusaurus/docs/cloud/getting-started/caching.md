@@ -8,7 +8,11 @@ tags:
 - Strapi Cloud
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Caching & Performance
+
+<NotV5/>
 
 For Strapi Cloud applications with large amounts of cacheable content, such as images, videos, and other static assets, enabling CDN (Content Delivery Network) caching via the [`Cache-control` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) can help improve application performance.
 
