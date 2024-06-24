@@ -64,4 +64,4 @@ Log out of Strapi Cloud.
 strapi logout
 ```
 
-This command logs you out of Strapi Cloud. Once the `logout` command is run, the terminal will display a confirmation message that you were successfully logged out, and you will not be able to use the `deploy` command anymore.
+This command logs you out of Strapi Cloud. Once the `logout` command is run, a browser page will open and the terminal will display a confirmation message that you were successfully logged out. You will not be able to use the `deploy` command anymore.
