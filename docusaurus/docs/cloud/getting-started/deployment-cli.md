@@ -81,6 +81,10 @@ Another option is to enable automatic deployment through a git repository. To do
 2. Connect your Strapi Cloud project to the repository (see the _Connected repository_ setting in [Projects Settings > General](/cloud/projects/settings#general)).
 3. Still in _Projects Settings > General_ tab, tick the box for the "Deploy the project on every commit pushed to this branch" setting. From now on, a new deployment to Strapi Cloud will be triggered any time a commit is pushed to the connected git repository.
 
+:::note
+Automatic deployment is compatible with all other deployment methods, so once a git repository is connected, you can trigger a new deployment to Strapi Cloud [from the Cloud dashboard](/cloud/projects/deploys), [from the CLI](/cloud/cli/cloud-cli#strapi-deploy), or by pushing new commits to your connected repository.
+:::
+
 ## ⏩ What to do next?
 
 Now that you have deployed your project via the Command Line Interface, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
