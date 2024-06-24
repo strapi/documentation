@@ -7,6 +7,10 @@ displayed_sidebar: devDocsSidebar
 
 # Templates
 
+:::caution
+Templates are currently not usable with Strapi 5 pre-releases versions (beta or release candidate versions). Templates will be available again with the Strapi 5 stable release.
+:::
+
 Templates are pre-made Strapi configurations designed for specific use cases. They allow bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/content-type-builder), [components](/dev-docs/backend-customization/models.md#components-2) and [dynamic zones](/dev-docs/backend-customization/models.md#dynamic-zones), and [plugins](/dev-docs/plugins).
 
 :::strapi Templates vs. Starters
