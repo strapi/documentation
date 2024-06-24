@@ -10,8 +10,8 @@ sidebar_position: 1
 
 The creation of a new Strapi Cloud project automatically trigger the deployment of that project. After that, deployments can be:
 
-- automatically triggered everytime a new commit is pushed to the branch (see [Project settings](/cloud/projects/settings#modifying-git-repository-branch)),
-- or [manually triggered](#triggering-a-new-deployment) whenever needed.
+- manually triggered whenever needed, [from the Cloud dashboard](#triggering-a-new-deployment) or [from the CLI](/cloud/cli/cloud-cli#strapi-deploy),
+- or automatically triggered everytime a new commit is pushed to the branch, if the Strapi Cloud project is connected to a git repository and the "deploy on push" option is enabled (see [Project settings](/cloud/projects/settings#modifying-git-repository--branch)).
 
 Ongoing deployments can also be [manually cancelled](#cancelling-a-deployment) if needed.
 
