@@ -273,7 +273,7 @@ Your Strapi project is now installed on your DigitalOcean Droplet. Before being 
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
         ```
-    * Nginx has a [config setting](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) called `client_max_body_size` that will prevent file uploads greater than the specified amount. This will need to be adjusted since its default is only 1MB. Note that strapi middleware is already in charge of parsing requests of file sizes up to 200MB.
+    * Nginx has a [configuration setting](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) called `client_max_body_size` that will prevent file uploads greater than the specified amount. This will need to be adjusted since its default is only 1MB. Note that strapi middleware is already in charge of parsing requests of file sizes up to 200MB.
       ```
       ...
       http {
