@@ -14,7 +14,13 @@ import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 This page is a work-in-progress and the list of breaking changes might not be 100% final yet.
 :::
 
-This page lists all the breaking changes introduced in Strapi 5.
+The present page lists all the breaking changes introduced in Strapi 5.
+Breaking changes are grouped into topic-related categories, and for each line in the following tables line you will find:
+
+- a short description of the breaking change,
+- and 2 other columns, "Affects plugins" and "Handled by codemods", that sum up whether the breaking change also affects plugins and whether the breaking change is automatically handled by a codemod from the [upgrade CLI tool](/dev-docs/upgrade-tool).
+
+You can click on the description of any breaking change in the following tables to jump to the corresponding page with more details.
 
 <DoNotMigrateYet />
 
