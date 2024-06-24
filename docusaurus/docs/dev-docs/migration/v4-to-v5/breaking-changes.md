@@ -10,10 +10,6 @@ import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # Strapi v4 to Strapi 5 breaking changes
 
-:::callout 🚧  Work in progress
-This page is a work-in-progress and the list of breaking changes might not be 100% final yet.
-:::
-
 The present page lists all the breaking changes introduced in Strapi 5.
 Breaking changes are grouped into topic-related categories, and for each line in the following tables line you will find:
 
