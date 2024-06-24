@@ -15,7 +15,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
-# Strapi users `react-router-dom` v6
+# Strapi 5 uses `koa-body` v6
 
 Strapi 5 uses [`koa-body`](https://github.com/koajs/koa-body) v6, which updates `formidable` to v2. This means uploaded files have new properties.
 

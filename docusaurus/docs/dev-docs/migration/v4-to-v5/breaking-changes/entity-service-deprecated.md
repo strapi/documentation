@@ -12,12 +12,14 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import PartialCodemods from '/docs/snippets/breaking-change-partially-handled-by-codemod.md'
 
 # Entity Service deprecated
 
 The Entity Service that was used in Strapi v4 is deprecated and replaced by the new [Document Service API](/dev-docs/api/document-service) in Strapi 5. <MigrationIntro/>
 
 <YesPlugins/>
+<PartialCodemods />
 
 ## Breaking change description
 
