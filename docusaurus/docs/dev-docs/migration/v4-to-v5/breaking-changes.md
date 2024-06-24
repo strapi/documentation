@@ -25,7 +25,7 @@ This page lists all the breaking changes introduced in Strapi 5.
 | [Some `env`-only configuration options are handled by the server configuration](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options) | No | No |
 | [Configuration filenames should meet strict requirements](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files) | No | No |
 | [Server log level is `http`](/dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level) | No | No |
-| [Model config path uses uid instead of dot notation](/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid) | Yes | Partly |
+| [Model config path uses uid instead of dot notation](/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid) | Yes | 👷 Partly |
 | [The `webhooks.populateRelations` server configuration is removed](/dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations) | Yes | No |
 | [The `defaultIndex` option is removed from the `public` middleware](/dev-docs/migration/v4-to-v5/breaking-changes/default-index-removed) | No | No |
 | [Server proxy configuration options are grouped under the `server.proxy` object](/dev-docs/migration/v4-to-v5/breaking-changes/server-proxy) | No | No |
