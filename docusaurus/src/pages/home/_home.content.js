@@ -109,7 +109,7 @@ export default {
           to: '/dev-docs/plugins/guides/use-the-plugin-cli',
         },
         {
-          label: 'Migration from v4',
+          label: 'Upgrade to Strapi 5',
           to: '/dev-docs/migration/v4-to-v5/introduction',
         },
       ],

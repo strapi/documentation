@@ -17,7 +17,7 @@ import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 The upgrade tool assists Strapi users in upgrading their Strapi application dependencies and code to a specific version.
 
-Running the upgrade tool triggers the update of the application dependencies, their installation, and the execution of a series of **codemods** <Annotation>Codemods are automated tools used for large-scale code modifications, especially useful for refactoring, adapting to API changes, or applying coding style updates. They enable precise and programmable alterations to source code.</Annotation> that automatically edit the application codebase according to the breaking changes introduced up until the targeted version.
+Running the upgrade tool triggers the update of the application dependencies, their installation, and the execution of a series of **codemods** <Codemods/> that automatically edit the application codebase according to the breaking changes introduced up until the targeted version.
 
 The upgrade tool is a Strapi package and can be run from the CLI.
 
