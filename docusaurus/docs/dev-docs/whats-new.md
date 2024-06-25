@@ -6,6 +6,7 @@ tags:
 - REST API
 - GraphQL API 
 - upgrade tool
+- content history
 - breaking changes
 ---
 # What's new in Strapi 5 RC docs?
@@ -25,6 +26,8 @@ Strapi 5 RC (Release Candidate) brings many new features and improvements, and t
 👷 Also, we have some resources ready to help you [upgrade to Strapi 5](/dev-docs/migration/v4-to-v5/introduction), including a list of [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) and [additional migration resources](/dev-docs/migration/v4-to-v5/guides/introduction) to read for when you will consider migrating to Strapi 5. _But please don't migrate your *production* project before Strapi 5 is released as a stable version!_ 🙏. 
 
 👀 There might be much more: new or updated pages are identified in the table of contents with <ThemedImage alt="new badge" sources={{light:'/img/assets/new-badge.png', dark:'/img/assets/new-badge_DARK.png'}} /> or <ThemedImage alt="updated badge" sources={{light:'/img/assets/updated-badge.png', dark:'/img/assets/updated-badge_DARK.png'}} /> badges.
+
+🏷️ We introduced a new **tagging system** to provide another layer of information architecture. Tags can be found at the bottom of each page. Clicking on a tag will point you to an index page listing all pages with the same tag. The list of all available tags is visible by visiting the [/tags](/tags) page.
 
 ➕ You will also soon find more official guides and more references to external resources (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
 
