@@ -19,7 +19,6 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab enables you to e
 - Connected accounts: to manage Google, GitHub and GitLab accounts connected with your Strapi Cloud account (see [Managing connected accounts](#managing-connected-accounts)).
 - Delete account: to permanently delete your Strapi Cloud account (see [Deleting Strapi Cloud account](#deleting-strapi-cloud-account)).
 
-<!-- Update screenshot
 <ThemedImage
   alt="General tab of Profile page"
   sources={{
@@ -27,7 +26,6 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab enables you to e
     dark: '/img/assets/cloud/settings-general_DARK.png',
   }}
 />
--->
 
 ### Managing connected accounts
 
@@ -49,7 +47,6 @@ You can delete your Strapi Cloud account, but it will be permanent and irreversi
 
 The ![Preferences icon](/img/assets/icons/Palette.svg) *Preferences* tab enables you to choose the appearance of your Strapi Cloud dashboard: either the Light or Dark theme.
 
-<!-- Update screenshot
 <ThemedImage
   alt="Preferences tab of Profile page"
   sources={{
@@ -57,4 +54,3 @@ The ![Preferences icon](/img/assets/icons/Palette.svg) *Preferences* tab enables
     dark: '/img/assets/cloud/account-preferences_DARK.png',
   }}
 />
--->

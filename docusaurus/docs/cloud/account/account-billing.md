@@ -15,7 +15,6 @@ Through the *Profile* page, accessible by clicking on your profile picture on th
 
 The ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab displays and enables you to modify the billing details and payment method set for the account.
 
-<!-- Update screenshot of Profile > Billing tab
 <ThemedImage
   alt="Billing tab of Profile page"
   sources={{
@@ -23,7 +22,6 @@ The ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab displays and
       dark: '/img/assets/cloud/account-billing2_DARK.png',
     }}
 />
--->
 
 The *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab allows you to manage the credit cards that can be used for the Strapi Cloud projects. The *Billing details* section requires to be filled in, at least for the mandatory fields, as this information will be the default billing details for all Strapi Cloud projects related to your account.
 
@@ -59,10 +57,16 @@ You cannot delete the primary card as at least one credit card must be available
 
 The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the complete list of invoices for all your Strapi Cloud projects.
 
+<ThemedImage
+  alt="Invoices tab of Profile page"
+  sources={{
+      light: '/img/assets/cloud/account-invoices.png',
+      dark: '/img/assets/cloud/account-invoices_DARK.png',
+    }}
+/>
+
 <InvoiceStatus components={props.components} />
 
 :::strapi Invoices are also available per project.
 In the *Settings > Invoices* tab of any project, you will find the invoices for that project only. Feel free to check the [dedicated documentation](/cloud/projects/settings#invoices).
 :::
-
-<!-- Add screenshot of Profile > Invoices tab -->
