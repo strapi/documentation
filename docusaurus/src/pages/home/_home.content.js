@@ -19,23 +19,23 @@ export default {
         to: '/dev-docs/whats-new',
       },
     },
-    {
-      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
-      variant: 'cloud',
-      title: 'Strapi Cloud CLI',
-      description: (
-        <>
-          {'Learn how to deploy your project on '}
-          <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
-          {' directly from the CLI!'}
-        </>
-      ),
-      button: {
-        label: 'Cloud CLI docs',
-        decorative: '☁️',
-        to: '/cloud/intro',
-      },
-    },
+    // {
+    //   backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
+    //   variant: 'cloud',
+    //   title: 'Strapi Cloud CLI',
+    //   description: (
+    //     <>
+    //       {'Learn how to deploy your project on '}
+    //       <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
+    //       {' directly from the CLI!'}
+    //     </>
+    //   ),
+    //   button: {
+    //     label: 'Cloud CLI docs',
+    //     decorative: '☁️',
+    //     to: '/cloud/getting-started/deployment-cli',
+    //   },
+    // },
     {
       title: 'Can’t wait to use Strapi?',
       description: (
