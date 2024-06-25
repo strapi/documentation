@@ -196,7 +196,7 @@ The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* 
 :::tip
 In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
 
-Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab to advise which plan you could switch to.s
+Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab to advise which plan you could switch to.
 :::
 
 <!-- Update screenshot

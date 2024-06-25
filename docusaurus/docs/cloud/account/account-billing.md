@@ -27,10 +27,6 @@ The ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab displays and
 
 The *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab allows you to manage the credit cards that can be used for the Strapi Cloud projects. The *Billing details* section requires to be filled in, at least for the mandatory fields, as this information will be the default billing details for all Strapi Cloud projects related to your account.
 
-:::note
-The *Payment method* section can only be accessible once the mandatory fields of the *Billing details* section have been filled in.
-:::
-
 ### Adding a new credit card
 
 1. In the *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab, click on the **Add card** button.
