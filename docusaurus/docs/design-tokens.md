@@ -357,6 +357,8 @@ Returns entries matching the query filters (see [API parameters](/dev-docs/api/r
   - **Version badge or component** <br />
     We'd like to display the minimum number version from which the feature can be used.
 
+  - **"Information" toolbar** that combines icons, version numbers, and other additional info (experimental feature badge, links, etc.) and tooltips — inspiration: see [here](https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-selection-button) for instance
+
   - **Last update and contributor component** <br />
     At the bottom of the page, this component would show when was the page updated for the last time, and by who.
 
