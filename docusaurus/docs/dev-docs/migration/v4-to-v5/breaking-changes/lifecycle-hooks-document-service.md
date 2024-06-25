@@ -7,6 +7,7 @@ tags:
  - breaking changes
  - Document Service API
  - lifecycle hooks
+ - upgrade to Strapi 5
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

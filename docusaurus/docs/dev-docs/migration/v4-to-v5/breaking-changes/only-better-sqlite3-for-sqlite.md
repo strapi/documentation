@@ -8,6 +8,7 @@ tags:
  - breaking changes
  - database
  - PostgreSQL
+ - upgrade to Strapi 5
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

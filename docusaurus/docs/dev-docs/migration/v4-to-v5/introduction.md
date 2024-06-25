@@ -5,6 +5,7 @@ unlisted: true
 tags:
 - breaking changes
 - upgrade tool
+- upgrade to Strapi 5
 ---
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'

@@ -26,7 +26,7 @@ The documentation for Strapi contains 3 main sections, accessible from the top n
 2. Continue your journey through the various Developer Docs sections. The ["What you will learn"](#what-you-will-find-here) section gives you an overview of the available topics.
 
 :::strapi What's new in Strapi 5?
-Head over to the ["What's new in Strapi 5 docs beta?"](/dev-docs/whats-new) page for a quick tour.
+Head over to the ["What's new in Strapi 5 docs?"](/dev-docs/whats-new) page for a quick tour.
 :::
 
 ## What you will find here

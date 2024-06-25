@@ -1,6 +1,10 @@
 ---
 title: Plugins migration summary
 displayed_sidebar: devDocsMigrationV5Sidebar
+tags:
+  - plugins
+  - plugins development
+  - upgrade to Strapi 5
 ---
 
 # Plugins migration summary

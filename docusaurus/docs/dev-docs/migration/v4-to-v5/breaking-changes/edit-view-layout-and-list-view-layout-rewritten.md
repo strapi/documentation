@@ -5,6 +5,8 @@ sidebar_label: EditViewLayout and ListViewLayout refactored
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
+ - content manager
+ - upgrade to Strapi 5
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

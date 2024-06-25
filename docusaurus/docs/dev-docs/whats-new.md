@@ -8,9 +8,9 @@ tags:
 - upgrade tool
 - breaking changes
 ---
-# What's new in Strapi 5 docs beta?
+# What's new in Strapi 5 RC docs?
 
-Strapi 5 beta brings many new features and improvements, and this page quickly highlights the most important documentation changes.
+Strapi 5 RC (Release Candidate) brings many new features and improvements, and this page quickly highlights the most important documentation changes.
 
 🧑‍🎨 The [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature has been fully reworked. When Draft & Publish is enabled, the Content Manager edit view shows 2 different tabs, one for the draft version and one for the published version, and both can handle different content.
 
