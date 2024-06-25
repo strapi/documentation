@@ -23,7 +23,14 @@ const sidebars = {
       label: "🚀 Getting Started",
       items: [
         "dev-docs/intro",
-        "dev-docs/quick-start",
+        {
+          type: "doc",
+          label: "Quick Start Guide",
+          id: "dev-docs/quick-start",
+          customProps: {
+            updated: true,
+          },
+        },
         "dev-docs/faq",
         "dev-docs/usage-information",
       ],
@@ -764,18 +771,34 @@ const sidebars = {
           },
         },
         {
-          type: "doc",
-          id: "cloud/getting-started/deployment",
+          type: "category",
+          label: "Project deployment",
+          link: { type: "doc", id: "cloud/getting-started/deployment-options" },
           customProps: {
             updated: false,
           },
+          items: [
+            {
+              type: "doc",
+              id: "cloud/getting-started/deployment",
+              customProps: {
+                updated: true,
+              },
+            },
+            {
+              type: "doc",
+              id: "cloud/getting-started/deployment-cli",
+              customProps: {
+                new: true,
+              },
+             },
+          ],
         },
-        ,
         {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
           customProps: {
-            updated: true,
+            updated: false,
           },
         },
         "cloud/getting-started/caching",
@@ -797,7 +820,7 @@ const sidebars = {
           label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
-            updated: true,
+            updated: false,
           },
         },
         "cloud/projects/collaboration",
@@ -821,7 +844,22 @@ const sidebars = {
           id: "cloud/account/account-billing",
           label: "Account billing & invoices",
           customProps: {
-            updated: true,
+            updated: false,
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Command Line Interface",
+      items: [
+        {
+          type: "doc",
+          id: "cloud/cli/cloud-cli",
+          label: "Strapi Cloud CLI",
+          customProps: {
+            new: true,
           },
         },
       ],
