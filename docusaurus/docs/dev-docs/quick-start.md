@@ -45,7 +45,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 Run the following command in a terminal:
 
 ```bash
-npx create-strapi@beta my-project --quickstart
+npx create-strapi@rc my-project --quickstart
 ```
 
 :::info
