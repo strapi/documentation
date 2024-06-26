@@ -29,7 +29,7 @@ From a front-end application, your content can be accessed through Strapi's Cont
 REST and GraphQL APIs represent the top-level layers of the Content API exposed to external applications. Strapi also provides 2 lower-level APIs:
 
 - The [Document Service API](/dev-docs/api/document-service) is the recommended API to interact with your application's database within the [backend server](/dev-docs/customization) or through [plugins](/dev-docs/plugins). The Document Service is the layer that handles **documents** <DocumentDefinition /> as well as Strapi's complex data structures like components and dynamic zones.
-- The [Query Engine API](/dev-docs/api/query-engine) interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but is not aware of any advanced Strapi features that Strapi 5 can handle, like Draft & Publish, Internationalization, Content History, and more.<br/>⚠️ In most, if not all, use cases, you should use the Document Service API instead.
+- The Query Engine API interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but is not aware of any advanced Strapi features that Strapi 5 can handle, like Draft & Publish, Internationalization, Content History, and more.<br/>⚠️ In most, if not all, use cases, you should use the Document Service API instead.
 
 ```mermaid
   flowchart BT
@@ -46,7 +46,6 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
       click rest "/dev-docs/api/rest"
       click graphql "/dev-docs/api/graphql"
       click documentService "/dev-docs/api/document-service"
-      click queryEngine "/dev-docs/api/query-engine"
 ```
 
 <br/>
@@ -60,8 +59,6 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/dev-docs/api/graphql" />
 
 <CustomDocCard emoji="🔃" title="Document Service API" description="Query your data through the backend server or plugins." link="/dev-docs/api/document-service" />
-
-<CustomDocCard emoji="🔃" title="Query Engine API" description="Query your data by interacting directly with the database layer." link="/dev-docs/api/query-engine" />
 
 :::strapi Integrations
 If you're looking for how to integrate Strapi with other platforms, please refer to Strapi's [integrations pages](https://strapi.io/integrations).
