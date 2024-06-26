@@ -135,7 +135,7 @@ const config = {
       announcementBar: {
         id: 'strapi5docs',
         content:
-          "Strapi 5 release candidate (RC) is out! 🚀 Read the Strapi 5 RC docs at <a href='https://docs-next.strapi.io/dev-docs/whats-new'>docs-next.strapi.io</a>",
+          "Strapi 5 Release Candidate (RC) is out! 🚀 Read the Strapi 5 RC docs at <a href='https://docs-next.strapi.io/dev-docs/whats-new'>docs-next.strapi.io</a>",
         backgroundColor: 'rgb(236, 235, 255)',
         textColor: '#091E42',
         isCloseable: true,
