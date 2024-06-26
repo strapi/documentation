@@ -1,4 +1,5 @@
 ---
+unlisted: true
 title: Filtering
 description: Use Strapi's Query Engine API to filter the results of your queries.
 displayed_sidebar: devDocsSidebar
