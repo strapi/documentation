@@ -1,10 +1,10 @@
 ---
-sidebar_label: 'Usage & Billing'
+sidebar_label: 'Information on billing & usage'
 displayed_sidebar: cloudSidebar
 sidebar_position: 3
 ---
 
-# Usage & Billing
+# Information on billing & usage
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
@@ -42,7 +42,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 
 Seats represent the maximum number of users that can access the Strapi admin panel. Each plan comes with a default number of seats. 
 
-You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the **Account Settings** (see [Edit subscription](/cloud/account/account-billing#edit-subscription)).
+You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the **Billing & Usage** tab of a project's settings (see [Managing project's number of seats](/cloud/projects/settings#managing-projects-number-of-seats)).
 
 There is however a maximum number of seats that can be added per plan:
 

@@ -125,6 +125,18 @@ strapi watch-admin
 options: [--browser <name>]
 ```
 
+## strapi login
+
+Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
+
+## strapi logout
+
+Logs out of Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
+
+## strapi deploy
+
+Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
+
 ## strapi export
 
 [Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.

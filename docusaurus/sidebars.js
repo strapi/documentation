@@ -775,7 +775,7 @@ const sidebars = {
           label: "Project deployment",
           link: { type: "doc", id: "cloud/getting-started/deployment-options" },
           customProps: {
-            new: true,
+            updated: false,
           },
           items: [
             {
@@ -842,7 +842,7 @@ const sidebars = {
         {
           type: "doc",
           id: "cloud/account/account-billing",
-          label: "Account billing details",
+          label: "Account billing & invoices",
           customProps: {
             updated: false,
           },

@@ -39,7 +39,7 @@ The Strapi Cloud documentation that you are currently reading is organised in to
 
 <CustomDocCardsWrapper>
   <CustomDocCard emoji="☁️" title="Project creation" description="Step-by-step guide to guide you through the creation and deployment of a Strapi Cloud project." link="/cloud/getting-started/deployment" />
-  <CustomDocCard emoji="💸" title="Usage & Billing" description="All details on Strapi Cloud plans & billing, including overages and project suspension." link="/cloud/getting-started/usage-billing" />
+  <CustomDocCard emoji="💸" title="Information on billing & usage" description="All details on Strapi Cloud plans & billing, including overages and project suspension." link="/cloud/getting-started/usage-billing" />
   <CustomDocCard emoji="🗃️" title="Projects overview" description="Information on how to access Strapi Cloud projects to view their details & usage, and manage them." link="/cloud/projects/overview" />
   <CustomDocCard emoji="⚙️" title="Projects settings" description="Details on all the available settings for Strapi Cloud projects and how to configure them." link="/cloud/projects/settings"/>
   <CustomDocCard emoji="🤝" title="Collaboration" description="Documentation for the Collaboration feature to invite other users to access and manage a project." link="/cloud/projects/collaboration"/>
