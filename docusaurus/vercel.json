@@ -1034,6 +1034,82 @@
 		{
 			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.html",
 			"destination": "/dev-docs/migration-guides"
-		}
-	]
+		},
+    {
+      "source": "/dev-docs/integrations/11ty",
+      "destination": "https://strapi.io/integrations/11ty-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/11ty",
+      "destination": "https://strapi.io/integrations/11ty-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/dart",
+      "destination": "https://strapi.io/integrations/dart-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/flutter",
+      "destination": "https://strapi.io/integrations/flutter-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/gatsby",
+      "destination": "https://strapi.io/integrations/gatsby-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/gridsome",
+      "destination": "https://strapi.io/integrations/gridsome-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/go",
+      "destination": "https://strapi.io/integrations/go-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/jekyll",
+      "destination": "https://strapi.io/integrations/jekyll-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/laravel",
+      "destination": "https://strapi.io/integrations/laravel-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/next-js",
+      "destination": "https://strapi.io/integrations/nextjs-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/nuxt-js",
+      "destination": "https://strapi.io/integrations/nuxtjs-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/php",
+      "destination": "https://strapi.io/integrations/php-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/python",
+      "destination": "https://strapi.io/integrations/python-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/react",
+      "destination": "https://strapi.io/integrations/react-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/ruby",
+      "destination": "https://strapi.io/integrations/ruby-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/sapper",
+      "destination": "https://strapi.io/integrations/sapper-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/svelte",
+      "destination": "https://strapi.io/integrations/svelte-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/vue",
+      "destination": "https://strapi.io/integrations/vuejs-cms"
+    },
+    {
+      "source": "/dev-docs/integrations",
+      "destination": "https://strapi.io/integrations"
+    }
+  ]
 }

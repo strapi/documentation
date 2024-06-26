@@ -63,6 +63,8 @@ This documentation section includes reference information about the following St
 
 <CustomDocCard emoji="🔃" title="Query Engine API" description="Query your data by interacting directly with the database layer." link="/dev-docs/api/query-engine" />
 
-<CustomDocCard emoji="🔄" title="Integration guides" description="Use 3rd-party technologies to query the Content API from a front-end application." link="/dev-docs/integrations" />
+:::strapi Integrations
+If you're looking for how to integrate Strapi with other platforms, please refer to Strapi's [integrations pages](https://strapi.io/integrations).
+:::
 
 </CustomDocCardsWrapper>
