@@ -1,4 +1,5 @@
 ---
+unlisted: true
 title: Single Operations
 description: Use Strapi's Query Engine API to perform operations on single entries.
 displayed_sidebar: devDocsSidebar
