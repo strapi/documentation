@@ -618,9 +618,9 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/working-with-content-history',
-          // customProps: {
-          //   new: true,
-          // }
+          customProps: {
+            new: true,
+          }
         },
         'user-docs/content-manager/managing-relational-fields',
         'user-docs/content-manager/translating-content',
