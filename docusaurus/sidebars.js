@@ -302,26 +302,6 @@ const sidebars = {
             },
           ]
         },
-        {
-          type: 'category',
-          label: 'Query Engine API',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/query-engine',
-          },
-          items: [
-            {
-              type: 'doc',
-              label: 'Introduction to Query Engine API',
-              id: 'dev-docs/api/query-engine',
-            },
-            'dev-docs/api/query-engine/single-operations',
-            'dev-docs/api/query-engine/bulk-operations',
-            'dev-docs/api/query-engine/filtering',
-            'dev-docs/api/query-engine/populating',
-            'dev-docs/api/query-engine/order-pagination',
-          ]
-        },
       ]
     },
     { // Advanced features

@@ -10,14 +10,12 @@ tags:
 - Query Engine API
 ---
 
-import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Filtering with the Query Engine API
 
-<NotV5 />
-
-<RecommendEntityService/>
+<ConsiderDocumentService />
 
 The [Query Engine API](/dev-docs/api/query-engine/) offers the ability to filter results found with its [findMany()](/dev-docs/api/query-engine/single-operations#findmany) method.
 

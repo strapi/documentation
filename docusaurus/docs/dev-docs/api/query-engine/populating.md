@@ -11,13 +11,11 @@ tags:
 ---
 
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Populating with the Query Engine API
 
-<NotV5 />
-
-<RecommendEntityService/>
+<ConsiderDocumentService />
 
 Relations and components have a unified API for populating them.
 

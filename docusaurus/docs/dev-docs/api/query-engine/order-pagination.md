@@ -11,13 +11,11 @@ tags:
 ---
 
 import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Ordering and Paginating with the Query Engine API
 
-<NotV5 />
-
-<RecommendEntityService/>
+<ConsiderDocumentService />
 
 The [Query Engine API](/dev-docs/api/query-engine) offers the ability to [order](#ordering) and [paginate](#pagination) results.
 

@@ -15,11 +15,11 @@ tags:
 ---
 
 import ManagingRelations from '/docs/snippets/managing-relations.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Single Operations with the Query Engine API
 
-<NotV5 />
+<ConsiderDocumentService />
 
 ## findOne()
 
