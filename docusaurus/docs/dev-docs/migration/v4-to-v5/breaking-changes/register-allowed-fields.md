@@ -5,6 +5,8 @@ sidebar_label: register.allowedFields defaults to []
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
+ - users & permissions
+ - upgrade to Strapi 5
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

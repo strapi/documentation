@@ -6,11 +6,12 @@ tags:
 - REST API
 - GraphQL API 
 - upgrade tool
+- content history
 - breaking changes
 ---
-# What's new in Strapi 5 docs beta?
+# What's new in Strapi 5 RC docs?
 
-Strapi 5 beta brings many new features and improvements, and this page quickly highlights the most important documentation changes.
+Strapi 5 RC (Release Candidate) brings many new features and improvements, and this page quickly highlights the most important documentation changes.
 
 🧑‍🎨 The [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature has been fully reworked. When Draft & Publish is enabled, the Content Manager edit view shows 2 different tabs, one for the draft version and one for the published version, and both can handle different content.
 
@@ -22,9 +23,11 @@ Strapi 5 beta brings many new features and improvements, and this page quickly h
 
 🦾 A whole new CLI [upgrade tool](/dev-docs/upgrade-tool) will soon help you migrate to any patch, minor, and major version of Strapi, automating most of the common tasks through codemods.
 
-👷 Also, we have a list of [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) and actions to take for when you will consider migrating to Strapi 5 (_but please don't migrate your production project while Strapi 5 and docs are in beta!_ 🙏).
+👷 Also, we have some resources ready to help you [upgrade to Strapi 5](/dev-docs/migration/v4-to-v5/introduction), including a list of [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) and [additional migration resources](/dev-docs/migration/v4-to-v5/guides/introduction) to read for when you will consider migrating to Strapi 5. _But please don't migrate your *production* project before Strapi 5 is released as a stable version!_ 🙏. 
 
 👀 There might be much more: new or updated pages are identified in the table of contents with <ThemedImage alt="new badge" sources={{light:'/img/assets/new-badge.png', dark:'/img/assets/new-badge_DARK.png'}} /> or <ThemedImage alt="updated badge" sources={{light:'/img/assets/updated-badge.png', dark:'/img/assets/updated-badge_DARK.png'}} /> badges.
+
+🏷️ We introduced a new **tagging system** to provide another layer of information architecture. Tags can be found at the bottom of each page. Clicking on a tag will point you to an index page listing all pages with the same tag. The list of all available tags is visible by visiting the [/tags](/tags) page.
 
 ➕ You will also soon find more official guides and more references to external resources (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
 

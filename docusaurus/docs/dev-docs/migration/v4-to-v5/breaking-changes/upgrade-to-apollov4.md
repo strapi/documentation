@@ -9,6 +9,7 @@ tags:
  - GraphQL
  - GraphQL API
  - Apollo Server
+ - upgrade to Strapi 5
 ---
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'

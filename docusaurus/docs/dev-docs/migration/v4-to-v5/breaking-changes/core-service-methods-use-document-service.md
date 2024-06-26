@@ -6,6 +6,7 @@ displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
  - document service API
+ - upgrade to Strapi 5
 ---
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'

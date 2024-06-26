@@ -1,15 +1,19 @@
 ---
-title: Plugins migration summary
+title: Plugins upgrade summary
 displayed_sidebar: devDocsMigrationV5Sidebar
+tags:
+  - plugins
+  - plugins development
+  - upgrade to Strapi 5
 ---
 
-# Plugins migration summary
+# Plugins upgrade summary
 
 :::callout 🚧  Work in progress
 This page is a work-in-progress and some links are currently missing.
 :::
 
-The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to migrate your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
+The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to upgrade your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
 
 ## Back-end changes
 

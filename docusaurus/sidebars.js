@@ -34,7 +34,7 @@ const sidebars = {
           id: 'dev-docs/whats-new',
           label: "What's new?",
           customProps: {
-            new: true
+            udpated: true
           }
         },
         'dev-docs/faq',
@@ -1091,6 +1091,9 @@ const sidebars = {
         id: 'dev-docs/migration/v4-to-v5/introduction'
       },
       label: 'Upgrade to Strapi 5',
+      customProps: {
+        new: true,
+      },
       items: [
         {
           type: "doc",
@@ -1236,7 +1239,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Migration guides',
+          label: 'Specific resources',
           link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/guides/introduction' },
           items: [
             'dev-docs/migration/v4-to-v5/guides/introduction',

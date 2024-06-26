@@ -4,6 +4,7 @@ description: View the list of all breaking changes introduced between Strapi v4 
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
+ - upgrade to Strapi 5
 ---
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
