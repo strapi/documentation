@@ -27,22 +27,22 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
 
 3. Enter the following command to log into Strapi Cloud:
 
-<Tabs groupId="yarn-npm">
-<TabItem value="yarn" label="Yarn">
+  <Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
 
-```bash
-yarn strapi login
-```
+  ```bash
+  yarn strapi login
+  ```
 
-</TabItem>
-<TabItem value="npm" label="NPM">
+  </TabItem>
+  <TabItem value="npm" label="NPM">
 
-```bash
-npx run strapi login
-```
+  ```bash
+  npx run strapi login
+  ```
 
-</TabItem>
-</Tabs>
+  </TabItem>
+  </Tabs>
 
 4. In the browser window that opens automatically, confirm that the code displayed is the same as the one written in the terminal message.
 
@@ -52,24 +52,38 @@ npx run strapi login
 
 1. From your terminal, still from the folder of your Strapi project, enter the following command to deploy the project:
 
-<Tabs groupId="yarn-npm">
-<TabItem value="yarn" label="Yarn">
+  <Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
 
-```bash
-yarn strapi deploy
-```
+  ```bash
+  yarn strapi deploy
+  ```
 
-</TabItem>
-<TabItem value="npm" label="NPM">
+  </TabItem>
+  <TabItem value="npm" label="NPM">
 
-```bash
-npx run strapi deploy
-```
+  ```bash
+  npx run strapi deploy
+  ```
 
-</TabItem>
-</Tabs>
+  </TabItem>
+  </Tabs>
 
 2. Follow the progression bar in the terminal until confirmation that the project was successfully deployed with Strapi Cloud.
+
+### Automatically deploying subsequent changes
+
+By default, when creating and deploying a project with the Cloud CLI, you need to manually deploy again all subsequent changes by running the corresponding `deploy` command everytime you make a change.
+
+Another option is to enable automatic deployment through a git repository. To do so:
+
+1. Host your code on a git repository, such as [GitHub](https://www.github.com) or [GitLab](https://www.gitlab.com).
+2. Connect your Strapi Cloud project to the repository (see the _Connected repository_ setting in [Projects Settings > General](/cloud/projects/settings#general)).
+3. Still in _Projects Settings > General_ tab, tick the box for the "Deploy the project on every commit pushed to this branch" setting. From now on, a new deployment to Strapi Cloud will be triggered any time a commit is pushed to the connected git repository.
+
+:::note
+Automatic deployment is compatible with all other deployment methods, so once a git repository is connected, you can trigger a new deployment to Strapi Cloud [from the Cloud dashboard](/cloud/projects/deploys), [from the CLI](/cloud/cli/cloud-cli#strapi-deploy), or by pushing new commits to your connected repository.
+:::
 
 ## ⏩ What to do next?
 
