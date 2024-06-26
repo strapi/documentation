@@ -22,6 +22,8 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # 🧠 Understanding the `populate` parameter for the REST API
 
+<NotV5/>
+
 :::note Note: Example responses might differ from your experience
 
 The content of this page might not be fully up-to-date with Strapi 5 yet:
