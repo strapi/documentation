@@ -50,5 +50,5 @@ Click on any of the following cards to learn more about customization possibilit
 :::info
 Customizing the database or the external, front-end application are outside of the scope of the present documentation section.
 - You can learn more about databases usage with Strapi by reading the installation documentation, which lists [supported databases](/dev-docs/installation/cli#preparing-the-installation), and the configuration documentation, which describes how to [configure a database](/dev-docs/configurations/database) with your project.
-- You can learn more about how external front-end applications can interact with Strapi by reading the [integration guides](/dev-docs/integrations).
+- You can learn more about how external front-end applications can interact with Strapi by reading the Strapi's [integration pages](https://strapi.io/integrations).
 :::
