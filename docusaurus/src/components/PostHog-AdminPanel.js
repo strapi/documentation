@@ -4,16 +4,12 @@ import { useFeatureFlagVariantKey } from 'posthog-js/react'
 export default function PostHogAdminPanelBasic({ wording = "user guide" }) {
 
   const variantKey = useFeatureFlagVariantKey('userguide_adminpanel')
-  // let wording = ''
-  console.log("variantKey: ", variantKey);
 
-  if (variantKey === 'userguide') {
+  if (variantKey === 'user-guide') {
     wording = 'user guide'
-  } else if (variantKey === 'adminpanel') {
+  } else if (variantKey === 'admin-panel') {
     wording = 'admin panel'
   }
-
-  console.log("wording: ", wording);
 
   return (
     <span id="posthog-adminpanel">{wording}</span>
