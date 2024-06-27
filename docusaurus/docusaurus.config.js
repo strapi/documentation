@@ -13,6 +13,11 @@ const config = {
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
+  customFields: {
+    postHogApiKey: 'process.env.REACT_APP_PUBLIC_POSTHOG_KEY',
+    postHogApiHost: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
+    test: 'test'
+  },
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -267,6 +272,7 @@ const config = {
     }),
 
   plugins: [
+    'docusaurus-plugin-dotenv',
     [
       '@docusaurus/plugin-google-tag-manager',
       {
