@@ -14,7 +14,7 @@ const config = {
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
   customFields: {
-    postHogApiKey: 'process.env.REACT_APP_PUBLIC_POSTHOG_KEY',
+    postHogApiKey: process.env.REACT_APP_PUBLIC_POSTHOG_KEY,
     postHogApiHost: process.env.REACT_APP_PUBLIC_POSTHOG_HOST,
     test: 'test'
   },
