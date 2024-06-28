@@ -665,7 +665,7 @@ If no `locale` parameter is passed, `discardDraft()` discards draft data and ove
 <Request title="Discard draft for the default locale of a document">
 
 ```js
-strapi.documents.discard({
+strapi.documents.discardDraft({
   documentId: 'a1b2c3d4e5f6g7h8i9j0klm', 
 });
 ```
