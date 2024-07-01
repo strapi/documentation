@@ -507,6 +507,10 @@
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html",
 			"destination": "/dev-docs/api/rest"
 		},
+    {
+       "source": "/dev-docs/api/rest/guides",
+       "destination": "/dev-docs/api/rest/guides/intro"
+    },
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html",
 			"destination": "/dev-docs/api/rest/parameters"
