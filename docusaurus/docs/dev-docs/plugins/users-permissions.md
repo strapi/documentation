@@ -924,10 +924,9 @@ Launch the backend and the [react login example app](https://github.com/strapi/s
 
 ##### Creating a custom provider
 
-<!-- TODO: add path of file to create 👇 -->
-You can also create your own custom provider, creating a … file and using the following code example adjusted to your needs:
+You can also use the `register` lifecycle function to create your own custom provider in the `src/index.js|ts` file of your Strapi application. Use the following code example adjusted to your needs:
 
-```js title="/path/to/the/file.js"
+```js title="/src/index.js"
 module.exports = {
   register({ strapi }) {
     strapi
@@ -956,6 +955,8 @@ module.exports = {
   },
 };
 ```
+
+For additional information on parameters passed to `grantConfig`, please refer to the  [`grant` documentation](https://github.com/simov/grant). For additional information `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
 
 #### Setup the frontend
 
