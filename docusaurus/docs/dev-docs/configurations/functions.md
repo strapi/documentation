@@ -1,5 +1,5 @@
 ---
-title: Lifecycle Functions
+title: Lifecycle functions
 displayed_sidebar: devDocsConfigSidebar
 description: Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
 tags:
@@ -166,7 +166,8 @@ It can be used to:
 - [extend plugins](/dev-docs/plugins-extension#extending-a-plugin-s-interface)
 - extend [content-types](/dev-docs/backend-customization/models) programmatically
 - load some [environment variables](/dev-docs/configurations/environment)
-- register a [custom field](/dev-docs/custom-fields) that would be used only by the current Strapi application.
+- register a [custom field](/dev-docs/custom-fields) that would be used only by the current Strapi application,
+- register a [custom provider for the Users & Permissions plugin](/dev-docs/plugins/users-permissions#creating-a-custom-provider).
 
 `register()` is the very first thing that happens when a Strapi application is starting. This happens _before_ any setup process and you don't have any access to database, routes, policies, or any other backend server elements within the `register()` function.
 
