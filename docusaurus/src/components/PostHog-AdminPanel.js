@@ -12,6 +12,6 @@ export default function PostHogAdminPanelBasic({ wording = "user guide" }) {
   }
 
   return (
-    <span id="posthog-adminpanel">{wording}</span>
+    <span id="posthog-adminpanel-vs-userguide">{wording}</span>
   );
 }
