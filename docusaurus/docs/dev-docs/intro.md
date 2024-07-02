@@ -55,7 +55,7 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 <CustomDocCard emoji="🔌" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/dev-docs/plugins" />
 
-<CustomDocCard emoji="♻️" title="Upgrade" description="Upgrade your application to the most recent Strapi versions." link="/dev-docs/update-migration" />
+<CustomDocCard emoji="♻️" title="Upgrade" description="Upgrade your application to the most recent Strapi versions." link="/dev-docs/upgrades" />
 
 </CustomDocCardsWrapper>
 
