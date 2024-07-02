@@ -22,6 +22,7 @@ To manually deploy your Strapi project on 3rd-party platforms, click on any of t
 <CustomDocCard title="DigitalOcean App Platform" description="Deploy your Strapi project on DigitalOcean App Platform." link="/dev-docs/deployment/digitalocean-app-platform" />
 <CustomDocCard title="DigitalOcean Droplet" description="Deploy your Strapi project on DigitalOcean Droplets." link="/dev-docs/deployment/digitalocean" />
 <CustomDocCard title="Heroku" description="Deploy your Strapi project on Heroku." link="/dev-docs/deployment/heroku" />
+<CustomDocCard title="Koyeb" description="Deploy your Strapi project on Koyeb." link="/dev-docs/deployment/koyeb" />
 </CustomDocCardsWrapper>
 
 <CommunityGuides />
