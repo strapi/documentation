@@ -1,7 +1,7 @@
 ---
 title: Users & Permissions plugin
 displayed_sidebar: devDocsSidebar
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
 tags:
 - authenticated role
@@ -24,11 +24,11 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 This plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API. It also provides an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
-To access the plugin admin panel, click on the **Settings** link in the left menu of your Strapi application dashboard and under the **USERS & PERMISSIONS PLUGIN** section you will find sections for managing **Roles**, **Providers**, **Email Templates**, and **Advanced Settings**.
+The user guide describes how to use the [Users & Permissions plugin](/user-docs/users-roles-permissions) from the admin panel. The present page is more about the developer-related aspects of using the Users & Permissions plugin.
 
 ## Concept
 
-When this plugin is installed, it adds an access layer on your application.
+The Users & Permissions plugin adds an access layer to your application.
 The plugin uses `JWTs` to authenticate users. Your JWT contains your user ID, which is matched to the group your user is in and used to determine whether to allow access to the route.
 
 Each time an API request is sent the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
@@ -293,7 +293,7 @@ axios
 
  [Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest) allow you to use OAuth and OAuth2 providers to enable authentication in your application.
 
-For a better understanding, review the following description of the login flow. The example uses`github` as the provider but it works the same for other providers.
+For a better understanding, review the following description of the login flow. The example uses `github` as the provider but it works the same for other providers.
 
 #### Understanding the login flow
 
@@ -355,7 +355,7 @@ Later you will give this url to your provider. <br/> For development, some provi
 
 #### Setting up the provider - examples
 
-Instead of a generic explanation we decided to show an example for each provider.
+Instead of a generic explanation we decided to show an example for each provider. You can also [create your own custom provider](#creating-a-custom-provider).
 
 In the following examples, the frontend app will be the [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react). <br/>
 It (the frontend app) will be running on `http://localhost:3000`. <br/>
@@ -921,6 +921,42 @@ The use of `ngrok` is not needed.
 
 Your configuration is done.
 Launch the backend and the [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react), go to `http://localhost:3000` and try to connect to the provider your configured.
+
+##### Creating a custom provider
+
+You can also use the `register` lifecycle function to create your own custom provider in the `src/index.js|ts` file of your Strapi application. Use the following code example adjusted to your needs:
+
+```js title="/src/index.js"
+module.exports = {
+  register({ strapi }) {
+    strapi
+      .plugin("users-permissions")
+      .service("providers-registry")
+      .add("example-provider-name", {
+        icon: "",
+        enabled: true,
+        grantConfig: {
+          key: "",
+          secret: "",
+          callback: `${strapi.config.server.url}/auth/test-provider/callback`,
+          scope: ["email"],
+          authorize_url: "https://awesome.com/authorize",
+          access_url: "https://awesome.com/token",
+          oauth: 2,
+        },
+        async authCallback({ accessToken, providers, purest }) {
+          // use whatever you want here to get the user info
+          return {
+            username: "test",
+            email: "test",
+          };
+        },
+      });
+  },
+};
+```
+
+For additional information on parameters passed to `grantConfig`, please refer to the  [`grant` documentation](https://github.com/simov/grant). For additional information about `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
 
 #### Setup the frontend
 
