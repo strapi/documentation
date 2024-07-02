@@ -71,7 +71,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
   }}
 />
 
-As you will see in the terminal, your project is now building locally and also getting ready to be deployed on Strapi Cloud later.
+As you will see in the terminal, your project is now building locally.
 
 :::info
 * The `quick start` installation sets up Strapi with a SQLite database. Other databases and installation options are available (see [CLI installation guide](/dev-docs/installation/cli)).
@@ -230,7 +230,7 @@ sources={{
 />
 
 :::callout 🥳 CONGRATULATIONS!  
-Now your project is hosted on Strapi Cloud and accessible online. You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
+Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-day free Strapi Cloud trial! You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
 :::
 
 :::tip
