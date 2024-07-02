@@ -56,22 +56,16 @@ The default data collection feature can be disabled using the following CLI comm
 
 <TabItem value="yarn" label="yarn">
 
-```jsx
-//disable telemetry in a Strapi application
-
+```sh
 yarn strapi telemetry:disable
-
 ```
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
 
-```jsx
-//disable telemetry in a Strapi application
-
+```sh
 npm run strapi telemetry:disable
-
 ```
 
 </TabItem>
