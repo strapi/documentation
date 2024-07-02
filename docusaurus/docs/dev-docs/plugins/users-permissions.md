@@ -956,7 +956,7 @@ module.exports = {
 };
 ```
 
-For additional information on parameters passed to `grantConfig`, please refer to the  [`grant` documentation](https://github.com/simov/grant). For additional information `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
+For additional information on parameters passed to `grantConfig`, please refer to the  [`grant` documentation](https://github.com/simov/grant). For additional information about `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
 
 #### Setup the frontend
 
