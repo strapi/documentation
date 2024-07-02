@@ -18,7 +18,7 @@ tags:
 By default the [Document Service API](/dev-docs/api/document-service) does not populate any relations, media fields, components, or dynamic zones. This page describes how to use the populate parameter to [`populate`](#populate) specific fields.
 
 :::tip
-You can also use the `select` parameter to return only specific fields with the query results (see the [`select` parameter](/dev-docs/api/document-service/select) documentation).
+You can also use the `select` parameter to return only specific fields with the query results (see the [`select` parameter](/dev-docs/api/document-service/fields) documentation).
 :::
 
 :::caution

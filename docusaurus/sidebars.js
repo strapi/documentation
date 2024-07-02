@@ -272,8 +272,8 @@ const sidebars = {
             },
             {
               type: 'doc',
-              label: 'Select',
-              id: 'dev-docs/api/document-service/select'
+              label: 'Fields',
+              id: 'dev-docs/api/document-service/fields'
             },
             {
               type: 'doc',
