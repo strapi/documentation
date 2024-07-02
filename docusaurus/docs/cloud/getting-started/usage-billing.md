@@ -16,7 +16,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 | **Database Entries**  | 1,000 | 1,000 | 100,000 | 1,000,000 |
 | **Assets Storage** | 5GB | 15GB | 150GB | 500GB |
 | **Assets Bandwidth** | 50GB | 50GB per month | 500GB per month | 1,000GB per month |
-| **API Requests** | 10,000 | 100,000 | 1,000,000 | 2,000,000 |
+| **API Requests** | 10,000 | 100,000 | 1,000,000 | 10,000,000 |
 |  |  |  |  |  |
 | **Audit Logs** | 7 days retention | N/A | N/A | 7 days retention |
 | **Releases** | 3 pending releases | N/A | N/A | 3 pending releases |
