@@ -231,7 +231,9 @@ export default {
     },
     // Replace the favicon
     head: {
-      favicon: favicon,
+      // Try to change the origin favicon.png file in the
+      // root of strapi project if this config don't work.
+      favicon: favicon, 
     },
     // Add a new locale, other than 'en'
     locales: ["fr", "de"],
