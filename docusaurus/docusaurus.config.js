@@ -77,6 +77,11 @@ const config = {
       'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
+      'data-search-mode-enabled': 'true',
+      'data-modal-open-on-command-k': 'true',
+      'data-modal-command-k-search-mode-default': 'true',
+      'data-search-display-num-results': '10',
+      'data-modal-override-open-class': "DocSearch",
       async: true,
     },
   ],
@@ -164,11 +169,11 @@ const config = {
           autoCollapseCategories: true,
         },
       },
-      algolia: {
-         appId: '392RJ63O14',
-         apiKey: 'ed62374a794e8da5accb298e13618614',
-         indexName: 'strapiDocsv5beta',
-      },
+      // algolia: {
+      //    appId: '392RJ63O14',
+      //    apiKey: 'ed62374a794e8da5accb298e13618614',
+      //    indexName: 'strapiDocsv5beta',
+      // },
       navbar: {
         hideOnScroll: false,
         logo: {
