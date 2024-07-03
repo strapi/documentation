@@ -234,6 +234,7 @@ await strapi.documents('api::restaurant.restaurant').delete({
 
 The `*` wildcard is supported by the `locale` parameter and can be used to delete all locale versions of a document:
 
+<ApiCall>
 <Request>
 
 ```js
@@ -244,6 +245,23 @@ await strapi.documents('api::restaurant.restaurant').delete({
 ```
 
 </Request>
+
+<Response title="Example response">
+
+```json
+{
+  "documentId": "a1b2c3d4e5f6g7h8i9j0klm",
+  // All of the deleted locale versions are returned
+  "versions": [
+    {
+      "title": "Test Article"
+    }
+  ]
+}
+```
+
+</Response>
+</ApiCall>
 
 ## `publish()` locale versions {#publish}
 
