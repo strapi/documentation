@@ -487,8 +487,6 @@ const sidebars = {
               id: "dev-docs/api/plugins/server-api",
               label: "Server API",
             },
-            "dev-docs/custom-fields",
-            "dev-docs/plugins-extension",
             {
                 type: 'doc',
                 id: 'dev-docs/plugins/development/plugin-cli',
