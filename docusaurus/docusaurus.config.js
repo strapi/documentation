@@ -79,7 +79,6 @@ const config = {
       'data-button-bg-color': '#32324D',
       'data-search-mode-enabled': 'true',
       'data-modal-open-on-command-k': 'true',
-      'data-modal-command-k-search-mode-default': 'true',
       'data-search-display-num-results': '10',
       'data-modal-override-open-class': "DocSearch",
       async: true,
