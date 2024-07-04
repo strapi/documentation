@@ -615,6 +615,7 @@ const sidebars = {
       items: [
         'user-docs/content-manager/introduction-to-content-manager',
         'user-docs/content-manager/configuring-view-of-content-type',
+        'user-docs/content-manager/writing-content',
         {
           type: 'doc',
           id: 'user-docs/content-manager/working-with-content-history',
