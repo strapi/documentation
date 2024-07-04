@@ -103,11 +103,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     width: var(--custom-navbar-search-button-width);
   }
 
-  &__item.kapa-widget-button {
+  .kapa-widget-button {
     button {
       border: none;
-      // margin-left: 10px;
-      // margin-right: 20px;
       padding: 0;
       width: auto;
       overflow: visible;
@@ -145,6 +143,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         position: relative;
         left: 6px;
         color: var(--strapi-primary-600);
+
+        @media screen and (max-width: 996px){
+          left: 12px;
+        }
       }
     }
   }
