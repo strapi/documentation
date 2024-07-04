@@ -105,7 +105,7 @@ To fetch multiple documents <DocumentDefinition/> you can use simple, flat queri
 
 <Tabs groupId="flat-relay">
 
-<Tab value="flat" label="Flat queries">
+<TabItem value="flat" label="Flat queries">
 
 To fetch multiple documents you can use flat queries like the following:
 
@@ -116,9 +116,9 @@ restaurants {
 }
 ```
 
-</Tab>
+</TabItem>
 
-<Tab value="relay" label="Relay-style queries">
+<TabItem value="relay" label="Relay-style queries">
 
 Relay-style queries can be used to fetch multiple documents and return meta information:
 
@@ -139,7 +139,7 @@ Relay-style queries can be used to fetch multiple documents and return meta info
 }
 ```
 
-</Tab>
+</TabItem>
 
 </Tabs>
 
@@ -149,7 +149,7 @@ You can ask to include relation data in your flat queries or in your [Relay-styl
 
 <Tabs groupId="flat-relay">
 
-<Tab value="flat" label="Flat queries">
+<TabItem value="flat" label="Flat queries">
 
 The following example fetches all documents from the "Restaurant" content-type, and for each of them, also returns some fields for the many-to-many relation with the "Category" content-type:
 
@@ -168,9 +168,9 @@ The following example fetches all documents from the "Restaurant" content-type, 
 }
 ```
 
-</Tab>
+</TabItem>
 
-<Tab value="relay" label="Relay-style queries">
+<TabItem value="relay" label="Relay-style queries">
 
 The following example fetches all documents from the "Restaurant" content-type using a Relay-style query, and for each restaurant, also returns some fields for the many-to-many relation with the "Category" content-type:
 
@@ -276,7 +276,7 @@ This does not work:
 
 :::
 
-</Tab>
+</TabItem>
 
 </Tabs>
 
@@ -301,7 +301,7 @@ For multiple media fields, you can use flat queries or [Relay-style](https://www
 
 <Tabs groupId="flat-relay">
 
-<Tab value="flat" label="Flat queries">
+<TabItem value="flat" label="Flat queries">
 
 The following example fetches some attributes from the `images` multiple media field found in the "Restaurant" content-type:
 
@@ -318,9 +318,9 @@ The following example fetches some attributes from the `images` multiple media f
 }
 ```
 
-</Tab>
+</TabItem>
 
-<Tab value="relay" label="Relay-style queries">
+<TabItem value="relay" label="Relay-style queries">
 
 The following example fetches some attributes from the `images` multiple media field found in the "Restaurant" content-type using a Relay-style query:
 
@@ -341,7 +341,7 @@ The following example fetches some attributes from the `images` multiple media f
 For now, `pageInfo` only works for documents. Future implementations of Strapi might implement `pageInfo` for the media fields `_connection` too.
 :::
 
-</Tab>
+</TabItem>
 
 </Tabs>
 
