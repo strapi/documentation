@@ -73,10 +73,17 @@ const config = {
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
-      // 'data-button-hide': 'true',
+      'data-button-hide': 'true',
       'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
+      'data-search-mode-enabled': 'true',
+      'data-modal-open-on-command-k': 'true',
+      'data-search-display-num-results': '10',
+      'data-modal-override-open-class': "kapa-widget-button",
+      'data-modal-title-ask-ai': 'Ask your question',
+      'data-modal-title-search': 'Search Strapi Docs',
+      'data-modal-search-input-placeholder': 'Search for a docs page or section…',
       async: true,
     },
   ],
@@ -164,11 +171,11 @@ const config = {
           autoCollapseCategories: true,
         },
       },
-      algolia: {
-         appId: '392RJ63O14',
-         apiKey: 'ed62374a794e8da5accb298e13618614',
-         indexName: 'strapiDocsv5beta',
-      },
+      // algolia: {
+      //    appId: '392RJ63O14',
+      //    apiKey: 'ed62374a794e8da5accb298e13618614',
+      //    indexName: 'strapiDocsv5beta',
+      // },
       navbar: {
         hideOnScroll: false,
         logo: {
@@ -200,6 +207,12 @@ const config = {
             docId: 'cloud/getting-started/intro',
             position: 'left',
             label: 'Cloud Documentation',
+          },
+          {
+            type: 'html',
+            value: '<button><span class="kapa-button-label">🔎 Ask AI & Search Docs</span></button>',
+            className: 'navbar__link kapa-widget-button',
+            position: 'right',
           },
           {
             href: 'https://github.com/strapi/documentation',
