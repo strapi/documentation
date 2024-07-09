@@ -33,6 +33,10 @@ const config = {
 
   themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
+  customFields: {
+    prefabApiKey: "398-Development-P435-E907-FRONTEND-b3f733ec-b1b7-464f-8b6f-9cf91d23a434",
+  },
+
   scripts: [
     {
       src:

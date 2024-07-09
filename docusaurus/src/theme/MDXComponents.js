@@ -30,8 +30,7 @@ import {
 import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
-import PostHogAdminPanelBasic from '../components/PostHog-AdminPanel-Basic';
-import PostHogAdminPanel from '../components/PostHog-AdminPanel';
+import { UserGuideVsAdminPanel } from '../components/UserGuideAdminPanel';
 
 export default {
   // Re-use the default mapping
@@ -78,8 +77,7 @@ export default {
   PluginsConfigurationFile,
   HeadlessCms,
   /**
-   * PostHog-specific components go below👇
+   * Prefab components go below👇
    */
-  PostHogAdminPanelBasic,
-  PostHogAdminPanel
+  UserGuideVsAdminPanel
 };
