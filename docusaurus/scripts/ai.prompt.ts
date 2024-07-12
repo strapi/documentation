@@ -1,10 +1,10 @@
 import debug from "debug";
 
 // Setup debug namespaces
-const debugSetup = debug("ai-translate:setup");
-const debugFileOps = debug("ai-translate:file-operations");
-const debugTransform = debug("ai-translate:transform");
-const debugError = debug("ai-translate:error");
+const debugSetup = debug("ai-prompt:setup");
+const debugFileOps = debug("ai-prompt:file-operations");
+const debugTransform = debug("ai-prompt:transform");
+const debugError = debug("ai-prompt:error");
 
 debugSetup("Initializing translation process");
 
@@ -75,6 +75,11 @@ async function copyFilesRecursively({
         prompt,
         input: srcPath,
         output: destPath,
+        copyAll,
+        exclude,
+        include,
+        overwrite,
+        model,
       });
     } else {
       // Check if destPath exists before proceeding
@@ -97,7 +102,8 @@ async function copyFilesRecursively({
         if (entry.name.endsWith(".md")) {
           debugTransform(`Transforming markdown file: ${srcPath}`);
           const content = await fs.readFile(srcPath, "utf-8");
-          if (timesCalled++ > limit && limit > -1) {
+          timesCalled = timesCalled + 1;
+          if (timesCalled > limit && limit > -1) {
             debugTransform(
               `Reached max API calls per run; not translating file ${srcPath}`
             );
@@ -130,7 +136,7 @@ async function transformMarkdown(
     const response = await openai.chat.completions.create({
       model,
       messages: [
-        { role: "system", content: prompt },
+        { role: "user", content: prompt },
         { role: "user", content },
       ],
       max_tokens: MAX_TOKENS,
@@ -144,12 +150,17 @@ async function transformMarkdown(
   }
 }
 yargs(hideBin(process.argv))
-  .option("language", {
-    alias: "l",
-    describe: "The target language for translation (e.g., 'french')",
-    type: "string",
-    demandOption: true,
-  })
+  .command(
+    "$0 <config>",
+    "Run the AI prompt script with the specified configuration",
+    (yargs) => {
+      yargs.positional("config", {
+        describe: "The name of the YAML configuration file (without extension)",
+        type: "string",
+        demandOption: true,
+      });
+    }
+  )
   .option("output", {
     alias: "o",
     describe: "The output directory",
@@ -171,26 +182,34 @@ yargs(hideBin(process.argv))
   .option("overwrite", {
     describe: "Overwrite files in output path",
     type: "boolean",
+  }) // Add include option
+  .option("include", {
+    describe: "CSV string of patterns to include",
+    type: "string",
+    coerce: (csv) => csv.split(",").map((item: any) => item.trim()), // Split the CSV string into an array of strings
   })
-  .demandOption(
-    "language",
-    "Please provide the target language for translation"
-  )
+  // Add exclude option
+  .option("exclude", {
+    describe: "CSV string of patterns to exclude",
+    type: "string",
+    coerce: (csv) => csv.split(",").map((item: any) => item.trim()), // Split the CSV string into an array of strings
+  })
   .help()
   .parseAsync()
   .then(async (argv) => {
     debugSetup(
-      `Translation invoked with language: ${argv.language} and output: ${argv.output}`
+      `Prompt invoked with script: ${argv.config} and output: ${argv.output}`
     );
-    const filePath = path.join(__dirname, "ai", "translate.yaml");
+
+    const filePath = path.join(__dirname, "ai", `${argv.config}.yaml`);
+
     try {
       debugFileOps(`Attempting to read configuration from: ${filePath}`);
       let fileContent = await fs.readFile(filePath, "utf-8");
       debugFileOps(`Loaded configuration from ${filePath}`);
-      // Replace $lang in the prompt with the actual language
-      fileContent = fileContent.replace(/\$lang/g, argv.language);
+
       const parsedContent = yaml.parse(fileContent);
-      debugFileOps(`Parsed YAML configuration for language: ${argv.language}`);
+
       // Override output directory if specified
       if (argv.output) {
         parsedContent.output = argv.output;
@@ -205,7 +224,6 @@ yargs(hideBin(process.argv))
       debugFileOps(`Output directory created at: ${outputPath}`);
       const options = {
         ...parsedContent,
-        prompt: parsedContent.prompt.replace(/\$lang/g, argv.language), // Ensure prompt is updated with the language
       };
       debugFileOps(
         `copyFilesRecursively options:` + JSON.stringify(options, null, 2)
@@ -213,9 +231,9 @@ yargs(hideBin(process.argv))
       await copyFilesRecursively(options);
       debugFileOps("Completed file copy and transformation process");
     } catch (error) {
-      console.error(`Error in translation process: ${error}`);
+      console.error(`Error in process: ${error}`);
     }
   })
   .catch((error) => {
-    console.error(`Failed to process translation: ${error}`);
+    console.error(`Failed to process: ${error}`);
   });

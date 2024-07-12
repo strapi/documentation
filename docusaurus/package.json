@@ -3,6 +3,7 @@
   "version": "4.25.2",
   "private": true,
   "scripts": {
+    "ai:prompt": "ts-node scripts/ai.prompt.ts",
     "ai:translate": "ts-node scripts/ai.translate.ts",
     "docusaurus": "docusaurus",
     "dev": "docusaurus start --port 8080 --no-open",
