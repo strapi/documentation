@@ -18,7 +18,7 @@ import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md
 
 # Strapi 5 has a new, flattened response format for API calls
 
-In Strapi 5, the response format has been simplified and flattened.
+In Strapi 5, the response format has been simplified and flattened. You can set the `Strapi-Response-Format: v4` header to use the old v4 format while you convert your code to fully take into account the new Strapi 5 response format.
 
 <Intro />
 
