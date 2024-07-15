@@ -58,7 +58,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 3. Choose a plan for your Strapi Cloud project: either Developer, Pro, Team, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
     :::note Notes
-    - Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
+    - Strapi Cloud offers a free trial for only 5 projects and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used, the option will no longer appear in the plan selection.
     - You can't upload HTML files to Strapi Cloud during your free trial.
     :::
 
@@ -170,7 +170,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 ## Setting up billing details
 
 :::strapi No billing step for free trials
-If you chose the free trial, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project. 
+If you chose the free trial, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project.
 
 During the free trial, will be kept informed of the number of remaining free days. You will then be notified by email and via the Strapi Cloud dashboard whenever it is time to fill in your billing information to move to a paid plan.
 
