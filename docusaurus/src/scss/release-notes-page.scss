@@ -1,0 +1,29 @@
+.release-notes-page {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  font-size: 0.9em;
+}
+
+.release-notes-page ul {
+  padding-left: 1.5em;
+  margin-top: 0.5em;
+}
+
+.release-notes-page ul li {
+  margin-bottom: 0.5em;
+}
+
+.release-notes-page .contributors-section {
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.release-notes-page .contributor-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  vertical-align: middle;
+  margin-left: 5px;
+}
