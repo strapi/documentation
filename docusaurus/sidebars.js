@@ -592,6 +592,7 @@ const sidebars = {
         }
       ],
     },
+    'release-notes',
   ],
   userDocsSidebar: [
     {
