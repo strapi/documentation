@@ -23,7 +23,14 @@ const sidebars = {
       label: "🚀 Getting Started",
       items: [
         "dev-docs/intro",
-        "dev-docs/quick-start",
+        {
+          type: "doc",
+          label: "Quick Start Guide",
+          id: "dev-docs/quick-start",
+          customProps: {
+            updated: true,
+          },
+        },
         "dev-docs/faq",
         "dev-docs/usage-information",
       ],
@@ -31,50 +38,63 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: '⚙️ Setup & Deployment',
+      label: "⚙️ Setup & Deployment",
       link: {
-        type: 'doc',
-        id: 'dev-docs/setup-deployment',
+        type: "doc",
+        id: "dev-docs/setup-deployment",
       },
       items: [
         {
-          type: 'doc',
-          label: 'Introduction',
-          id: 'dev-docs/setup-deployment',
+          type: "doc",
+          label: "Introduction to Setup & Deployment",
+          id: "dev-docs/setup-deployment",
         },
         {
-          type: 'category',
-          label: 'Installation',
-          link: {type: 'doc', id: 'dev-docs/installation'},
+          type: "category",
+          label: "Installation",
+          link: { type: "doc", id: "dev-docs/installation" },
           items: [
             {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/installation',
+              type: "doc",
+              label: "Introduction to installation",
+              id: "dev-docs/installation",
             },
             "dev-docs/installation/cli",
-            "dev-docs/installation/docker",
+            {
+                type: 'doc',
+                id: "dev-docs/installation/docker",
+                customProps: {
+                    updated: true
+                },
+            },
           ],
         },
-        'dev-docs/project-structure',
+        "dev-docs/project-structure",
         {
           type: "category",
           label: "Configuration",
           items: [
             {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/configurations',
+              type: "doc",
+              label: "Introduction",
+              id: "dev-docs/configurations",
               customProps: {
                 updated: true,
               },
             },
+
             'dev-docs/configurations/database',
             'dev-docs/configurations/server',
             'dev-docs/configurations/admin-panel',
             'dev-docs/configurations/middlewares',
             'dev-docs/configurations/api',
-            'dev-docs/configurations/plugins',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/plugins',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
             'dev-docs/configurations/functions',
@@ -83,21 +103,27 @@ const sidebars = {
             'dev-docs/configurations/public-assets',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/rbac',
-            'dev-docs/configurations/features',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/features',
+              customProps: {
+                updated: true,
+              }
+            },
           ],
         },
         {
-          type: 'category',
-          label: 'Deployment',
+          type: "category",
+          label: "Deployment",
           link: {
-            type: 'doc',
-            id: 'dev-docs/deployment',
+            type: "doc",
+            id: "dev-docs/deployment",
           },
           items: [
-           {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/deployment',
+            {
+              type: "doc",
+              label: "Introduction to deployment",
+              id: "dev-docs/deployment",
             },
             {
               type: "doc",
@@ -105,39 +131,39 @@ const sidebars = {
               id: "cloud/getting-started/deployment",
             },
             {
-              type: 'category',
-              label: 'Other Hosting Guides',
+              type: "category",
+              label: "Other Hosting Guides",
               link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
+                type: "doc",
+                id: "dev-docs/deployment/hosting-guides",
               },
               collapsed: false,
               items: [
                 {
-                  type: 'doc',
-                  label: 'Introduction',
-                  id: 'dev-docs/deployment/hosting-guides',
+                  type: "doc",
+                  label: "Introduction to hosting guides",
+                  id: "dev-docs/deployment/hosting-guides",
                 },
-                'dev-docs/deployment/amazon-aws',
-                'dev-docs/deployment/azure',
-                'dev-docs/deployment/digitalocean-app-platform',
-                'dev-docs/deployment/digitalocean',
-                'dev-docs/deployment/heroku',
+                "dev-docs/deployment/amazon-aws",
+                "dev-docs/deployment/azure",
+                "dev-docs/deployment/digitalocean-app-platform",
+                "dev-docs/deployment/digitalocean",
+                "dev-docs/deployment/heroku",
               ],
             },
             {
-              type: 'category',
-              label: 'Optional Software Guides',
+              type: "category",
+              label: "Optional Software Guides",
               link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
+                type: "doc",
+                id: "dev-docs/deployment/optional-software-guides",
               },
               collapsed: false,
               items: [
                 {
-                  type: 'doc',
-                  label: 'Introduction',
-                  id: 'dev-docs/deployment/optional-software-guides',
+                  type: "doc",
+                  label: "Introduction to optional guides",
+                  id: "dev-docs/deployment/optional-software-guides",
                 },
                 "dev-docs/deployment/caddy-proxy",
                 "dev-docs/deployment/haproxy-proxy",
@@ -145,9 +171,9 @@ const sidebars = {
                 "dev-docs/deployment/process-manager",
               ],
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       type: "category",
@@ -155,25 +181,39 @@ const sidebars = {
       label: "📦 APIs",
       items: [
         {
-          type: 'doc',
-          label: 'Introduction/Concepts',
-          id: 'dev-docs/api/content-api',
+          type: "doc",
+          label: "APIs Introduction/Concepts",
+          id: "dev-docs/api/content-api",
         },
         {
-          type: 'category',
-          label: 'REST API',
+          type: "category",
+          label: "REST API",
           items: [
             {
               type: "doc",
               id: "dev-docs/api/rest",
-              label: "Introduction",
+              label: "Introduction to REST APIs",
             },
             "dev-docs/api/rest/parameters",
-            "dev-docs/api/rest/populate-select",
+            {
+              type: 'doc',
+              id: "dev-docs/api/rest/populate-select",
+              customProps: {
+                updated: true,
+              },
+            },
             "dev-docs/api/rest/filters-locale-publication",
             "dev-docs/api/rest/sort-pagination",
             "dev-docs/api/rest/relations",
             "dev-docs/api/rest/interactive-query-builder",
+            {
+              type: "doc",
+              id: "dev-docs/api/rest/guides/intro",
+              label: "Guides",
+              customProps: {
+                new: true,
+              }
+            }
           ],
         },
         "dev-docs/api/graphql",
@@ -184,7 +224,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/entity-service",
-              label: "Introduction",
+              label: "Introduction to Entity Service API",
             },
             "dev-docs/api/entity-service/crud",
             "dev-docs/api/entity-service/filter",
@@ -200,7 +240,7 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/api/query-engine",
-              label: "Introduction",
+              label: "Introduction to Query Engine API",
             },
             "dev-docs/api/query-engine/single-operations",
             "dev-docs/api/query-engine/bulk-operations",
@@ -209,7 +249,7 @@ const sidebars = {
             "dev-docs/api/query-engine/order-pagination",
           ],
         },
-      ]
+      ],
     },
     {
       type: "category",
@@ -227,68 +267,68 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/backend-customization",
-              label: "Introduction",
+              label: "Introduction to backend customization",
             },
             {
-              type: 'doc',
-              id: 'dev-docs/backend-customization/requests-responses',
+              type: "doc",
+              id: "dev-docs/backend-customization/requests-responses",
             },
             "dev-docs/backend-customization/routes",
             "dev-docs/backend-customization/policies",
             {
-              type: 'doc',
-              id: 'dev-docs/backend-customization/middlewares',
+              type: "doc",
+              id: "dev-docs/backend-customization/middlewares",
             },
             {
-              type: 'doc',
-              id: 'dev-docs/backend-customization/controllers',
+              type: "doc",
+              id: "dev-docs/backend-customization/controllers",
               customProps: {
                 updated: true,
               },
             },
-            'dev-docs/backend-customization/services',
-            'dev-docs/backend-customization/models',
-            'dev-docs/backend-customization/webhooks',
+            "dev-docs/backend-customization/services",
+            "dev-docs/backend-customization/models",
+            "dev-docs/backend-customization/webhooks",
             {
-              type: 'category',
-              label: '✨ Examples',
+              type: "category",
+              label: "✨ Examples",
               collapsed: true,
               items: [
                 {
-                  type: 'doc',
-                  label: 'Introduction',
-                  id: 'dev-docs/backend-customization/examples',
+                  type: "doc",
+                  label: "Introduction",
+                  id: "dev-docs/backend-customization/examples",
                 },
                 {
-                  type: 'doc',
-                  label: 'Authentication',
-                  id: 'dev-docs/backend-customization/examples/authentication',
+                  type: "doc",
+                  label: "Authentication",
+                  id: "dev-docs/backend-customization/examples/authentication",
                 },
                 {
-                  type: 'doc',
-                  label: 'Services, Controllers',
-                  id: 'dev-docs/backend-customization/examples/services-and-controllers',
+                  type: "doc",
+                  label: "Services, Controllers",
+                  id: "dev-docs/backend-customization/examples/services-and-controllers",
                 },
                 {
-                  type: 'doc',
-                  label: 'Policies',
-                  id: 'dev-docs/backend-customization/examples/policies',
+                  type: "doc",
+                  label: "Policies",
+                  id: "dev-docs/backend-customization/examples/policies",
                 },
                 {
-                  type: 'doc',
-                  label: 'Routes',
-                  id: 'dev-docs/backend-customization/examples/routes',
+                  type: "doc",
+                  label: "Routes",
+                  id: "dev-docs/backend-customization/examples/routes",
                 },
                 {
-                  type: 'doc',
-                  label: 'Global middlewares',
-                  id: 'dev-docs/backend-customization/examples/middlewares',
+                  type: "doc",
+                  label: "Global middlewares",
+                  id: "dev-docs/backend-customization/examples/middlewares",
                 },
-              ]
-            }
-          ]
+              ],
+            },
+          ],
         },
-        'dev-docs/typescript',
+        "dev-docs/typescript",
         {
           type: "doc",
           label: "Providers",
@@ -308,7 +348,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to data management",
               id: "dev-docs/data-management",
             },
             "dev-docs/data-management/export",
@@ -329,7 +369,7 @@ const sidebars = {
           items: [
             {
               type: "doc",
-              label: "Introduction",
+              label: "Introduction to integrations",
               id: "dev-docs/integrations",
             },
             "dev-docs/integrations/11ty",
@@ -360,110 +400,119 @@ const sidebars = {
       collapsed: false,
       label: "🔌 Plugins",
       link: {
-        type: 'doc',
-        id: 'dev-docs/plugins',
+        type: "doc",
+        id: "dev-docs/plugins",
       },
       items: [
         {
-          type: 'doc',
-          label: 'Introduction/Concepts',
-          id: 'dev-docs/plugins',
+          type: "doc",
+          label: "Plugins Introduction/Concepts",
+          id: "dev-docs/plugins",
         },
         {
-          type: 'category',
-          label: 'Using plugins',
+          type: "category",
+          label: "Using plugins",
           link: {
-            type: 'doc',
-            id: 'dev-docs/plugins/using-plugins'
+            type: "doc",
+            id: "dev-docs/plugins/using-plugins",
           },
           items: [
             {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/plugins/using-plugins'
+              type: "doc",
+              label: "Introduction to using plugins",
+              id: "dev-docs/plugins/using-plugins",
             },
             {
-              type: 'doc',
-              label: 'Content Source Map',
-              id: 'dev-docs/plugins/content-source-map',
+              type: "doc",
+              label: "Documentation",
+              id: "dev-docs/plugins/documentation",
             },
             {
-              type: 'doc',
-              label: 'Documentation',
-              id: 'dev-docs/plugins/documentation',
+              type: "doc",
+              label: "Email",
+              id: "dev-docs/plugins/email",
             },
             {
-              type: 'doc',
-              label: 'Email',
-              id: 'dev-docs/plugins/email',
+              type: "doc",
+              label: "GraphQL",
+              id: "dev-docs/plugins/graphql",
             },
             {
-              type: 'doc',
-              label: 'GraphQL',
-              id: 'dev-docs/plugins/graphql',
+              type: "doc",
+              label: "Internationalization (i18n)",
+              id: "dev-docs/plugins/i18n",
             },
             {
-              type: 'doc',
-              label: 'Internationalization (i18n)',
-              id: 'dev-docs/plugins/i18n',
+              type: "doc",
+              label: "Sentry",
+              id: "dev-docs/plugins/sentry",
             },
             {
-              type: 'doc',
-              label: 'Sentry',
-              id: 'dev-docs/plugins/sentry',
+              type: "doc",
+              label: "Upload",
+              id: "dev-docs/plugins/upload",
             },
             {
-              type: 'doc',
-              label: 'Upload',
-              id: 'dev-docs/plugins/upload',
+              type: "doc",
+              label: "Users & Permissions",
+              id: "dev-docs/plugins/users-permissions",
             },
-            {
-              type: 'doc',
-              label: 'Users & Permissions',
-              id: 'dev-docs/plugins/users-permissions',
-            },
-          ]
+          ],
         },
         {
-          type: 'category',
-          label: 'Developing plugins',
+          type: "category",
+          label: "Developing plugins",
           customProps: {
             new: true,
           },
           link: {
-            type: 'doc',
-            id: 'dev-docs/plugins/developing-plugins',
+            type: "doc",
+            id: "dev-docs/plugins/developing-plugins",
           },
           items: [
             {
-              type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/plugins/developing-plugins'
+              type: "doc",
+              label: "Introduction to developing plugins",
+              id: "dev-docs/plugins/developing-plugins",
             },
-            'dev-docs/plugins/development/create-a-plugin',
-            'dev-docs/plugins/development/plugin-structure',
+            "dev-docs/plugins/development/create-a-plugin",
+            "dev-docs/plugins/development/plugin-structure",
             {
-              type: 'doc',
-              id: 'dev-docs/api/plugins/admin-panel-api',
-              label: 'Admin Panel API',
+              type: "doc",
+              id: "dev-docs/api/plugins/admin-panel-api",
+              label: "Admin Panel API",
             },
             {
-              type: 'doc',
-              id: 'dev-docs/api/plugins/server-api',
-              label: 'Server API',
+              type: "doc",
+              id: "dev-docs/api/plugins/server-api",
+              label: "Server API",
+            },
+            {
+                type: 'doc',
+                id: 'dev-docs/plugins/development/plugin-cli',
+                customProps: {
+                    new: true
+                }
             },
             'dev-docs/custom-fields',
             'dev-docs/plugins-extension',
             {
-              type: 'category',
-              label: 'Guides',
+              type: "category",
+              label: "Guides",
               link: {
-                type: 'doc',
-                id: 'dev-docs/plugins/developing-plugins',
+                type: "doc",
+                id: "dev-docs/plugins/developing-plugins",
               },
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
+                {
+                  type: 'doc',
+                  id: 'dev-docs/plugins/guides/use-the-plugin-cli',
+                  customProps: {
+                    new: true,
+                  }
+                }
               ]
             }
           ]
@@ -567,21 +616,33 @@ const sidebars = {
   ],
 
   userDocsSidebar: [
-    "user-docs/intro",
     {
-      type: "category",
+      type: 'category',
+      customProps: {
+        updated: true,
+      },
       collapsed: false,
-      label: "Content Manager",
+      label: 'Getting Started',
       items: [
-        "user-docs/content-manager/introduction-to-content-manager",
-        "user-docs/content-manager/configuring-view-of-content-type",
+        'user-docs/intro',
+        'user-docs/getting-started/user-guide-fundamentals',
+        'user-docs/getting-started/setting-up-admin-panel',
+      ],
+    },
+    {
+      type: 'category',
+      collapsed: false,
+      label: 'Content Manager',
+      items: [
+        'user-docs/content-manager/introduction-to-content-manager',
+        'user-docs/content-manager/configuring-view-of-content-type',
         {
-          type: "doc",
-          id: "user-docs/content-manager/writing-content",
+          type: 'doc',
+          id: 'user-docs/content-manager/writing-content',
         },
-        "user-docs/content-manager/managing-relational-fields",
-        "user-docs/content-manager/translating-content",
-        "user-docs/content-manager/reviewing-content",
+        'user-docs/content-manager/managing-relational-fields',
+        'user-docs/content-manager/translating-content',
+        'user-docs/content-manager/reviewing-content',
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
@@ -590,40 +651,40 @@ const sidebars = {
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
-      label: "Content-type Builder",
+      label: 'Content-type Builder',
       items: [
-        "user-docs/content-type-builder/introduction-to-content-types-builder",
-        "user-docs/content-type-builder/creating-new-content-type",
+        'user-docs/content-type-builder/introduction-to-content-types-builder',
+        'user-docs/content-type-builder/creating-new-content-type',
         {
-          type: "doc",
-          id: "user-docs/content-type-builder/configuring-fields-content-type",
+          type: 'doc',
+          id: 'user-docs/content-type-builder/configuring-fields-content-type',
           customProps: {
             updated: true,
           },
         },
-        "user-docs/content-type-builder/managing-content-types",
+        'user-docs/content-type-builder/managing-content-types',
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
-      label: "Media Library",
+      label: 'Media Library',
       items: [
         {
-          type: "autogenerated",
-          dirName: "user-docs/media-library",
+          type: 'autogenerated',
+          dirName: 'user-docs/media-library',
         },
       ],
     },
     {
-      type: "category",
+      type: 'category',
       customProps: {
-        new: true
+        new: true,
       },
       collapsed: false,
-      label: "Releases",
+      label: 'Releases',
       items: [
         'user-docs/releases/introduction',
         'user-docs/releases/creating-a-release',
@@ -631,53 +692,61 @@ const sidebars = {
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
-      label: "Users, Roles & Permissions",
+      label: 'Users, Roles & Permissions',
       items: [
         {
-          type: "autogenerated",
-          dirName: "user-docs/users-roles-permissions",
+          type: 'autogenerated',
+          dirName: 'user-docs/users-roles-permissions',
         },
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
-      label: "Plugins",
+      label: 'Plugins',
       items: [
         {
-          type: "autogenerated",
-          dirName: "user-docs/plugins",
+          type: 'autogenerated',
+          dirName: 'user-docs/plugins',
         },
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
-      label: "General Settings",
+      label: 'General Settings',
       items: [
-        "user-docs/settings/configuring-users-permissions-plugin-settings",
-        "user-docs/settings/audit-logs",
         {
-          type: "category",
+          type: 'doc',
+          id: 'user-docs/settings/introduction',
+          customProps: {
+            new: true,
+          },
+        },
+
+        'user-docs/settings/configuring-users-permissions-plugin-settings',
+        'user-docs/settings/audit-logs',
+        {
+          type: 'category',
           collapsed: false,
-          label: "Configuring global settings",
+          label: 'Configuring global settings',
           items: [
-            "user-docs/settings/admin-panel",
-            "user-docs/settings/API-tokens",
-            "user-docs/settings/internationalization",
-            "user-docs/settings/media-library-settings",
+            'user-docs/settings/admin-panel',
+            'user-docs/settings/API-tokens',
+            'user-docs/settings/internationalization',
+            'user-docs/settings/media-library-settings',
             {
-              type: "doc",
-              label: "Review Workflows",
-              id: "user-docs/settings/review-workflows",
+              type: 'doc',
+              label: 'Review Workflows',
+              id: 'user-docs/settings/review-workflows',
               customProps: {
                 updated: true,
               },
             },
-            "user-docs/settings/single-sign-on",
-            "user-docs/settings/transfer-tokens",
+            'user-docs/settings/single-sign-on',
+            'user-docs/settings/transfer-tokens',
           ],
         },
       ],
@@ -693,11 +762,36 @@ const sidebars = {
         "cloud/getting-started/intro",
         {
           type: "doc",
-          id: "cloud/getting-started/deployment",
+          label: "Cloud fundamentals",
+          id: "cloud/getting-started/cloud-fundamentals",
           customProps: {
-            updated: true,
+            new: false,
           },
-        },,
+        },
+        {
+          type: "category",
+          label: "Project deployment",
+          link: { type: "doc", id: "cloud/getting-started/deployment-options" },
+          customProps: {
+            updated: false,
+          },
+          items: [
+            {
+              type: "doc",
+              id: "cloud/getting-started/deployment",
+              customProps: {
+                updated: true,
+              },
+            },
+            {
+              type: "doc",
+              id: "cloud/getting-started/deployment-cli",
+              customProps: {
+                new: true,
+              },
+             },
+          ],
+        },
         {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
@@ -724,37 +818,56 @@ const sidebars = {
           label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
-            new: false,
+            updated: false,
           },
         },
-        'cloud/projects/collaboration',
-        'cloud/projects/runtime-logs',
+        "cloud/projects/collaboration",
+        "cloud/projects/runtime-logs",
       ],
     },
     {
       type: "category",
       collapsed: false,
       label: "Deployments",
-      items: [
-        "cloud/projects/deploys",
-        "cloud/projects/deploys-history",
-      ],
+      items: ["cloud/projects/deploys", "cloud/projects/deploys-history"],
     },
     {
       type: "category",
       collapsed: false,
       label: "Account management",
       items: [
-        'cloud/account/account-settings',
-        'cloud/account/account-billing',
-      ]
+        "cloud/account/account-settings",
+        {
+          type: "doc",
+          id: "cloud/account/account-billing",
+          label: "Account billing & invoices",
+          customProps: {
+            updated: false,
+          },
+        },
+      ],
     },
     {
       type: "category",
       collapsed: false,
-      label: 'Advanced configuration',
+      label: "Command Line Interface",
       items: [
-        'cloud/advanced/database',
+        {
+          type: "doc",
+          id: "cloud/cli/cloud-cli",
+          label: "Strapi Cloud CLI",
+          customProps: {
+            new: true,
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Advanced configuration",
+      items: [
+        "cloud/advanced/database",
         {
           type: "doc",
           id: "cloud/advanced/email",
@@ -771,8 +884,8 @@ const sidebars = {
             new: false,
           },
         },
-      ]
-    }
+      ],
+    },
   ],
 
   restApiSidebar: [
@@ -784,7 +897,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "REST API",
+      label: "REST API reference",
       items: [
         {
           type: "category",
@@ -846,24 +959,15 @@ const sidebars = {
             },
             {
               type: "link",
-              label: "Populate Relations & Media Fields",
-              href: "/dev-docs/api/rest/populate-select#relations--media-fields",
-            },
-            {
-              type: "link",
-              label: "Populate Components & Dynamic Zones",
-              href: "/dev-docs/api/rest/populate-select#components--dynamic-zones",
-            },
-            {
-              type: "link",
-              label: "Populating createdBy and updatedBy",
-              href: "/dev-docs/api/rest/populate-select#populating-createdby-and-updatedby",
+              label: "Populate",
+              href: "/dev-docs/api/rest/populate-select#population",
             },
             {
               type: "link",
               label: "Combining populate with other operators",
               href: "/dev-docs/api/rest/populate-select#combining-population-with-other-operators",
             },
+
           ],
         },
         {
@@ -955,79 +1059,115 @@ const sidebars = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Rest API guides",
+      collapsed: false,
+      customProps: {
+        new: true,
+      },
+      link: {
+        type: 'doc',
+        id: 'dev-docs/api/rest/guides/intro',
+      },
+      items: [
+        {
+          type: "doc",
+          label: "Understanding populate",
+          id: 'dev-docs/api/rest/guides/understanding-populate',
+        },
+        {
+          type: "doc",
+          label: "How to populate creator fields",
+          id: 'dev-docs/api/rest/guides/populate-creator-fields',
+        },
+      ],
+    }
   ],
 
   devDocsConfigSidebar: [
     {
-      type: 'link',
-      label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
+      type: "link",
+      label: "⬅️ Back to Dev Docs content",
+      href: "/dev-docs/intro",
     },
     {
-      type: 'category',
+      type: "category",
       collapsed: false,
-      label: 'Configuration',
+      label: "Configuration",
       link: {
-        type: 'doc',
-        id: 'dev-docs/configurations',
+        type: "doc",
+        id: "dev-docs/configurations",
       },
       items: [
         {
-          type: 'doc',
-          label: 'Introduction',
-          id: 'dev-docs/configurations',
+          type: "doc",
+          label: "Introduction to configuration",
+          id: "dev-docs/configurations",
         },
         {
-          type: 'category',
+          type: "category",
           collapsed: false,
-          label: 'Base configurations',
+          label: "Base configurations",
           link: {
-            type: 'doc',
-            id: 'dev-docs/configurations'
+            type: "doc",
+            id: "dev-docs/configurations",
           },
           items: [
-            'dev-docs/configurations/database',
-            'dev-docs/configurations/server',
-            'dev-docs/configurations/admin-panel',
-            'dev-docs/configurations/middlewares',
-            'dev-docs/configurations/api',
-          ]
+            "dev-docs/configurations/database",
+            "dev-docs/configurations/server",
+            "dev-docs/configurations/admin-panel",
+            "dev-docs/configurations/middlewares",
+            "dev-docs/configurations/api",
+          ],
         },
         {
-          type: 'category',
-          label: 'Additional configurations',
+          type: "category",
+          label: "Additional configurations",
           collapsed: false,
           link: {
-            type: 'doc',
-            id: 'dev-docs/configurations'
+            type: "doc",
+            id: "dev-docs/configurations",
           },
           items: [
-            'dev-docs/configurations/plugins',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/plugins',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
             'dev-docs/configurations/functions',
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
-            'dev-docs/configurations/features',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/features',
+              customProps: {
+                updated: true
+              }
+            }
           ]
         },
         {
-          type: 'category',
-          label: 'Guides',
+          type: "category",
+          label: "Guides",
           collapsed: false,
           link: {
-            type: 'doc',
-            id: 'dev-docs/configurations'
+            type: "doc",
+            id: "dev-docs/configurations",
           },
           items: [
-            'dev-docs/configurations/rbac',
-            'dev-docs/configurations/public-assets',
-            'dev-docs/configurations/guides/access-cast-environment-variables',
-            'dev-docs/configurations/guides/access-configuration-values',
-          ]
-        }
-      ]
+            "dev-docs/configurations/rbac",
+            "dev-docs/configurations/public-assets",
+            "dev-docs/configurations/guides/access-cast-environment-variables",
+            "dev-docs/configurations/guides/access-configuration-values",
+          ],
+        },
+      ],
     },
   ],
 };

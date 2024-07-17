@@ -61,6 +61,10 @@ Syntax: `findMany(uid: string, parameters: Params)` ⇒ `Entry[]`
 | `populate`  | Relations, components and dynamic zones to [populate](/dev-docs/api/entity-service/populate)  | [`PopulateParameter`](/dev-docs/api/entity-service/populate)         |
 | `publicationState` | Publication state, can be:<ul><li>`live` to return only published entries</li><li>`preview` to return both draft entries & published entries (default)</li></ul>   | `PublicationStateParameter`  |
 
+:::note
+For single types, "findMany" returns the entry data as an object instead of an array of entries.
+:::
+
 ### Example
 
 ```js

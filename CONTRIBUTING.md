@@ -17,6 +17,10 @@ Contributing to the Strapi documentation implies 2 steps:
 
 2. [Submit a pull request](#-pull-requests) for review.
 
+***
+*Please note*: The Strapi Documentation team is currently not accepting new deployment or integration guides. These guides will soon be moved to another resource and probably only maintained by the Strapi Community while the Strapi Documentation team will focus on documenting only core Strapi products and features. Thank you for your understanding 🙏
+***
+
 ## 🦖 Docusaurus
 
 Strapi’s documentation is built with the React- and Markdown-based [Docusaurus](https://docusaurus.io) framework.
@@ -44,6 +48,8 @@ The Strapi Documentation team has created a complete style guide for you to make
 👉 [Strapi Documentation Style Guide](STYLE_GUIDE.pdf) 
 
 💁 While writing, please consider the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) that the Strapi Documentation team will use to assess the quality and consistency of the contribution. 😊
+
+**Important:** If you use an automatic formatter in your code editor (e.g., Prettier), **please disable it** as it could add unnecessary changes to your pull request or cause rendering issues because some Markdown formatting is based on whitespace.
 
 ### Working locally: Set up the project
 

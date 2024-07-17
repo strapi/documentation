@@ -26,17 +26,17 @@ To enable a future flag:
 
 1. (_optional_) If the server is running, stop it with `Ctrl-C`.
 2. Open the `config/features.js|ts` file or create it if the file does not exist yet. The file will export a `future` object with all the future flags to enable.
-3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `contentReleases` future flag:
+3. To enable a future flag, add its property name (see [full list](#available-future-flags)) to the `future` object and ensure the property's value is set to `true`. The following example shows how to enable the `contentReleasesScheduling` future flag:
 
   <Tabs groupId='js-ts'>
 
-  <Tab value="js" label="JavaScript">
+  <TabItem value="js" label="JavaScript">
 
   ```ts title="/config/features.ts"
   module.export = ({ env }) => ({
     future: {
       // You could also simply write: contentReleases: true
-      contentReleases: env.bool('STRAPI_FEATURES_FUTURE_CONTENT_RELEASES', false),
+      contentReleasesScheduling: env.bool('STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING', false),
     },
   })
 
@@ -45,20 +45,20 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FEATURES_FUTURE_CONTENT_RELEASES=true
+  STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING=true
   ```
 
-  If your environment file does not include this value, the `contentReleases` future flag property value  will default to `false` and the experimental feature will not be enabled.
+  If your environment file does not include this value, the `contentReleasesScheduling` future flag property value  will default to `false` and the experimental feature will not be enabled.
 
-  </Tab>
+  </TabItem>
 
-  <Tab value="ts" label="TypeScript">
+  <TabItem value="ts" label="TypeScript">
 
   ```ts title="/config/features.ts"
   export default {
     future: {
       // You could also simply write: contentReleases: true
-      contentReleases: env.bool('STRAPI_FEATURES_FUTURE_CONTENT_RELEASES', false),
+      contentReleasesScheduling: env.bool('STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING', false),
     },
   };
   ```
@@ -66,30 +66,30 @@ To enable a future flag:
   This example assumes that you have an `.env` environment file at the root of your application and that the file includes the following line:
 
   ```json title=".env"
-  STRAPI_FEATURES_FUTURE_CONTENT_RELEASES=true
+  STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING=true
   ```
 
   If your environment file does not include this value, the `contentReleases` future flag property value will default to `false` and the experimental feature will not be enabled.
 
-  </Tab>
-  </Tabs> 
+  </TabItem>
+  </Tabs>
 
 4. Rebuild the admin panel and restart the server:
 
   <Tabs groupId="yarn-npm">
-  <Tab value="yarn" label="Yarn">
+  <TabItem value="yarn" label="Yarn">
   
     ```sh
       yarn develop
     ```
-  </Tab>
-  <Tab value="npm" label="NPM">
+  </TabItem>
+  <TabItem value="npm" label="NPM">
 
     ```sh
       npm run develop
     ```
 
-  </Tab>
+  </TabItem>
   </Tabs>
 
 ## Future flags API
@@ -102,8 +102,10 @@ Developers can use the following APIs to interact with future flags:
 
 ## Available future flags
 
-The following future flags are currently available and can be used in the `future` object of the `config/features` configuration file:
+There are currently no available future flags. This section will be updated once new experimental features are available for testing.
+
+<!-- The following future flags are currently available and can be used in the `future` object of the `config/features` configuration file:
 
 | Property name     | Related feature                              | Suggested environment variable name       |
 | ----------------- | -------------------------------------------- | ----------------------------------------- |
-| `contentReleases` | [Releases](/user-docs/releases/introduction) | `STRAPI_FEATURES_FUTURE_CONTENT_RELEASES` |
+| `contentReleasesScheduling` | [Releases Scheduling](/user-docs/releases/managing-a-release#scheduling-a-release-) | `STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING` | -->

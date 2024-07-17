@@ -55,7 +55,7 @@ The content-types use the following files:
 These models files are stored in `./src/api/[api-name]/content-types/[content-type-name]/`, and any JavaScript or JSON file found in these folders will be loaded as a content-type's model (see [project structure](/dev-docs/project-structure)).
 
 :::note
-In [TypeScript](/dev-docs/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command.
+In [TypeScript](/dev-docs/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command (e.g., `npm run strapi ts:generate-types` or `yarn strapi ts:generate-types`).
 :::
 
 ### Components
@@ -139,6 +139,10 @@ The `type` parameter of an attribute should be one of the following values:
 | Other generic types |<ul><li>`boolean`</li><li>`json`</li></ul> |
 | Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
 | Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/dev-docs/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
+
+:::caution
+Never name a custom attribute `locale` because it could interfere with, and break, the [i18n](/dev-docs/plugins/i18n) feature.
+:::
 
 #### Validations
 
@@ -613,6 +617,10 @@ Lifecycle hooks can be customized declaratively or programmatically.
 
 :::caution
 Lifecycles hooks are not triggered when using directly the [knex](https://knexjs.org/) library instead of Strapi functions.
+:::
+
+:::tip
+Please refer to the [error handling](/dev-docs/error-handling#services-and-models-lifecycles) documentation to learn how to throw errors from lifecycle hooks.
 :::
 
 ### Available lifecycle events

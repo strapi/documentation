@@ -10,13 +10,13 @@ import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.m
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
 
-The admin panel is a `node_module` that is similar to a plugin, except that it encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
+The admin panel is a React-based single-page application. It encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
 
 To start your strapi instance with hot reloading while developing, run the following command:
 
 ```bash
 cd my-app # cd into the root directory of the Strapi application project
-strapi develop
+strapi develop --watch-admin
 ```
 
 ## Customization options
@@ -27,7 +27,6 @@ Customizing the admin panel is helpful to better reflect your brand identity or 
 - The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, extending the theme, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
 - The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
 - The [email templates](#email-templates) should be customized using the Users and Permissions plugin.
-- The [webpack configuration](#webpack-configuration) based on webpack 5 can also be extended for advanced customization
 
 ### Access URL
 
@@ -454,7 +453,7 @@ To replace the favicon, use the following procedure:
 4. Update `./src/admin/app.js` with the following:
 
    ```js title="./src/admin/app.js"
-   import favicon from "../extensions/favicon.png";
+   import favicon from "./extensions/favicon.png";
 
    export default {
      config: {
@@ -539,15 +538,24 @@ export default {
 
 Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates).
 
-### Webpack configuration
+## Bundlers (experimental)
+
+2 different bundlers can be used with your Strapi application, [webpack](#webpack) and [vite](#vite).
+
+### Webpack
+
+In v4 this is the defacto bundler that Strapi uses to build the admin panel.
 
 :::prerequisites
-Make sure to rename the default `webpack.config.example.js` file into `webpack.config.js` before customizing webpack.
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
 :::
 
-In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.js`:
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `./my-app/src/admin/webpack.config.[js|ts]`:
 
-```js
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./my-app/src/admin/webpack.config.js"
 module.exports = (config, webpack) => {
   // Note: we provide webpack above so you should not `require` it
 
@@ -559,9 +567,78 @@ module.exports = (config, webpack) => {
 };
 ```
 
-:::note
-Only `./src/admin/app.js` and the files under the `./src/admin/extensions` folder are being watched by the webpack dev server.
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./my-app/src/admin/webpack.config.ts"
+export default (config, webpack) => {
+  // Note: we provide webpack above so you should not `require` it
+
+  // Perform customizations to webpack config
+  config.plugins.push(new webpack.IgnorePlugin(/\/__tests__\//));
+
+  // Important: return the modified config
+  return config;
+};
+```
+
+</TabItem>
+</Tabs>
+
+### Vite
+
+:::caution
+This is considered experimental. Please report any issues you encounter.
 :::
+
+To use `vite` as a bundler you will need to pass it as an option to the `strapi develop` command:
+
+```bash
+strapi develop --watch-admin --bundler=vite
+```
+
+To extend the usage of `vite`, define a function that extends its configuration inside `./my-app/src/admin/vite.config.[js|ts]`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./my-app/src/admin/vite.config.js"
+const { mergeConfig } = require("vite");
+
+module.exports = (config) => {
+  // Important: always return the modified config
+  return mergeConfig(config, {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  });
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./my-app/src/admin/vite.config.ts"
+import { mergeConfig } from "vite";
+
+export default (config) => {
+  // Important: always return the modified config
+  return mergeConfig(config, {
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
+  });
+};
+```
+
+</TabItem>
+</Tabs>
 
 ## Extension
 

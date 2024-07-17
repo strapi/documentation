@@ -7,10 +7,22 @@
 			"source": "/cloud/",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/developer-docs/latest/getting-started/quick-start.html%23_1-install-strapi-and-create-a-new-project",
+      "destination": "/dev-docs/quick-start"
+    },
+    {
+      "source": "/user-docs/intro%23using-sso-for-authentication-",
+      "destination": "/user-docs/getting-started/setting-up-admin-panel#using-sso-for-authentication-"
+    },
 		{
 			"source": "/dev-docs/deployment/strapi-cloud",
 			"destination": "/cloud/intro"
 		},
+    {
+      "source": "/developer-docs/latest/getting-started/quick-start.html",
+      "destination": "/dev-docs/quick-start"
+    },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
       "destination": "/dev-docs/deployment/digitalocean-app-platform"
@@ -495,6 +507,10 @@
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html",
 			"destination": "/dev-docs/api/rest"
 		},
+    {
+       "source": "/dev-docs/api/rest/guides",
+       "destination": "/dev-docs/api/rest/guides/intro"
+    },
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html",
 			"destination": "/dev-docs/api/rest/parameters"

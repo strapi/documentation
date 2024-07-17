@@ -13,6 +13,12 @@ In most cases, the controllers will contain the bulk of a project's business log
   <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
+<br/>
+
+:::caution
+Before deciding to customize core controllers, please consider creating custom route middlewares (see [routes documentation](/dev-docs/backend-customization/routes)).
+:::
+
 ## Implementation
 
 Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
@@ -252,11 +258,21 @@ export default {
 When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
-:::tip
-To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+:::tip Tips
+- To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
+- If you want to implement unit testing to your controllers, this [blog post](https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest) should get you covered.
 :::
 
 ### Sanitization and Validation in controllers
+
+Sanitization means that the object is “cleaned” and returned.
+
+Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
+
+In Strapi:
+
+- validation is applied on query parameters, 
+- and only sanitization is applied to input data (create and update body data).
 
 :::warning
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
@@ -421,6 +437,8 @@ An action from a core controller can be replaced entirely by [creating a custom 
 :::tip
 When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
 :::
+
+
 
 <details>
 <summary>Collection type examples</summary>

@@ -5,6 +5,7 @@ sidebar_position: 1
 description: Introduction to the Media Library which allows to display and manage all assets uploaded in the application.
 
 ---
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Introduction to the Media Library
 
@@ -24,10 +25,10 @@ The Media Library displays all assets uploaded in the application, either via th
 
 From the Media Library, it is possible to:
 
-- upload a new asset (see [adding assets](/user-docs/media-library/adding-assets)) or create a new folder (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders)) (1),
-- sort the assets and folders or set filters (2) to find assets and folders more easily,
-- toggle between the list view ![List icon](/img/assets/icons/list_view.svg) and the grid view ![Grid icon](/img/assets/icons/grid_view.svg) to display assets, access settings ![Settings icon](/img/assets/icons/settings.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](/img/assets/icons/search.svg) (3) to find a specific asset or folder,
-- and view, navigate through, and manage folders (4).
+- upload a new asset (see [adding assets](/user-docs/media-library/adding-assets)) or create a new folder (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
+- sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more easily,
+- toggle between the list view ![List icon](/img/assets/icons/list_view.svg) and the grid view ![Grid icon](/img/assets/icons/grid_view.svg) to display assets, access settings ![Settings icon](/img/assets/icons/settings.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](/img/assets/icons/search.svg) <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
+- and view, navigate through, and manage folders <ScreenshotNumberReference number="4" />.
 
 :::tip
 Click the search icon ![Search icon](/img/assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets or folders more quickly!

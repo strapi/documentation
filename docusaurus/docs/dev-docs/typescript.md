@@ -1,7 +1,7 @@
 ---
 title: TypeScript
 displayed_sidebar: devDocsSidebar
-description: Learn how you can use Typescript for your Strapi application.
+description: Learn how you can use TypeScript for your Strapi application.
 ---
 
 # TypeScript development
@@ -85,12 +85,12 @@ yarn strapi ts:generate-types --debug #optional flag to display additional loggi
 </TabItem>
 </Tabs>
 
-:::tip Tip: Automatically generate types
-Types can be automatically generated on server restart by adding `autogenerate: true` to [the `config/typescript.js|ts` configuration file](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript).
+:::tip Tip: Types generation for JavaScript projects
+For JavaScript projects, automatic types generation can be turned off (see [`config/typescript.js` documentation](/dev-docs/configurations/typescript#strapi-specific-configuration-for-typescript)).
 :::
 
 :::tip Tip: Using types in your front-end application
-To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution.
+To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution, and you will find additional information in [this blog article](https://strapi.io/blog/improve-your-frontend-experience-with-strapi-types-and-type-script).
 :::
 
 ### Fix build issues with the Generated Types

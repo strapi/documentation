@@ -6,8 +6,6 @@ displayed_sidebar: userDocsSidebar
 
 ---
 
-import CSMPrereq from '/docs/snippets/content-source-map-requirements.md'
-
 # Writing content
 
 In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
@@ -31,7 +29,7 @@ To write or edit content:
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text (Markdown) | Write your textual content in the editor, in Markdown. Some basic formatting options (titles, bold, italics, underline) are available in the top bar of the editor to apply to selected text. A **Preview mode/Markdown mode** button to switch between modes is also available. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
-| Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon ![Reorder icon](/img/assets/icons/reorder.svg) on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <br /><br /> 💡 In the Blocks editor, you can use text formatting keyboard shortcuts (e.g. `ctrl + B` to apply bold formatting on selected content) as well as Markdown shortcuts (e.g. `# Header` for "Header" to be heading 1 style). Note however that Markdown shortcuts are at the moment only available for formatting options listed in the drop-down of the Blocks editor (headings, lists, image, quote, code block). <br /><br /> 💡 You can also click on the **Expand** button <!-- add icon --> in the bottom right corner to expand the Rich text field. |
+| Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon ![Reorder icon](/img/assets/icons/reorder.svg) on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <br /><br /> 💡 In the Blocks editor, you can use text formatting keyboard shortcuts (e.g. `ctrl + B` to apply bold formatting on selected content) as well as Markdown shortcuts. <details><summary>List of available Markdown shortcuts in Blocks</summary><ul><li>`#` to `######` to convert to H1 to H6 headings</li><li>`>` to convert to a quote</li><li>`-`, `*` or `+` to convert to a bullet list</li><li>`1.` to convert to a numbered list</li><li>`![` to add an image</li><li><code>```</code> to convert to a code block</li></ul></details> 💡 You can also click on the **Expand** button <!-- add icon --> in the bottom right corner to expand the Rich text field. |
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation.
 | Boolean     | Click on **OFF** or **ON**.                                                                                                                                                                                                                                                                                                                                               |
@@ -44,10 +42,6 @@ To write or edit content:
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows automatically generating a UID based on the content type name.                                                                                                                                                                                                |
 :::note
 Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
-:::
-
-:::tip Preview and edit your content live on your website
-By installing the [Content Source Map plugin](/dev-docs/plugins/content-source-map) plugin and combining it with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) experience, you can preview your content on the rendered website, and edit fields from there. Using this plugin requires an <EnterpriseBadge /> licence or a [Strapi Cloud](https://strapi.io/pricing-cloud) plan.  
 :::
 
 ### Components
@@ -149,18 +143,3 @@ You can also use the keyboard to reorder components: focus the component using T
 Unlike regular fields, the order of the fields and components inside a dynamic field is important. It should correspond exactly to how end users will read/see the content.
 :::
 
-## Editing fields from a front-end website <EnterpriseBadge />
-
-<CSMPrereq />
-
-Strapi's [Content Source Map plugin](/dev-docs/plugins/content-source-map) combined with [Vercel's Visual Editing](https://vercel.com/docs/workflow-collaboration/visual-editing) can offer another intuitive editing experience, where you can click on any editable content on the front-end website of a Strapi-based project to directly jump to the corresponding field in Strapi's admin panel.
-
-Once the Content Source Map plugin is installed and configured (see [Developer Docs](/dev-docs/plugins/content-source-map)), you can experience Visual Editing as follows:
-
-1. Visit any preview deployment website hosted on Vercel.
-2. Login using the Vercel Toolbar.
-3. When Content Source Maps are detected on the page, a pencil icon will appear in the Vercel toolbar. Clicking this icon will enable Edit Mode, highlighting all editable fields on the page in blue.
-4. Hover any content highlighted in blue to display an **Open in strapi.io** button.
-5. Click on the **Open in strapi.io** button to jump directly to the corresponding field in the admin panel and edit its content.
-
-![Vercel Visual Editing in Strapi](/img/assets/content-manager/content-source-map-visual-editing.png)

@@ -59,24 +59,28 @@ Strapi modifies/creates files at runtime and needs to restart when new files are
 
 Strapi also adds middlewares to support HMR (Hot Module Replacement) for the administration panel. This allows you to customize the administration panel without having to restart the application or run a separate server. This is only added when you use the `--watch-admin` command.
 
-```
+```bash
 strapi develop
-options: [--no-build |--watch-admin |--browser |--debug |--silent]
 ```
 
-- **strapi develop**<br/>
-  Starts your application with the autoReload enabled
-- **strapi develop --open**<br/>
-  Starts your application with the autoReload enabled & open your default browser with the administration panel running.
-- **strapi develop --watch-admin**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel.
-- [DEPRECATED] **strapi develop --no-build**<br/>
-  Starts your application with the autoReload enabled and skip the administration panel build process
-- [DEPRECATED] **strapi develop --watch-admin --browser 'google chrome'**<br/>
-  Starts your application with the autoReload enabled and the front-end development server. It allows you to customize the administration panel. Provide a browser name to use instead of the default one, `false` means stop opening the browser.
+| Option             | Type   | Description                                                                                                      | Default   |
+| ------------------ | :----: | ---------------------------------------------------------------------------------------------------------------- | --------- |
+| `--bundler`        | string | Specifies the bundler to use, either `webpack` or `vite`x                                                        | `webpack` |
+| `-d, --debug`      | -      | Enable debugging mode with verbose logs                                                                          | false     |
+| `--ignore-prompts` | -      | Ignore all prompts                                                                                               | false     |
+| `--open`           | -      | Open the admin in your browser                                                                                   | true      |
+| `--polling`        | -      | Watch for file changes in network directories                                                                    | false     |
+| `--silent`         | -      | Don't log anything                                                                                               | false     |
+| `--watch-admin`    | -      | Watch the admin panel for hot changes                                                                            | false     |
+| `--no-build`       | -      | [DEPRECATED] Starts your application with the autoReload enabled and skip the administration panel build process | -         |
+| `--browser`        | string | [DEPRECATED] Provide a browser name to use instead of the default one                                            | -         |
 
 :::warning
 You should never use this command to run a Strapi application in production.
+:::
+
+:::caution
+Using the `vite` option as a bundler is considered experimental.
 :::
 
 ## strapi start
@@ -94,14 +98,19 @@ Builds your admin panel.
 strapi build
 ```
 
-| Option              | Type | Description                                              |
-| ------------------- | :--: | -------------------------------------------------------- |
-| `-d, --debug`       |  -   | Enable debugging mode with verbose logs (default: false) |
-| `--minify`          |  -   | Minify the output (default: true)                        |
-| `--no-optimization` |  -   | [DEPRECATED]: use minify instead                         |
-| `--silent`          |  -   | Don't log anything (default: false)                      |
-| `--sourcemaps`      |  -   | Produce sourcemaps (default: false)                      |
-| `--stats`           |  -   | Print build statistics to the console (default: false)   |
+| Option              | Type   | Description                                                         | Default   |
+| ------------------- | :----: | ------------------------------------------------------------------- | --------- |
+| `--bundler`         | string | Specifies the bundler you'd like to use, either `webpack` or `vite` | `webpack` |
+| `-d, --debug`       | -      | Enable debugging mode with verbose logs                             | false     |
+| `--minify`          | -      | Minify the output                                                   | true      |
+| `--no-optimization` | -      | [DEPRECATED]: use minify instead                                    | -         |
+| `--silent`          | -      | Don't log anything                                                  | false     |
+| `--sourcemaps`      | -      | Produce sourcemaps                                                  | false     |
+| `--stats`           | -      | Print build statistics to the console                               | false     |
+
+:::caution
+Using the `vite` option as a bundler is considered experimental.
+:::
 
 ## strapi watch-admin
 
@@ -115,6 +124,18 @@ Starts the admin server. Strapi should already be running with `strapi develop`.
 strapi watch-admin
 options: [--browser <name>]
 ```
+
+## strapi login
+
+Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
+
+## strapi logout
+
+Logs out of Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
+
+## strapi deploy
+
+Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
 
 ## strapi export
 
@@ -421,6 +442,10 @@ strapi hooks:list
 
 Display a list of all the registered [controllers](/dev-docs/backend-customization/controllers.md).
 
+```bash
+strapi controllers:list
+```
+
 ## strapi services:list
 
 Display a list of all the registered [services](/dev-docs/backend-customization/services.md).
@@ -470,7 +495,7 @@ options [--delete-files]
 
 - In addition to the `uninstall` command you need to remove the plugin configuration from `./config/plugins.js`.
 - Some plugins have admin panel integrations, your admin panel might have to be rebuilt. This can take some time.
-  :::
+:::
 
 ## strapi telemetry:disable
 

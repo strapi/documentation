@@ -201,7 +201,7 @@ Deploying to Heroku requires installing the CLI tool, creating an App, connectin
 Run the following from a terminal:
 
 ```bash
-sudo snap install --classic heroku
+curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 ```
 
 </TabItem>

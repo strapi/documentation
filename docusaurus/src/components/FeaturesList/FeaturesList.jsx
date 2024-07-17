@@ -14,6 +14,7 @@ export function FeatureListItem({
   ...rest
 }) {
   const ContentElement = ((href || to) ? LinkWithArrow : 'span');
+  const IconElement = ((href || to) ? 'a' : 'span');
 
   return (
     <li
@@ -23,14 +24,17 @@ export function FeatureListItem({
       )}
     >
       {Icon && (
-        <span
+        <IconElement
           className={clsx(
             styles['features-list__item__icon'],
             (iconColor && styles[`features-list__item__icon--${iconColor}`]),
           )}
+          href={href}
+          to={to}
+          {...(IconElement === 'a' ? { href: to || href } : {})}
         >
           <Icon />
-        </span>
+        </IconElement>
       )}
       <ContentElement
         className={styles['features-list__item__content']}

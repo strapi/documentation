@@ -144,7 +144,7 @@ Note the database name, username and password for later use.
 
 :::prerequisites
 - You must have `git` [installed and set-up locally](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup).
-- Git should be [initialized](https://git-scm.com/docs/git-init) for your previsouly created Strapi project.
+- Git should be [initialized](https://git-scm.com/docs/git-init) for your previously created Strapi project.
 :::
 
 1. Replace the content of the `config/database.js` with the following:
@@ -273,6 +273,16 @@ Your Strapi project is now installed on your DigitalOcean Droplet. Before being 
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
         ```
+    * Nginx has a [configuration setting](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) called `client_max_body_size` that will prevent file uploads greater than the specified amount. This will need to be adjusted since its default is only 1MB. Note that strapi middleware is already in charge of parsing requests of file sizes up to 200MB.
+      ```
+      ...
+      http {
+        ...
+        client_max_body_size 200m; # Or 0 to disable
+        ...
+      }
+      ...
+      ```
 
 2. Close the port to outside traffic by running the following commands:
 

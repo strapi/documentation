@@ -49,8 +49,11 @@ The optional `inputSize` object, when specified, must contain all of the followi
 | `default`     | The default size in columns that the input field will occupy in the 12-column grid in the admin panel.<br/>The value can either be `4`, `6`, `8` or `12`. | `Integer` |
 | `isResizable` | Whether the input can be resized or not                                                                                                                   | `Boolean` |
 
-:::note
-Currently, custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization#model-attributes) documentation. Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, cannot be used in custom fields.
+:::note Current limitations
+Currently:
+* Custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization#model-attributes) documentation. 
+* You also cannot modify an existing data type.
+* Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, cannot be used in custom fields.
 :::
 
 <details>
@@ -275,7 +278,7 @@ Each object in the `items` array can contain the following parameters:
 | Items parameter | Description                                                        | Type                                                 |
 | --------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
 | `name`          | Label of the input.<br/>Must use the `options.settingName` format. | `String`                                             |
-| `description`   | Description of the input to use in the Content-type Builder        | `String`                                             |
+| `description`   | Description of the input to use in the Content-type Builder        | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
 
@@ -371,5 +374,5 @@ export default {
 <!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 
 :::tip
-The Strapi codebase gives an example of how settings objects can be described: check the [`baseForm.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.js) file for the `base` settings and the [`advancedForm.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.js) file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an [`attributeOptions.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js) file.
+The Strapi codebase gives an example of how settings objects can be described: check the [`baseForm.ts`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.ts) file for the `base` settings and the [`advancedForm.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.ts) file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an [`attributeOptions.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js) file.
 :::

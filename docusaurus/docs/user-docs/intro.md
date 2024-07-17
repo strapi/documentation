@@ -5,109 +5,50 @@ sidebar_label: Welcome!
 
 # Welcome to the Strapi User Guide!
 
-This user guide contains the functional documentation related to all features available in the admin panel of your Strapi v4 application.
+<SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
+
+The documentation for Strapi contains 3 main sections, accessible from the top navigation bar:
+
+- 🧑‍💻 The **[Developer Docs](/dev-docs/intro)** contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi v4 application.
+- 🧑‍🏫 The **User Guide** that you're currently reading is all about using Strapi's admin panel.
+- ☁️ The **[Strapi Cloud](/cloud/intro)** documentation is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
+
+</SubtleCallout>
+
+This <PostHogAdminPanel /> documentation contains the functional documentation related to all features available in the main navigation of your Strapi application.
+
+Once you have logged in, you can access your Strapi admin panel:
 
 <ThemedImage
-  alt="Homepage of the Admin Panel"
-  sources={{
+alt="Homepage of the Admin Panel"
+sources={{
     light: '/img/assets/getting-started/admin-panel-homepage.png',
     dark: '/img/assets/getting-started/admin-panel-homepage_DARK.png',
   }}
 />
 
-Before going any further into this user guide, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi works, and ensure a smooth Strapi experience.
+If you are not sure where to begin on this User Guide, we suggest you to:
 
-- **Development, Staging or Production Environment** <br/> When you start working on your application, it is in a development environment, which is the status for the content structure and application configuration. After deploying your application, it is in production or staging environment. This status change impacts how you can use your Strapi application, as some features are only available in development environment, such as the Content-type Builder. In this user guide the availability or not of a feature, depending on the application status, is always mentioned in the feature's introduction.
+1. Go through the [User Guide fundamentals](/user-docs/getting-started/user-guide-fundamentals).
+2. Follow the [Setting up the admin panel](/user-docs/getting-started/setting-up-admin-panel) guide.
+3. Continue your journey through the various User Guide sections. The ["What you will find here"](#what-you-will-find-here) section gives you an overview of the available topics.
 
-- **Versions** <br/> Strapi is constantly evolving and growing. This implies that new releases are quite frequent, to improve what is already available but also to add new features to Strapi. For every new Strapi version, we communicate through our main channels and by sending notifications both on your terminal (when launching your Strapi application), and on your application's admin panel. We always recommend to use the latest version. However, we always keep live both the documentation of the current Strapi version, and the documentation of the previous one - the latter being officially and actively maintained for 6 months after the release of the newest Strapi version.
+## What you will find here
 
-- **License and Pricing Plans** <br/> As a Strapi user you have the choice between using the Community Edition, which is entirely free, or the [Enterprise Edition](https://strapi.io/pricing-self-hosted). In this user guide, if a feature is only available for the Enterprise Edition, an <EnterpriseBadge /> badge is displayed beside the section's title.
+The table of content in this User Guide displays 7 main sections.
 
-- **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still  offers community users the opportunity to provide early feedback on these new features or changes. This feedback is invaluable in enhancing the feature before the final release. Such experimental features are indicated by a <FutureBadge /> badge throughout the documentation and enabling these features requires enabling the corresponding future flags (see [Developer Docs](/dev-docs/configurations/features#enabling-a-future-flag)).
+Clicking on any of the following cards will direct you to the introductory page for that section, with additional details and concepts:
 
-- **Roles and Permissions** <br/> Some features of the admin panel, as well as the content managed with Strapi itself, are ruled by a system of permissions. From your Strapi admin panel, you have the possibility to define, at a detailed level, the roles and permissions of all administrators and end users. In this user guide, all features and possible options are documented. It is however possible, depending on your role and permissions, that you may not be able to access all these features and options. In that case, please refer to the main Super Admin of your Strapi application.
-
-With all this in mind, you should be ready to start your Strapi experience!
-
-## Accessing the admin panel
-
-The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types, and write their actual content. It is also from the admin panel that you will manage users, both administrators and end users of your Strapi application.
-
-:::caution
-In order to access the admin panel, your Strapi application must be launched, and you must be aware of the URL to its admin panel (e.g. `api.example.com/admin`).
-:::
-
-<ThemedImage
-  alt="Login page"
-  sources={{
-    light: '/img/assets/getting-started/login-page-sso.png',
-    dark: '/img/assets/getting-started/login-page_DARK.png',
-  }}
-/>
-
-To access the admin panel:
-
-1. Go to the URL of your Strapi application's admin panel.
-2. Enter your credentials to log in.
-3. Click on the **Login** button. You should be redirected to the homepage of the admin panel.
-
-### Using SSO for authentication <EnterpriseBadge />
-
-If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](/user-docs/settings/single-sign-on)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
-
-To do so, in the login page of your Strapi application, click on a chosen provider. If you cannot see your provider, click the ![icon more](/img/assets/getting-started/icon_more.png) button to access the full list of all available providers. You will be redirected to your provider's own login page where you will be able to authenticate.
-
-## Setting up your administrator profile
-
-If you are a new administrator, we recommend making sure your profile is all set, before diving into your Strapi application. From your administrator profile, you are able to modify your user information, such as name, username, email or password. You can also choose the language of the interface for your Strapi application.
-
-<ThemedImage
-  alt="Homepage of the Admin Panel"
-  sources={{
-    light: '/img/assets/getting-started/user-information-profile.png',
-    dark: '/img/assets/getting-started/user-information-profile_DARK.png',
-  }}
-/>
-
-To modify your user information:
-
-1. Click on your account name or initials in the bottom left hand corner of the main navigation of your Strapi application.
-2. In the drop-down menu, click on **Profile**.
-3. Modify the information of your choice:
-
-| Profile & Experience  | Instructions                                                                                            |
-| --------------------- | ------------------------------------------------------------------------------------------------------- |
-| First name            | Write your first name in the textbox.                                                                   |
-| Last name             | Write your last name in the textbox.                                                                    |
-| Email                 | Write your complete email address in the textbox.                                                       |
-| Username              | (optional) Write a username in the textbox.                                                             |
-| Interface language    | Among the drop-down list, choose a language for your Strapi application interface.                      |
-| Interface mode        | Among the drop-down list, choose a mode for your Strapi application interface: either "Light mode" or "Dark mode". Note that by default, the chosen mode for a Strapi application is based on the browser's mode. |
-
-4. Click on the **Save** button.
-
-### Changing your password
-
-To change the password of your account:
-
-1. Go to your administrator profile.
-2. Fill in the password-related options:
-
-| Password modification |                                                                                                         |
-| --------------------- | ------------------------------------------------------------------------------------------------------- |
-| Current password      | Write your current password in the textbox. <br/> 💡 You can click on the eye icon for the password to be shown. |
-| Password              | Write the new password in the textbox. <br/> 💡 You can click on the eye icon for the password to be shown.      |
-| Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the eye icon for the password to be shown. |
-
-3. Click on the **Save** button.
-
-
----
-
-Congratulations on being a new Strapi user! You're now ready to discover all the features and options that Strapi has to offer!
+<CustomDocCardsWrapper>
+  <CustomDocCard emoji="📝" title="Content Manager" description="Manage and publish all content types created with the Content-type Builder." link="/user-docs/content-manager" />
+  <CustomDocCard emoji="📚" title="Content Type Builder" description="Build your data structure by creating and managing content-types." link="/user-docs/content-type-builder" />
+  <CustomDocCard emoji="🗃️" title="Media Library" description="Upload and manage all assets and organize them into folders." link="/user-docs/media-library" />
+  <CustomDocCard emoji="📅" title="Releases" description="Arrange entries into containers for publishing and unpublishing actions." link="/user-docs/releases/introduction"/>
+  <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/user-docs/users-roles-permissions"/>
+  <CustomDocCard emoji="🔗" title="Plugins" description="Find additional functionalities to extend and customize your applications." link="/user-docs/plugins" />
+  <CustomDocCard emoji="⚙️" title="General Settings" description="Access features needed set up your Strapi admin panel." link="/user-docs/settings/introduction" />
+</CustomDocCardsWrapper>
 
 :::strapi Welcome to the Strapi community!
 
 If you have any trouble with your Strapi experience, you can reach us through [GitHub](https://github.com/strapi/) or our [forum](https://forum.strapi.io/)! The Strapi Community and Strapi team are always available to answer your questions or help you with anything!
-
-:::

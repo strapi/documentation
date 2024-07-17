@@ -132,13 +132,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // announcementBar: {
-      //   id: 'support_us',
-      //   content: "We're rebuilding our documentation from the ground up (see <a href='/'>status page</a>). Looking for the complete Strapi documentation? Please visit <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
-      //   backgroundColor: '#F3E5FA',
-      //   textColor: '#091E42',
-      //   isCloseable: true,
-      // },
+      announcementBar: {
+        id: 'strapi5docs',
+        content:
+          "Strapi 5 Release Candidate (RC) is out! 🚀 Read the Strapi 5 RC docs at <a href='https://docs-next.strapi.io/dev-docs/whats-new'>docs-next.strapi.io</a>",
+        backgroundColor: 'rgb(236, 235, 255)',
+        textColor: '#091E42',
+        isCloseable: true,
+      },
       docs: {
         sidebar: {
           hideable: true,
@@ -147,7 +148,7 @@ const config = {
       },
       algolia: {
         appId: '392RJ63O14',
-        apiKey: '8cf63dc4a24ff4087407f9f5bd188aae',
+        apiKey: 'ed62374a794e8da5accb298e13618614',
         indexName: 'strapiDocsNextstrapiDocsNext',
       },
       navbar: {
@@ -255,7 +256,8 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
-        // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
+        // selector: '.markdown :not(em) > img', // disabled to ensure it works with themed images
+        // We also have a bug with images embedded in details blocks, see https://github.com/gabrielcsapo/docusaurus-plugin-image-zoom/issues/27
       },
       hubspot: {
         accountId: 6893032,
@@ -274,6 +276,14 @@ const config = {
     'docusaurus-plugin-hubspot',
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
+    [
+      "posthog-docusaurus",
+      {
+        apiKey: "phc_DETCfjmHIm184mceL8duwutdQgOnVTZSC59xontNRWN",
+        appUrl: "https://eu.i.posthog.com", // optional, defaults to "https://us.i.posthog.com"
+        enableInDevelopment: false, // optional
+      },
+    ],
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's

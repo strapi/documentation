@@ -13,7 +13,7 @@ Strapi does not build any official container images. The following instructions 
 :::
 
 :::danger
- Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
+Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
 :::
 
 The following documentation will guide you through building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
@@ -57,7 +57,7 @@ Sample `Dockerfile`:
 <TabItem value="yarn" label="yarn">
 
 ```dockerfile title="./Dockerfile"
-FROM node:18-alpine
+FROM node:18-alpine3.18
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
@@ -321,6 +321,40 @@ networks:
 </TabItem>
 
 </Tabs>
+
+### (Optional) .dockerignore
+
+When building Docker images, it's essential to include only the files necessary for running the application inside the container. This is where the `.dockerignore` file comes into play. Similar to how `.gitignore` works for Git, specifying files and directories that should not be tracked or uploaded, `.dockerignore` tells Docker which files and directories to ignore when building an image.
+
+Sample `.dockerignore`:
+
+```bash
+.tmp/
+.cache/
+.git/
+.env
+build/
+node_modules/
+# Ignoring folders that might be used in starter templates
+data/
+backup/
+```
+
+#### Why Use .dockerignore?
+
+Including unnecessary files in a Docker build context can significantly slow down the build process. By excluding files and directories like .tmp, .cache, .git, build, node_modules, and .env through .dockerignore, the amount of data sent to the Docker daemon is reduced. This leads to faster build times since Docker has fewer files to process and include in the image.
+
+#### Security
+
+Excluding files and directories can also enhance the security of the Docker image. Sensitive files, such as `.env`, which might contain environment-specific secrets or credentials, should not be included in Docker images. This prevents accidental exposure of sensitive information.
+
+#### Cleaner Images
+
+A Docker image cluttered with unnecessary files can lead to potential confusion and issues, especially when the image is shared across teams or used in production. By keeping the image clean and focused only on the essentials, it becomes easier to maintain and troubleshoot.
+
+#### Reduced Image Size
+
+Smaller Docker images are more efficient to store, transfer, and launch. By excluding non-essential files, the final image size can be significantly reduced, leading to quicker pull and start times, especially in distributed and cloud environments.
 
 ## Production Environments
 

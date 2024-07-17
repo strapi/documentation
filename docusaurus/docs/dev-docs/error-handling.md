@@ -399,7 +399,7 @@ throw new NotFoundError('These are not the droids you are looking for');
 
 <TabItem value="Forbidden" label="Forbidden">
 
-The `ForbiddenError` class is a specific error class used when a user either doesn't provide any or the correct authentication credentials. It accepts the following parameters:
+The `ForbiddenError` class is a specific error class ([error 403](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403)) used when a user doesn't have the proper role or permissions to perform a specific action, but has properly authenticated. It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |
@@ -415,7 +415,7 @@ throw new ForbiddenError('Ah ah ah, you didn\'t say the magic word');
 
 <TabItem value="Unauthorized" label="Unauthorized">
 
-The `UnauthorizedError` class is a specific error class used when a user doesn't have the proper role or permissions to perform a specific action, but has properly authenticated. It accepts the following parameters:
+The `UnauthorizedError` class is a specific error class ([error 401](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)) used when a user either doesn't provide any or the correct authentication credentials. It accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |

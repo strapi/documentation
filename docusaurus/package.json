@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "4.17.2",
+  "version": "4.25.2",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -28,6 +28,8 @@
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "embla-carousel-wheel-gestures": "^3.0.0",
+    "posthog-docusaurus": "^2.0.0",
+    "posthog-js": "^1.141.4",
     "prism-react-renderer": "^1.3.5",
     "qs": "^6.11.1",
     "react": "^17.0.2",

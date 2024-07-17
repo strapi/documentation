@@ -1,6 +1,6 @@
-{
+{ 
   "theme.common.editThisPage": {
-    "message": "Improve this page",
+    "message": "Contribute to this page on GitHub",
     "description": "The link label to edit the current page"
   }
 }

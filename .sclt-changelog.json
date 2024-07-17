@@ -3,7 +3,7 @@
   "labelsToHeadline": {
     "new content": "✨ New content",
     "updated content": "🖌 Updated content",
-    "chore": "🧹 Chore, fixes, typos, and other improvements"
+    "fix": "🧹 Fixes, typos, chore, and other improvements"
   },
   "footer": "<br />Thanks a lot for your contributions! 🥰🚀"
 }

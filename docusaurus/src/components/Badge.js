@@ -91,6 +91,15 @@ export function CloudTeamBadge(props) {
     />
   );
 }
+export function CloudDevBadge(props) {
+  return (
+    <Badge
+      variant="Strapi Cloud Dev"
+      link="https://strapi.io/pricing-cloud"
+      {...props}
+    />
+  );
+}
 
 export function NewBadge(props) {
   return (

@@ -16,7 +16,6 @@ This section is about using Strapi built-in plugins from a developer's perspecti
 Strapi comes with the following built-in plugins that are officially maintained and documented by the Strapi core team:
 
 <CustomDocCardsWrapper>
-<CustomDocCard emoji="✍️" title="Content Source Map" description="The Content Source Map plugin, used with Vercel Visual Editing, enhances the content edition experience." link="/dev-docs/plugins/content-source-map" />
 <CustomDocCard emoji="ℹ️" title="Documentation" description="The Documentation plugin is useful to document the available endpoints once you created an API." link="/dev-docs/plugins/documentation" />
 <CustomDocCard emoji="✉️" title="Email" description="The Email plugin enables applications to send emails from a server or an external provider." link="/dev-docs/plugins/email"/>
 <CustomDocCard title="GraphQL" description="The GraphQL plugin adds a GraphQL endpoint to fetch and mutate your content." link="/dev-docs/plugins/graphql"/>

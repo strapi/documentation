@@ -1,4 +1,4 @@
-/** Component: Feature Badges (alpha, beta) */
+ /** Component: Feature Badges (alpha, beta) */
 
 .badge {
   --custom-badge-background-color: var(--strapi-neutral-200);
@@ -55,6 +55,10 @@
 
   &--strapicloudteam {
     --custom-badge-background-color: rgb(154, 53, 242);
+    --custom-badge-color: #fff;
+  }
+  &--strapiclouddev {
+    --custom-badge-background-color: rgb(44,170,73);
     --custom-badge-color: #fff;
   }
 

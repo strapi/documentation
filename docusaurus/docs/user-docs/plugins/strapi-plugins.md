@@ -68,12 +68,6 @@ The Email plugin allows users to send email from the server or from external pro
 
 ## Additional plugins
 
-### ✍️ Content Source Map <EnterpriseBadge />
-
-The Content Source Map plugin combined with Vercel's Visual Editing can offer an intuitive [editing experience](/user-docs/content-manager/writing-content#editing-fields-from-a-front-end-website-), where you can click on any editable content on the front-end website of a Strapi-based project deployed on Vercel to directly jump to the corresponding field in Strapi's admin panel.
-
-There is no access to the Content Source Map plugin in the admin panel. More information on using the Content Source Map plugin is located in the [Content Manager](/user-docs/content-manager/writing-content#editing-fields-from-a-front-end-website-) documentation and in the dedicated [Developer Documentation](/dev-docs/plugins/content-source-map) for the plugin.
-
 ### <img width="28" src="/img/assets/plugins/Documentation-swagger.png" /> Documentation
 
  The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading "Plugins". The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation). The Documentation plugin enables:

@@ -3,6 +3,7 @@ title: Managing administrator accounts
 displayed_sidebar: userDocsSidebar
 sidebar_position: 3
 ---
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Managing administrator accounts
 
@@ -22,9 +23,9 @@ The *Users* sub-section of *Administration panel* displays a table listing all t
 
 From this interface, it is possible to:
 
-- make a textual search (1) to find specific administrators,
-- set filters (2) to find specific administrators,
-- create a new administrator account (see [Creating a new account](#creating-a-new-account)) (3),
+- make a textual search <ScreenshotNumberReference number="1" /> to find specific administrators,
+- set filters <ScreenshotNumberReference number="2" /> to find specific administrators,
+- create a new administrator account (see [Creating a new account](#creating-a-new-account)) <ScreenshotNumberReference number="3" />,
 - delete an administrator account (see [Deleting an account](#deleting-an-account)),
 - or access information regarding an administrator account, and edit it (see [Editing an account](#editing-an-account)).
 

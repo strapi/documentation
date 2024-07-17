@@ -14,6 +14,7 @@ To start developing a Strapi plugin, you need to:
 
 :::prerequisites
 You created a Strapi project.
+
 <details>
 <summary>Use the CLI to create a project:</summary>
 
@@ -40,6 +41,7 @@ npx create-strapi-app@latest my-project --quickstart
 </Tabs>
 
 More details can be found in the [CLI installation guide](/dev-docs/installation/cli).
+
 </details>
 :::
 
@@ -51,24 +53,28 @@ The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
 2. Run the following command in a terminal window to start the interactive CLI:
 
   <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
+    <TabItem value="yarn" label="Yarn">
 
   ```sh
-  yarn strapi generate plugin
+    yarn strapi generate plugin
   ```
 
-  </TabItem>
+    </TabItem>
 
-  <TabItem value="npm" label="NPM">
+    <TabItem value="npm" label="NPM">
 
   ```sh
   npm run strapi generate plugin
   ```
 
-  </TabItem>
+    </TabItem>
   </Tabs>
 
 4. Choose either `JavaScript` or `TypeScript` for the plugin language.
+
+:::callout 🚧 Experimental plugin CLI
+Strapi now also offers a [plugin CLI](/dev-docs/plugins/development/plugin-cli), but use it at your own risk as it's still experimental.
+:::
 
 ## Enable the plugin
 
@@ -80,22 +86,23 @@ To enable a plugin:
 2. Enable the plugin by adding the following code to the plugins configuration file:
 
   <Tabs>
-  <TabItem value="js" label="JavaScript">
+    <TabItem value="js" label="JavaScript">
 
-  ```js title="./config/plugins.js"
-  module.exports = {
-    // ...
-    "my-plugin": { // name of your plugin, kebab-cased
-      enabled: true,
-      resolve: "./src/plugins/my-plugin", // path to the plugin folder
-    },
-    // ...
-  };
-  ```
+    ```js title="./config/plugins.js"
+    module.exports = {
+      // ...
+      "my-plugin": {
+        // name of your plugin, kebab-cased
+        enabled: true,
+        resolve: "./src/plugins/my-plugin", // path to the plugin folder
+      },
+      // ...
+    };
+    ```
 
-  </TabItem>
+    </TabItem>
 
-  <TabItem value="ts" label="TypeScript">
+    <TabItem value="ts" label="TypeScript">
 
   ```js title=./config/plugins.ts
   export default {
@@ -108,7 +115,7 @@ To enable a plugin:
   };
   ```
 
-  </TabItem>
+    </TabItem>
   </Tabs>
 
 :::tip
@@ -146,10 +153,10 @@ Once the plugin code has been generated and the plugin is enabled, the next step
   </Tabs>
 
 3. Navigate back to the Strapi project root with `cd ../../..` and run the following command to build the admin panel and start the server(s):
-  
+
   <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
-  
+
   ```sh
   yarn develop
   ```
@@ -157,7 +164,7 @@ Once the plugin code has been generated and the plugin is enabled, the next step
   </TabItem>
 
   <TabItem value="npm" label="NPM">
-  
+
   ```sh
   npm run develop
   ```
@@ -225,7 +232,7 @@ Once the plugin code has been generated and the plugin is enabled, the next step
   </TabItem>
 
   <TabItem value="npm" label="NPM">
-  
+
   ```sh
   npm run develop
   ```
@@ -240,10 +247,6 @@ You should now be ready to start developing your plugin.
 
 :::strapi What to read next?
 You can either jump to the [plugin structure](/dev-docs/plugins/development/plugin-structure) documentation or read the [servers and hot reloading](#servers-and-hot-reloading) section to learn more about different ways to start the server.
-:::
-
-:::info Did you know?
-The admin panel needs to be rebuilt after its code has been modified. Rebuilding the admin panel is done by running the `build` command. The `strapi generate plugin` generates code that injects some plugin components (menu link, plugin homepage) into the admin panel. That's why we run the `build` command after the plugin code has been generated and before starting the server.
 :::
 
 ### Servers and hot reloading

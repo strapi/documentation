@@ -74,3 +74,35 @@ module.exports = {
 ```
 
 </details>
+
+### Using Strapi Instance for migrations
+
+:::danger
+If a user opts not to use Knex directly for migrations and instead utilizes the Strapi instance, it is important to wrap the migration code with `strapi.db.transaction()`. Failure to do so may result in migrations not rolling back if an error occurs.
+:::
+
+<details>
+<summary>Example of migration file with Strapi instance</summary>
+
+```jsx title="./database/migrations/2022.05.10T00.00.00.name-of-my-migration.js"
+module.exports = {
+  async up() {
+    await strapi.db.transaction(async () => {
+      // Your migration code here
+
+      // Example: creating new entries
+      await strapi.entityService.create('api::article.article', {
+        data: {
+          title: 'My Article',
+        },
+      });
+
+      // Example: custom service method
+      await strapi.service('api::article.article').updateRelatedArticles();
+    });
+  },
+};
+```
+
+</details>
+

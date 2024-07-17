@@ -19,7 +19,6 @@ The present migration guide upgrades Strapi v4.14.0 to v4.15.5. Strapi v4.15.5 u
 
 <PluginsCaution components={props.components} />
 
-
 ## Upgrading the application dependencies to 4.15.5
 
 :::prerequisites
@@ -34,7 +33,12 @@ Stop the server before starting the upgrade.
      "dependencies": {
        "@strapi/strapi": "4.15.5",
        "@strapi/plugin-users-permissions": "4.15.5",
-       "@strapi/plugin-i18n": "4.15.5"
+       "@strapi/plugin-i18n": "4.15.5",
+       "react": "^18.0.0",
+       "react-dom": "^18.0.0",
+       "react-router-dom": "5.3.4",
+       "styled-components": "5.3.3"
+
        // ...
      }
    }
@@ -54,12 +58,11 @@ Manually update the [`config/middlewares.js` configuration file](/dev-docs/confi
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/middlewares.js" {3}
-
 module.exports = [
-  'strapi::logger',
-  'strapi::errors',
-  'strapi::security',
-  'strapi::cors',
+  "strapi::logger",
+  "strapi::errors",
+  "strapi::security",
+  "strapi::cors",
   // …
 ];
 ```
@@ -69,14 +72,13 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts" {3}
-
 export default [
-  'strapi::logger',
-  'strapi::cors',
-  'strapi::body',
-  'strapi::errors',
+  "strapi::logger",
+  "strapi::cors",
+  "strapi::body",
+  "strapi::errors",
   // …
-]
+];
 ```
 
 </TabItem>
