@@ -27,3 +27,66 @@
   vertical-align: middle;
   margin-left: 5px;
 }
+
+/** Detailed version */
+.release-notes-page--detailed details {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  background: none;
+  font-size: 0.9em;
+  border: none;
+  box-shadow: none;
+}
+
+.release-notes-page--detailed details summary {
+  list-style: none;
+  border: none;
+  box-shadow: none;
+}
+
+.release-notes-page--detailed details ul {
+  padding-left: 1.5em;
+  margin-top: 0.5em;
+}
+
+.release-notes-page--detailed details ul li {
+  margin-bottom: 0.5em;
+}
+
+.release-notes-page--detailed .contributors-section {
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.release-notes-page--detailed .contributors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.release-notes-page--detailed .contributor-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.release-notes-page--detailed .image-comparison img {
+  max-width: 300px;
+  max-height: 300px;
+  display: block;
+}
+
+.release-notes-page--detailed .image-comparison {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.release-notes-page--detailed .image-comparison div {
+  text-align: center;
+  font-size: 0.8em;
+  color: #666;
+}
