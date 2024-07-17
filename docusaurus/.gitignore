@@ -22,3 +22,5 @@ yarn-error.log*
 docs/.vuepress*
 docs/.vuepress/config.js
 docs/node_modules/**
+
+release-notes.py
