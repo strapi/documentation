@@ -1,5 +1,5 @@
 /* Style pour la page de release notes */
-.release-notes-page details {
+.release-notes-page--detailed details {
   margin: 0.5em 0;
   padding: 0.5em;
   background: none;
@@ -9,36 +9,36 @@
 }
 
 /* Style pour les éléments <summary> */
-.release-notes-page details summary {
+.release-notes-page--detailed details summary {
   list-style: none; /* Suppression du style de la liste */
   border: none; /* Suppression de la bordure */
   box-shadow: none; /* Suppression de l'ombre */
 }
 
 /* Style pour les éléments <ul> à l'intérieur de <details> */
-.release-notes-page details ul {
+.release-notes-page--detailed details ul {
   padding-left: 1.5em; /* Indentation pour la liste */
   margin-top: 0.5em; /* Espacement supérieur */
 }
 
 /* Style pour les éléments <li> */
-.release-notes-page details ul li {
+.release-notes-page--detailed details ul li {
   margin-bottom: 0.5em; /* Espacement entre les éléments de la liste */
 }
 
-.release-notes-page .contributors-section {
+.release-notes-page--detailed .contributors-section {
   margin-top: 20px;
   font-style: italic;
 }
 
-.release-notes-page .contributors {
+.release-notes-page--detailed .contributors {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-.release-notes-page .contributor-avatar {
+.release-notes-page--detailed .contributor-avatar {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -46,19 +46,19 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.release-notes-page .image-comparison img {
+.release-notes-page--detailed .image-comparison img {
   max-width: 300px;
   max-height: 300px;
   display: block;
 }
 
-.release-notes-page .image-comparison {
+.release-notes-page--detailed .image-comparison {
   display: flex;
   flex-direction: row;
   gap: 10px;
 }
 
-.release-notes-page .image-comparison div {
+.release-notes-page--detailed .image-comparison div {
   text-align: center;
   font-size: 0.8em;
   color: #666;
