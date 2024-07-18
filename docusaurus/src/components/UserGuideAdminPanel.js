@@ -33,6 +33,7 @@ const PrefabWrapper = ({ children }) => {
 
   useEffect(() => {
     if (isBrowser && userId) {
+      // trying to get the user id from hotjar, but not working either… 🤷
       hj('identify', userId, {
         // Add other user properties here if required
         userProperty: 'value'
