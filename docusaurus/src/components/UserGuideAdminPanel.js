@@ -14,6 +14,8 @@ const PrefabWrapper = ({ children }) => {
   const {siteConfig} = useDocusaurusContext();
   const { prefabApiKey } = siteConfig.customFields;
 
+  console.log("prefabApiKey", prefabApiKey);
+
   if (isBrowser) {
     const onError = (error) => {
       console.log(error);
@@ -26,11 +28,10 @@ const PrefabWrapper = ({ children }) => {
 
     let gaCookie = getCookie('_ga');
 
+
     return (
       <PrefabProvider
-        // at some point we'll need to get prefabApiKey from the docusaurus config
-        apiKey={"398-Development-P435-E907-FRONTEND-b3f733ec-b1b7-464f-8b6f-9cf91d23a434"}
-        // apiKey={prefabApiKey}
+        apiKey={prefabApiKey}
         contextAttributes={{
           //  pass the google analytics id
           user: { key: gaCookie },
@@ -60,6 +61,8 @@ const InnerComponent = () => {
     // default state — could also be used for a loading spinner or something
     return <span>user guide</span>;
   }
+
+  console.log("variant", variant);
 
   switch (variant) {
     case "user guide":
