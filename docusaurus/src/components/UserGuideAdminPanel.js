@@ -14,8 +14,6 @@ const PrefabWrapper = ({ children }) => {
   const {siteConfig} = useDocusaurusContext();
   const { prefabApiKey } = siteConfig.customFields;
 
-  console.log("prefabApiKey", prefabApiKey);
-
   if (isBrowser) {
     const onError = (error) => {
       console.log(error);
@@ -27,7 +25,6 @@ const PrefabWrapper = ({ children }) => {
     }
 
     let gaCookie = getCookie('_ga');
-
 
     return (
       <PrefabProvider
@@ -61,8 +58,6 @@ const InnerComponent = () => {
     // default state — could also be used for a loading spinner or something
     return <span>user guide</span>;
   }
-
-  console.log("variant", variant);
 
   switch (variant) {
     case "user guide":
