@@ -100,12 +100,16 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 ## Backups <CloudProBadge /> <CloudTeamBadge /> {#backups}
 
-The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period.
+The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period. Additionally, you can create a single manual backup.
 
-:::note
-The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up.
+:::note Notes
 
-Note also that only project owners can restore a backup. Maintainers have access to the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
+- The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up and to have access to manual backups.
+
+- Only project owners can restore a backup. Maintainers have access to the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
+
+- The manual backup option should become available shortly after project's first succesful deployment.
+
 :::
 
 :::tip
@@ -120,12 +124,22 @@ For projects created before the release of the Backup feature in October 2023, t
   }}
 />
 
+### Creating a manual backup
+
+To create a manual backup, in the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* section, click on the **Create backup** button.
+
+The manual backup should start immediately, and restoration or creation of other backups will be disabled until backup is complete.
+
+:::caution
+When creating a new manual backup, any existing manual backup will be deleted. You can only have one manual backup at a time.
+:::
+
 ### Restoring a backup
 
 If you need to restore a backup of your project:
 
 1. In the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* section, click on the **Restore backup** button.
-2. In the dialog, choose one of the available backups of your project in the *Choose backup* drop-down.
+2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
 3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
 
 ## Domains
