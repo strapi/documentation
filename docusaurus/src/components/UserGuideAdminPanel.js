@@ -71,7 +71,7 @@ const InnerComponent = () => {
   const { get, loading } = usePrefab();
 
   if (loading) {
-    // show a spinner while the prefab flag data is loading
+    // default state — could also be used for a loading spinner or something
     return <span>user guide</span>;
   }
 
