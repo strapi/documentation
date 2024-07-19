@@ -21,7 +21,7 @@
     "@docusaurus/theme-live-codeblock": "2.4.0",
     "@docusaurus/theme-mermaid": "2.4.0",
     "@mdx-js/react": "^1.6.22",
-    "@prefab-cloud/prefab-cloud-react": "^0.3.5",
+    "@prefab-cloud/prefab-cloud-react": "^0.3.6",
     "clsx": "^1.2.1",
     "docusaurus-plugin-hubspot": "^1.0.1",
     "docusaurus-plugin-image-zoom": "^0.1.1",

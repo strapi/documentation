@@ -50,7 +50,7 @@ const InnerComponent = () => {
 
   useEffect(() => {
     if (!loading) {
-      setVariant(get("flag.user-guide-name")[0]);
+      setVariant(get("flag.user-guide-name"));
     }
   }, [loading, get]);
 
