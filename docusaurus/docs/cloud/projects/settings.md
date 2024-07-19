@@ -98,7 +98,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
-## Backups <CloudProBadge /> <CloudTeamBadge /> {#backups}
+## Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
 
 The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period. Additionally, you can create a single manual backup.
 

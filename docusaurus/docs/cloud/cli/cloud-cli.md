@@ -4,7 +4,7 @@ displayed_sidebar: cloudSidebar
 sidebar_position: 3
 ---
 
-# Command Line Interface (CLI)
+# Command Line Interface (CLI) <NewBadge />
 
 Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a local project without it having to be hosted on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
 
