@@ -24,3 +24,4 @@ docs/.vuepress/config.js
 docs/node_modules/**
 
 release-notes.py
+release-notes-detailed.py
