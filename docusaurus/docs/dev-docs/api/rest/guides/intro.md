@@ -26,6 +26,16 @@ The following guides, officially maintained by the Strapi Documentation team, co
 
 ## Additional resources
 
+:::strapi Want to help other users?
+Some of the additional resources listed in this section have been created for Strapi v4 and might not fully work with Strapi 5. If you want to update one of the following articles for Strapi 5, feel free to [propose an article](https://strapi.io/write-for-the-community) for the Write for the Community program.
+:::
+
 Additional tutorials and guides can be found in the following blog posts:
 
 <CustomDocCard emoji="➕" title="Authenticating requests with the REST API" description="Learn how to authenticate your REST API queries with JSON Web Tokens and API tokens." link="https://strapi.io/blog/guide-on-authenticating-requests-with-the-rest-api" />
+
+<CustomDocCard emoji="➕" title="Using Fetch with Strapi's Content API" description="Explore how to use the fetch() method of the Fetch API to interact with Strapi's Content API." link="https://strapi.io/blog/mastering-api-requests-using-fetch-with-strapi-content-api" />
+
+<CustomDocCard emoji="➕" title="Requesting Strapi's REST API behind a Content Delivery Network (CDN)" description="Learn how to overcome network latency issues when requesting large numbers of media assets by leveraging the usage of a CDN with Strapi's REST API." link="https://strapi.io/blog/request-strapi-s-rest-api-behind-a-content-delivery-network-cdn" />
+
+
