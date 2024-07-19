@@ -16,7 +16,7 @@ The following guides, officially maintained by the Strapi Documentation team, co
 <CustomDocCard emoji="🧠" title="Understanding populate" description="Learn what populating means and how you can use the populate parameter in your REST API queries to add additional fields to your responses." link="/dev-docs/api/rest/guides/understanding-populate" />
 <CustomDocCard emoji="🛠️" title="How to populate creator fields" description="Read step-by-step instructions on how to build a custom controller that leverages the populate parameter to add 'createdBy' and 'updatedBy' data to queries responses" link="/dev-docs/api/rest/guides/populate-creator-fields" />
 
-## Additional resources
+## Additional resources <UpdatedBadge />
 
 Additional tutorials and guides can be found in the following blog posts:
 

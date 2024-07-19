@@ -18,7 +18,7 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
-import { AlphaBadge, BetaBadge, EnterpriseBadge, FutureBadge, CloudProBadge, CloudTeamBadge, CloudDevBadge } from '../components/Badge';
+import { AlphaBadge, BetaBadge, EnterpriseBadge, FutureBadge, CloudProBadge, CloudTeamBadge, CloudDevBadge, NewBadge, UpdatedBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
 import ScreenshotNumberReference from '../components/ScreenshotNumberReference';
@@ -55,6 +55,8 @@ export default {
   CloudProBadge,
   CloudTeamBadge,
   CloudDevBadge,
+  NewBadge,
+  UpdatedBadge,
   Columns,
   ColumnLeft,
   ColumnRight,
