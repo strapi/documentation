@@ -25,14 +25,14 @@ This documentation contains all technical documentation related to the setup, de
 
 ## What is Strapi Cloud
 
-Strapi Cloud is a hosting platform that allows you to deploy your Strapi applications in a matter of minutes. It is a fully managed content platform built on top of Strapi, the leading open-source headless CMS.
+[Strapi Cloud](https://strapi.io/cloud) is a hosting platform that allows you to deploy your Strapi applications in a matter of minutes. It is a fully managed content platform built on top of Strapi, the leading open-source headless CMS.
 
-Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
+Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping their development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
 
 ## What you will find here
 
 :::prerequisites
-The typical workflow, which is recommended by the Strapi team, is:
+The typical workflow, which is recommended by the Strapi team, is the following:
 1. Create your Strapi application locally (v4.8.2 or later).
 2. Optionally, extend the application with plugins or custom code.
 3. Version the application's codebase through your git provider (GitHub or GitLab).
