@@ -52,7 +52,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 :::
 
 
-## strapi projects
+## strapi projects <NewBadge />
 
 **Alias:** `strapi cloud:projects`
 
