@@ -14,7 +14,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5 />
 
-:::note
+<!-- :::note
 If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), its structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure.
 
 <details>
@@ -29,8 +29,8 @@ my-project
 
 </details>
 
-:::
+::: -->
 
-The default structure of a Strapi project created without the starter CLI depends on whether the project was created with vanilla JavaScript or with [TypeScript](/dev-docs/typescript), and looks like the following:
+The structure of a Strapi project depends on whether the project was created with [TypeScript](/dev-docs/typescript) (which is the default if you used the `--quickstart` option while creating the project) or with vanilla JavaScript, and looks like the following:
 
 <InteractiveProjectStructure />
