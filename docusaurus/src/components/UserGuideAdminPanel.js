@@ -63,7 +63,7 @@ const InnerComponent = () => {
     case "user guide":
       return <span>user guide</span>;
     case "admin panel":
-      return <span>admin panel</span>;
+      return <span>admin panel guide</span>;
     default:
       return <span>user guide</span>;
   }
