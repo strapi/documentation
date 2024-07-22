@@ -88,6 +88,7 @@ export default function InteractiveProjectStructure() {
           │           └ contentTypes.d.ts <span className="token comment"># generated types for content-types</span><br/>
           ├ .env<br/>
           ├ .strapi-updater.json <span className="token comment"># used to track if users need to update their application</span><br/>
+          ├ <a href="/dev-docs/admin-panel-customization#favicon">favicon.png</a><br/>
           ├ package.json<br/>
           └ tsconfig.json<br/>
 
@@ -111,9 +112,9 @@ export default function InteractiveProjectStructure() {
         ├──── .tmp<br/>
         ├──── <a href="/dev-docs/admin-panel-customization#build">build</a> <span className="token comment"># build of the admin panel</span><br/>
         ├──── config <span className="token comment"># API configurations</span><br/>
-        │     ├ <a href="/dev-docs/configurations/api">api.js</a><br/>
         │     ├ <a href="/dev-docs/configurations/admin-panel">admin.js</a><br/>
-        │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.js</a><br/>
+        │     ├ <a href="/dev-docs/configurations/api">api.js</a><br/>
+        │     ├ <a href="/dev-docs/configurations/cron">cron-tasks.ts</a> <span className="token comment"># optional, only if you created CRON tasks</span><br/>
         │     ├ <a href="/dev-docs/configurations/database#database-configuration">database.js</a><br/>
         │     ├ <a href="/dev-docs/configurations/middlewares">middlewares.js</a><br/>
         │     ├ <a href="/dev-docs/configurations/plugins">plugins.js</a><br/>
@@ -125,7 +126,7 @@ export default function InteractiveProjectStructure() {
         │     └──── uploads<br/>
         ├──── src<br/>
         │     ├──── admin <span className="token comment"># admin customization files</span><br/>
-        │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span className="token comment"># files to extend the admin panel</span><br/>
+        │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
         │     │     ├ <a href="/dev-docs/admin-panel-customization#configuration-options">app.js</a><br/>
         │     │     └ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.js</a><br/>
         │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
@@ -167,6 +168,7 @@ export default function InteractiveProjectStructure() {
         │     ├─── <a href="/dev-docs/backend-customization/policies">policies</a><br/>
         │     └ <a href="/dev-docs/configurations/functions">index.js</a> <span className="token comment"># include register(), bootstrap() and destroy() functions</span><br/>
         ├ <a href="/dev-docs/configurations/environment">.env</a><br/>
+        ├ <a href="/dev-docs/admin-panel-customization#favicon">favicon.png</a><br/>
         └ package.json<br/>
           </code>
         </pre>

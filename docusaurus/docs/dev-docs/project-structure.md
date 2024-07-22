@@ -8,11 +8,9 @@ tags:
 ---
 
 import InteractiveProjectStructure from '@site/src/components/ProjectStructure.js'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Project structure
 
-<NotV5 />
 
 <!-- :::note
 If the Strapi project was created with the [starter CLI](https://strapi.io/blog/announcing-the-strapi-starter-cli), its structure includes both a `frontend` and `backend` folder, where the `backend` folder has the default structure.
