@@ -14,8 +14,6 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
-<!-- ! This breaking change is more "internal" and should only affect users that deeply customize Strapi. -->
-
 Internationalization (i18n) is now part of the Strapi core and no longer a plugin, and this impacts how some parameters are sent and accessed. This also means you should not use or depend on the old `@strapi/plugin-i18n` package in your project, it is now natively included.
 
  <Intro />
