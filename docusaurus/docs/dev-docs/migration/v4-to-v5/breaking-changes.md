@@ -19,6 +19,11 @@ Breaking changes are grouped into topic-related categories, and for each line in
 
 You can click on the description of any breaking change in the following tables to jump to the corresponding page with more details.
 
+:::tip Tips
+* To view a full list of available codemods, run the `npx @strapi/upgrade codemods ls` command in your terminal.
+* To have a deeper look at the code executed by the codemods, head over to the [list of codemods](https://github.com/strapi/strapi/tree/v5/main/packages/utils/upgrade/resources/codemods/5.0.0) in the GitHub repository.
+:::
+
 <DoNotMigrateYet />
 
 ## Configuration
