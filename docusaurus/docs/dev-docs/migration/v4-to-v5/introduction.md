@@ -24,6 +24,10 @@ The present page is meant to be used as an entry point to guide you through the 
 - handle the most [common use cases](#common-use-cases),
 - and access [additional resources](#additional-resources) such as the full list of breaking changes and dedicated upgrade resources for specific topics.
 
+:::caution
+Always backup your database before trying any migration.
+:::
+
 ## Common use cases
 
 The following questions and their answers should help you cover most common use cases. If your Strapi code is deeply customized or if you have specific needs, you might also need to look at [additional resources](#additional-resources).
