@@ -9,6 +9,7 @@ tags:
 ---
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
+import TempUpgradeRCtag from '/docs/snippets/temp-upgrade-rc.md'
 const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
 const summaryStyle = {fontSize: '18px'}
 
@@ -64,6 +65,8 @@ The latest version number of Strapi v4 that was released by the Strapi core team
     npx @strapi/upgrade major
     ```
 
+   <TempUpgradeRCtag />
+
     The command will execute:
     * the update and installation of the dependencies of Strapi 5,
     * and the codemods provided to handle the breaking changes that come with Strapi 5.
@@ -81,6 +84,8 @@ The latest version number of Strapi v4 that was released by the Strapi core team
     npx @strapi/upgrade minor
     ```
 
+   <TempUpgradeRCtag />
+
 2. Run the upgrade tool with the `major` command to reach Strapi 5.0.0:
 
     ```sh
@@ -90,6 +95,8 @@ The latest version number of Strapi v4 that was released by the Strapi core team
     The command will execute:
     * the update and installation of the dependencies of Strapi 5,
     * and the codemods provided to handle the breaking changes that come with Strapi 5.
+
+   <TempUpgradeRCtag />
 
 3. Run the application with `yarn develop` or `npm run develop` to adapt the database to the latest breaking changes.
 
