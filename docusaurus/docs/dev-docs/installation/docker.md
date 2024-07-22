@@ -9,11 +9,8 @@ tags:
 ---
 
 import DockerEnvTable from '/docs/snippets/docker-env-table.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Running Strapi in a Docker container
-
-<NotV5 />
 
 :::caution
 Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).
@@ -31,7 +28,7 @@ Docker is an open platform that allows developing, shipping, and running applica
 
 - [Docker](https://www.docker.com/) installed on your machine
 - A [supported version of Node.js](./cli.md#step-1-make-sure-requirements-are-met)
-- An existing Strapi v4 project, or a new one created with the [Quick Start guide](/dev-docs/quick-start.md)
+- An **existing Strapi 5 project**, or a new one created with the [Quick Start guide](/dev-docs/quick-start.md)
 - (_optional_) [Yarn](https://yarnpkg.com/) installed on your machine
 - (_optional_) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
 
