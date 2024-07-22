@@ -75,9 +75,9 @@ You can click on the description of any breaking change in the following tables 
 | [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch) | Yes | No |
 | [strapi factories import have changed](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports) | Yes | No |
 | [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed) | Yes | No |
-| [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored) | Yes | No |
+| [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored) | Yes | ✅ Yes |
 | [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service) | Yes | No |
-| [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale) | Yes | No |
+| [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale) | Yes | ✅ Yes |
 
 ## Content Manager
 
@@ -92,7 +92,7 @@ You can click on the description of any breaking change in the following tables 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
 | [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite) | Yes | No |
-| [Strapi 5 uses `react-router-dom` v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6) | Yes | No |
+| [Strapi 5 uses `react-router-dom` v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6) | Yes | ✅ Yes |
 | [Strapi 5 uses `koa-body` v6](/dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6) | Yes | No |
 | [Webpack aliases are removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed) | Yes | No |
 | [Apollo Server v3 upgraded to Apollo Server v4](/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4) | Yes | No |

@@ -13,7 +13,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
+import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Strapi users `react-router-dom` v6
 
@@ -22,7 +22,7 @@ Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-do
  <Intro />
 
 <YesPlugins />
-<NoCodemods />
+<YesCodemods />
 
 ## Breaking change description
 
@@ -59,4 +59,5 @@ Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-do
 
 ### Manual procedure
 
+This breaking change should be handled by a codemod (see the [full list of 5.0.0 codemods](https://github.com/strapi/strapi/tree/v5/main/packages/utils/upgrade/resources/codemods/5.0.0)).
 Ensure that links added to [settings](/dev-docs/plugins/admin-panel-api#settings-api) or to the [menu](/dev-docs/plugins/admin-panel-api#menu-api) links using the Admin Panel API use relative paths.
