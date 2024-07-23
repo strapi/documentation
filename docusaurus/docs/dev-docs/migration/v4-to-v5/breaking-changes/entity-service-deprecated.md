@@ -68,4 +68,4 @@ The following are the main topics to take into account when using the Document S
 
 ### Migration procedure
 
-The migration is partially handled by a codemod when using the [upgrade tool](/dev-docs/upgrade-tool). The [Entity Service API to Document Service API migration reference](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service) gives additional information about which aspects are handled by the codemod and which use cases require manual migration.
+The migration is partially handled by a codemod when using the [upgrade tool](/dev-docs/upgrade-tool). The [Entity Service API to Document Service API migration reference](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) gives additional information about which aspects are handled by the codemod and which use cases require manual migration.

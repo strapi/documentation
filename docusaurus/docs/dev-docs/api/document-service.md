@@ -18,7 +18,7 @@ With the Document Service API, you can also [count](#count) documents and, if [D
 
 :::strapi Entity Service API is deprecated in Strapi 5
 <!-- TODO: update this link to start with docs-v4 once stable is out -->
-The Document Service API is meant to replace the Entity Service API used in Strapi v4 ([see Strapi v4 documentation](https://docs.strapi.io/dev-docs/api/entity-service)). Additional information on how to transition away from the Entity Service API to the Document Service API can be found in the related [migration reference](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service).
+The Document Service API is meant to replace the Entity Service API used in Strapi v4 ([see Strapi v4 documentation](https://docs.strapi.io/dev-docs/api/entity-service)). Additional information on how to transition away from the Entity Service API to the Document Service API can be found in the related [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
 :::
 
 :::note

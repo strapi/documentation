@@ -110,7 +110,7 @@ export default {
         },
         {
           label: 'Upgrade to Strapi 5',
-          to: '/dev-docs/migration/v4-to-v5/introduction',
+          to: '/dev-docs/migration/v4-to-v5/introduction-and-faq',
         },
       ],
     },

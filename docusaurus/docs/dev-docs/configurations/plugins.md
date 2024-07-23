@@ -96,7 +96,7 @@ export default ({ env }) => ({
 If no specific configuration is required, a plugin can also be declared with the shorthand syntax `'plugin-name': true`.
 :::
 
-## GraphQL configuration
+## GraphQL configuration {#graphql}
 
 The [GraphQL plugin](/dev-docs/plugins/graphql) has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
 
@@ -161,7 +161,7 @@ export default () => ({
 
 </Tabs>
 
-## Upload configuration
+## Upload configuration {#upload}
 
 The [Upload plugin](/dev-docs/plugins/upload) handles the [Media Library](/user-docs/media-library). When using the default upload provider, the following specific configuration options can be declared in an `upload.config` object within the `config/plugins` file. All parameters are optional:
 

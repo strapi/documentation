@@ -116,4 +116,4 @@ To update your custom code:
 1. Find all calls to `createCoreService` with customization.
 2. If any of `findOne, delete, update` function for a collection type are extending core methods, update them as explained in the [notes](#notes).
 
-Additionally, please refer to the [Entity Service API to Document Service API migration](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service) documentation.
+Additionally, please refer to the [Entity Service API to Document Service API migration](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) documentation.
