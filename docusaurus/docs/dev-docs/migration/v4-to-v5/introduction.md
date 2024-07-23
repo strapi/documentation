@@ -81,7 +81,9 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
 
 ## Check and handle manual upgrades
 
-The following main changes might affect your Strapi application and require you to do some manual actions:
+The following main changes might affect your Strapi application and require you to do some manual actions.
+
+For each of them, read the indicated breaking change entry and check if some manual actions are still required after the upgrade tool has run:
 
 1. **Database migration**:
     1. MySQL v5 is not supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
