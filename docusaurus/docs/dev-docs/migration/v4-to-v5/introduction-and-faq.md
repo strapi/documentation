@@ -2,8 +2,6 @@
 title: Upgrading to Strapi 5 - Introduction and FAQ
 description: Learn more about how to upgrade to Strapi 5
 tags:
-- breaking changes
-- upgrade tool
 - upgrade to Strapi 5
 ---
 
