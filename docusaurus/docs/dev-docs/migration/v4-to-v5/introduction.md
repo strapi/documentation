@@ -36,6 +36,7 @@ Your Strapi v4 application is already running on the latest v4 minor and patch v
 3. **Ensure the plugins you are using are compatible with Strapi 5** before migrating.
 
   To do so, list the plugins you are using and check compatibily for each of them on their [Marketplace](https://market.strapi.io/plugins) page.
+  <!-- TODO: once we have a direct link to Strapi 5-compatible plugins, use it here and update instructions -->
 
 ## Step 2: Run automated migrations
 
