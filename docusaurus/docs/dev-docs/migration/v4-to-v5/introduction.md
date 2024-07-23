@@ -19,122 +19,99 @@ The latest major version of Strapi is Strapi 5, which is currently provided as a
 
 <DoNotMigrateYet />
 
-The present page is meant to be used as an entry point to guide you through the whole upgrade process from Strapi v4 to Strapi 5, and helps you:
+The present page is meant to be used as an entry point to guide you through the whole upgrade process from Strapi v4 to Strapi 5.
 
-- handle the most [common use cases](#common-use-cases),
-- and access [additional resources](#additional-resources) such as the full list of breaking changes and dedicated upgrade resources for specific topics.
-
-:::caution
-Always backup your database before trying any migration.
+:::prerequisites
+Your Strapi v4 application is already running on the latest v4 minor and patch version. If it's not, run the upgrade tool with the `minor` command to reach it: `npx @strapi/upgrade minor`.
 :::
 
-## Common use cases
+## Get ready to migrate
 
-The following questions and their answers should help you cover most common use cases. If your Strapi code is deeply customized or if you have specific needs, you might also need to look at [additional resources](#additional-resources).
+1. **Backup your database**.
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>How can I handle the upgrade and the installation of the latest dependencies? How can I handle the breaking changes in the code and adapt my code to Strapi 5?</summary>
+  Your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
+2. **Backup your code**:
+    * If your code is versioned with git, create a new dedicated branch to run the migration.
+    * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
+3. **Ensure the plugins you are using are compatible with Strapi 5** before migrating.
 
-Strapi provides a tool, the [upgrade tool](/dev-docs/upgrade-tool). The upgrade tool is a command line tool with some commands allows to handle the upgrade of the dependencies and the execution of **codemods** <Codemods/>.
+  To do so, list the plugins you are using and check compatibily for each of them on their [Marketplace](https://market.strapi.io/plugins) page.
 
-The steps to execute slightly differ depending on whether your Strapi application is already running the latest minor and patch version of Strapi v4 or if it is still running on an older version.
+## Run automated migrations
 
-<details>
-<summary>How to find my current Strapi version number?</summary>
+Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [upgrade tool](/dev-docs/upgrade-tool).
 
-You can find the current version number of your Strapi application:
+1. **Run the upgrade tool**.  
 
-- either in the admin panel, by going to _Settings > Global Settings > Overview_ and looking at the Strapi version number printed in the Details section:
+  ```sh
+  npx @strapi/upgrade major
+  ```
 
-  <ThemedImage
-    alt="Finding your Strapi version number in the admin panel"
-    sources={{
-      light: '/img/assets/migration/strapi-version-number.png',
-      dark: '/img/assets/migration/strapi-version-number_DARK.png'
-    }}
-  />
+  <details>
+  <summary>⚠️ Upgrading while Strapi 5 is in RC:</summary>
+  <p><strong>Warning</strong>: It is not recommended to migrate a production-level project to Strapi 5 before the release of the stable version. Migrate to Strapi 5 release candidate (RC) at your own risk.</p>
 
-- or by running `yarn strapi version` or `npm run strapi version` in the terminal, from the folder where your Strapi project is located.
+  As long as Strapi 5 is available as a RC, the proper command to upgrade is different and depends on the RC version you want to reach. For instance, to reach Strapi 5.0.0-rc.5, the command is:
 
-</details>
+  ```sh
+  npx @strapi/upgrade@rc to 5.0.0-rc.5 -c 5.0.0
+  ```
 
-The latest version number of Strapi v4 that was released by the Strapi core team can be found on [npm](https://www.npmjs.com/package/@strapi/strapi) or on [GitHub](https://github.com/strapi/strapi/releases).
+  </details>
 
-<Tabs>
-<TabItem value="major" label="Already running the latest minor version">
+  The command will execute the update and installation of the dependencies of Strapi 5, and run the codemods to handle some of the breaking changes that come with Strapi 5.
 
-1. Run the upgrade tool with the `major` command to reach Strapi 5.0.0:
+  The codemods will handle the following changes:
 
-    ```sh
-    npx @strapi/upgrade major
-    ```
+  | Codemod name and GitHub code link | Description |
+  |-----------------------------------|-------------|
+  | [dependency-remove-strapi-plugin-i18n](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/dependency-remove-strapi-plugin-i18n.json.ts) | Remove the i18n plugin dependency as i18n is now integrated into the core of Strapi                               |
+  | [dependency-upgrade-react-router-dom](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-router-dom.json.ts)  | Upgrade the react-router-dom dependency                                                                            |
+  | [dependency-upgrade-styled-components](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-styled-components.json.ts)  | Upgrade the styled-components dependency                                                                           |
+  | [entity-service-document-service](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/entity-service-document-service.code.ts)            | Partly handle the migration from the Entity Service API to the new Document Service API                            |
+  | [s3-keys-wrapped-in-credentials](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/s3-keys-wrapped-in-credentials.code.ts)            | Wrap the `accessKeyId` and `secretAccessKey` properties inside a `credentials` object for users using the `aws-s3` provider |
+  | [sqlite3-to-better-sqlite3](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/sqlite3-to-better-sqlite3.json.ts)                      | Update the sqlite dependency to better-sqlite3                                                                     |
+  | [strapi-public-interface](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/strapi-public-interface.code.ts)                          | Transform `@strapi/strapi` imports to use the new public interface                                                 |
+  | [use-uid-for-config-namespace](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts)                | Replace string dot format for config get/set/has with uid format for 'plugin' and 'api' namespace where possiblenamespace                                                                                       |
+  | [utils-public-interface](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/utils-public-interface.code.ts)                            | Update utils to use the new public interface                                                                       |
 
-   <TempUpgradeRCtag />
+2. Go over the changes made by the upgrade tool to **check if you have to manually complete some code updates**.
 
-    The command will execute:
-    * the update and installation of the dependencies of Strapi 5,
-    * and the codemods provided to handle the breaking changes that come with Strapi 5.
+  Look for `__TODO__` automatically added to your code by the codemods.
 
-2. Run the application with `yarn develop` or `npm run develop` to adapt the database to the latest breaking changes.
+## Check and handle manual upgrades
 
-3. Test the results of the automatic upgrade and check how your application upgraded to Strapi 5 behaves. You might need to use [additional resources](#additional-resources) to have a fully-working Strapi 5 application.
+The following main changes might affect your Strapi application and require you to do some manual actions:
 
-</TabItem>
-<TabItem value="minor" label="Running an older minor version">
+1. **Database migration**:
+    1. MySQL v5 is not supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
+    2. Only better-sqlite3 is supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
+    3. Only mysql2 is supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql)
+    4. Lifecycle hooks are triggered differently 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service)
+2. **Configuration**:
+    1. Some environment variables are handled by the server configuration 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
+    2. Custom configuration must meet specific requirements 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
+3. **Admin panel customization**:
+    * The helper-plugin has been deprecated 👉 see [migration reference](/dev-docs/migration/v4-to-v5/guides/helper-plugin)
 
-1. Run the upgrade tool with the `minor` command to reach the latest minor and patch version of Strapi v4:
+👉 Finally, go over the rest of the [breaking changes database](https://docs-next.strapi.io/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 
-    ```sh
-    npx @strapi/upgrade minor
-    ```
+## Migrate the API consuming side
 
-   <TempUpgradeRCtag />
+Strapi 5 has updated both the REST and GraphQL APIs.
 
-2. Run the upgrade tool with the `major` command to reach Strapi 5.0.0:
+The following sections will guide you through gradually moving from Strapi v4 to Strapi 5, with the help of retro-compatibility flags and guided migration resources.
 
-    ```sh
-    npx @strapi/upgrade major
-    ```
+### Migrate REST API calls
 
-    The command will execute:
-    * the update and installation of the dependencies of Strapi 5,
-    * and the codemods provided to handle the breaking changes that come with Strapi 5.
+1. Enable the retro-compatibility flag by setting the `Strapi-Response-Format: v4` header.
+2. Update your queries & mutations only, guided by the dedicated [breaking change entry for REST API](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format).
+3. Validate that your client is running correctly.
+4. Disable the retro-compatibiliy flag by removing the `Strapi-Response-Format: v4` header and start using the new response format.
 
-   <TempUpgradeRCtag />
+### Migrate GraphQL API calls
 
-3. Run the application with `yarn develop` or `npm run develop` to adapt the database to the latest breaking changes.
-
-4. Test the results of the automatic upgrade and check how your application upgraded to Strapi 5 behaves. You might need to use [additional resources](#additional-resources) to have a fully-working Strapi 5 application.
-
-</TabItem>
-</Tabs>
-
-</details>
-
-<details style={detailsStyle}>
-<summary style={summaryStyle}>How can I handle the data migration, ensuring that in Strapi 5 the application will still be working?</summary>
-Strapi 5 integrates a data migration script that is run once the application starts for the first time in Strapi 5.
-</details>
-
-<details style={detailsStyle}>
-<summary style={summaryStyle}>As a Strapi Cloud customer, how can I handle the entire upgrade and deployment of my Strapi 5 application?</summary>
-
-:::danger Warning: Don't push a Strapi 5 project to Strapi Cloud yet
-Strapi Cloud is still running on Strapi v4. The following process is provided as an indication of what will happen when Strapi 5 is released as a stable version. Do not try to push your Strapi 5 beta or  Release Candidate (RC) project to Strapi Cloud yet.
-:::
-
-1. Update your code locally, automatically with the [upgrade tool](/dev-docs/upgrade-tool) or manually when the fully automatic upgrade is not possible. If you need to manually update your code, be sure to read the [breaking changes list](/dev-docs/migration/v4-to-v5/breaking-changes) and [specific upgrade resources](/dev-docs/migration/v4-to-v5/guides/introduction).
-2. Run the `yarn deploy` or `npm run deploy` commands from the [Cloud CLI](https://docs.strapi.io/cloud/cli/cloud-cli).<br/>(⚠️ *This command is currently only available to push Strapi v4 projects to Strapi Cloud. The current link to Cloud CLI documentation points to Strapi v4 stable documentation, not to Strapi 5 RC documentation.*)
-
-Strapi Cloud will deploy the updated code in Strapi 5 and will automatically run the data migration script.
-
-</details>
-
-## Additional resources
-
-The following additional resources will help you upgrade your application and plugins if you have customized your Strapi v4 code in ways that make the automatic upgrade to Strapi 5 not 100% possible:
-
-<CustomDocCardsWrapper>
-<CustomDocCard emoji="" title="Breaking changes list" description="Read more about the differences between Strapi v4 and v5 and the resulting breaking changes." link="/dev-docs/migration/v4-to-v5/breaking-changes" />
-<CustomDocCard emoji="" title="Specific upgrade resources" description="Handle specific use cases: Plugins migration, helper-plugin deprecation, Entity Service API deprecation." link="/dev-docs/migration/v4-to-v5/guides/introduction" />
-</CustomDocCardsWrapper>
+1. Enable the retro-compatibility flag by setting `v4ComptabilityMode` to `true` in the `graphl.config` object of [the `/config/plugins.js|ts` file](/dev-docs/configurations/plugins#graphql).
+2. Update your queries and mutations only, guided by the dedicated [breaking change entry for GraphQL](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated).
+3. Validate that your client is running correctly.
+4. Disable the retro-compatibily flag by setting `v4ComptabilityMode` to `true` and start using the new response format.
