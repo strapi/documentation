@@ -31,7 +31,7 @@ Before getting into the upgrade process itself, take the following precautions:
 
 1. **Backup your database**.
 
-  Your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
+  If you are using SQLite, your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
 2. **Backup your code**:
     * If your code is versioned with git, create a new dedicated branch to run the migration.
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.

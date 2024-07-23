@@ -49,7 +49,7 @@ Strapi 5 docs also provide a [complete breaking changes database](/dev-docs/migr
 <details style={detailsStyle}>
 <summary style={summaryStyle}>How can I handle the data migration, ensuring that in Strapi 5 the application will still be working?</summary>
 <p>Strapi 5 integrates a data migration script that is run once the application starts for the first time in Strapi 5.</p>
-<p>However, please <strong>always backup your database file</strong> (found at <code style={codeStyle}>.tmp/data.db</code>) before performing any upgrade, as instructed in the <a href="/dev-docs/migration/v4-to-v5/step-by-step">step-by-step guide</a>.</p>
+<p>However, please <strong>always backup your database file</strong> (found at <code style={codeStyle}>.tmp/data.db</code> by default if using a SQL database) before performing any upgrade, as instructed in the <a href="/dev-docs/migration/v4-to-v5/step-by-step">step-by-step guide</a>.</p>
 </details>
 
 <details style={detailsStyle}>
