@@ -1081,11 +1081,11 @@ const sidebars = {
           label: "Introduction",
           id: "dev-docs/migration/v4-to-v5/introduction"
         },
-        'dev-docs/upgrade-tool',
         {
           type: "category",
           label: "Breaking changes",
-          collapsed: true,
+          collapsible: true,
+          // collapsed: false,
           link: {
             type: "doc",
             id: "dev-docs/migration/v4-to-v5/breaking-changes",
@@ -1094,133 +1094,44 @@ const sidebars = {
             {
               type: "doc",
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
-              label: 'Index',
+              label: 'Complete list',
             },
             {
-              type: "category",
-              collapsed: false,
-              label: "Configuration",
-              link: {
-                type: 'doc',
-                id: "dev-docs/migration/v4-to-v5/breaking-changes"
-              },
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options',
-                'dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files',
-                {
-                  type: 'doc',
-                  label: 'Server log level is `http`',
-                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level',
-                },
-                {
-                  type: 'doc',
-                  label: 'Model config path uses uid',
-                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid',
-                },
-                'dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations',
-                'dev-docs/migration/v4-to-v5/breaking-changes/default-index-removed',
-                'dev-docs/migration/v4-to-v5/breaking-changes/server-proxy',
-              ]
-            },
-            {
-              type: "category",
-              collapsed: false,
-              label: "Content API",
-              link: {
-                type: 'doc',
-                id: "dev-docs/migration/v4-to-v5/breaking-changes"
-              },
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/new-response-format',
-                'dev-docs/migration/v4-to-v5/breaking-changes/use-document-id',
-                'dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed',
-                'dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id',
-                'dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service',
-                'dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field',
-                'dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved',
-                // 'dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id', // not implemented yet
-                'dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated',
-                'dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated',
-                'dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation',
-                'dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service',
-              ]
-            },
-            {
-              type: "category",
+              type: "link",
               label: "Database",
-              collapsed: false,
-              link: {
-                type: 'doc',
-                id: "dev-docs/migration/v4-to-v5/breaking-changes"
-              },
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported',
-                'dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened',
-                'dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite',
-                'dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql',
-              ]
+              href: "/dev-docs/migration/v4-to-v5/breaking-changes#database",
             },
             {
-              type: "category",
-              collapsed: false,
-              label: "Plugins, providers, and admin panel customization",
-              link: {
-                type: 'doc',
-                id: "dev-docs/migration/v4-to-v5/breaking-changes"
-              },
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields',
-                'dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated',
-                'dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component',
-                'dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables',
-                'dev-docs/migration/v4-to-v5/breaking-changes/license-only',
-              ]
-            },
-            {
-              type: "category",
-              label: "Strapi objects, methods, packages, and back-end cutomization",
-              collapsed: false,
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/fetch',
-                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports',
-                'dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed',
-                'dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored',
-                // 'dev-docs/migration/v4-to-v5/breaking-changes/strapi-container', // might change
-                'dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service',
-                'dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale',
-              ]
-            },
-            {
-              type: "category",
-              label: "Content Manager",
-              collapsed: false,
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state',
-                'dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten',
-                'dev-docs/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated',
-              ],
-            },
-            {
-              type: "category",
+              type: "link",
               label: "Dependencies",
-              collapsed: false,
-              items: [
-                'dev-docs/migration/v4-to-v5/breaking-changes/vite',
-                'dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6',
-                {
-                  type: 'doc',
-                  label: 'Webpack Aliases Removed',
-                  id: 'dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed',
-                },
-                'dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6',
-                'dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4',
-              ]
+              href: "/dev-docs/migration/v4-to-v5/breaking-changes#dependencies",
+            },
+            {
+              type: "link",
+              label: "Configuration",
+              href: "/dev-docs/migration/v4-to-v5/breaking-changes#configuration",
+            },
+            {
+              type: "link",
+              label: "Strapi objects, methods, packages, and back-end cutomization",
+              href: "/dev-docs/migration/v4-to-v5/breaking-changes#strapi-objects-methods-packages-and-back-end-customization",
+            },
+            {
+              type: "link",
+              label: "Plugins, providers, and admin panel customization",
+              href: "/dev-docs/migration/v4-to-v5/breaking-changes#plugins-providers-and-admin-panel-customization",
+            },
+            {
+              type: "link",
+              label: "Content API",
+              href: "/dev-docs/migration/v4-to-v5/breaking-changes#content-api",
             },
           ]
         },
         {
           type: 'category',
           label: 'Specific resources',
+          collapsed: false,
           link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/guides/introduction' },
           items: [
             'dev-docs/migration/v4-to-v5/guides/introduction',
