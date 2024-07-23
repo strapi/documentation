@@ -27,15 +27,17 @@ Your Strapi v4 application is already running on the latest v4 minor and patch v
 
 ## Step 1: Get ready to upgrade
 
+Before getting into the upgrade process itself, take the following precautions:
+
 1. **Backup your database**.
 
   Your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
 2. **Backup your code**:
     * If your code is versioned with git, create a new dedicated branch to run the migration.
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
-3. **Ensure the plugins you are using are compatible with Strapi 5** before migrating.
+3. **Ensure the plugins you are using are compatible with Strapi 5**.
 
-  To do so, list the plugins you are using and check compatibily for each of them on their [Marketplace](https://market.strapi.io/plugins) page.
+  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the [Marketplace](https://market.strapi.io/plugins) website.
   <!-- TODO: once we have a direct link to Strapi 5-compatible plugins, use it here and update instructions -->
 
 ## Step 2: Run automated migrations
