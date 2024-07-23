@@ -51,10 +51,10 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
   <summary>⚠️ Upgrading while Strapi 5 is in RC:</summary>
   <p><strong>Warning</strong>: It is not recommended to migrate a production-level project to Strapi 5 before the release of the stable version. Migrate to Strapi 5 release candidate (RC) at your own risk.</p>
 
-  As long as Strapi 5 is available as a RC, the proper command to upgrade is different and depends on the RC version you want to reach. For instance, to reach Strapi 5.0.0-rc.5, the command is:
+  As long as Strapi 5 is available as a RC, the proper command to upgrade is different and depends on the RC version you want to reach. For instance, to reach Strapi 5.0.0-rc.6, the command is:
 
   ```sh
-  npx @strapi/upgrade@rc to 5.0.0-rc.5 -c 5.0.0
+  npx @strapi/upgrade@rc to 5.0.0-rc.6 -c 5.0.0
   ```
 
   </details>
