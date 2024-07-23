@@ -25,7 +25,7 @@ The present page is meant to be used as an entry point to guide you through the 
 Your Strapi v4 application is already running on the latest v4 minor and patch version. If it's not, run the upgrade tool with the `minor` command to reach it: `npx @strapi/upgrade minor`.
 :::
 
-## Get ready to migrate
+## Step 1: Get ready to upgrade
 
 1. **Backup your database**.
 
@@ -37,7 +37,7 @@ Your Strapi v4 application is already running on the latest v4 minor and patch v
 
   To do so, list the plugins you are using and check compatibily for each of them on their [Marketplace](https://market.strapi.io/plugins) page.
 
-## Run automated migrations
+## Step 2: Run automated migrations
 
 Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [upgrade tool](/dev-docs/upgrade-tool).
 
@@ -75,11 +75,11 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
   | [use-uid-for-config-namespace](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts)                | Replace string dot format for config get/set/has with uid format for 'plugin' and 'api' namespace where possiblenamespace                                                                                       |
   | [utils-public-interface](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/utils-public-interface.code.ts)                            | Update utils to use the new public interface                                                                       |
 
-2. Go over the changes made by the upgrade tool to **check if you have to manually complete some code updates**.
+2. Go over the changes made by the upgrade tool to **check if you have to manually complete some code updates**:
 
   Look for `__TODO__` automatically added to your code by the codemods.
 
-## Check and handle manual upgrades
+## Step 3: Check and handle manual upgrades
 
 The following main changes might affect your Strapi application and require you to do some manual actions.
 
@@ -96,13 +96,13 @@ For each of them, read the indicated breaking change entry and check if some man
 3. **Admin panel customization**:
     * The helper-plugin has been deprecated 👉 see [migration reference](/dev-docs/migration/v4-to-v5/guides/helper-plugin)
 
-👉 Finally, go over the rest of the [breaking changes database](https://docs-next.strapi.io/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
+👉 Finally, go over the rest of the [breaking changes database](/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 
-## Migrate the API consuming side
+## Step 4: Migrate the API consuming side
 
 Strapi 5 has updated both the REST and GraphQL APIs.
 
-The following sections will guide you through gradually moving from Strapi v4 to Strapi 5, with the help of retro-compatibility flags and guided migration resources.
+Follow the steps below and leverage retro-compatibility flags and guided migration resources to gradually update your code for Strapi 5.
 
 ### Migrate REST API calls
 
