@@ -23,7 +23,7 @@ Strapi 5 RC (Release Candidate) brings many new features and improvements, and t
 
 🦾 A whole new CLI [upgrade tool](/dev-docs/upgrade-tool) will soon help you migrate to any patch, minor, and major version of Strapi, automating most of the common tasks through codemods.
 
-👷 Also, we have some resources ready to help you [upgrade to Strapi 5](/dev-docs/migration/v4-to-v5/introduction), including a list of [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) and [additional migration resources](/dev-docs/migration/v4-to-v5/guides/introduction) to read for when you will consider migrating to Strapi 5. _But please don't migrate your *production* project before Strapi 5 is released as a stable version!_ 🙏. 
+👷 Also, we have some resources ready to help you [upgrade to Strapi 5](/dev-docs/migration/v4-to-v5/introduction-and-faq), including a list of [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) and [additional migration resources](/dev-docs/migration/v4-to-v5/additional-resources/introduction) to read for when you will consider migrating to Strapi 5. _But please don't migrate your *production* project before Strapi 5 is released as a stable version!_ 🙏. 
 
 👀 There might be much more: new or updated pages are identified in the table of contents with <ThemedImage alt="new badge" sources={{light:'/img/assets/new-badge.png', dark:'/img/assets/new-badge_DARK.png'}} /> or <ThemedImage alt="updated badge" sources={{light:'/img/assets/updated-badge.png', dark:'/img/assets/updated-badge_DARK.png'}} /> badges.
 

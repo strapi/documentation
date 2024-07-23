@@ -46,5 +46,5 @@ You can find the current version number of your Strapi application:
 
 Click on one of the 2 following cards depending on your use case:
 
-<CustomDocCard emoji="4️⃣" title="I'm running Strapi v4 and want to upgrade to Strapi 5." description="All you need to know to upgrade to Strapi 5, the latest major version of Strapi." link="/dev-docs/migration/v4-to-v5/introduction" />
+<CustomDocCard emoji="4️⃣" title="I'm running Strapi v4 and want to upgrade to Strapi 5." description="All you need to know to upgrade to Strapi 5, the latest major version of Strapi." link="/dev-docs/migration/v4-to-v5/introduction-and-faq" />
 <CustomDocCard emoji="5️⃣" title="I'm already running Strapi 5 and want to upgrade to the latest version." description="All you need to know to use the automatic upgrade tool, which upgrades both from Strapi v4 to Strapi 5 or to an existing Strapi 5.x.x version to a more recent one." link="/dev-docs/upgrade-tool" />

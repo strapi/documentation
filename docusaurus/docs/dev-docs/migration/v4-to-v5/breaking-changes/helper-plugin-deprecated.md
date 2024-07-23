@@ -47,4 +47,4 @@ The `helper-plugin` is deprecated.
 
 ## Migration
 
-Users should follow information found in the  extensive [migration guide](/dev-docs/migration/v4-to-v5/guides/helper-plugin).
+Users should follow information found in the  extensive [migration guide](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin).

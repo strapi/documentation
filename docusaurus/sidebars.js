@@ -555,14 +555,19 @@ const sidebars = {
           collapsed: false,
           link: {
             type: 'doc',
-            id: 'dev-docs/migration/v4-to-v5/introduction'
+            id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
           },
           label: 'Upgrade to Strapi 5',
           items: [
             {
               type: 'doc',
-              label: 'Introduction',
-              id: 'dev-docs/migration/v4-to-v5/introduction'
+              label: 'Introduction and FAQ',
+              id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+            },
+            {
+              type: 'doc',
+              label: 'Step-by-step guide',
+              id: 'dev-docs/migration/v4-to-v5/step-by-step'
             },
             {
               type: 'doc',
@@ -572,20 +577,20 @@ const sidebars = {
             {
               type: 'category',
               collapsed: true,
-              label: 'Additional guides',
+              label: 'Specific resources',
               link: {
                 type: 'doc',
-                id: 'dev-docs/migration/v4-to-v5/guides/introduction'
+                id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction'
               },
               items: [
                 {
                   type: 'doc',
                   label: 'Introduction to migration guides',
-                  id: 'dev-docs/migration/v4-to-v5/introduction'
+                  id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
                 },
-                'dev-docs/migration/v4-to-v5/guides/plugins-migration',
-                'dev-docs/migration/v4-to-v5/guides/helper-plugin',
-                'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
+                'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
+                'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
+                'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
               ],
             },
           ]
@@ -1069,7 +1074,7 @@ const sidebars = {
       collapsed: false,
       link: {
         type: 'doc',
-        id: 'dev-docs/migration/v4-to-v5/introduction'
+        id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
       },
       label: 'Upgrade to Strapi 5',
       customProps: {
@@ -1078,14 +1083,23 @@ const sidebars = {
       items: [
         {
           type: "doc",
-          label: "Introduction",
-          id: "dev-docs/migration/v4-to-v5/introduction"
+          label: "Introduction and FAQ",
+          id: "dev-docs/migration/v4-to-v5/introduction-and-faq"
+        },
+        {
+          type: "doc",
+          label: "Step-by-step guide",
+          id: "dev-docs/migration/v4-to-v5/step-by-step"
+        },
+        {
+          type: "doc",
+          label: "Upgrade tool reference",
+          id: 'dev-docs/upgrade-tool',
         },
         {
           type: "category",
           label: "Breaking changes",
-          collapsible: true,
-          // collapsed: false,
+          collapsed: false,
           link: {
             type: "doc",
             id: "dev-docs/migration/v4-to-v5/breaking-changes",
@@ -1132,12 +1146,12 @@ const sidebars = {
           type: 'category',
           label: 'Specific resources',
           collapsed: false,
-          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/guides/introduction' },
+          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction' },
           items: [
-            'dev-docs/migration/v4-to-v5/guides/introduction',
-            'dev-docs/migration/v4-to-v5/guides/plugins-migration',
-            'dev-docs/migration/v4-to-v5/guides/helper-plugin',
-            'dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service',
+            'dev-docs/migration/v4-to-v5/additional-resources/introduction',
+            'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
+            'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
+            'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
           ]
         }
       ]

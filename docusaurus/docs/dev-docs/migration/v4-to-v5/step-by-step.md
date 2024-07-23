@@ -13,13 +13,13 @@ import TempUpgradeRCtag from '/docs/snippets/temp-upgrade-rc.md'
 const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
 const summaryStyle = {fontSize: '18px'}
 
-# Upgrading from Strapi v4 to Strapi 5
+# Step-by-step guide to upgrade to Strapi 5
 
 The latest major version of Strapi is Strapi 5, which is currently provided as a Release Candidate (RC) version, not as a stable version yet.
 
 <DoNotMigrateYet />
 
-The present page is meant to be used as an entry point to guide you through the whole upgrade process from Strapi v4 to Strapi 5.
+The present page is meant to be used as step-by-step instructions for upgrading your Strapi v4 application to Strapi 5.
 
 :::prerequisites
 Your Strapi v4 application is already running on the latest v4 minor and patch version. If it's not, run the upgrade tool with the `minor` command to reach it: `npx @strapi/upgrade minor`.
@@ -97,7 +97,7 @@ For each of them, read the indicated breaking change entry and check if some man
     1. Some environment variables are handled by the server configuration 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
     2. Custom configuration must meet specific requirements 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 3. **Admin panel customization**:
-    * The helper-plugin has been deprecated 👉 see [migration reference](/dev-docs/migration/v4-to-v5/guides/helper-plugin)
+    * The helper-plugin has been deprecated 👉 see [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin)
 
 👉 Finally, go over the rest of the [breaking changes database](/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 

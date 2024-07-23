@@ -66,4 +66,4 @@ There are no fallbacks to return by default the published version, and return th
 ### Migration procedure
 
 * API calls initiated from the front end (REST API, GraphQL API) that used `publicationState` need to be manually updated.
-* If `publicationState` is used in your custom back-end code with the Entity Service API in Strapi v4, a codemod will automatically handle the change for Strapi 5 (see [Entity Service to Document Service migration reference](/dev-docs/migration/v4-to-v5/guides/from-entity-service-to-document-service) for additional details).
+* If `publicationState` is used in your custom back-end code with the Entity Service API in Strapi v4, a codemod will automatically handle the change for Strapi 5 (see [Entity Service to Document Service migration reference](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) for additional details).
