@@ -3,9 +3,10 @@ title: Migrating from Strapi v4 to v5
 # description: todo
 unlisted: true
 tags:
-- breaking changes
-- upgrade tool
 - upgrade to Strapi 5
+- upgrade tool
+- breaking changes
+- guides
 ---
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
