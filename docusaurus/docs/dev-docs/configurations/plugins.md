@@ -111,6 +111,7 @@ The [GraphQL plugin](/dev-docs/plugins/graphql) has the following specific confi
 | `maxLimit`         | Maximum value for [the `pagination[limit]` parameter](/dev-docs/api/graphql#pagination-by-offset) used in API calls                                                                                                              | Integer  | `-1`    |
 | `playgroundAlways` | Whether the playground should be publicly exposed.<br/><br/>Enabled by default in if `NODE_ENV` is set to `development`.                                        | Boolean | `false`  |
 | `shadowCRUD`       | Whether type definitions for queries, mutations and resolvers based on models should be created automatically (see [Shadow CRUD documentation](/dev-docs/plugins/graphql#shadow-crud)). | Boolean | `true` |
+| `v4ComptabilityMode` | Enables the retro-compatibility with the Strapi v4 format (see more details in the [breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated) | Boolean | `false` |
 
 **Example custom configuration**:
 
