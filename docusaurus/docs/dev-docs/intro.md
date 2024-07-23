@@ -2,6 +2,7 @@
 sidebar_label: 'Introduction'
 displayed_sidebar: devDocsSidebar
 slug: /dev-docs/intro
+pagination_next: dev-docs/setup-deployment
 sidebar_position: 1
 tags:
  - introduction

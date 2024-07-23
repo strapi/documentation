@@ -1,7 +1,6 @@
 ---
-title: Migrating from Strapi v4 to v5
-# description: todo
-unlisted: true
+title: Step-by-step guide to upgrade to Strapi 5
+description: Follow this step-by-step guide to upgrade from Strapi v4 to Strapi 5
 tags:
 - upgrade to Strapi 5
 - upgrade tool

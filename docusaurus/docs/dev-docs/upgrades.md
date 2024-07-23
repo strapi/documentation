@@ -3,6 +3,7 @@ title: Upgrades
 # description: todo
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
+pagination_next: dev-docs/upgrade-tool
 tags:
 - migration
 - upgrades

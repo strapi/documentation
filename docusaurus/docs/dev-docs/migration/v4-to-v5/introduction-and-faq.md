@@ -1,6 +1,8 @@
 ---
 title: Upgrading to Strapi 5 - Introduction and FAQ
 description: Learn more about how to upgrade to Strapi 5
+pagination_prev: dev-docs/upgrades
+pagination_next: dev-docs/migration/v4-to-v5/step-by-step
 tags:
 - upgrade to Strapi 5
 ---

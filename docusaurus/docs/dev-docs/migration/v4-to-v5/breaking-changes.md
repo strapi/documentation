@@ -2,6 +2,8 @@
 title: Breaking changes
 description: View the list of all breaking changes introduced between Strapi v4 and v5.
 displayed_sidebar: devDocsMigrationV5Sidebar
+pagination_prev: dev-docs/migration/v4-to-v5/step-by-step
+pagination_next: dev-docs/migration/v4-to-v5/additional-resources/introduction
 tags:
  - breaking changes
  - upgrade to Strapi 5
