@@ -27,12 +27,12 @@ This documentation contains all technical documentation related to the setup, de
 
 [Strapi Cloud](https://strapi.io/cloud) is a hosting platform that allows you to deploy your Strapi applications in a matter of minutes. It is a fully managed content platform built on top of Strapi, the leading open-source headless CMS.
 
-Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping their development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
+Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
 
 ## What you will find here
 
 :::prerequisites
-The typical workflow, which is recommended by the Strapi team, is the following:
+The typical workflow, which is recommended by the Strapi team, is:
 1. Create your Strapi application locally (v4.8.2 or later).
 2. Optionally, extend the application with plugins or custom code.
 3. Version the application's codebase through your git provider (GitHub or GitLab).
@@ -43,7 +43,7 @@ The Strapi Cloud documentation that you are currently reading is organised in to
 
 <CustomDocCardsWrapper>
   <CustomDocCard emoji="☁️" title="Project creation" description="Step-by-step guide to guide you through the creation and deployment of a Strapi Cloud project." link="/cloud/getting-started/deployment" />
-  <CustomDocCard emoji="💸" title="Usage & Billing" description="All details on Strapi Cloud plans & billing, including overages and project suspension." link="/cloud/getting-started/usage-billing" />
+  <CustomDocCard emoji="💸" title="Information on billing & usage" description="All details on Strapi Cloud plans & billing, including overages and project suspension." link="/cloud/getting-started/usage-billing" />
   <CustomDocCard emoji="🗃️" title="Projects overview" description="Information on how to access Strapi Cloud projects to view their details & usage, and manage them." link="/cloud/projects/overview" />
   <CustomDocCard emoji="⚙️" title="Projects settings" description="Details on all the available settings for Strapi Cloud projects and how to configure them." link="/cloud/projects/settings"/>
   <CustomDocCard emoji="🤝" title="Collaboration" description="Documentation for the Collaboration feature to invite other users to access and manage a project." link="/cloud/projects/collaboration"/>

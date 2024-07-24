@@ -13,80 +13,70 @@ tags:
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
-# Account billing details
+# Account billing & invoices 
 
-<NotV5/>
+<NotV5 />
 
-Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the *Billing* tab.
+Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the [![Billing icon](/img/assets/icons/CreditCard.svg) *Billing*](#account-billing) and [![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices*](#account-invoices) tabs.
 
-The *Billing* tab displays and enables you to modify the billing details and payment method set for the account. This information will by default be reused for every new project created with your Strapi Cloud account.
+## Account billing
 
-:::note
-The Payment method section can only be accessible once the mandatory fields of the Billing details section have been filled in.
-:::
+The ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab displays and enables you to modify the billing details and payment method set for the account.
 
 <ThemedImage
   alt="Billing tab of Profile page"
   sources={{
-    light: '/img/assets/cloud/account-billing2.png',
-    dark: '/img/assets/cloud/account-billing2_DARK.png',
-  }}
-/>
-
-## Managing subscriptions
-
-Using the **Manage subscriptions** button, you can view and manage your subscriptions, account and billing information, and payment method.
-
-1. Click the **Manage subscriptions** button. A login modal will appear. 
-
-2. Enter the billing email address associated with your account and click **Continue**. A one-time password will be sent to the email address.
-
-3. Enter the one-time password and click **Continue**. The **Manage Subscriptions** modal will appear. From here, you can:
-  
-    - view and edit your subscriptions by clicking on the active subscription(s) tile(s): change project name, update shipping details, [edit current subscription](#edit-subscription) and [cancel current subscription](#cancel-subscription)
-    - view and edit your Account Information: email, password, company name
-    - view and edit your Billing & Shipping Addresses
-    - view and edit your Payment Methods and add new ones
-    - access your Billing History and download your invoices
-
-  <ThemedImage
-    alt="Subscriptions management modal"
-    sources={{
-      light: '/img/assets/cloud/manage-subscriptions.png',
-      dark: '/img/assets/cloud/manage-subscriptions_DARK.png',
+      light: '/img/assets/cloud/account-billing2.png',
+      dark: '/img/assets/cloud/account-billing2_DARK.png',
     }}
-  />
-
-## Edit subscription
-
-From the subscription management modal, you can view and modify any current subscription.
-
-<ThemedImage
-  alt="Subscription edition modal"
-  sources={{
-    light: '/img/assets/cloud/edit-subscription-modal.png',
-    dark: '/img/assets/cloud/edit-subscription-modal_DARK.png',
-  }}
 />
 
-1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.00" located above the subscriptions management links such as *Account Information*, *Billing & Shipping Addresses*). You will be redirected to your subscription details.
-2. Click on the **Edit Subscription** link.
-3. If you only want to add addons (e.g. additional seats), click on the **Add Addons** button.
-4. If you want to change plan (e.g. from Pro plan to Team plan), click on **Change** and select a new plan.
-5. Confirm your modifications by clicking on the **Update Subscription** button at the bottom of the modal.
+The *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab allows you to manage the credit cards that can be used for the Strapi Cloud projects. The *Billing details* section requires to be filled in, at least for the mandatory fields, as this information will be the default billing details for all Strapi Cloud projects related to your account.
 
-## Cancel subscription
+### Adding a new credit card
+
+1. In the *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab, click on the **Add card** button.
+2. Fill in the following fields:
+
+| Field name | Description |
+| --- | --- |
+| Card Number | Write the number of the credit card to add as payment method. |
+| Expires | Write the expiration date of the credit card. |
+| CVC | Write the 3-numbers code displayed at the back of the credit card. |
+
+3. Click on the **Save** button.
+
+:::tip
+The first credit card to be added as payment method for the account will by default be the primary one. It is however possible to define another credit card as primary by clicking on the ![Menu icon](/img/assets/icons/more.svg) icon, then **Switch as primary**.
+:::
+
+### Deleting a credit card
+
+To remove a credit card from the list of payment methods for the account:
+
+1. Click on the ![Menu icon](/img/assets/icons/more.svg) icon of the credit card you wish to delete.
+2. Click **Remove card**. The card is immediately deleted.
+
+:::note
+You cannot delete the primary card as at least one credit card must be available as payment method, and the primary card is by default that one. If the credit card you wish to delete is currently the primary card, you must first define another credit card as primary, then delete it.
+:::
+
+## Account invoices
+
+The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the complete list of invoices for all your Strapi Cloud projects.
 
 <ThemedImage
-  alt="Subscription cancellation modal"
+  alt="Invoices tab of Profile page"
   sources={{
-    light: '/img/assets/cloud/cancel-subscription-modal.png',
-    dark: '/img/assets/cloud/cancel-subscription-modal_DARK.png',
-  }}
+      light: '/img/assets/cloud/account-invoices.png',
+      dark: '/img/assets/cloud/account-invoices_DARK.png',
+    }}
 />
 
-1. Click on an active subscription tile (e.g. "Strapi Cloud Pro $99.OO"). You will be redirected to your subscription details.
-2. Click on the **Cancel Subscription** link.
-3. Select the reason of your cancellation from the drop-down menu, and optionally add a comment in the textbox.
-4. Confirm your choice by clicking on the **Confirm Cancellation** button.
+<InvoiceStatus components={props.components} />
+
+:::strapi Invoices are also available per project.
+In the *Settings > Invoices* tab of any project, you will find the invoices for that project only. Feel free to check the [dedicated documentation](/cloud/projects/settings#invoices).
+:::
