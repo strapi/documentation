@@ -91,7 +91,7 @@ You can click on the description of any breaking change in the following tables 
 | [REST API input is validated by default in controllers](/dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation) | Yes | No |
 | [The GraphQL API has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated) | Yes | No |
 | [The Entity Service API is deprecated and replaced by the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated) | Yes | 👷 Partly |
-| [`documentId` should be used instead of `id` in API calls](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id) | Yes | ✅ Yes |
+| [`documentId` should be used instead of `id` in API calls](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id) | Yes | 👷 Partly |
 | [Lifecycle hooks are triggered differently based on Document Service API methods](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | Yes | No |
 | [The `publicationState` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed) | Yes | ✅ Yes |
 | [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id) | Yes | ✅ Yes |
