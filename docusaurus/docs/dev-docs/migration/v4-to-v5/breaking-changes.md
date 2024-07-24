@@ -41,6 +41,7 @@ You can click on the description of any breaking change in the following tables 
 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
+| [The CLI default package manager is not yarn anymore](/dev-docs/migration/v4-to-v5/breaking-changes/yarn-not-default) | No | No |
 | [Vite is the default bundler in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/vite) | Yes | No |
 | [Strapi 5 uses `react-router-dom` v6](/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6) | Yes | ✅ Yes |
 | [Strapi 5 uses `koa-body` v6](/dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6) | Yes | No |
