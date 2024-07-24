@@ -318,7 +318,7 @@ Deep filtering is filtering on a relation's fields.
 :::caution
 
 - Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
-- Deep filtering isn't available for polymorphic relations (e.g., dynamic zones and media fields).
+- Deep filtering isn't available for some polymorphic relations such as media fields, but it works on dynamic zones.
 
 :::
 
