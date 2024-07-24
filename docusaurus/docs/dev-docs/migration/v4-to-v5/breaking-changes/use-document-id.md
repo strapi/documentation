@@ -91,13 +91,12 @@ Documents are identified by their `documentId`:
 
 ## Migration
 
-<MigrationIntro />
-
 ### Notes
 
 This breaking change impacts routes and relations.
 
 ### Migration procedure 
 
-<!-- TODO: to be confirmed -->
-A codemod will automatically handle the change.
+A codemod will partly handle the change, but might probably add `__TODO__` items to your code since it's impossible for the codemod to automatically guess the new `documentId` of your content.
+
+For additional information, please refer to the related [breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated), the [step-by-step guide](/dev-docs/migration/v4-to-v5/step-by-step) to upgrade to Strapi 5, and the dedicated migration guide for the [Entity Service API to Document Service API transition](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) if this applies to your custom code.
