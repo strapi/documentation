@@ -13,7 +13,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
+import PartialCodemods from '/docs/snippets/breaking-change-partially-handled-by-codemod.md'
 
 # `documentId` should be used instead of `id` in Content API calls
 
@@ -22,7 +22,7 @@ In Strapi 5, the underlying API handling content is the [Document Service API](/
 <Intro />
 
 <YesPlugins />
-<YesCodemods />
+<PartialCodemods />
 
 ## Breaking change description
 
