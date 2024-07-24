@@ -12,6 +12,7 @@ tags:
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Project settings
 
