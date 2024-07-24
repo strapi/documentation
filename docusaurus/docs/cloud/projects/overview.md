@@ -68,4 +68,3 @@ From the *Overview* tab, you can:
   - the URL and link to the application
 - view your project's usage (see [Usage](/cloud/getting-started/usage-billing) for more information)
 - view your project's latest deploys (see [Deploys](/cloud/projects/deploys) for more information)
-

@@ -20,15 +20,19 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
-:::caution
-While possible, it is not recommended to use an external database with Strapi Cloud, unless there is an explicit need to do so. This is because Strapi Cloud provides a managed database that is optimized for Strapi. Using an external database may result in unexpected behavior and/or performance issues (e.g., network latency may impact performance). Strapi cannot provide security or support with configuring external databases.
-:::
-
 :::prerequisites
 - A local Strapi project running on `v4.8.2+`.
 - Credentials for external database.
 - If using an existing database, the schema must match the Strapi project schema.
 :::
+
+:::caution
+While it's possible to use an external database with Strapi Cloud, you should do it while keeping in mind the following considerations:
+- Strapi Cloud already provides a managed database that is optimized for Strapi.
+- Using an external database may result in unexpected behavior and/or performance issues (e.g., network latency may impact performance). For performance reasons, it's recommended to host your external database close to the region where your Strapi Cloud project is hosted. You can find where your Strapi Cloud project is hosted in your Project Settings (see [Project Settings > General > Selected Region](/cloud/projects/settings#general)).
+- Strapi can't provide security or support with external databases used with Strapi Cloud.
+:::
+
 
 ## Configuration
 

@@ -16,6 +16,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5/>
 
+
 Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the project dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
 
 Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the project owner, maintainers:
