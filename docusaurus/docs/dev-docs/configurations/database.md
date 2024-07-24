@@ -535,18 +535,16 @@ For deployed versions of your application the database environment variables sho
 
 ## Databases installation guides
 
-Strapi gives you the option to choose the most appropriate database for your project. Strapi supports **PostgreSQL**, **SQLite**, **MySQL** and **MariaDB**.
+Strapi gives you the option to choose the most appropriate database for your project. Strapi supports **PostgreSQL**, **SQLite**, or **MySQL**.
 
 The following documentation covers how to install databases locally:
 
 - [SQLite installation guide](/dev-docs/configurations/sqlite),
-- PostgreSQL (coming soon),
-- MySQL/MariaDB (coming soon).
 
 :::note
 When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
 
-To create a new PostgreSQL user with the SCHEMA permission, use the following steps.
+To create a new PostgreSQL user with the SCHEMA permission, use the following steps:
 
 ```shell
 # Create a new database user with a secure password
