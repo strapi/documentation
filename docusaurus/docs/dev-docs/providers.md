@@ -18,6 +18,10 @@ For the relevant plugins, there are both official providers maintained by Strapi
 
 A provider can be configured to be [private](#creating-private-providers) to ensure asset URLs will be signed for secure access.
 
+:::strapi Providers for Strapi Cloud
+This page describes how providers work for the Strapi CMS (self-hosted version). [Email providers](/cloud/advanced/email) and [upload providers](/cloud/advanced/upload) for Strapi Cloud are described in the Cloud documentation.
+:::
+
 ## Installing providers
 
 New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
@@ -353,6 +357,10 @@ You can review the [Strapi maintained providers](https://github.com/strapi/strap
 After creating your new provider you can [publish it to npm](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages) to share with the community or [use it locally](#local-providers) for your project only.
 
 ### Local providers
+
+:::strapi Providers for Strapi Cloud
+This section describes how providers work for the Strapi CMS (self-hosted version). [Email providers](/cloud/advanced/email) and [upload providers](/cloud/advanced/upload) for Strapi Cloud are described in the Cloud documentation.
+:::
 
 If you want to create your own provider without publishing it on npm you can follow these steps:
 
