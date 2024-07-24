@@ -53,6 +53,7 @@ The [Document Service API](/dev-docs/api/document-service) replaces the Entity S
 The following are the main topics to take into account when using the Document Service API instead of the Entity Service API from Strapi v4:
 
 * The Document Service API expects a `documentId` property.<br/>This breaking change also affects the REST and GraphQL APIs (see [the related entry](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id)).
+  ℹ️  However, to ease the transition to Strapi 5, Document Service API responses still include `id` fields in addition to the new `documentId` fields.
 * The response returned by the `findMany()` function is different in Strapi v4 and Strapi 5:
   - In Strapi v4, the `findMany()` function from the Entity Service API returns a single item for single types.
   - In Strapi 5, the [`findMany()` function from the Document Service API](/dev-docs/api/document-service#findmany) always returns arrays. To get a single item, extract the first item from the returned array, or use [the `findFirst()` function](/dev-docs/api/document-service#findfirst).
