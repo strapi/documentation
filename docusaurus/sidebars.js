@@ -733,7 +733,35 @@ const sidebars = {
         "cloud/getting-started/intro",
         {
           type: "doc",
-          id: "cloud/getting-started/deployment",
+          label: "Cloud fundamentals",
+          id: "cloud/getting-started/cloud-fundamentals",
+          customProps: {
+            new: false,
+          },
+        },
+        {
+          type: "category",
+          label: "Project deployment",
+          link: { type: "doc", id: "cloud/getting-started/deployment-options" },
+          customProps: {
+            updated: false,
+          },
+          items: [
+            {
+              type: "doc",
+              id: "cloud/getting-started/deployment",
+              customProps: {
+                updated: true,
+              },
+            },
+            {
+              type: "doc",
+              id: "cloud/getting-started/deployment-cli",
+              customProps: {
+                new: true,
+              },
+             },
+          ],
         },
         {
           type: "doc",
@@ -760,47 +788,75 @@ const sidebars = {
           type: "doc",
           label: "Project settings",
           id: "cloud/projects/settings",
+          customProps: {
+            updated: true,
+          },
         },
-        'cloud/projects/collaboration',
-        'cloud/projects/runtime-logs',
+        "cloud/projects/collaboration",
+        "cloud/projects/runtime-logs",
       ],
     },
     {
       type: "category",
       collapsed: false,
       label: "Deployments",
-      items: [
-        "cloud/projects/deploys",
-        "cloud/projects/deploys-history",
-      ],
+      items: ["cloud/projects/deploys", "cloud/projects/deploys-history"],
     },
     {
       type: "category",
       collapsed: false,
       label: "Account management",
       items: [
-        'cloud/account/account-settings',
-        'cloud/account/account-billing',
-      ]
+        "cloud/account/account-settings",
+        {
+          type: "doc",
+          id: "cloud/account/account-billing",
+          label: "Account billing & invoices",
+          customProps: {
+            updated: false,
+          },
+        },
+      ],
     },
     {
       type: "category",
       collapsed: false,
-      label: 'Advanced configuration',
+      label: "Command Line Interface",
       items: [
-        'cloud/advanced/database',
+        {
+          type: "doc",
+          id: "cloud/cli/cloud-cli",
+          label: "Strapi Cloud CLI",
+          customProps: {
+            new: true,
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Advanced configuration",
+      items: [
+        "cloud/advanced/database",
         {
           type: "doc",
           id: "cloud/advanced/email",
           label: "Email provider",
+          customProps: {
+            new: false,
+          },
         },
         {
           type: "doc",
           id: "cloud/advanced/upload",
           label: "Upload provider",
+          customProps: {
+            new: false,
+          },
         },
-      ]
-    }
+      ],
+    },
   ],
   restApiSidebar: [
     {
