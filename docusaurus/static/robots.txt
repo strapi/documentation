@@ -4,4 +4,6 @@ Disallow: /nogooglebot/
 User-agent: *
 Allow: /
 
+User-agent: Algolia Crawler
+
 Sitemap: https://docs-next.strapi.io/sitemap.xml
