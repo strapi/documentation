@@ -1,6 +1,15 @@
-/** Component: Search Bar */
+// /** Component: Search Bar */
 
-.search-bar {
-  // TO DO: Customize the styles for Algolia's Search Bar.
-  display: block;
+@media (min-width: 1000px) {
+  // Move Algolia search bar to the left
+  [class*="searchBox_node_modules-@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module"] {
+    position: relative;
+    left: -40px;
+  }
+
+  // Push dark mode toggle to the right
+  [class*="toggle_node_modules-@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module colorModeToggle_node_modules-@docusaurus-theme-classic-lib-theme-Navbar-Content-styles-module"] {
+    position: relative;
+    left: 295px;
+  }
 }
