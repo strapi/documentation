@@ -142,7 +142,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       .kapa-button-label {
         position: relative;
         left: 6px;
-        color: var(--strapi-primary-600);
+        // color: var(--strapi-primary-600);
 
         @media screen and (max-width: 996px){
           left: 12px;
