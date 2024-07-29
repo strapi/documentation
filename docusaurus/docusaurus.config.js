@@ -205,14 +205,14 @@ const config = {
             label: 'Cloud Documentation',
           },
           {
-            type: 'html',
-            value: '<button><span class="kapa-button-label">🔎 Ask AI & Search Docs</span></button>',
-            className: 'navbar__link kapa-widget-button',
+            href: 'https://github.com/strapi/documentation',
+            label: 'GitHub',
             position: 'right',
           },
           {
-            href: 'https://github.com/strapi/documentation',
-            label: 'GitHub',
+            type: 'html',
+            value: '<button><span class="kapa-button-label">💁 Ask AI</span></button>',
+            className: 'navbar__link kapa-widget-button',
             position: 'right',
           },
           // {
