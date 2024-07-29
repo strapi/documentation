@@ -68,6 +68,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     &--active {
       --ifm-font-weight-semibold: 700;
     }
+
+    &:hover {
+      background-color: var(--strapi-neutral-100);
+      color: var(--strapi-primary-600);
+    }
   }
 
   &__link svg,
@@ -135,17 +140,28 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       svg {
         position: relative;
         top: 2px;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
+        fill: var(--strapi-neutral-600)
       }
 
       .kapa-button-label {
         position: relative;
         left: 6px;
-        color: var(--strapi-primary-600);
 
         @media screen and (max-width: 996px){
           left: 12px;
+        }
+      }
+    }
+
+    &:hover {
+      .kapa-button-label {
+        color: var(--strapi-primary-600);
+      }
+      button {
+        svg {
+          fill: var(--strapi-primary-600);
         }
       }
     }
@@ -213,5 +229,16 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --custom-navbar-search-button-width: 266px;
 
     --ifm-navbar-padding-horizontal: var(--custom-navbar-items-gap);
+  }
+}
+
+@include dark {
+  .kapa-widget-button {
+    button {
+      svg {
+        fill: var(--strapi-neutral-800);
+        // fill: var(--custom-navbar-icon-color);
+      }
+    }
   }
 }
