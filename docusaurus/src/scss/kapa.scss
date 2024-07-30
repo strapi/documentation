@@ -56,6 +56,13 @@
     }
   }
 
+  .mantine-Modal-body > .mantine-Modal-body > div:first-of-type > div:first-of-type {
+    background-color: var(--strapi-neutral-150);
+    .mantine-Group-root {
+      background-color: var(--strapi-neutral-150);
+    }
+  }
+
   .mantine-Button-root,
   .mantine-Tooltip-tooltip {
     background-color: black !important;
