@@ -77,7 +77,7 @@ const config = {
       'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
-      'data-modal-open-on-command-k': 'true',
+      // 'data-modal-open-on-command-k': 'true',
       'data-modal-override-open-class': "kapa-widget-button",
       'data-modal-title-ask-ai': 'Ask your question',
       async: true,
