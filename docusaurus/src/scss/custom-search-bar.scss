@@ -54,3 +54,18 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .my-custom-search-bar {
+    .kapa-widget-button-text {
+      display: none;
+    }
+    .kapa-widget-button {
+      border-radius: 50%;
+      padding: 0;
+      margin-right: 4px;
+    }
+  }
+
+
+}
