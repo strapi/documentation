@@ -5,3 +5,53 @@
 .mantine-InputWrapper-root button:hover {
   background-color: #7B79FF;
 }
+
+@include dark {
+  .mantine-Modal-body * {
+    background-color: transparent;
+    color: white;
+  }
+
+  .mantine-Popover-dropdown {
+    background-color: #181826;
+    color: #F6F6F9;
+  }
+
+  .mantine-Modal-body,
+  .mantine-Modal-header,
+  .mantine-Group-root {
+    background-color: #181826;
+    color: #F6F6F9;
+
+    code, span, ol {
+      color: #F6F6F9;
+    }
+
+    code {
+      background-color: black;
+    }
+
+    a {
+      color: var(--strapi-primary-500);
+    }
+
+    pre {
+      border: solid 1px var(--strapi-input-border-color);
+    }
+  }
+
+  .mantine-Modal-body {
+    .mantine-InputWrapper-root {
+      background-color: black;
+      border-radius: 8px;
+      textarea {
+        color: white;
+      }
+    }
+  }
+
+  .mantine-Button-root,
+  .mantine-Tooltip-tooltip {
+    background-color: black !important;
+  }
+}
