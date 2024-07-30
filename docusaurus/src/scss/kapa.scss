@@ -45,7 +45,13 @@
       background-color: black;
       border-radius: 8px;
       textarea {
-        color: white;
+        border-color: var(--strapi-neutral-200);
+        &::placeholder {
+          color: var(--strapi-neutral-300);
+        }
+        &:focus {
+          border-color: var(--strapi-neutral-800);
+        }
       }
     }
   }
