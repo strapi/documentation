@@ -1,0 +1,15 @@
+.custom-search-bar {
+  position: relative;
+  top: 80px;
+  left: 20px;
+  margin-bottom: 30px;
+
+  /** Override the default search bar styles */
+  .DocSearch {
+    &.DocSearch-Button {
+      background-color: var(--strapi-neutral-100);
+      width: 90%;
+      border-radius: 5px;
+    }
+  }
+}
