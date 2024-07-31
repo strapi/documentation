@@ -1,5 +1,4 @@
 .my-custom-search-bar {
-  // background-color: tomato;
   display: flex;
   justify-content: space-evenly;
   border: var(--strapi-input-border);
@@ -71,8 +70,6 @@
 
 @include dark {
   .my-custom-search-bar {
-    // background-color: var(--strapi-dark-800);
-    // background-color: transparent;
     background: var(--strapi-neutral-0);
     border: var(--strapi-input-border);
     color: var(--strapi-dark-100);
