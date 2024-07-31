@@ -14,11 +14,7 @@ tags:
 - Rest API
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Strapi APIs to access your content
-
-<NotV5 />
 
 Once you've created and configured a Strapi project, created a data structure with the [Content-Type Builder](/user-docs/content-type-builder) and started adding data through the [Content Manager](/user-docs/content-manager), you likely would like to access your content.
 
