@@ -165,6 +165,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
     }
   }
+
+  button[class*="ColorModeToggle"]:hover {
+    svg path {
+      fill: var(--strapi-primary-600);
+    }
+  }
 }
 
 /** Responsive */
