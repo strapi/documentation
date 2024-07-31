@@ -93,7 +93,8 @@ Documents are identified by their `documentId`:
 
 ### Notes
 
-This breaking change impacts routes and relations.
+- This breaking change impacts routes and relations.
+- To ease the transition from v4 to Strapi 5, API calls to entries might still include an `id` field in their response, especially with the [Document Service API](/dev-docs/api/document-service). But it's recommended that you start making an habit of using `documentId` instead of `id` as it will ease handling the transition to future Strapi versions.
 
 ### Migration procedure 
 
