@@ -166,8 +166,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
   }
 
-  button[class*="ColorModeToggle"]:hover {
+  /** Color mode toggle hover effect */
+  button[class*="ColorModeToggle"]:hover { // local selector
     svg path {
+      fill: var(--strapi-primary-600);
+    }
+  }
+  div[class*="colorModeToggle"]:hover { // production selector
+    button svg path {
       fill: var(--strapi-primary-600);
     }
   }
