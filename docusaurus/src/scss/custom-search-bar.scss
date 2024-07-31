@@ -4,10 +4,28 @@
   border: var(--strapi-input-border);
   border-radius: 6px;
   background-color: white;
+  position: relative;
+
+  .DocSearch.DocSearch-Button:hover {
+    box-shadow: none;
+  }
+
+  .DocSearch.DocSearch-Button,
+  .kapa-widget-button {
+    &:hover {
+      background-color: var(--strapi-neutral-100);
+    }
+  }
+
 
   .DocSearch.DocSearch-Button {
+    background-color: transparent;
     width: 60%;
     border: none;
+
+    &:hover {
+      border-radius: 6px 0 0 6px;
+    }
   }
 
   .DocSearch-Button-Keys {
@@ -24,7 +42,6 @@
     margin: 0;
     border-radius: 0;
     box-shadow: none;
-    // font: inherit;
     color: inherit;
     text-align: inherit;
     line-height: inherit;
@@ -49,8 +66,7 @@
     }
 
     &:hover {
-      box-shadow: 0 0 0 2px var(--strapi-primary-600);
-      border-radius: 6px;
+      border-radius: 0 6px 6px 0;
     }
   }
 }
