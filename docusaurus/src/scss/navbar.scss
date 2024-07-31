@@ -70,7 +70,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     &:hover {
-      background-color: var(--strapi-neutral-100);
       color: var(--strapi-primary-600);
     }
   }
