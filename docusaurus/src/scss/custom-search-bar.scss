@@ -17,14 +17,22 @@
     }
   }
 
-
   .DocSearch.DocSearch-Button {
     background-color: transparent;
     width: 60%;
     border: none;
 
     &:hover {
+      color: var(--strapi-primary-600);
       border-radius: 6px 0 0 6px;
+
+      svg path {
+        stroke: var(--strapi-primary-500);
+      }
+
+      .DocSearch-Button-Key {
+        color: var(--strapi-primary-600);
+      }
     }
   }
 
@@ -67,6 +75,14 @@
 
     &:hover {
       border-radius: 0 6px 6px 0;
+
+      .kapa-widget-button-text {
+        color: var(--strapi-primary-600);
+      }
+
+      svg {
+        fill: var(--strapi-primary-600);
+      }
     }
   }
 }
