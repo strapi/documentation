@@ -21,16 +21,21 @@ Single Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 - A Strapi application running on version 3.5.0 or higher is required.
 - To configure SSO on your application, you will need an <EnterpriseBadge /> license.
 - Make sure the SSO feature is [enabled in the admin panel](/user-docs/settings/single-sign-on).
-- Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
+- You will need to have a working knowledge of JavaScript and Node.js to configure SSO.
+
 :::
 
 :::caution
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
-SSO configuration lives in the server configuration of the application, found at `./config/admin.js`.
+## Required configuration before setting up SSO
 
-## Accessing the configuration
+TODO: Add server configuration information
+
+## Accessing the SSO configuration
+
+The SSO configuration lives in the server configuration of the application, found at `./config/admin.js` or `./config/admin.ts`.
 
 The providers' configuration should be written within the `auth.providers` path of the admin panel configuration.
 
@@ -45,8 +50,10 @@ The providers' configuration should be written within the `auth.providers` path 
 module.exports = ({ env }) => ({
   // ...
   auth: {
+    // ...
     providers: [], // The providers' configuration lives there
   },
+  // ...
 });
 ```
 
@@ -59,8 +66,10 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   // ...
   auth: {
+    // ...
     providers: [], // The providers' configuration lives there
   },
+  // ...
 });
 ```
 
@@ -107,14 +116,14 @@ module.exports = [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'www.okta.com', // Base URL of the provider's logo
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'www.okta.com', // Base URL of the provider's logo
           ],
           upgradeInsecureRequests: null,
@@ -144,14 +153,14 @@ export default [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'www.okta.com', // Base URL of the provider's logo
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            'dl.airtable.com',
+            'market-assets.strapi.io',
             'www.okta.com', // Base URL of the provider's logo
           ],
           upgradeInsecureRequests: null,
@@ -173,7 +182,7 @@ When deploying the admin panel to a different location or on a different subdoma
 :::
 
 :::caution
-Deploying the admin and backend on entirely different unrelated domains is not possible at this time when using SSO.
+Deploying the admin and backend on entirely different unrelated domains is not possible at this time when using SSO due to restrictions in cross-domain cookies.
 :::
 
 <details>
@@ -266,738 +275,23 @@ To configure a provider, follow the procedure below:
 1. Make sure to import your strategy in your admin configuration file, either from an installed package or a local file.
 2. You'll need to add a new item to the `auth.providers` array in your admin panel configuration that will match the [format given above](#setting-up-provider-configuration)
 3. Restart your application, the provider should appear on your admin login page.
-<!-- step 3 requires the build command? -->
 
 ### Provider configuration examples
 
-#### Google
-
-Using: [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2)
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```sh
-yarn add passport-google-oauth2
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```sh
-npm install --save passport-google-oauth2
-```
-
-</TabItem>
-
-</Tabs>
-
-<details>
-  <summary>Configuration example for Google:</summary>
-  <div>
-    <div>
-    <br/>
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/admin.js"
-
-const GoogleStrategy = require("passport-google-oauth2");
-
-module.exports = ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "google",
-        displayName: "Google",
-        icon: "https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png",
-        createStrategy: (strapi) =>
-          new GoogleStrategy(
-            {
-              clientID: env("GOOGLE_CLIENT_ID"),
-              clientSecret: env("GOOGLE_CLIENT_SECRET"),
-              scope: [
-                "https://www.googleapis.com/auth/userinfo.email",
-                "https://www.googleapis.com/auth/userinfo.profile",
-              ],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("google"),
-            },
-            (request, accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                firstname: profile.given_name,
-                lastname: profile.family_name,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/admin.ts"
-
-import {Strategy as GoogleStrategy } from "passport-google-oauth2";
-
-export default ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "google",
-        displayName: "Google",
-        icon: "https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Google-512.png",
-        createStrategy: (strapi) =>
-          new GoogleStrategy(
-            {
-              clientID: env("GOOGLE_CLIENT_ID"),
-              clientSecret: env("GOOGLE_CLIENT_SECRET"),
-              scope: [
-                "https://www.googleapis.com/auth/userinfo.email",
-                "https://www.googleapis.com/auth/userinfo.profile",
-              ],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("google"),
-            },
-            (request, accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                firstname: profile.given_name,
-                lastname: profile.family_name,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-</Tabs>
-
- </div>
-<br/>
- </div>
-</details>
-
-#### Github
-
-Using: [passport-github](https://github.com/cfsghost/passport-github)
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```sh
-yarn add passport-github2
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```sh
-npm install --save passport-github2
-```
-
-</TabItem>
-
-</Tabs>
-
-<details>
-  <summary>Configuration example for Github:</summary>
-  <div>
-    <div>
-    <Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/admin.js"
-
-const GithubStrategy = require("passport-github2");
-
-module.exports = ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "github",
-        displayName: "Github",
-        icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png",
-        createStrategy: (strapi) =>
-          new GithubStrategy(
-            {
-              clientID: env("GITHUB_CLIENT_ID"),
-              clientSecret: env("GITHUB_CLIENT_SECRET"),
-              scope: ["user:email"],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("github"),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.emails[0].value,
-                username: profile.username,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/admin.ts"
-
-import { Strategy as GithubStrategy } from "passport-github2";
-
-export default ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "github",
-        displayName: "Github",
-        icon: "https://cdn1.iconfinder.com/data/icons/logotypes/32/github-512.png",
-        createStrategy: (strapi) =>
-          new GithubStrategy(
-            {
-              clientID: env("GITHUB_CLIENT_ID"),
-              clientSecret: env("GITHUB_CLIENT_SECRET"),
-              scope: ["user:email"],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("github"),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.emails[0].value,
-                username: profile.username,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-
-```
-
-</TabItem>
-
-</Tabs>
-    </div>
-    <br/>
-  </div>
-</details>
-
-#### Discord
-
-Using: [passport-discord](https://github.com/nicholastay/passport-discord#readme)
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```sh
-yarn add passport-discord
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```sh
-npm install --save passport-discord
-```
-
-</TabItem>
-
-</Tabs>
-
-<details>
-  <summary>Configuration example for Discord:
-<br/></summary>
-  <div>
-    <div>
-    <Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```jsx title="./config/admin.js"
-
-const DiscordStrategy = require("passport-discord");
-
-module.exports = ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "discord",
-        displayName: "Discord",
-        icon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png",
-        createStrategy: (strapi) =>
-          new DiscordStrategy(
-            {
-              clientID: env("DISCORD_CLIENT_ID"),
-              clientSecret: env("DISCORD_SECRET"),
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL(
-                  "discord"
-                ),
-              scope: ["identify", "email"],
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                username: `${profile.username}#${profile.discriminator}`,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/admin.ts"
-
-import { Strategy as DiscordStrategy } from "passport-discord";
-
-
-export default ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "discord",
-        displayName: "Discord",
-        icon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png",
-        createStrategy: (strapi) =>
-          new DiscordStrategy(
-            {
-              clientID: env("DISCORD_CLIENT_ID"),
-              clientSecret: env("DISCORD_SECRET"),
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL(
-                  "discord"
-                ),
-              scope: ["identify", "email"],
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                username: `${profile.username}#${profile.discriminator}`,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-</Tabs>
-    </div>
-    <br/>
-  </div>
-</details>
-
-#### Microsoft
-
-Using: [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme)
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```sh
-yarn add passport-azure-ad-oauth2 jsonwebtoken
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```sh
-npm install --save passport-azure-ad-oauth2 jsonwebtoken
-```
-
-</TabItem>
-
-</Tabs>
-
-<details>
-  <summary>Configuration example for Microsoft:</summary>
-  <div>
-    <div>
-    <Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/admin.js"
-
-const AzureAdOAuth2Strategy = require("passport-azure-ad-oauth2");
-const jwt = require("jsonwebtoken");
-
-module.exports = ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "azure_ad_oauth2",
-        displayName: "Microsoft",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png",
-        createStrategy: (strapi) =>
-          new AzureAdOAuth2Strategy(
-            {
-              clientID: env("MICROSOFT_CLIENT_ID", ""),
-              clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
-              scope: ["user:email"],
-              tenant: env("MICROSOFT_TENANT_ID", ""),
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL(
-                  "azure_ad_oauth2"
-                ),
-            },
-            (accessToken, refreshToken, params, profile, done) => {
-              let waadProfile = jwt.decode(params.id_token, "", true);
-              done(null, {
-                email: waadProfile.email,
-                username: waadProfile.email,
-                firstname: waadProfile.given_name, // optional if email and username exist
-                lastname: waadProfile.family_name, // optional if email and username exist
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/admin.ts"
-
-import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
-import jwt from "jsonwebtoken";
-
-export default ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "azure_ad_oauth2",
-        displayName: "Microsoft",
-        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png",
-        createStrategy: (strapi) =>
-          new AzureAdOAuth2Strategy(
-            {
-              clientID: env("MICROSOFT_CLIENT_ID", ""),
-              clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
-              scope: ["user:email"],
-              tenant: env("MICROSOFT_TENANT_ID", ""),
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL(
-                  "azure_ad_oauth2"
-                ),
-            },
-            (accessToken, refreshToken, params, profile, done) => {
-              let waadProfile = jwt.decode(params.id_token, "", true);
-              done(null, {
-                email: waadProfile.email,
-                username: waadProfile.email,
-                firstname: waadProfile.given_name, // optional if email and username exist
-                lastname: waadProfile.family_name, // optional if email and username exist
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-</Tabs>
-    </div>
-    <br/>
-  </div>
-</details>
-
-#### Keycloak (OpenID Connect)
-
-Using: [passport-keycloak-oauth2-oidc](https://www.npmjs.com/package/passport-keycloak-oauth2-oidc)
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```sh
-yarn add passport-keycloak-oauth2-oidc
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```sh
-npm install --save passport-keycloak-oauth2-oidc
-```
-
-</TabItem>
-
-</Tabs>
-
-
-
-<details>
-  <summary>Configuration example for Keycloak (OpenID Connect):</summary>
-  <div>
-    <div>
-    <Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/admin.js"
-
-const KeyCloakStrategy = require("passport-keycloak-oauth2-oidc");
-
-module.exports = ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "keycloak",
-        displayName: "Keycloak",
-        icon: "https://raw.githubusercontent.com/keycloak/keycloak-admin-ui/main/themes/keycloak/logo.svg",
-        createStrategy: (strapi) =>
-          new KeyCloakStrategy(
-            {
-              clientID: env("KEYCLOAK_CLIENT_ID", ""),
-              realm: env("KEYCLOAK_REALM", ""),
-              publicClient: env.bool("KEYCLOAK_PUBLIC_CLIENT", false),
-              clientSecret: env("KEYCLOAK_CLIENT_SECRET", ""),
-              sslRequired: env("KEYCLOAK_SSL_REQUIRED", "external"),
-              authServerURL: env("KEYCLOAK_AUTH_SERVER_URL", ""),
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL(
-                  "keycloak"
-                ),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                username: profile.username,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/admin.ts"
-
-import { Strategy as KeyCloakStrategy } from "passport-keycloak-oauth2-oidc";
-
-export default ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "keycloak",
-        displayName: "Keycloak",
-        icon: "https://raw.githubusercontent.com/keycloak/keycloak-admin-ui/main/themes/keycloak/logo.svg",
-        createStrategy: (strapi) =>
-          new KeyCloakStrategy(
-            {
-              clientID: env("KEYCLOAK_CLIENT_ID", ""),
-              realm: env("KEYCLOAK_REALM", ""),
-              publicClient: env.bool("KEYCLOAK_PUBLIC_CLIENT", false),
-              clientSecret: env("KEYCLOAK_CLIENT_SECRET", ""),
-              sslRequired: env("KEYCLOAK_SSL_REQUIRED", "external"),
-              authServerURL: env("KEYCLOAK_AUTH_SERVER_URL", ""),
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL(
-                  "keycloak"
-                ),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                username: profile.username,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-</Tabs>
-    </div>
-    <br/>
-  </div>
-</details>
-
-#### Okta
-
-Using: [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/#readme)
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="yarn">
-
-```sh
-yarn add passport-okta-oauth20
-```
-
-</TabItem>
-
-<TabItem value="npm" label="npm">
-
-```sh
-npm install --save passport-okta-oauth20
-```
-
-</TabItem>
-
-</Tabs>
-
-:::caution
-When setting the `OKTA_DOMAIN` environment variable, make sure to include the protocol (e.g. `https://example.okta.com`). If you do not, you will end up in a redirect loop.
-:::
-
-<details>
-  <summary>Configuration example for Okta:</summary>
-  <div>
-    <div>
-    <Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="./config/admin.js"
-
-const OktaOAuth2Strategy = require("passport-okta-oauth20").Strategy;
-
-module.exports = ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "okta",
-        displayName: "Okta",
-        icon: "https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png",
-        createStrategy: (strapi) =>
-          new OktaOAuth2Strategy(
-            {
-              clientID: env("OKTA_CLIENT_ID"),
-              clientSecret: env("OKTA_CLIENT_SECRET"),
-              audience: env("OKTA_DOMAIN"),
-              scope: ["openid", "email", "profile"],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("okta"),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                username: profile.username,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="./config/admin.ts"
-
-import { Strategy as OktaOAuth2Strategy } from "passport-okta-oauth20";
-
-export default ({ env }) => ({
-  auth: {
-    // ...
-    providers: [
-      {
-        uid: "okta",
-        displayName: "Okta",
-        icon: "https://www.okta.com/sites/default/files/Okta_Logo_BrightBlue_Medium-thumbnail.png",
-        createStrategy: (strapi) =>
-          new OktaOAuth2Strategy(
-            {
-              clientID: env("OKTA_CLIENT_ID"),
-              clientSecret: env("OKTA_CLIENT_SECRET"),
-              audience: env("OKTA_DOMAIN"),
-              scope: ["openid", "email", "profile"],
-              callbackURL:
-                strapi.admin.services.passport.getStrategyCallbackURL("okta"),
-            },
-            (accessToken, refreshToken, profile, done) => {
-              done(null, {
-                email: profile.email,
-                username: profile.username,
-              });
-            }
-          ),
-      },
-    ],
-  },
-});
-```
-
-</TabItem>
-
-</Tabs>
-    </div>
-    <br/>
-  </div>
-</details>
+| Provider           | Package                    | Configuration                                                                     |
+|--------------------|----------------------------|-----------------------------------------------------------------------------------|
+| Auth0              | `passport-auth0`           | [Auth0 configuration](/dev-docs/configurations/sso-providers/auth0)               |
+| Discord            | `passport-discord`         | [Discord configuration](/dev-docs/configurations/sso-providers/discord)           |
+| Microsoft Entra ID | `passport-azure-ad-oauth2` | [Microsoft configuration](/dev-docs/configurations/sso-providers/entra-id)        |
+| GitHub             | `passport-github`          | [GitHub configuration](/dev-docs/configurations/sso-providers/github)             |
+| Gitlab             | `passport-gitlab2`         | [Gitlab configuration](/dev-docs/configurations/sso-providers/gitlab)             |
+| Google             | `passport-google-oauth20`  | [Google configuration](/dev-docs/configurations/sso-providers/google)             |
+| Keycloak           | `passport-keycloak-oauth2` | [Keycloak configuration](/dev-docs/configurations/sso-providers/keycloak)         |
+| Okta               | `passport-okta-oauth20`    | [Okta configuration](/dev-docs/configurations/sso-providers/okta)                 |
+| Generic OIDC       | `passport-oidc`            | [Generic OIDC configuration](/dev-docs/configurations/sso-providers/generic-oidc) |
+| Generic SAML       | `passport-saml`            | [Generic SAML configuration](/dev-docs/configurations/sso-providers/generic-saml) |
 
 ## Performing advanced customization
-
-### Admin panel URL
-
-If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
-update the `url` key in the `./config/admin.js` configuration file (see [admin panel customization documentation](/dev-docs/admin-panel-customization#access-url)).
 
 ### Custom Logic
 
@@ -1111,3 +405,21 @@ export default () => ({
 </TabItem>
 
 </Tabs>
+
+## Debugging common issues with SSO
+
+### Oops something went wrong
+
+TODO add information about common error page
+
+### Insecure Cookies
+
+TODO add information about insecure cookies
+
+### Redirect URI mismatch
+
+TODO add information about redirect URI mismatch
+
+### Opening in a new tab requires logging in again
+
+TODO explain why opening in a new tab requires logging in again
