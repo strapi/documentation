@@ -438,7 +438,6 @@ const sidebars = {
             'dev-docs/admin-panel-customization/deployment',
           ]
         },
-        'dev-docs/admin-panel-customization',
       ]
     },
     { // Plugins

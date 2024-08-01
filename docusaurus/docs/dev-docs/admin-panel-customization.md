@@ -9,15 +9,22 @@ tags:
 
 # Admin panel customization
 
-Strapi's admin panel is a React-based single-page application. It encapsulates all the features and installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
+Strapi's admin panel is a React-based single-page application. The admin panel encapsulates all the features and installed plugins of a Strapi application.
 
-## Customization options
+Admin panel customization is a broad topic in Strapi and cover the following aspects:
 
-Customizing the admin panel is helpful to better reflect your brand identity or to modify some default Strapi behavior. Various customization options are available, and depending on what you want to achieve, you might go to different places, as summarized in the following table:
+- Some parts of the admin panel can be customized to better reflect your brand identity or to modify some default Strapi behaviors.
+- Some other parts of the admin panel, such as the WYSIWYG editor and the bundler, can be replaced.
+- The admin panel can also be extended to add new features or customize the existing user interface.
 
-| Customization options | How to customize it | Related documentation |
+Depending on what you want to achieve, you might need to update different parts of Strapi, as summarized in the following table:
+
+| Customization use case | How to customize it | Related documentation |
 |---------------------------|-----------------------|-----------------------|
-| <ul><li>Update the access URL</li><li>Update host and port</li></ul>  | By updating the <code>config/admin.ts&#124;js</code> file | [Access URL, host, and port configuration](/dev-docs/admin-panel-customization/url-host-port) |
-| <ul><li>Replace the logos and favicon</li><li>Define locales and extend translations</li><li>Extend the theme</li><li>Disable video tutorials or notifications about new Strapi releases</li></ul> | By updating the <code>src/admin/app.ts&#124;js</code> file | |
-| Replace or customize the WYSIWYG editor | | |
-| Customize the email templates | Users and Permissions plugin | |
+| <ul><li>Update the admin panel's URL</li><li>Update host and port</li></ul>  | By updating the code of the <code>config/admin.ts&#124;js</code> file | [Access URL, host, and port configuration](/dev-docs/admin-panel-customization/url-host-port) |
+| <ul><li>Replace the logos and favicon</li><li>Define locales and extend translations</li><li>Extend the theme</li><li>Disable video tutorials or notifications about new Strapi releases</li></ul> | By updating the code of the <code>src/admin/app.ts&#124;js</code> file | [Customization options](/dev-docs/admin-panel-customization/options) |
+| Choose and configure a bundler | By writing some code in dedicated configuration files found in the `src/admin` folder | [Bundlers](/dev-docs/admin-panel-customization/bundlers) |
+| Replace or customize the WYSIWYG editor | _(Various strategies available, see related documentation)_ | [WYSIWYG editor](/dev-docs/admin-panel-customization/wysiwyg-editor) |
+| Extend the admin panel | _(Various strategies available, see related documentation)_ | [Extension](/dev-docs/admin-panel-customization/extension) |
+| Deploy the admin panel | _(Various strategies available, see related documentation)_ | [Deployment](/dev-docs/admin-panel-customization/deployment) |
+| Customize the email templates | Directly from the admin panel through the settings for the Users & Permissions plugin | [User Guide for the Users&nbsp;&&nbsp;Permissions plugin](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates) |
