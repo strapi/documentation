@@ -21,8 +21,8 @@ Depending on what you want to achieve, you might need to update different parts 
 
 | Customization use case | How to customize it | Related documentation |
 |---------------------------|-----------------------|-----------------------|
-| <ul><li>Update the admin panel's URL</li><li>Update host and port</li></ul>  | By updating the code of the <code>config/admin.ts&#124;js</code> file | [Access URL, host, and port configuration](/dev-docs/admin-panel-customization/url-host-port) |
-| <ul><li>Replace the logos and favicon</li><li>Define locales and extend translations</li><li>Extend the theme</li><li>Disable video tutorials or notifications about new Strapi releases</li></ul> | By updating the code of the <code>src/admin/app.ts&#124;js</code> file | [Customization options](/dev-docs/admin-panel-customization/options) |
+| Update the admin panel's URL, host, and port  | By updating the code of the <code>config/admin.ts&#124;js</code> file | [URL, host, and port configuration](/dev-docs/admin-panel-customization/url-host-port) |
+| <ul><li>Replace the logos and favicon</li><li>Disable video tutorials or notifications about new Strapi releases</li><li>Define locales and extend translations</li><li>Extend the theme</li></ul> | By updating the code of the <code>src/admin/app.ts&#124;js</code> file | [Customization options](/dev-docs/admin-panel-customization/options) |
 | Choose and configure a bundler | By writing some code in dedicated configuration files found in the `src/admin` folder | [Bundlers](/dev-docs/admin-panel-customization/bundlers) |
 | Replace or customize the WYSIWYG editor | _(Various strategies available, see related documentation)_ | [WYSIWYG editor](/dev-docs/admin-panel-customization/wysiwyg-editor) |
 | Extend the admin panel | _(Various strategies available, see related documentation)_ | [Extension](/dev-docs/admin-panel-customization/extension) |
