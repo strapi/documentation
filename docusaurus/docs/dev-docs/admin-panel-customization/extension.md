@@ -9,30 +9,27 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-const captionStyle = {fontSize: '12px'}
-const imgStyle = {width: '100%', margin: '0' }
+import HotReloading from '/docs/snippets/hot-reloading-admin-panel.md'
 
-<NotV5 />
+# Admin panel extension
 
-The admin panel is a React-based single-page application. It encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
+Strapi's admin panel is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application. If the [customization options](/dev-docs/admin-panel-customization/options) provided by Strapi are not enough for your use case, you will need to extend Strapi's admin panel.
 
-To start your strapi instance with hot reloading while developing, run the following command:
+Extending Strapi's admin panel means leveraging its React foundation to adapt and enhance the interface and features according to the specific needs of your project, which might imply creating new components or adding new types of fields.
 
-```bash
-cd my-app # cd into the root directory of the Strapi application project
-strapi develop
-```
+There are 2 use cases where you might want to extend the admin panel:
 
-:::note
-In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `strapi develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
+- As a Strapi plugin developer, you want to develop a Strapi plugin that extends the admin panel **everytime it's installed in any Strapi application**.
+
+  👉 This can be done by taking advantage of the [Admin Panel API for plugins](/dev-docs/plugins/admin-panel-api).
+
+- As a Strapi developer, you want to develop a unique solution for a Strapi user who only needs to extend a specific instance of a Strapi application.
+
+  👉 This can be done by directly updating the `/src/admin/app.[tsx|js]` file, which can import any file located in `/src/admin/extensions`.
+
+:::strapi Additional resources
+* If you're searching for ways of replacing the default WYSIWYG editor, please refer to the [corresponding page](/dev-docs/admin-panel-customization/wysiwyg-editor).
+* The [Strapi Design System documentation](https://design-system.strapi.io/?path=/docs/getting-started-welcome--docs) will also provide additional information on developing for Strapi's admin panel.
 :::
 
-## Extension
-
-There are 2 use cases to extend the admin panel:
-
-- A plugin developer wants to develop a Strapi plugin that extends the admin panel everytime it's installed in any Strapi application. This can be done by taking advantage of the [Admin Panel API](/dev-docs/plugins/admin-panel-api).
-
-- A Strapi user only needs to extend a specific instance of a Strapi application. This can be done by directly updating the `./src/admin/app.js` file, which can import any file located in `./src/admin/extensions`.
+<HotReloading />
