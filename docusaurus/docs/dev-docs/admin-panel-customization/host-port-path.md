@@ -29,7 +29,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin.ts|js` file should work if you left the `host` and `port` property values untouched in the [server configuration](/dev-docs/configurations/server) file, which should be as follows:
+Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin.[ts|js]` file should work if you left the `host` and `port` property values untouched in the [server configuration](/dev-docs/configurations/server) file, which should be as follows:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -92,5 +92,5 @@ export default ({ env }) => ({
 <br/>
 
 :::strapi Other admin panel configurations
-The `/config/admin.ts|js` file can be used to configure many other aspects. Please refer to the [admin panel configuration](/dev-docs/configurations/admin-panel) documentation for details.
+The `/config/admin.[ts|js]` file can be used to configure many other aspects. Please refer to the [admin panel configuration](/dev-docs/configurations/admin-panel) documentation for details.
 :::

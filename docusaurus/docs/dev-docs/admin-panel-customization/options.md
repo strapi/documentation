@@ -13,12 +13,12 @@ import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.m
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
 
-Many aspects of Strapi's [admin panel](/dev-docs/admin-panel-customization) can be customized through the code using the admin panel's `/src/admin/app.tsx|js` entry point file (see [project structure](/dev-docs/project-structure)).
+Many aspects of Strapi's [admin panel](/dev-docs/admin-panel-customization) can be customized through the code using the admin panel's `/src/admin/app.[tsx|js]` entry point file (see [project structure](/dev-docs/project-structure)).
 
 :::prerequisites
 Before trying to update code to configure any admin panel customization option:
 
-- Rename the default `app.example.tsx|js` file into `app.ts|js`.
+- Rename the default `app.example.[tsx|js]` file into `app.[ts|js]`.
 - Create a new `extensions` folder in `/src/admin/`.
 - If you want to see your changes applied live while developing, ensure the admin panel server is running (it's usually done with the `yarn develop` or `npm run develop` command if you have not changed the default [host, port, and path](/dev-docs/admin-panel-customization/host-port-path) of the admin panel).
 :::
@@ -27,7 +27,7 @@ Before trying to update code to configure any admin panel customization option:
 By default, Strapi projects already contain another `extensions` folder in `/src` but it is for plugins extensions only (see [Plugins extension](/dev-docs/plugins-extension)).
 :::
 
-The `config` object found in `/src/admin/app.ts|js` stores the admin panel configuration.
+The `config` object found in `/src/admin/app.[ts|js]` stores the admin panel configuration.
 
 Any file used by the `config` object (e.g., a custom logo) should be placed in a `/src/admin/extensions/` folder and imported inside `/src/admin/app.js`.
 
@@ -37,7 +37,7 @@ In Strapi 5, the server runs in `watch-admin` mode by default, so the admin pane
 
 ## Available configuration options
 
-The `config` object of `/src/admin/app.tsx|js` accepts the following parameters:
+The `config` object of `/src/admin/app.[tsx|js]` accepts the following parameters:
 
 | Parameter                      | Type             | Description                                                                                                           |
 | ------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -344,7 +344,7 @@ The logo handled by `config.menu.logo` logo is located in the main navigation at
 
 ### Updating logos
 
-To update the logos, put image files in the `/src/admin/extensions` folder, import these files in `src/admin/app.tsx|js` and update the corresponding keys as in the following example:
+To update the logos, put image files in the `/src/admin/extensions` folder, import these files in `src/admin/app.[tsx|js]` and update the corresponding keys as in the following example:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -405,7 +405,7 @@ To replace the favicon:
 1. Create a `/src/admin/extensions/` folder if the folder does not already exist.
 2. Upload your favicon into `/src/admin/extensions/`.
 3. Replace the existing **favicon.png|ico** file at the Strapi application root with a custom `favicon.png|ico` file.
-4. Update `/src/admin/app.tsx|js` with the following:
+4. Update `/src/admin/app.[tsx|js]` with the following:
 
    ```js title="./src/admin/app.js"
    import favicon from "./extensions/favicon.png";
@@ -432,11 +432,11 @@ Make sure that the cached favicon is cleared. It can be cached in your web brows
 
 ## Tutorial videos
 
-To disable the information box containing the tutorial videos, set the `config.tutorials` key of the `src/admin/app.tsx|js` file to `false`.
+To disable the information box containing the tutorial videos, set the `config.tutorials` key of the `src/admin/app.[tsx|js]` file to `false`.
 
 ## Releases notifications
 
-To disable notifications about new Strapi releases, set the `config.notifications.releases` key of the `src/admin/app.tsx|js` file to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key of the `src/admin/app.[tsx|js]` file to `false`.
 
 ## Theme extension
 
