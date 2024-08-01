@@ -433,7 +433,7 @@ const sidebars = {
             'dev-docs/admin-panel-customization/host-port-path',
             'dev-docs/admin-panel-customization/options',
             'dev-docs/admin-panel-customization/bundlers',
-            'dev-docs/admin-panel-customization/development',
+            'dev-docs/admin-panel-customization/wysiwyg-editor',
             'dev-docs/admin-panel-customization/extension',
             'dev-docs/admin-panel-customization/deployment',
           ]
