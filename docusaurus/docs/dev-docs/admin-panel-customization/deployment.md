@@ -1,6 +1,7 @@
 ---
 title: Admin panel deployment
 # description: todo
+sidebar_label: Deployment
 toc_max_heading_level: 4
 tags:
 - admin panel 

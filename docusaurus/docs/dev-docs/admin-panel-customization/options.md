@@ -1,6 +1,7 @@
 ---
 title: Admin panel customization
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
+sidebar_label: Customization options
 toc_max_heading_level: 4
 tags:
 - admin panel 
@@ -28,16 +29,7 @@ strapi develop
 In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `strapi develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
 :::
 
-## Customization options
-
-Customizing the admin panel is helpful to better reflect your brand identity or to modify some default Strapi behavior:
-
-- The [access URL, host and port](#access-url) can be modified through the server configuration.
-- The [configuration object](#configuration-options) allows replacing the logos and favicon, defining locales and extending translations, extending the theme, and disabling some Strapi default behaviors like displaying video tutorials or notifications about new Strapi releases.
-- The [WYSIWYG editor](#wysiwyg-editor) can be replaced or customized.
-- The [email templates](#email-templates) should be customized using the Users and Permissions plugin.
-
-### Access URL
+## Access URL
 
 By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, this path can be updated.
 
@@ -85,23 +77,14 @@ export default ({ env }) => ({
 For more advanced settings please see the [admin panel configuration](/dev-docs/configurations/admin-panel) documentation.
 :::
 
-#### Host and port
+### Host and port
 
-:::note
-From 4.15.1 this is now deprecated. The strapi server now supports the live updating of the admin panel in development mode.
-:::
+In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `strapi develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
 
-By default, the front end development server runs on `localhost:8000` but this can be modified:
+To update the host and port values of the admin panel, use [the `config/admin.ts|js` file](/dev-docs/configurations/admin):
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
-
-```js title="./config/server.js"
-module.exports = ({ env }) => ({
-  host: env("HOST", "0.0.0.0"),
-  port: env.int("PORT", 1337),
-});
-```
 
 ```js title="./config/admin.js"
 module.exports = ({ env }) => ({
@@ -114,13 +97,6 @@ module.exports = ({ env }) => ({
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
-export default ({ env }) => ({
-  host: env("HOST", "0.0.0.0"),
-  port: env.int("PORT", 1337),
-});
-```
-
 ```js title="./config/admin.ts"
 export default ({ env }) => ({
   host: "my-host",
@@ -131,7 +107,7 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-### Configuration options
+## Configuration options
 
 :::prerequisites
 Before configuring any admin panel customization option, make sure to:
@@ -286,7 +262,7 @@ export default {
 
 </details>
 
-#### Locales
+### Locales
 
 To update the list of available locales in the admin panel, use the `config.locales` array:
 
@@ -325,7 +301,7 @@ export default {
 
 :::
 
-##### Extending translations
+#### Extending translations
 
 Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
@@ -423,7 +399,7 @@ export default {
 
 If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
 
-#### Logos
+### Logos
 
 The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#configuration-options):
 
@@ -452,7 +428,7 @@ Both logos can also be customized directly via the admin panel (see [User Guide]
 Logos uploaded via the admin panel supersede any logo set through the configuration files.
 :::
 
-#### Favicon
+### Favicon
 
 To replace the favicon, use the following procedure:
 
@@ -484,15 +460,15 @@ This same process may be used to replace the login logo (i.e. `AuthLogo`) and me
 Make sure that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN.
 :::
 
-#### Tutorial videos
+### Tutorial videos
 
 To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
 
-#### Releases notifications
+### Releases notifications
 
 To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
 
-#### Theme extension
+### Theme extension
 
 Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/intro#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
 
@@ -509,7 +485,7 @@ The default [Strapi theme](https://github.com/strapi/design-system/tree/main/pac
 The former syntax for `config.theme` without `light` or `dark` keys is deprecated and will be removed in the next major release. We encourage you to update your custom theme to use the new syntax that supports light and dark modes.
 :::
 
-### WYSIWYG editor
+## WYSIWYG editor
 
 To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/dev-docs/custom-fields)) or take advantage of the [bootstrap lifecycle](/dev-docs/plugins/admin-panel-api#bootstrap) and the [extensions](#extension) system:
 

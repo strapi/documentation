@@ -1,6 +1,7 @@
 ---
-title: Admin panel customization
+title: Admin panel extension
 # description: todo
+sidebar_label: Extension
 toc_max_heading_level: 4
 tags:
 - admin panel 

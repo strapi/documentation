@@ -1,6 +1,7 @@
 ---
 title: Admin panel bundlers
 # description: todo
+sidebar_label: Bundlers
 toc_max_heading_level: 4
 tags:
 - admin panel 
