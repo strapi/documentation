@@ -9,9 +9,7 @@ tags:
 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-const captionStyle = {fontSize: '12px'}
-const imgStyle = {width: '100%', margin: '0' }
+import HotReloading from '/docs/snippets/hot-reloading-admin-panel.md'
 
 Many aspects of Strapi's [admin panel](/dev-docs/admin-panel-customization) can be customized through the code using the admin panel's `/src/admin/app.[tsx|js]` entry point file (see [project structure](/dev-docs/project-structure)).
 
@@ -31,9 +29,7 @@ The `config` object found in `/src/admin/app.[ts|js]` stores the admin panel con
 
 Any file used by the `config` object (e.g., a custom logo) should be placed in a `/src/admin/extensions/` folder and imported inside `/src/admin/app.js`.
 
-:::tip Tip: Hot reloading while developing
-In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `yarn develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
-:::
+<HotReloading />
 
 ## Available configuration options
 
