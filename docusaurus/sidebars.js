@@ -430,7 +430,7 @@ const sidebars = {
               id: 'dev-docs/admin-panel-customization',
               label: 'Introduction to admin panel customization',
             },
-            'dev-docs/admin-panel-customization/url-host-port',
+            'dev-docs/admin-panel-customization/host-port-path',
             'dev-docs/admin-panel-customization/options',
             'dev-docs/admin-panel-customization/bundlers',
             'dev-docs/admin-panel-customization/development',

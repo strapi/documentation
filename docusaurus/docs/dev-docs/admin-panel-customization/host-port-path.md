@@ -1,5 +1,5 @@
 ---
-title: Admin panel customization - URL, host, and path
+title: Admin panel customization - URL, host, and path configuration
 # description: todo
 sidebar_label: URL, host, and port configuration
 toc_max_heading_level: 4
@@ -9,7 +9,7 @@ tags:
 
 ---
 
-# Admin panel customization: Host, port, and path
+# Admin panel customization: Host, port, and path configuration
 
 By default, Strapi's [admin panel](/dev-docs/admin-panel-customization) is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, the host, port, and path can be updated.
 
