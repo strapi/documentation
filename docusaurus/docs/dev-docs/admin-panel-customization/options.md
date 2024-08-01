@@ -1,5 +1,5 @@
 ---
-title: Admin panel customization
+title: Admin panel customization options
 description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
 sidebar_label: Customization options
 toc_max_heading_level: 4
@@ -9,118 +9,35 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 const captionStyle = {fontSize: '12px'}
 const imgStyle = {width: '100%', margin: '0' }
 
-<NotV5 />
-
-The admin panel is a React-based single-page application. It encapsulates all the installed plugins of a Strapi application. Some of its aspects can be [customized](#customization-options), and plugins can also [extend](#extension) it.
-
-To start your strapi instance with hot reloading while developing, run the following command:
-
-```bash
-cd my-app # cd into the root directory of the Strapi application project
-strapi develop
-```
-
-:::note
-In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `strapi develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
-:::
-
-## Access URL
-
-By default, the administration panel is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, this path can be updated.
-
-**Example:**
-
-To make the admin panel accessible from `http://localhost:1337/dashboard`, use this in the [server configuration](/dev-docs/configurations/server) file:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="./config/server.js"
-module.exports = ({ env }) => ({
-  host: env("HOST", "0.0.0.0"),
-  port: env.int("PORT", 1337),
-});
-```
-
-```js title="./config/admin.js"
-module.exports = ({ env }) => ({
-  url: "/dashboard",
-});
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```js title="./config/server.ts"
-export default ({ env }) => ({
-  host: env("HOST", "0.0.0.0"),
-  port: env.int("PORT", 1337),
-});
-```
-
-```js title="./config/admin.ts"
-export default ({ env }) => ({
-  url: "/dashboard",
-});
-```
-
-</TabItem>
-</Tabs>
-
-:::strapi Advanced settings
-For more advanced settings please see the [admin panel configuration](/dev-docs/configurations/admin-panel) documentation.
-:::
-
-### Host and port
-
-In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `strapi develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
-
-To update the host and port values of the admin panel, use [the `config/admin.ts|js` file](/dev-docs/configurations/admin):
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="./config/admin.js"
-module.exports = ({ env }) => ({
-  host: "my-host",
-  port: 3000,
-});
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```js title="./config/admin.ts"
-export default ({ env }) => ({
-  host: "my-host",
-  port: 3000,
-});
-```
-
-</TabItem>
-</Tabs>
-
-## Configuration options
+Many aspects of Strapi's [admin panel](/dev-docs/admin-panel-customization) can be customized through the code using the admin panel's `/src/admin/app.tsx|js` entry point file (see [project structure](/dev-docs/project-structure)).
 
 :::prerequisites
-Before configuring any admin panel customization option, make sure to:
+Before trying to update code to configure any admin panel customization option:
 
-- rename the default `app.example.js` file into `app.js`,
-- and create a new `extensions` folder in `./src/admin/`. Strapi projects already contain by default another `extensions` folder in `./src/` but it is for plugins extensions only (see [Plugins extension](/dev-docs/plugins-extension)).
+- Rename the default `app.example.tsx|js` file into `app.ts|js`.
+- Create a new `extensions` folder in `/src/admin/`.
+- If you want to see your changes applied live while developing, ensure the admin panel server is running (it's usually done with the `yarn develop` or `npm run develop` command if you have not changed the default [host, port, and path](/dev-docs/admin-panel-customization/host-port-path) of the admin panel).
 :::
 
-The `config` object found at `./src/admin/app.js` stores the admin panel configuration.
+:::note Note: Admin panel extensions vs. plugins extensions
+By default, Strapi projects already contain another `extensions` folder in `/src` but it is for plugins extensions only (see [Plugins extension](/dev-docs/plugins-extension)).
+:::
 
-Any file used by the `config` object (e.g. a custom logo) should be placed in a `./src/admin/extensions/` folder and imported inside `./src/admin/app.js`.
+The `config` object found in `/src/admin/app.ts|js` stores the admin panel configuration.
 
-The `config` object accepts the following parameters:
+Any file used by the `config` object (e.g., a custom logo) should be placed in a `/src/admin/extensions/` folder and imported inside `/src/admin/app.js`.
+
+:::tip Tip: Hot reloading while developing
+In Strapi 5, the server runs in `watch-admin` mode by default, so the admin panel auto-reloads whenever you change its code. This simplifies admin panel and front-end plugins development. To disable this, run `yarn develop --no-watch-admin` (see [CLI reference](/dev-docs/cli#strapi-develop)).
+:::
+
+## Available configuration options
+
+The `config` object of `/src/admin/app.tsx|js` accepts the following parameters:
 
 | Parameter                      | Type             | Description                                                                                                           |
 | ------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------- |
@@ -134,12 +51,12 @@ The `config` object accepts the following parameters:
 | `notifications`                | Object           | Accepts the `releases` key (Boolean) to toggle [displaying notifications about new releases](#releases-notifications) |
 
 <details>
-<summary>Example of a custom configuration for the admin panel</summary>
+<summary>Example of a custom configuration for the admin panel:</summary>
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```jsx title="./my-app/src/admin/app.js"
+```jsx title="/src/admin/app.js"
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
 import favicon from "./extensions/favicon.png";
@@ -203,7 +120,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```jsx title="./my-app/src/admin/app.ts"
+```jsx title="/src/admin/app.ts"
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
 import favicon from "./extensions/favicon.png";
@@ -262,7 +179,7 @@ export default {
 
 </details>
 
-### Locales
+## Locales
 
 To update the list of available locales in the admin panel, use the `config.locales` array:
 
@@ -301,7 +218,7 @@ export default {
 
 :::
 
-#### Extending translations
+### Extending translations
 
 Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
 
@@ -399,7 +316,7 @@ export default {
 
 If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
 
-### Logos
+## Logos
 
 The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#configuration-options):
 
@@ -408,34 +325,87 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | On the login page      | `config.auth.logo`          |
 | In the main navigation | `config.menu.logo`          |
 
-<details>
-<summary>Logos location in the admin panel:</summary>
-<figure style={imgStyle}>
-  <img src="/img/assets/development/config-auth-logo.png" alt="Simplified Strapi backend diagram with controllers highlighted" />
-  <em><figcaption >The logo handled by <code>config.auth.logo</code> logo is only shown on the login screen.</figcaption></em>
-</figure>
-<br/>
-<figure style={imgStyle}>
-  <img src="/img/assets/development/config-menu-logo.png" alt="Location of Menu logo" />
-  <em><figcaption >The logo handled by <code>config.menu.logo</code> logo is located in the main navigation at the top left corner of the admin panel.</figcaption></em>
-</figure>
-</details>
-
-To update the logos, put image files in the `./src/admin/extensions` folder and update the corresponding keys. There is no size limit for image files set through the configuration files.
-
 :::note
 Both logos can also be customized directly via the admin panel (see [User Guide](/user-docs/settings/admin-panel.md)).
 Logos uploaded via the admin panel supersede any logo set through the configuration files.
 :::
 
-### Favicon
+### Logos location in the admin panel
 
-To replace the favicon, use the following procedure:
+<!--TODO: update screenshot #2 -->
 
-1. (_optional_) Create a `./src/admin/extensions/` folder if the folder does not already exist.
-2. Upload your favicon into `./src/admin/extensions/`.
+The logo handled by `config.auth.logo` logo is only shown on the login screen:
+
+![Location of the auth logo](/img/assets/development/config-auth-logo.png)
+
+The logo handled by `config.menu.logo` logo is located in the main navigation at the top left corner of the admin panel:
+
+![Location of Menu logo](/img/assets/development/config-menu-logo.png)
+
+### Updating logos
+
+To update the logos, put image files in the `/src/admin/extensions` folder, import these files in `src/admin/app.tsx|js` and update the corresponding keys as in the following example:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="/src/admin/app.js"
+import AuthLogo from "./extensions/my-auth-logo.png";
+import MenuLogo from "./extensions/my-menu-logo.png";
+
+export default {
+  config: {
+    // … other configuration properties 
+    auth: { // Replace the Strapi logo in auth (login) views
+      logo: AuthLogo,
+    },
+    menu: { // Replace the Strapi logo in the main navigation
+      logo: MenuLogo,
+    },
+    // … other configuration properties 
+
+  bootstrap() {},
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```jsx title="/src/admin/app.ts"
+import AuthLogo from "./extensions/my-auth-logo.png";
+import MenuLogo from "./extensions/my-menu-logo.png";
+
+export default {
+  config: {
+    // … other configuration properties 
+    auth: { // Replace the Strapi logo in auth (login) views
+      logo: AuthLogo,
+    },
+    menu: { // Replace the Strapi logo in the main navigation
+      logo: MenuLogo,
+    },
+    // … other configuration properties 
+
+  bootstrap() {},
+};
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+There is no size limit for image files set through the configuration files.
+:::
+
+## Favicon
+
+To replace the favicon:
+
+1. Create a `/src/admin/extensions/` folder if the folder does not already exist.
+2. Upload your favicon into `/src/admin/extensions/`.
 3. Replace the existing **favicon.png|ico** file at the Strapi application root with a custom `favicon.png|ico` file.
-4. Update `./src/admin/app.js` with the following:
+4. Update `/src/admin/app.tsx|js` with the following:
 
    ```js title="./src/admin/app.js"
    import favicon from "./extensions/favicon.png";
@@ -460,17 +430,17 @@ This same process may be used to replace the login logo (i.e. `AuthLogo`) and me
 Make sure that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN.
 :::
 
-### Tutorial videos
+## Tutorial videos
 
-To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
+To disable the information box containing the tutorial videos, set the `config.tutorials` key of the `src/admin/app.tsx|js` file to `false`.
 
-### Releases notifications
+## Releases notifications
 
-To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key of the `src/admin/app.tsx|js` file to `false`.
 
-### Theme extension
+## Theme extension
 
-Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/intro#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
+Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/user-docs/getting-started/setting-up-admin-panel#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
 
 To extend the theme, use either:
 
@@ -480,45 +450,3 @@ To extend the theme, use either:
 :::strapi Strapi Design System
 The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The [Strapi Design System](https://design-system.strapi.io/) is fully customizable and has a dedicated [StoryBook](https://design-system-git-main-strapijs.vercel.app) documentation.
 :::
-
-:::caution
-The former syntax for `config.theme` without `light` or `dark` keys is deprecated and will be removed in the next major release. We encourage you to update your custom theme to use the new syntax that supports light and dark modes.
-:::
-
-## WYSIWYG editor
-
-To change the current WYSIWYG, you can install a [third-party plugin](https://market.strapi.io/), create your own plugin (see [creating a new field in the admin panel](/dev-docs/custom-fields)) or take advantage of the [bootstrap lifecycle](/dev-docs/plugins/admin-panel-api#bootstrap) and the [extensions](#extension) system:
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```js title="./src/admin/app.js"
-import MyNewWYSIGWYG from "./extensions/components/MyNewWYSIGWYG"; // this file contains the logic for your new WYSIWYG
-
-export default {
-  bootstrap(app) {
-    app.addFields({ type: "wysiwyg", Component: MyNewWYSIGWYG });
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```js title="./src/admin/app.ts"
-import MyNewWYSIGWYG from "./extensions/components/MyNewWYSIGWYG"; // this file contains the logic for your new WYSIWYG
-
-export default {
-  bootstrap(app) {
-    app.addFields({ type: "wysiwyg", Component: MyNewWYSIGWYG });
-  },
-};
-```
-
-</TabItem>
-</Tabs>
-
-### Email templates
-
-Email templates should be edited through the admin panel, using the [Users and Permissions plugin settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates).
