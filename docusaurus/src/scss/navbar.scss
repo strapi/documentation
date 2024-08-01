@@ -70,7 +70,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     &:hover {
-      background-color: var(--strapi-neutral-100);
       color: var(--strapi-primary-600);
     }
   }
@@ -166,6 +165,18 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
     }
   }
+
+  /** Color mode toggle hover effect */
+  button[class*="ColorModeToggle"]:hover { // local selector
+    svg path {
+      fill: var(--strapi-primary-600);
+    }
+  }
+  div[class*="colorModeToggle"]:hover { // production selector
+    button svg path {
+      fill: var(--strapi-primary-600);
+    }
+  }
 }
 
 /** Responsive */
@@ -237,7 +248,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     button {
       svg {
         fill: var(--strapi-neutral-800);
-        // fill: var(--custom-navbar-icon-color);
       }
     }
   }
