@@ -417,7 +417,27 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
-        'dev-docs/admin-panel-customization',
+        {
+          type: 'category',
+          label: 'Admin panel customization',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/admin-panel-customization',
+          },
+          items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/admin-panel-customization',
+              label: 'Introduction to admin panel customization',
+            },
+            'dev-docs/admin-panel-customization/host-port-path',
+            'dev-docs/admin-panel-customization/options',
+            'dev-docs/admin-panel-customization/bundlers',
+            'dev-docs/admin-panel-customization/wysiwyg-editor',
+            'dev-docs/admin-panel-customization/extension',
+            'dev-docs/admin-panel-customization/deployment',
+          ]
+        },
       ]
     },
     { // Plugins
