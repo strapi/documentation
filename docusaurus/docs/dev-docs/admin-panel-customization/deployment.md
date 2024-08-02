@@ -11,11 +11,11 @@ tags:
 
 # Admin panel deployment
 
-The front-end part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content that will be accessible through the Content API.
+The front-end part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content that will be accessible to your application's own front-end through Strapi's Content API.
 
 The admin panel is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application.
 
-The back-end server of Strapi serves the Content API which provides endpoints to your content.
+The [back-end server](/dev-docs/backend-customization) of Strapi serves the Content API which provides endpoints to your content.
 
 By default, the back-end server and the admin panel server are deployed on the same server. But the admin panel and the back-end server are independent and can be deployed on different servers, which brings us to different scenarios:
 
