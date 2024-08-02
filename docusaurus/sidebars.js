@@ -1043,6 +1043,11 @@ const sidebars = {
           label: "How to populate creator fields",
           id: 'dev-docs/api/rest/guides/populate-creator-fields',
         },
+        {
+          type: 'link',
+          label: 'Additional resources',
+          href: '/dev-docs/api/rest/guides/intro#additional-resources'
+        },
       ],
     }
   ],
