@@ -135,7 +135,6 @@ The above installation guide only covers the basic installation option using the
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
 
-
 ### Skipping the Strapi Cloud login step
 
 When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free, 14-day trial [Strapi Cloud](/cloud/intro#what-is-strapi-cloud) project as described in the [Quick Start Guide](/dev-docs/quick-start).
