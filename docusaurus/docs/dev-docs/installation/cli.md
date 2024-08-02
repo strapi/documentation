@@ -118,7 +118,7 @@ The above installation guide only covers the basic installation option using the
 | `--use-npm` | Force the usage of [npm](https://www.npmjs.com/) as the project package manager |
 | `--use-yarn` | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager |
 | `--use-pnpm` | Force the usage of [pnpm](https://pnpm.io/) as the project package manager |
-| `--skip-cloud` |  Skip cloud login and project creation |
+| `--skip-cloud` |  Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step) |
 | `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
 | `--dbhost <dbhost>` | Define the database host to use by replacing `<dbclient>` in the command by the value of your choice |
 | `--dbport <dbport>` | Define the database port to use by replacing `<dbclient>` in the command by the value of your choice |
