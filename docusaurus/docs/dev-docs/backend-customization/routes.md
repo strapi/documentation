@@ -18,8 +18,6 @@ tags:
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-const imgStyle = {width: '100%', margin: '0'}
-const captionStyle = {fontSize: '12px'}
 
 # Routes
 
@@ -32,9 +30,9 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 
 Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/dev-docs/backend-customization/controllers)). To view all existing routes and their hierarchal order, you can run `yarn strapi routes:list` (see [CLI reference](/dev-docs/cli)).
 
-<figure style={imgStyle}>
+<figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation

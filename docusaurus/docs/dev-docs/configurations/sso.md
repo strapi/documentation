@@ -535,8 +535,7 @@ npm install --save passport-discord
 </Tabs>
 
 <details>
-  <summary>Configuration example for Discord:
-<br/></summary>
+  <summary>Configuration example for Discord:</summary>
   <div>
     <div>
     <Tabs groupId="js-ts">

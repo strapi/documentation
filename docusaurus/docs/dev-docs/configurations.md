@@ -13,8 +13,6 @@ tags:
 
 import ProjectStructureConfigFiles from '@site/src/components/ProjectStructureConfigFiles'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-const imgStyle = {width: '100%', margin: '0'}
-const captionStyle = {fontSize: '12px'}
 
 # Configuration
 
@@ -24,7 +22,7 @@ The configuration of a Strapi project lives in the `/config` folder:
 
 <ProjectStructureConfigFiles />
 
-<em style={captionStyle}>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/dev-docs/project-structure">project structure page</a> for the full version.</em>
+<em style={{fontSize: '12px'}}>The block above is an excerpt from the project structure. You can click on any file name in purple to read the corresponding documentation. Visit the <a href="/dev-docs/project-structure">project structure page</a> for the full version.</em>
 
 ## Base configurations
 
