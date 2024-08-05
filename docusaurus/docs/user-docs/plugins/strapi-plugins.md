@@ -109,7 +109,7 @@ The Gatsby preview plugin affects multiple parts of the admin panel. The table b
 
 The GraphQL plugin enables GraphQL endpoints in a Strapi application, and gives access to the GraphQL Playground: a browser-based interface that assists in writing GraphQL queries and data exploration. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).
 
-There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <http://localhost:1337/graphql> in a Strapi application. More information on using the GraphQL API is located in the [API reference](/dev-docs/api/graphql) and the [Developer Documentation plugins section](/dev-docs/plugins/graphql).
+There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <a href="http://localhost:1337/graphql">http://localhost:1337/graphql</a> in a Strapi application. More information on using the GraphQL API is located in the [API reference](/dev-docs/api/graphql) and the [Developer Documentation plugins section](/dev-docs/plugins/graphql).
 
 ### <img width="28" src="/img/assets/plugins/seo-logo.png" /> SEO
 

@@ -10,8 +10,6 @@ tags:
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 import TempUpgradeRCtag from '/docs/snippets/temp-upgrade-rc.md'
-const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
-const summaryStyle = {fontSize: '18px'}
 
 # Step-by-step guide to upgrade to Strapi 5
 
