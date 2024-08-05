@@ -2064,6 +2064,20 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
+"@prefab-cloud/prefab-cloud-js@0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@prefab-cloud/prefab-cloud-js/-/prefab-cloud-js-0.3.4.tgz#52d9a502689d63b4ac6c43b780320dc5e0e71bd2"
+  integrity sha512-wWjvBUlhVDUuiJlEkahS4+AUa1bp+y6DjDyCQkODyPT+QWJ+CGJBufxRKvYfF+mm9mWaE1toIyNR3GEhki8+2Q==
+  dependencies:
+    uuid "^9.0.1"
+
+"@prefab-cloud/prefab-cloud-react@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@prefab-cloud/prefab-cloud-react/-/prefab-cloud-react-0.3.6.tgz#f95ca2e0b037fe635212d68dee7c9be0644c78b9"
+  integrity sha512-5412ZRD07YPNJflorJ/4DOYgVjv6+R/x54mRlF/9QGSOoVjWY6tcyR2+0oXASFldc9zSMAfiF1y0iqYg8D/t+Q==
+  dependencies:
+    "@prefab-cloud/prefab-cloud-js" "0.3.4"
+
 "@redocly/ajv@^8.11.0":
   version "8.11.0"
   resolved "https://registry.yarnpkg.com/@redocly/ajv/-/ajv-8.11.0.tgz#2fad322888dc0113af026e08fceb3e71aae495ae"
@@ -8825,6 +8839,11 @@ uuid@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
   integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
+
+uuid@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 value-equal@^1.0.1:
   version "1.0.1"

@@ -6,7 +6,7 @@ canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment.html
 sidebar_position: 2
 ---
 
-# Project deployment with the Cloud dashboard
+# Project deployment with the Cloud dashboard <UpdatedBadge />
 
 This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Cloud dashboard.
 

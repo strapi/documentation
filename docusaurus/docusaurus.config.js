@@ -13,11 +13,9 @@ const config = {
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  // organizationName: 'strapi', // Usually your GitHub org/user name.
-  // projectName: 'documentation', // Usually your repo name.
+  customFields: {
+    prefabApiKey: process.env.REACT_APP_PREFAB_FRONTEND_PRODUCTION_API_KEY || "398-Development-P435-E907-FRONTEND-b3f733ec-b1b7-464f-8b6f-9cf91d23a434",
+  },
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -148,7 +146,7 @@ const config = {
       },
       algolia: {
         appId: '392RJ63O14',
-        apiKey: '8cf63dc4a24ff4087407f9f5bd188aae',
+        apiKey: 'ed62374a794e8da5accb298e13618614',
         indexName: 'strapiDocsNextstrapiDocsNext',
       },
       navbar: {

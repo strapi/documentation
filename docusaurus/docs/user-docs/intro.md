@@ -15,7 +15,7 @@ The documentation for Strapi contains 3 main sections, accessible from the top n
 
 </SubtleCallout>
 
-This <PostHogAdminPanel /> documentation contains the functional documentation related to all features available in the main navigation of your Strapi application.
+This <UserGuideAdminPanel /> documentation contains the functional documentation related to all features available in the main navigation of your Strapi application.
 
 Once you have logged in, you can access your Strapi admin panel:
 
@@ -35,7 +35,7 @@ If you are not sure where to begin on this User Guide, we suggest you to:
 
 ## What you will find here
 
-The table of content in this User Guide displays 7 main sections.
+The table of content in this <UserGuideAdminPanel />  displays 7 main sections.
 
 Clicking on any of the following cards will direct you to the introductory page for that section, with additional details and concepts:
 

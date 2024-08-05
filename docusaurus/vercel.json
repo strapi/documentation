@@ -13,7 +13,7 @@
     },
     {
       "source": "/user-docs/intro%23using-sso-for-authentication-",
-      "destination": "/user-docs/getting-started/setting-up-admin-panel#using-sso-for-authentication-"
+      "destination": "/user-docs/settings/single-sign-on"
     },
 		{
 			"source": "/dev-docs/deployment/strapi-cloud",

@@ -27,9 +27,6 @@ const sidebars = {
           type: "doc",
           label: "Quick Start Guide",
           id: "dev-docs/quick-start",
-          customProps: {
-            updated: true,
-          },
         },
         "dev-docs/faq",
         "dev-docs/usage-information",
@@ -63,9 +60,6 @@ const sidebars = {
             {
                 type: 'doc',
                 id: "dev-docs/installation/docker",
-                customProps: {
-                    updated: true
-                },
             },
           ],
         },
@@ -78,9 +72,6 @@ const sidebars = {
               type: "doc",
               label: "Introduction",
               id: "dev-docs/configurations",
-              customProps: {
-                updated: true,
-              },
             },
 
             'dev-docs/configurations/database',
@@ -91,9 +82,6 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/configurations/plugins',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
@@ -106,9 +94,6 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/configurations/features',
-              customProps: {
-                updated: true,
-              }
             },
           ],
         },
@@ -198,9 +183,6 @@ const sidebars = {
             {
               type: 'doc',
               id: "dev-docs/api/rest/populate-select",
-              customProps: {
-                updated: true,
-              },
             },
             "dev-docs/api/rest/filters-locale-publication",
             "dev-docs/api/rest/sort-pagination",
@@ -211,7 +193,7 @@ const sidebars = {
               id: "dev-docs/api/rest/guides/intro",
               label: "Guides",
               customProps: {
-                new: true,
+                updated: true,
               }
             }
           ],
@@ -260,9 +242,6 @@ const sidebars = {
         {
           type: "category",
           label: "Back-end customization",
-          customProps: {
-            updated: true,
-          },
           items: [
             {
               type: "doc",
@@ -282,9 +261,6 @@ const sidebars = {
             {
               type: "doc",
               id: "dev-docs/backend-customization/controllers",
-              customProps: {
-                updated: true,
-              },
             },
             "dev-docs/backend-customization/services",
             "dev-docs/backend-customization/models",
@@ -618,9 +594,6 @@ const sidebars = {
   userDocsSidebar: [
     {
       type: 'category',
-      customProps: {
-        updated: true,
-      },
       collapsed: false,
       label: 'Getting Started',
       items: [
@@ -660,9 +633,6 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-type-builder/configuring-fields-content-type',
-          customProps: {
-            updated: true,
-          },
         },
         'user-docs/content-type-builder/managing-content-types',
       ],
@@ -741,9 +711,6 @@ const sidebars = {
               type: 'doc',
               label: 'Review Workflows',
               id: 'user-docs/settings/review-workflows',
-              customProps: {
-                updated: true,
-              },
             },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
@@ -818,7 +785,7 @@ const sidebars = {
           label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
-            updated: false,
+            updated: true,
           },
         },
         "cloud/projects/collaboration",
@@ -1081,6 +1048,11 @@ const sidebars = {
           label: "How to populate creator fields",
           id: 'dev-docs/api/rest/guides/populate-creator-fields',
         },
+        {
+          type: "link",
+          label: "Additional resources",
+          href: '/dev-docs/api/rest/guides/intro#additional-resources',
+        },
       ],
     }
   ],
@@ -1133,9 +1105,6 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/configurations/plugins',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/configurations/typescript',
             'dev-docs/configurations/api-tokens',
@@ -1146,9 +1115,6 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/configurations/features',
-              customProps: {
-                updated: true
-              }
             }
           ]
         },
