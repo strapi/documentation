@@ -14,6 +14,9 @@ const config = {
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
+  // ⚠️ TODO: remove this for stable release
+  noIndex: true, // set to false to allow indexing by search engines
+
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
