@@ -199,7 +199,7 @@ export default ({ env }) => ({
 
 * When using a different provider per environment, specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js` (See [Environments](/dev-docs/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js` file is in the correct folder.
-* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/user-docs//settings/configuring-users-permissions-plugin-settings#configuring-email-templates)).
+* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates)).
 
 :::
 
