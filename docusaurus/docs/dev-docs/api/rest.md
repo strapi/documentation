@@ -35,7 +35,9 @@ The Upload plugin (which handles media found in the [Media Library](/user-docs/m
 For each Content-Type, the following endpoints are automatically generated:
 
 <details>
+
 <summary>Plural API ID vs. Singular API ID:</summary>
+
 In the following tables:
 
 - `:singularApiId` refers to the value of the "API ID (Singular)" field of the content-type,
