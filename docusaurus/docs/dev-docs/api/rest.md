@@ -158,8 +158,10 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 Returns documents matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
 
-:::strapi Strapi 5 vs. Strapi 4
+:::tip Tip: Strapi 5 vs. Strapi 4
 In Strapi 5 the response format has been flattened, and attributes are directly accessible from the `data` object instead of being nested in `data.attributes`.
+
+You can pass an optional header while you're migrating to Strapi 5 (see the [related breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format)).
 :::
 
 </SideBySideColumn>
