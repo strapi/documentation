@@ -51,10 +51,6 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 ### <img width="28" src="/img/assets/plugins/icon_up-plugin.png" /> Users & Permissions plugin
 
-:::note
-[API tokens](/user-docs/settings/API-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022.
-:::
-
 The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
 
 This plugin is used to manage end users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device, etc.). With the Users & Permissions plugin, it is possible to:
