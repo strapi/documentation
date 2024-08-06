@@ -33,7 +33,7 @@ The Email plugin requires a provider and a provider configuration in the `config
 
 ## Sending emails with a controller or service
 
-The Email plugin has an `email` [service](/dev-docs/backend-customization/services#services) that contains 2 functions to send emails:
+The Email plugin has an `email` [service](/dev-docs/backend-customization/services) that contains 2 functions to send emails:
 
 * `send()` directly contains the email contents,
 * `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.

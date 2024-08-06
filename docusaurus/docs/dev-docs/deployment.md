@@ -183,12 +183,12 @@ strapi(/* {...} */).start();
 :::caution
 
 If you are developing a `TypeScript`-based project you must provide the `distDir` option to start the server.
-For more information, consult the [TypeScript documentation](/dev-docs/typescript#use-the-strapi-factory).
+For more information, consult the [TypeScript documentation](/dev-docs/typescript/development#use-the-strapi-factory).
 :::
 
 ### Advanced configurations
 
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization#deployment).
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization/deployment).
 
 ## Deployment guides
 

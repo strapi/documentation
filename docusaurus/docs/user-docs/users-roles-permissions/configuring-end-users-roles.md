@@ -12,7 +12,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.
 
-With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-user roles and permissions are managed in the Settings interface.
+With the [Users & Permissions plugin](../plugins/strapi-plugins#users-and-permissions) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users)) but end-user roles and permissions are managed in the Settings interface.
 
 The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](/img/assets/icons/settings.svg) _Settings_ sub navigation.
 
@@ -42,7 +42,7 @@ By default, 2 end-user roles are defined for any Strapi application:
 - Public: for end users to access content without being logged in to a front-end application.
 
 :::note
-The end-user role attributed by default to all new end users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](../settings/configuring-users-permissions-plugin-settings.md#configuring-advanced-settings)).
+The end-user role attributed by default to all new end users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-advanced-settings)).
 :::
 
 ## Creating a new role

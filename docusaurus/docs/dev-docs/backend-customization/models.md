@@ -1,7 +1,7 @@
 ---
 title: Models
 description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
-sidebarDepth: 3
+toc_max_heading_level: 4
 tags:
 - admin panel
 - backend customization
@@ -51,7 +51,7 @@ These models files are stored in `./src/api/[api-name]/content-types/[content-ty
 In [TypeScript](/dev-docs/typescript.md)-enabled projects, schema typings can be generated using the `ts:generate-types` command.
 :::
 
-### Components
+### Components {#components-creation}
 
 Component models can't be created with CLI tools. Use the [Content-type Builder](/user-docs/content-type-builder) or create them manually.
 
@@ -115,12 +115,12 @@ Many types of attributes are available:
 
 - scalar types (e.g. strings, dates, numbers, booleans, etc.),
 - Strapi-specific types, such as:
-  - `media` for files uploaded through the [Media library](/user-docs/content-type-builder/configuring-fields-content-type.md#media)
+  - `media` for files uploaded through the [Media library](/user-docs/content-type-builder/configuring-fields-content-type#media)
   - `relation` to describe a [relation](#relations) between content-types
   - `customField` to describe [custom fields](#custom-fields) and their specific keys
-  - `component` to define a [component](#components-1) (i.e. a data structure usable in multiple content-types)
+  - `component` to define a [component](#components-json) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
-  - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md)
+  - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n)
 
 The `type` parameter of an attribute should be one of the following values:
 
@@ -130,8 +130,8 @@ The `type` parameter of an attribute should be one of the following values:
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
 | Other generic types |<ul><li>`boolean`</li><li>`json`</li></ul> |
-| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
-| Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n plugin](/dev-docs/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
+| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components-json)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
+| Internationalization (i17n)-related types<br /><br />_Can only be used if the [i18n plugin](/dev-docs/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 
 #### Validations
 
@@ -539,7 +539,7 @@ Custom fields' attributes also show the following specificities:
 }
 ```
 
-#### Components
+#### Components {#components-json}
 
 Component fields create a relation between a content-type and a component structure. Components are explicitly defined in the [attributes](#model-attributes) of a model with `type: 'component'` and accept the following additional parameters:
 
@@ -563,7 +563,7 @@ Component fields create a relation between a content-type and a component struct
 
 #### Dynamic zones
 
-Dynamic zones create a flexible space in which to compose content, based on a mixed list of [components](#components-2).
+Dynamic zones create a flexible space in which to compose content, based on a mixed list of [components](#components-json).
 
 Dynamic zones are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'dynamiczone'`. They also accept a `components` array, where each component should be named following this format: `<category>.<componentName>`.
 

@@ -17,7 +17,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values available in your code.
 
 :::tip
-An `env()` utility can be used to [retrieve the value of environment variables](/dev-docs/configurations/guides/access-cast-environment-variables#accessing-environment-variables) and [cast variables to different types](/dev-docs/configurations/guides/access-cast-environment-variables#casting-environment-variables).
+An `env()` utility can be used to [retrieve the value of environment variables](/dev-docs/configurations/guides/access-cast-environment-variables#accessing-environment-variables) and [cast variables to different types](/dev-docs/configurations/guides/access-cast-environment-variables).
 :::
 
 Additionally, specific [configurations for different environments](#environment-configurations) can be created.

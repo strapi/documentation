@@ -80,7 +80,7 @@ const strapi = require('@strapi/strapi');
 3. Start the server by running `pm2 start server.js` in the project root directory.
 
 :::note
-TypeScript projects require additional code in the `server.js` file to identify the correct directory. See the previous TypeScript code example or the [TypeScript documentation](/dev-docs/typescript#start-strapi-programmatically) for additional details.
+TypeScript projects require additional code in the `server.js` file to identify the correct directory. See the previous TypeScript code example or the [TypeScript documentation](/dev-docs/typescript/development#start-strapi-programmatically) for additional details.
 :::
 
 ## Start PM2 with the `strapi` command

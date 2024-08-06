@@ -18,7 +18,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5/>
 
-With the [Internationalization feature](/user-docs/plugins/strapi-plugins#-internationalization-plugin) enabled for a content-type, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/internationalization)).
+With the [Internationalization feature](/user-docs/plugins/strapi-plugins#internationalization) enabled for a content-type, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/internationalization)).
 
 <ThemedImage
   alt="Edit view of a localizable content-type"

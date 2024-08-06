@@ -66,7 +66,7 @@ Let's add a small front-end component to restaurant pages. This component will a
 * Add a form to write a review.
 * Display the form on any restaurants page.
 * Send a POST request to Strapi's REST API when the form is submitted.
-* Use the [previously stored JWT](#authentication-flow-with-jwt) to authenticate the request.
+* Use the [previously stored JWT](/dev-docs/backend-customization/examples/authentication) to authenticate the request.
 
 </SideBySideColumn>
 

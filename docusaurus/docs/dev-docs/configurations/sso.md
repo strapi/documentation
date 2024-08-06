@@ -88,7 +88,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 :::
 
 :::note
-By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security).
+By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/getting-started/setting-up-admin-panel#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security).
 :::
 
 <details>
@@ -1000,7 +1000,7 @@ export default ({ env }) => ({
 ### Admin panel URL
 
 If the administration panel lives on a host/port different from the Strapi server, the admin panel URL needs to be updated:
-update the `url` key in the `./config/admin.js` configuration file (see [admin panel customization documentation](/dev-docs/admin-panel-customization#access-url)).
+update the `url` key in the `./config/admin.js` configuration file (see [admin panel customization documentation](/dev-docs/admin-panel-customization/host-port-path)).
 
 ### Custom Logic
 

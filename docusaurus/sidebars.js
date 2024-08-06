@@ -983,7 +983,7 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
+              href: '/dev-docs/plugins/i18n#rest',
             },
             {
               type: 'link',

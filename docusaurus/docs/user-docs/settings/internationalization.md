@@ -13,7 +13,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5/>
 
-The [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Internationalization*.
+The [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Internationalization*.
 
 <ThemedImage
   alt="i18n settings"

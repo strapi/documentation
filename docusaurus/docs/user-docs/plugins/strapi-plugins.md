@@ -31,7 +31,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 
 ## Pre-installed plugins
 
-### <img width="28" src="/img/assets/plugins/icon_i18n-plugin.png" /> Internationalization plugin
+### <img width="28" src="/img/assets/plugins/icon_i18n-plugin.png" /> Internationalization plugin {#internationalization}
 
 The Internationalization plugin is installed by default on all v4 Strapi applications, but it can be deactivated.
 
@@ -45,11 +45,11 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 | Section impacted | Options and settings   |
 |------------------|----------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](/user-docs/settings/internationalization)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br/> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#configuring-roles-permissions/)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration panel*</li> <br/> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* </li></ul> |
-| Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type/)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#regular-fields)).</li></ul> |
+| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](/user-docs/settings/internationalization)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br/> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#configuring-roles-permissions)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration panel*</li> <br/> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* </li></ul> |
+| Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#regular-fields)).</li></ul> |
 | Content Manager | <ul><li>Addition of a new *Locales* filter in collection types list view, to manage entries per locale (see [Introduction to the Content Manager](/user-docs/content-manager#collection-types)).</li> <li>Addition of new options in Content-types edit view, to translate content and manage it per locale (see [Translating content](/user-docs/content-manager/translating-content)).</li></ul> |
 
-### <img width="28" src="/img/assets/plugins/icon_up-plugin.png" /> Users & Permissions plugin
+### <img width="28" src="/img/assets/plugins/icon_up-plugin.png" /> Users & Permissions plugin {#users-and-permissions}
 
 :::note
 [API tokens](/user-docs/settings/API-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022.
@@ -72,7 +72,7 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 | Content-type Builder | <ul>Creation of a default collection type "User" which allows for the management of the end users, the end-user roles and their permissions. This collection type cannot be deleted and the composing fields cannot be edited, but the addition of new fields is possible. </ul> |
 | Content Manager | <ul>Addition of the default "User" collection type that allows for the management of end-user accounts (see [Managing end-user accounts](/user-docs/users-roles-permissions/managing-end-users)). <ul><li>By default, the following fields are available: Username, Email, Password, as well as Confirmed and Blocked as boolean fields.</li> <li>The "User" collection type has a relation established with the "Role" collection type. All end-user accounts must have a designated role: by default, the end user is attributed the end-user role set as default, but that role can be changed via the end-user entries directly in the Content Manager.</li></ul> </ul> |
 
-### <img width="28" src="/img/assets/plugins/EmailPlugin.png" /> Email plugin
+### <img width="28" src="/img/assets/plugins/EmailPlugin.png" /> Email plugin {#email}
 
 The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator. More information about the email plugin is available in the [Developer Documentation](/dev-docs/plugins/email).
 
@@ -82,7 +82,7 @@ The Email plugin allows users to send email from the server or from external pro
 
 ## Additional plugins
 
-### <img width="28" src="/img/assets/plugins/Documentation-swagger.png" /> Documentation
+### <img width="28" src="/img/assets/plugins/Documentation-swagger.png" /> Documentation {#documentation}
 
  The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading "Plugins". The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation). The Documentation plugin enables:
 
@@ -97,7 +97,7 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 | Documentation    | <ul>Addition of a new Documentation option in the main navigation under the plugins heading, which contains links to open and refresh the documentation.   </ul>        |
 | Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not. <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration Panel > Roles* </li></ul>|
 
-### <img width="28" src="/img/assets/plugins/Gatsby_Monogram.png" /> Gatsby preview
+### <img width="28" src="/img/assets/plugins/Gatsby_Monogram.png" /> Gatsby preview {#gatsby}
 
 The Gatsby preview plugin allows applications with Gatsby Cloud accounts to preview the front end. The Strapi Gatsby preview plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-gatsby-preview).
 
@@ -109,13 +109,13 @@ The Gatsby preview plugin affects multiple parts of the admin panel. The table b
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation.                  |
   
 
-### <img width="28" src="/img/assets/plugins/graphql.png" /> GraphQL
+### <img width="28" src="/img/assets/plugins/graphql.png" /> GraphQL {#graphql}
 
 The GraphQL plugin enables GraphQL endpoints in a Strapi application, and gives access to the GraphQL Playground: a browser-based interface that assists in writing GraphQL queries and data exploration. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).
 
 There is no access to the GraphQL plugin in the admin panel. The GraphQL Playground is accessible at <a href="http://localhost:1337/graphql">http://localhost:1337/graphql</a> in a Strapi application. More information on using the GraphQL API is located in the [API reference](/dev-docs/api/graphql) and the [Developer Documentation plugins section](/dev-docs/plugins/graphql).
 
-### <img width="28" src="/img/assets/plugins/seo-logo.png" /> SEO
+### <img width="28" src="/img/assets/plugins/seo-logo.png" /> SEO {#seo}
 
 The Strapi SEO plugin is designed to improve your application SEO. The Strapi SEO plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-seo). Once installed, the plugin is available in the main navigation and adds 2 pre-built components *MetaSocial* and *Seo* to the Content-type Builder, which can be used as regular components (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#components)).
 
@@ -134,7 +134,7 @@ The Strapi SEO plugin affects multiple parts of the admin panel. The table below
 | Content-type Builder     | <ul> Addition of `shared - metaSocial` and `shared - seo` components in the Content-type Builder sub navigation. The `shared - metaSocial` and `shared - seo` components can be added to a collection type or single type using the **+ Add another field** button and adding an existing component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#components)). </ul> |
 |Main navigation    | <ul> Addition of ![search icon](/img/assets/icons/search.svg) *SEO* to the main navigation. By clicking on ![search icon](/img/assets/icons/search.svg) *SEO* a list of Collection Types and Single Types, with the SEO status, is available.</ul>
 
-### <img width="28" src="/img/assets/plugins/sentry.png" /> Sentry
+### <img width="28" src="/img/assets/plugins/sentry.png" /> Sentry {#sentry}
 
 The Strapi Sentry plugin is used to track Strapi errors with Sentry. The Strapi Sentry plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-sentry). With the plugin installed it is possible to:
 

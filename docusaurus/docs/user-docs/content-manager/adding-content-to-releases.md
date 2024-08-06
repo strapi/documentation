@@ -11,7 +11,7 @@ tags:
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# Including content in a release  <EnterpriseBadge /> <CloudTeamBadge />
+# Including content in a release  <EnterpriseBadge /> <CloudTeamBadge /> {#add-to-release}
 
 <NotV5 />
 

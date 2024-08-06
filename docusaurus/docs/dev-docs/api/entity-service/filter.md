@@ -90,7 +90,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 `$not` can be used as:
 
 - a logical operator (e.g. in `filters: { $not: { // conditions… }}`)
-- [an attribute operator](#not-2) (e.g. in `filters: { attribute-name: $not: { … } }`).
+- [an attribute operator](#not-1) (e.g. in `filters: { attribute-name: $not: { … } }`).
 :::
 
 :::tip

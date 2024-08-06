@@ -47,7 +47,7 @@ When using a `.js` file, the configuration can be exported:
   };
   ```
 
-- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](#casting-environment-variables):
+- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](/dev-docs/configurations/guides/access-cast-environment-variables#casting-environment-variables):
 
   ```js
   module.exports = ({ env }) => {

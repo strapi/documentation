@@ -36,7 +36,7 @@ ENV_PATH=/absolute/path/to/.env npm run start
 
 Variables defined in the `.env` file are accessible using `process.env.{variableName}` anywhere in configuration and application files.
 
-In configuration files, a `env()` utility allows defining defaults and [casting values](#casting-environment-variables):
+In configuration files, a `env()` utility allows defining defaults and [casting values](/dev-docs/configurations/guides/access-cast-environment-variables#casting-environment-variables):
 
 <Tabs groupId="js-ts">
 

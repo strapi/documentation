@@ -52,7 +52,7 @@ If the Draft & Publish feature (see [Saving, publishing and deleting content](sa
 :::
 
 :::caution
-If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
 :::
 
 ## Managing one-choice relational fields
