@@ -81,7 +81,7 @@ You should never use this command to run a Strapi application in production.
 Start a Strapi application with auto-reloading disabled.
 
 This command is to run a Strapi application without restarts and file writes, primarily for use in production.
-Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/dev-docs/configurations/environment.md#strapi-s-environment-variables) to customize the application start.
+Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/dev-docs/configurations/environment#strapis-environment-variables) to customize the application start.
 
 ## strapi build
 
@@ -335,7 +335,7 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers.md), [content-types](/dev-docs/backend-customization/models.md), [plugins](/dev-docs/plugins/developing-plugins.md#create-a-plugin), [policies](/dev-docs/backend-customization/policies.md), [middlewares](/dev-docs/backend-customization/middlewares.md) and [services](/dev-docs/backend-customization/services.md), and [migrations](/dev-docs/database-migrations).
+Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers), [content-types](/dev-docs/backend-customization/models), [plugins](/dev-docs/plugins/development/create-a-plugin), [policies](/dev-docs/backend-customization/policies), [middlewares](/dev-docs/backend-customization/middlewares) and [services](/dev-docs/backend-customization/services), and [migrations](/dev-docs/database-migrations).
 
 ```bash
 strapi generate
@@ -356,7 +356,7 @@ strapi templates:generate <path>
 
 ## strapi ts:generate-types
 
-Generate [TypeScript](/dev-docs/typescript.md) typings for the project schemas.
+Generate [TypeScript](/dev-docs/typescript) typings for the project schemas.
 
 ```bash
 strapi ts:generate-types
@@ -375,7 +375,7 @@ Strapi requires the project types to be generated in the `types` directory for t
 
 ## strapi routes:list
 
-Display a list of all the available [routes](/dev-docs/backend-customization/routes.md).
+Display a list of all the available [routes](/dev-docs/backend-customization/routes).
 
 ```bash
 strapi routes:list
@@ -383,7 +383,7 @@ strapi routes:list
 
 ## strapi policies:list
 
-Display a list of all the registered [policies](/dev-docs/backend-customization/policies.md).
+Display a list of all the registered [policies](/dev-docs/backend-customization/policies).
 
 ```bash
 strapi policies:list
@@ -391,7 +391,7 @@ strapi policies:list
 
 ## strapi middlewares:list
 
-Display a list of all the registered [middlewares](/dev-docs/backend-customization/middlewares.md).
+Display a list of all the registered [middlewares](/dev-docs/backend-customization/middlewares).
 
 ```bash
 strapi middlewares:list
@@ -399,7 +399,7 @@ strapi middlewares:list
 
 ## strapi content-types:list
 
-Display a list of all the existing [content-types](/dev-docs/backend-customization/models.md).
+Display a list of all the existing [content-types](/dev-docs/backend-customization/models).
 
 ```bash
 strapi content-types:list
@@ -415,7 +415,7 @@ strapi hooks:list
 
 ## strapi controllers:list
 
-Display a list of all the registered [controllers](/dev-docs/backend-customization/controllers.md).
+Display a list of all the registered [controllers](/dev-docs/backend-customization/controllers).
 
 ```bash
 strapi controllers:list
@@ -423,7 +423,7 @@ strapi controllers:list
 
 ## strapi services:list
 
-Display a list of all the registered [services](/dev-docs/backend-customization/services.md).
+Display a list of all the registered [services](/dev-docs/backend-customization/services).
 
 ```bash
 strapi services:list
@@ -431,7 +431,7 @@ strapi services:list
 
 ## strapi telemetry:disable
 
-Disable data collection for the project (see [Usage Information](/dev-docs/usage-information.md)).
+Disable data collection for the project (see [Usage Information](/dev-docs/usage-information)).
 
 ```bash
 strapi telemetry:disable
@@ -439,7 +439,7 @@ strapi telemetry:disable
 
 ## strapi telemetry:enable
 
-Re-enable data collection for the project after it was disabled (see [Usage Information](/dev-docs/usage-information.md)).
+Re-enable data collection for the project after it was disabled (see [Usage Information](/dev-docs/usage-information)).
 
 ```bash
 strapi telemetry:enable

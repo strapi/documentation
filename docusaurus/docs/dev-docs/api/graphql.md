@@ -463,7 +463,7 @@ mutation CreateCategory {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#create-a-new-localized-document)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#graphql-create)).
 :::
 
 ### Update an existing document
@@ -491,7 +491,7 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#update-a-document-for-a-specific-locale)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#graphql-update)).
 :::
 
 #### Update relations
@@ -529,7 +529,7 @@ mutation DeleteRestaurant {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/plugins/i18n#delete-a-locale-for-a-document)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/plugins/i18n#graphql-delete)).
 :::
 
 ### Mutations on media files
@@ -550,7 +550,7 @@ Media fields mutations use files `id`. However, GraphQL API queries in Strapi 5 
     }}
   />
 
-- or by sending REST API `GET` requests that [populate media files](/dev-docs/api/rest/populate-select#relations--media-fields), because REST API requests currently return both `id` and `documentId` for media files.
+- or by sending REST API `GET` requests that [populate media files](/dev-docs/api/rest/populate-select#population), because REST API requests currently return both `id` and `documentId` for media files.
 
 #### Update an uploaded media file
 
@@ -745,5 +745,5 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` or
 ```
 
 :::tip
-The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/dev-docs/configurations/plugins#graphql-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
+The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/dev-docs/configurations/plugins#graphql) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::

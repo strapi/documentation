@@ -314,7 +314,7 @@ If more translations files should be added, place them in `./src/admin/extension
 
 ## Logos
 
-The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the [admin panel configuration](#configuration-options):
+The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the admin panel configuration:
 
 | Location in the UI     | Configuration key to update |
 | ---------------------- | --------------------------- |

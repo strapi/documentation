@@ -1,4 +1,4 @@
----
+--- 
 title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 displayed_sidebar: restApiSidebar
@@ -19,7 +19,7 @@ The REST API allows accessing the [content-types](/dev-docs/backend-customizatio
 This section of the documentation is for the REST API reference. We also have [guides](/dev-docs/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
-All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/dev-docs/quick-start#step-3-set-roles--permissions), the user guide for the [Users & Permissions plugin](/user-docs/users-roles-permissions/configuring-end-users-roles), and [API tokens configuration documentation](/dev-docs/configurations/api-tokens) for more details.
+All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/dev-docs/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions plugin](/user-docs/users-roles-permissions/configuring-end-users-roles), and [API tokens configuration documentation](/dev-docs/configurations/api-tokens) for more details.
 :::
 
 :::note
@@ -65,10 +65,10 @@ sources={{
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
 | `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-documents) |
-| `POST`   | `/api/:pluralApiId`             | [Create a document](#create-an-entry)   |
-| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get-an-entry)         |
-| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update-an-entry)   |
-| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete-an-entry)   |
+| `POST`   | `/api/:pluralApiId`             | [Create a document](#create-a-document)   |
+| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get-a-document)         |
+| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update-a-document)   |
+| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete-a-document)   |
 
 </TabItem>
 
@@ -76,9 +76,9 @@ sources={{
 
 | Method   | URL                   | Description                                |
 | -------- | --------------------- | ------------------------------------------ |
-| `GET`    | `/api/:singularApiId` | [Get a document](#get-an-entry)              |
-| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update-an-entry) |
-| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete-an-entry)        |
+| `GET`    | `/api/:singularApiId` | [Get a document](#get-a-document)              |
+| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update-a-document) |
+| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete-a-document)        |
 
 </TabItem>
 
@@ -121,7 +121,7 @@ The following endpoint examples are taken from the [FoodAdvisor](https://github.
 </details>
 
 :::note
-[Components](/dev-docs/backend-customization/models#components) don't have API endpoints.
+[Components](/dev-docs/backend-customization/models#components-json) don't have API endpoints.
 :::
 
 ## Requests
@@ -302,7 +302,7 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/plugins/i18n#rest-post).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
@@ -386,7 +386,7 @@ Send a `null` value to clear fields.
 
 :::note NOTES
 * Even unmodified fields must be included in the request's body.
-* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/plugins/i18n#updating-an-entry).
+* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/plugins/i18n#rest-put).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
 

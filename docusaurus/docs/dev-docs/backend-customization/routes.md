@@ -530,7 +530,7 @@ export default  {
 
 ### Public routes
 
-By default, routes are protected by Strapi's authentication system, which is based on [API tokens](/dev-docs/configurations/api-tokens) or on the use of the [Users & Permissions plugin](/user-docs/plugins/strapi-plugins#users-permissions-plugin).
+By default, routes are protected by Strapi's authentication system, which is based on [API tokens](/dev-docs/configurations/api-tokens) or on the use of the [Users & Permissions plugin](/user-docs/plugins/strapi-plugins#users-and-permissions).
 
 In some scenarios, it can be useful to have a route publicly available and control the access outside of the normal Strapi authentication system. This can be achieved by setting the `auth` configuration parameter of a route to `false`:
 

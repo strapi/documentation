@@ -145,7 +145,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </Tabs>
 
 Each controller action can be an `async` or `sync` function.
-Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/backend-customization/requests-responses#requests) and the [response context](/dev-docs/backend-customization/requests-responses#responses).
+Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/backend-customization/requests-responses#ctxrequest) and the [response context](/dev-docs/backend-customization/requests-responses#ctxresponse).
 
 <details>
 <summary>Example: GET /hello route calling a basic controller</summary>

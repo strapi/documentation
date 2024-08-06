@@ -47,8 +47,8 @@ Plugin extensions code is located in the `./src/extensions` folder (see [project
 
 Plugins can be extended in 2 ways:
 
-- [extending the plugin's content-types](#extending-a-plugin-s-content-types)
-- [extending the plugin's interface](#extending-a-plugin-s-interface) (e.g. to add controllers, services, policies, middlewares and more)
+- [extending the plugin's content-types](#extending-a-plugins-content-types)
+- [extending the plugin's interface](#extending-a-plugins-interface) (e.g. to add controllers, services, policies, middlewares and more)
 
 ## Extending a plugin's content-types
 

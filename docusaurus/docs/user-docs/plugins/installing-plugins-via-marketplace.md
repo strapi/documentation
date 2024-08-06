@@ -15,7 +15,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5/>
 
-The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](/user-docs/plugins#providers/) to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](/img/assets/icons/marketplace.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
+The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](/img/assets/icons/marketplace.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
 :::note strapi In-app Marketplace vs. Market website
 The Marketplace in the admin panel only displays v4 plugins, but all plugins for all Strapi versions are discoverable in the [Strapi Market](https://market.strapi.io).

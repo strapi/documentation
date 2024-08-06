@@ -325,7 +325,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 ### `$startsWith`
 
-Attribute starts with input value.
+Attribute starts with input value (case-sensitive).
 
 **Example**
 
@@ -339,9 +339,25 @@ const entries = await strapi.documents('api::article.article').findMany({
 });
 ```
 
+### `$startsWithi`
+
+Attribute starts with input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.documents('api::article.article').findMany({
+  filters: {
+    title: {
+      $startsWithi: 'ABCD', // will return the same as filtering with 'abcd'
+    },
+  },
+});
+```
+
 ### `$endsWith`
 
-Attribute ends with input value.
+Attribute ends with input value (case-sensitive).
 
 **Example**
 
@@ -350,6 +366,23 @@ const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $endsWith: 'ABCD',
+    },
+  },
+});
+```
+
+### `$endsWithi`
+
+Attribute ends with input value (case-insensitive).
+
+**Example**
+
+```js
+const entries = await strapi.documents('api::article.article').findMany({
+  filters: {
+    title: {
+      $endsWith: 'ABCD', // will return the same as filtering with 'abcd'
+    },
     },
   },
 });

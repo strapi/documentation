@@ -51,7 +51,7 @@ Errors thrown by the REST API are included in the [response](/dev-docs/api/rest#
 
 ### GraphQL errors
 
-Errors thrown by the GraphQL API are included in the [response](/dev-docs/api/graphql#unified-response-format) that has the following format:
+Errors thrown by the GraphQL API are included in the response that has the following format:
 
 ```json
 { "errors": [

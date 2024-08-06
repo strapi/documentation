@@ -87,7 +87,7 @@ Given an API request sent to the `https://example.com:1337/api/restaurants?id=12
 | `ctx.request.query.populate`         | Parameters to [populate relations, components, or dynamic zones](/dev-docs/api/rest/populate-select#population)             | `String` or `Object` |
 | `ctx.request.query.fields`           | Parameters to [select only specific fields to return with the response](/dev-docs/api/rest/populate-select#field-selection) | `Array`              |
 | `ctx.request.query.pagination`       | Parameter to [page through entries](/dev-docs/api/rest/sort-pagination.md#pagination)                                       | `Object`             |
-| `ctx.request.query.publicationState` | Parameter to [select the Draft & Publish state](/dev-docs/api/rest/filters-locale-publication#publication-state)            | `String`             |
+| `ctx.request.query.publicationState` | Parameter to [select the Draft & Publish state](/dev-docs/api/rest/filters-locale-publication#status)            | `String`             |
 | `ctx.request.query.locale`           | Parameter to [select one or multiple locales](/dev-docs/api/rest/filters-locale-publication#locale)                         | `String` or `Array`  |
 
 ## `ctx.state`

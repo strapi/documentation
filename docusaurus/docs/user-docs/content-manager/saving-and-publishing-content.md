@@ -114,7 +114,7 @@ If the draft version of the document contains content different from the publish
 Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
 
 :::caution
-If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
 <!-- TODO: update screenshot -->
@@ -153,7 +153,7 @@ You can delete content by deleting any entry of a collection type, or the defaul
 :::tip
 You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/more.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/delete.svg) **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
 <!-- TODO: Commented out since it's not currently testable and only planned for stable release -->
-<!-- You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table. If [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type, the confirmation dialog box asks whether you want to delete only the current locales for the document, or the whole documents including all their locales. -->
+<!-- You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table. If [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#internationalization) is enabled for the content-type, the confirmation dialog box asks whether you want to delete only the current locales for the document, or the whole documents including all their locales. -->
 :::
 
 <!-- :::caution
