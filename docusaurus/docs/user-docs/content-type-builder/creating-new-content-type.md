@@ -42,8 +42,8 @@ To create a new content-type:
 
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-      | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving-publishing-content)). |
-      | Localization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
+      | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content)). |
+      | Localization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
       | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
 
 6. Click on the **Continue** button.

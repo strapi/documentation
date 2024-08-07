@@ -38,7 +38,7 @@ export default function InteractiveProjectStructure() {
           ├──── src<br/>
           │     ├──── admin <span className="token comment"># admin customization files</span><br/>
           │     │     ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
-          │     │     ├──── <a href="/dev-docs/admin-panel-customization#configuration-options">app.example.tsx</a><br/>
+          │     │     ├──── <a href="/dev-docs/admin-panel-customization/options">app.example.tsx</a><br/>
           │     │     ├──── <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.example.js</a><br/>
           |     |     ├──── tsconfig.json<br/>
           │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
@@ -127,7 +127,7 @@ export default function InteractiveProjectStructure() {
         ├──── src<br/>
         │     ├──── admin <span className="token comment"># admin customization files</span><br/>
         │           ├──── <a href="/dev-docs/admin-panel-customization#extension">extensions</a> <span className="token comment"># optional, files to extend the admin panel</span><br/>
-        │     │     ├ <a href="/dev-docs/admin-panel-customization#configuration-options">app.js</a><br/>
+        │     │     ├ <a href="/dev-docs/admin-panel-customization/options">app.js</a><br/>
         │     │     └ <a href="/dev-docs/admin-panel-customization#webpack-configuration">webpack.config.js</a><br/>
         │     ├──── api <span className="token comment"># business logic of the project split into subfolders per API</span><br/>
         │     │     └──── (api-name)<br/>

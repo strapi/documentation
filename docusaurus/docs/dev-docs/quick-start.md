@@ -16,8 +16,6 @@ tags:
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
-const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
-const summaryStyle = {fontSize: '18px'}
 
 # Quick Start Guide
 
@@ -37,8 +35,8 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 1: Run the installation script</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 1: Run the installation script</summary>
 
 ### Step 1: Run the installation script
 
@@ -54,8 +52,8 @@ The `--quickstart` installation sets up Strapi with a SQLite database. Other dat
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 2: Register the first local administrator user</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 2: Register the first local administrator user</summary>
 
 ### Step 2: Register the first local administrator user
 
@@ -93,9 +91,9 @@ If the server is not already running, in your terminal, `cd` into the `my-projec
 
 The Content-Type Builder helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
 
-<details style={detailsStyle}>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
 
-<summary style={summaryStyle}>Step 1: Create a "Restaurant" collection type</summary>
+<summary style={{fontSize: '18px'}}>Step 1: Create a "Restaurant" collection type</summary>
 
 ### Step 1: Create a "Restaurant" collection type
 
@@ -124,8 +122,8 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 2: Create a "Category" collection type</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 2: Create a "Category" collection type</summary>
 
 ### Step 2: Create a "Category" collection type
 
@@ -161,8 +159,8 @@ You have just created a basic data structure for your Strapi project! You can ke
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud. Before deploying to Strapi Cloud, you will need to host your Strapi project on an online repository — we will use GitHub.
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 1: Host the code of your Strapi project on GitHub</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 1: Host the code of your Strapi project on GitHub</summary>
 
 ### Step 1: Host the code of your Strapi project on GitHub
 
@@ -188,8 +186,8 @@ Additional information about using git with the command line interface can be fo
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 2: Create a Strapi Cloud account and a new Strapi Cloud project</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 2: Create a Strapi Cloud account and a new Strapi Cloud project</summary>
 
 ### Step 2: Create a Strapi Cloud account and a new Strapi Cloud project
 
@@ -228,8 +226,8 @@ Now your project is hosted on Strapi Cloud and accessible online. You can learn 
 
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
 
 ### Step 1: Log in to the admin panel of your new Strapi Cloud project
 
@@ -264,8 +262,8 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 2: Create an entry for the "Restaurant" collection type</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 2: Create an entry for the "Restaurant" collection type</summary>
 
 ### Step 2: Create an entry for the "Restaurant" collection type
 
@@ -287,8 +285,8 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 3: Add Categories</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 3: Add Categories</summary>
 
 #### Step 3: Add Categories
 
@@ -316,8 +314,8 @@ Now, we will add a category to a restaurant:
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 4: Set Roles & Permissions</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 4: Set Roles & Permissions</summary>
 
 ### Step 4: Set Roles & Permissions
 
@@ -341,8 +339,8 @@ sources={{
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 5: Publish the content</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 5: Publish the content</summary>
 
 ### Step 5: Publish the content
 
@@ -368,8 +366,8 @@ sources={{
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 6: Use the API</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 6: Use the API</summary>
 
 ### Step 6: Use the API
 

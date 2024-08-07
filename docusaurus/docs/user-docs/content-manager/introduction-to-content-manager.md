@@ -48,14 +48,14 @@ From the list view, it is possible to:
 
 - create a new entry <ScreenshotNumberReference number="1" />,
 - make a textual search <ScreenshotNumberReference number="2" /> or set filters <ScreenshotNumberReference number="3" /> to find specific entries,
-- if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, filter by locale to display only the entries [translated](/user-docs/content-manager/translating-content) in a chosen locale <ScreenshotNumberReference number="4" />,
+- if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#internationalization) is enabled, filter by locale to display only the entries [translated](/user-docs/content-manager/translating-content) in a chosen locale <ScreenshotNumberReference number="4" />,
 - configure the fields displayed in the table of the list view <ScreenshotNumberReference number="5" />,
 - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, see the status of each entry <ScreenshotNumberReference number="6" />,
 - perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/more.svg) <ScreenshotNumberReference number="7" /> at the end of the line:
   - edit ![Edit icon](/img/assets/icons/edit.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/duplicate.svg), or delete ![Delete icon](/img/assets/icons/delete.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
   - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/cross-circle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/cross-circle.svg) or discard its changes,
-  - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale,
-- select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publish-and-unpublish-), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
+  - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#internationalization) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale,
+- select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publishing-and-unpublishing), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
 
 :::tip
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.

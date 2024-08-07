@@ -19,7 +19,7 @@ The purpose of this guide is to allow users to deploy Strapi applications on Her
 
 :::caution
 
-- The Content-type Builder is disabled in production. See the documentation [FAQ for PaaS](/dev-docs/faq#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/dev-docs/faq#why-can-t-i-create-or-update-content-types-in-production-staging) for more information. Changes to the content structure should be developed locally and then deployed to production.
+- The Content-type Builder is disabled in production. See the documentation [FAQ for PaaS](/dev-docs/faq#why-are-my-applications-database-and-uploads-resetting-on-paas-type-services) and the [FAQ for content-types in production](/dev-docs/faq#why-cant-i-create-or-update-content-types-in-productionstaging) for more information. Changes to the content structure should be developed locally and then deployed to production.
 
 - Strapi maintains deployment guides to assist users in deploying projects. Since there are frequent updates to Strapi and to the hosting provider platforms, the guides are sometimes out of date. If you encounter an issue deploying your project following this guide, please [open an issue on GitHub](https://github.com/strapi/documentation/issues) or [submit a pull request](https://github.com/strapi/documentation/pulls) to improve the documentation.
 
@@ -350,7 +350,7 @@ The Strapi Welcome page indicates that the project is correctly set up, configur
 
 ## Update your project
 
-Modifications that require writing to model creation or other JSON files, such as creating or changing content types, require making those changes on the local development environment and then pushing the changes to Heroku. See the documentation [FAQ for PaaS](/dev-docs/faq#why-are-my-application-s-database-and-uploads-resetting-on-paas) and the [FAQ for content-types in production](/dev-docs/faq#why-can-t-i-create-or-update-content-types-in-production-staging) for more information.
+Modifications that require writing to model creation or other JSON files, such as creating or changing content types, require making those changes on the local development environment and then pushing the changes to Heroku. See the documentation [FAQ for PaaS](/dev-docs/faq#why-are-my-applications-database-and-uploads-resetting-on-paas-type-services) and the [FAQ for content-types in production](/dev-docs/faq#why-cant-i-create-or-update-content-types-in-productionstaging) for more information.
 
 Further development can benefit from [version control](https://devcenter.heroku.com/articles/github-integration), or continue  using `git push heroku HEAD:main` to commit and push changes to Heroku directly.
 

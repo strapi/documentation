@@ -43,7 +43,7 @@ New API tokens are generated using a salt. This salt is automatically generated 
 The salt can be customized:
 
 - either by updating the string value for `apiToken.salt` in `./config/admin.js` (see [admin panel configuration documentation](/dev-docs/configurations/admin-panel))
-- or by creating an `API_TOKEN_SALT` [environment variable](/dev-docs/configurations/environment#strapi-s-environment-variables) in the `.env` file of the project
+- or by creating an `API_TOKEN_SALT` [environment variable](/dev-docs/configurations/environment#strapis-environment-variables) in the `.env` file of the project
 
 :::caution
 Changing the salt invalidates all the existing API tokens.

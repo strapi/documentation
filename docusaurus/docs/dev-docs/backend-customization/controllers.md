@@ -12,10 +12,9 @@ tags:
 - strapi-utils
 - validateQuery function
 ---
+
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-const imgStyle = {width: '100%', margin: '0'}
-const captionStyle = {fontSize: '12px'}
 
 # Controllers
 
@@ -25,9 +24,9 @@ Controllers are JavaScript files that contain a set of methods, called actions, 
 
 In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/dev-docs/backend-customization/services) to organize the code into re-usable parts.
 
-<figure style={imgStyle}>
+<figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-controllers-services.png" alt="Simplified Strapi backend diagram with controllers highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation
@@ -146,7 +145,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </Tabs>
 
 Each controller action can be an `async` or `sync` function.
-Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/backend-customization/requests-responses#requests) and the [response context](/dev-docs/backend-customization/requests-responses#responses).
+Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/backend-customization/requests-responses#ctxrequest) and the [response context](/dev-docs/backend-customization/requests-responses#ctxresponse).
 
 <details>
 <summary>Example: GET /hello route calling a basic controller</summary>

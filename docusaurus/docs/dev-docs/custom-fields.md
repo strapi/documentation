@@ -25,7 +25,7 @@ The present documentation is intended for custom field creators: it describes wh
 
 It is recommended that you develop a dedicated [plugin](/dev-docs/plugins-development) for custom fields. Custom field plugins include both a server and admin panel part. The custom field must be registered in both parts before it is usable in Strapi's admin panel.
 
-Once created and used, custom fields are defined like any other attribute in the model's schema. An attribute using a custom field will have its type represented as `customField` (i.e. `type: 'customField'`). Depending on the custom field being used a few additional properties may be present in the attribute's definition (see [models documentation](/dev-docs/backend-customization#custom-fields)).
+Once created and used, custom fields are defined like any other attribute in the model's schema. An attribute using a custom field will have its type represented as `customField` (i.e. `type: 'customField'`). Depending on the custom field being used a few additional properties may be present in the attribute's definition (see [models documentation](/dev-docs/backend-customization/models#custom-fields)).
 
 :::note NOTES
 
@@ -61,7 +61,7 @@ The optional `inputSize` object, when specified, must contain all of the followi
 
 :::note Current limitations
 Currently:
-* Custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization#model-attributes) documentation. 
+* Custom fields cannot add new data types to Strapi and must use existing, built-in Strapi data types described in the [models' attributes](/dev-docs/backend-customization/models#model-attributes) documentation. 
 * You also cannot modify an existing data type.
 * Special data types unique to Strapi, such as relation, media, component, or dynamic zone data types, cannot be used in custom fields.
 :::

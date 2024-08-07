@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -97,7 +98,6 @@ const config = {
           // TODO: update 'v5/mvp' to v5 once it's on docs-next, and then back to 'main' for the stable release
           editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus',
           admonitions: {
-            tag: ':::',
             keywords: [
               // Admonitions defaults
               'note',
@@ -131,23 +131,6 @@ const config = {
           priority: 0.5,
           ignorePatterns: ['/tags/**'],
           filename: 'sitemap.xml',
-        },
-      },
-    ],
-    [
-      'redocusaurus',
-      {
-        // Plugin Options for loading OpenAPI files
-        specs: [
-          {
-            spec: 'docs/dev-docs/api/openapi.yaml',
-            route: '/openapi/',
-          },
-        ],
-        // Theme Options for modifying how redoc renders them
-        theme: {
-          // Change with your site colors
-          primaryColor: '#4945FF',
         },
       },
     ],
@@ -277,6 +260,9 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
+        prism: {
+          additionalLanguages: ['bash', 'diff', 'json'],
+        },
       },
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
@@ -303,24 +289,6 @@ const config = {
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
      * related to the Docusaurus canary build or not.
      */
-    // [
-    //   '@docusaurus/plugin-client-redirects',
-    //   {
-    //     fromExtensions: ['html', 'htm'], // /myPage.html -> /myPage
-    //     redirects: [
-    //       // /docs/oldDoc -> /docs/newDoc
-    //       {
-    //         to: '/dev-docs/admin-panel-customization',
-    //         from: ['/developer-docs/latest/development/admin-customization', '/developer-docs/latest/development/admin-customization.html'],
-    //       },
-    //       // Redirect from multiple old paths to the new path
-    //       // {
-    //       //   to: '/docs/newDoc2',
-    //       //   from: ['/docs/oldDocFrom2019', '/docs/legacyDocFrom2016'],
-    //       // },
-    //     ],
-    //   },
-    // ],
   ],
 };
 

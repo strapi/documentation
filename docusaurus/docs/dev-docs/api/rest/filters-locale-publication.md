@@ -23,7 +23,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Filtering, Locale, and Publication State
 
-The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-entries) method.<br/>
+The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-documents) method.<br/>
 Using optional Strapi features can provide some more filters:
 
 - If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is enabled on a content-type, it's possible to filter by locale.
@@ -408,7 +408,7 @@ await request(`/api/restaurants?${query}`);
 - [Localization should be enabled for the content-type](/user-docs/content-type-builder/creating-new-content-type.md#creating-a-new-content-type).
 :::
 
-The `locale` API parameter can be used to work with entries from a specific locale (see [Internationalization documentation](/dev-docs/plugins/i18n.md#usage-with-the-rest-api)).
+The `locale` API parameter can be used to work with entries from a specific locale (see [Internationalization documentation](/dev-docs/plugins/i18n#rest)).
 
 <SideBySideContainer>
 <SideBySideColumn>

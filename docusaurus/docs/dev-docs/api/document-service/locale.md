@@ -25,7 +25,7 @@ By default the [Document Service API](/dev-docs/api/document-service) returns th
 
 ## Get a locale version with `findOne()` {#find-one}
 
-If a `locale` is passed, the [`findOne()` method](/dev-docs/api/document-service#find-one) of the Document Service API returns the version of the document for this locale:
+If a `locale` is passed, the [`findOne()` method](/dev-docs/api/document-service#findone) of the Document Service API returns the version of the document for this locale:
 
 <ApiCall>
 

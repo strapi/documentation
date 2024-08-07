@@ -22,7 +22,7 @@ Examples:
 - As the `uid`s for user-defined custom content-types follow the `api::[content-type]` syntax, if a content-type `article` exists, it is referenced by `api::article.article`.
 
 :::tip
-Run the [`strapi content-types:list`](/dev-docs/cli#strapi-content-types-list) command in a terminal to display all possible content-types' `uid`s for a specific Strapi instance.
+Run the [`strapi content-types:list`](/dev-docs/cli#strapi-content-types) command in a terminal to display all possible content-types' `uid`s for a specific Strapi instance.
 :::
 
 ## findOne()

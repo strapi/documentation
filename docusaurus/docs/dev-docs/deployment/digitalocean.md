@@ -263,7 +263,7 @@ You will now deploy your Strapi project to your Droplet by cloning it from GitHu
 
   Press `y` to answer yes to the `Command may disrupt existing ssh connections. Proceed with operation (y|n)?` message. 
 
-Your Strapi project is now installed on your DigitalOcean Droplet. Before being able to create your first user, you must install and configure [Nginx](#install-and-configure-nginx-web-server) and [pm2](#install-and-configure-pm2), configure the [`ecosystem.config.js` file and environment variables](#configure-the-ecosystemconfigjs-and-env-files), and [setup webhooks](#set-up-a-webhook-on-digitalocean--github).
+Your Strapi project is now installed on your DigitalOcean Droplet. Before being able to create your first user, you must install and configure [Nginx](#install-and-configure-nginx-web-server) and [pm2](#install-and-configure-pm2), configure the [`ecosystem.config.js` file and environment variables](#configure-the-ecosystemconfigjs-and-env-files), and [setup webhooks](#set-up-a-webhook-on-digitaloceangithub).
 
 ### Install and configure Nginx web server
 

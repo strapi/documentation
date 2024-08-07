@@ -9,9 +9,6 @@ tags:
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 import TempUpgradeRCtag from '/docs/snippets/temp-upgrade-rc.md'
-const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
-const summaryStyle = {fontSize: '18px'}
-const codeStyle = {color: 'rgb(73, 69, 255)', backgroundColor: 'rgb(240, 240, 255)'}
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
@@ -35,8 +32,8 @@ All of the following available resources will help you upgrade your application 
 
 The following questions and their answers should help you cover the most common use cases:
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>How can I handle the upgrade and the installation of the latest dependencies? How can I handle the breaking changes in the code and adapt my code to Strapi 5?</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>How can I handle the upgrade and the installation of the latest dependencies? How can I handle the breaking changes in the code and adapt my code to Strapi 5?</summary>
 
 Strapi provides a tool, the [upgrade tool](/dev-docs/upgrade-tool). The upgrade tool is a command line tool with some commands that handle the upgrade of the dependencies and the execution of **codemods** <Codemods/>.
 
@@ -46,14 +43,14 @@ Strapi 5 docs also provide a [complete breaking changes database](/dev-docs/migr
 
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>How can I handle the data migration, ensuring that in Strapi 5 the application will still be working?</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>How can I handle the data migration, ensuring that in Strapi 5 the application will still be working?</summary>
 <p>Strapi 5 integrates a data migration script that is run once the application starts for the first time in Strapi 5.</p>
-<p>However, please <strong>always backup your database file</strong> (found at <code style={codeStyle}>.tmp/data.db</code> by default if using a SQL database) before performing any upgrade, as instructed in the <a href="/dev-docs/migration/v4-to-v5/step-by-step">step-by-step guide</a>.</p>
+<p>However, please <strong>always backup your database file</strong> (found at <code style={{color: 'rgb(73, 69, 255)', backgroundColor: 'rgb(240, 240, 255)'}}>.tmp/data.db</code> by default if using a SQL database) before performing any upgrade, as instructed in the <a href="/dev-docs/migration/v4-to-v5/step-by-step">step-by-step guide</a>.</p>
 </details>
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>As a Strapi Cloud customer, how can I handle the entire upgrade and deployment of my Strapi 5 application?</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>As a Strapi Cloud customer, how can I handle the entire upgrade and deployment of my Strapi 5 application?</summary>
 
 :::danger Warning: Don't push a Strapi 5 project to Strapi Cloud yet
 Strapi Cloud is still running on Strapi v4. The following process is provided as an indication of what will happen when Strapi 5 is released as a stable version. Do not try to push your Strapi 5 beta or  Release Candidate (RC) project to Strapi Cloud yet.

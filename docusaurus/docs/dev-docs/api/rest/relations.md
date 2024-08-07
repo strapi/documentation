@@ -16,7 +16,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 
-Relations between content-types can be managed through the [admin panel](/user-docs/content-manager/managing-relational-fields#managing-multiple-choices-relational-fields) or through [REST API](/dev-docs/api/rest) or [Document Service API](/dev-docs/api/document-service) requests.
+Relations between content-types can be managed through the [admin panel](/user-docs/content-manager/managing-relational-fields#managing-multiple-choice-relational-fields) or through [REST API](/dev-docs/api/rest) or [Document Service API](/dev-docs/api/document-service) requests.
 
 Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
 

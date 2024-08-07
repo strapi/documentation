@@ -163,7 +163,7 @@ export default {
 The `register` lifecycle function, found in `./src/index.js` (or in `./src/index.ts`), is an asynchronous function that runs before the application is initialized.
 It can be used to:
 
-- [extend plugins](/dev-docs/plugins-extension#extending-a-plugin-s-interface)
+- [extend plugins](/dev-docs/plugins-extension#extending-a-plugins-interface)
 - extend [content-types](/dev-docs/backend-customization/models) programmatically
 - load some [environment variables](/dev-docs/configurations/environment)
 - register a [custom field](/dev-docs/custom-fields) that would be used only by the current Strapi application,

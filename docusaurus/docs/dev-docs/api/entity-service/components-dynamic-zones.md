@@ -11,11 +11,11 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 
 <ESdeprecated />
 
-The [Entity Service](/dev-docs/api/entity-service) is the layer that handles [components](/dev-docs/backend-customization/models#components) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones) logic. With the Entity Service API, components and dynamic zones can be [created](#creation) and [updated](#update) while creating or updating entries.
+The [Entity Service](/dev-docs/api/entity-service) is the layer that handles [components](/dev-docs/backend-customization/models#components-json) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones) logic. With the Entity Service API, components and dynamic zones can be [created](#creation) and [updated](#update) while creating or updating entries.
 
 ## Creation
 
-A [component](/dev-docs/backend-customization/models#components) can be created while creating an entry with the Entity Service API:
+A [component](/dev-docs/backend-customization/models#components-json) can be created while creating an entry with the Entity Service API:
 
 ```js
 strapi.entityService.create('api::article.article', {
@@ -48,7 +48,7 @@ strapi.entityService.create('api::article.article', {
 
 ## Update
 
-A [component](/dev-docs/backend-customization/models#components) can be updated while updating an entry with the Entity Service API. If a component `id` is specified, the component is updated, otherwise the old one is deleted and a new one is created:
+A [component](/dev-docs/backend-customization/models#components-json) can be updated while updating an entry with the Entity Service API. If a component `id` is specified, the component is updated, otherwise the old one is deleted and a new one is created:
 
 ```js
 strapi.entityService.update('api::article.article', 1, {

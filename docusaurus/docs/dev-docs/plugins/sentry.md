@@ -105,7 +105,7 @@ export default ({ env }) => ({
 
 ### Environment configuration
 
-Using the [`env` utility](/dev-docs/configurations/environment#configuration-using-environment-variables), you can enable or disable the Sentry plugin based on the environment. For example, to only enable the plugin in your `production` environment:
+Using the [`env` utility](/dev-docs/configurations/guides/access-cast-environment-variables), you can enable or disable the Sentry plugin based on the environment. For example, to only enable the plugin in your `production` environment:
 
 <Tabs groupId="js-ts">
 

@@ -13,4 +13,4 @@ The following environment variables are required in order to run Strapi in a Doc
 | `ADMIN_JWT_SECRET` | The secret used to sign the JWT for the Admin panel. |
 | `APP_KEYS` | The secret keys used to sign the session cookies. |
 
-You can also set some [optional environment variables](/dev-docs/configurations/environment#strapi-s-environment-variables).
+You can also set some [optional environment variables](/dev-docs/configurations/environment#strapis-environment-variables).

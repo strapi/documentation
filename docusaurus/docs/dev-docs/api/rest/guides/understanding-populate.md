@@ -38,7 +38,7 @@ However, having slightly different response examples should not prevent you from
 
 When querying content-types with Strapi's [REST API](/dev-docs/api/rest), by default, responses only include top-level fields and do not include any relations, media fields, components, or dynamic zones.
 
-Populating in the context of the Strapi REST API means including additional content with your response by returning more fields than the ones returned by default. You use the [`populate` parameter](#population) to achieve this.
+Populating in the context of the Strapi REST API means including additional content with your response by returning more fields than the ones returned by default. You use the [`populate` parameter](/dev-docs/api/rest/populate-select#population) to achieve this.
 
 :::info
 Throughout this guide, examples are built with real data queried from the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application. To test examples by yourself, setup FoodAdvisor, start the server in the `/api/` folder, and ensure that proper `find` permissions are given for the queried content-types before sending your queries.

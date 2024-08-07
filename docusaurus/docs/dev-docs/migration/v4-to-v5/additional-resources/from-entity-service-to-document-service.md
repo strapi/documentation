@@ -219,7 +219,7 @@ strapi.documents(uid).count();
 
 ## Manual migration
 
-- Users who prefer to manually migrate can do so by replicating what the codemod does (see [codemod scope](#codemod-scope) and [function calls examples](#function-calls-migration-examples) for reference).
+- Users who prefer to manually migrate can do so by replicating what the codemod does (see [codemod scope](#codemod-scope) and [function calls examples](#examples-of-function-calls-migration) for reference).
 
 - Plugin developers who use Entity Service decorators in their code must replace them by Document Service middlewares. The following example gives you an idea of how they work, and additional information can be found in the dedicated [Document Service middlewares documentation](/dev-docs/api/document-service/middlewares):
 
