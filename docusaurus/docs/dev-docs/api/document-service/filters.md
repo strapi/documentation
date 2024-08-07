@@ -52,7 +52,7 @@ Negates the nested condition(s).
 **Example**
 
 ```js
-const entries = await strapi.documents('api::article.article').find({
+const entries = await strapi.documents('api::article.article').findMany({
   filters: {
     title: {
       $not: {
