@@ -40,6 +40,12 @@
       svg path {
         stroke: var(--strapi-primary-500);
       }
+
+      .DocSearch-Button-Keys {
+        .DocSearch-Button-Key {
+          color: var(--strapi-primary-600);
+        }
+      }
     }
   }
 
@@ -95,38 +101,32 @@
     svg {
       position: relative;
       left: 6px;
-      top: 3px;
-      width: 18px;
-      height: 18px;
-      fill: var(--strapi-neutral-500);
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      fill: var(--strapi-neutral-400);
     }
 
     .kapa-widget-button-text {
       position: relative;
-      top: -2px;
-      // left: 6px;
+      top: -5px;
 
       @media screen and (max-width: 996px){
         left: 12px;
       }
     }
-  }
 
-  &:hover {
-    .kapa-widget-button-text {
-      color: var(--strapi-primary-600);
-    }
-    button {
+    &:hover {
+      .kapa-widget-button-text {
+        color: var(--strapi-primary-600);
+      }
       svg {
         fill: var(--strapi-primary-600);
       }
     }
-    .DocSearch-Button-Keys {
-      .DocSearch-Button-Key {
-        color: var(--strapi-primary-600);
-      }
-    }
   }
+
+
 }
 
 @media (max-width: 768px) {
