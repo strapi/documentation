@@ -8,7 +8,7 @@ sidebar_position: 3
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
+Strapi Cloud offers up to 5 free trial projects, each free for 14 days, and 3 paid plans: Developer, Pro, and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
 
 | Feature | Free Trial | Developer | Pro | Team |
 | --- | --- | --- | --- | --- |
