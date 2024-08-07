@@ -29,3 +29,7 @@ Depending on the [Document Service API methods](/dev-docs/api/document-service) 
 :::note
 Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method.
 :::
+
+:::strapi Document Service middlewares
+In Strapi 5, Document Service middlewares allow you to perform actions before and after a method runs. Please refer to the [Document Service middlewares documentation](/dev-docs/api/document-service/middlewares) for more information on how to register and implement this type of middleware.
+:::

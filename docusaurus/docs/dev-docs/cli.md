@@ -30,7 +30,7 @@ It is recommended to install Strapi locally only, which requires prefixing all o
 
 To pass options with `npm` use the syntax: `npm run strapi <command> -- --<option>`.
 
-To pass options with `yarn` use the syntax: `yarn run strapi <command> --<option>`
+To pass options with `yarn` use the syntax: `yarn strapi <command> --<option>`
 :::
 
 <details>

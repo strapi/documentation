@@ -1,24 +1,109 @@
-.custom-search-bar {
+.my-custom-search-bar {
+  display: flex;
+  justify-content: space-evenly;
+  border: var(--strapi-input-border);
+  border-radius: 6px;
+  background-color: white;
   position: relative;
-  top: 80px;
-  left: 20px;
-  margin-bottom: 30px;
 
-  /** Override the default search bar styles */
-  .DocSearch {
-    &.DocSearch-Button {
+  .DocSearch.DocSearch-Button:hover {
+    box-shadow: none;
+  }
+
+  .DocSearch.DocSearch-Button,
+  .kapa-widget-button {
+    &:hover {
       background-color: var(--strapi-neutral-100);
-      width: 90%;
-      border-radius: 5px;
+    }
+  }
+
+  .DocSearch.DocSearch-Button {
+    background-color: transparent;
+    width: 60%;
+    border: none;
+
+    &:hover {
+      color: var(--strapi-primary-600);
+      border-radius: 6px 0 0 6px;
+
+      svg path {
+        stroke: var(--strapi-primary-500);
+      }
+
+      .DocSearch-Button-Key {
+        color: var(--strapi-primary-600);
+      }
+    }
+  }
+
+  .DocSearch-Button-Keys {
+    min-width: 30px;
+    position: relative;
+    top: 1px;
+  }
+
+  .kapa-widget-button {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0 10px;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: inherit;
+    text-align: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    outline: none;
+
+    &-text {
+      font-size: var(--custom-navbar-items-font-size);
+      color: var(--strapi-neutral-500);
+      position: relative;
+      font-weight: 500;
+      top: -5px;
+    }
+
+    svg {
+      margin-left: 6px;
+      fill: var(--strapi-neutral-500);
+      position: relative;
+      top: 6px;
+      width: 27px;
+      height: 27px;
+    }
+
+    &:hover {
+      border-radius: 0 6px 6px 0;
+
+      .kapa-widget-button-text {
+        color: var(--strapi-primary-600);
+      }
+
+      svg {
+        fill: var(--strapi-primary-600);
+      }
     }
   }
 }
 
-.navbar .DocSearch {
-  &.DocSearch-Button {
-    display: none;
+@media (max-width: 768px) {
+  .my-custom-search-bar {
+    .kapa-widget-button-text {
+      display: none;
+    }
+    .kapa-widget-button {
+      border-radius: 50%;
+      padding: 0;
+      padding-right: 4px;
+    }
   }
 }
 
-
-
+@include dark {
+  .my-custom-search-bar {
+    background: var(--strapi-neutral-0);
+    border: var(--strapi-input-border);
+    color: var(--strapi-dark-100);
+  }
+}

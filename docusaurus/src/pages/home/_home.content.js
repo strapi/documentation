@@ -115,7 +115,7 @@ export default {
       ],
     },
     {
-      cardLink: '/dev-docs/intro',
+      cardLink: '/cloud/intro',
       cardTitle: 'Cloud Documentation',
       cardDescription: 'Learn how to deploy and manage projects on Strapi Cloud',
       cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,

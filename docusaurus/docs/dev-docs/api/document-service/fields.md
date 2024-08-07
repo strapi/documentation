@@ -17,6 +17,8 @@ tags:
 - update()
 - unpublishing content
 ---
+ 
+import IdsInResponse from '/docs/snippets/id-in-responses.md'
 
 # Document Service API: Selecting fields
 
@@ -26,6 +28,8 @@ By default the [Document Service API](/dev-docs/api/document-service) returns al
 You can also use the `populate` parameter to populate relations, media fields, components, or dynamic zones (see the [`populate` parameter](/dev-docs/api/document-service/populate) documentation).
 :::
 
+<IdsInResponse />
+
 ## Select fields with `findOne()` queries
 
 To select fields to return while [finding a specific document](/dev-docs/api/document-service#findone) with the Document Service API:
@@ -34,8 +38,9 @@ To select fields to return while [finding a specific document](/dev-docs/api/doc
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").findOne({
-  fields: ["title", "slug"],
+const document = await strapi.documents("api::restaurant.restaurant").findOne({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
+  fields: ["name", "description"],
 });
 ```
 
@@ -45,9 +50,9 @@ const document = await strapi.documents("api::article.article").findOne({
 
 ```js
 {
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  title: "Test Article",
-  slug: "test-article"
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  description: "Welcome to Biscotte restaurant! …"
 }
 ```
 
@@ -62,8 +67,8 @@ To select fields to return while [finding the first document](/dev-docs/api/docu
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").findFirst({
-  fields: ["title", "slug"],
+const document = await strapi.documents("api::restaurant.restaurant").findFirst({
+  fields: ["name", "description"],
 });
 ```
 
@@ -73,9 +78,9 @@ const document = await strapi.documents("api::article.article").findFirst({
 
 ```js
 {
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  title: "Test Article",
-  slug: "test-article" …
+  documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+  name: "Biscotte Restaurant",
+  description: "Welcome to Biscotte restaurant! …"
 }
 ```
 
@@ -90,8 +95,8 @@ To select fields to return while [finding documents](/dev-docs/api/document-serv
 <Request title="Example request">
 
 ```js
-const documents = await strapi.documents("api::article.article").findMany({
-  fields: ["title", "slug"],
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  fields: ["name", "description"],
 });
 ```
 
@@ -102,9 +107,9 @@ const documents = await strapi.documents("api::article.article").findMany({
 ```js
 [
   {
-    documentId: "cjld2cjxh0000qzrmn831i7rn",
-    title: "Test Article",
-    slug: "test-article"
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    description: "Welcome to Biscotte restaurant! …"
   }
   // ...
 ]
@@ -121,14 +126,12 @@ To select fields to return while [creating documents](/dev-docs/api/document-ser
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").create({
+const document = await strapi.documents("api::restaurant.restaurant").create({
   data: {
-    title: "Test Article",
-    slug: "test-article",
-    body: "Test 1",
-    headerImage: 2,
+    name: "Restaurant B",
+    description: "Description for the restaurant",
   },
-  fields: ["title", "slug"],
+  fields: ["name", "description"],
 });
 ```
 
@@ -138,9 +141,10 @@ const document = await strapi.documents("api::article.article").create({
 
 ```js
 {
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  title: "Test Article",
-  slug: "test-article"
+  id: 4,
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+  name: 'Restaurant B',
+  description: 'Description for the restaurant'
 }
 ```
 
@@ -155,12 +159,12 @@ To select fields to return while [updating documents](/dev-docs/api/document-ser
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").update({
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
+const document = await strapi.documents("api::restaurant.restaurant").update({
+  documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
   data: {
-    title: "Test Article Updated",
+    name: "Restaurant C",
   },
-  fields: ["title"],
+  fields: ["name"],
 });
 ```
 
@@ -169,9 +173,9 @@ const document = await strapi.documents("api::article.article").update({
 <Response title="Example response">
 
 ```js
-{
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  title: "Test Article Updated"
+{ 
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+  name: 'Restaurant C'
 }
 ```
 
@@ -186,9 +190,9 @@ To select fields to return while [deleting documents](/dev-docs/api/document-ser
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").delete({
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  fields: ["title"],
+const document = await strapi.documents("api::restaurant.restaurant").delete({
+  documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
+  fields: ["name"],
 });
 ```
 
@@ -196,13 +200,15 @@ const document = await strapi.documents("api::article.article").delete({
 
 <Response title="Example response">
 
-```json
-{
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
+```js
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
   // All of the deleted document's versions are returned
-  "versions": [
+  entries: [
     {
-      "title": "Test Article"
+      id: 4,
+      documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+      name: 'Restaurant C',
+      // …
     }
   ]
 }
@@ -219,9 +225,9 @@ To select fields to return while [publishing documents](/dev-docs/api/document-s
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").publish({
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  fields: ["title"],
+const document = await strapi.documents("api::restaurant.restaurant").publish({
+  documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
+  fields: ["name"],
 });
 ```
 
@@ -229,13 +235,14 @@ const document = await strapi.documents("api::article.article").publish({
 
 <Response title="Example response">
 
-```json
+```js
 {
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  // All of the published locale versions are returned
-  "versions": [
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+  // All of the published locale entries are returned
+  entries: [
     {
-      "title": "Test Article"
+      documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+      name: 'Restaurant B'
     }
   ]
 }
@@ -252,9 +259,9 @@ To select fields to return while [unpublishing documents](/dev-docs/api/document
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").unpublish({
+const document = await strapi.documents("api::restaurant.restaurant").unpublish({
   documentId: "cjld2cjxh0000qzrmn831i7rn",
-  fields: ["title"],
+  fields: ["name"],
 });
 ```
 
@@ -262,13 +269,14 @@ const document = await strapi.documents("api::article.article").unpublish({
 
 <Response title="Example response">
 
-```json
+```js
 {
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  // All of the unpublished locale versions are returned
-  "versions": [
+  documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+  // All of the published locale entries are returned
+  entries: [
     {
-      "title": "Test Article"
+      documentId: 'fmtr6d7ktzpgrijqaqgr6vxs',
+      name: 'Restaurant B'
     }
   ]
 }
@@ -285,9 +293,9 @@ To select fields to return while [discarding draft versions of documents](/dev-d
 <Request title="Example request">
 
 ```js
-const document = await strapi.documents("api::article.article").discardDraft({
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  fields: ["title"],
+const document = await strapi.documents("api::restaurant.restaurant").discardDraft({
+  documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
+  fields: ["name"],
 });
 ```
 
@@ -297,11 +305,11 @@ const document = await strapi.documents("api::article.article").discardDraft({
 
 ```json
 {
-  documentId: "cjld2cjxh0000qzrmn831i7rn",
-  // All of the discarded draft versions are returned
-  "versions": [
+  documentId: "fmtr6d7ktzpgrijqaqgr6vxs",
+  // All of the discarded draft entries are returned
+  entries: [
     {
-      "title": "Test Article"
+      "name": "Restaurant B"
     }
   ]
 }

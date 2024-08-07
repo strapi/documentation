@@ -28,7 +28,7 @@ A supported database is also required for any Strapi project:
 | Database   | Recommended | Minimum |
 | ---------- | ----------- | ------- |
 | MySQL      | 8.0         | 8.0     |
-| MariaDB    | 10.6        | 10.3    |
+| MariaDB    | 10.6        | 10.5    |
 | PostgreSQL | 14.0        | 12.0    |
 | SQLite     | 3           | 3       |
 
@@ -118,7 +118,7 @@ The above installation guide only covers the basic installation option using the
 | `--use-npm` | Force the usage of [npm](https://www.npmjs.com/) as the project package manager |
 | `--use-yarn` | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager |
 | `--use-pnpm` | Force the usage of [pnpm](https://pnpm.io/) as the project package manager |
-| `--template` | Create a project with pre-made Strapi configurations (see [Templates](/dev-docs/templates)). |
+| `--skip-cloud` |  Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step) |
 | `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
 | `--dbhost <dbhost>` | Define the database host to use by replacing `<dbclient>` in the command by the value of your choice |
 | `--dbport <dbport>` | Define the database port to use by replacing `<dbclient>` in the command by the value of your choice |
@@ -134,7 +134,6 @@ The above installation guide only covers the basic installation option using the
 * For additional information about database configuration, please refer to the [database configuration documentation](/dev-docs/configurations/database#configuration-structure).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
-
 
 ### Skipping the Strapi Cloud login step
 

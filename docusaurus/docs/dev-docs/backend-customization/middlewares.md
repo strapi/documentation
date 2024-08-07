@@ -14,28 +14,18 @@ tags:
 - routes
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-const imgStyle = {width: '100%', margin: '0'}
-const captionStyle = {fontSize: '12px'}
+import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares customization
 
 <NotV5 />
 
-:::strapi Different types of middlewares
+<MiddlewareTypes />
 
-In Strapi, 2 middleware concepts coexist:
-
-- **Global middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add global middlewares (see [Server API documentation](/dev-docs/plugins/server-api)).
-
-- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/backend-customization/routes#middlewares).
-
-:::
-
-<figure style={imgStyle}>
+<figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-global-middlewares.png" alt="Simplified Strapi backend diagram with global middlewares highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation

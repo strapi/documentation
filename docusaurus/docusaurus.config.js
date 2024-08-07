@@ -14,6 +14,9 @@ const config = {
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
+  // ⚠️ TODO: remove this for stable release
+  noIndex: true, // set to false to allow indexing by search engines
+
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
@@ -209,15 +212,6 @@ const config = {
           //   label: 'GitHub',
           //   position: 'right',
           // },
-          {
-            type: 'html',
-            value: '<button><span class="kapa-button-label">Ask AI bot <?xml version="1.0" encoding="utf-8"?><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 32 32" xml:space="preserve"><style type="text/css">.linesandangles_een{fill:inherit;}</style><path class="linesandangles_een" d="M4,4v20h14l0,6l6-6h4V4H4z M26,22h-2.828L20,25.172L20,22H6V6h20V22z M14,12h-2 c0-1.607,1.065-4,4-4s4,2.393,4,4c0,1.41-0.819,3.423-3,3.897V17h-2v-3h1c1.903,0,2-1.666,2-2c-0.008-0.464-0.174-2-2-2 C14.097,10,14,11.666,14,12z M15,18h2v2h-2V18z"/></svg></span></button>',
-            className: 'navbar__link kapa-widget-button',
-            position: 'right',
-          },
-          // {
-          //   type: 'docsVersionDropdown', // temporarily disabled, enable again when adding versioning, see https://tutorial.docusaurus.io/docs/tutorial-extras/manage-docs-versions
-          // }
         ],
       },
       footer: {

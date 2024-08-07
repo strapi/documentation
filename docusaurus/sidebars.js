@@ -91,10 +91,12 @@ const sidebars = {
             'dev-docs/configurations/functions',
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
-            'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/sso',
-            'dev-docs/configurations/guides/rbac',
             'dev-docs/configurations/features',
+            'dev-docs/configurations/guides/rbac',
+            'dev-docs/configurations/guides/public-assets',
+            'dev-docs/configurations/guides/access-cast-environment-variables',
+            'dev-docs/configurations/guides/access-configuration-values',
           ],
         },
         {
@@ -196,6 +198,7 @@ const sidebars = {
             'dev-docs/api/rest/sort-pagination',
             'dev-docs/api/rest/relations',
             'dev-docs/api/rest/interactive-query-builder',
+            'dev-docs/api/rest/guides/intro',
           ]
         },
         {
@@ -417,7 +420,27 @@ const sidebars = {
             'dev-docs/backend-customization/webhooks',
           ]
         },
-        'dev-docs/admin-panel-customization',
+        {
+          type: 'category',
+          label: 'Admin panel customization',
+          link: {
+            type: 'doc',
+            id: 'dev-docs/admin-panel-customization',
+          },
+          items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/admin-panel-customization',
+              label: 'Introduction to admin panel customization',
+            },
+            'dev-docs/admin-panel-customization/host-port-path',
+            'dev-docs/admin-panel-customization/options',
+            'dev-docs/admin-panel-customization/bundlers',
+            'dev-docs/admin-panel-customization/wysiwyg-editor',
+            'dev-docs/admin-panel-customization/extension',
+            'dev-docs/admin-panel-customization/deployment',
+          ]
+        },
       ]
     },
     { // Plugins
@@ -712,6 +735,7 @@ const sidebars = {
             'user-docs/settings/API-tokens',
             'user-docs/settings/internationalization',
             'user-docs/settings/media-library-settings',
+            'user-docs/settings/releases',
             {
               type: 'doc',
               label: 'Review Workflows',
@@ -1042,6 +1066,11 @@ const sidebars = {
           type: "doc",
           label: "How to populate creator fields",
           id: 'dev-docs/api/rest/guides/populate-creator-fields',
+        },
+        {
+          type: 'link',
+          label: 'Additional resources',
+          href: '/dev-docs/api/rest/guides/intro#additional-resources'
         },
       ],
     }

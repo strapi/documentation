@@ -31,4 +31,4 @@ Strapi 5 RC (Release Candidate) brings many new features and improvements, and t
 
 ➕ You will also soon find more official guides and more references to external resources (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
 
-🤖 Also, last but not least, you might have noticed a shiny new **🔎 Ask AI & Search Docs** button in the top navigation bar! Click on it and select "Ask AI" to ask your questions. It keeps the context of previous answers so you can ask follow-up questions as long as you don't close the popup. You could also click "Search" to do a regular search through the documentation.
+🤖 Also, last but not least, you might have noticed that the search bar in the top navigation bar now combines 2 buttons: the left button, **🔎 Search**, triggers a regular search, while the right part is our new AI-based chatbot! Click **Ask AI** to ask your questions. The chatbot keeps the context of previous answers so you can ask follow-up questions as long as you don't close the popup.

@@ -59,8 +59,8 @@ The following guides will help you address specific use cases related to the Str
 
 <CustomDocCard small title="How to create custom conditions for Role-Based Access Control (RBAC)" link="/dev-docs/configurations/guides/rbac" />
 
-<CustomDocCard small title="How to use public assets" link="/dev-docs/configurations/public-assets" />
-
-<CustomDocCard small title="How to access configuration values from the code" link="/dev-docs/configurations/guides/access-configuration-values" />
+<CustomDocCard small title="How to use public assets" link="/dev-docs/configurations/guides/public-assets" />
 
 <CustomDocCard small title="How to access and cast environment variables" link="/dev-docs/configurations/guides/access-cast-environment-variables" />
+
+<CustomDocCard small title="How to access configuration values from the code" link="/dev-docs/configurations/guides/access-configuration-values" />
