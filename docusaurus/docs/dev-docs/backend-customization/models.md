@@ -1,7 +1,7 @@
 ---
 title: Models
 description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
-sidebarDepth: 3
+toc_max_heading_level: 4
 tags:
 - admin panel
 - backend customization
@@ -608,8 +608,8 @@ Lifecycle hooks can be customized declaratively or programmatically.
 Lifecycles hooks are not triggered when using directly the [knex](https://knexjs.org/) library instead of Strapi functions.
 :::
 
-:::strapi Document Service API
-The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks). Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method.
+:::strapi Document Service API: lifecycles and middlewares
+The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks). Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method. [Document Service middlewares](/dev-docs/api/document-service/middlewares) can be implemented too.
 :::
 
 ### Available lifecycle events
