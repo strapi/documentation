@@ -5,6 +5,11 @@
   border-radius: 6px;
   background-color: white;
   position: relative;
+  top: 60px;
+  left: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 80%;
 
   .DocSearch.DocSearch-Button:hover {
     box-shadow: none;
@@ -19,8 +24,14 @@
 
   .DocSearch.DocSearch-Button {
     background-color: transparent;
-    width: 60%;
+    width: 65%;
     border: none;
+    justify-content: flex-start;
+    margin: 0;
+    border-radius: 6px 0 0 6px;
+    position: relative;
+    padding-left: 16px;
+    padding-right: 0;
 
     &:hover {
       color: var(--strapi-primary-600);
@@ -29,10 +40,6 @@
       svg path {
         stroke: var(--strapi-primary-500);
       }
-
-      .DocSearch-Button-Key {
-        color: var(--strapi-primary-600);
-      }
     }
   }
 
@@ -40,48 +47,83 @@
     min-width: 30px;
     position: relative;
     top: 1px;
+    font-size: 1rem;
+
+    .DocSearch-Button-Key {
+      color: var(--strapi-neutral-500);
+      box-shadow: none;
+      background: none;
+      border-radius: 0;
+      padding: 0;
+      margin-right: 0;
+      width: 10px;
+    }
   }
 
-  .kapa-widget-button {
-    appearance: none;
-    background: none;
+  button.kapa-widget-button {
     border: none;
-    padding: 0 10px;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-    color: inherit;
-    text-align: inherit;
-    line-height: inherit;
+    padding: 0;
+    width: 100%;
+    overflow: visible;
     cursor: pointer;
-    outline: none;
+    position: relative;
+    border-radius: 0 6px 6px 0;
 
-    &-text {
-      font-size: var(--custom-navbar-items-font-size);
-      color: var(--strapi-neutral-500);
-      position: relative;
-      font-weight: 500;
-      top: -5px;
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: var(--strapi-neutral-400);
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 500;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+    /* Remove excess padding and border in Firefox 4+ */
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
     }
 
     svg {
-      margin-left: 6px;
-      fill: var(--strapi-neutral-500);
       position: relative;
-      top: 6px;
-      width: 27px;
-      height: 27px;
+      left: 6px;
+      top: 3px;
+      width: 18px;
+      height: 18px;
+      fill: var(--strapi-neutral-500);
     }
 
-    &:hover {
-      border-radius: 0 6px 6px 0;
+    .kapa-widget-button-text {
+      position: relative;
+      top: -2px;
+      // left: 6px;
 
-      .kapa-widget-button-text {
-        color: var(--strapi-primary-600);
+      @media screen and (max-width: 996px){
+        left: 12px;
       }
+    }
+  }
 
+  &:hover {
+    .kapa-widget-button-text {
+      color: var(--strapi-primary-600);
+    }
+    button {
       svg {
         fill: var(--strapi-primary-600);
+      }
+    }
+    .DocSearch-Button-Keys {
+      .DocSearch-Button-Key {
+        color: var(--strapi-primary-600);
       }
     }
   }
