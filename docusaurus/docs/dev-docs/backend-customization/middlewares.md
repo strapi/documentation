@@ -16,8 +16,6 @@ tags:
 
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-const imgStyle = {width: '100%', margin: '0'}
-const captionStyle = {fontSize: '12px'}
 import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares customization
@@ -26,9 +24,9 @@ import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 <MiddlewareTypes />
 
-<figure style={imgStyle}>
+<figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-global-middlewares.png" alt="Simplified Strapi backend diagram with global middlewares highlighted" />
-  <em><figcaption style={captionStyle}>The diagram represents a simplified version of how a request travels through the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+  <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with global middlewares highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
 ## Implementation
