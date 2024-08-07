@@ -44,4 +44,4 @@ Installed plugins can also be manually enabled or disabled.
 
 ## Manual enabling/disabling of plugins
 
-To disable a plugin without uninstalling it, switch its `enabled` key to `false` in the [`/config/plugins.js` file](/dev-docs/configurations/plugins).
+To disable a plugin without uninstalling it, switch its `enabled` key to `false` in the [`/config/plugins.ts|js` file](/dev-docs/configurations/plugins).
