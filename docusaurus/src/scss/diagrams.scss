@@ -10,11 +10,9 @@ main:has(.docusaurus-mermaid-container) {
 }
 
 .docusaurus-mermaid-container {
-
   * {
     font-size: 1rem;
     transition: transform ease-in-out .2s;
-    // transition: transform ease-in-out .5s;
   }
 
   svg {
@@ -23,9 +21,6 @@ main:has(.docusaurus-mermaid-container) {
     transform: translateX(0);
   }
 
-  @include small-up {
-    // background-color: green;
-  }
 
   @include medium-up {
     svg {
@@ -52,9 +47,4 @@ main:has(.docusaurus-mermaid-container) {
       margin-left: 100px;
     }
   }
-}
-
-/* Ajoutez cette règle pour définir les propriétés du conteneur principal */
-main[class*="docMainContainer"] {
-
 }
