@@ -537,13 +537,11 @@ For deployed versions of your application the database environment variables sho
 
 Strapi gives you the option to choose the most appropriate database for your project. Strapi supports PostgreSQL, SQLite, or MySQL.
 
-👉 The [SQLite installation guide](/dev-docs/configurations/sqlite) covers how to install the SQL database locally.
-
 ### SQLite
 
 SQLite is the default (see [Quick Start Guide](/dev-docs/quick-start)) and recommended database to quickly create an application locally.
 
-### Install SQLite during application creation
+#### Install SQLite during application creation
 
 Use one of the following commands:
 
@@ -569,7 +567,7 @@ npx create-strapi-app@latest my-project --quickstart
 
 This will create a new project and launch it in the browser.
 
-### Install SQLite manually
+#### Install SQLite manually
 
 In a terminal, run the following command:
 

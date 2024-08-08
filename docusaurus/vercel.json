@@ -237,15 +237,15 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html",
-			"destination": "/dev-docs/deployment/nginx-proxy"
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html",
-			"destination": "/dev-docs/deployment/haproxy-proxy"
+			"destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html",
-			"destination": "/dev-docs/deployment/caddy-proxy"
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/40616"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html",
