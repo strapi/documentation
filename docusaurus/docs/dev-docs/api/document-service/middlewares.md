@@ -8,7 +8,12 @@ displayed_sidebar: devDocsSidebar
 
 The [Document Service API](/dev-docs/api/document-service) offers the ability to extend its behavior thanks to middlewares.
 
-Middlewares allow you to perform actions before and/or after a method runs.
+Document Service middlewares allow you to perform actions before and/or after a method runs.
+
+<figure style={{width: '100%', margin: '0'}}>
+  <img src="/img/assets/backend-customization/diagram-controllers-services.png" alt="Simplified Strapi backend diagram with controllers highlighted" />
+  <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with the Document Service highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## Registering a middleware
 
@@ -117,5 +122,5 @@ strapi.documents.use((context, next) => {
 <br/>
 
 :::strapi Lifecycle hooks
-The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks).
+The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table).
 :::

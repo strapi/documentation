@@ -16,8 +16,6 @@ tags:
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-const captionStyle = {fontSize: '12px'}
-const imgStyle = {width: '100%', margin: '0' }
 
 # GraphQL API
 

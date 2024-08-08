@@ -21,6 +21,12 @@
   }
 }
 
+@mixin xlarge-up {
+  @media (min-width: 1920px) {
+    @content;
+  }
+}
+
 /** Mixin: Dark mode */
 @mixin dark {
   html[data-theme='dark'] {
