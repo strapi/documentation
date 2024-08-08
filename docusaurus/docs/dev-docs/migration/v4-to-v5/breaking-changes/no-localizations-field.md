@@ -107,18 +107,20 @@ In Strapi 5, the `localizations` field does not exist anymore, and this might re
 
 Based on your custom code, you might need to use workarounds in Strapi 5 to get feature parity with Strapi v4.
 
-For instance, an alternative approach to using Strapi v4 `populate: { localizations: true }` in Strapi 5 is to use the `getAvailableLocales()` method as in the following example:
+<!-- For instance, an alternative approach to using Strapi v4 `populate: { localizations: true }` in Strapi 5 is to use the `getAvailableLocales()` method as in the following example:
 
 ```tsx
 strapi.documents('api::articles.articles').getAvailableLocales(documentId, {})
 ```
 
-This will return the locales of a document.
+This will return the locales of a document. -->
 
-In other use cases, you might need to take into account that the Document Service API now returns only a given locale version of document(s), such as in the following example code:
+The Document Service API now returns only a given locale version of document(s), such as in the following example code:
 
-```tsx
+```ts
 strapi.documents('api::articles.articles').findMany({ locale: 'en' })
 ```
+
+If you need to get all locales of a single document, or multiple locales of many documents, you should resort to using the [Query Engine API](/dev-docs/api/query-engine), because the `locale` attribute exists in the database.
 
 Additional information about how to use the `locale` parameter can be found in the [Document Service API reference](/dev-docs/api/document-service) documentation.
