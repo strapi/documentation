@@ -475,63 +475,6 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 }
 ```
 
-:::caution Payload format for Strapi v4.11.4+
-The payload format for the `review-workflows.updateEntryStage` webhook changed between Strapi v4.11.3 and Strapi v4.11.4. Please notice the payload format differences in the following examples and update your integration code accordingly:
-
-<details>
-<summary>Payload formats for Strapi v4.11.3 vs. Strapi v4.11.4</summary>
-
-In Strapi v4.11.3 the webhook payload has the following structure:
-
-```json
-{
-  "event": "review-workflows.updateEntryStage",
-  "createdAt": "2023-06-30T11:40:00.658Z",
-  "model": "model",
-  "uid": "uid",
-  "entry": {
-    "entityId": 2,
-    "workflow": {
-      "id": 1,
-      "stages": {
-        "from": 1,
-        "to": 2
-      }
-    }
-  }
-}
-```
-
-In Strapi v4.11.4 the webhook payload has the following structure:
-
-```json
-{
-  "event": "review-workflows.updateEntryStage",
-  "createdAt": "2023-06-26T15:46:35.664Z",
-  "model": "model",
-  "uid": "uid",
-  "entity": {
-    "id": 2
-  },
-  "workflow": {
-    "id": 1,
-    "stages": {
-      "from": {
-        "id": 1,
-        "name": "Stage 1"
-      },
-      "to": {
-        "id": 2,
-        "name": "Stage 2"
-      }
-    }
-  }
-}
-```
-
-</details>
-:::
-
 ### `releases.publish` <EnterpriseBadge/><CloudTeamBadge/>
 
 The event is triggered when a [release](/user-docs/releases/introduction) is published.
