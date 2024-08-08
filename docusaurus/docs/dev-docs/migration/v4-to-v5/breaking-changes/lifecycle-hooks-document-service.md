@@ -57,6 +57,7 @@ Lifecycle hooks work the same way as in Strapi v4 but are triggered differently,
 
 ### Notes
 
+#### Database lifecycle hooks triggered by the Document Service API methods {#table}
 Depending on the [Document Service API methods](/dev-docs/api/document-service) called, the following database lifecycle hooks are triggered:
 
 | Document Service API method       | Triggered database lifecycle hook(s) |

@@ -6,6 +6,6 @@ In Strapi, 3 middleware concepts coexist:
 
 - **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/backend-customization/routes#middlewares).
 
-- **Document Service middlewares** apply to the Document Service API and have their own [implementation](/dev-docs/api/document-service/middlewares) and related [lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks).
+- **Document Service middlewares** apply to the Document Service API and have their own [implementation](/dev-docs/api/document-service/middlewares) and related [lifecycle hooks](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table).
 
 :::
