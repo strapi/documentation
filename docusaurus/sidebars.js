@@ -117,47 +117,6 @@ const sidebars = {
               label: '☁️ Strapi Cloud',
               id: 'cloud/getting-started/deployment',
             },
-            {
-              type: 'category',
-              label: 'Other Hosting Guides',
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
-              },
-              collapsed: false,
-              items: [
-                {
-                  type: 'doc',
-                  label: 'Introduction to hosting guides',
-                  id: 'dev-docs/deployment/hosting-guides',
-                },
-                'dev-docs/deployment/amazon-aws',
-                'dev-docs/deployment/azure',
-                'dev-docs/deployment/digitalocean-app-platform',
-                'dev-docs/deployment/digitalocean',
-                'dev-docs/deployment/heroku',
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Optional Software Guides',
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
-              },
-              collapsed: false,
-              items: [
-                {
-                  type: 'doc',
-                  label: 'Introduction to optional guides',
-                  id: 'dev-docs/deployment/optional-software-guides',
-                },
-                'dev-docs/deployment/caddy-proxy',
-                'dev-docs/deployment/haproxy-proxy',
-                'dev-docs/deployment/nginx-proxy',
-                'dev-docs/deployment/process-manager',
-              ],
-            },
           ]
         }
       ]
