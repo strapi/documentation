@@ -257,11 +257,6 @@ const sidebars = {
               label: 'Middlewares',
               id: 'dev-docs/api/document-service/middlewares'
             },
-            {
-              type: 'doc',
-              label: 'Lifecycle hooks',
-              id: 'dev-docs/api/document-service/lifecycle-hooks'
-            },
           ]
         },
       ]

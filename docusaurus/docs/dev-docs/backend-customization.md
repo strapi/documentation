@@ -44,6 +44,7 @@ A request can travel through the Strapi back end as follows:
 4. [Route policies](/dev-docs/backend-customization/policies) act as a read-only validation step that can block access to a route. [Route middlewares](/dev-docs/backend-customization/routes#middlewares) can control the request flow and mutate the request itself before moving forward.
 5. [Controllers](/dev-docs/backend-customization/controllers) execute code once a route has been reached. [Services](/dev-docs/backend-customization/services) are optional, additional code that can be used to build custom logic reusable by controllers.
 6. The code executed by the controllers and services interacts with the [models](/dev-docs/backend-customization/models) that are a representation of the content data structure stored in the database.<br />Interacting with the data represented by the models is handled by the [Document Service](/dev-docs/api/document-service) and [Query Engine](/dev-docs/api/query-engine).
+7. You can implement [Document Service middlewares](/dev-docs/api/document-service/middlewares) to control the data before it's sent to the Query Engine. The Query Engine can also use lifecycle hooks though we recommend you use Document Service middlewares unless you absolutely need to directly interact with the database.
 7. The server returns a [response](/dev-docs/backend-customization/requests-responses). The response can travel back through route middlewares and global middlewares before being sent.
 
 Both global and route middlewares include an asynchronous callback function, `await next()`. Depending on what is returned by the middleware, the request will either go through a shorter or longer path through the back end:
@@ -55,9 +56,10 @@ Both global and route middlewares include an asynchronous callback function, `aw
 Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
 :::
 
-:::tip Learn by example
+<!-- TODO: uncomment this once we have updated the backend examples cookbook for v5 -->
+<!-- :::tip Learn by example
 If you prefer learning by reading examples and understanding how they can be used in real-world use cases, the [Examples cookbook](/dev-docs/backend-customization/examples) section is another way at looking how the Strapi back end customization works.
-:::
+::: -->
 
 ## Interactive diagram
 
@@ -76,12 +78,15 @@ graph TB
     controllerA --"Don't call Service(s)" --> routeMiddlewareB
     serviceA --"Call Document Service" --> documentService{{Document Service}}
     serviceA --"Don't call Document Service" --> controllerB
-    documentService --"Call Query Engine"--> queryEngine{{Query Engine}}
-    documentService --"Don't call Query Engine" --> serviceB
-    queryEngine --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
+    documentService --"Call Document Service Middleware"--> dsMiddlewareBefore{{Document Service Middleware}}
+    dsMiddlewareBefore[/"Document Service Middleware"<br> before\]
+    dsMiddlewareBefore --> queryEngine
+    dsMiddlewareBefore --"Don't call Query Engine" --> dsMiddlewareAfter
+    queryEngine{{"Query Engine"}} --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
     lifecyclesBefore[/Lifecycle<br> beforeX\] --> database[(Database)]
     database --> lifecyclesAfter[\Lifecycle<br> afterX/]
-    lifecyclesAfter --> serviceB{{"Service<br/>after Document Service call"}}
+    lifecyclesAfter --> dsMiddlewareAfter[\"Document Service Middleware"<br> after/]
+    dsMiddlewareAfter --> serviceB{{"Service<br/>after Document Service call"}}
     serviceB --> controllerB{{"Controller<br/>after service call"}}
     controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
     routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
@@ -106,5 +111,6 @@ graph TB
     click lifecyclesAfter "/dev-docs/backend-customization/models#lifecycle-hooks"
     click response "/dev-docs/backend-customization/requests-responses"
     click queryEngine "/dev-docs/api/query-engine"
+    click dsMiddlewareBefore "/dev-docs/api/document-service/middlewares"
+    click dsMiddlewareAfter "/dev-docs/api/document-service/middlewares"
 ```
-
