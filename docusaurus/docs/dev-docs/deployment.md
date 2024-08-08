@@ -209,6 +209,6 @@ The [integrations page](https://strapi.io/integrations) of the Strapi website in
 In addition, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28). This includes the following guides:
 
 <CustomDocCard emoji="🔗" small title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
-<CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://strapi.io/integrations/heroku" />
-<CustomDocCard emoji="🔗" small title="Proxying with NGinx" link="https://strapi.io/integrations/heroku" />
-<CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://strapi.io/integrations/heroku" />
+<CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
+<CustomDocCard emoji="🔗" small title="Proxying with NGinx" link="https://forum.strapi.io/t/nginx-proxing-with-strapi/" />
+<CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
