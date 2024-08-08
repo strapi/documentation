@@ -533,15 +533,108 @@ For deployed versions of your application the database environment variables sho
 | DigitalOcean App Platform                             | `Environment Variables` table   |
 | Heroku                                                | `Config vars` table                   |
 
-## Databases installation guides
+## Databases installation
 
-Strapi gives you the option to choose the most appropriate database for your project. Strapi supports **PostgreSQL**, **SQLite**, or **MySQL**.
+Strapi gives you the option to choose the most appropriate database for your project. Strapi supports PostgreSQL, SQLite, or MySQL.
 
-The following documentation covers how to install databases locally:
+👉 The [SQLite installation guide](/dev-docs/configurations/sqlite) covers how to install the SQL database locally.
 
-- [SQLite installation guide](/dev-docs/configurations/sqlite),
+### SQLite
 
-:::note
+SQLite is the default (see [Quick Start Guide](/dev-docs/quick-start)) and recommended database to quickly create an application locally.
+
+### Install SQLite during application creation
+
+Use one of the following commands:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn create strapi-app my-project --quickstart
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npx create-strapi-app@latest my-project --quickstart
+```
+
+</TabItem>
+
+</Tabs>
+
+This will create a new project and launch it in the browser.
+
+### Install SQLite manually
+
+In a terminal, run the following command:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add better-sqlite3
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm install better-sqlite3
+```
+
+</TabItem>
+
+</Tabs>
+
+Add the following code to your `/config/database.ts|js` file:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/database.ts"
+import path from 'path';
+
+export default ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+### PostgreSQL
+
 When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
 
 To create a new PostgreSQL user with the SCHEMA permission, use the following steps:
@@ -554,4 +647,3 @@ $ \c my_strapi_db_name admin_user
 # Grant schema privileges to the user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
-:::
