@@ -76,12 +76,15 @@ graph TB
     controllerA --"Don't call Service(s)" --> routeMiddlewareB
     serviceA --"Call Document Service" --> documentService{{Document Service}}
     serviceA --"Don't call Document Service" --> controllerB
-    documentService --"Call Query Engine"--> queryEngine{{Query Engine}}
-    documentService --"Don't call Query Engine" --> serviceB
-    queryEngine --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
+    documentService --"Call Document Service Middleware"--> dsMiddlewareBefore{{Document Service Middleware}}
+    dsMiddlewareBefore[/"Document Service Middleware"<br> before\]
+    dsMiddlewareBefore --> queryEngine
+    dsMiddlewareBefore --"Don't call Query Engine" --> dsMiddlewareAfter
+    queryEngine{{"Query Engine"}} --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
     lifecyclesBefore[/Lifecycle<br> beforeX\] --> database[(Database)]
     database --> lifecyclesAfter[\Lifecycle<br> afterX/]
-    lifecyclesAfter --> serviceB{{"Service<br/>after Document Service call"}}
+    lifecyclesAfter --> dsMiddlewareAfter[\"Document Service Middleware"<br> after/]
+    dsMiddlewareAfter --> serviceB{{"Service<br/>after Document Service call"}}
     serviceB --> controllerB{{"Controller<br/>after service call"}}
     controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
     routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
@@ -106,5 +109,6 @@ graph TB
     click lifecyclesAfter "/dev-docs/backend-customization/models#lifecycle-hooks"
     click response "/dev-docs/backend-customization/requests-responses"
     click queryEngine "/dev-docs/api/query-engine"
+    click dsMiddlewareBefore "/dev-docs/api/document-service/middlewares"
+    click dsMiddlewareAfter "/dev-docs/api/document-service/middlewares"
 ```
-
