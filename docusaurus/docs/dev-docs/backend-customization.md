@@ -56,9 +56,10 @@ Both global and route middlewares include an asynchronous callback function, `aw
 Please note that all customizations described in the pages of this section are only for the REST API. [GraphQL customizations](/dev-docs/plugins/graphql#customization) are described in the GraphQL plugin documentation.
 :::
 
-:::tip Learn by example
+<!-- TODO: uncomment this once we have updated the backend examples cookbook for v5 -->
+<!-- :::tip Learn by example
 If you prefer learning by reading examples and understanding how they can be used in real-world use cases, the [Examples cookbook](/dev-docs/backend-customization/examples) section is another way at looking how the Strapi back end customization works.
-:::
+::: -->
 
 ## Interactive diagram
 
