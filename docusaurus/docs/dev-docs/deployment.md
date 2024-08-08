@@ -1,7 +1,6 @@
 ---
 title: Deployment
 displayed_sidebar: devDocsSidebar
-pagination_next: dev-docs/deployment/hosting-guides
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
 tags:
 - database deployment
@@ -10,23 +9,19 @@ tags:
 - hosting provider
 - hosting server
 ---
+
 import DatabaseRequire from '/docs/snippets/database-require.md'
 import HardwareRequire from '/docs/snippets/hardware-require.md'
 import OperatingSystemRequire from '/docs/snippets/operating-system-require.md'
-import ConsiderStrapiCloud from '/docs/snippets/consider-strapi-cloud.md'
-import CommunityGuides from '/docs/snippets/community-deployment-guides.md'
 import InstallPrereq from '/docs/snippets/installation-prerequisites.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Deployment
 
-<NotV5 />
+Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
 
-Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider. 
+The following documentation covers the basics of how to develop locally with Strapi and deploy Strapi with several common hosting options.
 
-The following documentation covers how to develop locally with Strapi and deploy Strapi with several common hosting options.
-
-:::callout ☁️ Strapi Cloud
+:::strapi Strapi Cloud
 You can use [Strapi Cloud](/cloud/intro) to quickly deploy and host your project.
 :::
 
@@ -43,6 +38,7 @@ Another possible workflow is to first create the data structure locally, push yo
 To provide the best possible environment for Strapi the following requirements apply to development (local) and staging and production workflows.
 
 <InstallPrereq />
+
 - Standard build tools for your OS (the `build-essentials` package on most Debian-based systems)
 - Hardware specifications for your server (CPU, RAM, storage):
 
@@ -189,20 +185,30 @@ For more information, consult the [TypeScript documentation](/dev-docs/typescrip
 
 ### Advanced configurations
 
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization#deployment).
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/dev-docs/admin-panel-customization/deployment).
 
-## Deployment guides
+## Additional resources
 
-Click on any of the following cards to read manual guides for deployment and optional software:
+:::prerequisites
+* Your Strapi project is [created](/dev-docs/installation) and its code is hosted on GitHub.
+* You have read the [general deployment guidelines](/dev-docs/deployment#general-guidelines).
+:::
 
-<CustomDocCardsWrapper>
+The [integrations page](https://strapi.io/integrations) of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms:
 
-<CustomDocCard emoji="☁️" title="Strapi Cloud" description="Deploy your project to Strapi Cloud." link="/cloud/getting-started/deployment" />
+<CustomDocCard emoji="🔗" small title="Deploy Strapi on AWS"  link="https://strapi.io/integrations/aws" />
 
-<CustomDocCard emoji="🗃️" title="3rd-party hosting guides" description="Deploy your project to various 3rd-party providers." link="/dev-docs/deployment/hosting-guides" />
+<CustomDocCard emoji="🔗" small title="Deploy Strapi on Azure" link="https://strapi.io/integrations/azure" />
 
-<CustomDocCard emoji="➕" title="Optional software guides" description="Compliment or improve the deployment process when using Strapi in a production environment." link="/dev-docs/deployment/optional-software-guides" />
+<CustomDocCard emoji="🔗" small title="Deploy Strapi on DigitalOcean App Platform"  link="https://strapi.io/integrations/digital-ocean" />
 
-</CustomDocCardsWrapper>
+<CustomDocCard emoji="🔗" small title="Deploy Strapi on Heroku" link="https://strapi.io/integrations/heroku" />
 
-<CommunityGuides />
+<br/>
+
+In addition, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28). This includes the following guides:
+
+<CustomDocCard emoji="🔗" small title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
+<CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://strapi.io/integrations/heroku" />
+<CustomDocCard emoji="🔗" small title="Proxying with NGinx" link="https://strapi.io/integrations/heroku" />
+<CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://strapi.io/integrations/heroku" />
