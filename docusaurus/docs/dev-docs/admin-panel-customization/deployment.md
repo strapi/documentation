@@ -1,6 +1,6 @@
 ---
 title: Admin panel deployment
-# description: todo
+description: Learn more about deploying Strapi's admin panel in various scenarios.
 sidebar_label: Deployment
 toc_max_heading_level: 4
 tags:

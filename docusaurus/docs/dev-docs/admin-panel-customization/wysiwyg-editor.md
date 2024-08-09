@@ -1,6 +1,6 @@
 ---
 title: Customizing the WYSIWYG editor
-# description: todo
+description: Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
 sidebar_label: WYSIWYG editor
 tags:
 - admin panel 
