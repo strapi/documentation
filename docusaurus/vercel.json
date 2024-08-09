@@ -233,7 +233,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html",
-			"destination": "/dev-docs/deployment/process-manager"
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html",
@@ -853,7 +853,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/guides/process-manager.html",
-			"destination": "/dev-docs/deployment/process-manager"
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/"
 		},
 		{
 			"source": "/developer-docs/latest/guides/registering-a-field-in-admin.html",
