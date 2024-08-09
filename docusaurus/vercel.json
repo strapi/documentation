@@ -29,7 +29,7 @@
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
-      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+      "destination": "https://strapi.io/integrations/digital-ocean"
     },
 		{
 			"source": "/developer-docs",
@@ -213,7 +213,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html",
-			"destination": "/dev-docs/deployment/digitalocean-app-platform"
+			"destination": "https://strapi.io/integrations/digital-ocean"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
@@ -221,15 +221,15 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
-			"destination": "/dev-docs/deployment/heroku"
+			"destination": "https://strapi.io/integrations/heroku"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html",
-			"destination": "/dev-docs/deployment/amazon-aws"
+			"destination": "https://strapi.io/integrations/aws"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html",
-			"destination": "/dev-docs/deployment/azure"
+			"destination": "https://strapi.io/integrations/azure"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html",
@@ -529,7 +529,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html",
-			"destination": "/dev-docs/configurations/sqlite"
+			"destination": "/dev-docs/configurations/database#sqlite"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/installation/templates.html",
