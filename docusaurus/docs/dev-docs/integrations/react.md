@@ -2,17 +2,19 @@
 title: React
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with React.
-tags:
-- collection type
 ---
-
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Getting Started with React
 
-<NotV5 />
+:::callout 🧹 Removing integration guides
+The Strapi Documentation team focuses on improving the documentation for Strapi 5's core experience. We will release many changes in the next 6 months, so please keep an eye out 👀.
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
+As a result, the present page is now in maintenance mode only, might not be fully up-to-date with Strapi 5, and will soon be replaced by a React (and possibly Next.js) integration guide. This will be the only official integration guide that the Strapi Documentation team will maintain.
+
+You will find other integration guides on Strapi's [integrations page](https://strapi.io/integrations) when it's done.
+:::
+
+This integration guide follows the [Quick Start Guide](/dev-docs/quick-start). You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [React](https://reactjs.org/) remains the same except that you will not fetch the same content.
 
@@ -116,14 +118,24 @@ fetch("http://localhost:1337/api/restaurants", {
 {
   "data": [
     {
-      "id": 1,
-      "attributes": {
-        "name": "Biscotte Restaurant",
-        "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
-        "createdAt": "2023-03-02T19:24:33.456Z",
-        "updatedAt": "2023-03-02T19:32:01.904Z",
-        "publishedAt": "2023-03-02T19:32:01.902Z"
-      }
+      "id": 2,
+      "documentId": "na8ce9ltc0y99syjbs3vbigx",
+      "Name": "Biscotte Restaurant",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+            }
+          ]
+        }
+      ],
+      "createdAt": "2024-08-09T08:59:05.114Z",
+      "updatedAt": "2024-08-09T08:59:06.341Z",
+      "publishedAt": "2024-08-09T08:59:06.344Z",
+      "locale": "en"
     }
   ],
   "meta": {
@@ -131,10 +143,10 @@ fetch("http://localhost:1337/api/restaurants", {
       "page": 1,
       "pageSize": 25,
       "pageCount": 1,
-      "total": 2
+      "total": 1
     }
   }
-}
+} 
 ```
 
 </Response>
@@ -261,9 +273,18 @@ import axios from "axios";
 axios
   .post("http://localhost:1337/api/restaurants", {
     data: {
-      name: "Dolemon Sushi",
-      description:
-        "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "Name": "Dolemon Sushi",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+            }
+          ]
+        }
+      ],
       categories: [3],
     },
   })
@@ -288,9 +309,18 @@ fetch("http://localhost:1337/api/restaurants", {
   },
   body: JSON.stringify({
     data: {
-      name: "Dolemon Sushi",
-      description:
-        "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
+      "Name": "Dolemon Sushi",
+      "Description": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+            }
+          ]
+        }
+      ],
       categories: [3],
     },
   }),
@@ -310,13 +340,23 @@ fetch("http://localhost:1337/api/restaurants", {
 {
   "data": {
     "id": 3,
-    "attributes": {
-      "name": "Dolemon Sushi",
-      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-      "createdAt": "2023-03-02T21:40:39.185Z",
-      "updatedAt": "2023-03-02T21:40:39.185Z",
-      "publishedAt": "2023-03-02T21:40:39.118Z"
-    }
+    "documentId": "jm8rm7jl9ncalk12lkc4bhcx"
+    "name": "Dolemon Sushi",
+    "description": [ 
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+          }
+        ]
+      }
+    ],
+    "createdAt": "2024-03-02T21:40:39.185Z",
+    "updatedAt": "2024-03-02T21:40:39.185Z",
+    "publishedAt": "2024-03-02T21:40:39.118Z",
+    "locale": "en"
   },
   "meta": {}
 }
@@ -662,13 +702,23 @@ fetch("http://localhost:1337/api/restaurants/3", {
 {
   "data": {
     "id": 3,
-    "attributes": {
-      "name": "Dolemon Sushi",
-      "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-      "createdAt": "2023-03-02T21:40:39.185Z",
-      "updatedAt": "2023-03-02T23:13:47.494Z",
-      "publishedAt": "2023-03-02T21:40:39.118Z"
-    }
+    "documentId": "jm8rm7jl9ncalk12lkc4bhcx"
+    "name": "Dolemon Sushi",
+    "description": [ 
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "text": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers."
+          }
+        ]
+      }
+    ],
+    "createdAt": "2024-03-02T21:40:39.185Z",
+    "updatedAt": "2024-03-02T21:40:39.185Z",
+    "publishedAt": "2024-03-02T21:40:39.118Z",
+    "locale": "en"
   },
   "meta": {}
 }

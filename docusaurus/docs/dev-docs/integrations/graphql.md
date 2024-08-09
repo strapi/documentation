@@ -2,17 +2,21 @@
 title: GraphQL
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with GraphQL.
-tags:
-- collection type
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import RemovingIntegrations from '/docs/snippets/integration-guides-soon-removed.md'
 
 # Getting Started with GraphQL
 
-<NotV5 />
+:::callout 🧹 Removing integration guides
+The Strapi Documentation team focuses on improving the documentation for Strapi 5's core experience. We will release many changes in the next 6 months, so please keep an eye out 👀.
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
+As a result, the present page is now in maintenance mode only, might not be fully up-to-date with Strapi 5, and will soon be removed from docs.strapi.io and moved to Strapi's [integrations page](https://strapi.io/integrations).
+
+In the meantime, we encourage you to read the [GraphQL API](/dev-docs/api/graphql) section, which is already up-to-date with Strapi 5.
+:::
+
+This integration guide follows the [Quick Start Guide](https://docs.strapi.io/dev-docs/quick-start). You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [GraphQL](https://graphql.org/) remains the same except that you will not fetch the same content.
 

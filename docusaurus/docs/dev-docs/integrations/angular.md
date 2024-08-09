@@ -2,17 +2,15 @@
 title: Angular
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Angular.
-tags:
-- collection type
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import RemovingIntegrations from '/docs/snippets/integration-guides-soon-removed.md'
 
 # Getting Started with Angular
 
-<NotV5 />
+<RemovingIntegrations />
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
+This integration guide follows the [Quick Start Guide](https://docs.strapi.io/dev-docs/quick-start) and assumes you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Angular](https://angular.io) remains the same except that you do not fetch the same content.
 
@@ -388,25 +386,39 @@ this.http
 
 ```json
 {
-  "id": 2,
-  "attributes": {
-    "name": "Dolemon Sushi",
-    "description": "Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious",
-    "created_by": null,
-    "updated_by": null,
-    "created_at": "2020-08-04T10:21:30.219Z",
-    "updated_at": "2020-08-04T10:21:30.219Z",
-    "categories": [
-      {
-        "id": 2,
-        "name": "Brunch",
-        "created_by": 1,
-        "updated_by": 1,
-        "created_at": "2020-08-04T10:24:26.901Z",
-        "updated_at": "2020-08-04T10:24:26.911Z"
-      }
-    ]
-  }
+    "data": [
+        {
+            "id": 1,
+            "attributes": {
+                "name": "Biscotte Restaurant",
+                "description": "Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.",
+                "createdAt": "2022-05-23T09:41:46.762Z",
+                "updatedAt": "2022-05-23T09:44:32.424Z",
+                "publishedAt": "2022-05-23T09:44:32.423Z",
+                "categories": {
+                    "data": [
+                        {
+                            "id": 2,
+                            "attributes": {
+                                "name": "Brunch",
+                                "createdAt": "2022-05-23T09:42:16.764Z",
+                                "updatedAt": "2022-05-23T09:44:21.534Z",
+                                "publishedAt": "2022-05-23T09:44:21.532Z"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 1
+        }
+    }
 }
 ```
 
