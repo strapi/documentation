@@ -199,10 +199,14 @@ In the ![Variables icon](/img/assets/icons/code2.svg) *Variables* tab, you can:
 
 ## Billing & Usage
 
-The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab displays all information on the current subscription plan and included usage for the project, and allows to have a detailed look at the usage. Through this tab, you can also [manage the number of seats for your project](#managing-projects-number-of-seats).
+The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's usage. It also allows you to directly [manage the number of seats](#managing-projects-number-of-seats) for your project.
+
+Through this tab, you also have the possibility to:
+- click the **Change** button to be redirected to the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
+- click the **Edit** button to be redirected to the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab of your profile page, where you can edit the payment method ([see related documentation](/cloud/account/account-billing)).
 
 :::tip
-In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the *Time range* filters to see the project's usage for any chosen month.
+In the *Usage summary* section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the arrows in the top right corner to see the project's usage for any chosen month.
 
 Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab to advise which plan you could switch to.
 :::
@@ -217,7 +221,7 @@ Note also that if your usage indicates that another subscription plan would fit 
 
 ### Managing project's number of seats
 
-You can manually add more seats or lower the number of seats for your project without necessarily upgrading or downgrading to another plan (see [full documentation on seats management](/cloud/getting-started/usage-billing#seats-management)).
+You can manually add more seats or lower the number of seats for your project without necessarily upgrading or downgrading to another plan (see [more information on seats management](/cloud/getting-started/usage-billing#seats-management)).
 
 #### Adding more seats for the project
 
