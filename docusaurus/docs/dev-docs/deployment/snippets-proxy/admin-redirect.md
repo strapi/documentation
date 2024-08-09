@@ -34,7 +34,7 @@ If you do not wish to have the default landing page mounted on `/` you can creat
 ```js title="./config/middlewares.js"
 module.exports = ({ env }) => [
 	// ...
-	{ resolve: '../src/middlewares/root' },
+"global::admin-redirect",
 ];
 
 ```
