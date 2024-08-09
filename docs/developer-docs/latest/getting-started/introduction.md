@@ -7,6 +7,12 @@ description: This documentation contains all technical documentation related to 
 
 This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi application.
 
+
+::: caution
+Strapi v3 has reached end-of-life. We encourage you to upgrade to Strapi v4, documented at [docs.strapi.io](https://docs.strapi.io).
+:::
+
+
 ::: strapi  Can't wait to start using Strapi?
 You can directly head to the [Quick Start](quick-start.md)! <br> If demos are more your thing, we have a [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo)!
 :::
