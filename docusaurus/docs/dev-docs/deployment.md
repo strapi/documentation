@@ -19,7 +19,7 @@ import InstallPrereq from '/docs/snippets/installation-prerequisites.md'
 
 Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
 
-The following documentation covers the basics of how to develop locally with Strapi and deploy Strapi with several common hosting options.
+The following documentation covers the basics of how to prepare Strapi for deployment on with several common hosting options.
 
 :::strapi Strapi Cloud
 You can use [Strapi Cloud](/cloud/intro) to quickly deploy and host your project.
