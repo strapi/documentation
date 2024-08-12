@@ -1,6 +1,6 @@
 ---
 title: Only the `better-sqlite3` package is supported for the SQLite client
-description: In Strapi 5, 
+description: In Strapi 5, users can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
 sidebar_label: Only better-sqlite3 for sqlite 
 displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true
