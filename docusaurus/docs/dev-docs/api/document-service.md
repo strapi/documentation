@@ -315,7 +315,7 @@ Syntax: `create(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | [`locale`](/dev-docs/api/document-service/locale#create) | Locale of the documents to create. | Default locale | String or `undefined` |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-create-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-create-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
-| [`status`](/dev-docs/api/document-service/status#find-many) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while creating it  | -| `'published'` |
+| [`status`](/dev-docs/api/document-service/status#create) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while creating it  | -| `'published'` |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Example
@@ -368,7 +368,7 @@ Syntax: `update(parameters: Params) => Promise<Document>`
 | [`locale`](/dev-docs/api/document-service/locale#update) | Locale of the document to update. | Default locale | String or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-update-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-update-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
-| [`status`](/dev-docs/api/document-service/status#find-many) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while updating it  | - | `'published'` |
+| [`status`](/dev-docs/api/document-service/status#update) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while updating it  | - | `'published'` |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 :::tip
