@@ -79,7 +79,7 @@ When using a `.js` or `.ts` file, the configuration can be exported:
 
   </Tabs>
 
-- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](#casting-environment-variables):
+- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](/dev-docs/configurations/guides/access-cast-environment-variables):
 
   <Tabs groupId="js-ts">
 
