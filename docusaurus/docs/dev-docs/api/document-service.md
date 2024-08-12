@@ -37,7 +37,7 @@ Syntax: `findOne(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | `documentId` | Document id | | `ID` |
 | [`locale`](/dev-docs/api/document-service/locale#find-one)|  Locale of the documents to create. | Default locale | String or `undefined` |
-| [`status`](/dev-docs/api/document-service/status#find-one) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#find-one) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-findone-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-findone-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
@@ -84,7 +84,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | [`locale`](/dev-docs/api/document-service/locale#find-first) |  Locale of the documents to find. | Default locale | String or `undefined` |
-| [`status`](/dev-docs/api/document-service/status#find-first) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#find-first) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-findfirst-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-findfirst-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -172,7 +172,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | [`locale`](/dev-docs/api/document-service/locale#find-many) |  Locale of the documents to find. | Default locale | String or `undefined` |
-| [`status`](/dev-docs/api/document-service/status#find-many) | Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#find-many) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-findmany-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-findmany-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -315,11 +315,10 @@ Syntax: `create(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | [`locale`](/dev-docs/api/document-service/locale#create) | Locale of the documents to create. | Default locale | String or `undefined` |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-create-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-create-queries) to return   | All fields<br/>(except those not populated by default)  | Object |
+| [`status`](/dev-docs/api/document-service/status#find-many) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while creating it  | -| `'published'` |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
-
-#### Generic example
+### Example
 
 If no `locale` parameter is passed, `create()` creates the draft version of the document for the default locale:
 
@@ -351,39 +350,9 @@ await strapi.documents('api::restaurant.restaurant').create({
 </Response>
 </ApiCall>
 
-#### Auto-publish a document
-
-To automatically publish a document while creating it, add `status: 'published'` to parameters passed to `create()`:
-
-<ApiCall>
-
-<Request>
-
-```js
-await strapi.documents('api::restaurant.restaurant').create({
-  data: {
-    name: "New Restaurant",
-  },
-  status: 'published',
-})
-```
-
-</Request>
-
-<Response>
-
-```js {5}
-{
-  documentId: "d41r46wac4xix5vpba7561at",
-  name: "New Restaurant",
-  publishedAt: "2024-03-14T17:29:03.399Z",
-  locale: "en" // default locale
-  // …
-}
-```
-
-</Response>
-</ApiCall>
+:::tip
+If the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature is enabled on the content-type, you can automatically publish a document while creating it (see [`status` documentation](/dev-docs/api/document-service/status#create)).
+:::
 
 ## `update()`
 
@@ -399,6 +368,7 @@ Syntax: `update(parameters: Params) => Promise<Document>`
 | [`locale`](/dev-docs/api/document-service/locale#update) | Locale of the document to update. | Default locale | String or `null` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/dev-docs/api/document-service/fields#selecting-fields-with-update-queries)   | [Select fields](/dev-docs/api/document-service/fields#selecting-fields-with-update-queries) to return   | All fields<br/>(except those not populate by default)  | Object |
+| [`status`](/dev-docs/api/document-service/status#find-many) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while updating it  | - | `'published'` |
 | [`populate`](/dev-docs/api/document-service/populate) | [Populate](/dev-docs/api/document-service/populate) results with additional fields. | `null` | Object |
 
 :::tip
@@ -406,7 +376,7 @@ Published versions are read-only, so you can not technically update the publishe
 To update a document and publish the new version right away, you can:
 
 - update its draft version with `update()`, then [publish it](#publish) with `publish()`,
-- or directly add `status: 'published'` along with the other parameters passed to `update()`.
+- or directly add `status: 'published'` along with the other parameters passed to `update()` (see [`status` documentation](/dev-docs/api/document-service/status#update)).
 
 :::
 
@@ -704,7 +674,7 @@ Syntax: `count(parameters: Params) => number`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | [`locale`](/dev-docs/api/document-service/locale#count) | Locale of the documents to count | Default locale | String or `null` |
-| [`status`](/dev-docs/api/document-service/status#count) | Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/dev-docs/api/document-service/status#count) | _If [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/dev-docs/api/document-service/filters) | [Filters](/dev-docs/api/document-service/filters) to use | `null` | Object |
 
 :::note
