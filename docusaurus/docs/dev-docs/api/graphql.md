@@ -381,7 +381,7 @@ The following example fetches data for the `label` attribute of a "Closingperiod
 }
 ```
 
-### Fetch draft or published versions
+### Fetch draft or published versions {#status}
 
 If the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature is enabled for the content-type, you can add a `status` parameter to queries to fetch draft or published versions of documents <DocumentDefinition/>:
 
