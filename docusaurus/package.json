@@ -21,6 +21,7 @@
     "@docusaurus/theme-live-codeblock": "3.5.1",
     "@docusaurus/theme-mermaid": "3.5.1",
     "@mdx-js/react": "^3.0.0",
+    "classnames": "^2.5.1",
     "clsx": "^1.2.1",
     "docusaurus-plugin-hubspot": "^1.0.1",
     "docusaurus-plugin-image-zoom": "^0.1.1",
