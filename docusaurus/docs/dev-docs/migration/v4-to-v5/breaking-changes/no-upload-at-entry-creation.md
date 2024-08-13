@@ -10,7 +10,7 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
 import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Upload a file at entry creation is no longer supported
@@ -19,7 +19,7 @@ In Strapi 5, it is not possible to upload a file while creating an entry, so thi
 
 <Intro />
 <NoPlugins />
-<YesCodemods />
+<NoCodemods />
 
 ## Breaking change description
 
