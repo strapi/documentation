@@ -207,6 +207,12 @@ const config = {
             position: 'left',
             label: 'Cloud Documentation',
           },
+          {
+            type: 'doc',
+            docId: 'release-notes-detailed',
+            position: 'left',
+            label: 'Release Notes',
+          },
           // {
           //   href: 'https://github.com/strapi/documentation',
           //   label: 'GitHub',
