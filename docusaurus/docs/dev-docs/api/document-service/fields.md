@@ -30,7 +30,7 @@ You can also use the `populate` parameter to populate relations, media fields, c
 
 <IdsInResponse />
 
-## Select fields with `findOne()` queries
+## Select fields with `findOne()` queries {#find-one}
 
 To select fields to return while [finding a specific document](/dev-docs/api/document-service#findone) with the Document Service API:
 
@@ -59,7 +59,7 @@ const document = await strapi.documents("api::restaurant.restaurant").findOne({
 </Response>
 </ApiCall>
 
-## Select fields with `findFirst()` queries
+## Select fields with `findFirst()` queries {#find-first}
 
 To select fields to return while [finding the first document](/dev-docs/api/document-service#findfirst) matching the parameters with the Document Service API:
 
@@ -87,7 +87,7 @@ const document = await strapi.documents("api::restaurant.restaurant").findFirst(
 </Response>
 </ApiCall>
 
-## Select fields with `findMany()` queries
+## Select fields with `findMany()` queries {#find-many}
 
 To select fields to return while [finding documents](/dev-docs/api/document-service#findmany) with the Document Service API:
 
@@ -118,7 +118,7 @@ const documents = await strapi.documents("api::restaurant.restaurant").findMany(
 </Response>
 </ApiCall>
 
-## Select fields with `create()` queries
+## Select fields with `create()` queries {#create}
 
 To select fields to return while [creating documents](/dev-docs/api/document-service#create) with the Document Service API:
 
@@ -151,7 +151,7 @@ const document = await strapi.documents("api::restaurant.restaurant").create({
 </Response>
 </ApiCall>
 
-## Select fields with `update()` queries
+## Select fields with `update()` queries {#update}
 
 To select fields to return while [updating documents](/dev-docs/api/document-service#update) with the Document Service API:
 
@@ -182,7 +182,7 @@ const document = await strapi.documents("api::restaurant.restaurant").update({
 </Response>
 </ApiCall>
 
-## Select fields with `delete()` queries
+## Select fields with `delete()` queries {#delete}
 
 To select fields to return while [deleting documents](/dev-docs/api/document-service#delete) with the Document Service API:
 
@@ -217,7 +217,7 @@ const document = await strapi.documents("api::restaurant.restaurant").delete({
 </Response>
 </ApiCall>
 
-## Select fields with `publish()` queries
+## Select fields with `publish()` queries {#publish}
 
 To select fields to return while [publishing documents](/dev-docs/api/document-service#publish) with the Document Service API:
 
@@ -251,7 +251,7 @@ const document = await strapi.documents("api::restaurant.restaurant").publish({
 </Response>
 </ApiCall>
 
-## Select fields with `unpublish()` queries
+## Select fields with `unpublish()` queries {#unpublish}
 
 To select fields to return while [unpublishing documents](/dev-docs/api/document-service#unpublish) with the Document Service API:
 
@@ -285,7 +285,7 @@ const document = await strapi.documents("api::restaurant.restaurant").unpublish(
 </Response>
 </ApiCall>
 
-## Select fields with `discardDraft()` queries
+## Select fields with `discardDraft()` queries {#discard-draft}
 
 To select fields to return while [discarding draft versions of documents](/dev-docs/api/document-service#discarddraft) with the Document Service API:
 

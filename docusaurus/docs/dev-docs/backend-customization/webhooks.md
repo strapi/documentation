@@ -475,7 +475,7 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 }
 ```
 
-### `releases.publish` <EnterpriseBadge/><CloudTeamBadge/>
+### `releases.publish` <EnterpriseBadge/><CloudTeamBadge/> {#releases-publish}
 
 The event is triggered when a [release](/user-docs/releases/introduction) is published.
 
