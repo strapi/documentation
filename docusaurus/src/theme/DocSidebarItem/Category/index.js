@@ -17,6 +17,7 @@ import Link from '@docusaurus/Link';
 import {translate} from '@docusaurus/Translate';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import DocSidebarItems from '@theme/DocSidebarItems';
+import { NewBadge, UpdatedBadge } from '../../../components/Badge';
 // If we navigate to a category and it becomes active, it should automatically
 // expand itself
 function useAutoExpandActiveCategory({isActive, collapsed, updateCollapsed}) {
@@ -87,7 +88,7 @@ export default function DocSidebarItemCategory({
   index,
   ...props
 }) {
-  const {items, label, collapsible, className, href} = item;
+  const {items, label, collapsible, className, href, customProps} = item;
   const {
     docs: {
       sidebar: {autoCollapseCategories},
@@ -143,6 +144,7 @@ export default function DocSidebarItemCategory({
             'menu__link--sublist': collapsible,
             'menu__link--sublist-caret': !href && collapsible,
             'menu__link--active': isActive,
+            'menu__link--with-badge': customProps?.new,
           })}
           onClick={
             collapsible
@@ -165,6 +167,8 @@ export default function DocSidebarItemCategory({
           href={collapsible ? hrefWithSSRFallback ?? '#' : hrefWithSSRFallback}
           {...props}>
           {label}
+          {customProps?.new && <NewBadge />}
+          {customProps?.updated && <UpdatedBadge />}
         </Link>
         {href && collapsible && (
           <CollapseButton
