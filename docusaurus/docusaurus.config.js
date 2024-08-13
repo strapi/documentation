@@ -13,6 +13,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
+  onBrokenAnchors: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
   // ⚠️ TODO: remove this for stable release
