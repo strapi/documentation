@@ -97,7 +97,6 @@ const config = {
           // TODO: update 'v5/mvp' to v5 once it's on docs-next, and then back to 'main' for the stable release
           editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus',
           admonitions: {
-            tag: ':::',
             keywords: [
               // Admonitions defaults
               'note',
