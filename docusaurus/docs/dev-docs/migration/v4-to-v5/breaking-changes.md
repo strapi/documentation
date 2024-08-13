@@ -65,7 +65,7 @@ You can click on the description of any breaking change in the following tables 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
 | [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch) | Yes | No |
-| [strapi factories import have changed](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports) | Yes | No |
+| [strapi factories import have changed](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports) | Yes | 👷 Partly |
 | [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed) | Yes | No |
 | [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored) | Yes | ✅ Yes |
 | [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service) | Yes | No |
