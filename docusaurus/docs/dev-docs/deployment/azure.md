@@ -54,7 +54,7 @@ In this section we'll use the Azure Portal to create the required resources to h
 
    - _Name_ - `my-strapi-app`
    - _Publish_ - `Code`
-   - _Runtime stack_ - `Node 16 LTS`
+   - _Runtime stack_ - `Node 20 LTS`
    - _Operating System_ - `Linux`
    - _Region_ - Select an appropriate region
 
@@ -132,11 +132,11 @@ In this section, we'll use the [Azure CLI](https://docs.microsoft.com/cli/azure/
    az appservice plan create --resource-group $rgName --name $appPlanName --is-linux --number-of-workers 4 --sku S1 --location $location
    ```
 
-3. Create a Web App running Node.js 16.
+3. Create a Web App running Node.js 20.
 
    ```bash
    webAppName=my-strapi-app
-   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|16-lts"
+   az webapp create --resource-group $rgName --name $webAppName --plan $appPlanName --runtime "node|20-lts"
    ```
 
 4. Create a Storage Account.
