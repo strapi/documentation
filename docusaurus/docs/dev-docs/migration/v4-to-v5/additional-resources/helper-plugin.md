@@ -44,6 +44,8 @@ const MyPage = () => {
 
 This component has been removed and not replaced. If you feel like you need this component, please open an issue on the Strapi repository to discuss your usecase.
 
+We recommend using the `Page.Protect` component from `@strapi/strapi/admin` instead. See below for an example. If you need to check permissions for a lower level component you can use the useRBAC hook.
+
 ### CheckPagePermissions
 
 This component has been removed and refactored to be part of the `Page` component exported from `@strapi/strapi/admin`. You should use the `Page` component from there:
@@ -278,6 +280,27 @@ const MyPage = () => {
 
 This component has been removed and not replaced, you should use the `EmptyStateLayout` component from `@strapi/design-system`.
 
+```tsx
+import { NoContent } from '@strapi/helper-plugin';
+
+<NoContent
+  content={{
+    id: 'translation_id',
+    defaultMessage: 'Message',
+  }}
+/>;
+
+// After
+import { EmptyStateLayout } from '@strapi/design-system';
+
+<EmptyStateLayout
+  content={{
+    id: 'translation_id',
+    defaultMessage: 'Message',
+  }}
+/>;
+```
+
 ### NoMedia
 
 This component has been removed and not replaced. If you feel like you need this component, please open an issue on the Strapi repository to discuss your usecase.
@@ -476,6 +499,29 @@ const {
   edit: { layout, components },
 } = useDocumentLayout();
 ```
+
+```tsx
+// Before
+const { modifiedData } = useCMEditViewDataManager();
+
+// After
+import { useForm } from '@strapi/admin/strapi-admin';
+
+const formValues = useForm('ActionName', ({ values }) => values);
+```
+
+```tsx
+// Before
+const { hasDraftAndPublished } = useCMEditViewDataManager();
+
+// After
+import { useDocument } from '@strapi/admin/strapi-admin';
+
+const { schema } = useDocument();
+const hasDraftAndPublished = schema?.options?.draftAndPublish ?? false;
+```
+
+
 
 ## Features
 
@@ -732,6 +778,11 @@ This util has been removed and not replaced. If you feel like you need this util
 
 This util has been removed and not replaced. If you feel like you need this util, please open an issue on the Strapi repository to discuss your usecase.
 
+### auth
+
+This util has been removed and not replaced. If you're trying to interact with the token or current user you use should use the `useAuth` hook instead.
+If you're generally interacting with localStorage, then access this directly e.g. `localStorage.getItem('myKey')`.
+
 ### hasPermissions
 
 This util has been removed. If you need to use it, you should use the `checkUserHasPermissions` function from the `useAuth` hook.
@@ -759,7 +810,24 @@ This util has been removed and not replaced. Use the strapi backendUrl to prefix
 
 ### prefixPluginTranslations
 
-This util has been removed and not replaced. If you feel like you need this util, please open an issue on the Strapi repository to discuss your usecase.
+This util has been removed and not replaced. Your plugin should define this util itself if needed, with an implementation like this:
+
+```tsx
+type TradOptions = Record<string, string>;
+
+const prefixPluginTranslations = (
+  trad: TradOptions,
+  pluginId: string
+): TradOptions => {
+  if (!pluginId) {
+    throw new TypeError("pluginId can't be empty");
+  }
+  return Object.keys(trad).reduce((acc, current) => {
+    acc[`${pluginId}.${current}`] = trad[current];
+    return acc;
+  }, {} as TradOptions);
+};
+```
 
 ### pxToRem
 
@@ -783,7 +851,16 @@ This util has been removed and not replaced.
 You can use `useFetchClient` from `@strapi/admin/strapi-admin`.
 
 ```tsx
+// Before
+import { request } from '@strapi/helper-plugin';
+
+request(`/${pluginId}/settings/config`, { method: 'GET' });
+
+// After
 import { useFetchClient } from '@strapi/admin/strapi-admin';
+
+const { get } = useFetchClient();
+get(`/${pluginId}/settings/config`);
 ```
 
 And you can use it like this
