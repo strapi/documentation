@@ -93,7 +93,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 :::
 
 :::note
-By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security).
+By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security) or you use a file uploaded directly on your Strapi application.
 :::
 
 <details>
@@ -117,14 +117,14 @@ module.exports = [
             'data:',
             'blob:',
             'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo
+            'www.okta.com', // Base URL of the provider's logo without the protocol
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
             'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo
+            'www.okta.com', // Base URL of the provider's logo without the protocol
           ],
           upgradeInsecureRequests: null,
         },
@@ -154,14 +154,14 @@ export default [
             'data:',
             'blob:',
             'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo
+            'www.okta.com', // Base URL of the provider's logo without the protocol
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
             'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo
+            'www.okta.com', // Base URL of the provider's logo without the protocol
           ],
           upgradeInsecureRequests: null,
         },
@@ -261,6 +261,10 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 Adding a new provider means adding a new way for your administrators to log-in.
 
 Strapi uses [Passport.js](http://www.passportjs.org/), which enables a large selection of providers. Any valid passport strategy that doesn't need additional custom data should therefore work with Strapi.
+
+:::caution
+Strategies are required to have their own "login page" where the user can enter their credentials. If the strategy doesn't have one, it won't work with Strapi's SSO.
+:::
 
 :::caution
 Strategies such as [ldapauth](https://github.com/vesse/passport-ldapauth) don't work out of the box since they require extra data to be sent from the admin panel.

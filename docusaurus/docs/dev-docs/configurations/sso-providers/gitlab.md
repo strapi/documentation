@@ -1,6 +1,8 @@
 ---
 title: Gitlab - Admin SSO Provider
 description: Steps to configure Gitlab as a Strapi Admin SSO Provider
+sidebar_label: Gitlab
+displayed_sidebar: devDocsConfigSSOSidebar
 tags:
 - gitlab
 - additional configuration
