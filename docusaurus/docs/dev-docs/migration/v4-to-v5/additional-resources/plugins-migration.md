@@ -25,7 +25,7 @@ This page is intended to be used as a short summary of everything to consider if
 
 - The Design System is upgraded to v2 in Strapi 5:
   - There are no big visual changes, except for [icons](https://design-system-git-main-strapijs.vercel.app/?path=/docs/foundations-icons-overview--docs).<br/>
-  - A migration guide will be [available](https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs).<br/>
+  - A migration guide is available [in the Design System documentation](https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs).<br/>
   <!-- TODO: add link to breaking changes -->
   - A list of breaking changes specific to the Design System will be available in the [Design System documentation](#).<br/>(_the link will be added in the upcoming weeks_)
   - General Strapi v4 to Strapi 5 [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) might apply.
