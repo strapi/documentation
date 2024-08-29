@@ -20,7 +20,7 @@ Depending on their type, content-types can be divided into 2 interfaces: the lis
 
 ## Configuring the list view
 
-On the right side of the list view interface, right above the table, a settings button ![Cog icon](/img/assets/icons/cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
+On the right side of the list view interface, right above the table, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 :::note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -39,7 +39,7 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view settings
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/cog.svg) to be redirected to the list view configuration interface.
+1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) to be redirected to the list view configuration interface.
 2. In the Settings area, define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
@@ -55,12 +55,12 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view display
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/cog.svg) to be redirected to the list view configuration interface.
+1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) to be redirected to the list view configuration interface.
 2. In the View area, define what fields to display in the list view table, and in what order:
-   - Click the add button ![Add icon](/img/assets/icons/add_icon.svg) to add a new field.
-   - Click the delete button ![Clear icon](/img/assets/icons/clear.svg) to remove a field.
-   - Click the reorder button ![Drag icon](/img/assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](/img/assets/icons/edit.svg) to access its available own settings:
+   - Click the add button ![Add icon](/img/assets/icons/v5/Plus.svg) to add a new field.
+   - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.
+   - Click the reorder button ![Drag icon](/img/assets/icons/v5/Drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to access its available own settings:
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
@@ -109,10 +109,10 @@ In the edit view of a content-type, in the right side of the interface, a **Conf
 
 1. In the edit view of your content-type, click on the **Configure the view** button.
 2. In the View area, define what fields (including relational fields) to display in the list view table, in what order and what size:
-   - Click the ![Add icon](/img/assets/icons/add_icon.svg) **Insert another field** button to add a new field.
-   - Click the delete button ![Clear icon](/img/assets/icons/clear.svg) to remove a field.
-   - Click the reorder button ![Drag icon](/img/assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](/img/assets/icons/edit.svg) of a field to access its available settings:
+   - Click the ![Add icon](/img/assets/icons/v5/Plus.svg) **Insert another field** button to add a new field.
+   - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.
+   - Click the reorder button ![Drag icon](/img/assets/icons/v5/Drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) of a field to access its available settings:
 
 | Setting name    | Instructions                                                                              |
 | --------------- | ----------------------------------------------------------------------------------------- |
