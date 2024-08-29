@@ -72,7 +72,7 @@ To create a new component:
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.
-   - _(optional)_ Choose an icon representing the new component. You can use the search ![Search icon](/img/assets/icons/search.svg) to find an icon instead of scrolling through the list.
+   - _(optional)_ Choose an icon representing the new component. You can use the search ![Search icon](/img/assets/icons/v5/Search.svg) to find an icon instead of scrolling through the list.
 3. Click on the **Continue** button.
 4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
 5. Click on the **Save** button.
