@@ -8,7 +8,7 @@ tags:
 - Users, Roles & Permissions
 ---
 
-The ![Settings icon](/img/assets/icons/settings.svg) _Settings_ section in the main navigation of the admin panel includes all the required set-up information that determines how an administrator interacts with and manages their Strapi application. 
+The ![Settings icon](/img/assets/icons/v5/Cog.svg) _Settings_ section in the main navigation of the admin panel includes all the required set-up information that determines how an administrator interacts with and manages their Strapi application. 
 
 <ThemedImage
 alt="Custom logo settings"
