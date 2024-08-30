@@ -48,3 +48,25 @@ main:has(.docusaurus-mermaid-container) {
     }
   }
 }
+
+.document-concept-page {
+  .docusaurus-mermaid-container {
+    @include medium-up {
+      svg {
+        margin-bottom: 120px;
+      }
+    }
+
+    @include large-up {
+      svg {
+        margin-bottom: 240px;
+      }
+    }
+
+    @include xlarge-up {
+      svg {
+        margin-bottom: 360px;
+      }
+    }
+  }
+}
