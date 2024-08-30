@@ -2,7 +2,7 @@
 title: Google - Admin SSO Provider
 description: Steps to configure Google as a Strapi Admin SSO Provider
 sidebar_label: Google
-displayed_sidebar: devDocsConfigSSOSidebar
+displayed_sidebar: devDocsConfigSidebar
 tags:
 - google
 - additional configuration
@@ -12,22 +12,44 @@ tags:
 - SSO 
 ---
 
-## Requirements
+import SSOServerConfig from '/docs/snippets/configuration-sso-server.md'
+import SSOAdminConfig from '/docs/snippets/configuration-sso-admin.md'
+import SSOMiddlewaresConfig from '/docs/snippets/configuration-sso-middlewares.md'
 
-You will need to gather or complete the following requirements before you can configure Google as a Strapi Admin SSO Provider:
+:::prerequisites
 
-- [Properly configure Strapi for SSO](/dev-docs/configurations/sso.md#required-configuration-before-setting-up-sso) including adding the `url` configuration key to your `./config/server.js` file.
-- Create your Google OAuth2 credentials by following the steps in the [Google Developer Console](https://developers.google.com/workspace/guides/create-credentials#oauth-client-id).
+- [Properly configure Strapi for SSO](#required-configuration-before-setting-up-sso)
+- Create your Google OAuth2 app by following the steps in the [Google Console](https://developers.google.com/workspace/guides/create-credentials#oauth-client-id).
 - Gather the required information to set as environment variables in your Strapi project:
-  - `GOOGLE_CLIENT_ID`
-  - `GOOGLE_CLIENT_SECRET`
+  - GOOGLE_CLIENT_ID
+  - GOOGLE_CLIENT_SECRET
+
+:::
+
+## Required configuration before setting up SSO
+
+### Server Configuration
+
+<SSOServerConfig />
+
+### Admin Configuration
+
+<SSOAdminConfig />
+
+### Middlewares Configuration
+
+<SSOMiddlewaresConfig />
 
 ## Provider Specific Notes
+
+### Scopes
 
 The Google OAuth2 provider requires the following scopes, however additional scopes can be added as needed depending on your use case and the data you need returned:
 
 - `https://www.googleapis.com/auth/userinfo.email`
 - `https://www.googleapis.com/auth/userinfo.profile`
+
+### Profile Data
 
 Data returned from the provider is dependent on how your Google OAuth2 application is configured. The example below assumes that the Google OAuth2 application is configured to return the user's email, first name, and last name. Fields returned by the provider can change based on the scopes requested and the user's Google account settings.
 
@@ -51,6 +73,24 @@ If you aren't sure what data is being returned by the provider, you can log the 
 ```
 
 </details>
+
+### Redirect URL/URI
+
+The redirect URL/URI will be dependent on your provider configuration however in most cases should combine your application's public URL and the provider's callback URL. The example below shows how to combine the public URL with the provider's callback URL.
+
+```js
+callbackURL:
+  env('PUBLIC_URL', "https://api.example.com") +
+  strapi.admin.services.passport.getStrategyCallbackURL("google"),
+```
+
+In this example the redirect URL/URI used by the provider will be `https://api.example.com/admin/connect/google`.
+
+This is broken down as follows:
+
+- `https://api.example.com` is the public URL of your Strapi application
+- `/admin/connect` is the general path for SSO callbacks in Strapi
+- `/google` is the specific provider UID for Google
 
 ## Strapi Configuration
 

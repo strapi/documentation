@@ -1173,34 +1173,6 @@ const sidebars = {
       ],
     },
   ],
-  devDocsConfigSSOSidebar: [
-    {
-      type: 'link',
-      label: '⬅️ Back to Single Sign-On (SSO)',
-      href: '/dev-docs/configurations/sso#configuring-the-provider',
-    },
-    {
-      type: 'category',
-      label: 'SSO Providers',
-      collapsed: false,
-      link: {
-        type: 'doc',
-        id: 'dev-docs/configurations/sso',
-      },
-      items: [
-        'dev-docs/configurations/sso-providers/auth0',
-        'dev-docs/configurations/sso-providers/discord',
-        'dev-docs/configurations/sso-providers/entra-id',
-        'dev-docs/configurations/sso-providers/github',
-        'dev-docs/configurations/sso-providers/gitlab',
-        'dev-docs/configurations/sso-providers/google',
-        'dev-docs/configurations/sso-providers/keycloak',
-        'dev-docs/configurations/sso-providers/okta',
-        'dev-docs/configurations/sso-providers/generic-oidc',
-        'dev-docs/configurations/sso-providers/generic-saml',
-      ],
-    },
-  ],
   devDocsMigrationV5Sidebar: [
     {
       type: 'link',

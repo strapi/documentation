@@ -29,10 +29,6 @@ Single Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
 :::
 
-## Required configuration before setting up SSO
-
-TODO: Add server configuration information
-
 ## Accessing the SSO configuration
 
 The SSO configuration lives in the server configuration of the application, found at `./config/admin.js` or `./config/admin.ts`.
@@ -91,140 +87,6 @@ A provider's configuration is a JavaScript object built with the following prope
 :::tip
 The `uid` property is the unique identifier of each strategy and is generally found in the strategy's package. If you are not sure of what it refers to, please contact the maintainer of the strategy.
 :::
-
-:::note
-By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/intro#accessing-the-admin-panel) of the admin panel unless [a security exception is added](/dev-docs/configurations/middlewares#security) or you use a file uploaded directly on your Strapi application.
-:::
-
-<details>
-  <summary>Example: Security exception for provider logos</summary>
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```jsx title="./config/middlewares.js"
-module.exports = [
-  // ...
-  {
-    name: 'strapi::security',
-    config: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          'connect-src': ["'self'", 'https:'],
-          'img-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo without the protocol
-          ],
-          'media-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo without the protocol
-          ],
-          upgradeInsecureRequests: null,
-        },
-      },
-    },
-  },
-  // ...
-]
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="./config/middlewares.ts"
-export default [
-  // ...
-  {
-    name: 'strapi::security',
-    config: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          'connect-src': ["'self'", 'https:'],
-          'img-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo without the protocol
-          ],
-          'media-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'www.okta.com', // Base URL of the provider's logo without the protocol
-          ],
-          upgradeInsecureRequests: null,
-        },
-      },
-    },
-  },
-  // ...
-]
-```
-
-  </TabItem>
-</Tabs>
-
-</details>
-
-:::note
-When deploying the admin panel to a different location or on a different subdomain, an additional configuration is required to set the common domain for the cookies. This is required to ensure the cookies are shared across the domains.
-:::
-
-:::caution
-Deploying the admin and backend on entirely different unrelated domains is not possible at this time when using SSO due to restrictions in cross-domain cookies.
-:::
-
-<details>
-  <summary>Example: Setting custom cookie domain</summary>
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript">
-
-```jsx title="./config/admin.js"
-module.exports = ({ env }) => ({
-  auth: {
-    domain: env("ADMIN_SSO_DOMAIN", ".test.example.com"),
-    providers: [
-      // ...
-    ],
-  },
-  url: env("ADMIN_URL", "http://admin.test.example.com"),
-  // ...
-});
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="./config/admin.ts"
-export default ({ env }) => ({
-  auth: {
-    domain: env("ADMIN_SSO_DOMAIN", ".test.example.com"),
-    providers: [
-      // ...
-    ],
-  },
-  url: env("ADMIN_URL", "http://admin.test.example.com"),
-  // ...
-});
-```
-
-</TabItem>
-</Tabs>
-
-</details>
 
 ### The `createStrategy` Factory
 
@@ -409,21 +271,3 @@ export default () => ({
 </TabItem>
 
 </Tabs>
-
-## Debugging common issues with SSO
-
-### Oops something went wrong
-
-TODO add information about common error page
-
-### Insecure Cookies
-
-TODO add information about insecure cookies
-
-### Redirect URI mismatch
-
-TODO add information about redirect URI mismatch
-
-### Opening in a new tab requires logging in again
-
-TODO explain why opening in a new tab requires logging in again
