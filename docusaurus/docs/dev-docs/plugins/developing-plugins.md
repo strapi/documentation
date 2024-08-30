@@ -30,6 +30,10 @@ Strapi allows the development of plugins that work exactly like the built-in plu
 3. Get an overview of the [plugin APIs](#plugin-apis) to add features to your plugin.
 4. Read some [guides](#guides) based on your use case(s).
 
+:::note
+Ensure you release your Strapi 5 plugin as a different major version number to distinguish it from the v4 compatible version.
+:::
+
 ## Plugin APIs
 
 Strapi provides the following programmatic APIs for plugins to hook into some of Strapi's features:
