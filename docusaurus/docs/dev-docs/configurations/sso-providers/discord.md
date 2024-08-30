@@ -69,20 +69,20 @@ The redirect URL/URI will be dependent on your provider configuration however in
 ```js
 callbackURL:
   env('PUBLIC_URL', "https://api.example.com") +
-  strapi.admin.services.passport.getStrategyCallbackURL("TODO"),
+  strapi.admin.services.passport.getStrategyCallbackURL("discord"),
 ```
 
-In this example the redirect URL/URI used by the provider will be `https://api.example.com/admin/connect/TODO`.
+In this example the redirect URL/URI used by the provider will be `https://api.example.com/admin/connect/discord`.
 
 This is broken down as follows:
 
 - `https://api.example.com` is the public URL of your Strapi application
 - `/admin/connect` is the general path for SSO callbacks in Strapi
-- `/TODO` is the specific provider UID for TODO
+- `/discord` is the specific provider UID for Discord
 
 ## Strapi Configuration
 
-Using: // TODO
+Using: [passport-discord](https://github.com/nicholastay/passport-discord)
 
 ### Install the Provider Package
 
@@ -91,7 +91,7 @@ Using: // TODO
 <TabItem value="yarn" label="yarn">
 
 ```sh
-// TODO
+yarn add passport-discord
 ```
 
 </TabItem>
@@ -99,7 +99,7 @@ Using: // TODO
 <TabItem value="npm" label="npm">
 
 ```sh
-// TODO
+npm install --save passport-discord
 ```
 
 </TabItem>
@@ -114,7 +114,38 @@ Using: // TODO
 
 ```js title="./config/admin.js"
 
-// TODO
+const DiscordStrategy = require("passport-discord");
+
+module.exports = ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "discord",
+        displayName: "Discord",
+        icon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png",
+        createStrategy: (strapi) =>
+          new DiscordStrategy(
+            {
+              clientID: env("DISCORD_CLIENT_ID"),
+              clientSecret: env("DISCORD_SECRET"),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "discord"
+                ),
+              scope: ["identify", "email"],
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: `${profile.username}#${profile.discriminator}`,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
 ```
 
 </TabItem>
@@ -123,7 +154,39 @@ Using: // TODO
 
 ```ts title="./config/admin.ts"
 
-// TODO
+import { Strategy as DiscordStrategy } from "passport-discord";
+
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "discord",
+        displayName: "Discord",
+        icon: "https://cdn0.iconfinder.com/data/icons/free-social-media-set/24/discord-512.png",
+        createStrategy: (strapi) =>
+          new DiscordStrategy(
+            {
+              clientID: env("DISCORD_CLIENT_ID"),
+              clientSecret: env("DISCORD_SECRET"),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "discord"
+                ),
+              scope: ["identify", "email"],
+            },
+            (accessToken, refreshToken, profile, done) => {
+              done(null, {
+                email: profile.email,
+                username: `${profile.username}#${profile.discriminator}`,
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
 ```
 
 </TabItem>
