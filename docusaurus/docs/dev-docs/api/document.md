@@ -13,7 +13,7 @@ tags:
 - introduction
 ---
 
-<div className="document-concept-page">
+<div className="document-concept-page custom-mermaid-layout">
 
 A **document** in Strapi 5 is an API-only concept. A document represents all the different variations of content for a given entry of a content-type.
 
