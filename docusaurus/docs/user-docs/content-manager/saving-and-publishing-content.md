@@ -128,10 +128,10 @@ To publish several entries at the same time:
 2. Click on the **Publish** button located above the header of the table.
 3. In the _Publish entries_ dialog, check the list of selected entries and their status:
 
-   - ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish: the entry can be published
-   - ![Fail icon](/img/assets/icons/CrossCircle.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
+   - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry can be published
+   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
 
-4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/CrossCircle.svg) status, click the ![Edit icon](/img/assets/icons/v5/Pencil.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
+4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![Edit icon](/img/assets/icons/v5/Pencil.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
 5. Click the **Publish** button.
 6. In the confirmation dialog box, confirm your choice by clicking again on the **Publish** button.
 

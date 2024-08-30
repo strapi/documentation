@@ -41,7 +41,7 @@ Other providers that are not proposed by default by Strapi can be added manually
 
 <!---
 :::tip
-Click the search button ![Search icon](/img/assets/icons/search.svg) above the table to use a text search and find one of your providers more quickly!
+Click the search button ![Search icon](/img/assets/icons/v5/search.svg) above the table to use a text search and find one of your providers more quickly!
 :::
 --->
 

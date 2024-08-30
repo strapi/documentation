@@ -54,7 +54,7 @@ From the list view, it is possible to:
 - perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/v5/More.svg) <ScreenshotNumberReference number="7" /> at the end of the line:
   - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete ![Delete icon](/img/assets/icons/v5/Trash.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
   - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) or discard its changes,
-  - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/delete-locale.svg) delete a given locale,
+  - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
 - select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publish-and-unpublish-), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
 
 :::tip
@@ -82,7 +82,7 @@ To set a new filter:
 5. Click on the **Add filter** button.
 
 :::note
-When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/clear.svg).
+When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
 :::
 
 ### Creating a new entry

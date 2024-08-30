@@ -34,8 +34,8 @@ Keep in mind that v3 and v4 plugins are not cross-compatible, but that providers
 The Plugins and Providers tabs display each plugin/provider on individual cards containing:
 
 - their name, sometimes followed by either of the following badges:
-  - ![maintained by Strapi icon](/img/assets/icons/official-market.svg) to indicate it is made by Strapi,
-  - ![verified by Strapi icon](/img/assets/icons/verified-marketplace.svg) to indicate it was verified by Strapi.
+  - ![maintained by Strapi icon](/img/assets/icons/v5/official-market.svg) to indicate it is made by Strapi,
+  - ![verified by Strapi icon](/img/assets/icons/v5/verified-marketplace.svg) to indicate it was verified by Strapi.
 - the number of times the plugin/provider was starred on GitHub and downloaded
 - the description
 - a **Learn more** button for additional information, including detailed implementation instructions

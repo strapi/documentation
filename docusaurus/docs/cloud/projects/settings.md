@@ -165,9 +165,9 @@ The ![Domains icon](/img/assets/icons/Browsers.svg) *Domains* tab enables you to
 All existing domains for your Strapi Cloud project are listed in the ![Domains icon](/img/assets/icons/Browsers.svg) *Domains* tab. For each domain, you can:
 
 - see its current status:
-    - ![Edit icon](/img/assets/icons/CheckCircle.svg) Active: the domain is currently confirmed and active
+    - ![Edit icon](/img/assets/icons/v5/CheckCircle.svg) Active: the domain is currently confirmed and active
     - ![Edit icon](/img/assets/icons/Clock.svg) Pending: the domain transfer is being processed, waiting for DNS changes to propagate
-    - ![Edit icon](/img/assets/icons/CrossCircle.svg) Failed: the domain change request did not complete as an error occured
+    - ![Edit icon](/img/assets/icons/v5/CrossCircle2.svg) Failed: the domain change request did not complete as an error occured
 - click the ![Edit icon](/img/assets/icons/edit.svg) edit button to access the settings of the domain
 - click the ![Delete icon](/img/assets/icons/delete.svg) delete button to delete the domain
 

@@ -139,7 +139,7 @@ It would help getting a bit more organized if our restaurants directory had some
 6. Switch to the _Advanced Settings_ tab, and check the **Required field** and the **Unique field** settings.
 7. Click on **Add another field**.
 8. Choose the Relation field.
-9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/ctb_relation_manytomany.svg). The text should read `Categories has and belongs to many Restaurants`.
+9. In the center, select the icon that represents "many-to-many" ![icon many-to-many](/img/assets/icons/v5/ctb_relation_manytomany.svg). The text should read `Categories has and belongs to many Restaurants`.
 
 <ThemedImage
 alt="Admin Panel screenshot: relations"
