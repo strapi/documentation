@@ -72,20 +72,20 @@ The redirect URL/URI will be dependent on your provider configuration however in
 ```js
 callbackURL:
   env('PUBLIC_URL', "https://api.example.com") +
-  strapi.admin.services.passport.getStrategyCallbackURL("TODO"),
+  strapi.admin.services.passport.getStrategyCallbackURL("azure_ad_oauth2"),
 ```
 
-In this example the redirect URL/URI used by the provider will be `https://api.example.com/admin/connect/TODO`.
+In this example the redirect URL/URI used by the provider will be `https://api.example.com/admin/connect/azure_ad_oauth2`.
 
 This is broken down as follows:
 
 - `https://api.example.com` is the public URL of your Strapi application
 - `/admin/connect` is the general path for SSO callbacks in Strapi
-- `/TODO` is the specific provider UID for TODO
+- `/azure_ad_oauth2` is the specific provider UID for Mircosoft Entra ID / Azure Active Directory
 
 ## Strapi Configuration
 
-Using: // TODO
+Using: [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme)
 
 ### Install the Provider Package
 
@@ -94,7 +94,7 @@ Using: // TODO
 <TabItem value="yarn" label="yarn">
 
 ```sh
-// TODO
+yarn add passport-azure-ad-oauth2 jsonwebtoken
 ```
 
 </TabItem>
@@ -102,7 +102,7 @@ Using: // TODO
 <TabItem value="npm" label="npm">
 
 ```sh
-// TODO
+npm install --save passport-azure-ad-oauth2 jsonwebtoken
 ```
 
 </TabItem>
@@ -117,7 +117,43 @@ Using: // TODO
 
 ```js title="./config/admin.js"
 
-// TODO
+const AzureAdOAuth2Strategy = require("passport-azure-ad-oauth2");
+const jwt = require("jsonwebtoken");
+
+module.exports = ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "azure_ad_oauth2",
+        displayName: "Microsoft",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png",
+        createStrategy: (strapi) =>
+          new AzureAdOAuth2Strategy(
+            {
+              clientID: env("MICROSOFT_CLIENT_ID", ""),
+              clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
+              scope: ["user:email"],
+              tenant: env("MICROSOFT_TENANT_ID", ""),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "azure_ad_oauth2"
+                ),
+            },
+            (accessToken, refreshToken, params, profile, done) => {
+              let waadProfile = jwt.decode(params.id_token, "", true);
+              done(null, {
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
 ```
 
 </TabItem>
@@ -126,7 +162,43 @@ Using: // TODO
 
 ```ts title="./config/admin.ts"
 
-// TODO
+import { Strategy as AzureAdOAuth2Strategy} from "passport-azure-ad-oauth2";
+import jwt from "jsonwebtoken";
+
+export default ({ env }) => ({
+  auth: {
+    // ...
+    providers: [
+      {
+        uid: "azure_ad_oauth2",
+        displayName: "Microsoft",
+        icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png",
+        createStrategy: (strapi) =>
+          new AzureAdOAuth2Strategy(
+            {
+              clientID: env("MICROSOFT_CLIENT_ID", ""),
+              clientSecret: env("MICROSOFT_CLIENT_SECRET", ""),
+              scope: ["user:email"],
+              tenant: env("MICROSOFT_TENANT_ID", ""),
+              callbackURL:
+                strapi.admin.services.passport.getStrategyCallbackURL(
+                  "azure_ad_oauth2"
+                ),
+            },
+            (accessToken, refreshToken, params, profile, done) => {
+              let waadProfile = jwt.decode(params.id_token, "", true);
+              done(null, {
+                email: waadProfile.email,
+                username: waadProfile.email,
+                firstname: waadProfile.given_name, // optional if email and username exist
+                lastname: waadProfile.family_name, // optional if email and username exist
+              });
+            }
+          ),
+      },
+    ],
+  },
+});
 ```
 
 </TabItem>
