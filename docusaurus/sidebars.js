@@ -280,6 +280,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Internationalization (i18n)',
+          id: 'dev-docs/i18n',
+        },
+        {
+          type: 'doc',
           id: 'dev-docs/cli',
           customProps: {
             updated: true,
@@ -439,11 +444,7 @@ const sidebars = {
               label: 'GraphQL',
               id: 'dev-docs/plugins/graphql',
             },
-            {
-              type: 'doc',
-              label: 'Internationalization (i18n)',
-              id: 'dev-docs/plugins/i18n',
-            },
+
             {
               type: 'doc',
               label: 'Sentry',
@@ -940,7 +941,7 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
+              href: '/dev-docs/api/rest/filters-locale-publication#locale',
             },
             {
               type: 'link',
