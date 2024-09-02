@@ -281,12 +281,6 @@ const config = {
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
-      // TODO: re-enable when we publish stable v5 docs on docs.strapi.io
-      // hubspot: {
-      //   accountId: 6893032,
-      //   async: false, // OPTIONAL: sets the async attribute on the script tag, defaults to false
-      //   defer: false, // OPTIONAL: sets the defer attribute on the script tag, defaults to false
-      // },
     }),
 
   plugins: [

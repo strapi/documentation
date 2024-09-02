@@ -78,8 +78,7 @@ Strapi uses a system called [extension](/dev-docs/plugins-extension) as plugins 
 
 ## Can I add my own 3rd party auth provider?
 
-<!-- TODO: convert this link to an internal link when U&P is updated -->
-Yes, you can either follow the following [guide](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html#providers) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
+Yes, you can either follow the following [documentation](/dev-docs/plugins/users-permissions#providers) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions) code and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
 
 There is currently no ETA on this migration however.
 

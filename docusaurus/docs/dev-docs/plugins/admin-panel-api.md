@@ -415,7 +415,6 @@ Injection zones are defined in the [register()](#register) lifecycle but compone
 
 #### Using predefined injection zones
 
-<!-- TODO: link to the proper page once CM section of user guide is converted -->
 Strapi admin panel comes with predefined injection zones so components can be added to the UI of the [Content Manager](/user-docs/intro):
 
 <!-- TODO: maybe add screenshots once the design system is ready? -->

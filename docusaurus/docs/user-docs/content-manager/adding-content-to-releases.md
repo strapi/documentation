@@ -33,7 +33,6 @@ To add entries to a release:
 3. In the modal, select which release to add these entries to.
 4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
 
-<!-- TODO: update screenshot -->
 <ThemedImage
   alt="Including content in a release"
   sources={{
