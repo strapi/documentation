@@ -1315,6 +1315,118 @@
     {
       "source": "/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql",
       "destination": "/dev-docs/i18n#graphql-delete"
-    }
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/configuration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/configuration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/content-type-schema",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/content-type-schema"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/controllers",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/controllers"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/dependencies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/dependencies"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/global-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/global-middlewares"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/graphql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/graphql"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/policies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/policies"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/route-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/route-middlewares"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/routes",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/routes"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/services",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/services"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/backend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/backend"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/frontend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/frontend"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/strapi-global",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/strapi-global"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/theming",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/theming"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/translations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/translations"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/webpack",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/webpack"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/wysiwyg",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/wysiwyg"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/update-folder-structure",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/update-folder-structure"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/migrate-back-end",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-back-end"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/migrate-front-end",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-front-end"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/enable-plugin",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/enable-plugin"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/sql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/sql"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/sql-relations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/sql-relations"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/mongo",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet"
+    },
   ]
 }
