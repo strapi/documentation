@@ -1427,6 +1427,6 @@
     {
       "source": "/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet",
       "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet"
-    },
+    }
   ]
 }
