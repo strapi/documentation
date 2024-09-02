@@ -1,6 +1,6 @@
 ---
 title: TypeScript development
-# description: todo
+description: Learn more about TypeScript usage with Strapi 5
 tags:
 - strapi() factory
 - strapi.compile() function
