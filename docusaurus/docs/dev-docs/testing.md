@@ -344,3 +344,43 @@ Time:        6.874 s, estimated 9 s
 Ran all test suites.
 ✨  Done in 8.40s.
 ```
+
+## Set all endpoints to Public
+This function will by-pass all of the securities set by the `Users Permissions` plug-in. Usefull to test endpoints.
+
+```js
+function setAllEndpointsToEnebleTrue(obj) {
+  for (let key in obj) {
+    if (obj[key] && typeof obj[key] === "object" && "enabled" in obj[key]) {
+      obj[key].enabled = true;
+    }
+  }
+}
+
+const makeAllRoutesPublic = async (strapi) => {
+  const roles = await strapi.service("plugin::users-permissions.role").find();
+
+  const _public = await strapi
+    .service("plugin::users-permissions.role")
+    .findOne(roles.filter((role) => role.type === "public")[0].id);
+
+  // Iterate over all api content-types
+  Object.keys(_public.permissions)
+    .filter((permission) => permission.startsWith("api"))
+    .forEach((permission) => {
+      const controller = Object.keys(
+        _public.permissions[permission].controllers
+      )[0];
+
+      setAllEndpointsToEnebleTrue(
+        _public.permissions[permission].controllers[controller]
+      );
+    });
+
+  await strapi
+    .service("plugin::users-permissions.role")
+    .updateRole(_public.id, _public);
+};
+
+module.exports = { makeAllRoutesPublic };
+```
