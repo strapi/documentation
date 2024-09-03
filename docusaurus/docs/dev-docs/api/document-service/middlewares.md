@@ -39,6 +39,206 @@ Syntax: `(context, next) => ReturnType<typeof next>`
 | `uid`         | Content type unique identifier                                                       | `string`      |
 | `contentType` | Content type                                                                         | `ContentType` |
 
+The following examples show what `context` might include:
+
+<Tabs>
+
+<TabItem value="find-many" label="findMany">
+
+```js
+{
+  uid: 'api::test.test',
+  contentType: {
+    kind: 'collectionType',
+    collectionName: 'tests',
+    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
+    options: { comment: '', draftAndPublish: false },
+    attributes: {
+      test: [Object],
+      createdAt: [Object],
+      updatedAt: [Object],
+      publishedAt: [Object],
+      createdBy: [Object],
+      updatedBy: [Object],
+      locale: [Object]
+    },
+    apiName: 'test',
+    globalId: 'Test',
+    uid: 'api::test.test',
+    modelType: 'contentType',
+    modelName: 'test',
+    actions: {},
+    lifecycles: {}
+  },
+  action: 'findMany',
+  params: {
+    filters: { documentId: [Object] },
+    status: 'draft',
+    locale: null,
+    fields: [ 'documentId', 'locale', 'updatedAt', 'createdAt', 'publishedAt' ]
+  }
+}
+```
+</TabItem>
+
+<TabItem value="find-one" label="findOne">
+
+```js
+{
+  uid: 'api::test.test',
+  contentType: {
+    kind: 'collectionType',
+    collectionName: 'tests',
+    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
+    options: { comment: '', draftAndPublish: false },
+    attributes: {
+      test: [Object],
+      createdAt: [Object],
+      updatedAt: [Object],
+      publishedAt: [Object],
+      createdBy: [Object],
+      updatedBy: [Object],
+      locale: [Object]
+    },
+    apiName: 'test',
+    globalId: 'Test',
+    uid: 'api::test.test',
+    modelType: 'contentType',
+    modelName: 'test',
+    actions: {},
+    lifecycles: {}
+  },
+  action: 'findOne',
+  params: {
+    populate: { createdBy: true, updatedBy: true },
+    locale: undefined,
+    status: 'published',
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq'
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="update" label="update">
+
+```js
+{
+  uid: 'api::test.test',
+  contentType: {
+    kind: 'collectionType',
+    collectionName: 'tests',
+    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
+    options: { comment: '', draftAndPublish: false },
+    attributes: {
+      test: [Object],
+      createdAt: [Object],
+      updatedAt: [Object],
+      publishedAt: [Object],
+      createdBy: [Object],
+      updatedBy: [Object],
+      locale: [Object]
+    },
+    apiName: 'test',
+    globalId: 'Test',
+    uid: 'api::test.test',
+    modelType: 'contentType',
+    modelName: 'test',
+    actions: {},
+    lifecycles: {}
+  },
+  action: 'update',
+  params: {
+    data: { test: 'test1', updatedBy: 1 },
+    populate: { createdBy: true, updatedBy: true },
+    locale: undefined,
+    status: 'draft',
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq'
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="delete" label="delete">
+
+```js
+{
+  uid: 'api::test.test',
+  contentType: {
+    kind: 'collectionType',
+    collectionName: 'tests',
+    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
+    options: { comment: '', draftAndPublish: false },
+    attributes: {
+      test: [Object],
+      createdAt: [Object],
+      updatedAt: [Object],
+      publishedAt: [Object],
+      createdBy: [Object],
+      updatedBy: [Object],
+      locale: [Object]
+    },
+    apiName: 'test',
+    globalId: 'Test',
+    uid: 'api::test.test',
+    modelType: 'contentType',
+    modelName: 'test',
+    actions: {},
+    lifecycles: {}
+  },
+  action: 'delete',
+  params: {
+    locale: '*',
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
+    populate: { createdBy: true, updatedBy: true }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="create" label="create">
+
+```js
+{
+  uid: 'api::test.test',
+  contentType: {
+    kind: 'collectionType',
+    collectionName: 'tests',
+    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
+    options: { comment: '', draftAndPublish: false },
+    attributes: {
+      test: [Object],
+      createdAt: [Object],
+      updatedAt: [Object],
+      publishedAt: [Object],
+      createdBy: [Object],
+      updatedBy: [Object],
+      locale: [Object]
+    },
+    apiName: 'test',
+    globalId: 'Test',
+    uid: 'api::test.test',
+    modelType: 'contentType',
+    modelName: 'test',
+    actions: {},
+    lifecycles: {}
+  },
+  action: 'create',
+  params: {
+    data: { test: 'test1', createdBy: 1, updatedBy: 1 },
+    locale: undefined,
+    status: 'draft',
+    populate: { createdBy: true, updatedBy: true }
+  }
+}
+```
+
+</TabItem>
+
+</Tabs>
+
 #### `next`
 
 `next` is a function without parameters that calls the next middleware in the stack and return its response.
