@@ -39,6 +39,9 @@ Syntax: `(context, next) => ReturnType<typeof next>`
 | `uid`         | Content type unique identifier                                                       | `string`      |
 | `contentType` | Content type                                                                         | `ContentType` |
 
+<details>
+<summary>Examples:</summary>
+
 The following examples show what `context` might include:
 
 <Tabs>
@@ -238,6 +241,7 @@ The following examples show what `context` might include:
 </TabItem>
 
 </Tabs>
+</details>
 
 #### `next`
 
