@@ -101,7 +101,7 @@ The Content-Type Builder helps you create your data structure. When creating an 
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to ![Content-type Builder icon](/img/assets/icons/v5/Layout.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
@@ -120,7 +120,7 @@ sources={{
 }}
 />
 
-Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
+Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager > Collection types_ in the navigation. Wow, you have just created your very first content-type! It was so cool — let's create another one right now, just for pleasure.
 
 </details>
 
@@ -131,7 +131,7 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-1. Go to ![Content-type Builder icon](/img/assets/quick-start-guide/icons/content_types_builder.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to ![Content-type Builder icon](/img/assets/icons/v5/Layout.svg) [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
@@ -269,7 +269,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 ### Step 2: Create an entry for the "Restaurant" collection type
 
-1. Go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types - Restaurant_ in the navigation.
+1. Go to ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager > Collection types - Restaurant_ in the navigation.
 2. Click on **Create new entry**.
 3. Type the name of your favorite local restaurant in the _Name_ field. Let's say it's `Biscotte Restaurant`.
 4. In the _Description_ field, write a few words about it. If you're lacking some inspiration, you can use `Welcome to Biscotte restaurant! Restaurant Biscotte offers a cuisine based on fresh, quality products, often local, organic when possible, and always produced by passionate producers.`
@@ -283,7 +283,7 @@ sources={{
 }}
 />
 
-The restaurant is now listed in the _Collection types - Restaurant_ view of the ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager_.
+The restaurant is now listed in the _Collection types - Restaurant_ view of the ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager_.
 
 </details>
 
@@ -292,7 +292,7 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 
 #### Step 3: Add Categories
 
-Let's go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types - Category_ and create 2 categories:
+Let's go to ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager > Collection types - Category_ and create 2 categories:
 
 1. Click on **Create new entry**.
 2. Type `French Food` in the _Name_ field.
@@ -307,11 +307,11 @@ sources={{
   dark: '/img/assets/quick-start-guide/qsg-handson-categories_DARK.gif',
 }}/>
 
-The "French Food" and "Brunch" categories are now listed in the _Collection types - Category_ view of the ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager_.
+The "French Food" and "Brunch" categories are now listed in the _Collection types - Category_ view of the ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager_.
 
 Now, we will add a category to a restaurant:
 
-1. Go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types - Restaurant_ in the navigation, and click on "Biscotte Restaurant".
+1. Go to ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager > Collection types - Restaurant_ in the navigation, and click on "Biscotte Restaurant".
 2. In the **Categories** drop-down list at the bottom of the page, select "Brunch". Scroll back to the top of the page and click **Save**.
 
 </details>
@@ -323,7 +323,7 @@ Now, we will add a category to a restaurant:
 
 We have just added a restaurant and 2 categories. We now have enough content to consume (pun intended). But first, we need to make sure that the content is publicly accessible through the API:
 
-1. Click on _![Settings icon](/img/assets/quick-start-guide/icons/settings.svg) Settings_ at the bottom of the main navigation.
+1. Click on _![Settings icon](/img/assets/icons/v5/Cog.svg) Settings_ at the bottom of the main navigation.
 2. Under _Users & Permissions Plugin_, choose _Roles_.
 3. Click the **Public** role.
 4. Scroll down under _Permissions_.
@@ -348,7 +348,7 @@ sources={{
 
 By default, any content you create is saved as a draft. Let's publish our categories and restaurant.
 
-First, navigate to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types - Category_. From there:
+First, navigate to ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager > Collection types - Category_. From there:
 
 1. Click the "Brunch" entry.
 2. On the next screen, click **Publish**.
@@ -356,7 +356,7 @@ First, navigate to ![Content Manager icon](/img/assets/quick-start-guide/icons/c
 
 Then, go back to the Categories list and repeat for the "French Food" category.
 
-Finally, to publish your favorite restaurant, go to ![Content Manager icon](/img/assets/quick-start-guide/icons/content.svg) _Content Manager > Collection types - Restaurant_, click the "Biscotte Restaurant" entry, and **Publish** it.
+Finally, to publish your favorite restaurant, go to ![Content Manager icon](/img/assets/icons/v5/Feather.svg) _Content Manager > Collection types - Restaurant_, click the "Biscotte Restaurant" entry, and **Publish** it.
 
 <ThemedImage
 alt="GIF: Publish content"
