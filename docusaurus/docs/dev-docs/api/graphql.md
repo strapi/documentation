@@ -421,7 +421,7 @@ For instance, for a "Restaurant" content-type, the following mutations are gener
 
 ### Create a new document
 
-When creating new documents <DocumentDefinition/>, the `data` argument will have an associated input type that is specific to your content-type.
+When creating new documents, the `data` argument will have an associated input type that is specific to your content-type.
 
 For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
 
