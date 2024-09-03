@@ -14,11 +14,7 @@ tags:
 - REST API 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Models
-
-<NotV5 />
 
 As Strapi is a headless Content Management System (CMS), creating a data structure for the content is one of the most important aspects of using the software. Models define a representation of the data structure.
 
@@ -587,6 +583,7 @@ The `options` key is used to define specific behaviors and accepts the following
 |---------------------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `privateAttributes` | Array of strings | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps. <br /><br /> The `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
 | `draftAndPublish`   | Boolean          | Enables the draft and publish feature. <br /><br /> Default value: `true` (`false` if the content-type is created from the interactive CLI).                                                                                                                                                                                    |
+| `populateCreatorFields` | Boolean | Populates `createdBy` and `updatedBy` fields in responses returned by the REST API (see [guide](/dev-docs/api/rest/guides/populate-creator-fields) for more details).<br/><br/>Default value: `false`. |
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
