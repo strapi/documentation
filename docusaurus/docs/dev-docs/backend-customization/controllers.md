@@ -13,11 +13,7 @@ tags:
 - validateQuery function
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Controllers
-
-<NotV5 />
 
 Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/dev-docs/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/dev-docs/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
 

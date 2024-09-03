@@ -12,11 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Database
-
-<NotV5/>
 
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
