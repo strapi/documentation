@@ -17,7 +17,6 @@ tags:
 - register function
 - reducers API
 - redux
-- Strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

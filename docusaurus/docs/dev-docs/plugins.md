@@ -9,7 +9,6 @@ tags:
 - concepts 
 - plugins 
 - introduction
-- Strapi plugin
 ---
 
 # Strapi plugins

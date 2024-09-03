@@ -7,7 +7,6 @@ tags:
 - admin panel
 - plugins 
 - introduction
-- Strapi plugin
 ---
 
 # Using Strapi built-in plugins
