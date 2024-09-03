@@ -26,14 +26,14 @@ A middleware is a function that receives a context and a next function.
 Syntax: `(context, next) => ReturnType<typeof next>`
 
 | Parameter | Description                           | Type       |
-| --------- | ------------------------------------- | ---------- |
+|-----------|---------------------------------------|------------|
 | `context` | Middleware context                    | `Context`  |
 | `next`    | Call the next middleware in the stack | `function` |
 
 #### `context`
 
 | Parameter     | Description                                                                          | Type          |
-| ------------- | ------------------------------------------------------------------------------------ | ------------- |
+|---------------|--------------------------------------------------------------------------------------|---------------|
 | `action`      | The method that is running ([see available methods](/dev-docs/api/document-service)) | `string`      |
 | `params`      | The method params ([see available methods](/dev-docs/api/document-service))          | `Object`      |
 | `uid`         | Content type unique identifier                                                       | `string`      |
@@ -50,73 +50,90 @@ The following examples show what `context` might include:
 
 ```js
 {
-  uid: 'api::test.test',
+  uid: "api::restaurant.restaurant",
   contentType: {
-    kind: 'collectionType',
-    collectionName: 'tests',
-    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
-    options: { comment: '', draftAndPublish: false },
-    attributes: {
-      test: [Object],
-      createdAt: [Object],
-      updatedAt: [Object],
-      publishedAt: [Object],
-      createdBy: [Object],
-      updatedBy: [Object],
-      locale: [Object]
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
     },
-    apiName: 'test',
-    globalId: 'Test',
-    uid: 'api::test.test',
-    modelType: 'contentType',
-    modelName: 'test',
-    actions: {},
-    lifecycles: {}
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
   },
-  action: 'findMany',
+  action: "findMany",
   params: {
-    filters: { documentId: [Object] },
-    status: 'draft',
+    filters: { /*...*/ },
+    status: "draft",
     locale: null,
-    fields: [ 'documentId', 'locale', 'updatedAt', 'createdAt', 'publishedAt' ]
+    fields: ['name', 'description'],
   }
 }
 ```
+
 </TabItem>
 
 <TabItem value="find-one" label="findOne">
 
 ```js
 {
-  uid: 'api::test.test',
+  uid: "api::restaurant.restaurant",
   contentType: {
-    kind: 'collectionType',
-    collectionName: 'tests',
-    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
-    options: { comment: '', draftAndPublish: false },
-    attributes: {
-      test: [Object],
-      createdAt: [Object],
-      updatedAt: [Object],
-      publishedAt: [Object],
-      createdBy: [Object],
-      updatedBy: [Object],
-      locale: [Object]
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
     },
-    apiName: 'test',
-    globalId: 'Test',
-    uid: 'api::test.test',
-    modelType: 'contentType',
-    modelName: 'test',
-    actions: {},
-    lifecycles: {}
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
   },
-  action: 'findOne',
+  action: "findOne",
   params: {
-    populate: { createdBy: true, updatedBy: true },
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
     locale: undefined,
-    status: 'published',
-    documentId: 'hp7hjvrbt8rcgkmabntu0aoq'
+    status: "publish"
+    populate: { /*...*/ },
   }
 }
 ```
@@ -127,36 +144,44 @@ The following examples show what `context` might include:
 
 ```js
 {
-  uid: 'api::test.test',
+  uid: "api::restaurant.restaurant",
   contentType: {
-    kind: 'collectionType',
-    collectionName: 'tests',
-    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
-    options: { comment: '', draftAndPublish: false },
-    attributes: {
-      test: [Object],
-      createdAt: [Object],
-      updatedAt: [Object],
-      publishedAt: [Object],
-      createdBy: [Object],
-      updatedBy: [Object],
-      locale: [Object]
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
     },
-    apiName: 'test',
-    globalId: 'Test',
-    uid: 'api::test.test',
-    modelType: 'contentType',
-    modelName: 'test',
-    actions: {},
-    lifecycles: {}
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
   },
-  action: 'update',
+  action: "update",
   params: {
-    data: { test: 'test1', updatedBy: 1 },
-    populate: { createdBy: true, updatedBy: true },
+    data: { /*...*/ },
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
     locale: undefined,
-    status: 'draft',
-    documentId: 'hp7hjvrbt8rcgkmabntu0aoq'
+    status: "draft"
+    populate: { /*...*/ },
   }
 }
 ```
@@ -167,34 +192,43 @@ The following examples show what `context` might include:
 
 ```js
 {
-  uid: 'api::test.test',
+  uid: "api::restaurant.restaurant",
   contentType: {
-    kind: 'collectionType',
-    collectionName: 'tests',
-    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
-    options: { comment: '', draftAndPublish: false },
-    attributes: {
-      test: [Object],
-      createdAt: [Object],
-      updatedAt: [Object],
-      publishedAt: [Object],
-      createdBy: [Object],
-      updatedBy: [Object],
-      locale: [Object]
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
     },
-    apiName: 'test',
-    globalId: 'Test',
-    uid: 'api::test.test',
-    modelType: 'contentType',
-    modelName: 'test',
-    actions: {},
-    lifecycles: {}
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
   },
-  action: 'delete',
+  action: "delete",
   params: {
-    locale: '*',
+    data: { /*...*/ },
     documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
-    populate: { createdBy: true, updatedBy: true }
+    locale: "*",
+    populate: { /*...*/ },
   }
 }
 ```
@@ -205,35 +239,42 @@ The following examples show what `context` might include:
 
 ```js
 {
-  uid: 'api::test.test',
+  uid: "api::restaurant.restaurant",
   contentType: {
-    kind: 'collectionType',
-    collectionName: 'tests',
-    info: { singularName: 'test', pluralName: 'tests', displayName: 'test' },
-    options: { comment: '', draftAndPublish: false },
-    attributes: {
-      test: [Object],
-      createdAt: [Object],
-      updatedAt: [Object],
-      publishedAt: [Object],
-      createdBy: [Object],
-      updatedBy: [Object],
-      locale: [Object]
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
     },
-    apiName: 'test',
-    globalId: 'Test',
-    uid: 'api::test.test',
-    modelType: 'contentType',
-    modelName: 'test',
-    actions: {},
-    lifecycles: {}
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
   },
-  action: 'create',
+  action: "create",
   params: {
-    data: { test: 'test1', createdBy: 1, updatedBy: 1 },
-    locale: undefined,
-    status: 'draft',
-    populate: { createdBy: true, updatedBy: true }
+    data: { /*...*/ },
+    status: "draft",
+    populate: { /*...*/ },
   }
 }
 ```
