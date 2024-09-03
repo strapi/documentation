@@ -44,14 +44,14 @@ Strapi version numbers respect the [semantic versioning](https://semver.org/) co
 
 The upgrade tool allows upgrading to a major, minor, or patch version.
 
-What the upgrade tool will do depends on the latest existing version and the command you run. For instance, if the latest Strapi v4 version is v4.16.6:
+What the upgrade tool will do depends on the latest existing version and the command you run. For instance, if the latest Strapi v4 version is v4.25.9:
 
 | My Strapi application is currently on… | If I run… | My Strapi application will be upgraded to … |
 |----|----|----|
-| v4.14.1 | `npx @strapi/upgrade patch` | v4.14.6<br/><br/>(because v4.14.6 is the latest patch version for the v4.14 minor version) |
-| v4.14.1 | `npx @strapi/upgrade minor` | v4.16.2 |
-| v4.14.1 | `npx @strapi/upgrade major` | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.16.2. |
-| v4.16.2 | `npx @strapi/upgrade major` | v5.0.0  |
+| v4.25.1 | `npx @strapi/upgrade patch` | v4.25.9<br/><br/>(because v4.25.9 is the latest patch version for the v4.25 minor version) |
+| v4.14.1 | `npx @strapi/upgrade minor` | v4.25.9 |
+| v4.14.1 | `npx @strapi/upgrade major` | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.25.9. |
+| v4.25.9 | `npx @strapi/upgrade major` | v5.0.0  |
 
 ## Upgrade to a major version
 
