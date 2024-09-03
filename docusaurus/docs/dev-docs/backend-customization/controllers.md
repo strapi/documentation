@@ -13,7 +13,6 @@ tags:
 - validateQuery function
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Controllers
@@ -233,7 +232,7 @@ In Strapi 5, both query parameters and input data (i.e., create and update body 
 - relations the user do not have permission to create
 - unrecognized values that are not present on a schema
 - non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
-- the `id` field (other than for connecting relations) which attempts to set or update the `id` of an object
+- setting or updating an `id` field (except for connecting relations)
 
 #### Sanitization when utilizing controller factories
 
