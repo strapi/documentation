@@ -29,6 +29,8 @@ Strapi comes with the following built-in plugins that are officially maintained 
 <CustomDocCard emoji="👥" title="Users & Permissions (U&P)" description="The U&P plugin offers JWT-based authentication and ACL strategies for API protection and user permissions." link="/dev-docs/plugins/users-permissions"/>
 </CustomDocCardsWrapper>
 
+The Upload plugin and the Users & Permissions plugin are installed by default and can not be uninstalled.
+
 ## Automatic plugins discovery
 
 Strapi automatically loads plugins installed with npm. Under the hood, Strapi scans every `package.json` file of the project dependencies, and looks for the following declaration:
