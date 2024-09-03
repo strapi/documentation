@@ -42,9 +42,57 @@ Syntax: `(context, next) => ReturnType<typeof next>`
 <details>
 <summary>Examples:</summary>
 
-The following examples show what `context` might include:
+The following examples show what `context` might include depending on the method called:
 
 <Tabs>
+
+
+<TabItem value="find-one" label="findOne">
+
+```js
+{
+  uid: "api::restaurant.restaurant",
+  contentType: {
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
+    },
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
+  },
+  action: "findOne",
+  params: {
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
+    locale: undefined,
+    status: "publish"
+    populate: { /*...*/ },
+  }
+}
+```
+
+</TabItem>
 
 <TabItem value="find-many" label="findMany">
 
@@ -93,7 +141,7 @@ The following examples show what `context` might include:
 
 </TabItem>
 
-<TabItem value="find-one" label="findOne">
+<TabItem value="create" label="create">
 
 ```js
 {
@@ -128,11 +176,10 @@ The following examples show what `context` might include:
     actions: { /*...*/ },
     lifecycles: { /*...*/ },
   },
-  action: "findOne",
+  action: "create",
   params: {
-    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
-    locale: undefined,
-    status: "publish"
+    data: { /*...*/ },
+    status: "draft",
     populate: { /*...*/ },
   }
 }
@@ -234,53 +281,6 @@ The following examples show what `context` might include:
 ```
 
 </TabItem>
-
-<TabItem value="create" label="create">
-
-```js
-{
-  uid: "api::restaurant.restaurant",
-  contentType: {
-    kind: "collectionType",
-    collectionName: "restaurants",
-    info: {
-      singularName: "restaurant",
-      pluralName: "restaurants",
-      displayName: "restaurant"
-    },
-    options: {
-      draftAndPublish: true
-    },
-    pluginOptions: {},
-    attributes: {
-      name: { /*...*/ },
-      description: { /*...*/ },
-      createdAt: { /*...*/ },
-      updatedAt: { /*...*/ },
-      publishedAt: { /*...*/ },
-      createdBy: { /*...*/ },
-      updatedBy: { /*...*/ },
-      locale: { /*...*/ },
-    },
-    apiName: "restaurant",
-    globalId: "Restaurants",
-    uid: "api::restaurant.restaurant",
-    modelType: "contentType",
-    modelName: "restaurant",
-    actions: { /*...*/ },
-    lifecycles: { /*...*/ },
-  },
-  action: "create",
-  params: {
-    data: { /*...*/ },
-    status: "draft",
-    populate: { /*...*/ },
-  }
-}
-```
-
-</TabItem>
-
 </Tabs>
 </details>
 
