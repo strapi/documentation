@@ -1,5 +1,5 @@
 ---
-title: Templates are now typical Strapi applications
+title: Templates are now regular, standalone Strapi applications
 description: Strapi 5 has strict requirements on the configuration filenames allowed to be loaded.
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
