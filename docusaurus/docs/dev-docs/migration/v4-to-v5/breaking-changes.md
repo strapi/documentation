@@ -70,7 +70,7 @@ You can click on the description of any breaking change in the following tables 
 | [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored) | Yes | ✅ Yes |
 | [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service) | Yes | No |
 | [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale) | Yes | ✅ Yes |
-| [Templates are now regular, standalone Strapi applications](/dev-docs/migration/v4-to-v5/breaking-changes/templates) | No | No |
+<!-- | [Templates are now regular, standalone Strapi applications](/dev-docs/migration/v4-to-v5/breaking-changes/templates) | No | No | -->
 
 ## Plugins, providers, and admin panel customization
 
