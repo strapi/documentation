@@ -100,7 +100,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 ## Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
 
-The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up weekly and those backups are retained for a one-month period. Additionally, you can create a single manual backup.
+The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Developer and Pro plans, and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
 :::note Notes
 
