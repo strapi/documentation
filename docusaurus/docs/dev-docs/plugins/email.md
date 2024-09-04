@@ -100,7 +100,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-## Sending emails with a lifecycle hook
+## Sending emails from a lifecycle hook
 
  To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
@@ -115,7 +115,7 @@ module.exports = {
         const { result } = event;
 
         try{
-            await strapi.plugins['email'].services.email.send({
+            await strapi.plugin('email').service('email').send({ // you could also do: await strapi.service('plugin:email.email').send({
               to: 'valid email address',
               from: 'your verified email address', // e.g. single sender verification in SendGrid
               cc: 'valid email address',
