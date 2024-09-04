@@ -35,7 +35,7 @@ Clicking on the edit ![Edit icon](/img/assets/icons/edit.svg) button of an asset
   - click on the download button ![Download icon](/img/assets/icons/download.svg) to download the asset,
   - click on the copy link button ![Copy link icon](/img/assets/icons/link.svg) to copy the asset's link to the clipboard,
   - optionally, click on the crop button ![Copy link icon](/img/assets/icons/crop.svg) to enter cropping mode for the image (see [cropping images](#cropping-images)).
-- On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Asset location_ (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders.md)) for the asset <ScreenshotNumberReference number="3" />.
+- On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders.md)) for the asset <ScreenshotNumberReference number="3" />.
 - At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
 
 ## Moving assets
@@ -45,7 +45,7 @@ An individual asset can be moved to a folder when editing its details.
 To move an asset:
 
 1. Click on the edit ![Edit icon](/img/assets/icons/edit.svg) button for the asset to be moved.
-2. In the window that pops up, click the _Asset location_ field and choose a different folder from the drop-down list.
+2. In the window that pops up, click the _Location_ field and choose a different folder from the drop-down list.
 3. Click **Save** to confirm.
 
 :::note
