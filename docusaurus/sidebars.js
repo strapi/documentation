@@ -97,6 +97,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/use-cron-jobs',
           ],
         },
         {
@@ -1098,6 +1099,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/use-cron-jobs',
           ]
         }
       ]
