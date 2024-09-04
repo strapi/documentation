@@ -10,7 +10,7 @@ tags:
 
 # Templates
 
-Templates in Strapi 5 are pre-made Strapi applications designed for specific use cases.
+Templates in Strapi 5 are standalone, pre-made Strapi applications designed for specific use cases.
 
 Strapi 5 templates are folders that include all files and folders that you would find in a typical Strapi application (see [project structure](/dev-docs/project-structure)).
 
