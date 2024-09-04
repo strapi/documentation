@@ -41,12 +41,12 @@ Sorting can be enabled for most fields displayed in the table. Click on a field 
 
 ## Creating a new account
 
-On the top right side of the *Administration panel > Users* interface, a **Create new user** button is displayed. It allows to create a new administrator account for your Strapi application.
+On the top right side of the *Administration panel > Users* interface, a ![Mail icon](/img/assets/icons/v5/Mail.svg) **Invite new user** button is displayed. It allows to create a new administrator account for your Strapi application.
 
 To create a new administrator account:
 
-1. Click on the **Create new user** button.
-2. In the *Create new user* window, fill in the Details information about the new administrator:
+1. Click on the ![Mail icon](/img/assets/icons/v5/Mail.svg) **Invite new user** button.
+2. In the *Invite new user* window, fill in the Details information about the new administrator:
 
   | User information | Instructions                                                                 |
   | ---------------- | ---------------------------------------------------------------------------- |
@@ -59,9 +59,9 @@ To create a new administrator account:
   | Setting          | Instructions                                                                                                    |
   | ---------------- | --------------------------------------------------------------------------------------------------------------- |
   | User's roles     | (mandatory) Choose from the drop-down list the role to attribute to the new administrator.                      |
-  | Connect with SSO | (optional) Click **ON** or **OFF** to connect the new administrator account with SSO.                           |
+  | Connect with SSO | (optional) Click **TRUE** or **FALSE** to connect the new administrator account with SSO.                       |
 
-4. Click on the **Create user** button in the bottom right corner of the *Add new user* window.
+4. Click on the **Invite user** button in the bottom right corner of the *Add new user* window.
 5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![Duplicate icon](/img/assets/icons/duplicate.svg) to copy the URL.
 6. Click on the **Finish** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
@@ -76,7 +76,7 @@ Administrator accounts can be deleted from the *Administration panel > Users* in
 To delete an administrator:
 
 1. Click on the delete button ![Delete icon](/img/assets/icons/delete.svg) on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the ![Delete icon](/img/assets/icons/delete.svg) **Delete** button above the table.
-2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
+2. In the deletion window, click on the **Confirm** button to confirm the deletion.
 
 ## Editing an account
 
@@ -93,7 +93,7 @@ The table displayed in the *Administration panel > Users* interface allows to ac
 To edit an administrator account:
 
 1. Click on the name of the administrator whose account you want to edit.
-2. In the *Details* area, edit your chosen account details:
+2. In the *User details* area, edit your chosen account details:
 
 | User information      | Instructions  |
 | --------------------- | ----------------------- |
@@ -102,10 +102,10 @@ To edit an administrator account:
 | Email                 | Write the administrator's complete email address in the textbox.                            |
 | Username              | Write the administrator's username in the textbox.                                          |
 | Password              | Write the new administrator account's password in the textbox.                              |
-| Password confirmation | Write the new password in the textbox for confirmation.                                     |
+| Confirm password      | Write the new password in the textbox for confirmation.                                     |
 | Active                | Click on **TRUE** to activate the administrator's account.                                  |
 
-3. (optional) In the *Login settings* area, edit the role of the administrator:
+3. (optional) In the *Roles* area, edit the role of the administrator:
 
   - Click on the drop-down list to choose a new role, and/or add it to the already attributed one.
   - Click on the delete button ![Clear icon](/img/assets/icons/clear.svg) to delete an already attributed role.

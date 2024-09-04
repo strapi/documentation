@@ -33,7 +33,7 @@ If end users can register themselves on your front-end application (see [Managin
 To create a new end-user account:
 
 1. Go to the User collection type in the Content Manager.
-2. Click on the **Add new entry** button in the top right corner.
+2. Click on the **Create new entry** button in the top right corner.
 3. Fill in the default fields of the entry. Additional fields added specifically for your Strapi application by your administrators may be displayed as well.
 
 | Field     | Instructions    |
