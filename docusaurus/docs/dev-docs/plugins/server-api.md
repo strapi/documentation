@@ -10,7 +10,6 @@ tags:
 - bootstrap function
 - destroy function
 - configuration
-- cron job
 - backend customization
 - routes
 - controllers
@@ -53,7 +52,7 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li> <li>[Cron](#cron)</li></ul>                                                                                                                                                                             |
+| Configuration          | <ul><li>[config](#configuration) object   </li></ul>                                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -146,7 +145,6 @@ Once defined, the configuration can be accessed:
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.
 :::
-
 
 ## Backend customization
 
