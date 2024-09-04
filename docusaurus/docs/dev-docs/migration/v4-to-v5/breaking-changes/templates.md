@@ -1,6 +1,6 @@
 ---
 title: Templates are now regular, standalone Strapi applications
-description: Strapi 5 has strict requirements on the configuration filenames allowed to be loaded.
+description: Templates have been fully rewritten in Strapi 5 and now are standalone, regular Strapi applications, making it easier to create, distribute, and re-use them.
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
  - breaking changes
