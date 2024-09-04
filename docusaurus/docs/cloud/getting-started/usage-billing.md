@@ -30,7 +30,7 @@ Strapi Cloud offers up to 5 free 14-day trial projects, which can be activated a
   - Database entries are the number of entries in your database.
   - Assets storage is the amount of storage used by your assets.
   - Assets bandwidth is the amount of bandwidth used by your assets.
-  - API requests are the number of requests made to your APIs. This includes requests made to the GraphQL and REST APIs.
+  - API requests are the number of requests made to your APIs. This includes requests to the GraphQL and REST APIs, excluding requests for file and media assets counted towards CDN bandwidth and storage.
 - CMS features:
   - Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/user-docs/settings/audit-logs) for more information).
   - Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
