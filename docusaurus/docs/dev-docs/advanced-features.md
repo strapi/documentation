@@ -25,6 +25,8 @@ Strapi provides advanced built-in features for developers who'd like to get the 
 
 <CustomDocCard title="Providers" description="Install, configure, and create providers to extend core capabilities of some plugins." link="/dev-docs/providers" />
 
+<CustomDocCard title="Templates" description="Use and create pre-made Strapi applications designed for a specific purpose." link="/dev-docs/templates" />
+
 <CustomDocCard title="Data management" description="Use Strapi's built-in data management system to import, export, or transfer data." link="/dev-docs/data-management" />
 
 <CustomDocCard title="Database migrations" description="Manage database migrations operations." link="/dev-docs/database-migrations" />

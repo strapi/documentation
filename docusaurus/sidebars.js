@@ -310,6 +310,14 @@ const sidebars = {
           id: 'dev-docs/providers',
         },
         {
+          type: 'doc',
+          label: 'Templates',
+          id: 'dev-docs/templates',
+          customProps: {
+            updated: true,
+          }
+        },
+        {
           type: 'category',
           label: 'Data management',
           link: {
