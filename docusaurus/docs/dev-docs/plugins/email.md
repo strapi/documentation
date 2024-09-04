@@ -13,11 +13,7 @@ tags:
 - sendTemplatedEmail() function
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Email plugin
-
-<NotV5 />
 
 The Email plugin enables applications to send emails from a server or an external provider. The Email plugin uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application. Two of the most common use cases are in the Strapi back end and in the admin panel. The following documentation describes how to use the Email plugin in a controller or service for back-end use cases and using a lifecycle hook for admin panel use cases.
 

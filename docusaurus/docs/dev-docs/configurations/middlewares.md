@@ -15,12 +15,9 @@ tags:
 - route middlewares
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares configuration
-
-<NotV5 />
 
 <MiddlewareTypes />
 

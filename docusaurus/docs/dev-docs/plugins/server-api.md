@@ -19,11 +19,7 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Server API for plugins
-
-<NotV5 />
 
 A Strapi [plugin](/dev-docs/plugins) can interact with both the back end and the [front end](/dev-docs/plugins/admin-panel-api) of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
 
