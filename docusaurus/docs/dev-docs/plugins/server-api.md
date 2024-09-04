@@ -10,7 +10,6 @@ tags:
 - bootstrap function
 - destroy function
 - configuration
-- cron job
 - backend customization
 - routes
 - controllers
