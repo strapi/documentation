@@ -588,6 +588,6 @@ strapi.middleware('plugin::plugin-name.middleware-name');
 
 </details>
 
-:::strapi Entity Service API
-To interact with the content-types, use the [Entity Service API](/dev-docs/api/entity-service).
+:::strapi Document Service API
+To interact with the content-types, use the [Document Service API](/dev-docs/api/document-service).
 :::
