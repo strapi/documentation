@@ -27,7 +27,7 @@ The upgrade tool is a Strapi package and can be run from the CLI.
 
 ## Scope
 
-While the upgrade tool helps upgrade apps and plugins, it doesn't cover every aspect of it. 
+While the upgrade tool helps upgrade applications and plugins, it doesn't cover every aspect of it. 
 
 :white_check_mark: The upgrade tool supports:
 - Updating the project's dependencies
