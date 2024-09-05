@@ -39,6 +39,6 @@ To create a new end-user account:
 | Password  | Write a new password in the textbox. You can click on the eye icon for the password to be shown. The user will be able to change this password on first log in. |
 | Confirmed | (optional) Click **ON** for the end-user account to be confirmed.                                           |
 | Blocked   | (optional) Click **ON** to block the account of the end user, to prevent them to access content.            |
-| Role      | Indicate the role that should be granted to the new end user (see [Managing Users & Permissions plugin settings](../settings/configuring-users-permissions-plugin-settings#configuring-advanced-settings)). |
+| Role      | Indicate the role that should be granted to the new end user (see [Managing Users & Permissions plugin settings](/user-docs/users-roles-permissions/configuring-end-users-roles)). |
 
 4. Click on the **Save** button.
