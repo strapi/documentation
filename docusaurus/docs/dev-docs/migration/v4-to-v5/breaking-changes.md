@@ -71,6 +71,7 @@ You can click on the description of any breaking change in the following tables 
 | [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service) | Yes | No |
 | [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale) | Yes | ✅ Yes |
 
+
 ## Plugins, providers, and admin panel customization
 
 | Description | Affects plugins | Handled by codemods |

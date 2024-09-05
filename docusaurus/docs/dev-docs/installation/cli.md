@@ -118,7 +118,15 @@ The above installation guide only covers the basic installation option using the
 | `--use-npm` | Force the usage of [npm](https://www.npmjs.com/) as the project package manager |
 | `--use-yarn` | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager |
 | `--use-pnpm` | Force the usage of [pnpm](https://pnpm.io/) as the project package manager |
+| `--install`  | Install all dependencies, skipping the related CLI prompt |
+| `--no-install`  | Do not install all dependencies, skipping the related CLI prompt |
+| `--git-init` | Initialize a git repository, skipping the related CLI prompt |
+| `--no-git-init` | Do not initialize a git repository, skipping the related CLI prompt |
+| `--example`  | Add example data, skipping the related CLI prompt |
+| `--no-example`  | Do not add example data, skipping the related CLI prompt |
 | `--skip-cloud` |  Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step) |
+| `--skip-db` | Skip all database-related prompts and create a project with the default (SQLite) database |
+| `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/dev-docs/templates) for details. |
 | `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
 | `--dbhost <dbhost>` | Define the database host to use by replacing `<dbclient>` in the command by the value of your choice |
 | `--dbport <dbport>` | Define the database port to use by replacing `<dbclient>` in the command by the value of your choice |
