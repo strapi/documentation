@@ -11,7 +11,6 @@ tags:
 - Query Engine API
 ---
 
-import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Ordering and Paginating with the Query Engine API
