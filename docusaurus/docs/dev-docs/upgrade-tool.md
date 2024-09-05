@@ -74,7 +74,7 @@ For instance, if the latest Strapi v4 version is v4.25.9:
 
 
 
-## Upgrading to a new version
+## Upgrade to a new version
 
 :::warning
 Before running the upgrade process, make sure you've created a backup of your codebase and database.
