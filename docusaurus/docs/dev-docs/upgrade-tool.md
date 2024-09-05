@@ -36,7 +36,7 @@ While the upgrade tool helps upgrade apps and plugins, it doesn't cover every as
 
 :x: The upgrade tool doesn't support:
 - Modifying the file tree by adding, removing or moving files and directories
-- Migrating the app's data. This is handled by Strapi database migrations
+- Migrating the application's data. This is handled by Strapi database migrations.
 
 :::warning
 After the upgrade tool completes its execution,
