@@ -173,11 +173,7 @@ Proper implementation largely depends on your project's needs and custom code, b
          * the response includes author-related information
          */
         if (entryId) {
-          entry = await strapi.entityService.findOne(
-            // highlight-start
-            // replace the next line with your proper content-type identifier
-            "api::restaurant.restaurant",
-            // highlight-end
+          entry = await strapi.documents('api::restaurant.restaurant').findOne(
             entryId,
             { populate: "*" }
           );
