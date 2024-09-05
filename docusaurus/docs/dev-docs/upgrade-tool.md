@@ -34,7 +34,7 @@ While the upgrade tool helps upgrade apps and plugins, it doesn't cover every as
 - Applying automatic code transformation to existing files
 - Installing or re-installing the correct dependencies for the project
 
-:x: The upgrade tool **doesn't** support
+:x: The upgrade tool doesn't support:
 - Modifying the file tree by adding, removing or moving files and directories
 - Migrating the app's data. This is handled by Strapi database migrations
 
