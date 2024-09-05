@@ -135,7 +135,7 @@ The above installation guide only covers the basic installation option using the
 | `--dbpassword <dbpassword>` | Define the database password to use by replacing `<dbclient>` in the command by the value of your choice |
 | `--dbssl <dbssl>` | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default) |
 | `--dbfile <dbfile>` | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice |
-| `--quickstart` | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode, including adding example data. |
+| `--quickstart` | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. |
 
 :::note Notes
 * If you do not pass a `--use-yarn|npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
