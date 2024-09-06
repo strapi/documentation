@@ -28,7 +28,13 @@ const sidebars = {
             updated: true,
           },
         },
-        'dev-docs/quick-start',
+        {
+          type: 'doc',
+          id: 'dev-docs/quick-start',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'doc',
           id: 'dev-docs/whats-new',
@@ -60,13 +66,22 @@ const sidebars = {
           type: 'category',
           label: 'Installation',
           link: {type: 'doc', id: 'dev-docs/installation'},
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'doc',
               label: 'Introduction to installation',
               id: 'dev-docs/installation',
             },
-            'dev-docs/installation/cli',
+            {
+              type: 'doc',
+              id: 'dev-docs/installation/cli',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/installation/docker',
           ]
         },
@@ -282,6 +297,9 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
+          customProps: {
+            updated: true,
+          },
           id: 'dev-docs/i18n',
         },
         {
@@ -365,6 +383,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Back-end customization',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/backend-customization'
@@ -391,6 +412,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Admin panel customization',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/admin-panel-customization',
