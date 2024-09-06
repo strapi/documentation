@@ -1,6 +1,6 @@
 ---
 title: Access configuration values from the code
-# description: todo
+description: Learn how to access Strapi 5 configuration values from the code.
 displayed_sidebar: devDocsConfigSidebar
 tags:
 - configuration

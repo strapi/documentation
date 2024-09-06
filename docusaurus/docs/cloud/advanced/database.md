@@ -12,11 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Database
-
-<NotV5/>
 
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
@@ -40,20 +36,20 @@ The project `./config/database.js` or `./config/database.ts` file must match the
 
 Before pushing changes, add environment variables to the Strapi Cloud project:
 
-1.  Log into Strapi Cloud and click on the corresponding project on the Projects page.
-2.  Click on the **Settings** tab and choose **Variables** in the left menu.
-3.  Add the following environment variables:
+1. Log into Strapi Cloud and click on the corresponding project on the Projects page.
+2. Click on the **Settings** tab and choose **Variables** in the left menu.
+3. Add the following environment variables:
 
-    | Variable                           | Value            |
-    | ---------------------------------- | ---------------- |
-    | `DATABASE_CLIENT`                  | your_db          |
-    | `DATABASE_HOST`                    | your_db_host     |
-    | `DATABASE_PORT`                    | your_db_port     |
-    | `DATABASE_NAME`                    | your_db_name     |
-    | `DATABASE_USERNAME`                | your_db_username |
-    | `DATABASE_PASSWORD`                | your_db_password |
-    | `DATABASE_SSL_REJECT_UNAUTHORIZED` | false            |
-    | `DATABASE_SCHEMA`                  | public           |
+    | Variable                           | Value            | Details  |
+    | ---------------------------------- | ---------------- |----------|
+    | `DATABASE_CLIENT`                  | your_db          | Should be one of `mysql`, `postgres`, or `sqlite`. |
+    | `DATABASE_HOST`                    | your_db_host     | The URL or IP address of your database host |
+    | `DATABASE_PORT`                    | your_db_port     | The port to access your database |
+    | `DATABASE_NAME`                    | your_db_name     | The name of your database |
+    | `DATABASE_USERNAME`                | your_db_username | The username to access your database |
+    | `DATABASE_PASSWORD`                | your_db_password | The password associated to this username |
+    | `DATABASE_SSL_REJECT_UNAUTHORIZED` | false            | Whether unauthorized connections should be rejected |
+    | `DATABASE_SCHEMA`                  | public           | - |
 
 4.  Click **Save**.
 

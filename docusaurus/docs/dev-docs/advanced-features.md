@@ -1,6 +1,6 @@
 ---
 title: Advanced features
-# description: todo
+description: Learn more about Strapi 5 advanced features
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/api/content-api
 pagination_next: dev-docs/customization
@@ -17,11 +17,15 @@ Strapi provides advanced built-in features for developers who'd like to get the 
 
 <CustomDocCardsWrapper>
 
+<CustomDocCard emoji="🌍" title="Internationalization (i18n)" description="The i18n feature allows creating, managing and distributing localized content in different languages." link="/dev-docs/i18n"/>
+
 <CustomDocCard title="CLI reference" description="Control Strapi through the Command Line Interface (CLI)." link="/dev-docs/cli" />
 
 <CustomDocCard title="TypeScript" description="Use TypeScript to develop your Strapi project." link="/dev-docs/typescript" />
 
 <CustomDocCard title="Providers" description="Install, configure, and create providers to extend core capabilities of some plugins." link="/dev-docs/providers" />
+
+<CustomDocCard title="Templates" description="Use and create pre-made Strapi applications designed for a specific purpose." link="/dev-docs/templates" />
 
 <CustomDocCard title="Data management" description="Use Strapi's built-in data management system to import, export, or transfer data." link="/dev-docs/data-management" />
 

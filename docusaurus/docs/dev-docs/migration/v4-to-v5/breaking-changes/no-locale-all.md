@@ -54,7 +54,7 @@ Getting documents (collection types or single types) in all locales at the same 
 
 ### Notes
 
-Additional information on what is possible to do with `locale` in Strapi 5 is available in the [REST API](/dev-docs/plugins/i18n#usage-with-the-rest-api), [GraphQL API](/dev-docs/plugins/i18n#usage-with-the-graphql-api), and [Document Service API](/dev-docs/api/document-service/locale) reference documentations.
+Additional information on what is possible to do with `locale` in Strapi 5 is available in the [REST API](/dev-docs/i18n#rest), [GraphQL API](/dev-docs/i18n#graphql), and [Document Service API](/dev-docs/api/document-service/locale) reference documentations.
 
 ### Manual procedure
 

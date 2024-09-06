@@ -33,3 +33,11 @@ details.alert {
     text-decoration: var(--ifm-link-decoration);
   }
 }
+
+@include dark {
+  details.alert {
+    .theme-code-block-highlighted-line {
+      background-color: var(--strapi-neutral-0);
+    }
+  }
+}

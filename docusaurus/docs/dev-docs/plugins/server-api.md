@@ -10,7 +10,6 @@ tags:
 - bootstrap function
 - destroy function
 - configuration
-- cron job
 - backend customization
 - routes
 - controllers
@@ -20,11 +19,7 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Server API for plugins
-
-<NotV5 />
 
 A Strapi [plugin](/dev-docs/plugins) can interact with both the back end and the [front end](/dev-docs/plugins/admin-panel-api) of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
 
@@ -53,7 +48,7 @@ To tap into the Server API, create a `strapi-server.js` file at the root of the 
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li> <li>[Cron](#cron)</li></ul>                                                                                                                                                                             |
+| Configuration          | <ul><li>[config](#configuration) object   </li></ul>                                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -146,46 +141,6 @@ Once defined, the configuration can be accessed:
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.
 :::
-
-## Cron
-
-The `cron` object allows you to add cron jobs to the Strapi instance.
-
-```js title="./src/plugins/my-plugin/strapi-server.js"
-module.exports = () => ({
-  bootstrap({ strapi }) {
-    strapi.cron.add({
-      // runs every second
-      myJob: {
-        task: ({ strapi }) => {
-          console.log("hello from plugin");
-        },
-        options: {
-          rule: "* * * * * *",
-        },
-      },
-    });
-  },
-});
-```
-
-To remove a CRON job you can call the remove function on the `strapi.cron` object and pass in the key corresponding to the CRON job you want to remove.
-
-:::note
-Cron jobs that are using the key as the rule can not be removed.
-:::
-
-```js
-strapi.cron.remove("myJob");
-```
-
-### List cron jobs
-
-To list all the cron jobs that are currently running you can call the `jobs` array on the `strapi.cron` object.
-
-```js
-strapi.cron.jobs
-```
 
 ## Backend customization
 
@@ -588,6 +543,6 @@ strapi.middleware('plugin::plugin-name.middleware-name');
 
 </details>
 
-:::strapi Entity Service API
-To interact with the content-types, use the [Entity Service API](/dev-docs/api/entity-service).
+:::strapi Document Service API
+To interact with the content-types, use the [Document Service API](/dev-docs/api/document-service).
 :::

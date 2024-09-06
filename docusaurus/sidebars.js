@@ -28,7 +28,13 @@ const sidebars = {
             updated: true,
           },
         },
-        'dev-docs/quick-start',
+        {
+          type: 'doc',
+          id: 'dev-docs/quick-start',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'doc',
           id: 'dev-docs/whats-new',
@@ -60,13 +66,22 @@ const sidebars = {
           type: 'category',
           label: 'Installation',
           link: {type: 'doc', id: 'dev-docs/installation'},
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'doc',
               label: 'Introduction to installation',
               id: 'dev-docs/installation',
             },
-            'dev-docs/installation/cli',
+            {
+              type: 'doc',
+              id: 'dev-docs/installation/cli',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/installation/docker',
           ]
         },
@@ -97,6 +112,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/use-cron-jobs',
           ],
         },
         {
@@ -280,6 +296,14 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Internationalization (i18n)',
+          customProps: {
+            updated: true,
+          },
+          id: 'dev-docs/i18n',
+        },
+        {
+          type: 'doc',
           id: 'dev-docs/cli',
           customProps: {
             updated: true,
@@ -302,6 +326,14 @@ const sidebars = {
           type: 'doc',
           label: 'Providers',
           id: 'dev-docs/providers',
+        },
+        {
+          type: 'doc',
+          label: 'Templates',
+          id: 'dev-docs/templates',
+          customProps: {
+            updated: true,
+          }
         },
         {
           type: 'category',
@@ -351,6 +383,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Back-end customization',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/backend-customization'
@@ -377,6 +412,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Admin panel customization',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/admin-panel-customization',
@@ -439,11 +477,7 @@ const sidebars = {
               label: 'GraphQL',
               id: 'dev-docs/plugins/graphql',
             },
-            {
-              type: 'doc',
-              label: 'Internationalization (i18n)',
-              id: 'dev-docs/plugins/i18n',
-            },
+
             {
               type: 'doc',
               label: 'Sentry',
@@ -940,7 +974,7 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
+              href: '/dev-docs/api/rest/filters-locale-publication#locale',
             },
             {
               type: 'link',
@@ -1097,6 +1131,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/use-cron-jobs',
           ]
         }
       ]

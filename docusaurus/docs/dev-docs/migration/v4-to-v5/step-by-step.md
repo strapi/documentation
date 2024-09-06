@@ -42,7 +42,7 @@ Before getting into the upgrade process itself, take the following precautions:
 3. **Ensure the plugins you are using are compatible with Strapi 5**.
 
   To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the [Marketplace](https://market.strapi.io/plugins) website.
-  <!-- TODO: once we have a direct link to Strapi 5-compatible plugins, use it here and update instructions -->
+  <!-- TODO v5: once we have a direct link to Strapi 5-compatible plugins, use it here and update instructions -->
 
 ## Step 2: Run automated migrations
 

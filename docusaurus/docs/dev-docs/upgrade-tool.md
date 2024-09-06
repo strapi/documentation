@@ -25,6 +25,23 @@ The upgrade tool is a Strapi package and can be run from the CLI.
 
 <DoNotMigrateYet />
 
+## Scope
+
+While the upgrade tool helps upgrade applications and plugins, it doesn't cover every aspect of it. 
+
+:white_check_mark: The upgrade tool supports:
+- Updating the project's dependencies
+- Applying automatic code transformation to existing files
+- Installing or re-installing the correct dependencies for the project
+
+:x: The upgrade tool doesn't support:
+- Modifying the file tree by adding, removing or moving files and directories
+- Migrating the application's data. This is handled by Strapi database migrations
+
+:::warning
+After the upgrade tool completes its execution,
+it is strongly recommended to review the modifications made before re-running the app or plugin.
+:::
 
 ## Version types
 
@@ -44,16 +61,26 @@ Strapi version numbers respect the [semantic versioning](https://semver.org/) co
 
 The upgrade tool allows upgrading to a major, minor, or patch version.
 
-What the upgrade tool will do depends on the latest existing version and the command you run. For instance, if the latest Strapi v4 version is v4.16.6:
+What the upgrade tool does depends on the latest existing version and the command you run.
 
-| My Strapi application is currently on… | If I run… | My Strapi application will be upgraded to … |
-|----|----|----|
-| v4.14.1 | `npx @strapi/upgrade patch` | v4.14.6<br/><br/>(because v4.14.6 is the latest patch version for the v4.14 minor version) |
-| v4.14.1 | `npx @strapi/upgrade minor` | v4.16.2 |
-| v4.14.1 | `npx @strapi/upgrade major` | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.16.2. |
-| v4.16.2 | `npx @strapi/upgrade major` | v5.0.0  |
+For instance, if the latest Strapi v4 version is v4.25.9:
 
-## Upgrade to a major version
+| My Strapi application is currently on… | If I run…                   | My Strapi application will be upgraded to …                                                |
+|----------------------------------------|-----------------------------|--------------------------------------------------------------------------------------------|
+| v4.25.1                                | `npx @strapi/upgrade patch` | v4.25.9<br/><br/>(because v4.25.9 is the latest patch version for the v4.25 minor version) |
+| v4.14.1                                | `npx @strapi/upgrade minor` | v4.25.9                                                                                    |
+| v4.14.1                                | `npx @strapi/upgrade major` | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.25.9.   |
+| v4.25.9                                | `npx @strapi/upgrade major` | v5.0.0                                                                                     |
+
+
+
+## Upgrade to a new version
+
+:::warning
+Before running the upgrade process, make sure you've created a backup of your codebase and database.
+:::
+
+### Upgrade to a major version
 
 Run the upgrade tool with the `major` parameter to upgrade the project to the next major version of Strapi:
 
@@ -67,7 +94,7 @@ During the upgrade process, the application dependencies are updated and install
 If your application is not already running the latest minor and patch version in the current major, the `major` upgrade is prevented, and you will first need to upgrade to the latest [minor.patch](#upgrade-to-a-minor-version) version in the current major version. This means that moving from v4.14.4 to v5.0.0 is a 2-step process because the latest v4 version is v4.16.2.
 :::
 
-## Upgrade to a minor version
+### Upgrade to a minor version
 
 Run the upgrade tool with the `minor` parameter to upgrade the project to the latest minor and patch version of Strapi:
 
@@ -77,7 +104,7 @@ npx @strapi/upgrade minor
 
 During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
 
-## Upgrade to a patch version
+### Upgrade to a patch version
 
 Run the upgrade tool with the `patch` parameter to upgrade the project to the latest patch version in the current minor and major version of Strapi:
 
