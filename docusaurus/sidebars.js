@@ -741,6 +741,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Getting Started",
+      link: {
+        type: "doc",
+        id: "cloud/getting-started/intro",
+      },
       items: [
         "cloud/getting-started/intro",
         {
@@ -794,6 +798,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Projects management",
+      link: {
+        type: "doc",
+        id: "cloud/projects/overview",
+      },
       items: [
         "cloud/projects/overview",
         {
@@ -812,12 +820,20 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Deployments",
+      link: {
+        type: "doc",
+        id: "cloud/projects/deploys",
+      },
       items: ["cloud/projects/deploys", "cloud/projects/deploys-history"],
     },
     {
       type: "category",
       collapsed: false,
       label: "Account management",
+      link: {
+        type: "doc",
+        id: "cloud/account/account-settings",
+      },
       items: [
         "cloud/account/account-settings",
         {
@@ -834,6 +850,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Command Line Interface",
+      link: {
+        type: "doc",
+        id: "cloud/cli/cloud-cli",
+      },
       items: [
         {
           type: "doc",
@@ -849,6 +869,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Advanced configuration",
+      link: {
+        type: "doc",
+        id: "cloud/advanced/database",
+      },
       items: [
         "cloud/advanced/database",
         {
