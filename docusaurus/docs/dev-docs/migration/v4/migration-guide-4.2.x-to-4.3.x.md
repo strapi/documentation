@@ -46,6 +46,25 @@ Stop the server before starting the upgrade. At the time of writing this, the la
 
 3. <InstallCommand components={props.components} />
 
+  :::note
+  If you are on a Node <=16.x version, you might get an error stating that the `cheerio` sub-dependency of of `@strapi/plugin-documentation` requires node >=18.17.
+
+  The reason is that the version specifier for `cheerio` in Strapi >=4.2.x is `^1.0.0-rc.12`, which used to resolve to the version `1.0.0-rc.12` that supported Node v16, but now it resolves to `1.0.0` (non-rc) which has a requirement for Node >=18.17.
+  
+  As a workaround in yarn, you can add a resolution to your `package.json` that pins cheerio at the exact release candidate that still supports Node v16:
+
+  ```json title="path: ./package.json"
+  {
+    // ...
+    "resolutions": {
+      "@strapi/plugin-documentation/**/cheerio": "1.0.0-rc.12"
+    },
+    // ...
+  }
+  ```
+  Next, run `yarn` again. When you upgrade to a later Strapi version that supports Node 18, remove this resolution.
+  :::
+
 ## Updating the database configuration script
 
 This step is only required if you use the default SQLite database configuration in a TypeScript project.
