@@ -54,7 +54,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 To delete a role:
 
 1. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the role's record.
-2. In the deletion window, click on the **Yes, confirm** button to confirm the deletion.
+2. In the deletion window, click on the **Confirm** button to confirm the deletion.
 
 ## Editing a role
 

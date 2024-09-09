@@ -51,7 +51,7 @@ From the list view, it is possible to:
 - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, filter by locale to display only the entries [translated](/user-docs/content-manager/translating-content) in a chosen locale <ScreenshotNumberReference number="4" />,
 - configure the fields displayed in the table of the list view <ScreenshotNumberReference number="5" />,
 - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, see the status of each entry <ScreenshotNumberReference number="6" />,
-- perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/v5/More.svg) <ScreenshotNumberReference number="7" /> at the end of the line:
+- perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/v5/More.svg) <ScreenshotNumberReference number="7" /> at the end of the row:
   - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete ![Delete icon](/img/assets/icons/v5/Trash.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content)) the entry,
   - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) or discard its changes,
   - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
@@ -100,7 +100,7 @@ New entries are only considered created once some of their content has been writ
 Above the list view table, on the right, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to temporarily choose which fields to display in the table or to access permanent view settings.
 
 :::note
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) and clicking on the ![List + icon](/img/assets/icons/v5/ListPlus.svg)**Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) and clicking on the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
 <ThemedImage
