@@ -19,7 +19,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 * A `transfer.token.salt` should be defined in the admin panel configuration file (see [Developer Documentation](/dev-docs/configurations/admin-panel)).
 :::
 
-Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management/transfer)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Transfer Tokens*.
+Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Developer Documentation](/dev-docs/data-management/transfer)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Transfer Tokens*.
 
 <ThemedImage
   alt="Transfer tokens"
@@ -33,8 +33,8 @@ The *Transfer Tokens* settings sub-section displays a table listing all of the c
 
 The table displays each Transfer token's name, description, date of creation, and date of last use. From the table, administrators can also:
 
-- Click on the ![edit button](/img/assets/icons/edit.svg) to edit a transfer token's name, description, or type, or [regenerate the token](#regenerating-a-transfer-token).
-- Click on the ![delete button](/img/assets/icons/delete.svg) to delete a Transfer token.
+- Click on the ![edit button](/img/assets/icons/v5/Pencil.svg) to edit a transfer token's name, description, or type, or [regenerate the token](#regenerating-a-transfer-token).
+- Click on the ![delete button](/img/assets/icons/v5/Trash.svg) to delete a Transfer token.
 
 ## Creating a new transfer token
 
@@ -50,7 +50,7 @@ To create a new Transfer token:
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*.      |
     | Token type | Choose a token type:<ul><li>*Push* to allow transfers from local to remote instances only,</li><li>*Pull* to allow transfers from remote to local instances only,</li><li>or *Full Access* to allow both types of transfer.</li></ul>      |
 
-3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/duplicate.svg).
+3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/v5/Duplicate.svg).
 
 <ThemedImage
   alt="Custom Transfer Token"

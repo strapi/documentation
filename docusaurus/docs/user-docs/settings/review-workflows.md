@@ -28,7 +28,7 @@ In many organizations different teams review different parts of content. By usin
 
 The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 
-Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Review Workflows*. The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
+Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Review Workflows*. The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
 
 ## Creating or editing a workflow
 
@@ -40,7 +40,7 @@ Before being available in the [Content Manager](/user-docs/content-manager/revie
   }}
 />
 
-1. Click on the **Create new workflow** button or on the edit button ![Edit icon](/img/assets/icons/edit.svg) of a workflow.
+1. Click on the **Create new workflow** button or on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) of a workflow.
 2. In the workflow edit interface, configure the new workflow:
 
     | Setting name   | Instructions                                                             |
@@ -66,7 +66,7 @@ To add a new stage in the review workflows:
 4. Select *Roles* that can change the stage, if the entity is currently in that review stage.
 5. Click on the **Save** button.
 
-By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/drag.svg) button.
+By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/v5/Drag.svg) button.
 
 :::tip
 To set up roles for each stage, you can either click "Apply to all stages" to apply the current roles to all other stages of the workflow or use "Duplicate stage" of the stage context menu.
@@ -90,7 +90,7 @@ contain at least one stage and therefore it is not possible to delete the last s
 
 ## Deleting a workflow
 
-To delete a workflow click on the delete button ![Delete icon](/img/assets/icons/delete.svg) of a workflow in the list view.
+To delete a workflow click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) of a workflow in the list view.
 
 :::note
 It is not possible to delete the last workflow.

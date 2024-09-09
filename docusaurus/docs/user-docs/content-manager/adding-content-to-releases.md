@@ -47,7 +47,7 @@ An entry can be added to a [release](/user-docs/releases/introduction) while edi
 
 To add an entry to a release:
 
-1. Click on ![More icon](/img/assets/icons/more.svg) in the top right corner of the interface.
+1. Click on ![More icon](/img/assets/icons/v5/More.svg) in the top right corner of the interface.
 2. In the list, click on the **Add to release** button.
 2. Select which release to add this entry to.
 3. Click on the **Publish** or **Unpublish** button depending on whether you want the entry to be published or unpublished when the release itself is published, then click **Continue**.
@@ -64,7 +64,7 @@ An entry can be removed from a [release](/user-docs/releases/introduction) while
 
 To remove an entry from a release:
 
-1. In the Releases box in the right sidebar, click the **…** three dots below the name of the release.
+1. In the Releases box in the right sidebar, click on ![More icon](/img/assets/icons/v5/More.svg) below the name of the release.
 2. Click the **Remove from release** button.
 
 <!-- TODO: re-add when implemented -->

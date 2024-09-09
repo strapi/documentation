@@ -39,7 +39,7 @@ Depending on what content-type or component is being created or edited, not all 
 
 ## Regular fields
 
-### <img width="28" src="/img/assets/icons/ctb_text.svg" /> Text
+### <img width="28" src="/img/assets/icons/v5/ctb_text.svg" /> Text
 
 The Text field displays a textbox that can contain small text. This field can be used for titles, descriptions, etc.
 
@@ -71,7 +71,36 @@ The Text field displays a textbox that can contain small text. This field can be
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_richtextblocks.svg" /> Rich Text (Blocks)
+### <img width="28" src="/img/assets/icons/v5/ctb_richtext.svg" /> Rich Text (Markdown)
+
+The Rich Text (Markdown) field displays an editor with basic formatting options to manage rich text written in Markdown. This field can be used for long written content.
+
+<Tabs>
+
+<TabItem value="base" label="Base settings">
+
+| Setting name | Instructions                                      |
+|--------------|---------------------------------------------------|
+| Name         | Write the name of the Rich Text (Markdown) field. |
+
+</TabItem>
+
+<TabItem value="advanced" label="Advanced settings">
+
+| Setting name   | Instructions                                                                |
+|----------------|-----------------------------------------------------------------------------|
+| Default value  | Write the default value of the Rich Text field.                             |
+| Private field  | Tick to make the field private and prevent it from being found via the API. |
+| Enable localization for this field | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed and localization is enabled for the content-type) Allow the field to have a different value per locale. |
+| Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
+| Maximum length | Tick to define a maximum number of characters allowed.                      |
+| Minimum length | Tick to define a minimum number of characters allowed.                      |
+
+</TabItem>
+
+</Tabs>
+
+### <img width="28" src="/img/assets/icons/v5/ctb_richtextblocks.svg" /> Rich Text (Blocks)
 
 The Rich Text (Blocks) field displays an editor with live rendering and various options to manage rich text. This field can be used for long written content, even including images and code.
 
@@ -101,7 +130,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
 :::
 
-### <img width="28" src="/img/assets/icons/ctb_number.svg" /> Number
+### <img width="28" src="/img/assets/icons/v5/ctb_number.svg" /> Number
 
 The Number field displays a field for any kind of number: integer, decimal and float.
 
@@ -132,7 +161,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_date.svg" /> Date
+### <img width="28" src="/img/assets/icons/v5/ctb_date.svg" /> Date
 
 The Date field can display a date (year, month, day), time (hour, minute, second) or datetime (year, month, day, hour, minute, and second) picker.
 
@@ -161,7 +190,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_media.svg" /> Media
+### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
 
@@ -190,18 +219,18 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_relation.svg" /> Relation
+### <img width="28" src="/img/assets/icons/v5/ctb_relation.svg" /> Relation
 
 The Relation field allows to establish a relation with another content-type, that must be a collection type.
 
 There are 6 different types of relations:
 
-- <img width="25" src="/img/assets/icons/ctb_relation_oneway.svg" /> One way: Content-type A *has one* Content-type B
-- <img width="25" src="/img/assets/icons/ctb_relation_1to1.svg" /> One-to-one: Content-type A *has and belong to one* Content-type B
-- <img width="25" src="/img/assets/icons/ctb_relation_1tomany.svg" /> One-to-many: Content-type A *belongs to many* Content-type B
-- <img width="25" src="/img/assets/icons/ctb_relation_manyto1.svg" /> Many-to-one: Content-type B *has many* Content-type A
-- <img width="25" src="/img/assets/icons/ctb_relation_manytomany.svg" /> Many-to-many: Content-type A *has and belongs to many* Content-type B
-- <img width="25" src="/img/assets/icons/ctb_relation_manyway.svg" /> Many way: Content-type A *has many* Content-type B
+- <img width="25" src="/img/assets/icons/v5/ctb_relation_oneway.svg" /> One way: Content-type A *has one* Content-type B
+- <img width="25" src="/img/assets/icons/v5/ctb_relation_1to1.svg" /> One-to-one: Content-type A *has and belong to one* Content-type B
+- <img width="25" src="/img/assets/icons/v5/ctb_relation_1tomany.svg" /> One-to-many: Content-type A *belongs to many* Content-type B
+- <img width="25" src="/img/assets/icons/v5/ctb_relation_manyto1.svg" /> Many-to-one: Content-type B *has many* Content-type A
+- <img width="25" src="/img/assets/icons/v5/ctb_relation_manytomany.svg" /> Many-to-many: Content-type A *has and belongs to many* Content-type B
+- <img width="25" src="/img/assets/icons/v5/ctb_relation_manyway.svg" /> Many way: Content-type A *has many* Content-type B
 
 <Tabs>
 
@@ -226,7 +255,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_boolean.svg" /> Boolean
+### <img width="28" src="/img/assets/icons/v5/ctb_email.svg" /> Email
 
 The Boolean field displays a toggle button to manage boolean values (e.g. Yes or No, 1 or 0, True or False).
 
@@ -254,7 +283,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_json.svg" /> JSON
+### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
 
 The JSON field allows to configure data in a JSON format, to store JSON objects or arrays.
 
@@ -280,7 +309,9 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_email.svg" /> Email
+### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration
+
+The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
 The Email field displays an email address field with format validation to ensure the email address is valid.
 
@@ -310,7 +341,11 @@ The Email field displays an email address field with format validation to ensure
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_password.svg" /> Password
+:::caution
+Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
+:::
+
+### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media
 
 The Password field displays a password field that is encrypted.
 
@@ -339,7 +374,7 @@ The Password field displays a password field that is encrypted.
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_enum.svg" /> Enumeration
+### <img width="28" src="/img/assets/icons/v5/ctb_json.svg" /> JSON
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
@@ -370,11 +405,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 </Tabs>
 
-:::caution
-Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
-:::
-
-### <img width="28" src="/img/assets/icons/ctb_uid.svg" /> UID
+### <img width="28" src="/img/assets/icons/v5/ctb_uid.svg" /> UID
 
 The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content-type.
 
@@ -442,7 +473,7 @@ Custom fields are a way to extend Strapi’s capabilities by adding new types of
 
 Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
-## <img width="28" src="/img/assets/icons/ctb_component.svg" /> Components
+## <img width="28" src="/img/assets/icons/v5/ctb_component.svg" /> Components
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
 
@@ -477,7 +508,7 @@ When configuring a component through the Content-type Builder, it is possible to
 
 </Tabs>
 
-## <img width="28" src="/img/assets/icons/ctb_dz.svg" /> Dynamic zones
+## <img width="28" src="/img/assets/icons/v5/ctb_dz.svg" /> Dynamic zones
 
 Dynamic zones are a combination of components that can be added to content-types. They allow a flexible content structure as once in the Content Manager, administrators have the choice of composing and rearranging the components of the dynamic zone how they want.
 

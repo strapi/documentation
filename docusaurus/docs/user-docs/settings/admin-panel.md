@@ -12,7 +12,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5/>
 
-The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified from ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global settings > Overview*.
+The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Overview*.
 
 :::note
 Both logos can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/dev-docs/admin-panel-customization#logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
@@ -35,5 +35,5 @@ To customize the logos:
 5. Click on the **Save** button in the top right corner.
 
 :::tip
-Once uploaded, the new logo can be replaced with another one ![Add icon](/img/assets/icons/add.svg), or reset ![Reset icon](/img/assets/icons/reset_icon.svg) with the default Strapi logo or the logo set in the configuration files.
+Once uploaded, the new logo can be replaced with another one ![Add icon](/img/assets/icons/v5/Plus.svg), or reset ![Reset icon](/img/assets/icons/v5/ArrowClockwise.svg) with the default Strapi logo or the logo set in the configuration files.
 :::

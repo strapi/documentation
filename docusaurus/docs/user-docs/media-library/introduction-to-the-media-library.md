@@ -21,7 +21,7 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 The Media Library is a Strapi plugin that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
 
-Administrators can access the Media Library from ![ML icon](/img/assets/icons/media_library.svg) _Media Library_ in the main navigation of the admin panel.
+Administrators can access the Media Library from ![ML icon](/img/assets/icons/v5/Images.svg) _Media Library_ in the main navigation of the admin panel.
 
 <ThemedImage
   alt="Media Library overview, annotated"
@@ -37,11 +37,11 @@ From the Media Library, it is possible to:
 
 - upload a new asset (see [adding assets](/user-docs/media-library/adding-assets)) or create a new folder (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
 - sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more easily,
-- toggle between the list view ![List icon](/img/assets/icons/list_view.svg) and the grid view ![Grid icon](/img/assets/icons/grid_view.svg) to display assets, access settings ![Settings icon](/img/assets/icons/settings.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](/img/assets/icons/search.svg) <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
+- toggle between the list view ![List icon](/img/assets/icons/v5/List.svg) and the grid view ![Grid icon](/img/assets/icons/v5/GridFour.svg) to display assets, access settings ![Settings icon](/img/assets/icons/v5/Cog.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](/img/assets/icons/v5/Search.svg) <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
 - and view, navigate through, and manage folders <ScreenshotNumberReference number="4" />.
 
 :::tip
-Click the search icon ![Search icon](/img/assets/icons/search.svg) on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
+Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
 :::
 
 ## Filtering assets
@@ -65,7 +65,7 @@ To set a new filter:
 5. Click on the **Add filter** button.
 
 :::note
-When active, filters are displayed next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/clear.svg).
+When active, filters are displayed next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
 :::
 
 ## Sorting assets
@@ -82,7 +82,7 @@ Just above the list of folders and assets and next to the ![Filter icon](/img/as
 
 ## Configuring the view
 
-Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on the middle one ![Settings icon](/img/assets/icons/settings.svg) to configure the default view for the Media library.
+Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on the middle one ![Settings icon](/img/assets/icons/v5/Cog.svg) to configure the default view for the Media library.
 
 <ThemedImage
   alt="Configure the view"
