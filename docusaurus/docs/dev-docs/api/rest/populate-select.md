@@ -33,9 +33,6 @@ Strapi v4 docs very recently included a more extensive description of how to use
 In the meantime, you can trust the content of the present page as accurate as it already reflects the new Strapi 5, flattened response format (see [breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format) and [REST API introduction](/dev-docs/api/rest#requests) for details); the present page is just not as complete as its v4 equivalent yet.
 :::
 
-<SideBySideContainer>
-<SideBySideColumn>
-
 ## Field selection
 
 Queries can accept a `fields` parameter to select only some fields. By default, only the following [types of fields](/dev-docs/backend-customization/models#model-attributes) are returned:
@@ -45,17 +42,15 @@ Queries can accept a `fields` parameter to select only some fields. By default, 
 - number types: integer, biginteger, float, and decimal,
 - generic types: boolean, array, and JSON.
 
-Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
+| Use case              | Example parameter syntax              |
+|-----------------------|---------------------------------------|
+| Select a single field | `fields=name`                         |
+| Select multiple fields| `fields[0]=name&fields[1]=description`|
 
-:::tip
-By default, fields are selected except relations, media, dynamic zones, and components, but you can specify a wildcard `*` instead of an array.
+:::note
+Field selection does not work on relational, media, component, or dynamic zone fields. To populate these fields, use the [`populate` parameter](#population).
 :::
 
-</SideBySideColumn>
-<SideBySideColumn>
-
-<br />
-<br />
 <ApiCall noSideBySide>
 <Request title="Example request: Return only name and description fields">
 
@@ -121,9 +116,6 @@ await request(`/api/users?${query}`);
 
 </details>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
 ## Population
 
 The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types.
@@ -152,14 +144,13 @@ The following table sums up possible populate use cases and their associated par
 | Use case  | Example parameter syntax | Detailed explanations to read |
 |-----------| ---------------|-----------------------|
 | Populate everything, 1 level deep, including media fields, relations, components, and dynamic zones | `populate=*`| [Populate all relations and fields, 1 level deep](/dev-docs/api/rest/guides/understanding-populate#populate-all-relations-and-fields-1-level-deep) |
-| Populate one relation,<br/>1 level deep | `populate[0]=a-relation-name`| [Populate 1 level deep for specific relations](/dev-docs/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
+| Populate one relation,<br/>1 level deep | `populate=a-relation-name`| [Populate 1 level deep for specific relations](/dev-docs/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
 | Populate several relations,<br/>1 level deep | `populate[0]=relation-name&populate[1]=another-relation-name&populate[2]=yet-another-relation-name`| [Populate 1 level deep for specific relations](/dev-docs/api/rest/guides/understanding-populate#populate-1-level-deep-for-specific-relations) |
-| Populate some relations, several levels deep | `populate[first-level-relation-to-populate][populate][0]=second-level-relation-to-populate`| [Populate several levels deep for specific relations](/dev-docs/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations) |
+| Populate some relations, several levels deep | `populate[root-relation-name][populate][0]=nested-relation-name`| [Populate several levels deep for specific relations](/dev-docs/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations) |
 | Populate a component | `populate[0]=component-name`| [Populate components](/dev-docs/api/rest/guides/understanding-populate#populate-components) |
 | Populate a component and one of its nested components | `populate[0]=component-name&populate[1]=component-name.nested-component-name`| [Populate components](/dev-docs/api/rest/guides/understanding-populate#populate-components) |
 | Populate a dynamic zone (only its first-level elements) | `populate[0]=dynamic-zone-name`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#populate-dynamic-zones) |
-| Populate a dynamic zone and its nested elements and relations, using a unique, shared population strategy | `populate[dynamic-zone-name][populate]=*`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#shared-population-strategy) |
-| Populate a dynamic zone and its nested elements and relations, using a precisely defined, detailed population strategy | `populate[dynamic-zone-name][on][dynamic-zone-name.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#detailed-population-strategy) |
+| Populate a dynamic zone and its nested elements and relations, using a precisely defined, detailed population strategy | `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#detailed-population-strategy) |
 
 :::tip
 The easiest way to build complex queries with multiple-level population is to use our [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool.

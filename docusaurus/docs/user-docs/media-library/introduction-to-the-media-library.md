@@ -46,7 +46,7 @@ Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) on the rig
 
 ## Filtering assets
 
-Right above the list of folders and assets, on the left side of the interface, a **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
+Right above the list of folders and assets, on the left side of the interface, a ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
 
 <ThemedImage
   alt="Filters"
@@ -58,14 +58,14 @@ Right above the list of folders and assets, on the left side of the interface, a
 
 To set a new filter:
 
-1. Click on the **Filters** button.
+1. Click on the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button.
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. For conditions based on the type of asset to filter, click on the 3rd drop-down list and choose a file type to include or exclude. For conditions based on date and time (i.e. _createdAt_ or _updatedAt_ fields), click on the left field to select a date and click on the right field to select a time.
 5. Click on the **Add filter** button.
 
 :::note
-When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
+When active, filters are displayed next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
 :::
 
 ## Sorting assets
@@ -78,7 +78,7 @@ When active, filters are displayed next to the **Filters** button. They can be r
   }}
 />
 
-Just above the list of folders and assets, on the left side of the interface, a **Sort by** button is displayed. It allows to display assets by upload date, alphabetical order or date of update. Click on the button and select an option in the list to automatically display the sorted assets.
+Just above the list of folders and assets and next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
 
 ## Configuring the view
 

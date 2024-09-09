@@ -17,12 +17,11 @@ tags:
 - route middlewares
 ---
 
-# Back-end customization
+<div className="custom-mermaid-layout">
 
 :::strapi Disambiguation: Strapi back end
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
-
 
 - The **back-end** part of Strapi is an HTTP server that Strapi runs. Like any HTTP server, the Strapi back end receives requests and send responses. Your content is stored in a database, and the Strapi back end interacts with the database to create, retrieve, update, and delete content.
 - The **front-end** part of Strapi is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content.
@@ -114,3 +113,5 @@ graph TB
     click dsMiddlewareBefore "/dev-docs/api/document-service/middlewares"
     click dsMiddlewareAfter "/dev-docs/api/document-service/middlewares"
 ```
+
+</div>

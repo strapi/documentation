@@ -45,8 +45,8 @@ Before being available in the [Content Manager](/user-docs/content-manager/revie
 
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
-    | Name           | Write a unique name of workflow.                                         |
-    | Content-Types  | (optional) Assign this workflow to one or more existing content-types.   |
+    | Workflow name  | Write a unique name of workflow.                                         |
+    | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
 
 3. Click on the **Save** button. The new workflow will be displayed in the list-view and for every content-type assigned.
@@ -82,8 +82,7 @@ To set up roles for each stage, you can either click "Apply to all stages" to ap
 
 ### Deleting a stage
 
-1. Click ![Delete](/img/assets/icons/v5/Trash.svg) in the context menu of the stage.
-2. Click on the **Save** button: a confirmation modal will appear to confirm the deletion, in case the stage has previously been saved.
+To delete a stage, click ![More](/img/assets/icons/v5/More.svg) in the context menu of the stage, then **Delete**.
 
 If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
 contain at least one stage and therefore it is not possible to delete the last stage.

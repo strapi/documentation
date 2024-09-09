@@ -6,7 +6,11 @@ pagination_prev: dev-docs/backend-customization/examples/services-and-controller
 pagination_next: dev-docs/backend-customization/examples/routes
 ---
 
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
 # Examples cookbook: Custom policies
+
+<NotV5/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).

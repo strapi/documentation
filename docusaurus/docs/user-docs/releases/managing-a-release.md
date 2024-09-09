@@ -8,15 +8,10 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Managing a release <EnterpriseBadge /> <CloudTeamBadge />
-
-<NotV5/>
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
-<!-- TODO: add actual screenshots for both light and dark modes -->
 <ThemedImage
   alt="Release details"
   sources={{
@@ -29,11 +24,15 @@ Adding entries to a [release](/user-docs/releases/introduction) allow viewing th
 
 From a release page, you can:
 
-- edit the name of the release, or delete the release,
+- edit the release, to update its name or schedule it, or delete the release,
 <!-- - [adjust the view](#choose-how-entries-are-grouped) to display entries grouped either by locale or by content-type, -->
 - decide whether an entry will be published or unpublished with the release,
 <!-- - edit a specific entry or [remove](#remove-entries-from-a-release) it from the release, -->
 - and publish the release.
+
+:::caution
+Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
+:::
 
 ## Editing a release
 
@@ -44,11 +43,7 @@ You can rename a release. To do so, while on a release page:
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
 
-## Scheduling a release <FutureBadge /><AlphaBadge />
-
-:::callout 🚧 Experimental feature
-Scheduling a release is an experimental feature and currently requires enabling the proper `contentReleasesScheduling` future flag in your configuration file (see [Developer Docs](/dev-docs/configurations/features) for details).
-:::
+## Scheduling a release
 
 Releases can be [published manually](#publishing-a-release) or scheduled to be automatically published at a given date and time, with the timezone of your choice.
 
@@ -78,10 +73,6 @@ A release page can display entries either grouped by locale, content-type, or ac
 ## Publishing or unpublishing entries
 
 A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
-
-:::caution
-Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
-:::
 
 ## Removing entries from a release
 

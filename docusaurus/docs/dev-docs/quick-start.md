@@ -23,7 +23,7 @@ const summaryStyle = {fontSize: '18px'}
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
-*Estimated completion time: 15-20 minutes*
+*Estimated completion time: 5-10 minutes*
 
 :::prerequisites
 <InstallPrerequisites components={props.components} />

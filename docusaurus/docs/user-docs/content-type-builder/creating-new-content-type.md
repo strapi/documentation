@@ -37,13 +37,13 @@ To create a new content-type:
 1. Choose whether you want to create a collection type or a single type.
 2. In the category of the content-type you want to create, click on **Create a new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
-4. Check the *API UID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API UID* field allows to fix any pluralization mistake.
+4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
 
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving-publishing-content)). |
-      | Localization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
+      | Internationalization | (if the [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is installed) Tick the checkbox to allow entries of the content-type to be translated into other locales. |
       | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
 
 6. Click on the **Continue** button.
@@ -70,7 +70,7 @@ To create a new component:
 
 1. In the Components category of the Content-type Builder sub navigation, click on **Create a new component**.
 2. In the component creation window, configure the base settings of the new component:
-   - Write the name of the component in the *Name* textbox.
+   - Write the name of the component in the *Display name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.
    - _(optional)_ Choose an icon representing the new component. You can use the search ![Search icon](/img/assets/icons/v5/Search.svg) to find an icon instead of scrolling through the list.
 3. Click on the **Continue** button.

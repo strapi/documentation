@@ -34,7 +34,7 @@ To install the plugin run following command in your terminal:
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi install documentation
+yarn add @strapi/plugin-documentation
 ```
 
 </TabItem>
@@ -42,7 +42,7 @@ yarn strapi install documentation
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi install documentation
+npm install @strapi/plugin-documentation
 ```
 
 </TabItem>

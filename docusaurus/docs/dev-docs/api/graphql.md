@@ -421,7 +421,7 @@ For instance, for a "Restaurant" content-type, the following mutations are gener
 
 ### Create a new document
 
-When creating new documents <DocumentDefinition/>, the `data` argument will have an associated input type that is specific to your content-type.
+When creating new documents, the `data` argument will have an associated input type that is specific to your content-type.
 
 For instance, if your Strapi project contains the "Restaurant" content-type, you will have the following:
 
@@ -463,7 +463,7 @@ mutation CreateCategory {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#create-a-new-localized-document)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/i18n#graphl-create)).
 :::
 
 ### Update an existing document
@@ -491,7 +491,7 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/plugins/i18n#update-a-document-for-a-specific-locale)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/i18n#graphql-update)).
 :::
 
 #### Update relations
@@ -529,7 +529,7 @@ mutation DeleteRestaurant {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/plugins/i18n#delete-a-locale-for-a-document)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/i18n#graphql-delete)).
 :::
 
 ### Mutations on media files

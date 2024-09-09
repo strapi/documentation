@@ -9,42 +9,65 @@ main:has(.docusaurus-mermaid-container) {
   }
 }
 
-.docusaurus-mermaid-container {
-  * {
-    font-size: 1rem;
-    transition: transform ease-in-out .2s;
-  }
+.custom-mermaid-layout {
+  .docusaurus-mermaid-container {
+    * {
+      font-size: 1rem;
+      transition: transform ease-in-out .2s;
+    }
 
-  svg {
-    position: relative;
-    top: 0;
-    transform: translateX(0);
-  }
-
-
-  @include medium-up {
     svg {
-      transform: scale(1.3);
-      transform-origin: top left;
-      margin-bottom: 400px;
-      margin-right: 200px;
+      position: relative;
+      top: 0;
+      transform: translateX(0);
+    }
+
+    @include medium-up {
+      svg {
+        transform: scale(1.3);
+        transform-origin: top left;
+        margin-bottom: 400px;
+        margin-right: 200px;
+      }
+    }
+
+    @include large-up {
+      svg {
+        transform: scale(1.5);
+        transform: translateX(-100px) scale(1.5);
+        margin-bottom: 700px;
+        margin-left: 50px;
+      }
+    }
+
+    @include xlarge-up {
+      svg {
+        transform: translateX(-400px) scale(1.8);
+        margin-bottom: 1200px;
+        margin-left: 100px;
+      }
     }
   }
+}
 
-  @include large-up {
-    svg {
-      transform: scale(1.5);
-      transform: translateX(-100px) scale(1.5);
-      margin-bottom: 700px;
-      margin-left: 50px;
+.document-concept-page {
+  .docusaurus-mermaid-container {
+    @include medium-up {
+      svg {
+        margin-bottom: 120px;
+      }
     }
-  }
 
-  @include xlarge-up {
-    svg {
-      transform: translateX(-400px) scale(1.8);
-      margin-bottom: 1200px;
-      margin-left: 100px;
+    @include large-up {
+      svg {
+        margin-bottom: 240px;
+      }
+    }
+
+    @include xlarge-up {
+      svg {
+        margin-bottom: 360px;
+      }
     }
   }
 }

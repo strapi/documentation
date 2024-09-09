@@ -1,6 +1,6 @@
 ---
 title: Content API
-# description: todo
+description: Learn more about Strapi 5's Content API
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/setup-deployment
 pagination_next: dev-docs/advanced-features

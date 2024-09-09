@@ -14,7 +14,7 @@ const config = {
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
-  // ⚠️ TODO: remove this for stable release
+  // ⚠️ TODO v5: remove this for stable release
   noIndex: true, // set to false to allow indexing by search engines
 
   // Even if you don't use internalization, you can use this field to set useful
@@ -94,7 +94,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // TODO: update 'v5/mvp' to v5 once it's on docs-next, and then back to 'main' for the stable release
+          // TODO v5: update back to 'main' for the stable release
           editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus',
           admonitions: {
             tag: ':::',
@@ -281,12 +281,6 @@ const config = {
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
-      // TODO: re-enable when we publish stable v5 docs on docs.strapi.io
-      // hubspot: {
-      //   accountId: 6893032,
-      //   async: false, // OPTIONAL: sets the async attribute on the script tag, defaults to false
-      //   defer: false, // OPTIONAL: sets the defer attribute on the script tag, defaults to false
-      // },
     }),
 
   plugins: [

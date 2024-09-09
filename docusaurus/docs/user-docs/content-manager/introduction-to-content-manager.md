@@ -63,7 +63,7 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 ### Filtering entries
 
-Right above the list view table, on the left side of the interface, a **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
+Right above the list view table, on the left side of the interface, a ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
 <ThemedImage
   alt="Filters in the Content Manager"
@@ -75,19 +75,19 @@ Right above the list view table, on the left side of the interface, a **Filters*
 
 To set a new filter:
 
-1. Click on the **Filters** button.
+1. Click on the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button.
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. Enter the value(s) of the condition in the remaining textbox.
 5. Click on the **Add filter** button.
 
 :::note
-When active, filters are displayed next to the **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
+When active, filters are displayed next to the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
 :::
 
 ### Creating a new entry
 
-On the top right side of the list view interface, an **Add new entry** button is displayed. It allows to create a new entry for your collection type.
+On the top right side of the list view interface, an **Create new entry** button is displayed. It allows to create a new entry for your collection type.
 
 Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](writing-content.md)).
 
@@ -100,7 +100,7 @@ New entries are only considered created once some of their content has been writ
 Above the list view table, on the right, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to temporarily choose which fields to display in the table or to access permanent view settings.
 
 :::note
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) and clicking on the **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
+Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) and clicking on the ![List + icon](/img/assets/icons/v5/ListPlus.svg)**Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
 
 <ThemedImage

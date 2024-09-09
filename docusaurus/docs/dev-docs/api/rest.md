@@ -154,7 +154,7 @@ Some plugins (including Users & Permissions and Upload) may not follow this resp
 
 <SideBySideColumn>
 
-### Get documents
+### Get documents {#get-all}
 
 Returns documents matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
 
@@ -235,7 +235,7 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
 
 <SideBySideColumn>
 
-### Get a document
+### Get a document {#get}
 
 Returns a document by `documentId`.
 
@@ -296,11 +296,11 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 <SideBySideColumn>
 
-### Create a document
+### Create a document {#create}
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n.md) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/plugins/i18n.md#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#creating-a-new-localized-entry).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
@@ -376,7 +376,7 @@ While creating a document, you can define its relations and their order (see [Ma
 
 <SideBySideColumn>
 
-### Update a document
+### Update a document {#update}
 
 Partially updates a document by `id` and returns its value.
 
@@ -384,8 +384,8 @@ Send a `null` value to clear fields.
 
 :::note NOTES
 * Even unmodified fields must be included in the request's body.
-* Even with the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/plugins/i18n#updating-an-entry).
-* While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
+* Even with the [Internationalization (i18n) plugin](/dev-docs/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/i18n#rest-update).
+* While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations) for more details).
 :::
 
 </SideBySideColumn>
@@ -458,7 +458,7 @@ Send a `null` value to clear fields.
 
 <SideBySideColumn>
 
-### Delete a document
+### Delete a document {#delete}
 
 Deletes a document.
 

@@ -1,6 +1,6 @@
 ---
 title: Upgrades
-# description: todo
+description: Learn more about Strapi 5's upgrade process
 displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
 pagination_next: dev-docs/upgrade-tool

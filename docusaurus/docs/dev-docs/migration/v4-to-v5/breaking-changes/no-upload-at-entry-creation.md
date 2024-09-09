@@ -10,8 +10,8 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
+import NoPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
+import YesCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Upload a file at entry creation is no longer supported
 
@@ -29,7 +29,7 @@ In Strapi 5, it is not possible to upload a file while creating an entry, so thi
 
 **In Strapi v4**
 
-<!-- TODO: update this link for Strapi v4 once moved to the new URL -->
+<!-- TODO v5: update this link for Strapi v4 once moved to the new URL -->
 It was possible to upload a file while creating an entry, as [documented for Strapi v4](https://docs.strapi.io/dev-docs/plugins/upload#upload-files-at-entry-creation).
 
 </SideBySideColumn>
