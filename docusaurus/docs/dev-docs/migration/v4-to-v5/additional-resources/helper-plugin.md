@@ -7,7 +7,7 @@ tags:
   - upgrade to Strapi 5
 ---
 
-import DoNotMigrateYet from '/docs/snippets/\_do-not-migrate-to-v5-yet.md'
+import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # `helper-plugin` migration reference
 
