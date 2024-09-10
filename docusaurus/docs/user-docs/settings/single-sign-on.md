@@ -19,7 +19,7 @@ Single Sign-On (SSO) can be made available on a Strapi application to allow admi
   alt="SSO settings"
   sources={{
     light: '/img/assets/settings/settings-sso.png',
-    dark: '/img/assets/settings/settings-sso.png',
+    dark: '/img/assets/settings/settings-sso_DARK.png',
   }}
 />
 
