@@ -208,7 +208,9 @@ const MyComponent = ({ area, ...compProps }) => {
     return null;
   }
 
-  return components.map(({ name, Component }) => <Component key={name} {...props} />);
+  return components.map(({ name, Component }) => (
+    <Component key={name} {...props} />
+  ));
 };
 ```
 
@@ -336,7 +338,12 @@ import { TextInput } from '@strapi/design-system';
 
 const MyComponent = (props) => {
   return (
-    <TextInput disabled placeholder="No permissions to see this field" type="text" {...props} />
+    <TextInput
+      disabled
+      placeholder="No permissions to see this field"
+      type="text"
+      {...props}
+    />
   );
 };
 ```
@@ -449,37 +456,58 @@ This function has been removed and not replaced. If you feel like you need this 
 
 ### useCMEditViewDataManager
 
-This hook has been split into different hooks, each with more ability then it's previous:
-
-- useDocument
-- useDocumentLayout
-- useDocumentRBAC
-- useForm
+A lot of the internals have been reworked and split. We are exposing a main experimental hook to replace this one named `useContentManagerContext` while the rest of the logic is in several hooks.
 
 ```tsx
 // Before
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 // After
-import {
-  useDocument,
-  useDocumentActions,
-  useDocumentLayout,
-  useDocumentRBAC,
-  useForm,
-} from '@strapi/strapi/admin/hooks';
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin/hooks';
 ```
 
 Some common use cases are listed below:
 
 ```tsx
 // Before
-const { slug, isSingleType, isCreatingEntry } = useCMEditViewDataManager();
+const { slug, isSingleType, isCreatingEntry, hasDraftAndPublished } =
+  useCMEditViewDataManager();
 
 // After
-const { model, id, collectionType } = useDocument();
-const isSingleType = collectionType === 'single-types';
-const isCreatingEntry = id === 'create';
+const {
+  model,
+  collectionType,
+  id,
+  slug,
+  isCreatingEntry,
+  isSingleType,
+  hasDraftAndPublish,
+} = useContentManagerContext();
+```
+
+- `allLayoutData` has been removed.
+
+```tsx
+// Before
+const { layout, allLayoutData } = useCMEditViewDataManager();
+
+// After
+const { layout } = useContentManagerContext();
+
+const {
+  edit: { layout, components },
+  list: { layout },
+} = layout;
+```
+
+```tsx
+// Before
+const { initialData, modifiedData, onChange } = useCMEditViewDataManager();
+
+// After
+const { form } = useContentManagerContext();
+
+const { initialValues, values, onChange } = form;
 ```
 
 ```tsx
@@ -489,39 +517,6 @@ const { onPublish, onUnpublish } = useCMEditViewDataManager();
 // After
 const { publish, unpublish } = useDocumentActions();
 ```
-
-```tsx
-// Before
-const { layout } = useCMEditViewDataManager();
-
-// After
-const {
-  edit: { layout, components },
-} = useDocumentLayout();
-```
-
-```tsx
-// Before
-const { modifiedData } = useCMEditViewDataManager();
-
-// After
-import { useForm } from '@strapi/admin/strapi-admin';
-
-const formValues = useForm('ActionName', ({ values }) => values);
-```
-
-```tsx
-// Before
-const { hasDraftAndPublished } = useCMEditViewDataManager();
-
-// After
-import { useDocument } from '@strapi/admin/strapi-admin';
-
-const { schema } = useDocument();
-const hasDraftAndPublished = schema?.options?.draftAndPublish ?? false;
-```
-
-
 
 ## Features
 
@@ -593,7 +588,10 @@ const { allPermission, refetchPermissions } = useRBACProvider();
 import { useAuth } from '@strapi/strapi/admin';
 
 const permissions = useAuth('COMPONENT_NAME', (state) => state.permissions);
-const refetchPermission = useAuth('COMPONENT_NAME', (state) => state.refetchPermission);
+const refetchPermission = useAuth(
+  'COMPONENT_NAME',
+  (state) => state.refetchPermission
+);
 ```
 
 ### OverlayBlocker
