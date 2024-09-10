@@ -73,6 +73,7 @@ As you will see in the terminal, your project is now building locally.
 
 :::info
 * The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi Cloud project.
+* Many more installation options are available. Please refer to the [installation documentation](/dev-docs/installation) for details.
 :::
 
 </details>
