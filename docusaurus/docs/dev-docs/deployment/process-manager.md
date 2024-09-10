@@ -77,7 +77,7 @@ app.start();
 TypeScript projects require additional code in the `server.js` file to identify the correct directory. See the previous TypeScript code example or the [TypeScript documentation](/dev-docs/typescript#start-strapi-programmatically) for additional details.
 :::
 
-## Start PM2 with the `strapi` command
+## Start PM2 with the `strapi` command - Production
 
 To start PM2 and your application from a terminal you should start PM2 and pass the application name and start command as arguments:
 
@@ -86,7 +86,7 @@ To start PM2 and your application from a terminal you should start PM2 and pass 
 <TabItem value="yarn" label="yarn">
 
 ```bash
-pm2 start yarn --name app -- start
+pm2 start yarn --name your-app-name -- start
 
 ```
 
@@ -95,7 +95,33 @@ pm2 start yarn --name app -- start
 <TabItem value="npm" label="npm">
 
 ```bash
-pm2 start npm --name app -- run start
+pm2 start npm --name your-app-name -- run start
+
+```
+
+</TabItem>
+
+</Tabs>
+
+## Start PM2 with the `strapi` command - Development
+
+To start PM2 and your development application from a terminal you should start PM2 and pass the application name and start command as arguments:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+pm2 start yarn --name your-app-name -- develop
+
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+pm2 start npm --name your-app-name -- run develop
 
 ```
 
