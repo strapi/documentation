@@ -37,8 +37,10 @@ The CLI command consists of the following arguments:
 | `--throttle`   | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer.                                                   |
 
 :::caution
-Either `--to` or `--from` is required.
+Exactly one remote source `--from` or destination `--to` option must be provided.
 :::
+
+If you want to transfer data from one remote Strapi to another you will have to go through your local instance to transfer the data.
 
 :::tip
 Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
