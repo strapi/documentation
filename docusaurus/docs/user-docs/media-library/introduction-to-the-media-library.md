@@ -82,7 +82,7 @@ Just above the list of folders and assets and next to the ![Filter icon](/img/as
 
 ## Configuring the view
 
-Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on the middle one ![Settings icon](/img/assets/icons/v5/Cog.svg) to configure the default view for the Media library.
+Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on ![Settings icon](/img/assets/icons/v5/Cog.svg) to configure the default view for the Media library.
 
 <ThemedImage
   alt="Configure the view"
