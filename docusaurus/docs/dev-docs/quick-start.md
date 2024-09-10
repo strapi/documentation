@@ -65,7 +65,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
       }}
     />
 
-6. The terminal will now ask you a few questions. Answer 'Yes' by pressing `Enter` to all questions _except_ to **Start with an example structure & data?**: for this question, press `n` to answer 'No'. We'll guide you in the following steps on how to create your own data structure and add data manually.
+6. The terminal will now ask you a few questions. Answer 'Yes' by pressing `Enter` to all questions _except_ to **Start with an example structure & data**: for this question, press `n` to answer 'No'. We will guide you through the steps to create your own data structure and manually add data.
 
     ![Questions and answers from the terminal](/img/assets/quick-start-guide/qsg-questions-answers-terminal.png)
 
