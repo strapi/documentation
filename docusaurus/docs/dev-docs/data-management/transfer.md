@@ -38,6 +38,8 @@ The CLI command consists of the following arguments:
 
 :::caution
 Exactly one remote source `--from` or destination `--to` option must be provided.
+
+If you want to transfer data from one remote Strapi to another you will have to go through your local instance to transfer the data.
 :::
 
 If you want to transfer data from one remote Strapi to another you will have to go through your local instance to transfer the data.
