@@ -456,7 +456,7 @@ This function has been removed and not replaced. If you feel like you need this 
 
 ### useCMEditViewDataManager
 
-A lot of the internals have been reworked and splitted. We are exposing a main experimental hook to replace this one named `useContentManagerContext` the rest of the logic is in multiple hooks.
+A lot of the internals have been reworked and split. We are exposing a main experimental hook to replace this one named `useContentManagerContext` while the rest of the logic is in several hooks.
 
 ```tsx
 // Before
