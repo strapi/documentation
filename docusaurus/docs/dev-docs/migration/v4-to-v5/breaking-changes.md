@@ -70,7 +70,7 @@ You can click on the description of any breaking change in the following tables 
 | [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored) | Yes | ✅ Yes |
 | [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service) | Yes | No |
 | [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale) | Yes | ✅ Yes |
-| [Templates are now regular, standalone Strapi applications](/dev-docs/migration/v4-to-v5/breaking-changes/templates) | No | No |
+
 
 ## Plugins, providers, and admin panel customization
 
@@ -99,7 +99,6 @@ You can click on the description of any breaking change in the following tables 
 | [The `publicationState` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed) | Yes | ✅ Yes |
 | [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id) | Yes | ✅ Yes |
 | [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service) | Yes | No |
-| [The `localizations` field does not exist anymore](/dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field) | Yes | No |
 | [Some attributes and content-types names are reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
 | [Upload a file at entry creation is no longer possible](/dev-docs/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
 | [Components and dynamic zones should be populated using the detailed population strategy](/dev-docs/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |
