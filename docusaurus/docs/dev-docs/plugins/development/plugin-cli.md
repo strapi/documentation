@@ -31,10 +31,14 @@ npx @strapi/sdk-plugin init
 | --------- | :----: | ------------------ | ------------------------- |
 | `path`    | string | Path to the plugin | `./src/plugins/my-plugin` |
 
-| Option        | Type | Description                             | Default |
-| ------------- | :--: | --------------------------------------- | ------- |
-| `-d, --debug` |  -   | Enable debugging mode with verbose logs | false   |
-| `--silent`    |  -   | Do not log anything                     | false   |
+| Option         | Type | Description                             | Default |
+| -------------- | :--: | --------------------------------------- | ------- |
+| `-d, --debug`  |  -   | Enable debugging mode with verbose logs | false   |
+| `--silent`     |  -   | Do not log anything                     | false   |
+| `--use-npm`    |  -   | Use npm as the plugin package manager   | false   |
+| `--use-yarn`   |  -   | Use yarn as the plugin package manager  | false   |
+| `--use-pnpm`   |  -   | Use pnpm as the plugin package manager  | false   |
+| `--no-install` |  -   | Do not install dependencies             | false   |
 
 ## strapi-plugin build
 
