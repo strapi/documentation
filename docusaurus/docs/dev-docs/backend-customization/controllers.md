@@ -318,9 +318,9 @@ module.exports = {
     await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
     const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
 
-    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams);
+    const documents = await strapi.documents(contentType.uid).findMany(sanitizedQueryParams);
 
-    return await sanitize.contentAPI.output(entities, contentType, { auth: ctx.state.auth });
+    return await sanitize.contentAPI.output(documents, contentType, { auth: ctx.state.auth });
   }
 }
 ```
@@ -340,9 +340,9 @@ export default {
     await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
     const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
 
-    const entities = await strapi.entityService.findMany(contentType.uid, sanitizedQueryParams);
+    const documents = await strapi.documents(contentType.uid).findMany(sanitizedQueryParams);
 
-    return await sanitize.contentAPI.output(entities, contentType, { auth: ctx.state.auth });
+    return await sanitize.contentAPI.output(documents, contentType, { auth: ctx.state.auth });
   }
 }
 ```
