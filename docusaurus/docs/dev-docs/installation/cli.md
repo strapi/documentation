@@ -86,7 +86,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </Tabs>
 
-2. The terminal will aks you whether you want to `Login/Signup` to Strapi Cloud (and start using your free 14-day trial projects), or `Skip` this step. Use arrow keys and press Enter to make your choice. If you choose to skip this step, you will need to [host the project yourself](#skipping-the-strapi-cloud-login-step).
+2. The terminal will ask you whether you want to `Login/Signup` to Strapi Cloud (and start using your free 14-day trial projects), or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to skip this step, you will need to [host the project yourself](#skipping-the-strapi-cloud-login-step).
 
 2. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
 
