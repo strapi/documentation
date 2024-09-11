@@ -255,7 +255,7 @@ Content-Types keys in the `contentTypes` object should re-use the `singularName`
 
 <TabItem value="js" label="JavaScript">
 
-```js title="path: /src/plugins/my-plugin/server/content-types/index.js"
+```js title="/src/plugins/my-plugin/server/content-types/index.js"
 
 'use strict';
 
@@ -268,7 +268,7 @@ module.exports = {
 };
 ```
 
-```js title="path: /src/plugins/my-plugin/server/content-types/content-type-a.js"
+```js title="/src/plugins/my-plugin/server/content-types/content-type-a.js"
 
 module.exports = {
   kind: 'collectionType',
@@ -304,7 +304,7 @@ module.exports = {
 </TabItem>
 <TabItem value="ts" label="TypeScript">
 
-```js title="path: /src/plugins/my-plugin/server/content-types/index.ts"
+```js title="/src/plugins/my-plugin/server/content-types/index.ts"
 
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
@@ -315,7 +315,7 @@ module.exports = {
 };
 ```
 
-```js title="path: /src/plugins/my-plugin/server/content-types/content-type-a.ts"
+```js title="/src/plugins/my-plugin/server/content-types/content-type-a.ts"
 
 export default {
   kind: 'collectionType',
