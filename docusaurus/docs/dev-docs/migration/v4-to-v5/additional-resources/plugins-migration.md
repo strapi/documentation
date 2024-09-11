@@ -32,7 +32,7 @@ Upgrading a Strapi v4 plugin to Strapi 5 consists in:
   <!-- TODO: add link to icons in Design System v2 -->
   - There are no big visual changes, except for [icons](#).<br/>(_the link will be added in the upcoming weeks_)
   <!-- TODO: add link to migration guide -->
-  - A migration guide will be [available](#).<br/>(_the link will be added in the upcoming weeks_)
+  - A migration guide is [available](https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs).<br/>(_the link will be added in the upcoming weeks_)
   <!-- TODO: add link to breaking changes -->
   - A list of breaking changes specific to the Design System will be available in the [Design System documentation](#).<br/>(_the link will be added in the upcoming weeks_)
   - General Strapi v4 to Strapi 5 [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) might apply.
