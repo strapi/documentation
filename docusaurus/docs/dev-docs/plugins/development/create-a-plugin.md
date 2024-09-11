@@ -25,6 +25,9 @@ This guide assumes you want to develop a plugin external to your Strapi project.
 
 ## Getting started with the Plugin SDK
 
+The Plugin SDK helps you creating a plugin, linking it to an existing Strapi project, and building it for publishing.
+
+### Creating the plugin
 
 To create your plugin, ensure you are in the parent directory of where you want it to be created and run the following command:
 
