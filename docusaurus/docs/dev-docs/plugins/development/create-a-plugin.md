@@ -185,5 +185,5 @@ export default (config, webpack) => {
 ```
 
 :::caution
-Because the server looks at the `strapi-server.js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
+Because the server looks at the `server/src/index.js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
 :::
