@@ -22,7 +22,7 @@ The latest major version of Strapi is Strapi 5, which is currently provided as a
 The present page is meant to be used as step-by-step instructions for upgrading your Strapi v4 application to Strapi 5.
 
 :::prerequisites
-Your Strapi v4 application is already running on the latest v4 minor and patch version. If it's not, run the upgrade tool with the `minor` command to reach it: `npx @strapi/upgrade minor`.
+Your Strapi v4 application is already running on the latest v4 minor and patch version. If it's not, run the [upgrade tool](/dev-docs/upgrade-tool) with the `minor` command to reach it: `npx @strapi/upgrade minor`.
 :::
 
 ## Step 1: Get ready to upgrade
