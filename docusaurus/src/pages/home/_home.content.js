@@ -106,7 +106,7 @@ export default {
         },
         {
           label: 'Plugin SDK',
-          to: '/dev-docs/plugins/guides/use-the-plugin-sdk',
+          to: '/dev-docs/plugins/development/create-a-plugin',
         },
         {
           label: 'Upgrade to Strapi 5',

@@ -1,40 +1,39 @@
 ---
 title: Plugin creation & setup
-description: Learn how to create a Strapi plugin and how to start the development servers
+description: Learn how to use the Plugin SDK to build and publish a Strapi plugin
 pagination_next: dev-docs/plugins/development/plugin-structure
 tags:
-- admin panel
-- Command Line Interface (CLI)
-- hot reloading
-- plugins
-- plugins development
+  - guides
+  - plugins
+  - Plugin SDK
+  - plugins development
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+# Plugin creation
 
-# Plugin creation and setup
+There are many ways to create a Strapi 5 plugin, but the fastest and recommended way is to use the Plugin SDK.
 
-<NotV5/>
+The Plugin SDK is a set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
 
-To start developing a Strapi plugin, you need to:
+With the Plugin SDK, you do not need to set up a Strapi project before creating a plugin.
 
-1. create the plugin,
-2. enable the plugin,
-3. install dependencies, build the admin panel, and start the server(s).
+The present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin. If you already have an existing plugin, you can instead retrofit the plugin setup to utilise the Plugin SDK commands (please refer to the [Plugin SDK reference](/dev-docs/plugins/development/plugin-sdk) for a full list of available commands).
 
-:::prerequisites
-You created a Strapi project.
-<details>
-<summary>Use the CLI to create a project:</summary>
+:::note
+This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#working-with-the-plugin-cli-in-a-monorepo-environment) the steps are exactly the same.
+:::
 
-Run the corresponding command in a terminal window, replacing `my-project` with the name of your choice:
+## Getting started with the Plugin SDK
+
+
+To create your plugin, ensure you are in the parent directory of where you want it to be created and run the following command:
 
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn create strapi-app my-project --quickstart
+yarn dlx @strapi/sdk-plugin init my-strapi-plugin
 ```
 
 </TabItem>
@@ -42,268 +41,29 @@ yarn create strapi-app my-project --quickstart
 <TabItem value="npm" label="NPM">
 
 ```bash
-npx create-strapi-app@latest my-project --quickstart
+npx @strapi/sdk-plugin:init my-strapi-plugin
 ```
 
 </TabItem>
 
 </Tabs>
 
-More details can be found in the [CLI installation guide](/dev-docs/installation/cli).
-</details>
-:::
+The path `my-strapi-plugin` can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
 
-## Create the plugin using the CLI generator
+You will be ran through a series of prompts to help you setup your plugin. If you selected yes to all options the final structure will be similar to the default [plugin structure](/dev-docs/plugins/development/plugin-structure).
 
-The fastest way to create a Strapi plugin is to use the CLI generator. To do so:
+### Linking the plugin to your project
 
-1. Navigate to the root of an existing Strapi project, or create a new one.
-2. Run the following command in a terminal window to start the interactive CLI:
-
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-
-  ```sh
-  yarn strapi generate plugin
-  ```
-
-  </TabItem>
-
-  <TabItem value="npm" label="NPM">
-
-  ```sh
-  npm run strapi generate plugin
-  ```
-
-  </TabItem>
-  </Tabs>
-
-4. Choose either `JavaScript` or `TypeScript` for the plugin language.
-
-## Enable the plugin
-
-Once the `strapi generate plugin` CLI script has finished running, the minimum required code for the plugin to work is created for you, but the plugin is not enabled yet.
-
-To enable a plugin:
-
-1. If it does not exist already, create the **plugins configuration file** <PluginsConfigurationFile /> file at the root of the Strapi project.
-2. Enable the plugin by adding the following code to the plugins configuration file:
-
-  <Tabs>
-  <TabItem value="js" label="JavaScript">
-
-  ```js title="./config/plugins.js"
-  module.exports = {
-    // ...
-    "my-plugin": { // name of your plugin, kebab-cased
-      enabled: true,
-      resolve: "./src/plugins/my-plugin", // path to the plugin folder
-    },
-    // ...
-  };
-  ```
-
-  </TabItem>
-
-  <TabItem value="ts" label="TypeScript">
-
-  ```js title=./config/plugins.ts
-  export default {
-    // ...
-    "my-plugin": {
-      enabled: true,
-      resolve: "./src/plugins/my-plugin", // path to plugin folder
-    },
-    // ...
-  };
-  ```
-
-  </TabItem>
-  </Tabs>
-
-:::tip
-If you plan to use the plugin outside the Strapi project it was created in, move your plugin file outside the Strapi project and change the `resolve` value to the absolute directory path of your plugin.
-:::
-
-## Install dependencies, build the admin panel, and start servers
-
-Once the plugin code has been generated and the plugin is enabled, the next steps slighly differ depending on whether you created a vanilla JavaScript-based plugin or a TypeScript-based plugin (see [step 3](#create-the-plugin-using-the-cli-generator) of the CLI generator instructions).
-
-<Tabs groupId="js-ts">
-
-<TabItem value="js" label="JavaScript-based plugin">
-
-1. Navigate to the folder of the plugin.<br />If created from a Strapi project using the CLI generator, plugins are located in the `src/plugins` folder (see [project structure](/dev-docs/project-structure)).
-
-2. Run the following command in the newly-created plugin directory to install plugin dependencies:
-
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-
-  ```sh
-  yarn
-  ```
-
-  </TabItem>
-
-  <TabItem value="npm" label="NPM">
-
-  ```sh
-  npm install
-  ```
-
-  </TabItem>
-  </Tabs>
-
-3. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
-  
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-  
-  ```sh
-  yarn build
-  yarn develop
-  ```
-
-  </TabItem>
-
-  <TabItem value="npm" label="NPM">
-  
-  ```sh
-  npm run build
-  npm run develop
-  ```
-
-  </TabItem>
-  </Tabs>
-
-</TabItem>
-
-<TabItem label="TypeScript-based plugin" value="ts">
-
-1. Navigate to the folder of the plugin.<br />If created from a Strapi project using the CLI generator, plugins are located in the `src/plugins` folder (see [project structure](/dev-docs/project-structure)).
-
-2. Run the following command in the newly-created plugin directory to install plugin dependencies:
-
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-
-  ```sh
-  yarn
-  ```
-
-  </TabItem>
-
-  <TabItem value="npm" label="NPM">
-
-  ```sh
-  npm install
-  ```
-
-  </TabItem>
-  </Tabs>
-
-3. Still in the plugin directory (e.g., `src/plugins/my-plugin`), run the following command:
-
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-
-  ```sh
-  yarn build
-  ```
-
-  </TabItem>
-
-  <TabItem value="npm" label="NPM">
-
-  ```sh
-  npm run build
-  ```
-
-  </TabItem>
-  </Tabs>
-
-  This step transpiles the TypeScript files and outputs the JavaScript files to a `dist` directory that is unique to the plugin.
-
-4. Navigate back to the Strapi project root with `cd ../../..` and run the following commands to build the admin panel and start the server(s):
-
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-
-  ```sh
-  yarn build
-  yarn develop
-  ```
-
-  </TabItem>
-
-  <TabItem value="npm" label="NPM">
-  
-  ```sh
-  npm run build
-  npm run develop
-  ```
-
-  </TabItem>
-  </Tabs>
-
-</TabItem>
-</Tabs>
-
-You should now be ready to start developing your plugin.
-
-:::strapi What to read next?
-You can either jump to the [plugin structure](/dev-docs/plugins/development/plugin-structure) documentation or read the [servers and hot reloading](#servers-and-hot-reloading) section to learn more about different ways to start the server.
-:::
-
-### Servers and hot reloading
-
-Strapi itself is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
-
-```mermaid
-graph LR
-    A{Server} -->|Axios instance| B{Admin Panel}
-    B --> A
-```
-
-The server can be started in 2 different ways: you can run the backend server only or start both the server and admin panel servers.
-
-#### Start only the backend server
-
-To start only the backend server, run the following command:
-
-<Tabs groupId="yarn-npm">
-
-<TabItem label="Yarn" value="yarn">
-
-```bash
-yarn develop
-```
-
-</TabItem>
-
-<TabItem label="NPM" value="npm">
-
-```bash
-npm run develop
-```
-
-</TabItem>
-
-</Tabs>
-
-This will run the server on `localhost:1337` and enable hot reloading only on the back-end server, i.e. it will only auto-reload when changes are made to the server. If you are only doing development in the `./server` directory of your plugin, this will be faster.
-
-#### Start both the backend and admin panel servers
-
-If you are doing development on both the `/server` and `/admin` directories of your plugin, run the following command:
+Once you created your plugin, you will want to register it with the [yalc](https://github.com/wclr/yalc) repository (it's local to your machine). To do this, run the following command:
 
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn develop
+cd my-strapi-plugin
+yarn install
+yarn watch:link
 ```
 
 </TabItem>
@@ -311,10 +71,116 @@ yarn develop
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm run develop
+cd my-strapi-plugin
+npm install
+npm run watch:link
 ```
 
 </TabItem>
+
 </Tabs>
 
-This will run the server on `localhost:1337` and enable hot reloading on both the back-end and front-end servers, i.e.it will auto-reload when changes are made to the server or the admin panel of Strapi.
+This will then produce an output explaing how to link your plugin to your Strapi project. Open a new terminal window to do the next steps:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+cd /path/to/strapi/project
+yarn dlx yalc add --link my-strapi-plugin && yarn install
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+cd /path/to/strapi/project
+npx yalc add --link my-strapi-plugin && npm run install
+```
+
+</TabItem>
+
+</Tabs>
+
+:::note
+In the above examples we use the name of the plugin when linking it to the project. This is the name of the package, not the name of the folder.
+:::
+
+Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/dev-docs/configurations/plugins), so running the [`develop command`](../../cli.md#strapi-develop) will automatically pick up your plugin. However, to improve your experience we recommend you run Strapi with the `--watch-admin` flag so that your admin panel is automatically rebuilt when you make changes to your plugin:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn develop --watch-admin
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run develop --watch-admin
+```
+
+</TabItem>
+
+</Tabs>
+
+You are now ready to develop your plugin how you see fit! If you are making server changes, you will need to restart your server for them to take effect.
+
+### Building the plugin for publishing
+
+When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn build && yarn verify
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run build && npm run verify
+```
+
+</TabItem>
+
+</Tabs>
+
+The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
+
+## Working with the Plugin SDK in a monorepo environment
+
+If you are working with a monorepo environment to develop your plugin, you don't need to use the `watch:link` command because the monorepo workspace setup will handle the symlink. You can use the `watch` command instead.
+
+However, if you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
+
+```ts
+import path from "node:path";
+
+export default (config, webpack) => {
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    "my-strapi-plugin": path.resolve(
+      __dirname,
+      // We've assumed the plugin is local.
+      "../plugins/my-strapi-plugin/admin/src"
+    ),
+  };
+
+  return config;
+};
+```
+
+:::caution
+Because the server looks at the `strapi-server.js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
+:::
