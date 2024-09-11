@@ -13,11 +13,8 @@ tags:
 ---
 
 import InteractivePluginStructure from '@site/src/components/PluginStructure.js'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Plugin structure
-
-<NotV5/>
 
 When [creating a plugin with Plugin SDK](/dev-docs/plugins/development/create-a-plugin), Strapi generates the following boilerplate structure for you in the `./src/plugins/my-plugin` folder:
 
