@@ -15,7 +15,7 @@ This page is a work-in-progress and some links are currently missing.
 
 The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to upgrade your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
 
-Migrating a Strapi v4 plugin to Strapi 5 consists in:
+Upgrading a Strapi v4 plugin to Strapi 5 consists in:
 
 1. Creating a new empty plugin using the [Plugin SDK](/dev-docs/plugins/development/create-a-plugin).
 2. Move your Strapi v4 code to the corresponding Strapi 5 [plugin structure](/dev-docs/plugins/development/plugin-structure), also considering the changes summarized in this page.
