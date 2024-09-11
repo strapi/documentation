@@ -102,8 +102,6 @@ description: todo
 
 ### 🧹 Chore, fixes, typos, and other improvements
 
-#### Global
-
 * [AI bot improvements](https://github.com/strapi/documentation/pull/2142)
 
 ***
