@@ -17,7 +17,7 @@ import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
 
 The Plugin CLI is set of commands provided by the package [@strapi/sdk-plugin](https://github.com/strapi/sdk-plugin) orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
 
-The present documentation lists the available Plugin CLI commands. The [associated guide](/dev-docs/plugins/guides/use-the-plugin-cli) illustrates how to use these commands to create a plugin from scratch, link it to an existing project, and publish it.
+The present documentation lists the available Plugin CLI commands. The [associated guide](/dev-docs/plugins/guides/use-the-plugin-sdk) illustrates how to use these commands to create a plugin from scratch, link it to an existing project, and publish it.
 
 ## npx @strapi/sdk-plugin init
 
