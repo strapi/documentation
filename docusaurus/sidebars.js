@@ -510,7 +510,7 @@ const sidebars = {
             },
             'dev-docs/plugins/development/create-a-plugin',
             'dev-docs/plugins/development/plugin-structure',
-            'dev-docs/plugins/development/plugin-cli',
+            'dev-docs/plugins/development/plugin-sdk',
             {
               type: 'doc',
               id: 'dev-docs/plugins/admin-panel-api',
@@ -533,7 +533,7 @@ const sidebars = {
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
-                'dev-docs/plugins/guides/use-the-plugin-cli',
+                'dev-docs/plugins/guides/use-the-plugin-sdk',
               ]
             }
           ]

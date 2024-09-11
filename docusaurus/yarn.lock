@@ -1573,9 +1573,9 @@
     react-helmet-async "*"
     react-loadable "npm:@docusaurus/react-loadable@5.5.2"
 
-"@docusaurus/plugin-client-redirects@2.4.0":
+"@docusaurus/plugin-sdkent-redirects@2.4.0":
   version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-client-redirects/-/plugin-client-redirects-2.4.0.tgz#53117d112ac9cc191deda053af4335e0381b4125"
+  resolved "https://registry.yarnpkg.com/@docusaurus/plugin-sdkent-redirects/-/plugin-sdkent-redirects-2.4.0.tgz#53117d112ac9cc191deda053af4335e0381b4125"
   integrity sha512-HsS+Dc2ZLWhfpjYJ5LIrOB/XfXZcElcC7o1iA4yIVtiFz+LHhwP863fhqbwSJ1c6tNDOYBH3HwbskHrc/PIn7Q==
   dependencies:
     "@docusaurus/core" "2.4.0"

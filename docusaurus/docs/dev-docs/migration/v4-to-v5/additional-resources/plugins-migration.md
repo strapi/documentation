@@ -19,7 +19,7 @@ The present page is intended to be used as a short summary of everything to cons
 
 - The Entity Service API from Strapi v4 is deprecated and Strapi 5 uses the [Document Service API](/dev-docs/api/document-service) instead. A [migration guide](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) is available to help you transition to the Document Service API.
 - General Strapi v4 to Strapi 5 [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) might apply.
-- You can use the new [Plugin CLI](/dev-docs/plugins/guides/use-the-plugin-cli) to generate plugins and publish them on NPM and/or submit them to the Marketplace.
+- You can use the new [Plugin SDK](/dev-docs/plugins/guides/use-the-plugin-sdk) to generate plugins and publish them on NPM and/or submit them to the Marketplace.
 
 ## Front-end changes
 

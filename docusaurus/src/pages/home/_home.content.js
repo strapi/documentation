@@ -105,8 +105,8 @@ export default {
           to: '/dev-docs/api/document-service',
         },
         {
-          label: 'Plugin CLI',
-          to: '/dev-docs/plugins/guides/use-the-plugin-cli',
+          label: 'Plugin SDK',
+          to: '/dev-docs/plugins/guides/use-the-plugin-sdk',
         },
         {
           label: 'Upgrade to Strapi 5',
