@@ -117,8 +117,13 @@ Selecting multiple entries from the Content Manager's list view will display add
 If the [Internationalization plugin](/user-docs/plugins/strapi-plugins.md#-internationalization-plugin) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
-<!-- TODO: update screenshot -->
-![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
+<ThemedImage
+  alt="Unpublish a document"
+  sources={{
+    light: '/img/assets/content-manager/bulk-publish.png',
+    dark: '/img/assets/content-manager/bulk-publish_DARK.png',
+  }}
+/>
 
 #### Bulk publishing drafts
 

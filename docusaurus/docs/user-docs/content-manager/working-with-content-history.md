@@ -31,8 +31,8 @@ To browse Content History, while editing a document in the Content Manager, clic
 <ThemedImage
 alt="Accessing the Content History of a document"
 sources={{
-  light:'/img/assets/content-manager/browsing-content-history.gif',
-  dark:'/img/assets/content-manager/browsing-content-history_DARK.gif',
+  light:'/img/assets/content-manager/browsing-content-history.png',
+  dark:'/img/assets/content-manager/browsing-content-history_DARK.png',
 }}
 />
 
@@ -50,14 +50,6 @@ To restore a version:
 2. Browse the Content History and select a version in the sidebar on the right.
 3. Click the **Restore** button.
 4. In the _Confirmation_ window, click **Restore**.  
-
-<ThemedImage
-alt="Restoring a previous version"
-sources={{
-  light:'/img/assets/content-manager/restoring-version.gif',
-  dark:'/img/assets/content-manager/restoring-version_DARK.gif',
-}}
-/>
 
 :::note
 If the [Internationalization (i18n)](/user-docs/content-manager/translating-content) feature is enabled for the content-type, restoring a version with a unique field (i.e. a field whose content is the same for all locales) will restore the content of this field for all locales.

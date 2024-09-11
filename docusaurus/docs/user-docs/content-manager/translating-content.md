@@ -51,5 +51,5 @@ To translate content in another locale:
 4. Translate your content by filling up your content-type's fields (see [Writing content](writing-content.md)). 
 
 :::tip
-Click on the **Fill in from another locale** button in the Internationalization box for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
+Click on the ![Dowload icon](/img/assets/icons/v5/Download.svg) *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
 :::

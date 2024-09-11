@@ -21,7 +21,7 @@ When viewing your content in the Content Manager, you can see the current stage 
   alt="Review Stage column"
   sources={{
     light: '/img/assets/content-manager/review-workflow-list-view.png',
-    dark: '/img/assets/content-manager/review-workflow-list-view.png',
+    dark: '/img/assets/content-manager/review-workflow-list-view_DARK.png',
   }}
 />
 
@@ -53,6 +53,12 @@ To change the assignee of your content:
 2. In the Information box, click on the _Assignee_ drop-down list.
 3. Choose the new assignee of your entry. It is automatically saved.
 
-![Review Stage dropdown](/img/assets/content-manager/review-assignee-dropdown.png)
+<ThemedImage
+  alt="Review Stage dropdown"
+  sources={{
+    light: '/img/assets/content-manager/review-assignee-dropdown.png',
+    dark: '/img/assets/content-manager/review-assignee-dropdown_DARK.png',
+  }}
+/>
 
 <FeedbackPlaceholder />
