@@ -11,12 +11,9 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Project settings
-
-<NotV5/>
 
 From a chosen project's dashboard, the *Settings* tab, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project.
 

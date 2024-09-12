@@ -11,11 +11,7 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Information on billing & usage
-
-<NotV5 />
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
