@@ -1,5 +1,5 @@
 ---
-title: Plugins upgrade
+title: Plugins upgrade summary
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
   - plugins
