@@ -31,7 +31,7 @@ Before getting into the upgrade process itself, take the following precautions:
 
 1. **Backup your database**.
 
-  If you are using SQLite (the default database provided with Strapi), your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
+  If you are using SQLite with the default configuration (the default database provided with Strapi), your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
   
   If you are using another type of database, please refer to their official documentation (see [PostgreSQL docs](https://www.postgresql.org/docs/) and [MySQL docs](https://dev.mysql.com/doc/)).
 
@@ -105,7 +105,7 @@ For each of them, read the indicated breaking change entry and check if some man
     1. Some environment variables are handled by the server configuration 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
     2. Custom configuration must meet specific requirements 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 3. **Admin panel customization**:
-    * The helper-plugin has been deprecated 👉 see [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin)
+    * The helper-plugin has been removed 👉 see [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin)
 
 👉 Finally, go over the rest of the [breaking changes database](/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 

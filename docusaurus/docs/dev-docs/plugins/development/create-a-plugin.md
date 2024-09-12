@@ -23,9 +23,15 @@ The present guide covers creating a plugin from scratch, linking it to an existi
 This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#working-with-the-plugin-cli-in-a-monorepo-environment) the steps are exactly the same.
 :::
 
+:::prerequisites
+[yalc](https://www.npmjs.com/package/yalc) must be installed globally (with `npm install -g yalc` or `yarn global add yalc`).
+:::
+
 ## Getting started with the Plugin SDK
 
 The Plugin SDK helps you creating a plugin, linking it to an existing Strapi project, and building it for publishing.
+
+The full list of commands and their parameters are available in the [Plugin SDK reference](/dev-docs/plugins/development/plugin-sdk). The present page will guide on using the main ones.
 
 ### Creating the plugin
 
@@ -57,33 +63,11 @@ You will be ran through a series of prompts to help you setup your plugin. If yo
 
 ### Linking the plugin to your project
 
-Once you created your plugin, you will want to register it with the [yalc](https://github.com/wclr/yalc) repository (it's local to your machine). To do this, run the following command:
+In order to test your plugin during its development, the recommended approach is to link it to a Strapi project.
 
-<Tabs groupId="yarn-npm">
+Linking your plugin to a project is done with the `watch:link` command. The command will output explanations on how to link your plugin to a Strapi project.
 
-<TabItem value="yarn" label="Yarn">
-
-```bash
-cd my-strapi-plugin
-yarn install
-yarn watch:link
-```
-
-</TabItem>
-
-<TabItem value="npm" label="NPM">
-
-```bash
-cd my-strapi-plugin
-npm install
-npm run watch:link
-```
-
-</TabItem>
-
-</Tabs>
-
-This will then produce an output explaing how to link your plugin to your Strapi project. Open a new terminal window to do the next steps:
+In a new terminal window, run the following commands:
 
 <Tabs groupId="yarn-npm">
 
@@ -108,30 +92,12 @@ npx yalc add --link my-strapi-plugin && npm run install
 </Tabs>
 
 :::note
-In the above examples we use the name of the plugin when linking it to the project. This is the name of the package, not the name of the folder.
+In the above examples we use the name of the plugin (`my-strapi-plugin`) when linking it to the project. This is the name of the package, not the name of the folder.
 :::
 
-Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/dev-docs/configurations/plugins), so running the [`develop command`](../../cli.md#strapi-develop) will automatically pick up your plugin. However, to improve your experience we recommend you run Strapi with the `--watch-admin` flag so that your admin panel is automatically rebuilt when you make changes to your plugin:
+Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/dev-docs/configurations/plugins), so running the [`develop command`](../../cli.md#strapi-develop) to start your Strapi project will automatically pick up your plugin.
 
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="Yarn">
-
-```bash
-yarn develop --watch-admin
-```
-
-</TabItem>
-
-<TabItem value="npm" label="NPM">
-
-```bash
-npm run develop --watch-admin
-```
-
-</TabItem>
-
-</Tabs>
+Now that your plugin is linked to a project, run `yarn develop` or `npm run develop` to start the Strapi application.
 
 You are now ready to develop your plugin how you see fit! If you are making server changes, you will need to restart your server for them to take effect.
 
@@ -168,15 +134,15 @@ If you are working with a monorepo environment to develop your plugin, you don't
 However, if you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
 
 ```ts
-import path from "node:path";
+import path from 'node:path';
 
 export default (config, webpack) => {
   config.resolve.alias = {
     ...config.resolve.alias,
-    "my-strapi-plugin": path.resolve(
+    'my-strapi-plugin': path.resolve(
       __dirname,
       // We've assumed the plugin is local.
-      "../plugins/my-strapi-plugin/admin/src"
+      '../plugins/my-strapi-plugin/admin/src'
     ),
   };
 
