@@ -7,7 +7,7 @@ tags:
   - upgrade to Strapi 5
 ---
 
-# Plugins upgrade
+# Plugins upgrade summary
 
 The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to upgrade your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
 
