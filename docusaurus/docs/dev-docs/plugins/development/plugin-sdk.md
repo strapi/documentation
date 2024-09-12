@@ -34,7 +34,7 @@ npx @strapi/sdk-plugin init
 
 ## strapi-plugin build
 
-Bundle the strapi plugin for publishing.
+Bundle the Strapi plugin for publishing.
 
 ```bash
 strapi-plugin build
@@ -52,6 +52,8 @@ strapi-plugin build
 
 Recompiles the plugin automatically on changes and runs `yalc push --publish`.
 
+For testing purposes, it is very convenient to link your plugin to an existing application to experiment with it in real condition. This command is made to help you streamline this process.
+
 ```bash
 strapi-plugin watch:link
 ```
@@ -63,7 +65,7 @@ strapi-plugin watch:link
 
 ## strapi-plugin watch
 
-Watch and compile the Strapi plugin for local development.
+Watch the plugin source code for any change and rebuild it everytime. Useful when implementing your plugin and testing it in an application.
 
 ```bash
 strapi-plugin watch
