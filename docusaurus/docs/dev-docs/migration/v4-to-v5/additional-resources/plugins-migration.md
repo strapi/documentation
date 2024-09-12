@@ -12,7 +12,7 @@ tags:
 The present page is intended to be used as a short summary of everything to consider if you are a plugin developer intending to upgrade your plugin from Strapi v4 to Strapi 5. The page quickly describes the changes affecting plugins and links to additional resources where necessary.
 
 :::strapi Plugin SDK
-Starting with Strapi 5, the platform includes a [Plugin SDK](/dev-docs/plugins/development/plugin-sdk) to help develop and build Strapi plugins. While you are free to use other methods for plugin development, we strongly recommend using the Plugin SDK. As part of the migration process from v4 to v5, we encourage you to update your plugin to take advantage of the Plugin SDK.
+Starting with Strapi 5, the platform includes a [Plugin SDK](/dev-docs/plugins/development/plugin-sdk) to help develop and build Strapi plugins. While you are free to use other methods for plugin development, we strongly recommend using the Plugin SDK. As part of the migration process from v4 to Strapi 5, we encourage you to update your plugin to take advantage of the Plugin SDK.
 :::
 
 ## Recommended steps to migrate a plugin
