@@ -55,17 +55,72 @@ The path `my-strapi-plugin` can be replaced with whatever you want to call your 
 
 You will be ran through a series of prompts to help you setup your plugin. If you selected yes to all options the final structure will be similar to the default [plugin structure](/dev-docs/plugins/development/plugin-structure).
 
-### Linking the plugin to your project
+### Commands
 
-Once you created your plugin, you will want to register it with the [yalc](https://github.com/wclr/yalc) repository (it's local to your machine). To do this, run the following command:
+Inside the plugin code, several commands are available to work with the plugin.
+
+Make sure to start by moving to the plugin folder `cd my-strapi-plugin`
+
+#### `build`
+
+This will build the plugin an make it ready for release
 
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-cd my-strapi-plugin
-yarn install
+yarn build
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run build
+```
+
+</TabItem>
+</Tabs>
+
+#### `watch`
+
+This will watch the plugin source code for any change and rebuild it everytime. _This can be usefull when you are implementing your plugin and testing it in an application_
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn watch
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run watch
+```
+
+</TabItem>
+
+</Tabs>
+
+#### `watch:link`
+
+For testing purposes it is very convenient to link your plugin to an existing application to experiment with it in real condition. This command is made to help you streamline this process.
+
+##### Requirements
+
+- [yalc](https://www.npmjs.com/package/yalc) must be installed globally
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
 yarn watch:link
 ```
 
@@ -74,8 +129,6 @@ yarn watch:link
 <TabItem value="npm" label="NPM">
 
 ```bash
-cd my-strapi-plugin
-npm install
 npm run watch:link
 ```
 
@@ -83,7 +136,37 @@ npm run watch:link
 
 </Tabs>
 
-This will then produce an output explaing how to link your plugin to your Strapi project. Open a new terminal window to do the next steps:
+#### `verify`
+
+Verifies the plugin is ready to be published
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn verify
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run verify
+```
+
+</TabItem>
+
+</Tabs>
+
+## Testing your plugin in a Strapi project
+
+In order to test your plugin during it's development, the recommended approach is to link it to a Strapi project.
+
+Start by running the [`watch:link`](#watchlink) command. _The command will output explanations on how to link your plugin to a Strapi project._
+
+Open a new terminal window and follow the next steps:
 
 <Tabs groupId="yarn-npm">
 
@@ -111,14 +194,16 @@ npx yalc add --link my-strapi-plugin && npm run install
 In the above examples we use the name of the plugin when linking it to the project. This is the name of the package, not the name of the folder.
 :::
 
-Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/dev-docs/configurations/plugins), so running the [`develop command`](../../cli.md#strapi-develop) will automatically pick up your plugin. However, to improve your experience we recommend you run Strapi with the `--watch-admin` flag so that your admin panel is automatically rebuilt when you make changes to your plugin:
+Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/dev-docs/configurations/plugins), so running the [`develop command`](../../cli.md#strapi-develop) will automatically pick up your plugin.
+
+In the Strapi application you can now run
 
 <Tabs groupId="yarn-npm">
 
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn develop --watch-admin
+yarn develop
 ```
 
 </TabItem>
@@ -126,7 +211,7 @@ yarn develop --watch-admin
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm run develop --watch-admin
+npm run develop
 ```
 
 </TabItem>
@@ -135,7 +220,7 @@ npm run develop --watch-admin
 
 You are now ready to develop your plugin how you see fit! If you are making server changes, you will need to restart your server for them to take effect.
 
-### Building the plugin for publishing
+## Building the plugin for publishing
 
 When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
 
@@ -168,15 +253,15 @@ If you are working with a monorepo environment to develop your plugin, you don't
 However, if you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
 
 ```ts
-import path from "node:path";
+import path from 'node:path';
 
 export default (config, webpack) => {
   config.resolve.alias = {
     ...config.resolve.alias,
-    "my-strapi-plugin": path.resolve(
+    'my-strapi-plugin': path.resolve(
       __dirname,
       // We've assumed the plugin is local.
-      "../plugins/my-strapi-plugin/admin/src"
+      '../plugins/my-strapi-plugin/admin/src'
     ),
   };
 
