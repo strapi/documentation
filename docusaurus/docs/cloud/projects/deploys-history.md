@@ -12,11 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Deploy history and logs
-
-<NotV5/>
 
 For each Strapi Cloud project, you can access the history of all deployments that occured and their details including build and deploy logs. This information is available in the *Deploys* tab, located in the header of any chosen project.
 

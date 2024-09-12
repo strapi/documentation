@@ -9,11 +9,7 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Projects overview
-
-<NotV5/>
 
 The *Projects* page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 

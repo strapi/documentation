@@ -10,11 +10,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Notifications
-
-<NotV5/>
 
 The Notification center can be opened by clicking the bell icon ![Notification icon](/img/assets/icons/notifications.svg) in the top navigation of the Cloud dashboard.
 

@@ -12,11 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Deployments management
-
-<NotV5/>
 
 The creation of a new Strapi Cloud project automatically trigger the deployment of that project. After that, deployments can be:
 
