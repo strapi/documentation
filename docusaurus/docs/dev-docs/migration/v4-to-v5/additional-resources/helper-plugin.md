@@ -53,7 +53,8 @@ const MyPage = () => {
 ### CheckPermissions
 
 This component has been removed and not replaced. If you feel like you need this component, please open an issue on the Strapi repository to discuss your usecase.
-We recommend using the `Page.Protect` component from `@strapi/strapi/admin` instead. See `CheckPagePermissions`below for an example. If you need to check permissions for a lower level component you can use the useRBAC hook.
+
+We recommend using the `Page.Protect` component from `@strapi/strapi/admin` instead (see [`CheckPagePermissions`](#checkpagepermissions) for an example). If you need to check permissions for a lower level component you can use [the `useRBAC` hook](#userbac).
 
 
 ### CheckPagePermissions
