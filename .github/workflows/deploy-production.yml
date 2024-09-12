@@ -8,7 +8,6 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
-
       # Need to get actual deployment URL and not previous one
       - name: Get Vercel deployment URL
         id: get-url-prod
@@ -16,9 +15,9 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
-          vercel_team_id: 'strapijs'
-          vercel_target: 'production'
-          vercel_app: 'documentation'
+          vercel_team_id: "strapijs"
+          vercel_target: "production"
+          vercel_app: "documentation"
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
 
       # Waits for Vercel to finish building the docs
@@ -40,9 +39,9 @@ jobs:
         uses: chetan/invalidate-cloudfront-action@v2
         id: invalid-cloudfront-prod
         env:
-          DISTRIBUTION: ${{ secrets.PROD_DISTRIBUTION }}
+          DISTRIBUTION: ${{ secrets.LEGACY_V4_DISTRIBUTION }}
           PATHS: "/*"
-          AWS_REGION: ${{ secrets.PROD_REGION }}
+          AWS_REGION: ${{ secrets.LEGACY_V4_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -55,5 +54,5 @@ jobs:
           crawler-api-key: ${{ secrets.CRAWLER_API_KEY }}
           algolia-app-id: ${{ secrets.ALGOLIA_APP_ID }}
           algolia-api-key: ${{ secrets.ALGOLIA_API_KEY }}
-          site-url: 'https://docs.strapi.io'
-          crawler-name: 'strapiDocsNext'
+          site-url: "https://docs.strapi.io"
+          crawler-name: "strapiDocsNext"
