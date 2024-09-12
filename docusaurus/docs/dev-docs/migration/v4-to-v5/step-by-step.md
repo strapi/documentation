@@ -72,7 +72,7 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
 
   | Codemod name and GitHub code link | Description |
   |-----------------------------------|-------------|
-  | [comment-out-lifecycle-files](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/comment-out-lifecycle-files.code.ts) | Comment out lifecycles files in favor of [Document Services Middlewares](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | 
+  | [comment-out-lifecycle-files](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/comment-out-lifecycle-files.code.ts) | Comment out lifecycles files in favor of [Document Service Middlewares](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | 
   | [dependency-remove-strapi-plugin-i18n](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/dependency-remove-strapi-plugin-i18n.json.ts) | Remove the i18n plugin dependency as i18n is now integrated into the core of Strapi |
   | [dependency-upgrade-react-and-react-dom](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-and-react-dom.json.ts)  | Upgrade the react and react-dom dependencies | 
   | [dependency-upgrade-react-router-dom](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-router-dom.json.ts)  | Upgrade the react-router-dom dependency |
