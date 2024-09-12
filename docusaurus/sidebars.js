@@ -586,23 +586,9 @@ const sidebars = {
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
             },
             {
-              type: 'category',
-              collapsed: false,
+              type: 'doc',
               label: 'Specific resources',
-              link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction'
-              },
-              items: [
-                {
-                  type: 'doc',
-                  label: 'Introduction to migration guides',
-                  id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
-                },
-                'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
-                'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
-                'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
-              ],
+              id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction',
             },
           ]
         }
