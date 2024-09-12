@@ -587,7 +587,7 @@ const sidebars = {
             },
             {
               type: 'category',
-              collapsed: true,
+              collapsed: false,
               label: 'Specific resources',
               link: {
                 type: 'doc',
