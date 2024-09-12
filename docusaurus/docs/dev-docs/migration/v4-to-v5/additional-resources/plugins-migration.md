@@ -17,7 +17,7 @@ Starting with Strapi 5, the platform includes a [Plugin SDK](https://github.com/
 
 ## Recommended steps to migrate a plugin
 :::prerequisites
-Your Strapi application is already running on the latest v5 minor and patch version. If it's not, follow the [step-by-step guide](/dev-docs/step-by-step) to upgrade to Strapi 5.
+Your Strapi application is already running on the latest v5 minor and patch version. If it's not, follow the [step-by-step guide](/dev-docs/migration/v4-to-v5/step-by-step) to upgrade to Strapi 5.
 :::
 
 Upgrading a Strapi v4 plugin to Strapi 5 consists in:
