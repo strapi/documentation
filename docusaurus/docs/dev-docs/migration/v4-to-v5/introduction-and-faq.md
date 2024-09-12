@@ -37,7 +37,7 @@ The following questions and their answers should help you cover the most common 
 <details style={detailsStyle}>
 <summary style={summaryStyle}>How can I handle the upgrade and the installation of the latest dependencies?<br/>How can I handle the breaking changes in the code and adapt my code to Strapi 5?</summary>
 
-Strapi provides an [upgrade tool](/dev-docs/upgrade-tool) to easy the process. The upgrade tool is a command line tool with some commands that handle the upgrade of the dependencies and the execution of **codemods** <Codemods/>.
+Strapi provides an [upgrade tool](/dev-docs/upgrade-tool) to ease the process. The upgrade tool is a command line tool with some commands that handle the upgrade of the dependencies and the execution of **codemods** <Codemods/>.
 
 Follow the <a href="/dev-docs/migration/v4-to-v5/step-by-step">step-by-step guide</a> to learn how to use this tool in the context of upgrading to Strapi 5.
 
