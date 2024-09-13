@@ -14,8 +14,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Saving, publishing and deleting content
 
-<NotV5/>
-
 Strapi allows you to manage your content throughout its whole lifecycle, whether you are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
 
 ## Saving & publishing content
@@ -49,9 +47,9 @@ While editing a document, you can see 2 tabs:
 - The _Draft_ tab is where you can edit your content.
 - The _Published_ tab is a read-only tab where edition of all fields is disabled. The _Published_ tab only exists to show what is the content of fields in the published version.
 
-By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button in the _Document_ box on the right of the edit view, until they are ready to be published.
+By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button in the _Entry_ box on the right side of the interface, until they are ready to be published.
 
-Once you made changes to a draft, you have 3 possible options, all available in the _Document_ box on the right side of the edit view:
+Once you made changes to a draft, you have 3 possible options, all available in the _Entry_ box on the right side of the interface:
 - **Publish** your document (see [publishing a draft](#publishing-a-draft)),
 - **Save** your draft for later retrieval,
 - or discard changes, by clicking on ![More icon](/img/assets/icons/v5/More.svg) and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
@@ -62,7 +60,7 @@ While editing a document, you can decide to publish a draft or unpublish previou
 
 #### Publishing a draft
 
-To publish a draft, click on the **Publish** button in the _Document_ box on the right of the content editor.
+To publish a draft, click on the **Publish** button in the _Entry_ box on the right side of the interface.
 
 After a draft is published:
 
@@ -91,11 +89,11 @@ To schedule publication, i.e., convert a draft to a published entry at a given d
 
 Previously published content can be unpublished.
 
-To unpublish content,  from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
+To unpublish content,  from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
 If the draft version of the document contains content different from the published version, you can decide what to do with both content when unpublishing:
 
-1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
+1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 2. In the Confirmation dialog that opens, you can choose to:
     - **Unpublish and keep last draft**, so that all the content you currently have in the _Draft_ tab is preserved, but the all the content from the _Published_ tab is definitely gone
     - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab

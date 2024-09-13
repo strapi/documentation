@@ -23,7 +23,7 @@ sources={{
 
 Content History is accessible from the Edit View of any document created with the Content Manager.
 
-To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the **Content History** button. You will be presented with the Content History view:
+To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. You will be presented with the Content History view:
 
 - The sidebar on the right lists the total number of versions available, and for each version, the date and time when the version was created, the user who created it, and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content) for more information about document statuses).
 - The main view on the left lists the fields and their content for the version selected in the sidebar on the right.
@@ -46,7 +46,7 @@ You can choose to restore a previous version of a document. When restoring a ver
 
 To restore a version:
 
-1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the **Content History** button.
+1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button.
 2. Browse the Content History and select a version in the sidebar on the right.
 3. Click the **Restore** button.
 4. In the _Confirmation_ window, click **Restore**.  

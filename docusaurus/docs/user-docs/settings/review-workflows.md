@@ -12,8 +12,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Managing Review Workflows <EnterpriseBadge /> <CloudTeamBadge/>
 
-<NotV5/>
-
 The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
 <ThemedImage

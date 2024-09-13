@@ -15,8 +15,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Introduction to plugins
 
-<NotV5/>
-
 Strapi is built around different types of plugins. Every default Strapi application comes with the following pre-installed plugins:
 
 * Content Manager (see [Introduction to the Content Manager](/user-docs/content-manager))

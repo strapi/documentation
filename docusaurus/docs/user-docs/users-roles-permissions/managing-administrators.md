@@ -9,8 +9,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Managing administrator accounts
 
-<NotV5/>
-
 Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the section of the ![Settings icon](/img/assets/icons/v5/Cog.svg) _Settings_ sub navigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* (see [Configuring administrator roles](configuring-administrator-roles.md)) and *Users*.

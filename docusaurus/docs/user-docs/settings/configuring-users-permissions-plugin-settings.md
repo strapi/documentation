@@ -11,8 +11,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuring Users & Permissions plugin settings
 
-<NotV5/>
-
 The Users & Permissions plugin is managed from the *Users & Permissions plugin* settings section, accessible from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings* in the main navigation of the admin panel. This settings section allows to configure the available providers, email templates and the advanced settings of the plugin. It also allows to define the end-users roles and their related permissions (see [Configuring end-user roles](../users-roles-permissions/configuring-end-users-roles.md)).
 
 ## Configuring providers
@@ -30,7 +28,7 @@ The Users & Permissions plugin allows to enable and configure providers, for end
 To enable and configure a provider:
 
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
-2. Click on the edit ![Edit icon](/img/assets/icons/edit.svg) button of the provider to enable and configure.
+2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the provider to enable and configure.
 3. In the provider edition window, click on the **TRUE** button of the *Enable* option.
 4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](/dev-docs/plugins/users-permissions#setting-up-the-provider---examples)).
 5. Click on the **Save** button.
@@ -63,7 +61,7 @@ The Users & Permissions plugin uses 2 email templates, "Email address confirmati
 To configure and edit email templates:
 
 1. Go to the *Users & Permissions plugin > Email templates* sub-section of the settings interface.
-2. Click on the edit ![Edit icon](/img/assets/icons/edit.svg) button of the email template to configure and edit.
+2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the email template to configure and edit.
 3. Configure the email template:
 
 | Setting name   | Instructions |

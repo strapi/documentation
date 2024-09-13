@@ -14,8 +14,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuring the views of a content-type
 
-<NotV5/>
-
 Depending on their type, content-types can be divided into 2 interfaces: the list view and the edit view. Both interfaces can be configured.
 
 ## Configuring the list view

@@ -18,8 +18,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Introduction to the Content Manager
 
-<NotV5 />
-
 The Content Manager is a core feature of Strapi. It is always enabled by default and cannot be disabled. It is accessible both when the application is in a development and production environment.
 
 The Content Manager is accessible from ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.

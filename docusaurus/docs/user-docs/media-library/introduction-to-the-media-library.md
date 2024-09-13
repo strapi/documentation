@@ -17,8 +17,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Introduction to the Media Library
 
-<NotV5/>
-
 The Media Library is a Strapi plugin that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
 
 Administrators can access the Media Library from ![ML icon](/img/assets/icons/v5/Images.svg) _Media Library_ in the main navigation of the admin panel.

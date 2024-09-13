@@ -8,8 +8,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuring end-user roles
 
-<NotV5/>
-
 End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.
 
 With the [Users & Permissions plugin](../plugins/strapi-plugins.md#users-permissions-plugin) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users.md)) but end-user roles and permissions are managed in the Settings interface.

@@ -14,8 +14,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Managing individual assets
 
-<NotV5/>
-
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped. To manage an asset, click on its Edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button.
 
 ## Editing assets
