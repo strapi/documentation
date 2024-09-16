@@ -2,6 +2,7 @@
 title: Introduction to users, roles & permissions
 slug: /user-docs/users-roles-permissions
 displayed_sidebar: userDocsSidebar
+pagination_next: user-docs/users-roles-permissions/configuring-administrator-roles
 sidebar_position: 1
 ---
 
