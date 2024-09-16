@@ -14,9 +14,6 @@ const config = {
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
-  // ⚠️ TODO v5: remove this for stable release
-  noIndex: true, // set to false to allow indexing by search engines
-
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".
@@ -94,8 +91,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // TODO v5: update back to 'main' for the stable release
-          editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus',
+          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             tag: ':::',
             keywords: [
@@ -207,18 +203,12 @@ const config = {
             position: 'left',
             label: 'Cloud Documentation',
           },
-          // TODO v5: unhide
-          // {
-          //   type: 'doc',
-          //   docId: 'release-notes',
-          //   position: 'left',
-          //   label: 'Release Notes',
-          // },
-          // {
-          //   href: 'https://github.com/strapi/documentation',
-          //   label: 'GitHub',
-          //   position: 'right',
-          // },
+          {
+            type: 'doc',
+            docId: 'release-notes',
+            position: 'left',
+            label: 'Release Notes',
+          },
         ],
       },
       footer: {
