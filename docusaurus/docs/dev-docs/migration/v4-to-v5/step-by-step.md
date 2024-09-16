@@ -9,7 +9,6 @@ tags:
 ---
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
-import TempUpgradeRCtag from '/docs/snippets/temp-upgrade-rc.md'
 const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
 const summaryStyle = {fontSize: '18px'}
 
@@ -53,18 +52,6 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
   ```sh
   npx @strapi/upgrade major
   ```
-
-  <details>
-  <summary>⚠️ Upgrading while Strapi 5 is in RC:</summary>
-  <p><strong>Warning</strong>: It is not recommended to migrate a production-level project to Strapi 5 before the release of the stable version. Migrate to Strapi 5 release candidate (RC) at your own risk.</p>
-
-  As long as Strapi 5 is available as a RC, the proper command to upgrade is different and depends on the RC version you want to reach. For instance, to reach Strapi 5.0.0-rc.6, the command is:
-
-  ```sh
-  npx @strapi/upgrade@rc to 5.0.0-rc.6 -c 5.0.0
-  ```
-
-  </details>
 
   The command will execute the update and installation of the dependencies of Strapi 5, and run the codemods to handle some of the breaking changes that come with Strapi 5.
 

@@ -8,7 +8,6 @@ tags:
 ---
 
 import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
-import TempUpgradeRCtag from '/docs/snippets/temp-upgrade-rc.md'
 const detailsStyle = {backgroundColor: 'transparent', border: 'solid 1px #4945ff' }
 const summaryStyle = {fontSize: '18px'}
 const codeStyle = {color: 'rgb(73, 69, 255)', backgroundColor: 'rgb(240, 240, 255)'}
