@@ -1,5 +1,5 @@
 ---
-title: Introduction to General Settings
+title: Introduction to Settings
 description: Customizing and managing Strapi.
 sidebar_position: 2
 tags:

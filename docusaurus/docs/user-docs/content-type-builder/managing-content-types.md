@@ -14,8 +14,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Managing content-types
 
-<NotV5/>
-
 :::note development-only
 The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 :::
@@ -38,7 +36,7 @@ Managing a content-type or component can include editing the general settings an
 
 - Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="1" /> allows to access the [basic settings](#editing-content-type-or-component-settings) of the content-type or component.
 - In the top right corner:
-  - the **Add new field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
+  - the **Add new/another field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
   - the **Configure the view** button allows to access the view configuration interface (see [Configuring the edit view](/user-docs/content-manager/configuring-view-of-content-type#configuring-the-edit-view))
 - Below the previous editing options, a table <ScreenshotNumberReference number="3" /> lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
   - Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a field
@@ -83,7 +81,10 @@ The **Advanced Settings** tab allows to edit the following properties of the con
 
 * **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
 * **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
+
+<!--
 * **Review workflows**: Enable the [Review Workflows](/user-docs/settings/review-workflows) <EnterpriseBadge /> feature for the content-type. It is disabled by default.
+-->
 
 ## Deleting content-types
 

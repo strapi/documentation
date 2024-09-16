@@ -106,7 +106,7 @@ To add a new entry and display its combination of fields:
 
 1. Click on the add button ![Add icon](/img/assets/icons/v5/PlusCircle.svg) to add the component.
 2. Fill in the fields of the component.
-3. (optional) Click on the **Add new entry** button and fill in the fields again.
+3. (optional) Click on the **Add an entry** button and fill in the fields again.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 

@@ -11,8 +11,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Managing transfer tokens
 
-<NotV5/>
-
 :::prerequisites
 * Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
 * The *Global settings > Transfer Tokens* sub-section of the settings interface is accessible in the admin panel only if the _Transfer tokens > Read_ permission is granted.

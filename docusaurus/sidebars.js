@@ -719,7 +719,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: 'General Settings',
+      label: 'Settings',
       link: {
         type: "doc",
         id: "user-docs/settings/introduction",

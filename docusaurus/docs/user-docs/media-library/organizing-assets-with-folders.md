@@ -15,8 +15,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Organizing assets with folders
 
-<NotV5/>
-
 Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/user-docs/content-manager/writing-content).
 
 From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.

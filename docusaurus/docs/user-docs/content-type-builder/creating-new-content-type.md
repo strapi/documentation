@@ -12,8 +12,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Creating content-types
 
-<NotV5/>
-
 :::note Development-only
 The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 :::
@@ -35,7 +33,7 @@ Content types are created from the Content-type Builder's Collection types and S
 To create a new content-type:
 
 1. Choose whether you want to create a collection type or a single type.
-2. In the category of the content-type you want to create, click on **Create a new collection/single type**.
+2. In the category of the content-type you want to create, click on **Create new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
 4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
@@ -44,7 +42,10 @@ To create a new content-type:
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving-publishing-content)). |
       | Internationalization | Tick the checkbox to allow entries of the content-type to be translated into other locales. |
-      | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
+
+<!--
+| Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
+-->
 
 6. Click on the **Continue** button.
 7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
@@ -68,7 +69,7 @@ Components are created from the same-named category of the Content-type Builder'
 
 To create a new component:
 
-1. In the Components category of the Content-type Builder sub navigation, click on **Create a new component**.
+1. In the Components category of the Content-type Builder sub navigation, click on **Create new component**.
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Display name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.

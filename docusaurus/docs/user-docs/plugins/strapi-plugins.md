@@ -17,15 +17,13 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # List of Strapi plugins
 
-<NotV5/>
-
 Strapi builds and maintains plugins that extend the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace/). Additional documentation on plugins is provided in the relevant sections of the User Guide and the Developer Documentation, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
 
 :::note
 
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
 - If plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), they are marked with  <EnterpriseBadge /> in this reference guide.
-- All plugin installations can be confirmed in the admin panel by clicking on ![plugins icon](/img/assets/icons/v5/PuzzlePiece.svg) *Plugins* in the main navigation.
+- All plugin installations can be confirmed in ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings > Plugins* in the admin panel.
 
 :::
 
@@ -33,7 +31,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 
 ### <img width="28" src="/img/assets/plugins/icon_i18n-plugin.png" /> Internationalization plugin
 
-The Internationalization plugin is installed by default on all v4 Strapi applications, but it can be deactivated.
+The Internationalization plugin is installed by default on all v5 Strapi applications, but it can be deactivated.
 
 This plugin is used to manage content in different languages, called "locales". With the Internationalization plugin, it is possible to:
 
@@ -51,7 +49,7 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 ### <img width="28" src="/img/assets/plugins/icon_up-plugin.png" /> Users & Permissions plugin
 
-The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
+The Users & Permissions plugin is installed by default on all v5 Strapi applications, but can be deactivated.
 
 This plugin is used to manage end users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device, etc.). With the Users & Permissions plugin, it is possible to:
 

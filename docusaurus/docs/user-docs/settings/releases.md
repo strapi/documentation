@@ -15,7 +15,7 @@ The [Releases](/user-docs/releases/introduction) feature enables content manager
   alt="Release settings"
   sources={{
     light: '/img/assets/releases/release-settings.png',
-    dark: '/img/assets/releases/release-settings.png',
+    dark: '/img/assets/releases/release-settings_DARK.png',
   }}
 />
 

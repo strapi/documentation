@@ -17,8 +17,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Introduction to the Media Library
 
-<NotV5/>
-
 The Media Library is a Strapi plugin that is always activated by default and cannot be deactivated. It is accessible both when the application is in a development and production environment.
 
 Administrators can access the Media Library from ![ML icon](/img/assets/icons/v5/Images.svg) _Media Library_ in the main navigation of the admin panel.
@@ -82,7 +80,7 @@ Just above the list of folders and assets and next to the ![Filter icon](/img/as
 
 ## Configuring the view
 
-Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on the middle one ![Settings icon](/img/assets/icons/v5/Cog.svg) to configure the default view for the Media library.
+Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on ![Settings icon](/img/assets/icons/v5/Cog.svg) to configure the default view for the Media library.
 
 <ThemedImage
   alt="Configure the view"

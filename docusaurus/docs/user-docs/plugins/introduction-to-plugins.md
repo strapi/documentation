@@ -15,8 +15,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Introduction to plugins
 
-<NotV5/>
-
 Strapi is built around different types of plugins. Every default Strapi application comes with the following pre-installed plugins:
 
 * Content Manager (see [Introduction to the Content Manager](/user-docs/content-manager))
@@ -33,7 +31,7 @@ Additional plugins that you can use to extend and customize your Strapi applicat
 From the admin panel, administrators are allowed to:
 
 - discover additional plugins and [providers](#providers) in the ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) _Marketplace_ (see [Managing Marketplace plugins](./installing-plugins-via-marketplace.md))
-- review the currently installed plugins and [providers](#providers) in ![Plugins icon](/img/assets/icons/v5/PuzzlePiece.svg) _Plugins_
+- review the currently installed plugins and [providers](#providers) in ![Cog icon](/img/assets/icons/v5/Cog.svg) _Settings > Plugins_
 
 <ThemedImage
   alt="Plugins in Settings section"
