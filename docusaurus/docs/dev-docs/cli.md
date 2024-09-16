@@ -100,8 +100,7 @@ strapi build
 | `--sourcemaps`      |  -   | Produce sourcemaps (default: false)                      |
 | `--stats`           |  -   | Print build statistics to the console (default: false)   |
 
-<!-- TODO v5: uncomment when the following commands are available and working in Strapi 5 👇 -->
-<!-- ## strapi login
+## strapi login
 
 Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
 
@@ -111,7 +110,7 @@ Logs out from Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) 
 
 ## strapi deploy
 
-Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation). -->
+Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
 
 ## strapi export
 
