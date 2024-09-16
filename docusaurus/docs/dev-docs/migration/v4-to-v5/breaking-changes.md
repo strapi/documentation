@@ -77,7 +77,7 @@ You can click on the description of any breaking change in the following tables 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
 | [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields) | No | ✅ Yes |
-| [The `helper-plugin` is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) | Yes | No |
+| [The `helper-plugin` is removed](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) | Yes | 👷 Partly |
 | [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component) | Yes | No |
 | [Some Mailgun provider legacy variables are not supported](/dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables) | Yes | No |
 | [The `lockIcon` property has been replaced by `licenseOnly`](/dev-docs/migration/v4-to-v5/breaking-changes/license-only) | Yes | No |
