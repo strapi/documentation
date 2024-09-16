@@ -14,8 +14,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Managing relational fields
 
-<NotV5/>
-
 Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields". 
 
 The content of relational fields is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)). However, relational fields can point to one or several entries of the other collection type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
