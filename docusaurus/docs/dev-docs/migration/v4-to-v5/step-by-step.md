@@ -72,6 +72,10 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
   | [use-uid-for-config-namespace](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts)                | Replace string dot format for config get/set/has with uid format for 'plugin' and 'api' namespace where possible | 
   | [utils-public-interface](https://github.com/strapi/strapi/blob/v5/main/packages/utils/upgrade/resources/codemods/5.0.0/utils-public-interface.code.ts)                            | Update utils to use the new public interface | 
 
+:::tip
+If you develop Strapi plugins, other codemods handle some aspects of the helper-plugin deprecation. See the [related breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) for more information.
+:::
+
 2. Go over the changes made by the upgrade tool to **check if you have to manually complete some code updates**:
 
   Look for `__TODO__` automatically added to your code by the codemods. Some of them might have been added while migrating from the Entity Service API to the new Document Service API introduced in Strapi 5.
