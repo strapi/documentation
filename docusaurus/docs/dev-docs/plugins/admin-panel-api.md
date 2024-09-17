@@ -120,11 +120,12 @@ export default {
 
 Exposes the bootstrap function, executed after all the plugins are [registered](#register).
 
-Within the bootstrap function, a plugin can:
+Within the bootstrap function, a plugin can, for instance:
 
 * extend another plugin, using `getPlugin('plugin-name')`,
-* register hooks (see [Hooks API](#hooks-api))
-* [add links to a settings section](#settings-api)
+* register hooks (see [Hooks API](#hooks-api)),
+* [add links to a settings section](#settings-api),
+* add actions and options to the Content Manager's List view and Edit view (see details on the [Content Manager APIs page](/dev-docs/plugins/content-manager-apis)).
 
 **Example:**
 
@@ -197,8 +198,8 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Add a single link to a settings section  | [Settings API](#settings-api)           | [`addSettingsLink()`](#addsettingslink)             | [`bootstrap()`](#bootstrap) |
 | Add multiple links to a settings section | [Settings API](#settings-api)           | [`addSettingsLinks()`](#addsettingslinks)           | [`bootstrap()`](#bootstrap) |
 | Inject a Component in an injection zone  | [Injection Zones API](#injection-zones-api) | [`injectComponent()`](#injection-zones-api)           | [`bootstrap()`](#register)  |
+| Add options and actions to the Content Manager's Edit view and List view | [Content Manager APIs](/dev-docs/plugins/content-manager-apis) | <ul><li>`addEditViewSidePanel()`</li><li>`addDocumentAction`</li><li>`addDocumentHeaderAction`</li><li>`addBulkAction`</li></ul> | [`bootstrap()`](#bootstrap) |
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
-
 
 :::tip Replacing the WYSIWYG
 The WYSIWYG editor can be replaced by taking advantage of [custom fields](/dev-docs/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
