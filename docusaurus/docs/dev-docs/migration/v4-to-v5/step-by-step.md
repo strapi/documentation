@@ -16,8 +16,6 @@ const summaryStyle = {fontSize: '18px'}
 
 The latest major version of Strapi is Strapi 5, which is currently provided as a Release Candidate (RC) version, not as a stable version yet.
 
-<DoNotMigrateYet />
-
 The present page is meant to be used as step-by-step instructions for upgrading your Strapi v4 application to Strapi 5.
 
 :::prerequisites
