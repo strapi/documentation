@@ -13,6 +13,7 @@ _The following is an extensive list of all the pull requests that were merged si
 
 #### Dev Docs
 
+* [Breaking change for database columns](https://github.com/strapi/documentation/pull/2221)
 * [Content Manager APIs](https://github.com/strapi/documentation/pull/2220)
 * [Breaking change for removing the "shared population strategy" for components & dynamic zones](https://github.com/strapi/documentation/pull/2204)
 * [Templates](https://github.com/strapi/documentation/pull/2192)
