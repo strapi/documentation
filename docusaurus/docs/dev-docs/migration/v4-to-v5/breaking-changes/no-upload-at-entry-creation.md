@@ -29,8 +29,7 @@ In Strapi 5, it is not possible to upload a file while creating an entry, so thi
 
 **In Strapi v4**
 
-<!-- TODO v5: update this link for Strapi v4 once moved to the new URL -->
-It was possible to upload a file while creating an entry, as [documented for Strapi v4](https://docs.strapi.io/dev-docs/plugins/upload#upload-files-at-entry-creation).
+It was possible to upload a file while creating an entry, as [documented for Strapi v4](https://docs-v4.strapi.io/dev-docs/plugins/upload#upload-files-at-entry-creation).
 
 </SideBySideColumn>
 
