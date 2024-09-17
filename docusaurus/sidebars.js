@@ -498,6 +498,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/developing-plugins',
@@ -509,12 +512,46 @@ const sidebars = {
               id: 'dev-docs/plugins/developing-plugins'
             },
             'dev-docs/plugins/development/create-a-plugin',
-            'dev-docs/plugins/development/plugin-structure',
-            'dev-docs/plugins/development/plugin-sdk',
             {
               type: 'doc',
-              id: 'dev-docs/plugins/admin-panel-api',
+              id: 'dev-docs/plugins/development/plugin-structure',
+              label: 'Plugin structure',
+              customProps: {
+                updated: true,
+              },
+            },
+            {
+              type: 'doc',
+              id: 'dev-docs/plugins/development/plugin-sdk',
+              label: 'Plugin SDK',
+              customProps: {
+                new: true,
+              },
+            },
+            {
+              type: 'category',
               label: 'Admin Panel API',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/plugins/admin-panel-api',
+              },
+              items: [
+                {
+                  type: 'doc',
+                  label: 'Introduction to Admin Panel APIs',
+                  id: 'dev-docs/plugins/admin-panel-api',
+                  customProps: {
+                    updated: true,
+                  },
+                },
+                {
+                  type: 'doc',
+                  id: 'dev-docs/plugins/content-manager-apis',
+                  customProps: {
+                    new: true,
+                  },
+                }
+              ]
             },
             {
               type: 'doc',
