@@ -34,7 +34,7 @@ Additional official Strapi documentation websites cover different content:
 
 The following are required if you are submitting pull requests to the documentation:
 
-- NodeJS >=16.14 <=18.x.x
+- NodeJS >=18.17 <=20.x.x
 - NPM >= 6.x
 - Yarn >= 1.22.x
 
