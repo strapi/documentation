@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Strapi v4 Documentation',
+  title: 'Strapi Documentation',
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://docs.strapi.io/',
   baseUrl: '/',
@@ -86,7 +86,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/v4/docusaurus',
+          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             tag: ':::',
             keywords: [
@@ -112,6 +112,23 @@ const config = {
         },
       },
     ],
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        specs: [
+          {
+            spec: 'docs/dev-docs/api/openapi.yaml',
+            route: '/openapi/'
+          },
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#4945FF',
+        },
+      },
+    ],
   ],
 
   themeConfig:
@@ -120,7 +137,7 @@ const config = {
       announcementBar: {
         id: 'strapi5docs',
         content:
-          "Strapi 5 is out! 🚀 Read the latest docs at <a href='https://docs.strapi.io/dev-docs/whats-new'>docs.strapi.io</a>",
+          "Strapi 5 Release Candidate (RC) is out! 🚀 Read the Strapi 5 RC docs at <a href='https://docs-next.strapi.io/dev-docs/whats-new'>docs-next.strapi.io</a>",
         backgroundColor: 'rgb(236, 235, 255)',
         textColor: '#091E42',
         isCloseable: true,
@@ -179,12 +196,20 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'v3 Docs (unsupported)',
-                href: 'https://docs-v3.strapi.io'
+                label: 'Dev Docs',
+                to: '/dev-docs/intro',
               },
               {
-                label: 'v5 Docs (latest version)',
-                href: 'https://docs.strapi.io'
+                label: 'User Guide',
+                to: '/user-docs/intro',
+              },
+              {
+                label: 'Strapi Cloud',
+                to: '/cloud/intro'
+              },
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
               },
               {
                 label: 'Contributor Docs',
