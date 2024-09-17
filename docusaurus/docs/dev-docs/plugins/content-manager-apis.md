@@ -144,17 +144,17 @@ The interface of the API only receives the following 2 properties:
 
 ### `addDocumentAction`
 
-Use this API to add more actions to the Edit view of the Content Manager. There are 3 positions available:
+Use this API to add more actions to the Edit view or the List View of the Content Manager. There are 3 positions available:
 
-- `header`:
+- `header` of the Edit view:
 
-    ![addEditViewSidePanel](/img/assets/content-manager-apis/add-document-header-action.png)
-- `table-row`:
+    ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
+- `panel` of the Edit view:
 
-    ![addEditViewSidePanel](/img/assets/content-manager-apis/add-document-action.png)
-- `panel`:
+    ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
+- `table-row` of the List view:
 
-    ![addEditViewSidePanel](/img/assets/content-manager-apis/add-document-action-bis.png)
+    ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
 
 ```jsx
 addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | DocumentActionComponent[])
