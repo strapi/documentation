@@ -4,15 +4,11 @@ displayed_sidebar: cloudSidebar
 sidebar_position: 4
 tags:
 - caching
-- Content Delivery Network (CDN) caching
+- Content Delivery Network (CDN)
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Caching & Performance
-
-<NotV5/>
 
 For Strapi Cloud applications with large amounts of cacheable content, such as images, videos, and other static assets, enabling CDN (Content Delivery Network) caching via the [`Cache-control` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) can help improve application performance.
 
@@ -21,8 +17,6 @@ CDN caching can help improve application performance in a few ways:
 * **Reducing Latency**: Caching frequently accessed content on edge servers located closer to the end-users can reduce the time it takes to load content.
 * **Offloading Origin Server**: By caching content on edge servers it can offload the origin server, reducing the load and allowing it to focus on delivering more dynamic content.
 * **Handling Traffic Spikes**: Help handle traffic spikes by distributing the load across multiple edge servers. This can prevent the origin server from becoming overwhelmed during peak traffic times and ensures a consistent user experience.
-* **Minimizing Round-Trips**: By serving content directly from the edge servers, this can reduce the time it takes to load content.
-* **Improving Scalability**: Distributing content across multiple edge servers can improve scalability, making the application more reliable and responsive.
 
 ## Cache-Control Header in Strapi Cloud
 
