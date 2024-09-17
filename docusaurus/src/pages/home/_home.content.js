@@ -35,23 +35,23 @@ export default {
         to: '/dev-docs/quick-start',
       },
     },
-    // {
-    //   backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
-    //   variant: 'cloud',
-    //   title: 'Strapi Cloud CLI',
-    //   description: (
-    //     <>
-    //       {'Learn how to deploy your project on '}
-    //       <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
-    //       {' directly from the CLI!'}
-    //     </>
-    //   ),
-    //   button: {
-    //     label: 'Cloud CLI docs',
-    //     decorative: '☁️',
-    //     to: '/cloud/getting-started/deployment-cli',
-    //   },
-    // },
+    {
+      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
+      variant: 'cloud',
+      title: 'Strapi Cloud CLI',
+      description: (
+        <>
+          {'Learn how to deploy your project on '}
+          <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
+          {' directly from the CLI!'}
+        </>
+      ),
+      button: {
+        label: 'Cloud CLI docs',
+        decorative: '☁️',
+        to: '/cloud/getting-started/deployment-cli',
+      },
+    },
   ],
   categories: [
     {
