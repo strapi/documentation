@@ -25,9 +25,8 @@ In Strapi 5, Content types always have document, publication and internationaliz
 
 **In Strapi 5**
 
-All the Content Types have a new `document_id` column.
-
-The `published_at` column is now always added.
-The `locale` column is now always added.
+* All the Content Types have a new `document_id` column.
+* The `published_at` column is now always added.
+* The `locale` column is now always added.
 
 <br />
