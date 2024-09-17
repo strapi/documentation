@@ -1,7 +1,6 @@
 ---
 title: Release notes
 description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
-toc_max_heading_level: 4
 ---
 
 <div className="release-notes-page">
