@@ -28,6 +28,7 @@ You can click on the description of any breaking change in the following tables 
 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
+| [Content types always have feature columns](/dev-docs/migration/v4-to-v5/breaking-changes/database-columns) | Yes | No|
 | [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported) | No | No |
 | [Database identifiers longer than 55 characters will be automatically shortened](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened) | Yes | ✅ Yes |
 | [Only the `better-sqlite3` package is supported for the SQLite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite) | No | ✅ Yes |
