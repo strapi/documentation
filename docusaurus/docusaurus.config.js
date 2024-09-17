@@ -155,7 +155,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "You're reading a work-in-progress documentation for the upcoming Strapi 5. <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/5iXineW1ya28ALF97'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
+          "Strapi 5 is out, but Strapi v4 is still supported until March 2026. Read Strapi v4 docs at <a target='_blank' rel='noopener noreferrer' href='https://docs-v4.strapi.io'>docs-v4.strapi.io</a>.",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
