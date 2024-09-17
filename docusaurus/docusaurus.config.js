@@ -218,12 +218,8 @@ const config = {
             title: 'Additional resources',
             items: [
               {
-                label: 'v3 Docs (unsupported)',
-                href: 'https://docs-v3.strapi.io'
-              },
-              {
                 label: 'v4 Docs',
-                href: 'https://docs.strapi.io'
+                href: 'https://docs-v4.strapi.io'
               },
               {
                 label: 'Contributor Docs',
@@ -232,6 +228,10 @@ const config = {
               {
                 label: 'Strapi Design System',
                 href: 'https://design-system.strapi.io/'
+              },
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
               },
             ],
           },
