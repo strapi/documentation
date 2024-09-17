@@ -12,11 +12,8 @@ tags:
 ---
 
 import ProjectStructureConfigFiles from '@site/src/components/ProjectStructureConfigFiles'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuration
-
-<NotV5 />
 
 The configuration of a Strapi project lives in the `/config` folder:
 
