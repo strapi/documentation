@@ -6,3 +6,9 @@
     pointer-events: none;
   }
 }
+
+.theme-doc-markdown:has(.release-notes-page) {
+  h1 {
+    margin-top: 2rem;
+  }
+}

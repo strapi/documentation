@@ -203,12 +203,12 @@ const config = {
             position: 'left',
             label: 'Cloud Documentation',
           },
-          // {
-          //   type: 'doc',
-          //   docId: 'release-notes',
-          //   position: 'left',
-          //   label: 'Release Notes',
-          // },
+          {
+            type: 'doc',
+            docId: 'release-notes',
+            position: 'left',
+            label: 'Release Notes',
+          },
         ],
       },
       footer: {

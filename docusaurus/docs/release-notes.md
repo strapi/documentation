@@ -1,17 +1,27 @@
 ---
 title: Release notes
-description: todo
+description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
+toc_max_heading_level: 4
 ---
 
-## 5.0.0
-
 <div className="release-notes-page">
+
+## 5.0.0
 
 ### ✨ New content
 
 #### Dev Docs
 
+* [Add Content Manager APIs](https://github.com/strapi/documentation/pull/2220)
+* [Update breaking change for default server level log](https://github.com/strapi/documentation/pull/2216)
+* [Update breaking change for reserved attributes and content-types names](https://github.com/strapi/documentation/pull/2215)
+* [Update breaking change for `is-supported-image`](https://github.com/strapi/documentation/pull/2214)
+* [Update codemods list](https://github.com/strapi/documentation/pull/2212)
+* [Update some v5 migration and Plugin SDK docs](https://github.com/strapi/documentation/pull/2210)
+* [Add more before examples for helper plugin migration](https://github.com/strapi/documentation/pull/2209)
+* [Plugin migration updates](https://github.com/strapi/documentation/pull/2208)
 * [Breaking change for removing the "shared population strategy" for components & dynamic zones](https://github.com/strapi/documentation/pull/2204)
+* [Update backend customization examples to Document Service API](https://github.com/strapi/documentation/pull/2196)
 * [Templates](https://github.com/strapi/documentation/pull/2192)
 * [Upgrade section revamp](https://github.com/strapi/documentation/pull/2153)
 * [Update REST API additional resources with new links and call to write](https://github.com/strapi/documentation/pull/2148)
@@ -51,6 +61,7 @@ description: todo
 
 #### User Guide
 
+* [Updated screenshots & last updates in User Guide](https://github.com/strapi/documentation/pull/2207)
 * [Releases settings](https://github.com/strapi/documentation/pull/2120)
 
 #### Cloud Docs
