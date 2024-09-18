@@ -44,7 +44,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
     <TabItem value="npm" label="NPM">
 
     ```bash
-    npx create-strapi@latest my-strapi-project
+    npx create-strapi my-strapi-project
     ```
 
     </TabItem>
