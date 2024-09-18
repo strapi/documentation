@@ -61,8 +61,8 @@ Users should ensure that components and dynamic zones are explicitly populated u
 
 - example generic syntax:
   
-    `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`
+    `populate[dynamic-zone-name][on][component-category.component-name]=true`
 
 - example URL:
 
-  `/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*`
+  `/api/articles?populate[dynamic-zone-name][on][component-category.component-name]=true`
