@@ -180,99 +180,99 @@ const config = {
           src: 'img/logo.png',
           srcDark: 'img/logo-v5-dark.png',
         },
-        // items: [
-        //   {
-        //     type: 'doc',
-        //     docId: 'dev-docs/quick-start',
-        //     position: 'left',
-        //     label: 'Quick Start Guide',
-        //   },
-        //   {
-        //     type: 'doc',
-        //     docId: 'user-docs/intro',
-        //     position: 'left',
-        //     label: 'User Guide',
-        //   },
-        //   {
-        //     type: 'doc',
-        //     docId: 'dev-docs/intro',
-        //     position: 'left',
-        //     label: 'Developer Docs',
-        //   },
-        //   {
-        //     type: 'doc',
-        //     docId: 'cloud/getting-started/intro',
-        //     position: 'left',
-        //     label: 'Cloud Documentation',
-        //   },
-        //   // {
-        //   //   type: 'doc',
-        //   //   docId: 'release-notes',
-        //   //   position: 'left',
-        //   //   label: 'Release Notes',
-        //   // },
-        // ],
+        items: [
+          {
+            type: 'doc',
+            docId: 'dev-docs/quick-start',
+            position: 'left',
+            label: 'Quick Start Guide',
+          },
+          {
+            type: 'doc',
+            docId: 'user-docs/intro',
+            position: 'left',
+            label: 'User Guide',
+          },
+          {
+            type: 'doc',
+            docId: 'dev-docs/intro',
+            position: 'left',
+            label: 'Developer Docs',
+          },
+          {
+            type: 'doc',
+            docId: 'cloud/getting-started/intro',
+            position: 'left',
+            label: 'Cloud Documentation',
+          },
+          {
+            type: 'doc',
+            docId: 'release-notes',
+            position: 'left',
+            label: 'Release Notes',
+          },
+        ],
       },
-      // footer: {
-      //   style: 'dark',
-      //   links: [
-      //     {
-      //       title: 'Additional resources',
-      //       items: [
-      //         {
-      //           label: 'v3 Docs (unsupported)',
-      //           href: 'https://docs-v3.strapi.io'
-      //         },
-      //         {
-      //           label: 'v4 Docs',
-      //           href: 'https://docs.strapi.io'
-      //         },
-      //         {
-      //           label: 'Contributor Docs',
-      //           href: 'https://contributor.strapi.io'
-      //         },
-      //         {
-      //           label: 'Strapi Design System',
-      //           href: 'https://design-system.strapi.io/'
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       title: 'Community',
-      //       items: [
-      //         {
-      //           label: 'Discord',
-      //           href: 'https://discord.strapi.io/',
-      //         },
-      //         {
-      //           label: 'Twitter',
-      //           href: 'https://twitter.com/strapijs',
-      //         },
-      //         {
-      //           label: 'Stack Overflow',
-      //           href: 'https://stackoverflow.com/questions/tagged/strapi',
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       title: 'More',
-      //       items: [
-      //         {
-      //           label: 'Blog',
-      //           to: 'https://strapi.io/blog',
-      //         },
-      //         {
-      //           label: 'GitHub',
-      //           href: 'https://github.com/strapi/documentation',
-      //         },
-      //         {
-      //           label: 'Strapi.io',
-      //           href: 'https://strapi.io',
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
+      footer: {
+        style: 'dark',
+        links: [
+          {
+            title: 'Additional resources',
+            items: [
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
+              },
+              {
+                label: 'v4 Docs',
+                href: 'https://docs.strapi.io'
+              },
+              {
+                label: 'Contributor Docs',
+                href: 'https://contributor.strapi.io'
+              },
+              {
+                label: 'Strapi Design System',
+                href: 'https://design-system.strapi.io/'
+              },
+            ],
+          },
+          {
+            title: 'Community',
+            items: [
+              {
+                label: 'Discord',
+                href: 'https://discord.strapi.io/',
+              },
+              {
+                label: 'Twitter',
+                href: 'https://twitter.com/strapijs',
+              },
+              {
+                label: 'Stack Overflow',
+                href: 'https://stackoverflow.com/questions/tagged/strapi',
+              },
+            ],
+          },
+          {
+            title: 'More',
+            items: [
+              {
+                label: 'Blog',
+                to: 'https://strapi.io/blog',
+              },
+              {
+                label: 'GitHub',
+                href: 'https://github.com/strapi/documentation',
+              },
+              {
+                label: 'Strapi.io',
+                href: 'https://strapi.io',
+              },
+            ],
+          },
+        ],
+      },
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
