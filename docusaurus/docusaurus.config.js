@@ -155,7 +155,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "Don't panic! Strapi 5 is out, but Strapi v4 is still supported until March 2026. Strapi v4 docs are now hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs-v4.strapi.io'>docs-v4.strapi.io</a>.",
+          "Strapi 5 is out 🥳 Don't panic! Strapi v4 is still supported until March 2026. Strapi v4 docs are now hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs-v4.strapi.io'>docs-v4.strapi.io</a>.",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
