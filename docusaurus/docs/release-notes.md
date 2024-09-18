@@ -73,6 +73,7 @@ _The following is an extensive list of all the pull requests that were merged si
 
 #### Dev Docs
 
+* [Remove shared population strategy for dynamic zones](https://github.com/strapi/documentation/pull/2222)
 * [Update breaking change for default server level log](https://github.com/strapi/documentation/pull/2216)
 * [Update breaking change for reserved attributes and content-types names](https://github.com/strapi/documentation/pull/2215)
 * [Update breaking change for `is-supported-image`](https://github.com/strapi/documentation/pull/2214)
