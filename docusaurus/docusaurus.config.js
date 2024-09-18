@@ -134,7 +134,8 @@ const config = {
       announcementBar: {
         id: 'strapi5docs',
         content:
-        "Strapi 4 docs are now in maintenance mode until March 2026. Strapi 5 is out! 🚀 Read the latest docs at <a href='https://docs.strapi.io/dev-docs/whats-new'>docs.strapi.io</a>",
+        "Strapi 4 docs are now in maintenance mode until March 2026.",
+        // "Strapi 4 docs are now in maintenance mode until March 2026. Strapi 5 is out! 🚀 Read the latest docs at <a href='https://docs.strapi.io/dev-docs/whats-new'>docs.strapi.io</a>",
         backgroundColor: 'rgb(236, 235, 255)',
         textColor: '#091E42',
         isCloseable: true,
