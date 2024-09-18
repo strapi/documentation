@@ -35,25 +35,9 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
 1. Run the following command in a terminal:
 
-    <Tabs groupId="yarn-npm">
-
-    <TabItem value="npm" label="NPM">
-
     ```bash
-    npx create-strapi-app@latest my-strapi-project --quickstart
+    npx create-strapi-app@4.25.11 my-strapi-project --quickstart
     ```
-
-    </TabItem>
-
-    <TabItem value="yarn" label="Yarn">
-
-    ```bash
-    yarn create strapi-app my-strapi-project --quickstart
-    ```
-
-    </TabItem>
-
-    </Tabs>
 
 2. The terminal will invite you to create a Strapi Cloud account and start a free, 14-day trial. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
 
