@@ -1,6 +1,7 @@
 ---
 title: Release notes
 description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
+custom_edit_url: null
 ---
 
 <div className="release-notes-page">
