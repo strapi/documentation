@@ -30,7 +30,6 @@ import {
 import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
-import { UserGuideAdminPanel } from '../components/UserGuideAdminPanel';
 
 export default {
   // Re-use the default mapping
@@ -78,8 +77,4 @@ export default {
    */
   PluginsConfigurationFile,
   HeadlessCms,
-  /**
-   * Prefab-specific components go below👇
-   */
-  UserGuideAdminPanel,
 };

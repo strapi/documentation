@@ -8,14 +8,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Strapi Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs.strapi.io/',
+  url: 'https://docs-v4.strapi.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
-  customFields: {
-    prefabApiKey: process.env.REACT_APP_PREFAB_FRONTEND_PRODUCTION_API_KEY || "398-Development-P435-E907-FRONTEND-b3f733ec-b1b7-464f-8b6f-9cf91d23a434",
-  },
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -86,7 +83,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
+          editUrl: 'https://github.com/strapi/documentation/edit/v4/docusaurus',
           admonitions: {
             tag: ':::',
             keywords: [
@@ -137,7 +134,7 @@ const config = {
       announcementBar: {
         id: 'strapi5docs',
         content:
-          "Strapi 5 Release Candidate (RC) is out! 🚀 Read the Strapi 5 RC docs at <a href='https://docs-next.strapi.io/dev-docs/whats-new'>docs-next.strapi.io</a>",
+        "Strapi 4 docs are now in maintenance mode until March 2026. Strapi 5 is out! 🚀 Read the latest docs at <a href='https://docs.strapi.io/dev-docs/whats-new'>docs.strapi.io</a>",
         backgroundColor: 'rgb(236, 235, 255)',
         textColor: '#091E42',
         isCloseable: true,
@@ -196,16 +193,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Dev Docs',
-                to: '/dev-docs/intro',
-              },
-              {
-                label: 'User Guide',
-                to: '/user-docs/intro',
-              },
-              {
-                label: 'Strapi Cloud',
-                to: '/cloud/intro'
+                label: 'v5 Docs (latest)',
+                href: 'https://docs.strapi.io'
               },
               {
                 label: 'v3 Docs (unsupported)',
