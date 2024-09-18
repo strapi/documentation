@@ -31,6 +31,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 | **Content History** | 14 days retention | N/A | 14 days retention | 90 days retention |
 |  |  |  |  |  |
 | **Backups** | N/A | N/A | Weekly | Weekly |
+| **Environments** | N/A | N/A | 0 | 1 |
 
 :::strapi Additional information on usage and features
 - General features & usage:
@@ -44,14 +45,22 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
   - Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
   - Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/user-docs/settings/review-workflows) for more information).
   - Content History refers to the maximum numbers of days kept in history (see [Content History in User Guide](/user-docs/content-manager/working-with-content-history))
-- Cloud specific feature: Backups refers to the automatic backups of Strapi Cloud projects (see [dedicated page in Cloud documentation](/cloud/projects/settings#backups) for more information).
+- Cloud specific feature:
+  - Backups refers to the automatic backups of Strapi Cloud projects (see [Backups documentation](/cloud/projects/settings#backups) for more information on the feature).
+  - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments--) documentation for more information on the feature).
 :::
+
+## Environments management
+
+Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Team plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments--)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
+
+The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 150GB for assets storage, and overages will be charged the same way as for the production environment). Note however that the assets bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
 
 ## Seats management
 
 Seats represent the maximum number of users that can access the Strapi admin panel. Each plan comes with a default number of seats. 
 
-You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the **Billing & Usage** tab of a project's settings (see [Managing project's number of seats](/cloud/projects/settings#managing-projects-number-of-seats)).
+You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of a project's settings (see [Managing project's number of seats](/cloud/projects/settings#managing-projects-number-of-seats)).
 
 There is however a maximum number of seats that can be added per plan:
 

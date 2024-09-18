@@ -14,12 +14,13 @@ tags:
 
 # Deploy history and logs
 
-For each Strapi Cloud project, you can access the history of all deployments that occured and their details including build and deploy logs. This information is available in the *Deploys* tab, located in the header of any chosen project.
+For each Strapi Cloud project, you can access the history of all deployments that occured and their details including build and deploy logs. This information is available in the *Deployments* tab.
 
 ## Viewing deploy history
 
-In the *Deploys* tab is displayed a chronological list of cards with the details of all historical deployments for your project.
+In the *Deployments* tab is displayed a chronological list of cards with the details of all historical deployments for your project.
 
+<!-- Update screenshot -->
 <ThemedImage
   alt="Project deploys"
   sources={{
@@ -41,8 +42,9 @@ Each card displays the following information:
 
 ## Accessing deployment details & logs
 
-From the *Deploys* tab, you can click on the ![See logs button](/img/assets/icons/Eye.svg) **See logs** button of any chosen deployment card to be redirected to the *Log details*. It contains the deployment's details logs.
+From the *Deployments* tab, you can hover a deployment card to make the ![See logs button](/img/assets/icons/Eye.svg) **Show details** button appear. Clicking on this button will redirect you to the *Deployment details* page which contains the deployment's detailed logs.
 
+<!-- Update screenshot -->
 <ThemedImage
   alt="Deployment details"
   sources={{
@@ -51,15 +53,14 @@ From the *Deploys* tab, you can click on the ![See logs button](/img/assets/icon
   }}
 />
 
-In the *Deploy details* section of the *Log details* page is displayed the following information:
-- *Status*, which can be *Building*, *Deploying*, *Done*, *Cancelled*, *Build failed*, or *Deploy failed*
-- *Maintenance*: when the deployment occured
-- *Deployed in*: the amount of time the deployment took
-- *Commit*: the commit SHA <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
-- *Branch*: the branch used for this deployment
-
-In the *Logs* section of the *Log details* page you can click on the arrow buttons ![Down arrow](/img/assets/icons/ONHOLDCarretDown.svg) ![Up arrow](/img/assets/icons/ONHOLDCarretUp.svg) to show or hide the build and deploy logs of the deployment.
+In the *Build logs* and *Deployment logs* sections of the page you can click on the arrow buttons ![Down arrow](/img/assets/icons/ONHOLDCarretDown.svg) ![Up arrow](/img/assets/icons/ONHOLDCarretUp.svg) to show or hide the build and deployment logs of the deployment.
 
 :::tip
 Click the ![Copy button](/img/assets/icons/duplicate.svg) **Copy to clipboard** button to copy the log contents.
 :::
+
+In the right side of the *Deployment details* page is also displayed the following information:
+- *Commit*: the commit SHA <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
+- *Status*, which can be *Building*, *Deploying*, *Done*, *Cancelled*, *Build failed*, or *Deploy failed*
+- *Source*: the branch and commit message for this deployment
+- *Duration*: the amount of time the deployment took and when it occured
