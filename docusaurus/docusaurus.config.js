@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Strapi Documentation',
+  title: 'Strapi 5 Documentation',
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://docs.strapi.io/',
   baseUrl: '/',
