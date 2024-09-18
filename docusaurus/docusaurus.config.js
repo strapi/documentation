@@ -177,7 +177,7 @@ const config = {
         hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-v5-new.png',
+          src: 'img/logo.png',
           srcDark: 'img/logo-v5-dark.png',
         },
         // items: [
