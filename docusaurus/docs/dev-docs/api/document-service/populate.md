@@ -215,60 +215,7 @@ const documents = await strapi.documents("api::article.article").findMany({
 </Response>
 </ApiCall>
 
-Dynamic zones are highly dynamic content structures by essence. When populating dynamic zones, you can choose between a shared population strategy or a detailed population strategy.
-
-In a shared population strategy, apply a unique behavior for all the dynamic zone's components.
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-```js
-const documents = await strapi.documents("api::article.article").findMany({
-  populate: {
-    testDZ: "*",
-  },
-});
-```
-
-</Request>
-
-<Response title="Example response">
-
-```json
-[
-  {
-    "id": "cjld2cjxh0000qzrmn831i7rn",
-    "title": "Test Article",
-    "slug": "test-article",
-    "body": "Test 1",
-    // ...
-    "testDZ": [
-      {
-        "id": 3,
-        "__component": "test.test-compo",
-        "testString": "test1",
-        "testNestedCompo": {
-          "id": 3,
-          "testNestedString": "testNested1"
-        },
-        "otherField": "test"
-      },
-      {
-        "id": 1,
-        "__component": "test.test-compo2",
-        "testInt": 1,
-        "otherField": "test"
-      }
-    ]
-  }
-  // ...
-]
-```
-
-</Response>
-</ApiCall>
-
-With the detailed population strategy, define per-component populate queries using the on property.
+Dynamic zones are highly dynamic content structures by essence. To populate a dynamic zone, you must define per-component populate queries using the `on` property.
 
 <ApiCall noSideBySide>
 <Request title="Example request">
