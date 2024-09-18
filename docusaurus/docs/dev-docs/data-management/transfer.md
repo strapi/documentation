@@ -46,8 +46,9 @@ The CLI command consists of the following arguments:
 Either `--to` or `--from` is required.
 :::
 
-:::tip
-Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
+:::tip Tips
+* Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
+* It might be convenient to store your transfer tokens into [environment variables](/dev-docs/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
 :::
 
 :::warning
