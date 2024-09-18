@@ -26,6 +26,8 @@ const config = {
     mermaid: true,
   },
 
+  noIndex: true,
+
   themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
 
   scripts: [
