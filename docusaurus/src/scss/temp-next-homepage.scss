@@ -1,0 +1,23 @@
+.temp-next-homepage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .redirection {
+    .out {
+      font-size: 1.5em;
+    }
+    .link {
+      font-size: 2em;
+    }
+  }
+  .next-teaser {
+    padding-top: 3em;
+  }
+}
+
+[class*="searchBox_node_modules-@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module"] {
+  display: none;
+}

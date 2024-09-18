@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Strapi Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs.strapi.io/',
+  url: 'https://docs-next.strapi.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
@@ -152,14 +152,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      announcementBar: {
-        id: 'support_us',
-        content:
-          "You're reading a work-in-progress documentation for the upcoming Strapi 5. <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/5iXineW1ya28ALF97'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
-        backgroundColor: '#F3E5FA',
-        textColor: '#091E42',
-        isCloseable: true,
-      },
+      // announcementBar: {
+      //   id: 'support_us',
+      //   content:
+      //     "You're reading a work-in-progress documentation for the upcoming Strapi 5. <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/5iXineW1ya28ALF97'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
+      //   backgroundColor: '#F3E5FA',
+      //   textColor: '#091E42',
+      //   isCloseable: true,
+      // },
       docs: {
         sidebar: {
           hideable: true,
@@ -175,102 +175,102 @@ const config = {
         hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-v5-2x.png',
-          srcDark: 'img/logo-v5-2x.png',
+          src: 'img/logo-v5-new.png',
+          srcDark: 'img/logo-v5-dark.png',
         },
-        items: [
-          {
-            type: 'doc',
-            docId: 'dev-docs/quick-start',
-            position: 'left',
-            label: 'Quick Start Guide',
-          },
-          {
-            type: 'doc',
-            docId: 'user-docs/intro',
-            position: 'left',
-            label: 'User Guide',
-          },
-          {
-            type: 'doc',
-            docId: 'dev-docs/intro',
-            position: 'left',
-            label: 'Developer Docs',
-          },
-          {
-            type: 'doc',
-            docId: 'cloud/getting-started/intro',
-            position: 'left',
-            label: 'Cloud Documentation',
-          },
-          // {
-          //   type: 'doc',
-          //   docId: 'release-notes',
-          //   position: 'left',
-          //   label: 'Release Notes',
-          // },
-        ],
+        // items: [
+        //   {
+        //     type: 'doc',
+        //     docId: 'dev-docs/quick-start',
+        //     position: 'left',
+        //     label: 'Quick Start Guide',
+        //   },
+        //   {
+        //     type: 'doc',
+        //     docId: 'user-docs/intro',
+        //     position: 'left',
+        //     label: 'User Guide',
+        //   },
+        //   {
+        //     type: 'doc',
+        //     docId: 'dev-docs/intro',
+        //     position: 'left',
+        //     label: 'Developer Docs',
+        //   },
+        //   {
+        //     type: 'doc',
+        //     docId: 'cloud/getting-started/intro',
+        //     position: 'left',
+        //     label: 'Cloud Documentation',
+        //   },
+        //   // {
+        //   //   type: 'doc',
+        //   //   docId: 'release-notes',
+        //   //   position: 'left',
+        //   //   label: 'Release Notes',
+        //   // },
+        // ],
       },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Additional resources',
-            items: [
-              {
-                label: 'v3 Docs (unsupported)',
-                href: 'https://docs-v3.strapi.io'
-              },
-              {
-                label: 'v4 Docs',
-                href: 'https://docs.strapi.io'
-              },
-              {
-                label: 'Contributor Docs',
-                href: 'https://contributor.strapi.io'
-              },
-              {
-                label: 'Strapi Design System',
-                href: 'https://design-system.strapi.io/'
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Discord',
-                href: 'https://discord.strapi.io/',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/strapijs',
-              },
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/strapi',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: 'https://strapi.io/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/strapi/documentation',
-              },
-              {
-                label: 'Strapi.io',
-                href: 'https://strapi.io',
-              },
-            ],
-          },
-        ],
-      },
+      // footer: {
+      //   style: 'dark',
+      //   links: [
+      //     {
+      //       title: 'Additional resources',
+      //       items: [
+      //         {
+      //           label: 'v3 Docs (unsupported)',
+      //           href: 'https://docs-v3.strapi.io'
+      //         },
+      //         {
+      //           label: 'v4 Docs',
+      //           href: 'https://docs.strapi.io'
+      //         },
+      //         {
+      //           label: 'Contributor Docs',
+      //           href: 'https://contributor.strapi.io'
+      //         },
+      //         {
+      //           label: 'Strapi Design System',
+      //           href: 'https://design-system.strapi.io/'
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       title: 'Community',
+      //       items: [
+      //         {
+      //           label: 'Discord',
+      //           href: 'https://discord.strapi.io/',
+      //         },
+      //         {
+      //           label: 'Twitter',
+      //           href: 'https://twitter.com/strapijs',
+      //         },
+      //         {
+      //           label: 'Stack Overflow',
+      //           href: 'https://stackoverflow.com/questions/tagged/strapi',
+      //         },
+      //       ],
+      //     },
+      //     {
+      //       title: 'More',
+      //       items: [
+      //         {
+      //           label: 'Blog',
+      //           to: 'https://strapi.io/blog',
+      //         },
+      //         {
+      //           label: 'GitHub',
+      //           href: 'https://github.com/strapi/documentation',
+      //         },
+      //         {
+      //           label: 'Strapi.io',
+      //           href: 'https://strapi.io',
+      //         },
+      //       ],
+      //     },
+      //   ],
+      // },
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,

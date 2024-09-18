@@ -78,19 +78,35 @@ export default function PageHome() {
       <main className={clsx('font-poppins', styles.home)}>
         <Hero id="homeHero">
           <Container>
-            <HeroTitle>
+            <div className="temp-next-homepage">
+              <div className="redirection">
+                <p className="out">
+                  Strapi 5 is now available! 🥳
+                </p>
+                <p className="link">
+                  Strapi 5 documentation is now hosted at:
+                  <p>
+                    <a href="https://docs.strapi.io">👉 docs.strapi.io 👈</a>
+                  </p>
+                </p>
+              </div>
+              <div className="next-teaser">
+                🧑‍🍳 We're cooking something totally new for you on docs-next. Please come back in a few weeks! 👀
+              </div>
+            </div>
+            {/* <HeroTitle>
               {content.page.title}
             </HeroTitle>
             <HeroDescription>
               {content.page.description}
-            </HeroDescription>
+            </HeroDescription> */}
           </Container>
         </Hero>
         <section
           id="homeCarousel"
           className={styles.home__carousel}
         >
-          <Container>
+          {/* <Container>
             <Carousel>
               {content.carousel.map(({
                 backgroundImgSrc: carouselCardBackgroundImgSrc,
@@ -121,9 +137,9 @@ export default function PageHome() {
                 </CarouselSlide>
               ))}
             </Carousel>
-          </Container>
+          </Container> */}
         </section>
-        <section
+        {/* <section
           id="homeCategories"
           className={styles.home__categories}
         >
@@ -162,8 +178,8 @@ export default function PageHome() {
               })}
             </div>
           </Container>
-        </section>
-        <section
+        </section> */}
+        {/* <section
           id="homeHelpUsImproveTheDocumentation"
           className={styles.home__huitd}
         >
@@ -176,7 +192,7 @@ export default function PageHome() {
               {content.huitd.label}
             </LinkWithArrow>
           </Container>
-        </section>
+        </section> */}
       </main>
     </Layout>
   );
