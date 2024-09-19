@@ -19,7 +19,6 @@ From a chosen project's dashboard, the *Runtime logs* tab displays the live logs
 The *Runtime logs* are only accessible once the project is successfully deployed.
 :::
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Runtime logs"
   sources={{

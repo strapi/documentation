@@ -4,6 +4,7 @@ displayed_sidebar: cloudSidebar
 description: View and manage your projects on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/settings.html
 sidebar_position: 2
+toc_max_heading_level: 4
 tags:
 - project settings
 - project  subscription
@@ -40,7 +41,6 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project settings page"
   sources={{
@@ -90,10 +90,16 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 The *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::tip
-Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete the project. Please [refer to the dedicated documentation](#general-environment) for more information.
+Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#general-environment) for more information.
 :::
 
-<!-- Add screenshot -->
+<ThemedImage
+  alt="Project overview"
+  sources={{
+    light: '/img/assets/cloud/environments.png',
+    dark: '/img/assets/cloud/environments_DARK.png',
+  }}
+/>
 
 To create a new environment:
 
@@ -110,6 +116,10 @@ To create a new environment:
 
 4. Click on the **Add environment** button to create your project's new environment. A new deployment will automatically be triggered.
 
+:::caution
+If the creation of a new environment fails but you are still charged, try creating the environment again. This time, the environment creation should be successful and you will not be charged a second time. This behaviour is an known issue that should be fixed in the upcoming weeks.
+:::
+
 ### Billing & Usage
 
 The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to directly [manage the number of seats](#managing-projects-number-of-seats) and add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
@@ -124,7 +134,6 @@ In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard
 Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab to advise which plan you could switch to.
 :::
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project billing"
   sources={{
@@ -158,7 +167,6 @@ The ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab displays an over
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
 :::
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project plans"
   sources={{
@@ -191,6 +199,8 @@ Strapi Cloud plan downgrades can be managed for each project via the project set
 
 :::caution
 Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. Note also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
+
+Note also that you cannot downgrade if you have additional environments. For instance, if you wish to downgrade from the Pro plan to the Developer plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
 :::
 
 To downgrade your current plan to a lower one:
@@ -203,7 +213,6 @@ To downgrade your current plan to a lower one:
 
 The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project invoices"
   sources={{
@@ -239,7 +248,13 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the environm
 - *Connect branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see Resetting & Deleting environment).
 
- <!-- Add screenshot -->
+<ThemedImage
+  alt="Project invoices"
+  sources={{
+    light: '/img/assets/cloud/settings_env.png',
+    dark: '/img/assets/cloud/settings_env_DARK.png',
+  }}
+/>
 
 #### Modifying Node version
 
@@ -307,7 +322,6 @@ The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs 
 For projects created before the release of the Backup feature in October 2023, the first backup will automatically be triggered with the next deployment of the project.
 :::
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Backups"
   sources={{
@@ -338,7 +352,6 @@ If you need to restore a backup of your project:
 
 The ![Domains icon](/img/assets/icons/Browsers.svg) *Domains* tab enables you to manage domains and connect new ones.
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project domains"
   sources={{
@@ -376,7 +389,6 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 Environment variables (more information in the [Developer Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project variables"
   sources={{

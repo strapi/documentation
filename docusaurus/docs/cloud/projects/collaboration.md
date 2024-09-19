@@ -53,8 +53,8 @@ From the *Share [project name]* dialog accessible by clicking on the **Share** b
 <ThemedImage
   alt="Share button and avatar"
   sources={{
-    light: '/img/assets/cloud/collaboration-dialog.png',
-    dark: '/img/assets/cloud/collaboration-dialog_DARK.png',
+    light: '/img/assets/cloud/collaboration-dialog2.png',
+    dark: '/img/assets/cloud/collaboration-dialog2_DARK.png',
   }}
 />
 

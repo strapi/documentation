@@ -41,12 +41,11 @@ Each project card also displays a ![Menu icon](/img/assets/icons/more.svg) menu 
 
 From the *Projects* page, click on any project card to access is dashboard. It displays the project and environment details and gives access to the deployment history and all available settings.
 
-<!-- Update screenshot and add number to match explanations below -->
 <ThemedImage
   alt="Project overview"
   sources={{
-    light: '/img/assets/cloud/overview.png',
-    dark: '/img/assets/cloud/overview_DARK.png',
+    light: '/img/assets/cloud/overview2.png',
+    dark: '/img/assets/cloud/overview2_DARK.png',
   }}
 />
 

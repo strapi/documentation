@@ -20,12 +20,11 @@ For each Strapi Cloud project, you can access the history of all deployments tha
 
 In the *Deployments* tab is displayed a chronological list of cards with the details of all historical deployments for your project.
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Project deploys"
   sources={{
-    light: '/img/assets/cloud/deploys.png',
-    dark: '/img/assets/cloud/deploys_DARK.png',
+    light: '/img/assets/cloud/overview.png',
+    dark: '/img/assets/cloud/overview_DARK.png',
   }}
 />
 
@@ -44,12 +43,11 @@ Each card displays the following information:
 
 From the *Deployments* tab, you can hover a deployment card to make the ![See logs button](/img/assets/icons/Eye.svg) **Show details** button appear. Clicking on this button will redirect you to the *Deployment details* page which contains the deployment's detailed logs.
 
-<!-- Update screenshot -->
 <ThemedImage
   alt="Deployment details"
   sources={{
-    light: '/img/assets/cloud/deploy-logs.png',
-    dark: '/img/assets/cloud/deploy-logs_DARK.png',
+    light: '/img/assets/cloud/deploy_logs.png',
+    dark: '/img/assets/cloud/deploy_logs_DARK.png',
   }}
 />
 
