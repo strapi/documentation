@@ -14,7 +14,6 @@ tags:
 import InstallCommand from '/docs/snippets/install-npm-yarn.md'
 import BuildCommand from '/docs/snippets/build-npm-yarn.md'
 import DevelopCommand from '/docs/snippets/develop-npm-yarn.md'
-import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # Upgrades
 
@@ -42,8 +41,6 @@ You can find the current version number of your Strapi application:
 - or by running `yarn strapi version` or `npm run strapi version` in the terminal, from the folder where your Strapi project is located.
 
 </details>
-
-<DoNotMigrateYet />
 
 Click on one of the 2 following cards depending on your use case:
 

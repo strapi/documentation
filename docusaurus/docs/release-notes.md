@@ -1,20 +1,24 @@
 ---
 title: Release notes
-description: todo
+description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
+custom_edit_url: null
 ---
+
+<div className="release-notes-page">
 
 ## 5.0.0
 
-<div className="release-notes-page">
+_The following is an extensive list of all the pull requests that were merged since we started working on Strapi 5 documentation. For a quicker tour, please refer to the [What's new page](/dev-docs/whats-new)._
 
 ### ✨ New content
 
 #### Dev Docs
 
+* [Breaking change for database columns](https://github.com/strapi/documentation/pull/2221)
+* [Content Manager APIs](https://github.com/strapi/documentation/pull/2220)
 * [Breaking change for removing the "shared population strategy" for components & dynamic zones](https://github.com/strapi/documentation/pull/2204)
 * [Templates](https://github.com/strapi/documentation/pull/2192)
 * [Upgrade section revamp](https://github.com/strapi/documentation/pull/2153)
-* [Update REST API additional resources with new links and call to write](https://github.com/strapi/documentation/pull/2148)
 * [Custom U&P providers](https://github.com/strapi/documentation/pull/2138)
 * [Breaking change for server.proxy config](https://github.com/strapi/documentation/pull/2131)
 * [New "Upgrades" section (replaces updates & migration) for Strapi 5](https://github.com/strapi/documentation/pull/2126)
@@ -51,6 +55,7 @@ description: todo
 
 #### User Guide
 
+* [Updated screenshots & last updates in User Guide](https://github.com/strapi/documentation/pull/2207)
 * [Releases settings](https://github.com/strapi/documentation/pull/2120)
 
 #### Cloud Docs
@@ -68,15 +73,25 @@ description: todo
 
 #### Dev Docs
 
+* [Remove shared population strategy for dynamic zones](https://github.com/strapi/documentation/pull/2222)
+* [Update breaking change for default server level log](https://github.com/strapi/documentation/pull/2216)
+* [Update breaking change for reserved attributes and content-types names](https://github.com/strapi/documentation/pull/2215)
+* [Update breaking change for `is-supported-image`](https://github.com/strapi/documentation/pull/2214)
+* [Update codemods list](https://github.com/strapi/documentation/pull/2212)
+* [Update some v5 migration and Plugin SDK docs](https://github.com/strapi/documentation/pull/2210)
+* [Add more before examples for helper plugin migration](https://github.com/strapi/documentation/pull/2209)
+* [Plugin migration updates](https://github.com/strapi/documentation/pull/2208)
 * [Update the Quick Start Guide with Cloud CLI and new CLI prompts](https://github.com/strapi/documentation/pull/2203)
 * [Update sdk-plugin init with new options](https://github.com/strapi/documentation/pull/2202)
 * [Update helper plugin migration doc](https://github.com/strapi/documentation/pull/2200)
+* [Update backend customization examples to Document Service API](https://github.com/strapi/documentation/pull/2196)
 * [Add scope and warning details to the upgrade tool guide](https://github.com/strapi/documentation/pull/2195)
 * [More examples for middlewares context to Document Service API](https://github.com/strapi/documentation/pull/2189)
 * [Deprecate integration guides](https://github.com/strapi/documentation/pull/2173)
 * [Transfer deployment guides to external resources](https://github.com/strapi/documentation/pull/2172)
 * [Database lifecycles vs. Document Service middlewares](https://github.com/strapi/documentation/pull/2170)
 * [Admin panel customization section rework](https://github.com/strapi/documentation/pull/2162)
+* [Update REST API additional resources with new links and call to write](https://github.com/strapi/documentation/pull/2148)
 * [Updates to the CLI installation guide](https://github.com/strapi/documentation/pull/2121)
 * [FAQ section for 'Cannot find module @strapi/XXX' build error](https://github.com/strapi/documentation/pull/2116)
 * [Update upgrade tool documentation with codemods updates](https://github.com/strapi/documentation/pull/2112)

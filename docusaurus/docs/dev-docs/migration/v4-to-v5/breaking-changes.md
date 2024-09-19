@@ -9,8 +9,6 @@ tags:
  - upgrade to Strapi 5
 ---
 
-import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
-
 # Strapi v4 to Strapi 5 breaking changes
 
 The present page lists all the breaking changes introduced in Strapi 5.
@@ -26,12 +24,11 @@ You can click on the description of any breaking change in the following tables 
 * To have a deeper look at the code executed by the codemods, head over to the [list of codemods](https://github.com/strapi/strapi/tree/v5/main/packages/utils/upgrade/resources/codemods/5.0.0) in the GitHub repository.
 :::
 
-<DoNotMigrateYet />
-
 ## Database
 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
+| [Content types always have feature columns](/dev-docs/migration/v4-to-v5/breaking-changes/database-columns) | Yes | No|
 | [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported) | No | No |
 | [Database identifiers longer than 55 characters will be automatically shortened](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened) | Yes | ✅ Yes |
 | [Only the `better-sqlite3` package is supported for the SQLite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite) | No | ✅ Yes |

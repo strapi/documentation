@@ -26,14 +26,9 @@ The `./config/database.js` file (or the `./config/database.ts` file for TypeScri
 The CLI installation guide details [supported database and versions](/dev-docs/installation/cli.md#preparing-the-installation).
 :::
 
-:::note
-Strapi `v4.6.2` introduced a new format for the database configuration file that allows all of the database configuration properties to be set using environment variables. Only new projects created after the `v4.6.2` release will include the new configuration, however, earlier projects can utilize the new configuration by manually modifying the `./config/database.js` or `./config/database.ts` and updating the `.env` file. See [environment variables in database configurations](#environment-variables-in-database-configurations)
-
-:::
-
 ## Configuration structure
 
-The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 main configuration objects:
+The `/config/database.js|ts` file accepts 2 main configuration objects:
 
 - [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
 - [`settings`](#settings-configuration-object) for Strapi-specific database settings

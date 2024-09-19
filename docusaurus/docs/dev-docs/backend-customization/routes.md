@@ -16,11 +16,7 @@ tags:
 - routes
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Routes
-
-<NotV5 />
 
 Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/dev-docs/api/rest)). Routes can be [added](#implementation) and configured:
 

@@ -36,8 +36,7 @@ However, the Document Service API might not suit all your use cases; the databas
 
 **In Strapi v4**
 
-<!-- TODO v5: update this link to start with docs-v4 once stable is out -->
-In Strapi v4, lifecycle hooks work as documented in the [Strapi v4 documentation](https://docs.strapi.io/dev-docs/backend-customization/models#lifecycle-hooks).
+In Strapi v4, lifecycle hooks work as documented in the [Strapi v4 documentation](https://docs-v4.strapi.io/dev-docs/backend-customization/models#lifecycle-hooks).
 
 </SideBySideColumn>
 

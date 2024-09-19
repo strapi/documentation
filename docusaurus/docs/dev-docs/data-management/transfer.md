@@ -16,10 +16,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5 />
 
-:::strapi v4.10.0+ feature
-Data export is available in v4.10.0 and newer versions of Strapi. See the [Updates and Migration documentation](/dev-docs/upgrade-tool) to upgrade your application.
-:::
-
 The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
 
 - from a local Strapi instance to a remote Strapi instance
@@ -50,8 +46,9 @@ The CLI command consists of the following arguments:
 Either `--to` or `--from` is required.
 :::
 
-:::tip
-Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
+:::tip Tips
+* Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/user-docs/settings/transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
+* It might be convenient to store your transfer tokens into [environment variables](/dev-docs/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
 :::
 
 :::warning

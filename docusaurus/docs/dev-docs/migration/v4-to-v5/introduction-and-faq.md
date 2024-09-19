@@ -14,11 +14,9 @@ const codeStyle = {color: 'rgb(73, 69, 255)', backgroundColor: 'rgb(240, 240, 25
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
-The latest major version of Strapi is Strapi 5, which is currently provided as a Release Candidate (RC) version, not as a stable version yet.
+The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until March 2026.
 
-The present page lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
-
-<DoNotMigrateYet />
+Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
 
 ## Available resources
 

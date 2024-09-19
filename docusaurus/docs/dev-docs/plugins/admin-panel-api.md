@@ -1,6 +1,7 @@
 ---
 title: Admin Panel API
 pagination_prev: dev-docs/plugins/development/plugin-structure
+pagination_next: dev-docs/plugins/content-manager-apis
 toc_max_heading_level: 4
 tags:
 - admin panel

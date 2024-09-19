@@ -28,8 +28,7 @@ Templates have been fully rewritten in Strapi 5 and now are standalone, regular 
 
 **In Strapi v4**
 
-<!-- TODO: update this link with docs-v4 just before the stable -->
-Templates were npm packages with strict requirements (see [v4 documentation](https://docs.strapi.io/dev-docs/templates)).
+Templates were npm packages with strict requirements (see [v4 documentation](https://docs-v4.strapi.io/dev-docs/templates)).
 
 </SideBySideColumn>
 

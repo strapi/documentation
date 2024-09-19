@@ -33,8 +33,7 @@ In Strapi 5, components and dynamic zones should be populated using the detailed
 
 **In Strapi v4**
 
-<!-- TODO v5: Update this URL to docs-v4 -->
-You could use either [the shared or the detailed population strategy](https://docs.strapi.io/dev-docs/api/rest/guides/understanding-populate#populate-dynamic-zones) to populate components and dynamic zones in a REST API call.
+You could use either [the shared or the detailed population strategy](https://docs-v4.strapi.io/dev-docs/api/rest/guides/understanding-populate#populate-dynamic-zones) to populate components and dynamic zones in a REST API call.
 
 </SideBySideColumn>
 
@@ -62,8 +61,8 @@ Users should ensure that components and dynamic zones are explicitly populated u
 
 - example generic syntax:
   
-    `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`
+    `populate[dynamic-zone-name][on][component-category.component-name]=true`
 
 - example URL:
 
-  `/api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*`
+  `/api/articles?populate[dynamic-zone-name][on][component-category.component-name]=true`

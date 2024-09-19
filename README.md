@@ -26,9 +26,11 @@ The main official Strapi documentation website is hosted at [docs.strapi.io](htt
 
 Additional official Strapi documentation websites cover different content:
 
+- Documentation for the older version 4 of Strapi is hosted at [docs-v4.strapi.io](https://docs-v4.strapi.io) and featured in the `v4` branch. This branch is not actively maintained by the Strapi Documentation team, but community contributions are most welcome!
+- Upcoming and/or experimental documentation is hosted at [docs-next.strapi.io](https://docs-next.strapi.io). Starting autumn/winter 2024, this website will include an all-new documentation — more info soon!
 - Documentation for the older, unsupported version 3 of Strapi is hosted at [docs-v3.strapi.io](https://docs-v3.strapi.io).
-- Upcoming and/or experimental documentation is hosted at [docs-next.strapi.io](https://docs-next.strapi.io). Starting autumn/winter 2023, this website will include in-progress documentation for Strapi v5.
 - Documentation for contributors, which include more in-depth and experimental content for developers who actively maintain and contribute to Strapi, is hosted at [contributor.strapi.io](https://contributor.strapi.io). This experimental documentation is maintained by Strapi engineers and any issue should be reported to the [`strapi/strapi`](https://github.com/strapi/strapi/issues/new/choose) repository.
+- Documentation for the Strapi Design System is hosted at [design-system.strapi.io](https://design-system.strapi.io/) and maintained by Strapi front-end engineers in its [dedicated repository](https://github.com/strapi/design-system/).
 
 ## Contribution requirements
 

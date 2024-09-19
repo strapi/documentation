@@ -1,8 +1,11 @@
 ---
 title: Content Manager APIs
-# description: todo
-# tags: todo
+description: The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
 toc_max_heading_level: 4
+tags:
+- admin panel API
+- plugins development
+- plugins
 ---
 
 # Content Manager APIs

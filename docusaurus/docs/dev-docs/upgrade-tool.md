@@ -13,8 +13,6 @@ tags:
 - version types
 ---
 
-import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
-
 # Upgrade tool
 
 The upgrade tool assists Strapi users in upgrading their Strapi application dependencies and code to a specific version.
@@ -22,8 +20,6 @@ The upgrade tool assists Strapi users in upgrading their Strapi application depe
 Running the upgrade tool triggers the update of the application dependencies, their installation, and the execution of a series of **codemods** <Codemods/> that automatically edit the application codebase according to the breaking changes introduced up until the targeted version.
 
 The upgrade tool is a Strapi package and can be run from the CLI.
-
-<DoNotMigrateYet />
 
 ## Scope
 
