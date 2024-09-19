@@ -59,5 +59,5 @@ Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-do
 
 ### Manual procedure
 
-This breaking change should be handled by a codemod (see the [full list of 5.0.0 codemods](https://github.com/strapi/strapi/tree/v5/main/packages/utils/upgrade/resources/codemods/5.0.0)).
+This breaking change should be handled by a codemod (see the [full list of 5.0.0 codemods](https://github.com/strapi/strapi/tree/develop/packages/utils/upgrade/resources/codemods/5.0.0)).
 Ensure that links added to [settings](/dev-docs/plugins/admin-panel-api#settings-api) or to the [menu](/dev-docs/plugins/admin-panel-api#menu-api) links using the Admin Panel API use relative paths.
