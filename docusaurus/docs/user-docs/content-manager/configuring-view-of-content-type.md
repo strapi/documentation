@@ -76,7 +76,7 @@ Relational fields can also be displayed in the list view. There are however some
 
 Note also that relational fields have a couple limitations when it comes to sorting options:
 
-- Sorting cannot be enabled for relational fields which display several fields.
+- Sorting cannot be enabled for relational fields.
 - Relational fields cannot be set as default sort.
 :::
 
