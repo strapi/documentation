@@ -158,8 +158,8 @@ const config = {
         hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-v5-new.png',
-          srcDark: 'img/logo-v5-dark.png',
+          src: 'img/strapi-logo.png',
+          srcDark: 'img/strapi-logo-dark.png',
         },
         // items: [
         //   {

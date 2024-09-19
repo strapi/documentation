@@ -5,12 +5,16 @@
   align-items: center;
   height: 80vh;
 
+  .strapivolta {
+    margin-bottom: 5em;
+  }
+
   .redirection {
     .out {
       font-size: 1.5em;
     }
     .link {
-      font-size: 2em;
+      font-size: 2rem;
     }
   }
   .next-teaser {
@@ -21,4 +25,32 @@
 [class*="searchBox_node_modules-@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module"],
 .my-custom-search-bar {
   display: none;
+}
+
+@media (max-width: 720px) {
+  .strapivolta {
+    width: 80%;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+
+  .temp-next-homepage {
+    padding: 0 1rem;
+
+    .redirection {
+      .link {
+        font-size: 1.3rem;
+      }
+    }
+
+    .next-teaser {
+      padding: 3rem 1rem 0 1rem;
+      font-size: .85rem;
+    }
+  }
+}
+
+img[alt="Strapi Documentation Logo"] {
+  margin: 1em;
+  width: 120px;
 }

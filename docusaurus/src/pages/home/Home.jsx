@@ -79,6 +79,7 @@ export default function PageHome() {
         <Hero id="homeHero">
           <Container>
             <div className="temp-next-homepage">
+              <img className="strapivolta" src="/img/strapidocswhere.gif" />
               <div className="redirection">
                 <p className="link">
                   The Strapi 5 documentation is now hosted at:
