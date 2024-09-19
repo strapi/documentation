@@ -81,7 +81,7 @@ export default function PageHome() {
             <div className="temp-next-homepage">
               <div className="redirection">
                 <p className="link">
-                  Strapi 5 documentation is now hosted at:
+                  The Strapi 5 documentation is now hosted at:
                   <p>
                     👉 <a href="https://docs.strapi.io"> docs.strapi.io</a> 👈
                   </p>
