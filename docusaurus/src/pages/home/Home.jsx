@@ -80,9 +80,6 @@ export default function PageHome() {
           <Container>
             <div className="temp-next-homepage">
               <div className="redirection">
-                <p className="out">
-                  Strapi 5 is now available! 🥳
-                </p>
                 <p className="link">
                   Strapi 5 documentation is now hosted at:
                   <p>
@@ -91,7 +88,9 @@ export default function PageHome() {
                 </p>
               </div>
               <div className="next-teaser">
-                🧑‍🍳 We're cooking something totally new for you on docs-next. Please come back in a few weeks! 👀
+                <p>
+                  🧑‍🍳 We're cooking something totally new for you on docs-next.<br/>Please come back in a few weeks! 👀
+                </p>
               </div>
             </div>
             {/* <HeroTitle>
