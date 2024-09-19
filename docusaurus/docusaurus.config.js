@@ -266,7 +266,12 @@ const config = {
     'docusaurus-plugin-hubspot',
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
-    "@cmfcmf/docusaurus-search-local",
+    [
+      '@cmfcmf/docusaurus-search-local',
+      {
+        indexBlog: false,
+      },
+    ],
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
