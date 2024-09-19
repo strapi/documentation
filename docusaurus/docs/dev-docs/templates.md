@@ -44,7 +44,7 @@ The following table lists all the possible ways to define which template to use:
 
 | Syntax | Description |
 |--------|-------------|
-| `--template website` | Using one of the [Strapi-maintained templates](https://github.com/strapi/strapi/tree/v5/main/templates) calling it by its (folder) name. |
+| `--template website` | Using one of the [Strapi-maintained templates](https://github.com/strapi/strapi/tree/develop/templates) calling it by its (folder) name. |
 | `--template strapi/strapi` | Using the template's GitHub repository shorthand.<br/>This will use the default repository branch. |
 | `--template strapi/strapi/some/sub/path` | Using the template's GitHub repository shorthand and specifying a subpath.<br/>This will use the default repository branch. |
 | `--template strapi/strapi`<br/>`--template-branch=xxx`<br/>`--template-path=some/sub/path` | The most verbose way, explicitly defining a template branch and a subpath. |
@@ -56,4 +56,4 @@ The following table lists all the possible ways to define which template to use:
 
 Creating a Strapi 5 template is as simple as creating a Strapi application. Create the application (see [CLI installation](/dev-docs/installation/cli)) and the generated folder containing your Strapi 5 application can serve as a template. You can then pass it to the `--template` flag when creating a new Strapi 5 application to use it as a template.
 
-An example of what a template could look like is the [Strapi-maintained `website` template](https://github.com/strapi/strapi/tree/v5/main/templates/website).
+An example of what a template could look like is the [Strapi-maintained `website` template](https://github.com/strapi/strapi/tree/develop/templates/website).
