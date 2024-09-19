@@ -18,6 +18,7 @@
   }
 }
 
-[class*="searchBox_node_modules-@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module"] {
+[class*="searchBox_node_modules-@docusaurus-theme-classic-lib-theme-Navbar-Search-styles-module"],
+.my-custom-search-bar {
   display: none;
 }
