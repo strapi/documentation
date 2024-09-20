@@ -537,7 +537,7 @@
 			"destination": "/dev-docs/api/rest/sort-pagination"
 		},
 		{
-			"source": "/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html",
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite",
 			"destination": "/dev-docs/configurations/database#sqlite"
 		},
 		{
