@@ -130,7 +130,7 @@ const config = {
       algolia: {
         appId: '392RJ63O14',
         apiKey: 'ed62374a794e8da5accb298e13618614',
-        indexName: 'strapi',
+        indexName: 'strapiv4Docs',
       },
       navbar: {
         hideOnScroll: false,
@@ -249,12 +249,12 @@ const config = {
     'docusaurus-plugin-hubspot',
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
-    [
-      '@cmfcmf/docusaurus-search-local',
-      {
-        indexBlog: false,
-      },
-    ],
+    // [
+    //   '@cmfcmf/docusaurus-search-local',
+    //   {
+    //     indexBlog: false,
+    //   },
+    // ],
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
