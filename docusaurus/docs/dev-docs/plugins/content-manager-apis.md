@@ -97,7 +97,7 @@ interface EditViewContext {
 ```
 
 :::tip
-More information about types and APIs can be found in [Strapi's codebase, in the `/admin/src/content-manager.ts` file](https://github.com/strapi/strapi/blob/v5/main/packages/core/content-manager/admin/src/content-manager.ts).
+More information about types and APIs can be found in [Strapi's codebase, in the `/admin/src/content-manager.ts` file](https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/content-manager.ts).
 :::
 
 **Example:**
