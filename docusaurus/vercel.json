@@ -544,6 +544,10 @@
 			"source": "/dev-docs/configurations/database/sqlite",
 			"destination": "/dev-docs/configurations/database#sqlite"
 		},
+    {
+			"source": "/dev-docs/configurations/sqlite",
+			"destination": "/dev-docs/configurations/database#sqlite"
+		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/installation/templates.html",
 			"destination": "/dev-docs/templates"
