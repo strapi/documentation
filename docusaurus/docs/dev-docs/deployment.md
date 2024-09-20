@@ -174,7 +174,7 @@ If you need a server.js file to be able to run `node server.js` instead of `npm 
 ```js title="path: ./server.js"
 
 const strapi = require('@strapi/strapi');
-strapi(/* {...} */).start();
+strapi.createStrapi(/* {...} */).start();
 ```
 
 :::caution
