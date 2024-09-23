@@ -221,8 +221,19 @@
 			"destination": "/dev-docs/deployment/digitalocean"
 		},
 		{
+			"source": "/dev-docs/deployment/digitalocean-app-platform",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+  	{
+			"source": "/dev-docs/deployment/digitalocean",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html",
-			"destination": "https://strapi.io/integrations/digital-ocean"
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
@@ -230,31 +241,71 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
-			"destination": "https://strapi.io/integrations/heroku"
+			"destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
+		},
+    {
+			"source": "/dev-docs/deployment/heroku",
+			"destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html",
 			"destination": "https://strapi.io/integrations/aws"
 		},
+    {
+			"source": "/dev-docs/deployment/amazon-aws",
+			"destination": "https://strapi.io/integrations/aws",
+      "permanent": true
+		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html",
 			"destination": "https://strapi.io/integrations/azure"
 		},
+    {
+      "source": "/dev-docs/deployment/azure",
+      "destination": "https://strapi.io/integrations/azure",
+      "permanent": true
+    },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html",
-			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/"
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
 		},
 		{
+      "source": "/dev-docs/deployment/process-manager",
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/nginx-proxy",
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
+		},
+   	{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html",
-			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/"
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html",
-			"destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/"
+			"destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
 		},
+    {
+      "source": "/dev-docs/deployment/haproxu-proxy",
+      "destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
+    },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html",
-			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/40616"
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/caddy-proxy",
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html",
