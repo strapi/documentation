@@ -1,6 +1,6 @@
 ---
 unlisted: true
-title: Ordering & Pagination
+title: Ordering & Pagination with the Query Engine API
 description: Use Strapi's Query Engine API to order and paginate the results of your queries.
 displayed_sidebar: devDocsSidebar
 tags:
