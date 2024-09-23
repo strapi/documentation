@@ -1,6 +1,6 @@
 ---
 title: Admin panel customization options
-description: The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
+description: Various options help you configure Strapi's administration panel behavior and look, so you can make it reflect your identity.
 sidebar_label: Customization options
 toc_max_heading_level: 4
 tags:

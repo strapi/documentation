@@ -1,4 +1,5 @@
 ---
+description: Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager.
 sidebar_position: 3
 tags:
 - collection type
