@@ -2,8 +2,6 @@
 title: Svelte
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Svelte.
-tags:
-- collection type
 ---
 
 import RemovingIntegrations from '/docs/snippets/integration-guides-soon-removed.md'
