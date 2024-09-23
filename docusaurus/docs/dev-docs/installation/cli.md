@@ -1,5 +1,6 @@
 ---
-title: CLI
+title: Installing from CLI
+sidebar_label: CLI
 displayed_sidebar: devDocsSidebar
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
 tags:
@@ -12,7 +13,9 @@ tags:
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
-# Installing from CLI
+<Head>
+  <link rel="alternate" href="https://docs.strapi.io/dev-docs/installation/cli" hreflang="en" />
+</Head>
 
 Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
 
