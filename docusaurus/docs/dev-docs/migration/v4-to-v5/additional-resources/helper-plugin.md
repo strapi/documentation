@@ -52,7 +52,6 @@ This component has been removed and not replaced. If you feel like you need this
 
 We recommend using the `Page.Protect` component from `@strapi/strapi/admin` instead (see [`CheckPagePermissions`](#checkpagepermissions) for an example). If you need to check permissions for a lower level component you can use [the `useRBAC` hook](#userbac).
 
-
 ### CheckPagePermissions
 
 This component has been removed and refactored to be part of the `Page` component exported from `@strapi/strapi/admin`. You should use the `Page` component from there:
@@ -153,10 +152,17 @@ import { FilterListURLQuery } from '@strapi/helper-plugin';
 
 const MyComponent = () => {
   return (
-    <FilterListURLQuery filtersSchema={[{name: 'name', metadatas: {label: 'Name'}, fieldSchema: {type: 'string'}}]} />
+    <FilterListURLQuery
+      filtersSchema={[
+        {
+          name: 'name',
+          metadatas: { label: 'Name' },
+          fieldSchema: { type: 'string' },
+        },
+      ]}
+    />
   );
 };
-
 
 // After
 import { Filters } from '@strapi/strapi/admin';
@@ -237,6 +243,13 @@ Note, that the `InputRenderer` component has a different API, and you should ref
 This component has been removed and not replaced. However, you can easily replicate this in your own project by using the `useStrapiApp` hook:
 
 ```tsx
+// Before
+
+import { InjectionZone } from '@strapi/helper-plugin';
+<InjectionZone area={`injection.zone.area`} />;
+
+// After
+
 const MyComponent = ({ area, ...compProps }) => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
 
@@ -536,14 +549,16 @@ const MyComponent = () => {
           return (
             <Tr key={name}>
               <Td>
-                <Typography textColor="neutral800" variant="omega" fontWeight="bold">
+                <Typography
+                  textColor="neutral800"
+                  variant="omega"
+                  fontWeight="bold"
+                >
                   {name}
                 </Typography>
               </Td>
               <Td>
-                <Typography textColor="neutral800">
-                  {description}
-                </Typography>
+                <Typography textColor="neutral800">{description}</Typography>
               </Td>
             </Tr>
           );
@@ -552,7 +567,6 @@ const MyComponent = () => {
     </Table>
   );
 };
-
 
 // After
 import { Table } from '@strapi/strapi/admin';
@@ -603,11 +617,19 @@ const {
 } = useContentManagerContext();
 ```
 
-- `allLayoutData` has been removed.
+```tsx
+// Before
+
+// 'allLayoutData' has been removed. It contained 'components' and 'contentType' which can be extracted from the 'useContentManagerContext' hook as seen below.
+const { allLayoutData } = useCMEditViewDataManager();
+
+// After
+const { components, contentType } = useContentManagerContext();
+```
 
 ```tsx
 // Before
-const { layout, allLayoutData } = useCMEditViewDataManager();
+const { layout } = useCMEditViewDataManager();
 
 // After
 const { layout } = useContentManagerContext();
@@ -625,6 +647,7 @@ const { initialData, modifiedData, onChange } = useCMEditViewDataManager();
 // After
 const { form } = useContentManagerContext();
 
+// Here 'initialData' and 'modifiedData' correspond to 'initialValues' and 'values'.
 const { initialValues, values, onChange } = form;
 ```
 
@@ -907,9 +930,10 @@ This util has been removed. If you need to use it, you should use the `checkUser
 // Before
 import { hasPermissions } from '@strapi/helper-plugin';
 
-
 const permissions = await Promise.all(
-  generalSectionRawLinks.map(({ permissions }) => hasPermissions(userPermissions, permissions))
+  generalSectionRawLinks.map(({ permissions }) =>
+    hasPermissions(userPermissions, permissions)
+  )
 );
 
 // After

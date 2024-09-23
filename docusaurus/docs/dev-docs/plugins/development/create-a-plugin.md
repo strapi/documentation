@@ -84,7 +84,7 @@ yarn dlx yalc add --link my-strapi-plugin && yarn install
 
 ```bash
 cd /path/to/strapi/project
-npx yalc add --link my-strapi-plugin && npm run install
+npx yalc add --link my-strapi-plugin && npm install
 ```
 
 </TabItem>

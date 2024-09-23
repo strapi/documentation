@@ -12,3 +12,9 @@ img[src^="data:image/svg+xml"] {
   pointer-events: none;
 }
 
+@include dark {
+  img[src^="data:image/svg+xml"] {
+    background-color: white;
+  }
+}
+
