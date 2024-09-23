@@ -1,5 +1,5 @@
 ---
-title: Using Select with the Document Service API
+title: Using fields with the Document Service API
 description: Use Strapi's Document Service API to select the fields to return with your queries.
 displayed_sidebar: devDocsSidebar
 tags:

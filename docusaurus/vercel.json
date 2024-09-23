@@ -321,6 +321,10 @@
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment.html",
 			"destination": "/dev-docs/deployment"
 		},
+    {
+      "source": "/dev-docs/api/document-service/select",
+      "destination": "/dev-docs/api/document-service/fields"
+    },
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.html",
 			"destination": "/dev-docs/api/entity-service/populate"

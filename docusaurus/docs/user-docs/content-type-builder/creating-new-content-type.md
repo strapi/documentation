@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+description: The Content-type Builder allows to create new content-types, single and collection types.
 tags:
 - collection type
 - components

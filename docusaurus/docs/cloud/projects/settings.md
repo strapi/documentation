@@ -1,7 +1,7 @@
 ---
 title: Project settings
 displayed_sidebar: cloudSidebar
-description: View and manage your projects on Strapi Cloud.
+description: View and manage your projects settings on Strapi Cloud.
 canonicalUrl: https://docs.strapi.io/cloud/projects/settings.html
 sidebar_position: 2
 tags:

@@ -22,6 +22,17 @@ const config = {
     locales: ['en'],
   },
 
+  headTags: [
+    { // Useful for SEO even if we don't have multiple languages
+      tagName: 'link',
+      attributes: {
+        rel: 'alternate',
+        href: 'https://docs.strapi.io',
+        hreflang: 'en',
+      },
+    },
+  ],
+
   markdown: {
     mermaid: true,
   },

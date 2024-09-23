@@ -1,5 +1,6 @@
 ---
 sidebar_label: 'Introduction'
+description: The Strapi Dev Docs contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
 displayed_sidebar: devDocsSidebar
 slug: /dev-docs/intro
 pagination_next: dev-docs/setup-deployment
@@ -15,7 +16,7 @@ tags:
 
 The documentation for Strapi contains 3 main sections, accessible from the top navigation bar:
 
-- 🧑‍💻 The **Developer Docs** that you're currently reading contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi v5 application.
+- 🧑‍💻 The **Developer Docs** that you're currently reading contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
 - 🧑‍🏫 The **[User Guide](/user-docs/intro)** is all about using Strapi's admin panel.
 - ☁️ The **[Strapi Cloud](/cloud/intro)** documentation is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
 
