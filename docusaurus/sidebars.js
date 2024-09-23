@@ -769,6 +769,10 @@ const sidebars = {
           type: 'category',
           collapsed: false,
           label: 'Configuring global settings',
+          link: {
+            type: 'doc',
+            id: 'user-docs/settings/introduction'
+          },
           items: [
             'user-docs/settings/admin-panel',
             'user-docs/settings/API-tokens',
