@@ -1,5 +1,6 @@
 ---
 title: Configuring end-user roles
+description: With the Users & Permissions plugin, it is possible to manage roles for end users roles, i.e., users who consume the content that is created and managed with a Strapi application and displayed on front-end applications.
 displayed_sidebar: userDocsSidebar
 sidebar_position: 4
 ---
