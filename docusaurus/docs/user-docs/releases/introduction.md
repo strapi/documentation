@@ -7,6 +7,7 @@ tags:
 - introduction
 - Releases feature
 - Strapi Cloud
+pagination_next: user-docs/releases/creating-a-release
 ---
 
 # Releases <EnterpriseBadge /> <CloudTeamBadge/>

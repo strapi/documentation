@@ -10,6 +10,7 @@ tags:
 - PostgreSQL
 - Strapi Cloud
 - Strapi Cloud project
+pagination_next: cloud/advanced/email
 ---
 
 # Database

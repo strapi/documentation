@@ -8,6 +8,7 @@ tags:
 - Content-type Builder
 - introduction
 - single type 
+pagination_next: user-docs/content-type-builder/creating-new-content-type
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

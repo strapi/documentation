@@ -10,6 +10,7 @@ tags:
 - project settings
 - Strapi Cloud
 - Strapi Cloud project
+pagination_next: cloud/account/account-billing
 ---
 
 # Profile settings

@@ -10,6 +10,7 @@ tags:
 - deploy, history and logs
 - Strapi Cloud
 - Strapi Cloud project
+pagination_next: cloud/projects/deploys-history
 ---
 
 # Deployments management
