@@ -22,10 +22,9 @@ The settings' menu on the left side of the interface is separated into 2 categor
 
 ## Project-level settings
 
-<!-- Add icon for Environments -->
 There are 5 tabs available for the project's settings:
 - ![General icon](/img/assets/icons/Faders.svg) [*General (project)*](#general),
-- [*Environments*](#environments),
+- ![Environments icon](/img/assets/icons/v5/Stack.svg) [*Environments*](#environments),
 - ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) [*Billing & Usage*](#billing--usage),
 - ![Plans icon](/img/assets/icons/MapTrifold.svg) [Plans](#plans),
 - and ![Invoices icon](/img/assets/icons/Invoice.svg) [Invoices](#invoices).
@@ -87,7 +86,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 ### Environments <CloudProBadge /> <CloudTeamBadge />
 
-The *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
+The ![Environments icon](/img/assets/icons/v5/Stack.svg) *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::tip
 Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#general-environment) for more information.
