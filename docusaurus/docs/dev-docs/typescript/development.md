@@ -134,7 +134,7 @@ strapi.compile().then(appContext => strapi(appContext).start());
 
 ## Develop a plugin using TypeScript
 
-New plugins can be generated following the [plugins development documentation](/dev-docs/plugins-development), ensuring you select "TypeScript" when prompted by the CLI tool.
+New plugins can be generated following the [plugins development documentation](/dev-docs/plugins/developing-plugins), ensuring you select "TypeScript" when prompted by the CLI tool.
 
 There are 2 important distinctions for TypeScript applications:
 

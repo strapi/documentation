@@ -23,7 +23,7 @@ Custom fields extend Strapi’s capabilities by adding new types of fields to co
 
 The present documentation is intended for custom field creators: it describes which APIs and functions developers must use to create a new custom field. The [User Guide](/user-docs/plugins/introduction-to-plugins.md#custom-fields) describes how to add and use custom fields from Strapi's admin panel.
 
-It is recommended that you develop a dedicated [plugin](/dev-docs/plugins-development) for custom fields. Custom field plugins include both a server and admin panel part. The custom field must be registered in both parts before it is usable in Strapi's admin panel.
+It is recommended that you develop a dedicated [plugin](/dev-docs/plugins/developing-plugins) for custom fields. Custom field plugins include both a server and admin panel part. The custom field must be registered in both parts before it is usable in Strapi's admin panel.
 
 Once created and used, custom fields are defined like any other attribute in the model's schema. An attribute using a custom field will have its type represented as `customField` (i.e. `type: 'customField'`). Depending on the custom field being used a few additional properties may be present in the attribute's definition (see [models documentation](/dev-docs/backend-customization#custom-fields)).
 
@@ -69,7 +69,7 @@ Currently:
 <details>
 <summary>Example: Registering an example "color" custom field on the server:</summary>
 
-In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins-development)):
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins/developing-plugins)):
 
 ```js title="./src/plugins/color-picker/server/register.js"
 "use strict";
@@ -135,7 +135,7 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 <details>
 <summary>Example: Registering an example "color" custom field in the admin panel:</summary>
 
-In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins-development.md)):
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins/developing-plugins.md)):
 
 ```jsx title="./src/plugins/color-picker/admin/src/index.js"
 import ColorPickerIcon from "./components/ColorPicker/ColorPickerIcon";
@@ -183,7 +183,7 @@ export default {
 <details>
 <summary>Example: Registering an Input component</summary>
 
-In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins-development.md)):
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins/developing-plugins.md)):
 
 ```jsx title="./src/plugins/color-picker/admin/src/index.js"
 export default {
@@ -295,7 +295,7 @@ Each object in the `items` array can contain the following parameters:
 <details>
 <summary>Example: Declaring options for an example "color" custom field:</summary>
 
-In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins-development.md)):
+In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/dev-docs/plugins/developing-plugins.md)):
 
 ```jsx title="./src/plugins/color-picker/admin/src/index.js"
 // imports go here (ColorPickerIcon, pluginId, yup package…)
