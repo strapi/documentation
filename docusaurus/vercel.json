@@ -522,6 +522,10 @@
 			"destination": "/dev-docs/plugins/developing-plugins"
 		},
 		{
+			"source": "/dev-docs/plugins-development",
+			"destination": "/dev-docs/plugins/developing-plugins"
+		},
+		{
 			"source": "/developer-docs/latest/development/plugins-extension.html",
 			"destination": "/dev-docs/plugins-extension"
 		},
