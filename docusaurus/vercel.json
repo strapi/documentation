@@ -237,7 +237,13 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
-			"destination": "/dev-docs/deployment"
+			"destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
+      "destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
