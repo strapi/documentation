@@ -50,7 +50,7 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-
 
 #### Modifying git repository & branch
 
-The GitHub or Gitlab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to update the project's repository or switch to another git provider.
+The GitHub or GitLab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to update the project's repository or switch to another git provider.
 
 :::caution
 Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
@@ -74,7 +74,7 @@ Updating the git repository could result in the loss of the project and its data
     | Auto-deploy     | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 5. Click on the **Update repository** button at the bottom of the *Update repository* interface.
-5. In the *Manage repository* dialog, confirm your changes by clicking on the **Relink repository** button.
+6. In the *Manage repository* dialog, confirm your changes by clicking on the **Relink repository** button.
 
 #### Deleting Strapi Cloud project
 
