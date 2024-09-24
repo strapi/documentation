@@ -8,6 +8,7 @@ tags:
 - introduction
 - deployment
 - Strapi Cloud
+pagination_next: cloud/getting-started/cloud-fundamentals
 ---
 
 # Welcome to the Strapi Cloud Docs!

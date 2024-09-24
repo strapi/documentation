@@ -9,6 +9,7 @@ tags:
 - provider
 - media library
 - upload plugin
+pagination_next: user-docs/plugins/installing-plugins-via-marketplace
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

@@ -6,6 +6,7 @@ tags:
 - Strapi Cloud
 - CLI
 - deployment
+pagination_next: cloud/advanced/database
 ---
 
 # Command Line Interface (CLI) <NewBadge />

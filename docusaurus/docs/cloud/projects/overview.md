@@ -7,6 +7,7 @@ sidebar_position: 1
 tags:
 - project status
 - Strapi Cloud
+pagination_next: cloud/projects/settings
 ---
 
 # Projects overview

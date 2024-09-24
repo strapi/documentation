@@ -6,6 +6,7 @@ tags:
 - admin panel
 - guides
 - introduction
+pagination_next: user-docs/getting-started/user-guide-fundamentals
 ---
 
 # Welcome to the Strapi User Guide!
