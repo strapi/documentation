@@ -16,7 +16,7 @@ import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Project settings
 
-From a chosen project's dashboard, the ![Settings icon](/img/assets/icons/settings.svg) icon, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
+From a chosen project's dashboard, the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
 
 The settings' menu on the left side of the interface is separated into 2 categories: the settings for the entire project and the settings specific to any configured environment for the project.
 
@@ -57,7 +57,7 @@ Updating the git repository could result in the loss of the project and its data
 :::
 
 1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Update repository** button. You will be redirected to another interface.
-2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch to GitHub/GitLab** button at the top right corner of the interface. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository* interface.
+2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch Git provider** button at the top right corner of the interface. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository* interface.
 3. In the *Update repository* section, fill in the 2 available settings:
 
     | Setting name    | Instructions                                                             |
@@ -197,16 +197,20 @@ To upgrade your current plan to a higher one:
 Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Team plan to the Pro plan on June 18th, your project will remain on the Team plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. Note also that you may lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. You may also lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional environments. For instance, if you wish to downgrade from the Pro plan to the Developer plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
+Note also that you cannot downgrade if you have additional environments (i.e. extra environments that have been purchased, not the default or included environments). For instance, if you wish to downgrade from the Pro plan to the Developer plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
 :::
 
 To downgrade your current plan to a lower one:
 
 1. In the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab of your project's settings, click on the **Downgrade** button of the plan you want to downgrade to.
 2. In the window that opens, check the information related to downgrading.
-3. Click on the **Downgrade** button to confirm the downgrade of your Strapi project's plan.
+3. Click on the **Downgrade** button to confirm the downgrade of your Strapi project's plan. 
+
+:::tip
+Downgrades are effective from the 1st of the following month. Before that date, you can click on the **Cancel downgrade** button to remain on the current plan.
+:::
 
 ### Invoices
 
@@ -244,8 +248,8 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the environm
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
-- *Connect branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-branch)). Also allows to enable/disable the "deploy on push" option.
-- *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see Resetting & Deleting environment).
+- *Connect branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see [Resetting & Deleting environment](#resetting--deleting-environment)).
 
 <ThemedImage
   alt="Project invoices"
@@ -283,6 +287,8 @@ You can reset or delete any additional environment of your Strapi Cloud project,
 
 ##### Resetting an environment
 
+Resetting an environment deletes all environments data and resets the variables to their default. To do so:
+
 1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Reset environment** button.
 2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
 3. Fill in the available fields to reset the environment:
@@ -304,13 +310,13 @@ You can reset or delete any additional environment of your Strapi Cloud project,
 
 ### Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
 
-The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Developer and Pro plans, and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
+The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
 :::note Notes
 
 - The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up and to have access to manual backups.
 
-- Only project owners can restore a backup. Maintainers have access to the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information.
+<!-- - Only project owners can restore a backup. Maintainers have access to the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
 
 - The manual backup option should become available shortly after project's first succesful deployment.
 
@@ -399,5 +405,5 @@ Environment variables (more information in the [Developer Documentation](../../d
 In the ![Variables icon](/img/assets/icons/code2.svg) *Variables* tab, you can:
 - click the **Add variable** button to create a new variable
 - edit any variable, each being composed of a *Name* and a *Value*
-- click the ![Delete icon](/img/assets/icons/delete.svg) delete button associated with any variable to delete it
+- click the ![Delete icon](/img/assets/icons/delete.svg) delete button associated with any non-default variable to delete it
 - click the **Save** button to save any change made on the page

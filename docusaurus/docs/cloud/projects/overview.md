@@ -30,7 +30,6 @@ Each project card displays the following information:
     * *Disconnected*, if the project repository is not connected to Strapi Cloud
     * *Suspended*, if the project has been suspended (refer to [Project suspension](/cloud/getting-started/usage-billing#project-suspension) to reactivate the project)
     * *Incompatible version*, if the project is using a Strapi version that is not compatible with Strapi Cloud
-* the last deployment date
 
 Each project card also displays a ![Menu icon](/img/assets/icons/more.svg) menu icon to access the following options:
 * **Visit App**: to be redirected to the application
@@ -50,8 +49,8 @@ From the *Projects* page, click on any project card to access is dashboard. It d
 />
 
 From the dashboard's header of a chosen project, you can:
-- use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icones of those who have already been invited <ScreenshotNumberReference number="1" />,
-- use the ![Settings icon](/img/assets/icons/settings.svg) button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
+- use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="1" />,
+- use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
 - choose which environment to visualise for the project <ScreenshotNumberReference number="3" />,
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="4" />.
 
@@ -60,7 +59,7 @@ Your project's dashboard also displays:
 - the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
   - the number of API calls and database entries,
   - the current usage for assets bandwidth and storage,
-  - the name of the branch and a **Manage** button to be redirect to the branch settings (see Modifying git repository & branch),
+  - the name of the branch and a **Manage** button to be redirect to the branch settings (see [Modifying git repository & branch](/cloud/projects/settings#modifying-git-repository--branch)),
   - the name of the base directory,
   - the Strapi version number.
 
