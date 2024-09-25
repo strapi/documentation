@@ -6,6 +6,92 @@ custom_edit_url: null
 
 <div className="release-notes-page">
 
+This page lists all the Strapi Docs version numbers and their corresponding updates.
+
+<details>
+<summary>🧐 Strapi Docs version numbers explained:</summary>
+
+The Strapi Documentation (or in short, Strapi Docs) hosted at docs.strapi.io is **always documenting the latest version of the Strapi (CMS and Cloud) products**.
+
+Please note however, that, since Strapi Docs version 5.0.0, the documentation's package version number is decoupled from the Strapi product(s) version number. Version numbers of [`strapi/documentation`](https://github.com/strapi/documentation) and [`strapi/strapi`](https://github.com/strapi/strapi) might be different.
+
+Strapi Docs now follow the [semantic versioning](https://semver.org/) philosophy, but adapted to docs:
+
+* New **major version** number (6.0.0, 7.0.0…): **The documentation website is significantly rewritten** (either its content or the framework underlying it). When a new major docs version is released, the following might happen:
+  * The reading experience might significantly change, including a complete redesign, a rework of the navigation and table of content, or a different way of grouping, presenting, and displaying pages and features.
+  * Links used in the previous major version might be broken. This should however happen transparently as the Strapi Docs team will do its best to handle previous links with redirections. If you find broken links, please feel free to [report an issue](https://github.com/strapi/documentation/issues/new/choose).
+  * The present website is based on [Docusaurus](https://docusaurus.io), but Docusaurus upgrades (including new major versions) will generally not trigger a new major Strapi Docs version number, unless such upgrades require rewriting the whole website in a way that would qualify it for a new major version number.
+* New **minor version** number (5.1.0, 5.2.0…): **New Strapi features are documented**, or small, quality-of-life-related documentation features (such as new components or new tools) are added or updated.
+* New **patch version** number (5.1.1, 5.1.2…): **Existing documentation content is updated**. This includes fixes, typos, and updates to already documented Strapi features.
+
+The highest number will take precedence, meaning that if a weekly release includes both patch version-type and minor version-type updates, a new minor version is released.
+
+New minor or patch version numbers are released weekly, usually on Wednesdays.
+
+</details>
+
+## 5.1.0
+
+### ✨ New content
+
+#### Cloud Docs
+
+* [Multi-Environments](https://github.com/strapi/documentation/pull/2229)
+
+### 🖌 Updated content
+
+#### User Guide
+
+* [Mention Blocked status for Releases](https://github.com/strapi/documentation/pull/2235)
+
+#### Dev Docs
+
+* [Clarify helper-plugin migration guide](https://github.com/strapi/documentation/pull/2230)
+
+### 🧹 Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+
+* [Fix creating a custom provider example](https://github.com/strapi/documentation/pull/2237)
+* [Fix pagination_next for first page of categories](https://github.com/strapi/documentation/pull/2234)
+* [Fix SEO issues](https://github.com/strapi/documentation/pull/2233)
+* [Fix links to strapi codebase](https://github.com/strapi/documentation/pull/2226)
+* [Fix code example in general deployment guidelines](https://github.com/strapi/documentation/pull/2231)
+* [Fix grammar in TypeScript development docs](https://github.com/strapi/documentation/pull/2232)
+
+***
+
+This release was made possible thanks to the following contributors. Thank you! 🫶
+
+<div>
+
+<a href="https://github.com/ChristopheCVB" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/946345?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ChristopheCVB"/>
+</a>
+<a href="https://github.com/imcarlosguerrero" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/173419460?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="imcarlosguerrero"/>
+</a>
+<a href="https://github.com/stefanhuber" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5379359?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="stefanhuber"/>
+</a>
+<a href="https://github.com/butcherZ" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8189028?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="butcherZ"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+
+</div>
+
+<br/>
+<br/>
+
 ## 5.0.0
 
 _The following is an extensive list of all the pull requests that were merged since we started working on Strapi 5 documentation. For a quicker tour, please refer to the [What's new page](/dev-docs/whats-new)._
