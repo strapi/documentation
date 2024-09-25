@@ -11,22 +11,17 @@ This page lists all the Strapi Docs version numbers and their corresponding upda
 <details>
 <summary>🧐 Strapi Docs version numbers explained:</summary>
 
-The Strapi Documentation (or in short, Strapi Docs) hosted at docs.strapi.io is **always documenting the latest version of the Strapi (CMS and Cloud) products**.
+The **Strapi Documentation** (Strapi Docs) at [docs.strapi.io](https://docs.strapi.io) **always reflects the latest version of Strapi (CMS and Cloud)**.
 
-Please note however, that, since Strapi Docs version 5.0.0, the documentation's package version number is decoupled from the Strapi product(s) version number. Version numbers of [`strapi/documentation`](https://github.com/strapi/documentation) and [`strapi/strapi`](https://github.com/strapi/strapi) might be different.
+Since Strapi Docs version 5.0.0, the **docs' version number is independent from the Strapi product version**. Thus, the version numbers of [`strapi/documentation`](https://github.com/strapi/documentation) and [`strapi/strapi`](https://github.com/strapi/strapi) may differ.
 
-Strapi Docs now follow the [semantic versioning](https://semver.org/) philosophy, but adapted to docs:
+Strapi Docs now follow the **[semantic versioning](https://semver.org/)** philosophy, but adapted to docs:
 
-* New **major version** number (6.0.0, 7.0.0…): **The documentation website is significantly rewritten** (either its content or the framework underlying it). When a new major docs version is released, the following might happen:
-  * The reading experience might significantly change, including a complete redesign, a rework of the navigation and table of content, or a different way of grouping, presenting, and displaying pages and features.
-  * Links used in the previous major version might be broken. This should however happen transparently as the Strapi Docs team will do its best to handle previous links with redirections. If you find broken links, please feel free to [report an issue](https://github.com/strapi/documentation/issues/new/choose).
-  * The present website is based on [Docusaurus](https://docusaurus.io), but Docusaurus upgrades (including new major versions) will generally not trigger a new major Strapi Docs version number, unless such upgrades require rewriting the whole website in a way that would qualify it for a new major version number.
-* New **minor version** number (5.1.0, 5.2.0…): **New Strapi features are documented**, or small, quality-of-life-related documentation features (such as new components or new tools) are added or updated.
-* New **patch version** number (5.1.1, 5.1.2…): **Existing documentation content is updated**. This includes fixes, typos, and updates to already documented Strapi features.
+- **Major version** (6.0.0, 7.0.0…): A **significant rewrite** of the docs (content or framework). This may impact the user experience, redesign the site, or break old links (redirections are handled, but broken links can be [reported](https://github.com/strapi/documentation/issues/new/choose)).
+- **Minor version** (5.1.0, 5.2.0…): **New Strapi features or improvements** to the docs (e.g., new components or tools).
+- **Patch version** (5.1.1, 5.1.2…): **Content updates**, incl. such as fixes or typos.
 
-The highest number will take precedence, meaning that if a weekly release includes both patch version-type and minor version-type updates, a new minor version is released.
-
-New minor or patch version numbers are released weekly, usually on Wednesdays.
+New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
