@@ -62,14 +62,6 @@ To ensure a smooth deployment, it is recommended to not change the names of the 
 
 To deploy the project and utilize the external database, push the changes from earlier. This will trigger a rebuild and new deployment of the Strapi Cloud project.
 
-<ThemedImage
-  alt="Deployment"
-  sources={{
-    light: '/img/assets/cloud/deploy-logs.png',
-    dark: '/img/assets/cloud/deploy-logs_DARK.png',
-  }}
-/>
-
 Once the application finishes building, the project will use the external database.
 
 ## Reverting to the default database
