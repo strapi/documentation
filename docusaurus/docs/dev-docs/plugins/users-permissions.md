@@ -934,7 +934,7 @@ module.exports = {
         grantConfig: {
           key: "",
           secret: "",
-          callback: `${strapi.config.server.url}/auth/test-provider/callback`,
+          callback: `${strapi.config.server.url}/auth/example-provider-name/callback`,
           scope: ["email"],
           authorize_url: "https://awesome.com/authorize",
           access_url: "https://awesome.com/token",
