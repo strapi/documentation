@@ -86,7 +86,7 @@ The _Status_ column displays the status of each entry:
 
    - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Already published: the entry is already published and publishing the release will not affect this entry 
    - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry is ready to  be published with the release
-   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. 
+   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
    
 If some of your entries have a ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![More icon](/img/assets/icons/v5/More.svg) and the **Edit the entry** button to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
 
