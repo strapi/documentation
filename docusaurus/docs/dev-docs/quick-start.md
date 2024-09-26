@@ -32,8 +32,8 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details style={detailsStyle}>
-<summary style={summaryStyle}>Step 1: Run the installation script and create a Strapi Cloud account</summary>
+<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<summary style={{fontSize: '18px'}}>Step 1: Run the installation script and create a Strapi Cloud account</summary>
 
 ### Step 1: Run the installation script and create a Strapi Cloud account
 

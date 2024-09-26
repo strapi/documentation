@@ -113,5 +113,5 @@ After running `yarn build` with this configuration, the `build` folder will be c
 The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
 
 :::note
-If you add a path to the `url` option, it won't prefix your application. To do so, use a proxy server like Nginx (see [optional software deployment guides](/dev-docs/deployment/optional-software-guides)).
+If you add a path to the `url` option, it won't prefix your application. To do so, use a proxy server like Nginx (see [optional software deployment guides](/dev-docs/deployment#additional-resources)).
 :::
