@@ -4,4 +4,4 @@ Disallow: /nogooglebot/
 User-agent: *
 Allow: /
 
-Sitemap: https://docs-next.strapi.io/sitemap.xml
+Sitemap: https://docs.strapi.io/sitemap.xml

@@ -56,6 +56,10 @@ If you used `--quickstart` to create your Strapi project, by default this uses t
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
+## How can I upgrade my free Strapi Cloud trial to a paid plan?
+
+Strapi Cloud provides a free, 14-day trial for up to 5 projects. Whenever you're ready to upgrade to one of the [paid plans](https://strapi.io/pricing-cloud), please use the _Plans_ section of your Strapi Cloud project's settings (see [Cloud documentation](/cloud/projects/settings#upgrading-to-another-plan) for more details).
+
 ## Can Strapi be run in serverless environments?
 
 Strapi is not well suited for serverless environments due to how the application is structured. Several actions happen while Strapi is booting that can take several seconds. Serverless deployment usually requires an application to cold boot very quickly. Strapi is designed to run as an always-on service, and we don't plan to decrease the cold boot time for the foreseeable future. Therefore, running Strapi in serverless environments is not a great experience, as every request will take seconds to respond to instead of milliseconds. Choosing between a cold boot or a warm boot is an architectural decision that many software developers need to take from a very early stage, so please consider this when choosing to use Strapi.
@@ -78,8 +82,7 @@ Strapi uses a system called [extension](/dev-docs/plugins-extension) as plugins 
 
 ## Can I add my own 3rd party auth provider?
 
-<!-- TODO: convert this link to an internal link when U&P is updated -->
-Yes, you can either follow the following [guide](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html#providers) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions) and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
+Yes, you can either follow the following [documentation](/dev-docs/plugins/users-permissions#providers) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions) code and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
 
 There is currently no ETA on this migration however.
 
@@ -99,11 +102,11 @@ On Linux based operating systems you need root permissions to bind to any port b
 
 Likewise since Strapi is Node.js based, in order for changes with the SSL certificate to take place (say when it expires) you would need to restart your application for that change to take effect.
 
-Due to these two issues, it is recommended you use a proxy application such as [Nginx](/dev-docs/deployment/nginx-proxy), [Caddy](/dev-docs/deployment/caddy-proxy), [HAProxy](/dev-docs/deployment/haproxy-proxy), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/dev-docs/configurations/server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
+Due to these two issues, it is recommended you use a proxy application such as [Nginx](https://forum.strapi.io/t/nginx-proxing-with-strapi/), [Caddy](https://forum.strapi.io/t/caddy-proxying-with-strapi/40616), [HAProxy](https://forum.strapi.io/t/haproxy-proxying-with-strapi/), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/dev-docs/configurations/server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
 ## Can I use TypeScript in a Strapi project?
 
-TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/dev-docs/typescript.md).
+TypeScript is supported in Strapi projects from v4.2.0-beta.1 TypeScript code examples are available throughout the core Developer Documentation and a [dedicated TypeScript support page](/dev-docs/typescript).
 
 ## How to fix the build error `Error: Cannot find module @strapi/XXX`
 

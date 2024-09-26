@@ -12,11 +12,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Email Provider
-
-<NotV5/>
 
 Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize another email provider, if needed.
 

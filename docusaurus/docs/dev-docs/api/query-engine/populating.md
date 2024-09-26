@@ -1,6 +1,6 @@
 ---
 unlisted: true
-title: Populating
+title: Populating with the Query Engine API
 description: Use Strapi's Query Engine API to populate relations when querying your content.
 displayed_sidebar: devDocsSidebar
 tags:
@@ -11,7 +11,6 @@ tags:
 - Query Engine API
 ---
 
-import RecommendEntityService from '/docs/snippets/recommend-entity-service.md'
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Populating with the Query Engine API

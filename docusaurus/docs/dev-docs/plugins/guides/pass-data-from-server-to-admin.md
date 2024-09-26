@@ -9,7 +9,6 @@ tags:
 - content-type
 - guides
 - plugins
-- Strapi plugin
 - plugins development guides
 ---
 

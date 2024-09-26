@@ -14,8 +14,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <CloudTeamBadge/>
 
-<NotV5/>
-
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
 Audit logs are only accessible to users with the **Super Admin** role by default. They are available in the **Administration Panel** section of the **Settings** panel.
@@ -79,7 +77,7 @@ Click the **Search** icon to search for a specific log. The search is performed 
 
 ## Log details
 
-For any log item, click the **Details** icon to display a modal with more details about that action.
+For any log item, click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon to display a modal with more details about that action.
 
 <ThemedImage
   alt="Log details modal"

@@ -7,16 +7,13 @@ const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Strapi Documentation',
+  title: 'Strapi 5 Documentation',
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://docs.strapi.io/',
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
-
-  // ⚠️ TODO: remove this for stable release
-  noIndex: true, // set to false to allow indexing by search engines
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -95,8 +92,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          // TODO: update 'v5/mvp' to v5 once it's on docs-next, and then back to 'main' for the stable release
-          editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus',
+          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             keywords: [
               // Admonitions defaults
@@ -142,7 +138,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "You're reading a work-in-progress documentation for the upcoming Strapi 5. <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/5iXineW1ya28ALF97'>We'd love to read your feedback!</a> Looking for the stable v4 docs? Please visit <a href='https://docs.strapi.io'>docs.strapi.io</a>.",
+          "You are viewing the Strapi 5 docs 🥳 Don't panic! Strapi v4 is still supported until March 2026. Strapi v4 docs are now hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs-v4.strapi.io'>docs-v4.strapi.io</a>.",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
@@ -162,8 +158,8 @@ const config = {
         hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-beta.png',
-          srcDark: 'img/logo-beta-dark.png',
+          src: 'img/logo-v5.png',
+          srcDark: 'img/logo-v5-dark.png',
         },
         items: [
           {
@@ -190,11 +186,12 @@ const config = {
             position: 'left',
             label: 'Cloud Documentation',
           },
-          // {
-          //   href: 'https://github.com/strapi/documentation',
-          //   label: 'GitHub',
-          //   position: 'right',
-          // },
+          {
+            type: 'doc',
+            docId: 'release-notes',
+            position: 'left',
+            label: 'Release Notes',
+          },
         ],
       },
       footer: {
@@ -204,12 +201,8 @@ const config = {
             title: 'Additional resources',
             items: [
               {
-                label: 'v3 Docs (unsupported)',
-                href: 'https://docs-v3.strapi.io'
-              },
-              {
                 label: 'v4 Docs',
-                href: 'https://docs.strapi.io'
+                href: 'https://docs-v4.strapi.io'
               },
               {
                 label: 'Contributor Docs',
@@ -218,6 +211,10 @@ const config = {
               {
                 label: 'Strapi Design System',
                 href: 'https://design-system.strapi.io/'
+              },
+              {
+                label: 'v3 Docs (unsupported)',
+                href: 'https://docs-v3.strapi.io'
               },
             ],
           },
@@ -267,12 +264,6 @@ const config = {
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images
       },
-      // TODO: re-enable when we publish stable v5 docs on docs.strapi.io
-      // hubspot: {
-      //   accountId: 6893032,
-      //   async: false, // OPTIONAL: sets the async attribute on the script tag, defaults to false
-      //   defer: false, // OPTIONAL: sets the defer attribute on the script tag, defaults to false
-      // },
     }),
 
   plugins: [

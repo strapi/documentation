@@ -14,8 +14,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Managing relational fields
 
-<NotV5/>
-
 Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields". 
 
 The content of relational fields is written from the edit view of the content-type they belong to (see [Writing content](writing-content.md)). However, relational fields can point to one or several entries of the other collection type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
@@ -77,7 +75,7 @@ To select the only relevant relational field's entry:
 You can click on the name of the selected entry to be redirected to the edit view of the relational field's content type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](/img/assets/icons/clear.svg).
+To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg).
 
 ## Managing multiple-choice relational fields
 
@@ -102,6 +100,6 @@ To select the relevant relational field's entries:
 All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/cross.svg) in the selected entries list.
+To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/v5/Cross.svg) in the selected entries list.
 
-Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/v5/Drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.

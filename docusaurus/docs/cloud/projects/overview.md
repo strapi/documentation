@@ -7,13 +7,12 @@ sidebar_position: 1
 tags:
 - project status
 - Strapi Cloud
+pagination_next: cloud/projects/settings
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Projects overview
-
-<NotV5/>
 
 The *Projects* page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 
@@ -32,39 +31,36 @@ Each project card displays the following information:
     * *Disconnected*, if the project repository is not connected to Strapi Cloud
     * *Suspended*, if the project has been suspended (refer to [Project suspension](/cloud/getting-started/usage-billing#project-suspension) to reactivate the project)
     * *Incompatible version*, if the project is using a Strapi version that is not compatible with Strapi Cloud
-* the last deployment date
 
 Each project card also displays a ![Menu icon](/img/assets/icons/more.svg) menu icon to access the following options:
 * **Visit App**: to be redirected to the application
-* **Go to Deploys**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
+* **Go to Deployments**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
 
-## Accessing a project's overview
+## Accessing a project's dashboard
 
-From the *Projects* page, click on any project card to access the *Overview* of your project. It displays all details such as usage and status information and gives access to deployment history and available settings.
-
-:::strapi Navigating Strapi Cloud projects dashboards
-Once you click on a project page, you access the dedicated dashboard for your chosen project. It is by default that you land on the *Overview* tab, however the header of the project's dashboard doesn't change and always offers the following options:
-
-- links to the other available tabs for the project: *Overview*, [*Deploys*](/cloud/projects/deploys), [*Runtime Logs*](/cloud/projects/runtime-logs) and [*Settings*](/cloud/projects/settings)
-- the **Share** button to invite a new maintainer to collaborate on your project — and if the project is already shared: avatars of the maintainers (see [Collaboration](/cloud/projects/collaboration))
-- the **Trigger deploy** button to trigger a new deployment of your project
-- the **Visit app** button to access your application
-:::
+From the *Projects* page, click on any project card to access is dashboard. It displays the project and environment details and gives access to the deployment history and all available settings.
 
 <ThemedImage
   alt="Project overview"
   sources={{
-    light: '/img/assets/cloud/overview.png',
-    dark: '/img/assets/cloud/overview_DARK.png',
+    light: '/img/assets/cloud/overview2.png',
+    dark: '/img/assets/cloud/overview2_DARK.png',
   }}
 />
 
-From the *Overview* tab, you can:
-- view a recap of the main settings of your project, such as:
-  - the link to the source repository
-  - the name of the branch
-  - the name of the base directory
-  - the URL and link to the application
-- view your project's usage (see [Usage](/cloud/getting-started/usage-billing) for more information)
-- view your project's latest deploys (see [Deploys](/cloud/projects/deploys) for more information)
+From the dashboard's header of a chosen project, you can:
+- use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="1" />,
+- use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
+- choose which environment to visualise for the project <ScreenshotNumberReference number="3" />,
+- trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="4" />.
+
+Your project's dashboard also displays:
+- the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) <ScreenshotNumberReference number="5" />
+- the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
+  - the number of API calls and database entries,
+  - the current usage for assets bandwidth and storage,
+  - the name of the branch and a **Manage** button to be redirect to the branch settings (see [Modifying git repository & branch](/cloud/projects/settings#modifying-git-repository--branch)),
+  - the name of the base directory,
+  - the Strapi version number.
+

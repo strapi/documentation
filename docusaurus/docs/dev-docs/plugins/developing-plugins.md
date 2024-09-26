@@ -25,10 +25,14 @@ Strapi allows the development of plugins that work exactly like the built-in plu
 
 👉 To start developing a Strapi plugin:
 
-1. [Create a plugin](/dev-docs/plugins/development/create-a-plugin) using the CLI-based generator.
+1. [Create a plugin](/dev-docs/plugins/development/create-a-plugin) using the Plugin SDK.
 2. Learn more about the [structure of a plugin](/dev-docs/plugins/development/plugin-structure).
 3. Get an overview of the [plugin APIs](#plugin-apis) to add features to your plugin.
-4. Read some [guides](#guides) based on your use case(s).
+4. Read some advanced [guides](#guides) based on your use case(s).
+
+:::note
+Ensure you release your Strapi 5 plugin as a different major version number to distinguish it from the v4 compatible version.
+:::
 
 ## Plugin APIs
 
@@ -47,10 +51,9 @@ Plugins can also be used to add [custom fields](/dev-docs/custom-fields) to Stra
 
 <CustomDocCard small emoji="💁" title="How to store and access data from a Strapi plugin" description="" link="/dev-docs/plugins/guides/store-and-access-data" />
 <CustomDocCard small emoji="💁" title="How to pass data from the backend server to the admin panel with a plugin" description="" link="/dev-docs/plugins/guides/pass-data-from-server-to-admin" />
-<CustomDocCard small emoji="💁" title="How to use the Plugin CLI to create and publish a Strapi plugin" description="" link="/dev-docs/plugins/guides/use-the-plugin-cli" />
 
 <br />
 
 :::strapi Additional resources
-The Strapi blog features a [tutorial series](https://strapi.io/blog/how-to-create-a-strapi-v4-plugin-server-customization-4-6) about creating a Strapi v4 'Todo' plugin. The [contributors documentation](https://contributor.strapi.io/) can also include additional information useful while developing a Strapi plugin.
+The [contributors documentation](https://contributor.strapi.io/) can also include additional information useful while developing a Strapi plugin.
 :::

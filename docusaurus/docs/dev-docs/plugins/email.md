@@ -13,11 +13,7 @@ tags:
 - sendTemplatedEmail() function
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Email plugin
-
-<NotV5 />
 
 The Email plugin enables applications to send emails from a server or an external provider. The Email plugin uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application. Two of the most common use cases are in the Strapi back end and in the admin panel. The following documentation describes how to use the Email plugin in a controller or service for back-end use cases and using a lifecycle hook for admin panel use cases.
 
@@ -100,7 +96,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-## Sending emails with a lifecycle hook
+## Sending emails from a lifecycle hook
 
  To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
@@ -115,7 +111,7 @@ module.exports = {
         const { result } = event;
 
         try{
-            await strapi.plugins['email'].services.email.send({
+            await strapi.plugin('email').service('email').send({ // you could also do: await strapi.service('plugin:email.email').send({
               to: 'valid email address',
               from: 'your verified email address', // e.g. single sender verification in SendGrid
               cc: 'valid email address',

@@ -41,12 +41,12 @@ The `isSupportedImage` method is supported, but deprecated.
 
 The `isSupportedImage` method is removed.
 
-Developers must use either `isImage` to check if a file is an image, or `isOptimizableImage` to check if the file is an image that can be optimized.
-
+Developers must use either `isImage` to check if a file is an image, or `isOptimizableImage` to check if the file is an image that can be optimized. 
 </SideBySideColumn>
 
 </SideBySideContainer>
 
 ## Manual migration
 
-Replace occurences of the `isSupportedImage` method in your code by the appropriate method, `isImage` or `isOptimizableImage`, depending on your needs.
+Replace occurences of the `isSupportedImage` method in your code by the appropriate method, `isImage` or `isOptimizableImage`, depending on your needs. Note that the behavior in Strapi v4 was equivalent to `isOptimizableImage`.
+

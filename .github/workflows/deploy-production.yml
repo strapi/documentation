@@ -29,7 +29,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           deployment-url: ${{ steps.get-url-prod.outputs.preview_url }}
-          timeout: 300 # wait 5 minutes before failing
+          timeout: 600 # wait 10 minutes before failing
 
       # Outputs the current URL and confirms ready status (for debugging purposes)
       - name: Output debug status

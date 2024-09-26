@@ -14,13 +14,11 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuring the views of a content-type
 
-<NotV5/>
-
 Depending on their type, content-types can be divided into 2 interfaces: the list view and the edit view. Both interfaces can be configured.
 
 ## Configuring the list view
 
-On the right side of the list view interface, right above the table, a settings button ![Cog icon](/img/assets/icons/cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
+On the right side of the list view interface, right above the table, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to access the configurations that can be set for the list view of your collection type, and to choose which fields to display in the table.
 
 :::note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -39,7 +37,7 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view settings
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/cog.svg) to be redirected to the list view configuration interface.
+1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** to be redirected to the list view configuration interface.
 2. In the Settings area, define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
@@ -55,12 +53,12 @@ Note also that the explanations below explain how to permanently configure which
 
 ### List view display
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/cog.svg) to be redirected to the list view configuration interface.
+1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** to be redirected to the list view configuration interface.
 2. In the View area, define what fields to display in the list view table, and in what order:
-   - Click the add button ![Add icon](/img/assets/icons/add_icon.svg) to add a new field.
-   - Click the delete button ![Clear icon](/img/assets/icons/clear.svg) to remove a field.
-   - Click the reorder button ![Drag icon](/img/assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](/img/assets/icons/edit.svg) to access its available own settings:
+   - Click the add button ![Add icon](/img/assets/icons/v5/Plus.svg) to add a new field.
+   - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.
+   - Click the reorder button ![Drag icon](/img/assets/icons/v5/Drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to access its available own settings:
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
@@ -84,7 +82,7 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 ## Configuring the edit view
 
-In the edit view of a content-type, in the right side of the interface, a **Configure the view** button is displayed. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
+In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg) button is displayed, which leads to the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
 
 <ThemedImage
   alt="Configuring the edit view of the Content Manager"
@@ -96,7 +94,7 @@ In the edit view of a content-type, in the right side of the interface, a **Conf
 
 ### Edit view settings
 
-1. In the edit view of your content-type, click on the **Configure the view** button.
+1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
 2. In the Settings area, define your chosen new settings:
 
 | Setting name    | Instructions                                                                          |
@@ -107,19 +105,19 @@ In the edit view of a content-type, in the right side of the interface, a **Conf
 
 ### Edit view display
 
-1. In the edit view of your content-type, click on the **Configure the view** button.
+1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
 2. In the View area, define what fields (including relational fields) to display in the list view table, in what order and what size:
-   - Click the ![Add icon](/img/assets/icons/add_icon.svg) **Insert another field** button to add a new field.
-   - Click the delete button ![Clear icon](/img/assets/icons/clear.svg) to remove a field.
-   - Click the reorder button ![Drag icon](/img/assets/icons/drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](/img/assets/icons/edit.svg) of a field to access its available settings:
+   - Click the ![Add icon](/img/assets/icons/v5/Plus.svg) **Insert another field** button to add a new field.
+   - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.
+   - Click the reorder button ![Drag icon](/img/assets/icons/v5/Drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) of a field to access its available settings:
 
 | Setting name    | Instructions                                                                              |
 | --------------- | ----------------------------------------------------------------------------------------- |
 | Label           | Write the label that should be used for the field.                                        |
 | Description     | Write a description for the field, to help other administrators fill it properly.         |
 | Placeholder     | Write the placeholder that should be displayed by default in the field.                   |
-| Editable field  | Click on **ON** or **OFF** to able or disable the edition of the field by administrators. |
+| Editable field  | Click on **TRUE** or **FALSE** to able or disable the edition of the field by administrators. |
 | Size            | Select the size in which the field should be displayed in the Content Manager. Note that this setting is neither available for JSON and Rich Text fields, nor dynamic zones and components. |
 | Entry title     | *(relational fields only)* Write the entry title that should be used for the relational field. It is recommended to choose well the entry title of relational fields as the more comprehensive it is, the easier it will be for administrators to manage the content of relational fields from the edit view. |
 

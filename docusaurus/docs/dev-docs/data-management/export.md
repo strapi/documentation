@@ -21,10 +21,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5 />
 
-:::strapi v4.6.0 feature
-Data export is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/dev-docs/upgrade-tool) to upgrade your application.
-:::
-
 The `strapi export` command is used to export data from a local Strapi instance. By default, the `strapi export` command exports data as an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,

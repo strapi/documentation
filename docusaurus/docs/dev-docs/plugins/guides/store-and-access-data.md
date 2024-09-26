@@ -9,7 +9,6 @@ tags:
 - plugins
 - plugins development
 - plugins development guides
-- Strapi plugin
 ---
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'

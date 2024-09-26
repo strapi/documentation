@@ -27,7 +27,7 @@ The following API parameters are available:
 | `populate`         | String or Object | [Populate relations, components, or dynamic zones](/dev-docs/api/rest/populate-select#population) |
 | `fields`           | Array         | [Select only specific fields to display](/dev-docs/api/rest/populate-select#field-selection) |
 | `filters`          | Object        | [Filter the response](/dev-docs/api/rest/filters-locale-publication#filtering) |
-| `locale`           | String        | [Select a locale](/dev-docs/plugins/i18n#rest) |
+| `locale`           | String        | [Select a locale](/dev-docs/i18n#rest) |
 | `status`           | String        | [Select the Draft & Publish status](/dev-docs/api/rest/filters-locale-publication#status) |
 | `sort`             | String or Array  | [Sort the response](/dev-docs/api/rest/sort-pagination.md#sorting) |
 | `pagination`       | Object        | [Page through entries](/dev-docs/api/rest/sort-pagination.md#pagination) |

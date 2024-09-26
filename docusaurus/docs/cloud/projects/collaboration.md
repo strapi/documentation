@@ -10,11 +10,7 @@ tags:
 - Strapi Cloud project
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Collaboration on projects
-
-<NotV5/>
 
 
 Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the project dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
@@ -57,8 +53,8 @@ From the *Share [project name]* dialog accessible by clicking on the **Share** b
 <ThemedImage
   alt="Share button and avatar"
   sources={{
-    light: '/img/assets/cloud/collaboration-dialog.png',
-    dark: '/img/assets/cloud/collaboration-dialog_DARK.png',
+    light: '/img/assets/cloud/collaboration-dialog2.png',
+    dark: '/img/assets/cloud/collaboration-dialog2_DARK.png',
   }}
 />
 

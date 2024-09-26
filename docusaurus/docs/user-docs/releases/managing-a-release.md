@@ -8,15 +8,10 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Managing a release <EnterpriseBadge /> <CloudTeamBadge />
-
-<NotV5/>
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
-<!-- TODO: add actual screenshots for both light and dark modes -->
 <ThemedImage
   alt="Release details"
   sources={{
@@ -29,26 +24,26 @@ Adding entries to a [release](/user-docs/releases/introduction) allow viewing th
 
 From a release page, you can:
 
-- edit the name of the release, or delete the release,
+- edit the release, to update its name or schedule it, or delete the release,
 <!-- - [adjust the view](#choose-how-entries-are-grouped) to display entries grouped either by locale or by content-type, -->
 - decide whether an entry will be published or unpublished with the release,
 <!-- - edit a specific entry or [remove](#remove-entries-from-a-release) it from the release, -->
 - and publish the release.
 
+:::caution
+Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
+:::
+
 ## Editing a release
 
 You can rename a release. To do so, while on a release page:
 
-1. Click on the ![More icon](/img/assets/icons/more.svg) button in the top right corner of the admin panel.
-2. Select ![Edit icon](/img/assets/icons/edit.svg) **Edit**.
+1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+2. Select ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit**.
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
 
-## Scheduling a release <FutureBadge /><AlphaBadge />
-
-:::callout 🚧 Experimental feature
-Scheduling a release is an experimental feature and currently requires enabling the proper `contentReleasesScheduling` future flag in your configuration file (see [Developer Docs](/dev-docs/configurations/features) for details).
-:::
+## Scheduling a release
 
 Releases can be [published manually](#publishing-a-release) or scheduled to be automatically published at a given date and time, with the timezone of your choice.
 
@@ -57,8 +52,8 @@ You can schedule a release:
 - or once the release is already created, by editing it.
 
 To schedule an existing release, while on a release page:
-1. Click on the ![More icon](/img/assets/icons/more.svg) button in the top right corner of the admin panel.
-2. Select ![Edit icon](/img/assets/icons/edit.svg) **Edit**.
+1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+2. Select ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit**.
 3. In the modal, check the **Schedule release** checkbox.
 4. Select a date, time, and timezone for the release to be published.
 5. Click **Save**.
@@ -79,13 +74,9 @@ A release page can display entries either grouped by locale, content-type, or ac
 
 A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
 
-:::caution
-Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
-:::
-
 ## Removing entries from a release
 
-Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/more.svg) at the end of the line of an entry and select the **Remove from release** button.
+Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/v5/More.svg) at the end of the row of an entry and select the **Remove from release** button.
 
 ## Publishing a release
 
@@ -93,11 +84,11 @@ Publishing a release means that all the actions (publish or unpublish) defined f
 
 The _Status_ column displays the status of each entry:
 
-   - ![Success icon](/img/assets/icons/CheckCircle.svg) Already published: the entry is already published and publishing the release will not affect this entry 
-   - ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish: the entry is ready to  be published with the release
-   - ![Fail icon](/img/assets/icons/CrossCircle.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. 
+   - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Already published: the entry is already published and publishing the release will not affect this entry 
+   - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry is ready to  be published with the release
+   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
    
-If some of your entries have a ![Fail icon](/img/assets/icons/CrossCircle.svg) status, click the ![More icon](/img/assets/icons/more.svg) and the **Edit the entry** button to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+If some of your entries have a ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![More icon](/img/assets/icons/v5/More.svg) and the **Edit the entry** button to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
 
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
@@ -107,6 +98,6 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 You can delete a release. Deleting a release will only delete the release itself, but not the content-type entries included in the release. To delete a release, while on the release page:
 
-1. Click on the ![More icon](/img/assets/icons/more.svg) button in the top right corner of the admin panel.
-2. Select ![Delete icon](/img/assets/icons/delete.svg) **Delete**.
-3. In the confirmation dialog, click ![Delete icon](/img/assets/icons/delete.svg) **Confirm**.
+1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+2. Select ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete**.
+3. In the confirmation dialog, click ![Delete icon](/img/assets/icons/v5/Trash.svg) **Confirm**.

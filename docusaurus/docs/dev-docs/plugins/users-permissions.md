@@ -16,13 +16,9 @@ tags:
 - Users, Roles & Permissions 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Users & Permissions plugin
 
-<NotV5 />
-
-This plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API. It also provides an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
+The Users & Permissions plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users. The Users & Permissions plugin is installed by default and can not be uninstalled. 
 
 The user guide describes how to use the [Users & Permissions plugin](/user-docs/users-roles-permissions) from the admin panel. The present page is more about the developer-related aspects of using the Users & Permissions plugin.
 
@@ -938,7 +934,7 @@ module.exports = {
         grantConfig: {
           key: "",
           secret: "",
-          callback: `${strapi.config.server.url}/auth/test-provider/callback`,
+          callback: `${strapi.config.server.url}/auth/example-provider-name/callback`,
           scope: ["email"],
           authorize_url: "https://awesome.com/authorize",
           access_url: "https://awesome.com/token",

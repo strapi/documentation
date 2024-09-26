@@ -14,12 +14,7 @@ tags:
 - routes
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Policies
-
-<NotV5 />
 
 Policies are functions that execute specific logic on each request before it reaches the [controller](/dev-docs/backend-customization/controllers). They are mostly used for securing business logic.
 

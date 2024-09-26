@@ -15,21 +15,11 @@ tags:
 - route middlewares
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares configuration
 
-<NotV5 />
-
-:::strapi Different types of middlewares
-
-In Strapi, 2 middleware concepts coexist:
-
-- **Global middlewares** are configured and enabled as global middlewares for the entire Strapi server application. The present documentation describes how to configure global middlewares.<br/>Strapi also offers the ability to implement your own custom middlewares (see [middlewares customization documentation](/dev-docs//backend-customization/middlewares.md)).
-
-- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [route middlewares documentation](/dev-docs/backend-customization/routes.md#middlewares).
-
-:::
+<MiddlewareTypes />
 
 The `./config/middlewares.js` file is used to define all the global middlewares that should be applied by the Strapi server.
 

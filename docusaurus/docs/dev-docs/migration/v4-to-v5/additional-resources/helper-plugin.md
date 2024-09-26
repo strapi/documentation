@@ -7,14 +7,10 @@ tags:
   - upgrade to Strapi 5
 ---
 
-import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
-
 # `helper-plugin` migration reference
 
 This document has been written to help developers migrate their Strapi plugins and applications to _not_ use the `helper-plugin` package.
 It lists every export that existed in the `helper-plugin` package, in alphabetical order and grouped by domain.
-
-<DoNotMigrateYet />
 
 ## Components
 
@@ -25,6 +21,16 @@ This component has been removed and refactored to be part of the `Page` componen
 ```tsx
 // Before
 import { AnErrorOccurred } from '@strapi/helper-plugin';
+
+const MyPage = () => {
+  // ...
+
+  if (error) {
+    return <AnErrorOccurred />;
+  }
+
+  // ...
+};
 
 // After
 import { Page } from '@strapi/strapi/admin';
@@ -44,6 +50,8 @@ const MyPage = () => {
 
 This component has been removed and not replaced. If you feel like you need this component, please open an issue on the Strapi repository to discuss your usecase.
 
+We recommend using the `Page.Protect` component from `@strapi/strapi/admin` instead (see [`CheckPagePermissions`](#checkpagepermissions) for an example). If you need to check permissions for a lower level component you can use [the `useRBAC` hook](#userbac).
+
 ### CheckPagePermissions
 
 This component has been removed and refactored to be part of the `Page` component exported from `@strapi/strapi/admin`. You should use the `Page` component from there:
@@ -52,14 +60,24 @@ This component has been removed and refactored to be part of the `Page` componen
 // Before
 import { CheckPagePermissions } from '@strapi/helper-plugin';
 
+const MyProtectedPage = () => {
+  return (
+    <CheckPagePermissions
+        permissions={[action: 'plugin::my-plugin.read']}
+    >
+      <MyPag />
+    </CheckPagePermissions>
+  );
+};
+
 // After
 import { Page } from '@strapi/strapi/admin';
 
 const MyProtectedPage = () => {
+  <Page.Protect permissions={[action: 'plugin::my-plugin.read']}>
   return (
-    <Page.Protect permissions={[action: 'plugin::my-plugin.read']}>
-      <MyPage />
     </Page.Protect>
+      <MyPage />
   );
 };
 ```
@@ -100,9 +118,13 @@ import { DateTimePicker } from '@strapi/design-system';
 
 This component was previously deprecated and has now been removed. Similar to the deprecation notice, we recommend using the `Table` component from `@strapi/strapi/admin`.
 
+Please see the contributors [documentation for the `Table` component](https://v5.contributor.strapi.io/exports/namespaces/Table) for more information.
+
 ### EmptyBodyTable
 
 This component has been removed and is part of the `Table` component.
+
+Please see the contributors [documentation for the `Table` component](https://v5.contributor.strapi.io/exports/namespaces/Table) for more information.
 
 ### EmptyStateLayout
 
@@ -127,6 +149,20 @@ This component was moved to the `admin` package and can now be imported via the 
 ```tsx
 // Before
 import { FilterListURLQuery } from '@strapi/helper-plugin';
+
+const MyComponent = () => {
+  return (
+    <FilterListURLQuery
+      filtersSchema={[
+        {
+          name: 'name',
+          metadatas: { label: 'Name' },
+          fieldSchema: { type: 'string' },
+        },
+      ]}
+    />
+  );
+};
 
 // After
 import { Filters } from '@strapi/strapi/admin';
@@ -183,6 +219,19 @@ This component has been removed and refactored to become the `InputRenderer` com
 // Before
 import { GenericInput } from '@strapi/helper-plugin';
 
+const MyComponent = () => {
+  return (
+    <GenericInput
+      type={'type'}
+      hint={'hint'}
+      label={'label'}
+      name={'name'}
+      onChange={onMetaChange}
+      value={'value'}
+    />
+  );
+};
+
 // After
 import { InputRenderer } from '@strapi/strapi/admin';
 ```
@@ -194,6 +243,13 @@ Note, that the `InputRenderer` component has a different API, and you should ref
 This component has been removed and not replaced. However, you can easily replicate this in your own project by using the `useStrapiApp` hook:
 
 ```tsx
+// Before
+
+import { InjectionZone } from '@strapi/helper-plugin';
+<InjectionZone area={`injection.zone.area`} />;
+
+// After
+
 const MyComponent = ({ area, ...compProps }) => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
 
@@ -206,7 +262,9 @@ const MyComponent = ({ area, ...compProps }) => {
     return null;
   }
 
-  return components.map(({ name, Component }) => <Component key={name} {...props} />);
+  return components.map(({ name, Component }) => (
+    <Component key={name} {...props} />
+  ));
 };
 ```
 
@@ -260,6 +318,16 @@ This component has been removed and refactored to be part of the `Page` componen
 // Before
 import { LoadingIndicatorPage } from '@strapi/helper-plugin';
 
+const MyPage = () => {
+  // ...
+
+  if (isLoading) {
+    return <LoadingIndicatorPage />;
+  }
+
+  // ...
+};
+
 // After
 import { Page } from '@strapi/strapi/admin';
 
@@ -278,6 +346,28 @@ const MyPage = () => {
 
 This component has been removed and not replaced, you should use the `EmptyStateLayout` component from `@strapi/design-system`.
 
+```tsx
+// Before
+import { NoContent } from '@strapi/helper-plugin';
+
+<NoContent
+  content={{
+    id: 'translation_id',
+    defaultMessage: 'Message',
+  }}
+/>;
+
+// After
+import { EmptyStateLayout } from '@strapi/design-system';
+
+<EmptyStateLayout
+  content={{
+    id: 'translation_id',
+    defaultMessage: 'Message',
+  }}
+/>;
+```
+
 ### NoMedia
 
 This component has been removed and not replaced. If you feel like you need this component, please open an issue on the Strapi repository to discuss your usecase.
@@ -289,6 +379,16 @@ This component has been removed and refactored to be part of the `Page` componen
 ```tsx
 // Before
 import { NoPermissions } from '@strapi/helper-plugin';
+
+const MyPage = () => {
+  // ...
+
+  if (!canRead) {
+    return <NoPermissions />;
+  }
+
+  // ...
+};
 
 // After
 import { Page } from '@strapi/strapi/admin';
@@ -313,7 +413,12 @@ import { TextInput } from '@strapi/design-system';
 
 const MyComponent = (props) => {
   return (
-    <TextInput disabled placeholder="No permissions to see this field" type="text" {...props} />
+    <TextInput
+      disabled
+      placeholder="No permissions to see this field"
+      type="text"
+      {...props}
+    />
   );
 };
 ```
@@ -325,6 +430,12 @@ This component was moved to the `admin` package and can now be imported via the 
 ```tsx
 // Before
 import { PageSizeURLQuery } from '@strapi/helper-plugin';
+
+const MyComponent = () => {
+  return (
+    <PageSizeURLQuery options={['12', '24', '50', '100']} defaultValue="24" />
+  );
+};
 
 // After
 import { Pagination } from '@strapi/strapi/admin';
@@ -394,6 +505,16 @@ This component should be imported from the `@strapi/design-system` package:
 // Before
 import { Status } from '@strapi/helper-plugin';
 
+const MyComponent = () => {
+  return (
+    <Status variant={statusColor} showBullet={false} size="S">
+      <Typography fontWeight="bold" textColor={`${statusColor}700`}>
+        {stateMessage[status]}
+      </Typography>
+    </Status>
+  );
+};
+
 // After
 import { Status } from '@strapi/design-system';
 ```
@@ -405,6 +526,47 @@ This component should be imported from the `@strapi/strapi/admin` package:
 ```tsx
 // Before
 import { Table } from '@strapi/helper-plugin';
+
+const MyComponent = () => {
+  return (
+    <Table colCount={2} rowCount={2}>
+      <Thead>
+        <Tr>
+          <Th>
+            <Typography variant="sigma" textColor="neutral600">
+              {`Name`}
+            </Typography>
+          </Th>
+          <Th>
+            <Typography variant="sigma" textColor="neutral600">
+              {`Description`}
+            </Typography>
+          </Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {data?.map(({ name, description }) => {
+          return (
+            <Tr key={name}>
+              <Td>
+                <Typography
+                  textColor="neutral800"
+                  variant="omega"
+                  fontWeight="bold"
+                >
+                  {name}
+                </Typography>
+              </Td>
+              <Td>
+                <Typography textColor="neutral800">{description}</Typography>
+              </Td>
+            </Tr>
+          );
+        })}
+      </Tbody>
+    </Table>
+  );
+};
 
 // After
 import { Table } from '@strapi/strapi/admin';
@@ -426,37 +588,67 @@ This function has been removed and not replaced. If you feel like you need this 
 
 ### useCMEditViewDataManager
 
-This hook has been split into different hooks, each with more ability then it's previous:
-
-- useDocument
-- useDocumentLayout
-- useDocumentRBAC
-- useForm
+A lot of the internals have been reworked and split. We are exposing a main experimental hook to replace this one named `useContentManagerContext` while the rest of the logic is in several hooks.
 
 ```tsx
 // Before
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 // After
-import {
-  useDocument,
-  useDocumentActions,
-  useDocumentLayout,
-  useDocumentRBAC,
-  useForm,
-} from '@strapi/strapi/admin/hooks';
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin/hooks';
 ```
 
 Some common use cases are listed below:
 
 ```tsx
 // Before
-const { slug, isSingleType, isCreatingEntry } = useCMEditViewDataManager();
+const { slug, isSingleType, isCreatingEntry, hasDraftAndPublished } =
+  useCMEditViewDataManager();
 
 // After
-const { model, id, collectionType } = useDocument();
-const isSingleType = collectionType === 'single-types';
-const isCreatingEntry = id === 'create';
+const {
+  model,
+  collectionType,
+  id,
+  slug,
+  isCreatingEntry,
+  isSingleType,
+  hasDraftAndPublish,
+} = useContentManagerContext();
+```
+
+```tsx
+// Before
+
+// 'allLayoutData' has been removed. It contained 'components' and 'contentType' which can be extracted from the 'useContentManagerContext' hook as seen below.
+const { allLayoutData } = useCMEditViewDataManager();
+
+// After
+const { components, contentType } = useContentManagerContext();
+```
+
+```tsx
+// Before
+const { layout } = useCMEditViewDataManager();
+
+// After
+const { layout } = useContentManagerContext();
+
+const {
+  edit: { layout, components },
+  list: { layout },
+} = layout;
+```
+
+```tsx
+// Before
+const { initialData, modifiedData, onChange } = useCMEditViewDataManager();
+
+// After
+const { form } = useContentManagerContext();
+
+// Here 'initialData' and 'modifiedData' correspond to 'initialValues' and 'values'.
+const { initialValues, values, onChange } = form;
 ```
 
 ```tsx
@@ -465,16 +657,6 @@ const { onPublish, onUnpublish } = useCMEditViewDataManager();
 
 // After
 const { publish, unpublish } = useDocumentActions();
-```
-
-```tsx
-// Before
-const { layout } = useCMEditViewDataManager();
-
-// After
-const {
-  edit: { layout, components },
-} = useDocumentLayout();
 ```
 
 ## Features
@@ -547,7 +729,10 @@ const { allPermission, refetchPermissions } = useRBACProvider();
 import { useAuth } from '@strapi/strapi/admin';
 
 const permissions = useAuth('COMPONENT_NAME', (state) => state.permissions);
-const refetchPermission = useAuth('COMPONENT_NAME', (state) => state.refetchPermission);
+const refetchPermission = useAuth(
+  'COMPONENT_NAME',
+  (state) => state.refetchPermission
+);
 ```
 
 ### OverlayBlocker
@@ -732,6 +917,11 @@ This util has been removed and not replaced. If you feel like you need this util
 
 This util has been removed and not replaced. If you feel like you need this util, please open an issue on the Strapi repository to discuss your usecase.
 
+### auth
+
+This util has been removed and not replaced. If you're trying to interact with the token or current user you use should use the `useAuth` hook instead.
+If you're generally interacting with localStorage, then access this directly e.g. `localStorage.getItem('myKey')`.
+
 ### hasPermissions
 
 This util has been removed. If you need to use it, you should use the `checkUserHasPermissions` function from the `useAuth` hook.
@@ -739,6 +929,12 @@ This util has been removed. If you need to use it, you should use the `checkUser
 ```tsx
 // Before
 import { hasPermissions } from '@strapi/helper-plugin';
+
+const permissions = await Promise.all(
+  generalSectionRawLinks.map(({ permissions }) =>
+    hasPermissions(userPermissions, permissions)
+  )
+);
 
 // After
 import { useAuth } from '@strapi/strapi/admin';
@@ -759,7 +955,26 @@ This util has been removed and not replaced. Use the strapi backendUrl to prefix
 
 ### prefixPluginTranslations
 
-This util has been removed and not replaced. If you feel like you need this util, please open an issue on the Strapi repository to discuss your usecase.
+This util has been removed and not replaced. Your plugin should define this util itself if needed, with an implementation like this:
+
+```tsx
+type TradOptions = Record<string, string>;
+
+const prefixPluginTranslations = (
+  trad: TradOptions,
+  pluginId: string
+): TradOptions => {
+  if (!pluginId) {
+    throw new TypeError("pluginId can't be empty");
+  }
+  return Object.keys(trad).reduce((acc, current) => {
+    acc[`${pluginId}.${current}`] = trad[current];
+    return acc;
+  }, {} as TradOptions);
+};
+```
+
+If you feel like you need this util, please open an issue on the Strapi repository to discuss your usecase.
 
 ### pxToRem
 
@@ -783,7 +998,16 @@ This util has been removed and not replaced.
 You can use `useFetchClient` from `@strapi/admin/strapi-admin`.
 
 ```tsx
+// Before
+import { request } from '@strapi/helper-plugin';
+
+request(`/${pluginId}/settings/config`, { method: 'GET' });
+
+// After
 import { useFetchClient } from '@strapi/admin/strapi-admin';
+
+const { get } = useFetchClient();
+get(`/${pluginId}/settings/config`);
 ```
 
 And you can use it like this

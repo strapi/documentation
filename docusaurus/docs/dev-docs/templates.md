@@ -1,24 +1,18 @@
 ---
 title: Templates
-description: Quickly create a pre-made Strapi application designed for a specific use case. It allows you to quickly bootstrap a custom Strapi application.
+description: Use and create pre-made Strapi applications designed for a specific use case.
 displayed_sidebar: devDocsSidebar
-
+tags:
+- installation
+- templates
+- CLI
 ---
 
 # Templates
 
-:::caution
-Templates are currently not usable with Strapi 5 pre-releases versions (beta or release candidate versions). Templates will be available again with the Strapi 5 stable release.
-:::
+Templates in Strapi 5 are standalone, pre-made Strapi applications designed for specific use cases.
 
-Templates are pre-made Strapi configurations designed for specific use cases. They allow bootstrapping a custom Strapi application. A template can configure [collection types and single types](/user-docs/content-type-builder), [components](/dev-docs/backend-customization/models#components-json) and [dynamic zones](/dev-docs/backend-customization/models#dynamic-zones), and [plugins](/dev-docs/plugins).
-
-:::strapi Templates vs. Starters
-
-- A template is only useful once applied on top of a default Strapi application via the CLI. It is not a configured application and cannot be run on its own since it lacks many files (e.g. database configurations, `package.json`, etc.).
-- A starter is a pre-made frontend application that consumes a Strapi API. Only one starter is currently available, the [Next.js starter](https://strapi.io/starters).
-
-:::
+Strapi 5 templates are folders that include all files and folders that you would find in a typical Strapi application (see [project structure](/dev-docs/project-structure)).
 
 ## Using a template
 
@@ -29,7 +23,7 @@ To create a new Strapi project based on a template, run the following command:
 <TabItem value="yarn" label="Yarn">
 
 ```sh
-yarn create strapi-app my-project --template <template-package>
+yarn create strapi-app my-project --template <template-name-or-url>
 ```
 
 </TabItem>
@@ -37,115 +31,29 @@ yarn create strapi-app my-project --template <template-package>
 <TabItem value="npm" label="NPM">
 
 ```sh
-npx create-strapi-app@latest my-project --template <template-package>
+npx create-strapi-app@latest my-project --template <template-name-or-url>
 ```
 
 </TabItem>
 
 </Tabs>
 
-npm is used to install template packages, so `<template-package>` can match [any format](https://docs.npmjs.com/cli/v8/commands/npm-install) supported by `npm install`. This includes npm packages, scoped packages, packages with a precise version or tag, and local directories for development.
+In addition to the mandatory `--template` parameter, you can pass the optional `--template-path` and `--template-branch` options to more precisely define the template to use.
 
-:::tip
-For convenience, official Strapi templates also have a shorthand, making it possible to omit the `@strapi/template-` prefix from the template npm package name:
+The following table lists all the possible ways to define which template to use:
 
-```sh
-# use the full template name
-yarn create strapi-app my-project --template @strapi/template-blog
-
-# use the shorthand
-yarn create strapi-app my-project --template blog
-```
-
-:::
-
-The `--template` option can be used in combination with all other `create-strapi-app` options (e.g. `--quickstart` or `--no-run`).
+| Syntax | Description |
+|--------|-------------|
+| `--template website` | Using one of the [Strapi-maintained templates](https://github.com/strapi/strapi/tree/develop/templates) calling it by its (folder) name. |
+| `--template strapi/strapi` | Using the template's GitHub repository shorthand.<br/>This will use the default repository branch. |
+| `--template strapi/strapi/some/sub/path` | Using the template's GitHub repository shorthand and specifying a subpath.<br/>This will use the default repository branch. |
+| `--template strapi/strapi`<br/>`--template-branch=xxx`<br/>`--template-path=some/sub/path` | The most verbose way, explicitly defining a template branch and a subpath. |
+| `--template https://github.com/owner/some-template-repo` | Using a full repository URL.<br/>This will use the default repository branch. |
+| `--template https://github.com/owner/some-template-repo --template-branch=xxx --template-path=sub/path` | Using a full repository URL, and specifying both the branch and the subpath for the template. |
+| `--template https://github.com/strapi/strapi/tree/branch/sub/path` | Using a repository, branch, and subpath directly.<br/><br/>⚠️ _Warning: This won't work with branch names that include a `/`. In such cases, it's best to explicitly define `--template-branch` and `--template-path`._ |
 
 ## Creating a template
 
-Templates are generated from a customized Strapi application and published to the npm package registry. Before creating a template make sure you have a Strapi application that matches your use case and that you have read the [template requirements](#requirements).
+Creating a Strapi 5 template is as simple as creating a Strapi application. Create the application (see [CLI installation](/dev-docs/installation/cli)) and the generated folder containing your Strapi 5 application can serve as a template. You can then pass it to the `--template` flag when creating a new Strapi 5 application to use it as a template.
 
-### Requirements
-
-Keep the following requirements in mind when creating a template:
-
-* Templates should not deal with environment-specific configurations (e.g. databases or upload and email providers). This keeps templates maintainable and avoids conflicts with other CLI options (e.g. `--quickstart`).
-
-* Templates must follow a specific file structure, containing the following at the repository's root:
-    * [`template` directory](#template-directory)
-    * [`package.json` file](https://docs.npmjs.com/creating-a-package-json-file)
-    * [`template.json` file](#templatejson-file)
-
-This structure can be created manually or automatically generated with the `strapi templates:generate` command:
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="Yarn">
-
-```sh
-yarn strapi templates:generate <path>
-```
-
-</TabItem>
-
-<TabItem value="npm" label="NPM">
-  
-```sh
-npx strapi templates:generate [path]
-```
-  
-</TabItem>
-
-</Tabs>
-
-The repository root can contain any other files or directories desired, but must include the `template` directory, `package.json` file, and `template.json` file at a minimum.
-
-#### `template` directory
-
-The `template` directory is used to extend the file contents of a Strapi project and should only include the files that will overwrite the default Strapi application.
-
-Only the following contents are allowed inside the `template` directory:
-
-- `README.md`: the readme of an application made with this template
-- `.env.example` to specify required environment variables
-- `src/`
-- `data/` to store the data imported by a seed script
-- `public/` to serve files
-- `scripts/` for custom scripts
-
-:::caution
-If any unexpected file or directory is found, the installation will crash.
-:::
-
-#### `template.json` file
-
-The `template.json` is used to extend the Strapi application's default `package.json`. All properties overwriting the default `package.json` should be included in a root `package` property:
-
-```json title="./template.json"
-
-{
-  "package": {
-    "dependencies": {
-      "@strapi/plugin-graphql": "^4.0.0"
-    },
-    "scripts": {
-      "custom": "node ./scripts/custom.js"
-    }
-  }
-}
-```
-
-### Packaging and publishing
-
-With the above [requirements](#requirements) in mind, follow these steps to create and publish a template:
-
-1. [Create a standard Strapi application](/dev-docs/quick-start) with `create-strapi-app`, using the `--quickstart` option.
-2. Customize your application to match the needs of your use case.
-3. Generate your template using the CLI] by running `strapi templates:generate <path>`
-4. Navigate to this path to see your generated template.
-5. If you have modified your application's `package.json`, include these changes (and _only_ these changes) in `template.json` in a `package` property. If not, leave it as an empty object.
-6. Enter `npm publish` to make your template available on the npm package registry.
-
-:::strapi List of templates
-[Strapi-maintained](https://github.com/strapi/starters-and-templates) templates and [community-maintained](https://github.com/strapi/community-content/tree/master/templates) templates can be found on GitHub.
-:::
+An example of what a template could look like is the [Strapi-maintained `website` template](https://github.com/strapi/strapi/tree/develop/templates/website).

@@ -347,3 +347,7 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
+
+:::tip
+To learn more about using CRON jobs in your code, please refer to the [corresponding guide](/dev-docs/configurations/guides/use-cron-jobs).
+:::

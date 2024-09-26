@@ -11,11 +11,8 @@ tags:
 ---
 
 import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Installing from CLI
-
-<NotV5 />
 
 Strapi CLI (Command Line Interface) installation scripts are the fastest way to get Strapi running locally. The following guide is the installation option most recommended by Strapi.
 
@@ -89,17 +86,17 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </Tabs>
 
-2. Type the name of your project. If you press `Enter` instead of typing something, the default `my-strapi-project` name will be used.
+2. The terminal will ask you whether you want to `Login/Signup` to Strapi Cloud (and start using your free 14-day trial projects), or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to skip this step, you will need to [host the project yourself](#skipping-the-strapi-cloud-login-step).
 
-    :::tip
-    This question can be skipped by passing the project name to the command at step 1 (e.g., `npx create-strapi@latest my-strapi-project`).
-    :::
+2. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
 
-3. Choose whether you want to use TypeScript or not, by typing `y` for yes or `n` for no, then pressing `Enter`.<br/>If you press `Enter` without typing anything, as "yes" is the default selected option, it will create a TypeScript project.
+  ![Terminal prompts at installation](/img/assets/installation/prompts.png)
 
-4. Choose whether you want to use the default database type (SQLite) or not, by typing `y` for "yes" or `n` for "no", then pressing `Enter`.<br/>If you press `Enter` without typing anything, as "yes" is the default selected option, it will create a project with a SQLite database.
+  :::tip
+  You can skip these questions using various options passed to the installation command. Please refer to the [table](#cli-installation-options) for the full list of available options.
+  :::
 
-5. _(optional)_ If you answered `n` for "no" to the previous (default database) question, the CLI will ask for more questions about the database:
+3. _(optional)_ If you answered `n` for "no" to the default (SQLite) database question, the CLI will ask for more questions about the database:
 
     * Use arrow keys to select the database type you want, then press `Enter`.
     * Give the database a name, define the database host address and port, define the database admin username and password, and define whether the database will use a SSL connection.<br/>For any of these questions, if you press `Enter` without typing anything, the default value (indicated in parentheses in the terminal output) will be used.
@@ -118,7 +115,15 @@ The above installation guide only covers the basic installation option using the
 | `--use-npm` | Force the usage of [npm](https://www.npmjs.com/) as the project package manager |
 | `--use-yarn` | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager |
 | `--use-pnpm` | Force the usage of [pnpm](https://pnpm.io/) as the project package manager |
+| `--install`  | Install all dependencies, skipping the related CLI prompt |
+| `--no-install`  | Do not install all dependencies, skipping the related CLI prompt |
+| `--git-init` | Initialize a git repository, skipping the related CLI prompt |
+| `--no-git-init` | Do not initialize a git repository, skipping the related CLI prompt |
+| `--example`  | Add example data, skipping the related CLI prompt |
+| `--no-example`  | Do not add example data, skipping the related CLI prompt |
 | `--skip-cloud` |  Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step) |
+| `--skip-db` | Skip all database-related prompts and create a project with the default (SQLite) database |
+| `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/dev-docs/templates) for details. |
 | `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
 | `--dbhost <dbhost>` | Define the database host to use by replacing `<dbclient>` in the command by the value of your choice |
 | `--dbport <dbport>` | Define the database port to use by replacing `<dbclient>` in the command by the value of your choice |
@@ -140,9 +145,9 @@ The above installation guide only covers the basic installation option using the
 When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free, 14-day trial [Strapi Cloud](/cloud/intro#what-is-strapi-cloud) project as described in the [Quick Start Guide](/dev-docs/quick-start).
 
 If you prefer skipping this Strapi Cloud login part, use the arrow keys to select `Skip`. The script will resume and create a local project. To deploy this project and host it online, you could later choose to:
-- host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following a [3rd-party deployment guide](/dev-docs/deployment),
-<!-- TODO: Update link to cloud CLI: /cloud/cli/cloud-cli when it's ported to Strapi 5 -->
-- or use the [Cloud CLI](#) commands to login to Strapi Cloud and deploy your project there.
+
+- host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following the [deployment guide](/dev-docs/deployment),
+- or use the [Cloud CLI](/cloud/cli/cloud-cli#) commands to login to Strapi Cloud and deploy your project there.
 
 If you want to host your project yourself and are not already familiar with GitHub, the following togglable content should get you started👇.
 

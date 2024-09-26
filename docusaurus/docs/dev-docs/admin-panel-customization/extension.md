@@ -1,6 +1,6 @@
 ---
 title: Admin panel extension
-# description: todo
+description: Learn more about extending Strapi's admin panel.
 sidebar_label: Extension
 toc_max_heading_level: 4
 tags:

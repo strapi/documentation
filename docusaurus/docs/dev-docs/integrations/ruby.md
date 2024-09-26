@@ -2,17 +2,15 @@
 title: Ruby
 displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Ruby.
-tags:
-- collection type
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import RemovingIntegrations from '/docs/snippets/integration-guides-soon-removed.md'
 
 # Getting Started with Ruby
 
-<NotV5 />
+<RemovingIntegrations />
 
-This integration guide follows the [Quick Start Guide](/dev-docs/quick-start) and assumes you have you have fully completed the "Hands-on" path. You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
+This integration guide follows the [Quick Start Guide](https://docs.strapi.io/dev-docs/quick-start). You should be able to consume the API by browsing the URL [http://localhost:1337/api/restaurants](http://localhost:1337/api/restaurants).
 
 If you haven't gone through the Quick Start Guide, the way you request a Strapi API with [Ruby](https://www.ruby-lang.org/en/) remains the same except that you do not fetch the same content.
 

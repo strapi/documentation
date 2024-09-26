@@ -42,7 +42,9 @@ The following attribute names can be created on a content type:
 - `localizations`
 - `strapi_assignee`
 - `strapi_stage`
-- anything with the prefix `strapi`
+- `then`
+- `document`
+- anything with the prefix `strapi`, `_strapi`, or `__strapi`
 
 Any model name can be prefixed with `strapi`.
 
@@ -62,9 +64,11 @@ The following attribute names can **not** be created on a content type:
 - `localizations`
 - `strapi_assignee`
 - `strapi_stage`
-- `anything` with the prefix `strapi` or `__strapi`
+- `then`
+- `document`
+- anything with the prefix `strapi`, `_strapi`, or `__strapi`
 
-Model names can **not** be prefixed with `strapi` or `__strapi`.
+Model names can **not** be prefixed with `strapi`, `_strapi`, or `__strapi`.
 
 </SideBySideColumn>
 

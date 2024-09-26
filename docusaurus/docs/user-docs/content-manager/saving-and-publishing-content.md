@@ -14,8 +14,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Saving, publishing and deleting content
 
-<NotV5/>
-
 Strapi allows you to manage your content throughout its whole lifecycle, whether you are working on its draft version, about to finish it and share it with the world, or wanting to delete it when it's obsolete.
 
 ## Saving & publishing content
@@ -49,12 +47,12 @@ While editing a document, you can see 2 tabs:
 - The _Draft_ tab is where you can edit your content.
 - The _Published_ tab is a read-only tab where edition of all fields is disabled. The _Published_ tab only exists to show what is the content of fields in the published version.
 
-By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button in the _Document_ box on the right of the edit view, until they are ready to be published.
+By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button in the _Entry_ box on the right side of the interface, until they are ready to be published.
 
-Once you made changes to a draft, you have 3 possible options, all available in the _Document_ box on the right side of the edit view:
+Once you made changes to a draft, you have 3 possible options, all available in the _Entry_ box on the right side of the interface:
 - **Publish** your document (see [publishing a draft](#publishing-a-draft)),
 - **Save** your draft for later retrieval,
-- or discard changes, by clicking on ![More icon](/img/assets/icons/more.svg) and choosing ![Discard changes icon](/img/assets/icons/cross-circle.svg) **Discard changes**.
+- or discard changes, by clicking on ![More icon](/img/assets/icons/v5/More.svg) and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
 
 ### Publishing and unpublishing
 
@@ -62,7 +60,7 @@ While editing a document, you can decide to publish a draft or unpublish previou
 
 #### Publishing a draft
 
-To publish a draft, click on the **Publish** button in the _Document_ box on the right of the content editor.
+To publish a draft, click on the **Publish** button in the _Entry_ box on the right side of the interface.
 
 After a draft is published:
 
@@ -91,11 +89,11 @@ To schedule publication, i.e., convert a draft to a published entry at a given d
 
 Previously published content can be unpublished.
 
-To unpublish content,  from the _Draft_ tab, click on ![More icon](/img/assets/icons/more.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
+To unpublish content,  from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
 If the draft version of the document contains content different from the published version, you can decide what to do with both content when unpublishing:
 
-1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/more.svg) in the _Document_ box on the right of the content editor and choose the **Unpublish** button.
+1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 2. In the Confirmation dialog that opens, you can choose to:
     - **Unpublish and keep last draft**, so that all the content you currently have in the _Draft_ tab is preserved, but the all the content from the _Published_ tab is definitely gone
     - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab
@@ -117,8 +115,13 @@ Selecting multiple entries from the Content Manager's list view will display add
 If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#internationalization) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
-<!-- TODO: update screenshot -->
-![Selecting entries for bulk publish/unpublish](/img/assets/content-manager/bulk-publish.png)
+<ThemedImage
+  alt="Unpublish a document"
+  sources={{
+    light: '/img/assets/content-manager/bulk-publish.png',
+    dark: '/img/assets/content-manager/bulk-publish_DARK.png',
+  }}
+/>
 
 #### Bulk publishing drafts
 
@@ -128,10 +131,10 @@ To publish several entries at the same time:
 2. Click on the **Publish** button located above the header of the table.
 3. In the _Publish entries_ dialog, check the list of selected entries and their status:
 
-   - ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish: the entry can be published
-   - ![Fail icon](/img/assets/icons/CrossCircle.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
+   - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry can be published
+   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
 
-4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/CrossCircle.svg) status, click the ![Edit icon](/img/assets/icons/edit.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
+4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![Edit icon](/img/assets/icons/v5/Pencil.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
 5. Click the **Publish** button.
 6. In the confirmation dialog box, confirm your choice by clicking again on the **Publish** button.
 
@@ -147,11 +150,11 @@ To unpublish several entries at the same time:
 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
 
-1. In the edit view of the entry, click on ![More icon](/img/assets/icons/more.svg) at the top right of the interface, and click the **Delete document** button.<br/>If Internationalization is enabled for the content-type, you can also choose to delete only the currently selected locale by clicking on the **Delete locale** button.
+1. In the edit view of the entry, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the **Delete document** button.<br/>If Internationalization is enabled for the content-type, you can also choose to delete only the currently selected locale by clicking on the **Delete locale** button.
 2. In the window that pops up, click on the **Confirm** button to confirm the deletion.
 
 :::tip
-You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/more.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/delete.svg) **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
+You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/v5/More.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
 <!-- TODO: Commented out since it's not currently testable and only planned for stable release -->
 <!-- You also have the possibility to delete multiple entries at the same time. To do so, select your entries to delete by ticking the box on the left side of the entries' record. Then, click on the **Delete** button located above the header of the table. If [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#internationalization) is enabled for the content-type, the confirmation dialog box asks whether you want to delete only the current locales for the document, or the whole documents including all their locales. -->
 :::

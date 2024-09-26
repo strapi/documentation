@@ -5,3 +5,16 @@
   border: 0.125rem solid var(--strapi-neutral-200);
   border-radius: 0.25rem;
 }
+
+img[src^="data:image/svg+xml"] {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+@include dark {
+  img[src^="data:image/svg+xml"] {
+    background-color: white;
+  }
+}
+

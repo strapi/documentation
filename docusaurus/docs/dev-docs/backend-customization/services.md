@@ -11,12 +11,7 @@ tags:
 - REST API 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Services
-
-<NotV5 />
 
 Services are a set of reusable functions. They are particularly useful to respect the "don’t repeat yourself" (DRY) programming concept and to simplify [controllers](/dev-docs/backend-customization/controllers.md) logic.
 
@@ -74,8 +69,8 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
   },
 
   // Method 3: Replacing a core service
-  async findOne(entityId, params = {}) {
-    return strapi.entityService.findOne('api::restaurant.restaurant', entityId, this.getFetchParams(params));
+  async findOne(documentId, params = {}) {
+    return strapi.documents('api::restaurant.restaurant').findOne(documentId, this.getFetchParams(params));
   }
 }));
 ```
@@ -114,8 +109,8 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
   },
 
   // Method 3: Replacing a core service
-  async findOne(entityId, params = {}) {
-    return strapi.entityService.findOne('api::restaurant.restaurant', entityId, this.getFetchParams(params));
+  async findOne(documentId, params = {}) {
+     return strapi.documents('api::restaurant.restaurant').findOne(documentId, this.getFetchParams(params));
   }
 }));
 ```
@@ -299,9 +294,9 @@ async find(params) {
 <TabItem value="find-one" label="findOne()">
 
 ```js
-async findOne(entityId, params) {
+async findOne(documentId, params) {
   // some logic here
-  const result = await super.findOne(entityId, params);
+  const result = await super.findOne(documentId, params);
   // some more logic
 
   return result;
@@ -327,9 +322,9 @@ async create(params) {
 <TabItem value="update" label="update()">
 
 ```js
-async update(entityId, params) {
+async update(documentId, params) {
   // some logic here
-  const result = await super.update(entityId, params);
+  const result = await super.update(documentId, params);
   // some more logic
 
   return result;
@@ -341,9 +336,9 @@ async update(entityId, params) {
 <TabItem value="delete" label="delete()">
 
 ```js
-async delete(entityId, params) {
+async delete(documentId, params) {
   // some logic here
-  const result = await super.delete(entityId, params);
+  const result = await super.delete(documentId, params);
   // some more logic
 
   return result;
@@ -366,10 +361,10 @@ async delete(entityId, params) {
 ```js
 async find(params) {
   // some logic here
-  const entity = await super.find(params);
+  const document = await super.find(params);
   // some more logic
 
-  return entity;
+  return document;
 }
 ```
 
@@ -380,10 +375,10 @@ async find(params) {
 ```js
 async createOrUpdate({ data, ...params }) {
   // some logic here
-  const entity = await super.createOrUpdate({ data, ...params });
+  const document = await super.createOrUpdate({ data, ...params });
   // some more logic
 
-  return entity;
+  return document;
 }
 ```
 
@@ -394,10 +389,10 @@ async createOrUpdate({ data, ...params }) {
 ```js
 async delete(params) {
   // some logic here
-  const entity = await super.delete(params);
+  const document = await super.delete(params);
   // some more logic
 
-  return entity;
+  return document;
 }
 ```
 

@@ -34,7 +34,7 @@ To install the plugin run following command in your terminal:
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn strapi install documentation
+yarn add @strapi/plugin-documentation
 ```
 
 </TabItem>
@@ -42,7 +42,7 @@ yarn strapi install documentation
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run strapi install documentation
+npm install @strapi/plugin-documentation
 ```
 
 </TabItem>
@@ -53,7 +53,7 @@ Once the plugin is installed, starting the application generates the API documen
 
 ## Swagger UI
 
-The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select *Plugins > ![Documentation plugin icon](/img/assets/icons/documentation-plugin.svg) Documentation* in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select *Plugins > Documentation* in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
 
 :::tip
 Once installed, the Documentation plugin UI can be accessed at the following URL:
@@ -75,7 +75,7 @@ By default, your documentation will be accessible by anyone.
 
 To restrict API documentation access, enable the **Restricted Access** option from the admin panel:
 
-1. Navigate to ![Settings icon](/img/assets/icons/settings.svg) *Settings* in the main navigation of the admin panel.
+1. Navigate to ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings* in the main navigation of the admin panel.
 2. Choose **Documentation**.
 3. Toggle **Restricted Access** to `ON`.
 4. Define a password in the `password` input.

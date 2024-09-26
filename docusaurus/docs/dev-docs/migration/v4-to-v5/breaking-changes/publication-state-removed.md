@@ -17,10 +17,9 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
-
 # `publicationState` is removed and replaced by `status`
 
-In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and-publishing-content) has been reworked, and the Content API, including [REST API](/dev-docs/api/rest/filters-locale-publication#status), [GraphQL API](/dev-docs/api/graphql), and [Document Service API](/dev-docs/api/document-service) accept a new `status` parameter.
+In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and-publishing-content) has been reworked, and the Content API, including REST, GraphQL, and Document Service APIs accept a new `status` parameter.
 
 <Intro />
 
@@ -61,7 +60,8 @@ In Strapi 5, the [Draft & Publish feature](/user-docs/content-manager/saving-and
 
 ### Notes
 
-There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
+* There are no fallbacks to return by default the published version, and return the draft version if no published version is found.
+* Additional information about how to use the new `status` parameter can be found in the [REST API](/dev-docs/api/rest/filters-locale-publication#status), [GraphQL API](/dev-docs/api/graphql#status), and [Document Service API](/dev-docs/api/document-service/status) documentation.
 
 ### Migration procedure
 

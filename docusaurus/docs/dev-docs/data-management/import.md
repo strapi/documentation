@@ -19,10 +19,6 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5 />
 
-:::strapi v4.6.0 feature
-Data import is available in v4.6.0 and newer versions of Strapi. See the [Updates and Migration documentation](/dev-docs/upgrade-tool) to upgrade your application.
-:::
-
 The `strapi import` command is used to import data from a file. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,

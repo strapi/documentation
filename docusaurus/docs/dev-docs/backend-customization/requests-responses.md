@@ -8,17 +8,11 @@ tags:
 - REST API 
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Requests and Responses
-
-<NotV5 />
 
 The Strapi back end server is based on [Koa](https://koajs.com/). When you send requests through the [REST API](/dev-docs/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/dev-docs/backend-customization/policies), [controllers](/dev-docs/backend-customization/controllers), [services](/dev-docs/backend-customization/services)).
 
 `ctx` includes 3 main objects:
-
 
 - [`ctx.request`](#ctxrequest) for information about the request sent by the client making an API request,
 - [`ctx.state`](#ctxstate) for information about the state of the request within the Strapi back end,
@@ -155,10 +149,6 @@ The `ctx.response` object gives access to information related to the response th
 <!-- I don't understand what these 5 last lines above mean, just copied and pasted them from the user's PR 🤷 — piwi -->
 
 ## Accessing the request context anywhere
-
-:::callout ✨ New in v4.3.9
-The `strapi.requestContext` works with Strapi v4.3.9+.
-:::
 
 Strapi exposes a way to access the current request context from anywhere in the code (e.g. lifecycle functions).
 

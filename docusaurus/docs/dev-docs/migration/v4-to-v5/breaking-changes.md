@@ -9,8 +9,6 @@ tags:
  - upgrade to Strapi 5
 ---
 
-import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
-
 # Strapi v4 to Strapi 5 breaking changes
 
 The present page lists all the breaking changes introduced in Strapi 5.
@@ -23,17 +21,16 @@ You can click on the description of any breaking change in the following tables 
 
 :::tip Tips
 * To view a full list of available codemods, run the `npx @strapi/upgrade codemods ls` command in your terminal.
-* To have a deeper look at the code executed by the codemods, head over to the [list of codemods](https://github.com/strapi/strapi/tree/v5/main/packages/utils/upgrade/resources/codemods/5.0.0) in the GitHub repository.
+* To have a deeper look at the code executed by the codemods, head over to the [list of codemods](https://github.com/strapi/strapi/tree/develop/packages/utils/upgrade/resources/codemods/5.0.0) in the GitHub repository.
 :::
-
-<DoNotMigrateYet />
 
 ## Database
 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
+| [Content types always have feature columns](/dev-docs/migration/v4-to-v5/breaking-changes/database-columns) | Yes | No|
 | [MySQL v5 is not supported anymore](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported) | No | No |
-| [Database identifiers can't be longer than 55 characters](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened) | Yes | ✅ Yes |
+| [Database identifiers longer than 55 characters will be automatically shortened](/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened) | Yes | ✅ Yes |
 | [Only the `better-sqlite3` package is supported for the SQLite client](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite) | No | ✅ Yes |
 | [Only the `mysql2` package is supported for the MySQL client](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql) | No | ✅ Yes |
 
@@ -65,24 +62,26 @@ You can click on the description of any breaking change in the following tables 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
 | [`strapi.fetch` uses the native `fetch()` API](/dev-docs/migration/v4-to-v5/breaking-changes/fetch) | Yes | No |
-| [strapi factories import have changed](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports) | Yes | No |
+| [strapi factories import have changed](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports) | Yes | 👷 Partly |
 | [The `isSupportedImage` method is removed in Strapi 5](/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed) | Yes | No |
 | [`strapi-utils` has been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored) | Yes | ✅ Yes |
 | [Core service methods use the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service) | Yes | No |
 | [i18n is now part of the strapi core](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale) | Yes | ✅ Yes |
+
 
 ## Plugins, providers, and admin panel customization
 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
 | [Users & Permissions `register.allowedFields` defaults to `[]`](/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields) | No | ✅ Yes |
-| [The `helper-plugin` is deprecated](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) | Yes | No |
+| [The `helper-plugin` is removed](/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) | Yes | 👷 Partly |
 | [`injectContentManagerComponent()` is removed in favor of `getPlugin('content-manager').injectComponent()`](/dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component) | Yes | No |
 | [Some Mailgun provider legacy variables are not supported](/dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables) | Yes | No |
 | [The `lockIcon` property has been replaced by `licenseOnly`](/dev-docs/migration/v4-to-v5/breaking-changes/license-only) | Yes | No |
 | [The `ContentManagerAppState` redux is modified](/dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state) | Yes | No |
 | [The `EditViewLayout` and `ListViewLayout` have been refactored](/dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten) | Yes | No |
 | [The Admin Panel RBAC redux store has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated) | Yes | No |
+| [The `getWhere` method for permission provider instances has been removed](/dev-docs/migration/v4-to-v5/breaking-changes/get-where-removed) | Yes | No |
 
 ## Content API
 
@@ -93,9 +92,10 @@ You can click on the description of any breaking change in the following tables 
 | [The GraphQL API has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated) | Yes | No |
 | [The Entity Service API is deprecated and replaced by the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated) | Yes | 👷 Partly |
 | [`documentId` should be used instead of `id` in API calls](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id) | Yes | 👷 Partly |
-| [Lifecycle hooks are triggered differently based on Document Service API methods](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | Yes | No |
+| [Database lifecycle hooks are triggered differently based on Document Service API methods](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | Yes | No |
 | [The `publicationState` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed) | Yes | ✅ Yes |
 | [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id) | Yes | ✅ Yes |
 | [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service) | Yes | No |
-| [The `localizations` field does not exist anymore](/dev-docs/migration/v4-to-v5/breaking-changes/no-localizations-field) | Yes | No |
 | [Some attributes and content-types names are reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
+| [Upload a file at entry creation is no longer possible](/dev-docs/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
+| [Components and dynamic zones should be populated using the detailed population strategy](/dev-docs/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |

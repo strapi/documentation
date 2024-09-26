@@ -1,6 +1,7 @@
 ---
 title: Extending the Document Service behavior
 description: This document provides information about the middlewares in the Document Service API.
+toc_max_heading_level: 4
 displayed_sidebar: devDocsSidebar
 ---
 
@@ -8,7 +9,12 @@ displayed_sidebar: devDocsSidebar
 
 The [Document Service API](/dev-docs/api/document-service) offers the ability to extend its behavior thanks to middlewares.
 
-Middlewares allow you to perform actions before and/or after a method runs.
+Document Service middlewares allow you to perform actions before and/or after a method runs.
+
+<figure style={{width: '100%', margin: '0'}}>
+  <img src="/img/assets/backend-customization/diagram-controllers-services.png" alt="Simplified Strapi backend diagram with controllers highlighted" />
+  <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with the Document Service highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
+</figure>
 
 ## Registering a middleware
 
@@ -21,18 +27,263 @@ A middleware is a function that receives a context and a next function.
 Syntax: `(context, next) => ReturnType<typeof next>`
 
 | Parameter | Description                           | Type       |
-| --------- | ------------------------------------- | ---------- |
+|-----------|---------------------------------------|------------|
 | `context` | Middleware context                    | `Context`  |
 | `next`    | Call the next middleware in the stack | `function` |
 
 #### `context`
 
 | Parameter     | Description                                                                          | Type          |
-| ------------- | ------------------------------------------------------------------------------------ | ------------- |
+|---------------|--------------------------------------------------------------------------------------|---------------|
 | `action`      | The method that is running ([see available methods](/dev-docs/api/document-service)) | `string`      |
 | `params`      | The method params ([see available methods](/dev-docs/api/document-service))          | `Object`      |
 | `uid`         | Content type unique identifier                                                       | `string`      |
 | `contentType` | Content type                                                                         | `ContentType` |
+
+<details>
+<summary>Examples:</summary>
+
+The following examples show what `context` might include depending on the method called:
+
+<Tabs>
+
+
+<TabItem value="find-one" label="findOne">
+
+```js
+{
+  uid: "api::restaurant.restaurant",
+  contentType: {
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
+    },
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
+  },
+  action: "findOne",
+  params: {
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
+    locale: undefined,
+    status: "publish"
+    populate: { /*...*/ },
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="find-many" label="findMany">
+
+```js
+{
+  uid: "api::restaurant.restaurant",
+  contentType: {
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
+    },
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
+  },
+  action: "findMany",
+  params: {
+    filters: { /*...*/ },
+    status: "draft",
+    locale: null,
+    fields: ['name', 'description'],
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="create" label="create">
+
+```js
+{
+  uid: "api::restaurant.restaurant",
+  contentType: {
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
+    },
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
+  },
+  action: "create",
+  params: {
+    data: { /*...*/ },
+    status: "draft",
+    populate: { /*...*/ },
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="update" label="update">
+
+```js
+{
+  uid: "api::restaurant.restaurant",
+  contentType: {
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
+    },
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
+  },
+  action: "update",
+  params: {
+    data: { /*...*/ },
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
+    locale: undefined,
+    status: "draft"
+    populate: { /*...*/ },
+  }
+}
+```
+
+</TabItem>
+
+<TabItem value="delete" label="delete">
+
+```js
+{
+  uid: "api::restaurant.restaurant",
+  contentType: {
+    kind: "collectionType",
+    collectionName: "restaurants",
+    info: {
+      singularName: "restaurant",
+      pluralName: "restaurants",
+      displayName: "restaurant"
+    },
+    options: {
+      draftAndPublish: true
+    },
+    pluginOptions: {},
+    attributes: {
+      name: { /*...*/ },
+      description: { /*...*/ },
+      createdAt: { /*...*/ },
+      updatedAt: { /*...*/ },
+      publishedAt: { /*...*/ },
+      createdBy: { /*...*/ },
+      updatedBy: { /*...*/ },
+      locale: { /*...*/ },
+    },
+    apiName: "restaurant",
+    globalId: "Restaurants",
+    uid: "api::restaurant.restaurant",
+    modelType: "contentType",
+    modelName: "restaurant",
+    actions: { /*...*/ },
+    lifecycles: { /*...*/ },
+  },
+  action: "delete",
+  params: {
+    data: { /*...*/ },
+    documentId: 'hp7hjvrbt8rcgkmabntu0aoq',
+    locale: "*",
+    populate: { /*...*/ },
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+</details>
 
 #### `next`
 
@@ -117,5 +368,5 @@ strapi.documents.use((context, next) => {
 <br/>
 
 :::strapi Lifecycle hooks
-The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks).
+The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table).
 :::

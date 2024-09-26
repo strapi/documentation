@@ -1,6 +1,6 @@
 ---
 title: Only the mysql2 package is supported for the MySQL client
-description: In Strapi 5, only the mysql2 package is supported for MySQL databases, which is 
+description: In Strapi 5, only the mysql2 package is supported for MySQL databases.
 sidebar_label: Only mysql2 for MySQL 
 displayed_sidebar: devDocsMigrationV5Sidebar
 unlisted: true

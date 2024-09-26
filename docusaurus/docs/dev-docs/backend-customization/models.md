@@ -14,11 +14,7 @@ tags:
 - REST API 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Models
-
-<NotV5 />
 
 As Strapi is a headless Content Management System (CMS), creating a data structure for the content is one of the most important aspects of using the software. Models define a representation of the data structure.
 
@@ -120,7 +116,7 @@ Many types of attributes are available:
   - `customField` to describe [custom fields](#custom-fields) and their specific keys
   - `component` to define a [component](#components-json) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
-  - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/plugins/i18n)
+  - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/i18n)
 
 The `type` parameter of an attribute should be one of the following values:
 
@@ -130,8 +126,8 @@ The `type` parameter of an attribute should be one of the following values:
 | Date types | <ul><li>`date`</li> <li>`time`</li> <li>`datetime`</li> <li>`timestamp`</li></ul> |
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
 | Other generic types |<ul><li>`boolean`</li><li>`json`</li></ul> |
-| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components-json)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
-| Internationalization (i17n)-related types<br /><br />_Can only be used if the [i18n plugin](/dev-docs/plugins/i18n.md) is installed_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
+| Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
+| Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n](/dev-docs/i18n) is enabled on the content-type_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 
 #### Validations
 
@@ -587,6 +583,7 @@ The `options` key is used to define specific behaviors and accepts the following
 |---------------------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `privateAttributes` | Array of strings | Allows treating a set of attributes as private, even if they're not actually defined as attributes in the model. It could be used to remove them from API responses timestamps. <br /><br /> The `privateAttributes` defined in the model are merged with the `privateAttributes` defined in the global Strapi configuration. |
 | `draftAndPublish`   | Boolean          | Enables the draft and publish feature. <br /><br /> Default value: `true` (`false` if the content-type is created from the interactive CLI).                                                                                                                                                                                    |
+| `populateCreatorFields` | Boolean | Populates `createdBy` and `updatedBy` fields in responses returned by the REST API (see [guide](/dev-docs/api/rest/guides/populate-creator-fields) for more details).<br/><br/>Default value: `false`. |
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
@@ -608,8 +605,8 @@ Lifecycle hooks can be customized declaratively or programmatically.
 Lifecycles hooks are not triggered when using directly the [knex](https://knexjs.org/) library instead of Strapi functions.
 :::
 
-:::strapi Document Service API
-The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks). Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method.
+:::strapi Document Service API: lifecycles and middlewares
+The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table). Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method. [Document Service middlewares](/dev-docs/api/document-service/middlewares) can be implemented too.
 :::
 
 ### Available lifecycle events

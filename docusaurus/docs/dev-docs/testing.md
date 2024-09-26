@@ -14,6 +14,10 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5 />
 
+:::strapi
+The Strapi blog has a tutorial on how to implement [API testing with Jest and Supertest](https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest) and [how to add unit tests to your Strapi plugin](https://strapi.io/blog/how-to-add-unit-tests-to-your-strapi-plugin).
+:::
+
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 
 In this example we will use [Jest](https://jestjs.io/) Testing Framework with a focus on simplicity and
@@ -107,7 +111,7 @@ module.exports = ({ env }) => ({
 ## Create a Strapi instance
 
 In order to test anything we need to have a strapi instance that runs in the testing environment,
-basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](/dev-docs/deployment/process-manager).
+basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/).
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 

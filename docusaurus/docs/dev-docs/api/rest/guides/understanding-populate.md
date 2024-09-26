@@ -146,7 +146,6 @@ Notice how the response only includes the `title`, `slug`, `createdAt`, `updated
     }
   }
 }
-}
 ```
 
 </Response>
@@ -1034,15 +1033,10 @@ Notice that we now have the `metaSocial` component-related data included with th
 
 ### Populate dynamic zones
 
-Dynamic zones are highly dynamic content structures by essence.
-When populating dynamic zones, you can choose between the following 2 strategies:
+Dynamic zones are highly dynamic content structures by essence. To populate dynamic zones and their content, you need to explicitly define what to populate with the response.
 
-| Strategy name                                        | Use case                                             |
-| ---------------------------------------------------- | ------------------------------------------------------------- |
-| [Shared population](#shared-population-strategy)     | Apply a unique behavior to all the dynamic zone's components. |
-| [Detailed population](#detailed-population-strategy) | Explicitly define what to populate with the response.         |
-
-#### Shared population strategy
+<!-- ! not working in Strapi 5 -->
+<!-- #### Shared population strategy
 
 With the shared population strategy, you apply the same population to all the components of a dynamic zone.
 
@@ -1254,11 +1248,9 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
 ```
 
 </Response>
-</ApiCall>
+</ApiCall> -->
 
-#### Detailed population strategy
-
-With the detailed population strategy, you can define per-component populate queries using the `on` property.
+To do so, you can define per-component populate queries using the `on` property.
 
 For instance, in the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
 
@@ -1298,178 +1290,11 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 Let's compare and explain the responses returned with some examples of a shared population strategy and a detailed population strategy:
 
-##### Example: Shared population strategy
+#### Example
 
-When we populate the `blocks` dynamic zone and apply a shared population strategy to all its components with `[populate]=*`, we not only include components fields but also their 1st-level relations.
+When we populate the `blocks` dynamic zone, we explicitly define which data to populate.
 
-Highlighted lines show that the response include the `articles` first-level relation with the `relatedArticles` component, and also data for all types of blocks, including the `faq` and `CtaCommandLine` blocks:
-
-<ApiCall noSideBySide>
-
-<Request title="Example request with a shared population strategy">
-
-`GET /api/articles?populate[blocks][populate]=*`
-
-</Request>
-
-<Response title="Example response with a shared population strategy">
-
-```json {23-55,108-113}
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "md60m5cy3dula5g87x1uar",
-      "title": "Here's why you have to try basque cuisine, according to a basque chef",
-      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-      "createdAt": "2021-11-09T13:33:19.948Z",
-      "updatedAt": "2023-06-02T10:57:19.584Z",
-      "publishedAt": "2022-09-22T09:30:00.208Z",
-      "locale": "en",
-      "ckeditor_content": "…", // truncated content
-      "blocks": [
-        {
-          "id": 2,
-          "documentId": "jz2yd53om690vdbp3vgj4t",
-          "__component": "blocks.related-articles",
-          "header": {
-            "id": 2,
-            "theme": "primary",
-            "label": "More, I want more!",
-            "title": "Similar articles"
-          },
-          "articles": {
-            "data": [
-              {
-                "id": 2,
-                "attributes": {
-                  "title": "What are chinese hamburgers and why aren't you eating them?",
-                  "slug": "what-are-chinese-hamburgers-and-why-aren-t-you-eating-them",
-                  "createdAt": "2021-11-11T13:33:19.948Z",
-                  "updatedAt": "2023-06-01T14:32:50.984Z",
-                  "publishedAt": "2022-09-22T12:36:48.312Z",
-                  "locale": "en",
-                  "ckeditor_content": "…", // truncated content
-                }
-              },
-              {
-                "id": 3,
-                // …
-              },
-              {
-                "id": 4,
-                // …
-              }
-            ]
-          }
-        },
-        {
-          "id": 2,
-          "__component": "blocks.cta-command-line",
-          "theme": "primary",
-          "title": "Want to give a try to a Strapi starter?",
-          "text": "❤️",
-          "commandLine": "git clone https://github.com/strapi/nextjs-corporate-starter.git"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "documentId": "v6vkdzyl14khxjhkwqkuny",
-      // …
-    },
-    {
-      "id": 3,
-      "documentId": "v6vkdzyl14khxjhkwqkuny",
-      "attributes": {
-      "title": "7 Places worth visiting for the food alone",
-      "slug": "7-places-worth-visiting-for-the-food-alone",
-      "createdAt": "2021-11-12T13:33:19.948Z",
-      "updatedAt": "2023-06-02T11:30:00.075Z",
-      "publishedAt": "2023-06-02T11:30:00.075Z",
-      "locale": "en",
-      "ckeditor_content": "…", // truncated content
-      "blocks": [
-        {
-          "id": 1,
-          "documentId": "lu16w9g4jri8ppiukg542j",
-          "__component": "blocks.related-articles",
-          "header": {
-            "id": 1,
-            "documentId": "c2imt19iywk27hl2ftph7s",
-            "theme": "primary",
-            "label": "More, I want more!",
-            "title": "Similar articles"
-          },
-          "articles": {
-            "data": [
-              {
-                "id": 1,
-                "documentId": "h9x7sir188co1s2fq5jbj2",
-                "attributes": {
-                  "title": "Here's why you have to try basque cuisine, according to a basque chef",
-                  "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-                  "createdAt": "2021-11-09T13:33:19.948Z",
-                  "updatedAt": "2023-06-02T10:57:19.584Z",
-                  "publishedAt": "2022-09-22T09:30:00.208Z",
-                  "locale": "en",
-                  "ckeditor_content": "…", // truncated content
-                }
-              },
-              {
-                "id": 2,
-                // …  
-              },
-              {
-                "id": 4,
-                // …
-              }
-            ]
-          }
-        },
-        {
-          "id": 1,
-          "documentId": "pfcpzcsizcq9z8hrrktw2o",
-          "__component": "blocks.faq",
-          "title": "Frequently asked questions",
-          "theme": "muted"
-        },
-        {
-          "id": 1,
-          "documentId": "hew8bftptk6ut3g919ses7",
-          "__component": "blocks.cta-command-line",
-          "theme": "secondary",
-          "title": "Want to give it a try with a brand new project?",
-          "text": "Up & running in seconds 🚀",
-          "commandLine": "npx create-strapi-app my-project --quickstart"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      // …
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 4
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
-
-##### Example: Detailed population strategy
-
-When we populate the `blocks` dynamic zone and apply a detailed population strategy, we explicitly define which data to populate.
-
-In the following example response, highlighted lines show differences with the shared population strategy:
+In the following example response, highlighted lines show that:
 
 - We deeply populate the `articles` relation of the `relatedArticles` component, and even the `image` media field of the related article.
 
@@ -1477,13 +1302,13 @@ In the following example response, highlighted lines show differences with the s
 
 <ApiCall noSideBySide>
 
-<Request title="Example request with a detailed population strategy">
+<Request title="Example request with a detailed population">
 
 `GET /api/articles?populate[blocks][on][blocks.related-articles][populate][articles][populate][0]=image&populate[blocks][on][blocks.cta-command-line][populate]=*`
 
 </Request>
 
-<Response title="Example response with a detailed population strategy">
+<Response title="Example response with a detailed population">
 
 ```json {16-17,29-34}
 {

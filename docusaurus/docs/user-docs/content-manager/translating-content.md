@@ -16,9 +16,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Translating content
 
-<NotV5/>
-
-With the [Internationalization feature](/user-docs/plugins/strapi-plugins#internationalization) enabled for a content-type, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/internationalization)).
+With the [Internationalization feature](/user-docs/plugins/strapi-plugins#-internationalization-plugin) enabled for a content-type, it is possible to manage content in more than one language, called "locale". To manage content in a specific locale, the latter must be added beforehand through the Internationalization settings (see [Configuring Internationalization locales](../settings/internationalization)).
 
 <ThemedImage
   alt="Edit view of a localizable content-type"
@@ -51,5 +49,5 @@ To translate content in another locale:
 4. Translate your content by filling up your content-type's fields (see [Writing content](writing-content.md)). 
 
 :::tip
-Click on the **Fill in from another locale** button in the Internationalization box for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
+Click on the ![Dowload icon](/img/assets/icons/v5/Download.svg) *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
 :::

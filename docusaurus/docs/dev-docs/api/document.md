@@ -13,7 +13,7 @@ tags:
 - introduction
 ---
 
-# Documents
+<div className="document-concept-page custom-mermaid-layout">
 
 A **document** in Strapi 5 is an API-only concept. A document represents all the different variations of content for a given entry of a content-type.
 
@@ -35,25 +35,175 @@ The following diagrams represent all the possible variations of content dependin
 <Tabs>
 <TabItem value="document-only" label="Neither i18n nor Draft & Publish enabled">
 
-![Document diagram with neither i18n nor Draft & Publish enabled](/img/assets/apis/document.png)
+```mermaid
+flowchart LR
+stX("Single type X <br>(e.g., homepage)")
+docX("Document X<br/>(e.g., the homepage)")
+docA(Document A)
+docB(Document B)
+docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
+ctA(Collection type A)
+ctB("Collection type B<br>(e.g., restaurants)")
+fieldA(Field A)
+fieldB(Field B)
+fieldC("Field C<br>(e.g., 'name')")
+
+content --- stX --- docX
+content --- ctA
+content --- ctB
+
+ctB --- docA
+ctB --- docB
+ctB --- docC
+
+docC --- fieldA
+docC --- fieldB
+docC --- fieldC
+
+classDef notHighlighted fill:transparent,stroke:none
+classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
+class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
+linkStyle default stroke:#8D5AF3
+class docC highlighted
+```
 
 </TabItem>
 
 <TabItem value="dandp-only" label="Only Draft & Publish enabled">
 
-![Document diagram with only Draft & Publish enabled](/img/assets/apis/document-d_and_p-only.png)
+```mermaid
+flowchart LR
+stX("Single type X <br>(e.g., homepage)")
+docX("Document X<br/>(e.g., the homepage)")
+docA(Document A)
+docB(Document B)
+docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
+draftC(Draft Version)
+pubC(Published Version)
+ctA(Collection type A)
+ctB("Collection type B<br>(e.g., restaurants)")
+fieldA(Field A)
+fieldB(Field B)
+fieldC("Field C<br>(e.g., 'name')")
+
+content --- stX --- docX
+content --- ctA
+content --- ctB
+
+ctB --- docA
+ctB --- docB
+ctB --- docC
+
+docC --- draftC
+docC --- pubC
+
+pubC --- fieldA
+pubC --- fieldB
+pubC --- fieldC
+
+classDef notHighlighted fill:transparent,stroke:none
+classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
+class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
+linkStyle default stroke:#8D5AF3
+class docC highlighted
+```
 
 </TabItem>
 
 <TabItem value="i18n-only" label="Only i18n enabled">
 
-![Document diagram with only i18n enabled](/img/assets/apis/document-i18n-only.png)
+```mermaid
+flowchart LR
+stX("Single type X <br>(e.g., homepage)")
+docX("Document X<br/>(e.g., the homepage)")
+docA(Document A)
+docB(Document B)
+docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
+docLocA("Document Locale A<br>(e.g., 'en')")
+docLocB("Document Locale B<br><br>")
+docLocC(Document Locale C)
+ctA(Collection type A)
+ctB("Collection type B<br>(e.g., restaurants)")
+fieldA(Field A)
+fieldB(Field B)
+fieldC("Field C<br>(e.g., 'name')")
+
+content --- stX --- docX
+content --- ctA
+content --- ctB
+
+ctB --- docA
+ctB --- docB
+ctB --- docC
+
+docC --- docLocA
+docC --- docLocB
+docC --- docLocC
+
+docLocC --- fieldA
+docLocC --- fieldB
+docLocC --- fieldC
+
+classDef notHighlighted fill:transparent,stroke:none
+classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
+class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,fieldA,fieldB,fieldC notHighlighted
+linkStyle default stroke:#8D5AF3
+class docC highlighted
+```
 
 </TabItem>
 
 <TabItem value="i18n-and-dandp" label="i18n + Draft & Publish enabled" default>
 
-![Document diagram with i18n + Draft & Publish enabled](/img/assets/apis/document-i18n-d_and_p.png)
+```mermaid
+flowchart LR
+stX("Single type X <br>(e.g., homepage)")
+docX("Document X<br/>(e.g., the homepage)")
+docA(Document A)
+docB(Document B)
+docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
+docLocA("Document Locale A<br>(e.g., 'en')")
+docLocB(Document Locale B)
+docLocC(Document Locale C)
+draftA(Draft Version)
+draftB(Draft Version)
+draftC(Draft Version)
+pubA(Published Version)
+pubC(Published Version)
+ctA(Collection type A)
+ctB("Collection type B<br>(e.g., restaurants)")
+fieldA(Field A)
+fieldB(Field B)
+fieldC("Field C<br>(e.g., 'name')")
+
+content --- stX --- docX
+content --- ctA
+content --- ctB
+
+ctB --- docA
+ctB --- docB
+ctB --- docC
+
+docC --- docLocA
+docC --- docLocB --- draftB
+docC --- docLocC
+
+docLocA --- draftA
+docLocA --- pubA
+
+docLocC --- draftC
+docLocC --- pubC
+
+pubC --- fieldA
+pubC --- fieldB
+pubC --- fieldC
+
+classDef notHighlighted fill:transparent,stroke:none
+classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
+class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
+linkStyle default stroke:#8D5AF3
+class docC highlighted
+```
 
 </TabItem>
 </Tabs>
@@ -75,3 +225,5 @@ An important difference between the back-end and front-end APIs is about the def
 - The Document Service API returns the draft version by default,
 - while REST and GraphQL APIs return the published version by default.
 :::
+
+</div>

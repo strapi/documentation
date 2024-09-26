@@ -5,7 +5,7 @@ tags:
 - introduction
 - installation
 - Command Line Interface (CLI)
-
+pagination_next: dev-docs/installation/cli
 ---
 
 # Installation

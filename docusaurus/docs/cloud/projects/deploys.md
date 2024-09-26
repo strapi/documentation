@@ -10,13 +10,10 @@ tags:
 - deploy, history and logs
 - Strapi Cloud
 - Strapi Cloud project
+pagination_next: cloud/projects/deploys-history
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Deployments management
-
-<NotV5/>
 
 The creation of a new Strapi Cloud project automatically trigger the deployment of that project. After that, deployments can be:
 
@@ -27,7 +24,7 @@ Ongoing deployments can also be [manually cancelled](#cancelling-a-deployment) i
 
 ## Triggering a new deployment
 
-To manually trigger a new deployment for your project, click on the **Trigger deploy** button always displayed in the right corner of a project dashboard's header. This action will add a new card in the *Deploys* tab, where you can monitor the status and view the deployment logs live (see [Deploy history and logs](/cloud/projects/deploys-history)).
+To manually trigger a new deployment for your project, click on the **Trigger deployment** button always displayed in the right corner of a project dashboard's header. This action will add a new card in the *Deployments* tab, where you can monitor the status and view the deployment logs live (see [Deploy history and logs](/cloud/projects/deploys-history)).
 
 <ThemedImage
   alt="Triggering new deploy"
@@ -41,11 +38,11 @@ To manually trigger a new deployment for your project, click on the **Trigger de
 
 If for any reason you want to cancel an ongoing and unfinished deployment:
 
-1. Go to the *Log details* page of the deployment (see [Accessing log details](/cloud/projects/deploys-history#accessing-deployment-details--logs)).
-2. Click on the **Cancel deploy** button in the top right corner. The status of the deployment will automatically change to *Cancelled*.
+1. Go to the *Deployment details* page of the latest triggered deployment (see [Accessing log details](/cloud/projects/deploys-history#accessing-deployment-details--logs)).
+2. Click on the **Cancel deployment** button in the top right corner. The status of the deployment will automatically change to *Cancelled*.
 
 :::tip
-You can also cancel a deployment from the *Deploys* tab which lists the deployments history. The card of ongoing deployment with the *Building* status will display a **Cancel deploy** button.
+You can also cancel a deployment from the *Deployments* tab which lists the deployments history. The card of ongoing deployment with the *Building* status will display a ![Cancel button](/img/assets/icons/clear.svg) button for cancelling the deployment.
 :::
 
 <ThemedImage

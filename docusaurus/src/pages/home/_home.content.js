@@ -19,30 +19,13 @@ export default {
         to: '/dev-docs/whats-new',
       },
     },
-    // {
-    //   backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
-    //   variant: 'cloud',
-    //   title: 'Strapi Cloud CLI',
-    //   description: (
-    //     <>
-    //       {'Learn how to deploy your project on '}
-    //       <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
-    //       {' directly from the CLI!'}
-    //     </>
-    //   ),
-    //   button: {
-    //     label: 'Cloud CLI docs',
-    //     decorative: '☁️',
-    //     to: '/cloud/getting-started/deployment-cli',
-    //   },
-    // },
     {
       title: 'Can’t wait to use Strapi?',
       description: (
         <>
-          {'If demos are more your thing, we have a '}
-          <a href="https://youtu.be/h9vETeRiulY" target="_blank">video demo</a>
-          {', or you can request a '}
+          {'Learn Strapi in a nutshell with our '}
+          <a href="https://docs.strapi.io/dev-docs/quick-start" target="_blank">quick start guide</a>
+          {', or request a '}
           <a href="https://strapi.io/demo" target="_blank">live demo</a>!
         </>
       ),
@@ -50,6 +33,23 @@ export default {
         label: 'Quick start',
         decorative: '🚀',
         to: '/dev-docs/quick-start',
+      },
+    },
+    {
+      backgroundImgSrc: require('@site/static/img/assets/home/carousel-background--cloud.png').default,
+      variant: 'cloud',
+      title: 'Strapi Cloud CLI',
+      description: (
+        <>
+          {'Learn how to deploy your project on '}
+          <a href="https://strapi.io/cloud" target="_blank">Strapi Cloud</a>
+          {' directly from the CLI!'}
+        </>
+      ),
+      button: {
+        label: 'Cloud CLI docs',
+        decorative: '☁️',
+        to: '/cloud/getting-started/deployment-cli',
       },
     },
   ],
@@ -105,8 +105,8 @@ export default {
           to: '/dev-docs/api/document-service',
         },
         {
-          label: 'Plugin CLI',
-          to: '/dev-docs/plugins/guides/use-the-plugin-cli',
+          label: 'Plugin SDK',
+          to: '/dev-docs/plugins/development/create-a-plugin',
         },
         {
           label: 'Upgrade to Strapi 5',
@@ -115,7 +115,7 @@ export default {
       ],
     },
     {
-      cardLink: '/dev-docs/intro',
+      cardLink: '/cloud/intro',
       cardTitle: 'Cloud Documentation',
       cardDescription: 'Learn how to deploy and manage projects on Strapi Cloud',
       cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,

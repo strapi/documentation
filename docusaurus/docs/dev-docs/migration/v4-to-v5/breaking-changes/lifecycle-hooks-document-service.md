@@ -1,6 +1,6 @@
 ---
-title: Lifecycle hooks are triggered differently with the Document Service API methods
-description: In Strapi 5, database lifecycle hooks are triggered differently with the various Document Service API methods, mainly due to the new way the Draft & Publish feature works.
+title: Database lifecycle hooks are triggered differently with the Document Service API methods
+description: In Strapi 5, database lifecycle hooks are triggered differently with the various Document Service API methods.
 sidebar_label: Lifecycle hooks
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:
@@ -15,9 +15,13 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
-# Lifecycle hooks are triggered differently with the Document Service API methods
+# Database lifecycle hooks are triggered differently with the Document Service API methods
 
 In Strapi 5, database lifecycle hooks are triggered differently with the various [Document Service API](/dev-docs/api/document-service) methods, mainly due to the new way the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature works.
+
+The majority of use cases should only use the Document Service. The Document Service API handles Draft & Publish, i18n, and any underlying strapi logic.
+
+However, the Document Service API might not suit all your use cases; the database layer is therefore exposed allowing you to do anything on the database without any restriction. Users would then need to resort to the database lifecycle hooks as a system to extend the database behaviour.
 
 <Intro />
 
@@ -32,8 +36,7 @@ In Strapi 5, database lifecycle hooks are triggered differently with the various
 
 **In Strapi v4**
 
-<!-- TODO: update this link to start with docs-v4 once stable is out -->
-In Strapi v4, lifecycle hooks work as documented in the [Strapi v4 documentation](https://docs.strapi.io/dev-docs/backend-customization/models#lifecycle-hooks).
+In Strapi v4, lifecycle hooks work as documented in the [Strapi v4 documentation](https://docs-v4.strapi.io/dev-docs/backend-customization/models#lifecycle-hooks).
 
 </SideBySideColumn>
 
@@ -53,7 +56,27 @@ Lifecycle hooks work the same way as in Strapi v4 but are triggered differently,
 
 ### Notes
 
-The [Document Service API: Lifecycle hooks](/dev-docs/api/document-service/lifecycle-hooks) documentation lists how database lifecycle hooks are triggered based on which Document Service API methods are called.
+#### Database lifecycle hooks triggered by the Document Service API methods {#table}
+Depending on the [Document Service API methods](/dev-docs/api/document-service) called, the following database lifecycle hooks are triggered:
+
+| Document Service API method       | Triggered database lifecycle hook(s) |
+|-----------------------------------|--------------------------------------|
+| `findOne()`                       | before(after) findOne                |
+| `findFirst()`                     | before(after) findOne                |
+| `findMany()`                      | before(after) findMany               |
+| `create()`                        | before(after) Create                 |
+| `create({ status: 'published' })` | <ul><li>before(after) Create️<br/>Triggered twice as it creates both the draft and published versions</li><li>before(after) Delete<ul><li>Deletes previous draft versions of a document</li><li>Can be triggered multiple times if deleting multiple locales (one per each locale)</li></ul></li></ul> |
+| `update()`                        | <ul><li>before(after) Create<br/>when creating a new locale on a document</li><li>before(after) Update<br/>when updating an existing version of a document</li></ul> |
+| `update({ status: 'published' })` | <ul><li>before(after) Create<br/>Can be triggered multiple times if deleting multiple locales (one per each locale)</li><li>before(after) Update<br/>when updating an existing version of a document</li><li>before(after) Delete<ul><li>Deletes previous published versions of a document</li><li>Can be triggered multiple times if deleting multiple locales (one per each locale)</li></ul></li></ul> |
+| `delete()`                        | before(after) Delete<br/>Can be triggered multiple times if deleting multiple locales (one per each locale) |
+| `publish()`                       | <ul><li>before(after) Create<br/>Can be triggered multiple times if deleting multiple locales (one per each locale)</li><li>before(after) Delete<ul><li>Deletes previous published versions of a document</li><li>Can be triggered multiple times if deleting multiple locales (one per each locale)</li></ul></li></ul> |
+| `unpublish()`                     | before(after) Delete<ul><li>Deletes all published versions of a document</li><li>Can be triggered multiple times if deleting multiple locales (one per each locale)</li></ul> |
+| `discardDraft()`                  | <ul><li>before(after) Create<ul><li>Creates new draft versions</li><li>Can be triggered multiple times if deleting multiple locales (one per each locale)</li></ul></li><li>before(after) Delete<ul><li>Deletes previous draft versions of a document</li><li>Can be triggered multiple times if deleting multiple locales (one per each locale)</li></ul></li></ul> |
+| `count()`                         | before(after) Count |
+
+:::note
+Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be triggered by a Document Service API method.
+:::
 
 ### Manual procedure
 

@@ -1,5 +1,6 @@
 {
-	"redirects": [{
+	"redirects": [
+    {
 			"source": "/cloud",
 			"destination": "/cloud/intro"
 		},
@@ -24,12 +25,20 @@
 			"destination": "/cloud/intro"
 		},
     {
+      "source": "/dev-docs/deployment/optional-software-guides",
+      "destination": "/dev-docs/deployment#additional-resources"
+    },
+    {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
-      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+      "destination": "https://strapi.io/integrations/digital-ocean"
     },
     {
       "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
-      "destination": "/dev-docs/deployment/digitalocean-app-platform"
+      "destination": "https://strapi.io/integrations/digital-ocean"
+    },
+    {
+      "source": "/dev-docs/deployment/digitalocean",
+      "destination": "https://strapi.io/integrations/digital-ocean"
     },
 		{
 			"source": "/developer-docs",
@@ -212,40 +221,97 @@
 			"destination": "/dev-docs/deployment/digitalocean"
 		},
 		{
+			"source": "/dev-docs/deployment/digitalocean-app-platform",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+  	{
+			"source": "/dev-docs/deployment/digitalocean",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html",
-			"destination": "/dev-docs/deployment/digitalocean-app-platform"
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
-			"destination": "/dev-docs/deployment"
+			"destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/google-app-engine",
+      "destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
-			"destination": "/dev-docs/deployment/heroku"
+			"destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
+		},
+    {
+			"source": "/dev-docs/deployment/heroku",
+			"destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html",
-			"destination": "/dev-docs/deployment/amazon-aws"
+			"destination": "https://strapi.io/integrations/aws"
+		},
+    {
+			"source": "/dev-docs/deployment/amazon-aws",
+			"destination": "https://strapi.io/integrations/aws",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html",
-			"destination": "/dev-docs/deployment/azure"
+			"destination": "https://strapi.io/integrations/azure"
 		},
+    {
+      "source": "/dev-docs/deployment/azure",
+      "destination": "https://strapi.io/integrations/azure",
+      "permanent": true
+    },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html",
-			"destination": "/dev-docs/deployment/process-manager"
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
 		},
 		{
+      "source": "/dev-docs/deployment/process-manager",
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/nginx-proxy",
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
+		},
+   	{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html",
-			"destination": "/dev-docs/deployment/nginx-proxy"
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html",
-			"destination": "/dev-docs/deployment/haproxy-proxy"
+			"destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
 		},
+    {
+      "source": "/dev-docs/deployment/haproxu-proxy",
+      "destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
+    },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html",
-			"destination": "/dev-docs/deployment/caddy-proxy"
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/caddy-proxy",
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html",
@@ -255,6 +321,10 @@
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment.html",
 			"destination": "/dev-docs/deployment"
 		},
+    {
+      "source": "/dev-docs/api/document-service/select",
+      "destination": "/dev-docs/api/document-service/fields"
+    },
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.html",
 			"destination": "/dev-docs/api/entity-service/populate"
@@ -405,11 +475,11 @@
 		},
 		{
 			"source": "/developer-docs/latest/update-migration-guides/update-version.html",
-			"destination": "/dev-docs/upgrade-tool"
+			"destination": "/dev-docs/upgrades"
 		},
 		{
 			"source": "/developer-docs/latest/update-migration-guides/migration-guides.html",
-			"destination": "/dev-docs/migration-guides"
+			"destination": "/dev-docs/upgrades"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
@@ -445,10 +515,14 @@
 		},
 		{
 			"source": "/developer-docs/latest/plugins/i18n.html",
-			"destination": "/dev-docs/plugins/i18n"
+			"destination": "/dev-docs/i18n"
 		},
 		{
 			"source": "/developer-docs/latest/development/plugins-development.html",
+			"destination": "/dev-docs/plugins/developing-plugins"
+		},
+		{
+			"source": "/dev-docs/plugins-development",
 			"destination": "/dev-docs/plugins/developing-plugins"
 		},
 		{
@@ -529,7 +603,15 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html",
-			"destination": "/dev-docs/configurations/sqlite"
+			"destination": "/dev-docs/configurations/database#sqlite"
+		},
+    {
+			"source": "/dev-docs/configurations/database/sqlite",
+			"destination": "/dev-docs/configurations/database#sqlite"
+		},
+    {
+			"source": "/dev-docs/configurations/sqlite",
+			"destination": "/dev-docs/configurations/database#sqlite"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/installation/templates.html",
@@ -853,7 +935,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/guides/process-manager.html",
-			"destination": "/dev-docs/deployment/process-manager"
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/"
 		},
 		{
 			"source": "/developer-docs/latest/guides/registering-a-field-in-admin.html",
@@ -865,19 +947,19 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.html",
-			"destination": "/dev-docs/deployment#deployment-guides"
+			"destination": "/dev-docs/deployment"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html.",
-			"destination": "/dev-docs/deployment#deployment-guides"
+			"destination": "/dev-docs/deployment"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html",
-			"destination": "/dev-docs/deployment#deployment-guides"
+			"destination": "/dev-docs/deployment"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.html",
-			"destination": "/dev-docs/deployment#deployment-guides"
+			"destination": "/dev-docs/deployment"
 		},
 		{
 			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-1-to-3.html",
@@ -1110,6 +1192,314 @@
     {
       "source": "/dev-docs/integrations",
       "destination": "https://strapi.io/integrations"
+    },
+    {
+      "source": "/dev-docs/update-version",
+      "destination": "/dev-docs/upgrades"
+    },
+    {
+      "source": "/dev-docs/intro#strapi-community",
+      "destination": "/dev-docs/community"
+    },
+    {
+      "source": "/dev-docs/configurations/rbac",
+      "destination": "/dev-docs/configurations/guides/rbac"
+    },
+    {
+      "source": "/dev-docs/configurations/public-assets",
+      "destination": "/dev-docs/configurations/guides/public-assets"
+    },
+    {
+      "source": "/dev-docs/api/rest#get-entries",
+      "destination": "/dev-docs/api/rest#get-all"
+    },
+    {
+      "source": "/dev-docs/api/rest#get-an-entry",
+      "destination": "/dev-docs/api/rest#get"
+    },
+    {
+      "source": "/dev-docs/api/rest#create-an-entry",
+      "destination": "/dev-docs/api/rest#create"
+    },
+    {
+      "source": "/dev-docs/api/rest#update-an-entry",
+      "destination": "/dev-docs/api/rest#update"
+    },
+    {
+      "source": "/dev-docs/api/rest#delete-an-entry",
+      "destination": "/dev-docs/api/rest#delete"
+    },
+    {
+      "source": "/dev-docs/api/rest/populate-select#combining-population-with-other-operators",
+      "destination": "/dev-docs/api/rest/populate-select#population"
+    },
+    {
+      "source": "/dev-docs/api/rest/filters-locale-publication#publication-state",
+      "destination": "/dev-docs/api/rest/filters-locale-publication#status"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#access-url",
+      "destination": "/dev-docs/admin-panel-customization/host-port-path"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#host-and-port",
+      "destination": "/dev-docs/admin-panel-customization/host-port-path"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#configuration-options",
+      "destination": "/dev-docs/admin-panel-customization/options"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#locales",
+      "destination": "/dev-docs/admin-panel-customization/options#locales"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#logos",
+      "destination": "/dev-docs/admin-panel-customization/options#logos"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#favicon",
+      "destination": "/dev-docs/admin-panel-customization/options#favicon"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#tutorial-videos",
+      "destination": "/dev-docs/admin-panel-customization/options#tutorial-videos"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#releases-notifications",
+      "destination": "/dev-docs/admin-panel-customization/options#releases-notifications"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#theme-extension",
+      "destination": "/dev-docs/admin-panel-customization/options#theme-extension"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#wysiwyg-editor",
+      "destination": "/dev-docs/admin-panel-customization/wysiwyg-editor"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#email-templates",
+      "destination": "/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#bundlers-experimental",
+      "destination": "/dev-docs/admin-panel-customization/bundlers"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#webpack",
+      "destination": "/dev-docs/admin-panel-customization/bundlers#webpack"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#vite",
+      "destination": "/dev-docs/admin-panel-customization/bundlers#vite"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#extension",
+      "destination": "/dev-docs/admin-panel-customization/extension"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#deployment",
+      "destination": "/dev-docs/admin-panel-customization/deployment"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#same-server",
+      "destination": "/dev-docs/admin-panel-customization/deployment#same-server"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#different-servers",
+      "destination": "/dev-docs/admin-panel-customization/deployment#different-servers"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#extending-translations",
+      "destination": "/dev-docs/admin-panel-customization/options#extending-translations"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n",
+      "destination": "/dev-docs/i18n"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#configuration-of-the-default-locale",
+      "destination": "/dev-docs/i18n"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#installation",
+      "destination": "/dev-docs/i18n"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#usage-with-the-rest-api",
+      "destination": "/dev-docs/i18n#rest"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#getting-localized-entries-with-the-locale-parameter",
+      "destination": "/dev-docs/i18n#rest-get-all"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-new-localized-entry",
+      "destination": "/dev-docs/i18n#rest-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-localization-for-an-existing-entry",
+      "destination": "/dev-docs/i18n#rest-put"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-localization-for-a-collection-type",
+      "destination": "/dev-docs/i18n#rest-put-collection-type"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-localization-for-a-single-type",
+      "destination": "/dev-docs/i18n#rest-put-single-type"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#updating-an-entry",
+      "destination": "/dev-docs/i18n#rest-put"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#usage-with-the-graphql-plugin",
+      "destination": "/dev-docs/i18n#graphql"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#getting-localized-entries-with-graphql",
+      "destination": "/dev-docs/i18n#graphql-fetch-all"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#fetching-a-collection-type",
+      "destination": "/dev-docs/i18n#graphql-fetch-all"
+    },
+    {
+      "source": "dev-docs/plugins/i18n#fetching-a-single-type",
+      "destination": "/dev-docs/i18n#graphql-fetch-all"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-new-localized-entries-with-graphql",
+      "destination": "/dev-docs/i18n#graphql-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-new-localization-for-a-collection-type",
+      "destination": "/dev-docs/i18n#graphql-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-new-localization-for-a-single-type",
+      "destination": "/dev-docs/i18n#graphql-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#updating-a-localized-single-type-with-graphql",
+      "destination": "/dev-docs/i18n#graphl-update"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql",
+      "destination": "/dev-docs/i18n#graphql-delete"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/configuration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/configuration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/content-type-schema",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/content-type-schema"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/controllers",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/controllers"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/dependencies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/dependencies"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/global-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/global-middlewares"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/graphql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/graphql"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/policies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/policies"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/route-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/route-middlewares"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/routes",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/routes"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/services",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/services"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/backend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/backend"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/frontend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/frontend"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/strapi-global",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/strapi-global"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/theming",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/theming"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/translations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/translations"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/webpack",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/webpack"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/wysiwyg",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/wysiwyg"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/update-folder-structure",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/update-folder-structure"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/migrate-back-end",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-back-end"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/migrate-front-end",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-front-end"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/enable-plugin",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/enable-plugin"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/sql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/sql"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/sql-relations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/sql-relations"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/mongo",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet"
     }
   ]
 }

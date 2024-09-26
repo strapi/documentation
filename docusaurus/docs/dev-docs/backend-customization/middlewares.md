@@ -14,22 +14,11 @@ tags:
 - routes
 ---
 
-import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares customization
 
-<NotV5 />
-
-:::strapi Different types of middlewares
-
-In Strapi, 2 middleware concepts coexist:
-
-- **Global middlewares** are [configured and enabled](/dev-docs/configurations/middlewares) for the entire Strapi server application. These middlewares can be applied at the application level or at the API level. <br/>The present documentation describes how to implement them.<br/>Plugins can also add global middlewares (see [Server API documentation](/dev-docs/plugins/server-api)).
-
-- **Route middlewares** have a more limited scope and are configured and used as middlewares at the route level. They are described in the [routes documentation](/dev-docs/backend-customization/routes#middlewares).
-
-:::
+<MiddlewareTypes />
 
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-global-middlewares.png" alt="Simplified Strapi backend diagram with global middlewares highlighted" />
@@ -181,11 +170,7 @@ Proper implementation largely depends on your project's needs and custom code, b
          * the response includes author-related information
          */
         if (entryId) {
-          entry = await strapi.entityService.findOne(
-            // highlight-start
-            // replace the next line with your proper content-type identifier
-            "api::restaurant.restaurant",
-            // highlight-end
+          entry = await strapi.documents('api::restaurant.restaurant').findOne(
             entryId,
             { populate: "*" }
           );

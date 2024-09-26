@@ -14,8 +14,6 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Managing content-types
 
-<NotV5/>
-
 :::note development-only
 The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 :::
@@ -36,13 +34,13 @@ Managing a content-type or component can include editing the general settings an
   }}
 />
 
-- Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/edit.svg) **Edit** button <ScreenshotNumberReference number="1" /> allows to access the [basic settings](#editing-content-type-or-component-settings) of the content-type or component.
+- Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="1" /> allows to access the [basic settings](#editing-content-type-or-component-settings) of the content-type or component.
 - In the top right corner:
-  - the **Add new field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
+  - the **Add new/another field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
   - the **Configure the view** button allows to access the view configuration interface (see [Configuring the edit view](/user-docs/content-manager/configuring-view-of-content-type#configuring-the-edit-view))
 - Below the previous editing options, a table <ScreenshotNumberReference number="3" /> lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
-  - Click on the edit button ![Edit icon](/img/assets/icons/edit.svg) to edit a field
-  - Click on the delete button ![Delete icon](/img/assets/icons/delete.svg) to delete a field
+  - Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a field
+  - Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a field
 
 :::caution
 Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
@@ -83,7 +81,10 @@ The **Advanced Settings** tab allows to edit the following properties of the con
 
 * **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
 * **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
+
+<!--
 * **Review workflows**: Enable the [Review Workflows](/user-docs/settings/review-workflows) <EnterpriseBadge /> feature for the content-type. It is disabled by default.
+-->
 
 ## Deleting content-types
 
@@ -92,7 +93,7 @@ Content types and components can be deleted through the Content-type Builder. De
 To delete a content-type or component:
 
 1. In the Content-type Builder sub navigation, click on the name of the content-type or component to delete.
-2. In the edition interface of the chosen content-type or component, click on the ![Edit icon](/img/assets/icons/edit.svg) **Edit** button on the right side of the content-type's or component's name.
+2. In the edition interface of the chosen content-type or component, click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button on the right side of the content-type's or component's name.
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.
 

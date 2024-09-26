@@ -10,7 +10,6 @@ tags:
 - bootstrap function
 - destroy function
 - configuration
-- cron job
 - backend customization
 - routes
 - controllers
@@ -20,11 +19,7 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Server API for plugins
-
-<NotV5 />
 
 A Strapi [plugin](/dev-docs/plugins) can interact with both the back end and the [front end](/dev-docs/plugins/admin-panel-api) of a Strapi application. The Server API is about the back-end part, i.e. how the plugin interacts with the server part of a Strapi application.
 
@@ -43,17 +38,17 @@ The Server API includes:
 Once you have declared and exported the plugin interface, you will be able to [use the plugin interface](#usage).
 
 :::note
-The whole code for the server part of your plugin could live in the `/strapi-server.js|ts` or `/server/index.js|ts` file. However, it's recommended to split the code into different folders, just like the [structure](/dev-docs/plugins/development/plugin-structure) created by the `strapi generate plugin` CLI generator command.
+The whole code for the server part of your plugin could live in the `/server/src/index.ts|js` file. However, it's recommended to split the code into different folders, just like the [structure](/dev-docs/plugins/development/plugin-structure) created by the Plugin SDK.
 :::
 
 ## Entry file
 
-To tap into the Server API, create a `strapi-server.js` file at the root of the plugin package folder. This file exports the required interface, with the following parameters available:
+The `/src/server/index.js` file at the root of the plugin folder exports the required interface, with the following parameters available:
 
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li> <li>[Cron](#cron)</li></ul>                                                                                                                                                                             |
+| Configuration          | <ul><li>[config](#configuration) object   </li></ul>                                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -66,14 +61,39 @@ This function is called to load the plugin, before the application is [bootstrap
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupId="js-ts">
 
-module.exports = () => ({
-  register({ strapi }) {
-    // execute some register code
-  },
-});
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/plugins/my-plugin/server/src/register.js"
+
+'use strict';
+
+const register = ({ strapi }) => {
+  // execute some register code
+};
+
+module.exports = register;
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/register.ts"
+
+import type { Core } from '@strapi/strapi';
+
+const register = ({ strapi }: { strapi: Core.Strapi }) => {
+  // execute some register code
+};
+
+export default register;
+```
+
+</TabItem>
+
+</Tabs>
 
 ### bootstrap()
 
@@ -83,14 +103,38 @@ The [bootstrap](/dev-docs/configurations/functions#bootstrap) function is called
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupId="js-ts">
 
-module.exports = () => ({
-  bootstrap({ strapi }) {
-    // execute some bootstrap code
-  },
-});
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/plugins/my-plugin/server/src/bootstrap.js"
+'use strict';
+
+const bootstrap = ({ strapi }) => {
+  // execute some bootstrap code
+};
+
+module.exports = bootstrap;
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/bootstrap.ts"
+import type { Core } from '@strapi/strapi';
+
+const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
+  // execute some bootstrap code
+};
+
+export default bootstrap;
+
+```
+
+</TabItem>
+
+</Tabs>
 
 ### destroy()
 
@@ -100,14 +144,36 @@ The [destroy](/dev-docs/configurations/functions#destroy) lifecycle function is 
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupId="js-ts">
 
-module.exports = () => ({
-  destroy({ strapi }) {
-    // execute some destroy code
-  },
-});
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/plugins/my-plugin/server/src/destroy.js"
+'use strict';
+
+const destroy = ({ strapi }) => {
+  // execute some destroy code
+};
+
+module.exports = destroy;
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/destroy.ts"
+import type { Core } from '@strapi/strapi';
+
+const destroy = ({ strapi }: { strapi: Core.Strapi }) => {
+  // destroy phase
+};
+
+export default destroy;
+```
+
+</TabItem>
+</Tabs>
 
 ## Configuration
 
@@ -122,21 +188,39 @@ module.exports = () => ({
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js or ./src/plugins/my-plugin/server/index.js"
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 
-const config = require('./config');
+```js title="/src/plugins/my-plugin/server/src/config/index.js"
 
-module.exports = () => ({
-  config: {
-    default: ({ env }) => ({ optionA: true }),
-    validator: (config) => { 
-      if (typeof config.optionA !== 'boolean') {
-        throw new Error('optionA has to be a boolean');
-      }
-    },
+module.exports = {
+  default: ({ env }) => ({ optionA: true }),
+  validator: (config) => { 
+    if (typeof config.optionA !== 'boolean') {
+      throw new Error('optionA has to be a boolean');
+    }
   },
-});
+};
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/config/index.ts"
+
+export default {
+  default: ({ env }) => ({ optionA: true }),
+  validator: (config) => { 
+    if (typeof config.optionA !== 'boolean') {
+      throw new Error('optionA has to be a boolean');
+    }
+  },
+};
+```
+
+</TabItem>
+</Tabs>
 
 Once defined, the configuration can be accessed:
 
@@ -146,46 +230,6 @@ Once defined, the configuration can be accessed:
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.
 :::
-
-## Cron
-
-The `cron` object allows you to add cron jobs to the Strapi instance.
-
-```js title="./src/plugins/my-plugin/strapi-server.js"
-module.exports = () => ({
-  bootstrap({ strapi }) {
-    strapi.cron.add({
-      // runs every second
-      myJob: {
-        task: ({ strapi }) => {
-          console.log("hello from plugin");
-        },
-        options: {
-          rule: "* * * * * *",
-        },
-      },
-    });
-  },
-});
-```
-
-To remove a CRON job you can call the remove function on the `strapi.cron` object and pass in the key corresponding to the CRON job you want to remove.
-
-:::note
-Cron jobs that are using the key as the rule can not be removed.
-:::
-
-```js
-strapi.cron.remove("myJob");
-```
-
-### List cron jobs
-
-To list all the cron jobs that are currently running you can call the `jobs` array on the `strapi.cron` object.
-
-```js
-strapi.cron.jobs
-```
 
 ## Backend customization
 
@@ -207,23 +251,13 @@ Content-Types keys in the `contentTypes` object should re-use the `singularName`
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupId="js-ts">
 
-"use strict";
+<TabItem value="js" label="JavaScript">
 
-module.exports = require('./server');
-```
+```js title="/src/plugins/my-plugin/server/content-types/index.js"
 
-```js title="path: ./src/plugins/my-plugin/server/index.js"
-
-const contentTypes = require('./content-types');
-
-module.exports = () => ({
-  contentTypes,
-});
-```
-
-```js title="path: ./src/plugins/my-plugin/server/content-types/index.js"
+'use strict';
 
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
@@ -234,7 +268,7 @@ module.exports = {
 };
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/content-types/content-type-a.js"
+```js title="/src/plugins/my-plugin/server/content-types/content-type-a.js"
 
 module.exports = {
   kind: 'collectionType',
@@ -267,6 +301,56 @@ module.exports = {
 };
 ```
 
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/content-types/index.ts"
+
+const contentTypeA = require('./content-type-a');
+const contentTypeB = require('./content-type-b');
+
+module.exports = {
+  'content-type-a': { schema: contentTypeA }, // should re-use the singularName of the content-type
+  'content-type-b': { schema: contentTypeB },
+};
+```
+
+```js title="/src/plugins/my-plugin/server/content-types/content-type-a.ts"
+
+export default {
+  kind: 'collectionType',
+  collectionName: 'content-type',
+  info: {
+    singularName: 'content-type-a', // kebab-case mandatory
+    pluralName: 'content-type-as', // kebab-case mandatory
+    displayName: 'Content Type A',
+    description: 'A regular content-type',
+  },
+  options: {
+    draftAndPublish: true,
+  },
+  pluginOptions: {
+    'content-manager': {
+      visible: false,
+    },
+    'content-type-builder': {
+      visible: false,
+    }
+  },
+  attributes: {
+    name: {
+      type: 'string',
+      min: 1,
+      max: 50,
+      configurable: false,
+    },
+  }
+};
+```
+
+</TabItem>
+</Tabs>
+
 ### Routes
 
 An array of [routes](/dev-docs/backend-customization/routes) configuration.
@@ -275,17 +359,15 @@ An array of [routes](/dev-docs/backend-customization/routes) configuration.
 
 **Examples:**
 
-<Tabs>
+<Tabs groupId="js-ts">
+
 <TabItem value="content-api" label="Content API routes only">
 
-```js title="path: ./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupId="js-ts">
 
-"use strict";
+<TabItem value="js" label="JavaScript">
 
-module.exports = require('./server');
-```
-
-```js title="path: ./src/plugins/my-plugin/server/index.js"
+```js title="/src/plugins/my-plugin/server/index.js"
 
 const routes = require('./routes');
 
@@ -295,7 +377,7 @@ module.exports = () => ({
 });
 ```
 
-```js title="path: ./src/plugins/my-plugin/server/routes/index.js"
+```js title="/src/plugins/my-plugin/server/routes/index.js"
 
 module.exports = [
   {
@@ -311,9 +393,45 @@ module.exports = [
 
 </TabItem>
 
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/index.ts"
+
+const routes = require('./routes');
+
+export default {
+  routes,
+  type: 'content-api', // can also be 'admin' depending on the type of route
+};
+```
+
+```js title="/src/plugins/my-plugin/server/routes/index.ts"
+
+export default [
+  {
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['policyName'],
+    },
+  },
+];
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
+
 <TabItem value="both" label="Content API and admin routes">
 
 It is also possible to combine both admin and Content API routes if you need different policies on these: 
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
 
 ```js title="./src/plugins/my-plugin/server/routes/index.js"
 
@@ -354,6 +472,52 @@ module.exports = {
 ```
 
 </TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/routes/index.ts"
+
+export default {
+  admin: require('./admin'),
+  'content-api': require('./content-api'),
+};
+```
+
+```js title="/src/plugins/my-plugin/server/routes/admin/index.ts"
+
+export default {
+  type: 'admin',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['policyName'],
+    },
+  }],
+};
+```
+
+```js title="./src/plugins/my-plugin/server/routes/content-api/index.ts"
+
+export default {
+  type: 'content-api',
+  routes: [{
+    method: 'GET',
+    path: '/model',
+    handler: 'controllerName.action',
+    config: {
+      policies: ['differentPolicyName'],
+    },
+  }],
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+</TabItem>
 </Tabs>
 
 ### Controllers
@@ -364,24 +528,24 @@ An object with the [controllers](/dev-docs/backend-customization/controllers) th
 
 **Example:**
 
+<Tabs groupdId="js-ts">
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<TabItem value="js" label="JavaScript">
 
-"use strict";
+```js title="/src/plugins/my-plugin/server/src/index.js"
 
-module.exports = require('./server');
-```
-
-```js title="./src/plugins/my-plugin/server/index.js"
-
+//…
 const controllers = require('./controllers');
+//…
 
 module.exports = () => ({
+  //…
   controllers,
+  //…
 });
 ```
 
-```js title="./src/plugins/my-plugin/server/controllers/index.js"
+```js title="/src/plugins/my-plugin/server/controllers/index.js"
 
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
@@ -392,14 +556,69 @@ module.exports = {
 };
 ```
 
-```js title="./src/plugins/my-plugin/server/controllers/controller-a.js"
+```js title="/src/plugins/my-plugin/server/controllers/controller-a.js"
 
-module.exports = ({ strapi }) => ({
-  doSomething(ctx) {
-    ctx.body = { message: 'HelloWorld' };
+'use strict';
+
+const controllerA = ({ strapi }) => ({
+  index(ctx) {
+    ctx.body = strapi
+      .plugin('my-strapi-plugin')
+      // the name of the service file & the method.
+      .service('service')
+      .getWelcomeMessage();
   },
 });
+
+module.exports = controllerA;
+
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/index.ts"
+
+import controllers from './controllers';
+
+module.exports = () => ({
+  controllers,
+});
+```
+
+```js title="/src/plugins/my-plugin/server/controllers/index.ts"
+
+import controllerA from './controller-a';
+import controllerB from './controller-b';
+
+export default {
+  controllerA,
+  controllerB,
+};
+```
+
+```js title="/src/plugins/my-plugin/server/controllers/controller-a.ts"
+
+import type { Core } from '@strapi/strapi';
+
+const controllerA = ({ strapi }: { strapi: Core.Strapi }) => ({
+  index(ctx) {
+    ctx.body = strapi
+      .plugin('my-strapi-plugin')
+      // the name of the service file & the method.
+      .service('service')
+      .getWelcomeMessage();
+  },
+});
+
+export default controllerA;
+
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Services
 
@@ -411,23 +630,24 @@ Services should be functions taking `strapi` as a parameter.
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupdId="js-ts">
 
-"use strict";
+<TabItem value="js" label="JavaScript">
 
-module.exports = require('./server');
-```
+```js title="/src/plugins/my-plugin/server/src/index.js"
 
-```js title="./src/plugins/my-plugin/server/index.js"
-
+// …
 const services = require('./services');
+// …
 
 module.exports = () => ({
+  // …
   services,
+  // …
 });
 ```
 
-```js title="./src/plugins/my-plugin/server/services/index.js"
+```js title="/src/plugins/my-plugin/server/services/index.js"
 
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
@@ -440,12 +660,63 @@ module.exports = {
 
 ```js title="./src/plugins/my-plugin/server/services/service-a.js"
 
-module.exports = ({ strapi }) => ({
-  someFunction() {
-    return [1, 2, 3];
+'use strict';
+
+const service = ({ strapi }) => ({
+  getWelcomeMessage() {
+    return 'Welcome to Strapi 🚀';
   },
 });
+
+module.exports = service;
+
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/index.ts"
+
+// …
+import services from './services';
+// …
+
+export default {
+  // …
+  services,
+  // …
+};
+```
+
+```js title="/src/plugins/my-plugin/server/services/index.ts"
+
+import serviceA from './service-a';
+import serviceB from './service-b';
+
+export default {
+  serviceA,
+  serviceB,
+};
+```
+
+```js title="/src/plugins/my-plugin/server/services/service-a.ts"
+
+import type { Core } from '@strapi/strapi';
+
+const serviceA = ({ strapi }: { strapi: Core.Strapi }) => ({
+  getWelcomeMessage() {
+    return 'Welcome to Strapi 🚀';
+  },
+});
+
+export default serviceA;
+
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Policies
 
@@ -455,23 +726,26 @@ An object with the [policies](/dev-docs/backend-customization/policies) the plug
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/strapi-server.js"
+<Tabs groupdId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/plugins/my-plugin/server/src/index.js"
 
 "use strict";
 
-module.exports = require('./server');
-```
-
-```js title="./src/plugins/my-plugin/server/index.js"
-
+//…
 const policies = require('./policies');
+//…
 
-module.exports = () => ({
+module.exports = {
+  //…
   policies,
-});
+  //…
+};
 ```
 
-```js title="./src/plugins/my-plugin/server/policies/index.js"
+```js title="/src/plugins/my-plugin/server/policies/index.js"
 
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
@@ -482,16 +756,59 @@ module.exports = {
 };
 ```
 
-```js title="./src/plugins/my-plugin/server/policies/policy-a.js"
+```js title="/src/plugins/my-plugin/server/policies/policy-a.js"
 
 module.exports = (policyContext, config, { strapi }) => {
-    if (ctx.state.user && ctx.state.user.isActive) {
-      return true;
-    }
+  if (ctx.state.user && ctx.state.user.isActive) {
+    return true;
+  }
 
-    return false;
+  return false;
 };
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/src/index.ts"
+
+//…
+import policies from './policies';
+//…
+
+module.exports = {
+  //…
+  policies,
+  //…
+};
+```
+
+```js title="/src/plugins/my-plugin/server/policies/index.ts"
+
+import policyA from './policy-a';
+import policyB from './policy-b';
+
+export default {
+  policyA,
+  policyB,
+};
+```
+
+```js title="/src/plugins/my-plugin/server/policies/policy-a.ts"
+
+export default (policyContext, config, { strapi }) => {
+  if (ctx.state.user && ctx.state.user.isActive) {
+    return true;
+  }
+
+  return false;
+};
+```
+
+</TabItem>
+
+</Tabs>
 
 ### Middlewares
 
@@ -501,7 +818,11 @@ An object with the [middlewares](/dev-docs/configurations/middlewares) the plugi
 
 **Example:**
 
-```js title="./src/plugins/my-plugin/server/middlewares/your-middleware.js"
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/plugins/my-plugin/server/middlewares/your-middleware.js"
 
 /** 
  * The your-middleware.js file 
@@ -542,6 +863,57 @@ module.exports = ({ strapi }) => {
   strapi.server.use(middlewares.yourMiddleware);
 };
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```js title="/src/plugins/my-plugin/server/middlewares/your-middleware.ts"
+
+/** 
+ * The your-middleware.js file 
+ * declares a basic middleware function and exports it.
+ */
+const middleware = async (ctx, next) => {
+  console.log("your custom logic")
+  await next();
+}
+
+export default middleware;
+```
+
+```js title="./src/plugins/my-plugin/server/middlewares/index.ts"
+
+/**
+ * The middleware function previously created
+ * is imported from its file and
+ * exported by the middlewares index.
+ */
+import yourMiddleware from 'your-middleware';
+
+export default {
+  yourMiddleware
+};
+```
+
+```js title="/src/plugins/my-plugin/server/register.ts"
+
+/**
+ * The middleware is called from 
+ * the plugin's register lifecycle function.
+ */
+import type { Core } from '@strapi/strapi';
+import middlewares from './middlewares';
+
+export default ({ strapi }: { strapi: Core.Strapi }) => {
+  strapi.server.use(middlewares.yourMiddleware);
+};
+
+```
+
+</TabItem>
+
+</Tabs>
 
 ## Usage
 
@@ -588,6 +960,6 @@ strapi.middleware('plugin::plugin-name.middleware-name');
 
 </details>
 
-:::strapi Entity Service API
-To interact with the content-types, use the [Entity Service API](/dev-docs/api/entity-service).
+:::strapi Document Service API
+To interact with the content-types, use the [Document Service API](/dev-docs/api/document-service).
 :::

@@ -13,7 +13,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
+import PartialCodemods from '/docs/snippets/breaking-change-partially-handled-by-codemod.md'
 
 # Strapi factories import have been updated
 
@@ -21,7 +21,7 @@ In Strapi 5, strapi factories import have been updated.
 
 <Intro />
 <YesPlugins />
-<NoCodemods />
+<PartialCodemods />
 
 ## Breaking change description
 

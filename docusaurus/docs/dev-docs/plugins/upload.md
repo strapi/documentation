@@ -17,7 +17,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5 />
 
-The Upload plugin is the backend powering the Media Library plugin available by default in the Strapi admin panel. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
+The Upload plugin is the backend powering the Media Library available by default in the Strapi admin panel. The Upload plugin is installed by default and can not be uninstalled. Using either the Media Library from the admin panel or the upload API directly, you can upload any kind of file for use in your Strapi application.
 
 By default Strapi provides a [provider](/dev-docs/providers) that uploads files to a local directory, which by default will be `public/uploads/` in your Strapi project. Additional providers are available should you want to upload your files to another location.
 
@@ -452,79 +452,6 @@ The corresponding code is be:
   });
 </script>
 ```
-
-:::caution
-You have to send FormData in your request body.
-:::
-
-### Upload files at entry creation
-
-You can also add files during your entry creation.
-
-For example, given the `Restaurant` model attributes:
-
-```json title="path: ./src/api/restaurant/content-types/restaurant/schema.json"
-
-{
-  // ...
-  "attributes": {
-    "name": {
-      "type": "string"
-    },
-    "cover": {
-      "type": "media",
-      "multiple": false,
-    }
-  }
-  // ...
-}
-```
-
-The corresponding code would be:
-
-```html
-<form>
-  <!-- Can be multiple files if you setup "collection" instead of "model" -->
-  <input type="text" name="name" />
-  <input type="file" name="cover" />
-  <input type="submit" value="Submit" />
-</form>
-
-<script type="text/javascript">
-  const form = document.querySelector('form');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const data = {};
-    const formData = new FormData();
-
-    form.elements
-      .forEach(({ name, type, value, files, ...element }) => {
-        if (!['submit', 'file'].includes(type)) {
-          data[name] = value;
-        } else if (type === 'file') {
-          files.forEach((file) => {
-            formData.append(`files.${name}`, file, file.name);
-          });
-        }
-      });
-
-    formData.append('data', JSON.stringify(data));
-
-    await fetch('/api/restaurants', {
-      method: 'post',
-      body: formData
-    });
-  });
-</script>
-```
-
-Your entry data has to be contained in a `data` key and you need to `JSON.stringify` this object. The keys for files need to be prefixed with `files` (e.g. for a cover attribute: `files.cover`).
-
-:::tip
-If you want to upload files for a repeatable component, you will have to specify the zero-based index of the item you want to add the file to, using the following syntax: `files.my_component_name[the_index].attribute_name`. For instance, if you put 3 components and the file is for the second one, the index will be 1.
-:::
 
 :::caution
 You have to send FormData in your request body.

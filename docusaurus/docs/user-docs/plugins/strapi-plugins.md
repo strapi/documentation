@@ -17,15 +17,13 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # List of Strapi plugins
 
-<NotV5/>
-
 Strapi builds and maintains plugins that extend the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace/). Additional documentation on plugins is provided in the relevant sections of the User Guide and the Developer Documentation, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
 
 :::note
 
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
 - If plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), they are marked with  <EnterpriseBadge /> in this reference guide.
-- All plugin installations can be confirmed in the admin panel by clicking on ![plugins icon](/img/assets/icons/plugins.svg) *Plugins* in the main navigation.
+- All plugin installations can be confirmed in ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings > Plugins* in the admin panel.
 
 :::
 
@@ -33,7 +31,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 
 ### <img width="28" src="/img/assets/plugins/icon_i18n-plugin.png" /> Internationalization plugin {#internationalization}
 
-The Internationalization plugin is installed by default on all v4 Strapi applications, but it can be deactivated.
+The Internationalization plugin is installed by default on all v5 Strapi applications, but it can be deactivated.
 
 This plugin is used to manage content in different languages, called "locales". With the Internationalization plugin, it is possible to:
 
@@ -45,17 +43,13 @@ The Internationalization plugin affects several parts of the admin panel. The ta
 
 | Section impacted | Options and settings   |
 |------------------|----------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](/user-docs/settings/internationalization)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Global Settings > Internationalization* </li> <br/> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#configuring-roles-permissions)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration panel*</li> <br/> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration panel > Roles > select role > Settings* </li></ul> |
-| Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#regular-fields)).</li></ul> |
+| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](/user-docs/settings/internationalization)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global Settings > Internationalization* </li> <br/> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#configuring-roles-permissions/)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel*</li> <br/> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel > Roles > select role > Settings* </li></ul> |
+| Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type/)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#regular-fields)).</li></ul> |
 | Content Manager | <ul><li>Addition of a new *Locales* filter in collection types list view, to manage entries per locale (see [Introduction to the Content Manager](/user-docs/content-manager#collection-types)).</li> <li>Addition of new options in Content-types edit view, to translate content and manage it per locale (see [Translating content](/user-docs/content-manager/translating-content)).</li></ul> |
 
 ### <img width="28" src="/img/assets/plugins/icon_up-plugin.png" /> Users & Permissions plugin {#users-and-permissions}
 
-:::note
-[API tokens](/user-docs/settings/API-tokens) are the preferred method for managing end users. Strapi plans to remove the Users & Permissions plugin from the default installation by the end of September 2022.
-:::
-
-The Users & Permissions plugin is installed by default on all v4 Strapi applications, but can be deactivated.
+The Users & Permissions plugin is installed by default on all v5 Strapi applications, but can be deactivated.
 
 This plugin is used to manage end users, who consume the content that is created and managed with a Strapi application and displayed on a front-end application (e.g. website, mobile application, connected device, etc.). With the Users & Permissions plugin, it is possible to:
 
@@ -68,7 +62,7 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 
 | Section impacted | Options and settings       |
 |------------------|------------------------------------------------------|
-| Settings         | <ul>Addition of a "Users & Permissions plugin" setting section, which contains 4 sub-sections: Roles (see [Configuring end-user roles](/user-docs/users-roles-permissions/configuring-end-users-roles)), Providers, Email Templates, and Advanced Settings (see [Configuring Users & Permissions plugin](/user-docs/settings/configuring-users-permissions-plugin-settings)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Users & Permissions plugin* </ul> |
+| Settings         | <ul>Addition of a "Users & Permissions plugin" setting section, which contains 4 sub-sections: Roles (see [Configuring end-user roles](/user-docs/users-roles-permissions/configuring-end-users-roles)), Providers, Email Templates, and Advanced Settings (see [Configuring Users & Permissions plugin](/user-docs/settings/configuring-users-permissions-plugin-settings)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Users & Permissions plugin* </ul> |
 | Content-type Builder | <ul>Creation of a default collection type "User" which allows for the management of the end users, the end-user roles and their permissions. This collection type cannot be deleted and the composing fields cannot be edited, but the addition of new fields is possible. </ul> |
 | Content Manager | <ul>Addition of the default "User" collection type that allows for the management of end-user accounts (see [Managing end-user accounts](/user-docs/users-roles-permissions/managing-end-users)). <ul><li>By default, the following fields are available: Username, Email, Password, as well as Confirmed and Blocked as boolean fields.</li> <li>The "User" collection type has a relation established with the "Role" collection type. All end-user accounts must have a designated role: by default, the end user is attributed the end-user role set as default, but that role can be changed via the end-user entries directly in the Content Manager.</li></ul> </ul> |
 
@@ -78,7 +72,7 @@ The Email plugin allows users to send email from the server or from external pro
 
 | Section impacted | Options and settings |
 |------------------|----------------------|
-| Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Users and Permissions > Roles* </li></ul>|
+| Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Users and Permissions > Roles* </li></ul>|
 
 ## Additional plugins
 
@@ -95,7 +89,7 @@ The Documentation plugin affects multiple parts of the admin panel. The table be
 | Section impacted    | Options and settings         |
 |------------------|-------------------------------------------------------------|
 | Documentation    | <ul>Addition of a new Documentation option in the main navigation under the plugins heading, which contains links to open and refresh the documentation.   </ul>        |
-| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not. <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Administration Panel > Roles* </li></ul>|
+| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not. <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration Panel > Roles* </li></ul>|
 
 ### <img width="28" src="/img/assets/plugins/Gatsby_Monogram.png" /> Gatsby preview {#gatsby}
 
@@ -105,7 +99,7 @@ The Gatsby preview plugin affects multiple parts of the admin panel. The table b
 
 | Section impacted    | Options and settings         |
 |------------|-----------------|
-| Settings     |  Addition of a "Gatsby preview plugin" setting section, enables/disables collection types and single types, and allows the Gatsby Content Sync URL to be added. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/settings.svg) *Settings > Gatsby preview plugin* | |
+| Settings     |  Addition of a "Gatsby preview plugin" setting section, enables/disables collection types and single types, and allows the Gatsby Content Sync URL to be added. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Gatsby preview plugin* | |
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation.                  |
   
 
@@ -131,8 +125,8 @@ The Strapi SEO plugin affects multiple parts of the admin panel. The table below
 | Section impacted    | Options and settings                     |
 |-------------------|--------------------------------------------|
 | Content Manager    | <ul> <li>Addition of SEO field to Collection Types with the SEO component.</li> <li> Addition of SEO menu in the right-side navigation </li> <li>Addition of **Browser Preview** and **Social Preview** buttons in the right-side navigation, </li> <li> Addition of SEO Summary and link for details in the right-side navigation.</li> </ul>                          |
-| Content-type Builder     | <ul> Addition of `shared - metaSocial` and `shared - seo` components in the Content-type Builder sub navigation. The `shared - metaSocial` and `shared - seo` components can be added to a collection type or single type using the **+ Add another field** button and adding an existing component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#components)). </ul> |
-|Main navigation    | <ul> Addition of ![search icon](/img/assets/icons/search.svg) *SEO* to the main navigation. By clicking on ![search icon](/img/assets/icons/search.svg) *SEO* a list of Collection Types and Single Types, with the SEO status, is available.</ul>
+| Content-type Builder     | <ul> Addition of `shared - metaSocial` and `shared - seo` components in the Content-type Builder sub navigation. The `shared - metaSocial` and `shared - seo` components can be added to a collection type or single type using the ![Plus icon](/img/assets/icons/v5/Plus.svg) **Add another field** button and adding an existing component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#components)). </ul> |
+|Main navigation    | <ul> Addition of ![search icon](/img/assets/icons/v5/Search.svg) *SEO* to the main navigation. By clicking on ![search icon](/img/assets/icons/v5/Search.svg) *SEO* a list of Collection Types and Single Types, with the SEO status, is available.</ul>
 
 ### <img width="28" src="/img/assets/plugins/sentry.png" /> Sentry {#sentry}
 

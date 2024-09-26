@@ -14,11 +14,7 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Database configuration
-
-<NotV5 />
 
 The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
 
@@ -30,14 +26,9 @@ The `./config/database.js` file (or the `./config/database.ts` file for TypeScri
 The CLI installation guide details [supported database and versions](/dev-docs/installation/cli.md#preparing-the-installation).
 :::
 
-:::note
-Strapi `v4.6.2` introduced a new format for the database configuration file that allows all of the database configuration properties to be set using environment variables. Only new projects created after the `v4.6.2` release will include the new configuration, however, earlier projects can utilize the new configuration by manually modifying the `./config/database.js` or `./config/database.ts` and updating the `.env` file. See [environment variables in database configurations](#environment-variables-in-database-configurations)
-
-:::
-
 ## Configuration structure
 
-The `./config/database.js` (or `./config/database.ts` for TypeScript) accepts 2 main configuration objects:
+The `/config/database.js|ts` file accepts 2 main configuration objects:
 
 - [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
 - [`settings`](#settings-configuration-object) for Strapi-specific database settings
@@ -533,15 +524,106 @@ For deployed versions of your application the database environment variables sho
 | DigitalOcean App Platform                             | `Environment Variables` table   |
 | Heroku                                                | `Config vars` table                   |
 
-## Databases installation guides
+## Databases installation
 
-Strapi gives you the option to choose the most appropriate database for your project. Strapi supports **PostgreSQL**, **SQLite**, or **MySQL**.
+Strapi gives you the option to choose the most appropriate database for your project. Strapi supports PostgreSQL, SQLite, or MySQL.
 
-The following documentation covers how to install databases locally:
+### SQLite
 
-- [SQLite installation guide](/dev-docs/configurations/sqlite),
+SQLite is the default (see [Quick Start Guide](/dev-docs/quick-start)) and recommended database to quickly create an application locally.
 
-:::note
+#### Install SQLite during application creation
+
+Use one of the following commands:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn create strapi-app my-project --quickstart
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npx create-strapi-app@latest my-project --quickstart
+```
+
+</TabItem>
+
+</Tabs>
+
+This will create a new project and launch it in the browser.
+
+#### Install SQLite manually
+
+In a terminal, run the following command:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn add better-sqlite3
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm install better-sqlite3
+```
+
+</TabItem>
+
+</Tabs>
+
+Add the following code to your `/config/database.ts|js` file:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/database.ts"
+import path from 'path';
+
+export default ({ env }) => ({
+  connection: {
+    client: 'sqlite',
+    connection: {
+      filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+    },
+    useNullAsDefault: true,
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+### PostgreSQL
+
 When connecting Strapi to a PostgreSQL database, the database user requires SCHEMA permissions. While the database admin has this permission by default, a new database user explicitly created for the Strapi application will not. This would result in a 500 error when trying to load the admin console.
 
 To create a new PostgreSQL user with the SCHEMA permission, use the following steps:
@@ -554,4 +636,3 @@ $ \c my_strapi_db_name admin_user
 # Grant schema privileges to the user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
-:::

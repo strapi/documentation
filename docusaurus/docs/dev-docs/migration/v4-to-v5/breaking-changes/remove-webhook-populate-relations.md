@@ -1,6 +1,6 @@
 ---
 title: The 'webhooks.populateRelations' server configuration is removed
-description: Breaking change description
+description: In Strapi 5, webhooks have been refactored and the `webhook.populateRelations` option will become redundant. This might affect lifecycles expecting the returned relations of create, update and delete to be populated.
 sidebar_label: No webhooks.populateRelations configuration
 displayed_sidebar: devDocsMigrationV5Sidebar
 tags:

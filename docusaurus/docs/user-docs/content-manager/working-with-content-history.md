@@ -1,5 +1,5 @@
 ---
-title: Working with Content History
+title: Browsing Content History
 description: Learn how you can use the Content History feature of Strapi 5 to browse and restore previous versions of documents from the Content Manager.
 displayed_sidebar: userDocsSidebar
 tags:
@@ -23,7 +23,7 @@ sources={{
 
 Content History is accessible from the Edit View of any document created with the Content Manager.
 
-To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/more.svg) at the top right of the interface, and click the **Content History** button. You will be presented with the Content History view:
+To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. You will be presented with the Content History view:
 
 - The sidebar on the right lists the total number of versions available, and for each version, the date and time when the version was created, the user who created it, and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content) for more information about document statuses).
 - The main view on the left lists the fields and their content for the version selected in the sidebar on the right.
@@ -31,8 +31,8 @@ To browse Content History, while editing a document in the Content Manager, clic
 <ThemedImage
 alt="Accessing the Content History of a document"
 sources={{
-  light:'/img/assets/content-manager/browsing-content-history.gif',
-  dark:'/img/assets/content-manager/browsing-content-history_DARK.gif',
+  light:'/img/assets/content-manager/browsing-content-history.png',
+  dark:'/img/assets/content-manager/browsing-content-history_DARK.png',
 }}
 />
 
@@ -46,18 +46,10 @@ You can choose to restore a previous version of a document. When restoring a ver
 
 To restore a version:
 
-1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/more.svg) at the top right of the interface, and click the **Content History** button.
+1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button.
 2. Browse the Content History and select a version in the sidebar on the right.
 3. Click the **Restore** button.
 4. In the _Confirmation_ window, click **Restore**.  
-
-<ThemedImage
-alt="Restoring a previous version"
-sources={{
-  light:'/img/assets/content-manager/restoring-version.gif',
-  dark:'/img/assets/content-manager/restoring-version_DARK.gif',
-}}
-/>
 
 :::note
 If the [Internationalization (i18n)](/user-docs/content-manager/translating-content) feature is enabled for the content-type, restoring a version with a unique field (i.e. a field whose content is the same for all locales) will restore the content of this field for all locales.

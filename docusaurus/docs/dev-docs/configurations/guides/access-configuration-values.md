@@ -1,27 +1,41 @@
 ---
 title: Access configuration values from the code
-# description: todo
+description: Learn how to access Strapi 5 configuration values from the code.
 displayed_sidebar: devDocsConfigSidebar
 tags:
 - configuration
 - configuration guide
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # How to access to configuration values from the code
-
-<NotV5 />
 
 All the [configuration files](/dev-docs/configurations) are loaded on startup and can be accessed through the `strapi.config` configuration provider.
 
-If the `/config/server.js` file has the following configuration:
+If the `/config/server.ts|js` file has the following configuration:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
 
   ```js
   module.exports = {
     host: '0.0.0.0',
   };
   ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+  ```ts
+  export default {
+    host: '0.0.0.0',
+  };
+  ```
+
+</TabItem>
+
+</Tabs>
 
 then the `server.host` key can be accessed as:
 
@@ -35,11 +49,15 @@ Nested keys are accessible with the [dot notation](https://developer.mozilla.org
 The filename is used as a prefix to access the configurations.
 :::
 
-Configuration files can either be `.js` or `.json` files.
+Configuration files can either be `.js`, `.ts`, or `.json` files.
 
-When using a `.js` file, the configuration can be exported:
+When using a `.js` or `.ts` file, the configuration can be exported:
 
 - either as an object:
+
+  <Tabs groupId="js-ts">
+
+  <TabItem value="js" label="JavaScript">
 
   ```js
   module.exports = {
@@ -47,12 +65,46 @@ When using a `.js` file, the configuration can be exported:
   };
   ```
 
-- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](/dev-docs/configurations/guides/access-cast-environment-variables#casting-environment-variables):
+  </TabItem>
+
+  <TabItem value="ts" label="TypeScript">
+
+  ```ts
+  export default {
+    mySecret: 'someValue',
+  };
+  ```
+
+  </TabItem>
+
+  </Tabs>
+
+- or as a function returning a configuration object (recommended usage). The function will get access to the [`env` utility](/dev-docs/configurations/guides/access-cast-environment-variables):
+
+  <Tabs groupId="js-ts">
+
+  <TabItem value="js" label="JavaScript">
 
   ```js
   module.exports = ({ env }) => {
     return {
-      mySecret: 'someValue',
+      mySecret: env('MY_SECRET_KEY', 'defaultSecretValue'),
     };
   };
   ```
+
+  </TabItem>
+
+  <TabItem value="ts" label="TypeScript">
+
+  ```ts
+  export default ({ env }) => {
+    return {
+      mySecret: env('MY_SECRET_KEY', 'defaultSecretValue'),
+    };
+  };
+  ```
+
+  </TabItem>
+
+  </Tabs>

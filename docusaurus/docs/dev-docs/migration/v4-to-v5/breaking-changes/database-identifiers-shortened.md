@@ -76,4 +76,6 @@ Database identifiers can't be longer than 55 characters and will be shortened.
 
 ### Manual procedure
 
-No manual migration is required. Strapi will handle everything when starting the application in Strapi v5.
+Strapi should handle everything when starting the application in Strapi v5.
+
+However, be aware that if you have hard-coded references to database tables or columns, you may need to manually update them.

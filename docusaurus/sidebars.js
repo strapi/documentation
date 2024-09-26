@@ -28,7 +28,13 @@ const sidebars = {
             updated: true,
           },
         },
-        'dev-docs/quick-start',
+        {
+          type: 'doc',
+          id: 'dev-docs/quick-start',
+          customProps: {
+            updated: true,
+          },
+        },
         {
           type: 'doc',
           id: 'dev-docs/whats-new',
@@ -60,13 +66,22 @@ const sidebars = {
           type: 'category',
           label: 'Installation',
           link: {type: 'doc', id: 'dev-docs/installation'},
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'doc',
               label: 'Introduction to installation',
               id: 'dev-docs/installation',
             },
-            'dev-docs/installation/cli',
+            {
+              type: 'doc',
+              id: 'dev-docs/installation/cli',
+              customProps: {
+                updated: true,
+              },
+            },
             'dev-docs/installation/docker',
           ]
         },
@@ -91,10 +106,13 @@ const sidebars = {
             'dev-docs/configurations/functions',
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
-            'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/sso',
-            'dev-docs/configurations/guides/rbac',
             'dev-docs/configurations/features',
+            'dev-docs/configurations/guides/rbac',
+            'dev-docs/configurations/guides/public-assets',
+            'dev-docs/configurations/guides/access-cast-environment-variables',
+            'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/use-cron-jobs',
           ],
         },
         {
@@ -114,47 +132,6 @@ const sidebars = {
               type: 'doc',
               label: '☁️ Strapi Cloud',
               id: 'cloud/getting-started/deployment',
-            },
-            {
-              type: 'category',
-              label: 'Other Hosting Guides',
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/hosting-guides',
-              },
-              collapsed: false,
-              items: [
-                {
-                  type: 'doc',
-                  label: 'Introduction to hosting guides',
-                  id: 'dev-docs/deployment/hosting-guides',
-                },
-                'dev-docs/deployment/amazon-aws',
-                'dev-docs/deployment/azure',
-                'dev-docs/deployment/digitalocean-app-platform',
-                'dev-docs/deployment/digitalocean',
-                'dev-docs/deployment/heroku',
-              ],
-            },
-            {
-              type: 'category',
-              label: 'Optional Software Guides',
-              link: {
-                type: 'doc',
-                id: 'dev-docs/deployment/optional-software-guides',
-              },
-              collapsed: false,
-              items: [
-                {
-                  type: 'doc',
-                  label: 'Introduction to optional guides',
-                  id: 'dev-docs/deployment/optional-software-guides',
-                },
-                'dev-docs/deployment/caddy-proxy',
-                'dev-docs/deployment/haproxy-proxy',
-                'dev-docs/deployment/nginx-proxy',
-                'dev-docs/deployment/process-manager',
-              ],
             },
           ]
         }
@@ -296,11 +273,6 @@ const sidebars = {
               label: 'Middlewares',
               id: 'dev-docs/api/document-service/middlewares'
             },
-            {
-              type: 'doc',
-              label: 'Lifecycle hooks',
-              id: 'dev-docs/api/document-service/lifecycle-hooks'
-            },
           ]
         },
       ]
@@ -321,6 +293,14 @@ const sidebars = {
           customProps: {
             new: true,
           },
+        },
+        {
+          type: 'doc',
+          label: 'Internationalization (i18n)',
+          customProps: {
+            updated: true,
+          },
+          id: 'dev-docs/i18n',
         },
         {
           type: 'doc',
@@ -346,6 +326,14 @@ const sidebars = {
           type: 'doc',
           label: 'Providers',
           id: 'dev-docs/providers',
+        },
+        {
+          type: 'doc',
+          label: 'Templates',
+          id: 'dev-docs/templates',
+          customProps: {
+            updated: true,
+          }
         },
         {
           type: 'category',
@@ -395,6 +383,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Back-end customization',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/backend-customization'
@@ -421,6 +412,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Admin panel customization',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/admin-panel-customization',
@@ -483,11 +477,7 @@ const sidebars = {
               label: 'GraphQL',
               id: 'dev-docs/plugins/graphql',
             },
-            {
-              type: 'doc',
-              label: 'Internationalization (i18n)',
-              id: 'dev-docs/plugins/i18n',
-            },
+
             {
               type: 'doc',
               label: 'Sentry',
@@ -508,6 +498,9 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
+          customProps: {
+            updated: true,
+          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/developing-plugins',
@@ -519,12 +512,46 @@ const sidebars = {
               id: 'dev-docs/plugins/developing-plugins'
             },
             'dev-docs/plugins/development/create-a-plugin',
-            'dev-docs/plugins/development/plugin-structure',
-            'dev-docs/plugins/development/plugin-cli',
             {
               type: 'doc',
-              id: 'dev-docs/plugins/admin-panel-api',
+              id: 'dev-docs/plugins/development/plugin-structure',
+              label: 'Plugin structure',
+              customProps: {
+                updated: true,
+              },
+            },
+            {
+              type: 'doc',
+              id: 'dev-docs/plugins/development/plugin-sdk',
+              label: 'Plugin SDK',
+              customProps: {
+                new: true,
+              },
+            },
+            {
+              type: 'category',
               label: 'Admin Panel API',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/plugins/admin-panel-api',
+              },
+              items: [
+                {
+                  type: 'doc',
+                  label: 'Introduction to Admin Panel APIs',
+                  id: 'dev-docs/plugins/admin-panel-api',
+                  customProps: {
+                    updated: true,
+                  },
+                },
+                {
+                  type: 'doc',
+                  id: 'dev-docs/plugins/content-manager-apis',
+                  customProps: {
+                    new: true,
+                  },
+                }
+              ]
             },
             {
               type: 'doc',
@@ -543,7 +570,7 @@ const sidebars = {
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
-                'dev-docs/plugins/guides/use-the-plugin-cli',
+                'dev-docs/plugins/development/create-a-plugin',
               ]
             }
           ]
@@ -596,23 +623,9 @@ const sidebars = {
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
             },
             {
-              type: 'category',
-              collapsed: true,
+              type: 'doc',
               label: 'Specific resources',
-              link: {
-                type: 'doc',
-                id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction'
-              },
-              items: [
-                {
-                  type: 'doc',
-                  label: 'Introduction to migration guides',
-                  id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
-                },
-                'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
-                'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
-                'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
-              ],
+              id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction',
             },
           ]
         }
@@ -624,6 +637,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'Getting Started',
+      link: {
+        type: "doc",
+        id: "user-docs/intro",
+      },
       items: [
         'user-docs/intro',
         'user-docs/getting-started/user-guide-fundamentals',
@@ -666,6 +683,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'Content-type Builder',
+      link: {
+        type: "doc",
+        id: "user-docs/content-type-builder/introduction-to-content-types-builder",
+      },
       items: [
         {
           type: 'autogenerated',
@@ -677,6 +698,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'Media Library',
+      link: {
+        type: "doc",
+        id: "user-docs/media-library/introduction-to-the-media-library",
+      },
       items: [
         {
           type: 'autogenerated',
@@ -688,6 +713,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Releases",
+      link: {
+        type: "doc",
+        id: "user-docs/releases/introduction",
+      },
       items: [
         'user-docs/releases/introduction',
         'user-docs/releases/creating-a-release',
@@ -698,6 +727,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'Users, Roles & Permissions',
+      link: {
+        type: "doc",
+        id: "user-docs/users-roles-permissions/introduction-to-users-roles-permissions",
+      },
       items: [
         {
           type: 'autogenerated',
@@ -709,6 +742,10 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: 'Plugins',
+      link: {
+        type: "doc",
+        id: "user-docs/plugins/introduction-to-plugins",
+      },
       items: [
         {
           type: 'autogenerated',
@@ -719,7 +756,11 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
-      label: 'General Settings',
+      label: 'Settings',
+      link: {
+        type: "doc",
+        id: "user-docs/settings/introduction",
+      },
       items: [
        'user-docs/settings/introduction',
        'user-docs/settings/configuring-users-permissions-plugin-settings',
@@ -728,11 +769,16 @@ const sidebars = {
           type: 'category',
           collapsed: false,
           label: 'Configuring global settings',
+          link: {
+            type: 'doc',
+            id: 'user-docs/settings/introduction'
+          },
           items: [
             'user-docs/settings/admin-panel',
             'user-docs/settings/API-tokens',
             'user-docs/settings/internationalization',
             'user-docs/settings/media-library-settings',
+            'user-docs/settings/releases',
             {
               type: 'doc',
               label: 'Review Workflows',
@@ -750,6 +796,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Getting Started",
+      link: {
+        type: "doc",
+        id: "cloud/getting-started/intro",
+      },
       items: [
         "cloud/getting-started/intro",
         {
@@ -803,6 +853,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Projects management",
+      link: {
+        type: "doc",
+        id: "cloud/projects/overview",
+      },
       items: [
         "cloud/projects/overview",
         {
@@ -821,12 +875,20 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Deployments",
+      link: {
+        type: "doc",
+        id: "cloud/projects/deploys",
+      },
       items: ["cloud/projects/deploys", "cloud/projects/deploys-history"],
     },
     {
       type: "category",
       collapsed: false,
       label: "Account management",
+      link: {
+        type: "doc",
+        id: "cloud/account/account-settings",
+      },
       items: [
         "cloud/account/account-settings",
         {
@@ -843,6 +905,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Command Line Interface",
+      link: {
+        type: "doc",
+        id: "cloud/cli/cloud-cli",
+      },
       items: [
         {
           type: "doc",
@@ -858,6 +924,10 @@ const sidebars = {
       type: "category",
       collapsed: false,
       label: "Advanced configuration",
+      link: {
+        type: "doc",
+        id: "cloud/advanced/database",
+      },
       items: [
         "cloud/advanced/database",
         {
@@ -983,7 +1053,7 @@ const sidebars = {
             {
               type: 'link',
               label: 'Locale',
-              href: '/dev-docs/plugins/i18n#rest',
+              href: '/dev-docs/api/rest/filters-locale-publication#locale',
             },
             {
               type: 'link',
@@ -1140,6 +1210,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/use-cron-jobs',
           ]
         }
       ]
@@ -1180,47 +1251,17 @@ const sidebars = {
         },
         {
           type: "category",
+          collapsible: true,
+          collapsed: true,
           label: "Breaking changes",
-          collapsed: false,
           link: {
-            type: "doc",
-            id: "dev-docs/migration/v4-to-v5/breaking-changes",
+            type: 'doc',
+            id: 'dev-docs/migration/v4-to-v5/breaking-changes'
           },
           items: [
             {
-              type: "doc",
-              id: 'dev-docs/migration/v4-to-v5/breaking-changes',
-              label: 'Complete list',
-            },
-            {
-              type: "link",
-              label: "Database",
-              href: "/dev-docs/migration/v4-to-v5/breaking-changes#database",
-            },
-            {
-              type: "link",
-              label: "Dependencies",
-              href: "/dev-docs/migration/v4-to-v5/breaking-changes#dependencies",
-            },
-            {
-              type: "link",
-              label: "Configuration",
-              href: "/dev-docs/migration/v4-to-v5/breaking-changes#configuration",
-            },
-            {
-              type: "link",
-              label: "Strapi objects, methods, packages, and back-end cutomization",
-              href: "/dev-docs/migration/v4-to-v5/breaking-changes#strapi-objects-methods-packages-and-back-end-customization",
-            },
-            {
-              type: "link",
-              label: "Plugins, providers, and admin panel customization",
-              href: "/dev-docs/migration/v4-to-v5/breaking-changes#plugins-providers-and-admin-panel-customization",
-            },
-            {
-              type: "link",
-              label: "Content API",
-              href: "/dev-docs/migration/v4-to-v5/breaking-changes#content-api",
+              type: "autogenerated",
+              dirName: 'dev-docs/migration/v4-to-v5/breaking-changes'
             },
           ]
         },
