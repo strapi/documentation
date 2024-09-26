@@ -78,7 +78,24 @@ Lists all Strapi Cloud projects associated with your account.
 strapi projects
 ```
 
-This command retrieves and displays a list of all projects hosted on your Strapi Cloud account.
+
+```bash
+strapi link
+```
+
+This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud.
+
+## strapi cloud environments <NewBadge />
+
+**Alias:** `strapi cloud environment list`
+
+Lists all environments associated with your Strapi Cloud Project.
+
+```bash
+strapi cloud environments
+```
+
+This command retrieves and displays a list of all environments belonging to your Strapi Cloud project.
 
 ## strapi logout
 
