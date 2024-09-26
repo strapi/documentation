@@ -53,7 +53,7 @@ To add an entry to a release:
 The *Releases* box on the right should show which release(s) the entry is included in.
 
 :::info
-If [Releases scheduling](/user-docs/releases/managing-a-release#scheduling-a-release-) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
+If [Releases scheduling](/user-docs/releases/managing-a-release#scheduling-a-release) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
 :::
 
 ## Removing an entry from a release

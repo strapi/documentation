@@ -29,7 +29,7 @@ There are 5 tabs available for the project's settings:
 - ![Plans icon](/img/assets/icons/MapTrifold.svg) [Plans](#plans),
 - and ![Invoices icon](/img/assets/icons/Invoice.svg) [Invoices](#invoices).
 
-### General (project)
+### General (project) {#general}
 
 The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-level settings enables you to check and update the following options for the project:
 
@@ -271,7 +271,7 @@ The environment's Node version is based on the one chosen at the creation of the
 #### Editing Git branch
 
 1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Edit branch** button.
-2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General (project)](#general-project).
+2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General (project)](#general).
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |

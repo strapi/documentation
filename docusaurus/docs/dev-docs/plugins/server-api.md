@@ -32,7 +32,6 @@ The Server API includes:
 - an [entry file](#entry-file) which export the required interface,
 - [lifecycle functions](#lifecycle-functions),
 - a [configuration](#configuration) API,
-- the ability to add [cron](#cron) jobs,
 - and the ability to [customize all elements of the back-end server](#backend-customization).
 
 Once you have declared and exported the plugin interface, you will be able to [use the plugin interface](#usage).

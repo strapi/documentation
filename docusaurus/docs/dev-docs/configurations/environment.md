@@ -22,7 +22,7 @@ An `env()` utility can be used to [retrieve the value of environment variables](
 
 Additionally, specific [configurations for different environments](#environment-configurations) can be created.
 
-## Strapi's environment variables
+## Strapi's environment variables {#strapi}
 
 Strapi provides the following environment variables:
 

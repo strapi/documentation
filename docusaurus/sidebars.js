@@ -978,27 +978,27 @@ const sidebars = {
             {
               type: 'link',
               label: 'Get documents',
-              href: '/dev-docs/api/rest#get-documents'
+              href: '/dev-docs/api/rest#get-all'
             },
             {
               type: 'link',
               label: 'Get a document',
-              href: '/dev-docs/api/rest#get-a-document'
+              href: '/dev-docs/api/rest#get'
             },
             {
               type: 'link',
               label: 'Create a document',
-              href: '/dev-docs/api/rest#create-a-document'
+              href: '/dev-docs/api/rest#create'
             },
             {
               type: 'link',
               label: 'Update a document',
-              href: '/dev-docs/api/rest#update-a-document'
+              href: '/dev-docs/api/rest#update'
             },
             {
               type: 'link',
               label: 'Delete a document',
-              href: '/dev-docs/api/rest#delete-a-document'
+              href: '/dev-docs/api/rest#delete'
             },
           ]
         },

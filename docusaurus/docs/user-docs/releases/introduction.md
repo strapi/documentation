@@ -28,5 +28,5 @@ From the Releases view, it is possible to:
 
 - [create a new release](/user-docs/releases/creating-a-release),
 - view pending and done releases,
-- view which releases are [scheduled](/user-docs/releases/managing-a-release#scheduling-a-release-), and when they will be published (in the Pending tab) or have been published (in the Done tab),
+- view which releases are [scheduled](/user-docs/releases/managing-a-release#scheduling-a-release), and when they will be published (in the Pending tab) or have been published (in the Done tab),
 - and click on a release to [manage its content](/user-docs/releases/managing-a-release).

@@ -23,7 +23,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Filtering, Locale, and Publication State
 
-The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-documents) method.<br/>
+The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-all) method.<br/>
 Using optional Strapi features can provide some more filters:
 
 - If the [Internationalization (i18n) plugin](/dev-docs/i18n) is enabled on a content-type, it's possible to filter by locale.

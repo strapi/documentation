@@ -25,7 +25,7 @@ All the Content Manager APIs share the same API shape and must use components.
 
 ### API shape
 
-All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](#bootstrap) function, in 2 possible ways:
+All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/dev-docs/plugins/admin-panel-api#bootstrap) function, in 2 possible ways:
 
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
   

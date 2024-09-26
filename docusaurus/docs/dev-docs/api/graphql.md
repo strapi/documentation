@@ -463,7 +463,7 @@ mutation CreateCategory {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/i18n#graphl-create)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/i18n#graphql-create)).
 :::
 
 ### Update an existing document

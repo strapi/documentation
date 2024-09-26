@@ -20,7 +20,7 @@ With the Plugin SDK, you do not need to set up a Strapi project before creating 
 The present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin. If you already have an existing plugin, you can instead retrofit the plugin setup to utilise the Plugin SDK commands (please refer to the [Plugin SDK reference](/dev-docs/plugins/development/plugin-sdk) for a full list of available commands).
 
 :::note
-This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#working-with-the-plugin-cli-in-a-monorepo-environment) the steps are exactly the same.
+This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#monorepo) the steps are exactly the same.
 :::
 
 :::prerequisites
@@ -127,7 +127,7 @@ npm run build && npm run verify
 
 The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
 
-## Working with the Plugin SDK in a monorepo environment
+## Working with the Plugin SDK in a monorepo environment {#monorepo}
 
 If you are working with a monorepo environment to develop your plugin, you don't need to use the `watch:link` command because the monorepo workspace setup will handle the symlink. You can use the `watch` command instead.
 

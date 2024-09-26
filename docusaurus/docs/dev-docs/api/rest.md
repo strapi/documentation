@@ -64,11 +64,11 @@ sources={{
 
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
-| `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-documents) |
-| `POST`   | `/api/:pluralApiId`             | [Create a document](#create-a-document)   |
-| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get-a-document)         |
-| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update-a-document)   |
-| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete-a-document)   |
+| `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-all) |
+| `POST`   | `/api/:pluralApiId`             | [Create a document](#create)   |
+| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get)         |
+| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update)   |
+| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete)   |
 
 </TabItem>
 
@@ -76,9 +76,9 @@ sources={{
 
 | Method   | URL                   | Description                                |
 | -------- | --------------------- | ------------------------------------------ |
-| `GET`    | `/api/:singularApiId` | [Get a document](#get-a-document)              |
-| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update-a-document) |
-| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete-a-document)        |
+| `GET`    | `/api/:singularApiId` | [Get a document](#get)              |
+| `PUT`    | `/api/:singularApiId` | [Update/Create a document](#update) |
+| `DELETE` | `/api/:singularApiId` | [Delete a document](#delete)        |
 
 </TabItem>
 
@@ -302,7 +302,7 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#creating-a-new-localized-entry).
+If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#rest-create).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).

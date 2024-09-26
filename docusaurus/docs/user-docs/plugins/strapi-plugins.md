@@ -29,22 +29,22 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 
 ## Pre-installed plugins
 
-### <img width="28" src="/img/assets/plugins/icon_i18n-plugin.png" /> Internationalization plugin {#internationalization}
+### <img width="28" src="/img/assets/plugins/icon_i18n-plugin.png" /> Internationalization {#i18n}
 
-The Internationalization plugin is installed by default on all v5 Strapi applications, but it can be deactivated.
+The Internationalization feature is a core part of all Strapi 5 applications, but it can be deactivated.
 
-This plugin is used to manage content in different languages, called "locales". With the Internationalization plugin, it is possible to:
+This feature is used to manage content in different languages, called "locales". With the Internationalization plugin, it is possible to:
 
 - define which locales should be available in the Strapi application,
 - define which content-types and fields can be translated in different locales, or should only be available in the default locale,
 - translate content and manage each locale individually.
 
-The Internationalization plugin affects several parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
+The Internationalization feature affects several parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application.
 
 | Section impacted | Options and settings   |
 |------------------|----------------------------------------------------------------|
-| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](/user-docs/settings/internationalization)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global Settings > Internationalization* </li> <br/> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#configuring-roles-permissions/)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel*</li> <br/> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel > Roles > select role > Settings* </li></ul> |
-| Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type/)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#regular-fields)).</li></ul> |
+| Settings         | <ul><li>Addition of a new "Internationalization" setting sub-section, where locales can be added, edited or deleted from the application (see [Configuring Internationalization locales](/user-docs/settings/internationalization)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global Settings > Internationalization* </li> <br/> <li>Addition of new permissions for administrator roles: access to Content-types, as well as possible actions on the Content-types, can be defined depending on the locale (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#configuring-roles-permissions)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel*</li> <br/> <li> Addition of role-based permissions settings where the access for each user type can be enabled or restricted (see [Configuring permissions](/user-docs/users-roles-permissions/configuring-administrator-roles#editing-a-role)). <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel > Roles > select role > Settings* </li></ul> |
+| Content-type Builder | <ul><li>Addition of a new setting at the Content-type level, to allow or not localization/translation of the content-type (see [Creating a new content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type)).</li> <li>Addition of a new setting at field level, to allow or not localization/translation of the content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type#regular-fields)).</li></ul> |
 | Content Manager | <ul><li>Addition of a new *Locales* filter in collection types list view, to manage entries per locale (see [Introduction to the Content Manager](/user-docs/content-manager#collection-types)).</li> <li>Addition of new options in Content-types edit view, to translate content and manage it per locale (see [Translating content](/user-docs/content-manager/translating-content)).</li></ul> |
 
 ### <img width="28" src="/img/assets/plugins/icon_up-plugin.png" /> Users & Permissions plugin {#users-and-permissions}
@@ -102,7 +102,6 @@ The Gatsby preview plugin affects multiple parts of the admin panel. The table b
 | Settings     |  Addition of a "Gatsby preview plugin" setting section, enables/disables collection types and single types, and allows the Gatsby Content Sync URL to be added. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Gatsby preview plugin* | |
 | Content Manager     | Addition of the **open Gatsby preview** button in the right-side navigation.                  |
   
-
 ### <img width="28" src="/img/assets/plugins/graphql.png" /> GraphQL {#graphql}
 
 The GraphQL plugin enables GraphQL endpoints in a Strapi application, and gives access to the GraphQL Playground: a browser-based interface that assists in writing GraphQL queries and data exploration. The Strapi GraphQL plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-graphql).
