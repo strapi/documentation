@@ -38,7 +38,7 @@ Depending on what content-type or component is being created or edited, not all 
 
 ## Regular fields
 
-### <img width="28" src="/img/assets/icons/v5/ctb_text.svg" /> Text {text}
+### <img width="28" src="/img/assets/icons/v5/ctb_text.svg" /> Text
 
 The Text field displays a textbox that can contain small text. This field can be used for titles, descriptions, etc.
 
@@ -60,7 +60,7 @@ The Text field displays a textbox that can contain small text. This field can be
 | Default value  | Write the default value of the Text field.                                    |
 | RegExp pattern | Write a regular expression to make sure the value of the Text field matches a specific format. |
 | Private field  | Tick to make the field private and prevent it from being found via the API.   |
-
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.    |
 | Unique field   | Tick to prevent another field to be identical to this one.                    |
 | Maximum length | Tick to define a maximum number of characters allowed.                        |
@@ -96,6 +96,9 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 </Tabs>
 
+:::strapi React renderer
+If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
+:::
 
 ### <img width="28" src="/img/assets/icons/v5/ctb_number.svg" /> Number
 
@@ -128,7 +131,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 </Tabs>
 
-
+### <img width="28" src="/img/assets/icons/v5/ctb_date.svg" /> Date
 
 The Date field can display a date (year, month, day), time (hour, minute, second) or datetime (year, month, day, hour, minute, and second) picker.
 
@@ -177,7 +180,7 @@ The Password field displays a password field that is encrypted.
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Password field.                              |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -185,7 +188,6 @@ The Password field displays a password field that is encrypted.
 </TabItem>
 
 </Tabs>
-
 
 
 ### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media
@@ -217,7 +219,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 </Tabs>
 
-### <img width="28" src="/img/assets/icons/ctb_relation.svg" /> Relation {#relation}
+### <img width="28" src="/img/assets/icons/v5/ctb_relation.svg" /> Relation
 
 The Relation field allows to establish a relation with another content-type, that must be a collection type.
 
@@ -273,7 +275,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Choose the default value of the Boolean field: *true*, *null* or *false*.   |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -300,7 +302,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 
 </TabItem>
@@ -327,7 +329,7 @@ The Email field displays an email address field with format validation to ensure
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Email field.                                 |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
@@ -337,7 +339,7 @@ The Email field displays an email address field with format validation to ensure
 
 </Tabs>
 
-
+### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
 
 The Password field displays a password field that is encrypted.
 
@@ -357,7 +359,7 @@ The Password field displays a password field that is encrypted.
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Password field.                              |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -366,7 +368,7 @@ The Password field displays a password field that is encrypted.
 
 </Tabs>
 
-
+### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
@@ -390,14 +392,18 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Default value  | Choose the default value of the Enumeration field.                          |
 | Name override for GraphQL | Write a custom GraphQL schema type to override the default one for the field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 
 </TabItem>
 
 </Tabs>
 
+:::caution
+Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
+:::
 
+### <img width="28" src="/img/assets/icons/v5/ctb_uid.svg" /> UID
 
 The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content-type.
 
@@ -465,7 +471,7 @@ Custom fields are a way to extend Strapi’s capabilities by adding new types of
 
 Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
-
+## <img width="28" src="/img/assets/icons/v5/ctb_component.svg" /> Components
 
 Components are a combination of several fields. Components allow to create reusable sets of fields, that can be quickly added to content-types, dynamic zones but also nested into other components.
 
@@ -494,13 +500,13 @@ When configuring a component through the Content-type Builder, it is possible to
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
 | Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
 | Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the component to be translated per available locale. |
 
 </TabItem>
 
 </Tabs>
 
-
+## <img width="28" src="/img/assets/icons/v5/ctb_dz.svg" /> Dynamic zones
 
 Dynamic zones are a combination of components that can be added to content-types. They allow a flexible content structure as once in the Content Manager, administrators have the choice of composing and rearranging the components of the dynamic zone how they want.
 
@@ -521,7 +527,7 @@ Dynamic zones are a combination of components that can be added to content-types
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Maximum value  | Tick to define a maximum number of characters allowed.                                  |
 | Minimum value  | Tick to define a minimum number of characters allowed.                                  |
-
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#-internationalization-plugin) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 </TabItem>
 
