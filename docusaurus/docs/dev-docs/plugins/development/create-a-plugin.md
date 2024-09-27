@@ -50,7 +50,7 @@ yarn dlx @strapi/sdk-plugin init my-strapi-plugin
 <TabItem value="npm" label="NPM">
 
 ```bash
-npx @strapi/sdk-plugin:init my-strapi-plugin
+npx @strapi/sdk-plugin init my-strapi-plugin
 ```
 
 </TabItem>
