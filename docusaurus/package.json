@@ -19,7 +19,7 @@
     "@docusaurus/plugin-google-tag-manager": "3.5.2",
     "@docusaurus/preset-classic": "3.5.2",
     "@docusaurus/theme-live-codeblock": "3.5.2",
-    "@docusaurus/theme-mermaid": "^3.5.2",
+    "@docusaurus/theme-mermaid": "3.5.2",
     "@mdx-js/react": "^3.0.0",
     "classnames": "^2.5.1",
     "clsx": "^1.2.1",
@@ -36,7 +36,8 @@
     "sass": "^1.58.3"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.5.2"
+    "@docusaurus/module-type-aliases": "3.5.2",
+    "@docusaurus/types": "3.5.2"
   },
   "browserslist": {
     "production": [
