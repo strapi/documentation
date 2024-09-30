@@ -74,10 +74,10 @@ const MyProtectedPage = () => {
 import { Page } from '@strapi/strapi/admin';
 
 const MyProtectedPage = () => {
-  <Page.Protect permissions={[action: 'plugin::my-plugin.read']}>
   return (
-    </Page.Protect>
+    <Page.Protect permissions={[action: 'plugin::my-plugin.read']}>
       <MyPage />
+    </Page.Protect>
   );
 };
 ```

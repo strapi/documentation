@@ -160,7 +160,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </Tabs>
  
-
+### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
 
 The Password field displays a password field that is encrypted.
 
