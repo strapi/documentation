@@ -167,36 +167,43 @@ const config = {
           srcDark: 'img/logo-v5-dark.png',
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'dev-docs/quick-start',
-            position: 'left',
-            label: 'Quick Start Guide',
-          },
-          {
-            type: 'doc',
-            docId: 'user-docs/intro',
-            position: 'left',
-            label: 'User Guide',
-          },
+          // {
+          //   type: 'doc',
+          //   docId: 'dev-docs/quick-start',
+          //   position: 'left',
+          //   label: 'Quick Start Guide',
+          // },
           {
             type: 'doc',
             docId: 'dev-docs/intro',
             position: 'left',
-            label: 'Developer Docs',
+            // label: 'CMS',
+            html: '<i class="ph-fill ph-feather"></i> CMS'
           },
+          // {
+          //   type: 'doc',
+          //   docId: 'dev-docs/intro',
+          //   position: 'left',
+          //   label: 'Developer Docs',
+          // },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
-            label: 'Cloud Documentation',
+            html: '<i class="ph-fill ph-cloud"></i> Cloud',
           },
-          {
-            type: 'doc',
-            docId: 'release-notes',
-            position: 'left',
-            label: 'Release Notes',
-          },
+          // {
+          //   type: 'doc',
+          //   docId: 'release-notes',
+          //   position: 'left',
+          //   label: 'Release Notes',
+          // },
+          // {
+          //   type: 'doc',
+          //   docId: 'release-notes',
+          //   position: 'center',
+          //   label: 'Release Notes',
+          // },
         ],
       },
       footer: {
