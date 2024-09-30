@@ -67,6 +67,10 @@ const config = {
       async: true,
     },
     {
+      src: 'https://unpkg.com/@phosphor-icons/web',
+      async: true,
+    },
+    {
       /**
        * Kapa AI widget script and parameters
        * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
