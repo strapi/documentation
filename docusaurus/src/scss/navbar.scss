@@ -86,6 +86,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --ifm-navbar-link-hover-color: var(--strapi-neutral-800);
     font-size: var(--custom-navbar-items-font-size);
     border-radius: 4px;
+    border: solid 1px transparent;
 
     &--active {
       color: var(--strapi-primary-600);
@@ -98,6 +99,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
     &:hover {
       color: var(--strapi-primary-600);
+      border: solid 1px var(--strapi-primary-100);
 
       i {
         color: var(--strapi-primary-600);
