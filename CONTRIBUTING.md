@@ -94,7 +94,7 @@ To submit your contribution for review:
 **⚠️ Important: Add the `flag: merge pending release` if the Strapi Documentation team should wait before merging the pull request.** Approved pull requests are usually merged immediately into the `main` branch, automatically triggering a deployment on docs.strapi.io. Please use the `flag: merge pending release` label if the pull request content should only be released publicly in sync with a product release (e.g., if you submit a pull request to document a contribution to the `strapi/strapi` repository).
 
 
-That’s it! 🥳 Once the pull request is [reviewed and approved](#review-and-management-of-pull-requests), the Strapi Documentation team will merge it, and the content will be live on [docs.strapi.io](http://docs.strapi.io) a few minutes later. 🚀
+That’s it! 🥳 Once the pull request is [reviewed and approved](#review-and-management-of-pull-requests), the Strapi Documentation team will merge it, and the content will be live on [docs.strapi.io](http://docs.strapi.io) a few minutes later. 🚀 Please note that the title of your PR might be rewritten to increase clarity for inclusion in the [release notes](docs.strapi.io/release-notes).
 
 
 ## Review and management of pull requests
