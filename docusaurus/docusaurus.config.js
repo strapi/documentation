@@ -175,17 +175,17 @@ const config = {
           // },
           {
             type: 'doc',
-            docId: 'dev-docs/intro',
+            docId: 'user-docs/intro',
             position: 'left',
             // label: 'CMS',
             html: '<i class="ph-fill ph-feather"></i> CMS'
           },
-          // {
-          //   type: 'doc',
-          //   docId: 'dev-docs/intro',
-          //   position: 'left',
-          //   label: 'Developer Docs',
-          // },
+          {
+            type: 'doc',
+            docId: 'dev-docs/intro',
+            position: 'left',
+            html: '<i class="ph-fill ph-code-simple"></i> Dev'
+          },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
@@ -196,12 +196,6 @@ const config = {
           //   type: 'doc',
           //   docId: 'release-notes',
           //   position: 'left',
-          //   label: 'Release Notes',
-          // },
-          // {
-          //   type: 'doc',
-          //   docId: 'release-notes',
-          //   position: 'center',
           //   label: 'Release Notes',
           // },
         ],
