@@ -63,6 +63,10 @@ p, ul {
   }
 }
 
+.markdown li {
+  padding-bottom: 4px;
+}
+
 /** Dark mode */
 @include dark {
   h1, h2, h3, h4, h5, h6 {
