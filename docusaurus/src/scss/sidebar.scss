@@ -193,6 +193,28 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         }
       }
     }
+
+    &-menu {
+      .theme-doc-sidebar-item-category.getting-started {
+        .menu__list-item-collapsible {
+          background-color: transparent;
+          text-transform: uppercase;
+          font-size: var(--strapi-font-size-xs);
+          color: var(--strapi-neutral-500);
+          font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+          a::before {
+            content: '\E3FC';
+            font-family: "Phosphor";
+            display: inline-block;
+            color: var(--strapi-neutral-500);
+            margin-right: 10px;
+            font-size: var(--strapi-font-size-md);
+            // TODO: use fill version
+          }
+        }
+      }
+    }
   }
 }
 

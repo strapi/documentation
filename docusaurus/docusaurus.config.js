@@ -89,6 +89,13 @@ const config = {
       async: true,
     },
   ],
+  stylesheets: [
+    {
+      href: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
+      type: 'text/css',
+      rel: 'stylesheet',
+    },
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',

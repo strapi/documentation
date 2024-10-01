@@ -18,7 +18,8 @@ const sidebars = {
     { // Getting Started
       type: 'category',
       collapsed: false,
-      label: '🚀 Getting Started',
+      label: 'Getting Started',
+      className: 'getting-started',
       link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
         {
