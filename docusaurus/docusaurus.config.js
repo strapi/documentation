@@ -152,7 +152,7 @@ const config = {
       algolia: {
          appId: '392RJ63O14',
          apiKey: 'ed62374a794e8da5accb298e13618614',
-         indexName: 'strapiDocsv5beta',
+         indexName: 'strapiDocsNextstrapiDocsNext',
       },
       navbar: {
         hideOnScroll: false,
