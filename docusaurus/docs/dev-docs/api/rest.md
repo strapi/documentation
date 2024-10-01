@@ -300,6 +300,8 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
+By default, a document is created with a published status. To create a document as a draft, pass the [`status`](/dev-docs/api/rest/filters-locale-publication#status) parameter with the value `draft`.
+
 If the Internationalization (i18n) feature is enabled on the content-type, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#creating-a-new-localized-entry).
 
 :::note
