@@ -1,7 +1,7 @@
 ---
 title: Server API for plugins
 sidebar_label: Server API
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 tags:
 - plugin APIs

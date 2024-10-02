@@ -1,7 +1,7 @@
 ---
 title: Plugins
 description: Strapi comes with built-in plugins (GraphQL, Users & Permissions, Upload, API documentation, and Email) and you can install plugins as npm packages.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/advanced-features
 pagination_next: dev-docs/customization
 tags:

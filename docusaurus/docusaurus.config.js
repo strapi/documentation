@@ -183,17 +183,17 @@ const config = {
           // },
           {
             type: 'doc',
-            docId: 'user-docs/intro',
+            docId: 'dev-docs/intro',
             position: 'left',
             // label: 'CMS',
             html: '<i class="ph-fill ph-feather"></i> CMS'
           },
-          {
-            type: 'doc',
-            docId: 'dev-docs/intro',
-            position: 'left',
-            html: '<i class="ph-fill ph-code-simple"></i> Dev'
-          },
+          // {
+          //   type: 'doc',
+          //   docId: 'dev-docs/intro',
+          //   position: 'left',
+          //   html: '<i class="ph-fill ph-code-simple"></i> Dev'
+          // },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',

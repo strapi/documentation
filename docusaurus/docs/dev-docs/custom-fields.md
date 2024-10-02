@@ -1,7 +1,7 @@
 ---
 title: Custom fields
 description: Learn how you can use custom fields to extend Strapi's content-types capabilities.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/development/custom-fields.html
 tags:
 - admin panel

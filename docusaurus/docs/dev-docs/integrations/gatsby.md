@@ -1,6 +1,6 @@
 ---
 title: Gatsby
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Integrate Strapi with Gatsby.
 ---
 

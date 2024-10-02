@@ -2,7 +2,7 @@
 unlisted: true
 title: Bulk Operations
 description: Use Strapi's Query Engine API to perform operations on multiple entries.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

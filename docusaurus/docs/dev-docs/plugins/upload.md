@@ -1,6 +1,6 @@
 ---
 title: Upload plugin
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Upload any kind of file on your server or external providers.
 tags:
 - localServer

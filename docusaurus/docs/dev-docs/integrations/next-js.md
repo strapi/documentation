@@ -1,6 +1,6 @@
 ---
 title: Next.js
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Integrate Strapi with Next.js.
 ---
 

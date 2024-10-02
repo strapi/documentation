@@ -1,7 +1,7 @@
 ---
 title: Custom policies
 description: Learn how to create custom policies using our FoodAdvisor example
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/backend-customization/examples/services-and-controllers
 pagination_next: dev-docs/backend-customization/examples/routes
 ---
