@@ -50,7 +50,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --custom-sidebar-menu-padding-y: var(--strapi-spacing-4);
 
   --ifm-menu-color-background-active: transparent;
-  --ifm-menu-color-background-hover: var(--strapi-neutral-100);
+  --ifm-menu-color-background-hover: var(--strapi-primary-100);
   --ifm-menu-link-padding-vertical: var(--strapi-spacing-1);
   --ifm-menu-link-padding-horizontal: 0;
 
@@ -105,10 +105,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     // font-weight: 500;
     min-height: var(--custom-menu-item-link-min-height, 24px);
     @include transition;
-
-    &:hover {
-      // --ifm-menu-color: var(--strapi-neutral-800);
-    }
 
     &--sublist-caret {
       --ifm-menu-color: var(--strapi-neutral-800);
@@ -194,6 +190,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         }
       }
 
+      &-link:hover {
+        background-color: var(--strapi-primary-100);
+      }
     }
 
     &-menu {
@@ -230,7 +229,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 .theme-doc-sidebar-container {
   --docusaurus-collapse-button-bg: var(--strapi-neutral-0);
-  --docusaurus-collapse-button-bg-hover: var(--strapi-neutral-100);
+  --docusaurus-collapse-button-bg-hover: var(--strapi-primary-100);
 }
 
 /** Dark mode */
