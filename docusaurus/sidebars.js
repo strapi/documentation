@@ -163,6 +163,31 @@ const sidebars = {
         'dev-docs/configurations/typescript',
       ]
     },
+    { // Development
+      type: 'category',
+      label: 'Development',
+      className: 'category-development',
+      collapsible: false,
+      collapsed: false,
+      link: {type: 'doc', id: 'dev-docs/customization'},
+      items: [
+        'dev-docs/backend-customization',
+        {
+          type: 'category',
+          label: 'Backend customization',
+          link: {type: 'doc', id: 'dev-docs/backend-customization'},
+          collapsible: true,
+          collapsed: false,
+          items: [
+            'dev-docs/backend-customization/routes',
+            'dev-docs/backend-customization/policies',
+            'dev-docs/backend-customization/middlewares',
+            'dev-docs/backend-customization/controllers',
+            'dev-docs/backend-customization/services',
+          ]
+        }
+      ]
+    }
   ],
 
   userDocsSidebar: [
