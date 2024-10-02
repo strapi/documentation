@@ -52,9 +52,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --ifm-menu-color-background-active: transparent;
   --ifm-menu-color-background-hover: var(--strapi-neutral-100);
   --ifm-menu-link-padding-vertical: var(--strapi-spacing-1);
+  --ifm-menu-link-padding-horizontal: 0;
 
   font-weight: var(--custom-sidebar-menu-font-weight);
   padding-top: var(--custom-sidebar-menu-padding-y) !important;
+  padding: 14px;
 
   &__caret {
     margin: 0 0 0 3px;
@@ -72,8 +74,18 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__list {
+    padding-left: 0;
+
+    .menu__list,
+    .theme-doc-sidebar-item-link,
+    .theme-doc-sidebar-item-link a {
+      padding-left: 0;
+    }
+
     &-item {
       font-size: var(--custom-sidebar-menu-list-item-font-size, --strapi-font-size-sm);
+      line-height: var(--strapi-line-height-sm);
+      padding: 2px 10px 2px 0;
 
       &-collapsible {
         &:hover {
@@ -81,38 +93,19 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         }
       }
     }
+
+    .theme-doc-sidebar-item-link:has(.menu__link--active) {
+      background-color: var(--strapi-primary-100);
+    }
   }
 
   &__link {
-    font-weight: 500;
+    // font-weight: 500;
     min-height: var(--custom-menu-item-link-min-height, 24px);
     @include transition;
 
     &:hover {
-      --ifm-menu-color: var(--strapi-neutral-800);
-    }
-
-    &--active {
-      --ifm-menu-color-active: var(--strapi-neutral-700);
-
-      font-weight: 700;
-
-      &:not(.menu__link--sublist) {
-        --ifm-menu-color-active: var(--strapi-primary-600);
-
-        position: relative;
-
-        &:before {
-          position: absolute;
-          content: " ";
-          width: 5px;
-          top: 0;
-          bottom: 0;
-          left: var(--custom-sidebar-menu-list-item-link-active-left, -8px);
-          background-color: var(--strapi-primary-600);
-          border-radius: 0 2px 2px 0;
-        }
-      }
+      // --ifm-menu-color: var(--strapi-neutral-800);
     }
 
     &--sublist-caret {
@@ -160,7 +153,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           padding-bottom: var(--custom-sidebar-menu-list-item-py);
 
           > .menu__list-item-collapsible {
-            font-weight: 700;
+            // font-weight: 700;
             font-size: var(--strapi-font-size-sm);
           }
         }
@@ -192,27 +185,36 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           }
         }
       }
+
     }
 
     &-menu {
-      .theme-doc-sidebar-item-category.getting-started {
-        .menu__list-item-collapsible {
-          background-color: transparent;
-          text-transform: uppercase;
-          font-size: var(--strapi-font-size-xs);
-          color: var(--strapi-neutral-500);
-          font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible {
+        padding-left: 10px;
+        background-color: transparent;
+        text-transform: uppercase;
+        font-size: var(--strapi-font-size-xs);
+        color: var(--strapi-neutral-500);
+        font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-weight: 500;
 
-          a::before {
-            content: '\E3FC';
-            font-family: "Phosphor";
-            display: inline-block;
-            color: var(--strapi-neutral-500);
-            margin-right: 10px;
-            font-size: var(--strapi-font-size-md);
-            // TODO: use fill version
-          }
+        a::before {
+          font-family: "Phosphor";
+          display: inline-block;
+          color: var(--strapi-neutral-500);
+          margin-right: 8px;
+          font-size: var(--strapi-font-size-md);
+          // TODO: use fill version
         }
+      }
+      .theme-doc-sidebar-item-category-level-1.category-getting-started > .menu__list-item-collapsible a::before {
+        content: '\E3FC';
+      }
+      .theme-doc-sidebar-item-category-level-1.category-features > .menu__list-item-collapsible a::before {
+        content: '\E922';
+      }
+      .theme-doc-sidebar-item-category-level-1.category-configurations > .menu__list-item-collapsible a::before {
+        content: '\E87C';
       }
     }
   }
