@@ -692,7 +692,7 @@ const sidebars = {
         {
           type: 'doc',
           label: 'SSO',
-          id: 'user-docs/intro',
+          id: 'dev-docs/configurations/sso',
         },
         {
           type: 'category',
