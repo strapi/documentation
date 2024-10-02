@@ -675,7 +675,7 @@ const sidebars = {
       ],
     }
   ],
-  cmsSidebar: [
+  devDocsConfigSidebar: [
     {
       type: 'link',
       label: '⬅️ Back to Dev Docs content',
