@@ -56,7 +56,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   font-weight: var(--custom-sidebar-menu-font-weight);
   padding-top: var(--custom-sidebar-menu-padding-y) !important;
-  padding: 14px;
+  padding-left: 14px;
+  padding-right: 2px;
 
   &__caret {
     margin: 0 0 0 3px;
@@ -96,6 +97,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
     .theme-doc-sidebar-item-link:has(.menu__link--active) {
       background-color: var(--strapi-primary-100);
+      border-radius: 4px;
     }
   }
 
@@ -151,10 +153,16 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
           padding-top: var(--custom-sidebar-menu-list-item-py);
           padding-bottom: var(--custom-sidebar-menu-list-item-py);
+          padding-bottom: 20px;
 
           > .menu__list-item-collapsible {
             // font-weight: 700;
             font-size: var(--strapi-font-size-sm);
+
+            > a.menu__link,
+            a.menu__link--active {
+              color: var(--strapi-neutral-500);
+            }
           }
         }
       }
