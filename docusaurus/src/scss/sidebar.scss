@@ -102,9 +102,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__link {
-    // font-weight: 500;
     min-height: var(--custom-menu-item-link-min-height, 24px);
     @include transition;
+
+    &:hover {
+      background-color: transparent;
+      color: var(--strapi-primary-600);
+    }
 
     &--sublist-caret {
       --ifm-menu-color: var(--strapi-neutral-800);
@@ -191,7 +195,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
 
       &-link:hover {
-        background-color: var(--strapi-primary-100);
+        color: var(--strapi-primary-600);
       }
     }
 
