@@ -53,8 +53,5 @@
   },
   "engines": {
     "node": ">=18.0"
-  },
-  "resolutions": {
-    "dompurify": "3.1.6"
   }
 }
