@@ -50,7 +50,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --custom-sidebar-menu-padding-y: var(--strapi-spacing-4);
 
   --ifm-menu-color-background-active: transparent;
-  --ifm-menu-color-background-hover: var(--strapi-primary-100);
+  --ifm-menu-color-background-hover: transparent;
   --ifm-menu-link-padding-vertical: var(--strapi-spacing-1);
   --ifm-menu-link-padding-horizontal: 0;
 
@@ -81,6 +81,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     .theme-doc-sidebar-item-link,
     .theme-doc-sidebar-item-link a {
       padding-left: 0;
+      padding-right: 4px;
+    }
+
+    .theme-doc-sidebar-item-category {
+      padding-right: 4px;
     }
 
     &-item {
@@ -165,6 +170,22 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
             }
           }
         }
+
+        &-level-2 ul {
+          padding-left: 10px;
+
+          a {
+            padding-left: 10px;
+          }
+        }
+
+        &-level-3 ul {
+          padding-left: 30px;
+
+          a {
+            padding-left: 10px;
+          }
+        }
       }
 
       &-category, &-link {
@@ -217,6 +238,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           font-size: var(--strapi-font-size-md);
           // TODO: use fill version
         }
+      /**
+       * Custom icons for categories
+       * Using https://phosphoricons.com
+       */
       }
       .theme-doc-sidebar-item-category-level-1.category-getting-started > .menu__list-item-collapsible a::before {
         content: '\E3FC';
