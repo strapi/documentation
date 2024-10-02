@@ -1354,3 +1354,30 @@ If you need to configure a custom handler to accept other URLs, you can create a
     },
   },
 ```
+
+### Creating a custom password validation
+
+To add password validation at the API level, you can create a custom function passed to `validationRules` in the configuration of the Users & Permissions plugin, as in the following example:
+
+```js title="/config/plugins.js|ts"
+  // ... other plugins configuration ...
+  // Users & Permissions configuration
+'users-permissions': {
+    config: {
+      validationRules: {
+        validatePassword(value) {
+          if (value.length < 8) {
+            // custom error message
+            throw new Error('password should be more than 8 letters');
+          }
+
+          if (value.length > 24) {
+            // throws default error message 
+            return false;
+          }
+
+          return true; // Validation passed
+        },
+      },
+    },
+  },
