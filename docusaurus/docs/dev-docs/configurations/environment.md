@@ -1,7 +1,7 @@
 ---
 title: Environment variables configuration
 sidebar_label: Environment variables
-displayed_sidebar: devDocsConfigSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - additional configuration
 - configuration
