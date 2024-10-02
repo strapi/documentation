@@ -104,6 +104,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
+          sidebarCollapsible: false,
+          sidebarCollapsed: false,
           editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             keywords: [
@@ -158,7 +160,6 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
-          autoCollapseCategories: true,
         },
       },
       algolia: {
