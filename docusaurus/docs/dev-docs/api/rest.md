@@ -62,11 +62,11 @@ sources={{
 
 | Method   | URL                             | Description                           |
 | -------- | ------------------------------- | ------------------------------------- |
-| `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-documents) |
-| `POST`   | `/api/:pluralApiId`             | [Create a document](#create-an-entry)   |
-| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get-an-entry)         |
-| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update-an-entry)   |
-| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete-an-entry)   |
+| `GET`    | `/api/:pluralApiId`             | [Get a list of document](#get-all) |
+| `POST`   | `/api/:pluralApiId`             | [Create a document](#create)   |
+| `GET`    | `/api/:pluralApiId/:documentId` | [Get a document](#get)         |
+| `PUT`    | `/api/:pluralApiId/:documentId` | [Update a document](#update)   |
+| `DELETE` | `/api/:pluralApiId/:documentId` | [Delete a document](#delete)   |
 
 </TabItem>
 
@@ -300,7 +300,9 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#creating-a-new-localized-entry).
+By default, a document is created with a published status. To create a document as a draft, pass the [`?status=draft`](/dev-docs/api/rest/filters-locale-publication#status) query parameter.
+
+If the Internationalization (i18n) feature is enabled on the content-type, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#creating-a-new-localized-entry).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
