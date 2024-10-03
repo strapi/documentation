@@ -8,10 +8,11 @@
   --custom-admonition-heading-color: var(--strapi-neutral-700);
   --custom-admonition-heading-mb: var(--strapi-spacing-2);
   --custom-admonition-mb: var(--strapi-spacing-4);
-  --custom-admonition-px: 20px;
-  --custom-admonition-py: 30px;
+  --custom-admonition-px: 1.5rem;
+  --custom-admonition-py: 1.5rem;
   --custom-prerequisites-px: 40px;
   --custom-prerequisites-py: 46px;
+  --custom-admonition-my: var(--strapi-spacing-7);
 
   --ifm-link-decoration: none;
   --ifm-link-color: var(--custom-admonition-heading-color);
@@ -21,7 +22,7 @@
   border: 1px solid var(--custom-admonition-border-color);
   border-radius: var(--custom-admonition-border-radius);
   color: var(--custom-admonition-color);
-  margin: 0 0 var(--custom-admonition-mb);
+  margin: var(--custom-admonition-my) 0;
   padding: var(--custom-admonition-py) var(--custom-admonition-px);
 
   /** Alert Title element */
