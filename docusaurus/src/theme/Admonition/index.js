@@ -32,7 +32,6 @@ const customDefaultProps = {
     icon: '🤓',
   },
   prerequisites: {
-    icon: '☑️',
     title: 'Prerequisites',
   },
 };
