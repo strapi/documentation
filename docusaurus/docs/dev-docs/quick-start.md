@@ -113,7 +113,7 @@ The admin panel of a local Strapi project runs at [http://localhost:1337/admin](
 
 First we will build a data structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
 
-:::tip TIP
+:::tip
 If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
