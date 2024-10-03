@@ -93,8 +93,8 @@ You can click on the description of any breaking change in the following tables 
 | [The Entity Service API is deprecated and replaced by the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated) | Yes | 👷 Partly |
 | [`documentId` should be used instead of `id` in API calls](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id) | Yes | 👷 Partly |
 | [Database lifecycle hooks are triggered differently based on Document Service API methods](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | Yes | No |
-| [The `publishedAt` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed) | Yes | ✅ Yes |
-| [The `publicationState` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes//publishedat-removed) | Yes | ✅ Yes |
+| [The `publishedAt` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes/publishedat-removed) | Yes | ✅ Yes |
+| [The `publicationState` parameter is not supported and replaced by `status`](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed) | Yes | ✅ Yes |
 | [Sorting by id is no longer possible to sort by chronological order](/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id) | Yes | ✅ Yes |
 | [There is no `findPage()` method with the Document Service API](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service) | Yes | No |
 | [Some attributes and content-types names are reserved by Strapi](/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
