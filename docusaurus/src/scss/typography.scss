@@ -56,6 +56,10 @@ h4, .markdown > h4 {
   line-height: var(--strapi-line-height-lg);
 }
 
+p {
+  color: var(--strapi-neutral-700);
+}
+
 p, ul {
   img {
     display: inline-block;
