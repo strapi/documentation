@@ -86,6 +86,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
     .theme-doc-sidebar-item-category {
       padding-right: 4px;
+
+      &-level-1 > .menu__list-item-collapsible > .menu__link {
+        font-weight: bold;
+      }
     }
 
     &-item {
