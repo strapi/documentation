@@ -5,31 +5,31 @@ import { ThemeClassNames } from '@docusaurus/theme-common';
 const defaultClassName = ThemeClassNames.common.admonition;
 const customDefaultProps = {
   note: {
-    icon: '✏️',
+    icon: <i class="ph-fill ph-pencil"></i>,
     title: 'Note',
   },
   tip: {
-    icon: '💡',
+    icon: <i class="ph-fill ph-lightbulb"></i>,
     title: 'Tip',
   },
   info: {
-    icon: '👀',
+    icon: <i class="ph-fill ph-warning-circle"></i>,
     title: 'Info',
   },
   caution: {
-    icon: '✋',
+    icon: <i class="ph-fill ph-hand-palm"></i>,
     title: 'Caution',
   },
   warning: {
-    icon: '⚠️',
+    icon: <i class="ph-fill ph-hand-palm"></i>,
     title: 'Warning',
   },
   danger: {
-    icon: '❗️',
+    icon: <i class="ph-fill ph-warning-circle"></i>,
     title: 'Warning',
   },
   strapi: {
-    icon: '🤓',
+    icon: <i class="ph-fill ph-warning-circle"></i>,
   },
   prerequisites: {
     title: 'Prerequisites',
