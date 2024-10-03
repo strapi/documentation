@@ -180,6 +180,16 @@ pre.prism-code {
   [class*="codeLineContent"] {
     margin-left: 32px;
   }
+
+  .clean-btn {
+    background-color: white;
+    position: relative;
+    top: -50px;
+
+    svg {
+      color: black;
+    }
+  }
 }
 
 
@@ -195,5 +205,13 @@ pre.prism-code {
   .theme-code-block {
     --ifm-scrollbar-track-background-color: var(--strapi-neutral-200);
     --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-300);
+  }
+
+  .clean-btn {
+    background-color: var(--strapi-neutral-100);
+
+    svg {
+      color: var(--strapi-neutral-900);
+    }
   }
 }
