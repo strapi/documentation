@@ -12,7 +12,7 @@
   --custom-admonition-py: 1.5rem;
   --custom-prerequisites-px: 40px;
   --custom-prerequisites-py: 46px;
-  --custom-admonition-my: calc(var(--strapi-spacing-7) - 6px);
+  --custom-admonition-my: var(--strapi-spacing-7);
 
   --ifm-link-decoration: none;
   --ifm-link-color: var(--custom-admonition-heading-color);
@@ -167,6 +167,10 @@
     background-color: transparent;
     border: solid 1px var(--strapi-neutral-500);
     font-size: 90%;
+  }
+
+  & + h2 {
+    margin-top: 74px;
   }
 }
 
