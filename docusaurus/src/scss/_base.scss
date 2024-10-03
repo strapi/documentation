@@ -13,7 +13,7 @@ main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
     --custom-main-px: var(--strapi-spacing-0);
-    --custom-main-width: 640px;
+    --custom-main-width: 608px;
 
     max-width: calc(var(--custom-main-width) + calc(var(--strapi-spacing-4) * 2));
     padding-left: var(--custom-main-px) !important;
