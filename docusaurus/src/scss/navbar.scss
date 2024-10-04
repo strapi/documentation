@@ -99,7 +99,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
     &:hover {
       color: var(--strapi-primary-600);
-      border: solid 1px var(--strapi-primary-100);
 
       i {
         color: var(--strapi-primary-600);
