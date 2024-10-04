@@ -11,7 +11,7 @@ This page lists all the Strapi Docs version numbers and their corresponding upda
 <details>
 <summary>🧐 Strapi Docs version numbers explained:</summary>
 
-The **Strapi Documentation** (Strapi Docs) at [docs.strapi.io](https://docs.strapi.io) **always documents the latest version of Strapi (CMS and Cloud) products**.
+The Strapi Documentation (Strapi Docs) at [docs.strapi.io](https://docs.strapi.io) always documents the latest version of Strapi (CMS and Cloud) products.
 
 Since Strapi Docs version 5.0.0, the **docs' version number is independent from the Strapi product version**. Thus, the version numbers of [`strapi/documentation`](https://github.com/strapi/documentation) and [`strapi/strapi`](https://github.com/strapi/strapi) may differ.
 
