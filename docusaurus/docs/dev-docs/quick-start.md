@@ -264,7 +264,7 @@ sources={{
 />
 
 <details>
-<summary>ℹ️ Additional information and tips about users and Strapi Cloud projects:</summary>
+<summary><i className="ph-fill ph-info"></i> Additional information and tips about users and Strapi Cloud projects:</summary>
 
 :::note Note: Local users and Strapi Cloud users are different
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically transferred from your local project to Strapi Cloud. This includes users that you previously created locally. That's why you are invited to create a new administrator account when logging in to your Strapi Cloud project for the first time.
