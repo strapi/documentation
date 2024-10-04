@@ -193,10 +193,15 @@ pre.prism-code {
   .clean-btn {
     background-color: white;
     position: relative;
-    top: -50px;
 
     svg {
       color: black;
+    }
+  }
+
+  &:has([class*="codeBlockTitle"]) {
+    .clean-btn {
+      top: -50px;
     }
   }
 }
