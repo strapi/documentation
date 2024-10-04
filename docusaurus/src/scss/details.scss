@@ -13,8 +13,10 @@ details.alert {
   --ifm-tabs-color-active: var(--ifm-color-primary);
   --ifm-tabs-color-active-border: var(--ifm-color-primary);
   box-shadow: none;
-  padding-top: 24px;
-  padding-bottom: 24px;
+  --ifm-alert-padding-horizontal: 24px;
+  --ifm-alert-padding-vertical: 24px;
+  padding-top: var(--ifm-alert-padding-vertical);
+  padding-bottom: var(--ifm-alert-padding-vertical);
 
   summary {
     padding-left: 24px;
