@@ -283,4 +283,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
     }
   }
+
+  .navbar__link:not(.navbar__link--active) {
+    color: var(--strapi-neutral-400);
+  }
 }
