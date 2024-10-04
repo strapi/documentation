@@ -23,6 +23,31 @@ main {
   }
 }
 
+/**
+ * Experimental: Different identity based on URL
+ */
+// html[class*="docs-doc-id-dev-docs"] {
+//   .navbar {
+//     background-color: var(--strapi-primary-100);
+//   }
+// }
+
+// html[class*="docs-doc-id-cloud"] {
+//   .navbar {
+//     background-color: var(--strapi-secondary-100);
+//   }
+
+//   .markdown {
+//     a {
+//       color: var(--strapi-secondary-600);
+//     }
+//   }
+
+//   .theme-doc-sidebar-item-link:has(.menu__link--active) {
+//     background-color: var(--strapi-secondary-100);
+//   }
+// }
+
 /** Responsive */
 @include medium-up {
   main {
