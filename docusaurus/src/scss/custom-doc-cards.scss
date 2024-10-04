@@ -3,24 +3,46 @@
 .custom-cards-wrapper {
   display: flex;
   flex-flow: row wrap;
-  max-width: 715px;
-  justify-content: flex-start;
+  max-width: 640px;
+  justify-content: space-between;
 
   .custom-doc-card {
-    max-width: 320px;
-    width: 320px;
-    margin-bottom: 10px;
-    margin-right: 20px;
+    margin-bottom: 16px;
+    flex: 0 0 312px;
+  }
 
-    a {
-      height: 170px;
-    }
+  .cardContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 136px;
+  }
 
+  .cardDescription {
+    font-size: var(--strapi-font-size-sm);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    padding-top: 0;
   }
 }
 
 /** Component: CustomDocCard */
 .custom-doc-card {
+  .cardContainer {
+    padding: 22px;
+  }
+
+  h2 {
+    font-size: var(--strapi-font-size-md);
+    padding-top: 0;
+    color: var(--strapi-neutral-800);
+  }
+
+  &__icon {
+    margin-right: 4px;
+  }
 
   a {
     text-decoration: none;
@@ -37,10 +59,33 @@
     overflow: auto;
     white-space: normal;
   }
+
+  .cardDescription {
+    color: var(--strapi-neutral-600);
+  }
+
+  .cardTitle {
+    margin-bottom: 10px;
+  }
+
+  p, h2 {
+    line-height: var(--strapi-line-height-sm);
+  }
+
+  i {
+    font-size: var(--strapi-font-size-md);
+    color: var(--strapi-neutral-500);
+    position: relative;
+    top: 1px;
+  }
 }
 
 .custom-doc-card--small {
-  .cardTitle {
-    margin-bottom: 0;
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: var(--strapi-font-size-md);
+    line-height: var(--strapi-line-height-sm);
+    margin-bottom: 0 !important;
   }
 }
