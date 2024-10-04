@@ -2,16 +2,18 @@
 
 .table-of-contents {
   --custom-toc-py: var(--strapi-spacing-1);
-  --custom-toc-items-py: var(--strapi-spacing-0);
+  --custom-toc-items-py: var(--strapi-spacing-1);
 
   --ifm-toc-padding-vertical: var(--custom-toc-py);
 
   font-size: var(--strapi-font-size-xs);
+  border-left: none;
 
   > li {
     margin: 0 var(--ifm-toc-padding-horizontal);
-    padding-top: var(--custom-toc-items-py);
-    padding-bottom: var(--custom-toc-items-py);
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 18px;
   }
 
   &__link {
@@ -19,35 +21,30 @@
 
     position: relative;
     font-weight: 400;
+    line-height: 16px;
+    padding-bottom: 10px;
 
     @include transition;
 
     &:hover {
-      font-weight: 500;
-
       &:not(.table-of-contents__link--active) {
         --ifm-color-primary: var(--strapi-neutral-900);
       }
     }
 
     &--active {
-      font-weight: 500;
+      color: var(--strapi-primary-600);
 
       &:before {
         content: " ";
         position: absolute;
-        top: 0;
-        bottom: 0;
+        top: -2px;
+        bottom: 8px;
+        --custom-table-of-contents-link-active-before-left: -20px;
         left: var(--custom-table-of-contents-link-active-before-left);
-        width: 3px;
+        width: 2px;
         border-radius: 0 2px 2px 0;
         background-color: var(--strapi-primary-600);
-      }
-    }
-
-    + ul li .table-of-contents {
-      &__link {
-        --custom-table-of-contents-link-active-before-left: -32px;
       }
     }
 
@@ -58,11 +55,39 @@
       margin-right: 2px;
     }
   }
+
+  > li > ul > li .table-of-contents__link::before {
+    --custom-table-of-contents-link-active-before-left: -36px;
+  }
+
+  > li > ul > li > ul > li .table-of-contents__link::before {
+    --custom-table-of-contents-link-active-before-left: -52px;
+  }
 }
 
 /** Responsive */
 @include medium-up {
   .table-of-contents {
     --custom-toc-items-py: var(--strapi-spacing-2);
+    margin-top: 74px;
+
+    &::before {
+      content: '\e484';
+      font-family: "Phosphor";
+      font-size: 16px;
+      position: relative;
+      top: -8px;
+      left: 6px;
+    }
+    &::after {
+      content: 'On this page';
+      position: absolute;
+      top: 68px;
+      left: 40px;
+    }
+
+    > li {
+      border-left: solid 2px var(--strapi-neutral-100);
+    }
   }
 }
