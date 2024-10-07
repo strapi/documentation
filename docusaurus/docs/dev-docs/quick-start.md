@@ -26,7 +26,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 You will also need to [install `git`](https://github.com/git-guides/install-git) and to have a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
 :::
 
-## <i className="ph-fill ph-rocket-launch"></i> Part A: Create a new project with Strapi
+## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
 
 We will first create a new Strapi project on your machine by running a command in the terminal, and then register our first local administrator user.
 
@@ -101,11 +101,11 @@ sources={{
 
 </details>
 
-:::callout <i className="ph-fill ph-confetti"></i> Congratulations!
+:::callout <Icon name="confetti" /> Congratulations!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/intro), or proceed to part B below.
 :::
 
-## <i className="ph-fill ph-wrench"></i> Part B: Build your data structure with the Content-type Builder
+## <Icon name="wrench" /> Part B: Build your data structure with the Content-type Builder
 
 The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
 
@@ -179,11 +179,11 @@ sources={{
 
 </details>
 
-:::callout <i className="ph-fill ph-confetti"></i> Congratulations!
+:::callout <Icon name="confetti" /> Congratulations!
 You have just created a basic data structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/user-docs/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
 :::
 
-## <i className="ph-fill ph-cloud"></i>️ Part C: Deploy to Strapi Cloud
+## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud: Deploying your project on Strapi Cloud is done with a single command! 🚀
 
@@ -230,7 +230,7 @@ sources={{
 }}
 />
 
-:::callout <i className="ph-fill ph-confetti"></i> Congratulations!
+:::callout <Icon name="confetti" /> Congratulations!
 Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-day free Strapi Cloud trial! You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
 :::
 
@@ -238,7 +238,7 @@ Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-
 Feel free to play with the Content-Type Builder even further and add more fields to your content-types or create new content-types. Anytime you make such changes, deploy them again on Strapi Cloud, by running the appropriate `deploy` command, and see your hosted project updated within a few minutes. Magical, isn't it? 🪄
 :::
 
-## <i className="ph-fill ph-note-pencil"></i> Part D: Add content to your Strapi Cloud project with the Content Manager
+## <Icon name="note-pencil" /> Part D: Add content to your Strapi Cloud project with the Content Manager
 
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
@@ -264,7 +264,7 @@ sources={{
 />
 
 <details>
-<summary><i className="ph-fill ph-info"></i> Additional information and tips about users and Strapi Cloud projects:</summary>
+<summary><Icon name="info" /> Additional information and tips about users and Strapi Cloud projects:</summary>
 
 :::note Note: Local users and Strapi Cloud users are different
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically transferred from your local project to Strapi Cloud. This includes users that you previously created locally. That's why you are invited to create a new administrator account when logging in to your Strapi Cloud project for the first time.
@@ -436,7 +436,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 </details>
 
-:::callout <i className="ph-fill ph-confetti"></i> Congratulations!
+:::callout <Icon name="confetti"/> Congratulations!
 Now your content is created, published, and you have permissions to request it through the API.
 Keep on creating amazing content!
 :::
@@ -445,11 +445,11 @@ Keep on creating amazing content!
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/dev-docs/data-management) to transfer data between projects.
 :::
 
-## <i className="ph-fill ph-fast-forward"></i> What to do next?
+## <Icon name="fast-forward"/> What to do next?
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-<i className="ph-fill ph-arrow-fat-right"></i> learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,<br/>
-<i className="ph-fill ph-arrow-fat-right"></i> learn more about Strapi features by browsing the [User Guide](/user-docs/intro),<br/>
-<i className="ph-fill ph-arrow-fat-right"></i> learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),<br/>
-<i className="ph-fill ph-arrow-fat-right"></i> and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.<br/>
+<Icon name="arrow-fat-right"/> learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,<br/>
+<Icon name="arrow-fat-right"/> learn more about Strapi features by browsing the [User Guide](/user-docs/intro),<br/>
+<Icon name="arrow-fat-right"/> learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),<br/>
+<Icon name="arrow-fat-right"/> and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.<br/>
