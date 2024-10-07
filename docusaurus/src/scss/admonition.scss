@@ -194,6 +194,10 @@
       --custom-admonition-heading-color: var(--strapi-neutral-500);
     }
 
+    &--prerequisites {
+      --custom-admonition-background-color: transparent;
+    }
+
     &--note {
       --custom-admonition-code-color: var(--strapi-secondary-500);
       --custom-admonition-heading-color: var(--strapi-secondary-500);
