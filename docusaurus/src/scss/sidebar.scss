@@ -256,6 +256,18 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       .theme-doc-sidebar-item-category-level-1.category-configurations > .menu__list-item-collapsible a::before {
         content: '\E87C';
       }
+      .theme-doc-sidebar-item-category-level-1.category-development > .menu__list-item-collapsible a::before {
+        content: '\E586';
+      }
+      .theme-doc-sidebar-item-category-level-1.category-plugins > .menu__list-item-collapsible a::before {
+        content: '\E596';
+      }
+      .theme-doc-sidebar-item-category-level-1.category-api > .menu__list-item-collapsible a::before {
+        content: '\E1DA';
+      }
+      .theme-doc-sidebar-item-category-level-1.category-upgrade > .menu__list-item-collapsible a::before {
+        content: '\ECBC';
+      }
     }
   }
 }
