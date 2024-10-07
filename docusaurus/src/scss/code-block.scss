@@ -2,7 +2,7 @@
 
 :root {
   --custom-code-block-background-color: var(--strapi-neutral-0);
-  --custom-code-block-background-color-highlighted: var(--strapi-neutral-800);
+  --custom-code-block-background-color-highlighted: var(--strapi-neutral-500);
   --custom-code-block-color: var(--strapi-neutral-800);
   --custom-code-block-comment-color: var(--strapi-neutral-500);
   --custom-code-block-key-color: var(--strapi-success-300);
@@ -55,6 +55,10 @@ pre,
 
 .theme-code-block {
   border: solid 1px var(--custom-code-block-border-color);
+
+  &-highlighted-line [class*="codeLineNumber"] {
+    background-color: var(--strapi-neutral-200);
+  }
 }
 
 pre.prism-code {
@@ -102,9 +106,9 @@ pre.prism-code {
 .api-call {
   .theme-code-block {
     [class*="highlighted-line"] {
-      // background-color: var(--custom-code-block-background-color-highlighted);
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: var(--custom-code-block-background-color-highlighted);
     }
+
   }
 }
 
@@ -121,10 +125,6 @@ pre.prism-code {
         // TODO fix by finding a better way
       }
     }
-  }
-
-  [class*="highlighted-line"] {
-    background-color: var(--custom-code-block-background-color-highlighted);
   }
 
   /** Title element */
@@ -190,6 +190,10 @@ pre.prism-code {
     margin-left: 32px;
   }
 
+  // &-highligted-line {
+  //   background-color: var(--strapi-neutral-500) !important;
+  // }
+
   .clean-btn {
     background-color: white;
     position: relative;
@@ -210,7 +214,7 @@ pre.prism-code {
 /** Dark theme */
 @include dark {
   --custom-code-block-background-color: var(--strapi-neutral-100);
-  --custom-code-block-background-color-highlighted: var(--strapi-neutral-150);
+  --custom-code-block-background-color-highlighted: var(--strapi-neutral-300);
   --custom-code-block-color: var(--strapi-neutral-1000);
   --custom-code-block-punctuation-color: var(--strapi-primary-200);
   --custom-code-block-value-color: var(--strapi-neutral-900);
