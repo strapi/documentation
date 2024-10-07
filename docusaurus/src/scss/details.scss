@@ -74,5 +74,9 @@ details.alert {
     .theme-code-block-highlighted-line {
       background-color: var(--strapi-neutral-0);
     }
+
+    summary::before {
+      border-color: #8E8EA9
+    }
   }
 }
