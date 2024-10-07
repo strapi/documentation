@@ -29,6 +29,7 @@ import {
 import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
+import Icon from '../components/Icon';
 
 export default {
   // Re-use the default mapping
@@ -70,6 +71,7 @@ export default {
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
   Annotation,
+  Icon,
   /**
    * Reusable annotation components go below👇
    */
