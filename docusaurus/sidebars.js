@@ -186,7 +186,85 @@ const sidebars = {
             'dev-docs/backend-customization/controllers',
             'dev-docs/backend-customization/services',
           ]
+        },
+        'dev-docs/admin-panel-customization',
+        'dev-docs/cli',
+        {
+          type: 'doc',
+          id: 'dev-docs/typescript',
+          label: 'TypeScript'
+        },
+        'dev-docs/database-migrations',
+        'dev-docs/database-transactions',
+        'dev-docs/testing',
+        'dev-docs/error-handling'
+      ]
+    },
+    { // Plugins
+      type: 'category',
+      label: 'Plugins',
+      className: 'category-plugins',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        {
+          type: 'doc',
+          id: 'user-docs/plugins/installing-plugins-via-marketplace',
+          label: 'Marketplace'
+        },
+        {
+          type: 'category',
+          link: { type: 'doc', id: 'dev-docs/plugins/developing-plugins' },
+          label: 'Plugins development',
+          collapsed: false,
+          items: [
+            'dev-docs/plugins/development/plugin-sdk',
+            'dev-docs/plugins/development/create-a-plugin',
+            'dev-docs/custom-fields',
+            {
+              type: 'category',
+              label: 'Plugin APIs',
+              collapsed: false,
+              items: [
+                'dev-docs/plugins/admin-panel-api',
+                'dev-docs/plugins/server-api',
+              ]
+            }
+          ]
         }
+      ]
+    },
+    { // APIs
+      type: 'category',
+      label: 'APIs',
+      className: 'category-api',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        'dev-docs/api/rest',
+        'dev-docs/api/graphql',
+        'dev-docs/api/document-service',
+      ]
+    },
+    { // Upgrades
+      type: 'category',
+      label: 'Upgrades',
+      className: 'category-upgrade',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        'dev-docs/upgrade-tool',
+        {
+          type: 'category',
+          label: 'v4 → v5',
+          collapsed: false,
+          items: [
+            'dev-docs/migration/v4-to-v5/introduction-and-faq',
+            'dev-docs/migration/v4-to-v5/step-by-step',
+            'dev-docs/migration/v4-to-v5/breaking-changes',
+            'dev-docs/migration/v4-to-v5/additional-resources/introduction'
+          ]
+        },
       ]
     }
   ],
