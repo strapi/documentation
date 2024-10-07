@@ -39,7 +39,7 @@ For an extensive description of the new Strapi 5 GraphQL API, please refer to th
 
 To gradually convert to the new GraphQL API format, follow these steps:
 
-1. Enable v4 compatibility mode with the `v4ComptabilityMode` flag in the configuration of the GraphQL plugin (see [plugins configuration](/dev-docs/configurations/plugins#graphql-configuration)):
+1. Enable v4 compatibility mode with the `v4CompatibilityMode` flag in the configuration of the GraphQL plugin (see [plugins configuration](/dev-docs/configurations/plugins#graphql-configuration)):
 
     ```graphql
     {
