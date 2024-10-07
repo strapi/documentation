@@ -89,3 +89,14 @@
     margin-bottom: 0 !important;
   }
 }
+
+.custom-doc-card + p {
+  margin-top: 16px
+}
+
+.markdown {
+  p + .custom-doc-card,
+  p + .custom-doc-card ~ .custom-doc-card {
+    margin-bottom: 16px;
+  }
+}
