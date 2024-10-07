@@ -186,6 +186,7 @@
     // --custom-admonition-color: var(--strapi-neutral-150);
     --custom-admonition-background-color: var(--strapi-neutral-100);
     --custom-admonition-code-background-color: var(--strapi-neutral-200);
+    --custom-admonition-border-color: var(--strapi-neutral-200);
 
     &--info,
     &--callout,
@@ -223,6 +224,18 @@
     &--strapi {
       --custom-admonition-code-color: var(--strapi-primary-500);
       --custom-admonition-heading-color: var(--strapi-primary-500);
+    }
+
+    &--strapi,
+    &--tip,
+    &--note,
+    &--callout,
+    &--prerequisites,
+    &--info,
+    &--caution,
+    &--warning,
+    &--danger {
+      border-color: var(--custom-admonition-border-color);
     }
 
     code,
