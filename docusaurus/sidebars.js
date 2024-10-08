@@ -172,7 +172,11 @@ const sidebars = {
       collapsed: false,
       link: {type: 'doc', id: 'dev-docs/customization'},
       items: [
-        'dev-docs/backend-customization',
+        {
+          type: 'doc',
+          id: 'dev-docs/backend-customization',
+          label: 'How the backend server works'
+        },
         {
           type: 'category',
           label: 'Backend customization',
