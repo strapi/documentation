@@ -57,7 +57,7 @@ pre,
   border: solid 1px var(--custom-code-block-border-color);
 
   &-highlighted-line [class*="codeLineNumber"] {
-    background-color: var(--strapi-neutral-200);
+    background-color: #E5E5E5;
   }
 }
 
@@ -166,6 +166,7 @@ pre.prism-code {
     position: relative;
   }
 
+
   [class*="codeBlockContent"] {
     border-radius: 0;
     border-color: transparent;
@@ -197,7 +198,43 @@ pre.prism-code {
     [class*="codeBlockLines"] {
       border: none;
       position: relative;
+    }
 
+    /**
+     * Fix style when lines are wrapped
+     * No class is added by the JS code of the button;
+     * Instead, the button adds inline style,
+     * so we're targetting this style
+     */
+    [style*="pre-wrap"] {
+      [class*="codeLineContent"] {
+        display: inline-block;
+        margin-left: 54px;
+      }
+
+      [class*="codeLineNumber"] {
+        position: relative;
+        left: 6px;
+
+        &::before { // line number
+          color: var(--strapi-neutral-800);
+          top: 0px;
+          position: absolute;
+          right: 0px;
+        }
+
+        &::after { // border in the gutter
+          content: '';
+          position: absolute;
+          width: 1px;
+          height: 100%;
+          margin-left: 40px;
+          background-color: var(--strapi-neutral-200);
+        }
+      }
+    }
+
+    [class*="codeBlockLines"]:has([class*="codeLineNumber"]) {
       /**
        * Adding border below title to simulate border continuity
        * because each code line has its own 'gutter' border
@@ -247,6 +284,9 @@ pre.prism-code {
           // TODO fix by finding a better way
         }
       }
+    }
+    &-highlighted-line [class*="codeLineNumber"] {
+      background-color: #11111B;
     }
   }
 }
