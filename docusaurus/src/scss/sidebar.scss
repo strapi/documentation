@@ -295,6 +295,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --docusaurus-collapse-button-bg-hover: var(--strapi-primary-100);
 }
 
+@include medium-up {
+  [class*="collapseSidebar"] {
+    border-bottom: none;
+  }
+}
+
 /** Dark mode */
 @include dark {
   --ifm-menu-color: var(--strapi-neutral-1000);
