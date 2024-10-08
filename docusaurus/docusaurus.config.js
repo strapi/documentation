@@ -210,6 +210,31 @@ const config = {
         style: 'dark',
         links: [
           {
+            title: 'Updates & Support',
+            items: [
+              {
+                label: "What's new?",
+                href: '/dev-docs/whats-new'
+              },
+              {
+                label: "Release notes",
+                href: '/release-notes'
+              },
+              {
+                label: "FAQ",
+                href: '/dev-docs/faq'
+              },
+              {
+                label: "Community & Support",
+                href: '/dev-docs/community'
+              },
+              {
+                label: "Usage information",
+                href: '/dev-docs/usage-information'
+              },
+            ]
+          },
+          {
             title: 'Additional resources',
             items: [
               {
