@@ -127,7 +127,6 @@ pre.prism-code {
     }
   }
 
-  /** Title element */
   [class*="codeBlockTitle"] {
     border-bottom: none;
     color: var(--strapi-neutral-800);
@@ -165,23 +164,12 @@ pre.prism-code {
   [class*="codeBlockLines"] {
     border: none;
     position: relative;
-
-    &::after {
-      content: '';
-      width: 1px;
-      height: 20px;
-      background-color: var(--strapi-neutral-200);
-      position: absolute;
-      top: -4px;
-      left: 62px
-    }
   }
 
   [class*="codeBlockContent"] {
     border-radius: 0;
     border-color: transparent;
     border: none;
-    // padding-top: 4px;
 
     pre.prism-code {
       background-color: var(--strapi-neutral-0) !important;
@@ -191,10 +179,6 @@ pre.prism-code {
   [class*="codeLineContent"] {
     margin-left: 32px;
   }
-
-  // &-highligted-line {
-  //   background-color: var(--strapi-neutral-500) !important;
-  // }
 
   .clean-btn {
     background-color: white;
@@ -208,6 +192,25 @@ pre.prism-code {
   &:has([class*="codeBlockTitle"]) {
     .clean-btn {
       top: -50px;
+    }
+
+    [class*="codeBlockLines"] {
+      border: none;
+      position: relative;
+
+      /**
+       * Adding border below title to simulate border continuity
+       * because each code line has its own 'gutter' border
+       */
+      &::after {
+        content: '';
+        width: 1px;
+        height: 20px;
+        background-color: var(--strapi-neutral-200);
+        position: absolute;
+        top: -4px;
+        left: 62px
+      }
     }
   }
 }
