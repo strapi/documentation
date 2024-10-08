@@ -134,14 +134,13 @@ pre.prism-code {
     font-family: var(--custom-code-block-title-font-family);
     background-color: var(--strapi-neutral-100);
     border-bottom: solid 1px var(--custom-code-block-border-color);
+    position: relative;
 
-    &:before {
-      content: '\e230';
-      font-family: "Phosphor"; // using https://phosphoricons.com
-      display: inline-block;
-      vertical-align: top;
-      margin-right: 4px;
-      // TODO: convert to fill version
+    &:before { // file icon from Phosphor icons
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z'%3E%3C/path%3E%3C/svg%3E");
+      position: relative;
+      top: 3px;
+      margin-right: 8px;
     }
   }
 
@@ -152,7 +151,7 @@ pre.prism-code {
     &::before {
       color: var(--strapi-neutral-800);
     }
-    // border-right: solid 1px var(--strapi-neutral-800);
+
     &::after {
       content: '';
       position: absolute;
@@ -161,22 +160,20 @@ pre.prism-code {
       margin-left: 24px;
       background-color: var(--strapi-neutral-200);
     }
-
-    &:first-of-type {
-      &::after {
-        // background-color: tomato;
-      }
-    }
   }
 
   [class*="codeBlockLines"] {
     border: none;
-    // padding-top: 0;
+    position: relative;
 
-    > .token-line[class*="codeLine"]:first-of-type {
-      // background-color: tomato;
-      // line-height: 40px;
-      // vertical-align: top;
+    &::after {
+      content: '';
+      width: 1px;
+      height: 20px;
+      background-color: var(--strapi-neutral-200);
+      position: absolute;
+      top: -4px;
+      left: 62px
     }
   }
 
@@ -184,6 +181,11 @@ pre.prism-code {
     border-radius: 0;
     border-color: transparent;
     border: none;
+    // padding-top: 4px;
+
+    pre.prism-code {
+      background-color: var(--strapi-neutral-0) !important;
+    }
   }
 
   [class*="codeLineContent"] {
