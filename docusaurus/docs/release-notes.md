@@ -11,7 +11,7 @@ This page lists all the Strapi Docs version numbers and their corresponding upda
 <details>
 <summary>🧐 Strapi Docs version numbers explained:</summary>
 
-The Strapi Documentation (Strapi Docs) at [docs.strapi.io](https://docs.strapi.io) always documents the latest version of Strapi (CMS and Cloud) products.
+The **Strapi Documentation** (Strapi Docs) at [docs.strapi.io](https://docs.strapi.io) **always documents the latest version of Strapi (CMS and Cloud) products**.
 
 Since Strapi Docs version 5.0.0, the **docs' version number is independent from the Strapi product version**. Thus, the version numbers of [`strapi/documentation`](https://github.com/strapi/documentation) and [`strapi/strapi`](https://github.com/strapi/strapi) may differ.
 
@@ -24,6 +24,83 @@ Strapi Docs now follow the **[semantic versioning](https://semver.org/)** philos
 New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
+
+## 5.1.1
+
+### 🖌 Updated content
+
+#### Strapi Cloud
+
+* [List environments with Cloud CLI](https://github.com/strapi/documentation/pull/2239)
+
+#### Dev Docs
+
+* [`publicationAt` breaking change](https://github.com/strapi/documentation/pull/2249)
+
+### 🧹 Chore, fixes, typos, and other improvements
+
+#### Strapi Cloud
+
+* [Update wording on purchasable extra Seats](https://github.com/strapi/documentation/pull/2238)
+
+#### Dev Docs
+
+* [Clarify sorting for relational fields in the Content Manager list view](https://github.com/strapi/documentation/pull/2224)
+* [Fix typo for `v4CompatibilityMode` flag](https://github.com/strapi/documentation/pull/2257)
+* [Fix step-by-step v4 → v5 migration (v4CompatibilityMode flag)](https://github.com/strapi/documentation/pull/2255)
+* [Update environment declaration in Docker guide](https://github.com/strapi/documentation/pull/2253)
+* [Fix createStrapi method in TypeScript development documentation](https://github.com/strapi/documentation/pull/2248)
+* [Fix links in the REST API documentation](https://github.com/strapi/documentation/pull/2247)
+* [Fix CheckPagePermissions code example in helper-plugin deprecation guide](https://github.com/strapi/documentation/pull/2244)
+* [Fix typo for init command in Plugin SDK](https://github.com/strapi/documentation/pull/2243)
+* [Add link to ms package for examples for JWT expiresIn](https://github.com/strapi/documentation/pull/2242)
+
+#### Repository
+
+* [Update LICENSE](https://github.com/strapi/documentation/pull/2251)
+
+
+***
+
+This release was made possible thanks to the following contributors. Thank you! 🫶
+
+<div>
+
+<a href="https://github.com/viniciuspalma" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3676032?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="viniciuspalma"/>
+</a>
+<a href="https://github.com/Patryk0494" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/74532122?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Patryk0494"/>
+</a>
+<a href="https://github.com/oyeamjad" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2516337?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="oyeamjad"/>
+</a>
+<a href="https://github.com/paulislava" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/43218364?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="paulislava"/>
+</a>
+<a href="https://github.com/gurdiga" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/53922?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="gurdiga"/>
+</a>
+<a href="https://github.com/maccomaccomaccomacco" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2686869?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="maccomaccomaccomacco"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/gonbaum" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/14006828?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="gonbaum"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+
+</div>
+
+<br/>
+<br/>
 
 ## 5.1.0
 
