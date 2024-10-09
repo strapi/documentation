@@ -20,7 +20,7 @@ export default function Badge({
       className={clsx(
         'badge',
         'badge--feature',
-        (variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
+        ((!feature && !version) && variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
         (version && `badge--version`),
         (feature && `badge--featureflag`),
       )}
