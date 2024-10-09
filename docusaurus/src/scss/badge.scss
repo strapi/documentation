@@ -47,6 +47,15 @@
     margin-left: 2px;
   }
 
+  &--alpha,
+  &--beta,
+  &--version {
+    height: 27px;
+    position: relative;
+    padding-top: 8px;
+    font-weight: 600;
+  }
+
   &--alpha {
     --custom-badge-background-color: var(--strapi-warning-100);
     --custom-badge-color: var(--strapi-warning-600);
@@ -59,12 +68,10 @@
     --custom-badge-border-color: var(--strapi-secondary-200);
   }
 
-  &--alpha,
-  &--beta {
-    height: 27px;
-    position: relative;
-    padding-top: 8px;
-    font-weight: 600;
+  &--version {
+    --custom-badge-background-color: var(--strapi-neutral-100);
+    --custom-badge-color: var(--strapi-neutral-600);
+    --custom-badge-border-color: var(--strapi-neutral-200);
   }
 
   &--featureflag {

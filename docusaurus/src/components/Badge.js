@@ -9,6 +9,7 @@ export default function Badge({
   noLink = false,
   variant = '',
   icon,
+  version,
   ...rest
 }) {
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
@@ -19,6 +20,7 @@ export default function Badge({
         'badge',
         'badge--feature',
         (variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
+        (version && `badge--version`),
       )}
       {...rest}
     >
@@ -126,4 +128,13 @@ export function UpdatedBadge(props) {
       {...props}
     />
   );
+}
+
+export function VersionBadge(props) {
+  return (
+    <Badge
+      variant={props.version}
+      {...props}
+    />
+  )
 }
