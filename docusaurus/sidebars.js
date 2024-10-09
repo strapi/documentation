@@ -67,37 +67,32 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Releases',
-          id: 'user-docs/intro',
+          id: 'user-docs/releases/introduction',
         },
         {
           type: 'doc',
           label: 'Audit Logs',
-          id: 'user-docs/intro',
-        },
-        {
-          type: 'doc',
-          label: 'Static Preview',
-          id: 'user-docs/intro',
+          id: 'user-docs/settings/audit-logs',
         },
         {
           type: 'doc',
           label: 'Review Workflows',
-          id: 'user-docs/intro',
+          id: 'user-docs/settings/review-workflows',
         },
         {
           type: 'doc',
           label: 'Media Library',
-          id: 'user-docs/intro',
+          id: 'user-docs/media-library/introduction-to-the-media-library',
         },
         {
           type: 'doc',
           label: 'Upgrade tools',
-          id: 'user-docs/intro',
+          id: 'dev-docs/upgrade-tool',
         },
         {
           type: 'doc',
           label: 'RBAC',
-          id: 'user-docs/intro',
+          id: 'dev-docs/configurations/guides/rbac',
         },
         {
           type: 'category',
@@ -123,27 +118,27 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Providers',
-          id: 'user-docs/intro',
+          id: 'dev-docs/providers',
         },
         {
           type: 'doc',
           label: 'Sentry',
-          id: 'user-docs/intro',
+          id: 'dev-docs/plugins/sentry',
         },
         {
           type: 'doc',
           label: 'GraphQL',
-          id: 'user-docs/intro',
+          id: 'dev-docs/plugins/graphql',
         },
         {
           type: 'doc',
           label: 'Documentation',
-          id: 'user-docs/intro',
+          id: 'dev-docs/plugins/documentation',
         },
         {
           type: 'doc',
           label: 'Email',
-          id: 'user-docs/intro',
+          id: 'dev-docs/plugins/email',
         },
       ]
     },
