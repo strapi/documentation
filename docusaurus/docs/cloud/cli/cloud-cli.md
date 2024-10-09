@@ -9,7 +9,7 @@ tags:
 pagination_next: cloud/advanced/database
 ---
 
-# Command Line Interface (CLI) <NewBadge />
+# Command Line Interface (CLI) <UpdatedBadge />
 
 Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a local project without it having to be hosted on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
 
@@ -56,7 +56,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 - Some buttons, such as the **Trigger deploy** button, will be greyed out and unclickable since, unless you have [connected a git repository to your Strapi Cloud project](/cloud/getting-started/deployment-cli#automatically-deploying-subsequent-changes).
 :::
 
-## strapi link <NewBadge />
+## strapi link
 
 **Alias:** `strapi cloud:link`
 
@@ -68,7 +68,7 @@ strapi link
 
 This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud.
 
-## strapi projects <NewBadge />
+## strapi projects
 
 **Alias:** `strapi cloud:projects`
 
@@ -85,7 +85,7 @@ strapi link
 
 This command connects your local project in the current directory with an existing project on your Strapi Cloud account. You will be prompted to select the project you wish to link from a list of available projects hosted on Strapi Cloud.
 
-## strapi cloud environments <NewBadge />
+## strapi cloud environments <NewBadge /> {#cloud-environments}
 
 **Alias:** `strapi cloud environment list`
 
