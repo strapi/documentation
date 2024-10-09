@@ -65,6 +65,20 @@
   }
 }
 
+/**
+ * Improve style for secondary nav "code"-formatted headings
+ */
+main .table-of-contents {
+  code {
+    font-size: var(--strapi-font-size-xs);
+    background-color: transparent;
+    border: none;
+    color: inherit;
+    padding: 0;
+    font-weight: 500;
+  }
+}
+
 /** Responsive */
 @include medium-up {
   .table-of-contents {
