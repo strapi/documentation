@@ -1,10 +1,18 @@
 .my-custom-search-bar {
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
   border: var(--strapi-input-border);
-  border-radius: 6px;
+  border-radius: 4px;
   background-color: white;
   position: relative;
+  top: 60px;
+  left: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 80%;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
 
   .DocSearch.DocSearch-Button:hover {
     box-shadow: none;
@@ -12,78 +20,150 @@
 
   .DocSearch.DocSearch-Button,
   .kapa-widget-button {
-    &:hover {
-      background-color: var(--strapi-neutral-100);
-    }
+    font-size: var(--strapi-font-size-sm);
+    line-height: var(--strapi-font-size-sm);
+    flex: 1 1 50%;
   }
 
   .DocSearch.DocSearch-Button {
     background-color: transparent;
-    width: 60%;
+    width: 65%;
     border: none;
+    justify-content: flex-start;
+    margin: 0;
+    border-radius: 4px 0 0 4px;
+    position: relative;
+    padding-left: 12px;
+    padding-right: 0;
+    border-right: solid 1px var(--strapi-neutral-200);
 
     &:hover {
       color: var(--strapi-primary-600);
-      border-radius: 6px 0 0 6px;
+      border-radius: 4px 0 0 4px;
 
-      svg path {
-        stroke: var(--strapi-primary-500);
-      }
-
-      .DocSearch-Button-Key {
-        color: var(--strapi-primary-600);
+      .DocSearch-Button-Placeholder::before {
+        content:'\E30C';
+        color: var(--strapi-primary-500) !important;
       }
     }
+  }
+
+  .DocSearch-Button-Placeholder {
+    font-size: var(--strapi-font-size-sm);
+    line-height: var(--strapi-line-height-sm);
+    padding-left: 0;
+
+    &::before {
+      content: '\E30C';
+      font-family: "Phosphor";
+      color: var(--strapi-neutral-500);
+      margin-right: 6px;
+      font-size: 16px;
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .DocSearch-Search-Icon {
+    display: none;
   }
 
   .DocSearch-Button-Keys {
-    min-width: 30px;
-    position: relative;
-    top: 1px;
+    display: none;
+    // min-width: 30px;
+    // position: relative;
+    // top: 1px;
+    // font-size: 1rem;
+
+    // .DocSearch-Button-Key {
+    //   color: var(--strapi-neutral-500);
+    //   box-shadow: none;
+    //   background: none;
+    //   border-radius: 0;
+    //   padding: 0;
+    //   margin-right: 0;
+    //   width: 10px;
+    // }
   }
 
-  .kapa-widget-button {
-    appearance: none;
-    background: none;
-    border: none;
-    padding: 0 10px;
-    margin: 0;
-    border-radius: 0;
-    box-shadow: none;
-    color: inherit;
-    text-align: inherit;
-    line-height: inherit;
-    cursor: pointer;
-    outline: none;
 
-    &-text {
-      font-size: var(--custom-navbar-items-font-size);
-      color: var(--strapi-neutral-500);
-      position: relative;
-      font-weight: 500;
-      top: -5px;
+  button.kapa-widget-button {
+    border: none;
+    padding: 0 0 0 12px;
+    width: 100%;
+    height: 36px;
+    overflow: visible;
+    cursor: pointer;
+    position: relative;
+    border-radius: 0 6px 6px 0;
+    background: transparent;
+    text-align: left;
+
+    /* inherit font & color from ancestor */
+    color: var(--strapi-neutral-400);
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 500;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+    /* Remove excess padding and border in Firefox 4+ */
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
     }
 
     svg {
-      margin-left: 6px;
-      fill: var(--strapi-neutral-500);
       position: relative;
-      top: 6px;
-      width: 27px;
-      height: 27px;
+      left: 6px;
+      top: 3px;
+      width: 18px;
+      height: 18px;
+      fill: var(--strapi-neutral-500);
     }
 
-    &:hover {
-      border-radius: 0 6px 6px 0;
+    .kapa-widget-button-text {
+      position: relative;
+      font-size: var(--strapi-font-size-sm);
+      line-height: var(--strapi-line-height-sm);
 
+      i {
+        margin-right: 6px;
+      }
+
+      @media screen and (max-width: 996px){
+        left: 12px;
+      }
+    }
+
+    &:hover,
+    &:active {
       .kapa-widget-button-text {
         color: var(--strapi-primary-600);
       }
-
-      svg {
-        fill: var(--strapi-primary-600);
+      button {
+        svg {
+          fill: var(--strapi-primary-600);
+        }
       }
     }
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    height: 60px;
+    left: -26px;
+    right: -33px;
+    top: 40px;
+    background: linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, var(--strapi-neutral-0) 100%);
   }
 }
 

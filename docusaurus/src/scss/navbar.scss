@@ -136,66 +136,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   .DocSearch-Button {
-    width: var(--custom-navbar-search-button-width);
-  }
-
-  .kapa-widget-button {
-    button {
-      border: none;
-      padding: 0;
-      width: auto;
-      overflow: visible;
-      cursor: pointer;
-
-      background: transparent;
-
-      /* inherit font & color from ancestor */
-      color: inherit;
-      font: inherit;
-
-      /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
-      line-height: normal;
-
-      /* Corrects font smoothing for webkit */
-      -webkit-font-smoothing: inherit;
-      -moz-osx-font-smoothing: inherit;
-
-      /* Corrects inability to style clickable `input` types in iOS */
-      -webkit-appearance: none;
-          /* Remove excess padding and border in Firefox 4+ */
-      &::-moz-focus-inner {
-        border: 0;
-        padding: 0;
-      }
-
-      svg {
-        position: relative;
-        top: 2px;
-        width: 18px;
-        height: 18px;
-        fill: var(--strapi-neutral-600)
-      }
-
-      .kapa-button-label {
-        position: relative;
-        left: 6px;
-
-        @media screen and (max-width: 996px){
-          left: 12px;
-        }
-      }
-    }
-
-    &:hover {
-      .kapa-button-label {
-        color: var(--strapi-primary-600);
-      }
-      button {
-        svg {
-          fill: var(--strapi-primary-600);
-        }
-      }
-    }
+    display: none;
   }
 
   /** Color mode toggle hover effect */
