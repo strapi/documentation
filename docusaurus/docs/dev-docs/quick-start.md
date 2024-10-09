@@ -16,7 +16,7 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
-<EnterpriseBadge /><CloudTeamBadge /><CloudDevBadge /><CloudProBadge /><AlphaBadge /><BetaBadge /><FeatureFlagBadge /><VersionBadge version="5.1.1" />
+<EnterpriseBadge /><CloudTeamBadge /><CloudDevBadge /><CloudProBadge /><AlphaBadge /><BetaBadge /><FeatureFlagBadge feature="Feature flag"/><VersionBadge version="5.1.1" />
 
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 

@@ -9,6 +9,7 @@ export default function Badge({
   noLink = false,
   variant = '',
   icon,
+  feature,
   version,
   ...rest
 }) {
@@ -21,6 +22,7 @@ export default function Badge({
         'badge--feature',
         (variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
         (version && `badge--version`),
+        (feature && `badge--featureflag`),
       )}
       {...rest}
     >
@@ -59,7 +61,7 @@ export function BetaBadge(props) {
 export function FeatureFlagBadge(props) {
   return (
     <Badge
-      variant="Feature Flag"
+      variant={props.feature}
       link="/dev-docs/configurations/features"
       icon="toggle-right"
       {...props}
