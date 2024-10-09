@@ -42,16 +42,10 @@ The sorting order can be defined with:
 - `:asc` for ascending order (default order, can be omitted)
 - or `:desc` for descending order.
 
-<SideBySideContainer>
-<SideBySideColumn>
 
 ### Example: Sort using 2 fields
 
 You can sort by multiple fields by passing fields in a `sort` array.
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <br />
 
@@ -130,19 +124,9 @@ await request(`/api/restaurants?${query}`);
 
 </details>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
-<SideBySideContainer>
-<SideBySideColumn>
-
 ### Example: Sort using 2 fields and set the order
 
 Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you can get results sorted in a particular order.
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <br />
 
@@ -222,8 +206,6 @@ await request(`/api/restaurants?${query}`);
 
 </details>
 
-</SideBySideColumn>
-</SideBySideContainer>
 
 ## Pagination
 
