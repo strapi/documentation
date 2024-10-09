@@ -61,7 +61,7 @@ export function BetaBadge(props) {
 export function FeatureFlagBadge(props) {
   return (
     <Badge
-      variant={props.feature || "Feature Flag"}
+      variant={props.feature ? props.feature : "Feature Flag"}
       link="/dev-docs/configurations/features"
       icon="toggle-right"
       {...props}
