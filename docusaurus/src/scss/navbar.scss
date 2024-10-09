@@ -143,7 +143,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     display: none;
   }
 
-  button[class*="ColorModeToggle"] {
+  button[class*="ColorModeToggle"],
+  button[class*="toggleButton"] {
     background: none !important;
     position: relative;
     right: -4px;
@@ -244,7 +245,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
   }
 
-  button[class*="ColorModeToggle"] {
+  button[class*="ColorModeToggle"],
+  button[class*="toggleButton"] {
     // Use 'moon' icon in dark mode
     &::after {
       content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
