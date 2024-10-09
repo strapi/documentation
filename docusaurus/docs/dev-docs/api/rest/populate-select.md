@@ -56,6 +56,26 @@ Field selection does not work on relational, media, component, or dynamic zone f
 
 `GET /api/restaurants?fields[0]=name&fields[1]=description`
 
+<details>
+<summary><QsForQueryTitle/></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify(
+  {
+    fields: ['name', 'description'],
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
+
+await request(`/api/users?${query}`);
+```
+
+</details>
 </Request>
 
 <Response title="Example response">
@@ -95,26 +115,7 @@ Field selection does not work on relational, media, component, or dynamic zone f
 </Response>
 </ApiCall>
 
-<details>
-<summary><QsForQueryTitle/></summary>
 
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    fields: ['name', 'description'],
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
-await request(`/api/users?${query}`);
-```
-
-</details>
 
 ## Population
 
