@@ -25,6 +25,10 @@ Upgrading a Strapi v4 plugin to Strapi 5 consists in:
 1. Creating a new empty plugin using the [Plugin SDK](/dev-docs/plugins/development/create-a-plugin).
 2. Move your Strapi v4 code to the newly created files in the Strapi 5 [plugin structure](/dev-docs/plugins/development/plugin-structure), also considering the changes summarized in this page.
 
+:::tip Tip: Partly automate the migration
+Some parts of the plugin migration can be automated by the CLI upgrade tool through its **codemods** <Codemods/>. You can run `npx @strapi/upgrade codemods ls` to list available codemods and `npx @strapi/upgrade codemods run` to run a specific codemod. See the [list of codemods](/dev-docs/migration/v4-to-v5/step-by-step#step-2-run-automated-migrations) and the [reference documentation for the upgrade tool](/dev-docs/upgrade-tool#run-codemods-only) for more details.
+:::
+
 Alternatively, you can manually update your Strapi v4 plugin to use the Plugin SDK.
 The manual steps include:
 1. If your code uses a format other than CommonJS, update the `package.json` file and specify the appropriate exports property.
