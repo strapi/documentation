@@ -56,6 +56,8 @@ Field selection does not work on relational, media, component, or dynamic zone f
 
 `GET /api/restaurants?fields[0]=name&fields[1]=description`
 
+</Request>
+
 <details>
 <summary><QsForQueryTitle/></summary>
 
@@ -76,7 +78,6 @@ await request(`/api/users?${query}`);
 ```
 
 </details>
-</Request>
 
 <Response title="Example response">
 
