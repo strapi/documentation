@@ -38,7 +38,7 @@ The `/config/database.js|ts` file accepts 2 main configuration objects:
 | Parameter                                                | Description                                                                                           | Type      | Default |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
 | `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>`sqlite` for SQLite databases</li><li>`postgres` for PostgreSQL databases</li><li>`mysql` for MySQL databases</li></ul> | `String`  | -       |
-| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
+| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Knex.Config object<br />Knex.Config Function (experimental)`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
 | `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
