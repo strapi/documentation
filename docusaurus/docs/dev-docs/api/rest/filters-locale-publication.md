@@ -86,6 +86,28 @@ You can use the `$eq` filter operator to find an exact match.
 
 </Request>
 
+<details>
+<summary><QsForQueryTitle /></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  filters: {
+    username: {
+      $eq: 'John',
+    },
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/users?${query}`);
+```
+
+</details>
+
 <Response title="Example response">
 
 ```json
@@ -116,27 +138,6 @@ You can use the `$eq` filter operator to find an exact match.
 </Response>
 </ApiCall>
 
-<details>
-<summary><QsForQueryTitle /></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    username: {
-      $eq: 'John',
-    },
-  },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/users?${query}`);
-```
-
-</details>
 
 ### Example: Find multiple restaurants with ids 3, 6,8
 
@@ -150,6 +151,28 @@ You can use the `$in` filter operator with an array of values to find multiple e
 `GET /api/restaurants?filters[id][$in][0]=6&filters[id][$in][1]=8`
 
 </Request>
+
+<details>
+<summary><QsForQueryTitle /></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  filters: {
+    id: {
+      $in: [3, 6, 8],
+    },
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+</details>
 
 <Response title="Example response">
 
@@ -178,28 +201,6 @@ You can use the `$in` filter operator with an array of values to find multiple e
 </Response>
 </ApiCall>
 
-<details>
-<summary><QsForQueryTitle /></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    id: {
-      $in: [3, 6, 8],
-    },
-  },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
 ### Complex filtering
 
 Complex filtering is combining multiple filters using advanced methods such as combining `$and` & `$or`. This allows for more flexibility to request exactly the data needed.
@@ -211,35 +212,6 @@ Complex filtering is combining multiple filters using advanced methods such as c
 `GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[author][name][$eq]=Kai%20doe`
 
 </Request>
-
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "rxngxzclq0zdaqtvz67hj38d",
-      "name": "test1",
-      "date": "2020-01-01",
-      // ...
-    },
-    {
-      "id": 2,
-      "documentId": "kjkhff4e269a50b4vi16stst",
-      "name": "test2",
-      "date": "2020-01-02",
-      // ...
-    }
-  ],
-  "meta": {
-    // ...
-  }
-}
-```
-
-</Response>
-</ApiCall>
 
 <details>
 <summary><QsForQueryTitle /></summary>
@@ -277,6 +249,35 @@ await request(`/api/books?${query}`);
 
 </details>
 
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "rxngxzclq0zdaqtvz67hj38d",
+      "name": "test1",
+      "date": "2020-01-01",
+      // ...
+    },
+    {
+      "id": 2,
+      "documentId": "kjkhff4e269a50b4vi16stst",
+      "name": "test2",
+      "date": "2020-01-02",
+      // ...
+    }
+  ],
+  "meta": {
+    // ...
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
 ### Deep filtering
 
 Deep filtering is filtering on a relation's fields.
@@ -305,6 +306,32 @@ Deep filtering is filtering on a relation's fields.
 `GET /api/restaurants?filters[chef][restaurants][stars][$eq]=5`
 
 </Request>
+
+<details>
+<summary><QsForQueryTitle /></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  filters: {
+    chef: {
+      restaurants: {
+        stars: {
+          $eq: 5,
+        },
+      },
+    },
+  },
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+</details>
 
 <Response title="Example response">
 
@@ -335,32 +362,6 @@ Deep filtering is filtering on a relation's fields.
 </Response>
 </ApiCall>
 
-<details>
-<summary><QsForQueryTitle /></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  filters: {
-    chef: {
-      restaurants: {
-        stars: {
-          $eq: 5,
-        },
-      },
-    },
-  },
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
 ## Locale
 
 :::prerequisites
@@ -370,7 +371,6 @@ await request(`/api/restaurants?${query}`);
 :::
 
 The `locale` API parameter can be used to work with entries from a specific locale (see [Internationalization documentation](/dev-docs/i18n#rest)).
-
 
 ## Status
 
@@ -399,6 +399,25 @@ Since published versions are returned by default, passing no status parameter is
 `GET /api/articles?status=draft`
 
 </Request>
+
+<details>
+<summary><QsForQueryTitle /></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+</details>
+
 <Response title="Example response">
 
 ```json {21}
@@ -440,21 +459,3 @@ Since published versions are returned by default, passing no status parameter is
 
 </Response>
 </ApiCall>
-
-<details>
-<summary><QsForQueryTitle /></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  status: 'draft',
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/articles?${query}`);
-```
-
-</details>
