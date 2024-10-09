@@ -115,8 +115,6 @@ await request(`/api/users?${query}`);
 </Response>
 </ApiCall>
 
-
-
 ## Population
 
 The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types.
@@ -176,6 +174,32 @@ The population and pagination operators cannot be combined.
 
 </Request>
 
+<details>
+<summary><QsForQueryTitle/></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify(
+  {
+    fields: ['title', 'slug'],
+    populate: {
+      headerImage: {
+        fields: ['name', 'url'],
+      },
+    },
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
+
+await request(`/api/articles?${query}`);
+```
+
+</details>
+
 <Response title="Example response">
 
 ```json
@@ -203,6 +227,18 @@ The population and pagination operators cannot be combined.
 </Response>
 </ApiCall>
 
+
+#### Populate with filtering
+
+`filters` and `populate` can be combined.
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+
+`GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
+
+</Request>
+
 <details>
 <summary><QsForQueryTitle/></summary>
 
@@ -212,10 +248,14 @@ The population and pagination operators cannot be combined.
 const qs = require('qs');
 const query = qs.stringify(
   {
-    fields: ['title', 'slug'],
     populate: {
-      headerImage: {
-        fields: ['name', 'url'],
+      categories: {
+        sort: ['name:asc'],
+        filters: {
+          name: {
+            $eq: 'Cars',
+          },
+        },
       },
     },
   },
@@ -228,17 +268,6 @@ await request(`/api/articles?${query}`);
 ```
 
 </details>
-
-#### Populate with filtering
-
-`filters` and `populate` can be combined.
-
-<ApiCall noSideBySide>
-<Request title="Example request">
-
-`GET /api/articles?populate[categories][sort][0]=name%3Aasc&populate[categories][filters][name][$eq]=Cars`
-
-</Request>
 
 <Response title="Example response">
 
@@ -271,33 +300,3 @@ await request(`/api/articles?${query}`);
 
 </Response>
 </ApiCall>
-
-<details>
-<summary><QsForQueryTitle/></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify(
-  {
-    populate: {
-      categories: {
-        sort: ['name:asc'],
-        filters: {
-          name: {
-            $eq: 'Cars',
-          },
-        },
-      },
-    },
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
-await request(`/api/articles?${query}`);
-```
-
-</details>
