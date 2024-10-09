@@ -16,7 +16,7 @@ export default function Badge({
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
 
   return (
-    <div
+    <span
       className={clsx(
         'badge',
         'badge--feature',
@@ -36,7 +36,7 @@ export default function Badge({
         </a>
       )}
       {children}
-    </div>
+    </span>
   );
 }
 
