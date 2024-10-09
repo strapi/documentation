@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import Icon from '../components/Icon'
 
 export default function Badge({
   children,
@@ -7,12 +8,13 @@ export default function Badge({
   link = '',
   noLink = false,
   variant = '',
+  icon,
   ...rest
 }) {
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
 
   return (
-    <span
+    <div
       className={clsx(
         'badge',
         'badge--feature',
@@ -26,11 +28,11 @@ export default function Badge({
         </>
       ) : (
         <a className="badge__link" href={link}>
-          {variant}
+          {icon && <Icon name={icon} />}{variant}
         </a>
       )}
       {children}
-    </span>
+    </div>
   );
 }
 
@@ -52,11 +54,12 @@ export function BetaBadge(props) {
   );
 }
 
-export function FutureBadge(props) {
+export function FeatureFlagBadge(props) {
   return (
     <Badge
-      variant="Future"
+      variant="Feature Flag"
       link="/dev-docs/configurations/features"
+      icon="toggle-right"
       {...props}
     />
   );
@@ -67,6 +70,7 @@ export function EnterpriseBadge(props) {
     <Badge
       variant="Enterprise"
       link="https://strapi.io/pricing-self-hosted"
+      icon="feather"
       {...props}
     />
   );
@@ -75,8 +79,9 @@ export function EnterpriseBadge(props) {
 export function CloudProBadge(props) {
   return (
     <Badge
-      variant="Strapi Cloud Pro"
+      variant="Pro"
       link="https://strapi.io/pricing-cloud"
+      icon="cloud"
       {...props}
     />
   );
@@ -85,8 +90,9 @@ export function CloudProBadge(props) {
 export function CloudTeamBadge(props) {
   return (
     <Badge
-      variant="Strapi Cloud Team"
+      variant="Team"
       link="https://strapi.io/pricing-cloud"
+      icon="cloud"
       {...props}
     />
   );
@@ -95,8 +101,9 @@ export function CloudTeamBadge(props) {
 export function CloudDevBadge(props) {
   return (
     <Badge
-      variant="Strapi Cloud Dev"
+      variant="Developer"
       link="https://strapi.io/pricing-cloud"
+      icon="cloud"
       {...props}
     />
   );

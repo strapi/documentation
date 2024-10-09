@@ -3,15 +3,16 @@
 .badge {
   --custom-badge-background-color: var(--strapi-neutral-200);
   --custom-badge-color: var(--strapi-neutral-800);
-  --custom-badge-font-size: var(--strapi-font-size-sm);
+  --custom-badge-font-size: var(--strapi-font-size-xxs);
+  --custom-badge-line-height: var(--strapi-line-height-xs);
 
   --custom-selection-background-color: var(--custom-badge-color);
 
   --ifm-badge-background-color: var(--custom-badge-background-color);
   --ifm-badge-color: var(--custom-badge-color);
   --ifm-badge-border-radius: var(--strapi-spacing-1);
-  --ifm-badge-padding-horizontal: var(--strapi-spacing-2);
-  --ifm-badge-padding-vertical: var(--strapi-spacing-2);
+  --ifm-badge-padding-horizontal: 7px;
+  --ifm-badge-padding-vertical: 6px;
 
   --ifm-font-weight-bold: var(--strapi-font-size-sm);
   --ifm-link-color: var(--ifm-badge-color);
@@ -20,46 +21,75 @@
   position: relative;
   top: var(--custom-badge-inside-titles-top);
   font-size: var(--custom-badge-font-size);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.3px;
   text-align: center;
+  text-transform: uppercase;
+  border: 1px solid var(--custom-badge-border-color);
+
+  a {
+    text-decoration: none;
+  }
+
+  .strapi-icons {
+    margin-right: 6px;
+    font-size: 12px;
+    position: relative;
+    top: 1px;
+  }
 
   &-link {
-    font-weight: 400;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  & + .badge {
+    margin-left: 2px;
   }
 
   &--alpha {
-    --custom-badge-background-color: rgb(255,230,228);
-    --custom-badge-color: rgb(219, 0, 22);
+    --custom-badge-background-color: var(--strapi-warning-100);
+    --custom-badge-color: var(--strapi-warning-600);
+    --custom-badge-border-color: var(--strapi-warning-200);
   }
 
   &--beta {
-    --custom-badge-background-color: rgb(246, 228, 253);
-    --custom-badge-color: rgb(160,25,240);
+    --custom-badge-background-color: var(--strapi-secondary-100);
+    --custom-badge-color: var(--strapi-secondary-600);
+    --custom-badge-border-color: var(--strapi-secondary-200);
   }
 
-  &--future {
-    --custom-badge-background-color: var(--strapi-danger-200);
-    --custom-badge-color: rgb(219, 0, 22);
+  &--alpha,
+  &--beta {
+    height: 27px;
+    position: relative;
+    padding-top: 8px;
+    font-weight: 600;
+  }
+
+  &--featureflag {
+    --custom-badge-background-color: var(--strapi-alternative-100);
+    --custom-badge-color: var(--strapi-alternative-600);
+    --custom-badge-border-color: var(--strapi-alternative-200);
   }
 
   &--enterprise {
-    --custom-badge-background-color: rgb(255, 241, 209);
-    --custom-badge-color: rgb(229, 136, 41);
+    --custom-badge-background-color: var(--strapi-warning-600);
+    --custom-badge-color: var(--strapi-neutral-0);
   }
 
-  &--strapicloudpro {
-    --custom-badge-background-color: rgb(55, 34, 254);
+  &--pro {
+    --custom-badge-background-color: var(--strapi-primary-600);
     --custom-badge-color: #fff;
   }
 
-  &--strapicloudteam {
+  &--team {
     --custom-badge-background-color: rgb(154, 53, 242);
     --custom-badge-color: #fff;
   }
 
-  &--strapiclouddev {
-    --custom-badge-background-color: rgb(44,170,73);
+  &--developer {
+    --custom-badge-background-color: var(--strapi-success-600);
     --custom-badge-color: #fff;
   }
 
@@ -80,7 +110,6 @@
     border: 1px solid var(--custom-badge-border-color);
   }
 
-
   &--updated {
     --custom-badge-background-color: var(--strapi-secondary-100);
     --custom-badge-border-color: var(--strapi-secondary-200);
@@ -98,6 +127,7 @@
     border: 1px solid var(--custom-badge-border-color);
     flex-shrink: 0;
   }
+
 }
 
 h1 .badge {
@@ -106,6 +136,10 @@ h1 .badge {
 
 h2 .badge {
   --custom-badge-inside-titles-top: -.3em;
+}
+
+.badge + p {
+  margin-top: 40px;
 }
 
 /** Dark mode */
