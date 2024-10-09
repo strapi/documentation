@@ -915,7 +915,7 @@ const sidebars = {
           id: "cloud/cli/cloud-cli",
           label: "Strapi Cloud CLI",
           customProps: {
-            new: true,
+            updated: true,
           },
         },
       ],
