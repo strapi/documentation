@@ -162,5 +162,30 @@ h2 .badge {
       --custom-badge-border-color: var(--strapi-secondary-500);
       --custom-badge-color: var(--strapi-secondary-500);
     }
+    &--enterprise {
+      --custom-badge-color: var(--strapi-neutral-1000);
+    }
+    &--alpha,
+    &--beta,
+    &--featureflag,
+    &--version {
+      --custom-badge-background-color: var(--strapi-neutral-100);
+      --custom-badge-border-color: var(--strapi-neutral-200);
+    }
+    &--beta {
+      --custom-badge-color: var(--strapi-secondary-200);
+    }
+    &--featureflag {
+      --custom-badge-color: var(--strapi-alternative-500);
+      .strapi-icons {
+        color: var(--strapi-alternative-200) !important;
+      }
+    }
+    &--pro {
+      --custom-badge-background-color: #4945FF;
+    }
+    &--version {
+      --custom-badge-color: var(--strapi-neutral-400);
+    }
   }
 }
