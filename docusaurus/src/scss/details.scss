@@ -60,6 +60,10 @@ details.alert {
     margin-top: 0;
   }
 
+  summary + div > div > span + p {
+    margin-top: 0;
+  }
+
   a {
     color: var(--custom-code-color);
   }
