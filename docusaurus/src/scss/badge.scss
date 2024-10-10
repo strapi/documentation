@@ -1,4 +1,31 @@
 /** Component: Feature Badges (alpha, beta) */
+@mixin badge-tooltip {
+  font-weight: 400;
+  visibility: hidden;
+  width: 150px;
+  background-color: var(--custom-badge-tooltip-background-color);
+  color: var(--custom-badge-tooltip-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  text-transform: initial;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
+  }
+}
 
 .badge {
   --custom-badge-background-color: var(--strapi-neutral-200);
@@ -171,31 +198,9 @@ main .badge--content {
   }
 
   .badge__tooltip {
-    visibility: hidden;
-    width: 150px;
-    background-color: var(--custom-badge-tooltip-background-color);
-    color: var(--custom-badge-tooltip-color);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -75px;
-    text-transform: initial;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -6px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
-    }
+    @include badge-tooltip();
   }
+
   &.badge--updated {
     .badge__tooltip {
       --custom-badge-tooltip-background-color: var(--strapi-secondary-100);
@@ -220,31 +225,9 @@ main .badge--pro,
 main .badge--enterprise,
 main .badge--version {
   .badge__tooltip {
-    font-weight: 400;
-    visibility: hidden;
-    width: 150px;
-    background-color: var(--custom-badge-tooltip-background-color);
-    color: var(--custom-badge-tooltip-color);
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -75px;
-    text-transform: initial;
+    @include badge-tooltip();
 
-    &::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -6px;
-      border-width: 6px;
-      border-style: solid;
-      border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
-    }
+
   }
   &:hover .badge__tooltip {
     visibility: visible;
