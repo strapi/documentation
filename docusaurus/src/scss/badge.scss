@@ -73,32 +73,43 @@
     --custom-badge-background-color: var(--strapi-neutral-100);
     --custom-badge-color: var(--strapi-neutral-600);
     --custom-badge-border-color: var(--strapi-neutral-200);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+    --custom-badge-tooltip-color: var(--strapi-neutral-600);
   }
 
   &--featureflag {
     --custom-badge-background-color: var(--strapi-alternative-100);
     --custom-badge-color: var(--strapi-alternative-600);
     --custom-badge-border-color: var(--strapi-alternative-200);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
   }
 
   &--enterprise {
     --custom-badge-background-color: var(--strapi-warning-600);
     --custom-badge-color: var(--strapi-neutral-0);
+    --custom-badge-tooltip-background-color: var(--strapi-warning-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
   &--pro {
     --custom-badge-background-color: var(--strapi-primary-600);
     --custom-badge-color: #fff;
+    --custom-badge-tooltip-background-color: var(--strapi-primary-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
   &--team {
     --custom-badge-background-color: rgb(154, 53, 242);
     --custom-badge-color: #fff;
+    --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
   &--developer {
     --custom-badge-background-color: var(--strapi-success-600);
     --custom-badge-color: #fff;
+    --custom-badge-tooltip-background-color: var(--strapi-success-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
   &--content {
@@ -157,6 +168,86 @@ main .badge--content {
   .strapi-icons {
     left: 2px;
     top: -2px;
+  }
+
+  .badge__tooltip {
+    visibility: hidden;
+    width: 150px;
+    background-color: var(--custom-badge-tooltip-background-color);
+    color: var(--custom-badge-tooltip-color);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    text-transform: initial;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -6px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
+    }
+  }
+  &.badge--updated {
+    .badge__tooltip {
+      --custom-badge-tooltip-background-color: var(--strapi-secondary-100);
+      --custom-badge-tooltip-color: var(--strapi-secondary-600);
+    }
+  }
+  &.badge--new {
+    .badge__tooltip {
+      --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
+      --custom-badge-tooltip-color: var(--strapi-alternative-600);
+    }
+  }
+  &:hover .badge__tooltip {
+    visibility: visible;
+  }
+}
+
+main .badge--featureflag,
+main .badge--developer,
+main .badge--team,
+main .badge--pro,
+main .badge--enterprise,
+main .badge--version {
+  .badge__tooltip {
+    font-weight: 400;
+    visibility: hidden;
+    width: 150px;
+    background-color: var(--custom-badge-tooltip-background-color);
+    color: var(--custom-badge-tooltip-color);
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    text-transform: initial;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -6px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
+    }
+  }
+  &:hover .badge__tooltip {
+    visibility: visible;
   }
 }
 
@@ -251,6 +342,9 @@ main .badge--content:has(+ table) {
   .strapi-icons {
     left: 1px;
   }
+  .badge__tooltip {
+    display: none;
+  }
 }
 .menu__link:has(.badge--content) {
   display: flex;
@@ -297,6 +391,8 @@ h2 .badge {
     }
     &--enterprise {
       --custom-badge-color: var(--strapi-neutral-1000);
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-warning-100);
     }
     &--alpha,
     &--beta,
@@ -310,15 +406,26 @@ h2 .badge {
     }
     &--featureflag {
       --custom-badge-color: var(--strapi-alternative-500);
+      --custom-badge-tooltip-color: var(--strapi-alternative-100);
       .strapi-icons {
         color: var(--strapi-alternative-200) !important;
       }
     }
     &--pro {
       --custom-badge-background-color: #4945FF;
+      --custom-badge-tooltip-color: var(--strapi-primary-200);
+    }
+    &--developer {
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-success-100);
+    }
+    &--team {
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-alternative-100);
     }
     &--version {
       --custom-badge-color: var(--strapi-neutral-400);
+      --custom-badge-tooltip-color: var(--strapi-neutral-700);
     }
   }
 }
