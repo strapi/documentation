@@ -279,7 +279,13 @@ const sidebars = {
       },
       items: [
         'user-docs/intro',
-        'user-docs/getting-started/user-guide-fundamentals',
+        {
+          type: 'doc',
+          id: 'user-docs/getting-started/user-guide-fundamentals',
+          customProps: {
+            updated: true,
+          }
+        },
         'user-docs/getting-started/setting-up-admin-panel',
       ],
     },
