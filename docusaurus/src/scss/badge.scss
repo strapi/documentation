@@ -2,7 +2,8 @@
 @mixin badge-tooltip {
   font-weight: 400;
   visibility: hidden;
-  width: 150px;
+  --custom-badge-tooltip-width: 220px;
+  width: var(--custom-badge-tooltip-width);
   background-color: var(--custom-badge-tooltip-background-color);
   color: var(--custom-badge-tooltip-color);
   text-align: center;
@@ -12,8 +13,40 @@
   z-index: 1;
   bottom: 150%;
   left: 50%;
-  margin-left: -75px;
+  margin-left: calc(-1 * var(--custom-badge-tooltip-width) / 2);
   text-transform: initial;
+  font-size: var(--strapi-font-size-ssm);
+  line-height: var(--strapi-line-height-sm);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
+  }
+}
+
+@mixin badge-content-tooltip {
+  font-weight: 400;
+  visibility: hidden;
+  background-color: var(--custom-badge-tooltip-background-color);
+  color: var(--custom-badge-tooltip-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  width: var(--custom-badge-content-tooltip-width);
+  margin-left: calc(-1 * var(--custom-badge-content-tooltip-width) / 2);
+  text-transform: initial;
+  font-size: var(--strapi-font-size-ssm);
+  line-height: var(--strapi-font-size-sm);
 
   &::after {
     content: "";
@@ -141,40 +174,36 @@
 
   &--content {
     height: 20px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    min-width: 52px;
+    border: 1px solid var(--custom-badge-border-color);
   }
 
   &--new {
     --custom-badge-background-color: var(--strapi-alternative-100);
     --custom-badge-border-color: var(--strapi-alternative-200);
     --custom-badge-color: var(--strapi-alternative-600);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+    --custom-badge-content-tooltip-width: 130px;
 
     --ifm-badge-padding-horizontal: 2px;
     --ifm-badge-padding-vertical: 2px;
-
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 20px;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-    min-width: 52px;
-    border: 1px solid var(--custom-badge-border-color);
   }
 
   &--updated {
     --custom-badge-background-color: var(--strapi-secondary-100);
     --custom-badge-border-color: var(--strapi-secondary-200);
     --custom-badge-color: var(--strapi-secondary-600);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+    --custom-badge-content-tooltip-width: 120px;
 
     --ifm-badge-padding-horizontal: 2px;
     --ifm-badge-padding-vertical: 2px;
 
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 20px;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-    min-width: 52px;
-    border: 1px solid var(--custom-badge-border-color);
     flex-shrink: 0;
   }
 }
@@ -198,7 +227,7 @@ main .badge--content {
   }
 
   .badge__tooltip {
-    @include badge-tooltip();
+    @include badge-content-tooltip();
   }
 
   &.badge--updated {
@@ -226,12 +255,17 @@ main .badge--enterprise,
 main .badge--version {
   .badge__tooltip {
     @include badge-tooltip();
-
-
   }
   &:hover .badge__tooltip {
     visibility: visible;
   }
+}
+
+main .badge--featureflag .badge__tooltip {
+  --custom-badge-tooltip-width: 190px !important;
+}
+main .badge--version .badge__tooltip {
+  --custom-badge-tooltip-width: 200px !important;
 }
 
 main h1:has(.badge--content),
@@ -364,13 +398,24 @@ h2 .badge {
   .badge {
     &--new {
       --custom-badge-background-color: var(--strapi-neutral-100);
-      --custom-badge-border-color: var(--strapi-warning-500);
-      --custom-badge-color: var(--strapi-warning-500);
+      --custom-badge-color: var(--strapi-alternative-500);
     }
     &--updated {
       --custom-badge-background-color: var(--strapi-neutral-100);
-      --custom-badge-border-color: var(--strapi-secondary-500);
-      --custom-badge-color: var(--strapi-secondary-500);
+      --custom-badge-color: var(--strapi-secondary-200);
+    }
+    &--new,
+    &--updated {
+      --custom-badge-border-color: var(--strapi-neutral-200);
+
+      .badge__tooltip {
+        --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+        --custom-badge-tooltip-color: var(--strapi-neutral-800);
+      }
+
+      .strapi-icons {
+        color: var(--strapi-neutral-1000) !important;
+      }
     }
     &--enterprise {
       --custom-badge-color: var(--strapi-neutral-1000);

@@ -78,7 +78,7 @@ export function FeatureFlagBadge(props) {
       variant={props.feature ?? "Feature Flag"}
       link="/dev-docs/configurations/features"
       icon="toggle-right"
-      tooltip={`This feature requires ${props.feature ? 'the ' + props.feature + ' feature flag' : 'a feature flag'} to be enabled`}
+      tooltip={`This feature requires ${props.feature ? 'the ' + props.feature + ' feature flag' : 'a feature flag'} to be enabled.`}
       {...props}
     />
   );
@@ -90,7 +90,7 @@ export function EnterpriseBadge(props) {
       variant="Enterprise"
       link="https://strapi.io/pricing-self-hosted"
       icon="feather"
-      tooltip="This feature requires an Enterprise plan."
+      tooltip="This feature is available with an Enterprise licence."
       {...props}
     />
   );
@@ -102,7 +102,7 @@ export function CloudProBadge(props) {
       variant="Pro"
       link="https://strapi.io/pricing-cloud"
       icon="cloud"
-      tooltip="This feature requires a Strapi Cloud Pro plan."
+      tooltip="This feature is available with a Strapi Cloud Pro plan."
       {...props}
     />
   );
@@ -114,7 +114,7 @@ export function CloudTeamBadge(props) {
       variant="Team"
       link="https://strapi.io/pricing-cloud"
       icon="cloud"
-      tooltip="This feature requires a Strapi Cloud Team plan."
+      tooltip="This feature is available with a Strapi Cloud Team plan."
       {...props}
     />
   );
@@ -126,7 +126,7 @@ export function CloudDevBadge(props) {
       variant="Developer"
       link="https://strapi.io/pricing-cloud"
       icon="cloud"
-      tooltip="This feature requires a Strapi Cloud Dev plan."
+      tooltip="This feature is available with a Strapi Cloud Dev plan."
       {...props}
     />
   );
@@ -149,7 +149,7 @@ export function UpdatedBadge(props) {
     <Badge
       variant="Updated"
       icon="pencil-simple"
-      tooltip="This content has been recently updated."
+      tooltip="This content was recently updated."
       {...props}
     />
   );
@@ -159,7 +159,7 @@ export function VersionBadge(props) {
   return (
     <Badge
       variant={props.version}
-      tooltip={`This feature requires Strapi version ${props.version} or later to work.`}
+      tooltip={`This feature requires Strapi version ${props.version} or later.`}
       {...props}
     />
   )
