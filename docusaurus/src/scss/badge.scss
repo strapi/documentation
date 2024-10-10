@@ -101,10 +101,14 @@
     --custom-badge-color: #fff;
   }
 
+  &--content {
+    height: 20px;
+  }
+
   &--new {
-    --custom-badge-background-color: var(--strapi-warning-100);
-    --custom-badge-border-color: var(--strapi-warning-200);
-    --custom-badge-color: var(--strapi-warning-700);
+    --custom-badge-background-color: var(--strapi-alternative-100);
+    --custom-badge-border-color: var(--strapi-alternative-200);
+    --custom-badge-color: var(--strapi-alternative-600);
 
     --ifm-badge-padding-horizontal: 2px;
     --ifm-badge-padding-vertical: 2px;
@@ -135,19 +139,91 @@
     border: 1px solid var(--custom-badge-border-color);
     flex-shrink: 0;
   }
+}
 
+/**
+ * New/updated badges in main content gutter
+ */
+main .badge--content {
+  position: absolute;
+  left: -36px;
+  min-width: 0;
+  max-width: 22px;
+
+  .badge__text {
+    display: none;
+  }
+
+  .strapi-icons {
+    left: 2px;
+    top: -2px;
+  }
+}
+
+main h1:has(.badge--content),
+main h2:has(.badge--content),
+main h3:has(.badge--content),
+main h4:has(.badge--content),
+main .theme-admonition:has(.badge--content),
+main p:has(.badge--content) {
+  position: relative;
+}
+
+main h1:has(.badge--content) .badge--content {
+  top: 6px;
+}
+main h2:has(.badge--content) .badge--content {
+  top: 30px;
+}
+main h3:has(.badge--content) .badge--content {
+  top: 4px;
+}
+main h4:has(.badge--content) .badge--content {
+  top: 2px;
+}
+main p:has(.badge--content) .badge--content {
+  top: 3px;
+}
+main .theme-admonition:has(.badge--content) .badge--content {
+  top: 0;
+}
+
+/**
+ * New/updated badges in TOC (sidebar)
+ */
+.menu .badge--content {
+  > span {
+    position: relative;
+    top: -3px;
+  }
+  .badge__text {
+    font-size: var(--strapi-font-size-xxs);
+    font-weight: 600;
+    position: relative;
+    right: 2px;
+  }
+  .badge--new {
+    min-width: 57px;
+  }
+  .badge--updated {
+    min-width: 84px;
+  }
+  .strapi-icons {
+    left: 1px;
+  }
 }
 
 h1 .badge {
   --custom-badge-inside-titles-top: -.4em;
 }
-
 h2 .badge {
   --custom-badge-inside-titles-top: -.3em;
 }
 
-.badge + p {
-  margin-top: 40px;
+.theme-admonition {
+  .badge + p {
+    margin-top: 0;
+  }
 }
 
 /** Dark mode */

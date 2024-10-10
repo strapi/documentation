@@ -23,12 +23,20 @@ export default function Badge({
         ((!feature && !version) && variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
         (version && `badge--version`),
         (feature && `badge--featureflag`),
+        ((variant === "Updated" || variant === "New") && `badge--content`)
       )}
       {...rest}
     >
       {(noLink || !link) ? (
         <>
-          {variant}
+          {(variant === "Updated" || variant === "New") ? (
+            <span><Icon name={icon}/><span className="badge__text">{variant}</span></span>
+          ) : (
+            <>
+            {variant}
+            </>
+          )
+        }
         </>
       ) : (
         <a className="badge__link" href={link}>
@@ -116,7 +124,8 @@ export function CloudDevBadge(props) {
 export function NewBadge(props) {
   return (
     <Badge
-      variant="New ✨"
+      variant="New"
+      icon="confetti"
       {...props}
     />
   );
@@ -126,7 +135,8 @@ export function NewBadge(props) {
 export function UpdatedBadge(props) {
   return (
     <Badge
-      variant="Updated ️🖌"
+      variant="Updated"
+      icon="pencil-simple"
       {...props}
     />
   );
