@@ -26,7 +26,7 @@ The Content Manager is accessible from ![Content icon](/img/assets/icons/v5/Feat
 Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the sub navigation to use a text search and find one of your content-types more quickly!
 :::
 
-## Collection types <UpdatedBadge />
+## Collection types <UpdatedBadge /> {#collection-types}
 
 The _Collection types_ category of the Content Manager displays the list of available collection types which are accessible from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager sub navigation.
 
@@ -59,7 +59,7 @@ From the list view, it is possible to: <UpdatedBadge/>
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
 :::
 
-### Filtering entries <NewBadge />
+### Filtering entries <NewBadge /> {#filtering-entries}
 
 Right above the list view table, on the left side of the interface, a ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
@@ -125,7 +125,7 @@ Configuring the displayed field of the table in the way detailed below is only t
 Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
 :::
 
-## Single types <UpdatedBadge/>
+## Single types <UpdatedBadge/> {#single-types}
 
 The _Single types_ category of the Content Manager displays the list of available single types, which are accessible from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager sub navigation.
 

@@ -214,7 +214,7 @@ When a new [content-type](/dev-docs/backend-customization/models#content-types) 
 To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
 :::
 
-### Sanitization and Validation in controllers <NewBadge/>
+### Sanitization and Validation in controllers <NewBadge/> {#sanitization-and-validation-in-controllers}
 
 :::warning <UpdatedBadge/>
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
@@ -360,7 +360,7 @@ export default {
 </TabItem>
 </Tabs>
 
-### Extending core controllers <NewBadge/>
+### Extending core controllers <NewBadge/> {#extending-core-controllers}
 
 <UpdatedBadge/>Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
