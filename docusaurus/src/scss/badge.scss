@@ -1,4 +1,4 @@
-/** Component: Feature Badges (alpha, beta) */
+/** Component: Badges (alpha, beta, plans, feature flags, new/updated…) */
 @mixin badge-tooltip {
   font-weight: 400;
   visibility: hidden;
@@ -329,7 +329,8 @@ main [class*="tabItem"] .badge--content:has(+ [class*="codeBlockContainer"]) {
  * Adjustments for tables as we can't rely on table-based positioning
  */
 main .badge--content:has(+ table) {
-  left: 364px;
+  position: relative;
+  top: 10px;
 }
 // Adjustment for when the sidebar is collapsed
 [class*="docSidebarContainerHidden"] ~ main .badge--content:has(+ table) {
