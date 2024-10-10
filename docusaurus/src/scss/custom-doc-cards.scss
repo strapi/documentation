@@ -68,8 +68,12 @@
     margin-bottom: 10px;
   }
 
-  p, h2 {
+  h2 {
     line-height: var(--strapi-line-height-sm);
+  }
+
+  p {
+    line-height: var(--strapi-line-height-ssm);
   }
 
   i {
