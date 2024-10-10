@@ -182,7 +182,13 @@ const sidebars = {
             'dev-docs/backend-customization/routes',
             'dev-docs/backend-customization/policies',
             'dev-docs/backend-customization/middlewares',
-            'dev-docs/backend-customization/controllers',
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization/controllers',
+              customProps: {
+                new: true
+              }
+            },
             'dev-docs/backend-customization/services',
           ]
         },
