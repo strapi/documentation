@@ -255,7 +255,7 @@ pre.prism-code {
 
 /** Dark theme */
 @include dark {
-  --custom-code-block-background-color: var(--strapi-neutral-100);
+  --custom-code-block-background-color: transparent;
   --custom-code-block-background-color-highlighted: var(--strapi-neutral-300);
   --custom-code-block-color: var(--strapi-neutral-1000);
   --custom-code-block-punctuation-color: var(--strapi-primary-200);
@@ -287,6 +287,15 @@ pre.prism-code {
     }
     &-highlighted-line [class*="codeLineNumber"] {
       background-color: #11111B;
+    }
+  }
+
+  .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      &:not(:has([class*="codeBlockTitle"])) {
+        border: solid 1px var(--strapi-neutral-200);
+      }
     }
   }
 }
