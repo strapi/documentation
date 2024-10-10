@@ -67,6 +67,10 @@ const config = {
       async: true,
     },
     {
+      src: 'https://unpkg.com/@phosphor-icons/web',
+      async: true,
+    },
+    {
       /**
        * Kapa AI widget script and parameters
        * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
@@ -83,6 +87,13 @@ const config = {
       'data-modal-override-open-class': "kapa-widget-button",
       'data-modal-title-ask-ai': 'Ask your question',
       async: true,
+    },
+  ],
+  stylesheets: [
+    {
+      href: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
+      type: 'text/css',
+      rel: 'stylesheet',
     },
   ],
   presets: [
@@ -139,7 +150,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "You are viewing the Strapi 5 docs 🥳 Don't panic! Strapi v4 is still supported until March 2026. Strapi v4 docs are now hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs-v4.strapi.io'>docs-v4.strapi.io</a>.",
+          "You are viewing an experimental version of Strapi Docs 👨🏻‍🔬  Official docs for Strapi 5 are still hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
@@ -147,7 +158,6 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
-          autoCollapseCategories: true,
         },
       },
       algolia: {
@@ -165,39 +175,52 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'dev-docs/quick-start',
-            position: 'left',
-            label: 'Quick Start Guide',
-          },
-          {
-            type: 'doc',
-            docId: 'user-docs/intro',
-            position: 'left',
-            label: 'User Guide',
-          },
-          {
-            type: 'doc',
             docId: 'dev-docs/intro',
             position: 'left',
-            label: 'Developer Docs',
+            // label: 'CMS',
+            html: '<i class="ph-fill ph-feather"></i> CMS'
           },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
-            label: 'Cloud Documentation',
+            html: '<i class="ph-fill ph-cloud"></i> Cloud',
           },
           {
-            type: 'doc',
-            docId: 'release-notes',
-            position: 'left',
-            label: 'Release Notes',
+            href: 'https://github.com/strapi/documentation',
+            position: 'right',
+            html: '<i class="ph-fill ph-github-logo"></i> GitHub',
           },
         ],
       },
       footer: {
         style: 'dark',
         links: [
+          {
+            title: 'Updates & Support',
+            items: [
+              {
+                label: "What's new?",
+                href: '/dev-docs/whats-new'
+              },
+              {
+                label: "Release notes",
+                href: '/release-notes'
+              },
+              {
+                label: "FAQ",
+                href: '/dev-docs/faq'
+              },
+              {
+                label: "Community & Support",
+                href: '/dev-docs/community'
+              },
+              {
+                label: "Usage information",
+                href: '/dev-docs/usage-information'
+              },
+            ]
+          },
           {
             title: 'Additional resources',
             items: [

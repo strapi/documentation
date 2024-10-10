@@ -9,8 +9,32 @@
 }
 
 .tabs {
+  border-bottom: solid 1px var(--strapi-neutral-100);
+
   &__item {
     border-top: 2px solid transparent;
+    border-bottom-width: 2px;
+    padding-bottom: 18px !important;
+    font-weight: 600;
+
+    &:hover {
+      background-color: transparent;
+      color: var(--strapi-primary-600);
+    }
+  }
+
+  &:not(.tabs__item--active) {
+    color: var(--strapi-neutral-600);
+  }
+
+  &-container {
+    .margin-top--md {
+      margin-top: 24px !important;
+    }
+
+    .tabs + .margin-top--md {
+      margin-top: 6px !important;
+    }
   }
 
   /** Tabs inside Tabs */

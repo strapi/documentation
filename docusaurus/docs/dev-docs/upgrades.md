@@ -1,7 +1,7 @@
 ---
 title: Upgrades
 description: Learn more about Strapi 5's upgrade process
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/plugins
 pagination_next: dev-docs/upgrade-tool
 tags:

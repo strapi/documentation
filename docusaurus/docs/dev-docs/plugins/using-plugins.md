@@ -1,7 +1,7 @@
 ---
 title: Using Strapi plugins
 description: Learn more about Strapi built-in plugins and how to use them from a developer perspective.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_next: dev-docs/plugins/documentation
 tags:
 - admin panel

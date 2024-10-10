@@ -1,7 +1,7 @@
 ---
 title: API calls configuration
 sidebar_label: API calls
-displayed_sidebar: devDocsConfigSidebar
+displayed_sidebar: cmsSidebar
 description: Strapi's default API parameters can be configured.
 tags:
 - base configuration

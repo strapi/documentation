@@ -1,6 +1,6 @@
 ---
 title: Error handling
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: With Strapi's error handling feature it's easy to send and receive errors in your application.
 tags:
 - ctx

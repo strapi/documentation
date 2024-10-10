@@ -1,6 +1,6 @@
 ---
 title: GraphQL API
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

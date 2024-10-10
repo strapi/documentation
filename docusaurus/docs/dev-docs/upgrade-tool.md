@@ -1,7 +1,7 @@
 ---
 title: Upgrade tool
 description: The Strapi upgrade tool is a CLI command that helps automatically upgrading to a new Strapi version.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_next: dev-docs/migration/v4-to-v5/breaking-changes
 sidebar_label: Upgrade tool reference
 tags:
