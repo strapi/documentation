@@ -173,12 +173,6 @@ const config = {
           srcDark: 'img/logo-v5-dark.png',
         },
         items: [
-          // {
-          //   type: 'doc',
-          //   docId: 'dev-docs/quick-start',
-          //   position: 'left',
-          //   label: 'Quick Start Guide',
-          // },
           {
             type: 'doc',
             docId: 'dev-docs/intro',
@@ -186,24 +180,17 @@ const config = {
             // label: 'CMS',
             html: '<i class="ph-fill ph-feather"></i> CMS'
           },
-          // {
-          //   type: 'doc',
-          //   docId: 'dev-docs/intro',
-          //   position: 'left',
-          //   html: '<i class="ph-fill ph-code-simple"></i> Dev'
-          // },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
             html: '<i class="ph-fill ph-cloud"></i> Cloud',
           },
-          // {
-          //   type: 'doc',
-          //   docId: 'release-notes',
-          //   position: 'left',
-          //   label: 'Release Notes',
-          // },
+          {
+            href: 'https://github.com/strapi/documentation',
+            position: 'right',
+            html: '<i class="ph-fill ph-github-logo"></i> GitHub',
+          },
         ],
       },
       footer: {
