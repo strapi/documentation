@@ -165,6 +165,11 @@ main h2:has(.badge--content),
 main h3:has(.badge--content),
 main h4:has(.badge--content),
 main .theme-admonition:has(.badge--content),
+main .badge--content + img,
+main [class*="tabItem"]:has(.badge--content),
+main [class*="collapsibleContent"]:has(.badge--content),
+main .badge--content:has( + [class*="codeBlockContainer"]),
+main .badge--content:has(+ table) + table,
 main p:has(.badge--content) {
   position: relative;
 }
@@ -181,11 +186,46 @@ main h3:has(.badge--content) .badge--content {
 main h4:has(.badge--content) .badge--content {
   top: 2px;
 }
-main p:has(.badge--content) .badge--content {
-  top: 3px;
-}
 main .theme-admonition:has(.badge--content) .badge--content {
+  top: -4px;
+}
+main [class*="collapsibleContent"]:has(.badge--content) .badge--content {
+  top: 20px;
+  left: -60px;
+}
+main p:has(+ .badge--content + [class*="codeBlockContainer"]) {
+  margin-bottom: 0;
+}
+main .badge--content + img {
+  position: relative;
+  top: -12px;
+}
+main .badge--content:has(+ img) {
+  position: relative;
+  top: 12px;
+}
+/**
+ * Adjustments for code blocks as we can't rely on child elements positioning
+ */
+main .badge--content:has(+ [class*="codeBlockContainer"]) {
+  top: 42px;
+}
+main [class*="tabItem"] .badge--content + [class*="codeBlockContainer"] {
+  position: relative;
+  top: -26px !important;
+}
+main [class*="tabItem"] .badge--content:has(+ [class*="codeBlockContainer"]) {
   top: 0;
+}
+/**
+ * Adjustments for tables as we can't rely on table-based positioning
+ */
+main .badge--content:has(+ table) {
+  left: 364px;
+}
+// Adjustment for when the sidebar is collapsed
+[class*="docSidebarContainerHidden"] ~ main .badge--content:has(+ table) {
+  left: 210px;
 }
 
 /**
@@ -212,7 +252,19 @@ main .theme-admonition:has(.badge--content) .badge--content {
     left: 1px;
   }
 }
+.menu__link:has(.badge--content) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
+  .badge--content {
+    margin-left: 8px;
+  }
+}
+
+/**
+ * Spacing adjustments
+ */
 h1 .badge {
   --custom-badge-inside-titles-top: -.4em;
 }
@@ -220,11 +272,15 @@ h2 .badge {
   --custom-badge-inside-titles-top: -.3em;
 }
 
+.badge + p {
+  margin-top: 48px;
+}
 .theme-admonition {
   .badge + p {
     margin-top: 0;
   }
 }
+
 
 /** Dark mode */
 @include dark {
