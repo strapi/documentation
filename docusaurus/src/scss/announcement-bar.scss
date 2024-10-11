@@ -1,0 +1,31 @@
+/**
+ * Optional, top banner
+ * whose content can be configured
+ * in docusarus.config.js
+ */
+
+[class*="announcementBar"] {
+  min-height: 44px;
+  color: var(--strapi-neutral-800);
+
+  [class*="announcementBarContent"] {
+    position: relative;
+    padding-top: 8px;
+    font-size: var(--strapi-font-size-sm);
+  }
+
+  button.clean-btn.close {
+    opacity: 1;
+
+    svg {
+      width: 11px;
+      height: 11px;
+
+      g path {
+        fill: var(--strapi-alternative-600);
+        stroke: var(--strapi-alternative-600);
+        stroke-width: 2px;
+      }
+    }
+  }
+}
