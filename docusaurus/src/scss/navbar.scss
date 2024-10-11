@@ -310,24 +310,61 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       right: 60px;
     }
 
+    .custom-mobile-navbar {
+      list-style-type: none;
+      display: flex;
+      padding: 0;
+      justify-content: space-evenly;
+    }
+
     a.custom-mobile-navbar__item {
-      display: inline-block;
       background-color: transparent;
-      padding: 4px 8px 16px;
       text-align: center;
-      width: calc(50% - 2px);
+      padding: 4px 8px;
       background-color: transparent;
-      position: relative;
-      top: 10px;
+      border-radius: 4px;
       color: var(--strapi-neutral-600);
       font-size: var(--strapi-font-size-sm);
       line-height: var(--strapi-line-height-sm);
       font-weight: 500;
-      border-bottom: solid 1px var(--strapi-neutral-200);
 
       i {
         margin-right: 8px;
       }
+    }
+
+    .custom-mobile-navbar__separator {
+      border-bottom: solid 1px var(--strapi-neutral-200);
+      width: 100%;
+    }
+  }
+
+  /**
+   * Highlights the current custom navbar link
+   * since we can't rely on --active classe
+   * since our nav is fully custom
+   */
+  html[class*="docs-doc-id-dev-docs"],
+  html[class*="docs-doc-id-user-docs"] {
+    .navbar .mobile-navbar__cms-link {
+      background-color: var(--strapi-neutral-100);
+      color: var(--strapi-primary-600);
+    }
+  }
+  html[class*="docs-doc-id-cloud"] {
+    .navbar .mobile-navbar__cloud-link {
+      background-color: var(--strapi-neutral-100);
+      color: var(--strapi-primary-600);
+    }
+  }
+
+  /**
+   * Hide first-level navbar items
+   * when on homepage
+   */
+  html[class*="plugin-pages"] {
+    .navbar-sidebar__items {
+      display: none;
     }
   }
 }
