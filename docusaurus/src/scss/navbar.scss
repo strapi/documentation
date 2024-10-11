@@ -289,9 +289,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       border: solid 1px var(--strapi-neutral-200);
     }
 
-    &__toggle,
     button[class*="toggleButton"] {
-      right: 36px;
+      right: 0;
       border: none;
     }
 
