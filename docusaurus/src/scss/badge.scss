@@ -330,7 +330,7 @@ main [class*="tabItem"] .badge--content:has(+ [class*="codeBlockContainer"]) {
  */
 main .badge--content:has(+ table) {
   position: relative;
-  top: 10px;
+  top: 26px;
 }
 // Adjustment for when the sidebar is collapsed
 [class*="docSidebarContainerHidden"] ~ main .badge--content:has(+ table) {
