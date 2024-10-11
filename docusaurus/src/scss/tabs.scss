@@ -65,3 +65,9 @@ details {
     --ifm-tabs-color-active-border: var(--strapi-)
   }
 }
+
+@include dark {
+  .tabs__item:not(.tabs__item--active) {
+    color: var(--strapi-neutral-400);
+  }
+}
