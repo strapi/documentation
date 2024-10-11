@@ -237,44 +237,33 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     width: 300px;
 
     &__item.menu {
-      margin-top: 70px;
+      // margin-top: 70px;
     }
 
     .mobile--search {
       position: absolute;
       top: 20px;
     }
-    // &::before {
-    //   content: 'Search';
-    //   background-image: url("data:image/svg+xml,%3Csvg width='0.5rem' height='0.5rem' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14 .889a.86.86 0 01-.26.625L7.615 7.736A.834.834 0 017 8a.834.834 0 01-.615-.264L.26 1.514A.861.861 0 010 .889c0-.24.087-.45.26-.625A.834.834 0 01.875 0h12.25c.237 0 .442.088.615.264a.86.86 0 01.26.625z' fill='%23fff'%3E%3C/path%3E%3C/svg%3E");
-    //   font-size: 12px;
-    //   color: var(--strapi-neutral-500);
-    //   padding-left: 12px;
-    //   padding-top: 6px;
-    //   position: absolute;
-    //   width: calc(50% - 36px);
-    //   height: 30px;
-    //   border-radius: 4px 0 0 4px;
-    //   border: solid 1px var(--strapi-neutral-200);
-    //   top: 70px;
-    //   left: 24px;
-    // }
-    // &::after {
-    //   content: 'Ask AI';
-    //   background-image: url("data:image/svg+xml,%3Csvg width='0.5rem' height='0.5rem' viewBox='0 0 14 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M14 .889a.86.86 0 01-.26.625L7.615 7.736A.834.834 0 017 8a.834.834 0 01-.615-.264L.26 1.514A.861.861 0 010 .889c0-.24.087-.45.26-.625A.834.834 0 01.875 0h12.25c.237 0 .442.088.615.264a.86.86 0 01.26.625z' fill='%23fff'%3E%3C/path%3E%3C/svg%3E");
-    //   font-size: 12px;
-    //   color: var(--strapi-neutral-500);
-    //   padding-left: 12px;
-    //   padding-top: 6px;
-    //   position: absolute;
-    //   width: calc(50% - 36px);
-    //   height: 30px;
-    //   border-radius: 0 4px 4px 0;
-    //   border: solid 1px var(--strapi-neutral-200);
-    //   top: 70px;
-    //   right: 24px;
-    // }
+
+    .my-custom-search-bar {
+      position: relative;
+      top: 10px;
+
+      .DocSearch-Button-Placeholder,
+      .kapa-widget-button-text {
+        display: block;
+      }
+    }
+
+    /**
+     * Prevents being able to go back to the first-level main menu
+     * which would display the CMS and Cloud buttons
+     */
+    &__back {
+      display: none;
+    }
   }
+
   .navbar {
     &__toggle,
     &-sidebar__close {

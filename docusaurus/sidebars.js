@@ -15,12 +15,6 @@
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   cmsSidebar: [
-    {
-      type: 'link',
-      label: 'Ask AI',
-      href: '#',
-      className: 'kapa-widget-button'
-    },
     { // Getting Started
       type: 'category',
       label: 'Getting Started',
