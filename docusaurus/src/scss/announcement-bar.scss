@@ -29,3 +29,16 @@
     }
   }
 }
+
+@include dark {
+  [class*="announcementBar"] {
+     background-color: rgb(56, 13, 91);
+
+     button.clean-btn.close {
+      background-color: rgb(56, 13, 91);
+      svg g path {
+        stroke: white;
+      }
+     }
+  }
+}
