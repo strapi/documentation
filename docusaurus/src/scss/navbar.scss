@@ -236,10 +236,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   .navbar-sidebar {
     width: calc(100% - 40px);
 
-    &__item.menu {
-      // margin-top: 70px;
-    }
-
     .mobile--search {
       position: absolute;
       top: 20px;
@@ -249,8 +245,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       position: relative;
       top: 10px;
       left: 16px;
-      width: 280px;
-      min-width: 240px;
+      width: calc(100% - 26px);
+      min-width: calc(100% - 36px);
 
       .DocSearch-Button-Placeholder,
       .kapa-widget-button-text {
