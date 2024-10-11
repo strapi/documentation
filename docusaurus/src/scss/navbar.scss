@@ -234,7 +234,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 @include medium-down {
   .navbar-sidebar {
-    width: 300px;
+    width: calc(100% - 40px);
 
     &__item.menu {
       // margin-top: 70px;
