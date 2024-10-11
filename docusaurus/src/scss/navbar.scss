@@ -248,6 +248,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     .my-custom-search-bar {
       position: relative;
       top: 10px;
+      left: 16px;
+      width: 280px;
+      min-width: 240px;
 
       .DocSearch-Button-Placeholder,
       .kapa-widget-button-text {
@@ -289,6 +292,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       border: solid 1px var(--strapi-neutral-200);
     }
 
+    &-sidebar__brand {
+      box-shadow: none;
+    }
+
     button[class*="toggleButton"] {
       right: 0;
       border: none;
@@ -304,6 +311,26 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     [class*="ColorModeToggle"] {
       position: absolute;
       right: 60px;
+    }
+
+    a.custom-mobile-navbar__item {
+      display: inline-block;
+      background-color: transparent;
+      padding: 4px 8px 16px;
+      text-align: center;
+      width: calc(50% - 2px);
+      background-color: transparent;
+      position: relative;
+      top: 10px;
+      color: var(--strapi-neutral-600);
+      font-size: var(--strapi-font-size-sm);
+      line-height: var(--strapi-line-height-sm);
+      font-weight: 500;
+      border-bottom: solid 1px var(--strapi-neutral-200);
+
+      i {
+        margin-right: 8px;
+      }
     }
   }
 }
