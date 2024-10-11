@@ -55,20 +55,25 @@ Strapi version numbers respect the [semantic versioning](https://semver.org/) co
 - The second number is the **minor** version number.
 - The third number is the **patch** version number.
 
-The upgrade tool allows upgrading to a major, minor, or patch version.
+The upgrade tool allows upgrading to a `major`, `minor`, or `patch` version.
 
-What the upgrade tool does depends on the latest existing version and the command you run.
+Alternatively, you can choose to upgrade to the `latest` available version.
 
-For instance, if the latest Strapi v4 version is v4.25.9:
+What the upgrade tool does depends on three things:
 
-| My Strapi application is currently on… | If I run…                   | My Strapi application will be upgraded to …                                                |
-|----------------------------------------|-----------------------------|--------------------------------------------------------------------------------------------|
-| v4.25.1                                | `npx @strapi/upgrade patch` | v4.25.9<br/><br/>(because v4.25.9 is the latest patch version for the v4.25 minor version) |
-| v4.14.1                                | `npx @strapi/upgrade minor` | v4.25.9                                                                                    |
-| v4.14.1                                | `npx @strapi/upgrade major` | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.25.9.   |
-| v4.25.9                                | `npx @strapi/upgrade major` | v5.0.0                                                                                     |
+- the project Strapi version
+- the latest available version of Strapi
+- the command you run.
 
+For instance, if the latest Strapi v4 version is v4.25.9, and the latest Strapi v5 version is v5.1.2:
 
+| My Strapi application is currently on… | If I run…                    | My Strapi application will be upgraded to …                                                     |
+|----------------------------------------|------------------------------|-------------------------------------------------------------------------------------------------|
+| v4.25.1                                | `npx @strapi/upgrade patch`  | v4.25.9<br/><br/>(because v4.25.9 is the latest patch version for the v4.25 minor version)      |
+| v4.14.1                                | `npx @strapi/upgrade minor`  | v4.25.9                                                                                         |
+| v4.14.1                                | `npx @strapi/upgrade major`  | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.25.9.        |
+| v4.25.9                                | `npx @strapi/upgrade major`  | v5.1.2                                                                                          |
+| v4.14.1                                | `npx @strapi/upgrade latest` | v5.1.2 <br/><br/>A confirmation prompt appears to make sure the major version bump is intended. |
 
 ## Upgrade to a new version
 
@@ -78,21 +83,23 @@ Before running the upgrade process, make sure you've created a backup of your co
 
 ### Upgrade to a major version
 
-Run the upgrade tool with the `major` parameter to upgrade the project to the next major version of Strapi:
+Run the upgrade tool with the `major` parameter to upgrade the project to the latest release of the next major Strapi version:
 
 ```bash
 npx @strapi/upgrade major
 ```
 
-During the upgrade process, the application dependencies are updated and installed, and the related codemods are executed.
+During the upgrade process, the application dependencies are updated and installed, and the related codemods are executed (if any).
 
 :::note
-If your application is not already running the latest minor and patch version in the current major, the `major` upgrade is prevented, and you will first need to upgrade to the latest [minor.patch](#upgrade-to-a-minor-version) version in the current major version. This means that moving from v4.14.4 to v5.0.0 is a 2-step process because the latest v4 version is v4.16.2.
+If your application is not already running the latest minor and patch version in the current major, the `major` upgrade is prevented, and you will first need to upgrade to the latest [minor.patch](#upgrade-to-a-minor-version) version in the current major version.
+
+This means that moving from v4.14.4 to v5.0.0 is a 2-step process because the latest v4 version is v4.16.2.
 :::
 
 ### Upgrade to a minor version
 
-Run the upgrade tool with the `minor` parameter to upgrade the project to the latest minor and patch version of Strapi:
+Run the upgrade tool with the `minor` parameter to upgrade the project to the latest minor and patch version of Strapi for the current major:
 
 ```bash
 npx @strapi/upgrade minor
@@ -109,6 +116,23 @@ npx @strapi/upgrade patch
 ```
 
 During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
+
+### Upgrade to the latest version
+
+Run the upgrade tool with the `latest` parameter to upgrade the project to the latest available version regardless of the current Strapi version:
+
+```bash
+npx @strapi/upgrade latest
+```
+
+During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
+
+:::note
+If a `major` version upgrade is detected, the upgrade tool displays a confirmation prompt to make sure the change is
+intended.
+
+In the scenario where the major bump isn't the desired option, see [the minor upgrade](#upgrade-to-a-minor-version).
+:::
 
 ## Run codemods only
 
@@ -136,20 +160,20 @@ npx @strapi/upgrade codemods run 5.0.0-strapi-codemod-uid
 
 The `npx @strapi/upgrade [major|minor|patch]` commands can accept the following options:
 
-| Option                                                                                  | Description                                                                     | Default  |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------|----------|
-| [`-n, --dry`](#simulate-the-upgrade-without-updating-any-files-dry-run)                 | [Simulate](#simulate-the-upgrade-without-updating-any-files-dry-run) the upgrade without updating any files | false    |
-| [`-d, --debug`](#get-detailed-debugging-information)                                    | Get [more logs](#get-detailed-debugging-information) in debug mode              | false    |
-| [`-s, --silent`](#execute-the-upgrade-silently)                                         | [Don't log anything](#execute-the-upgrade-silently)                             | false    |
-| [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | [Path](#select-a-path-for-the-strapi-application-folder) to the Strapi project  | -        |
-| [`-y, --yes`](#answer-yes-to-every-prompt)                                              | Automatically [answer "yes"](#answer-yes-to-every-prompt) to every prompt       | false    |
+| Option                                                                                  | Description                                                                                                 | Default |
+|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|---------|
+| [`-n, --dry`](#simulate-the-upgrade-without-updating-any-files-dry-run)                 | [Simulate](#simulate-the-upgrade-without-updating-any-files-dry-run) the upgrade without updating any files | false   |
+| [`-d, --debug`](#get-detailed-debugging-information)                                    | Get [more logs](#get-detailed-debugging-information) in debug mode                                          | false   |
+| [`-s, --silent`](#execute-the-upgrade-silently)                                         | [Don't log anything](#execute-the-upgrade-silently)                                                         | false   |
+| [`-p, --project-path <project-path>`](#select-a-path-for-the-strapi-application-folder) | [Path](#select-a-path-for-the-strapi-application-folder) to the Strapi project                              | -       |
+| [`-y, --yes`](#answer-yes-to-every-prompt)                                              | Automatically [answer "yes"](#answer-yes-to-every-prompt) to every prompt                                   | false   |
 
-The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch]` commands:
+The following options can be run either with the `npx @strapi/upgrade` command alone or with the `npx @strapi/upgrade [major|minor|patch|latest]` commands:
 
-| Option                                                                   | Description                                                      |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [`-V, --version`](#get-the-current-version)                              | Output the [version number](#get-the-current-version)            |
-| [`-h, --help`](#get-help)                                                | [Print](#get-help) command line options                          |
+| Option                                      | Description                                           |
+|---------------------------------------------|-------------------------------------------------------|
+| [`-V, --version`](#get-the-current-version) | Output the [version number](#get-the-current-version) |
+| [`-h, --help`](#get-help)                   | [Print](#get-help) command line options               |
 
 ### Simulate the upgrade without updating any files (dry run)
 
@@ -161,6 +185,7 @@ Examples:
 npx @strapi/upgrade major --dry
 npx @strapi/upgrade minor --dry
 npx @strapi/upgrade patch --dry
+npx @strapi/upgrade latest --dry
 ```
 
 ### Select a path for the Strapi application folder
@@ -226,9 +251,10 @@ Options:
  -h, --help       Print command line options
 
 Commands:
- major [options]  Upgrade to the next available major version of Strapi
+ major [options]  Upgrade to ...
  minor [options]  Upgrade to ...
  patch [options]  Upgrade to ...
+ latest [options]  Upgrade to ...
  help [command]   Print options for a specific command
 
 ```
