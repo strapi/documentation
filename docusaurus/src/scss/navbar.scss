@@ -265,7 +265,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   .navbar {
-    &__toggle,
+    &__toggle, // local selector
+    button[class*="toggleButton"], // production selector
     &-sidebar__close {
       position: absolute;
       right: 16px;
