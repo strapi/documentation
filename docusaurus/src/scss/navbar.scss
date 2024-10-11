@@ -232,6 +232,16 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
+@include medium-down {
+  .navbar {
+
+    &__toggle {
+      position: absolute;
+      right: 20px;
+    }
+  }
+}
+
 @include dark {
   .kapa-widget-button {
     button {
