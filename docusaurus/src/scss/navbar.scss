@@ -273,9 +273,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       height: 32px !important;
       width: 32px !important;
       padding: 0;
-      border-radius: 4px;
-      border-radius: 4px !important;
-      border: solid 1px var(--strapi-neutral-200);
 
       &::after {
         font-family: "Phosphor";
@@ -285,6 +282,17 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       svg {
         display: none;
       }
+    }
+
+    &-sidebar__close {
+      border-radius: 4px !important;
+      border: solid 1px var(--strapi-neutral-200);
+    }
+
+    &__toggle,
+    button[class*="toggleButton"] {
+      right: 36px;
+      border: none;
     }
 
     &__toggle::after {
