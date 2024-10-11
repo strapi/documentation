@@ -49,7 +49,8 @@
   }
 
   a:hover {
-    .cardTitle {
+    .cardTitle,
+    .cardTitle i {
       color: var(--strapi-primary-600);
     }
   }
@@ -70,10 +71,6 @@
 
   h2 {
     line-height: var(--strapi-line-height-sm);
-  }
-
-  p {
-    line-height: var(--strapi-line-height-ssm);
   }
 
   i {
