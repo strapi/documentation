@@ -70,10 +70,6 @@ const config = {
       type: 'module',
       async: true,
     },
-    {
-      src: '/js/reo.js',
-      async: true,
-    }
   ],
   presets: [
     [
