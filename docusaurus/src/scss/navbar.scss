@@ -34,12 +34,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   &__items {
     max-width: var(--custom-navbar-items-width);
     gap: var(--strapi-spacing-2);
-    height: 100%;
   }
 
   &__brand,
   &__logo {
     height: auto;
+    line-height: 0;
   }
 
   &__brand {
@@ -240,28 +240,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --custom-navbar-search-button-width: 266px;
 
     --ifm-navbar-padding-horizontal: var(--custom-navbar-items-gap);
-  }
-}
-
-@include medium-to-intermediate {
-  .navbar__logo img {
-    width: 150px;
-    height: 23px;
-  }
-  .navbar__items {
-    padding-right: 20px;
-
-    &--right {
-      padding-right: 0;
-    }
-  }
-  .navbar__item {
-    font-size: 13px;
-    line-height: 14px;
-  }
-  [class*="oggleIcon"] { // purposedly omitting the "t" because selectors vary in production and local envs
-    width: 20px;
-    height: 20px;
   }
 }
 

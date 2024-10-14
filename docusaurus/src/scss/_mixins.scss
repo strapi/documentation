@@ -14,12 +14,6 @@
   }
 }
 
-@mixin medium-to-intermediate {
-  @media (min-width: 997px) and (max-width: 1298px) {
-    @content;
-  }
-}
-
 /** Mixin: Responsive */
 @mixin large-up {
   @media (min-width: 1536px) {
