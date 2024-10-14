@@ -162,6 +162,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           > .menu__list-item-collapsible {
             font-weight: 700;
             font-size: var(--strapi-font-size-sm);
+
+            > .menu__link--sublist {
+              font-size: 16px;
+            }
           }
         }
       }
