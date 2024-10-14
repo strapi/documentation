@@ -446,3 +446,58 @@ To extend the theme, use either:
 :::strapi Strapi Design System
 The default [Strapi theme](https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes) defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The [Strapi Design System](https://design-system.strapi.io/) is fully customizable and has a dedicated [StoryBook](https://design-system-git-main-strapijs.vercel.app) documentation.
 :::
+
+<details>
+<summary>Example: Customizing some admin panel colors:</summary>
+
+With the following code example, buttons and links that would use some primary colors will be displayed in red, as shown in the example screenshot:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="js" label="JavaScript">
+
+```tsx title="/src/admin/app.js"
+export default {
+  config: {
+    theme: {
+      light: {
+        colors: {
+          primary600: "red",
+          buttonPrimary500: "red",
+          buttonPrimary600: "red",
+        },
+      },
+    },
+  },
+  bootstrap() {},
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="/src/admin/app.ts"
+import type { StrapiApp } from "@strapi/strapi/admin";
+
+export default {
+  config: {
+    theme: {
+      light: {
+        colors: {
+          primary600: "red",
+          buttonPrimary500: "red",
+          buttonPrimary600: "red",
+        },
+      };
+    },
+  },
+  bootstrap (app: StrapiApp) {},
+}
+```
+
+</TabItem>
+</Tabs>
+
+![Custom buttons in red](/img/assets/admin-panel-customization/red-login-button.png)
+</details>
