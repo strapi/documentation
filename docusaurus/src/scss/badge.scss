@@ -108,6 +108,20 @@ h2 .badge {
   --custom-badge-inside-titles-top: -.3em;
 }
 
+.menu {
+  .badge {
+    &--new,
+    &--updated {
+      font-size: .65rem;
+    }
+
+    &--updated {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+  }
+}
+
 /** Dark mode */
 @include dark {
   .badge {
