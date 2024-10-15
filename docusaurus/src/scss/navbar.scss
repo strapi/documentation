@@ -369,6 +369,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
             margin-right: 8px;
           }
         }
+
+        &:hover {
+          background-color: var(--strapi-neutral-100);
+        }
       }
 
       &__separator {
