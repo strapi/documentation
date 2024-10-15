@@ -315,12 +315,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       box-shadow: none;
     }
 
-    button[class*="toggleButton"] {
-      right: 60px;
-      top: 12px;
-      border: none;
-    }
-
     &__toggle::after {
       content: '\E2F0';
     }
@@ -328,9 +322,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       content: '\E4F6';
     }
 
-    [class*="ColorModeToggle"] {
+    [class*="ColorModeToggle"] { // local dev selector
       position: absolute;
-      right: 60px;
+      top: 0;
+      right: -8px !important;
+    }
+    button[class*="toggleButton"] { // production selector
+      right: 60px !important;
+      top: 12px;
+      border: none;
     }
 
     .custom-mobile-navbar {
