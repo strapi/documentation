@@ -239,7 +239,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   nav.navbar:not(.navbar-sidebar--show) {
     div.navbar-sidebar {
-      transform: translateX(100%);
+      transform: translateX(100vw);
     }
   }
   nav.navbar-sidebar--show {
