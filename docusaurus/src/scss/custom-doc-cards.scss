@@ -9,6 +9,7 @@
   .custom-doc-card {
     margin-bottom: 16px;
     flex: 0 0 312px;
+    flex: 0 0 calc(50% - 10px);
   }
 
   .cardContainer {
@@ -99,5 +100,11 @@
   p + .custom-doc-card,
   p + .custom-doc-card ~ .custom-doc-card {
     margin-bottom: 16px;
+  }
+}
+
+@include small-down {
+  .custom-doc-card {
+    flex: 0 0 calc(100%) !important;
   }
 }
