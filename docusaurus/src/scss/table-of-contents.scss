@@ -108,7 +108,7 @@ main .table-of-contents {
 }
 
 
-@include small-down {
+@include medium-down {
   div[class*="tocCollapsible"] {
     background-color: transparent;
     border-radius: 4px;
