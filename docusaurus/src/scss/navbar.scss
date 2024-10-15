@@ -307,6 +307,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       height: 32px !important;
       width: 32px !important;
       padding: 0;
+      border: solid 1px var(--strapi-neutral-200);
+      border-radius: 4px !important;
 
       &::after {
         font-family: "Phosphor";
@@ -316,11 +318,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       svg {
         display: none;
       }
-    }
-
-    &-sidebar__close {
-      border-radius: 4px !important;
-      border: solid 1px var(--strapi-neutral-200);
     }
 
     &-sidebar__brand {
