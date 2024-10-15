@@ -116,10 +116,15 @@ main .table-of-contents {
     font-size: var(--strapi-font-size-sm);
     padding: 10px 5px;
     margin-bottom: 56px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
   }
+
   div[class*="tocCollapsibleContent"] {
     border: none;
     padding-top: 0;
+    box-shadow: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 
     ul {
       border-top: none;
