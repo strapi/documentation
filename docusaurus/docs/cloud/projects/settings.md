@@ -125,7 +125,11 @@ The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* 
 
 Through this tab, you also have the possibility to:
 - click the **Change** button to be redirected to the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
-- click the **Edit** button to be redirected to the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab of your profile page, where you can edit the payment method (see [related documentation](/cloud/account/account-billing)).
+- click the **Edit** button in order to set a new payment method (see [related documentation](/cloud/account/account-billing)).
+
+:::note
+You can attach a dedicated card to your project by choosing the payment method directly from this page. In that way, you can manage your subscriptions with different cards.
+:::
 
 :::tip
 In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the arrows in the top right corner to see the project's usage for any chosen month.
