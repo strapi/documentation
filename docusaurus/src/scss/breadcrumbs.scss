@@ -31,8 +31,13 @@
       }
     }
 
+    a {
+      color: var(--strapi-neutral-600);
+      font-weight: 500;
+    }
+
     &--active {
-      font-weight: 700;
+      font-weight: 600;
     }
   }
 
@@ -53,5 +58,14 @@
   .breadcrumbs {
     --custom-breadcrumbs-pt: var(--strapi-spacing-6);
     --custom-breadcrumbs-item-caret-mx: var(--strapi-spacing-3);
+  }
+}
+
+@include small-down {
+  .breadcrumbs {
+    margin-bottom: 10px;
+  }
+  .breadcrumbs__link {
+    padding: 0 2px;
   }
 }
