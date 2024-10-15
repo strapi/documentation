@@ -232,9 +232,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
+/**
+ * Responsive: Mobile
+ */
 @include medium-down {
   .navbar-sidebar {
-    width: calc(100% - 40px);
+    --navbar-sidebar-mobile-width: 100%;
+    width: var(--navbar-sidebar-mobile-width);
+    --navbar-sidebar-max-width: 300px;
+    max-width: var(--navbar-sidebar-max-width);
 
     .mobile--search {
       position: absolute;
@@ -247,11 +253,28 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       left: 16px;
       width: calc(100% - 26px);
       min-width: calc(100% - 36px);
+      margin-top: 12px;
 
       .DocSearch-Button-Placeholder,
       .kapa-widget-button-text {
         display: block;
       }
+    }
+
+    &__item.menu {
+      padding-left: 10px;
+
+      &:nth-of-type(2) {
+        max-width: calc(var(--navbar-sidebar-max-width) - 16px);
+        width: 100%;
+      }
+    }
+
+    .theme-doc-sidebar-item-category-level-1,
+    .theme-doc-sidebar-item-category-level-2,
+    .theme-doc-sidebar-item-category-level-3,
+    .theme-doc-sidebar-item-category-level-4 {
+      padding-right: 0 !important;
     }
 
     /**
@@ -311,51 +334,63 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     .custom-mobile-navbar {
+      --custom-mobile-navbar-list-padding: 16px;
+      --custom-mobile-navbar-list-gap: 12px;
+      --custom-mobile-navbar-width: 100%;
+
       list-style-type: none;
       display: flex;
-      padding: 0;
-      justify-content: space-evenly;
-    }
+      padding: 0 var(--custom-mobile-navbar-list-padding);
+      justify-content: space-between;
 
-    a.custom-mobile-navbar__item {
-      background-color: transparent;
-      text-decoration: none;
-      text-align: center;
-      padding: 4px 8px;
-      background-color: transparent;
-      border-radius: 4px;
-      color: var(--strapi-neutral-600);
-      font-size: var(--strapi-font-size-sm);
-      line-height: var(--strapi-line-height-sm);
-      font-weight: 500;
+      &__item {
+        min-width: calc((var(--custom-mobile-navbar-width)  / 2) - var(--custom-mobile-navbar-list-gap) / 2);
+        text-align: center;
+        border-radius: 4px;
+        padding: 4px 8px;
 
-      i {
-        margin-right: 8px;
+        &-link {
+          text-decoration: none;
+          color: var(--strapi-neutral-600);
+          font-size: var(--strapi-font-size-sm);
+          line-height: var(--strapi-line-height-sm);
+          font-weight: 500;
+
+          i {
+            margin-right: 8px;
+          }
+        }
       }
-    }
 
-    .custom-mobile-navbar__separator {
-      border-bottom: solid 1px var(--strapi-neutral-200);
-      width: 100%;
+      &__separator {
+        border-bottom: solid 1px var(--strapi-neutral-200);
+        width: 100%;
+      }
     }
   }
 
   /**
    * Highlights the current custom navbar link
-   * since we can't rely on --active classe
+   * since we can't rely on --active classes
    * since our nav is fully custom
    */
   html[class*="docs-doc-id-dev-docs"],
   html[class*="docs-doc-id-user-docs"] {
-    .navbar .mobile-navbar__cms-link {
+    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__cms-link) {
       background-color: var(--strapi-neutral-100);
-      color: var(--strapi-primary-600);
+
+      .custom-mobile-navbar__item-link {
+        color: var(--strapi-primary-600);
+      }
     }
   }
   html[class*="docs-doc-id-cloud"] {
-    .navbar .mobile-navbar__cloud-link {
+    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__cloud-link) {
       background-color: var(--strapi-neutral-100);
-      color: var(--strapi-primary-600);
+
+      .custom-mobile-navbar__item-link {
+        color: var(--strapi-primary-600);
+      }
     }
   }
 
