@@ -1,8 +1,8 @@
 /** Component: Badges (alpha, beta, plans, feature flags, new/updated…) */
 @mixin badge-tooltip {
+  --custom-badge-tooltip-width: 220px;
   font-weight: 400;
   visibility: hidden;
-  --custom-badge-tooltip-width: 220px;
   width: var(--custom-badge-tooltip-width);
   background-color: var(--custom-badge-tooltip-background-color);
   color: var(--custom-badge-tooltip-color);
@@ -17,6 +17,7 @@
   text-transform: initial;
   font-size: var(--strapi-font-size-ssm);
   line-height: var(--strapi-line-height-sm);
+
 
   &::after {
     content: "";
@@ -393,6 +394,58 @@ h2 .badge {
   }
 }
 
+/**
+ * On mobile, badges can not necessarily
+ * be shown in the gutter, because there is not enough
+ * space, so we adjust their position
+ */
+
+@media (max-width: 720px) {
+  main h1:has(.badge--content),
+  main h2:has(.badge--content),
+  main h3:has(.badge--content),
+  main h4:has(.badge--content),
+  main .theme-admonition:has(.badge--content),
+  main .badge--content + img,
+  main [class*="tabItem"]:has(.badge--content),
+  main [class*="collapsibleContent"]:has(.badge--content),
+  main .badge--content:has( + [class*="codeBlockContainer"]),
+  main .badge--content:has(+ table) + table,
+  main p:has(.badge--content) {
+    .badge--content {
+      position: relative;
+      right: 0;
+      left: initial;
+      top: 0;
+    }
+  }
+  main p:has(.badge--content) .badge--content {
+    margin-right: 6px;
+  }
+  main .theme-admonition:has(.badge--content) .badge--content {
+    top: 2.3em;
+    left: -2.2em;
+  }
+  .badge__tooltip {
+    position: absolute !important;
+    right: 0;
+    min-width: 100%;
+
+    &::after {
+      display: none;
+    }
+  }
+  .badge--updated .badge__tooltip {
+    min-height: 44px;
+    left: 85px !important;
+    top: -60%;
+  }
+  .badge--new .badge__tooltip {
+    min-height: 28px;
+    left: 90px !important;
+    top: -25%;
+  }
+}
 
 /** Dark mode */
 @include dark {
