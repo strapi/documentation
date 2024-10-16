@@ -46,7 +46,9 @@ The *Payment method* section of the ![Billing icon](/img/assets/icons/CreditCard
 3. Click on the **Save** button.
 
 :::tip
-The first credit card to be added as payment method for the account will by default be the primary one. It is however possible to define another credit card as primary by clicking on the ![Menu icon](/img/assets/icons/more.svg) icon, then **Switch as primary**.
+- The very first credit card to be added as payment method will be by default the primary card.
+The second one to be added will be considerated as a backup card. It is however possible to update their role by clicking on the ![Menu icon](/img/assets/icons/more.svg) icon, then **Set as primary** or **Set as backup**.
+- Be aware that you also have the possibility to use a dedicated card at projects-level. It will allow you to use different cards for different projects (see [Project Settings > Billing & Usage](/cloud/projects/settings#billing--usage)).
 :::
 
 ### Deleting a credit card
