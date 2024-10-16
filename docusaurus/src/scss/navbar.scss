@@ -36,7 +36,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     gap: var(--strapi-spacing-2);
     justify-content: space-between;
     align-items: center;
-    // background-color: tomato;
   }
 
   &__items:not(.navbar__items--right) {
@@ -229,6 +228,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --custom-navbar-search-button-width: 266px;
 
     --ifm-navbar-padding-horizontal: var(--custom-navbar-items-gap);
+    min-height: 64px;
   }
 }
 
