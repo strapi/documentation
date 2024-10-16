@@ -252,6 +252,16 @@ pre.prism-code {
   }
 }
 
+@include medium-down {
+  [class*="buttonGroup"],
+  [class*="buttonGroup"] .clean-btn {
+    opacity: 1;
+  }
+
+  [class*="codeBlockTitle"] {
+    padding-right: 84px;
+  }
+}
 
 /** Dark theme */
 @include dark {
