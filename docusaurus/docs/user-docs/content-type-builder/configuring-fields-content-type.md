@@ -49,7 +49,7 @@ The Text field displays a textbox that can contain small text. This field can be
 | Setting name | Instructions                                                                                            |
 |--------------|---------------------------------------------------------------------------------------------------------|
 | Name         | Write the name of the Text field.                                                                       |
-| Type         | Choose between *Short text* and *Long text*, to allow more or less space to fill up the Text field.     |
+| Type         | Choose between *Short text* (255 characters maximum) and *Long text*, to allow more or less space to fill up the Text field.     |
 
 </TabItem>
 
