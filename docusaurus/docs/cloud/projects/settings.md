@@ -74,7 +74,7 @@ Updating the git repository could result in the loss of the project and its data
     | Auto-deploy     | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 5. Click on the **Update repository** button at the bottom of the *Update repository* interface.
-6. In the *Manage repository* dialog, confirm your changes by clicking on the **Relink repository** button.
+6. In the *Update repository* dialog, confirm your changes by clicking on the **Confirm** button.
 
 #### Deleting Strapi Cloud project
 
