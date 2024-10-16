@@ -431,10 +431,19 @@ h2 .badge {
     right: 0;
     min-width: 100%;
 
-    &::after {
-      display: none;
+    &--updated,
+    &--new {
+      // hide the "bubble" arrow on mobile for these
+      &::after {
+        display: none;
+      }
     }
   }
+  /**
+   * Display new/updated badges toolitps
+   * on the right of the badge on screens smaller than 720px
+   * instead of on top for larger screens
+   */
   .badge--updated .badge__tooltip {
     min-height: 44px;
     left: 85px !important;
