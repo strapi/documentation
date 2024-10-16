@@ -380,6 +380,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         width: 100%;
       }
     }
+
+    &--fixed-top {
+      position: relative;
+    }
   }
 
   /**
