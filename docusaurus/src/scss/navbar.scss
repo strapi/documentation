@@ -243,15 +243,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
   }
   nav.navbar-sidebar--show {
-
     div.navbar-sidebar {
-      transform: translateX(calc(100vw - 300px));
+      transform: translateX(calc(100vw - var(--navbar-sidebar-max-width)));
     }
   }
   .navbar-sidebar {
     --navbar-sidebar-mobile-width: 100%;
     width: var(--navbar-sidebar-mobile-width);
-    --navbar-sidebar-max-width: 300px;
+    --navbar-sidebar-max-width: 280px;
     max-width: var(--navbar-sidebar-max-width);
 
     .mobile--search {
