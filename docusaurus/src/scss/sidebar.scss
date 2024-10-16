@@ -290,14 +290,23 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-.theme-doc-sidebar-container {
-  --docusaurus-collapse-button-bg: var(--strapi-neutral-0);
-  --docusaurus-collapse-button-bg-hover: var(--strapi-primary-100);
-}
-
 @include medium-up {
-  [class*="collapseSidebar"] {
-    border-bottom: none;
+  .theme-doc-sidebar-container {
+    --docusaurus-collapse-button-bg: var(--strapi-neutral-0);
+    --docusaurus-collapse-button-bg-hover: var(--strapi-primary-100);
+    position: sticky;
+    top: 12px;
+    height: calc(100vh + 180px);
+  }
+
+  .theme-doc-sidebar-menu.menu__list {
+    margin-bottom: 80px;
+  }
+
+  @include medium-up {
+    [class*="collapseSidebar"] {
+      border-bottom: none;
+    }
   }
 }
 
