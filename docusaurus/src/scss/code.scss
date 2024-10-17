@@ -69,14 +69,17 @@ table {
     --custom-code-color: var(--strapi-neutral-800);
   }
 
-  pre code {
+  pre code,
+  code {
     --custom-code-color: var(--strapi-neutral-1000);
+    --custom-code-background-color: var(--strapi-neutral-150);
+    --custom-code-border-color: var(--strapi-neutral-600) !important;
   }
 
   h1, h2, h3, li, p, table {
     a code {
       --custom-code-background-color: var(--strapi-neutral-150);
-      --custom-code-border-color: var(--strapi-neutral-200);
+      --custom-code-border-color: var(--strapi-neutral-600);
       --custom-code-color: var(--strapi-primary-600);
 
       text-decoration: none;

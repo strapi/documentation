@@ -184,8 +184,8 @@
 @include dark {
   .theme-admonition {
     // --custom-admonition-color: var(--strapi-neutral-150);
-    --custom-admonition-background-color: var(--strapi-neutral-100);
-    --custom-admonition-code-background-color: var(--strapi-neutral-200);
+    --custom-admonition-background-color: var(--strapi-neutral-0);
+    --custom-admonition-code-background-color: var(--strapi-neutral-150);
     --custom-admonition-border-color: var(--strapi-neutral-200);
 
     &--info,
