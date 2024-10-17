@@ -1,7 +1,7 @@
 ---
 title: SSO configuration
 sidebar_label: Single Sign-On (SSO)
-displayed_sidebar: devDocsConfigSidebar
+displayed_sidebar: cmsSidebar
 description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
 canonicalUrl: https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html
 tags:

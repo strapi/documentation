@@ -1,6 +1,6 @@
 ---
 title: Deployment
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
 tags:
 - database deployment

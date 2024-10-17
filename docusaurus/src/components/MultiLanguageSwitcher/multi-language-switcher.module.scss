@@ -3,17 +3,17 @@
 @import '../../scss/_mixins.scss';
 
 :root {
-  --custom-strapi-docs-mls-color: var(--strapi-neutral-0);
+  --custom-strapi-docs-mls-color: var(--strapi-neutral-800);
   --custom-strapi-docs-mls-gap: var(--strapi-spacing-4);
   --custom-strapi-docs-mls-heading-font-size: var(--strapi-font-size-sm);
   --custom-strapi-docs-mls-heading-font-weight: 700;
   --custom-strapi-docs-mls-heading-py: var(--strapi-spacing-2);
   --custom-strapi-docs-mls-heading-px: var(--strapi-spacing-4);
   --custom-strapi-docs-mls-radius: var(--strapi-spacing-2);
-  --custom-strapi-docs-mls-response-heading-background-color: var(--strapi-neutral-800);
-  --custom-strapi-docs-mls-response-content-background-color: var(--strapi-neutral-900);
-  --custom-strapi-docs-mls-request-heading-background-color: var(--strapi-neutral-600);
-  --custom-strapi-docs-mls-request-content-background-color: var(--strapi-neutral-700);
+  --custom-strapi-docs-mls-response-heading-background-color: var(--strapi-neutral-100);
+  --custom-strapi-docs-mls-response-content-background-color: var(--strapi-neutral-0);
+  --custom-strapi-docs-mls-request-heading-background-color: var(--strapi-neutral-100);
+  --custom-strapi-docs-mls-request-content-background-color: var(--strapi-neutral-0);
 }
 
 .strapi-docs-mls {
@@ -90,6 +90,8 @@
     &__heading {
       border-top-left-radius: var(--custom-strapi-docs-mls-radius);
       border-top-right-radius: var(--custom-strapi-docs-mls-radius);
+      border: solid 1px var(--custom-api-call-border-color);
+      border-bottom: none;
       font-size: var(--custom-strapi-docs-mls-heading-font-size);
       font-weight: var(--custom-strapi-docs-mls-heading-font-weight);
       padding:
@@ -140,17 +142,21 @@
   .theme-code-block {
     border-radius: var(--custom-strapi-docs-mls-radius);
   }
+
+  code {
+    background-color: transparent;
+  }
 }
 
 /** Dark mode */
 @include dark {
   --custom-strapi-docs-mls-color: var(--strapi-neutral-1000);
 
-  --custom-strapi-docs-mls-request-heading-background-color: var(--strapi-neutral-300);
-  --custom-strapi-docs-mls-request-content-background-color: var(--strapi-neutral-200);
+  --custom-strapi-docs-mls-request-heading-background-color: var(--strapi-neutral-100);
+  --custom-strapi-docs-mls-request-content-background-color: transparent;
 
   --custom-strapi-docs-mls-response-heading-background-color: var(--strapi-neutral-150);
-  --custom-strapi-docs-mls-response-content-background-color: var(--strapi-neutral-100);
+  --custom-strapi-docs-mls-response-content-background-color: transparent;
 
   .strapi-docs-mls {
     &__request {

@@ -42,16 +42,10 @@ The sorting order can be defined with:
 - `:asc` for ascending order (default order, can be omitted)
 - or `:desc` for descending order.
 
-<SideBySideContainer>
-<SideBySideColumn>
 
 ### Example: Sort using 2 fields
 
 You can sort by multiple fields by passing fields in a `sort` array.
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <br />
 
@@ -61,6 +55,24 @@ You can sort by multiple fields by passing fields in a `sort` array.
 `GET /api/restaurants?sort[0]=Description&sort[1]=Name`
 
 </Request>
+
+<details>
+<summary><QsForQueryTitle /></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  sort: ['Description', 'Name'],
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+</details>
 
 <Response title="Example response">
 
@@ -112,37 +124,9 @@ You can sort by multiple fields by passing fields in a `sort` array.
 </Response>
 </ApiCall>
 
-<details>
-<summary><QsForQueryTitle /></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  sort: ['Description', 'Name'],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-</SideBySideColumn>
-</SideBySideContainer>
-
-<SideBySideContainer>
-<SideBySideColumn>
-
 ### Example: Sort using 2 fields and set the order
 
 Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you can get results sorted in a particular order.
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <br />
 
@@ -152,6 +136,24 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 `GET /api/restaurants?sort[0]=Description:asc&sort[1]=Name:desc`
 
 </Request>
+
+<details>
+<summary><QsForQueryTitle /></summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  sort: ['Description:asc', 'Name:desc'],
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/restaurants?${query}`);
+```
+
+</details>
 
 <Response title="Example response">
 
@@ -204,27 +206,6 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 
 </ApiCall>
 
-<details>
-<summary><QsForQueryTitle /></summary>
-
-<QsForQueryBody />
-
-```js
-const qs = require('qs');
-const query = qs.stringify({
-  sort: ['Description:asc', 'Name:desc'],
-}, {
-  encodeValuesOnly: true, // prettify URL
-});
-
-await request(`/api/restaurants?${query}`);
-```
-
-</details>
-
-</SideBySideColumn>
-</SideBySideContainer>
-
 ## Pagination
 
 Queries can accept `pagination` parameters. Results can be paginated:
@@ -252,26 +233,6 @@ To paginate results by page, use the following parameters:
 `GET /api/articles?pagination[page]=1&pagination[pageSize]=10`
 
 </Request>
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    // ...
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 10,
-      "pageCount": 5,
-      "total": 48
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
 
 <details>
 <summary><QsForQueryTitle /></summary>
@@ -294,6 +255,27 @@ await request(`/api/articles?${query}`);
 
 </details>
 
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    // ...
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 10,
+      "pageCount": 5,
+      "total": 48
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
 ### Pagination by offset
 
 To paginate results by offset, use the following parameters:
@@ -315,26 +297,6 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 
 </Request>
 
-<Response title="Example response">
-
-```json
-{
-  "data": [
-    // ...
-  ],
-  "meta": {
-    "pagination": {
-      "start": 0,
-      "limit": 10,
-      "total": 42
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
-
 <details>
 <summary><QsForQueryTitle /></summary>
 
@@ -355,3 +317,23 @@ await request(`/api/articles?${query}`);
 ```
 
 </details>
+
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    // ...
+  ],
+  "meta": {
+    "pagination": {
+      "start": 0,
+      "limit": 10,
+      "total": 42
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>

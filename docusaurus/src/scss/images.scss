@@ -6,6 +6,11 @@
   border-radius: 0.25rem;
 }
 
+.markdown img:not([src^="data:image/svg+xml"]) {
+  margin-bottom: 26px;
+}
+
+
 img[src^="data:image/svg+xml"] {
   width: 16px;
   height: 16px;

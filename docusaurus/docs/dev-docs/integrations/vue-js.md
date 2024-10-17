@@ -1,6 +1,6 @@
 ---
 title: Vue.js
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Integrate Strapi with Vue.js.
 ---
 

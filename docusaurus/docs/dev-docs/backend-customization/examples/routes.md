@@ -1,7 +1,7 @@
 ---
 title: Custom routes
 description: Learn how to use custom routes using our FoodAdvisor example
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/backend-customization/examples/policies
 pagination_next: dev-docs/backend-customization/examples/middlewares
 ---

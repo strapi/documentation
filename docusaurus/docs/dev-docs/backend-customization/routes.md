@@ -1,7 +1,7 @@
 ---
 title: Routes
 description: Strapi routes handle requests to your content and are auto-generated for your content-types. Routes can be customized according to your needs.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - backend customization
 - backend server

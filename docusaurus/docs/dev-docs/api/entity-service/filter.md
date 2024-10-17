@@ -1,7 +1,7 @@
 ---
 title: Filtering with the Entity Service API
 description: Use Strapi's Entity Service API to filter your queries results.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 unlisted: true
 ---
 

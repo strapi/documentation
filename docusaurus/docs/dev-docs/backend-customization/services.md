@@ -1,7 +1,7 @@
 ---
 title: Services
 description: Strapi services are a set of reusable functions, useful to simplify controllers logic.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - backend customization
 - backend server

@@ -152,10 +152,6 @@ Requests return a response as an object which usually includes the following key
 Some plugins (including Users & Permissions and Upload) may not follow this response format.
 :::
 
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 ### Get documents {#get-all}
 
 Returns documents matching the query filters (see [API parameters](/dev-docs/api/rest/parameters) documentation).
@@ -165,10 +161,6 @@ In Strapi 5 the response format has been flattened, and attributes are directly 
 
 You can pass an optional header while you're migrating to Strapi 5 (see the [related breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format)).
 :::
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <ApiCall>
 
@@ -229,14 +221,6 @@ You can pass an optional header while you're migrating to Strapi 5 (see the [rel
 
 </ApiCall>
 
-</SideBySideColumn>
-
-</SideBySideContainer>
-
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 ### Get a document {#get}
 
 Returns a document by `documentId`.
@@ -244,10 +228,6 @@ Returns a document by `documentId`.
 :::strapi Strapi 5 vs. Strapi v4
 In Strapi 5, a specific document is reached by its `documentId`.
 :::
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <ApiCall>
 
@@ -290,14 +270,6 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 </ApiCall>
 
-</SideBySideColumn>
-
-</SideBySideContainer>
-
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 ### Create a document {#create}
 
 Creates a document and returns its value.
@@ -307,10 +279,6 @@ If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's p
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
 :::
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <ApiCall>
 
@@ -370,14 +338,6 @@ While creating a document, you can define its relations and their order (see [Ma
 
 </ApiCall>
 
-</SideBySideColumn>
-</SideBySideContainer>
-
-
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 ### Update a document {#update}
 
 Partially updates a document by `id` and returns its value.
@@ -389,10 +349,6 @@ Send a `null` value to clear fields.
 * Even with the [Internationalization (i18n) plugin](/dev-docs/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/i18n#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations) for more details).
 :::
-
-</SideBySideColumn>
-
-<SideBySideColumn>
 
 <ApiCall>
 
@@ -453,22 +409,12 @@ Send a `null` value to clear fields.
 
 </ApiCall>
 
-</SideBySideColumn>
-</SideBySideContainer >
-
-<SideBySideContainer>
-
-<SideBySideColumn>
-
 ### Delete a document {#delete}
 
 Deletes a document.
 
 `DELETE` requests only send a 204 HTTP status code on success and do not return any data in the response body.
 
-</SideBySideColumn>
-
-<SideBySideColumn>
 <ApiCall>
 
 <Request title="Example request">
@@ -478,6 +424,3 @@ Deletes a document.
 </Request>
 
 </ApiCall>
-
-</SideBySideColumn>
-</SideBySideContainer>
