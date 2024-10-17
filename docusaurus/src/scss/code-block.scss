@@ -6,7 +6,7 @@
   --custom-code-block-color: var(--strapi-neutral-800);
   --custom-code-block-comment-color: var(--strapi-neutral-500);
   --custom-code-block-key-color: var(--strapi-success-300);
-  --custom-code-block-keyword-color: var(--strapi-alternative-600);
+  --custom-code-block-keyword-color: var(--strapi-success-700);
   --custom-code-block-number-color: var(--strapi-success-600);
   --custom-code-block-punctuation-color: var(--strapi-neutral-800);
   --custom-code-block-property-color: var(--strapi-success-600);
@@ -14,7 +14,7 @@
   --custom-code-block-literal-property-color: var(--strapi-secondary-600);
   --custom-code-block-value-color: var(--strapi-neutral-0);
   --custom-code-block-string-color: var(--strapi-primary-600);
-  --custom-code-block-function-color: var(--strapi-success-700);
+  --custom-code-block-function-color: var(--strapi-alternative-600);
   --custom-code-block-plain-color: var(--strapi-neutral-800);
   --custom-code-block-font-size: var(--strapi-font-size-sm);
   --custom-code-block-line-height: var(--strapi-line-height-sm);
@@ -105,18 +105,25 @@ pre.prism-code {
 
       &.keyword {
         color: var(--custom-code-block-keyword-color) !important;
+        font-style: italic;
       }
 
       &.literal-property {
         color: var(--custom-code-block-literal-property-color) !important;
       }
 
+      &.parameter {
+        color: var(--custom-code-block-parameter-color) !important;
+      }
+
       &.operator,
       &.punctuation {
         color: var(--custom-code-block-punctuation-color) !important;
       }
-      &.parameter {
-        color: var(--custom-code-block-parameter-color) !important;
+
+      &.class-name,
+      &.known-class-name {
+        color: var(--custom-code-block-plain-color) !important;
       }
     }
   }
@@ -289,18 +296,12 @@ pre.prism-code {
   --custom-code-block-color: var(--strapi-neutral-1000);
   --custom-code-block-punctuation-color: var(--strapi-primary-200);
   --custom-code-block-value-color: var(--strapi-neutral-900);
-
-  // --custom-code-block-comment-color: var(--strapi-neutral-500);
-  // --custom-code-block-key-color: var(--strapi-success-300);
   --custom-code-block-keyword-color: var(--strapi-code-purple);
-  // --custom-code-block-number-color: var(--strapi-success-600);
-  // --custom-code-block-punctuation-color: var(--strapi-neutral-800);
+  --custom-code-block-number-color: var(--strapi-code-green);
   --custom-code-block-property-color: var(--strapi-code-light-green);
   --custom-code-block-literal-property-color: var(--strapi-code-light-green);
-  // --custom-code-block-value-color: var(--strapi-neutral-0);
   --custom-code-block-string-color: var(--strapi-code-rose);
   --custom-code-block-function-color: var(--strapi-code-fluo-green);
-  // --custom-code-block-plain-color: var(--strapi-neutral-800);
 
   pre,
   .theme-code-block {
