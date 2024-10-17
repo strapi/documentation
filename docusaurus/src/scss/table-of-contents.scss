@@ -150,6 +150,7 @@ main .table-of-contents {
   button[class*="tocCollapsibleButton"] {
     position: relative;
     padding-left: 35px;
+    background: transparent;
 
     &::before {
       content: '\e484';
@@ -181,6 +182,14 @@ main .table-of-contents {
       position: absolute;
       top: 8px;
       right: 12px;
+    }
+  }
+}
+
+@include medium-down {
+  @include dark {
+    button[class*="tocCollapsibleButton"] {
+      background: var(--strapi-neutral-0);
     }
   }
 }
