@@ -9,18 +9,19 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # TypeScript Development with Strapi 
 
-<NotV5/>
+## :open_book: API Reference
 
-While developing a [TypeScript](/dev-docs/typescript)-based application with Strapi, you can:
+The API reference is an exhaustive list of the types exported by Strapi.
 
-- access [typings for the `Strapi`](#use-strapi-typescript-typings) class with autocompletion,
-- [generate typings](#generate-typings-for-content-types-schemas) for your project's content-types,
-- [start Strapi programmatically](#start-strapi-programmatically),
-- and follow some TypeScript-specific instructions for [plugins development](#develop-a-plugin-using-typescript).
+It's automatically generated based on the code and can be found [here](/dev-docs/typescript/development/api-reference).
+
+## :books: Guides
+
+The guides are a curated list of common examples in which you might need to use Strapi types in your application.
+
+You can find the list of available guides [here](/dev-docs/typescript/development/guides).
 
 ## Use `Strapi` TypeScript typings
 
@@ -32,10 +33,10 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 2. Declare the `strapi` argument as type `Strapi` within the global `register` method:
 
     ```typescript title="./src/index.ts"
-    import { Strapi } from '@strapi/strapi';
+    import type { Core } from '@strapi/strapi';
 
     export default {
-      register({ strapi }: { strapi: Strapi }) {
+      register({ strapi }: { strapi: Core.Strapi }) {
         // ...
       },
     };
