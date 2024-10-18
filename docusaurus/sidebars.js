@@ -123,7 +123,7 @@ const sidebars = {
             id: 'dev-docs/deployment',
           },
           items: [
-           {
+            {
               type: 'doc',
               label: 'Introduction to deployment',
               id: 'dev-docs/deployment',
@@ -318,7 +318,28 @@ const sidebars = {
           },
           items: [
             'dev-docs/typescript',
-            'dev-docs/typescript/development',
+            {
+              type: 'category',
+              label: 'TypeScript Development',
+              link: {
+                type: 'doc',
+                id: 'dev-docs/typescript/development'
+              },
+              items: [
+                'dev-docs/typescript/development/api-reference',
+                {
+                  type: 'category',
+                  label: 'Guides',
+                  link: {
+                    type: 'doc',
+                    id: 'dev-docs/typescript/development/guides'
+                  },
+                  items: [
+                    'dev-docs/typescript/development/guides/documents-and-entries'
+                  ],
+                }
+              ],
+            },
             'dev-docs/typescript/adding-support-to-existing-project',
           ]
         },
@@ -762,9 +783,9 @@ const sidebars = {
         id: "user-docs/settings/introduction",
       },
       items: [
-       'user-docs/settings/introduction',
-       'user-docs/settings/configuring-users-permissions-plugin-settings',
-       'user-docs/settings/audit-logs',
+        'user-docs/settings/introduction',
+        'user-docs/settings/configuring-users-permissions-plugin-settings',
+        'user-docs/settings/audit-logs',
         {
           type: 'category',
           collapsed: false,
@@ -813,7 +834,7 @@ const sidebars = {
         {
           type: "category",
           label: "Project deployment",
-          link: { type: "doc", id: "cloud/getting-started/deployment-options" },
+          link: {type: "doc", id: "cloud/getting-started/deployment-options"},
           customProps: {
             updated: false,
           },
@@ -831,7 +852,7 @@ const sidebars = {
               customProps: {
                 new: true,
               },
-             },
+            },
           ],
         },
         {
@@ -1033,7 +1054,7 @@ const sidebars = {
           type: 'category',
           collapsed: false,
           label: 'Filters, Locale, Publication State',
-          link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication' },
+          link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication'},
           items: [
             {
               type: 'link',
@@ -1066,7 +1087,7 @@ const sidebars = {
           type: 'category',
           collapsed: false,
           label: 'Sort and Pagination',
-          link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
+          link: {type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
           items: [
             {
               type: 'link',
@@ -1269,7 +1290,7 @@ const sidebars = {
           type: 'category',
           label: 'Specific resources',
           collapsed: false,
-          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction' },
+          link: {type: 'doc', id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction'},
           items: [
             'dev-docs/migration/v4-to-v5/additional-resources/introduction',
             'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
