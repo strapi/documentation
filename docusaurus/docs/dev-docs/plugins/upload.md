@@ -383,6 +383,24 @@ const response = await fetch('http://localhost:1337/api/upload', {
   body: form,
 });
 
+
+
+
+// Saves the local file to the entity
+const uploadPicturEntity = async (filePath, fileName) => {
+    const fileStat = fs.statSync(filePath);
+    const attachment = await strapi.plugins.upload.services.upload.upload({
+        data: {},
+        files: {
+            path: filePath,
+            name: fileName,
+            type: 'image/png', // mime type
+            size: fileStat.size,
+        },
+    });
+    return attachment
+}
+
 ```
 
 </TabItem>
