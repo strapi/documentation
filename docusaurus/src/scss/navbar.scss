@@ -147,7 +147,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     display: none;
   }
 
-  button[class*="ColorModeToggle"],
+  button[class*="olorModeToggle"], // not using c or C because they differ in production vs. local dev 😅
   button[class*="toggleButton"] {
     background: none !important;
     position: relative;
