@@ -45,7 +45,7 @@ The Content API returns all the attributes of requested content wrapped inside a
       "title": "Article A"
       "relation": {
         "data": {
-          "id": "14"
+          "id": "2"
           "name": "Category A"
         }
       }
