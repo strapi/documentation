@@ -13,6 +13,7 @@ details.alert {
   --ifm-tabs-color-active: var(--ifm-color-primary);
   --ifm-tabs-color-active-border: var(--ifm-color-primary);
   box-shadow: none;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
   --ifm-alert-padding-horizontal: 24px;
   --ifm-alert-padding-vertical: 24px;
   padding-top: var(--ifm-alert-padding-vertical);
