@@ -93,7 +93,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__link {
-    --ifm-navbar-link-hover-color: var(--strapi-neutral-800);
     font-size: var(--custom-navbar-items-font-size);
     border-radius: 4px;
     border: solid 1px transparent;
@@ -107,11 +106,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
     }
 
-    &:hover {
-      color: var(--strapi-primary-600);
+    &:not(.navbar__link--active) {
+      --ifm-navbar-link-hover-color: var(--strapi-neutral-800);
 
-      i {
-        color: var(--strapi-primary-600);
+      &:hover {
+        color: var(--strapi-neutral-900) !important;
+        background-color: var(--strapi-neutral-100);
       }
     }
   }
@@ -127,7 +127,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --ifm-color-emphasis-600: currentColor;
 
     background: transparent;
-    border-radius: 50%;
+    // border-radius: 50%;
 
     &:hover {
       background: var(--custom-navbar-icon-button-hover-background);
@@ -156,13 +156,27 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
     // Use 'moon' icon in dark mode
     &::after {
-      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
     }
     &:hover::after {
-      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(73,79,255)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='rgb(33,33,52)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
     }
     svg {
       display: none
+    }
+  }
+
+  button[class*="ColorModeToggle"] {
+    border-radius: 4px;
+    top: 0;
+
+    &:hover {
+      background-color: var(--strapi-neutral-100) !important;
+    }
+
+    &::after {
+      position: absolute;
+      top: 11px;
     }
   }
 }
@@ -446,7 +460,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
 
     &:hover::after {
-      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(73,79,255)' viewBox='0 0 256 256'%3E%3Cpath d='M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm8,24a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z'%3E%3C/path%3E%3C/svg%3E");
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(255,255,255)' viewBox='0 0 256 256'%3E%3Cpath d='M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm8,24a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z'%3E%3C/path%3E%3C/svg%3E");
     }
   }
 }
