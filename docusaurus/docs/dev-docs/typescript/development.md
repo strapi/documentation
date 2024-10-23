@@ -6,7 +6,7 @@ tags:
 - strapi.compile() function
 - typescript
 - plugins development
-- api reference
+- api
 - guides
 
 ---
