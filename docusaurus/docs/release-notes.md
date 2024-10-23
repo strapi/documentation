@@ -25,6 +25,31 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 5.1.3
+
+### 🧹 Chore, fixes, typos, and other improvements
+
+- [Improve instructions for upgrading to Apollo v4](https://github.com/strapi/documentation/pull/2271)
+- [Fix code example in breaking change for new response format](https://github.com/strapi/documentation/pull/2270)
+- [Update names of removed mutations in GraphQL breaking change](https://github.com/strapi/documentation/pull/2269)
+- [Fix typo in a snippet used in Cloud docs](https://github.com/strapi/documentation/pull/2268)
+
+***
+
+This release was made possible thanks to the following contributors. Thank you! 🫶
+
+<div>
+<a href="https://github.com/laurenskling" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6753724?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="laurenskling"/>
+</a>
+<a href="https://github.com/xxtf1z" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/98784191?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="xxtf1z"/>
+</a>
+</div>
+
+<br/>
+<br/>
+
 ## 5.1.2
 
 ### 🖌 Updated content
