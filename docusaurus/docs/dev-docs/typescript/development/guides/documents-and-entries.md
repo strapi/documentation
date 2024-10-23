@@ -153,7 +153,7 @@ type UsageMetrics = Data.Component<'app.metrics', 'clicks' | 'views'>;
 //   ^? { clicks: number; views: number }
 ```
 
-#### Type Argument Inference
+#### Type argument inference
 
 It is possible to bind and restrict an entity type based on other function parameters.
 
