@@ -137,7 +137,7 @@ function processUsageMetrics(id: string, metrics: Data.Component<'app.metrics'>)
   telemetry.send(id, { clicks: metrics.clicks, views: metrics.views });
 }
 ```
-### Advanced Use-Cases
+### Advanced use cases
 
 #### Entities Subsets
 
