@@ -14,7 +14,7 @@ tags:
 
 # Manipulating documents and entries
 
-## Prerequisites
+:::prerequisites
 
 - **Strapi Application:** A Strapi v5 application. If you don't have one, follow the [documentation](/dev-docs/quick-start) to get started.
 - **TypeScript:** Ensure TypeScript is set up in your Strapi project. You can follow Strapi's [official guide](/dev-docs/typescript#getting-started-with-typescript-in-strapi) on configuring TypeScript.
