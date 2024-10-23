@@ -54,7 +54,7 @@ In case of a mismatch or error, you can always [regenerate the types](/dev-docs/
 
 ## Usage
 
-### Generic Entities
+### Generic entities
 
 When dealing with generic data, it is recommended to use non-parametrized forms of the `Data` types.
 
