@@ -13,7 +13,9 @@ tags:
 
 # TypeScript Development with Strapi 
 
-## :open_book: API Reference
+:::strapi :open_book: API reference
+We are preparing an API reference page, which will include an exhaustive list of the types exported by Strapi. Please come back soon! 👀 
+:::
 
 The API reference is an exhaustive list of the types exported by Strapi.
 
