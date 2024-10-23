@@ -320,7 +320,7 @@ const sidebars = {
             'dev-docs/typescript',
             {
               type: 'category',
-              label: 'TypeScript Development',
+              label: 'TypeScript development',
               link: {
                 type: 'doc',
                 id: 'dev-docs/typescript/development'
