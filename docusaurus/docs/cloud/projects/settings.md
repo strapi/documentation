@@ -23,13 +23,13 @@ The settings' menu on the left side of the interface is separated into 2 categor
 ## Project-level settings
 
 There are 5 tabs available for the project's settings:
-- ![General icon](/img/assets/icons/Faders.svg) [*General (project)*](#general),
+- ![General icon](/img/assets/icons/Faders.svg) [*General*](#general),
 - ![Environments icon](/img/assets/icons/v5/Stack.svg) [*Environments*](#environments),
 - ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) [*Billing & Usage*](#billing--usage),
 - ![Plans icon](/img/assets/icons/MapTrifold.svg) [Plans](#plans),
 - and ![Invoices icon](/img/assets/icons/Invoice.svg) [Invoices](#invoices).
 
-### General (project)
+### General
 
 The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-level settings enables you to check and update the following options for the project:
 
@@ -235,20 +235,20 @@ In the *Profile > Invoices* tab, you will find the complete list of invoices for
 
 In the project's environments' settings, you first need to select the environment whose settings you would like to configure, using the dropdown. Depending on the chosen environment, there are 3 to 4 tabs available:
 
-- ![General icon](/img/assets/icons/Faders.svg) [*General (environment)*](#general),
+- ![General icon](/img/assets/icons/Faders.svg) [*Configuration*](#configuration),
 - ![Backups icon](/img/assets/icons/ArrowClockwise.svg) [*Backups*](#backups), which are only available for the production environment,
 - ![Domains icon](/img/assets/icons/Browsers.svg) [*Domains*](#domains),
 - and ![Variables icon](/img/assets/icons/code2.svg) [*Variables*](#variables).
 
-### General (environment)
+### Configuration
 
-The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the environment-level settings enables you to check and update the following options for the project:
+The ![General icon](/img/assets/icons/Faders.svg) *Configuration* tab for the environment-level settings enables you to check and update the following options for the project:
 
 - *Basic information*, to see:
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
-- *Connect branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see [Resetting & Deleting environment](#resetting--deleting-environment)).
 
 <ThemedImage
@@ -263,15 +263,15 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the environm
 
 The environment's Node version is based on the one chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)), through the advanced settings. It is possible to switch to another Node version afterwards, for any environment.
 
-1. In the *Basic information* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the *Node version*'s edit ![Edit icon](/img/assets/icons/edit.svg) button.
+1. In the *Basic information* section of the ![General icon](/img/assets/icons/Faders.svg) *Configuration* tab, click on the *Node version*'s edit ![Edit icon](/img/assets/icons/edit.svg) button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
 3. Click on the **Save** button.
 4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
 
 #### Editing Git branch
 
-1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Edit branch** button.
-2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General (project)](#general-project).
+1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *Configuration* tab, click on the **Edit branch** button.
+2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General](#general).
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
@@ -289,7 +289,7 @@ You can reset or delete any additional environment of your Strapi Cloud project,
 
 Resetting an environment deletes all environments data and resets the variables to their default. To do so:
 
-1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Reset environment** button.
+1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *Configuration* tab, click on the **Reset environment** button.
 2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
 3. Fill in the available fields to reset the environment:
 
@@ -304,7 +304,7 @@ Resetting an environment deletes all environments data and resets the variables 
 
 ##### Deleting an environment
 
-1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Delete environment** button.
+1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *Configuration* tab, click on the **Delete environment** button.
 2. Write in the textbox your *Environment name*.
 3. Click on the **Delete environment** button to confirm the deletion.
 
