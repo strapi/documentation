@@ -16,11 +16,10 @@ details.alert {
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
   --ifm-alert-padding-horizontal: 24px;
   --ifm-alert-padding-vertical: 24px;
-  padding-top: var(--ifm-alert-padding-vertical);
-  padding-bottom: var(--ifm-alert-padding-vertical);
+  padding: 0;
 
   summary {
-    padding-left: 24px;
+    position: relative;
 
     p {
       margin: 0;
@@ -28,11 +27,12 @@ details.alert {
 
     list-style: none;
 
-    &::before {
+    &::before { // Triangle icon to open/close the details block
       content: "";
+      position: relative;
       display: inline-block;
       border: none;
-      top: 0.5em;
+      top: 0px;
       width: 8px;
       height: 8px;
       border-right: 1px solid var(--strapi-neutral-600);
@@ -40,7 +40,36 @@ details.alert {
       transform: rotate(-45deg);
       transform-origin: calc(var(--docusaurus-details-summary-arrow-size)/2);
       transition: transform .3s ease;
+      margin-right: 14px;
     }
+
+    &::after {
+      // Ensures you can open/close by clicking anywhere, not just on title
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      cursor: pointer;
+    }
+  }
+
+  summary,
+  > div {
+    padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-vertical);
+  }
+
+  > *:last-child {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  > div:first-of-type,
+  > div > *:first-child,
+   {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
   }
 
   .theme-admonition {
@@ -49,8 +78,8 @@ details.alert {
 
   &[open] summary::before {
     transform: rotate(45deg) !important;
-    position: absolute;
-    top: 4px;
+    position: relative;
+    top: -4px;
     left: 0.15rem;
   }
 

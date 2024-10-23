@@ -144,9 +144,16 @@ pre.prism-code {
     background: var(--custom-code-block-background-color);
 
     &:not(:has([class*="codeBlockTitle"])) {
+      padding: 24px !important;
+      box-shadow: none !important;
+
       .prism-code {
         background-color: white !important;
         // TODO fix by finding a better way
+
+        code {
+          padding: 0;
+        }
       }
     }
   }
