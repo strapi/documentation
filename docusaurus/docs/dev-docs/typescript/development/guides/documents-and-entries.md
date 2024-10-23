@@ -130,7 +130,7 @@ function validateArticle(article: Data.ContentType<'api::article.article'>) {
 }
 ```
 
-#### Known Components
+#### Known components
 
 ```typescript
 function processUsageMetrics(id: string, metrics: Data.Component<'app.metrics'>) {
