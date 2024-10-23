@@ -106,7 +106,7 @@ function renderComponent(parent: Node, component: Data.Component) {
 }
 ```
 
-### Known Entities
+### Known entities
 
 When manipulating known entities, it is possible to parametrize `Data` types for better type safety and intellisense.
 
