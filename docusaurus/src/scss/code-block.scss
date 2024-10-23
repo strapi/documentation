@@ -134,7 +134,6 @@ pre.prism-code {
     [class*="highlighted-line"] {
       background-color: var(--custom-code-block-background-color-highlighted);
     }
-
   }
 }
 
@@ -215,6 +214,7 @@ pre.prism-code {
   .clean-btn {
     background-color: white;
     position: relative;
+    top: -12px;
 
     svg {
       color: black;
