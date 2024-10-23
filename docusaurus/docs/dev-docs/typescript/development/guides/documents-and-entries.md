@@ -57,7 +57,7 @@ In case of a mismatch or error, you can always [regenerate the types](/dev-docs/
 
 When dealing with generic data, it is recommended to use non-parametrized forms of the `Data` types.
 
-#### Generic Documents
+#### Generic documents
 
 ```typescript
 async function save(name: string, document: Data.ContentType) {
