@@ -85,7 +85,7 @@ if ('my_prop' in document) {
 ```
 :::
 
-#### Generic Components
+#### Generic components
 
 ```typescript
 function renderComponent(parent: Node, component: Data.Component) {
