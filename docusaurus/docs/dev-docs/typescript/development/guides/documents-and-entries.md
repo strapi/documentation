@@ -139,7 +139,7 @@ function processUsageMetrics(id: string, metrics: Data.Component<'app.metrics'>)
 ```
 ### Advanced use cases
 
-#### Entities Subsets
+#### Entities subsets
 
 Using the types' second parameter (`TKeys`), it is possible to obtain a subset of an entity.
 
