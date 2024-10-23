@@ -1,6 +1,6 @@
 ---
 title: Email plugin
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Send email from your server or externals providers.
 tags:
 - admin panel

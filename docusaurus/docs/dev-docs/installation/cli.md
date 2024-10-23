@@ -1,6 +1,6 @@
 ---
 title: CLI
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
 tags:
 - installation

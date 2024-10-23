@@ -18,7 +18,7 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
-import { AlphaBadge, BetaBadge, FutureBadge, EnterpriseBadge, CloudDevBadge, CloudProBadge, CloudTeamBadge, NewBadge, UpdatedBadge } from '../components/Badge';
+import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, CloudDevBadge, CloudProBadge, CloudTeamBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
 import {
@@ -29,6 +29,7 @@ import {
 import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
+import Icon from '../components/Icon';
 
 export default {
   // Re-use the default mapping
@@ -48,13 +49,14 @@ export default {
   ApiCall,
   AlphaBadge,
   BetaBadge,
-  FutureBadge,
+  FeatureFlagBadge,
   EnterpriseBadge,
   NewBadge,
   UpdatedBadge,
   CloudDevBadge,
   CloudProBadge,
   CloudTeamBadge,
+  VersionBadge,
   Columns,
   ColumnLeft,
   ColumnRight,
@@ -70,6 +72,7 @@ export default {
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
   Annotation,
+  Icon,
   /**
    * Reusable annotation components go below👇
    */

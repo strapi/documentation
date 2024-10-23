@@ -5,6 +5,9 @@
   --ifm-breadcrumb-border-radius: var(--strapi-spacing-1);
   --ifm-breadcrumb-color-active: var(--strapi-neutral-800);
   --ifm-link-hover-color: var(--strapi-neutral-700);
+  --ifm-breadcrumb-separator-size: 10px;
+  --ifm-breadcrumb-size-multiplier: .8;
+  --ifm-breadcrumb-separator-size-multiplier: 1.25;
 
   --custom-breadcrumbs-font-size: var(--strapi-font-size-xs);
   --custom-breadcrumbs-pt: var(--strapi-spacing-4);
@@ -13,18 +16,35 @@
   padding: var(--custom-breadcrumbs-pt) 0 0;
 
   &__item {
-    &:after {
-      --ifm-breadcrumb-spacing: var(--custom-breadcrumbs-item-caret-mx);
+    /**
+     * Replace home icon by text*
+     */
+    &:first-of-type .breadcrumbs__link {
+      padding-left: 0;
+
+      &::before {
+        content: 'Home'
+      }
+
+      svg {
+        display: none;
+      }
+    }
+
+    a {
+      color: var(--strapi-neutral-600);
+      font-weight: 500;
     }
 
     &--active {
-      font-weight: 700;
+      font-weight: 600;
     }
   }
 
   &__link {
     background-color: transparent;
     font-size: var(--custom-breadcrumbs-font-size);
+    padding: 8px 5px 8px 5px;
 
     @include transition;
 
@@ -38,5 +58,14 @@
   .breadcrumbs {
     --custom-breadcrumbs-pt: var(--strapi-spacing-6);
     --custom-breadcrumbs-item-caret-mx: var(--strapi-spacing-3);
+  }
+}
+
+@include small-down {
+  .breadcrumbs {
+    margin-bottom: 10px;
+  }
+  .breadcrumbs__link {
+    padding: 0 2px;
   }
 }

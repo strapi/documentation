@@ -1,7 +1,7 @@
 ---
 title: Using Draft & Publish with the Document Service API
 description: Use Strapi's Document Service API to return either the draft or the published version of a document
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

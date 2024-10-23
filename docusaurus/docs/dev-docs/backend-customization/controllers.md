@@ -1,4 +1,5 @@
 ---
+title: Controllers
 tags: 
 - backend customization
 - backend server
@@ -13,24 +14,24 @@ tags:
 - validateQuery function
 ---
 
-# Controllers
+# Controllers <NewBadge />
 
-Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/dev-docs/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/dev-docs/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
+<NewBadge/>Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/dev-docs/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/dev-docs/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
 
-In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/dev-docs/backend-customization/services) to organize the code into re-usable parts.
+<UpdatedBadge/>In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/dev-docs/backend-customization/services) to organize the code into re-usable parts.
 
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-controllers-services.png" alt="Simplified Strapi backend diagram with controllers highlighted" />
   <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/dev-docs/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
-## Implementation
+## Implementation <NewBadge/>
 
-Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
+<UpdatedBadge/>Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
 
-### Adding a new controller
+### Adding a new controller<UpdatedBadge/>
 
-A new controller can be implemented:
+<NewBadge/>A new controller can be implemented:
 
 - with the [interactive CLI command `strapi generate`](/dev-docs/cli)
 - or manually by creating a JavaScript file:
@@ -40,8 +41,9 @@ A new controller can be implemented:
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="./src/api/restaurant/controllers/restaurant.js"
+<UpdatedBadge/>
 
+```js title="./src/api/restaurant/controllers/restaurant.js"
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
@@ -139,10 +141,10 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </TabItem>
 </Tabs>
 
-Each controller action can be an `async` or `sync` function.
+<NewBadge/>Each controller action can be an `async` or `sync` function.
 Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/dev-docs/backend-customization/requests-responses#ctxrequest) and the [response context](/dev-docs/backend-customization/requests-responses#ctxresponse).
 
-<details>
+<details><UpdatedBadge />
 <summary>Example: GET /hello route calling a basic controller</summary>
 
 A specific `GET /hello` [route](/dev-docs/backend-customization/routes) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
@@ -205,23 +207,23 @@ export default {
 
 </details>
 
-:::note
+:::note <NewBadge/>
 When a new [content-type](/dev-docs/backend-customization/models#content-types) is created, Strapi builds a generic controller with placeholder code, ready to be customized.
 :::
 
-:::tip
+:::tip <UpdatedBadge/>
 To see a possible advanced usage for custom controllers, read the [services and controllers](/dev-docs/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
 :::
 
-### Sanitization and Validation in controllers
+### Sanitization and Validation in controllers <NewBadge/> {#sanitization-and-validation-in-controllers}
 
-:::warning
+:::warning <UpdatedBadge/>
 It's strongly recommended you sanitize (v4.8.0+) and/or validate (v4.13.0+) your incoming request query utilizing the new `sanitizeQuery` and `validateQuery` functions to prevent the leaking of private data.
 :::
 
-Sanitization means that the object is “cleaned” and returned.
+<NewBadge/>Sanitization means that the object is “cleaned” and returned.
 
-Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
+<UpdatedBadge/>Validation means an assertion is made that the data is already clean and throws an error if something is found that shouldn't be there.
 
 In Strapi 5, both query parameters and input data (i.e., create and update body data) are validated. Any create and update data requests with the following invalid input will throw a `400 Bad Request` error:
 
@@ -230,9 +232,11 @@ In Strapi 5, both query parameters and input data (i.e., create and update body 
 - non-writable fields and internal timestamps like `createdAt` and `createdBy` fields
 - setting or updating an `id` field (except for connecting relations)
 
-#### Sanitization when utilizing controller factories
+#### Sanitization when utilizing controller factories<UpdatedBadge/>
 
 Within the Strapi factories the following functions are exposed that can be used for sanitization and validation:
+
+<UpdatedBadge/>
 
 | Function Name    | Parameters                 | Description                                                                          |
 |------------------|----------------------------|--------------------------------------------------------------------------------------|
@@ -250,6 +254,7 @@ Because these methods use the model associated with the current controller, if y
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
+<UpdatedBadge/>
 
 ```js title="./src/api/restaurant/controllers/restaurant.js"
 
@@ -271,6 +276,8 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
 <TabItem value="ts" label="TypeScript">
 
+<NewBadge/>
+
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
 import { factories } from '@strapi/strapi';
@@ -289,10 +296,11 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </TabItem>
 </Tabs>
 
-#### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
+#### Sanitization and validation when building custom controllers  <NewBadge /> {#sanitize-validate-custom-controllers}
 
-Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
+<UpdatedBadge/>Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
 
+<NewBadge/>
 | Function Name                | Parameters         | Description                                             |
 |------------------------------|--------------------|---------------------------------------------------------|
 | `sanitize.contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
@@ -301,12 +309,13 @@ Within custom controllers, there are 5 primary functions exposed via the `@strap
 | `validate.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
 | `validate.contentAPI.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
 
-:::note
+:::note <UpdatedBadge/>
 Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for, especially when combining the data from multiple sources.
 :::
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
+<NewBadge/>
 
 ```js title="./src/api/restaurant/controllers/restaurant.js"
 
@@ -329,6 +338,8 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
+<NewBadge/>
+
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
 import { sanitize, validate } from '@strapi/utils';
@@ -350,25 +361,24 @@ export default {
 </TabItem>
 </Tabs>
 
-### Extending core controllers
+### Extending core controllers <NewBadge/> {#extending-core-controllers}
 
-Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
+<UpdatedBadge/>Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::tip
+:::tip <NewBadge/>
 An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
 
-:::tip
+:::tip <UpdatedBadge/>
 When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
 :::
 
-<details>
+<details><UpdatedBadge/>
 <summary>Collection type examples</summary>
 
 :::tip
 The [backend customization examples cookbook](/dev-docs/backend-customization/examples) shows how you can overwrite a default controller action, for instance for the [`create` action](/dev-docs/backend-customization/examples/services-and-controllers#custom-controller).
 :::
-
 <Tabs>
 <TabItem value="find" label="`find()`">
 
@@ -383,7 +393,6 @@ async find(ctx) {
 ```
 
 </TabItem>
-
 <TabItem value="findOne" label="findOne()">
 
 ```js
@@ -490,10 +499,10 @@ async delete(ctx) {
 </Tabs>
 </details>
 
-## Usage
+## Usage <NewBadge/>
 
-Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/dev-docs/backend-customization/services) can call controllers, and in this case the following syntax should be used:
-
+<UpdatedBadge/>Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/dev-docs/backend-customization/services) can call controllers, and in this case the following syntax should be used:
+<UpdatedBadge/>
 ```js
 // access an API controller
 strapi.controller('api::api-name.controller-name');
@@ -501,6 +510,6 @@ strapi.controller('api::api-name.controller-name');
 strapi.controller('plugin::plugin-name.controller-name');
 ```
 
-:::tip
+:::tip  <UpdatedBadge/>
 To list all the available controllers, run `yarn strapi controllers:list`.
 :::

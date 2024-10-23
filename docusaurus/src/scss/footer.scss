@@ -1,26 +1,165 @@
 /** Component: Footer */
 
 .footer {
+  position: relative;
+  padding: 40px;
+  border-top: solid 1px var(--strapi-neutral-200);
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+  }
+
+  &::after {
+    content: '';
+    background: url('/img/logo-v5.png') no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 152px;
+    height: 100px;
+  }
+
+  .container {
+    margin-top: 60px;
+    padding: 0;
+    max-width: calc(100% - 240px);
+  }
+
   a {
-    @include transition;
-    font-weight: 400;
+    color: var(--strapi-primary-600);
+    // @include transition;
+    font-size: var(--strapi-font-size-sm);
+    line-height: var(--strapi-line-height-sm);
 
     &:hover {
-      font-weight: 700;
+      // font-weight: 700;
     }
+  }
+
+  &__title {
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    color: var(--strapi-neutral-500);
   }
 
   &.footer--dark {
-    --ifm-footer-background-color: var(--strapi-neutral-700);
-    --ifm-footer-link-hover-color: var(--strapi-neutral-0);
+    --ifm-footer-background-color: transparent;
+    // --ifm-footer-link-hover-color: var(--strapi-neutral-0);
+  }
+
+  &__link-item {
+    margin-bottom: 4px;
+    display: inline-block;
+
+    svg {
+      display: none;
+    }
   }
 }
 
-/** Dark mode */
-@include dark {
+@include medium-up {
   .footer {
-    &.footer--dark {
-      --ifm-footer-background-color: var(--strapi-neutral-150);
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100%;
     }
+
+    &::after {
+      content: '';
+      background: url('/img/logo-v5.png') no-repeat;
+      background-size: contain;
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      width: 152px;
+      height: 100px;
+    }
+
+    .container {
+      margin-left: 280px;
+      margin-top: 0;
+      padding: 16px;
+    }
+  }
+}
+
+@include small-down {
+  .footer {
+    --custom-mobile-footer-px: 16px;
+    --custom-mobile-footer-py: 25px;
+    padding-top: var(--custom-mobile-footer-py);
+    padding-left: var(--custom-mobile-footer-px);
+    padding-right: var(--custom-mobile-footer-px);
+    padding-bottom: 0;
+
+    &::after {
+      left: var(--custom-mobile-footer-px);
+      top: var(--custom-mobile-footer-py);
+    }
+
+    .container {
+      display: block;
+      width: calc(100vw - 2 * var(--custom-mobile-footer-px)) !important;
+      max-width: calc(100vw - 2 * var(--custom-mobile-footer-px)) !important;
+      margin: 45px 0 0 0;
+
+      .row, .col {
+        width: 100%;
+      }
+
+      .col:not(:last-of-type) {
+        margin-bottom: 20px;
+      }
+
+      .col:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@include small-to-medium {
+  .footer .container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: var(--custom-mobile-footer-py);
+    padding-left: var(--custom-mobile-footer-px);
+    padding-right: var(--custom-mobile-footer-px);
+    padding-bottom: 0;
+  }
+
+  .footer .row {
+    width: 100%;
+  }
+
+  .footer .col {
+    max-width: 50%;
+  }
+}
+
+@include dark {
+  .footer::after {
+    content: '';
+    background: url('/img/logo-v5-dark.png') no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 152px;
+    height: 100px;
   }
 }

@@ -1,15 +1,25 @@
 /** Component: Code Block */
 
 :root {
-  --custom-code-block-background-color: var(--strapi-neutral-1000);
-  --custom-code-block-background-color-highlighted: var(--strapi-neutral-800);
-  --custom-code-block-color: var(--strapi-neutral-0);
-  --custom-code-block-comment-color: var(--strapi-neutral-400);
+  --custom-code-block-background-color: var(--strapi-neutral-0);
+  --custom-code-block-background-color-highlighted: var(--strapi-neutral-500);
+  --custom-code-block-color: var(--strapi-neutral-800);
+  --custom-code-block-comment-color: var(--strapi-neutral-500);
   --custom-code-block-key-color: var(--strapi-success-300);
-  --custom-code-block-number-color: var(--strapi-success-500);
-  --custom-code-block-punctuation-color: var(--strapi-primary-200);
-  --custom-code-block-property-color: var(--strapi-success-200);
+  --custom-code-block-keyword-color: var(--strapi-success-700);
+  --custom-code-block-number-color: var(--strapi-success-600);
+  --custom-code-block-punctuation-color: var(--strapi-neutral-800);
+  --custom-code-block-property-color: var(--strapi-success-600);
+  --custom-code-block-parameter-color: var(--strapi-neutral-800);
+  --custom-code-block-literal-property-color: var(--strapi-secondary-600);
   --custom-code-block-value-color: var(--strapi-neutral-0);
+  --custom-code-block-string-color: var(--strapi-primary-600);
+  --custom-code-block-function-color: var(--strapi-alternative-600);
+  --custom-code-block-plain-color: var(--strapi-neutral-800);
+  --custom-code-block-font-size: var(--strapi-font-size-sm);
+  --custom-code-block-line-height: var(--strapi-line-height-sm);
+  --custom-code-block-title-font-family: font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --custom-code-block-border-color: var(--strapi-neutral-200);
 }
 
 pre {
@@ -18,6 +28,8 @@ pre {
 
   background: var(--custom-code-block-background-color);
   color: var(--custom-code-block-color);
+  font-size: var(--custom-code-block-font-size);
+  line-height: var(--custom-code-block-line-height);
 
   code {
     --ifm-code-border-radius: 6px;
@@ -42,11 +54,24 @@ pre,
 
   --prism-background-color: var(--custom-code-block-background-color) !important;
   --prism-color: var(--custom-code-block-color);
+  border-radius: var(--strapi-spacing-1);
+  box-shadow: none;
+}
+
+.theme-code-block {
+  border: solid 1px var(--custom-code-block-border-color);
+
+  &-highlighted-line [class*="codeLineNumber"] {
+    background-color: #E5E5E5;
+  }
 }
 
 pre.prism-code {
   code {
     .token {
+      color: var(--strapi-neutral-800);
+      // TODO: define syntax coloring
+
       &.comment {
         color: var(--custom-code-block-comment-color) !important;
         font-style: italic;
@@ -61,16 +86,44 @@ pre.prism-code {
       }
 
       &.plain {
-        color: var(--custom-code-block-value-color) !important;
+        color: var(--custom-code-block-plain-color) !important;
       }
 
       &.property {
         color: var(--custom-code-block-property-color) !important;
       }
 
+      &.string {
+        color: var(--custom-code-block-string-color) !important;
+      }
+
+      &.method,
+      &.property-access,
+      &.function {
+        color: var(--custom-code-block-function-color) !important;
+      }
+
+      &.keyword {
+        color: var(--custom-code-block-keyword-color) !important;
+        font-style: italic;
+      }
+
+      &.literal-property {
+        color: var(--custom-code-block-literal-property-color) !important;
+      }
+
+      &.parameter {
+        color: var(--custom-code-block-parameter-color) !important;
+      }
+
       &.operator,
       &.punctuation {
         color: var(--custom-code-block-punctuation-color) !important;
+      }
+
+      &.class-name,
+      &.known-class-name {
+        color: var(--custom-code-block-plain-color) !important;
       }
     }
   }
@@ -79,8 +132,7 @@ pre.prism-code {
 .api-call {
   .theme-code-block {
     [class*="highlighted-line"] {
-      // background-color: var(--custom-code-block-background-color-highlighted);
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: var(--custom-code-block-background-color-highlighted);
     }
   }
 }
@@ -89,54 +141,208 @@ pre.prism-code {
   &[class*="codeBlockContainer"],
   [class*="codeBlockContainer"] {
     background: var(--custom-code-block-background-color);
+
+    &:not(:has([class*="codeBlockTitle"])) {
+      padding: 24px !important;
+      box-shadow: none !important;
+
+      .prism-code {
+        background-color: white !important;
+        // TODO fix by finding a better way
+
+        code {
+          padding: 0;
+        }
+      }
+    }
   }
 
-  [class*="highlighted-line"] {
-    background-color: var(--custom-code-block-background-color-highlighted);
-  }
-
-  [class*="codeBlockTitle"],
-  pre, pre code {
-    --ifm-code-font-size: 81.25%;
-  }
-
-  /** Title element */
   [class*="codeBlockTitle"] {
     border-bottom: none;
-    color: var(--strapi-neutral-400);
-    font-family: var(--custom-code-font-family);
-    padding-bottom: 0;
+    color: var(--strapi-neutral-800);
+    font-family: var(--custom-code-block-title-font-family);
+    background-color: var(--strapi-neutral-100);
+    border-bottom: solid 1px var(--custom-code-block-border-color);
+    position: relative;
 
-    &:before {
-      content: " ";
-      display: inline-block;
-      vertical-align: middle;
-      width: 1rem;
-      height: 1rem;
-      margin: -0.1rem 0.5rem 0 -0.1rem;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1rem' height='1rem' viewBox='0 0 24 33'%3E%3Cpath fill='%23A5A5BA' fill-rule='evenodd' d='m16.39.749 6.915 7.377A2.59 2.59 0 0 1 24 9.877v19.638c0 1.381-1.042 2.493-2.337 2.493H2.337C1.042 32.008 0 30.896 0 29.515V2.5C0 1.827.253 1.22.695.75 1.137.277 1.705.008 2.337.008h12.41c.6 0 1.2.27 1.643.74Zm.473 7.983h5.116L15.82 2.197V7.62c0 .607.474 1.112 1.042 1.112ZM2.337 30.559h19.326c.537 0 .98-.471.98-1.044V10.18h-5.78c-1.326 0-2.4-1.145-2.4-2.56V1.456H2.337a.949.949 0 0 0-.695.303c-.19.203-.284.472-.284.741v27.015c0 .573.442 1.044.979 1.044Zm3.358-5.248h12.442c.379 0 .695.326.726.718 0 .392-.316.718-.694.718H5.695c-.38 0-.695-.326-.695-.718 0-.392.316-.718.695-.718Zm12.442-5.287H5.695c-.38 0-.695.327-.695.718 0 .392.316.718.695.718h12.474c.378 0 .694-.326.694-.718 0-.391-.347-.718-.726-.718ZM5.695 14.738h12.442c.379 0 .726.326.726.718 0 .391-.316.718-.694.718H5.695c-.38 0-.695-.327-.695-.718 0-.392.316-.718.695-.718Z' clip-rule='evenodd'%3E%3C/path%3E%3C/svg%3E");
-      background-position: left center;
-      background-repeat: no-repeat;
+    &:before { // file icon from Phosphor icons
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM152,88V44l44,44Z'%3E%3C/path%3E%3C/svg%3E");
+      position: relative;
+      top: 3px;
+      margin-right: 8px;
+    }
+  }
+
+  [class*="codeLineNumber"] {
+    position: relative;
+    left: 6px;
+
+    &::before {
+      color: var(--strapi-neutral-800);
     }
 
-    + [class*="codeBlockContent"] pre code {
-      padding-top: 0;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      margin-left: 24px;
+      background-color: var(--strapi-neutral-200);
+    }
+  }
+
+  [class*="codeBlockLines"] {
+    border: none;
+    position: relative;
+  }
+
+
+  [class*="codeBlockContent"] {
+    border-radius: 0;
+    border-color: transparent;
+    border: none;
+
+    pre.prism-code {
+      background-color: var(--strapi-neutral-0) !important;
+    }
+  }
+
+  [class*="codeLineContent"] {
+    margin-left: 32px;
+  }
+
+  .clean-btn {
+    background-color: white;
+    position: relative;
+    top: -12px;
+
+    svg {
+      color: black;
+    }
+  }
+
+  &:has([class*="codeBlockTitle"]) {
+    .clean-btn {
+      top: -50px;
+    }
+
+    [class*="codeBlockLines"] {
+      border: none;
+      position: relative;
+    }
+
+    /**
+     * Fix style when lines are wrapped
+     * No class is added by the JS code of the button;
+     * Instead, the button adds inline style,
+     * so we're targetting this style
+     */
+    [style*="pre-wrap"] {
+      [class*="codeLineContent"] {
+        display: inline-block;
+        margin-left: 54px;
+      }
+
+      [class*="codeLineNumber"] {
+        position: relative;
+        left: 6px;
+
+        &::before { // line number
+          color: var(--strapi-neutral-800);
+          top: 0px;
+          position: absolute;
+          right: 0px;
+        }
+
+        &::after { // border in the gutter
+          content: '';
+          position: absolute;
+          width: 1px;
+          height: 100%;
+          margin-left: 40px;
+          background-color: var(--strapi-neutral-200);
+        }
+      }
+    }
+
+    [class*="codeBlockLines"]:has([class*="codeLineNumber"]) {
+      /**
+       * Adding border below title to simulate border continuity
+       * because each code line has its own 'gutter' border
+       */
+      &::after {
+        content: '';
+        width: 1px;
+        height: 20px;
+        background-color: var(--strapi-neutral-200);
+        position: absolute;
+        top: -4px;
+        left: 62px
+      }
     }
   }
 }
 
+@include medium-down {
+  [class*="buttonGroup"],
+  [class*="buttonGroup"] .clean-btn {
+    opacity: 1;
+  }
+
+  [class*="codeBlockTitle"] {
+    padding-right: 84px;
+  }
+}
 
 /** Dark theme */
 @include dark {
-  --custom-code-block-background-color: var(--strapi-neutral-100);
-  --custom-code-block-background-color-highlighted: var(--strapi-neutral-150);
+  --custom-code-block-background-color: transparent;
+  --custom-code-block-background-color-highlighted: var(--strapi-neutral-300);
   --custom-code-block-color: var(--strapi-neutral-1000);
   --custom-code-block-punctuation-color: var(--strapi-primary-200);
   --custom-code-block-value-color: var(--strapi-neutral-900);
+  --custom-code-block-keyword-color: var(--strapi-code-purple);
+  --custom-code-block-number-color: var(--strapi-code-green);
+  --custom-code-block-property-color: var(--strapi-code-light-green);
+  --custom-code-block-literal-property-color: var(--strapi-code-light-green);
+  --custom-code-block-string-color: var(--strapi-code-rose);
+  --custom-code-block-function-color: var(--strapi-code-fluo-green);
 
   pre,
   .theme-code-block {
     --ifm-scrollbar-track-background-color: var(--strapi-neutral-200);
     --ifm-scrollbar-thumb-background-color: var(--strapi-neutral-300);
+  }
+
+  .clean-btn {
+    background-color: var(--strapi-neutral-100);
+
+    svg {
+      color: var(--strapi-neutral-900);
+    }
+  }
+
+  .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      &:not(:has([class*="codeBlockTitle"])) {
+        .prism-code {
+          background-color: var(--strapi-neutral-0) !important;
+          // TODO fix by finding a better way
+        }
+      }
+    }
+    &-highlighted-line [class*="codeLineNumber"] {
+      background-color: #11111B;
+    }
+  }
+
+  .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      &:not(:has([class*="codeBlockTitle"])) {
+        border: solid 1px var(--strapi-neutral-200);
+      }
+    }
   }
 }

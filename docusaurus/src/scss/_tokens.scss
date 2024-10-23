@@ -23,7 +23,18 @@
   --strapi-font-size-sm: 0.875rem;    // 14px
   --strapi-font-size-md: 1rem;        // 16px
   --strapi-font-size-lg: 1.125rem;    // 18px
-  --strapi-font-size-xl: 2rem;        // 32px
+  --strapi-font-size-xl: 1.5rem;      // 24px
+  --strapi-font-size-xxl: 1.75rem;    // 28px
+  --strapi-font-size-xxxl: 2rem;      // 32px
+
+  --strapi-line-height-xs: 1rem;      // 16px
+  --strapi-line-height-ssm: 1.125rem; // 18px
+  --strapi-line-height-sm: 1.25rem;   // 20px
+  --strapi-line-height-md: 1.5rem;    // 24px
+  --strapi-line-height-lg: 1.75rem;   // 28px
+  --strapi-line-height-xl: 2rem;      // 32px
+  --strapi-line-height-xxl: 2.25rem;  // 36px
+  --strapi-line-height-xxxl: 2.5rem;  // 40px
 
   /** Color: Neutral */
   --strapi-neutral-1000: #181826;
@@ -86,6 +97,7 @@
   /** Color: Code */
   --strapi-code-fluo-green: #50FA7B;
   --strapi-code-green: #50FA7B;
+  --strapi-code-light-green: #C6F0E2;
   --strapi-code-rose: #FF79C6;
   --strapi-code-purple: #BD93F9;
   --strapi-code-dark-blue: #6272A4;
@@ -119,4 +131,5 @@
 
   /** Dark Color: Primary */
   --strapi-primary-600: #7B79FF;
+  --strapi-primary-100: #181826;
 }

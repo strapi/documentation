@@ -2,17 +2,26 @@
 table {
   min-width: 100%;
   overflow: auto;
+  border-radius: 4px;
 
   thead {
     --ifm-table-background: transparent;
     --ifm-table-stripe-background: transparent;
+    --ifm-table-head-font-weight: 600;
 
     tr {
       border-bottom-width: 1px;
+      text-align: left;
 
       th {
         --ifm-table-head-background: transparent;
       }
     }
+  }
+
+  code {
+    font-size: var(--strapi-font-size-ssm);
+    line-height: var(--strapi-font-size-ssm);
+    padding: 4px;
   }
 }
