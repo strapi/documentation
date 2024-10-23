@@ -110,7 +110,7 @@ function renderComponent(parent: Node, component: Data.Component) {
 
 When manipulating known entities, it is possible to parametrize `Data` types for better type safety and intellisense.
 
-#### Known Documents
+#### Known documents
 
 ```typescript
 const ALL_CATEGORIES = ['food', 'tech', 'travel'];
