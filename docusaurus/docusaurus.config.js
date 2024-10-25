@@ -65,6 +65,10 @@ const config = {
       async: true,
     },
     {
+      src: '/js/ext-signals.js',
+      async: true,
+    },
+    {
       /**
        * Kapa AI widget script and parameters
        * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
