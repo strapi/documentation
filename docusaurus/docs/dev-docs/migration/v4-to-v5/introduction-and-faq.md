@@ -51,10 +51,6 @@ Strapi 5 docs also provide a [complete breaking changes database](/dev-docs/migr
 <details style={detailsStyle}>
 <summary style={summaryStyle}>As a Strapi Cloud customer, how can I handle the entire upgrade and deployment of my Strapi 5 application?</summary>
 
-:::danger Warning: Don't push a Strapi 5 project to Strapi Cloud yet
-Strapi Cloud is still running on Strapi v4. The following process is provided as an indication of what will happen when Strapi 5 is released as a stable version. Do not try to push your Strapi 5 beta or  Release Candidate (RC) project to Strapi Cloud yet.
-:::
-
 1. [Create a backup](/cloud/projects/settings#backups) and update your code locally, following the <a href="/dev-docs/migration/v4-to-v5/step-by-step">step-by-step guide</a>.
 2. Run the `yarn deploy` or `npm run deploy` commands from the [Cloud CLI](/cloud/cli/cloud-cli).<br/>
 
