@@ -2,41 +2,62 @@
 
 :root {
   --custom-heading-decorative-line-color: var(--strapi-neutral-150);
+  color: var(--strapi-neutral-700);
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  --ifm-heading-color: var(--strapi-neutral-900);
+  --ifm-heading-color: var(--strapi-neutral-800);
   --ifm-heading-font-weight: 600;
   --ifm-code-font-size: 70%;
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 h1, .markdown h1:first-child {
-  --ifm-h1-font-size: 35px;
-  // --ifm-heading-line-height: 24px; // not good
+  --ifm-h1-font-size: var(--strapi-font-size-xxxl);
+  font-size: var(--strapi-font-size-xxxl);
+  line-height: var(--strapi-line-height-xxxl);
 }
 
 h2, .markdown > h2 {
-  --ifm-h2-font-size: 26px;
-  // --ifm-heading-line-height: 24px; // not good
+  --ifm-h2-font-size: var(--strapi-font-size-xxl);
+  font-size: var(--strapi-font-size-xxl);
+  --ifm-heading-line-height: var(--strapi-line-height-xxl);
+  line-height: var(--strapi-line-height-xxl);
+  padding-top: 24px;
+}
+
+h2 + p, .markdown > h2 + p {
+  padding-top: 6px;
+}
+
+h2 + table, .markdown > h2 + table {
+  padding-top: -2px;
+}
+
+h2 + img, .markdown > h2 + img {
+  padding-top: 28px;
 }
 
 h3, .markdown > h3 {
-  --ifm-h3-font-size: var(--strapi-font-size-lg);
+  --ifm-h3-font-size: var(--strapi-font-size-xl);
+  font-size: var(--strapi-font-size-xl);
+  line-height: var(--strapi-line-height-xl);
+  padding-bottom: 0;
   @include flex-row;
 }
 
-h2 {
-  position: relative;
+h4, .markdown > h4 {
+  --ifm-h3-font-size: var(--strapi-font-size-lg);
+  line-height: var(--strapi-line-height-lg);
+}
 
-  &:after {
-    content: " ";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -10px;
-    height: 1px;
-    background-color: var(--custom-heading-decorative-line-color);
-  }
+p {
+  color: var(--strapi-neutral-700);
 }
 
 p, ul {
@@ -44,6 +65,14 @@ p, ul {
     display: inline-block;
     vertical-align: text-bottom;
   }
+}
+
+.markdown li {
+  padding-bottom: 4px;
+}
+
+.markdown a {
+  font-weight: 600;
 }
 
 /** Dark mode */

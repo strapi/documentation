@@ -9,3 +9,17 @@
     }
   }
 }
+
+@include medium-up {
+  .pagination-nav__link {
+    &--prev {
+      position: relative;
+      left: -16px;
+    }
+
+    &--next {
+      position: relative;
+      right: -16px;
+    }
+  }
+}

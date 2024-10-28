@@ -1,7 +1,7 @@
 ---
 displayed_sidebar: userDocsSidebar
 description: The Strapi User Guide contains the functional documentation related to all features available in the main navigation of your Strapi application.
-sidebar_label: Welcome!
+# sidebar_label: Welcome!
 tags:
 - admin panel
 - guides

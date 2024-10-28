@@ -31,6 +31,8 @@
 
   p {
     font-size: var(--strapi-font-size-sm);
+    font-weight: 400;
+    line-height: var(--strapi-line-height-sm);
 
     &:last-of-type {
       margin-bottom: 0;

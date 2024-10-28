@@ -1,6 +1,6 @@
 ---
 title: React
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Integrate Strapi with React.
 ---
 

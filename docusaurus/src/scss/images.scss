@@ -1,10 +1,16 @@
 /** General: Images */
 
 /** Dark Mode images border */
-.theme-doc-markdown.markdown [class*="themedImage--dark"] {
-  border: 0.125rem solid var(--strapi-neutral-200);
-  border-radius: 0.25rem;
+.theme-doc-markdown.markdown [class*="themedImage--dark"],
+.theme-doc-markdown.markdown [class*="themedComponent"] {
+  border: solid 1px var(--strapi-neutral-200);
+  border-radius: 4px;
 }
+
+.markdown img:not([src^="data:image/svg+xml"]) {
+  margin-bottom: 26px;
+}
+
 
 img[src^="data:image/svg+xml"] {
   width: 16px;

@@ -1,17 +1,79 @@
-/** Component: Feature Badges (alpha, beta) */
+/** Component: Badges (alpha, beta, plans, feature flags, new/updated…) */
+@mixin badge-tooltip {
+  --custom-badge-tooltip-width: 220px;
+  font-weight: 400;
+  visibility: hidden;
+  width: var(--custom-badge-tooltip-width);
+  background-color: var(--custom-badge-tooltip-background-color);
+  color: var(--custom-badge-tooltip-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: calc(-1 * var(--custom-badge-tooltip-width) / 2);
+  text-transform: initial;
+  font-size: var(--strapi-font-size-ssm);
+  line-height: var(--strapi-line-height-sm);
+
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
+  }
+}
+
+@mixin badge-content-tooltip {
+  font-weight: 400;
+  visibility: hidden;
+  background-color: var(--custom-badge-tooltip-background-color);
+  color: var(--custom-badge-tooltip-color);
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  width: var(--custom-badge-content-tooltip-width);
+  margin-left: calc(-1 * var(--custom-badge-content-tooltip-width) / 2);
+  text-transform: initial;
+  font-size: var(--strapi-font-size-ssm);
+  line-height: var(--strapi-font-size-sm);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--custom-badge-tooltip-background-color) transparent transparent transparent;
+  }
+}
 
 .badge {
   --custom-badge-background-color: var(--strapi-neutral-200);
   --custom-badge-color: var(--strapi-neutral-800);
-  --custom-badge-font-size: var(--strapi-font-size-sm);
+  --custom-badge-font-size: var(--strapi-font-size-xxs);
+  --custom-badge-line-height: var(--strapi-line-height-xs);
 
   --custom-selection-background-color: var(--custom-badge-color);
 
   --ifm-badge-background-color: var(--custom-badge-background-color);
   --ifm-badge-color: var(--custom-badge-color);
   --ifm-badge-border-radius: var(--strapi-spacing-1);
-  --ifm-badge-padding-horizontal: var(--strapi-spacing-2);
-  --ifm-badge-padding-vertical: var(--strapi-spacing-2);
+  --ifm-badge-padding-horizontal: 7px;
+  --ifm-badge-padding-vertical: 6px;
 
   --ifm-font-weight-bold: var(--strapi-font-size-sm);
   --ifm-link-color: var(--ifm-badge-color);
@@ -20,57 +82,99 @@
   position: relative;
   top: var(--custom-badge-inside-titles-top);
   font-size: var(--custom-badge-font-size);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.3px;
   text-align: center;
+  text-transform: uppercase;
+  border: 1px solid var(--custom-badge-border-color);
+  margin-bottom: 6px;
+
+  a {
+    text-decoration: none;
+  }
+
+  .strapi-icons {
+    margin-right: 6px;
+    font-size: 12px;
+    position: relative;
+    top: 1px;
+  }
 
   &-link {
-    font-weight: 400;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  & + .badge {
+    margin-left: 2px;
+  }
+
+  &--alpha,
+  &--beta,
+  &--version {
+    height: 27px;
+    position: relative;
+    padding-top: 8px;
+    font-weight: 600;
   }
 
   &--alpha {
-    --custom-badge-background-color: rgb(255,230,228);
-    --custom-badge-color: rgb(219, 0, 22);
+    --custom-badge-background-color: var(--strapi-warning-100);
+    --custom-badge-color: var(--strapi-warning-600);
+    --custom-badge-border-color: var(--strapi-warning-200);
   }
 
   &--beta {
-    --custom-badge-background-color: rgb(246, 228, 253);
-    --custom-badge-color: rgb(160,25,240);
+    --custom-badge-background-color: var(--strapi-secondary-100);
+    --custom-badge-color: var(--strapi-secondary-600);
+    --custom-badge-border-color: var(--strapi-secondary-200);
   }
 
-  &--future {
-    --custom-badge-background-color: var(--strapi-danger-200);
-    --custom-badge-color: rgb(219, 0, 22);
+  &--version {
+    --custom-badge-background-color: var(--strapi-neutral-100);
+    --custom-badge-color: var(--strapi-neutral-600);
+    --custom-badge-border-color: var(--strapi-neutral-200);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+    --custom-badge-tooltip-color: var(--strapi-neutral-600);
+  }
+
+  &--featureflag {
+    --custom-badge-background-color: var(--strapi-alternative-100);
+    --custom-badge-color: var(--strapi-alternative-600);
+    --custom-badge-border-color: var(--strapi-alternative-200);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
   }
 
   &--enterprise {
-    --custom-badge-background-color: rgb(255, 241, 209);
-    --custom-badge-color: rgb(229, 136, 41);
+    --custom-badge-background-color: var(--strapi-warning-600);
+    --custom-badge-color: var(--strapi-neutral-0);
+    --custom-badge-tooltip-background-color: var(--strapi-warning-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--strapicloudpro {
-    --custom-badge-background-color: rgb(55, 34, 254);
+  &--pro {
+    --custom-badge-background-color: var(--strapi-primary-600);
     --custom-badge-color: #fff;
+    --custom-badge-tooltip-background-color: var(--strapi-primary-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--strapicloudteam {
+  &--team {
     --custom-badge-background-color: rgb(154, 53, 242);
     --custom-badge-color: #fff;
+    --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--strapiclouddev {
-    --custom-badge-background-color: rgb(44,170,73);
+  &--developer {
+    --custom-badge-background-color: var(--strapi-success-600);
     --custom-badge-color: #fff;
+    --custom-badge-tooltip-background-color: var(--strapi-success-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--new {
-    --custom-badge-background-color: var(--strapi-warning-100);
-    --custom-badge-border-color: var(--strapi-warning-200);
-    --custom-badge-color: var(--strapi-warning-700);
-
-    --ifm-badge-padding-horizontal: 2px;
-    --ifm-badge-padding-vertical: 2px;
-
+  &--content {
+    height: 20px;
     font-weight: 500;
     font-size: 12px;
     line-height: 20px;
@@ -80,32 +184,280 @@
     border: 1px solid var(--custom-badge-border-color);
   }
 
+  &--new {
+    --custom-badge-background-color: var(--strapi-alternative-100);
+    --custom-badge-border-color: var(--strapi-alternative-200);
+    --custom-badge-color: var(--strapi-alternative-600);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+    --custom-badge-content-tooltip-width: 130px;
+
+    --ifm-badge-padding-horizontal: 2px;
+    --ifm-badge-padding-vertical: 2px;
+  }
 
   &--updated {
     --custom-badge-background-color: var(--strapi-secondary-100);
     --custom-badge-border-color: var(--strapi-secondary-200);
     --custom-badge-color: var(--strapi-secondary-600);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+    --custom-badge-content-tooltip-width: 120px;
 
     --ifm-badge-padding-horizontal: 2px;
     --ifm-badge-padding-vertical: 2px;
 
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 20px;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-    min-width: 52px;
-    border: 1px solid var(--custom-badge-border-color);
     flex-shrink: 0;
   }
 }
 
+/**
+ * New/updated badges in main content gutter
+ */
+main .badge--content {
+  position: absolute;
+  left: -36px;
+  min-width: 0;
+  max-width: 22px;
+
+  .badge__text {
+    display: none;
+  }
+
+  .strapi-icons {
+    left: 2px;
+    top: -2px;
+  }
+
+  .badge__tooltip {
+    @include badge-content-tooltip();
+  }
+
+  &.badge--updated {
+    .badge__tooltip {
+      --custom-badge-tooltip-background-color: var(--strapi-secondary-100);
+      --custom-badge-tooltip-color: var(--strapi-secondary-600);
+    }
+  }
+  &.badge--new {
+    .badge__tooltip {
+      --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
+      --custom-badge-tooltip-color: var(--strapi-alternative-600);
+    }
+  }
+  &:hover .badge__tooltip {
+    visibility: visible;
+  }
+}
+
+main .badge--featureflag,
+main .badge--developer,
+main .badge--team,
+main .badge--pro,
+main .badge--enterprise,
+main .badge--version {
+  .badge__tooltip {
+    @include badge-tooltip();
+  }
+  &:hover .badge__tooltip {
+    visibility: visible;
+  }
+}
+
+main .badge--featureflag .badge__tooltip {
+  --custom-badge-tooltip-width: 190px !important;
+}
+main .badge--version .badge__tooltip {
+  --custom-badge-tooltip-width: 200px !important;
+}
+
+main h1:has(.badge--content),
+main h2:has(.badge--content),
+main h3:has(.badge--content),
+main h4:has(.badge--content),
+main .theme-admonition:has(.badge--content),
+main .badge--content + img,
+main [class*="tabItem"]:has(.badge--content),
+main [class*="collapsibleContent"]:has(.badge--content),
+main .badge--content:has( + [class*="codeBlockContainer"]),
+main .badge--content:has(+ table) + table,
+main p:has(.badge--content) {
+  position: relative;
+}
+
+main h1:has(.badge--content) .badge--content {
+  top: 6px;
+}
+main h2:has(.badge--content) .badge--content {
+  top: 30px;
+}
+main h3:has(.badge--content) .badge--content {
+  top: 4px;
+}
+main h4:has(.badge--content) .badge--content {
+  top: 2px;
+}
+main .theme-admonition:has(.badge--content) .badge--content {
+  top: -4px;
+}
+main [class*="collapsibleContent"]:has(.badge--content) .badge--content {
+  top: 20px;
+  left: -60px;
+}
+main p:has(+ .badge--content + [class*="codeBlockContainer"]) {
+  margin-bottom: 0;
+}
+main .badge--content + img {
+  position: relative;
+  top: -12px;
+}
+main .badge--content:has(+ img) {
+  position: relative;
+  top: 12px;
+}
+/**
+ * Adjustments for code blocks as we can't rely on child elements positioning
+ */
+main .badge--content:has(+ [class*="codeBlockContainer"]) {
+  top: 42px;
+}
+main [class*="tabItem"] .badge--content + [class*="codeBlockContainer"] {
+  position: relative;
+  top: -26px !important;
+}
+main [class*="tabItem"] .badge--content:has(+ [class*="codeBlockContainer"]) {
+  top: 0;
+}
+/**
+ * Adjustments for tables as we can't rely on table-based positioning
+ */
+main .badge--content:has(+ table) {
+  position: relative;
+  top: 26px;
+}
+// Adjustment for when the sidebar is collapsed
+[class*="docSidebarContainerHidden"] ~ main .badge--content:has(+ table) {
+  left: 210px;
+}
+
+/**
+ * New/updated badges in TOC (sidebar)
+ */
+.menu .badge--content {
+  > span {
+    position: relative;
+    top: -3px;
+  }
+  .badge__text {
+    font-size: var(--strapi-font-size-xxs);
+    font-weight: 600;
+    position: relative;
+    right: 2px;
+  }
+  .badge--new {
+    min-width: 57px;
+  }
+  .badge--updated {
+    min-width: 84px;
+  }
+  .strapi-icons {
+    left: 1px;
+  }
+  .badge__tooltip {
+    display: none;
+  }
+}
+.menu__link:has(.badge--content) {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .badge--content {
+    margin-left: 8px;
+  }
+}
+
+/**
+ * Spacing adjustments
+ */
 h1 .badge {
   --custom-badge-inside-titles-top: -.4em;
 }
-
 h2 .badge {
   --custom-badge-inside-titles-top: -.3em;
+}
+
+.badge + p {
+  margin-top: 48px;
+}
+.theme-admonition {
+  .badge + p {
+    margin-top: 0;
+  }
+}
+
+/**
+ * On mobile, badges can not necessarily
+ * be shown in the gutter, because there is not enough
+ * space, so we adjust their position
+ */
+
+@media (max-width: 720px) {
+  main h1:has(.badge--content),
+  main h2:has(.badge--content),
+  main h3:has(.badge--content),
+  main h4:has(.badge--content),
+  main .theme-admonition:has(.badge--content),
+  main .badge--content + img,
+  main [class*="tabItem"]:has(.badge--content),
+  main [class*="collapsibleContent"]:has(.badge--content),
+  main .badge--content:has( + [class*="codeBlockContainer"]),
+  main .badge--content:has(+ table) + table,
+  main p:has(.badge--content) {
+    .badge--content {
+      position: relative;
+      right: 0;
+      left: initial;
+      top: 0;
+    }
+  }
+  main p:has(.badge--content) .badge--content {
+    margin-right: 6px;
+  }
+  main .theme-admonition:has(.badge--content) .badge--content {
+    top: 2.3em;
+    left: -2.2em;
+  }
+  .badge__tooltip {
+    position: absolute !important;
+    right: 0;
+    min-width: 100%;
+
+  }
+
+  .badge--updated,
+  .badge--new {
+    .badge__tooltip {
+      // hide the "bubble" arrow on mobile for these
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  /**
+   * Display new/updated badges toolitps
+   * on the right of the badge on screens smaller than 720px
+   * instead of on top for larger screens
+   */
+  .badge--updated .badge__tooltip {
+    min-height: 44px;
+    left: 85px !important;
+    top: -60%;
+  }
+  .badge--new .badge__tooltip {
+    min-height: 28px;
+    left: 90px !important;
+    top: -25%;
+  }
 }
 
 /** Dark mode */
@@ -113,13 +465,62 @@ h2 .badge {
   .badge {
     &--new {
       --custom-badge-background-color: var(--strapi-neutral-100);
-      --custom-badge-border-color: var(--strapi-warning-500);
-      --custom-badge-color: var(--strapi-warning-500);
+      --custom-badge-color: var(--strapi-alternative-500);
     }
     &--updated {
       --custom-badge-background-color: var(--strapi-neutral-100);
-      --custom-badge-border-color: var(--strapi-secondary-500);
-      --custom-badge-color: var(--strapi-secondary-500);
+      --custom-badge-color: var(--strapi-secondary-200);
+    }
+    &--new,
+    &--updated {
+      --custom-badge-border-color: var(--strapi-neutral-200);
+
+      .badge__tooltip {
+        --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+        --custom-badge-tooltip-color: var(--strapi-neutral-800);
+      }
+
+      .strapi-icons {
+        color: var(--strapi-neutral-1000) !important;
+      }
+    }
+    &--enterprise {
+      --custom-badge-color: var(--strapi-neutral-1000);
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-warning-100);
+    }
+    &--alpha,
+    &--beta,
+    &--featureflag,
+    &--version {
+      --custom-badge-background-color: var(--strapi-neutral-100);
+      --custom-badge-border-color: var(--strapi-neutral-200);
+    }
+    &--beta {
+      --custom-badge-color: var(--strapi-secondary-200);
+    }
+    &--featureflag {
+      --custom-badge-color: var(--strapi-alternative-500);
+      --custom-badge-tooltip-color: var(--strapi-alternative-100);
+      .strapi-icons {
+        color: var(--strapi-alternative-200) !important;
+      }
+    }
+    &--pro {
+      --custom-badge-background-color: #4945FF;
+      --custom-badge-tooltip-color: var(--strapi-primary-200);
+    }
+    &--developer {
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-success-100);
+    }
+    &--team {
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-alternative-100);
+    }
+    &--version {
+      --custom-badge-color: var(--strapi-neutral-400);
+      --custom-badge-tooltip-color: var(--strapi-neutral-700);
     }
   }
 }

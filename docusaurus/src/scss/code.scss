@@ -6,6 +6,7 @@
   --custom-code-border-radius: var(--strapi-spacing-1);
   --custom-code-color: var(--strapi-primary-600);
   --custom-code-font-size: 81.25%;
+  --custom-code-font-size: var(--strapi-font-size-sm);
   --custom-code-font-family:
     "SFMono-Regular",
     "Menlo",
@@ -40,6 +41,7 @@ h1, h2, h3, li, p, table {
     background-color: var(--custom-code-background-color);
     border-color: var(--custom-code-border-color);
     color: var(--custom-code-color);
+    padding: 2px 4px;
   }
 
   a code {
@@ -68,14 +70,17 @@ table {
     --custom-code-color: var(--strapi-neutral-800);
   }
 
-  pre code {
+  pre code,
+  code {
     --custom-code-color: var(--strapi-neutral-1000);
+    --custom-code-background-color: var(--strapi-neutral-150);
+    --custom-code-border-color: var(--strapi-neutral-600) !important;
   }
 
   h1, h2, h3, li, p, table {
     a code {
       --custom-code-background-color: var(--strapi-neutral-150);
-      --custom-code-border-color: var(--strapi-neutral-200);
+      --custom-code-border-color: var(--strapi-neutral-600);
       --custom-code-color: var(--strapi-primary-600);
 
       text-decoration: none;

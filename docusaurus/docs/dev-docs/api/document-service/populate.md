@@ -1,7 +1,7 @@
 ---
 title: Using Populate with the Document Service API
 description: Use Strapi's Document Service API to populate or select some fields.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - Components
 - Content API

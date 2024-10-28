@@ -25,10 +25,11 @@ Adding entries to a [release](/user-docs/releases/introduction) allow viewing th
 From a release page, you can:
 
 - edit the release, to update its name or schedule it, or delete the release,
-<!-- - [adjust the view](#choose-how-entries-are-grouped) to display entries grouped either by locale or by content-type, -->
 - decide whether an entry will be published or unpublished with the release,
-<!-- - edit a specific entry or [remove](#remove-entries-from-a-release) it from the release, -->
 - and publish the release.
+
+<!-- - [adjust the view](#choose-how-entries-are-grouped) to display entries grouped either by locale or by content-type, -->
+<!-- - edit a specific entry or [remove](#remove-entries-from-a-release) it from the release, -->
 
 :::caution
 Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.

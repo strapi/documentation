@@ -1,7 +1,7 @@
 ---
 title: Backend Customization Examples Cookbook
 description: Learn how to use the core backend features of Strapi with the FoodAdvisor deployment
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/backend-customization
 pagination_next: dev-docs/backend-customization/examples/authentication
 ---

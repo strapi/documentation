@@ -1,7 +1,7 @@
 ---
 title: Using filters with the Document Service API
 description: This document provides information about the filters available in the Document Service API.
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

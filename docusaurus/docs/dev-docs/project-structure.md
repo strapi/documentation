@@ -1,6 +1,6 @@
 ---
 title: Project structure
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Discover the project structure of any default Strapi application.
 tags:
 - project structure

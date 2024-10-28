@@ -1,7 +1,7 @@
 ---
 title: TypeScript configuration
 sidebar_label: TypeScript
-displayed_sidebar: devDocsConfigSidebar
+displayed_sidebar: cmsSidebar
 description: How to configure Strapi for TypeScript development.
 tags:
 - additional configuration

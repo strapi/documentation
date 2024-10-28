@@ -23,7 +23,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --custom-navbar-items-font-size: var(--strapi-font-size-sm);
   --custom-navbar-items-gap: var(--strapi-spacing-3);
   // --custom-navbar-logo-img-height: 25px;
-  --custom-navbar-logo-img-width: 194px;
+  --custom-navbar-logo-img-width: 152px;
   --custom-navbar-toggle-mr: var(--strapi-spacing-1);
   --custom-navbar-transition: all 0.2s ease;
 
@@ -32,8 +32,34 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   transition: var(--custom-navbar-transition);
 
   &__items {
-    max-width: var(--custom-navbar-items-width);
+    display: flex;
     gap: var(--strapi-spacing-2);
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__items:not(.navbar__items--right) {
+    width: calc(100%);
+    /**
+     * Optical adjustments to have CMS and Cloud items centered
+     * Docusaurus DOM is weird so we can't rely on classical centering techniques
+     */
+    margin-left: calc(194px + 20px); // 194px = logo size
+    margin-right: 64px;
+    /**
+     * Use these if we remove the GitHub logo from navbar
+     */
+    // margin-left: calc(194px + 20px); // 194px = logo size
+    // margin-right: 170px;
+  }
+
+  &__item {
+    color: var(--strapi-neutral-600);
+  }
+
+  &__item i {
+    margin-right: 4px;
+    color: #8E8EA9;
   }
 
   &__brand,
@@ -43,7 +69,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__brand {
-    margin-right: var(--custom-navbar-brand-mr);
+    margin-right: auto;
+    position: absolute;
+    left: 20px;
+  }
+
+  &__items::before, &__items::after {
+    content: '';
+    flex: 1;
   }
 
   &__toggle {
@@ -60,34 +93,41 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__link {
-    --ifm-font-weight-semibold: 500;
-    --ifm-navbar-link-hover-color: var(--strapi-neutral-800);
-
     font-size: var(--custom-navbar-items-font-size);
+    border-radius: 4px;
+    border: solid 1px transparent;
 
     &--active {
-      --ifm-font-weight-semibold: 700;
+      color: var(--strapi-primary-600);
+      background-color: var(--strapi-primary-100);
+
+      i {
+        color: var(--strapi-primary-600);
+      }
     }
 
-    &:hover {
-      color: var(--strapi-primary-600);
+    &:not(.navbar__link--active) {
+      --ifm-navbar-link-hover-color: var(--strapi-neutral-800);
+
+      &:hover {
+        color: var(--strapi-neutral-900) !important;
+        background-color: var(--strapi-neutral-100);
+      }
     }
   }
 
   &__link svg,
   .navbar-sidebar__close,
-  .DocSearch-Button,
   #{$selector-color-mode-toggle-button} {
     color: var(--custom-navbar-icon-color);
   }
 
   .navbar-sidebar__close,
-  .DocSearch-Button,
   #{$selector-color-mode-toggle-button} {
     --ifm-color-emphasis-600: currentColor;
 
     background: transparent;
-    border-radius: 50%;
+    // border-radius: 50%;
 
     &:hover {
       background: var(--custom-navbar-icon-button-hover-background);
@@ -103,78 +143,40 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     width: var(--custom-navbar-icon-button-size);
   }
 
-  .DocSearch-Button {
-    width: var(--custom-navbar-search-button-width);
+  [class*="navbarSearchContainer"] {
+    display: none;
   }
 
-  .kapa-widget-button {
-    button {
-      border: none;
-      padding: 0;
-      width: auto;
-      overflow: visible;
-      cursor: pointer;
+  button[class*="olorModeToggle"], // not using c or C because they differ in production vs. local dev 😅
+  button[class*="toggleButton"] {
+    background: none !important;
+    position: relative;
+    right: -4px;
+    top: 2px;
 
-      background: transparent;
-
-      /* inherit font & color from ancestor */
-      color: inherit;
-      font: inherit;
-
-      /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
-      line-height: normal;
-
-      /* Corrects font smoothing for webkit */
-      -webkit-font-smoothing: inherit;
-      -moz-osx-font-smoothing: inherit;
-
-      /* Corrects inability to style clickable `input` types in iOS */
-      -webkit-appearance: none;
-          /* Remove excess padding and border in Firefox 4+ */
-      &::-moz-focus-inner {
-        border: 0;
-        padding: 0;
-      }
-
-      svg {
-        position: relative;
-        top: 2px;
-        width: 18px;
-        height: 18px;
-        fill: var(--strapi-neutral-600)
-      }
-
-      .kapa-button-label {
-        position: relative;
-        left: 6px;
-
-        @media screen and (max-width: 996px){
-          left: 12px;
-        }
-      }
+    // Use 'moon' icon in dark mode
+    &::after {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
     }
+    &:hover::after {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='rgb(33,33,52)' viewBox='0 0 256 256'%3E%3Cpath d='M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z'%3E%3C/path%3E%3C/svg%3E");
+    }
+    svg {
+      display: none
+    }
+  }
+
+  button[class*="ColorModeToggle"] {
+    border-radius: 4px;
+    top: 0;
 
     &:hover {
-      .kapa-button-label {
-        color: var(--strapi-primary-600);
-      }
-      button {
-        svg {
-          fill: var(--strapi-primary-600);
-        }
-      }
+      background-color: var(--strapi-neutral-100) !important;
     }
-  }
 
-  /** Color mode toggle hover effect */
-  button[class*="ColorModeToggle"]:hover { // local selector
-    svg path {
-      fill: var(--strapi-primary-600);
-    }
-  }
-  div[class*="colorModeToggle"]:hover { // production selector
-    button svg path {
-      fill: var(--strapi-primary-600);
+    &::after {
+      position: absolute;
+      top: 11px;
     }
   }
 }
@@ -240,6 +242,196 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --custom-navbar-search-button-width: 266px;
 
     --ifm-navbar-padding-horizontal: var(--custom-navbar-items-gap);
+    min-height: 64px;
+  }
+}
+
+/**
+ * Responsive: Mobile
+ */
+@include medium-down {
+
+  nav.navbar:not(.navbar-sidebar--show) {
+    div.navbar-sidebar {
+      transform: translateX(100vw);
+    }
+  }
+  nav.navbar-sidebar--show {
+    div.navbar-sidebar {
+      transform: translateX(calc(100vw - var(--navbar-sidebar-max-width)));
+    }
+  }
+  .navbar-sidebar {
+    --navbar-sidebar-mobile-width: 100%;
+    width: var(--navbar-sidebar-mobile-width);
+    --navbar-sidebar-max-width: 280px;
+    max-width: var(--navbar-sidebar-max-width);
+
+    .mobile--search {
+      position: absolute;
+      top: 20px;
+    }
+
+    .my-custom-search-bar {
+      position: relative;
+      top: 10px;
+      left: 20px;
+      width: calc(100% - 46px);
+      min-width: calc(100% - 46px);
+      margin-top: 12px;
+
+      .DocSearch-Button-Placeholder,
+      .kapa-widget-button-text {
+        display: block;
+      }
+    }
+
+    &__item.menu {
+      padding-left: 10px;
+
+      &:nth-of-type(2) {
+        max-width: calc(var(--navbar-sidebar-max-width) - 16px);
+        width: 100%;
+      }
+    }
+
+    .theme-doc-sidebar-item-category-level-1,
+    .theme-doc-sidebar-item-category-level-2,
+    .theme-doc-sidebar-item-category-level-3,
+    .theme-doc-sidebar-item-category-level-4 {
+      padding-right: 0 !important;
+    }
+
+    /**
+     * Prevents being able to go back to the first-level main menu
+     * which would display the CMS and Cloud buttons
+     */
+    &__back {
+      display: none;
+    }
+  }
+
+  .navbar {
+    &__toggle, // local selector
+    button[class*="toggleButton"], // production selector
+    &-sidebar__close {
+      position: absolute;
+      right: 16px;
+      height: 32px !important;
+      width: 32px !important;
+      padding: 0;
+      border: solid 1px var(--strapi-neutral-200);
+      border-radius: 4px !important;
+
+      &::after {
+        font-family: "Phosphor";
+        font-size: 16px;
+      }
+
+      svg {
+        display: none;
+      }
+    }
+
+    &-sidebar__brand {
+      box-shadow: none;
+    }
+
+    &__toggle::after {
+      content: '\E2F0';
+    }
+    &-sidebar__close::after {
+      content: '\E4F6';
+    }
+
+    [class*="ColorModeToggle"] { // local dev selector
+      position: absolute;
+      top: 0;
+      right: -8px !important;
+    }
+    button[class*="toggleButton"] { // production selector
+      right: 60px !important;
+      top: 12px;
+      border: none;
+    }
+
+    .custom-mobile-navbar {
+      --custom-mobile-navbar-list-padding: 16px;
+      --custom-mobile-navbar-list-gap: 12px;
+      --custom-mobile-navbar-width: 100%;
+
+      list-style-type: none;
+      display: flex;
+      padding: 0 var(--custom-mobile-navbar-list-padding);
+      justify-content: space-between;
+
+      &__item {
+        min-width: calc((var(--custom-mobile-navbar-width)  / 2) - var(--custom-mobile-navbar-list-gap) / 2);
+        text-align: center;
+        border-radius: 4px;
+        padding: 4px 8px;
+
+        &-link {
+          text-decoration: none;
+          color: var(--strapi-neutral-600);
+          font-size: var(--strapi-font-size-sm);
+          line-height: var(--strapi-line-height-sm);
+          font-weight: 500;
+
+          i {
+            margin-right: 8px;
+          }
+        }
+
+        &:hover {
+          background-color: var(--strapi-neutral-100);
+        }
+      }
+
+      &__separator {
+        border-bottom: solid 1px var(--strapi-neutral-200);
+        width: 100%;
+      }
+    }
+
+    &--fixed-top {
+      position: relative;
+    }
+  }
+
+  /**
+   * Highlights the current custom navbar link
+   * since we can't rely on --active classes
+   * since our nav is fully custom
+   */
+  html[class*="docs-doc-id-dev-docs"],
+  html[class*="docs-doc-id-user-docs"] {
+    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__cms-link) {
+      background-color: var(--strapi-neutral-100);
+
+      .custom-mobile-navbar__item-link {
+        color: var(--strapi-primary-600);
+      }
+    }
+  }
+  html[class*="docs-doc-id-cloud"] {
+    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__cloud-link) {
+      background-color: var(--strapi-neutral-100);
+
+      .custom-mobile-navbar__item-link {
+        color: var(--strapi-primary-600);
+      }
+    }
+  }
+
+  /**
+   * Hide first-level navbar items
+   * when on homepage
+   */
+  html[class*="plugin-pages"] {
+    .navbar-sidebar__items {
+      display: none;
+    }
   }
 }
 
@@ -249,6 +441,26 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       svg {
         fill: var(--strapi-neutral-800);
       }
+    }
+  }
+
+  .navbar__link:not(.navbar__link--active) {
+    color: var(--strapi-neutral-400);
+
+    &:hover {
+      color: var(--strapi-primary-600);
+    }
+  }
+
+  button[class*="ColorModeToggle"],
+  button[class*="toggleButton"] {
+    // Use sun icon from phosphoricons.com
+    &::after {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'%3E%3Cpath d='M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm8,24a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    &:hover::after {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(255,255,255)' viewBox='0 0 256 256'%3E%3Cpath d='M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm8,24a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z'%3E%3C/path%3E%3C/svg%3E");
     }
   }
 }

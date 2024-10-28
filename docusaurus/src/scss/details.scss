@@ -2,26 +2,95 @@
 
 details.alert {
   --docusaurus-details-decoration-color: var(--strapi-neutral-800);
+  --docusaurus-details-summary-arrow-size: 6px;
 
-  --ifm-alert-background-color: var(--strapi-neutral-150);
+  --ifm-alert-background-color: var(--strapi-neutral-0);
   --ifm-alert-background-color-highlight: var(--strapi-neutral-500);
   --ifm-alert-border-radius: var(--strapi-spacing-1);
   --ifm-alert-foreground-color: var( --ifm-color-info-contrast-foreground );
-  --ifm-alert-border-color: transparent;
+  --ifm-alert-border-color: var(--strapi-neutral-200);
 
   --ifm-tabs-color-active: var(--ifm-color-primary);
   --ifm-tabs-color-active-border: var(--ifm-color-primary);
+  box-shadow: none;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
+  --ifm-alert-padding-horizontal: 24px;
+  --ifm-alert-padding-vertical: 24px;
+  padding: 0;
 
   summary {
+    position: relative;
+
     p {
       margin: 0;
     }
+
+    list-style: none;
+
+    &::before { // Triangle icon to open/close the details block
+      content: "";
+      position: relative;
+      display: inline-block;
+      border: none;
+      top: 0px;
+      width: 8px;
+      height: 8px;
+      border-right: 1px solid var(--strapi-neutral-600);
+      border-bottom: 1px solid var(--strapi-neutral-600);
+      transform: rotate(-45deg);
+      transform-origin: calc(var(--docusaurus-details-summary-arrow-size)/2);
+      transition: transform .3s ease;
+      margin-right: 14px;
+    }
+
+    &::after {
+      // Ensures you can open/close by clicking anywhere, not just on title
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      cursor: pointer;
+    }
+  }
+
+  summary,
+  > div {
+    padding: var(--ifm-alert-padding-vertical) var(--ifm-alert-padding-vertical);
+  }
+
+  > *:last-child {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  > div:first-of-type,
+  > div > *:first-child,
+   {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .theme-admonition {
+    margin-top: 10px;
+  }
+
+  &[open] summary::before {
+    transform: rotate(45deg) !important;
+    position: relative;
+    top: -4px;
+    left: 0.15rem;
   }
 
   /** Content element */
   > div > div {
     --docusaurus-details-decoration-color: transparent;
 
+    margin-top: 0;
+  }
+
+  summary + div > div > span + p {
     margin-top: 0;
   }
 
@@ -38,6 +107,10 @@ details.alert {
   details.alert {
     .theme-code-block-highlighted-line {
       background-color: var(--strapi-neutral-0);
+    }
+
+    summary::before {
+      border-color: #8E8EA9
     }
   }
 }

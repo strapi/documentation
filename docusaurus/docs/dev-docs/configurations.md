@@ -1,7 +1,7 @@
 ---
 title: Configurations
 description: Learn how you can manage and customize the configuration of your Strapi application.
-displayed_sidebar: devDocsConfigSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/installation
 pagination_next: dev-docs/setup-deployment
 tags:

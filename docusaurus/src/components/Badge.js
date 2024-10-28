@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import Icon from '../components/Icon'
 
 export default function Badge({
   children,
@@ -7,6 +8,10 @@ export default function Badge({
   link = '',
   noLink = false,
   variant = '',
+  icon,
+  feature,
+  version,
+  tooltip,
   ...rest
 }) {
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
@@ -16,17 +21,32 @@ export default function Badge({
       className={clsx(
         'badge',
         'badge--feature',
-        (variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
+        ((!feature && !version) && variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
+        (version && `badge--version`),
+        (feature && `badge--featureflag`),
+        ((variant === "Updated" || variant === "New") && `badge--content`)
       )}
       {...rest}
     >
       {(noLink || !link) ? (
         <>
-          {variant}
+          {(variant === "Updated" || variant === "New") ? (
+            <>
+              <span><Icon name={icon}/><span className="badge__text">{variant}</span></span>
+              <span className="badge__tooltip">{tooltip}</span>
+            </>
+          ) : (
+            <>
+            {variant}
+            <span className="badge__tooltip">{tooltip}</span>
+            </>
+          )
+        }
         </>
       ) : (
         <a className="badge__link" href={link}>
-          {variant}
+          {icon && <Icon name={icon} />}{variant}
+          <span className="badge__tooltip">{tooltip}</span>
         </a>
       )}
       {children}
@@ -52,11 +72,13 @@ export function BetaBadge(props) {
   );
 }
 
-export function FutureBadge(props) {
+export function FeatureFlagBadge(props) {
   return (
     <Badge
-      variant="Future"
+      variant={props.feature ?? "Feature Flag"}
       link="/dev-docs/configurations/features"
+      icon="toggle-right"
+      tooltip={`This feature requires ${props.feature ? 'the ' + props.feature + ' feature flag' : 'a feature flag'} to be enabled.`}
       {...props}
     />
   );
@@ -67,6 +89,8 @@ export function EnterpriseBadge(props) {
     <Badge
       variant="Enterprise"
       link="https://strapi.io/pricing-self-hosted"
+      icon="feather"
+      tooltip="This feature is available with an Enterprise licence."
       {...props}
     />
   );
@@ -75,8 +99,10 @@ export function EnterpriseBadge(props) {
 export function CloudProBadge(props) {
   return (
     <Badge
-      variant="Strapi Cloud Pro"
+      variant="Pro"
       link="https://strapi.io/pricing-cloud"
+      icon="cloud"
+      tooltip="This feature is available with a Strapi Cloud Pro plan."
       {...props}
     />
   );
@@ -85,8 +111,10 @@ export function CloudProBadge(props) {
 export function CloudTeamBadge(props) {
   return (
     <Badge
-      variant="Strapi Cloud Team"
+      variant="Team"
       link="https://strapi.io/pricing-cloud"
+      icon="cloud"
+      tooltip="This feature is available with a Strapi Cloud Team plan."
       {...props}
     />
   );
@@ -95,8 +123,10 @@ export function CloudTeamBadge(props) {
 export function CloudDevBadge(props) {
   return (
     <Badge
-      variant="Strapi Cloud Dev"
+      variant="Developer"
       link="https://strapi.io/pricing-cloud"
+      icon="cloud"
+      tooltip="This feature is available with a Strapi Cloud Dev plan."
       {...props}
     />
   );
@@ -105,7 +135,9 @@ export function CloudDevBadge(props) {
 export function NewBadge(props) {
   return (
     <Badge
-      variant="New ✨"
+      variant="New"
+      icon="confetti"
+      tooltip="This content is new."
       {...props}
     />
   );
@@ -115,8 +147,20 @@ export function NewBadge(props) {
 export function UpdatedBadge(props) {
   return (
     <Badge
-      variant="Updated ️🖌"
+      variant="Updated"
+      icon="pencil-simple"
+      tooltip="This content was recently updated."
       {...props}
     />
   );
+}
+
+export function VersionBadge(props) {
+  return (
+    <Badge
+      variant={props.version}
+      tooltip={`This feature requires Strapi version ${props.version} or later.`}
+      {...props}
+    />
+  )
 }

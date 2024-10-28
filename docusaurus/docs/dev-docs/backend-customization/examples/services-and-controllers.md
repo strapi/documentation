@@ -1,7 +1,7 @@
 ---
 title: Custom services and controllers
 description: Learn how to authenticate use custom services and controllers using our FoodAdvisor example
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_prev: dev-docs/backend-customization/examples/authentication
 pagination_next: dev-docs/backend-customization/examples/policies
 tags:

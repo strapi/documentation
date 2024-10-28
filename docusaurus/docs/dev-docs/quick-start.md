@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Quick Start Guide'
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: cmsSidebar
 sidebar_position: 2
 title: Quick Start Guide - Strapi Developer Docs
 description: Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
@@ -16,6 +16,8 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
+<EnterpriseBadge /><CloudTeamBadge /><CloudDevBadge /><CloudProBadge /><AlphaBadge /><BetaBadge /><FeatureFlagBadge feature="Static Preview"/><VersionBadge version="5.1.1" />
+
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
 *Estimated completion time: 5-10 minutes*
@@ -26,14 +28,14 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 You will also need to [install `git`](https://github.com/git-guides/install-git) and to have a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
 :::
 
-## 🚀 Part A: Create a new project with Strapi
+## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
 
 We will first create a new Strapi project on your machine by running a command in the terminal, and then register our first local administrator user.
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 1: Run the installation script and create a Strapi Cloud account</summary>
+<summary>Step 1: Run the installation script and create a Strapi Cloud account</summary>
 
 ### Step 1: Run the installation script and create a Strapi Cloud account
 
@@ -77,7 +79,7 @@ As you will see in the terminal, your project is now building locally.
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 2: Register the first local administrator user</summary>
+<summary>Step 2: Register the first local administrator user</summary>
 
 ### Step 2: Register the first local administrator user
 
@@ -101,11 +103,11 @@ sources={{
 
 </details>
 
-:::callout 🥳 CONGRATULATIONS!
+:::callout <Icon name="confetti" /> Congratulations!
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/intro), or proceed to part B below.
 :::
 
-## 🛠 Part B: Build your data structure with the Content-type Builder
+## <Icon name="wrench" /> Part B: Build your data structure with the Content-type Builder
 
 The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
 
@@ -113,7 +115,7 @@ The admin panel of a local Strapi project runs at [http://localhost:1337/admin](
 
 First we will build a data structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
 
-:::tip TIP
+:::tip
 If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
@@ -121,7 +123,7 @@ The Content-Type Builder helps you create your data structure. When creating an 
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
 
-<summary style={{fontSize: '18px'}}>Step 1: Create a "Restaurant" collection type</summary>
+<summary>Step 1: Create a "Restaurant" collection type</summary>
 
 ### Step 1: Create a "Restaurant" collection type
 
@@ -151,7 +153,7 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 2: Create a "Category" collection type</summary>
+<summary>Step 2: Create a "Category" collection type</summary>
 
 ### Step 2: Create a "Category" collection type
 
@@ -179,11 +181,11 @@ sources={{
 
 </details>
 
-:::callout 🥳 CONGRATULATIONS!
+:::callout <Icon name="confetti" /> Congratulations!
 You have just created a basic data structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/user-docs/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
 :::
 
-## ☁️ Part C: Deploy to Strapi Cloud
+## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud: Deploying your project on Strapi Cloud is done with a single command! 🚀
 
@@ -230,7 +232,7 @@ sources={{
 }}
 />
 
-:::callout 🥳 CONGRATULATIONS!  
+:::callout <Icon name="confetti" /> Congratulations!
 Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-day free Strapi Cloud trial! You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
 :::
 
@@ -238,12 +240,12 @@ Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-
 Feel free to play with the Content-Type Builder even further and add more fields to your content-types or create new content-types. Anytime you make such changes, deploy them again on Strapi Cloud, by running the appropriate `deploy` command, and see your hosted project updated within a few minutes. Magical, isn't it? 🪄
 :::
 
-## 📝 Part D: Add content to your Strapi Cloud project with the Content Manager
+## <Icon name="note-pencil" /> Part D: Add content to your Strapi Cloud project with the Content Manager
 
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
+<summary>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
 
 ### Step 1: Log in to the admin panel of your new Strapi Cloud project
 
@@ -264,7 +266,7 @@ sources={{
 />
 
 <details>
-<summary>ℹ️ Additional information and tips about users and Strapi Cloud projects:</summary>
+<summary><Icon name="info" /> Additional information and tips about users and Strapi Cloud projects:</summary>
 
 :::note Note: Local users and Strapi Cloud users are different
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically transferred from your local project to Strapi Cloud. This includes users that you previously created locally. That's why you are invited to create a new administrator account when logging in to your Strapi Cloud project for the first time.
@@ -279,7 +281,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 2: Create an entry for the "Restaurant" collection type</summary>
+<summary>Step 2: Create an entry for the "Restaurant" collection type</summary>
 
 
 ### Step 2: Create an entry for the "Restaurant" collection type
@@ -303,7 +305,7 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 3: Add Categories</summary>
+<summary>Step 3: Add Categories</summary>
 
 #### Step 3: Add Categories
 
@@ -332,7 +334,7 @@ Now, we will add a category to a restaurant:
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 4: Set Roles & Permissions</summary>
+<summary>Step 4: Set Roles & Permissions</summary>
 
 ### Step 4: Set Roles & Permissions
 
@@ -357,7 +359,7 @@ sources={{
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 5: Publish the content</summary>
+<summary>Step 5: Publish the content</summary>
 
 ### Step 5: Publish the content
 
@@ -384,7 +386,7 @@ sources={{
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
-<summary style={{fontSize: '18px'}}>Step 6: Use the API</summary>
+<summary>Step 6: Use the API</summary>
 
 ### Step 6: Use the API
 
@@ -436,7 +438,7 @@ Try it now! The result should be similar to the example response below 👇.
 
 </details>
 
-:::callout 🥳 CONGRATULATIONS!  
+:::callout <Icon name="confetti"/> Congratulations!
 Now your content is created, published, and you have permissions to request it through the API.
 Keep on creating amazing content!
 :::
@@ -445,11 +447,11 @@ Keep on creating amazing content!
 The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/dev-docs/data-management) to transfer data between projects.
 :::
 
-## ⏩ What to do next?
+## <Icon name="fast-forward"/> What to do next?
 
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
-- 👉 learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,
-- 👉 learn more about Strapi features by browsing the [User Guide](/user-docs/intro),
-- 👉 learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),
-- 👉 and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.
+<Icon name="arrow-fat-right"/> learn how to use Strapi's [REST](/dev-docs/api/rest) API to query the content,<br/>
+<Icon name="arrow-fat-right"/> learn more about Strapi features by browsing the [User Guide](/user-docs/intro),<br/>
+<Icon name="arrow-fat-right"/> learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),<br/>
+<Icon name="arrow-fat-right"/> and [customize your Strapi back end](/dev-docs/backend-customization) and [admin panel](/dev-docs/admin-panel-customization) for advanced use cases.<br/>

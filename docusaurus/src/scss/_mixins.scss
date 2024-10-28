@@ -8,8 +8,29 @@
 }
 
 /** Mixin: Responsive */
+@mixin small-down {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+/** Mixin: Responsive */
+@mixin small-to-medium {
+  @media (min-width: 769px) and (max-width: 996px) {
+    @content;
+  }
+}
+
+/** Mixin: Responsive */
 @mixin medium-up {
   @media (min-width: 997px) {
+    @content;
+  }
+}
+
+/** Mixin: Responsive */
+@mixin medium-down {
+  @media (max-width: 996px) {
     @content;
   }
 }
