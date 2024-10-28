@@ -1190,8 +1190,8 @@
       "destination": "https://strapi.io/integrations/svelte-cms"
     },
     {
-      "source": "/dev-docs/integrations/vue",
-      "destination": "https://strapi.io/integrations/vuejs-cms"
+      "source": "/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html%23create-a-vue-js-app",
+      "destination": "/dev-docs/integrations/vue-js"
     },
     {
       "source": "/dev-docs/integrations",
