@@ -175,16 +175,23 @@ const config = {
         items: [
           {
             type: 'doc',
+            docId: 'user-docs/intro',
+            position: 'left',
+            // label: 'CMS',
+            html: '<i class="ph-fill ph-feather"></i> User Guide'
+          },
+          {
+            type: 'doc',
             docId: 'dev-docs/intro',
             position: 'left',
             // label: 'CMS',
-            html: '<i class="ph-fill ph-feather"></i> CMS'
+            html: '<i class="ph-fill ph-computer-tower"></i> Dev Docs'
           },
           {
             type: 'doc',
             docId: 'cloud/getting-started/intro',
             position: 'left',
-            html: '<i class="ph-fill ph-cloud"></i> Cloud',
+            html: '<i class="ph-fill ph-cloud"></i> Cloud Docs',
           },
           {
             href: 'https://github.com/strapi/documentation',
