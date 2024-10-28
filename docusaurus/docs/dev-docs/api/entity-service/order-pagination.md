@@ -1,7 +1,7 @@
 ---
 title: Ordering & Pagination with the Entity Service API
 description: Use Strapi's Entity Service API to order and paginate queries results.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 ---
 
 import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'

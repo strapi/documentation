@@ -2,7 +2,7 @@
 title: Server configuration
 sidebar_label: Server
 description: Strapi offers a single entry point file for its server configuration.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
   - app keys
   - base configuration

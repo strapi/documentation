@@ -1,7 +1,7 @@
 ---
 sidebar_label: 'Introduction'
 description: The Strapi Dev Docs contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 slug: /dev-docs/intro
 pagination_next: dev-docs/setup-deployment
 sidebar_position: 1

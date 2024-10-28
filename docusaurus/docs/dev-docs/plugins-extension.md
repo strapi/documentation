@@ -1,6 +1,6 @@
 ---
 title: Plugins extension
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - bootstrap function
 - controllers

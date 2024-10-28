@@ -1,7 +1,7 @@
 ---
 title: Data import 
 description: Import data using the Strapi CLI
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 canonicalUrl: https://docs.strapi.io/dev-docs/data-management/import.html
 tags:
 - data management system

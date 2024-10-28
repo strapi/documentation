@@ -1,7 +1,7 @@
 ---
 title: Components and Dynamic Zones
 description: Use Strapi's Entity Service to create and update components and dynamic zones.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 unlisted: true
 ---
 

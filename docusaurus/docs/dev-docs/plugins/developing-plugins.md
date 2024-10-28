@@ -1,7 +1,7 @@
 ---
 title: Developing plugins
 description: Generation introduction about Strapi plugins development
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/plugins
 pagination_next: dev-docs/plugins/development/create-a-plugin
 tags:

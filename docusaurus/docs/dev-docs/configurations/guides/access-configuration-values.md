@@ -1,7 +1,7 @@
 ---
 title: Access configuration values from the code
 description: Learn how to access Strapi 5 configuration values from the code.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - configuration
 - configuration guide

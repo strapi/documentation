@@ -1,7 +1,7 @@
 ---
 title: Authentication flow with JWT
 description: Learn how to authenticate REST API queries using our FoodAdvisor example
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/backend-customization/examples
 pagination_next: dev-docs/backend-customization/examples/services-and-controllers
 ---

@@ -1,6 +1,6 @@
 ---
 title: Sentry plugin
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Track errors in your Strapi application.
 tags:
 - environment

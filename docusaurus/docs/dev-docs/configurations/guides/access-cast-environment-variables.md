@@ -1,7 +1,7 @@
 ---
 title: Access and cast environment variables
 description: Learn how to cast environment variables in Strapi 5 with the env() utility.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - casting values
 - configuration

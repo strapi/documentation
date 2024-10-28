@@ -2,7 +2,7 @@
 title: Features configuration
 sidebar_label: Features
 description: Enable experimental Strapi features
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - additional configuration
 - configuration

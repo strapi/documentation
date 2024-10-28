@@ -1,6 +1,6 @@
 ---
 title: Jekyll
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Jekyll.
 ---
 

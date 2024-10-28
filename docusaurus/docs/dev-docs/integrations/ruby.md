@@ -1,6 +1,6 @@
 ---
 title: Ruby
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Ruby.
 ---
 

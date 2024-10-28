@@ -1,7 +1,7 @@
 ---
 title: Using Sort & Pagination with the Document Service API
 description: Use Strapi's Document Service API to sort and paginate query results
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - API 
 - Content API 

@@ -1,7 +1,7 @@
 ---
 title: Documents
 description: Learn what a Document is in Strapi v5
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/api/content-api
 tags:
 - API

@@ -1,6 +1,6 @@
 ---
 title: GraphQL plugin
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 toc_max_heading_level: 5
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
 tags:

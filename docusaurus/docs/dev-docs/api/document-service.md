@@ -1,7 +1,7 @@
 ---
 title: Document Service API
 description: The Document Service API is the recommended way to interact with your content from the back-end server or from plugins.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - API
 - Content API

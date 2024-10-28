@@ -1,6 +1,6 @@
 ---
 title: Laravel
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Laravel.
 ---
 

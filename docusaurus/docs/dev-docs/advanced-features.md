@@ -1,7 +1,7 @@
 ---
 title: Advanced features
 description: Learn more about Strapi 5 advanced features
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/api/content-api
 pagination_next: dev-docs/customization
 tags:

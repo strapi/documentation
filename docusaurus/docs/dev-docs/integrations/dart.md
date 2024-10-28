@@ -1,6 +1,6 @@
 ---
 title: Dart
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Dart.
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Webhooks
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
 tags:
 - backend customization

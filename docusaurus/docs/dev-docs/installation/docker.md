@@ -1,6 +1,6 @@
 ---
 title: Docker
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Quickly create a Docker container from a local project.
 tags:
 - installation

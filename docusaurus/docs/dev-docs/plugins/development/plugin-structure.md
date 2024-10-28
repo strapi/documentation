@@ -1,7 +1,7 @@
 ---
 title: Plugin structure
 description: Learn more about the structure of a Strapi plugin
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - admin panel
 - Command Line Interface (CLI)

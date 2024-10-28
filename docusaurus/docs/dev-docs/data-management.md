@@ -1,7 +1,7 @@
 ---
 title: Data management system 
 description: Import, export, and transfer data using the Strapi CLI
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 keywords: 
   - DEITS
 tags:

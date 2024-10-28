@@ -1,7 +1,7 @@
 ---
 title: Custom middlewares
 description: Learn how to use custom middlewares using our FoodAdvisor example
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/backend-customization/examples/routes
 ---
 

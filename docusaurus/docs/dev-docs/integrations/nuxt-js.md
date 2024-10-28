@@ -1,6 +1,6 @@
 ---
 title: Nuxt
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Nuxt 3.
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Database configuration
 sidebar_label: Database
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Strapi offers a single entry point file to configure its databases.
 tags:
 - base configuration

@@ -1,6 +1,6 @@
 ---
 title: Svelte
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Svelte.
 ---
 

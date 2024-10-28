@@ -1,7 +1,7 @@
 ---
 title: Customization
 description: Learn more about Strapi 5 customization possibilities
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 pagination_prev: dev-docs/advanced-features
 pagination_next: dev-docs/plugins
 tags:

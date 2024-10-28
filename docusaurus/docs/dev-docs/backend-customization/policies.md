@@ -1,7 +1,7 @@
 ---
 title: Policies
 description: Strapi policies are functions that execute specific logic on each request before it reaches the controller. Policies can be customized according to your needs.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - backend customization
 - backend server

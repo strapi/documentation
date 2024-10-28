@@ -1,6 +1,6 @@
 ---
 title: Flutter
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Integrate Strapi with Flutter.
 ---
 
