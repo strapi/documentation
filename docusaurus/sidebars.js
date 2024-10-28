@@ -158,7 +158,7 @@ const sidebars = {
           type: 'category',
           label: 'REST API',
           customProps: {
-            updated: false,
+            updated: true,
           },
           link: {
             type: 'doc',
@@ -183,7 +183,7 @@ const sidebars = {
           type: 'doc',
           id: 'dev-docs/api/graphql',
           customProps: {
-            updated: false,
+            updated: true,
           },
         },
         // {
@@ -228,7 +228,7 @@ const sidebars = {
             id: 'dev-docs/api/document-service'
           },
           customProps: {
-            new: true
+            new: true,
           },
           items: [
             {
@@ -295,7 +295,7 @@ const sidebars = {
           label: 'Introduction to advanced features',
           id: 'dev-docs/advanced-features',
           customProps: {
-            new: true,
+            new: false,
           },
         },
         {
@@ -382,7 +382,7 @@ const sidebars = {
           label: 'Customization Introduction & Concepts',
           id: 'dev-docs/customization',
           customProps: {
-            new: true,
+            new: false,
           },
         },
         {
@@ -554,7 +554,7 @@ const sidebars = {
                   type: 'doc',
                   id: 'dev-docs/plugins/content-manager-apis',
                   customProps: {
-                    new: true,
+                    new: false,
                   },
                 }
               ]
@@ -588,9 +588,6 @@ const sidebars = {
       collapsed: false,
       label: 'Upgrades',
       className: 'category-upgrade',
-      customProps: {
-        new: true,
-      },
       link: {
         type: 'doc',
         id: 'dev-docs/upgrades',
@@ -600,39 +597,57 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction to upgrades',
           id: 'dev-docs/upgrades',
+          customProps: {
+            new: true,
+          },
         },
         {
           type: 'doc',
           id: 'dev-docs/upgrade-tool',
+          customProps: {
+            new: true,
+          },
         },
         {
           type: 'category',
-          collapsed: false,
+          collapsed: true,
           link: {
             type: 'doc',
-            id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+            id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
           },
           label: 'Upgrade to Strapi 5',
           items: [
             {
               type: 'doc',
               label: 'Introduction and FAQ',
-              id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+              id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
+              customProps: {
+                new: true,
+              },
             },
             {
               type: 'doc',
               label: 'Step-by-step guide',
-              id: 'dev-docs/migration/v4-to-v5/step-by-step'
+              id: 'dev-docs/migration/v4-to-v5/step-by-step',
+              customProps: {
+                new: true,
+              },
             },
             {
               type: 'doc',
               label: 'Breaking changes list',
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
+              customProps: {
+                new: true,
+              },
             },
             {
               type: 'doc',
               label: 'Specific resources',
               id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction',
+              customProps: {
+                new: false,
+              },
             },
           ]
         }
@@ -680,7 +695,7 @@ const sidebars = {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
           customProps: {
-            updated: false,
+            new: true,
           }
         },
         'user-docs/content-manager/adding-content-to-releases',
@@ -836,7 +851,7 @@ const sidebars = {
               type: "doc",
               id: "cloud/getting-started/deployment-cli",
               customProps: {
-                new: true,
+                new: false,
               },
              },
           ],
@@ -1238,7 +1253,7 @@ const sidebars = {
       },
       label: 'Upgrade to Strapi 5',
       customProps: {
-        new: true,
+        new: false,
       },
       items: [
         {
