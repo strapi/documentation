@@ -275,9 +275,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     .my-custom-search-bar {
       position: relative;
       top: 10px;
-      left: 16px;
-      width: calc(100% - 26px);
-      min-width: calc(100% - 36px);
+      left: 20px;
+      width: calc(100% - 46px);
+      min-width: calc(100% - 46px);
       margin-top: 12px;
 
       .DocSearch-Button-Placeholder,

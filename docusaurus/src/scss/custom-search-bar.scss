@@ -11,7 +11,7 @@
   left: 24px;
   margin-top: 20px;
   margin-bottom: 20px;
-  max-width: 80%;
+  max-width: 238px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
 
   .DocSearch.DocSearch-Button:hover {
@@ -161,7 +161,7 @@
     content: '';
     height: 60px;
     left: -26px;
-    right: -33px;
+    right: -16px;
     top: 40px;
     background: linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, var(--strapi-neutral-0) 100%);
   }
