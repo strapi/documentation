@@ -1,6 +1,6 @@
 ---
 title: Testing
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 description: Learn how to test your Strapi application.
 unlisted: true
 tags:

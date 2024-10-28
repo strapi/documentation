@@ -1,7 +1,7 @@
 ---
 title: Templates
 description: Use and create pre-made Strapi applications designed for a specific use case.
-displayed_sidebar: cmsSidebar
+displayed_sidebar: devDocsSidebar
 tags:
 - installation
 - templates
