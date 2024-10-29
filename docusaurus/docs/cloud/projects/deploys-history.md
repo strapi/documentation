@@ -51,10 +51,10 @@ From the *Deployments* tab, you can hover a deployment card to make the ![See lo
   }}
 />
 
-In the *Build logs* and *Deployment logs* sections of the page you can click on the arrow buttons ![Down arrow](/img/assets/icons/ONHOLDCarretDown.svg) ![Up arrow](/img/assets/icons/ONHOLDCarretUp.svg) to show or hide the build and deployment logs of the deployment.
+In the *Build logs* and *Deployment logs* sections of the page you can click on the arrow buttons <Icon name="caret-down" /> <Icon name="caret-up" /> to show or hide the build and deployment logs of the deployment.
 
 :::tip
-Click the ![Copy button](/img/assets/icons/duplicate.svg) **Copy to clipboard** button to copy the log contents.
+Click the <Icon name="copy-simple" /> **Copy to clipboard** button to copy the log contents.
 :::
 
 In the right side of the *Deployment details* page is also displayed the following information:

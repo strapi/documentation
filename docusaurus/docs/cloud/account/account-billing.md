@@ -16,7 +16,7 @@ import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Account billing & invoices 
 
-Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the <Icon name="credit-card" /> [*Billing*](#account-billing) and <Icon name="invoice" /> *Invoices*](#account-invoices) tabs.
+Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the <Icon name="credit-card" /> [*Billing*](#account-billing) and <Icon name="invoice" /> [*Invoices*](#account-invoices) tabs.
 
 ## Account billing
 
