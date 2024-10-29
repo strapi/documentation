@@ -275,7 +275,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Choose the default value of the Boolean field: *true*, *null* or *false*.   |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -302,7 +302,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 
 </TabItem>
@@ -329,7 +329,7 @@ The Email field displays an email address field with format validation to ensure
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Email field.                                 |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
@@ -359,7 +359,7 @@ The Password field displays a password field that is encrypted.
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Password field.                              |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -392,7 +392,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Default value  | Choose the default value of the Enumeration field.                          |
 | Name override for GraphQL | Write a custom GraphQL schema type to override the default one for the field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 
 </TabItem>
@@ -456,7 +456,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Rich Text field.                             |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -500,7 +500,7 @@ When configuring a component through the Content-type Builder, it is possible to
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
 | Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
 | Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the component to be translated per available locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the component to be translated per available locale. |
 
 </TabItem>
 
@@ -527,7 +527,7 @@ Dynamic zones are a combination of components that can be added to content-types
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Maximum value  | Tick to define a maximum number of characters allowed.                                  |
 | Minimum value  | Tick to define a minimum number of characters allowed.                                  |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 </TabItem>
 
