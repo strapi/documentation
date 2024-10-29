@@ -64,6 +64,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     padding: 0;
 
     &:before {
+      position: relative;
+      top: 5px;
       background-size: var(--custom-sidebar-caret-size);
     }
   }
