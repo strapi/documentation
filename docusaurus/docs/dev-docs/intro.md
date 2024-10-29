@@ -47,17 +47,17 @@ Clicking on any of the following cards will direct you to the introduction page 
 
 <CustomDocCard icon="rocket" title="Getting Started" description="The section you're reading right now. Read recommended information for Strapi beginners." link="#" />
 
-<CustomDocCard title="Setup & Deployment" description="Install, configure, and deploy Strapi." link="/dev-docs/setup-deployment" />
+<CustomDocCard icon="gear-fine" title="Setup & Deployment" description="Install, configure, and deploy Strapi." link="/dev-docs/setup-deployment" />
 
-<CustomDocCard title="APIs" description="Query your content with REST, GraphQL, and Strapi's lower-level APIs." link="/dev-docs/api/content-api" />
+<CustomDocCard icon="cube" title="APIs" description="Query your content with REST, GraphQL, and Strapi's lower-level APIs." link="/dev-docs/api/content-api" />
 
-<CustomDocCard title="Advanced features" description="Use built-in Strapi features for advanced use cases." link="/dev-docs/advanced-features" />
+<CustomDocCard icon="wrench" title="Advanced features" description="Use built-in Strapi features for advanced use cases." link="/dev-docs/advanced-features" />
 
-<CustomDocCard title="Customization" description="Customize the Strapi server and admin panel." link="/dev-docs/customization" />
+<CustomDocCard icon="toolbox" title="Customization" description="Customize the Strapi server and admin panel." link="/dev-docs/customization" />
 
-<CustomDocCard title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/dev-docs/plugins" />
+<CustomDocCard icon="puzzle-piece" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/dev-docs/plugins" />
 
-<CustomDocCard title="Upgrade" description="Upgrade your application to the most recent Strapi versions." link="/dev-docs/upgrades" />
+<CustomDocCard icon="escalator-up" title="Upgrade" description="Upgrade your application to the most recent Strapi versions." link="/dev-docs/upgrades" />
 
 </CustomDocCardsWrapper>
 
