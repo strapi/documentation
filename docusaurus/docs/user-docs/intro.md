@@ -11,7 +11,7 @@ pagination_next: user-docs/getting-started/user-guide-fundamentals
 
 # Welcome to the Strapi User Guide!
 
-:::callout <Icon name="feather" /> Developer Docs, User Guide, and Strapi Cloud documentation
+:::callout <Icon name="map-pin-area" /> Developer Docs, User Guide, and Strapi Cloud documentation
 
 The documentation for Strapi contains 3 main sections, accessible from the top navigation bar:
 
