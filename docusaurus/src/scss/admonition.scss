@@ -161,6 +161,7 @@
     }
   }
 
+
   &--subtle {
     border-radius: 8px;
     border: none;
@@ -224,6 +225,12 @@
     &--strapi {
       --custom-admonition-code-color: var(--strapi-primary-500);
       --custom-admonition-heading-color: var(--strapi-primary-500);
+    }
+
+    &--callout {
+      mdxadmonitiontitle {
+        color: white;
+      }
     }
 
     &--strapi,
