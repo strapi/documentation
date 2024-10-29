@@ -30,7 +30,7 @@ img[src^="data:image/svg+xml"] {
 
 @include dark {
   img[src^="data:image/svg+xml"] {
-    background-color: white;
+    background-color: #1E1E2D
   }
 }
 
