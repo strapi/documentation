@@ -161,7 +161,7 @@ const sidebars = {
           type: 'category',
           label: 'REST API',
           customProps: {
-            updated: true,
+            updated: false,
           },
           link: {
             type: 'doc',
@@ -231,7 +231,7 @@ const sidebars = {
             id: 'dev-docs/api/document-service'
           },
           customProps: {
-            new: true,
+            new: false,
           },
           items: [
             {
@@ -605,14 +605,14 @@ const sidebars = {
           label: 'Introduction to upgrades',
           id: 'dev-docs/upgrades',
           customProps: {
-            new: true,
+            new: false,
           },
         },
         {
           type: 'doc',
           id: 'dev-docs/upgrade-tool',
           customProps: {
-            new: true,
+            new: false,
           },
         },
         {
@@ -629,7 +629,7 @@ const sidebars = {
               label: 'Introduction and FAQ',
               id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
               customProps: {
-                new: true,
+                new: false,
               },
             },
             {
@@ -637,7 +637,7 @@ const sidebars = {
               label: 'Step-by-step guide',
               id: 'dev-docs/migration/v4-to-v5/step-by-step',
               customProps: {
-                new: true,
+                new: false,
               },
             },
             {
@@ -645,7 +645,7 @@ const sidebars = {
               label: 'Breaking changes list',
               id: 'dev-docs/migration/v4-to-v5/breaking-changes',
               customProps: {
-                new: true,
+                new: false,
               },
             },
             {
