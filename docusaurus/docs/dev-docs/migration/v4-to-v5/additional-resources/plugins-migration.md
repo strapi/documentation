@@ -39,7 +39,7 @@ The manual steps include:
 ### Front-end changes
 
 - The Design System is upgraded to v2 in Strapi 5:
-  - 👉 A dedicated migration guide is [available in the Design System documentation](https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs).
+  - <Icon name="arrow-fat-right" /> A dedicated migration guide is [available in the Design System documentation](https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs).
   - There are no big visual changes, except for [icons](https://design-system-git-main-strapijs.vercel.app/?path=/docs/foundations-icons-overview--docs).
   - General Strapi v4 to Strapi 5 [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) might apply.
 - The `helper-plugin` has been removed. A [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin) is available to help you transition away from the `helper-plugin`.

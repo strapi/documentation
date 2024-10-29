@@ -52,7 +52,7 @@ The [Document Service API](/dev-docs/api/document-service) replaces the Entity S
 
 The following are the main topics to take into account when using the Document Service API instead of the Entity Service API from Strapi v4:
 
-* The Document Service API expects a `documentId` property.<br/>This breaking change also affects the REST and GraphQL APIs (👉 see [the related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id)).
+* The Document Service API expects a `documentId` property.<br/>This breaking change also affects the REST and GraphQL APIs (<Icon name="arrow-fat-right" /> see [the related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id)).
   :::info
   To ease the transition to Strapi 5, Document Service API responses still include `id` fields in addition to the new `documentId` fields.
   :::
@@ -75,10 +75,10 @@ The following are the main topics to take into account when using the Document S
   </SideBySideColumn>
   </SideBySideContainer>
 
-* There is no `findPage()` method anymore in Strapi 5.<br/>👉 see [the related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service).
+* There is no `findPage()` method anymore in Strapi 5.<br/><Icon name="arrow-fat-right" /> see [the related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service).
 
 * The [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature has been updated in Strapi 5 and this is reflected in the Document Service API:
-  - `publicationState` is replaced by `status`<br/>👉 see [the related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed).
+  - `publicationState` is replaced by `status`<br/><Icon name="arrow-fat-right" /> see [the related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed).
   - New methods are introduced to handle the updated [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature:
     - [`publish()`](/dev-docs/api/document-service#publish),
     - [`unpublish()`](/dev-docs/api/document-service#unpublish),
@@ -97,4 +97,4 @@ The following are the main topics to take into account when using the Document S
 
 The migration is partially handled by a codemod when using the [upgrade tool](/dev-docs/upgrade-tool).
 
-👉 The [Entity Service API to Document Service API migration reference](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) gives additional information about which aspects are handled by the codemod and which use cases require manual migration.
+<Icon name="arrow-fat-right" /> The [Entity Service API to Document Service API migration reference](/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) gives additional information about which aspects are handled by the codemod and which use cases require manual migration.

@@ -182,7 +182,7 @@ If you chose the free trial, this billing step will be skipped as you will not b
 
 During the free trial, will be kept informed of the number of remaining free days. You will then be notified by email and via the Strapi Cloud dashboard whenever it is time to fill in your billing information to move to a paid plan.
 
-👉 Skip to step 5 of the section below to finalise the creation of your project.
+<Icon name="fast-forward" /> Skip to step 5 of the section below to finalise the creation of your project.
 :::
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
@@ -207,7 +207,7 @@ During the free trial, will be kept informed of the number of remaining free day
 Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
 :::
 
-## ⏩ What to do next?
+## <Icon name="fast-forward" /> What to do next?
 
 Now that you have deployed your project via the Cloud dashboard, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
 

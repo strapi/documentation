@@ -23,15 +23,15 @@ The settings' menu on the left side of the interface is separated into 2 categor
 ## Project-level settings
 
 There are 5 tabs available for the project's settings:
-- ![General icon](/img/assets/icons/Faders.svg) [*General (project)*](#general),
-- ![Environments icon](/img/assets/icons/v5/Stack.svg) [*Environments*](#environments),
-- ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) [*Billing & Usage*](#billing--usage),
-- ![Plans icon](/img/assets/icons/MapTrifold.svg) [Plans](#plans),
-- and ![Invoices icon](/img/assets/icons/Invoice.svg) [Invoices](#invoices).
+- <Icon name="faders" /> [*General (project)*](#general),
+- <Icon name="stack" /> [*Environments*](#environments),
+- <Icon name="credit-card" /> [*Billing & Usage*](#billing--usage),
+- <Icon name="map-trifold" /> [Plans](#plans),
+- and <Icon name="invoice" /> [Invoices](#invoices).
 
 ### General (project) {#general}
 
-The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-level settings enables you to check and update the following options for the project:
+The <Icon name="faders" /> *General* tab for the project-level settings enables you to check and update the following options for the project:
 
 - *Basic information*, to see:
   - the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
@@ -56,7 +56,7 @@ The GitHub or GitLab repository, branch and base directory for a Strapi Cloud pr
 Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
 :::
 
-1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Update repository** button. You will be redirected to another interface.
+1. In the *Connected git repository* section of the <Icon name="faders" /> *General* tab, click on the **Update repository** button. You will be redirected to another interface.
 2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch Git provider** button at the top right corner of the interface. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository* interface.
 3. In the *Update repository* section, fill in the 2 available settings:
 
@@ -80,13 +80,13 @@ Updating the git repository could result in the loss of the project and its data
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
 
-1. In the *Delete project* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Delete project** button.
+1. In the *Delete project* section of the <Icon name="faders" /> *General* tab, click on the **Delete project** button.
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
 ### Environments <CloudProBadge /> <CloudTeamBadge /> {#environments}
 
-The ![Environments icon](/img/assets/icons/v5/Stack.svg) *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
+The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::tip
 Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#general-environment) for more information.
@@ -121,16 +121,16 @@ If the creation of a new environment fails but you are still charged, try creati
 
 ### Billing & Usage
 
-The ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to directly [manage the number of seats](#managing-projects-number-of-seats) and add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
+The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to directly [manage the number of seats](#managing-projects-number-of-seats) and add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
 
 Through this tab, you also have the possibility to:
-- click the **Change** button to be redirected to the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
-- click the **Edit** button to be redirected to the ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* tab of your profile page, where you can edit the payment method (see [related documentation](/cloud/account/account-billing)).
+- click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
+- click the **Edit** button to be redirected to the <Icon name="credit-card" /> *Billing* tab of your profile page, where you can edit the payment method (see [related documentation](/cloud/account/account-billing)).
 
 :::tip
-In the Usage section of the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the arrows in the top right corner to see the project's usage for any chosen month.
+In the Usage section of the <Icon name="credit-card" /> *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the arrows in the top right corner to see the project's usage for any chosen month.
 
-Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab to advise which plan you could switch to.
+Note also that if your usage indicates that another subscription plan would fit better for your project, a message will be displayed in the <Icon name="credit-card" /> *Billing & Usage* tab to advise which plan you could switch to.
 :::
 
 <ThemedImage
@@ -147,20 +147,20 @@ You can manually add more seats or lower the number of seats for your project wi
 
 ##### Adding more seats for the project
 
-1. In the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
+1. In the <Icon name="credit-card" /> *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
 2. In the window that opens, select with the drop-down the number of Additional seats of your choice. The cost of the additional seats is automatically calculated and displayed in the window.
 3. (optional) Click **I have a discount code**, enter your discount code in the field, and click on the **Apply** button.
 4. Click the **Save** button to confirm. You will automatically be billed with the payment method defined in your profile.
 
 ##### Removing seats from the project
 
-1. In the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
+1. In the <Icon name="credit-card" /> *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
 2. In the window that opens, select with the drop-down the number of *Billed seats* you want to keep.
 3. Click the **Save button** to confirm. The new, lower number of seats will not be effective until the next month.
 
 ### Plans
 
-The ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
+The <Icon name="map-trifold" /> *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
 
 :::note
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
@@ -184,7 +184,7 @@ When using the free trial, the buttons to upgrade to another plan are greyed out
 
 To upgrade your current plan to a higher one:
 
-1. In the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab of your project's settings, click on the **Upgrade** button of the plan you want to upgrade to.
+1. In the <Icon name="map-trifold" /> *Plans* tab of your project's settings, click on the **Upgrade** button of the plan you want to upgrade to.
 2. In the window that opens, check the payment details that indicate how much you will have to pay immediately after confirming the upgrade, and the available options.
 
    a. (optional) Click the **Edit** button to select another payment method.
@@ -204,7 +204,7 @@ Note also that you cannot downgrade if you have additional environments (i.e. ex
 
 To downgrade your current plan to a lower one:
 
-1. In the ![Plans icon](/img/assets/icons/MapTrifold.svg) *Plans* tab of your project's settings, click on the **Downgrade** button of the plan you want to downgrade to.
+1. In the <Icon name="map-trifold" /> *Plans* tab of your project's settings, click on the **Downgrade** button of the plan you want to downgrade to.
 2. In the window that opens, check the information related to downgrading.
 3. Click on the **Downgrade** button to confirm the downgrade of your Strapi project's plan. 
 
@@ -214,7 +214,7 @@ Downgrades are effective from the 1st of the following month. Before that date, 
 
 ### Invoices
 
-The ![Invoices icon](/img/assets/icons/Invoice.svg) *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
+The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
 
 <ThemedImage
   alt="Project invoices"
@@ -235,14 +235,14 @@ In the *Profile > Invoices* tab, you will find the complete list of invoices for
 
 In the project's environments' settings, you first need to select the environment whose settings you would like to configure, using the dropdown. Depending on the chosen environment, there are 3 to 4 tabs available:
 
-- ![General icon](/img/assets/icons/Faders.svg) [*General (environment)*](#general),
-- ![Backups icon](/img/assets/icons/ArrowClockwise.svg) [*Backups*](#backups), which are only available for the production environment,
+- <Icon name="faders" /> [*General (environment)*](#general),
+- <Icon name="arrow-clockwise" /> [*Backups*](#backups), which are only available for the production environment,
 - ![Domains icon](/img/assets/icons/Browsers.svg) [*Domains*](#domains),
 - and ![Variables icon](/img/assets/icons/code2.svg) [*Variables*](#variables).
 
 ### General (environment)
 
-The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the environment-level settings enables you to check and update the following options for the project:
+The <Icon name="faders" /> *General* tab for the environment-level settings enables you to check and update the following options for the project:
 
 - *Basic information*, to see:
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
@@ -263,14 +263,14 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the environm
 
 The environment's Node version is based on the one chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)), through the advanced settings. It is possible to switch to another Node version afterwards, for any environment.
 
-1. In the *Basic information* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the *Node version*'s edit ![Edit icon](/img/assets/icons/edit.svg) button.
+1. In the *Basic information* section of the <Icon name="faders" /> *General* tab, click on the *Node version*'s edit ![Edit icon](/img/assets/icons/edit.svg) button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
 3. Click on the **Save** button.
 4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
 
 #### Editing Git branch
 
-1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Edit branch** button.
+1. In the *Connected git repository* section of the <Icon name="faders" /> *General* tab, click on the **Edit branch** button.
 2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General (project)](#general).
 
     | Setting name    | Instructions                                                             |
@@ -289,7 +289,7 @@ You can reset or delete any additional environment of your Strapi Cloud project,
 
 Resetting an environment deletes all environments data and resets the variables to their default. To do so:
 
-1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Reset environment** button.
+1. In the *Danger zone* section of the <Icon name="faders" /> *General* tab, click on the **Reset environment** button.
 2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
 3. Fill in the available fields to reset the environment:
 
@@ -304,23 +304,23 @@ Resetting an environment deletes all environments data and resets the variables 
 
 ##### Deleting an environment
 
-1. In the *Danger zone* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Delete environment** button.
+1. In the *Danger zone* section of the <Icon name="faders" /> *General* tab, click on the **Delete environment** button.
 2. Write in the textbox your *Environment name*.
 3. Click on the **Delete environment** button to confirm the deletion.
 
 ### Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
 
-The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
+The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
 :::note Notes
 
 - The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up and to have access to manual backups.
 
-<!-- - Only project owners can restore a backup. Maintainers have access to the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
+<!-- - Only project owners can restore a backup. Maintainers have access to the <Icon name="arrow-clockwise" /> *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
 
 - The manual backup option should become available shortly after project's first succesful deployment.
 
-- The backup feature is only available for the default, production environment. Other additional environment's settings will not show the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab.
+- The backup feature is only available for the default, production environment. Other additional environment's settings will not show the <Icon name="arrow-clockwise" /> *Backups* tab.
 :::
 
 :::tip
@@ -337,7 +337,7 @@ For projects created before the release of the Backup feature in October 2023, t
 
 #### Creating a manual backup
 
-To create a manual backup, in the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* section, click on the **Create backup** button.
+To create a manual backup, in the <Icon name="arrow-clockwise" /> *Backups* section, click on the **Create backup** button.
 
 The manual backup should start immediately, and restoration or creation of other backups will be disabled until backup is complete.
 
@@ -349,7 +349,7 @@ When creating a new manual backup, any existing manual backup will be deleted. Y
 
 If you need to restore a backup of your project:
 
-1. In the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* section, click on the **Restore backup** button.
+1. In the <Icon name="arrow-clockwise" /> *Backups* section, click on the **Restore backup** button.
 2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
 3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
 

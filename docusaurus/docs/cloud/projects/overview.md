@@ -32,7 +32,7 @@ Each project card displays the following information:
     * *Suspended*, if the project has been suspended (refer to [Project suspension](/cloud/getting-started/usage-billing#project-suspension) to reactivate the project)
     * *Incompatible version*, if the project is using a Strapi version that is not compatible with Strapi Cloud
 
-Each project card also displays a ![Menu icon](/img/assets/icons/more.svg) menu icon to access the following options:
+Each project card also displays a <Icon name="dots-three-outline" /> menu icon to access the following options:
 * **Visit App**: to be redirected to the application
 * **Go to Deployments**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page

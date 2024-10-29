@@ -35,5 +35,5 @@ The following API parameters are available:
 Query parameters use the [LHS bracket syntax](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets) (i.e. they are encoded using square brackets `[]`).
 
 :::tip
-A wide range of REST API parameters can be used and combined to query your content, which can result in long and complex query URLs.<br/>👉 You can use Strapi's [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to build query URLs more conveniently. 🤗
+A wide range of REST API parameters can be used and combined to query your content, which can result in long and complex query URLs.<br/><Icon name="arrow-fat-right" /> You can use Strapi's [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool to build query URLs more conveniently. 🤗
 :::

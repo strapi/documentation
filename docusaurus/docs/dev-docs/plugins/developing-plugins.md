@@ -23,7 +23,7 @@ Strapi allows the development of plugins that work exactly like the built-in plu
 - used as a local plugin, working only with a specific Strapi project,
 - or [submitted to the Marketplace](https://market.strapi.io/submit-plugin) to be shared with the community.
 
-👉 To start developing a Strapi plugin:
+<Icon name="arrow-fat-right" /> To start developing a Strapi plugin:
 
 1. [Create a plugin](/dev-docs/plugins/development/create-a-plugin) using the Plugin SDK.
 2. Learn more about the [structure of a plugin](/dev-docs/plugins/development/plugin-structure).

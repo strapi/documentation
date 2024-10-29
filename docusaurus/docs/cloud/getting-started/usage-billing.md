@@ -60,7 +60,7 @@ The usage limits of additional environments are the same as for the project's pr
 
 Seats represent the maximum number of users that can access the Strapi admin panel. Each plan comes with a default number of seats. 
 
-You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the ![Billing & Usage icon](/img/assets/icons/CreditCard.svg) *Billing & Usage* tab of a project's settings (see [Managing project's number of seats](/cloud/projects/settings#managing-projects-number-of-seats)).
+You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the <Icon name="credit-card" /> *Billing & Usage* tab of a project's settings (see [Managing project's number of seats](/cloud/projects/settings#managing-projects-number-of-seats)).
 
 There is however a maximum number of seats that can be added per plan:
 

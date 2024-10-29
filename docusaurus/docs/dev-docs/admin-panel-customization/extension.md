@@ -21,11 +21,11 @@ There are 2 use cases where you might want to extend the admin panel:
 
 - As a Strapi plugin developer, you want to develop a Strapi plugin that extends the admin panel **everytime it's installed in any Strapi application**.
 
-  👉 This can be done by taking advantage of the [Admin Panel API for plugins](/dev-docs/plugins/admin-panel-api).
+  <Icon name="arrow-fat-right" /> This can be done by taking advantage of the [Admin Panel API for plugins](/dev-docs/plugins/admin-panel-api).
 
 - As a Strapi developer, you want to develop a unique solution for a Strapi user who only needs to extend a specific instance of a Strapi application.
 
-  👉 This can be done by directly updating the `/src/admin/app.[tsx|js]` file, which can import any file located in `/src/admin/extensions`.
+  <Icon name="arrow-fat-right" /> This can be done by directly updating the `/src/admin/app.[tsx|js]` file, which can import any file located in `/src/admin/extensions`.
 
 :::strapi Additional resources
 * If you're searching for ways of replacing the default WYSIWYG editor, please refer to the [corresponding page](/dev-docs/admin-panel-customization/wysiwyg-editor).

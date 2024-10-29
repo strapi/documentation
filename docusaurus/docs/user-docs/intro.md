@@ -11,15 +11,14 @@ pagination_next: user-docs/getting-started/user-guide-fundamentals
 
 # Welcome to the Strapi User Guide!
 
-<SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
+:::callout <Icon name="feather" /> Developer Docs, User Guide, and Strapi Cloud documentation
 
 The documentation for Strapi contains 3 main sections, accessible from the top navigation bar:
 
-- 🧑‍💻 The **[Developer Docs](/dev-docs/intro)** contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
-- 🧑‍🏫 The **User Guide** that you're currently reading is all about using Strapi's admin panel.
-- ☁️ The **[Strapi Cloud](/cloud/intro)** documentation is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
-
-</SubtleCallout>
+- <Icon name="computer-tower" /> The **[Developer Docs](/dev-docs/intro)** contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
+- <Icon name="feather" /> The **User Guide** that you're currently reading is all about using Strapi's admin panel.
+- <Icon name="cloud" /> The **[Strapi Cloud documentation ](/cloud/intro)** is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
+:::
 
 This user guide contains the functional documentation related to all features available in the main navigation of your Strapi application.
 

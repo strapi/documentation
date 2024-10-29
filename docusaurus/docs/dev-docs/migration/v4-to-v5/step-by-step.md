@@ -87,17 +87,17 @@ The following main changes might affect your Strapi application and require you 
 For each of them, read the indicated breaking change entry and check if some manual actions are still required after the upgrade tool has run:
 
 1. **Database migration**:
-    1. MySQL v5 is not supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
-    2. Only better-sqlite3 is supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
-    3. Only mysql2 is supported 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql)
-    4. Lifecycle hooks are triggered differently 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service)
+    1. MySQL v5 is not supported <Icon name="arrow-fat-right" /> see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported)
+    2. Only better-sqlite3 is supported <Icon name="arrow-fat-right" /> see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite)
+    3. Only mysql2 is supported <Icon name="arrow-fat-right" /> see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql)
+    4. Lifecycle hooks are triggered differently <Icon name="arrow-fat-right" /> see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service)
 2. **Configuration**:
-    1. Some environment variables are handled by the server configuration 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
-    2. Custom configuration must meet specific requirements 👉 see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
+    1. Some environment variables are handled by the server configuration <Icon name="arrow-fat-right" /> see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options)
+    2. Custom configuration must meet specific requirements <Icon name="arrow-fat-right" /> see [breaking change](/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files)
 3. **Admin panel customization**:
-    * The helper-plugin has been removed 👉 see [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin)
+    * The helper-plugin has been removed <Icon name="arrow-fat-right" /> see [migration reference](/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin)
 
-👉 Finally, go over the rest of the [breaking changes database](/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
+<Icon name="arrow-fat-right" /> Finally, go over the rest of the [breaking changes database](/dev-docs/migration/v4-to-v5/breaking-changes) for any edge case you might be concerned about.
 
 ## Step 4: Migrate the API consuming side
 
