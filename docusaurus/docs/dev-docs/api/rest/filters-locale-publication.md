@@ -1,5 +1,5 @@
 ---
-title: Filters, Locale, and Publication State
+title: Filters, Locale, and Status
 description: Use Strapi's REST API to filter the results of your requests.
 sidebarDepth: 3
 displayed_sidebar: restApiSidebar
@@ -21,7 +21,7 @@ import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# REST API: Filtering, Locale, and Publication State
+# REST API: Filtering, Locale, and Status
 
 The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-all) method.<br/>
 Using optional Strapi features can provide some more filters:
