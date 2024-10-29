@@ -16,21 +16,21 @@ tags:
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
-# Introduction to the Content Manager <UpdatedBadge />
+# Introduction to the Content Manager
 
 The Content Manager is a core feature of Strapi. It is always enabled by default and cannot be disabled. It is accessible both when the application is in a development and production environment.
 
 The Content Manager is accessible from ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
-:::tip <NewBadge />
+:::tip 
 Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the sub navigation to use a text search and find one of your content-types more quickly!
 :::
 
-## Collection types <UpdatedBadge /> {#collection-types}
+## Collection types {#collection-types}
 
 The _Collection types_ category of the Content Manager displays the list of available collection types which are accessible from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager sub navigation.
 
-<NewBadge />For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](writing-content.md)).
+For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](writing-content.md)).
 
 The list view of a collection type displays all entries created for that collection type.
 
@@ -42,7 +42,7 @@ The list view of a collection type displays all entries created for that collect
   }}
 />
 
-From the list view, it is possible to: <UpdatedBadge/>
+From the list view, it is possible to:
 
 - create a new entry <ScreenshotNumberReference number="1" />,
 - make a textual search <ScreenshotNumberReference number="2" /> or set filters <ScreenshotNumberReference number="3" /> to find specific entries,
@@ -59,7 +59,7 @@ From the list view, it is possible to: <UpdatedBadge/>
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
 :::
 
-### Filtering entries <NewBadge /> {#filtering-entries}
+### Filtering entries  {#filtering-entries}
 
 Right above the list view table, on the left side of the interface, a ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
@@ -79,7 +79,7 @@ To set a new filter:
 4. Enter the value(s) of the condition in the remaining textbox.
 5. Click on the **Add filter** button.
 
-:::note <UpdatedBadge />
+:::note
 When active, filters are displayed next to the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
 :::
 
@@ -97,15 +97,13 @@ New entries are only considered created once some of their content has been writ
 
 Above the list view table, on the right, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to temporarily choose which fields to display in the table or to access permanent view settings.
 
-#### Test h4 <UpdatedBadge/>
+#### Test h4
 
 Above the list view table, on the right, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to temporarily choose which fields to display in the table or to access permanent view settings.
 
-:::note <NewBadge />
+:::note 
 Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) and clicking on the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
 :::
-
-<UpdatedBadge/>
 
 <ThemedImage
   alt="Displayed fields in the settings of a list view in the Content Manager"
@@ -115,17 +113,17 @@ Configuring the displayed field of the table in the way detailed below is only t
   }}
 />
 
-<NewBadge/>To temporarily configure the fields displayed in the table:
+To temporarily configure the fields displayed in the table:
 
 1. Click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg).
 2. Tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
-:::tip <UpdatedBadge/>
+:::tip
 Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
 :::
 
-## Single types <UpdatedBadge/> {#single-types}
+## Single types {#single-types}
 
 The _Single types_ category of the Content Manager displays the list of available single types, which are accessible from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager sub navigation.
 
