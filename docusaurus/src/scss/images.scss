@@ -11,6 +11,16 @@
   margin-bottom: 26px;
 }
 
+.markdown h1 img,
+.markdown h2 img,
+.markdown h3 img,
+.markdown h4 img,
+.markdown h5 img,
+.markdown h6 img,
+.markdown ul img {
+  margin-bottom: 0 !important;
+}
+
 
 img[src^="data:image/svg+xml"] {
   width: 16px;
