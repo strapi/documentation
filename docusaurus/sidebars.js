@@ -20,6 +20,7 @@ const sidebars = {
       collapsed: false,
       label: 'Getting Started',
       className: 'category-getting-started',
+      collapsible: false,
       link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
         {
@@ -52,6 +53,7 @@ const sidebars = {
     { // Setup & Deployment
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Setup & Deployment',
       className: 'category-setup-deployment',
       link: {
@@ -142,6 +144,7 @@ const sidebars = {
     { // Content APIs
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Content API',
       className: 'category-api',
       link: {type: 'doc', id: 'dev-docs/api/content-api'},
@@ -285,6 +288,7 @@ const sidebars = {
       label: 'Advanced features',
       className: 'category-advanced-features',
       collapsed: false,
+      collapsible: false,
       link: {
         type: 'doc',
         id: 'dev-docs/advanced-features'
@@ -370,6 +374,7 @@ const sidebars = {
     { // Customization
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Customization',
       className: 'category-customization',
       link: {
@@ -443,6 +448,7 @@ const sidebars = {
     { // Plugins
       type: 'category',
       collapsed: false,
+      collapsible: false,
       className: 'category-plugins',
       label: 'Plugins',
       link: {
@@ -586,6 +592,7 @@ const sidebars = {
     { // Update & Migration
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Upgrades',
       className: 'category-upgrade',
       link: {
@@ -658,6 +665,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Getting Started',
       link: {
         type: "doc",
@@ -672,6 +680,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       link: {
         type: 'doc',
         id: 'user-docs/content-manager/introduction-to-content-manager'
@@ -704,6 +713,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Content-type Builder',
       link: {
         type: "doc",
@@ -719,6 +729,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Media Library',
       link: {
         type: "doc",
@@ -734,6 +745,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Releases",
       link: {
         type: "doc",
@@ -748,6 +760,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Users, Roles & Permissions',
       link: {
         type: "doc",
@@ -763,6 +776,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Plugins',
       link: {
         type: "doc",
@@ -778,6 +792,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Settings',
       link: {
         type: "doc",
@@ -817,6 +832,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Getting Started",
       link: {
         type: "doc",
@@ -874,6 +890,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Projects management",
       link: {
         type: "doc",
@@ -896,6 +913,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Deployments",
       link: {
         type: "doc",
@@ -906,6 +924,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Account management",
       link: {
         type: "doc",
@@ -926,6 +945,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Command Line Interface",
       link: {
         type: "doc",
@@ -945,6 +965,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Advanced configuration",
       link: {
         type: "doc",
