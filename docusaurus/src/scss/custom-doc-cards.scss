@@ -108,3 +108,11 @@
     flex: 0 0 calc(100%) !important;
   }
 }
+
+@include dark {
+  .custom-doc-card {
+    .cardDescription {
+      color: var(--strapi-neutral-400);
+    }
+  }
+}
