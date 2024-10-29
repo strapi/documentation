@@ -264,7 +264,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   .navbar-sidebar {
     --navbar-sidebar-mobile-width: 100%;
     width: var(--navbar-sidebar-mobile-width);
-    --navbar-sidebar-max-width: 280px;
+    --navbar-sidebar-max-width: 350px; // restore to 280px if we have only 2 items
     max-width: var(--navbar-sidebar-max-width);
 
     .mobile--search {
@@ -366,7 +366,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       justify-content: space-between;
 
       &__item {
-        min-width: calc((var(--custom-mobile-navbar-width)  / 2) - var(--custom-mobile-navbar-list-gap) / 2);
+        min-width: calc((var(--custom-mobile-navbar-width)  / 3) - var(--custom-mobile-navbar-list-gap) / 2);
         text-align: center;
         border-radius: 4px;
         padding: 4px 8px;
@@ -404,9 +404,17 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
    * since we can't rely on --active classes
    * since our nav is fully custom
    */
-  html[class*="docs-doc-id-dev-docs"],
   html[class*="docs-doc-id-user-docs"] {
-    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__cms-link) {
+    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__user-link) {
+      background-color: var(--strapi-neutral-100);
+
+      .custom-mobile-navbar__item-link {
+        color: var(--strapi-primary-600);
+      }
+    }
+  }
+  html[class*="docs-doc-id-dev-docs"] {
+    .navbar .custom-mobile-navbar__item:has(.mobile-navbar__dev-link) {
       background-color: var(--strapi-neutral-100);
 
       .custom-mobile-navbar__item-link {

@@ -8,7 +8,10 @@ export default function HeaderWrapper(props) {
       <Header {...props} />
       <ul className="custom-mobile-navbar">
         <li className="custom-mobile-navbar__item" >
-          <a className="custom-mobile-navbar__item-link mobile-navbar__cms-link" href="/dev-docs/intro"><i className="ph-fill ph-feather"></i>CMS</a>
+          <a className="custom-mobile-navbar__item-link mobile-navbar__user-link" href="/user-docs/intro"><i className="ph-fill ph-feather"></i>User Guide</a>
+        </li>
+        <li className="custom-mobile-navbar__item" >
+          <a className="custom-mobile-navbar__item-link mobile-navbar__dev-link" href="/dev-docs/intro"><i className="ph-fill ph-computer-tower"></i>Dev Docs</a>
         </li>
         <li className="custom-mobile-navbar__item" >
           <a className="custom-mobile-navbar__item-link mobile-navbar__cloud-link" href="/cloud/intro"><i className="ph-fill ph-cloud"></i>Cloud</a>
