@@ -77,7 +77,7 @@ Click the **Search** icon to search for a specific log. The search is performed 
 
 ## Log details
 
-For any log item, click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon to display a modal with more details about that action.
+For any log item, click the <Icon name="eye" /> icon to display a modal with more details about that action.
 
 <ThemedImage
   alt="Log details modal"

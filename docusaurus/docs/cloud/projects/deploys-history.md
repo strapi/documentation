@@ -41,7 +41,7 @@ Each card displays the following information:
 
 ## Accessing deployment details & logs
 
-From the *Deployments* tab, you can hover a deployment card to make the ![See logs button](/img/assets/icons/Eye.svg) **Show details** button appear. Clicking on this button will redirect you to the *Deployment details* page which contains the deployment's detailed logs.
+From the *Deployments* tab, you can hover a deployment card to make the <Icon name="eye" /> **Show details** button appear. Clicking on this button will redirect you to the *Deployment details* page which contains the deployment's detailed logs.
 
 <ThemedImage
   alt="Deployment details"

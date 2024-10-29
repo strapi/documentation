@@ -57,7 +57,7 @@ To create a new folder in the Media Library:
 4. Click **Create**.
 
 :::note
-There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the ![Search icon](/img/assets/icons/v5/Search.svg) on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the <Icon name="magnifying-glass" classes="ph-bold"/> on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
 :::
 
 ## Moving assets to a folder
@@ -75,7 +75,7 @@ Assets and folders can be moved to another folder from the root view of the Medi
 To bulk move assets and folders to another folder:
 
 1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the ![Move icon](/img/assets/icons/v5/Folder.svg) **Move** button at the top of the interface.
+2. Click the <Icon name="folder" /> **Move** button at the top of the interface.
 3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
 4. Click **Move**.
 
@@ -87,7 +87,7 @@ An individual asset can also be moved to a folder when [editing the asset](/user
 
 Once created, a folder can be renamed, moved or deleted. To manage a single folder:
 
-1. In the Folders part of the Media library, hover the folder to be edited and click its edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg).
+1. In the Folders part of the Media library, hover the folder to be edited and click its edit button <Icon name="pencil-simple" />.
 2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
 3. Click **Save**.
 
@@ -98,9 +98,9 @@ Deleting a folder can be done either from the list of folders of the Media Libra
 To delete a folder, from the Media Library:
 
 1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
-2. Click the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete** button above the Folders list.
+2. Click the <Icon name="trash"/> **Delete** button above the Folders list.
 3. In the _Confirmation_ dialog, click **Confirm**.
 
 :::note
-A single folder can also be deleted when editing it: hover the folder, click on its edit icon ![Edit icon](/img/assets/icons/v5/Pencil.svg), and in the window that pops up, click the **Delete folder** button and confirm the deletion.
+A single folder can also be deleted when editing it: hover the folder, click on its edit icon <Icon name="pencil-simple" />, and in the window that pops up, click the **Delete folder** button and confirm the deletion.
 :::

@@ -16,7 +16,7 @@ import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Project settings
 
-From a chosen project's dashboard, the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
+From a chosen project's dashboard, the <Icon name="gear-six" /> **Settings** button, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
 
 The settings' menu on the left side of the interface is separated into 2 categories: the settings for the entire project and the settings specific to any configured environment for the project.
 
@@ -237,8 +237,8 @@ In the project's environments' settings, you first need to select the environmen
 
 - <Icon name="faders" /> [*General (environment)*](#general),
 - <Icon name="arrow-clockwise" /> [*Backups*](#backups), which are only available for the production environment,
-- ![Domains icon](/img/assets/icons/Browsers.svg) [*Domains*](#domains),
-- and ![Variables icon](/img/assets/icons/code2.svg) [*Variables*](#variables).
+- <Icon name="browsers" /> [*Domains*](#domains),
+- and <Icon name="code" classes="ph-bold" /> [*Variables*](#variables).
 
 ### General (environment)
 
@@ -263,7 +263,7 @@ The <Icon name="faders" /> *General* tab for the environment-level settings enab
 
 The environment's Node version is based on the one chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)), through the advanced settings. It is possible to switch to another Node version afterwards, for any environment.
 
-1. In the *Basic information* section of the <Icon name="faders" /> *General* tab, click on the *Node version*'s edit ![Edit icon](/img/assets/icons/edit.svg) button.
+1. In the *Basic information* section of the <Icon name="faders" /> *General* tab, click on the *Node version*'s edit <Icon name="pencil-simple" /> button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
 3. Click on the **Save** button.
 4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
@@ -355,7 +355,7 @@ If you need to restore a backup of your project:
 
 ### Domains
 
-The ![Domains icon](/img/assets/icons/Browsers.svg) *Domains* tab enables you to manage domains and connect new ones.
+The <Icon name="browsers" /> *Domains* tab enables you to manage domains and connect new ones.
 
 <ThemedImage
   alt="Project domains"
@@ -365,14 +365,14 @@ The ![Domains icon](/img/assets/icons/Browsers.svg) *Domains* tab enables you to
   }}
 />
 
-All existing domains for your Strapi Cloud project are listed in the ![Domains icon](/img/assets/icons/Browsers.svg) *Domains* tab. For each domain, you can:
+All existing domains for your Strapi Cloud project are listed in the <Icon name="browsers" /> *Domains* tab. For each domain, you can:
 
 - see its current status:
-    - ![Edit icon](/img/assets/icons/v5/CheckCircle.svg) Active: the domain is currently confirmed and active
-    - ![Edit icon](/img/assets/icons/Clock.svg) Pending: the domain transfer is being processed, waiting for DNS changes to propagate
-    - ![Edit icon](/img/assets/icons/v5/CrossCircle2.svg) Failed: the domain change request did not complete as an error occured
-- click the ![Edit icon](/img/assets/icons/edit.svg) edit button to access the settings of the domain
-- click the ![Delete icon](/img/assets/icons/delete.svg) delete button to delete the domain
+    - <Icon name="check-circle" color="rgb(58,115,66)"/> Active: the domain is currently confirmed and active
+    - ![Clock icon](/img/assets/icons/Clock.svg) Pending: the domain transfer is being processed, waiting for DNS changes to propagate
+    - <Icon name="x-circle" color="rgb(190,51,33)" /> Failed: the domain change request did not complete as an error occured
+- click the <Icon name="pencil-simple" /> edit button to access the settings of the domain
+- click the <Icon name="trash-simple" /> delete button to delete the domain
 
 #### Connecting a custom domain
 
@@ -402,8 +402,8 @@ Environment variables (more information in the [Developer Documentation](../../d
   }}
 />
 
-In the ![Variables icon](/img/assets/icons/code2.svg) *Variables* tab, you can:
+In the <Icon name="code" classes="ph-bold" /> *Variables* tab, you can:
 - click the **Add variable** button to create a new variable
 - edit any variable, each being composed of a *Name* and a *Value*
-- click the ![Delete icon](/img/assets/icons/delete.svg) delete button associated with any non-default variable to delete it
+- click the <Icon name="trash-simple" /> delete button associated with any non-default variable to delete it
 - click the **Save** button to save any change made on the page

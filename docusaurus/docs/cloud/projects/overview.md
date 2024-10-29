@@ -51,7 +51,7 @@ From the *Projects* page, click on any project card to access is dashboard. It d
 
 From the dashboard's header of a chosen project, you can:
 - use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="1" />,
-- use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
+- use the <Icon name="gear-six" /> **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
 - choose which environment to visualise for the project <ScreenshotNumberReference number="3" />,
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="4" />.
 

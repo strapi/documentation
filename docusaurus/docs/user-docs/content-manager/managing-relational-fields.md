@@ -75,7 +75,7 @@ To select the only relevant relational field's entry:
 You can click on the name of the selected entry to be redirected to the edit view of the relational field's content type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg).
+To remove the entry selected in the drop-down list, click on the delete button <Icon name="x" classes="ph-bold"/>.
 
 ## Managing multiple-choice relational fields
 
@@ -100,6 +100,6 @@ To select the relevant relational field's entries:
 All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
 :::
 
-To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/v5/Cross.svg) in the selected entries list.
+To remove an entry, click on the cross button <Icon name="x" classes="ph-bold" /> in the selected entries list.
 
-Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/v5/Drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button <Icon name="dots-six-vertical" classes="ph-bold"/>. To move an entry, click and hold it, drag it to the desired position, then release it.

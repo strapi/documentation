@@ -7,5 +7,5 @@ Invoices can have any of the following statuses:
 - Voided: the invoice has been cancelled.
 
 :::tip
-Click the ![download icon](/img/assets/icons/download.svg) icon to download an invoice.
+Click the <Icon name="download-simple" /> icon to download an invoice.
 :::

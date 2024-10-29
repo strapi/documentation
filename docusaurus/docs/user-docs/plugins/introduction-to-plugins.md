@@ -31,8 +31,8 @@ Additional plugins that you can use to extend and customize your Strapi applicat
 
 From the admin panel, administrators are allowed to:
 
-- discover additional plugins and [providers](#providers) in the ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) _Marketplace_ (see [Managing Marketplace plugins](./installing-plugins-via-marketplace.md))
-- review the currently installed plugins and [providers](#providers) in ![Cog icon](/img/assets/icons/v5/Cog.svg) _Settings > Plugins_
+- discover additional plugins and [providers](#providers) in the <Icon name="shopping-cart-simple" /> _Marketplace_ (see [Managing Marketplace plugins](./installing-plugins-via-marketplace.md))
+- review the currently installed plugins and [providers](#providers) in <Icon name="gear-six" /> _Settings > Plugins_
 
 <ThemedImage
   alt="Plugins in Settings section"

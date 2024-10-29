@@ -195,7 +195,7 @@ During the free trial, will be kept informed of the number of remaining free day
     }}
     />
 
-2. Review your project: make sure the plan and setup information are correct. If needed, click the ![Edit icon](/img/assets/icons/edit.svg) **Edit** button to be redirected to the first interface of the project creation and fix any mistake.
+2. Review your project: make sure the plan and setup information are correct. If needed, click the <Icon name="pencil-simple" /> **Edit** button to be redirected to the first interface of the project creation and fix any mistake.
 
 3. In the Payment section, fill in at least all mandatory elements for *Payment method* and *Billing information*.
 

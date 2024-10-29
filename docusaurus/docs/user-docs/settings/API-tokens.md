@@ -16,7 +16,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 * The *Global settings > API Tokens* sub-section of the settings interface is accessible in the admin panel only if the _API tokens > Read_ permission is granted.
 :::
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/dev-docs/configurations/api-tokens)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*.
+API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/dev-docs/configurations/api-tokens)). Administrators can manage API tokens from <Icon name="gear-six" /> *Settings > Global settings > API Tokens*.
 
 <ThemedImage
   alt="API tokens"
@@ -30,8 +30,8 @@ The *API Tokens* settings sub-section displays a table listing all of the create
 
 The table displays each API token's name, description, date of creation, and date of last use. From the table, administrators can also:
 
-- Click on the ![edit button](/img/assets/icons/v5/Pencil.svg) to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
-- Click on the ![delete button](/img/assets/icons/v5/Trash.svg) to delete an API token.
+- Click on the <Icon name="pencil-simple" /> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
+- Click on the <Icon name="trash"/> to delete an API token.
 
 ## Creating a new API token
 
@@ -48,7 +48,7 @@ To create a new API token:
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 
 3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
-4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/v5/Duplicate.svg).
+4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <Icon name="copy"/>.
 
 <ThemedImage
   alt="Custom API token"

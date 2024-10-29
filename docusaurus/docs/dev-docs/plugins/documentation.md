@@ -75,7 +75,7 @@ By default, your documentation will be accessible by anyone.
 
 To restrict API documentation access, enable the **Restricted Access** option from the admin panel:
 
-1. Navigate to ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings* in the main navigation of the admin panel.
+1. Navigate to <Icon name="gear-six" /> *Settings* in the main navigation of the admin panel.
 2. Choose **Documentation**.
 3. Toggle **Restricted Access** to `ON`.
 4. Define a password in the `password` input.

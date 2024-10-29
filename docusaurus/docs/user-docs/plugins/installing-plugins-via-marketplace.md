@@ -15,7 +15,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 <NotV5/>
 
-The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](/user-docs/plugins#providers) to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
+The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](/user-docs/plugins#providers) to extend plugins. The Marketplace is located in the admin panel, indicated by <Icon name="shopping-cart-simple" /> _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
 :::note strapi In-app Marketplace vs. Market website
 The Marketplace in the admin panel displays all existing plugins, regardless of the version of Strapi they are for. All plugins can also be discoverable through the [Strapi Market](https://market.strapi.io) website.
@@ -35,10 +35,10 @@ The Plugins and Providers tabs display each plugin/provider on individual cards 
 
 - their name, sometimes followed by either of the following badges:
   - ![maintained by Strapi icon](/img/assets/icons/v5/official-market.svg) to indicate it is made by Strapi,
-  - ![verified by Strapi icon](/img/assets/icons/v5/verified-marketplace.svg) to indicate it was verified by Strapi.
+  - <Icon name="seal-check" color="rgb(58,115,66)" /> to indicate it was verified by Strapi.
 - the number of times the plugin/provider was starred on GitHub and downloaded
 - the description
-- a **More** ![ExternalLink icon](/img/assets/icons/v5/ExternalLink.svg) button to be redirected to the Market website for additional information, including about the version of Strapi the plugin is for, and implementation instructions
+- a **More** <Icon name="arrow-square-out" classes="ph-bold"/> button to be redirected to the Market website for additional information, including about the version of Strapi the plugin is for, and implementation instructions
 
 In the top right corner of the Marketplace, the **Submit plugin** button redirects to the Strapi Market where it is possible to submit your own plugin and provider.
 
@@ -57,7 +57,7 @@ Marketplace plugins and providers are installed and deleted from the user's term
 
 To install a new plugin or provider via the Marketplace:
 
-1. Go to the ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) *Marketplace*.
+1. Go to the <Icon name="shopping-cart-simple" /> *Marketplace*.
 2. Choose the **Plugins** tab to browse available plugins or the **Providers** tab to browse available providers.
-3. Choose an available plugin/provider and click on the **More** ![ExternalLink icon](/img/assets/icons/v5/ExternalLink.svg) button.
+3. Choose an available plugin/provider and click on the **More** <Icon name="arrow-square-out" classes="ph-bold"/> button.
 4. Once redirected to the Strapi Market website, follow the plugin/provider-specific implementation instructions.

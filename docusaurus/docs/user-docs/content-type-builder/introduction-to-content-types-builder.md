@@ -17,7 +17,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 The Content-type Builder is a core plugin of Strapi. It is a feature that is always activated by default and cannot be deactivated. The Content-type Builder is however only accessible when the application is in a development environment.
 
-Administrators can access the Content-type Builder from ![CTB icon](/img/assets/icons/v5/Layout.svg) _Content-type Builder_ in the main navigation of the admin panel.
+Administrators can access the Content-type Builder from <Icon name="layout" /> _Content-type Builder_ in the main navigation of the admin panel.
 
 <ThemedImage
   alt="Content-type Builder interface"
@@ -41,5 +41,5 @@ From each category of the Content-type Builder sub navigation, it is possible to
 - or create a new content-type or component (see [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)).
 
 :::tip
-Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the Content-type Builder sub navigation to find a specific collection type, single type, or component.
+Click the search icon <Icon name="magnifying-glass" classes="ph-bold"/> in the Content-type Builder sub navigation to find a specific collection type, single type, or component.
 :::

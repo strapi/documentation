@@ -8,7 +8,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuring administrator roles (RBAC)
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings* sub navigation.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the <Icon name="gear-six" /> *Settings* sub navigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](./managing-administrators)).
 
@@ -42,7 +42,7 @@ To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-roles-details)).
 
 :::tip
-In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg) to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button <Icon name="copy"/> to create a new role by duplicating an existing one.
 :::
 
 ## Deleting a role
@@ -51,7 +51,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 To delete a role:
 
-1. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the role's record.
+1. Click on the delete button <Icon name="trash"/> on the right side of the role's record.
 2. In the deletion window, click on the **Confirm** button to confirm the deletion.
 
 ## Editing a role
@@ -64,7 +64,7 @@ To delete a role:
   }}
 />
 
-The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application. It is accessible from *Administration panel > Roles* either after clicking on the edit button <Icon name="pencil-simple" /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 :::caution
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
@@ -156,7 +156,7 @@ Settings permissions can be configured for all settings accessible from *General
 
 ### Setting custom conditions for permissions
 
-For each permission of each category, a ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
+For each permission of each category, a <Icon name="gear-six" /> **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
 
 - the administrator must be the creator,
 - the administrator must have the same role as the creator.
@@ -175,17 +175,17 @@ Other custom conditions can be available if they have been created beforehand fo
 
 To set custom conditions:
 
-1. Click on the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button of the permission already granted for the role.
+1. Click on the <Icon name="gear-six" /> **Settings** button of the permission already granted for the role.
 2. In the *Define conditions* window, each available permission can be customized with a specific condition. Click on the drop-down list related to the permission you want to customize.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
-   - Click on the arrow button ![Carret icon](/img/assets/icons/v5/CaretDown.svg) to see the available additional conditions and tick only the chosen one(s).
+   - Click on the arrow button <Icon name="caret-down" /> to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
 :::tip
-Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button.
+Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the <Icon name="gear-six" /> **Settings** button.
 :::
 
 :::caution
-Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the <Icon name="gear-six" /> **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::

@@ -13,7 +13,7 @@ End-users are the users who consume the content that is created and managed with
 
 With the [Users & Permissions plugin](../plugins/strapi-plugins#users-and-permissions) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users)) but end-user roles and permissions are managed in the Settings interface.
 
-The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](/img/assets/icons/v5/Cog.svg) _Settings_ sub navigation.
+The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the <Icon name="gear-six" /> _Settings_ sub navigation.
 
 <ThemedImage
   alt="End-users roles interface"
@@ -32,7 +32,7 @@ From this interface, it is possible to:
 - or access information regarding an end-user role, and edit it (see [Editing a role](#editing-a-role)).
 
 :::tip
-Click the search button ![Search icon](/img/assets/icons/v5/Search.svg) above the table to use a text search and find one of your administrator roles more quickly!
+Click the search button <Icon name="magnifying-glass" classes="ph-bold"/> above the table to use a text search and find one of your administrator roles more quickly!
 :::
 
 By default, 2 end-user roles are defined for any Strapi application:
@@ -57,8 +57,8 @@ Although the 2 default end-user roles cannot be deleted, the other ones can, as 
 
 To delete a role:
 
-1. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the role's record.
-2. In the deletion window, click on the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Confirm** button to confirm the deletion.
+1. Click on the delete button <Icon name="trash"/> on the right side of the role's record.
+2. In the deletion window, click on the <Icon name="trash"/> **Confirm** button to confirm the deletion.
 
 ## Editing a role
 
@@ -70,7 +70,7 @@ To delete a role:
   }}
 />
 
-The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of a front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of a front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Icon name="pencil-simple" /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ### Editing role's details
 

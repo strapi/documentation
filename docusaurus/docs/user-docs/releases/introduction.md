@@ -22,7 +22,7 @@ Releases enables content managers to organize entries into containers that can p
   }}
 />
 
-Administrators can access Releases from ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) _Releases_ in the main navigation of the admin panel.
+Administrators can access Releases from <Icon name="paper-plane-tilt" /> _Releases_ in the main navigation of the admin panel.
 
 From the Releases view, it is possible to:
 

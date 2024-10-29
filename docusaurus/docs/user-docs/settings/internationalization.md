@@ -11,7 +11,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Configuring Internationalization locales
 
-The [Internationalization feature](/user-docs/plugins/strapi-plugins.md#i18n) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Internationalization*.
+The [Internationalization feature](/user-docs/plugins/strapi-plugins.md#i18n) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from <Icon name="gear-six" /> *Settings > Global settings > Internationalization*.
 
 <ThemedImage
   alt="i18n settings"
@@ -25,8 +25,8 @@ The *Internationalization* settings sub-section displays a table listing all loc
 
 For each locale, the table displays the default ISO code of the locale, its optional display name and indicates if the locale is set as the default one. From the table, administrators can also:
 
-- Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a locale
-- Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a locale
+- Click on the edit button <Icon name="pencil-simple" /> to edit a locale
+- Click on the delete button <Icon name="trash"/> to delete a locale
 
 ## Adding a new locale
 

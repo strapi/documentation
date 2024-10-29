@@ -9,7 +9,7 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Managing administrator accounts
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the section of the ![Settings icon](/img/assets/icons/v5/Cog.svg) _Settings_ sub navigation.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the section of the <Icon name="gear-six" /> _Settings_ sub navigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* (see [Configuring administrator roles](configuring-administrator-roles.md)) and *Users*.
 
@@ -39,11 +39,11 @@ Sorting can be enabled for most fields displayed in the table. Click on a field 
 
 ## Creating a new account
 
-On the top right side of the *Administration panel > Users* interface, a ![Mail icon](/img/assets/icons/v5/Mail.svg) **Invite new user** button is displayed. It allows to create a new administrator account for your Strapi application.
+On the top right side of the *Administration panel > Users* interface, a <Icon name="envelope" /> **Invite new user** button is displayed. It allows to create a new administrator account for your Strapi application.
 
 To create a new administrator account:
 
-1. Click on the ![Mail icon](/img/assets/icons/v5/Mail.svg) **Invite new user** button.
+1. Click on the <Icon name="envelope" /> **Invite new user** button.
 2. In the *Invite new user* window, fill in the Details information about the new administrator:
 
   | User information | Instructions                                                                 |
@@ -60,7 +60,7 @@ To create a new administrator account:
   | Connect with SSO | (optional) Click **TRUE** or **FALSE** to connect the new administrator account with SSO.                       |
 
 4. Click on the **Invite user** button in the bottom right corner of the *Add new user* window.
-5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg) to copy the URL.
+5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button <Icon name="copy"/> to copy the URL.
 6. Click on the **Finish** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
 :::note
@@ -73,7 +73,7 @@ Administrator accounts can be deleted from the *Administration panel > Users* in
 
 To delete an administrator:
 
-1. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete** button above the table.
+1. Click on the delete button <Icon name="trash"/> on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the <Icon name="trash"/> **Delete** button above the table.
 2. In the deletion window, click on the **Confirm** button to confirm the deletion.
 
 ## Editing an account
@@ -106,7 +106,7 @@ To edit an administrator account:
 3. (optional) In the *Roles* area, edit the role of the administrator:
 
   - Click on the drop-down list to choose a new role, and/or add it to the already attributed one.
-  - Click on the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to delete an already attributed role.
+  - Click on the delete button <Icon name="x" classes="ph-bold"/> to delete an already attributed role.
 
 4. Click on the **Save** button in the top right corner.
 
