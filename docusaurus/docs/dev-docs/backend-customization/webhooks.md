@@ -444,7 +444,8 @@ This event is triggered only when you delete a media through the media interface
 }
 ```
 
-### `review-workflows.updateEntryStage` <EnterpriseBadge/>
+### `review-workflows.updateEntryStage`
+<EnterpriseBadge/>
 
 This event is only available with the <EnterpriseBadge/> edition of Strapi.<br />The event is triggered when content is moved to a new review stage (see [Review Workflows](/user-docs/settings/review-workflows)).
 
@@ -475,7 +476,8 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 }
 ```
 
-### `releases.publish` <EnterpriseBadge/><CloudTeamBadge/> {#releases-publish}
+### `releases.publish`  {#releases-publish}
+<EnterpriseBadge/><CloudTeamBadge/>
 
 The event is triggered when a [release](/user-docs/releases/introduction) is published.
 

@@ -14,7 +14,8 @@ tags:
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# Single Sign-On <EnterpriseBadge/>
+# Single Sign-On
+<EnterpriseBadge/>
 
 <NotV5 />
 
