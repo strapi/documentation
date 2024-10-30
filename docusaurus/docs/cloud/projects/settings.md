@@ -84,7 +84,8 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
-### Environments <CloudProBadge /> <CloudTeamBadge /> {#environments}
+### Environments {#environments}
+<CloudProBadge /> <CloudTeamBadge />
 
 The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
@@ -308,7 +309,8 @@ Resetting an environment deletes all environments data and resets the variables 
 2. Write in the textbox your *Environment name*.
 3. Click on the **Delete environment** button to confirm the deletion.
 
-### Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
+### Backups {#backups}
+<CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge />
 
 The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 

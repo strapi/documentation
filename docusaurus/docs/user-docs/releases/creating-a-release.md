@@ -10,7 +10,8 @@ tags:
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# Creating a release  <EnterpriseBadge /> <CloudTeamBadge />
+# Creating a release
+<EnterpriseBadge /> <CloudTeamBadge />
 
 The <Icon name="paper-plane-tilt" /> [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
