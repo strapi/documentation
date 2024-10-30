@@ -104,7 +104,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
+          editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus',
           admonitions: {
             keywords: [
               // Admonitions defaults
