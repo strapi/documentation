@@ -2,25 +2,27 @@
 title: TypeScript development
 description: Learn more about TypeScript usage with Strapi 5
 tags:
-- strapi() factory
-- strapi.compile() function
-- typescript
-- plugins development
-
+  - strapi() factory
+  - strapi.compile() function
+  - typescript
+  - plugins development
+  - api
+  - guides
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+# TypeScript Development with Strapi
 
-# TypeScript Development with Strapi 
+This page provides a comprehensive guide to developing with TypeScript in Strapi v5, covering key patterns and configurations for integrating TypeScript effectively. You'll find sections on using Strapi’s provided types, generating and managing typings for content types, configuring Strapi programmatically, and building plugins with TypeScript. Each section includes practical steps and example code to help you set up and troubleshoot TypeScript-based workflows in your Strapi project.
 
-<NotV5/>
+:::strapi API reference
+We are preparing an API reference page, which will include an exhaustive list of the types exported by Strapi. Please come back soon! 👀
+:::
 
-While developing a [TypeScript](/dev-docs/typescript)-based application with Strapi, you can:
+## :books: Guides
 
-- access [typings for the `Strapi`](#use-strapi-typescript-typings) class with autocompletion,
-- [generate typings](#generate-typings-for-content-types-schemas) for your project's content-types,
-- [start Strapi programmatically](#start-strapi-programmatically),
-- and follow some TypeScript-specific instructions for [plugins development](#develop-a-plugin-using-typescript).
+The guides are a curated list of common examples in which you might need to use Strapi types in your application.
+
+You can find the list of available guides [here](/dev-docs/typescript/development/guides).
 
 ## Use `Strapi` TypeScript typings
 
@@ -31,15 +33,15 @@ To experience TypeScript-based autocomplete while developing Strapi applications
 1. Open the `./src/index.ts` file from your code editor.
 2. Declare the `strapi` argument as type `Strapi` within the global `register` method:
 
-    ```typescript title="./src/index.ts"
-    import { Strapi } from '@strapi/strapi';
+   ```typescript title="./src/index.ts"
+   import type { Core } from '@strapi/strapi';
 
-    export default {
-      register({ strapi }: { strapi: Strapi }) {
-        // ...
-      },
-    };
-    ```
+   export default {
+     register({ strapi }: { strapi: Core.Strapi }) {
+       // ...
+     },
+   };
+   ```
 
 3. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
 
@@ -116,10 +118,9 @@ To start Strapi programmatically in a TypeScript project the Strapi instance req
 Strapi can be run programmatically by using the `strapi.createStrapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
 ```js title="./server.js"
-
 const strapi = require('@strapi/strapi');
 const app = strapi.createStrapi({ distDir: './dist' });
-app.start(); 
+app.start();
 ```
 
 ### Use the `strapi.compile()` function
@@ -129,7 +130,7 @@ The `strapi.compile()` function should be mostly used for developing tools that 
 ```js
 const strapi = require('@strapi/strapi');
 
-strapi.compile().then(appContext => strapi(appContext).start());
+strapi.compile().then((appContext) => strapi(appContext).start());
 ```
 
 ## Develop a plugin using TypeScript
