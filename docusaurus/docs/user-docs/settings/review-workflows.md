@@ -24,7 +24,7 @@ The Review Workflows feature allows you to create and manage workflows for your 
 
 In many organizations different teams review different parts of content. By using different review workflows for different content-types, it is possible to adjust each workflow to the needs of each team involved.
 
-The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
+The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages. Additionally, any stage can be defined as a required stage for publishing, ensuring content must pass through that stage before it can be published.
 
 Before being available in the [Content Manager](/user-docs/content-manager/reviewing-content), review workflows must be configured from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Review Workflows*. The Review workflows settings are only available to users with the Super Admin role by default. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
 
@@ -46,6 +46,7 @@ Before being available in the [Content Manager](/user-docs/content-manager/revie
     | Workflow name  | Write a unique name of workflow.                                         |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
+    | Required stage | Define any stage as required for publishing.       |
 
 3. Click on the **Save** button. The new workflow will be displayed in the list-view and for every content-type assigned.
 
