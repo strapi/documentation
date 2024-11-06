@@ -14,7 +14,7 @@ tags:
 
 This page provides a comprehensive guide to developing with TypeScript in Strapi v5, covering key patterns and configurations for integrating TypeScript effectively. You'll find sections on using Strapi’s provided types, generating and managing typings for content types, configuring Strapi programmatically, and building plugins with TypeScript. Each section includes practical steps and example code to help you set up and troubleshoot TypeScript-based workflows in your Strapi project.
 
-:::strapi :open_book: API reference
+:::strapi API reference
 We are preparing an API reference page, which will include an exhaustive list of the types exported by Strapi. Please come back soon! 👀
 :::
 
