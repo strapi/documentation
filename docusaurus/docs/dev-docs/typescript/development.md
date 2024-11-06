@@ -18,10 +18,6 @@ This page provides a comprehensive guide to developing with TypeScript in Strapi
 We are preparing an API reference page, which will include an exhaustive list of the types exported by Strapi. Please come back soon! 👀
 :::
 
-The API reference is an exhaustive list of the types exported by Strapi.
-
-It's automatically generated based on the code and can be found [here](/dev-docs/typescript/development/api-reference).
-
 ## :books: Guides
 
 The guides are a curated list of common examples in which you might need to use Strapi types in your application.
