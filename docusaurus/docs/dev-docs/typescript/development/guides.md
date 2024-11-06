@@ -3,11 +3,13 @@ title: TypeScript - Guides
 sidebar_label: Guides
 description: List of TypeScript guides to get started with Strapi and TypeScript
 tags:
-- typescript
-- guides
+  - typescript
+  - guides
 ---
 
-# TypeScript Guides 
+# TypeScript Guides
+
+This page includes a curated list of common examples useful to use types while [developing a Strapi TypeScript application](/dev-docs/typescript/development).
 
 <CustomDocCardsWrapper>
 
