@@ -51,10 +51,6 @@ The terminal will inform you when the project is successfully deployed on Strapi
 
 Once the project is first deployed on Strapi Cloud with the CLI, the `deploy` command can be reused to trigger a new deployment of the same project.
 
-:::caution
-The `deploy` command can only be used by new users who have never created a Strapi Cloud project, and for which the free trial is still available. Once a project is deployed with the CLI, it isn't possible to deploy another project on the same Strapi Cloud account with the CLI.
-:::
-
 :::note
 Once you deployed your project, if you visit the Strapi Cloud dashboard, you may see some limitations as well as impacts due to creating a Strapi Cloud project that is not in a remote repository and which was deployed with the CLI.
 
