@@ -41,7 +41,10 @@ Deploy a new local project (< 100MB) in Strapi Cloud.
 strapi deploy
 ```
 
-This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand. 
+This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand.
+
+:::note
+If you have any free trial available, the deploy command will create automatically a new project on Strapi Cloud, unless you previously link your local project to an existing project by using the `strapi link` command.
 
 When you use this command, you’ll be asked to select a target environment. To skip this prompt, you can either:
 - Use the `--env` flag (e.g., `strapi deploy --env <environment-name>`)
@@ -63,6 +66,9 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 **Alias:** `strapi cloud:link`
 
 Links project in current folder to an existing project in Strapi Cloud.
+
+:::note
+Linking a project to Strapi Cloud doesn't limit it to Strapi Cloud alone; you can still deploy and manage it in your own self-hosted environment as needed.
 
 ```bash
 strapi link
