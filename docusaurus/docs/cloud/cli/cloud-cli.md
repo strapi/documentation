@@ -44,7 +44,7 @@ strapi deploy
 This command must be used after the `login` one. It deploys a local Strapi project on Strapi Cloud, without having to host it on a remote git repository beforehand. 
 
 When you use this command, you’ll be asked to select a target environment. To skip this prompt, you can either:
-- Use the `-env` flag (e.g., `strapi deploy -env <environment-name>`)
+- Use the `--env` flag (e.g., `strapi deploy --env <environment-name>`)
 - Set a default environment with `strapi cloud environment link` [command](#cloud-environment-link), so deployments automatically go to that environment.
 
 The terminal will inform you when the project is successfully deployed on Strapi Cloud.
