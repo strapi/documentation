@@ -45,6 +45,7 @@ This command must be used after the `login` one. It deploys a local Strapi proje
 
 :::note
 If you have any free trial available, the deploy command will create automatically a new project on Strapi Cloud, unless you previously link your local project to an existing project by using the `strapi link` command.
+:::
 
 When you use this command, you’ll be asked to select a target environment. To skip this prompt, you can either:
 - Use the `--env` flag (e.g., `strapi deploy --env <environment-name>`)
