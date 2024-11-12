@@ -7,8 +7,6 @@ tags:
 - review workflows
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Reviewing content <EnterpriseBadge />
 
 Using the [Review Workflows](/user-docs/settings/review-workflows) feature, you can manage content throughout the content creation process. In the Content Manager, you can change the review stage of the content from the edit view, and keep moving it between stages as needed. You can also change the assignee of the content, assigning it to a Strapi admin user for review.

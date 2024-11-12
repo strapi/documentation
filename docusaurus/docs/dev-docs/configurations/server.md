@@ -12,11 +12,7 @@ tags:
   - port
 ---
 
-import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
-
 # Server configuration
-
-<NotV5 />
 
 The `./config/server.js` file is used to define the server configuration for a Strapi application.
 

@@ -10,8 +10,6 @@ tags:
 - one-choice relational fields
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Managing relational fields
 
 Relation-type fields added to a content-type from the Content-type Builder allow establishing a relation with another collection type. These fields are called "relational fields". 
