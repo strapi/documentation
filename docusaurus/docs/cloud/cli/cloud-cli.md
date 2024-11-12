@@ -70,6 +70,7 @@ Links project in current folder to an existing project in Strapi Cloud.
 
 :::note
 Linking a project to Strapi Cloud doesn't limit it to Strapi Cloud alone; you can still deploy and manage it in your own self-hosted environment as needed.
+:::
 
 ```bash
 strapi link
