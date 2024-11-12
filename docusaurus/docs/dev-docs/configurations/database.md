@@ -105,7 +105,7 @@ The `settings` object found in `./config/database.js` (or `./config/database.ts`
 | `useTypescriptMigrations` | Look for migrations in the build dir instead of the src dir     | `Boolean` | `false` |
 
 :::note
-When using `useTypescriptMigrations` you can continue to use existing javascript migrations by setting `compilerOptions { allowJs: true }` in your tsconfig file.
+When using `useTypescriptMigrations` you can continue to use existing JavaScript migrations by setting `compilerOptions { allowJs: true }` in your tsconfig file.
 :::
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
