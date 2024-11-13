@@ -47,7 +47,7 @@ Please refer to the [REST API parameters table](/dev-docs/api/rest/parameters) a
     page: 1,
   },
   status: 'published',
-  locale: ['en'],
+  locale: 'en',
 }
   `}
 />
