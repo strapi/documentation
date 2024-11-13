@@ -31,7 +31,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 #### Dev Docs
 
-- [Add API Reference and Guides for TypeScript](https://github.com/strapi/documentation/pull/2266)
+- [Add WIP API Reference and Guides for TypeScript](https://github.com/strapi/documentation/pull/2266)
 
 ### 🖌 Updated content
 
