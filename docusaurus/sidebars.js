@@ -25,24 +25,15 @@ const sidebars = {
         {
           type: 'doc',
           id: 'dev-docs/intro',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'doc',
           id: 'dev-docs/quick-start',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'doc',
           id: 'dev-docs/whats-new',
           label: "What's new?",
-          customProps: {
-            updated: true,
-          },
         },
         'dev-docs/faq',
         'dev-docs/community',
@@ -68,9 +59,6 @@ const sidebars = {
           type: 'category',
           label: 'Installation',
           link: { type: 'doc', id: 'dev-docs/installation' },
-          customProps: {
-            updated: true,
-          },
           items: [
             {
               type: 'doc',
@@ -80,9 +68,6 @@ const sidebars = {
             {
               type: 'doc',
               id: 'dev-docs/installation/cli',
-              customProps: {
-                updated: true,
-              },
             },
             'dev-docs/installation/docker',
           ],
@@ -97,7 +82,13 @@ const sidebars = {
               label: 'Introduction to configuration',
               id: 'dev-docs/configurations',
             },
-            'dev-docs/configurations/database',
+            {
+              type: 'doc',
+              id: 'dev-docs/configurations/database',
+              customProps: {
+                updated: true,
+              }
+            },
             'dev-docs/configurations/server',
             'dev-docs/configurations/admin-panel',
             'dev-docs/configurations/middlewares',
@@ -150,16 +141,10 @@ const sidebars = {
           type: 'doc',
           label: 'APIs Introduction & Concepts',
           id: 'dev-docs/api/content-api',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'category',
           label: 'REST API',
-          customProps: {
-            updated: true,
-          },
           link: {
             type: 'doc',
             id: 'dev-docs/api/rest',
@@ -182,9 +167,6 @@ const sidebars = {
         {
           type: 'doc',
           id: 'dev-docs/api/graphql',
-          customProps: {
-            updated: true,
-          },
         },
         // {
         //   type: 'category',
@@ -227,9 +209,6 @@ const sidebars = {
             type: 'doc',
             id: 'dev-docs/api/document-service',
           },
-          customProps: {
-            new: true,
-          },
           items: [
             {
               type: 'doc',
@@ -270,6 +249,9 @@ const sidebars = {
               type: 'doc',
               label: 'Status',
               id: 'dev-docs/api/document-service/status',
+              customProps: {
+                updated: true,
+              }
             },
             {
               type: 'doc',
@@ -294,24 +276,15 @@ const sidebars = {
           type: 'doc',
           label: 'Introduction to advanced features',
           id: 'dev-docs/advanced-features',
-          customProps: {
-            new: true,
-          },
         },
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
-          customProps: {
-            updated: true,
-          },
           id: 'dev-docs/i18n',
         },
         {
           type: 'doc',
           id: 'dev-docs/cli',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'category',
@@ -319,10 +292,17 @@ const sidebars = {
           link: {
             type: 'doc',
             id: 'dev-docs/typescript',
+
           },
           items: [
             'dev-docs/typescript',
-            'dev-docs/typescript/development',
+            {
+              type: 'doc',
+              id: 'dev-docs/typescript/development',
+              customProps: {
+                updated: true,
+              }
+            },
             'dev-docs/typescript/adding-support-to-existing-project',
             {
               type: 'category',
@@ -330,9 +310,16 @@ const sidebars = {
               link: {
                 type: 'doc',
                 id: 'dev-docs/typescript/development/guides',
+
               },
               items: [
-                'dev-docs/typescript/development/guides/documents-and-entries',
+                {
+                  type: 'doc',
+                  id: 'dev-docs/typescript/development/guides/documents-and-entries',
+                  customProps: {
+                    new: true,
+                  }
+                }
               ],
             },
           ],
@@ -346,9 +333,6 @@ const sidebars = {
           type: 'doc',
           label: 'Templates',
           id: 'dev-docs/templates',
-          customProps: {
-            updated: true,
-          },
         },
         {
           type: 'category',
@@ -392,16 +376,10 @@ const sidebars = {
           type: 'doc',
           label: 'Customization Introduction & Concepts',
           id: 'dev-docs/customization',
-          customProps: {
-            new: true,
-          },
         },
         {
           type: 'category',
           label: 'Back-end customization',
-          customProps: {
-            updated: true,
-          },
           link: {
             type: 'doc',
             id: 'dev-docs/backend-customization',
@@ -428,9 +406,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Admin panel customization',
-          customProps: {
-            updated: true,
-          },
           link: {
             type: 'doc',
             id: 'dev-docs/admin-panel-customization',
@@ -515,9 +490,6 @@ const sidebars = {
         {
           type: 'category',
           label: 'Developing plugins',
-          customProps: {
-            updated: true,
-          },
           link: {
             type: 'doc',
             id: 'dev-docs/plugins/developing-plugins',
@@ -533,17 +505,11 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/plugins/development/plugin-structure',
               label: 'Plugin structure',
-              customProps: {
-                updated: true,
-              },
             },
             {
               type: 'doc',
               id: 'dev-docs/plugins/development/plugin-sdk',
               label: 'Plugin SDK',
-              customProps: {
-                new: true,
-              },
             },
             {
               type: 'category',
@@ -557,16 +523,10 @@ const sidebars = {
                   type: 'doc',
                   label: 'Introduction to Admin Panel APIs',
                   id: 'dev-docs/plugins/admin-panel-api',
-                  customProps: {
-                    updated: true,
-                  },
                 },
                 {
                   type: 'doc',
                   id: 'dev-docs/plugins/content-manager-apis',
-                  customProps: {
-                    new: true,
-                  },
                 },
               ],
             },
@@ -599,9 +559,6 @@ const sidebars = {
       type: 'category',
       collapsed: false,
       label: '♻️ Upgrades',
-      customProps: {
-        new: true,
-      },
       link: {
         type: 'doc',
         id: 'dev-docs/upgrades',
@@ -680,9 +637,6 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/working-with-content-history',
-          customProps: {
-            new: true,
-          },
         },
         'user-docs/content-manager/managing-relational-fields',
         'user-docs/content-manager/translating-content',
@@ -690,9 +644,6 @@ const sidebars = {
         {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
-          customProps: {
-            updated: true,
-          },
         },
         'user-docs/content-manager/adding-content-to-releases',
       ],
@@ -738,7 +689,13 @@ const sidebars = {
       items: [
         'user-docs/releases/introduction',
         'user-docs/releases/creating-a-release',
-        'user-docs/releases/managing-a-release',
+        {
+          type: 'doc',
+          id: 'user-docs/releases/managing-a-release',
+          customProps: {
+            updated: true,
+          }
+        }
       ],
     },
     {
@@ -801,6 +758,9 @@ const sidebars = {
               type: 'doc',
               label: 'Review Workflows',
               id: 'user-docs/settings/review-workflows',
+              customProps: {
+                updated: true,
+              }
             },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
@@ -824,40 +784,25 @@ const sidebars = {
           type: 'doc',
           label: 'Cloud fundamentals',
           id: 'cloud/getting-started/cloud-fundamentals',
-          customProps: {
-            new: false,
-          },
         },
         {
           type: 'category',
           label: 'Project deployment',
           link: { type: 'doc', id: 'cloud/getting-started/deployment-options' },
-          customProps: {
-            updated: false,
-          },
           items: [
             {
               type: 'doc',
               id: 'cloud/getting-started/deployment',
-              customProps: {
-                updated: true,
-              },
             },
             {
               type: 'doc',
               id: 'cloud/getting-started/deployment-cli',
-              customProps: {
-                new: true,
-              },
             },
           ],
         },
         {
           type: 'doc',
           id: 'cloud/getting-started/usage-billing',
-          customProps: {
-            updated: false,
-          },
         },
         'cloud/getting-started/caching',
         {
@@ -881,9 +826,6 @@ const sidebars = {
           type: 'doc',
           label: 'Project settings',
           id: 'cloud/projects/settings',
-          customProps: {
-            updated: true,
-          },
         },
         'cloud/projects/collaboration',
         'cloud/projects/runtime-logs',
@@ -913,9 +855,6 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/account/account-billing',
           label: 'Account billing & invoices',
-          customProps: {
-            updated: false,
-          },
         },
       ],
     },
@@ -932,9 +871,6 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/cli/cloud-cli',
           label: 'Strapi Cloud CLI',
-          customProps: {
-            updated: true,
-          },
         },
       ],
     },
@@ -953,16 +889,16 @@ const sidebars = {
           id: 'cloud/advanced/email',
           label: 'Email provider',
           customProps: {
-            new: false,
-          },
+            updated: true,
+          }
         },
         {
           type: 'doc',
           id: 'cloud/advanced/upload',
           label: 'Upload provider',
           customProps: {
-            new: false,
-          },
+            updated: true,
+          }
         },
       ],
     },
@@ -1251,9 +1187,6 @@ const sidebars = {
         id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
       },
       label: 'Upgrade to Strapi 5',
-      customProps: {
-        new: true,
-      },
       items: [
         {
           type: 'doc',
