@@ -25,6 +25,71 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 5.2.0
+
+### ✨ New content
+
+#### Dev Docs
+
+- [Add API Reference and Guides for TypeScript](https://github.com/strapi/documentation/pull/2266)
+
+### 🖌 Updated content
+
+#### Dev Docs
+
+- [Add Knex Config function support](https://github.com/strapi/documentation/pull/2252)
+
+#### User Guide
+
+- [Integration between the Releases and Review Workflows features](https://github.com/strapi/documentation/pull/2273)
+
+### 🧹 Chore, fixes, typos, and other improvement
+
+#### Cloud
+
+- [Minor Cloud Docs changes](https://github.com/strapi/documentation/pull/2264)
+- [Remove Strapi 5 warning for Cloud in FAQ](https://github.com/strapi/documentation/pull/2272)
+- [Move custom cloud provider config warnings higher](https://github.com/strapi/documentation/pull/2278)
+
+#### Dev Docs
+
+- [Fix example request for update method in Document Service API](https://github.com/strapi/documentation/pull/2275)
+
+#### Repo
+
+- [Align navbar search box with 100% width](https://github.com/strapi/documentation/pull/2280)
+
+***
+
+This release was made possible thanks to the following contributors. Thank you! 🫶
+
+<div>
+<a href="https://github.com/mukulpadwal" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/80583870?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mukulpadwal"/>
+</a>
+<a href="https://github.com/dzakki" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/38948296?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="dzakki"/>
+</a>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/Convly" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/25851739?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Convly"/>
+</a>
+<a href="https://github.com/yanniskadiri" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/47896922?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="yanniskadiri"/>
+</a>
+</div>
+
+<br/>
+<br/>
+
 ## 5.1.3
 
 ### 🧹 Chore, fixes, typos, and other improvements
