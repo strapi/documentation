@@ -322,28 +322,19 @@ const sidebars = {
           },
           items: [
             'dev-docs/typescript',
+            'dev-docs/typescript/development',
+            'dev-docs/typescript/adding-support-to-existing-project',
             {
               type: 'category',
-              label: 'TypeScript development',
+              label: 'Guides',
               link: {
                 type: 'doc',
-                id: 'dev-docs/typescript/development',
+                id: 'dev-docs/typescript/development/guides',
               },
               items: [
-                {
-                  type: 'category',
-                  label: 'Guides',
-                  link: {
-                    type: 'doc',
-                    id: 'dev-docs/typescript/development/guides',
-                  },
-                  items: [
-                    'dev-docs/typescript/development/guides/documents-and-entries',
-                  ],
-                },
+                'dev-docs/typescript/development/guides/documents-and-entries',
               ],
             },
-            'dev-docs/typescript/adding-support-to-existing-project',
           ],
         },
         {
