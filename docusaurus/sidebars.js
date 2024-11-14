@@ -46,13 +46,38 @@ const sidebars = {
       items: [
         {
           type: 'doc',
-          label: 'Draft & Publish',
-          id: 'user-docs/content-manager/saving-and-publishing-content'
+          label: 'Audit Logs',
+          id: 'user-docs/features/audit-logs',
         },
         {
           type: 'doc',
           label: 'Content History',
-          id: 'user-docs/content-manager/working-with-content-history'
+          id: 'user-docs/features/content-history'
+        },
+        {
+          type: 'doc',
+          label: 'Draft & Publish',
+          id: 'user-docs/features/draft-and-publish'
+        },
+        {
+          type: 'doc',
+          label: 'Internationalization',
+          id: 'user-docs/features/internationalization',
+        },
+        {
+          type: 'doc',
+          label: 'Media Library',
+          id: 'user-docs/features/media-library',
+        },
+        {
+          type: 'doc',
+          label: 'Releases',
+          id: 'user-docs/features/releases',
+        },
+        {
+          type: 'doc',
+          label: 'Review Workflows',
+          id: 'user-docs/features/review-workflows',
         },
         {
           type: 'doc',
@@ -61,28 +86,8 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Internationalization',
-          id: 'user-docs/content-manager/translating-content',
-        },
-        {
-          type: 'doc',
-          label: 'Releases',
-          id: 'user-docs/releases/introduction',
-        },
-        {
-          type: 'doc',
-          label: 'Audit Logs',
-          id: 'user-docs/settings/audit-logs',
-        },
-        {
-          type: 'doc',
           label: 'Review Workflows',
           id: 'user-docs/settings/review-workflows',
-        },
-        {
-          type: 'doc',
-          label: 'Media Library',
-          id: 'user-docs/media-library/introduction-to-the-media-library',
         },
         {
           type: 'doc',
