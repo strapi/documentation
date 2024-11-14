@@ -46,69 +46,112 @@ gh_api_get() {
         "https://api.github.com/repos/$REPO/$endpoint"
 }
 
-# Function to select a milestone with arrow keys
+# Function to select a milestone
 select_milestone() {
+    # Ask about including closed milestones
+    milestone_state="open"  # Default to open
+    echo -e "${BLUE}Do you want to include closed milestones? (y/N)${NC}"
+    read -r include_closed
+    # Only change if explicitly answered yes
+    if [[ "$include_closed" =~ ^[Yy]$ ]]; then
+        milestone_state="all"
+    fi
+
     echo -e "${BLUE}Fetching milestones...${NC}"
-    milestones=$(gh_api_get "milestones?state=all&sort=created&direction=desc")
+    milestones=$(gh_api_get "milestones?state=$milestone_state&sort=created&direction=desc")
 
     if [ "$(echo "$milestones" | jq length)" -eq 0 ]; then
         echo -e "${RED}No milestones found${NC}"
         exit 1
     fi
 
-    # Store milestones in a temporary file
-    echo "$milestones" | jq -r '.[] | "\(.number)|\(.title)"' > "$TEMP_DIR/milestones.txt"
-    total_lines=$(wc -l < "$TEMP_DIR/milestones.txt")
+    # Create temporary file with milestone options
+    echo "$milestones" | jq -r '.[] | "\(.number)) \(.title)"' > "$TEMP_DIR/milestones.txt"
 
-    # Print available milestones
-    echo -e "${GREEN}Use arrows to select a milestone (Enter to confirm):${NC}"
-    selected=1
-    current_line=1
+    # Read options into array
+    local options=()
+    while IFS= read -r line; do
+        options+=("$line")
+    done < "$TEMP_DIR/milestones.txt"
 
-    # Save cursor position
-    tput sc
+    local total=${#options[@]}
 
-    # Handle keyboard input
-    stty -echo
-    while true; do
-        # Return to saved position
-        tput rc
+    if [ $total -eq 0 ]; then
+        echo -e "${RED}No options available${NC}"
+        return 1
+    fi
 
-        # Display milestones
-        while IFS="|" read -r number title; do
-            if [ $current_line -eq $selected ]; then
-                echo -e "${BLUE}> $number) $title ${NC}"
-            else
-                echo "  $number) $title"
-            fi
-            ((current_line++))
-        done < "$TEMP_DIR/milestones.txt"
-        current_line=1
+    # Save terminal state and setup cleanup
+    saved_tty="$(stty -g 2>/dev/null)"
 
-        # Read a key
-        read -rsn1 key
-        if [[ $key == $'\x1b' ]]; then
-            read -rsn2 key
-            case "$key" in
-                "[A") # Up arrow
-                    ((selected--))
-                    [ $selected -lt 1 ] && selected=1
-                    ;;
-                "[B") # Down arrow
-                    ((selected++))
-                    [ $selected -gt $total_lines ] && selected=$total_lines
-                    ;;
-            esac
-        elif [[ $key == "" ]]; then # Enter
-            break
+    cleanup() {
+        printf "\033[?25h"  # Show cursor
+        if [ -n "$saved_tty" ]; then
+            stty "$saved_tty" 2>/dev/null
         fi
-    done
-    stty echo
+    }
 
-    # Get selected milestone
-    MILESTONE=$(sed -n "${selected}p" "$TEMP_DIR/milestones.txt" | cut -d'|' -f1)
-    MILESTONE_TITLE=$(sed -n "${selected}p" "$TEMP_DIR/milestones.txt" | cut -d'|' -f2)
-    echo -e "\n${GREEN}Selected milestone: $MILESTONE_TITLE${NC}"
+    trap cleanup EXIT INT TERM
+
+    # Prepare terminal
+    printf "\033[?25l"  # Hide cursor
+    stty raw -echo 2>/dev/null
+
+    # Initialize selection
+    local selected=0
+
+    # Main selection loop
+    while true; do
+        # Clear screen and display header
+        printf "\033[H\033[2J"  # Move to top and clear screen
+        printf "${BLUE}Use arrows to select a milestone (Enter to confirm, 'q' to quit):${NC}\n\n"
+
+        # Display all options with absolute positioning
+        for ((i=0; i<total; i++)); do
+            printf "\033[%d;0H" "$((i + 3))"  # Position cursor at start of line
+            if [ $i -eq $selected ]; then
+                printf "${GREEN}> %s${NC}" "${options[$i]}"
+            else
+                printf "  %s" "${options[$i]}"
+            fi
+        done
+
+        # Read user input
+        IFS= read -r -n1 input
+
+        case "$input" in
+            $'\x1b')  # ESC sequence
+                read -r -n2 seq
+                case "$seq" in
+                    '[A') # Up arrow
+                        if [ $selected -gt 0 ]; then
+                            ((selected--))
+                        fi
+                        ;;
+                    '[B') # Down arrow
+                        if [ $selected -lt $((total - 1)) ]; then
+                            ((selected++))
+                        fi
+                        ;;
+                esac
+                ;;
+            ''|$'\x0a') # Enter
+                cleanup
+                printf "\033[H\033[2J"  # Clear screen
+                SELECTED_OPTION="${options[$selected]}"
+                MILESTONE=$(echo "${SELECTED_OPTION}" | cut -d')' -f1)
+                MILESTONE_TITLE=$(echo "$milestones" | jq -r ".[] | select(.number==$MILESTONE) | .title")
+                printf "${GREEN}Selected: %s${NC}\n" "$SELECTED_OPTION"
+                return 0
+                ;;
+            'q'|$'\x03') # q or Ctrl-C
+                cleanup
+                printf "\033[H\033[2J"  # Clear screen
+                printf "Selection cancelled\n"
+                return 1
+                ;;
+        esac
+    done
 }
 
 # Main function
@@ -121,6 +164,10 @@ main() {
 
     setup_github_auth
     select_milestone
+
+    if [ $? -ne 0 ]; then
+        exit 1
+    fi
 
     echo -e "${BLUE}Generating release notes for milestone $MILESTONE_TITLE...${NC}"
 
