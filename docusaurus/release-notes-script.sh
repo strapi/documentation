@@ -238,7 +238,7 @@ main() {
                     echo "### 🖌 Updated content" > "$TEMP_DIR/${section}_header"
                     ;;
                 "chore")
-                    echo "### 🧹 Chore, fixes, typos, and other improvement" > "$TEMP_DIR/${section}_header"
+                    echo "### 🧹 Chore, fixes, typos, and other improvements" > "$TEMP_DIR/${section}_header"
                     ;;
             esac
 
