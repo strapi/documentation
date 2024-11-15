@@ -46,11 +46,21 @@ gh_api_get() {
         "https://api.github.com/repos/$REPO/$endpoint"
 }
 
+# Function to restore terminal to a sane state
+restore_terminal() {
+    printf "\033[?25h"  # Show cursor
+    stty sane  # Restore terminal to normal state
+    printf "\033[H\033[2J"  # Clear screen
+}
+
 # Function to select a milestone
 select_milestone() {
+    # Ensure terminal is in a normal state for initial question
+    restore_terminal
+
     # Ask about including closed milestones
     milestone_state="open"  # Default to open
-    echo -e "${BLUE}Do you want to include closed milestones? (y/N)${NC}"
+    echo -e "Do you want to include closed milestones?\n(Type 'y' for 'yes', 'n' for 'no', then press Enter. Defaults to no.)"
     read -r include_closed
     # Only change if explicitly answered yes
     if [[ "$include_closed" =~ ^[Yy]$ ]]; then
@@ -60,7 +70,15 @@ select_milestone() {
     echo -e "${BLUE}Fetching milestones...${NC}"
     milestones=$(gh_api_get "milestones?state=$milestone_state&sort=created&direction=desc")
 
-    if [ "$(echo "$milestones" | jq length)" -eq 0 ]; then
+    # Check if milestones is empty or invalid
+    if [ -z "$milestones" ]; then
+        echo -e "${RED}Error fetching milestones${NC}"
+        exit 1
+    fi
+
+    # More robust length check
+    milestone_count=$(echo "$milestones" | jq '. | length' 2>/dev/null)
+    if [ -z "$milestone_count" ] || [ "$milestone_count" = "null" ] || [ "$milestone_count" -eq 0 ]; then
         echo -e "${RED}No milestones found${NC}"
         exit 1
     fi
@@ -84,16 +102,16 @@ select_milestone() {
     # Save terminal state and setup cleanup
     saved_tty="$(stty -g 2>/dev/null)"
 
-    cleanup() {
+    cleanup_terminal() {
         printf "\033[?25h"  # Show cursor
         if [ -n "$saved_tty" ]; then
             stty "$saved_tty" 2>/dev/null
         fi
     }
 
-    trap cleanup EXIT INT TERM
+    trap cleanup_terminal EXIT INT TERM
 
-    # Prepare terminal
+    # Prepare terminal for interactive selection
     printf "\033[?25l"  # Hide cursor
     stty raw -echo 2>/dev/null
 
@@ -104,7 +122,7 @@ select_milestone() {
     while true; do
         # Clear screen and display header
         printf "\033[H\033[2J"  # Move to top and clear screen
-        printf "${BLUE}Use arrows to select a milestone (Enter to confirm, 'q' to quit):${NC}\n\n"
+        printf "Use arrows to select a milestone (Enter to confirm, 'q' to quit):\n\n"
 
         # Display all options with absolute positioning
         for ((i=0; i<total; i++)); do
@@ -136,7 +154,7 @@ select_milestone() {
                 esac
                 ;;
             ''|$'\x0a') # Enter
-                cleanup
+                cleanup_terminal
                 printf "\033[H\033[2J"  # Clear screen
                 SELECTED_OPTION="${options[$selected]}"
                 MILESTONE=$(echo "${SELECTED_OPTION}" | cut -d')' -f1)
@@ -145,7 +163,7 @@ select_milestone() {
                 return 0
                 ;;
             'q'|$'\x03') # q or Ctrl-C
-                cleanup
+                cleanup_terminal
                 printf "\033[H\033[2J"  # Clear screen
                 printf "Selection cancelled\n"
                 return 1
@@ -166,6 +184,7 @@ main() {
     select_milestone
 
     if [ $? -ne 0 ]; then
+        restore_terminal
         exit 1
     fi
 
