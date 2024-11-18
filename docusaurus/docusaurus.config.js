@@ -150,7 +150,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "You are viewing an experimental version of Strapi Docs, with a brand new design ✨ Official docs for Strapi 5 are still hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>.",
+          "You are viewing an experimental version of Strapi Docs, with a brand new design ✨ Please feel free to <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/9NM8npMGoTkYetxGA'>share your feedback</a>. Official docs are still hosted at <a target='_blank' rel='noopener noreferrer' href='https://docs.strapi.io'>docs.strapi.io</a>",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
