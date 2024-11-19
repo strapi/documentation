@@ -61,13 +61,18 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Internationalization',
+          label: 'Internationalization (i18n)',
           id: 'user-docs/features/internationalization',
         },
         {
           type: 'doc',
           label: 'Media Library',
           id: 'user-docs/features/media-library',
+        },
+        {
+          type: 'doc',
+          label: 'Role-Based Access Control (RBAC)',
+          id: 'user-docs/features/RBAC',
         },
         {
           type: 'doc',
@@ -86,18 +91,8 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Review Workflows',
-          id: 'user-docs/settings/review-workflows',
-        },
-        {
-          type: 'doc',
           label: 'Upgrade tools',
           id: 'dev-docs/upgrade-tool',
-        },
-        {
-          type: 'doc',
-          label: 'RBAC',
-          id: 'dev-docs/configurations/guides/rbac',
         },
         {
           type: 'category',
