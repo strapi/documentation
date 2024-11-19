@@ -86,6 +86,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Single Sign-On (SSO)',
+          id: 'user-docs/features/SSO',
+        },
+        {
+          type: 'doc',
           label: 'Static Preview',
           id: 'user-docs/intro',
         },
@@ -101,11 +106,6 @@ const sidebars = {
           items: [
             'user-docs/settings/API-tokens'
           ]
-        },
-        {
-          type: 'doc',
-          label: 'SSO',
-          id: 'dev-docs/configurations/sso',
         },
         {
           type: 'category',
