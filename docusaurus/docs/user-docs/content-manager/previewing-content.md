@@ -12,5 +12,5 @@ tags:
 With the Preview feature, you can preview your front-end directly from the Content Manager.
 
 :::prerequisites
-The Preview feature should be configured directly in the code in the `config/admin` file (see [Developer Docs](/dev-docs/preview) for details).
+The Preview feature should be configured in the code of the `config/admin` file (see [Developer Docs](/dev-docs/preview) for details).
 :::
