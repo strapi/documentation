@@ -284,6 +284,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Preview',
+          id: 'dev-docs/preview',
+        },
+        {
+          type: 'doc',
           id: 'dev-docs/cli',
         },
         {
@@ -646,6 +651,7 @@ const sidebars = {
           id: 'user-docs/content-manager/saving-and-publishing-content',
         },
         'user-docs/content-manager/adding-content-to-releases',
+        'user-docs/content-manager/previewing-content',
       ],
     },
     {
