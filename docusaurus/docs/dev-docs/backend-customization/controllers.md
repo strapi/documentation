@@ -245,7 +245,7 @@ Within the Strapi factories the following functions are exposed that can be used
 These functions automatically inherit the sanitization settings from the model and sanitize the data accordingly based on the content-type schema and any of the content API authentication strategies, such as the Users & Permissions plugin or API tokens.
 
 :::warning
-Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use the `@strapi/utils` tools, such as `sanitize.contentAPI.query` described in [Sanitizing Custom Controllers](#sanitize-validate-custom-controllers), or else the result of your query will be sanitized against the wrong model.
+Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use tools such as `strapi.contentAPI.sanitize.query` described in [Sanitizing Custom Controllers](#sanitize-validate-custom-controllers), or else the result of your query will be sanitized against the wrong model.
 :::
 
 <Tabs groupId="js-ts">
@@ -291,15 +291,15 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 
 #### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
 
-Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
+Within custom controllers, there are several primary functions exposed via the global `strapi` namespace that can be used for sanitization and validation:
 
 | Function Name                | Parameters         | Description                                             |
 |------------------------------|--------------------|---------------------------------------------------------|
-| `sanitize.contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
-| `sanitize.contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
-| `sanitize.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
-| `validate.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
-| `validate.contentAPI.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `strapi.contentAPI.sanitize.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `strapi.contentAPI.sanitize.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
+| `strapi.contentAPI.sanitize.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
+| `strapi.contentAPI.validate.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
+| `strapi.contentAPI.validate.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
 
 :::note
 Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for, especially when combining the data from multiple sources.
@@ -310,17 +310,17 @@ Depending on the complexity of your custom controllers, you may need additional 
 
 ```js title="./src/api/restaurant/controllers/restaurant.js"
 
-const { sanitize, validate } = require('@strapi/utils');
+const { sanitize, validate } = strapi.contentApi;
 
 module.exports = {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test');
-    await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
-    const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
+    await validate.query(ctx.query, contentType, { auth: ctx.state.auth });
+    const sanitizedQueryParams = await sanitize.query(ctx.query, contentType, { auth: ctx.state.auth });
 
     const documents = await strapi.documents(contentType.uid).findMany(sanitizedQueryParams);
 
-    return await sanitize.contentAPI.output(documents, contentType, { auth: ctx.state.auth });
+    return await sanitize.output(documents, contentType, { auth: ctx.state.auth });
   }
 }
 ```
@@ -331,18 +331,18 @@ module.exports = {
 
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
-import { sanitize, validate } from '@strapi/utils';
+const { sanitize, validate } = strapi.contentApi;
 
 export default {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test');
 
-    await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
-    const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
+    await validate.query(ctx.query, contentType, { auth: ctx.state.auth });
+    const sanitizedQueryParams = await sanitize.query(ctx.query, contentType, { auth: ctx.state.auth });
 
     const documents = await strapi.documents(contentType.uid).findMany(sanitizedQueryParams);
 
-    return await sanitize.contentAPI.output(documents, contentType, { auth: ctx.state.auth });
+    return await sanitize.output(documents, contentType, { auth: ctx.state.auth });
   }
 }
 ```
