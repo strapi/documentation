@@ -10,9 +10,9 @@ tags:
 
 # Setting up the Preview feature
 
-Strapi's Preview feature enables previewing content directly from the admin panel. This feature allows content editors to preview their changes in a frontend application before publishing. 
+Strapi's Preview feature enables previewing content in a frontend application directly from the Strapi admin panel. 
 
-This page describes how to set up the Preview feature in Strapi. Once set up, the feature can be used as described in the [User Guide](/user-docs/content-manager/previewing-content).
+The present page describes how to set up the Preview feature in Strapi. Once set up, the feature can be used as described in the [User Guide](/user-docs/content-manager/previewing-content).
 
 :::prerequisites
 * The following environment variables must be defined in your `.env` file, replacing example values with appropriate values:
