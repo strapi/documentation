@@ -18,12 +18,64 @@ Since Strapi Docs version 5.0.0, the **docs' version number is independent from 
 Strapi Docs now follow the **[semantic versioning](https://semver.org/)** philosophy, but adapted to docs:
 
 - **Major version** (6.0.0, 7.0.0…): A **significant rewrite** of the docs (content or framework). This may impact the user experience, redesign the site, or break old links (redirections are handled, but broken links can be [reported](https://github.com/strapi/documentation/issues/new/choose)).
-- **Minor version** (5.1.0, 5.2.0…): **New Strapi features or improvements** to the docs (e.g., new components or tools).
+- **Minor version** (5.1.0, 5.2.0…): **New Strapi features** or improvements to the docs (e.g., new components or tools).
 - **Patch version** (5.1.1, 5.1.2…): **Content updates**, including improvement or extension of existing pages, code examples fixes, and typos.
 
 New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
+
+## 5.2.1
+
+### 🖌 Updated content
+
+- [Add `strapi cloud environment link` to Cloud CLI](https://github.com/strapi/documentation/pull/2282)
+- [Add new Cloud regions](https://github.com/strapi/documentation/pull/2290)
+
+### 🧹 Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+- [Add useTypescriptMigrations](https://github.com/strapi/documentation/pull/2283)
+- [Fix typo in retro-compatibility flag value](https://github.com/strapi/documentation/pull/2294)
+- [Fix typo in example code for injectComponent in Admin Panel API docs ](https://github.com/strapi/documentation/pull/2287)
+- [Fix outdated mention of Gold plan in SSO docs](https://github.com/strapi/documentation/pull/2286)
+- [Fix locale param. example in Interactive Query Builder](https://github.com/strapi/documentation/pull/2285)
+- [Fix discardDraft() Document Service API example](https://github.com/strapi/documentation/pull/2284)
+
+#### Strapi Cloud
+- [Update credit cards handling](https://github.com/strapi/documentation/pull/2262)
+
+#### Repository
+- [Add release notes script](https://github.com/strapi/documentation/pull/2289)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/DomDew" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/72755955?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="DomDew"/>
+</a>
+<a href="https://github.com/boiiiboi" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/87666954?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="boiiiboi"/>
+</a>
+<a href="https://github.com/Jimimimi" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1778990?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Jimimimi"/>
+</a>
+<a href="https://github.com/gonbaum" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/14006828?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="gonbaum"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 5.2.0
 
