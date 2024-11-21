@@ -352,6 +352,7 @@ If you need to restore a backup of your project:
 1. In the ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* section, click on the **Restore backup** button.
 2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
 3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
+4. The timestamp of the last completed restoration will be displayed to help you track when the project was last restored.
 
 ### Domains
 
