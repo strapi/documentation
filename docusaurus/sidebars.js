@@ -27,12 +27,12 @@ const sidebars = {
         'dev-docs/installation',
         {
           type: 'doc',
-          id: 'user-docs/content-manager/introduction-to-content-manager',
+          id: 'user-docs/features/content-manager',
           label: 'Content Manager',
         },
         {
           type: 'doc',
-          id: 'user-docs/content-type-builder/introduction-to-content-types-builder',
+          id: 'user-docs/features/content-type-builder',
           label: 'Content Type Builder',
         },
         'dev-docs/deployment',

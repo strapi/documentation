@@ -1,6 +1,7 @@
 ---
 title: Releases
 description: Learn how to use the Releases feature that enables content managers to organize entries to publish/unpublish simultaneously
+toc_max_heading_level: 5
 tags:
 - admin panel
 - Enterprise feature

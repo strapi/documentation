@@ -1,6 +1,7 @@
 ---
 title: Review Workflows
 description: Learn how to use the Review Workflows feature that enables the creation and management of workflows for your various content-types
+toc_max_heading_level: 5
 tags:
 - admin panel
 - Enterprise feature

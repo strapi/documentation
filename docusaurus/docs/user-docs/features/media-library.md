@@ -2,6 +2,7 @@
 title: Media Library
 sidebar_position: 1
 description: Learn to use the Media Library which allows to display and manage all assets uploaded in the application.
+toc_max_heading_level: 5
 tags:
 - admin panel
 - Content-type Builder

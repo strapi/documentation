@@ -1,6 +1,7 @@
 ---
 title: Role-Based Access Control (RBAC)
 description: Learn to use the RBAC feature which allows to manage the users of the admin panel.
+toc_max_heading_level: 5
 tags:
 - admin panel
 - RBAC

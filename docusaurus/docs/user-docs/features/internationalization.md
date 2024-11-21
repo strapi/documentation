@@ -1,6 +1,7 @@
 ---
 title: Internationalization
 description: Learn how to use the Internationalization (i18n) feature that enables content managers to translate the content
+toc_max_heading_level: 5
 tags:
 - admin panel
 - internationalization

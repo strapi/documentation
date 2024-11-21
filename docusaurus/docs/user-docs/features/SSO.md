@@ -1,6 +1,7 @@
 ---
 title: Single Sign-On (SSO)
 description: Learn to use the SSO feature which manages authentication through an identity provider.
+toc_max_heading_level: 5
 tags:
 - admin panel
 - SSO
