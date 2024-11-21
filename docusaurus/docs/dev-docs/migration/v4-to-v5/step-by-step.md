@@ -119,4 +119,4 @@ Follow the steps below and leverage retro-compatibility flags and guided migrati
 1. Enable the retro-compatibility flag by setting `v4CompatibilityMode` to `true` in the `graphl.config` object of [the `/config/plugins.js|ts` file](/dev-docs/configurations/plugins#graphql).
 2. Update your queries and mutations only, guided by the dedicated [breaking change entry for GraphQL](/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated).
 3. Validate that your client is running correctly.
-4. Disable the retro-compatibily flag by setting `v4CompatibilityMode` to `true` and start using the new response format.
+4. Disable the retro-compatibily flag by setting `v4CompatibilityMode` to `false` and start using the new response format.
