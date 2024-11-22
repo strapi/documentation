@@ -46,6 +46,11 @@ const sidebars = {
       items: [
         {
           type: 'doc',
+          label: 'API Tokens',
+          id: 'user-docs/features/api-tokens',
+        },
+        {
+          type: 'doc',
           label: 'Audit Logs',
           id: 'user-docs/features/audit-logs',
         },
@@ -91,6 +96,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Users & Permissions',
+          id: 'user-docs/features/users-permissions',
+        },
+        {
+          type: 'doc',
           label: 'Static Preview',
           id: 'user-docs/intro',
         },
@@ -98,14 +108,6 @@ const sidebars = {
           type: 'doc',
           label: 'Upgrade tools',
           id: 'dev-docs/upgrade-tool',
-        },
-        {
-          type: 'category',
-          label: 'Users & Permissions',
-          link: {type: 'doc', id: 'user-docs/intro'},
-          items: [
-            'user-docs/settings/API-tokens'
-          ]
         },
         {
           type: 'category',
