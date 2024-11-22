@@ -17,79 +17,91 @@ The present page describes how to set up the Preview feature in Strapi. Once set
 :::prerequisites
 * The following environment variables must be defined in your `.env` file, replacing example values with appropriate values:
 
-  ```env
+  ```bash
   CLIENT_URL=https://your-frontend-app.com
-  PREVIEW_SECRET=your-secret-key
+  PREVIEW_SECRET=your-secret-key # optional, required with Next.js draft mode
   ```
 
-* A front-end application for your Strapi project should be already created and set up, preferably using [Next.js](https://nextjs.org/) or [Nuxt](https://nuxt.com/).
+* A front-end application for your Strapi project should be already created and set up.
 :::
 
 ## Configuration components
 
-The Preview feature configuration is stored in [the `config/admin` file](/dev-docs/configurations/admin-panel) and consists of 3 key components:
+The Preview feature configuration is stored in the `preview` object of [the `config/admin` file](/dev-docs/configurations/admin-panel) and consists of 3 key components:
 
 ### Activation flag
 
 Enables or disables the preview feature:
-```javascript
+```javascript title="config/admin.ts|js" {3}
+// …
 preview: {
   enabled: true,
     // …
 }
+// …
 ```
 
 ### Allowed origins
 
 Controls which domains can access previews:
 
-```javascript
+```javascript title="config/admin.ts|js" {5}
+// …
 preview: {
+  enabled: true,
   config: {
     allowedOrigins: env("CLIENT_URL"),  // Usually your frontend application URL
     // …
   }
 }
+// …
 ```
 
 ### Preview handler
 
-Manages the preview logic and URL generation, as in the following example:
+Manages the preview logic and URL generation, as in the following basic example where `uid` is the content-type identifier (e.g., `api::article.article` or `plugin::my-api.my-content-type`):
 
-```javascript
+```jsx title="config/admin.ts|js" {6-11}
+// …
 preview: {
+  enabled: true,
   config: {
+    // …
     async handler(uid, { documentId, locale, status }) {
-        // Fetches the document using the Document Service API
-        const document = await strapi.documents(uid).findOne({ documentId });
-        
-        // Generates appropriate URL with a dedicated function to define
-        const previewPathname = getPreviewPathname(uid, { locale, document });
+      const document = await strapi.documents(uid).findOne({ documentId });
+      const pathname = getPreviewPathname(uid, { locale, document });
 
-        // Handles published content
-        if (status === "published") {
-            return `${clientUrl}${previewPathname}`;
-        }
-
-        // Handles drafts with security parameters
-        const urlSearchParams = new URLSearchParams({
-            url: previewPathname,
-            secret: env('PREVIEW_SECRET'),
-        });
-        return `${clientUrl}/api/preview?${urlSearchParams}`;
+      return `${env('PREVIEW_URL')}${pathname}`
+    },
+  }
 }
+// …
 ```
 
-The preview `handler` accepts the following parameters:
-
-| Parameter    | Type   | Description                                 |
-| ------------ | ------ | ------------------------------------------- |
-| `uid`        | String | Content-type identifier (e.g., `api::article.article`)                    |
-| `documentId` | String | Unique identifier of the document           |
-| `locale`     | String | Locale of the content                |
-| `status`     | String | Publication status (`published` or `draft`) |
-
 An example of [URL generation logic](#2-add-url-generation-logic) in given in the following basic implementation guide.
+
+#### Previewing draft entries
+
+The strategy for the front end application to query draft or published content is framework-specific. At least 3 strategies exist:
+
+- using a query parameter, having something like `/your-path?preview=true` (this is, for instance, how [Nuxt](https://nuxt.com/docs/api/composables/use-preview-modehow) works)
+- redirecting to a dedicated preview route like `/preview?path=your-path`(this is, for instance, how [Next's draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) works)
+- or using a different domain for previews like `preview.mysite.com/your-path`.
+
+When [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content.md) is enabled for your content-type, you can also directly leverage Strapi's `status` parameter to handle the logic within the Preview handler, using the following generic approach:
+
+```javascript
+async handler(uid, { documentId, locale, status }) {
+   const document = await strapi.documents(uid).findOne({ documentId });
+   const pathname = getPreviewPathname(uid, { locale, document });
+   if (status === 'published')  { 
+      // return the published version
+   }
+   // return the draft version
+},
+```
+
+A more detailed example using the draft mode of Next.js is given in the [basic implementation guide](#3-add-handler-logic).
 
 ## Basic implementation guide
 
@@ -119,7 +131,7 @@ export default ({ env }) => ({
 
 Add the URL generation logic with a `getPreviewPathname` function. The following example is taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
 
-```typescript
+```typescript title="config/admin.ts"
 // Function to generate preview pathname based on content type and document
 const getPreviewPathname = (uid, { locale, document }): string => {
   const { slug } = document;
@@ -155,6 +167,8 @@ const getPreviewPathname = (uid, { locale, document }): string => {
   }
   return "/"; // Default fallback route
 };
+
+// … main export (see step 3)
 ```
 
 ### 3. Add handler logic
@@ -191,7 +205,7 @@ export default ({ env }) => {
             return `${clientUrl}${previewPathname}`;
           }
 
-          // For draft content, use Next.js draft mode
+          // For draft content, use Next.js draft mode, passing it a secret key
           const urlSearchParams = new URLSearchParams({
             url: previewPathname,
             secret: previewSecret, // Add security token
@@ -204,10 +218,12 @@ export default ({ env }) => {
 };
 ```
 
-### 4. Set up front-end preview route
+### 4. Set up the front-end preview route
 
-For now, the Strapi Preview feature works best with [Next.js draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) or 
-[Nuxt preview mode](https://nuxt.com/docs/api/composables/use-preview-mode). You will find additional documentation on how to implement the front-end part in their respective documentations.
+Setting up the front-end preview route is highly dependent on the framework used for your front-end application.
+
+For instance, [Next.js draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) and
+[Nuxt preview mode](https://nuxt.com/docs/api/composables/use-preview-mode) provide additional documentation on how to implement the front-end part in their respective documentations.
 
 If using Next.js, a basic implementation could be like in the following example taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
 
