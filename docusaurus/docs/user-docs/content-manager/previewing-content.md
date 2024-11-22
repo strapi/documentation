@@ -9,9 +9,7 @@ tags:
 
 # Previewing content
 
-With the Preview feature, you can preview your front end application directly from Strapi's admin panel and see how updates to the content in the Edit View of the Content Manager will affect the final result.
-
-The present page describes how to use the Preview feature once already set up.
+With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
 <!-- TODO: add a dark mode GIF -->
 <ThemedImage
@@ -21,6 +19,10 @@ The present page describes how to use the Preview feature once already set up.
     dark: '/img/assets/content-manager/previewing-content.gif',
   }}
 />
+
+<!-- <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
+<iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
+</div> -->
 
 :::prerequisites
 - The Strapi admin panel user should have read permissions for the content-type.
@@ -39,11 +41,11 @@ When the Preview feature is properly set up, an **Open preview** button is visib
   }}
 />
 
-From there, you can:
+From the Preview screen, you can:
 
 - click the close button ![Close button](/img/assets/icons/close-icon.svg) in the upper left corner to go back to the Edit View of the Content Manager,
 - switch between previewing the draft and the published version (if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type),
-- and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the draft or to the published version.
+- and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
 :::caution
 When making updates to the content, first save them before clicking on Open Preview again, otherwise your latest updates will be lost. A pop up window will warn you about this behavior.
