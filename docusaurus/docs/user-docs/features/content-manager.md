@@ -20,6 +20,7 @@ The Content Manager is from where the users of the admin panel write and manage 
 
 ## Overview
 
+<!--
 <ThemedImage
 alt="Content Manager"
 sources={{
@@ -27,6 +28,11 @@ sources={{
     dark: '/img/assets/content-manager-guideflow2.gif',
   }}
 />
+-->
+
+<div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
+<iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
+</div>
 
 The Content Manager is accessible from ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
