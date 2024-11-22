@@ -20,11 +20,16 @@ The Review Workflows feature allows you to create and manage workflows for your 
   }}
 />
 
-## Activation
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition. <br/>
+<Icon name="user"/> **Role & permission:** Super Admin role in project's admin panel. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
-The Review Workflows feature is available by default but only for Strapi CMS projects in Enterprise Edition.
-
+<!--
 You need to have a Super Admin role in your project's admin panel to see and have access to the Review Worklows feature configurations in the admin panel settings. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
+-->
 
 ## Configuration
 

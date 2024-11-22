@@ -20,16 +20,14 @@ sources={{
 }}
 />
 
-## <Icon name="gear"/> Activation & Configuration
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition, or Cloud Pro or Team plan. <br/>
+<Icon name="user"/> **Role & permission:** None. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
-The Content History feature is activated by default but only for:
-
-- Strapi CMS projects in Enterprise Edition,
-- Strapi Cloud projects in Pro or Team plan.
-
-No additional configuration is required for Content History to function, and it isn't customizable.
-
-## <Icon name="laptop"/> Usage
+## Usage
 
 ### Browsing Content History
 

@@ -22,18 +22,12 @@ The Releases feature enables content managers to organize entries into container
   }}
 />
 
-## Activation
-
-The Releases feature is available by default but only for:
-
-- Strapi CMS projects in Enterprise Edition,
-- Strapi Cloud projects in Team plan.
-
-You need to be an Administrator of your project's admin panel to have see and have access to the Releases feature.
-
-## Configuration
-
-No additional configuration is required for Content History to function, and it isn't customizable.
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
+<Icon name="user"/> **Role & permission:** Administrator role in the project's admin panel. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 ## Usage
 

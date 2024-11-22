@@ -24,21 +24,12 @@ The Audit Logs feature provides a searchable and filterable display of all activ
   }}
 />
 
-:::prerequisites
-<Icon name="check-square"/> Strapi project with Enterprise Edition or Cloud Team plan. <br/>
-<Icon name="check-square"/> Super Admin role in the project's admin panel.
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
+<Icon name="user"/> **Role & permission:** Super Admin role in the project's admin panel. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
 :::
-
-## Configuration
-
-<!-- The Audit Logs feature is activated by default but only for:
-
-- Strapi CMS projects in Enterprise Edition,
-- Strapi Cloud projects in Team plan. -->
-
-No additional configuration is required for Audit Logs to function, and it isn't customizable.
-
-<!-- It however requires the Super Admin role to be accessible (see ...). -->
 
 ## Usage
 

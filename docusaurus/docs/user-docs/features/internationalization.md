@@ -22,9 +22,12 @@ The Internationalization feature allows to manage content in different languages
   }}
 />
 
-## Activation
-
-The Internationalization feature is available in all projects, no matter the edition or plan of the project. The feature is however disabled by default.
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Free feature. <br/>
+<Icon name="user"/> **Role & permission:** None. <br/>
+<Icon name="toggle-left"/> **Activation:** Available but disabled by default. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 ## Configuration
 
