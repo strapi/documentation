@@ -22,6 +22,8 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 *Estimated completion time: 5-10 minutes*
 
+<details style={detailsStyle}>
+<summary style={summaryStyle}>Prerequisites</summary>
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
@@ -34,7 +36,9 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details style={detailsStyle}>
+</details>
+
+<details style={detailsStyle} open>
 <summary style={summaryStyle}>Step 1: Run the installation script and create a Strapi Cloud account</summary>
 
 ### Step 1: Run the installation script and create a Strapi Cloud account
