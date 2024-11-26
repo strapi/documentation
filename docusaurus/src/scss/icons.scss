@@ -1,4 +1,8 @@
 /** Use this later to define custom styles for icons
-.strapi-icons {
-}
 */
+article {
+  .strapi-icons {
+    position: relative;
+    top: 2px;
+  }
+}
