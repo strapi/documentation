@@ -74,6 +74,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     width: 16px;
   }
 
+  .menu__list-item-collapsible {
+    button.clean-btn.menu__caret {
+      position: inherit;
+      top: 5px;
+    }
+  }
+
   &__list {
     padding-left: 0;
 
