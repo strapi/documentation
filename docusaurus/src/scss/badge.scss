@@ -400,7 +400,51 @@ h2 .badge {
  * space, so we adjust their position
  */
 
-@media (max-width: 720px) {
+// Disabled for now — we simply hide them on mobile
+// @media (max-width: 720px) {
+//   main h1:has(.badge--content),
+//   main h2:has(.badge--content),
+//   main h3:has(.badge--content),
+//   main h4:has(.badge--content),
+//   main .theme-admonition:has(.badge--content),
+//   main .badge--content + img,
+//   main [class*="tabItem"]:has(.badge--content),
+//   main [class*="collapsibleContent"]:has(.badge--content),
+//   main .badge--content:has( + [class*="codeBlockContainer"]),
+//   main .badge--content:has(+ table) + table,
+//   main p:has(.badge--content) {
+//     .badge--content {
+//       position: relative;
+//       right: 0;
+//       left: initial;
+//       top: 0;
+//     }
+//   }
+//   main p:has(.badge--content) .badge--content {
+//     margin-right: 6px;
+//   }
+//   main .theme-admonition:has(.badge--content) .badge--content {
+//     top: 2.3em;
+//     left: -2.2em;
+//   }
+//   .badge__tooltip {
+//     position: absolute !important;
+//     right: 0;
+//     min-width: 100%;
+
+//   }
+
+//   .badge--updated,
+//   .badge--new {
+//     .badge__tooltip {
+//       // hide the "bubble" arrow on mobile for these
+//       &::after {
+//         display: none;
+//       }
+//     }
+//   }
+
+@media (max-width: 1259px) {
   main h1:has(.badge--content),
   main h2:has(.badge--content),
   main h3:has(.badge--content),
@@ -413,52 +457,28 @@ h2 .badge {
   main .badge--content:has(+ table) + table,
   main p:has(.badge--content) {
     .badge--content {
-      position: relative;
-      right: 0;
-      left: initial;
-      top: 0;
+      display: none;
     }
-  }
-  main p:has(.badge--content) .badge--content {
-    margin-right: 6px;
-  }
-  main .theme-admonition:has(.badge--content) .badge--content {
-    top: 2.3em;
-    left: -2.2em;
-  }
-  .badge__tooltip {
-    position: absolute !important;
-    right: 0;
-    min-width: 100%;
-
-  }
-
-  .badge--updated,
-  .badge--new {
-    .badge__tooltip {
-      // hide the "bubble" arrow on mobile for these
-      &::after {
-        display: none;
-      }
-    }
-  }
-
-  /**
-   * Display new/updated badges toolitps
-   * on the right of the badge on screens smaller than 720px
-   * instead of on top for larger screens
-   */
-  .badge--updated .badge__tooltip {
-    min-height: 44px;
-    left: 85px !important;
-    top: -60%;
-  }
-  .badge--new .badge__tooltip {
-    min-height: 28px;
-    left: 90px !important;
-    top: -25%;
   }
 }
+
+
+//   /**
+//    * Display new/updated badges toolitps
+//    * on the right of the badge on screens smaller than 720px
+//    * instead of on top for larger screens
+//    */
+//   .badge--updated .badge__tooltip {
+//     min-height: 44px;
+//     left: 85px !important;
+//     top: -60%;
+//   }
+//   .badge--new .badge__tooltip {
+//     min-height: 28px;
+//     left: 90px !important;
+//     top: -25%;
+//   }
+// }
 
 /** Dark mode */
 @include dark {
