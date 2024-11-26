@@ -112,9 +112,12 @@ const sidebars = {
         {
           type: 'category',
           label: 'Data Management',
-          link: {type: 'doc', id: 'user-docs/intro'},
+          link: {type: 'doc', id: 'dev-docs/data-management'},
           items: [
-            'user-docs/settings/transfer-tokens'
+            'user-docs/settings/transfer-tokens',
+            'dev-docs/data-management/import',
+            'dev-docs/data-management/export',
+            'dev-docs/data-management/transfer',
           ]
         },
         {
@@ -144,6 +147,54 @@ const sidebars = {
         },
       ]
     },
+    { // APIs
+      type: 'category',
+      label: 'APIs',
+      className: 'category-api',
+      collapsible: false,
+      collapsed: false,
+      items: [
+        'dev-docs/api/content-api',
+        'dev-docs/api/document',
+        {
+          type: 'category',
+          label: 'REST API',
+          collapsed: false,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/rest'
+          },
+          items: [
+            'dev-docs/api/rest/parameters',
+            'dev-docs/api/rest/filters-locale-publication',
+            'dev-docs/api/rest/populate-select',
+            'dev-docs/api/rest/relations',
+            'dev-docs/api/rest/sort-pagination',
+            'dev-docs/api/rest/interactive-query-builder',
+            'dev-docs/api/rest/guides/intro',
+          ]
+        },
+        'dev-docs/api/graphql',
+        {
+          type: 'category',
+          label: 'Document Service API',
+          collapsed: false,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/document-service',
+          },
+          items: [
+            'dev-docs/api/document-service/fields',
+            'dev-docs/api/document-service/filters',
+            'dev-docs/api/document-service/locale',
+            'dev-docs/api/document-service/middlewares',
+            'dev-docs/api/document-service/populate',
+            'dev-docs/api/document-service/sort-pagination',
+            'dev-docs/api/document-service/status',
+          ]
+        }
+      ]
+    },
     { // Configurations
       type: 'category',
       label: 'Configurations',
@@ -152,13 +203,31 @@ const sidebars = {
       link: {type: 'doc', id: 'dev-docs/configurations'},
       className: 'category-configurations',
       items: [
-        'dev-docs/configurations/database',
-        'dev-docs/configurations/server',
         'dev-docs/configurations/admin-panel',
-        'dev-docs/configurations/middlewares',
         'dev-docs/configurations/api',
+        'dev-docs/configurations/api-tokens',
+        'dev-docs/configurations/cron',
+        'dev-docs/configurations/database',
+        'dev-docs/configurations/environment',
+        'dev-docs/configurations/features',
+        'dev-docs/configurations/functions',
+        'dev-docs/configurations/middlewares',
         'dev-docs/configurations/plugins',
+        'dev-docs/configurations/server',
+        'dev-docs/configurations/sso',
         'dev-docs/configurations/typescript',
+        {
+          type: 'category',
+          label: 'Guides',
+          collapsed: false,
+          items: [
+            'dev-docs/configurations/guides/access-cast-environment-variables',
+            'dev-docs/configurations/guides/access-configuration-values',
+            'dev-docs/configurations/guides/public-assets',
+            'dev-docs/configurations/guides/rbac',
+            'dev-docs/configurations/guides/use-cron-jobs',
+          ]
+        }
       ]
     },
     { // Development
@@ -192,9 +261,28 @@ const sidebars = {
               }
             },
             'dev-docs/backend-customization/services',
+            'dev-docs/backend-customization/models',
+            'dev-docs/backend-customization/requests-responses',
+            'dev-docs/backend-customization/webhooks',
           ]
         },
-        'dev-docs/admin-panel-customization',
+        {
+          type: 'category',
+          label: 'Admin panel customization',
+          collapsed: false,
+          link: {
+            type: 'doc',
+            id: 'dev-docs/admin-panel-customization',
+          },
+          items: [
+            'dev-docs/admin-panel-customization/bundlers',
+            'dev-docs/admin-panel-customization/deployment',
+            'dev-docs/admin-panel-customization/extension',
+            'dev-docs/admin-panel-customization/host-port-path',
+            'dev-docs/admin-panel-customization/options',
+            'dev-docs/admin-panel-customization/wysiwyg-editor',
+          ]
+        },
         'dev-docs/cli',
         {
           type: 'doc',
@@ -204,7 +292,8 @@ const sidebars = {
         'dev-docs/database-migrations',
         'dev-docs/database-transactions',
         'dev-docs/testing',
-        'dev-docs/error-handling'
+        'dev-docs/error-handling',
+        'dev-docs/templates',
       ]
     },
     { // Plugins
@@ -225,8 +314,9 @@ const sidebars = {
           label: 'Plugins development',
           collapsed: false,
           items: [
-            'dev-docs/plugins/development/plugin-sdk',
             'dev-docs/plugins/development/create-a-plugin',
+            'dev-docs/plugins/development/plugin-sdk',
+            'dev-docs/plugins/development/plugin-structure',
             'dev-docs/custom-fields',
             {
               type: 'category',
@@ -236,23 +326,13 @@ const sidebars = {
                 'dev-docs/plugins/admin-panel-api',
                 'dev-docs/plugins/server-api',
               ]
-            }
+            },
+            'dev-docs/plugins-extension',
           ]
         }
       ]
     },
-    { // APIs
-      type: 'category',
-      label: 'APIs',
-      className: 'category-api',
-      collapsible: false,
-      collapsed: false,
-      items: [
-        'dev-docs/api/rest',
-        'dev-docs/api/graphql',
-        'dev-docs/api/document-service',
-      ]
-    },
+
     { // Upgrades
       type: 'category',
       label: 'Upgrades',
@@ -599,338 +679,338 @@ const sidebars = {
       ],
     },
   ],
-  restApiSidebar: [
-    {
-      type: 'link',
-      label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
-    },
-    {
-      type: 'category',
-      collapsed: false,
-      label: 'REST API reference',
-      link: {
-        type: 'doc',
-        id: 'dev-docs/api/rest'
-      },
-      items: [
-        {
-          type: 'category',
-          label: 'Endpoints and basic requests',
-          link: {type: 'doc', id: 'dev-docs/api/rest'},
-          collapsed: false,
-          items: [
-            {
-              type: 'link',
-              label: 'Endpoints',
-              href: '/dev-docs/api/rest#endpoints',
-            },
-            {
-              type: 'link',
-              label: 'Get documents',
-              href: '/dev-docs/api/rest#get-all'
-            },
-            {
-              type: 'link',
-              label: 'Get a document',
-              href: '/dev-docs/api/rest#get'
-            },
-            {
-              type: 'link',
-              label: 'Create a document',
-              href: '/dev-docs/api/rest#create'
-            },
-            {
-              type: 'link',
-              label: 'Update a document',
-              href: '/dev-docs/api/rest#update'
-            },
-            {
-              type: 'link',
-              label: 'Delete a document',
-              href: '/dev-docs/api/rest#delete'
-            },
-          ]
-        },
-        {
-          type: 'doc',
-          id: 'dev-docs/api/rest/interactive-query-builder',
-          label: '✨ Interactive Query Builder'
-        },
-        {
-          type: 'doc',
-          id: 'dev-docs/api/rest/parameters'
-        },
-        {
-          type: 'category',
-          label: 'Populate and Select',
-          link: {type: 'doc', id: 'dev-docs/api/rest/populate-select'},
-          collapsed: false,
-          items: [
-            {
-              type: 'link',
-              label: 'Field selection',
-              href: '/dev-docs/api/rest/populate-select#field-selection',
-            },
-            {
-              type: 'link',
-              label: 'Population',
-              href: '/dev-docs/api/rest/populate-select#population',
-            },
-          ]
-        },
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'Filters, Locale, Publication State',
-          link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication' },
-          items: [
-            {
-              type: 'link',
-              label: 'Filtering',
-              href: '/dev-docs/api/rest/filters-locale-publication#filtering'
-            },
-            {
-              type: 'link',
-              label: 'Complex filtering',
-              href: '/dev-docs/api/rest/filters-locale-publication#complex-filtering',
-            },
-            {
-              type: 'link',
-              label: 'Deep filtering',
-              href: '/dev-docs/api/rest/filters-locale-publication#deep-filtering',
-            },
-            {
-              type: 'link',
-              label: 'Locale',
-              href: '/dev-docs/api/rest/filters-locale-publication#locale',
-            },
-            {
-              type: 'link',
-              label: 'Status',
-              href: '/dev-docs/api/rest/filters-locale-publication#status',
-            },
-          ],
-        },
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'Sort and Pagination',
-          link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
-          items: [
-            {
-              type: 'link',
-              label: 'Sorting',
-              href: '/dev-docs/api/rest/sort-pagination#sorting'
-            },
-            {
-              type: 'link',
-              label: 'Pagination',
-              href: '/dev-docs/api/rest/sort-pagination#pagination'
-            },
-            {
-              type: 'link',
-              label: 'Pagination by page',
-              href: '/dev-docs/api/rest/sort-pagination#pagination-by-page'
-            },
-            {
-              type: 'link',
-              label: 'Pagination by offset',
-              href: '/dev-docs/api/rest/sort-pagination#pagination-by-offset'
-            },
-          ]
-        },
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'Relations',
-          link: {type: 'doc', id: 'dev-docs/api/rest/relations'},
-          items: [
-            {
-              type: 'link',
-              label: 'connect',
-              href: '/dev-docs/api/rest/relations#connect'
-            },
-            {
-              type: 'link',
-              label: 'disconnect',
-              href: '/dev-docs/api/rest/relations#disconnect'
-            },
-            {
-              type: 'link',
-              label: 'set',
-              href: '/dev-docs/api/rest/relations#set'
-            },
-          ]
-        },
-      ]
-    },
-    {
-      type: "category",
-      label: "Rest API guides",
-      collapsed: false,
-      link: {
-        type: 'doc',
-        id: 'dev-docs/api/rest/guides/intro',
-      },
-      items: [
-        {
-          type: "doc",
-          label: "Understanding populate",
-          id: 'dev-docs/api/rest/guides/understanding-populate',
-        },
-        {
-          type: "doc",
-          label: "How to populate creator fields",
-          id: 'dev-docs/api/rest/guides/populate-creator-fields',
-        },
-        {
-          type: 'link',
-          label: 'Additional resources',
-          href: '/dev-docs/api/rest/guides/intro#additional-resources'
-        },
-      ],
-    }
-  ],
-  devDocsConfigSidebar: [
-    {
-      type: 'link',
-      label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
-    },
-    {
-      type: 'category',
-      collapsed: false,
-      label: 'Configuration',
-      link: {
-        type: 'doc',
-        id: 'dev-docs/configurations',
-      },
-      items: [
-        {
-          type: 'doc',
-          label: 'Introduction to configurations',
-          id: 'dev-docs/configurations',
-        },
-        {
-          type: 'category',
-          collapsed: false,
-          label: 'Base configurations',
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations'
-          },
-          items: [
-            'dev-docs/configurations/database',
-            'dev-docs/configurations/server',
-            'dev-docs/configurations/admin-panel',
-            'dev-docs/configurations/middlewares',
-            'dev-docs/configurations/api',
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Additional configurations',
-          collapsed: false,
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations'
-          },
-          items: [
-            'dev-docs/configurations/plugins',
-            'dev-docs/configurations/typescript',
-            'dev-docs/configurations/api-tokens',
-            'dev-docs/configurations/functions',
-            'dev-docs/configurations/cron',
-            'dev-docs/configurations/environment',
-            'dev-docs/configurations/sso',
-            'dev-docs/configurations/features',
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Guides',
-          collapsed: false,
-          link: {
-            type: 'doc',
-            id: 'dev-docs/configurations'
-          },
-          items: [
-            'dev-docs/configurations/guides/rbac',
-            'dev-docs/configurations/guides/public-assets',
-            'dev-docs/configurations/guides/access-cast-environment-variables',
-            'dev-docs/configurations/guides/access-configuration-values',
-            'dev-docs/configurations/guides/use-cron-jobs',
-          ]
-        }
-      ]
-    },
-  ],
-  devDocsMigrationV5Sidebar: [
-    {
-      type: 'link',
-      label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
-    },
-    {
-      type: 'category',
-      collapsed: false,
-      link: {
-        type: 'doc',
-        id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
-      },
-      label: 'Upgrade to Strapi 5',
-      customProps: {
-        new: true,
-      },
-      items: [
-        {
-          type: "doc",
-          label: "Introduction and FAQ",
-          id: "dev-docs/migration/v4-to-v5/introduction-and-faq"
-        },
-        {
-          type: "doc",
-          label: "Step-by-step guide",
-          id: "dev-docs/migration/v4-to-v5/step-by-step"
-        },
-        {
-          type: "doc",
-          label: "Upgrade tool reference",
-          id: 'dev-docs/upgrade-tool',
-        },
-        {
-          type: "category",
-          collapsible: true,
-          collapsed: true,
-          label: "Breaking changes",
-          link: {
-            type: 'doc',
-            id: 'dev-docs/migration/v4-to-v5/breaking-changes'
-          },
-          items: [
-            {
-              type: "autogenerated",
-              dirName: 'dev-docs/migration/v4-to-v5/breaking-changes'
-            },
-          ]
-        },
-        {
-          type: 'category',
-          label: 'Specific resources',
-          collapsed: false,
-          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction' },
-          items: [
-            'dev-docs/migration/v4-to-v5/additional-resources/introduction',
-            'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
-            'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
-            'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
-          ]
-        }
-      ]
-    },
+  // cmsSidebar: [
+  //   {
+  //     type: 'link',
+  //     label: '⬅️ Back to Dev Docs content',
+  //     href: '/dev-docs/intro'
+  //   },
+  //   {
+  //     type: 'category',
+  //     collapsed: false,
+  //     label: 'REST API reference',
+  //     link: {
+  //       type: 'doc',
+  //       id: 'dev-docs/api/rest'
+  //     },
+  //     items: [
+  //       {
+  //         type: 'category',
+  //         label: 'Endpoints and basic requests',
+  //         link: {type: 'doc', id: 'dev-docs/api/rest'},
+  //         collapsed: false,
+  //         items: [
+  //           {
+  //             type: 'link',
+  //             label: 'Endpoints',
+  //             href: '/dev-docs/api/rest#endpoints',
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Get documents',
+  //             href: '/dev-docs/api/rest#get-all'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Get a document',
+  //             href: '/dev-docs/api/rest#get'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Create a document',
+  //             href: '/dev-docs/api/rest#create'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Update a document',
+  //             href: '/dev-docs/api/rest#update'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Delete a document',
+  //             href: '/dev-docs/api/rest#delete'
+  //           },
+  //         ]
+  //       },
+  //       {
+  //         type: 'doc',
+  //         id: 'dev-docs/api/rest/interactive-query-builder',
+  //         label: '✨ Interactive Query Builder'
+  //       },
+  //       {
+  //         type: 'doc',
+  //         id: 'dev-docs/api/rest/parameters'
+  //       },
+  //       {
+  //         type: 'category',
+  //         label: 'Populate and Select',
+  //         link: {type: 'doc', id: 'dev-docs/api/rest/populate-select'},
+  //         collapsed: false,
+  //         items: [
+  //           {
+  //             type: 'link',
+  //             label: 'Field selection',
+  //             href: '/dev-docs/api/rest/populate-select#field-selection',
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Population',
+  //             href: '/dev-docs/api/rest/populate-select#population',
+  //           },
+  //         ]
+  //       },
+  //       {
+  //         type: 'category',
+  //         collapsed: false,
+  //         label: 'Filters, Locale, Publication State',
+  //         link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication' },
+  //         items: [
+  //           {
+  //             type: 'link',
+  //             label: 'Filtering',
+  //             href: '/dev-docs/api/rest/filters-locale-publication#filtering'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Complex filtering',
+  //             href: '/dev-docs/api/rest/filters-locale-publication#complex-filtering',
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Deep filtering',
+  //             href: '/dev-docs/api/rest/filters-locale-publication#deep-filtering',
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Locale',
+  //             href: '/dev-docs/api/rest/filters-locale-publication#locale',
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Status',
+  //             href: '/dev-docs/api/rest/filters-locale-publication#status',
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         type: 'category',
+  //         collapsed: false,
+  //         label: 'Sort and Pagination',
+  //         link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
+  //         items: [
+  //           {
+  //             type: 'link',
+  //             label: 'Sorting',
+  //             href: '/dev-docs/api/rest/sort-pagination#sorting'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Pagination',
+  //             href: '/dev-docs/api/rest/sort-pagination#pagination'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Pagination by page',
+  //             href: '/dev-docs/api/rest/sort-pagination#pagination-by-page'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'Pagination by offset',
+  //             href: '/dev-docs/api/rest/sort-pagination#pagination-by-offset'
+  //           },
+  //         ]
+  //       },
+  //       {
+  //         type: 'category',
+  //         collapsed: false,
+  //         label: 'Relations',
+  //         link: {type: 'doc', id: 'dev-docs/api/rest/relations'},
+  //         items: [
+  //           {
+  //             type: 'link',
+  //             label: 'connect',
+  //             href: '/dev-docs/api/rest/relations#connect'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'disconnect',
+  //             href: '/dev-docs/api/rest/relations#disconnect'
+  //           },
+  //           {
+  //             type: 'link',
+  //             label: 'set',
+  //             href: '/dev-docs/api/rest/relations#set'
+  //           },
+  //         ]
+  //       },
+  //     ]
+  //   },
+  //   {
+  //     type: "category",
+  //     label: "Rest API guides",
+  //     collapsed: false,
+  //     link: {
+  //       type: 'doc',
+  //       id: 'dev-docs/api/rest/guides/intro',
+  //     },
+  //     items: [
+  //       {
+  //         type: "doc",
+  //         label: "Understanding populate",
+  //         id: 'dev-docs/api/rest/guides/understanding-populate',
+  //       },
+  //       {
+  //         type: "doc",
+  //         label: "How to populate creator fields",
+  //         id: 'dev-docs/api/rest/guides/populate-creator-fields',
+  //       },
+  //       {
+  //         type: 'link',
+  //         label: 'Additional resources',
+  //         href: '/dev-docs/api/rest/guides/intro#additional-resources'
+  //       },
+  //     ],
+  //   }
+  // ],
+  // devDocsConfigSidebar: [
+  //   {
+  //     type: 'link',
+  //     label: '⬅️ Back to Dev Docs content',
+  //     href: '/dev-docs/intro'
+  //   },
+  //   {
+  //     type: 'category',
+  //     collapsed: false,
+  //     label: 'Configuration',
+  //     link: {
+  //       type: 'doc',
+  //       id: 'dev-docs/configurations',
+  //     },
+  //     items: [
+  //       {
+  //         type: 'doc',
+  //         label: 'Introduction to configurations',
+  //         id: 'dev-docs/configurations',
+  //       },
+  //       {
+  //         type: 'category',
+  //         collapsed: false,
+  //         label: 'Base configurations',
+  //         link: {
+  //           type: 'doc',
+  //           id: 'dev-docs/configurations'
+  //         },
+  //         items: [
+  //           'dev-docs/configurations/database',
+  //           'dev-docs/configurations/server',
+  //           'dev-docs/configurations/admin-panel',
+  //           'dev-docs/configurations/middlewares',
+  //           'dev-docs/configurations/api',
+  //         ]
+  //       },
+  //       {
+  //         type: 'category',
+  //         label: 'Additional configurations',
+  //         collapsed: false,
+  //         link: {
+  //           type: 'doc',
+  //           id: 'dev-docs/configurations'
+  //         },
+  //         items: [
+  //           'dev-docs/configurations/plugins',
+  //           'dev-docs/configurations/typescript',
+  //           'dev-docs/configurations/api-tokens',
+  //           'dev-docs/configurations/functions',
+  //           'dev-docs/configurations/cron',
+  //           'dev-docs/configurations/environment',
+  //           'dev-docs/configurations/sso',
+  //           'dev-docs/configurations/features',
+  //         ]
+  //       },
+  //       {
+  //         type: 'category',
+  //         label: 'Guides',
+  //         collapsed: false,
+  //         link: {
+  //           type: 'doc',
+  //           id: 'dev-docs/configurations'
+  //         },
+  //         items: [
+  //           'dev-docs/configurations/guides/rbac',
+  //           'dev-docs/configurations/guides/public-assets',
+  //           'dev-docs/configurations/guides/access-cast-environment-variables',
+  //           'dev-docs/configurations/guides/access-configuration-values',
+  //           'dev-docs/configurations/guides/use-cron-jobs',
+  //         ]
+  //       }
+  //     ]
+  //   },
+  // ],
+  // devDocsMigrationV5Sidebar: [
+  //   {
+  //     type: 'link',
+  //     label: '⬅️ Back to Dev Docs content',
+  //     href: '/dev-docs/intro'
+  //   },
+  //   {
+  //     type: 'category',
+  //     collapsed: false,
+  //     link: {
+  //       type: 'doc',
+  //       id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+  //     },
+  //     label: 'Upgrade to Strapi 5',
+  //     customProps: {
+  //       new: true,
+  //     },
+  //     items: [
+  //       {
+  //         type: "doc",
+  //         label: "Introduction and FAQ",
+  //         id: "dev-docs/migration/v4-to-v5/introduction-and-faq"
+  //       },
+  //       {
+  //         type: "doc",
+  //         label: "Step-by-step guide",
+  //         id: "dev-docs/migration/v4-to-v5/step-by-step"
+  //       },
+  //       {
+  //         type: "doc",
+  //         label: "Upgrade tool reference",
+  //         id: 'dev-docs/upgrade-tool',
+  //       },
+  //       {
+  //         type: "category",
+  //         collapsible: true,
+  //         collapsed: true,
+  //         label: "Breaking changes",
+  //         link: {
+  //           type: 'doc',
+  //           id: 'dev-docs/migration/v4-to-v5/breaking-changes'
+  //         },
+  //         items: [
+  //           {
+  //             type: "autogenerated",
+  //             dirName: 'dev-docs/migration/v4-to-v5/breaking-changes'
+  //           },
+  //         ]
+  //       },
+  //       {
+  //         type: 'category',
+  //         label: 'Specific resources',
+  //         collapsed: false,
+  //         link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction' },
+  //         items: [
+  //           'dev-docs/migration/v4-to-v5/additional-resources/introduction',
+  //           'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
+  //           'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
+  //           'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
+  //         ]
+  //       }
+  //     ]
+  //   },
 
-  ]
+  // ]
 };
 
 module.exports = sidebars;
