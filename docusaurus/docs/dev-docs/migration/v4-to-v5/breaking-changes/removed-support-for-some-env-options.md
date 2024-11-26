@@ -1,7 +1,7 @@
 ---
 title: Some env-only configuration options are handled by the server configuration
 description: In Strapi 5, some env-only configuration options are handled by the server configuration
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 sidebar_label: Env options moved to server configuration
 tags:
  - breaking changes

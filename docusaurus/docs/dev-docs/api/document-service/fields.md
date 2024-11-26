@@ -1,6 +1,7 @@
 ---
 title: Using fields with the Document Service API
 description: Use Strapi's Document Service API to select the fields to return with your queries.
+sidebar_label: Fields
 displayed_sidebar: cmsSidebar
 tags:
 - API

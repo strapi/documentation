@@ -2,7 +2,7 @@
 title: No shared population strategy for components & dynamic zones
 description: In Strapi 5, the shared population strategy is not supported anymore, so components and dynamic zones must be explicitly populated using `on` fragments.
 sidebar_label: No shared population strategy
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content API

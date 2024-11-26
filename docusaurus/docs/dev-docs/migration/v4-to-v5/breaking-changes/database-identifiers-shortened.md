@@ -2,7 +2,7 @@
 title: Database identifiers shortened in v5
 description: Database identifiers are shortened in Strapi v5 and can't be longer than 55 characters to avoid issues with identifiers that are too long.
 sidebar_label: Database identifiers shortened
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - database

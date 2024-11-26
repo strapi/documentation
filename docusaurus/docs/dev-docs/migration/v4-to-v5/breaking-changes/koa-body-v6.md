@@ -2,7 +2,7 @@
 title: Strapi 5 uses koa-body v6
 description: Strapi 5 uses koa-body v6, which updates node formidable to v2.
 sidebar_label: koa-body v6 and formidable v2
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - body middleware

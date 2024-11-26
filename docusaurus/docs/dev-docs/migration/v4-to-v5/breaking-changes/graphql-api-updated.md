@@ -2,7 +2,7 @@
 title: The GraphQL API has been updated
 description: In Strapi 5, the GraphQL API has been updated. It handles the new, flattened response format, and can also now accept Relay-style queries.
 sidebar_label: GraphQL API updated
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content API

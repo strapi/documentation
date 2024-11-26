@@ -2,7 +2,8 @@
 title: Populate and Select
 description: Use Strapi's REST API to populate or select certain fields.
 sidebarDepth: 3
-displayed_sidebar: restApiSidebar
+sidebar_label: Populate & Select
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

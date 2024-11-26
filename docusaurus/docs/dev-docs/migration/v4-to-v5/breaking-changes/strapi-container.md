@@ -2,7 +2,7 @@
 title: Strapi is a subclass of Container
 description: In Strapi 5, container methods can be accessed directly from the strapi class.
 sidebar_label: Strapi subclass of Container
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 unlisted: true
 tags:
  - breaking changes

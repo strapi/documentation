@@ -1,7 +1,7 @@
 ---
 title: Parameters
 description: Use API parameters to refine your Strapi REST API queries.
-
+sidebar_label: Parameters
 next: ./filtering-locale-publication.md
 tags:
 - API

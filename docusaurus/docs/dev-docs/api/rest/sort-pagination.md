@@ -1,8 +1,9 @@
 ---
 title: Sort and Pagination
 description: Use Strapi's REST API to sort or paginate your data.
+sidebar_label: Sort & Pagination
 sidebarDepth: 3
-displayed_sidebar: restApiSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

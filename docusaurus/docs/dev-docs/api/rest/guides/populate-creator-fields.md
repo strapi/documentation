@@ -1,6 +1,7 @@
 ---
 title: How to populate creator fields
 description: Learn how to populate creator fields such as createdBy and updatedBy by creating a custom controller that leverages the populate parameter.
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API

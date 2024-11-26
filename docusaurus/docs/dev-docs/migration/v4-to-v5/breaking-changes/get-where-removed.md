@@ -2,7 +2,7 @@
 title: The getWhere() method for permission provider instances has been removed
 description: In Strapi 5, the getWhere() for permission provider instances has been removed, and users should use provider.values().filter() to replace it.
 sidebar_label: getWhere removed from permission provider
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - providers
