@@ -22,9 +22,12 @@ import SSOMiddlewaresConfig from '/docs/snippets/configuration-sso-middlewares.m
 :::prerequisites
 
 - [Properly configure Strapi for SSO](#required-configuration-before-setting-up-sso)
-- Create your REPLACEME OAuth2 app by following the steps in the [TODO](https://TODO).
+- Create your EntraID OAuth2 app by following the steps in the [EntraID/Azure Portal](https://learn.microsoft.com/en-us/entra/architecture/auth-oauth2).
+  - It's important to review the [OAuth application types](https://learn.microsoft.com/en-us/entra/identity-platform/v2-app-types#web-apps) as Strapi only supports "web" applications.
 - Gather the required information to set as environment variables in your Strapi project:
-  - // TODO
+  - MICROSOFT_CLIENT_ID
+  - MICROSOFT_CLIENT_SECRET
+  - MICROSOFT_TENANT_ID
 
 :::
 
@@ -46,21 +49,37 @@ import SSOMiddlewaresConfig from '/docs/snippets/configuration-sso-middlewares.m
 
 ### Scopes
 
-The TODO OAuth2 provider requires the following scopes, however additional scopes can be added as needed depending on your use case and the data you need returned:
+The EntraID OAuth2 provider requires the following scopes, however additional scopes can be added as needed depending on your use case and the data you need returned:
 
-- TODO
+- [`user:email`](https://learn.microsoft.com/en-us/entra/identity-platform/scopes-oidc#the-email-scope)
 
 ### Profile Data
 
-Data returned from the provider is dependent on how your TODO OAuth2 application is configured. The example below assumes that the TODO OAuth2 application is configured to return the user's email, first name, and last name. Fields returned by the provider can change based on the scopes requested and the user's TODO account settings.
+:::warning
+It is extremely likely that the below example will not work directly for you as the fields returned by the EntraID instance are extremely subjective to each individual setup. For example some instances will have a `upn` field, others will not and the value type of the `upn` may be different for each instance or even between different users in the same instance.
+:::
 
-If you aren't sure what data is being returned by the provider, you can log the `profile` object in the `createStrategy` function to see what data is available as seen in the following example.
+Data returned from the provider is dependent on how your EntraID OAuth2 application is configured. The example below assumes that the EntraID OAuth2 application is configured to return the user's email, first name, and last name. Fields returned by the provider can change based on the scopes requested and the user's EntraID account settings.
+
+If you aren't sure what data is being returned by the provider, you can log the `waadProfile` object in the `createStrategy` function to see what data is available as seen in the following example.
 
 <details>
   <summary>Configuration Example with Logging</summary>
 
 ```js
-// TODO
+(accessToken, refreshToken, params, profile, done) => {
+  let waadProfile = jwt.decode(params.id_token, "", true);
+
+  // See what is returned by the provider
+  console.log(waadProfile);
+
+  done(null, {
+    email: waadProfile.email,
+    username: waadProfile.email,
+    firstname: waadProfile.given_name, // optional if email and username exist
+    lastname: waadProfile.family_name, // optional if email and username exist
+  });
+}
 ```
 
 </details>
@@ -136,6 +155,7 @@ module.exports = ({ env }) => ({
               scope: ["user:email"],
               tenant: env("MICROSOFT_TENANT_ID", ""),
               callbackURL:
+                env('PUBLIC_URL') +
                 strapi.admin.services.passport.getStrategyCallbackURL(
                   "azure_ad_oauth2"
                 ),
@@ -181,6 +201,7 @@ export default ({ env }) => ({
               scope: ["user:email"],
               tenant: env("MICROSOFT_TENANT_ID", ""),
               callbackURL:
+                env('PUBLIC_URL') +
                 strapi.admin.services.passport.getStrategyCallbackURL(
                   "azure_ad_oauth2"
                 ),
