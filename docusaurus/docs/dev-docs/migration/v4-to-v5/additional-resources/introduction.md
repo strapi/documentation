@@ -1,5 +1,6 @@
 ---
 title: Additional resources for migrating to Strapi 5
+label: Additional resources
 pagination_next: dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service
 displayed_sidebar: cmsSidebar
 tags:
