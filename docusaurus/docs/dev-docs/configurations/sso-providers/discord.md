@@ -19,9 +19,10 @@ import SSOMiddlewaresConfig from '/docs/snippets/configuration-sso-middlewares.m
 :::prerequisites
 
 - [Properly configure Strapi for SSO](#required-configuration-before-setting-up-sso)
-- Create your REPLACEME OAuth2 app by following the steps in the [TODO](https://TODO).
+- Create your Discord OAuth2 app by following the steps in the [Discord Developer Console](https://discord.com/developers/docs/topics/oauth2).
 - Gather the required information to set as environment variables in your Strapi project:
-  - // TODO
+  - DISCORD_CLIENT_ID
+  - DISCORD_SECRET
 
 :::
 
@@ -43,13 +44,14 @@ import SSOMiddlewaresConfig from '/docs/snippets/configuration-sso-middlewares.m
 
 ### Scopes
 
-The TODO OAuth2 provider requires the following scopes, however additional scopes can be added as needed depending on your use case and the data you need returned:
+The Discord OAuth2 provider requires the following scopes, however additional scopes can be added as needed depending on your use case and the data you need returned:
 
-- TODO
+- [`identify`](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes)
+- [`email`](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes)
 
 ### Profile Data
 
-Data returned from the provider is dependent on how your TODO OAuth2 application is configured. The example below assumes that the TODO OAuth2 application is configured to return the user's email, first name, and last name. Fields returned by the provider can change based on the scopes requested and the user's TODO account settings.
+Data returned from the provider is dependent on how your Discord OAuth2 application is configured. The example below assumes that the Discord OAuth2 application is configured to return the user's email and username. Fields returned by the provider can change based on the scopes requested and the user's Discord account settings.
 
 If you aren't sure what data is being returned by the provider, you can log the `profile` object in the `createStrategy` function to see what data is available as seen in the following example.
 
@@ -57,7 +59,15 @@ If you aren't sure what data is being returned by the provider, you can log the 
   <summary>Configuration Example with Logging</summary>
 
 ```js
-// TODO
+(accessToken, refreshToken, profile, done) => {
+  // See what is returned by the provider
+  console.log(profile);
+
+  done(null, {
+    email: profile.email,
+    username: `${profile.username}`,
+  });
+}
 ```
 
 </details>
@@ -130,6 +140,7 @@ module.exports = ({ env }) => ({
               clientID: env("DISCORD_CLIENT_ID"),
               clientSecret: env("DISCORD_SECRET"),
               callbackURL:
+                env('PUBLIC_URL') +
                 strapi.admin.services.passport.getStrategyCallbackURL(
                   "discord"
                 ),
@@ -138,7 +149,7 @@ module.exports = ({ env }) => ({
             (accessToken, refreshToken, profile, done) => {
               done(null, {
                 email: profile.email,
-                username: `${profile.username}#${profile.discriminator}`,
+                username: `${profile.username}`,
               });
             }
           ),
@@ -171,6 +182,7 @@ export default ({ env }) => ({
               clientID: env("DISCORD_CLIENT_ID"),
               clientSecret: env("DISCORD_SECRET"),
               callbackURL:
+                env('PUBLIC_URL') +
                 strapi.admin.services.passport.getStrategyCallbackURL(
                   "discord"
                 ),
@@ -179,7 +191,7 @@ export default ({ env }) => ({
             (accessToken, refreshToken, profile, done) => {
               done(null, {
                 email: profile.email,
-                username: `${profile.username}#${profile.discriminator}`,
+                username: `${profile.username}`,
               });
             }
           ),
