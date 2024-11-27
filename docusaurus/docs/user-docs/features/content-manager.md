@@ -67,7 +67,7 @@ From the list view, it is possible to:
   - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete ![Delete icon](/img/assets/icons/v5/Trash.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content#deleting-content)) the entry,
   - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) or discard its changes,
   - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#i18n) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
-- select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publishing-and-unpublishing), or [delete](/user-docs/content-manager/saving-and-publishing-content.md#deleting-content).
+- select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publishing-and-unpublishing), or [delete](/user-docs/content-manager/saving-and-publishing-content#deleting-content).
 
 :::tip
 Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
@@ -444,7 +444,7 @@ Not all entries are listed by default: more can be displayed by clicking on the 
 :::
 
 :::note
-If the Draft & Publish feature (see [Saving, publishing and deleting content](user-docs/content-manager/saving-and-publishing-content)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
+If the Draft & Publish feature (see [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
 :::
 
 :::caution
