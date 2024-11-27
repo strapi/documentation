@@ -144,18 +144,19 @@ To configure a provider, follow the procedure below:
 
 ### Provider configuration examples
 
-| Provider           | Package                    | Configuration                                                                     |
-|--------------------|----------------------------|-----------------------------------------------------------------------------------|
-| Auth0              | `passport-auth0`           | [Auth0 configuration](/dev-docs/configurations/sso-providers/auth0)               |
-| Discord            | `passport-discord`         | [Discord configuration](/dev-docs/configurations/sso-providers/discord)           |
-| Microsoft Entra ID | `passport-azure-ad-oauth2` | [Microsoft configuration](/dev-docs/configurations/sso-providers/entra-id)        |
-| GitHub             | `passport-github`          | [GitHub configuration](/dev-docs/configurations/sso-providers/github)             |
-| Gitlab             | `passport-gitlab2`         | [Gitlab configuration](/dev-docs/configurations/sso-providers/gitlab)             |
-| Google             | `passport-google-oauth20`  | [Google configuration](/dev-docs/configurations/sso-providers/google)             |
-| Keycloak           | `passport-keycloak-oauth2` | [Keycloak configuration](/dev-docs/configurations/sso-providers/keycloak)         |
-| Okta               | `passport-okta-oauth20`    | [Okta configuration](/dev-docs/configurations/sso-providers/okta)                 |
-| Generic OIDC       | `passport-oidc`            | [Generic OIDC configuration](/dev-docs/configurations/sso-providers/generic-oidc) |
-| Generic SAML       | `passport-saml`            | [Generic SAML configuration](/dev-docs/configurations/sso-providers/generic-saml) |
+| Provider           | Package                    | Configuration                                                              |
+|--------------------|----------------------------|----------------------------------------------------------------------------|
+| Auth0              | `passport-auth0`           | [Auth0 configuration](/dev-docs/configurations/sso-providers/auth0)        |
+| Discord            | `passport-discord`         | [Discord configuration](/dev-docs/configurations/sso-providers/discord)    |
+| Microsoft Entra ID | `passport-azure-ad-oauth2` | [Microsoft configuration](/dev-docs/configurations/sso-providers/entra-id) |
+| GitHub             | `passport-github`          | [GitHub configuration](/dev-docs/configurations/sso-providers/github)      |
+| Gitlab             | `passport-gitlab2`         | [Gitlab configuration](/dev-docs/configurations/sso-providers/gitlab)      |
+| Google             | `passport-google-oauth20`  | [Google configuration](/dev-docs/configurations/sso-providers/google)      |
+| Keycloak           | `passport-keycloak-oauth2` | [Keycloak configuration](/dev-docs/configurations/sso-providers/keycloak)  |
+| Okta               | `passport-okta-oauth20`    | [Okta configuration](/dev-docs/configurations/sso-providers/okta)          |
+<!-- TODO: Add the following providers -->
+<!-- | Generic OIDC       | `passport-oidc`            | [Generic OIDC configuration](/dev-docs/configurations/sso-providers/generic-oidc) |
+| Generic SAML       | `passport-saml`            | [Generic SAML configuration](/dev-docs/configurations/sso-providers/generic-saml) | -->
 
 ## Performing advanced customization
 
