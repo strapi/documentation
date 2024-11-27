@@ -20,7 +20,6 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Filters, Locale, and Status
 

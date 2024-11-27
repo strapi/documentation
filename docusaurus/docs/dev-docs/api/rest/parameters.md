@@ -14,8 +14,6 @@ tags:
 - status
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # REST API parameters
 
 API parameters can be used with the [REST API](/dev-docs/api/rest) to filter, sort, and paginate results and to select fields and relations to populate. Additionally, specific parameters related to optional Strapi features can be used, like the publication state and locale of a content-type.

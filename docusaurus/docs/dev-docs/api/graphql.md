@@ -15,8 +15,6 @@ tags:
 - sort
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # GraphQL API
 
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/dev-docs/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/dev-docs/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).

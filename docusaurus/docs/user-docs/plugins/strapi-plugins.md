@@ -13,8 +13,6 @@ tags:
 - Strapi plugin
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # List of Strapi plugins
 
 Strapi builds and maintains plugins that extend the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace/). Additional documentation on plugins is provided in the relevant sections of the User Guide and the Developer Documentation, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.

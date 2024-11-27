@@ -14,11 +14,7 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Plugins configuration
-
-<NotV5 />
 
 Plugin configurations are stored in `/config/plugins.js|ts` (see [project structure](/dev-docs/project-structure)). Each plugin can be configured with the following available parameters:
 

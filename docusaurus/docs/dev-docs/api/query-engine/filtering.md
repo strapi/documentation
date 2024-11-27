@@ -11,7 +11,6 @@ tags:
 - Query Engine API
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 
 # Filtering with the Query Engine API

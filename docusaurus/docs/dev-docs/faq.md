@@ -19,11 +19,7 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Frequently Asked Questions
-
-<NotV5 />
 
 Below are answers and solutions to most common issues that you may experience when working with Strapi.
 
