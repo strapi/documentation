@@ -25,7 +25,7 @@ import IdsInResponse from '/docs/snippets/id-in-responses.md'
 
 By default the [Document Service API](/dev-docs/api/document-service) returns all the fields of a document but does not populate any fields. This page describes how to use the `fields` parameter to return only specific fields with the query results.
 
-:::time.p
+:::tip
 You can also use the `populate` parameter to populate relations, media fields, components, or dynamic zones (see the [`populate` parameter](/dev-docs/api/document-service/populate) documentation).
 :::
 
