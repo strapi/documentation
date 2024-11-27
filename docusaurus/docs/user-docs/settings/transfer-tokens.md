@@ -1,4 +1,5 @@
 ---
+displayed_sidebar: cmsSidebar
 sidebar_position: 3
 title: Transfer tokens
 tags:

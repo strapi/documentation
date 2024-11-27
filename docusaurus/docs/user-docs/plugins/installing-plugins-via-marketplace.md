@@ -1,6 +1,6 @@
 ---
 title: Installing Plugins via the Marketplace
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 sidebar_position: 2
 tags:
 - plugins

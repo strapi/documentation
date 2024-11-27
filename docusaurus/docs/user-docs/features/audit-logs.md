@@ -1,7 +1,7 @@
 ---
 title: Audit Logs
 description: Learn how you can use the Audit Logs feature of Strapi 5.
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 sidebar_position: 2
 toc_max_heading_level: 5
 tags:
