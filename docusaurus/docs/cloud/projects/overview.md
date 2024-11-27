@@ -50,17 +50,20 @@ From the *Projects* page, click on any project card to access is dashboard. It d
 />
 
 From the dashboard's header of a chosen project, you can:
-- use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="1" />,
-- use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
-- choose which environment to visualise for the project <ScreenshotNumberReference number="3" />,
-- trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="4" />.
+- use the navigation path to navigate between your projects and environments <ScreenshotNumberReference number="1" />,
+- use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="2" />,
+- use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="3" />,
+- choose which environment to visualise for the project <ScreenshotNumberReference number="4" />,
+- trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="5" />.
 
 Your project's dashboard also displays:
-- the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) <ScreenshotNumberReference number="5" />
-- the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
+- the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) <ScreenshotNumberReference number="6" />
+- the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="7" />, including:
+  - a Manage button to be redirected to the environment’s settings,
   - the number of API calls and database entries,
   - the current usage for assets bandwidth and storage,
-  - the name of the branch and a **Manage** button to be redirect to the branch settings (see [Modifying git repository & branch](/cloud/projects/settings#modifying-git-repository--branch)),
+  - the name of the branch,
   - the name of the base directory,
-  - the Strapi version number.
+  - the Strapi version number,
+  - the application url.
 
