@@ -15,11 +15,12 @@
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   devDocsSidebar: [
-    { // Getting Started
+    {
+      // Getting Started
       type: 'category',
       collapsed: false,
       label: '🚀 Getting Started',
-      link: {type: 'doc', id: 'dev-docs/intro'},
+      link: { type: 'doc', id: 'dev-docs/intro' },
       items: [
         {
           type: 'doc',
@@ -37,9 +38,10 @@ const sidebars = {
         'dev-docs/faq',
         'dev-docs/community',
         'dev-docs/usage-information',
-      ]
+      ],
     },
-    { // Setup & Deployment
+    {
+      // Setup & Deployment
       type: 'category',
       collapsed: false,
       label: '⚙️ Setup & Deployment',
@@ -56,7 +58,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Installation',
-          link: {type: 'doc', id: 'dev-docs/installation'},
+          link: { type: 'doc', id: 'dev-docs/installation' },
           items: [
             {
               type: 'doc',
@@ -68,7 +70,7 @@ const sidebars = {
               id: 'dev-docs/installation/cli',
             },
             'dev-docs/installation/docker',
-          ]
+          ],
         },
         'dev-docs/project-structure',
         {
@@ -85,7 +87,7 @@ const sidebars = {
               id: 'dev-docs/configurations/database',
               customProps: {
                 updated: true,
-              }
+              },
             },
             'dev-docs/configurations/server',
             'dev-docs/configurations/admin-panel',
@@ -114,7 +116,7 @@ const sidebars = {
             id: 'dev-docs/deployment',
           },
           items: [
-           {
+            {
               type: 'doc',
               label: 'Introduction to deployment',
               id: 'dev-docs/deployment',
@@ -124,15 +126,16 @@ const sidebars = {
               label: '☁️ Strapi Cloud',
               id: 'cloud/getting-started/deployment',
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
-    { // Content APIs
+    {
+      // Content APIs
       type: 'category',
       collapsed: false,
       label: '📦 Content API',
-      link: {type: 'doc', id: 'dev-docs/api/content-api'},
+      link: { type: 'doc', id: 'dev-docs/api/content-api' },
       items: [
         {
           type: 'doc',
@@ -144,7 +147,7 @@ const sidebars = {
           label: 'REST API',
           link: {
             type: 'doc',
-            id: 'dev-docs/api/rest'
+            id: 'dev-docs/api/rest',
           },
           items: [
             {
@@ -159,7 +162,7 @@ const sidebars = {
             'dev-docs/api/rest/relations',
             'dev-docs/api/rest/interactive-query-builder',
             'dev-docs/api/rest/guides/intro',
-          ]
+          ],
         },
         {
           type: 'doc',
@@ -204,43 +207,43 @@ const sidebars = {
           label: 'Document Service API',
           link: {
             type: 'doc',
-            id: 'dev-docs/api/document-service'
+            id: 'dev-docs/api/document-service',
           },
           items: [
             {
               type: 'doc',
               label: 'Introduction & Concepts',
-              id: 'dev-docs/api/document'
+              id: 'dev-docs/api/document',
             },
             {
               type: 'doc',
               label: 'Available methods',
-              id: 'dev-docs/api/document-service'
+              id: 'dev-docs/api/document-service',
             },
             {
               type: 'doc',
               label: 'Filters',
-              id: 'dev-docs/api/document-service/filters'
+              id: 'dev-docs/api/document-service/filters',
             },
             {
               type: 'doc',
               label: 'Populate',
-              id: 'dev-docs/api/document-service/populate'
+              id: 'dev-docs/api/document-service/populate',
             },
             {
               type: 'doc',
               label: 'Fields',
-              id: 'dev-docs/api/document-service/fields'
+              id: 'dev-docs/api/document-service/fields',
             },
             {
               type: 'doc',
               label: 'Sort & Pagination',
-              id: 'dev-docs/api/document-service/sort-pagination'
+              id: 'dev-docs/api/document-service/sort-pagination',
             },
             {
               type: 'doc',
               label: 'Locale',
-              id: 'dev-docs/api/document-service/locale'
+              id: 'dev-docs/api/document-service/locale',
             },
             {
               type: 'doc',
@@ -248,24 +251,25 @@ const sidebars = {
               id: 'dev-docs/api/document-service/status',
               customProps: {
                 updated: true,
-              }
+              },
             },
             {
               type: 'doc',
               label: 'Middlewares',
-              id: 'dev-docs/api/document-service/middlewares'
+              id: 'dev-docs/api/document-service/middlewares',
             },
-          ]
+          ],
         },
-      ]
+      ],
     },
-    { // Advanced features
+    {
+      // Advanced features
       type: 'category',
       label: '🔧 Advanced features',
       collapsed: false,
       link: {
         type: 'doc',
-        id: 'dev-docs/advanced-features'
+        id: 'dev-docs/advanced-features',
       },
       items: [
         {
@@ -288,7 +292,6 @@ const sidebars = {
           link: {
             type: 'doc',
             id: 'dev-docs/typescript',
-
           },
           items: [
             'dev-docs/typescript',
@@ -297,7 +300,7 @@ const sidebars = {
               id: 'dev-docs/typescript/development',
               customProps: {
                 updated: true,
-              }
+              },
             },
             'dev-docs/typescript/adding-support-to-existing-project',
             {
@@ -306,7 +309,6 @@ const sidebars = {
               link: {
                 type: 'doc',
                 id: 'dev-docs/typescript/development/guides',
-
               },
               items: [
                 {
@@ -314,8 +316,8 @@ const sidebars = {
                   id: 'dev-docs/typescript/development/guides/documents-and-entries',
                   customProps: {
                     new: true,
-                  }
-                }
+                  },
+                },
               ],
             },
           ],
@@ -349,16 +351,17 @@ const sidebars = {
               type: 'doc',
               label: 'Data transfer',
               id: 'dev-docs/data-management/transfer',
-            }
+            },
           ],
         },
         'dev-docs/database-migrations',
         'dev-docs/database-transactions',
         'dev-docs/testing',
         'dev-docs/error-handling',
-      ]
+      ],
     },
-    { // Customization
+    {
+      // Customization
       type: 'category',
       collapsed: false,
       label: '🛠 Customization',
@@ -377,7 +380,7 @@ const sidebars = {
           label: 'Back-end customization',
           link: {
             type: 'doc',
-            id: 'dev-docs/backend-customization'
+            id: 'dev-docs/backend-customization',
           },
           items: [
             {
@@ -396,7 +399,7 @@ const sidebars = {
             'dev-docs/backend-customization/services',
             'dev-docs/backend-customization/models',
             'dev-docs/backend-customization/webhooks',
-          ]
+          ],
         },
         {
           type: 'category',
@@ -417,11 +420,12 @@ const sidebars = {
             'dev-docs/admin-panel-customization/wysiwyg-editor',
             'dev-docs/admin-panel-customization/extension',
             'dev-docs/admin-panel-customization/deployment',
-          ]
+          ],
         },
-      ]
+      ],
     },
-    { // Plugins
+    {
+      // Plugins
       type: 'category',
       collapsed: false,
       label: '🔌 Plugins',
@@ -433,20 +437,20 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Plugins Introduction & Concepts',
-          id: 'dev-docs/plugins'
+          id: 'dev-docs/plugins',
         },
         {
           type: 'category',
           label: 'Using plugins',
           link: {
             type: 'doc',
-            id: 'dev-docs/plugins/using-plugins'
+            id: 'dev-docs/plugins/using-plugins',
           },
           items: [
             {
               type: 'doc',
               label: 'Introduction to using plugins',
-              id: 'dev-docs/plugins/using-plugins'
+              id: 'dev-docs/plugins/using-plugins',
             },
             {
               type: 'doc',
@@ -479,7 +483,7 @@ const sidebars = {
               label: 'Users & Permissions',
               id: 'dev-docs/plugins/users-permissions',
             },
-          ]
+          ],
         },
         {
           type: 'category',
@@ -492,7 +496,7 @@ const sidebars = {
             {
               type: 'doc',
               label: 'Introduction to developing plugins',
-              id: 'dev-docs/plugins/developing-plugins'
+              id: 'dev-docs/plugins/developing-plugins',
             },
             'dev-docs/plugins/development/create-a-plugin',
             {
@@ -548,7 +552,8 @@ const sidebars = {
         },
       ],
     },
-    { // Update & Migration
+    {
+      // Update & Migration
       type: 'category',
       collapsed: false,
       label: '♻️ Upgrades',
@@ -571,19 +576,19 @@ const sidebars = {
           collapsed: false,
           link: {
             type: 'doc',
-            id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+            id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
           },
           label: 'Upgrade to Strapi 5',
           items: [
             {
               type: 'doc',
               label: 'Introduction and FAQ',
-              id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+              id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
             },
             {
               type: 'doc',
               label: 'Step-by-step guide',
-              id: 'dev-docs/migration/v4-to-v5/step-by-step'
+              id: 'dev-docs/migration/v4-to-v5/step-by-step',
             },
             {
               type: 'doc',
@@ -595,8 +600,8 @@ const sidebars = {
               label: 'Specific resources',
               id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction',
             },
-          ]
-        }
+          ],
+        },
       ],
     },
   ],
@@ -620,7 +625,7 @@ const sidebars = {
       collapsed: false,
       link: {
         type: 'doc',
-        id: 'user-docs/content-manager/introduction-to-content-manager'
+        id: 'user-docs/content-manager/introduction-to-content-manager',
       },
       label: 'Content Manager',
       items: [
@@ -652,9 +657,9 @@ const sidebars = {
       items: [
         {
           type: 'autogenerated',
-          dirName: 'user-docs/content-type-builder'
-        }
-      ]
+          dirName: 'user-docs/content-type-builder',
+        },
+      ],
     },
     {
       type: 'category',
@@ -667,12 +672,12 @@ const sidebars = {
       items: [
         {
           type: 'autogenerated',
-          dirName: 'user-docs/media-library'
-        }
-      ]
+          dirName: 'user-docs/media-library',
+        },
+      ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Releases',
       link: {
@@ -687,8 +692,8 @@ const sidebars = {
           id: 'user-docs/releases/managing-a-release',
           customProps: {
             updated: true,
-          }
-        }
+          },
+        },
       ],
     },
     {
@@ -702,9 +707,9 @@ const sidebars = {
       items: [
         {
           type: 'autogenerated',
-          dirName: 'user-docs/users-roles-permissions'
-        }
-      ]
+          dirName: 'user-docs/users-roles-permissions',
+        },
+      ],
     },
     {
       type: 'category',
@@ -717,9 +722,9 @@ const sidebars = {
       items: [
         {
           type: 'autogenerated',
-          dirName: 'user-docs/plugins'
-        }
-      ]
+          dirName: 'user-docs/plugins',
+        },
+      ],
     },
     {
       type: 'category',
@@ -730,9 +735,9 @@ const sidebars = {
         id: 'user-docs/settings/introduction',
       },
       items: [
-       'user-docs/settings/introduction',
-       'user-docs/settings/configuring-users-permissions-plugin-settings',
-       'user-docs/settings/audit-logs',
+        'user-docs/settings/introduction',
+        'user-docs/settings/configuring-users-permissions-plugin-settings',
+        'user-docs/settings/audit-logs',
         {
           type: 'category',
           collapsed: false,
@@ -753,18 +758,18 @@ const sidebars = {
               id: 'user-docs/settings/review-workflows',
               customProps: {
                 updated: true,
-              }
+              },
             },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
-          ]
+          ],
         },
       ],
     },
   ],
   cloudSidebar: [
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Getting Started',
       link: {
@@ -772,7 +777,7 @@ const sidebars = {
         id: 'cloud/getting-started/intro',
       },
       items: [
-        "cloud/getting-started/intro",
+        'cloud/getting-started/intro',
         {
           type: 'doc',
           label: 'Cloud fundamentals',
@@ -797,16 +802,16 @@ const sidebars = {
           type: 'doc',
           id: 'cloud/getting-started/usage-billing',
         },
-        "cloud/getting-started/caching",
+        'cloud/getting-started/caching',
         {
-          type: "doc",
-          label: "Notifications",
-          id: "cloud/projects/notifications",
+          type: 'doc',
+          label: 'Notifications',
+          id: 'cloud/projects/notifications',
         },
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Projects management',
       link: {
@@ -814,18 +819,18 @@ const sidebars = {
         id: 'cloud/projects/overview',
       },
       items: [
-        "cloud/projects/overview",
+        'cloud/projects/overview',
         {
           type: 'doc',
           label: 'Project settings',
           id: 'cloud/projects/settings',
         },
-        "cloud/projects/collaboration",
-        "cloud/projects/runtime-logs",
+        'cloud/projects/collaboration',
+        'cloud/projects/runtime-logs',
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Deployments',
       link: {
@@ -835,7 +840,7 @@ const sidebars = {
       items: ['cloud/projects/deploys', 'cloud/projects/deploys-history'],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Account management',
       link: {
@@ -843,7 +848,7 @@ const sidebars = {
         id: 'cloud/account/account-settings',
       },
       items: [
-        "cloud/account/account-settings",
+        'cloud/account/account-settings',
         {
           type: 'doc',
           id: 'cloud/account/account-billing',
@@ -852,7 +857,7 @@ const sidebars = {
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Command Line Interface',
       link: {
@@ -868,7 +873,7 @@ const sidebars = {
       ],
     },
     {
-      type: "category",
+      type: 'category',
       collapsed: false,
       label: 'Advanced configuration',
       link: {
@@ -876,22 +881,22 @@ const sidebars = {
         id: 'cloud/advanced/database',
       },
       items: [
-        "cloud/advanced/database",
+        'cloud/advanced/database',
         {
-          type: "doc",
-          id: "cloud/advanced/email",
-          label: "Email provider",
+          type: 'doc',
+          id: 'cloud/advanced/email',
+          label: 'Email provider',
           customProps: {
             updated: true,
-          }
+          },
         },
         {
-          type: "doc",
-          id: "cloud/advanced/upload",
-          label: "Upload provider",
+          type: 'doc',
+          id: 'cloud/advanced/upload',
+          label: 'Upload provider',
           customProps: {
             updated: true,
-          }
+          },
         },
       ],
     },
@@ -900,7 +905,7 @@ const sidebars = {
     {
       type: 'link',
       label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
+      href: '/dev-docs/intro',
     },
     {
       type: 'category',
@@ -908,13 +913,13 @@ const sidebars = {
       label: 'REST API reference',
       link: {
         type: 'doc',
-        id: 'dev-docs/api/rest'
+        id: 'dev-docs/api/rest',
       },
       items: [
         {
           type: 'category',
           label: 'Endpoints and basic requests',
-          link: {type: 'doc', id: 'dev-docs/api/rest'},
+          link: { type: 'doc', id: 'dev-docs/api/rest' },
           collapsed: false,
           items: [
             {
@@ -947,21 +952,21 @@ const sidebars = {
               label: 'Delete a document',
               href: '/dev-docs/api/rest#delete',
             },
-          ]
+          ],
         },
         {
           type: 'doc',
           id: 'dev-docs/api/rest/interactive-query-builder',
-          label: '✨ Interactive Query Builder'
+          label: '✨ Interactive Query Builder',
         },
         {
           type: 'doc',
-          id: 'dev-docs/api/rest/parameters'
+          id: 'dev-docs/api/rest/parameters',
         },
         {
           type: 'category',
           label: 'Populate and Select',
-          link: {type: 'doc', id: 'dev-docs/api/rest/populate-select'},
+          link: { type: 'doc', id: 'dev-docs/api/rest/populate-select' },
           collapsed: false,
           items: [
             {
@@ -974,18 +979,21 @@ const sidebars = {
               label: 'Population',
               href: '/dev-docs/api/rest/populate-select#population',
             },
-          ]
+          ],
         },
         {
           type: 'category',
           collapsed: false,
           label: 'Filters, Locale, Publication State',
-          link: {type: 'doc', id: 'dev-docs/api/rest/filters-locale-publication' },
+          link: {
+            type: 'doc',
+            id: 'dev-docs/api/rest/filters-locale-publication',
+          },
           items: [
             {
               type: 'link',
               label: 'Filtering',
-              href: '/dev-docs/api/rest/filters-locale-publication#filtering'
+              href: '/dev-docs/api/rest/filters-locale-publication#filtering',
             },
             {
               type: 'link',
@@ -1013,58 +1021,58 @@ const sidebars = {
           type: 'category',
           collapsed: false,
           label: 'Sort and Pagination',
-          link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination'},
+          link: { type: 'doc', id: 'dev-docs/api/rest/sort-pagination' },
           items: [
             {
               type: 'link',
               label: 'Sorting',
-              href: '/dev-docs/api/rest/sort-pagination#sorting'
+              href: '/dev-docs/api/rest/sort-pagination#sorting',
             },
             {
               type: 'link',
               label: 'Pagination',
-              href: '/dev-docs/api/rest/sort-pagination#pagination'
+              href: '/dev-docs/api/rest/sort-pagination#pagination',
             },
             {
               type: 'link',
               label: 'Pagination by page',
-              href: '/dev-docs/api/rest/sort-pagination#pagination-by-page'
+              href: '/dev-docs/api/rest/sort-pagination#pagination-by-page',
             },
             {
               type: 'link',
               label: 'Pagination by offset',
-              href: '/dev-docs/api/rest/sort-pagination#pagination-by-offset'
+              href: '/dev-docs/api/rest/sort-pagination#pagination-by-offset',
             },
-          ]
+          ],
         },
         {
           type: 'category',
           collapsed: false,
           label: 'Relations',
-          link: {type: 'doc', id: 'dev-docs/api/rest/relations'},
+          link: { type: 'doc', id: 'dev-docs/api/rest/relations' },
           items: [
             {
               type: 'link',
               label: 'connect',
-              href: '/dev-docs/api/rest/relations#connect'
+              href: '/dev-docs/api/rest/relations#connect',
             },
             {
               type: 'link',
               label: 'disconnect',
-              href: '/dev-docs/api/rest/relations#disconnect'
+              href: '/dev-docs/api/rest/relations#disconnect',
             },
             {
               type: 'link',
               label: 'set',
-              href: '/dev-docs/api/rest/relations#set'
+              href: '/dev-docs/api/rest/relations#set',
             },
-          ]
+          ],
         },
-      ]
+      ],
     },
     {
-      type: "category",
-      label: "Rest API guides",
+      type: 'category',
+      label: 'Rest API guides',
       collapsed: false,
       link: {
         type: 'doc',
@@ -1072,28 +1080,28 @@ const sidebars = {
       },
       items: [
         {
-          type: "doc",
-          label: "Understanding populate",
+          type: 'doc',
+          label: 'Understanding populate',
           id: 'dev-docs/api/rest/guides/understanding-populate',
         },
         {
-          type: "doc",
-          label: "How to populate creator fields",
+          type: 'doc',
+          label: 'How to populate creator fields',
           id: 'dev-docs/api/rest/guides/populate-creator-fields',
         },
         {
           type: 'link',
           label: 'Additional resources',
-          href: '/dev-docs/api/rest/guides/intro#additional-resources'
+          href: '/dev-docs/api/rest/guides/intro#additional-resources',
         },
       ],
-    }
+    },
   ],
   devDocsConfigSidebar: [
     {
       type: 'link',
       label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
+      href: '/dev-docs/intro',
     },
     {
       type: 'category',
@@ -1115,7 +1123,7 @@ const sidebars = {
           label: 'Base configurations',
           link: {
             type: 'doc',
-            id: 'dev-docs/configurations'
+            id: 'dev-docs/configurations',
           },
           items: [
             'dev-docs/configurations/database',
@@ -1123,7 +1131,7 @@ const sidebars = {
             'dev-docs/configurations/admin-panel',
             'dev-docs/configurations/middlewares',
             'dev-docs/configurations/api',
-          ]
+          ],
         },
         {
           type: 'category',
@@ -1131,7 +1139,7 @@ const sidebars = {
           collapsed: false,
           link: {
             type: 'doc',
-            id: 'dev-docs/configurations'
+            id: 'dev-docs/configurations',
           },
           items: [
             'dev-docs/configurations/plugins',
@@ -1142,7 +1150,7 @@ const sidebars = {
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
             'dev-docs/configurations/features',
-          ]
+          ],
         },
         {
           type: 'category',
@@ -1150,7 +1158,7 @@ const sidebars = {
           collapsed: false,
           link: {
             type: 'doc',
-            id: 'dev-docs/configurations'
+            id: 'dev-docs/configurations',
           },
           items: [
             'dev-docs/configurations/guides/rbac',
@@ -1167,30 +1175,30 @@ const sidebars = {
     {
       type: 'link',
       label: '⬅️ Back to Dev Docs content',
-      href: '/dev-docs/intro'
+      href: '/dev-docs/intro',
     },
     {
       type: 'category',
       collapsed: false,
       link: {
         type: 'doc',
-        id: 'dev-docs/migration/v4-to-v5/introduction-and-faq'
+        id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
       },
       label: 'Upgrade to Strapi 5',
       items: [
         {
-          type: "doc",
-          label: "Introduction and FAQ",
-          id: "dev-docs/migration/v4-to-v5/introduction-and-faq"
+          type: 'doc',
+          label: 'Introduction and FAQ',
+          id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
         },
         {
-          type: "doc",
-          label: "Step-by-step guide",
-          id: "dev-docs/migration/v4-to-v5/step-by-step"
+          type: 'doc',
+          label: 'Step-by-step guide',
+          id: 'dev-docs/migration/v4-to-v5/step-by-step',
         },
         {
-          type: "doc",
-          label: "Upgrade tool reference",
+          type: 'doc',
+          label: 'Upgrade tool reference',
           id: 'dev-docs/upgrade-tool',
         },
         {
@@ -1199,8 +1207,8 @@ const sidebars = {
           collapsed: true,
           label: 'Breaking changes',
           link: {
-            type: "doc",
-            id: "dev-docs/migration/v4-to-v5/breaking-changes",
+            type: 'doc',
+            id: 'dev-docs/migration/v4-to-v5/breaking-changes',
           },
           items: [
             {
@@ -1213,18 +1221,20 @@ const sidebars = {
           type: 'category',
           label: 'Specific resources',
           collapsed: false,
-          link: { type: 'doc', id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction' },
+          link: {
+            type: 'doc',
+            id: 'dev-docs/migration/v4-to-v5/additional-resources/introduction',
+          },
           items: [
             'dev-docs/migration/v4-to-v5/additional-resources/introduction',
             'dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service',
             'dev-docs/migration/v4-to-v5/additional-resources/plugins-migration',
             'dev-docs/migration/v4-to-v5/additional-resources/helper-plugin',
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
-
-  ]
+  ],
 };
 
 module.exports = sidebars;
