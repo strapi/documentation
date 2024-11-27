@@ -1,7 +1,7 @@
 The following server configurations are required when using SSO, for more information on available options please see the [Server Configuration](/dev-docs/configurations/server) documentation.
 
 - **`url`**: The public facing URL of your Strapi application. (e.g. `https://api.example.com`)
-- **`proxy`**: Enabling trusted reverse proxy support. (`true`)
+- **`proxy.koa`**: Enabling trusted reverse proxy support. (`true`)
 
 <details>
   <summary>Admin Required Configuration Example</summary>
@@ -15,7 +15,9 @@ The following server configurations are required when using SSO, for more inform
 module.exports = ({ env }) => ({
   // ...
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: env.bool('TRUST_PROXY', true),
+  proxy: {
+    koa: env.bool('TRUST_PROXY', true),
+  },
   // ...
 });
 ```
@@ -29,7 +31,9 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   // ...
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: env.bool('TRUST_PROXY', true),
+  proxy: {
+    koa: env.bool('TRUST_PROXY', true),
+  },
   // ...
 });
 ```
@@ -40,7 +44,7 @@ export default ({ env }) => ({
 
 There are also some optional configurations that you can set should it be necessary:
 
-- **`globalProxy`**: If you are in a restricted network environment that requires a forward proxy (e.g Squid) for all outgoing requests. (e.g. `http://username:password@yourProxy:3128`)
+- **`proxy.global`**: If you are in a restricted network environment that requires a forward proxy (e.g Squid) for all outgoing requests. (e.g. `http://username:password@yourProxy:3128`)
 
 <details>
   <summary>Admin Optional Configuration Example</summary>
@@ -54,8 +58,10 @@ There are also some optional configurations that you can set should it be necess
 module.exports = ({ env }) => ({
   // ...
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: env.bool('TRUST_PROXY', true),
-  globalProxy: env('GLOBAL_PROXY'),
+  proxy: {
+    koa: env.bool('TRUST_PROXY', true),
+    global: env('GLOBAL_PROXY'),
+  },
   // ...
 });
 ```
@@ -69,8 +75,10 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   // ...
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: env.bool('TRUST_PROXY', true),
-  globalProxy: env('GLOBAL_PROXY'),
+  proxy: {
+    koa: env.bool('TRUST_PROXY', true),
+    global: env('GLOBAL_PROXY'),
+  },
   // ...
 });
 ```
