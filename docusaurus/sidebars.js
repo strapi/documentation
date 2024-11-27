@@ -312,15 +312,8 @@ const sidebars = {
             'dev-docs/plugins/development/plugin-sdk',
             'dev-docs/plugins/development/plugin-structure',
             'dev-docs/custom-fields',
-            {
-              type: 'category',
-              label: 'Plugin APIs',
-              collapsed: false,
-              items: [
-                'dev-docs/plugins/admin-panel-api',
-                'dev-docs/plugins/server-api',
-              ]
-            },
+            'dev-docs/plugins/admin-panel-api',
+            'dev-docs/plugins/server-api',
             'dev-docs/plugins-extension',
           ]
         }
