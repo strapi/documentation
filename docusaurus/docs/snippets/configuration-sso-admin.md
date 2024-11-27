@@ -1,4 +1,4 @@
-There are some optional configurations that you can set should it be necessary, for more information on available options please see the [Admin Configuration](/dev-docs/configurations/admin) documentation.
+There are some optional configurations that you can set should it be necessary, for more information on available options please see the [Admin Configuration](/dev-docs/configurations/admin-panel) documentation.
 
 - **`url`**: The public facing URL of your Strapi administration panel. (e.g. `https://admin.example.com`)
 - **`auth.domain`**: Setting a custom domain for cookie storage. (e.g. `.example.com`)
