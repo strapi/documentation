@@ -96,13 +96,13 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Users & Permissions',
-          id: 'user-docs/features/users-permissions',
+          label: 'Static Preview',
+          id: 'user-docs/features/preview',
         },
         {
           type: 'doc',
-          label: 'Static Preview',
-          id: 'user-docs/intro',
+          label: 'Users & Permissions',
+          id: 'user-docs/features/users-permissions',
         },
         {
           type: 'doc',
