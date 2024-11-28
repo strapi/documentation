@@ -8,9 +8,17 @@ tags:
  - Content History
 ---
 
-# Content History <EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
+# Content History
+<EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
 
-The Content History feature of the Content Manager gives you the ability to browse and restore previous versions of documents created with the Content Manager.
+The Content History feature, in the Content Manager, gives you the ability to browse and restore previous versions of documents created with the Content Manager.
+
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition, or Cloud Pro or Team plan. <br/>
+<Icon name="user"/> **Role & permission:** None. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 <ThemedImage
 alt="Accessing the Content History of a document"
@@ -20,23 +28,24 @@ sources={{
 }}
 />
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise Edition, or Cloud Pro or Team plan. <br/>
-<Icon name="user"/> **Role & permission:** None. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 ## Usage
+
+**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager <br/> From the edit view of a content type: click ![More icon](/img/assets/icons/v5/More.svg) (top right corner) then ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History**.
 
 ### Browsing Content History
 
-Content History is accessible from the Edit View of any document created with the Content Manager.
+<!--Content History is accessible from the Edit View of any document created with the Content Manager.
 
-To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. You will be presented with the Content History view:
+To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. -->
 
-- The sidebar on the right lists the total number of versions available, and for each version, the date and time when the version was created, the user who created it, and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content) for more information about document statuses).
-- The main view on the left lists the fields and their content for the version selected in the sidebar on the right.
+With Content History, you can browse your content through:
+
+- The main view on the left, which lists the fields and their content for the version selected in the sidebar on the right.
+- The sidebar on the right, which lists the total number of versions available, and for each version:
+  - the date and time when the version was created,
+  - the user who created it,
+  - and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content) for more information about document statuses).
+
 
 <ThemedImage
 alt="Accessing the Content History of a document"
@@ -56,11 +65,13 @@ You can choose to restore a previous version of a document. When restoring a ver
 
 To restore a version:
 
-1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button.
-2. Browse the Content History and select a version in the sidebar on the right.
-3. Click the **Restore** button.
-4. In the _Confirmation_ window, click **Restore**.  
+<!-- 1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. -->
+1. Browse the Content History and select a version via the sidebar on the right.
+2. Click the **Restore** button.
+3. In the _Confirmation_ window, click **Restore**.  
 
 :::note
 If the [Internationalization (i18n)](/user-docs/content-manager/translating-content) feature is enabled for the content-type, restoring a version with a unique field (i.e. a field whose content is the same for all locales) will restore the content of this field for all locales.
 :::
+
+<!-- Add illustration here -->
