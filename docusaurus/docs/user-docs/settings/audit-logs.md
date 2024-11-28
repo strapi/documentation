@@ -10,7 +10,8 @@ tags:
 - Strapi Cloud
 ---
 
-# Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <CloudTeamBadge/>
+# Audit Logs
+<EnterpriseBadge /> <CloudTeamBadge/>
 
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 

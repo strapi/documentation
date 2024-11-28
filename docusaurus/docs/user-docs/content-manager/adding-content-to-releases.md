@@ -9,7 +9,8 @@ tags:
 - Strapi Cloud
 ---
 
-# Including content in a release  <EnterpriseBadge /> <CloudTeamBadge /> {#add-to-release}
+# Including content in a release {#add-to-release}
+<EnterpriseBadge /> <CloudTeamBadge />
 
 Using the [Releases](/user-docs/releases/introduction) feature, you can group several entries to publish them altogether. Adding entries to a release is done from the Content Manager. You can also remove an entry from a release while updating the entry.
 

@@ -12,7 +12,10 @@ tags:
 - SSO 
 ---
 
-# Single Sign-On <EnterpriseBadge/>
+import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
+
+# Single Sign-On
+<EnterpriseBadge/>
 
 Single Sign-On on Strapi allows you to configure additional sign-in and sign-up methods for your administration panel.
 
