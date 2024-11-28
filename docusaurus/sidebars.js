@@ -20,8 +20,8 @@ const sidebars = {
       label: 'Getting Started',
       className: 'category-getting-started',
       collapsible: false,
-      link: {type: 'doc', id: 'dev-docs/intro'},
       items: [
+        'dev-docs/intro',
         'dev-docs/quick-start',
         'dev-docs/project-structure',
         'dev-docs/installation',
@@ -58,6 +58,18 @@ const sidebars = {
           type: 'doc',
           label: 'Content History',
           id: 'user-docs/features/content-history'
+        },
+        {
+          type: 'category',
+          label: 'Data Management',
+          collapsed: true,
+          // link: {type: 'doc', id: 'dev-docs/data-management'},
+          items: [
+            'user-docs/settings/transfer-tokens',
+            'dev-docs/data-management/import',
+            'dev-docs/data-management/export',
+            'dev-docs/data-management/transfer',
+          ]
         },
         {
           type: 'doc',
@@ -105,46 +117,33 @@ const sidebars = {
           id: 'user-docs/features/users-permissions',
         },
         {
-          type: 'doc',
-          label: 'Upgrade tools',
-          id: 'dev-docs/upgrade-tool',
-        },
-        {
           type: 'category',
-          label: 'Data Management',
-          link: {type: 'doc', id: 'dev-docs/data-management'},
+          label: 'Strapi plugins',
+          collapsed: true,
           items: [
-            'user-docs/settings/transfer-tokens',
-            'dev-docs/data-management/import',
-            'dev-docs/data-management/export',
-            'dev-docs/data-management/transfer',
+            {
+              type: 'doc',
+              label: 'Sentry',
+              id: 'dev-docs/plugins/sentry',
+            },
+            {
+              type: 'doc',
+              label: 'GraphQL',
+              id: 'dev-docs/plugins/graphql',
+            },
+            {
+              type: 'doc',
+              label: 'Documentation',
+              id: 'dev-docs/plugins/documentation',
+            },
+            {
+              type: 'doc',
+              label: 'Email',
+              id: 'dev-docs/plugins/email',
+            },
           ]
         },
-        {
-          type: 'doc',
-          label: 'Providers',
-          id: 'dev-docs/providers',
-        },
-        {
-          type: 'doc',
-          label: 'Sentry',
-          id: 'dev-docs/plugins/sentry',
-        },
-        {
-          type: 'doc',
-          label: 'GraphQL',
-          id: 'dev-docs/plugins/graphql',
-        },
-        {
-          type: 'doc',
-          label: 'Documentation',
-          id: 'dev-docs/plugins/documentation',
-        },
-        {
-          type: 'doc',
-          label: 'Email',
-          id: 'dev-docs/plugins/email',
-        },
+
       ]
     },
     { // APIs
@@ -159,12 +158,13 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
-          collapsed: false,
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/rest'
-          },
+          collapsed: true,
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/rest',
+              label: 'Endpoints'
+            },
             'dev-docs/api/rest/parameters',
             'dev-docs/api/rest/filters-locale-publication',
             'dev-docs/api/rest/populate-select',
@@ -178,12 +178,13 @@ const sidebars = {
         {
           type: 'category',
           label: 'Document Service API',
-          collapsed: false,
-          link: {
-            type: 'doc',
-            id: 'dev-docs/api/document-service',
-          },
+          collapsed: true,
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/api/document-service',
+              label: 'Available methods'
+            },
             'dev-docs/api/document-service/fields',
             'dev-docs/api/document-service/filters',
             'dev-docs/api/document-service/locale',
@@ -200,9 +201,13 @@ const sidebars = {
       label: 'Configurations',
       collapsed: false,
       collapsible: false,
-      link: {type: 'doc', id: 'dev-docs/configurations'},
       className: 'category-configurations',
       items: [
+        {
+          type: 'doc',
+          label: 'Configurations introduction',
+          id: 'dev-docs/configurations',
+        },
         'dev-docs/configurations/admin-panel',
         'dev-docs/configurations/api',
         'dev-docs/configurations/api-tokens',
@@ -213,13 +218,14 @@ const sidebars = {
         'dev-docs/configurations/functions',
         'dev-docs/configurations/middlewares',
         'dev-docs/configurations/plugins',
+        'dev-docs/providers',
         'dev-docs/configurations/server',
         'dev-docs/configurations/sso',
         'dev-docs/configurations/typescript',
         {
           type: 'category',
           label: 'Guides',
-          collapsed: false,
+          collapsed: true,
           items: [
             'dev-docs/configurations/guides/access-cast-environment-variables',
             'dev-docs/configurations/guides/access-configuration-values',
@@ -236,20 +242,19 @@ const sidebars = {
       className: 'category-development',
       collapsible: false,
       collapsed: false,
-      link: {type: 'doc', id: 'dev-docs/customization'},
       items: [
-        {
-          type: 'doc',
-          id: 'dev-docs/backend-customization',
-          label: 'How the backend server works'
-        },
+        'dev-docs/customization',
         {
           type: 'category',
           label: 'Backend customization',
-          link: {type: 'doc', id: 'dev-docs/backend-customization'},
           collapsible: true,
-          collapsed: false,
+          collapsed: true,
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/backend-customization',
+              label: 'How the backend server works'
+            },
             'dev-docs/backend-customization/routes',
             'dev-docs/backend-customization/policies',
             'dev-docs/backend-customization/middlewares',
@@ -263,12 +268,13 @@ const sidebars = {
         {
           type: 'category',
           label: 'Admin panel customization',
-          collapsed: false,
-          link: {
-            type: 'doc',
-            id: 'dev-docs/admin-panel-customization',
-          },
+          collapsed: true,
           items: [
+            {
+              type: 'doc',
+              id: 'dev-docs/admin-panel-customization',
+              label: 'What\'s possible'
+            },
             'dev-docs/admin-panel-customization/bundlers',
             'dev-docs/admin-panel-customization/deployment',
             'dev-docs/admin-panel-customization/extension',
@@ -304,10 +310,14 @@ const sidebars = {
         },
         {
           type: 'category',
-          link: { type: 'doc', id: 'dev-docs/plugins/developing-plugins' },
           label: 'Plugins development',
-          collapsed: false,
+          collapsed: true,
           items: [
+            {
+              type: 'doc',
+              label: 'Developing plugins',
+              id: 'dev-docs/plugins/developing-plugins'
+            },
             'dev-docs/plugins/development/create-a-plugin',
             'dev-docs/plugins/development/plugin-sdk',
             'dev-docs/plugins/development/plugin-structure',
@@ -331,7 +341,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'v4 → v5',
-          collapsed: false,
+          collapsed: true,
           items: [
             'dev-docs/migration/v4-to-v5/introduction-and-faq',
             'dev-docs/migration/v4-to-v5/step-by-step',
