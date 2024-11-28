@@ -50,7 +50,7 @@ Controls which domains can access previews:
 preview: {
   enabled: true,
   config: {
-    allowedOrigins: env("CLIENT_URL"),  // Usually your frontend application URL
+    allowedOrigins: [env("CLIENT_URL")],  // Usually your frontend application URL
     // …
   }
 }
