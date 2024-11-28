@@ -69,12 +69,19 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__caret,
-  &__caret:before {
+  &__caret:before,
+  &__link--sublist-caret::after,
+  &__list-item-collapsible .menu__link--sublist-caret::after {
+    background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;;
     height: 16px;
     width: 16px;
   }
 
   .menu__list-item-collapsible {
+    a {
+      color: var(--strapi-neutral-600);
+    }
+
     button.clean-btn.menu__caret {
       position: inherit;
       top: 5px;
@@ -131,7 +138,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       --ifm-menu-color-active: var(--strapi-neutral-800);
 
       &:after {
-        display: none;
+        // display: none;
       }
     }
 
