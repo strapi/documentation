@@ -12,9 +12,17 @@ tags:
 - Strapi Cloud
 ---
 
-# Audit Logs <EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <CloudTeamBadge/>
+# Audit Logs
+<EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <CloudTeamBadge/>
 
 The Audit Logs feature provides a searchable and filterable display of all activities performed by users of the Strapi application.
+
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
+<Icon name="user"/> **Role & permission:** Super Admin role in the project's admin panel. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 <ThemedImage
   alt="Audit Logs panel"
@@ -24,18 +32,11 @@ The Audit Logs feature provides a searchable and filterable display of all activ
   }}
 />
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
-<Icon name="user"/> **Role & permission:** Super Admin role in the project's admin panel. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 ## Usage
 
-The Audit Logs feature is accessible from the **Settings > Audit Logs** section of the admin panel.
+**Path to use the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings > Administration Panel - Audit Logs
 
-The following events are logged:
+The Audit Logs feature logs the following events:
 
 | Event | Actions |
 | --- | --- |
@@ -46,22 +47,21 @@ The following events are logged:
 | Role / Permission | `create`, `update`, `delete` |
 | User | `create`, `update`, `delete` |
 
+For each log item, the following information is displayed:
 
-For each log item the following information is displayed:
-
-* Action: The type of action performed by the user. For example `create` or `update`.
-* Date: The date and time of the action.
-* User: The user who performed the action.
-* Details: Displays a modal with more details about the action. For example the User IP address, the request body, or the response body.
+- Action: type of action performed by the user (e.g.`create` or `update`).
+- Date: date and time of the action.
+- User: user who performed the action.
+- Details: displays a modal with more details about the action (e.g. the User IP address, the request body, or the response body).
 
 
 ### Filtering logs
 
-The Audit Logs page displays all logs by default, in reverse chronological order. You can filter the logs by:
+By default, all logs are displayed in reverse chronological order. You can filter the logs by:
 
-* Action: Select the type of action to filter by. For example `create` or `update`.
-* User: Select the user to filter by.
-* Date: Select a date (range) and time to filter by.
+- Action: select the type of action to filter by (e.g `create` or `update`).
+- User: select the user to filter by.
+- Date: select a date (range) and time to filter by.
 
 <ThemedImage
   alt="Audit Logs filters"
@@ -73,7 +73,7 @@ The Audit Logs page displays all logs by default, in reverse chronological order
 
 ### Accessing log details
 
-For any log item, click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon to display a modal with more details about that action.
+For any log item, click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
 <ThemedImage
   alt="Log details modal"
@@ -82,5 +82,3 @@ For any log item, click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon to di
     dark: '/img/assets/settings/settings_log-details_DARK.png',
   }}
 />
-
-The *Payload* details are displayed in an interactive JSON component, enabling you to expand and collapse the JSON object.
