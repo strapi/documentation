@@ -25,6 +25,36 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 5.2.2
+
+### 🧹 Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+
+- [Collapse prerequisites and display step 1 in Quick Start Guide](https://github.com/strapi/documentation/pull/2296)
+
+#### Strapi Cloud
+- [Design system v2 and new header in cloud docs](https://github.com/strapi/documentation/pull/2298)
+- [Deleted old cloud assets](https://github.com/strapi/documentation/pull/2297)
+- [Add restoration timestamp to docs and ressources](https://github.com/strapi/documentation/pull/2292)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
+<a href="https://github.com/olegStrapier" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/148060535?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="olegStrapier"/>
+</a>
+<a href="https://github.com/pierreburgy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5550462?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pierreburgy"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 5.2.1
 
 ### 🖌 Updated content
