@@ -200,15 +200,11 @@ export default ({ env }) => {
           // Generate the preview pathname based on content type and document
           const previewPathname = getPreviewPathname(uid, { locale, document });
 
-          // For published content, return direct URL
-          if (status === "published") {
-            return `${clientUrl}${previewPathname}`;
-          }
-
-          // For draft content, use Next.js draft mode, passing it a secret key
+          // Use Next.js draft mode passing it a secret key and the content-type status
           const urlSearchParams = new URLSearchParams({
-            url: previewPathname,
-            secret: previewSecret, // Add security token
+            url: getPreviewPathname(uid, { locale, document }),
+            secret: previewSecret,
+            status,
           });
           return `${clientUrl}/api/preview?${urlSearchParams}`;
         },
@@ -236,6 +232,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
   const url = searchParams.get("url");
+  const status = searchParams.get("status");
 
   // Check the secret and next parameters
   // This secret should only be known to this route handler and the CMS
@@ -244,9 +241,14 @@ export async function GET(request: Request) {
   }
 
   // Enable Draft Mode by setting the cookie
-  draftMode().enable();
+  if (status === "published") {
+    draftMode().disable();
+  } else {
+    draftMode().enable();
+  }
 
   // Redirect to the path from the fetched post
+  // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
   redirect(url || "/");
 }
-
+```
