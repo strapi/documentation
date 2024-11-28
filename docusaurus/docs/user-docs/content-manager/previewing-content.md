@@ -47,6 +47,6 @@ From the Preview screen, you can:
 - switch between previewing the draft and the published version (if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type),
 - and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
-:::caution
-When making updates to the content, first save them before clicking on Open Preview again, otherwise your latest updates will be lost. A pop up window will warn you about this behavior.
+:::note
+In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
