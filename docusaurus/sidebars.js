@@ -21,7 +21,6 @@ const sidebars = {
       className: 'category-getting-started',
       collapsible: false,
       items: [
-        'dev-docs/intro',
         'dev-docs/quick-start',
         'dev-docs/project-structure',
         'dev-docs/installation',
