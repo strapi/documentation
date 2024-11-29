@@ -15,6 +15,13 @@ tags:
 
 The Draft & Publish feature allows to manage drafts for your content.
 
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Free feature. <br/>
+<Icon name="user"/> **Role & permission:** None. <br/>
+<Icon name="toggle-left"/> **Activation:** Available but disabled by default. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
+
 <ThemedImage
   alt="Editing draft version"
   sources={{
@@ -23,25 +30,18 @@ The Draft & Publish feature allows to manage drafts for your content.
   }}
 />
 
-<!-- Gif for each feature intro? Interactive demo showcase? -->
-
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature. <br/>
-<Icon name="user"/> **Role & permission:** None. <br/>
-<Icon name="toggle-left"/> **Activation:** Available but disabled by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 ## Configuration
+
+**Path to configure the feature:** ![CTB icon](/img/assets/icons/v5/Layout.svg) Content Type Builder
 
 For your content types to be managed with Draft & Publish in the Content Manager, the feature must be enabled through the Content-type Builder. Draft & Publish can be configured for each content type.
 
 To enable Draft & Publish:
 
-1. Go to the ![CTB icon](/img/assets/icons/v5/Layout.svg) _Content-type Builder_ via the main navigation of the admin panel.
-2. Either edit the already created content type of your choice, or create a new content type.
-3. Go to the **Advanced settings** tab.
-4. Tick the Draft & Publish option.
+1. Either edit an already created content type of your choice, or create a new content type (see Content Type Builder documentation for more information).
+2. Go to the **Advanced settings** tab.
+3. Tick the Draft & Publish option.
+4. Click the **Finish** button.
 
 <ThemedImage
   alt="Content-type Builder's advanced settings"
@@ -53,17 +53,32 @@ To enable Draft & Publish:
 
 ## Usage
 
-The Draft & Publish feature is visible and used from the ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager*, accessible via the main navigation of the admin panel. Edit any content type of your choice (with Draft & Publish enabled) to see and follow the documentation below.
+<!--The Draft & Publish feature is visible and used from the ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager*, accessible via the main navigation of the admin panel. Edit any content type of your choice (with Draft & Publish enabled) to see and follow the documentation below.-->
 
-With Draft & Publish enabled, your content can have 3 statuses:
+With Draft & Publish enabled, the Content Manager's edit view indicates the current status of your content type's entry at the top of the interface. Your content can have 3 statuses:
 
+- <span style={{color:"#5cb176"}}>Published</span>: The content was previously published. There are no pending draft changes saved.
+- <span style={{color:"#ac73e6"}}>Modified</span>: The content was previously published. You made some changes to the draft version and saved these changes, but the changes have not been published yet.
+- <span style={{color:"#7b79ff"}}>Draft</span>: The content has never been published yet.
+
+<!--
 | Status name | Description |
 |------------|--------------|
 | <span style={{color:"#5cb176"}}>Published</span> | The content was previously published.<br/>There are no pending draft changes saved. |
 | <span style={{color:"#ac73e6"}}>Modified</span> | The content was previously published.<br/>You made some changes to the draft version and saved these changes, but the changes have not been published yet. |
 | <span style={{color:"#7b79ff"}}>Draft</span> | The content has never been published yet. |
+-->
   
-In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.
+<!--In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.-->
+
+### Working with drafts
+
+**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+
+While editing a document, you can see 2 tabs:
+
+- The _Draft_ tab is where you can edit your content.
+- The _Published_ tab is a read-only tab where edition of all fields is disabled. The _Published_ tab only exists to show what is the content of fields in the published version.
 
 <ThemedImage
   alt="Editing draft version"
@@ -73,13 +88,6 @@ In the Content Manager edit view (the view you see when editing an entry), the c
   }}
 />
 
-### Working with drafts
-
-While editing a document, you can see 2 tabs:
-
-- The _Draft_ tab is where you can edit your content.
-- The _Published_ tab is a read-only tab where edition of all fields is disabled. The _Published_ tab only exists to show what is the content of fields in the published version.
-
 By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button in the _Entry_ box on the right side of the interface, until they are ready to be published.
 
 Once you made changes to a draft, you have 3 possible options, all available in the _Entry_ box on the right side of the interface:
@@ -87,11 +95,9 @@ Once you made changes to a draft, you have 3 possible options, all available in 
 - **Save** your draft for later retrieval,
 - or discard changes, by clicking on ![More icon](/img/assets/icons/v5/More.svg) and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
 
-### Publishing and unpublishing
+### Publishing a draft
 
-While editing a document, you can decide to publish a draft or unpublish previously published content.
-
-#### Publishing a draft
+**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
 
 To publish a draft, click on the **Publish** button in the _Entry_ box on the right side of the interface.
 
@@ -118,11 +124,11 @@ When a document has both a draft and a published version available, the publishe
 To schedule publication, i.e., convert a draft to a published entry at a given date and time, you can [include it in a release](/user-docs/content-manager/adding-content-to-releases) and [schedule the publication](/user-docs/releases/creating-a-release) of the release.
 :::
 
-#### Unpublishing content
+### Unpublishing content
 
-Previously published content can be unpublished.
+**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
 
-To unpublish content,  from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
+To unpublish a previously published content: from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
 If the draft version of the document contains content different from the published version, you can decide what to do with both content when unpublishing:
 
@@ -139,3 +145,42 @@ If the draft version of the document contains content different from the publish
     dark: '/img/assets/content-manager/content-manager_unpublish_DARK.png',
   }}
 />
+
+### Bulk actions
+
+**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, list view of your content type
+
+Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
+
+:::caution
+If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
+:::
+
+<ThemedImage
+  alt="Unpublish a document"
+  sources={{
+    light: '/img/assets/content-manager/bulk-publish.png',
+    dark: '/img/assets/content-manager/bulk-publish_DARK.png',
+  }}
+/>
+
+#### Bulk publishing drafts
+
+To publish several entries at the same time:
+
+1. From the list view of the Content Manager, select your entries to publish by ticking the box on the left side of the entries' record.
+2. Click on the **Publish** button located above the header of the table.
+3. In the _Publish entries_ dialog, check the list of selected entries and their status:
+   - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry can be published
+   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
+4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![Edit icon](/img/assets/icons/v5/Pencil.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
+5. Click the **Publish** button.
+6. In the confirmation dialog box, confirm your choice by clicking again on the **Publish** button.
+
+#### Bulk unpublishing content
+
+To unpublish several entries at the same time:
+
+1. From the list view of the Content Manager, select your entries to unpublish by ticking the box on the left side of the entries' record.
+2. Click on the **Unpublish** button located above the header of the table.
+3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button.
