@@ -252,3 +252,54 @@ export async function GET(request: Request) {
   redirect(url || "/");
 }
 ```
+
+### Next steps
+
+Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves:
+
+1. Create or adapt your data fetching utility to check if draft mode is enabled
+2. Update your API calls to include the draft status parameter when appropriate
+
+The following, taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application, is an example of how to implement draft-aware data fetching in your Next.js front-end application:
+
+```typescript {8-18}
+import { draftMode } from "next/headers";
+import qs from "qs";
+
+export default async function fetchContentType(
+  contentType: string,
+  params: Record = {}
+): Promise {
+  // Check if Next.js draft mode is enabled
+  const { isEnabled: isDraftMode } = draftMode();
+  
+  try {
+    const queryParams = { ...params };
+    // Add status=draft parameter when draft mode is enabled
+    if (isDraftMode) {
+      queryParams.status = "draft";
+    }
+    
+    const url = `${baseURL}/${contentType}?${qs.stringify(queryParams)}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data from Strapi (url=${url}, status=${response.status})`
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching content:", error);
+    throw error;
+  }
+}
+```
+
+This utility method can then be used in your page components to fetch either draft or published content based on the preview state:
+
+```typescript
+// In your page component:
+const pageData = await fetchContentType('api::page.page', {
+  // Your other query parameters
+});
+```
