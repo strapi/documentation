@@ -49,39 +49,55 @@ npm install @strapi/plugin-graphql
 
 </Tabs>
 
-Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
+Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Sandbox** that will help you to write your GraphQL queries and mutations.
 
 :::note
-The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+The GraphQL Sandbox is enabled by default in all environments except production. Set the `landingPage` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
 :::
 
 ## Configuration
 
 Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be passed directly to Apollo with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
 
 :::caution
 The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
 :::
 
+## GraphQL Configuration Options
+
+Here is a detailed list of configuration options supported by the GraphQL plugin. These options can be defined in the `config/plugins.js` (JavaScript) or `config/plugins.ts` (TypeScript) file.
+
+| Option            | Type                            | Description                                                                                                                                            | Default Value  | Notes                                      |
+|-------------------|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|--------------------------------------------|
+| `endpoint`        | String                         | Sets the GraphQL endpoint path.                                                                                                                        | `'/graphql'`   | Example: `/custom-graphql`                |
+| `shadowCRUD`      | Boolean                        | Enables or disables automatic schema generation for content types.                                                                                     | `true`         |                                            |
+| `depthLimit`      | Number                         | Limits the depth of GraphQL queries to prevent excessive nesting.                                                                                      | `10`           | Use this to mitigate potential DoS attacks. |
+| `amountLimit`     | Number                         | Limits the maximum number of items returned in a single response.                                                                                      | `100`          | Use cautiously to avoid performance issues.|
+| `playgroundAlways`| Boolean                        | [Deprecated] Enables GraphQL Playground in all environments (deprecated).                                                                                           | `false`        | Prefer using `landingPage` instead.        |
+| `landingPage`     | Boolean \| Function            | Enables or disables the landing page for GraphQL. Accepts a boolean or a function returning a boolean or an ApolloServerPlugin implementing `renderLandingPage`. | `false`        | Recommended for enabling GraphQL Sandbox. |
+| `apolloServer`    | Object                         | Passes configuration options directly to Apollo Server.                                                                                               | `{}`           | Example: `{ tracing: true }`              |
+
+### Example
+
+Below is an example of how to use these options in a Strapi configuration file:
+
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./config/plugins.js"
-
+```javascript title="./config/plugins.js"
 module.exports = {
-  //
   graphql: {
     config: {
       endpoint: '/graphql',
       shadowCRUD: true,
-      playgroundAlways: false,
       depthLimit: 7,
       amountLimit: 100,
+      landingPage: (ctx) => ctx.env === 'development',
       apolloServer: {
-        tracing: false,
+        tracing: true,
       },
     },
   },
@@ -93,18 +109,16 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/plugins.ts"
-
 export default {
-  //
   graphql: {
     config: {
       endpoint: '/graphql',
       shadowCRUD: true,
-      playgroundAlways: false,
       depthLimit: 7,
       amountLimit: 100,
+      landingPage: (ctx) => ctx.env === 'development',
       apolloServer: {
-        tracing: false,
+        tracing: true,
       },
     },
   },
@@ -936,7 +950,7 @@ mutation {
 
 </Request>
 
-Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
+Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Sandbox.
 
 
 ## API tokens
@@ -944,7 +958,7 @@ Then on each request, send along an `Authorization` header in the form of `{ "Au
 To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 
 :::note
-Using API tokens in the the GraphQL playground requires adding the authorization header with your token in the `HTTP HEADERS` tab:
+Using API tokens in the the GraphQL Sandbox requires adding the authorization header with your token in the `HTTP HEADERS` tab:
 
 ```http
 {
@@ -959,10 +973,9 @@ Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 
 GraphQL is a query language allowing users to use a broader panel of inputs than traditional REST APIs. GraphQL APIs are inherently prone to security risks, such as credential leakage and denial of service attacks, that can be reduced by taking appropriate precautions.
 
+### Disable introspection and Sandbox in production
 
-### Disable introspection and playground in production
-
-In production environments, disabling the GraphQL Playground and the introspection query is recommended.
+In production environments, disabling the GraphQL Sandbox and the introspection query is recommended.
 If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it is already disabled in production by default.
 
 ### Limit max depth and complexity
