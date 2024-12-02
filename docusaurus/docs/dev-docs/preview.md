@@ -43,7 +43,7 @@ preview: {
 
 ### Allowed origins
 
-Controls which domains can access previews:
+Controls which domains are allowed to be loaded in an iframe in your admin panel to preview content:
 
 ```javascript title="config/admin.ts|js" {5}
 // …
