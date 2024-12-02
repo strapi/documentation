@@ -164,12 +164,18 @@ const getPreviewPathname = (uid, { locale, document }): string => {
       }
       return `/blog/${slug}`; // Individual article page
     }
+    default: {
+      return null;
+    }
   }
-  return "/"; // Default fallback route
 };
 
 // … main export (see step 3)
 ```
+
+:::note
+Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching frontend page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the URL. This is how you enable/disable preview per content type.
+:::
 
 ### 3. Add handler logic
 
@@ -198,11 +204,16 @@ export default ({ env }) => {
           const document = await strapi.documents(uid).findOne({ documentId });
           
           // Generate the preview pathname based on content type and document
-          const previewPathname = getPreviewPathname(uid, { locale, document });
+          const pathname = getPreviewPathname(uid, { locale, document });
+
+          // Disable preview if the pathname is not found
+          if (!pathname) {
+            return null;
+          }
 
           // Use Next.js draft mode passing it a secret key and the content-type status
           const urlSearchParams = new URLSearchParams({
-            url: getPreviewPathname(uid, { locale, document }),
+            url: pathname,
             secret: previewSecret,
             status,
           });
