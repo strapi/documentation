@@ -10,9 +10,17 @@ tags:
 pagination_next: user-docs/releases/creating-a-release
 ---
 
-# Releases <EnterpriseBadge /> <CloudTeamBadge/>
+# Releases
+<EnterpriseBadge /> <CloudTeamBadge/>
 
 The Releases feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
+
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
+<Icon name="user"/> **Role & permission:** Administrator role in the project's admin panel. <br/>
+<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 <ThemedImage
   alt="List of Releases"
@@ -22,16 +30,11 @@ The Releases feature enables content managers to organize entries into container
   }}
 />
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
-<Icon name="user"/> **Role & permission:** Administrator role in the project's admin panel. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 ## Usage
 
-The Releases feature is used from ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) _Releases_, accessible via the main navigation of the admin panel.
+**Path to use the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+
+<!--The Releases feature is used from ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) _Releases_, accessible via the main navigation of the admin panel.-->
 
 <!--
 From there, it is possible to:
@@ -60,6 +63,8 @@ From there, it is possible to:
 Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).
 
 ### Managing a release
+
+<!-- Remove "Managing release" to get all H4 titles to H3 instead -->
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
