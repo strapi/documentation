@@ -76,7 +76,7 @@ Here is a detailed list of configuration options supported by the GraphQL plugin
 | `depthLimit`      | Number                         | Limits the depth of GraphQL queries to prevent excessive nesting.                                                                                      | `10`           | Use this to mitigate potential DoS attacks. |
 | `amountLimit`     | Number                         | Limits the maximum number of items returned in a single response.                                                                                      | `100`          | Use cautiously to avoid performance issues.|
 | `playgroundAlways`| Boolean                        | [Deprecated] Enables GraphQL Playground in all environments (deprecated).                                                                                           | `false`        | Prefer using `landingPage` instead.        |
-| `landingPage`     | Boolean \| Function            | Enables or disables the landing page for GraphQL. Accepts a boolean or a function returning a boolean or an ApolloServerPlugin implementing `renderLandingPage`. | `false`        | Recommended for enabling GraphQL Sandbox. |
+| `landingPage`     | Boolean \| Function            | Enables or disables the landing page for GraphQL. Accepts a boolean or a function returning a boolean or an ApolloServerPlugin implementing `renderLandingPage`. |        | `false` in production, `true` in other environments |
 | `apolloServer`    | Object                         | Passes configuration options directly to Apollo Server.                                                                                               | `{}`           | Example: `{ tracing: true }`              |
 
 ### Example
