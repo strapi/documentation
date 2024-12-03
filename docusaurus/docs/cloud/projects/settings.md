@@ -312,7 +312,7 @@ Resetting an environment deletes all environments data and resets the variables 
 2. Write in the textbox your *Environment name*.
 3. Click on the **Delete environment** button to confirm the deletion.
 
-### Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
+### Backups <CloudProBadge /> <CloudTeamBadge /> <GrowthBadge /> {#backups}
 
 The ![Backups icon](/img/assets/icons/ArrowClockwise.svg) *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
