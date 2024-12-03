@@ -26,6 +26,11 @@ const sidebars = {
         'dev-docs/installation',
         {
           type: 'doc',
+          id: 'user-docs/features/admin-panel',
+          label: 'Admin panel',
+        },
+        {
+          type: 'doc',
           id: 'user-docs/features/content-manager',
           label: 'Content Manager',
         },
