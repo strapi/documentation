@@ -15,7 +15,7 @@ tags:
 
 # Documentation plugin
 
-The Documentation plugin is useful to document the available endpoints once you created an API.
+The Documentation plugin automates your API documentation creation. It basically generates a swagger file. It follows the [Open API specification version 3.0.1](https://swagger.io/specification/).
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). The Documentation plugin generates the [paths objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [schema objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object) and converts all Strapi types to [OpenAPI data types](https://swagger.io/docs/specification/data-models/data-types/).
 
@@ -23,7 +23,7 @@ The generated documentation can be found in your application at the following pa
 
 ## Installation
 
-To install the plugin run following command in your terminal:
+To install the documentation plugin, run following command in your terminal:
 
 <Tabs groupId="yarn-npm">
 
@@ -47,7 +47,102 @@ npm install @strapi/plugin-documentation
 
 Once the plugin is installed, starting the application generates the API documentation.
 
-## Swagger UI
+## Configuration and settings
+
+To configure the Documentation plugin, create a `settings.json` file located in the `src/extensions/documentation/config` folder. In this file where you can specify all your environment variables, licenses, external documentation, and all the entries listed in the [specification](https://swagger.io/specification/). If you need to add a custom key, you can do it by prefixing your key by `x-{something}`. The following is an example configuration:
+
+```json title="src/extensions/documentation/config/settings.json"
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DOCUMENTATION",
+    "description": "",
+    "termsOfService": "YOUR_TERMS_OF_SERVICE_URL",
+    "contact": {
+      "name": "TEAM",
+      "email": "contact-email@something.io",
+      "url": "mywebsite.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "x-strapi-config": {
+    "plugins": ["upload", "users-permissions"],
+    "path": "/documentation"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1337/api",
+      "description": "Development server"
+    }
+  ],
+  "externalDocs": {
+    "description": "Find out more",
+    "url": "https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
+```
+
+### Creating a new version of the documentation
+
+To create a new version you need to change the `info.version` key in the `settings.json` file.
+This will automatically create a new version.
+
+```json title="src/extensions/documentation/config/settings.json"
+{
+  info: { version: "2.0.0" },
+  // …
+},
+```
+
+### Defining which plugins need documentation generated
+
+If you want plugins to be included in documentation generation, they should be included in the `plugins` array on the `x-strapi-config`. By default, the array is initialized with `["upload", "users-permissions"]`:
+
+```json title="src/extensions/documentation/config/settings.json"
+{
+  "x-strapi-config": {
+    plugins: ["upload", "users-permissions"],
+  },
+}
+```
+
+To add more plugins, such as your custom plugins, add their name to the array. If you do not want plugins to be included in documentation generation, provide an empty array.
+
+### Restricting access to your API documentation
+
+By default, your documentation will be accessible by anyone.
+
+To restrict API documentation access, enable the **Restricted Access** option from the admin panel:
+
+1. Navigate to ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings* in the main navigation of the admin panel.
+2. Choose **Documentation**.
+3. Toggle **Restricted Access** to `ON`.
+4. Define a password in the `password` input.
+5. Save the settings.
+
+ <!-- The Documentation plugin automates documentation for APIs in a Strapi application using the Open API specification version 3.0.1. When the Documentation plugin is installed it is available in the admin panel, under the heading "Plugins". The Documentation plugin is available in the in-app Marketplace and the [Strapi Market](https://market.strapi.io/plugins/@strapi-plugin-documentation). The Documentation plugin enables:
+
+- opening the API documentation,
+- regenerating the documentation,
+- restricting access to the documentation endpoint.
+
+The Documentation plugin affects multiple parts of the admin panel. The table below lists all the additional options and settings that are added to a Strapi application once the plugin has been installed.
+
+| Section impacted    | Options and settings         |
+|------------------|-------------------------------------------------------------|
+| Documentation    | <ul>Addition of a new Documentation option in the main navigation under the plugins heading, which contains links to open and refresh the documentation.   </ul>        |
+| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not. <br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration Panel > Roles* </li></ul>| -->
+
+## Usage
 
 The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select *Plugins > Documentation* in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
 
@@ -65,18 +160,6 @@ Strapi is secured by default, which means that most of your end-points require t
 
 This plugin comes with an interface that is available in your administration panel and a configuration file.
 
-### Restrict the access to your API documentation
-
-By default, your documentation will be accessible by anyone.
-
-To restrict API documentation access, enable the **Restricted Access** option from the admin panel:
-
-1. Navigate to ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings* in the main navigation of the admin panel.
-2. Choose **Documentation**.
-3. Toggle **Restricted Access** to `ON`.
-4. Define a password in the `password` input.
-5. Save the settings.
-
 ### Regenerate documentation
 
 There are 2 ways to update the documentation after making changes to your API:
@@ -86,85 +169,7 @@ There are 2 ways to update the documentation after making changes to your API:
 
 ## Configuration
 
-The Documentation plugin is initialized with the following configuration, where all properties can be altered by providing new values to the documentation plugin's configuration object in `config/plugins.js`:
 
-```js
-module.exports = {
-  documentation: {
-    enabled: true,
-    config: {
-      openapi: '3.0.0',
-      info: {
-        version: '1.0.0',
-        title: 'DOCUMENTATION',
-        description: '',
-        termsOfService: 'YOUR_TERMS_OF_SERVICE_URL',
-        contact: {
-          name: 'TEAM',
-          email: 'contact-email@something.io',
-          url: 'mywebsite.io'
-        },
-        license: {
-          name: 'Apache 2.0',
-          url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
-        },
-      },
-      'x-strapi-config': {
-        // Leave empty to ignore plugins during generation
-        plugins: [ 'upload', 'users-permissions'],
-        path: '/documentation',
-      },
-      servers: [{ url: 'http://localhost:1337/api', description: 'Development server' }],
-      externalDocs: {
-        description: 'Find out more',
-        url: 'https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html'
-      },
-      security: [ { bearerAuth: [] } ]
-    }
-  }
-}
-```
-
-### Create a new version of the documentation
-
-To create a new version of your documentation, update the `version` key as follows:
-
-```js title="config/plugins.js"
-
-module.exports = {
-  documentation: {
-    enabled: true,
-    config: {
-      info: { version: "2.0.0" },
-    },
-  },
-};
-```
-
-### Indicate which plugins need documentation generated
-
-If you want plugins to be included in documentation generation, they should be included in the `plugins` array on the `x-strapi-config`. By default, the array is initialized with `["upload", "users-permissions"]`.
-
-Similarly, if you do not want plugins to be included in documentation generation, provide an empty array:
-
-```js title="config/plugins.js"
-
-module.exports = {
-  documentation: {
-    enabled: true,
-    config: {
-      "x-strapi-config": {
-        // Default
-        plugins: ["upload", "users-permissions"],
-        // Custom
-        plugins: ["upload"],
-        // Do not generate for plugins
-        plugins: [],
-      },
-    },
-  },
-};
-```
 
 ## Overriding the generated documentation
 
