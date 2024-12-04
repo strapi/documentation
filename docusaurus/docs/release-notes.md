@@ -25,6 +25,45 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 5.3.0
+
+### ✨ New content
+
+#### Dev Docs
+- [Setting up the Preview feature](https://github.com/strapi/documentation/pull/2295)
+
+#### User Guide
+- [Previewing content in the Content Manager](https://github.com/strapi/documentation/pull/2295)
+
+### 🖌 Updated content
+
+#### Strapi Cloud
+- [Rename a project](https://github.com/strapi/documentation/pull/2300)
+
+### 🧹 Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+- [Update cross-link to U&P plugin from dev docs routes documentation](https://github.com/strapi/documentation/pull/2305)
+
+#### Strapi Cloud
+- [Update Cloud plans screenshot](https://github.com/strapi/documentation/pull/2304)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/AtallahFatma" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26638076?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="AtallahFatma"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.2.2
 
 ### 🧹 Chore, fixes, typos, and other improvements
