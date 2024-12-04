@@ -34,7 +34,7 @@ There are 5 tabs available for the project's settings:
 The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-level settings enables you to check and update the following options for the project:
 
 - *Basic information*, to see:
-  - the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+  - the name of your Strapi Cloud project — used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs — and change it (see [Renaming project](#renaming-project)).
   - the chosen hosting region for your Strapi Cloud project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the app's internal name for the project, which can be useful for debug & support purposes.
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
@@ -47,6 +47,14 @@ The ![General icon](/img/assets/icons/Faders.svg) *General* tab for the project-
     dark: '/img/assets/cloud/settings_DARK.png',
   }}
 />
+
+#### Renaming project
+
+The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and can be modified afterwards via the project's settings.
+
+1. In the *Basic information* section of the [General icon](/img/assets/icons/Faders.svg) *General* tab, click on the edit ![Edit icon](/img/assets/icons/edit.svg) button.
+2. In the dialog, write the new project name of your choice in the *Project name* textbox.
+3. Click on the **Rename** button to confirm the project name modification.
 
 #### Modifying git repository & branch
 
