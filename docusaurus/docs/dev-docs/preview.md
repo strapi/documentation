@@ -264,6 +264,12 @@ export async function GET(request: Request) {
 }
 ```
 
+### 5. Allow the front-end to be embedded
+
+On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-origins) allows the admin panel to load the front-end window in an iframe. But allowing the embedding works both ways, so on the front-end side, you also need to allow the window to be embedded in Strapi's admin panel.
+
+This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
+
 ### Next steps
 
 Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves:
