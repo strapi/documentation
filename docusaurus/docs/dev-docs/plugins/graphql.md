@@ -25,6 +25,10 @@ By default Strapi create [REST endpoints](/dev-docs/api/rest#endpoints) for each
 The [GraphQL API reference](/dev-docs/api/graphql) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
 :::
 
+:::caution
+If you uninstall the Users & Permissions plugin, the GraphQL plugin should work, but you need to include your header authorization to see the playground.
+:::
+
 ## Usage
 
 To get started with GraphQL in your application, please install the plugin first. To do that, open your terminal and run the following command:
