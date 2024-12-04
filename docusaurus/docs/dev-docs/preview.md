@@ -174,7 +174,7 @@ const getPreviewPathname = (uid, { locale, document }): string => {
 ```
 
 :::note
-Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching frontend page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the admin panel. This is how you enable/disable preview per content type.
+Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching front-end page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the admin panel. This is how you enable or disable preview per content type.
 :::
 
 ### 3. Add handler logic
