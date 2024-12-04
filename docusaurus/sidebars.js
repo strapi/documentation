@@ -87,7 +87,7 @@ const sidebars = {
               id: 'dev-docs/configurations/database',
               customProps: {
                 updated: true,
-              }
+              },
             },
             'dev-docs/configurations/server',
             'dev-docs/configurations/admin-panel',
@@ -251,7 +251,7 @@ const sidebars = {
               id: 'dev-docs/api/document-service/status',
               customProps: {
                 updated: true,
-              }
+              },
             },
             {
               type: 'doc',
@@ -292,7 +292,6 @@ const sidebars = {
           link: {
             type: 'doc',
             id: 'dev-docs/typescript',
-
           },
           items: [
             'dev-docs/typescript',
@@ -301,7 +300,7 @@ const sidebars = {
               id: 'dev-docs/typescript/development',
               customProps: {
                 updated: true,
-              }
+              },
             },
             'dev-docs/typescript/adding-support-to-existing-project',
             {
@@ -310,7 +309,6 @@ const sidebars = {
               link: {
                 type: 'doc',
                 id: 'dev-docs/typescript/development/guides',
-
               },
               items: [
                 {
@@ -318,8 +316,8 @@ const sidebars = {
                   id: 'dev-docs/typescript/development/guides/documents-and-entries',
                   customProps: {
                     new: true,
-                  }
-                }
+                  },
+                },
               ],
             },
           ],
@@ -694,8 +692,8 @@ const sidebars = {
           id: 'user-docs/releases/managing-a-release',
           customProps: {
             updated: true,
-          }
-        }
+          },
+        },
       ],
     },
     {
@@ -760,7 +758,7 @@ const sidebars = {
               id: 'user-docs/settings/review-workflows',
               customProps: {
                 updated: true,
-              }
+              },
             },
             'user-docs/settings/single-sign-on',
             'user-docs/settings/transfer-tokens',
@@ -890,7 +888,7 @@ const sidebars = {
           label: 'Email provider',
           customProps: {
             updated: true,
-          }
+          },
         },
         {
           type: 'doc',
@@ -898,7 +896,7 @@ const sidebars = {
           label: 'Upload provider',
           customProps: {
             updated: true,
-          }
+          },
         },
       ],
     },
