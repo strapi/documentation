@@ -29,6 +29,11 @@ sources={{
 <iframe id="dkd2m1lsgr" src="https://app.guideflow.com/embed/dkd2m1lsgr" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
 </div>
 
+<div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
+<iframe id="dkd2mjlugr" src="https://app.guideflow.com/embed/dkd2mjlugr" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
+</div>
+
+
 ## Configuration
 
 **Path to configure the admin panel:** Account name or initials (bottom left hand corner) > Profile
