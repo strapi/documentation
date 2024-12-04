@@ -286,6 +286,9 @@ const sidebars = {
           type: 'doc',
           label: 'Preview',
           id: 'dev-docs/preview',
+          customProps: {
+            new: true
+          }
         },
         {
           type: 'doc',
@@ -650,7 +653,13 @@ const sidebars = {
           type: 'doc',
           id: 'user-docs/content-manager/saving-and-publishing-content',
         },
-        'user-docs/content-manager/previewing-content',
+        {
+          type: 'doc',
+          id: 'user-docs/content-manager/previewing-content',
+          customProps: {
+            new: true
+          }
+        },
         'user-docs/content-manager/adding-content-to-releases',
       ],
     },
