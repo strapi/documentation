@@ -2,6 +2,7 @@
 title: Command Line Interface
 displayed_sidebar: cmsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+sidebar_label: Strapi CLI
 tags:
   - Command Line Interface (CLI)
   - strapi develop
@@ -13,11 +14,7 @@ tags:
   - strapi report
 ---
 
-import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
-
 # Command Line Interface (CLI)
-
-<NotV5 />
 
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
 

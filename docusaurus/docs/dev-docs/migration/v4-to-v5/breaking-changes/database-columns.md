@@ -1,7 +1,7 @@
 ---
 title: Database columns
 description: Content types always have feature columns
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
   - breaking changes
   - database

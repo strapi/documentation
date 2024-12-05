@@ -1,7 +1,7 @@
 ---
 title: Server proxy configuration
 description:  In Strapi 5, all proxy configuration options are now configured through the 'server.proxy' object in the '/config/server.js|ts' instead of having various option names such as 'globalProxy' and 'proxy' in Strapi v4.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - configuration

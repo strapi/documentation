@@ -2,7 +2,7 @@
 title: Database lifecycle hooks are triggered differently with the Document Service API methods
 description: In Strapi 5, database lifecycle hooks are triggered differently with the various Document Service API methods.
 sidebar_label: Lifecycle hooks
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Document Service API

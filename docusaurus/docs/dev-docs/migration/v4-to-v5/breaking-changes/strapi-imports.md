@@ -2,7 +2,7 @@
 title: Strapi factories import have been updated
 description: In Strapi 5, the way import are done, through the application init function or through factories, has been updated.
 sidebar_label: Use strapiFactory in imports
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 unlisted: true
 tags:
  - breaking changes

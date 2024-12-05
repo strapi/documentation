@@ -2,7 +2,7 @@
 title: Core service methods use the Document Service API
 description: In Strapi 5, core service methods use the Document Service API instead of the Entity Service API.
 sidebar_label: Core service methods use Document Service API
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - document service API

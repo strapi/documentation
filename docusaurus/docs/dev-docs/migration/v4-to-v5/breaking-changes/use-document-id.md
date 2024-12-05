@@ -2,7 +2,7 @@
 title: documentId should be used instead of id in API calls
 description: Documents should be called by their documentId in Content API calls (REST API & GraphQL).
 sidebar_label: documentId instead of id
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content API

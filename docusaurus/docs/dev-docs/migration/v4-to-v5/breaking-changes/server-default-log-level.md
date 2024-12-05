@@ -1,7 +1,7 @@
 ---
 title: Server log level is `http`
 description: The default log level of the middleware logger in Strapi 5 is 'http'.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - configuration

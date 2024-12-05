@@ -1,7 +1,7 @@
 ---
 title: Upload a file at entry creation no longer supported 
 description: In Strapi 5, it is not possible to upload a file while creating an entry, so users must upload the file first, and then create the entry with the created file id.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - upload

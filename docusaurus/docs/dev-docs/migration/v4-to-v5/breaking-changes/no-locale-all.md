@@ -2,7 +2,7 @@
 title: locale=all can not be used to query all locales
 description: In Strapi 5, it's no longer possible to get all localized versions with the '?locale=all' parameter.
 sidebar_label: No locale=all support
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - locale

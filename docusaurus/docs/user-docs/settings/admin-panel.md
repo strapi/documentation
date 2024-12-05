@@ -6,8 +6,6 @@ tags:
 - company logo
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Customizing the logo
 
 The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Overview*.

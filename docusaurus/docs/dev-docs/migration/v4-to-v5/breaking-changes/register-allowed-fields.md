@@ -2,7 +2,7 @@
 title: The Users & Permissions plugin's register.allowedFields configuration option defaults to []
 description: In Strapi 5, The Users & Permissions plugin's `register.allowedFields` configuration option defaults to [].
 sidebar_label: register.allowedFields defaults to []
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - users & permissions

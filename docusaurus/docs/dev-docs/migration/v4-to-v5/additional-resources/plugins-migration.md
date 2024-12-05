@@ -1,6 +1,6 @@
 ---
 title: Plugins upgrade summary
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
   - plugins
   - plugins development
