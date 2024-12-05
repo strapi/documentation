@@ -18,7 +18,7 @@ export default function Guideflow({ lightId, darkId }) {
   return (
     <div style={{
       position: 'relative',
-      paddingBottom: 'calc(54.43121693121693% + 50px)',
+      paddingBottom: 'calc(69.3342776203966% + 50px)',
       height: '0'
     }}>
       <iframe
