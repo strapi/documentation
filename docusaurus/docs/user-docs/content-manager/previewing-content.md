@@ -20,13 +20,10 @@ With the Preview feature, you can preview your front end application directly fr
   }}
 />
 
-<!-- <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
-<iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
-</div> -->
-
 :::prerequisites
 - The Strapi admin panel user should have read permissions for the content-type.
-- The Preview feature should be configured in the code of the `config/admin` file (see [Developer Docs](/dev-docs/preview) for details).
+- While the Preview feature is in beta, it should be enabled with the `future.preview` feature flag set to `true` in `config/features` (see [Developer Docs](/dev-docs/configurations/features)).
+- The Preview feature should be configured in the code of the `config/admin` file (see [Developer Docs](/dev-docs/preview)).
 - A front-end application should already be created and running so you can preview it.
 :::
 
