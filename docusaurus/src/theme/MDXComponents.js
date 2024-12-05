@@ -30,6 +30,7 @@ import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
 import Icon from '../components/Icon';
+import Guideflow from '../components/Guideflow';
 
 export default {
   // Re-use the default mapping
@@ -71,6 +72,7 @@ export default {
   MultiLanguageSwitcher,
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
+  Guideflow,
   Annotation,
   Icon,
   /**
