@@ -56,7 +56,7 @@ npm install @strapi/plugin-documentation
 
 Once the plugin is installed, starting Strapi generates the API documentation.
 
-## Configuration and settings
+## Configuration
 
 Most configuration options for the Documentation plugin are handled via your Strapi project's code. A few settings are available in the admin panel.
 
@@ -81,7 +81,7 @@ To restrict API documentation access, enable the **Restricted Access** option 
 4. Define a password in the `password` input.
 5. Save the settings.
 
-### Plugin configuration
+### Code-based configuration
 
 To configure the Documentation plugin, create a `settings.json` file in the `src/extensions/documentation/config` folder. In this file, you can specify all your environment variables, licenses, external documentation links, and all the entries listed in the [specification](https://swagger.io/specification/). 
 
