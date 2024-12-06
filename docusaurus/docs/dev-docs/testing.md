@@ -118,7 +118,7 @@ let instance;
 
 async function setupStrapi() {
   if (!instance) {
-    await Strapi().load();
+    await Strapi.createStrapi().load();
     instance = strapi;
     
     await instance.server.mount();
