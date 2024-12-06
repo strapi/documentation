@@ -80,6 +80,7 @@ const sidebars = {
           label: 'Draft & Publish',
           id: 'user-docs/features/draft-and-publish'
         },
+        'dev-docs/plugins/email',
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
@@ -129,11 +130,6 @@ const sidebars = {
               type: 'doc',
               label: 'Documentation',
               id: 'dev-docs/plugins/documentation',
-            },
-            {
-              type: 'doc',
-              label: 'Email',
-              id: 'dev-docs/plugins/email',
             },
             {
               type: 'doc',
