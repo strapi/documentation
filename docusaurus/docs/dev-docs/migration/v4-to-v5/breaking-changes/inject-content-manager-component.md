@@ -2,7 +2,7 @@
 title: injectContentManagerComponent() removed
 description: In Strapi 5, the Content Manager is a plugin, which affects the injectContentManagerComponent() method, replaced by getPlugin('content-manager').injectComponent().
 sidebar_label: injectContentManagerComponent() removed
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content manager

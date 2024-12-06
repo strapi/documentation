@@ -2,7 +2,7 @@
 title: REST API input is validated by default in controllers
 description: In Strapi 5, REST API input is validated by default in controllers, instead of accepting invalid data and sanitizing it silently.
 sidebar_label: Default input validation
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - controllers

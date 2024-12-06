@@ -1,7 +1,8 @@
 ---
 title: Relations
 description: Use the REST API to manage the order of relations
-displayed_sidebar: restApiSidebar
+displayed_sidebar: cmsSidebar
+sidebar_label: Relations
 tags:
 - API 
 - relations
@@ -9,8 +10,6 @@ tags:
 - disconnect
 - REST API
 ---
-
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # Managing relations with API requests
 

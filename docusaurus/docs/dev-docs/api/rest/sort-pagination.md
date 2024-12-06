@@ -1,8 +1,9 @@
 ---
 title: Sort and Pagination
 description: Use Strapi's REST API to sort or paginate your data.
+sidebar_label: Sort & Pagination
 sidebarDepth: 3
-displayed_sidebar: restApiSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API
@@ -18,7 +19,6 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Sort & Pagination
 

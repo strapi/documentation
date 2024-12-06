@@ -2,7 +2,7 @@
 title: lockIcon replaced by licenseOnly
 description: In Strapi 5, the lockIcon property is replaced by licenseOnly, which affects how the addMenuLink(), addSettingsLink(), and addSettingsLinks() methods from the Admin Panel API work.
 sidebar_label: lockIcon replaced by licenseOnly
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - plugins development

@@ -2,7 +2,7 @@
 title: Strapi 5 uses React Router DOM 6
 description: Strapi 5 uses react-router-dom v6. This impacts the links added to Global Settings or to the Menu using the Admin Panel API.
 sidebar_label: React Router DOM 6
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - react-router

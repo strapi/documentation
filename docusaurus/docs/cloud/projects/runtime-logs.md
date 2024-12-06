@@ -9,8 +9,6 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Runtime logs
 
 From a chosen project's dashboard, the *Runtime logs* tab displays the live logs of the project.

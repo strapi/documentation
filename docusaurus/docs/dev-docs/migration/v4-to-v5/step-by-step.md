@@ -1,6 +1,7 @@
 ---
 title: Step-by-step guide to upgrade to Strapi 5
 description: Follow this step-by-step guide to upgrade from Strapi v4 to Strapi 5
+sidebar_label: Step-by-step guide
 tags:
 - upgrade to Strapi 5
 - upgrade tool

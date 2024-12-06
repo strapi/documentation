@@ -2,7 +2,7 @@
 title: Webpack Aliases are removed
 description: A simplified approach of aliasing in Strapi v5. 
 sidebar_label: Webpack Aliases removed
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - dependencies

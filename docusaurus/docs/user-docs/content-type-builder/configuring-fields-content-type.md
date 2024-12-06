@@ -12,8 +12,6 @@ tags:
 - password
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Configuring fields for content-types
 
 :::note Development-only

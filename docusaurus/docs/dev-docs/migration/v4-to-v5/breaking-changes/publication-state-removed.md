@@ -2,7 +2,7 @@
 title: publicationState is removed and replaced by status
 description: In Strapi 5, 'publicationState' can no longer be used in Content API calls. The new status parameter can be used and accepts 2 different values, draft and published.
 sidebar_label: status instead of publicationState
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Content API

@@ -1,7 +1,7 @@
 ---
 title: Templates are now regular, standalone Strapi applications
 description: Templates have been fully rewritten in Strapi 5 and now are standalone, regular Strapi applications, making it easier to create, distribute, and re-use them.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - templates

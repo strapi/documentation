@@ -2,7 +2,7 @@
 title: The `EditViewLayout` and `ListViewLayout` have been rewritten
 description: In Strapi 5, some admin panel hooks have been removed from the Redux store and a new `useDocumentLayout` hook is introduced.
 sidebar_label: EditViewLayout and ListViewLayout refactored
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content manager

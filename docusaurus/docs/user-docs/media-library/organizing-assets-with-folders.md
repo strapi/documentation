@@ -10,7 +10,6 @@ tags:
 - Users, Roles & Permissions
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Organizing assets with folders

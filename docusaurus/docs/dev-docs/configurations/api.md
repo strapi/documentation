@@ -8,11 +8,7 @@ tags:
 - REST API
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # API configuration
-
-<NotV5 />
 
 General settings for API calls can be set in the `./config/api.js` file:
 

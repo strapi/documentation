@@ -2,7 +2,7 @@
 title: defaultIndex removed
 description: In Strapi 5, the 'defaultIndex' option is removed from the 'public' middleware.
 sidebar_label: defaultIndex removed
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - middlewares

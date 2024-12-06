@@ -1,6 +1,7 @@
 ---
 title: Admin panel customization - URL, host, and path configuration
 description: Learn more about configuring the URL, host, and path to access Strapi's admin panel.
+displayed_sidebar: cmsSidebar
 sidebar_label: URL, host, and port configuration
 toc_max_heading_level: 4
 tags:

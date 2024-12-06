@@ -8,11 +8,7 @@ tags:
 - environment
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Unit testing
-
-<NotV5 />
 
 :::strapi
 The Strapi blog has a tutorial on how to implement [API testing with Jest and Supertest](https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest) and [how to add unit tests to your Strapi plugin](https://strapi.io/blog/how-to-add-unit-tests-to-your-strapi-plugin).
