@@ -18,6 +18,12 @@ tags:
 
 The Documentation plugin automates your API documentation creation. It basically generates a swagger file. It follows the [Open API specification version](https://swagger.io/specification/).
 
+:::prerequisites Identity Card of the Plugin
+<Icon name="navigation-arrow"/> **Location:** Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.<br/>
+<Icon name="package"/> **Package name:** `@strapi/plugin-documentation`  <br/>
+<Icon name="plus-square"/> **Additional resources:** [Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-documentation) <br/>
+:::
+
 <Guideflow lightId="5pvjz4zswp" darkId="6kw4vdwizp"/>
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). The Documentation plugin generates the [paths objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [schema objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object) and converts all Strapi types to [OpenAPI data types](https://swagger.io/docs/specification/data-models/data-types/).
