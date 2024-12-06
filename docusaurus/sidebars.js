@@ -127,8 +127,13 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Sentry',
-              id: 'dev-docs/plugins/sentry',
+              label: 'Documentation',
+              id: 'dev-docs/plugins/documentation',
+            },
+            {
+              type: 'doc',
+              label: 'Email',
+              id: 'dev-docs/plugins/email',
             },
             {
               type: 'doc',
@@ -137,13 +142,8 @@ const sidebars = {
             },
             {
               type: 'doc',
-              label: 'Documentation',
-              id: 'dev-docs/plugins/documentation',
-            },
-            {
-              type: 'doc',
-              label: 'Email',
-              id: 'dev-docs/plugins/email',
+              label: 'Sentry',
+              id: 'dev-docs/plugins/sentry',
             },
           ]
         },
