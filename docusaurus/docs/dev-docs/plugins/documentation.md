@@ -165,7 +165,7 @@ If you do not want plugins to be included in documentation generation, provide a
 
 The Documentation plugins comes with 3 methods to override the generated documentation: [`excludeFromGeneration`](#exclude-from-generation), [`registerOverride`](#register-override), and [`mutateDocumentation`](#mutate-documentation).
 
-<h3 id="exclude-from-generation"><code>excludeFromGeneration</code></h3>
+##### excludeFromGeneration() {#exclude-from-generation}
 
 To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/dev-docs/plugins/admin-panel-api#register).
 
@@ -198,7 +198,7 @@ module.exports = {
 }
 ```
 
-<h3 id="register-override"><code>registerOverride()</code></h3>
+##### registerOverride() {#register-override}
 
 If the Documentation plugin fails to generate what you expect, it is possible to replace what has been generated.
 
@@ -256,7 +256,7 @@ module.exports = {
 
 The overrides system is provided to try and simplify amending the generated documentation. It is the only way a plugin can add or modify the generated documentation.
 
-<h3 id="mutate-documentation"><code>mutateDocumentation()</code></h3>
+##### mutateDocumentation() {#mutate-documentation}
 
 The Documentation plugin’s configuration also accepts a `mutateDocumentation` function on `info['x-strapi-config']`. This function receives a draft state of the generated documentation that be can be mutated. It should only be applied from an application and has the final say in the OpenAPI schema.
 
