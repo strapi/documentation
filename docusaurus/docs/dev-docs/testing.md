@@ -152,7 +152,6 @@ module.exports = { setupStrapi, cleanupStrapi };
 We need a main entry file for our tests, one that will also test our helper file.
 
 ```js title="path: ./tests/app.test.js"
-const fs = require('fs');
 const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
 beforeAll(async () => {
