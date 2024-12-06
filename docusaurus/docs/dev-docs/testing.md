@@ -74,7 +74,6 @@ and add those lines at the bottom of file
       ".tmp",
       ".cache"
     ],
-    "testEnvironment": "node"
   }
 ```
 
