@@ -21,7 +21,7 @@ The Documentation plugin automates your API documentation creation. It basically
 :::prerequisites Identity Card of the Plugin
 <Icon name="navigation-arrow"/> **Location:** Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.<br/>
 <Icon name="package"/> **Package name:** `@strapi/plugin-documentation`  <br/>
-<Icon name="plus-square"/> **Additional resources:** [Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-documentation) <br/>
+<Icon name="plus-square"/> **Additional resources:** [Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-documentation) <br/>
 :::
 
 <Guideflow lightId="5pvjz4zswp" darkId="6kw4vdwizp"/>
