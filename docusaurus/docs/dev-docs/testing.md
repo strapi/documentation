@@ -167,7 +167,7 @@ it("strapi is defined", () => {
 });
 ```
 
-Actually this is all we need for writing unit tests. Just run `yarn test` and see a result of your first test
+Actually this is all we need for writing unit tests. Just run `NODE_ENV=test yarn test` and see a result of your first test
 
 ```bash
 yarn run v1.13.0
