@@ -10,8 +10,8 @@ tags:
 
 # Unit testing
 
-:::strapi
-The Strapi blog has a tutorial on how to implement [API testing with Jest and Supertest](https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest) and [how to add unit tests to your Strapi plugin](https://strapi.io/blog/how-to-add-unit-tests-to-your-strapi-plugin).
+:::info
+Currently, our docs are only for Javascript projects that wish to have unit testing setup. We will update our docs soon as soon as we have the Typescript equivalent code samples available.
 :::
 
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
@@ -74,7 +74,6 @@ and add those lines at the bottom of file
       ".tmp",
       ".cache"
     ],
-    "testEnvironment": "node"
   }
 ```
 
@@ -119,7 +118,7 @@ let instance;
 
 async function setupStrapi() {
   if (!instance) {
-    await Strapi().load();
+    await Strapi.createStrapi().load();
     instance = strapi;
     
     await instance.server.mount();
@@ -153,7 +152,6 @@ module.exports = { setupStrapi, cleanupStrapi };
 We need a main entry file for our tests, one that will also test our helper file.
 
 ```js title="path: ./tests/app.test.js"
-const fs = require('fs');
 const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
 
 beforeAll(async () => {
@@ -169,7 +167,7 @@ it("strapi is defined", () => {
 });
 ```
 
-Actually this is all we need for writing unit tests. Just run `yarn test` and see a result of your first test
+Actually this is all we need for writing unit tests. Just run `NODE_ENV=test yarn test` and see a result of your first test
 
 ```bash
 yarn run v1.13.0
