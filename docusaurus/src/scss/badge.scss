@@ -48,6 +48,11 @@
     --custom-badge-color: rgb(229, 136, 41);
   }
 
+  &--growth {
+    --custom-badge-background-color: var(--strapi-primary-600);
+    --custom-badge-color: white;
+  }
+
   &--strapicloudpro {
     --custom-badge-background-color: rgb(55, 34, 254);
     --custom-badge-color: #fff;

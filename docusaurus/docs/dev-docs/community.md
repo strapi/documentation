@@ -35,6 +35,6 @@ You can join [GitHub](https://github.com/strapi/strapi), the [Forum](https://for
 
 ## Support
 
-Strapi is offered as free and open-source for users who wish to self-host the software. When having an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
+Strapi's Community plan is a free and open-source option for users who wish to self-host the software. If you have an issue or a question, the [forum](https://forum.strapi.io) is great first place to reach out for help. Both the Strapi community and core developers often check this platform and answer posts.
 
-For enterprise support, please see our [Enterprise Support platform](https://support.strapi.io/support/home). Please note that you will need to have an active <EnterpriseBadge /> license to place tickets.
+For customers on our paid plans, you can reference our [Support platform](https://support.strapi.io/support/home) to determine your support level and check out our Support platform for more information. Please note that you must have an active <GrowthBadge /> or <EnterpriseBadge /> plan to submit a ticket.

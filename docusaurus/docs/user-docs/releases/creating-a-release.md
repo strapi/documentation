@@ -3,12 +3,13 @@ title: Creating a release
 description: Instructions to create a release from the admin panel
 tags:
 - admin panel
+- Growth feature
 - Enterprise feature
 - Releases feature
 - Strapi Cloud
 ---
 
-# Creating a release  <EnterpriseBadge /> <CloudTeamBadge />
+# Creating a release <GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
 
 The ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
