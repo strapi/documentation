@@ -10,7 +10,7 @@ tags:
 
 # Unit testing
 
-:::strapi
+:::info
 Currently, our docs are only for Javascript projects that wish to have unit testing setup. We will update our docs soon as soon as we have the Typescript equivalent code samples available.
 :::
 
