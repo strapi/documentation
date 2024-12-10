@@ -7,8 +7,6 @@ tags:
 - GraphQL API
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Managing API tokens
 
 :::prerequisites

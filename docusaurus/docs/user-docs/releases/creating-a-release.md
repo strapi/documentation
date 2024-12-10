@@ -8,8 +8,6 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Creating a release
 <EnterpriseBadge /> <CloudTeamBadge />
 
@@ -30,7 +28,7 @@ To create a new release:
 
 1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner of the Releases page.  
 2. Give the release a name.
-3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox (see [scheduling a release](/user-docs/releases/managing-a-release#scheduling-a-release-) for details).
+3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox (see [scheduling a release](/user-docs/releases/managing-a-release#scheduling-a-release) for details).
 4. Click the **Continue** button.
 
 Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).

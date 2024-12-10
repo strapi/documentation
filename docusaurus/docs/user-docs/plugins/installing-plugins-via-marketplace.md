@@ -11,8 +11,6 @@ tags:
 
 # Using the Marketplace
 
-<NotV5/>
-
 The Marketplace is where users can find additional plugins to customize Strapi applications, and additional [providers](/user-docs/plugins#providers) to extend plugins. The Marketplace is located in the admin panel, indicated by <Icon name="shopping-cart-simple" /> _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
 :::note strapi In-app Marketplace vs. Market website
