@@ -28,7 +28,7 @@ In Strapi 5, the GraphQL API has been updated. It handles the new, flattened res
 
 | Topic                        |  Description of the changes |
 |------------------------------|-----------------------------------------------------------------------------------------------------|
-| File upload support          | <ul><li>Removed `uploadFile` `uploadFiles` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed `folder` queries & mutations</li><li>Removed `createUploadFile` mutation</li></ul> |
+| File upload support          | <ul><li>Removed `upload` `multipleUpload` mutations</li><li>Removed `updateFileInfo` mutation in favor of using the `updateUploadFile` mutation</li><li>Removed `removeFile` mutation in favor of using the `deleteUploadFile` mutation</li><li>Removed `folder` queries & mutations</li><li>Removed `createUploadFile` mutation</li></ul> |
 | Internationalization support | Removed the `createXXLocalization` mutations in favor of being able to update any locale from the main `updateXXX` mutation |
 | Draft & Publish support      | Removed `publicationState` in favor of `status` to align with the new Draft & Publish behavior |
 | Schema changes               | <ul><li>Simplified the basic queries with no `meta`/`pagination`</li><li>Introduced `Connection` to add pagination</li></ul> |
@@ -39,7 +39,7 @@ For an extensive description of the new Strapi 5 GraphQL API, please refer to th
 
 To gradually convert to the new GraphQL API format, follow these steps:
 
-1. Enable v4 compatibility mode with the `v4ComptabilityMode` flag in the configuration of the GraphQL plugin (see [plugins configuration](/dev-docs/configurations/plugins#graphql)):
+1. Enable v4 compatibility mode with the `v4CompatibilityMode` flag in the configuration of the GraphQL plugin (see [plugins configuration](/dev-docs/configurations/plugins#graphql-configuration)):
 
     ```graphql
     {

@@ -7,8 +7,6 @@ tags:
 - transfer tokens
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Managing transfer tokens
 
 :::prerequisites

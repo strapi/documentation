@@ -61,7 +61,7 @@ Apollo Server v4 for the GraphQL server and graphql ^16 for the GraphQL module.
 
 To migrate to Strapi 5:
 
-- Set the `x-apollo-operation-name` header or disable the new protection by adding `csrfPrevention: false` to the GraphQL plugin configuration for multipart messages (file uploads).
+- Set the `x-apollo-operation-name` header or disable the new protection by adding `csrfPrevention: false` to apolloServer in the GraphQL plugin configuration for multipart messages (file uploads).
 - Replace `ApolloError` with `GraphQLError`.
 - Remove root level configuration options like `formatResponse` and replace them with plugin hooks in the plugins array.
 - Remove the modules configuration option and split it into `typeDefs` and `resolvers`.

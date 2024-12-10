@@ -1,5 +1,6 @@
 ---
 title: TypeScript
+sidebar_label: Introduction
 description: Get started with TypeScript for your Strapi application
 pagination_next: dev-docs/typescript/development
 tags:

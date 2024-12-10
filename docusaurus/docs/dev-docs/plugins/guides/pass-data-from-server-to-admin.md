@@ -12,11 +12,7 @@ tags:
 - plugins development guides
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # How to pass data from server to admin panel with a Strapi plugin
-
-<NotV5 />
 
 Strapi is **headless** <HeadlessCms />. The admin panel is completely separate from the server.
 

@@ -9,8 +9,6 @@ tags:
 - upload plugin
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Using the Marketplace
 
 <NotV5/>

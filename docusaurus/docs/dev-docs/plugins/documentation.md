@@ -13,11 +13,7 @@ tags:
 - Swagger UI
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Documentation plugin
-
-<NotV5 />
 
 The Documentation plugin is useful to document the available endpoints once you created an API.
 

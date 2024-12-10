@@ -1,18 +1,14 @@
 ---
 title: API calls configuration
 sidebar_label: API calls
-displayed_sidebar: devDocsSidebar
+displayed_sidebar: devDocsConfigSidebar
 description: Strapi's default API parameters can be configured.
 tags:
 - base configuration
 - REST API
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # API configuration
-
-<NotV5 />
 
 General settings for API calls can be set in the `./config/api.js` file:
 

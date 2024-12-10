@@ -13,11 +13,7 @@ tags:
   - strapi report
 ---
 
-import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
-
 # Command Line Interface (CLI)
-
-<NotV5 />
 
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
 
@@ -81,7 +77,7 @@ You should never use this command to run a Strapi application in production.
 Start a Strapi application with auto-reloading disabled.
 
 This command is to run a Strapi application without restarts and file writes, primarily for use in production.
-Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/dev-docs/configurations/environment#strapi) to customize the application start.
+Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/dev-docs/configurations/environment.md#strapi-s-environment-variables) to customize the application start.
 
 ## strapi build
 

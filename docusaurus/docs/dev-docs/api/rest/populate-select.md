@@ -17,7 +17,6 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Population & Field Selection
 
@@ -56,6 +55,8 @@ Field selection does not work on relational, media, component, or dynamic zone f
 
 `GET /api/restaurants?fields[0]=name&fields[1]=description`
 
+</Request>
+
 <details>
 <summary><QsForQueryTitle/></summary>
 
@@ -76,7 +77,6 @@ await request(`/api/users?${query}`);
 ```
 
 </details>
-</Request>
 
 <Response title="Example response">
 
@@ -149,7 +149,7 @@ The following table sums up possible populate use cases and their associated par
 | Populate a component | `populate[0]=component-name`| [Populate components](/dev-docs/api/rest/guides/understanding-populate#populate-components) |
 | Populate a component and one of its nested components | `populate[0]=component-name&populate[1]=component-name.nested-component-name`| [Populate components](/dev-docs/api/rest/guides/understanding-populate#populate-components) |
 | Populate a dynamic zone (only its first-level elements) | `populate[0]=dynamic-zone-name`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#populate-dynamic-zones) |
-| Populate a dynamic zone and its nested elements and relations, using a precisely defined, detailed population strategy | `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#populate-dynamic-zones) |
+| Populate a dynamic zone and its nested elements and relations, using a precisely defined, detailed population strategy | `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/dev-docs/api/rest/guides/understanding-populate#detailed-population-strategy) |
 
 :::tip
 The easiest way to build complex queries with multiple-level population is to use our [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool.
