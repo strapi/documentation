@@ -319,8 +319,34 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   @include medium-up {
+    [class*="collapseSidebar"]::after,
+    [class*="expandButton"]::after {
+        font-family: "Phosphor";
+        position: relative;
+        top: 0;
+        left: 0;
+        color: var(--strapi-neutral-600);
+        font-weight: 500;
+    }
+
     [class*="collapseSidebar"] {
       border-bottom: none;
+      min-height: 38px;
+
+      &::after {
+        content:'\E128';
+      }
+    }
+    svg {
+      display: none;
+    }
+    [class*="expandButton"] {
+      svg {
+        display: none;
+      }
+      &::after {
+        content:'\E12A';
+      }
     }
   }
 }
