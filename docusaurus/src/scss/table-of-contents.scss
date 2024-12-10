@@ -89,13 +89,14 @@ ul.table-of-contents__left-border {
   .table-of-contents {
     --custom-toc-items-py: var(--strapi-spacing-2);
     margin-top: 74px;
+    font-weight: 500;
 
     &::before {
       content: '\e484';
       font-family: "Phosphor";
       font-size: 16px;
       position: relative;
-      top: -8px;
+      top: -9px;
       left: 6px;
     }
     &::after {
