@@ -8,10 +8,10 @@
   background-color: white;
   position: relative;
   top: 60px;
-  left: 24px;
+  left: 23px;
   margin-top: 20px;
   margin-bottom: 20px;
-  max-width: 238px;
+  max-width: 232px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
 
   .DocSearch.DocSearch-Button:hover {
@@ -44,7 +44,7 @@
 
       .DocSearch-Button-Placeholder::before {
         content:'\E30C';
-        color: var(--strapi-primary-500) !important;
+        color: var(--strapi-neutral-500) !important;
       }
     }
   }
