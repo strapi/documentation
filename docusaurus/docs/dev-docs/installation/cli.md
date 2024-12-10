@@ -103,6 +103,10 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
 Once all questions have been answered, the script will start creating the Strapi project.
 
+:::caution
+If the browser didn't respond you might need to disable any razer processes running in the background.
+:::
+
 ### CLI installation options
 
 The above installation guide only covers the basic installation option using the CLI. There are other options that can be used when creating a new Strapi project, for example:
