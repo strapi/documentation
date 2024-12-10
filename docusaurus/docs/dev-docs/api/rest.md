@@ -274,7 +274,7 @@ Creates a document and returns its value.
 
 By default, a document is created with a published status. To create a document as a draft, pass the [`status`](/dev-docs/api/rest/filters-locale-publication#status) query parameter with the value `draft` (e.g., `?status=draft`).
 
-If the Internationalization (i18n) feature is enabled on the content-type, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#creating-a-new-localized-entry).
+If the Internationalization (i18n) feature is enabled on the content-type, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#rest-create).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
