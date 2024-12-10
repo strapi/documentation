@@ -38,7 +38,7 @@ The `/config/database.js|ts` file accepts 2 main configuration objects:
 | Parameter                                                | Description                                                                                           | Type      | Default |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
 | `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>`sqlite` for SQLite databases</li><li>`postgres` for PostgreSQL databases</li><li>`mysql` for MySQL databases</li></ul> | `String`  | -       |
-| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
+| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Knex.Config object<br />Knex.Config Function (experimental)`  | -       |
 | `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
 | `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
 | `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
@@ -98,10 +98,15 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 
 The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
-| Parameter        | Description                                                     | Type      | Default |
-| ---------------- | --------------------------------------------------------------- | --------- | ------- |
-| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
-| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
+| Parameter                 | Description                                                     | Type      | Default |
+| ----------------          | --------------------------------------------------------------- | --------- | ------- |
+| `forceMigration`          | Enable or disable the forced database migration.                | `Boolean` | `true`  |
+| `runMigrations`           | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
+| `useTypescriptMigrations` | Look for migrations in the build dir instead of the src dir     | `Boolean` | `false` |
+
+:::note
+When using `useTypescriptMigrations` you can continue to use existing JavaScript migrations by setting `compilerOptions { allowJs: true }` in your tsconfig file.
+:::
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 

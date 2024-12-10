@@ -4,15 +4,14 @@ description: Instructions to include content in a release
 displayed_sidebar: userDocsSidebar
 tags:
 - admin panel
+- Growth feature
 - Enterprise feature
 - releases feature
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Including content in a release {#add-to-release}
-<EnterpriseBadge /> <CloudTeamBadge />
+<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
 
 Using the [Releases](/user-docs/releases/introduction) feature, you can group several entries to publish them altogether. Adding entries to a release is done from the Content Manager. You can also remove an entry from a release while updating the entry.
 

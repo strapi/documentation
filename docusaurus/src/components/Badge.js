@@ -96,6 +96,19 @@ export function EnterpriseBadge(props) {
   );
 }
 
+export function GrowthBadge(props) {
+  return (
+    <Badge
+      variant="Growth"
+      o
+      link="https://strapi.io/pricing-self-hosted"
+      {...props}
+
+
+    />
+  );
+}
+
 export function CloudProBadge(props) {
   return (
     <Badge

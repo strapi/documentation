@@ -10,8 +10,6 @@ tags:
 - Content-type edit view
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Configuring the views of a content-type
 
 Depending on their type, content-types can be divided into 2 interfaces: the list view and the edit view. Both interfaces can be configured.
@@ -74,10 +72,8 @@ Relational fields can also be displayed in the list view. There are however some
 - Only first-level fields can be displayed (i.e. fields from the relation of a relation can't be displayed).
 - If the displayed field contains more than one value, not all its values will be displayed, but a counter indicating the number of values. You can hover this counter to see a tooltip indicating the first 10 values of the relational field.
 
-Note also that relational fields have a couple limitations when it comes to sorting options:
+Note also that relational fields cannot be set as default sort.
 
-- Sorting cannot be enabled for relational fields which display several fields.
-- Relational fields cannot be set as default sort.
 :::
 
 ## Configuring the edit view

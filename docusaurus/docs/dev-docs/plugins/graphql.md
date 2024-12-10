@@ -17,16 +17,16 @@ tags:
 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # GraphQL plugin
-
-<NotV5 />
 
 By default Strapi create [REST endpoints](/dev-docs/api/rest#endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
 
 :::strapi Looking for the GraphQL API documentation?
 The [GraphQL API reference](/dev-docs/api/graphql) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
+:::
+
+:::caution
+If you uninstall the Users & Permissions plugin, the GraphQL plugin should work, but you need to include your header authorization to see the playground.
 :::
 
 ## Usage

@@ -17,11 +17,11 @@ pagination_next: cloud/account/account-billing
 
 The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**.
 
-There are 4 tabs available in the *Profile* interface: <Icon name="faders" /> [*General*](#general), <Icon name="palette" /> [*Preferences*](#preferences), <Icon name="credit-card" /> *Billing* and <Icon name="invoice" /> Invoices (the last 2 are documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
+There are 4 tabs available in the *Profile* interface: ![General icon](/img/assets/icons/Faders.svg) [*General*](#general), ![Preferences icon](/img/assets/icons/Palette.svg) [*Preferences*](#preferences), ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* and ![Invoices icon](/img/assets/icons/Invoice.svg) Invoices (the last 2 are documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
 
 ## General
 
-The <Icon name="faders" /> *General* tab enables you to edit the following details for your account profile:
+The ![General icon](/img/assets/icons/Faders.svg) *General* tab enables you to edit the following details for your account profile:
 
 - Details: to see the name associated with your account.
 - Connected accounts: to manage Google, GitHub and GitLab accounts connected with your Strapi Cloud account (see [Managing connected accounts](#managing-connected-accounts)).

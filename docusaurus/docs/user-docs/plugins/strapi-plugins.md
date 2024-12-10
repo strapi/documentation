@@ -13,8 +13,6 @@ tags:
 - Strapi plugin
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # List of Strapi plugins
 
 Strapi builds and maintains plugins that extend the functionality of a core Strapi application. This section is a reference guide to the pre-installed plugins and additional plugins developed by Strapi, which are available in the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace/). Additional documentation on plugins is provided in the relevant sections of the User Guide and the Developer Documentation, however, a brief plugin description, how the installed plugin works, and changes to the admin panel is provided.
@@ -22,7 +20,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 :::note
 
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
-- If plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), they are marked with  <EnterpriseBadge /> in this reference guide.
+- If plugin options are only available with a [paid plan](https://strapi.io/pricing-self-hosted), they are marked with a <GrowthBadge /> or an <EnterpriseBadge /> badge in this reference guide.
 - All plugin installations can be confirmed in <Icon name="gear-six" /> *Settings > Plugins* in the admin panel.
 
 :::

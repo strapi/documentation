@@ -12,11 +12,7 @@ tags:
 - services
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Plugins extension
-
-<NotV5 />
 
 Strapi comes with [plugins](/dev-docs/plugins) that can be installed from the [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/dev-docs/plugins/developing-plugins)) or extend the existing ones.
 

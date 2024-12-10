@@ -41,9 +41,8 @@ A new controller can be implemented:
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-
-
 ```js title="./src/api/restaurant/controllers/restaurant.js"
+
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) =>  ({
@@ -296,40 +295,38 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 </TabItem>
 </Tabs>
 
-#### Sanitization and validation when building custom controllers  <NewBadge /> {#sanitize-validate-custom-controllers}
+#### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
 
-Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
-
+Within custom controllers, there are several primary functions exposed via the global `strapi` namespace that can be used for sanitization and validation:
 
 | Function Name                | Parameters         | Description                                             |
 |------------------------------|--------------------|---------------------------------------------------------|
-| `sanitize.contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
-| `sanitize.contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
-| `sanitize.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
-| `validate.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
-| `validate.contentAPI.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `strapi.contentAPI.sanitize.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `strapi.contentAPI.sanitize.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
+| `strapi.contentAPI.sanitize.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
+| `strapi.contentAPI.validate.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
+| `strapi.contentAPI.validate.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
 
-:::note 
+:::note
 Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for, especially when combining the data from multiple sources.
 :::
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-
 ```js title="./src/api/restaurant/controllers/restaurant.js"
 
-const { sanitize, validate } = require('@strapi/utils');
+const { sanitize, validate } = strapi.contentApi;
 
 module.exports = {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test');
-    await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
-    const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
+    await validate.query(ctx.query, contentType, { auth: ctx.state.auth });
+    const sanitizedQueryParams = await sanitize.query(ctx.query, contentType, { auth: ctx.state.auth });
 
     const documents = await strapi.documents(contentType.uid).findMany(sanitizedQueryParams);
 
-    return await sanitize.contentAPI.output(documents, contentType, { auth: ctx.state.auth });
+    return await sanitize.output(documents, contentType, { auth: ctx.state.auth });
   }
 }
 ```
@@ -338,22 +335,20 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-
-
 ```js title="./src/api/restaurant/controllers/restaurant.ts"
 
-import { sanitize, validate } from '@strapi/utils';
+const { sanitize, validate } = strapi.contentApi;
 
 export default {
   async findCustom(ctx) {
     const contentType = strapi.contentType('api::test.test');
 
-    await validate.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
-    const sanitizedQueryParams = await sanitize.contentAPI.query(ctx.query, contentType, { auth: ctx.state.auth });
+    await validate.query(ctx.query, contentType, { auth: ctx.state.auth });
+    const sanitizedQueryParams = await sanitize.query(ctx.query, contentType, { auth: ctx.state.auth });
 
     const documents = await strapi.documents(contentType.uid).findMany(sanitizedQueryParams);
 
-    return await sanitize.contentAPI.output(documents, contentType, { auth: ctx.state.auth });
+    return await sanitize.output(documents, contentType, { auth: ctx.state.auth });
   }
 }
 ```
@@ -361,15 +356,15 @@ export default {
 </TabItem>
 </Tabs>
 
-### Extending core controllers  {#extending-core-controllers}
+### Extending core controllers
 
 Default controllers and actions are created for each content-type. These default controllers are used to return responses to API requests (e.g. when `GET /api/articles/3` is accessed, the `findOne` action of the default controller for the "Article" content-type is called). Default controllers can be customized to implement your own logic. The following code examples should help you get started.
 
-:::tip 
+:::tip
 An action from a core controller can be replaced entirely by [creating a custom action](#adding-a-new-controller) and naming the action the same as the original action (e.g. `find`, `findOne`, `create`, `update`, or `delete`).
 :::
 
-:::tip 
+:::tip
 When extending a core controller, you do not need to re-implement any sanitization as it will already be handled by the core controller you are extending. Where possible it's strongly recommended to extend the core controller instead of creating a custom controller.
 :::
 
@@ -379,6 +374,7 @@ When extending a core controller, you do not need to re-implement any sanitizati
 :::tip
 The [backend customization examples cookbook](/dev-docs/backend-customization/examples) shows how you can overwrite a default controller action, for instance for the [`create` action](/dev-docs/backend-customization/examples/services-and-controllers#custom-controller).
 :::
+
 <Tabs>
 <TabItem value="find" label="`find()`">
 
@@ -393,6 +389,7 @@ async find(ctx) {
 ```
 
 </TabItem>
+
 <TabItem value="findOne" label="findOne()">
 
 ```js
@@ -499,7 +496,7 @@ async delete(ctx) {
 </Tabs>
 </details>
 
-## Usage 
+## Usage
 
 Controllers are declared and attached to a route. Controllers are automatically called when the route is called, so controllers usually do not need to be called explicitly. However, [services](/dev-docs/backend-customization/services) can call controllers, and in this case the following syntax should be used:
 
@@ -510,6 +507,6 @@ strapi.controller('api::api-name.controller-name');
 strapi.controller('plugin::plugin-name.controller-name');
 ```
 
-:::tip  
+:::tip
 To list all the available controllers, run `yarn strapi controllers:list`.
 :::

@@ -7,8 +7,6 @@ tags:
 - review workflows
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Reviewing content
 <EnterpriseBadge />
 

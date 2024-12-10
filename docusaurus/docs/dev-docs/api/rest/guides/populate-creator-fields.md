@@ -13,11 +13,7 @@ tags:
 - updatedBy
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # 🛠️ How to populate creator fields such as `createdBy` and `updatedBy`
-
-<NotV5/>
 
 The creator fields `createdBy` and `updatedBy` are removed from the [REST API](/dev-docs/api/rest) response by default. These 2 fields can be returned in the REST API by activating the `populateCreatorFields` parameter at the content-type level.
 

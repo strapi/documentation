@@ -9,8 +9,6 @@ tags:
 - single type
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Creating content-types
 
 :::note Development-only

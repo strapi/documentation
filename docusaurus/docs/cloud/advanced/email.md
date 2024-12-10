@@ -42,7 +42,11 @@ Using either `npm` or `yarn`, install the provider plugin in your local Strapi p
 
 ### Configure the Provider
 
-In your Strapi project, create a `./config/env/production/plugins.js` or `./config/env/production/plugins.ts` file with the following content:
+:::caution
+The file structure must match the below path **exactly**, or the configuration will not be applied to Strapi Cloud.
+:::
+
+To configure a 3rd-party email provider in your Strapi project, create or edit the plugins configuration file for your production environment `./config/env/production/plugins.js|ts` by adding upload configuration options as follows:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -83,10 +87,6 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
-
-:::caution
-The file structure must match the above path exactly, or the configuration will not be applied to Strapi Cloud.
-:::
 
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
 

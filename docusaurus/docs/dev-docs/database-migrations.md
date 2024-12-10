@@ -3,11 +3,7 @@ title: Database migrations
 description: Strapi database migrations are ways to modify the database
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Database migrations
-
-<NotV5 />
 
 Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
@@ -109,5 +105,3 @@ module.exports = {
 ```
 
 </details>
-
-Footer

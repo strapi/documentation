@@ -104,7 +104,7 @@ If you do not resolve the issue within 30 days, your suspended project will be d
 
 #### Project suspension after subscription cancellation
 
-If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/account-billing#account-billing)).
+If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/account-billing)).
 
 1. Log into the billing modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
 2. Go back to the homepage of the billing modal, listing subscriptions and billing options.

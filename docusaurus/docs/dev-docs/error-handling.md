@@ -14,11 +14,7 @@ tags:
 - strapi-utils
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Error handling
-
-<NotV5 />
 
 Strapi is natively handling errors with a standard format.
 

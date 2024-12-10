@@ -6,11 +6,7 @@ pagination_prev: dev-docs/backend-customization/examples/policies
 pagination_next: dev-docs/backend-customization/examples/middlewares
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Examples cookbook: Custom routes
-
-<NotV5/>
 
 :::prerequisites
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/dev-docs/backend-customization/examples).

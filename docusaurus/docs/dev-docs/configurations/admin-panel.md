@@ -13,11 +13,7 @@ tags:
 - password
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Admin panel configuration
-
-<NotV5 />
 
 The `./config/admin.js` is used to define admin panel configuration for the Strapi application.
 
@@ -41,7 +37,7 @@ The `./config/admin.js` file can include the following parameters:
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
 | `url`                             | Url of your admin panel. Default value: `/admin`. Note: If the url is relative, it will be concatenated with `url`.                                                                                | string        | `/admin`                                                                                                                            |
 | `autoOpen`                        | Enable or disable administration opening on start.                                                                                                                                                 | boolean       | `true`                                                                                                                              |
-| `watchIgnoreFiles`                | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`).                                        | array(string) | `[]`                                                                                                                                |
+| `watchIgnoreFiles`                | Add custom files that should not be watched during development. See more [here](https://github.com/paulmillr/chokidar#path-filtering) (property `ignored`).                                        | array(string) | `[]`. Example: root path `local/data/mysql-data`, configured as `['**/mysql-data/**']`                                               |
 | `host`                            | Use a different host for the admin panel. | string        | `localhost`                                                                                                                         |
 | `port`                            | Use a different port for the admin panel.                                                                                                       | string        | `8000`                                                                                                                              |
 | `serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served                                            | boolean       | `true`                                                                                                                              |

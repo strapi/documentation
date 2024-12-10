@@ -18,7 +18,8 @@ tags:
 
 # Users & Permissions plugin
 
-The Users & Permissions plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users. The Users & Permissions plugin is installed by default and can not be uninstalled. 
+The Users & Permissions plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users. The Users & Permissions plugin is installed by default.
+
 
 The user guide describes how to use the [Users & Permissions plugin](/user-docs/users-roles-permissions) from the admin panel. The present page is more about the developer-related aspects of using the Users & Permissions plugin.
 
@@ -161,7 +162,7 @@ Available options:
 
 - `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/dev-docs/configurations/environment#strapi).
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br/>
-  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you need more advanced examples please see the [ms package](https://github.com/vercel/ms).
 
 <Tabs groupId="js-ts">
 
@@ -1354,3 +1355,30 @@ If you need to configure a custom handler to accept other URLs, you can create a
     },
   },
 ```
+
+### Creating a custom password validation
+
+To add password validation at the API level, you can create a custom function passed to `validationRules` in the configuration of the Users & Permissions plugin, as in the following example:
+
+```js title="/config/plugins.js|ts"
+  // ... other plugins configuration ...
+  // Users & Permissions configuration
+'users-permissions': {
+    config: {
+      validationRules: {
+        validatePassword(value) {
+          if (value.length < 8) {
+            // custom error message
+            throw new Error('password should be more than 8 letters');
+          }
+
+          if (value.length > 24) {
+            // throws default error message 
+            return false;
+          }
+
+          return true; // Validation passed
+        },
+      },
+    },
+  },

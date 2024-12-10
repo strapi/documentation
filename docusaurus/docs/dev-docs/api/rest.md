@@ -1,4 +1,4 @@
---- 
+---
 title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 displayed_sidebar: restApiSidebar
@@ -35,9 +35,7 @@ The Upload plugin (which handles media found in the [Media Library](/user-docs/m
 For each Content-Type, the following endpoints are automatically generated:
 
 <details>
-
 <summary>Plural API ID vs. Singular API ID:</summary>
-
 In the following tables:
 
 - `:singularApiId` refers to the value of the "API ID (Singular)" field of the content-type,
@@ -274,7 +272,9 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#rest-create).
+By default, a document is created with a published status. To create a document as a draft, pass the [`status`](/dev-docs/api/rest/filters-locale-publication#status) query parameter with the value `draft` (e.g., `?status=draft`).
+
+If the Internationalization (i18n) feature is enabled on the content-type, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#rest-create).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).

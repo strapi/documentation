@@ -13,11 +13,7 @@ tags:
   - strapi report
 ---
 
-import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
-
 # Command Line Interface (CLI)
-
-<NotV5 />
 
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
 
@@ -353,7 +349,7 @@ strapi templates:generate <path>
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
-## strapi ts:generate-types
+## strapi ts:generate-types {#ts-generate}
 
 Generate [TypeScript](/dev-docs/typescript) typings for the project schemas.
 

@@ -34,7 +34,7 @@ There are 5 tabs available for the project's settings:
 The <Icon name="faders" /> *General* tab for the project-level settings enables you to check and update the following options for the project:
 
 - *Basic information*, to see:
-  - the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
+  - the name of your Strapi Cloud project — used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs — and change it (see [Renaming project](#renaming-project)).
   - the chosen hosting region for your Strapi Cloud project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the app's internal name for the project, which can be useful for debug & support purposes.
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
@@ -48,6 +48,14 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
   }}
 />
 
+#### Renaming project
+
+The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and can be modified afterwards via the project's settings.
+
+1. In the *Basic information* section of the [General icon](/img/assets/icons/Faders.svg) *General* tab, click on the edit ![Edit icon](/img/assets/icons/edit.svg) button.
+2. In the dialog, write the new project name of your choice in the *Project name* textbox.
+3. Click on the **Rename** button to confirm the project name modification.
+
 #### Modifying git repository & branch
 
 The GitHub or GitLab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to update the project's repository or switch to another git provider.
@@ -56,7 +64,7 @@ The GitHub or GitLab repository, branch and base directory for a Strapi Cloud pr
 Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
 :::
 
-1. In the *Connected git repository* section of the <Icon name="faders" /> *General* tab, click on the **Update repository** button. You will be redirected to another interface.
+1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Update repository** button. You will be redirected to another interface.
 2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch Git provider** button at the top right corner of the interface. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository* interface.
 3. In the *Update repository* section, fill in the 2 available settings:
 
@@ -65,7 +73,7 @@ Updating the git repository could result in the loss of the project and its data
     | Account         | Choose an account from the drop-down list.                               |
     | Repository      | Choose a repository from the drop-down list.                             |
 
-4. In the *Select Git branches* section, fill in the available settings for any of your environments. Note that the branch can be edited per environment via its own settings, see [General (environment)](#general-environment).
+4. In the *Select Git branches* section, fill in the available settings for any of your environments. Note that the branch can be edited per environment via its own settings, see [General (environment)](#environments).
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
@@ -74,23 +82,22 @@ Updating the git repository could result in the loss of the project and its data
     | Auto-deploy     | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 5. Click on the **Update repository** button at the bottom of the *Update repository* interface.
-6. In the *Manage repository* dialog, confirm your changes by clicking on the **Relink repository** button.
+6. In the *Update repository* dialog, confirm your changes by clicking on the **Confirm** button.
 
 #### Deleting Strapi Cloud project
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
 
-1. In the *Delete project* section of the <Icon name="faders" /> *General* tab, click on the **Delete project** button.
+1. In the *Delete project* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Delete project** button.
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
-### Environments {#environments}
-<CloudProBadge /> <CloudTeamBadge />
+### Environments <CloudProBadge /> <CloudTeamBadge /> {#environments}
 
-The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
+The ![Environments icon](/img/assets/icons/v5/Stack.svg) *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::tip
-Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#general-environment) for more information.
+Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#environments) for more information.
 :::
 
 <ThemedImage
@@ -126,7 +133,11 @@ The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated p
 
 Through this tab, you also have the possibility to:
 - click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
-- click the **Edit** button to be redirected to the <Icon name="credit-card" /> *Billing* tab of your profile page, where you can edit the payment method (see [related documentation](/cloud/account/account-billing)).
+- click the **Edit** button in order to set a new payment method (see [related documentation](/cloud/account/account-billing)).
+
+:::note
+You can attach a dedicated card to your project by choosing the payment method directly from this page. In that way, you can manage your subscriptions with different cards.
+:::
 
 :::tip
 In the Usage section of the <Icon name="credit-card" /> *Billing & Usage* tab, you can see the current monthly usage of your project compared to the maximum usage allowed by your project's subscription. Use the arrows in the top right corner to see the project's usage for any chosen month.
@@ -241,7 +252,7 @@ In the project's environments' settings, you first need to select the environmen
 - <Icon name="browsers" /> [*Domains*](#domains),
 - and <Icon name="code" classes="ph-bold" /> [*Variables*](#variables).
 
-### General (environment)
+### Configuration
 
 The <Icon name="faders" /> *General* tab for the environment-level settings enables you to check and update the following options for the project:
 
@@ -249,7 +260,7 @@ The <Icon name="faders" /> *General* tab for the environment-level settings enab
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
-- *Connect branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
 - *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see [Resetting & Deleting environment](#resetting--deleting-environment)).
 
 <ThemedImage
@@ -271,8 +282,8 @@ The environment's Node version is based on the one chosen at the creation of the
 
 #### Editing Git branch
 
-1. In the *Connected git repository* section of the <Icon name="faders" /> *General* tab, click on the **Edit branch** button.
-2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General (project)](#general).
+1. In the *Connected git repository* section of the <Icon name="faders" /> *General* *Configuration* tab, click on the **Edit branch** button.
+2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General](#general).
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
@@ -290,7 +301,7 @@ You can reset or delete any additional environment of your Strapi Cloud project,
 
 Resetting an environment deletes all environments data and resets the variables to their default. To do so:
 
-1. In the *Danger zone* section of the <Icon name="faders" /> *General* tab, click on the **Reset environment** button.
+1. In the *Danger zone* section of the <Icon name="faders" /> *Configuration* tab, click on the **Reset environment** button.
 2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
 3. Fill in the available fields to reset the environment:
 
@@ -310,7 +321,7 @@ Resetting an environment deletes all environments data and resets the variables 
 3. Click on the **Delete environment** button to confirm the deletion.
 
 ### Backups {#backups}
-<CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge />
+<GrowthBadge /> <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge />
 
 The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
@@ -354,6 +365,7 @@ If you need to restore a backup of your project:
 1. In the <Icon name="arrow-clockwise" /> *Backups* section, click on the **Restore backup** button.
 2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
 3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup.
+4. The timestamp of the last completed restoration will be displayed to help you track when the project was last restored.
 
 ### Domains
 
