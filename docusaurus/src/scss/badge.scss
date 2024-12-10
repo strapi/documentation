@@ -152,6 +152,11 @@
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
+  &--growth {
+    --custom-badge-background-color: var(--strapi-primary-600);
+    --custom-badge-color: white;
+  }
+
   &--pro {
     --custom-badge-background-color: var(--strapi-primary-600);
     --custom-badge-color: #fff;
