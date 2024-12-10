@@ -96,6 +96,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     font-size: var(--custom-navbar-items-font-size);
     border-radius: 4px;
     border: solid 1px transparent;
+    i {
+      position: relative;
+      top: 1px;
+    }
 
     &--active {
       color: var(--strapi-primary-600);
