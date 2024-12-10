@@ -80,6 +80,10 @@ main .table-of-contents {
   }
 }
 
+ul.table-of-contents__left-border {
+  margin-bottom: -10px;
+}
+
 /** Responsive */
 @include medium-up {
   .table-of-contents {
