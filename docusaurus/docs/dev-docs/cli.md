@@ -349,7 +349,7 @@ strapi templates:generate <path>
 
   Example: `strapi templates:generate ../strapi-template-name` will copy the required files and folders to a `template` directory inside `../strapi-template-name`
 
-## strapi ts:generate-types
+## strapi ts:generate-types {#ts-generate}
 
 Generate [TypeScript](/dev-docs/typescript) typings for the project schemas.
 
