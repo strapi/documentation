@@ -23,13 +23,13 @@ The settings' menu on the left side of the interface is separated into 2 categor
 ## Project-level settings
 
 There are 5 tabs available for the project's settings:
-- <Icon name="faders" /> [*General (project)*](#general),
+- <Icon name="faders" /> [*General*](#general),
 - <Icon name="stack" /> [*Environments*](#environments),
 - <Icon name="credit-card" /> [*Billing & Usage*](#billing--usage),
 - <Icon name="map-trifold" /> [Plans](#plans),
 - and <Icon name="invoice" /> [Invoices](#invoices).
 
-### General (project) {#general}
+### General
 
 The <Icon name="faders" /> *General* tab for the project-level settings enables you to check and update the following options for the project:
 
@@ -52,7 +52,7 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
 
 The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and can be modified afterwards via the project's settings.
 
-1. In the *Basic information* section of the [General icon](/img/assets/icons/Faders.svg) *General* tab, click on the edit ![Edit icon](/img/assets/icons/edit.svg) button.
+1. In the *Basic information* section of the [General icon](/img/assets/icons/Faders.svg) *General* tab, click on the edit <Icon name="pencil-simple" /> button.
 2. In the dialog, write the new project name of your choice in the *Project name* textbox.
 3. Click on the **Rename** button to confirm the project name modification.
 
@@ -247,14 +247,14 @@ In the *Profile > Invoices* tab, you will find the complete list of invoices for
 
 In the project's environments' settings, you first need to select the environment whose settings you would like to configure, using the dropdown. Depending on the chosen environment, there are 3 to 4 tabs available:
 
-- <Icon name="faders" /> [*General (environment)*](#general),
+- <Icon name="faders" /> [*Configuration*](#configuration),
 - <Icon name="arrow-clockwise" /> [*Backups*](#backups), which are only available for the production environment,
 - <Icon name="browsers" /> [*Domains*](#domains),
 - and <Icon name="code" classes="ph-bold" /> [*Variables*](#variables).
 
 ### Configuration
 
-The <Icon name="faders" /> *General* tab for the environment-level settings enables you to check and update the following options for the project:
+The <Icon name="faders" /> *Configuration* tab for the environment-level settings enables you to check and update the following options for the project:
 
 - *Basic information*, to see:
   - the name of your Strapi Cloud project's environment. The environment name is set when it is created and cannot be modified afterwards.
@@ -275,14 +275,14 @@ The <Icon name="faders" /> *General* tab for the environment-level settings enab
 
 The environment's Node version is based on the one chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)), through the advanced settings. It is possible to switch to another Node version afterwards, for any environment.
 
-1. In the *Basic information* section of the <Icon name="faders" /> *General* tab, click on the *Node version*'s edit <Icon name="pencil-simple" /> button.
+1. In the *Basic information* section of the <Icon name="faders" /> *Configuration* tab, click on the *Node version*'s edit <Icon name="pencil-simple" /> button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
 3. Click on the **Save** button.
 4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
 
 #### Editing Git branch
 
-1. In the *Connected git repository* section of the <Icon name="faders" /> *General* *Configuration* tab, click on the **Edit branch** button.
+1. In the *Connected git repository* section of the <Icon name="faders" /> *Configuration* tab, click on the **Edit branch** button.
 2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General](#general).
 
     | Setting name    | Instructions                                                             |
@@ -316,12 +316,11 @@ Resetting an environment deletes all environments data and resets the variables 
 
 ##### Deleting an environment
 
-1. In the *Danger zone* section of the <Icon name="faders" /> *General* tab, click on the **Delete environment** button.
+1. In the *Danger zone* section of the <Icon name="faders" /> *Configuration* tab, click on the **Delete environment** button.
 2. Write in the textbox your *Environment name*.
 3. Click on the **Delete environment** button to confirm the deletion.
 
-### Backups {#backups}
-<GrowthBadge /> <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge />
+### Backups <CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge /> {#backups}
 
 The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
