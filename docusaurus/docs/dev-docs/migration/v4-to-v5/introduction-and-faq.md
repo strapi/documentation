@@ -57,3 +57,7 @@ Strapi 5 docs also provide a [complete breaking changes database](/dev-docs/migr
 Strapi Cloud will deploy the updated code in Strapi 5 and will automatically run the data migration script.
 
 </details>
+
+:::strapi Why Strapi 5?
+The [Strapi blog](https://strapi.io/blog/commonly-asked-questions-transitioning-from-strapi-4-to-strapi-5) has some additional information about commonly asked questions, including why some changes were made.
+:::
