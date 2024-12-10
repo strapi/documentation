@@ -160,7 +160,7 @@ Strapi uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to genera
 
 Available options:
 
-- `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/dev-docs/configurations/environment#strapi-s-environment-variables).
+- `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/dev-docs/configurations/environment#strapi).
 - `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br/>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you need more advanced examples please see the [ms package](https://github.com/vercel/ms).
 

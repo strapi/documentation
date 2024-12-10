@@ -96,7 +96,7 @@ const entries = await strapi.db.query('api::article.article').findMany({
 `$not` can be used:
 
 - as a logical operator (e.g. in `where: { $not: { // conditions… }}`)
-- or [as an attribute operator](#not-2) (e.g. in `where: { attribute-name: $not: { … } }`).
+- or [as an attribute operator](#not-1) (e.g. in `where: { attribute-name: $not: { … } }`).
 :::
 
 :::tip

@@ -73,7 +73,7 @@ Updating the git repository could result in the loss of the project and its data
     | Account         | Choose an account from the drop-down list.                               |
     | Repository      | Choose a repository from the drop-down list.                             |
 
-4. In the *Select Git branches* section, fill in the available settings for any of your environments. Note that the branch can be edited per environment via its own settings, see [General (environment)](#general-environment).
+4. In the *Select Git branches* section, fill in the available settings for any of your environments. Note that the branch can be edited per environment via its own settings, see [General (environment)](#environments).
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
@@ -97,7 +97,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 The ![Environments icon](/img/assets/icons/v5/Stack.svg) *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
 :::tip
-Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#general-environment) for more information.
+Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#environments) for more information.
 :::
 
 <ThemedImage
