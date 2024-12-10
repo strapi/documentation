@@ -2,9 +2,7 @@ Copyright (c) 2015-present Strapi Solutions SAS
 
 Portions of the Strapi software are licensed as follows:
 
-* All software that resides under an "ee/" directory (the “EE Software”), if that directory exists, is licensed under the license defined in "ee/LICENSE".
-
-* All software outside of the above-mentioned directories or restrictions above is available under the "MIT Expat" license as set forth below.
+* All software is available under the "MIT Expat" license as set forth below.
 
 MIT Expat License
 
