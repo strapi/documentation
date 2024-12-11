@@ -357,6 +357,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         content:'\E12A';
       }
     }
+    .plugin-pages {
+      svg {
+        display: initial;
+      }
+    }
+
   }
 }
 
