@@ -52,7 +52,7 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
 
 The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and can be modified afterwards via the project's settings.
 
-1. In the *Basic information* section of the [General icon](/img/assets/icons/Faders.svg) *General* tab, click on the edit <Icon name="pencil-simple" /> button.
+1. In the *Basic information* section of the <Icon name="faders" /> *General* tab, click on the edit <Icon name="pencil-simple" /> button.
 2. In the dialog, write the new project name of your choice in the *Project name* textbox.
 3. Click on the **Rename** button to confirm the project name modification.
 
@@ -64,7 +64,7 @@ The GitHub or GitLab repository, branch and base directory for a Strapi Cloud pr
 Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
 :::
 
-1. In the *Connected git repository* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Update repository** button. You will be redirected to another interface.
+1. In the *Connected git repository* section of the !<Icon name="faders" /> *General* tab, click on the **Update repository** button. You will be redirected to another interface.
 2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch Git provider** button at the top right corner of the interface. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository* interface.
 3. In the *Update repository* section, fill in the 2 available settings:
 
@@ -88,7 +88,7 @@ Updating the git repository could result in the loss of the project and its data
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
 
-1. In the *Delete project* section of the ![General icon](/img/assets/icons/Faders.svg) *General* tab, click on the **Delete project** button.
+1. In the *Delete project* section of the !<Icon name="faders" /> *General* tab, click on the **Delete project** button.
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 

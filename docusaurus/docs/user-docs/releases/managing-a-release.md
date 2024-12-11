@@ -88,9 +88,11 @@ Publishing a release means that all the actions (publish or unpublish) defined f
 The _Status_ column displays the status of each entry:
 
    - <Icon name="check-circle" color="rgb(58,115,66)"/> Already published: the entry is already published and publishing the release will not affect this entry 
+   - <Icon name="check-circle" color="rgb(58,115,66)"/> Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
    - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to publish: the entry is ready to  be published with the release
-   - <Icon name="x-circle" color="rgb(190,51,33)" /> "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
-   
+   - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to unpublish: the entry is ready to  be unpublished with the release
+   - <Icon name="x-circle" color="rgb(190,51,33)" /> Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+
 If some of your entries have a <Icon name="x-circle" color="rgb(190,51,33)" /> status, click the <Icon name="dots-three-outline" /> and the **Edit the entry** button to fix the issues until all entries have the <Icon name="check-circle" color="rgb(58,115,66)"/> status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
 
 :::caution
