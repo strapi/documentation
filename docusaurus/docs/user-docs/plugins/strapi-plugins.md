@@ -66,7 +66,7 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 
 ### <img width="28" src="/img/assets/plugins/EmailPlugin.png" /> Email plugin {#email}
 
-The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator. More information about the email plugin is available in the [Developer Documentation](/dev-docs/plugins/email).
+The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator. More information about the email plugin is available in the [Developer Documentation](/user-docs/features/email).
 
 | Section impacted | Options and settings |
 |------------------|----------------------|

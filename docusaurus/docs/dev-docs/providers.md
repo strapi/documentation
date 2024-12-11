@@ -16,7 +16,7 @@ Certain [plugins](../../../user-docs/plugins) can be extended via the installati
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
 :::note
-Only the [Upload](/dev-docs/plugins/upload) and [Email](/dev-docs/plugins/email) plugins are currently designed to work with providers. 
+Only the [Upload](/dev-docs/plugins/upload) and [Email](/user-docs/features/email) plugins are currently designed to work with providers. 
 :::
 
 For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
