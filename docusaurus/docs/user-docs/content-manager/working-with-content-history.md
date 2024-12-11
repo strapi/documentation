@@ -7,7 +7,7 @@ tags:
  - Content History
 ---
 
-# Content History <GrowthBadge /> <EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/> <NewBadge />
+# Content History <GrowthBadge /> <EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
 
 The Content History feature of the Content Manager gives you the ability to browse and restore previous versions of documents created with the Content Manager.
 
