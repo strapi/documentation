@@ -20,7 +20,7 @@ Single Sign-On on Strapi allows you to configure additional sign-in and sign-up 
 :::prerequisites
 
 - A Strapi application running on version 3.5.0 or higher is required.
-- To configure SSO on your application, you will need an <EntreprisBadge /> plan.
+- To configure SSO on your application, you will need an <EnterpriseBadge /> plan.
 - Make sure the SSO feature is [enabled in the admin panel](/user-docs/settings/single-sign-on).
 - Make sure Strapi is part of the applications you can access with your provider. For example, with Microsoft (Azure) Active Directory, you must first ask someone with the right permissions to add Strapi to the list of allowed applications. Please refer to your provider(s) documentation to learn more about that.
 :::
