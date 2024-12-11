@@ -1,1 +1,1 @@
-For a general overview and understanding of the Strapi backend elements, please refer to the backend customization [introduction](/dev-docs/backend-customization) and [diagram](/dev-docs/backend-customization#interactive-diagram).
+For a general overview and understanding of the Strapi backend elements, please refer to the backend customization [introduction](/dev-docs/backend-customization) and [diagram](/dev-docs/backend-customization#diagram).
