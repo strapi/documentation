@@ -86,7 +86,7 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/configurations/database',
               customProps: {
-                updated: true,
+                updated: false,
               }
             },
             'dev-docs/configurations/server',
@@ -250,7 +250,7 @@ const sidebars = {
               label: 'Status',
               id: 'dev-docs/api/document-service/status',
               customProps: {
-                updated: true,
+                updated: false,
               }
             },
             {
@@ -308,7 +308,7 @@ const sidebars = {
               type: 'doc',
               id: 'dev-docs/typescript/development',
               customProps: {
-                updated: true,
+                updated: false,
               }
             },
             'dev-docs/typescript/adding-support-to-existing-project',
