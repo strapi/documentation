@@ -30,8 +30,11 @@ While it's possible to use an external database with Strapi Cloud, you should do
 - Strapi can't provide security or support with external databases used with Strapi Cloud.
 :::
 
-
 ## Configuration
+
+:::caution
+To ensure a smooth deployment, it is recommended to not change the names of the environment variables.
+:::
 
 The project `./config/database.js` or `./config/database.ts` file must match the configuration found in the [environment variables in database configurations](https://docs.strapi.io/dev-docs/configurations/database#environment-variables-in-database-configurations) section.
 
@@ -53,10 +56,6 @@ Before pushing changes, add environment variables to the Strapi Cloud project:
     | `DATABASE_SCHEMA`                  | public           | - |
 
 4.  Click **Save**.
-
-:::caution
-To ensure a smooth deployment, it is recommended to not change the names of the environment variables.
-:::
 
 ## Deployment
 

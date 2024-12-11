@@ -20,11 +20,14 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 *Estimated completion time: 5-10 minutes*
 
-:::prerequisites
+<details>
+<summary>☑️ Prerequisites:</summary>
+
 <InstallPrerequisites components={props.components} />
 
 You will also need to [install `git`](https://github.com/git-guides/install-git) and to have a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
-:::
+
+</details>
 
 ## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
 
@@ -32,7 +35,7 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details>
+<details open>
 <summary>Step 1: Run the installation script and create a Strapi Cloud account</summary>
 
 ### Step 1: Run the installation script and create a Strapi Cloud account
