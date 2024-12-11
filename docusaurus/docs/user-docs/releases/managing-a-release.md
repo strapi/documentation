@@ -9,7 +9,7 @@ tags:
 ---
 
 # Managing a release
-<EnterpriseBadge /> <CloudTeamBadge />
+<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
