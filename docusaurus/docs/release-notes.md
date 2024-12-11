@@ -25,6 +25,40 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 5.4.0
+### ✨ New content
+
+#### Repository
+- [First iteration of Growth plan](https://github.com/strapi/documentation/pull/2303)
+
+### 🧹 Chore, fixes, typos, and other improvement
+
+#### Dev Docs
+- [Add a cross-link to the "commonly asked questions" about Strapi 5 article from the blog](https://github.com/strapi/documentation/pull/2313)
+- [Add watchIgnoreFiles demo](https://github.com/strapi/documentation/pull/2312)
+- [Fix unit testing docs for Strapi 5](https://github.com/strapi/documentation/pull/2308)
+- [Mention Preview is under a feature flag](https://github.com/strapi/documentation/pull/2307)
+
+***
+
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/declandragon" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/37643710?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="declandragon"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/kasonde" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/13610895?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kasonde"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.3.0
 
 ### ✨ New content
