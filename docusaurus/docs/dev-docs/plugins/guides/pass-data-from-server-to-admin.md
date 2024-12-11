@@ -20,11 +20,13 @@ When [developing a Strapi plugin](/dev-docs/plugins/developing-plugins) you migh
 
 Passing data from the `/server` to the `/admin` folder can be done using the admin panel's Axios instance:
 
-```mermaid
-graph LR
-    A{Server} -->|Axios instance| B{Admin Panel}
-    B --> A
-```
+<ThemedImage
+  alt=""
+  sources={{
+    'light': '/img/assets/diagrams/pass-data.png',
+    'dark': '/img/assets/diagrams/pass-data_DARK.png'
+  }}
+/>
 
 To pass data from the `/server` to `/admin` folder you would first [create a custom admin route](#create-a-custom-admin-route) and then [get the data returned in the admin panel](#get-the-data-in-the-admin-panel).
 

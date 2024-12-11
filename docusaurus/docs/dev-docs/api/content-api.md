@@ -27,22 +27,13 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
 - The [Document Service API](/dev-docs/api/document-service) is the recommended API to interact with your application's database within the [backend server](/dev-docs/customization) or through [plugins](/dev-docs/plugins). The Document Service is the layer that handles **documents** <DocumentDefinition /> as well as Strapi's complex data structures like components and dynamic zones.
 - The Query Engine API interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but is not aware of any advanced Strapi features that Strapi 5 can handle, like Draft & Publish, Internationalization, Content History, and more.<br/>⚠️ In most, if not all, use cases, you should use the Document Service API instead.
 
-```mermaid
-  flowchart BT
-      database[(Database)] <--> queryEngine[Query Engine API]
-      subgraph Strapi backend
-          direction BT
-          queryEngine <--> documentService[Document Service API]
-          documentService <--> content([Your content])
-          content <--> rest[REST API]
-          content <--> graphql[GraphQL API]
-      end
-      rest <==> frontend{{Your frontend application}}
-      graphql <==> frontend
-      click rest "/dev-docs/api/rest"
-      click graphql "/dev-docs/api/graphql"
-      click documentService "/dev-docs/api/document-service"
-```
+<ThemedImage
+alt="Content APIs diagram"
+sources={{
+  light: '/img/assets/diagrams/apis.png',
+  dark: '/img/assets/diagrams/apis_DARK.png'
+}}
+/>
 
 <br/>
 

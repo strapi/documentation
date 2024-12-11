@@ -20,17 +20,12 @@ The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/dev
 
 The functions can be synchronous, asynchronous, or return a promise.
 
-``` mermaid
-flowchart TB
-    A([The Strapi application starts.]) --> B{"register()"} 
-    B -- The Strapi application is setup. --> C
-    C{"bootstrap()"} -- The Strapi back-end server starts. --> D
-    D(Request)
-    D
-    click B "#register"
-    click C "#bootstrap"
-    click D "/dev-docs/backend-customization/requests-responses"
-```
+<ThemedImage
+alt="Lifecycle functions diagram"
+sources={{
+  light: '/img/assets/diagrams/functions.png',
+  dark: '/img/assets/diagrams/functions_DARK.png'
+}}/>
 
 ## Synchronous function
 

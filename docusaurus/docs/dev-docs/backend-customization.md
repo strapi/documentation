@@ -60,58 +60,16 @@ Please note that all customizations described in the pages of this section are o
 If you prefer learning by reading examples and understanding how they can be used in real-world use cases, the [Examples cookbook](/dev-docs/backend-customization/examples) section is another way at looking how the Strapi back end customization works.
 ::: -->
 
-## Interactive diagram
+## Diagram
 
-The following diagram represents how requests travel through the Strapi back end. You can click on any shape to jump to the relevant page in the documentation.
+The following diagram represents how requests travel through the Strapi back end:
 
-```mermaid
-graph TB
-    request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
-    globalMiddlewareA --"Call next()"--> routePolicy{Route policy}
-    globalMiddlewareA --"Returns before next()<br>Goes back up in the middleware chain"-->globalMiddlewareB
-    routePolicy --Returns true--> routeMiddlewareA(("Route middleware<br/>before await next()"))
-    routePolicy --Returns false or an error-->globalMiddlewareB
-    routeMiddlewareA --"Returns before next()<br>Goes back up in the middleware chain"-->routeMiddlewareB
-    routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
-    controllerA --"Call Service(s)"--> serviceA{{Service}}
-    controllerA --"Don't call Service(s)" --> routeMiddlewareB
-    serviceA --"Call Document Service" --> documentService{{Document Service}}
-    serviceA --"Don't call Document Service" --> controllerB
-    documentService --"Call Document Service Middleware"--> dsMiddlewareBefore{{Document Service Middleware}}
-    dsMiddlewareBefore[/"Document Service Middleware"<br> before\]
-    dsMiddlewareBefore --> queryEngine
-    dsMiddlewareBefore --"Don't call Query Engine" --> dsMiddlewareAfter
-    queryEngine{{"Query Engine"}} --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
-    lifecyclesBefore[/Lifecycle<br> beforeX\] --> database[(Database)]
-    database --> lifecyclesAfter[\Lifecycle<br> afterX/]
-    lifecyclesAfter --> dsMiddlewareAfter[\"Document Service Middleware"<br> after/]
-    dsMiddlewareAfter --> serviceB{{"Service<br/>after Document Service call"}}
-    serviceB --> controllerB{{"Controller<br/>after service call"}}
-    controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
-    routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
-    globalMiddlewareB --> response[Response]
-    linkStyle 3 stroke:green,color:green
-    linkStyle 4 stroke:red,color:red
-    linkStyle 2 stroke:purple,color:purple
-    linkStyle 5 stroke:purple,color:purple
-    click request "/dev-docs/backend-customization/requests-responses"
-    click globalMiddlewareA "/dev-docs/backend-customization/middlewares"
-    click globalMiddlewareB "/dev-docs/backend-customization/middlewares"
-    click routePolicy "/dev-docs/backend-customization/routes"
-    click routeMiddlewareA "/dev-docs/backend-customization/routes"
-    click routeMiddlewareB "/dev-docs/backend-customization/routes"
-    click controllerA "/dev-docs/backend-customization/controllers"
-    click controllerB "/dev-docs/backend-customization/controllers"
-    click serviceA "/dev-docs/backend-customization/services"
-    click serviceB "/dev-docs/backend-customization/services"
-    click documentService "/dev-docs/api/document-service"
-    click lifecyclesBefore "/dev-docs/backend-customization/models#lifecycle-hooks"
-    click queryEngine "/dev-docs/api/query-engine/"
-    click lifecyclesAfter "/dev-docs/backend-customization/models#lifecycle-hooks"
-    click response "/dev-docs/backend-customization/requests-responses"
-    click queryEngine "/dev-docs/api/query-engine"
-    click dsMiddlewareBefore "/dev-docs/api/document-service/middlewares"
-    click dsMiddlewareAfter "/dev-docs/api/document-service/middlewares"
-```
+<ThemedImage
+alt="Backend customization diagram"
+sources={{
+  light: '/img/assets/diagrams/backend-customization.png',
+  dark: '/img/assets/diagrams/backend-customization_DARK.png',
+}}
+/>
 
 </div>
