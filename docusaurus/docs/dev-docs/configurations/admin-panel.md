@@ -13,11 +13,7 @@ tags:
 - password
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Admin panel configuration
-
-<NotV5 />
 
 The `./config/admin.js` is used to define admin panel configuration for the Strapi application.
 
@@ -49,7 +45,7 @@ The `./config/admin.js` file can include the following parameters:
 | `flags.nps`                       | Enable/Disable the Net Promoter Score popup                                                                                                                                                        | boolean       | `true`                                                                                                                              |
 | `flags.promoteEE`                 | Enable/Disable the promotion of Strapi Enterprise features                                                                                                                                         | boolean       | `true`                                                                                                                              |
 | `forgotPassword`                  | Settings to customize the forgot password email (see [Forgot Password Email](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates))                                                        | object        | {}                                                                                                                                  |
-| `forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/dev-docs/plugins/email#using-the-sendtemplatedemail-function)                                                                                         | object        | [Default template](https://github.com/strapi/strapi/blob/main/packages/core/admin/server/config/email-templates/forgot-password.js) |
+| `forgotPassword.emailTemplate`    | Email template as defined in [email plugin](/user-docs/features/email#using-the-sendtemplatedemail-function)                                                                                         | object        | [Default template](https://github.com/strapi/strapi/blob/main/packages/core/admin/server/config/email-templates/forgot-password.js) |
 | `forgotPassword.from`             | Sender mail address                                                                                                                                                                                | string        | Default value defined in <br />your [provider configuration](/dev-docs/providers#configuring-providers)                             |
 | `forgotPassword.replyTo`          | Default address or addresses the receiver is asked to reply to                                                                                                                                     | string        | Default value defined in <br />your [provider configuration](/dev-docs/providers#configuring-providers)                             |
 | `rateLimit`                       | Settings to customize the rate limiting of the admin panel's authentication endpoints, additional configuration options come from [`koa2-ratelimit`](https://www.npmjs.com/package/koa2-ratelimit) | object        | {}                                                                                                                                  |

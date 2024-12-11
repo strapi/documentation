@@ -2,7 +2,7 @@
 title: The CLI default package manager is not yarn anymore
 description: Strapi 5 detects what package manager you are using to run the CLI, and uses this package manager to install dependencies.
 sidebar_label: yarn not the default package manager
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - dependencies

@@ -1,6 +1,7 @@
 ---
 title: Admin panel bundlers
 description: Learn more about configuring Vite and webpack with Strapi 5.
+displayed_sidebar: cmsSidebar
 sidebar_label: Bundlers
 toc_max_heading_level: 4
 tags:

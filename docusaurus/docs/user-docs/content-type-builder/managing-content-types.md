@@ -9,7 +9,6 @@ tags:
 - single type
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Managing content-types

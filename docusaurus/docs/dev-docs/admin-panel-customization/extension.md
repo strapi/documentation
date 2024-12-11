@@ -1,6 +1,7 @@
 ---
 title: Admin panel extension
 description: Learn more about extending Strapi's admin panel.
+displayed_sidebar: cmsSidebar
 sidebar_label: Extension
 toc_max_heading_level: 4
 tags:

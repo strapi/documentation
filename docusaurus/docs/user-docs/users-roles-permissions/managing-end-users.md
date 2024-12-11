@@ -5,8 +5,6 @@ displayed_sidebar: userDocsSidebar
 sidebar_position: 5
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Managing end-user accounts
 
 End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.

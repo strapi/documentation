@@ -303,14 +303,14 @@ Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not pr
 Let's create an `email.js` service file to send an email. We could use it in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
 
 :::callout 🤗 Optional service
-This service is an advanced code example using the [Email](/dev-docs/plugins/email) plugin and requires understanding how [plugins](/dev-docs/plugins) and [providers](/dev-docs/providers) work with Strapi. If you don't need an email service to notify the restaurant's owner, you can skip this part and jump next to the custom [controller](#custom-controller) example.
+This service is an advanced code example using the [Email](/user-docs/features/email) plugin and requires understanding how [plugins](/dev-docs/plugins) and [providers](/dev-docs/providers) work with Strapi. If you don't need an email service to notify the restaurant's owner, you can skip this part and jump next to the custom [controller](#custom-controller) example.
 :::
 
 <SideBySideContainer>
 <SideBySideColumn>
 
 :::prerequisites
-- You have setup a [provider for the Email plugin](/dev-docs/plugins/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
+- You have setup a [provider for the Email plugin](/user-docs/features/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
 - In Strapi's admin panel, you have [created an `Email` single type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
 :::
 
@@ -343,7 +343,7 @@ This service is an advanced code example using the [Email](/dev-docs/plugins/ema
 
 <SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Services](/dev-docs/backend-customization/services), [Entity Service API](/dev-docs/api/entity-service), [Email plugin](/dev-docs/plugins/email) and [Providers](/dev-docs/providers) documentation.
+Additional information can be found in the [Services](/dev-docs/backend-customization/services), [Entity Service API](/dev-docs/api/entity-service), [Email plugin](/user-docs/features/email) and [Providers](/dev-docs/providers) documentation.
 
 </SubtleCallout>
 

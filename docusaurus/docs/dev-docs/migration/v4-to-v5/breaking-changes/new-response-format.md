@@ -2,7 +2,7 @@
 title: Strapi 5 has a new, flattened response format for API calls
 description: In Strapi 5, the response format has been simplified and flattened, and attributes of requested content are no longer wrapped in an attributes object.
 sidebar_label: New response format
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Content API

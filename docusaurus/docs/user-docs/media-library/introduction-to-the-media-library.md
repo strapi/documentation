@@ -12,7 +12,6 @@ tags:
 pagination_next: user-docs/media-library/adding-assets
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Introduction to the Media Library

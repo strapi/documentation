@@ -15,11 +15,7 @@ tags:
 - tar.gz.enc file 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Data export
-
-<NotV5 />
 
 The `strapi export` command is used to export data from a local Strapi instance. By default, the `strapi export` command exports data as an encrypted and compressed `tar.gz.enc` file which includes:
 

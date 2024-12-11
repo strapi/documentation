@@ -2,7 +2,7 @@
 title: Content types with Draft & Publish disabled always have the publishedAt value set to a date
 description: In Strapi 5, content-types with Draft & Publish disabled always have the publishedAt value set to a date.
 sidebar_label: publishedAt always exists
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - draft & publish

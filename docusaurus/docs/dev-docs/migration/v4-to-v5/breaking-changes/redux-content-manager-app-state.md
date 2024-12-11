@@ -2,7 +2,7 @@
 title: The ContentManagerAppState redux is modified
 description: In Strapi 5, the redux store for the Content Manager has been changed and some redux actions were removed.
 sidebar_label: ContentManagerAppState redux modified
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Content Manager

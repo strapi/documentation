@@ -69,9 +69,23 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__caret,
-  &__caret:before {
+  &__caret:before,
+  &__link--sublist-caret::after,
+  &__list-item-collapsible .menu__link--sublist-caret::after {
+    background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;;
     height: 16px;
     width: 16px;
+  }
+
+  .menu__list-item-collapsible {
+    a {
+      color: var(--strapi-neutral-600);
+    }
+
+    button.clean-btn.menu__caret {
+      position: inherit;
+      top: 5px;
+    }
   }
 
   &__list {
@@ -124,7 +138,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       --ifm-menu-color-active: var(--strapi-neutral-800);
 
       &:after {
-        display: none;
+        // display: none;
       }
     }
 
@@ -305,8 +319,34 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   @include medium-up {
+    [class*="collapseSidebar"]::after,
+    [class*="expandButton"]::after {
+        font-family: "Phosphor";
+        position: relative;
+        top: 0;
+        left: 0;
+        color: var(--strapi-neutral-600);
+        font-weight: 500;
+    }
+
     [class*="collapseSidebar"] {
       border-bottom: none;
+      min-height: 38px;
+
+      &::after {
+        content:'\E128';
+      }
+    }
+    svg {
+      display: none;
+    }
+    [class*="expandButton"] {
+      svg {
+        display: none;
+      }
+      &::after {
+        content:'\E12A';
+      }
     }
   }
 }
