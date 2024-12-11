@@ -19,7 +19,8 @@ const sidebars = {
       // Getting Started
       type: 'category',
       collapsed: false,
-      label: '🚀 Getting Started',
+      collapsible: false,
+      label: 'Getting Started',
       link: { type: 'doc', id: 'dev-docs/intro' },
       items: [
         {
@@ -44,7 +45,8 @@ const sidebars = {
       // Setup & Deployment
       type: 'category',
       collapsed: false,
-      label: '⚙️ Setup & Deployment',
+      collapsible: false,
+      label: 'Setup & Deployment',
       link: {
         type: 'doc',
         id: 'dev-docs/setup-deployment',
@@ -134,7 +136,8 @@ const sidebars = {
       // Content APIs
       type: 'category',
       collapsed: false,
-      label: '📦 Content API',
+      collapsible: false,
+      label: 'Content API',
       link: { type: 'doc', id: 'dev-docs/api/content-api' },
       items: [
         {
@@ -265,8 +268,9 @@ const sidebars = {
     {
       // Advanced features
       type: 'category',
-      label: '🔧 Advanced features',
+      label: 'Advanced features',
       collapsed: false,
+      collapsible: false,
       link: {
         type: 'doc',
         id: 'dev-docs/advanced-features',
@@ -374,7 +378,8 @@ const sidebars = {
       // Customization
       type: 'category',
       collapsed: false,
-      label: '🛠 Customization',
+      collapsible: false,
+      label: 'Customization',
       link: {
         type: 'doc',
         id: 'dev-docs/customization',
@@ -438,7 +443,8 @@ const sidebars = {
       // Plugins
       type: 'category',
       collapsed: false,
-      label: '🔌 Plugins',
+      collapsible: false,
+      label: 'Plugins',
       link: {
         type: 'doc',
         id: 'dev-docs/plugins',
@@ -566,7 +572,8 @@ const sidebars = {
       // Update & Migration
       type: 'category',
       collapsed: false,
-      label: '♻️ Upgrades',
+      collapsible: false,
+      label: 'Upgrades',
       link: {
         type: 'doc',
         id: 'dev-docs/upgrades',
@@ -619,6 +626,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Getting Started',
       link: {
         type: 'doc',
@@ -633,6 +641,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       link: {
         type: 'doc',
         id: 'user-docs/content-manager/introduction-to-content-manager',
@@ -666,6 +675,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Content-type Builder',
       link: {
         type: 'doc',
@@ -681,6 +691,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Media Library',
       link: {
         type: 'doc',
@@ -696,6 +707,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Releases',
       link: {
         type: 'doc',
@@ -716,6 +728,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Users, Roles & Permissions',
       link: {
         type: 'doc',
@@ -730,6 +743,7 @@ const sidebars = {
     },
     {
       type: 'category',
+      collapsible: false,
       collapsed: false,
       label: 'Plugins',
       link: {
@@ -746,6 +760,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Settings',
       link: {
         type: 'doc',
@@ -788,6 +803,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Getting Started',
       link: {
         type: 'doc',
@@ -830,6 +846,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Projects management',
       link: {
         type: 'doc',
@@ -849,6 +866,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Deployments',
       link: {
         type: 'doc',
@@ -859,6 +877,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Account management',
       link: {
         type: 'doc',
@@ -876,6 +895,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Command Line Interface',
       link: {
         type: 'doc',
@@ -892,6 +912,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Advanced configuration',
       link: {
         type: 'doc',
@@ -927,6 +948,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'REST API reference',
       link: {
         type: 'doc',
@@ -1090,6 +1112,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Rest API guides',
+      collapsible: false,
       collapsed: false,
       link: {
         type: 'doc',
@@ -1123,6 +1146,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       label: 'Configuration',
       link: {
         type: 'doc',
@@ -1197,6 +1221,7 @@ const sidebars = {
     {
       type: 'category',
       collapsed: false,
+      collapsible: false,
       link: {
         type: 'doc',
         id: 'dev-docs/migration/v4-to-v5/introduction-and-faq',
