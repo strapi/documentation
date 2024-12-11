@@ -366,7 +366,13 @@ const sidebars = {
         },
         'dev-docs/database-migrations',
         'dev-docs/database-transactions',
-        'dev-docs/testing',
+        {
+          type: 'doc',
+          id: 'dev-docs/testing',
+          customProps: {
+            updated: true,
+          }
+        },
         'dev-docs/error-handling',
       ],
     },
@@ -626,7 +632,13 @@ const sidebars = {
       },
       items: [
         'user-docs/intro',
-        'user-docs/getting-started/user-guide-fundamentals',
+        {
+          type: 'doc',
+          id: 'user-docs/getting-started/user-guide-fundamentals',
+          customProps: {
+            updated: true,
+          }
+        },
         'user-docs/getting-started/setting-up-admin-panel',
       ],
     },
@@ -799,6 +811,9 @@ const sidebars = {
           type: 'doc',
           label: 'Cloud fundamentals',
           id: 'cloud/getting-started/cloud-fundamentals',
+          customProps: {
+            updated: true,
+          }
         },
         {
           type: 'category',
