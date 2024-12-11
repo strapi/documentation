@@ -5,9 +5,8 @@ description: Send email from your server or externals providers.
 tags:
 - admin panel
 - controllers 
-- email plugin
+- email
 - lifecycle hooks
-- plugins 
 - services
 ---
 
@@ -28,7 +27,7 @@ Most configuration options for the Email feature are handled via your Strapi pro
 
 ### Admin panel settings
 
-**Path to configure the feature:** <Icon name="gear-six" /> Settings > Email plugin > Configuration
+**Path to configure the feature:** <Icon name="gear-six" /> Settings > Email feature > Configuration
 
 <ThemedImage
   alt="Email configuration"
@@ -50,23 +49,23 @@ This page is only visible if the current role has the "Access the Email Settings
   }}
 />
 
-:::prerequisites
+### Code-based configuration
 
-The Email plugin requires a provider and a provider configuration in the `config/plugins.js` file or `config/plugins.ts` file. See the [Providers](/dev-docs/providers) documentation for detailed installation and configuration instructions.
+The Email feature requires a provider and a provider configuration in the `config/plugins.js` file or `config/plugins.ts` file. See the [Providers](/dev-docs/providers) documentation for detailed installation and configuration instructions.
 
-:::
+<CustomDocCardsWrapper>
+<CustomDocCard icon="plugs" title="Providers" description="Learn more about configuring and creating providers for the Email and Media Library features." link="/dev-docs/providers"/>
+</CustomDocCardsWrapper>
 
-:::note
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/dev-docs/providers) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
-:::
+[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
 
 ## Usage
 
-It uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application. Two of the most common use cases are in the Strapi back end and in the admin panel. The following documentation describes how to use the Email plugin in a controller or service for back-end use cases and using a lifecycle hook for admin panel use cases.
+The Email feature uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application, either from the back-end server itself through a [controller or service](#controller-service), or from the admin panel, for example in response to an event (using [lifecycle hooks](#lifecycle-hook)). 
 
-### Sending emails with a controller or service
+### Sending emails with a controller or service {#controller-service}
 
-The Email plugin has an `email` [service](/dev-docs/backend-customization/services) that contains 2 functions to send emails:
+The Email feature has an `email` [service](/dev-docs/backend-customization/services) that contains 2 functions to send emails:
 
 * `send()` directly contains the email contents,
 * `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.
@@ -86,23 +85,26 @@ To trigger an email in response to a user action add the `send()` function to a 
 | `text`    | `string` | -             | Either `text` or `html` is required.                  |
 | `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
 
-```js title="This code example can be used in a controller or a service path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js"
+The following code example can be used in a controller or a service:
 
-  await strapi.plugins['email'].services.email.send({
-    to: 'valid email address',
-    from: 'your verified email address', //e.g. single sender verification in SendGrid
-    cc: 'valid email address',
-    bcc: 'valid email address',
-    replyTo: 'valid email address',
-    subject: 'The Strapi Email plugin worked successfully',
-    text: 'Hello world!',
-    html: 'Hello world!',
-  }),
+```js title="/src/api/my-api-name/controllers/my-api-name.ts|js (or /src/api/my-api-name/services/my-api-name.ts|js)"
+await strapi.plugins['email'].services.email.send({
+  to: 'valid email address',
+  from: 'your verified email address', //e.g. single sender verification in SendGrid
+  cc: 'valid email address',
+  bcc: 'valid email address',
+  replyTo: 'valid email address',
+  subject: 'The Strapi Email feature worked successfully',
+  text: 'Hello world!',
+  html: 'Hello world!',
+}),
 ```
 
 #### Using the `sendTemplatedEmail()` function
 
-The `sendTemplatedEmail()` function is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
+The `sendTemplatedEmail()` function is used to compose emails from a template. The function compiles the email from the available properties and then sends the email.
+
+To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
 
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
@@ -110,9 +112,9 @@ The `sendTemplatedEmail()` function is used to compose emails from a template. T
 | `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
 | `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
-```js title="This code example can be used in a controller or a service path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js"
+The following code example can be used in a controller or a service:
 
-
+```js title="/src/api/my-api-name/controllers/my-api-name.js (or ./src/api/my-api-name/services/my-api-name.js)"
 const emailTemplate = {
   subject: 'Welcome <%= user.firstname %>',
   text: `Welcome to mywebsite.fr!
@@ -133,15 +135,17 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-### Sending emails from a lifecycle hook
+### Sending emails from a lifecycle hook {#lifecycle-hook}
 
- To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). For example, to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
+ To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/dev-docs/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). 
+
+ The following example illustrates how to send an email each time a new content entry is added in the Content Manager use the `afterCreate` lifecycle hook:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js"
+```js title="/src/api/my-api-name/content-types/my-content-type-name/lifecycles.js"
 
 module.exports = {
     async afterCreate(event) {    // Connected to "Save" button in admin panel
@@ -154,7 +158,7 @@ module.exports = {
               cc: 'valid email address',
               bcc: 'valid email address',
               replyTo: 'valid email address',
-              subject: 'The Strapi Email plugin worked successfully',
+              subject: 'The Strapi Email feature worked successfully',
               text: '${fieldName}', // Replace with a valid field ID
               html: 'Hello world!', 
                 
@@ -170,28 +174,27 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./src/api/{api-name}/content-types/{content-type-name}/lifecycles.js"
+```ts title="/src/api/my-api-name/content-types/my-content-type-name/lifecycles.ts"
 
 export default {
-    async afterCreate(event) {    // Connected to "Save" button in admin panel
-        const { result } = event;
+  async afterCreate(event) {    // Connected to "Save" button in admin panel
+    const { result } = event;
 
-        try{
-            await strapi.plugins['email'].services.email.send({
-              to: 'valid email address',
-              from: 'your verified email address', // e.g. single sender verification in SendGrid
-              cc: 'valid email address',
-              bcc: 'valid email address',
-              replyTo: 'valid email address',
-              subject: 'The Strapi Email plugin worked successfully',
-              text: '${fieldName}', // Replace with a valid field ID
-              html: 'Hello world!', 
-                
-            })
-        } catch(err) {
-            console.log(err);
-        }
+    try{
+      await strapi.plugins['email'].services.email.send({
+        to: 'valid email address',
+        from: 'your verified email address', // e.g. single sender verification in SendGrid
+        cc: 'valid email address',
+        bcc: 'valid email address',
+        replyTo: 'valid email address',
+        subject: 'The Strapi Email feature worked successfully',
+        text: '${fieldName}', // Replace with a valid field ID
+        html: 'Hello world!', 
+      })
+    } catch(err) {
+      console.log(err);
     }
+  }
 }
 
 ```
