@@ -165,6 +165,7 @@
     left: -26px;
     right: -16px;
     top: 40px;
+    pointer-events: none;
     background: linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, var(--strapi-neutral-0) 100%);
   }
 }
