@@ -46,6 +46,9 @@ This release was made possible thanks to the following contributors. Thank you! 
 <a href="https://github.com/declandragon" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/37643710?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="declandragon"/>
 </a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
 <a href="https://github.com/kasonde" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/13610895?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kasonde"/>
 </a>
