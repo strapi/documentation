@@ -150,6 +150,7 @@ const sidebars = {
       type: 'category',
       label: 'APIs',
       className: 'category-api',
+      link: {type: 'doc', id:'dev-docs/api/content-api'},
       collapsible: false,
       collapsed: false,
       items: [
@@ -158,6 +159,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
+          link: {type: 'doc', id:'dev-docs/api/rest'},
           collapsed: true,
           items: [
             {
@@ -179,6 +181,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Document Service API',
+          link: {type: 'doc', id:'dev-docs/api/document-service'},
           collapsed: true,
           items: [
             {
