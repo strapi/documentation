@@ -99,7 +99,8 @@ pre.prism-code {
 
       &.method,
       &.property-access,
-      &.function {
+      &.function,
+      &.attr-name {
         color: var(--custom-code-block-function-color) !important;
       }
 
@@ -133,6 +134,10 @@ pre.prism-code {
   .theme-code-block {
     [class*="highlighted-line"] {
       background-color: var(--custom-code-block-background-color-highlighted);
+    }
+
+    code {
+      background-color: var(--custom-code-block-background-color);
     }
   }
 }

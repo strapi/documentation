@@ -71,12 +71,14 @@
  */
 main .table-of-contents {
   code {
-    font-size: var(--strapi-font-size-xs);
+    font-size: var(--strapi-font-size-xxs);
     background-color: transparent;
     border: none;
     color: inherit;
     padding: 0;
-    font-weight: 500;
+    font-weight: 600;
+    position: relative;
+    top: -1px;
   }
 }
 
