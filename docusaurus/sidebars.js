@@ -167,6 +167,7 @@ const sidebars = {
             },
             'dev-docs/api/rest/parameters',
             'dev-docs/api/rest/filters-locale-publication',
+            'dev-docs/api/rest/locale',
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/relations',
             'dev-docs/api/rest/sort-pagination',
