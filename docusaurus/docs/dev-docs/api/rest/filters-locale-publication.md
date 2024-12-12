@@ -26,7 +26,7 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 The [REST API](/dev-docs/api/rest) offers the ability to filter results found with its ["Get entries"](/dev-docs/api/rest#get-all) method.<br/>
 Using optional Strapi features can provide some more filters:
 
-- If the [Internationalization (i18n) plugin](/dev-docs/i18n) is enabled on a content-type, it's possible to filter by locale.
+- If the [Internationalization (i18n) plugin](/user-docs/features/internationalization) is enabled on a content-type, it's possible to filter by locale.
 - If the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, it's possible to filter based on a `published` (default) or `draft` status.
 
 :::tip
@@ -366,11 +366,11 @@ await request(`/api/restaurants?${query}`);
 
 :::prerequisites
 
-- The [Internationalization (i18n) feature](/dev-docs/i18n) should be installed.
+- The [Internationalization (i18n) feature](/user-docs/features/internationalization) should be installed.
 - [Localization should be enabled for the content-type](/user-docs/content-type-builder/creating-new-content-type.md#creating-a-new-content-type).
 :::
 
-The `locale` API parameter can be used to work with entries from a specific locale (see [Internationalization documentation](/dev-docs/i18n#rest)).
+The `locale` API parameter can be used to work with entries from a specific locale (see [Internationalization documentation](/dev-docs/api/rest/locale)).
 
 ## Status
 

@@ -17,7 +17,7 @@ Strapi provides advanced built-in features for developers who'd like to get the 
 
 <CustomDocCardsWrapper>
 
-<CustomDocCard emoji="🌍" title="Internationalization (i18n)" description="The i18n feature allows creating, managing and distributing localized content in different languages." link="/dev-docs/i18n"/>
+<CustomDocCard emoji="🌍" title="Internationalization (i18n)" description="The i18n feature allows creating, managing and distributing localized content in different languages." link="/user-docs/features/internationalization"/>
 
 <CustomDocCard title="CLI reference" description="Control Strapi through the Command Line Interface (CLI)." link="/dev-docs/cli" />
 

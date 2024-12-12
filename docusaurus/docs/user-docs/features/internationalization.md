@@ -104,10 +104,15 @@ Click on the ![Dowload icon](/img/assets/icons/v5/Download.svg) *Fill in from an
 
 ### Usage with APIs
 
-Content can be requested, created, updated, and deleted for a given locale through the various APIs accessible from [Strapi's Content API](/dev-docs/api/content-api):
+Localized content can be requested, created, updated, and deleted for a given locale through the various front-end APIs accessible from [Strapi's Content API](/dev-docs/api/content-api):
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="cube" title="REST API" description="Learn how to use the locale parameter with REST." link="/dev-docs/api/rest/locale"/>
-<CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the locale parameter with GraphQL." link="/dev-docs/api/graphql#locale"/>
-<CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the locale parameter with the Document Service." link="/dev-docs/api/document-service/locale"/>
+<CustomDocCard icon="cube" title="REST API" description="Learn how to use the locale parameter with the REST API." link="/dev-docs/api/rest/locale"/>
+<CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the locale parameter with GraphQL API." link="/dev-docs/api/graphql#locale"/>
+</CustomDocCardsWrapper>
+
+On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the locale parameter with the Document Service API." link="/dev-docs/api/document-service/locale"/>
 </CustomDocCardsWrapper>

@@ -461,7 +461,7 @@ mutation CreateCategory {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/i18n#graphql-create)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/api/graphql#graphql-create)).
 :::
 
 ### Update an existing document
@@ -489,7 +489,7 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/i18n#graphql-update)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/dev-docs/api/graphql#graphql-update)).
 :::
 
 #### Update relations
@@ -527,7 +527,7 @@ mutation DeleteRestaurant {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/i18n#graphql-delete)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/dev-docs/api/graphql#graphql-delete)).
 :::
 
 ### Mutations on media files

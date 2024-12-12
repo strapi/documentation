@@ -116,7 +116,7 @@ Many types of attributes are available:
   - `customField` to describe [custom fields](#custom-fields) and their specific keys
   - `component` to define a [component](#components-json) (i.e. a data structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
-  - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/i18n)
+  - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/user-docs/features/internationalization)
 
 The `type` parameter of an attribute should be one of the following values:
 
@@ -127,7 +127,7 @@ The `type` parameter of an attribute should be one of the following values:
 | Number types | <ul><li>`integer`</li><li>`biginteger`</li><li>`float`</li> <li>`decimal`</li></ul> |
 | Other generic types |<ul><li>`boolean`</li><li>`json`</li></ul> |
 | Special types unique to Strapi |<ul><li>`media`</li><li>[`relation`](#relations)</li><li>[`customField`](#custom-fields)</li><li>[`component`](#components-json)</li><li>[`dynamiczone`](#dynamic-zones)</li></ul> |
-| Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n](/dev-docs/i18n) is enabled on the content-type_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
+| Internationalization (i18n)-related types<br /><br />_Can only be used if the [i18n](/user-docs/features/internationalization) is enabled on the content-type_|<ul><li>`locale`</li><li>`localizations`</li></ul> |
 
 #### Validations
 

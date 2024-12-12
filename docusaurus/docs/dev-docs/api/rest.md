@@ -274,7 +274,7 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#rest-create).
+If the [Internationalization (i18n) plugin](/user-docs/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/api/rest/locale#rest-delete).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
@@ -346,7 +346,7 @@ Send a `null` value to clear fields.
 
 :::note NOTES
 * Even unmodified fields must be included in the request's body.
-* Even with the [Internationalization (i18n) plugin](/dev-docs/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/i18n#rest-update).
+* Even with the [Internationalization (i18n) plugin](/user-docs/features/internationalization) installed, it's currently not possible to [update the locale of a document](/dev-docs/api/rest/locale#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations) for more details).
 :::
 
