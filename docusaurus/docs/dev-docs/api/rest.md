@@ -30,6 +30,10 @@ By default, the REST API responses only include top-level fields and does not po
 The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library)) has a specific API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
 :::
 
+:::strapi Strapi SDK
+Strapi has just released a new SDK, currently in beta. Early documentation is available on the [Contributor Docs](https://contributor.strapi.io/) website while we are integrating it into the official REST API reference.
+:::
+
 ## Endpoints
 
 For each Content-Type, the following endpoints are automatically generated:
