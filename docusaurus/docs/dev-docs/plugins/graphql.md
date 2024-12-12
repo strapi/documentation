@@ -990,3 +990,11 @@ Using API tokens in the the GraphQL playground requires adding the authorization
 
 Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 :::
+
+### GraphQL API
+
+The GraphQL plugin adds a GraphQL endpoint that can accessed through Strapi's GraphQL API:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the Strapi's GraphQL API." link="/dev-docs/api/graphql"/>
+</CustomDocCardsWrapper>
