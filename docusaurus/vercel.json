@@ -1235,7 +1235,7 @@
     },
     {
       "source": "/dev-docs/api/rest/filters-locale-publication#publication-state",
-      "destination": "/dev-docs/api/rest/filters-locale-publication#status"
+      "destination": "/dev-docs/api/rest/status"
     },
     {
       "source": "/dev-docs/admin-panel-customization#access-url",

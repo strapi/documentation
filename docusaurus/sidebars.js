@@ -168,8 +168,9 @@ const sidebars = {
               label: 'Endpoints'
             },
             'dev-docs/api/rest/parameters',
-            'dev-docs/api/rest/filters-locale-publication',
+            'dev-docs/api/rest/filters',
             'dev-docs/api/rest/locale',
+            'dev-docs/api/rest/status',
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/relations',
             'dev-docs/api/rest/sort-pagination',
@@ -770,7 +771,7 @@ const sidebars = {
   //           {
   //             type: 'link',
   //             label: 'Filtering',
-  //             href: '/dev-docs/api/rest/filters-locale-publication#filtering'
+  //             href: '/dev-docs/api/rest/filters'
   //           },
   //           {
   //             type: 'link',
@@ -785,12 +786,12 @@ const sidebars = {
   //           {
   //             type: 'link',
   //             label: 'Locale',
-  //             href: '/dev-docs/api/rest/filters-locale-publication#locale',
+  //             href: '/dev-docs/api/rest/locale',
   //           },
   //           {
   //             type: 'link',
   //             label: 'Status',
-  //             href: '/dev-docs/api/rest/filters-locale-publication#status',
+  //             href: '/dev-docs/api/rest/status',
   //           },
   //         ],
   //       },

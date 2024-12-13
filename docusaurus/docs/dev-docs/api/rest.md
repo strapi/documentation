@@ -26,10 +26,6 @@ All content types are private by default and need to be either made public or qu
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/dev-docs/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
 :::
 
-:::strapi Upload plugin API
-The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library)) has a specific API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
-:::
-
 ## Endpoints
 
 For each Content-Type, the following endpoints are automatically generated:
@@ -119,6 +115,10 @@ The following endpoint examples are taken from the [FoodAdvisor](https://github.
 </TabItem>
 </Tabs>
 </details>
+
+:::strapi Upload API
+The Upload package (which powers the [Media Library feature](/user-docs/features/media-library)) has a specific API accessible through its [`/api/upload` endpoints](/dev-docs/api/rest/upload).
+:::
 
 :::note
 [Components](/dev-docs/backend-customization/models#components-json) don't have API endpoints.

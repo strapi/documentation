@@ -1,17 +1,25 @@
 ---
-title: Internationalization
+title: Locale
 description: Browse the REST API reference for the locale parameter to take advantage of the Internationalization feature through REST.
 toc_max_heading_level: 5
 tags:
 - REST API
 - Internationalization
-- API reference
+- API
 - locale
+- Content API
+- find
+- interactive query builder
+- qs library
 ---
 
-# Use `locale` with the REST API
+import QsIntroFull from '/docs/snippets/qs-intro-full.md'
+import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
+import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
-The [Internationalization (i18n)](/user-docs/features/internationalization) feature adds new abilities to the [REST API](/dev-docs/api/rest). 
+# REST API: `locale`
+
+The [Internationalization (i18n) feature](/user-docs/features/internationalization) adds new abilities to the [REST API](/dev-docs/api/rest).
 
 :::prerequisites
 To work with API content for a locale, please ensure the locale has been already [added to Strapi in the admin panel](/user-docs/features/internationalization#settings).
