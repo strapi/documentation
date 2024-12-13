@@ -173,6 +173,7 @@ const sidebars = {
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/relations',
             'dev-docs/api/rest/sort-pagination',
+            'dev-docs/api/rest/upload',
             'dev-docs/api/rest/interactive-query-builder',
             'dev-docs/api/rest/guides/intro',
           ]

@@ -34,6 +34,10 @@ The Media Library is the Strapi feature that displays all assets uploaded in the
 
 ## Configuration
 
+Some configuration options for the Media Library are available in the admin panel, and some are handled via your Strapi project's code.
+
+### Admin panel settings
+
 The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
 
 <ThemedImage
@@ -49,11 +53,363 @@ The Media Library settings allow controlling the format, file size, and orientat
 
     | Setting name   | Instructions   | Default value |
     | -------------------------- | ----------------------- |---------------|
-    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset. | True          |
+    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
     | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
     | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
 
 3. Click on the **Save** button.
+
+### Code-based configuration
+
+The Media Library is powered in the backend server by the Upload package, which can be configured and extended through providers.
+
+#### Additional providers
+
+By default Strapi provides a [provider](/dev-docs/providers) that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available should you want to upload your files to another location.
+
+The providers maintained by Strapi are the following. Clicking on a card will redirect you to their Strapi Marketplace page:
+
+<CustomDocCardsWrapper>
+<CustomDocCard 
+  icon="shopping-cart" 
+  title="Amazon S3" 
+  description="Official provider for file uploads to Amazon S3."
+  link="https://market.strapi.io/providers/@strapi-provider-upload-aws-s3"
+/>
+<CustomDocCard 
+  icon="shopping-cart" 
+  title="Cloudinary" 
+  description="Official provider for media management with Cloudinary."
+  link="https://market.strapi.io/providers/@strapi-provider-upload-cloudinary"
+/>
+<CustomDocCard 
+  icon="shopping-cart" 
+  title="Local" 
+  description="Default provider for storing files locally on the server."
+  link="https://www.npmjs.com/package/@strapi/provider-upload-local"
+/>
+</CustomDocCardsWrapper>
+
+:::info
+Code-based configuration instructions on the present page detail options for the default upload provider. If using another provider, please refer to the available configuration parameters in that provider's documentation.
+:::
+
+#### Available options
+
+When using the default upload provider, the following specific configuration options can be declared in an `upload.config` object within [the `config/plugins` file](/dev-docs/configurations/plugins). All parameters are optional:
+
+| Parameter                                   | Description                                                                                                         | Type    | Default |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
+| `providerOptions.localServer`        | Options that will be passed to [koa-static](https://github.com/koajs/static) upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
+| `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `209715200`<br/><br/>(200 MB in bytes, i.e., 200 x 1024 x 1024 bytes) |
+| `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+
+:::note
+The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
+:::
+
+#### Example custom configuration
+
+The following is an example of a custom configuration for the Upload plugin when using the default upload provider:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env })=>({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+      sizeLimit: 250 * 1024 * 1024, // 256mb in bytes
+      breakpoints: {
+        xlarge: 1920,
+        large: 1000,
+        medium: 750,
+        small: 500,
+        xsmall: 64
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default () => ({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+      sizeLimit: 250 * 1024 * 1024, // 256mb in bytes
+      breakpoints: {
+        xlarge: 1920,
+        large: 1000,
+        medium: 750,
+        small: 500,
+        xsmall: 64
+      },
+    },
+  },
+})
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Local server
+
+By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for [koa-static](https://github.com/koajs/static).
+
+You can provide them by creating or editing [the `/config/plugins` file](/dev-docs/configurations/plugins). The following example sets the `max-age` header:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env })=>({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  upload: {
+    config: {
+      providerOptions: {
+        localServer: {
+          maxage: 300000
+        },
+      },
+    },
+  },
+});
+```
+</TabItem>
+
+</Tabs>
+
+#### Max file size
+
+The Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB. This must be done in addition to provider options passed to the Upload package for `sizeLimit`.
+
+:::caution
+You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes. For instance, [Nginx](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) has a configuration setting called `client_max_body_size` that must be adjusted, since its default is only 1mb.
+:::
+
+The middleware used by the Upload package is [the `body` middleware](/dev-docs/configurations/middlewares#body). You can pass configuration to the middleware directly by setting it in the `/config/middlewares` file:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/middlewares.js"
+module.exports = [
+  // ...
+  {
+    name: "strapi::body",
+    config: {
+      formLimit: "256mb", // modify form body
+      jsonLimit: "256mb", // modify JSON body
+      textLimit: "256mb", // modify text body
+      formidable: {
+        maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+      },
+    },
+  },
+  // ...
+];
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```js title="/config/middlewares.ts"
+export default [
+  // ...
+  {
+    name: "strapi::body",
+    config: {
+      formLimit: "256mb", // modify form body
+      jsonLimit: "256mb", // modify JSON body
+      textLimit: "256mb", // modify text body
+      formidable: {
+        maxFileSize: 250 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+      },
+    },
+  },
+  // ...
+];
+```
+
+</TabItem>
+
+</Tabs>
+
+In addition to the middleware configuration, you can pass the `sizeLimit`, which is an integer in bytes, in the [/config/plugins file](/dev-docs/configurations/plugins):
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
+    }
+  }
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```js title="/config/plugins.ts"
+export default {
+  // ...
+  upload: {
+    config: {
+      sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
+    }
+  }
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Upload request timeout
+
+By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads.
+
+To make it possible for users with slow internet connection to upload large files, it might be required to increase this timeout limit. The recommended way to do it is by setting the `http.serverOptions.requestTimeout` parameter in [the `config/servers` file](dev-docs/configurations/server).
+
+An alternate method is to set the `requestTimeout` value in [the `bootstrap` function](/dev-docs/configurations/functions#bootstrap) that runs before Strapi gets started. This is useful in cases where it needs to change programmatically—for example, to temporarily disable and re-enable it:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/index.js"
+module.exports = {
+
+  //...
+
+  bootstrap({ strapi }) {
+    // Set the requestTimeout to 1,800,000 milliseconds (30 minutes):
+    strapi.server.httpServer.requestTimeout = 30 * 60 * 1000;
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/index.ts"
+export default {
+
+  //...
+
+  bootstrap({ strapi }) {
+    // Set the requestTimeout to 1,800,000 milliseconds (30 minutes):
+    strapi.server.httpServer.requestTimeout = 30 * 60 * 1000;
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Responsive Images
+
+When the [`Responsive friendly upload` admin panel setting](#admin-panel-settings) is enabled, the plugin will generate the following responsive image sizes:
+
+| Name    | Largest dimension |
+| :------ | :--------- |
+| large   | 1000px     |
+| medium  | 750px      |
+| small   | 500px      |
+
+These sizes can be overridden in `/config/plugins`:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      breakpoints: {
+        xlarge: 1920,
+        large: 1000,
+        medium: 750,
+        small: 500,
+        xsmall: 64
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```js title="/config/plugins.ts"
+export default ({ env }) => ({
+  upload: {
+    config: {
+      breakpoints: {
+        xlarge: 1920,
+        large: 1000,
+        medium: 750,
+        small: 500,
+        xsmall: 64
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+:::caution
+Breakpoint changes will only apply to new images, existing images will not be resized or have new sizes generated.
+:::
 
 ## Usage
 
@@ -321,3 +677,11 @@ To delete a folder, from the Media Library:
 :::note
 A single folder can also be deleted when editing it: hover the folder, click on its edit icon ![Edit icon](/img/assets/icons/v5/Pencil.svg), and in the window that pops up, click the **Delete folder** button and confirm the deletion.
 :::
+
+### Usage with the REST API
+
+The Media Library feature has some endpoints that can accessed through Strapi's REST API:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="Upload with the REST API" description="Learn how to use the Strapi's REST API to upload files through your code." link="/dev-docs/api/rest/upload"/>
+</CustomDocCardsWrapper>
