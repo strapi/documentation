@@ -365,7 +365,6 @@ await request(`/api/restaurants?${query}`);
 
 :::prerequisites
 
-- The [Internationalization (i18n) feature](/dev-docs/i18n) should be installed.
 - [Localization should be enabled for the content-type](/user-docs/content-type-builder/creating-new-content-type.md#creating-a-new-content-type).
 :::
 
