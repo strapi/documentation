@@ -20,7 +20,7 @@ The present documentation lists the available Plugin SDK commands. The [associat
 Create a new plugin at a given path.
 
 ```bash
-npx @strapi/sdk-plugin init
+npx @strapi/sdk-plugin init /path/to/my-plugin
 ```
 
 | Arguments |  Type  | Description        | Default                   |
