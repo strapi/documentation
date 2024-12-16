@@ -43,6 +43,10 @@ To connect a new Google, GitLab or GitHub account to your Strapi Cloud account, 
 
 You can also click on the three dots button of a connected account and click on the "Manage on" button to manage your GitHub, GitLab or Google account directly on the corresponding website.
 
+:::caution
+For GitLab, Groups and Subgroups habilitations are not supported at the moment.
+:::
+
 ### Deleting Strapi Cloud account
 
 You can delete your Strapi Cloud account, but it will be permanent and irreversible. All associated projects and their data will be deleted as well and the subscriptions for the projects will automatically be canceled.
