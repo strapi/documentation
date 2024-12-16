@@ -995,7 +995,7 @@ If you feel like you need this util, please open an issue on the Strapi reposito
 ### request
 
 This util has been removed and not replaced.
-You can use `useFetchClient` from `@strapi/admin/strapi-admin`.
+You can use `useFetchClient` from `@strapi/strapi/admin`.
 
 ```tsx
 // Before
@@ -1004,7 +1004,7 @@ import { request } from '@strapi/helper-plugin';
 request(`/${pluginId}/settings/config`, { method: 'GET' });
 
 // After
-import { useFetchClient } from '@strapi/admin/strapi-admin';
+import { useFetchClient } from `@strapi/strapi/admin`;
 
 const { get } = useFetchClient();
 get(`/${pluginId}/settings/config`);
