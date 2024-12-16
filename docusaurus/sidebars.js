@@ -102,7 +102,7 @@ const sidebars = {
             'dev-docs/configurations/cron',
             'dev-docs/configurations/environment',
             'dev-docs/configurations/sso',
-            'dev-docs/configurations/features',
+            // 'dev-docs/configurations/features',
             'dev-docs/configurations/guides/rbac',
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/access-cast-environment-variables',

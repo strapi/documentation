@@ -7,7 +7,7 @@ tags:
 - preview
 ---
 
-# Previewing content <BetaBadge />
+# Previewing content 
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
@@ -22,7 +22,6 @@ With the Preview feature, you can preview your front end application directly fr
 
 :::prerequisites
 - The Strapi admin panel user should have read permissions for the content-type.
-- While the Preview feature is in beta, it should be enabled with the `future.preview` feature flag set to `true` in `config/features` (see [Developer Docs](/dev-docs/configurations/features)).
 - The Preview feature should be configured in the code of the `config/admin` file (see [Developer Docs](/dev-docs/preview)).
 - A front-end application should already be created and running so you can preview it.
 :::
