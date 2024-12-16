@@ -27,10 +27,12 @@ Once you have logged in, you can access your Strapi admin panel:
 <ThemedImage
 alt="Homepage of the Admin Panel"
 sources={{
-    light: '/img/assets/getting-started/admin-panel-homepage.png',
-    dark: '/img/assets/getting-started/admin-panel-homepage_DARK.png',
+    light: '/img/assets/getting-started/admin-panel-homepage-2.png',
+    dark: '/img/assets/getting-started/admin-panel-homepage-2_DARK.png',
   }}
 />
+
+The ![Home icon](/img/assets/icons/v5/House.svg) admin panel homepage can display the guided tour (if you have not skipped or completed it yet) and last edited and published entries if you have any.
 
 If you are not sure where to begin on this User Guide, we suggest you to:
 
