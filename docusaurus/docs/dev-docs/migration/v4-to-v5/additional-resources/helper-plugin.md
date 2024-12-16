@@ -1004,7 +1004,7 @@ import { request } from '@strapi/helper-plugin';
 request(`/${pluginId}/settings/config`, { method: 'GET' });
 
 // After
-import { useFetchClient } from `@strapi/strapi/admin`;
+import { useFetchClient } from '@strapi/strapi/admin';
 
 const { get } = useFetchClient();
 get(`/${pluginId}/settings/config`);
