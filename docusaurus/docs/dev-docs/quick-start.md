@@ -442,7 +442,7 @@ Keep on creating amazing content!
 :::
 
 :::tip Tip: Transfer data between your local and Strapi Cloud projects
-The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/dev-docs/data-management) to transfer data between projects.
+The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/user-docs/features/data-management) to transfer data between projects.
 :::
 
 ## <Icon name="fast-forward"/> What to do next?

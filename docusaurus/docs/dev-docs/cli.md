@@ -111,7 +111,7 @@ Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) doc
 
 ## strapi export
 
-[Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
+[Exports your project data](/user-docs/features/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
 ```bash
 strapi export
@@ -141,7 +141,7 @@ strapi export --no-encrypt
 
 ## strapi import
 
-[Imports data](/dev-docs/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+[Imports data](/user-docs/features/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
 ```bash
 strapi import

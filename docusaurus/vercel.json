@@ -210,7 +210,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/data-management.html",
-			"destination": "/dev-docs/data-management"
+			"destination": "/user-docs/features/data-management"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/database-migrations.html",
