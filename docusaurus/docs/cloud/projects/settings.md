@@ -119,6 +119,7 @@ To create a new environment:
     | Environment name | (mandatory) Write a name for your project's new environment.             |
     | Git branch       | (mandatory) Select the right branch for your new environment.            |
     | Base directory   | Write the name of the base directory of your new environment.            |
+    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
     | Auto-deploy      | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 4. Click on the **Add environment** button to create your project's new environment. A new deployment will automatically be triggered.
@@ -310,7 +311,8 @@ Resetting an environment deletes all environments data and resets the variables 
     | Environment name | (mandatory) Write a name for your project's new environment.            |
     | Git branch      | (mandatory) Choose a branch from the drop-down list.                     |
     | Base directory  | Write the path of the base directory in the textbox.                     |
-    | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
+    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
+    | Auto-deploy     | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 4. Click on the **Reset** button.
 
