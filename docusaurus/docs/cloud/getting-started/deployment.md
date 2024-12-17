@@ -26,7 +26,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 * Project(s) source code hosted on [GitHub](https://github.com) or [GitLab](https://about.gitlab.com/). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 * Specifically for GitLab:
   * at least have "[Maintainer](https://docs.gitlab.com/ee/user/permissions.html)" permissions for the project to import on Strapi Cloud.
-  * Groups and Subgroups habilitations are not supported at the moment.
+  * Groups and Subgroups organizations are not supported at the moment.
 :::
 
 ## Logging in to Strapi Cloud
