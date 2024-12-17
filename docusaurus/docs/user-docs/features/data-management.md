@@ -17,9 +17,9 @@ tags:
 The Data Management feature can be used to import, export, or transfer data. Data Management is  CLI-based only, but is partly configured in the admin panel.
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> Free feature. <br/>
+<Icon name="credit-card"/> **Plan:** Free feature. <br/>
 <Icon name="user"/> **Role & permission:** Minimum "Access the transfer tokens settings page" permission in Roles > Settings - Transfer tokens. <br/>
-<Icon name="toggle-left"/> **Activation:** Available and activated by default. <br/>
+<Icon name="toggle-left"/> **Activation:** Available and activated if a transfer salt is defined. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
 :::
 
