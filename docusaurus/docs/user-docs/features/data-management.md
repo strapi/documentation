@@ -128,7 +128,7 @@ export default ({ env }) => ({
 
 ## Usage
 
-The Data Management system is CLI-based only, meaning any import, export, or transfer command should be executed from the terminal. Exhaustive documentation for each command is accessible from the following pages:
+The Data Management system is CLI-based only, meaning any import, export, or transfer command must be executed from the terminal. Exhaustive documentation for each command is accessible from the following pages:
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="terminal" title="Import" description="Learn how to import data into a Strapi instance." link="/dev-docs/data-management/import"/>
