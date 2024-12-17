@@ -64,16 +64,9 @@ const sidebars = {
           id: 'user-docs/features/content-history'
         },
         {
-          type: 'category',
+          type: 'doc',
           label: 'Data Management',
-          collapsed: true,
-          // link: {type: 'doc', id: 'dev-docs/data-management'},
-          items: [
-            'user-docs/settings/transfer-tokens',
-            'dev-docs/data-management/import',
-            'dev-docs/data-management/export',
-            'dev-docs/data-management/transfer',
-          ]
+          id: 'user-docs/features/data-management'
         },
         {
           type: 'doc',
