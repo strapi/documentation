@@ -217,7 +217,12 @@ const sidebars = {
         'dev-docs/configurations/functions',
         'dev-docs/configurations/middlewares',
         'dev-docs/configurations/plugins',
-        'dev-docs/providers',
+        {
+          type: 'doc',
+          id: 'dev-docs/providers',
+          label: 'Email & Upload Providers'
+        },
+        'dev-docs/configurations/users-and-permissions-providers',
         'dev-docs/configurations/server',
         'dev-docs/configurations/sso',
         'dev-docs/configurations/typescript',

@@ -7,7 +7,7 @@ tags:
 
 ---
 
-# Providers
+# Email and Upload Providers
 
 2 Strapi features, [Email](/user-docs/features/email) and the [Media Library](/user-docs/features/media-library), can be extended via the installation and configuration of additional providers.
 
