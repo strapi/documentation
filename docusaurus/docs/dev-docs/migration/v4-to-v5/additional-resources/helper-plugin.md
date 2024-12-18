@@ -995,7 +995,9 @@ If you feel like you need this util, please open an issue on the Strapi reposito
 ### request
 
 This util has been removed and not replaced.
-You can use `useFetchClient` from `@strapi/strapi/admin`.
+You can use `useFetchClient` from `@strapi/strapi/admin`.<UpdatedBadge />
+
+<UpdatedBadge />
 
 ```tsx
 // Before

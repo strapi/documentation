@@ -110,10 +110,12 @@ Clicking on the **Manage** button for any environment will redirect you to the e
 
 To create a new environment:
 
+
 1. Click on the **Add a new environment** button.
 2. In the dialog that opens, you can see the price for the new environment and the date of the next invoice.
 3. Fill in the available settings:
 
+  <UpdatedBadge />
     | Setting name     | Instructions                                                             |
     | ---------------- | ------------------------------------------------------------------------ |
     | Environment name | (mandatory) Write a name for your project's new environment.             |
@@ -306,6 +308,7 @@ Resetting an environment deletes all environments data and resets the variables 
 2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
 3. Fill in the available fields to reset the environment:
 
+  <UpdatedBadge />
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
     | Environment name | (mandatory) Write a name for your project's new environment.            |

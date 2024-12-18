@@ -8,7 +8,7 @@ tags:
 - configuration
 ---
 
-# Setting up the Preview feature
+# Setting up the Preview feature <NewBadge />
 
 Strapi's Preview feature enables previewing content in a frontend application directly from the Strapi admin panel. 
 

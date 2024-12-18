@@ -43,7 +43,7 @@ To connect a new Google, GitLab or GitHub account to your Strapi Cloud account, 
 
 You can also click on the three dots button of a connected account and click on the "Manage on" button to manage your GitHub, GitLab or Google account directly on the corresponding website.
 
-:::caution
+:::caution <NewBadge />
 For GitLab, Groups and Subgroups organizations are not supported at the moment.
 :::
 

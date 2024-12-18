@@ -18,7 +18,7 @@ This is a step-by-step guide for deploying your project on Strapi Cloud for the 
 Before you can deploy your Strapi application on Strapi Cloud using the Command Line Interface, you need to have the following prerequisites:
 
 - Have remaining free trials.
-- Have a Google, GitHub or GitLab account. For GitLab, Groups and Subgroups organizations are not supported at the moment.
+- Have a Google, GitHub or GitLab account. For GitLab, Groups and Subgroups organizations are not supported at the moment. <UpdatedBadge />
 - Have an already created Strapi project (see [Installing from CLI in the Developer Documentation](/dev-docs/installation/cli)), stored locally. The project must be less than 100MB.
 - Have available storage in your hard drive where the temporary folder of your operating system is stored.
 :::

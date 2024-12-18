@@ -32,7 +32,7 @@ sources={{
   }}
 />
 
-The ![Home icon](/img/assets/icons/v5/House.svg) admin panel homepage can display the guided tour (if you have not skipped or completed it yet) and last edited and published entries if you have any.
+The ![Home icon](/img/assets/icons/v5/House.svg) admin panel homepage can display the guided tour (if you have not skipped or completed it yet) and last edited and published entries if you have any<UpdatedBadge />.
 
 If you are not sure where to begin on this User Guide, we suggest you to:
 

@@ -19,13 +19,14 @@ The present documentation lists the available Plugin SDK commands. The [associat
 
 Create a new plugin at a given path.
 
+<UpdatedBadge/>
 ```bash
-npx @strapi/sdk-plugin init
+npx @strapi/sdk-plugin init /path/to/my/plugin
 ```
 
 | Arguments |  Type  | Description        | Default                   |
 | --------- | :----: | ------------------ | ------------------------- |
-| `path`    | string | Path to the plugin | `./src/plugins/my-plugin` |
+| `path`    | string | Path to the plugin | `/src/plugins/my-plugin` |
 
 | Option        | Type | Description                             | Default |
 | ------------- | :--: | --------------------------------------- | ------- |

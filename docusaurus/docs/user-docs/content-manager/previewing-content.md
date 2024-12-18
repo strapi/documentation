@@ -7,7 +7,7 @@ tags:
 - preview
 ---
 
-# Previewing content 
+# Previewing content <NewBadge />
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
