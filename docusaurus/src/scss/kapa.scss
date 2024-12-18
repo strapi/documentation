@@ -164,6 +164,12 @@
     }
   }
 
+
+  .mantine-Alert-root {
+    background-color: transparent;
+    border: solid 1px var(--strapi-neutral-200);
+  }
+
   // Disclaimer
 
   .mantine-Modal-body>.mantine-Modal-body>div:first-of-type>div:first-of-type {
