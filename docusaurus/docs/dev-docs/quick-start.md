@@ -21,7 +21,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 *Estimated completion time: 5-10 minutes*
 
 <details>
-<summary>☑️ Prerequisites:</summary>
+<summary>Prerequisites:</summary>
 
 <InstallPrerequisites components={props.components} />
 
