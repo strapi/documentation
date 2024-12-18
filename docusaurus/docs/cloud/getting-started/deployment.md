@@ -24,7 +24,9 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
 * Project(s) source code hosted on [GitHub](https://github.com) or [GitLab](https://about.gitlab.com/). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
-* Specifically for GitLab: at least have "[Maintainer](https://docs.gitlab.com/ee/user/permissions.html)" permissions for the project to import on Strapi Cloud.
+* Specifically for GitLab:
+  * at least have "[Maintainer](https://docs.gitlab.com/ee/user/permissions.html)" permissions for the project to import on Strapi Cloud.
+  * Groups and Subgroups organizations are not supported at the moment.
 :::
 
 ## Logging in to Strapi Cloud
