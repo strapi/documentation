@@ -347,9 +347,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         content:'\E128';
       }
     }
-    svg {
-      // display: none;
-    }
+    // svg {
+    //   display: none;
+    // }
     [class*="expandButton"] {
       svg {
         display: none;

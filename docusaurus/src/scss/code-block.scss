@@ -160,6 +160,10 @@ pre.prism-code {
         }
       }
     }
+
+    svg {
+      display: initial;
+    }
   }
 
   [class*="codeBlockTitle"] {
@@ -320,7 +324,7 @@ pre.prism-code {
   }
 
   .clean-btn {
-    background-color: var(--strapi-neutral-100);
+    background-color: transparent;
 
     svg {
       color: var(--strapi-neutral-900);
