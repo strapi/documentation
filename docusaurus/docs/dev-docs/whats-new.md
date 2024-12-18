@@ -17,6 +17,8 @@ Strapi 5 brings many new features and improvements, and this page quickly highli
 
 <Icon name="magic-wand"/> The new **[Content History](/user-docs/content-manager/working-with-content-history)** feature allows you to view and restore previous versions of your content from the Content Manager.
 
+<Icon name="eye" /> The new **[Preview](/user-docs/content-manager/previewing-content)** feature allows you to preview your content in your front end application directly from Strapi's admin panel.
+
 <Icon name="file"/> Strapi 5 now use **[documents](/dev-docs/api/document)** and introduces a new **[Document Service API](/dev-docs/api/document-service)** to replace the Entity Service API from v4, leveraging the new Draft & Publish system and paving the way for more upcoming features.
 
 <Icon name="detective"/> The **[REST API](/dev-docs/api/rest)** and **[GraphQL API](/dev-docs/api/graphql)** have been updated, with a simplified response data format for both and partial support for Relay-style queries for GraphQL.
@@ -31,4 +33,4 @@ Strapi 5 brings many new features and improvements, and this page quickly highli
 
 <Icon name="plus" /> You will also soon find more **official guides** and more references to **external resources** (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
 
-<Icon name="call-bell" /> Also, last but not least, you might have noticed that the search bar in the top navigation bar now combines 2 buttons: the left button, **<Icon name="magnifying-glass" classes="ph-light" /> Search**, triggers a regular search, while the right part is our new AI-based chatbot! Click **<Icon name="sparkle"/> Ask AI** to ask your questions. The chatbot keeps the context of previous answers, so you can ask follow-up questions as long as you don't close the chatbot window.
+<Icon name="call-bell" /> Also, last but not least, you might have noticed that the search bar now sits in the left sidebar and combines 2 buttons: the left button, **<Icon name="magnifying-glass" classes="ph-light" /> Search**, triggers a regular search, while the right part is our new AI-based chatbot! Click **<Icon name="sparkle"/> Ask AI** to ask your questions. The chatbot keeps the context of previous answers, so you can ask follow-up questions as long as you don't close the chatbot window.
