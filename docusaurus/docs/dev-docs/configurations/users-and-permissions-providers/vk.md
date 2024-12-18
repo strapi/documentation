@@ -1,5 +1,5 @@
 ---
-title: VK provider for Users & Permissions
+title: VK provider setup for Users & Permissions
 # description: todo
 displayed_sidebar: cmsSidebar
 tags:
@@ -9,33 +9,43 @@ tags:
 - customization
 ---
 
-# VK provider for Users & Permissions
+import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
-<h4 id="vk">Using ngrok</h4>
+# VK provider setup for Users & Permissions
 
+The present page explains how to setup the VK provider for the [Users & Permissions feature](/user-docs/features/users-permissions).
+
+:::prerequisites
+You have the [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers).
+:::
+
+## VK configuration 
+
+:::note
 VK accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
+:::
 
-<h4 id="vk-config">VK configuration</h4>
+1. Visit the Apps list page at [https://vk.com/apps?act=manage](https://vk.com/apps?act=manage)
+2. Click on **Create app** button
+3. Fill the information:
+   - **Title**: Strapi auth
+   - **Platform**: Choose **Website** option
+   - **Website address**: `http://localhost:1337`
+   - **Base domain**: `localhost`
+4. Click on the **Settings** link in the left menu
+5. Click on the **Open API** link to enable this option
+6. Fill the information:
+   - **Authorized redirect URL**: `http://localhost:1337/api/connect/vk/callback`
 
-- Visit the Apps list page <br/> [https://vk.com/apps?act=manage](https://vk.com/apps?act=manage)
-- Click on **Create app** button
-- Fill the information:
-  - **Title**: Strapi auth
-  - **Platform**: Choose **Website** option
-  - **Website address**: `http://localhost:1337`
-  - **Base domain**: `localhost`
-- Click on the **Settings** link in the left menu
-- Click on the **Open API** link to enable this option
-- Fill the information:
-  - **Authorized redirect URL**: `http://localhost:1337/api/connect/vk/callback`
+## Strapi configuration
 
-<h4 id="vk-strapi-config">Strapi configuration</h4>
+1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+2. Click on the **VK** provider
+3. Fill the information:
+   - **Enable**: `ON`
+   - **Client ID**: 7276416
+   - **Client Secret**: cFBUSghLXGuxqnCyw1N3
+   - **The redirect URL to your front-end app**: `http://localhost:3000/connect/vk/redirect`
 
-- Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
-- Click on the **VK** provider
-- Fill the information:
-  - **Enable**: `ON`
-  - **Client ID**: 7276416
-  - **Client Secret**: cFBUSghLXGuxqnCyw1N3
-  - **The redirect URL to your front-end app**: `http://localhost:3000/connect/vk/redirect`
+<ConfigDone />

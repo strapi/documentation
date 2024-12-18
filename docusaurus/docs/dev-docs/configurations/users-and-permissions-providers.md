@@ -11,7 +11,7 @@ tags:
 
 # Users & Permissions providers
 
-Strapi comes with a predefined set of built-in providers for the [Users & Permissions feature](/user-docs/features/users-permissions). Custom providers can be configured.
+Strapi comes with a predefined set of built-in providers for the [Users & Permissions feature](/user-docs/features/users-permissions). Custom providers can also be configured (see the [dedicated guide](/dev-docs/configurations/users-and-permissions-providers/new-provider-guide)).
 
 ## Understanding the login flow
 

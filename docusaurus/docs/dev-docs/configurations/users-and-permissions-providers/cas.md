@@ -1,5 +1,5 @@
 ---
-title: CAS provider for Users & Permissions
+title: CAS provider setup for Users & Permissions
 # description: todo
 displayed_sidebar: cmsSidebar
 tags:
@@ -9,15 +9,23 @@ tags:
 - customization
 ---
 
-# CAS provider for Users & Permissions
+import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
-<h4 id="cas">Using ngrok</h4>
+# CAS provider setup for Users & Permissions
 
+The present page explains how to setup the Auth0 provider for the [Users & Permissions feature](/user-docs/features/users-permissions).
+
+:::prerequisites
+You have the [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers).
+:::
+
+## CAS configuration
+
+:::note
 A remote CAS server can be configured to accept `localhost` URLs or you can run your own CAS server locally that accepts them.
 
 The use of `ngrok` is not needed.
-
-<h4 id="cas-config">CAS configuration</h4>
+:::
 
 - [CAS](https://github.com/apereo/cas) is an SSO server that supports many different methods of verifying a users identity,
   retrieving attributes out the user and communicating that information to applications via protocols such as SAML, OIDC, and the CAS protocol. Strapi can use a CAS server for authentication if CAS is deployed with support for OIDC.
@@ -48,19 +56,21 @@ The use of `ngrok` is not needed.
 }
 ```
 
-<h4 id="cas-strapi-config">Strapi configuration</h4>
+## Strapi configuration
 
-- Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/plugins/users-permissions/providers](http://localhost:1337/admin/plugins/users-permissions/providers)
-- Click on the **Cas** provider
-- Fill the information:
-  - **Enable**: `ON`
-  - **Client ID**: thestrapiclientid
-  - **Client Secret**: thestrapiclientsecret
-  - **The redirect URL to your front-end app**: `http://localhost:1337/api/connect/cas/redirect`
-  - **The Provider Subdomain such that the following URLs are correct for the CAS deployment you are targeting:**
-  ```
-    authorize_url: https://[subdomain]/oidc/authorize
-    access_url: https://[subdomain]/oidc/token
-    profile_url: https://[subdomain]/oidc/profile
-  ```
-  For example, if running CAS locally with a login URL of: `https://localhost:8443/cas/login`, the value for the provider subdomain would be `localhost:8443/cas`.
+1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/plugins/users-permissions/providers](http://localhost:1337/admin/plugins/users-permissions/providers)
+2. Click on the **CAS** provider
+3. Fill the information:
+   - **Enable**: `ON`
+   - **Client ID**: thestrapiclientid
+   - **Client Secret**: thestrapiclientsecret
+   - **The redirect URL to your front-end app**: `http://localhost:1337/api/connect/cas/redirect`
+   - **The Provider Subdomain such that the following URLs are correct for the CAS deployment you are targeting:**
+   ```
+     authorize_url: https://[subdomain]/oidc/authorize
+     access_url: https://[subdomain]/oidc/token
+     profile_url: https://[subdomain]/oidc/profile
+   ```
+   For example, if running CAS locally with a login URL of: `https://localhost:8443/cas/login`, the value for the provider subdomain would be `localhost:8443/cas`.
+
+<ConfigDone />

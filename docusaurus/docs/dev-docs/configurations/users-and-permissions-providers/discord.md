@@ -1,5 +1,5 @@
 ---
-title: Discord provider for Users & Permissions
+title: Discord provider setup for Users & Permissions
 # description: todo
 displayed_sidebar: cmsSidebar
 tags:
@@ -9,30 +9,40 @@ tags:
 - customization
 ---
 
-# Discord provider for Users & Permissions
+import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 
-<h4 id="discord">Using ngrok</h4>
+# Discord provider setup for Users & Permissions
 
+The present page explains how to setup the Discord provider for the [Users & Permissions feature](/user-docs/features/users-permissions).
+
+:::prerequisites
+You have the [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers).
+:::
+
+## Discord configuration
+
+:::note
 Discord accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
+:::
 
-<h4 id="discord-configuration">Discord configuration</h4>
+1. Visit the Apps list page on the developer portal at [https://discordapp.com/developers/applications/](https://discordapp.com/developers/applications/)
+2. Click on **New application** button
+3. Fill the **name** and create
+4. Click on **OAuth2** in the left menu
+5. And click on **Add redirect** button
+6. Fill the **Redirect** input with `http://localhost:1337/api/connect/discord/callback` URL and save
+7. Click on **General information** in the left menu
+8. You should see your Application ID and secret, save them for later
 
-- Visit the Apps list page on the developer portal <br/> [https://discordapp.com/developers/applications/](https://discordapp.com/developers/applications/)
-- Click on **New application** button
-- Fill the **name** and create
-- Click on **OAuth2** in the left menu
-- And click on **Add redirect** button
-- Fill the **Redirect** input with `http://localhost:1337/api/connect/discord/callback` URL and save
-- Click on **General information** in the left menu
-- You should see your Application ID and secret, save them for later
+## Strapi configuration
 
-<h4 id="discord-strapi-configuration">Strapi configuration</h4>
+1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+2. Click on the **Discord** provider
+3. Fill the information (replace with your own client ID and secret):
+   - **Enable**: `ON`
+   - **Client ID**: 665118465148846081
+   - **Client Secret**: iJbr7mkyqyut-J2hGvvSDch_5Dw5U77J
+   - **The redirect URL to your front-end app**: `http://localhost:3000/connect/discord/redirect`
 
-- Visit the User Permissions provider settings page <br/> [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
-- Click on the **Discord** provider
-- Fill the information (replace with your own client ID and secret):
-  - **Enable**: `ON`
-  - **Client ID**: 665118465148846081
-  - **Client Secret**: iJbr7mkyqyut-J2hGvvSDch_5Dw5U77J
-  - **The redirect URL to your front-end app**: `http://localhost:3000/connect/discord/redirect`
+<ConfigDone />
