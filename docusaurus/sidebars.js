@@ -942,7 +942,7 @@ const sidebars = {
   restApiSidebar: [
     {
       type: 'link',
-      label: '⬅️ Back to Dev Docs content',
+      label: '← Back to Dev Docs content',
       href: '/dev-docs/intro',
     },
     {
@@ -1140,7 +1140,7 @@ const sidebars = {
   devDocsConfigSidebar: [
     {
       type: 'link',
-      label: '⬅️ Back to Dev Docs content',
+      label: '← Back to Dev Docs content',
       href: '/dev-docs/intro',
     },
     {
@@ -1215,7 +1215,7 @@ const sidebars = {
   devDocsMigrationV5Sidebar: [
     {
       type: 'link',
-      label: '⬅️ Back to Dev Docs content',
+      label: '← Back to Dev Docs content',
       href: '/dev-docs/intro',
     },
     {
