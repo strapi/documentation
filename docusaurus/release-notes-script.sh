@@ -213,13 +213,13 @@ main() {
             # Create section file if it doesn't exist
             case "$section" in
                 "new_content")
-                    echo "### ✨ New content" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name="sparkle" /> New content" > "$TEMP_DIR/${section}_header"
                     ;;
                 "updated_content")
-                    echo "### 🖌 Updated content" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name="pen-nib" /> Updated content" > "$TEMP_DIR/${section}_header"
                     ;;
                 "chore")
-                    echo "### 🧹 Chore, fixes, typos, and other improvement" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvement" > "$TEMP_DIR/${section}_header"
                     ;;
             esac
 
