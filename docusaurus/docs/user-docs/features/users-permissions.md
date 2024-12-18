@@ -124,7 +124,7 @@ When ticking an action or permission box, related bound routes of the API are di
 
 ### Configuring providers
 
-The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
+Users & Permissions allows enabling and configuring providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with Users & Permissions enabled.
 
 <ThemedImage
   alt="Providers interface"
@@ -139,11 +139,11 @@ To enable and configure a provider:
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
 2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the provider to enable and configure.
 3. In the provider edition window, click on the **TRUE** button of the *Enable* option.
-4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation  (see [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers)).
+4. Fill in the provider's configurations. Each provider has its own specific set of configurations (see [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers)).
 5. Click on the **Save** button.
 
-:::note
-Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers)).
+:::tip
+Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [the dedicated guide](/dev-docs/configurations/users-and-permissions-providers/new-provider-guide)).
 :::
 
 <!---
