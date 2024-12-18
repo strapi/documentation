@@ -14,7 +14,7 @@ tags:
 - Strapi Cloud plan
 ---
 
-# Project deployment with the Cloud dashboard <UpdatedBadge />
+# Project deployment with the Cloud dashboard
 
 This is a step-by-step guide for deploying your project on Strapi Cloud for the first time, using the Cloud dashboard.
 
