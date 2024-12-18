@@ -62,6 +62,9 @@ This release was made possible thanks to the following contributors. Thank you! 
 <a href="https://github.com/kibwashere" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
 </a>
+<a href="https://github.com/lucasboilly" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/45385696?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="lucasboilly"/>
+</a>
 <a href="https://github.com/pwizla" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
 </a>
