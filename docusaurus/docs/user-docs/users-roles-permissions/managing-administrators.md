@@ -4,7 +4,6 @@ displayed_sidebar: userDocsSidebar
 sidebar_position: 3
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 
 # Managing administrator accounts

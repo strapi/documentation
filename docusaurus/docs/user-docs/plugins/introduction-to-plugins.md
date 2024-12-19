@@ -12,8 +12,6 @@ tags:
 pagination_next: user-docs/plugins/installing-plugins-via-marketplace
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Introduction to plugins
 
 Strapi is built around different types of plugins. Every default Strapi application comes with the following pre-installed plugins:
@@ -48,7 +46,7 @@ Some plugins can be further extended through the configuration of _providers_, p
 
 Currently, the only plugins designed to work with providers are the:
 
-* [Email plugin](/dev-docs/plugins/email/), and
+* [Email plugin](/user-docs/features/email/), and
 * Media Library plugin (implemented via the [Upload plugin](/dev-docs/plugins/upload/)).
 
 ## Custom fields

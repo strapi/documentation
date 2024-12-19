@@ -3,23 +3,17 @@ title: Providers
 description: Install and use providers to extend the functionality of available plugins.
 tags:
 - environment
-- provider
-- local providers
-- private providers
+- providers
 
 ---
 
-# Providers
+# Email and Upload Providers
 
-Certain [plugins](../../../user-docs/plugins) can be extended via the installation and configuration of additional [providers](../../../user-docs/plugins#providers).
+2 Strapi features, [Email](/user-docs/features/email) and the [Media Library](/user-docs/features/media-library), can be extended via the installation and configuration of additional providers.
 
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
-:::note
-Only the [Upload](/dev-docs/plugins/upload) and [Email](/dev-docs/plugins/email) plugins are currently designed to work with providers. 
-:::
-
-For the relevant plugins, there are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
+There are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
 A provider can be configured to be [private](#creating-private-providers) to ensure asset URLs will be signed for secure access.
 
@@ -33,28 +27,32 @@ For example:
 
 <TabItem value="yarn" label="yarn">
 
+Install the AWS S3 provider for the Upload (Media Library) feature:
+
 ```bash
-#Install the AWS S3 provider for the Upload plugin
-
 yarn add @strapi/provider-upload-aws-s3
+```
 
-# Install the Sendgrid provider for the Email plugin
-yarn add @strapi/provider-email-sendgrid --save
+Install the Sendgrid provider for the Email feature:
 
+```bash
+yarn add @strapi/provider-email-sendgrid
 ```
 
 </TabItem>
 
 <TabItem value="npm" label="npm">
 
+Install the AWS S3 provider for the Upload (Media Library) feature:
+
 ```bash
-#Install the AWS S3 provider for the Upload plugin
-
 npm install @strapi/provider-upload-aws-s3 --save
+```
 
-# Install the Sendgrid provider for the Email plugin
+Install the Sendgrid provider for the Email feature:
+
+```bash
 npm install @strapi/provider-email-sendgrid --save
-
 ```
 
 </TabItem>
@@ -63,21 +61,21 @@ npm install @strapi/provider-email-sendgrid --save
 
 ## Configuring providers
 
-Newly installed providers are enabled and configured in the `./config/plugins.js` file. If this file does not exist you must create it.
+Newly installed providers are enabled and configured in [the `/config/plugins` file](/dev-docs/configurations/plugins). If this file does not exist you must create it.
 
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) or [npm](https://www.npmjs.com/) to learn more.
 
-Below are example configurations for the Upload and Email plugins.
+The following are example configurations for the Upload (Media Library) and Email features:
 
 <Tabs>
 
-<TabItem value="Upload" title="Upload">
+<TabItem value="Upload" label="Upload (Media Library)">
 
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./config/plugins.js"
+```js title="/config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -115,7 +113,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./config/plugins.ts"
+```ts title="/config/plugins.ts"
 
 export default ({ env }) => ({
   // ...
@@ -147,13 +145,13 @@ Strapi has a default [`security` middleware](/dev-docs/configurations/middleware
 
 </TabItem>
 
-<TabItem value="Email" title="Email">
+<TabItem value="Email" label="Email">
 
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./config/plugins.js"
+```js title="/config/plugins.js"
 
 module.exports = ({ env }) => ({
   // ...
@@ -178,7 +176,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./config/plugins.ts"
+```ts title="/config/plugins.ts"
 
 export default ({ env }) => ({
   // ...
@@ -205,8 +203,8 @@ export default ({ env }) => ({
 
 :::note
 
-* When using a different provider per environment, specify the correct configuration in `./config/env/${yourEnvironment}/plugins.js` (See [Environments](/dev-docs/configurations/environment)).
-* Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js` file is in the correct folder.
+* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/dev-docs/configurations/environment)).
+* Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
 * When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates)).
 
 :::
@@ -218,16 +216,16 @@ export default ({ env }) => ({
 
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
 
-You can set a specific configuration in the `./config/env/{env}/plugins.js` configuration file and it will be used to overwrite the default configuration.
+You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` configuration file and it will be used to overwrite the default configuration.
 
 ## Creating providers
 
 To implement your own custom provider you must [create a Node.js module](https://docs.npmjs.com/creating-node-js-modules).
 
-The interface that must be exported depends on the plugin you are developing the provider for. Below are templates for the Upload and Email plugins:
+The interface that must be exported depends on the plugin you are developing the provider for. The following are templates for the Upload (Media Library) and Email features:
 
 <Tabs>
-<TabItem value="Upload" title="Upload">
+<TabItem value="Upload" label="Upload (Media Library)">
 
 <Tabs groupId="js-ts">
 
@@ -319,7 +317,7 @@ export default {
 
 </TabItem>
 
-<TabItem value="Email" title="Email">
+<TabItem value="Email" label="Email">
 
 <Tabs groupId="js-ts">
 
@@ -358,8 +356,8 @@ export {
 
 In the send function you will have access to:
 
-* `providerOptions` that contains configurations written in `plugins.js`
-* `settings` that contains configurations written in `plugins.js`
+* `providerOptions` that contains configurations written in `plugins.js|ts`
+* `settings` that contains configurations written in `plugins.js|ts`
 * `options` that contains options you send when you call the send function from the email plugin service
 
 You can review the [Strapi maintained providers](https://github.com/strapi/strapi/tree/master/packages/providers) for example implementations.
@@ -371,7 +369,7 @@ After creating your new provider you can [publish it to npm](https://docs.npmjs.
 If you want to create your own provider without publishing it on npm you can follow these steps:
 
 1. Create a `providers` folder in your application.
-2. Create your provider (e.g. `./providers/strapi-provider-<plugin>-<provider>`)
+2. Create your provider (e.g. `/providers/strapi-provider-<plugin>-<provider>`)
 3. Then update your `package.json` to link your `strapi-provider-<plugin>-<provider>` dependency to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your new provider.
 
 ```json
@@ -385,10 +383,10 @@ If you want to create your own provider without publishing it on npm you can fol
 }
 ```
 
-4. Update your `./config/plugins.js` file to [configure the provider](#configuring-providers).
-5. Finally, run `yarn install` or `npm install` to install your new custom provider.
+4. Update your `/config/plugins.js|ts` file to [configure the provider](#configuring-providers).
+5. Finally, run `yarn` or `npm install` to install your new custom provider.
 
-## Creating private providers
+### Creating private providers
 
 You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
 
@@ -404,7 +402,7 @@ Note that for security reasons, the content API will not provide any signed URLs
 
 To create a private `aws-s3` provider:
 
-1. Create a `./providers/aws-s3` folder in your application. See [Local Providers](#local-providers) for more information.
+1. Create a `/providers/aws-s3` folder in your application. See [Local Providers](#local-providers) for more information.
 2. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
 3. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
 
@@ -412,7 +410,7 @@ To create a private `aws-s3` provider:
 
 <TabItem value="js" label="JavaScript">
 
-```js title="./providers/aws-s3/index.js"
+```js title="/providers/aws-s3/index.js"
 // aws-s3 provider
 
 module.exports = {
@@ -451,7 +449,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./providers/aws-s3/index.ts"
+```ts title="/providers/aws-s3/index.ts"
 // aws-s3 provider
 
 export = {

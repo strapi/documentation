@@ -1,7 +1,7 @@
 --- 
 title: REST API reference
 description: Interact with your Content-Types using the REST API endpoints Strapi generates for you.
-displayed_sidebar: restApiSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API
@@ -24,10 +24,6 @@ All content types are private by default and need to be either made public or qu
 
 :::note
 By default, the REST API responses only include top-level fields and does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](/dev-docs/api/rest/populate-select) to populate specific fields. Ensure that the find permission is given to the field(s) for the relation(s) you populate.
-:::
-
-:::strapi Upload plugin API
-The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library)) has a specific API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
 :::
 
 ## Endpoints
@@ -119,6 +115,10 @@ The following endpoint examples are taken from the [FoodAdvisor](https://github.
 </TabItem>
 </Tabs>
 </details>
+
+:::strapi Upload API
+The Upload package (which powers the [Media Library feature](/user-docs/features/media-library)) has a specific API accessible through its [`/api/upload` endpoints](/dev-docs/api/rest/upload).
+:::
 
 :::note
 [Components](/dev-docs/backend-customization/models#components-json) don't have API endpoints.
@@ -274,7 +274,7 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 Creates a document and returns its value.
 
-If the [Internationalization (i18n) plugin](/dev-docs/i18n) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/i18n#rest-create).
+If the [Internationalization (i18n) plugin](/user-docs/features/internationalization) is installed, it's possible to use POST requests to the REST API to [create localized documents](/dev-docs/api/rest/locale#rest-delete).
 
 :::note
 While creating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations.md) for more details).
@@ -346,7 +346,7 @@ Send a `null` value to clear fields.
 
 :::note NOTES
 * Even unmodified fields must be included in the request's body.
-* Even with the [Internationalization (i18n) plugin](/dev-docs/i18n) installed, it's currently not possible to [update the locale of a document](/dev-docs/i18n#rest-update).
+* Even with the [Internationalization (i18n) plugin](/user-docs/features/internationalization) installed, it's currently not possible to [update the locale of a document](/dev-docs/api/rest/locale#rest-update).
 * While updating a document, you can define its relations and their order (see [Managing relations through the REST API](/dev-docs/api/rest/relations) for more details).
 :::
 

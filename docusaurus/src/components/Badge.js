@@ -90,7 +90,19 @@ export function EnterpriseBadge(props) {
       variant="Enterprise"
       link="https://strapi.io/pricing-self-hosted"
       icon="feather"
-      tooltip="This feature is available with an Enterprise licence."
+      tooltip="This feature is available with an Enterprise plan."
+      {...props}
+    />
+  );
+}
+
+export function GrowthBadge(props) {
+  return (
+    <Badge
+      variant="Growth"
+      link="https://strapi.io/pricing-self-hosted"
+      icon="feather"
+      tooltip="This feature is available with a Growth plan."
       {...props}
     />
   );

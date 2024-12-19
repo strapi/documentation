@@ -2,7 +2,7 @@
 title: The isSupportedImage method is removed in Strapi 5
 description: The `isSupportedImage` method is removed in Strapi 5. Users should use `isImage` or `isOptimizableImage` instead.
 sidebar_label: isSupportedImage removed
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - upload plugin

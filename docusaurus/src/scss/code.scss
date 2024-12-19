@@ -36,6 +36,10 @@ pre {
   }
 }
 
+h1, h2, h3, h4, h5 {
+  display: inline-block !important;
+}
+
 h1, h2, h3, li, p, table {
   code {
     background-color: var(--custom-code-background-color);
@@ -50,6 +54,16 @@ h1, h2, h3, li, p, table {
     --custom-code-color: var(--ifm-link-color);
 
     font-weight: var(--ifm-font-weight-bold);
+  }
+}
+
+h2, h3 {
+  code {
+    padding: 4px 8px;
+    vertical-align: baseline;
+    position: relative;
+    top: -2px;
+    margin-right: 6px;
   }
 }
 

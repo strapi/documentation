@@ -163,7 +163,7 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 
 ### `body`
 
-The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body). It accepts the following options:
+The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body). Tt uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files. `body` accepts the following options:
 
 | Option       | Description                                                                                                                             | Type                  | Default     |
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------|-----------------------|-------------|

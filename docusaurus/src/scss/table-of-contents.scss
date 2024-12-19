@@ -71,13 +71,19 @@
  */
 main .table-of-contents {
   code {
-    font-size: var(--strapi-font-size-xs);
+    font-size: var(--strapi-font-size-xxs);
     background-color: transparent;
     border: none;
     color: inherit;
     padding: 0;
-    font-weight: 500;
+    font-weight: 600;
+    position: relative;
+    top: -1px;
   }
+}
+
+ul.table-of-contents__left-border {
+  margin-bottom: -10px;
 }
 
 /** Responsive */
@@ -85,13 +91,14 @@ main .table-of-contents {
   .table-of-contents {
     --custom-toc-items-py: var(--strapi-spacing-2);
     margin-top: 74px;
+    font-weight: 500;
 
     &::before {
       content: '\e484';
       font-family: "Phosphor";
       font-size: 16px;
       position: relative;
-      top: -8px;
+      top: -9px;
       left: 6px;
     }
     &::after {

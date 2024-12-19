@@ -1,7 +1,7 @@
 ---
 title: No findPage() in Document Service API
 description: In Strapi 5, the Entity Service API is deprecated, and for the findPage() method you should use the Document Service API's findMany() method instead.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Document Service API

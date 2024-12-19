@@ -1,7 +1,7 @@
 ---
 title: Strict requirements for configuration filenames
 description: Strapi 5 has strict requirements on the configuration filenames allowed to be loaded.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - configuration

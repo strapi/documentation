@@ -31,7 +31,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 | **Content History** | 14 days retention | N/A | 14 days retention | 90 days retention |
 |  |  |  |  |  |
 | **Backups** | N/A | N/A | Weekly | Daily |
-| **Environments** | N/A | N/A | 0 included (up to 99 extra) | 1 included (up to 99 extra) |
+| **Environments** | N/A | N/A | 0 included (up to 99 extra) | 2 included (up to 99 extra) |
 
 :::strapi Additional information on usage and features
 - General features & usage:

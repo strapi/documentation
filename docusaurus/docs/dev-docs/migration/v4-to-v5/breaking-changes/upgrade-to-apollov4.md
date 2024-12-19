@@ -2,7 +2,7 @@
 title: Apollo Server v3 upgraded to Apollo Server v4
 description: The upgrade from Apollo Server v3 to v4 and graphql ^15 to ^16.
 sidebar_label: Upgrade to Apollo Server v4
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Content API

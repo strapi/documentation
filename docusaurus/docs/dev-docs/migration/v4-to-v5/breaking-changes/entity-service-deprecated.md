@@ -2,7 +2,7 @@
 title: Entity Service deprecated
 description: In Strapi 5, the Entity Service API is deprecated in favor of the new Document Service API.
 sidebar_label: Entity Service deprecated
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Entity Service API
