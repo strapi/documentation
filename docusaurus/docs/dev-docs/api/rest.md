@@ -31,7 +31,7 @@ The Upload plugin (which handles media found in the [Media Library](/user-docs/m
 :::
 
 :::strapi Strapi SDK <NewBadge />
-Strapi has just released a new SDK, currently in alpha. Early documentation is available on the [repository](https://github.com/strapi/sdk-js) while we are integrating it into the official REST API reference.
+Strapi has just released a new SDK, currently in beta. Early documentation is available on the [repository](https://github.com/strapi/sdk-js) while we are integrating it into the official REST API reference.
 :::
 
 ## Endpoints
