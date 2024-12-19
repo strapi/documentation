@@ -59,6 +59,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   padding-left: 14px;
   padding-right: 2px;
 
+  &.thin-scrollbar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   &__caret {
     margin: 0 0 0 3px;
     padding: 0;
