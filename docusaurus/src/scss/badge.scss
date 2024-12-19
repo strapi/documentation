@@ -180,6 +180,12 @@
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
+  &__link {
+    .strapi-icons {
+      // vertical-align: bottom;
+    }
+  }
+
   &--content {
     height: 20px;
     font-weight: 500;
@@ -232,7 +238,6 @@ main .badge--content {
   .strapi-icons {
     left: 2px;
     top: -2px;
-    vertical-align: bottom;
   }
 
   .badge__tooltip {
