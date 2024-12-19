@@ -1,5 +1,6 @@
 [id*="hotjar-survey"] {
   button {
+    // Does not work because Hotjar's own CSS already has an !important declaration added
     background-color: var(--strapi-primary-200) !important;
   }
 }
