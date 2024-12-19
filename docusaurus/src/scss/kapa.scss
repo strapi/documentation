@@ -191,8 +191,8 @@
   }
 
   // Buttons
-
-  .mantine-Button-root {
+  .mantine-Button-root,
+  .mantine-UnstyledButton-root {
     background-color: var(--strapi-neutral-0) !important;
 
     &:hover {
