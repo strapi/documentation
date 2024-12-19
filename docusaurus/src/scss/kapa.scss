@@ -95,20 +95,17 @@
 @include dark {
 
   // Modal
-
   .mantine-Paper-root {
     background-color: #181826;
     box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.8);
   }
 
   // Header
-
   .mantine-Modal-header {
     background-color: var(--strapi-neutral-100);
     border-bottom: solid 1px var(--strapi-neutral-150);
 
     // Close button
-
     .mantine-CloseButton-root {
       background-color: var(--strapi-neutral-100);
 
@@ -119,7 +116,6 @@
   }
 
   // Body
-
   .mantine-Modal-body * {
     color: var(--strapi-neutral-800);
   }
@@ -156,7 +152,6 @@
       }
 
       // Button
-
       .mantine-UnstyledButton-root {
         border: solid 1px #4945FF;
         border-radius: 4px;
@@ -171,7 +166,6 @@
   }
 
   // Disclaimer
-
   .mantine-Modal-body>.mantine-Modal-body>div:first-of-type>div:first-of-type {
     background-color: var(--strapi-neutral-0);
 
@@ -189,7 +183,6 @@
   }
 
   // Last texts
-
   .mantine-Modal-body>.mantine-Modal-body>div:last-of-type>div:last-of-type {
 
     .mantine-Text-root {
