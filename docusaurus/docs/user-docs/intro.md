@@ -32,7 +32,7 @@ sources={{
   }}
 />
 
-The ![Home icon](/img/assets/icons/v5/House.svg) admin panel homepage can display the guided tour (if you have not skipped or completed it yet) and last edited and published entries if you have any<UpdatedBadge />.
+The ![Home icon](/img/assets/icons/v5/House.svg) admin panel homepage can display the guided tour (if you have not skipped or completed it yet) and last edited and published entries if you have any<UpdatedBadge />. _Please note that the new homepage shown in the screenshot is currently only available in beta versions of Strapi, created with the `npx create-strapi@beta my-strapi-project` command._
 
 If you are not sure where to begin on this User Guide, we suggest you to:
 
