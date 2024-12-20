@@ -83,7 +83,7 @@ You can click on the description of any breaking change in the following tables 
 | [The Admin Panel RBAC redux store has been updated](/dev-docs/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated) | Yes | No |
 | [The `getWhere` method for permission provider instances has been removed](/dev-docs/migration/v4-to-v5/breaking-changes/get-where-removed) | Yes | No |
 
-## Content API
+## APIs
 
 | Description | Affects plugins | Handled by codemods |
 |-------------|-----------------|---------------------|
