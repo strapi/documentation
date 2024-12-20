@@ -31,9 +31,13 @@ Before getting into the upgrade process itself, take the following precautions:
   If you are using another type of database, please refer to their official documentation (see [PostgreSQL docs](https://www.postgresql.org/docs/) and [MySQL docs](https://dev.mysql.com/doc/)).
 
   If your project is hosted on Strapi Cloud, you can manually [create a backup](/cloud/projects/settings#creating-a-manual-backup).
+
+  <Icon name="warning"/> Please ensure your database entries are not using reserved names (see the related [breaking change page](/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved)).
+
 2. **Backup your code**:
     * If your code is versioned with git, create a new dedicated branch to run the migration.
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
+
 3. **Ensure the plugins you are using are compatible with Strapi 5**.
 
   To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the [Marketplace](https://market.strapi.io/plugins) website.
