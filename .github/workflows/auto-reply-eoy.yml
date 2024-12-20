@@ -1,0 +1,25 @@
+name: Auto Reply to Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-reply:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Auto Reply to Issue
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            👋 Thank you for your contribution!
+
+            ❄️ We are currently in an end-of-year contribution freeze period.
+            For more information, please check [our announcement](https://github.com/strapi/documentation/issues/2329).
+
+            Your issue will be processed once contributions resume.
+            
+            Thank you for your understanding!
