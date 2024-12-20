@@ -17,7 +17,7 @@ pagination_next: cloud/account/account-billing
 
 The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**.
 
-There are 4 tabs available in the *Profile* interface: ![General icon](/img/assets/icons/Faders.svg) [*General*](#general), ![Preferences icon](/img/assets/icons/Palette.svg) [*Preferences*](#preferences), ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* and ![Invoices icon](/img/assets/icons/Invoice.svg) Invoices (the last 2 are documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
+There are 3 tabs available in the *Profile* interface: ![General icon](/img/assets/icons/Faders.svg) [*General*](#general), ![Billing icon](/img/assets/icons/CreditCard.svg) *Billing* and ![Invoices icon](/img/assets/icons/Invoice.svg) Invoices (the last 2 are documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
 
 ## General
 
@@ -54,15 +54,3 @@ You can delete your Strapi Cloud account, but it will be permanent and irreversi
 1. In the *Delete account* section of the <Icon name="faders" /> *General* tab, click on the **Delete account** button.
 2. In the dialog, type `DELETE` in the textbox.
 3. Confirm the deletion of your account by clicking on the **Delete** button.
-
-## Preferences
-
-The <Icon name="palette" /> *Preferences* tab enables you to choose the appearance of your Strapi Cloud dashboard: either the Light or Dark theme.
-
-<ThemedImage
-  alt="Preferences tab of Profile page"
-  sources={{
-    light: '/img/assets/cloud/account-preferences.png',
-    dark: '/img/assets/cloud/account-preferences_DARK.png',
-  }}
-/>
