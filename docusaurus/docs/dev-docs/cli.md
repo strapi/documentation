@@ -52,10 +52,25 @@ Strapi modifies/creates files at runtime and needs to restart when new files are
 
 Strapi also adds middlewares to support HMR (Hot Module Replacement) for the administration panel. This allows you to customize the administration panel without having to restart the application or run a separate server.
 
-```shell
-strapi develop
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi develop
 options: [--no-build |--no-watch-admin |--browser |--debug |--silent]
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi develop
+options: [--no-build |--no-watch-admin |--browser |--debug |--silent]
+```
+
+</TabItem>
+</Tabs>
 
 - **strapi develop --open**<br/>
   Starts your application with auto-reloading enabled & open your default browser with the administration panel running.
@@ -79,13 +94,45 @@ Start a Strapi application with auto-reloading disabled.
 This command is to run a Strapi application without restarts and file writes, primarily for use in production.
 Certain features such as the Content-type Builder are disabled in the `strapi start` mode because they require application restarts. The `start` command can be prefaced with [environment variables](/dev-docs/configurations/environment#strapi) to customize the application start.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi start
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi start
+```
+
+</TabItem>
+</Tabs>
+
 ## strapi build
 
 Builds your admin panel.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi build
+yarn strapi build
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi build
+```
+
+</TabItem>
+</Tabs>
 
 | Option              | Type | Description                                              |
 | ------------------- | :--: | -------------------------------------------------------- |
@@ -100,21 +147,89 @@ strapi build
 
 Logs in to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-login) documentation).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi login
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi login
+```
+
+</TabItem>
+</Tabs>
+
 ## strapi logout
 
 Logs out from Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-logout) documentation).
+
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi logout
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi logout
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi deploy
 
 Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) documentation).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi deploy
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi deploy
+```
+
+</TabItem>
+</Tabs>
+
 ## strapi export
 
 [Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi export
+yarn strapi export
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi export
+```
+
+</TabItem>
+</Tabs>
 
 The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
 
@@ -130,21 +245,53 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 **Examples**
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash title="Examples of strapi export:"
 # export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
-strapi export -f myData
+yarn strapi export -f myData
 
 # export your data without encryption.
-strapi export --no-encrypt
+yarn strapi export --no-encrypt
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash title="Examples of strapi export:"
+# export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
+npm run strapi export -- -f myData
+
+# export your data without encryption.
+npm run strapi export -- --no-encrypt
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi import
 
 [Imports data](/dev-docs/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi import
+yarn strapi import
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi import
+```
+
+</TabItem>
+</Tabs>
 
 | Option         | Type   | Description                                                               |
 | -------------- | ------ | ------------------------------------------------------------------------- |
@@ -154,11 +301,25 @@ strapi import
 
 **Examples**
 
-```bash title="Example of strapi import:"
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
+```bash title="Example of strapi import:"
 # import your data with the default parameters and pass an encryption key:
-strapi import -f your-filepath-and-filename --key my-key
+yarn strapi import -f your-filepath-and-filename --key my-key
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash title="Example of strapi import:"
+# import your data with the default parameters and pass an encryption key:
+npm run strapi import -- -f your-filepath-and-filename --key my-key
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi transfer
 
@@ -185,9 +346,23 @@ Either `--to` or `--from` is required, but it's not currently allowed to enter b
 
 **Example**
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi transfer --to http://example.com/admin --to-token my-transfer-token
+yarn strapi transfer --to http://example.com/admin --to-token my-transfer-token
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi transfer -- --to http://example.com/admin --to-token my-transfer-token
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi report
 
@@ -201,17 +376,31 @@ Prints out debug information useful for debugging and required when reporting an
 
 **Examples**
 
-To include the project UUID and dependencies in the output:
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
-strapi report --uuid --dependencies
+# To include the project UUID and dependencies in the output:
+yarn strapi report --uuid --dependencies
+
+# To log everything, use the --all option:
+yarn strapi report --all
 ```
 
-To log everything, use the `--all` option:
+</TabItem>
+
+<TabItem value="npm" label="NPM">
 
 ```bash
-strapi report --all
+# To include the project UUID and dependencies in the output:
+npm run strapi report -- --uuid --dependencies
+
+# To log everything, use the --all option:
+npm run strapi report -- --all
 ```
+
+</TabItem>
+</Tabs>
 
 ## strapi configuration:dump
 
@@ -221,18 +410,55 @@ Dumps configurations to a file or stdout to help you migrate to production.
 
 The dump format will be a JSON array.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash title="strapi configuration:dump"
+yarn strapi configuration:dump
 
 Options:
   -f, --file <file>  Output file, default output is stdout
   -p, --pretty       Format the output JSON with indentation and line breaks (default: false)
 ```
 
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash title="strapi configuration:dump"
+npm run strapi configuration:dump
+
+Options:
+  -f, --file <file>  Output file, default output is stdout
+  -p, --pretty       Format the output JSON with indentation and line breaks (default: false)
+```
+
+</TabItem>
+</Tabs>
+
 **Examples**
 
-- `strapi configuration:dump -f dump.json`
-- `strapi config:dump --file dump.json`
-- `strapi config:dump > dump.json`
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi configuration:dump -f dump.json
+yarn strapi config:dump --file dump.json
+yarn strapi config:dump > dump.json
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi configuration:dump -- -f dump.json
+npm run strapi config:dump -- --file dump.json
+npm run strapi config:dump > dump.json
+```
+
+</TabItem>
+</Tabs>
 
 All these examples are equivalent.
 
@@ -243,7 +469,6 @@ In case of doubt, you should avoid committing the dump file into a versioning sy
 - Copy the file directly to the environment you want and run the restore command there.
 - Put the file in a secure location and download it at deploy time with the right credentials.
 - Encrypt the file before committing and decrypt it when running the restore command.
-
 :::
 
 ## strapi configuration:restore
@@ -254,20 +479,55 @@ Restores a configuration dump into your application.
 
 The input format must be a JSON array.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi configuration:restore
+yarn strapi configuration:restore
 
 Options:
   -f, --file <file>          Input file, default input is stdin
   -s, --strategy <strategy>  Strategy name, one of: "replace", "merge", "keep". Defaults to: "replace"
 ```
 
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi configuration:restore
+
+Options:
+  -f, --file <file>          Input file, default input is stdin
+  -s, --strategy <strategy>  Strategy name, one of: "replace", "merge", "keep". Defaults to: "replace"
+```
+
+</TabItem>
+</Tabs>
+
 **Examples**
 
-- `strapi configuration:restore -f dump.json`
-- `strapi config:restore --file dump.json -s replace`
-- `cat dump.json | strapi config:restore`
-- `strapi config:restore < dump.json`
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi configuration:restore -f dump.json
+yarn strapi config:restore --file dump.json -s replace
+yarn strapi config:restore < dump.json
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi configuration:restore -- -f dump.json
+npm run strapi config:restore -- --file dump.json -s replace
+npm run strapi config:restore < dump.json
+```
+
+</TabItem>
+</Tabs>
 
 All these examples are equivalent.
 
@@ -291,10 +551,23 @@ Administrator's first name, last name, email, and password can be:
 
 **Example**
 
-```bash
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
+```bash
+yarn strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi admin:create-user -- --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
+```
+
+</TabItem>
+</Tabs>
 
 **Options**
 
@@ -315,10 +588,23 @@ You can pass the email and new password as options or set them interactively if 
 
 **Example**
 
-```bash
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
+```bash
+yarn strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi admin:reset-user-password -- --email=chef@strapi.io --password=Gourmet1234
+```
+
+</TabItem>
+</Tabs>
 
 **Options**
 
@@ -332,17 +618,45 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 Run a fully interactive CLI to generate APIs, [controllers](/dev-docs/backend-customization/controllers), [content-types](/dev-docs/backend-customization/models), [plugins](/dev-docs/plugins/development/create-a-plugin), [policies](/dev-docs/backend-customization/policies), [middlewares](/dev-docs/backend-customization/middlewares) and [services](/dev-docs/backend-customization/services), and [migrations](/dev-docs/database-migrations).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi generate
+yarn strapi generate
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi generate
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi templates:generate
 
 Create a template from the current Strapi project.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi templates:generate <path>
+yarn strapi templates:generate <path>
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi templates:generate <path>
+```
+
+</TabItem>
+</Tabs>
 
 - **strapi templates:generate &#60;path&#62;**<br/>
   Generates a Strapi template at `<path>`
@@ -353,9 +667,23 @@ strapi templates:generate <path>
 
 Generate [TypeScript](/dev-docs/typescript) typings for the project schemas.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi ts:generate-types
+yarn strapi ts:generate-types
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi ts:generate-types
+```
+
+</TabItem>
+</Tabs>
 
 - **strapi ts:generate-types --debug**<br />
   Generate typings with the debug mode enabled, displaying a detailed table of the generated schemas.
@@ -372,95 +700,263 @@ Strapi requires the project types to be generated in the `types` directory for t
 
 Display a list of all the available [routes](/dev-docs/backend-customization/routes).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi routes:list
+yarn strapi routes:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi routes:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi policies:list
 
 Display a list of all the registered [policies](/dev-docs/backend-customization/policies).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi policies:list
+yarn strapi policies:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi policies:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi middlewares:list
 
 Display a list of all the registered [middlewares](/dev-docs/backend-customization/middlewares).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi middlewares:list
+yarn strapi middlewares:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi middlewares:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi content-types:list
 
 Display a list of all the existing [content-types](/dev-docs/backend-customization/models).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi content-types:list
+yarn strapi content-types:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi content-types:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi hooks:list
 
 Display a list of all the available hooks.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi hooks:list
+yarn strapi hooks:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi hooks:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi controllers:list
 
 Display a list of all the registered [controllers](/dev-docs/backend-customization/controllers).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi controllers:list
+yarn strapi controllers:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi controllers:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi services:list
 
 Display a list of all the registered [services](/dev-docs/backend-customization/services).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi services:list
+yarn strapi services:list
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi services:list
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi telemetry:disable
 
 Disable data collection for the project (see [Usage Information](/dev-docs/usage-information)).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi telemetry:disable
+yarn strapi telemetry:disable
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi telemetry:disable
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi telemetry:enable
 
 Re-enable data collection for the project after it was disabled (see [Usage Information](/dev-docs/usage-information)).
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi telemetry:enable
+yarn strapi telemetry:enable
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi telemetry:enable
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi console
 
 Start the server and eval commands in your application in real time.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi console
+yarn strapi console
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi console
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi version
 
 Print the currently installed Strapi version.
 It will output the current globally installed version if this command is strapi is installed globally, or the current version of Strapi within a Strapi project if the command is run from a given folder containing a Strapi project.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi version
+yarn strapi version
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi version
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi help
 
 List CLI commands.
 
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
+
 ```bash
-strapi help
+yarn strapi help
 ```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi help
+```
+
+</TabItem>
+</Tabs>
