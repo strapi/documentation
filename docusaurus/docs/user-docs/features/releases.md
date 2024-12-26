@@ -32,7 +32,7 @@ The Releases feature enables content managers to organize entries into container
 
 ## Usage
 
-**Path to use the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+**Path to use the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases and ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
 
 :::caution
 Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
@@ -51,7 +51,9 @@ From there, it is possible to:
 
 ### Creating a release
 
-1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner of the Releases page.  
+**Path:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+
+1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner.  
 2. Give the release a name.
 3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication. Scheduling is currently a <FeatureFlagBadge /> feature (see [scheduling a release](/user-docs/releases/managing-a-release#scheduling-a-release) for details).
 4. Click the **Continue** button.
@@ -104,37 +106,16 @@ You can rename a release. To do so, while on a release page:
 
 ### Including content in a release
 
-Using the Releases feature, you can group several entries to publish them altogether. Adding entries to a release is done from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager. You can also remove an entry from a release while updating the entry.
+<!--Using the Releases feature, you can group several entries to publish them altogether. Adding entries to a release is done from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager. You can also remove an entry from a release while updating the entry.-->
 
 :::prerequisites
 - Before entries can be added to a release, you must create a release from the ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases page.
 - Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/user-docs/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
 :::
 
-#### Adding multiple entries to a release
+#### One entry at a time
 
-Multiple entries can be added to a release from the list view of the Content Manager.
-
-To add entries to a release:
-
-1. From the list view of the Content Manager, select which entries you want to add by ticking the box on the left side of the entries' record.
-2. Click on the **Add to release** button located above the header of the table.
-3. In the modal, select which release to add these entries to.
-4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
-
-<ThemedImage
-  alt="Including content in a release"
-  sources={{
-    light: '/img/assets/releases/releases-cm-list-view.png',
-    dark: '/img/assets/releases/releases-cm-list-view_DARK.png',
-  }}
-/>
-
-#### Adding an entry to a release
-
-An entry can be added to a release while editing it from the edit view of the Content Manager.
-
-To add an entry to a release:
+**Path:** Edit view of the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
 
 1. Click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ area on the right side of the interface.
 2. In the list, click on the ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) **Add to release** button.
@@ -147,21 +128,38 @@ The *Releases* box on the right should show which release(s) the entry is includ
 If [Releases scheduling](/user-docs/releases/managing-a-release#scheduling-a-release) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
 :::
 
-#### Removing an entry from a release
+#### Multiple entries at a time
 
-An entry can be removed from a [release](/user-docs/releases/introduction) while editing it from the edit view of the Content Manager.
+**Path:** List view of the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
 
-To remove an entry from a release:
+1. Select which entries you want to add by ticking the box on the left side of the entries' record.
+2. Click on the **Add to release** button located above the header of the table.
+3. In the modal, select which release to add these entries to.
+4. Click on the **Publish** or **Unpublish** button to decide whether these entries will be published or unpublished when the release is published, then click **Continue**.
+
+<ThemedImage
+  alt="Including content in a release"
+  sources={{
+    light: '/img/assets/releases/releases-cm-list-view.png',
+    dark: '/img/assets/releases/releases-cm-list-view_DARK.png',
+  }}
+/>
+
+### Removing content from a release
+
+**Path:** Edit view of the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
 
 1. In the *Releases* box in the right sidebar, click on ![More icon](/img/assets/icons/v5/More.svg) below the name of the release.
 2. Click the **Remove from release** button.
 
 ### Scheduling a release
 
+**Path:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+
 Releases can be [published manually](#publishing-a-release) or scheduled to be automatically published at a given date and time, with the timezone of your choice.
 
 You can schedule a release:
-- when [creating the release](/user-docs/releases/creating-a-release),
+- when [creating the release](#creating-a-release),
 - or once the release is already created, by editing it.
 
 To schedule an existing release, while on a release page:
@@ -179,19 +177,15 @@ To schedule an existing release, while on a release page:
   }}
 />
 
-<!--### Choosing how entries are grouped
-
+<!--
+:::tip
 A release page can display entries either grouped by locale, content-type, or action (publish or unpublish). To change how entries are grouped, click the **Group by …** dropdown and select an option from the list.
-
-### Publishing or unpublishing entries
-
-A release includes multiple entries. You can set the state of each entry with the **Publish** and **Unpublish** action buttons. When the release itself is “published” then the desired actions will be simultaneously performed on each entry.
-
-### Removing entries from a release
-
-Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/v5/More.svg) at the end of the row of an entry and select the **Remove from release** button.-->
+:::
+-->
 
 ### Publishing a release
+
+**Path:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
 
 Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously. To publish a release, click the **Publish** button in the top right corner of the admin panel.
 
@@ -209,7 +203,9 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 ### Deleting a release
 
-You can delete a release. Deleting a release will only delete the release itself, but not the content-type entries included in the release. To delete a release, while on the release page:
+**Path:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+
+Deleting a release will only delete the release itself, but not the content-type entries included in the release.
 
 1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
 2. Select ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete**.
