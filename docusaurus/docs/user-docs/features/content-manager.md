@@ -1,7 +1,7 @@
 ---
 title: Content Manager
 description: Learn to use the Content Manager.
-toc_max_heading_level: 5
+toc_max_heading_level: 4
 tags:
 - admin panel
 - content manager
@@ -33,6 +33,8 @@ sources={{
 <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
 <iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
 </div>
+
+<!-- Try to fit in the GuideFlow / and potentially rephrase in a very small paragraph
 
 The Content Manager is accessible from ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
 
@@ -150,6 +152,7 @@ Clicking on a single type will directly redirect you to the edit view, where you
     dark: '/img/assets/content-manager/content-manager_single-type_DARK.png',
   }}
 />
+-->
 
 ## Configuration
 
@@ -174,7 +177,9 @@ Note also that the explanations below explain how to permanently configure which
   }}
 />
 
-#### List view settings
+<Tabs groupId="ListViewConfig">
+
+<TabItem value="ListViewSettings" label="Settings">
 
 1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** to be redirected to the list view configuration interface.
 2. In the Settings area, define your chosen new settings:
@@ -190,7 +195,9 @@ Note also that the explanations below explain how to permanently configure which
 
 3. Click on the **Save** button.
 
-#### List view display
+</TabItem>
+
+<TabItem value="ListViewDisplay" label="View">
 
 1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** to be redirected to the list view configuration interface.
 2. In the View area, define what fields to display in the list view table, and in what order:
@@ -219,6 +226,10 @@ Note also that relational fields have a couple limitations when it comes to sort
 - Relational fields cannot be set as default sort.
 :::
 
+</TabItem>
+
+</Tabs>
+
 ### Configuring the edit view
 
 In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg) button is displayed, which leads to the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
@@ -231,7 +242,9 @@ In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg
   }}
 />
 
-#### Edit view settings
+<Tabs groupId="EditViewConfig">
+
+<TabItem value="EditViewSettings" label="Settings">
 
 1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
 2. In the Settings area, define your chosen new settings:
@@ -242,7 +255,9 @@ In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg
 
 3. Click on the **Save** button.
 
-#### Edit view display
+</TabItem>
+
+<TabItem value="EditViewDisplay" label="View">
 
 1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
 2. In the View area, define what fields (including relational fields) to display in the list view table, in what order and what size:
@@ -267,6 +282,10 @@ The settings and display of a component's fields cannot be managed and reordered
 
 Note also that the settings are defined for the component itself, which means that the settings will automatically be applied for every other content-type where the component is used.
 :::
+
+</TabItem>
+
+</Tabs>
 
 ## Usage
 
@@ -317,7 +336,9 @@ Components are a combination of several fields, which are grouped together in th
 
 There are 2 types of components: non-repeatable and repeatable components.
 
-##### Non-repeatable components
+<Tabs groupId="Components">
+
+<TabItem value="NonRepeatable" label="Non-repeatable components">
 
 <ThemedImage
   alt="Non-repeatable component - No entry yet"
@@ -345,7 +366,9 @@ By default, the combination of fields is not directly displayed in the edit view
 
 To delete the non-repeatable component, click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg), located in the top right corner of the component area.
 
-##### Repeatable components
+</TabItem>
+
+<TabItem value="Repeatable" label="Repeatable components">
 
 <ThemedImage
   alt="Repeatable component"
@@ -372,6 +395,10 @@ The repeatable component entries can be reordered or deleted directly in the edi
 :::note
 Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end users will read/see the content.
 :::
+
+</TabItem>
+
+</Tabs>
 
 #### Dynamic zones
 
@@ -451,7 +478,9 @@ If the Draft & Publish feature (see [Saving, publishing and deleting content](/u
 If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
 :::
 
-##### Managing one-choice relational fields
+<Tabs groupId="RelationalFields">
+
+<TabItem value="OneChoice" label="One-choice relational fields">
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
@@ -475,7 +504,9 @@ You can click on the name of the selected entry to be redirected to the edit vie
 
 To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg).
 
-##### Managing multiple-choice relational fields
+</TabItem>
+
+<TabItem value="MultipleChoice" label="Multiple-choice relational fields">
 
 Many-to-many, one-to-many, and many-ways types of relation allow to choose several entries per relational field.
 
@@ -501,6 +532,10 @@ All selected entries are listed right below the drop-down list. Click on the nam
 To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/v5/Cross.svg) in the selected entries list.
 
 Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/v5/Drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
+
+</TabItem>
+
+</Tabs>
 
 ### Deleting content
 

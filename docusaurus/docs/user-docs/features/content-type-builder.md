@@ -49,13 +49,15 @@ Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the Con
 
 ### Creating content-types
 
+<!--
 :::note Development-only
 The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 :::
+-->
 
 The Content-type Builder allows to create new content-types: single and collection types. Although they are not proper content-types as they cannot exist independently, components can also be created through the Content-type Builder, in the same way as collection and single types.
 
-#### Creating a new content-type
+#### New content-type
 
 <ThemedImage
   alt="Content-type creation"
@@ -74,16 +76,13 @@ To create a new content-type:
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
 4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
-
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content)). |
       | Internationalization | Tick the checkbox to allow entries of the content-type to be translated into other locales. |
-
 <!--
 | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
 -->
-
 6. Click on the **Continue** button.
 7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
 8. Click on the **Save** button.
@@ -92,7 +91,7 @@ To create a new content-type:
 New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-type Builder, and cannot be used in the Content Manager.
 :::
 
-#### Creating a new component
+#### New component
 
 <ThemedImage
   alt="Component creation"
@@ -115,11 +114,91 @@ To create a new component:
 4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
 5. Click on the **Save** button.
 
+<!--### Managing content-types
+
+:::note development-only
+The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
+:::
+
+The Content-type Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager. They can only be managed one at a time.
+
+To manage a content-type or a component, click on its name in the Collection types, Single types or Components category.-->
+
+### Editing content-types & components
+
+Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type or component, the right side of the Content-type Builder interface displays all available editing options.
+
+<ThemedImage
+  alt="Content-type Builder's edition interface"
+  sources={{
+    light: '/img/assets/content-type-builder/content-types-builder_edition.png',
+    dark: '/img/assets/content-type-builder/content-types-builder_edition_DARK.png',
+  }}
+/>
+
+- Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="1" /> allows to access the [basic settings](#editing-content-type-or-component-settings) of the content-type or component.
+- In the top right corner:
+  - the **Add new/another field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
+  - the **Configure the view** button allows to access the view configuration interface (see [Configuring the edit view](/user-docs/content-manager/configuring-view-of-content-type#configuring-the-edit-view))
+- Below the previous editing options, a table <ScreenshotNumberReference number="3" /> lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
+  - Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a field
+  - Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a field
+
+:::caution
+Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
+:::
+
+#### Settings
+
+The settings of a content-type or component can be edited through the Content-type Builder. There are two tabs available: **Basic settings** and **Advanced settings**.
+
+<Tabs groupId="CTSettings">
+
+<TabItem value="CTBasicSettings" label="Basic settings">
+
+The **Basic Settings** tab allows to edit the following properties of the content-type or component:
+
+<ThemedImage
+  alt="Content-type Builder's basic settings"
+  sources={{
+    light: '/img/assets/content-type-builder/basic-settings.png',
+    dark: '/img/assets/content-type-builder/basic-settings_DARK.png',
+  }}
+/>
+
+* **Display name**: Name of the content-type or component as it will be displayed in the admin panel.
+* **API ID (singular)**: Name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
+* **API ID (plural)**: Plural name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
+* **Type**: Type of the content-type or component. It can be either a **Collection type** or a **Single type**.
+
+</TabItem>
+
+<TabItem value="CTAdvancedSettings" label="Advanced settings">
+
+The **Advanced Settings** tab allows to edit the following properties of the content-type or component:
+
+<ThemedImage
+  alt="Content-type Builder's advanced settings"
+  sources={{
+    light: '/img/assets/content-type-builder/advanced-settings.png',
+    dark: '/img/assets/content-type-builder/advanced-settings_DARK.png',
+  }}
+/>
+
+* **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
+* **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
+
+</TabItem>
+
+</Tabs>
+
 ### Configuring fields for content-types
 
+<!--
 :::note Development-only
 The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
 :::
+-->
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/content-manager/writing-content.md)).
 
@@ -137,9 +216,7 @@ Depending on what content-type or component is being created or edited, not all 
   }}
 />
 
-#### Regular fields
-
-##### <img width="28" src="/img/assets/icons/v5/ctb_text.svg" /> Text {#text}
+#### <img width="28" src="/img/assets/icons/v5/ctb_text.svg" /> Text {#text}
 
 The Text field displays a textbox that can contain small text. This field can be used for titles, descriptions, etc.
 
@@ -171,7 +248,7 @@ The Text field displays a textbox that can contain small text. This field can be
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_richtextblocks.svg" /> Rich Text (Blocks) {#rich-text-blocks}
+#### <img width="28" src="/img/assets/icons/v5/ctb_richtextblocks.svg" /> Rich Text (Blocks) {#rich-text-blocks}
 
 The Rich Text (Blocks) field displays an editor with live rendering and various options to manage rich text. This field can be used for long written content, even including images and code.
 
@@ -201,7 +278,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
 :::
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_number.svg" /> Number {#number}
+#### <img width="28" src="/img/assets/icons/v5/ctb_number.svg" /> Number {#number}
 
 The Number field displays a field for any kind of number: integer, decimal and float.
 
@@ -232,7 +309,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_date.svg" /> Date {#date}
+#### <img width="28" src="/img/assets/icons/v5/ctb_date.svg" /> Date {#date}
 
 The Date field can display a date (year, month, day), time (hour, minute, second) or datetime (year, month, day, hour, minute, and second) picker.
 
@@ -261,7 +338,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </Tabs>
  
-##### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
+#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
 
 The Password field displays a password field that is encrypted.
 
@@ -291,7 +368,7 @@ The Password field displays a password field that is encrypted.
 </Tabs>
 
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
+#### <img width="28" src="/img/assets/icons/v5/ctb_media.svg" /> Media {#media}
 
 The Media field allows to choose one or more media files (e.g. image, video) from those uploaded in the Media Library of the application.
 
@@ -320,7 +397,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_relation.svg" /> Relation {#relation}
+#### <img width="28" src="/img/assets/icons/v5/ctb_relation.svg" /> Relation {#relation}
 
 The Relation field allows to establish a relation with another content-type, that must be a collection type.
 
@@ -356,7 +433,7 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean {#boolean}
+#### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean {#boolean}
 
 The Boolean field displays a toggle button to manage boolean values (e.g. Yes or No, 1 or 0, True or False).
 
@@ -384,7 +461,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_json.svg" /> JSON {#json}
+#### <img width="28" src="/img/assets/icons/v5/ctb_json.svg" /> JSON {#json}
 
 The JSON field allows to configure data in a JSON format, to store JSON objects or arrays.
 
@@ -410,7 +487,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_email.svg" /> Email {#email}
+#### <img width="28" src="/img/assets/icons/v5/ctb_email.svg" /> Email {#email}
 
 The Email field displays an email address field with format validation to ensure the email address is valid.
 
@@ -440,7 +517,7 @@ The Email field displays an email address field with format validation to ensure
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password {#password}
+#### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password {#password}
 
 The Password field displays a password field that is encrypted.
 
@@ -469,7 +546,7 @@ The Password field displays a password field that is encrypted.
 
 </Tabs>
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration {#enum}
+#### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration {#enum}
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
 
@@ -504,7 +581,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
 :::
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_uid.svg" /> UID {#uid}
+#### <img width="28" src="/img/assets/icons/v5/ctb_uid.svg" /> UID {#uid}
 
 The UID field displays a field that sets a unique identifier, optionally based on an existing other field from the same content-type.
 
@@ -537,7 +614,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 The UID field can be used to create a slug based on the Attached field.
 :::
 
-##### <img width="28" src="/img/assets/icons/v5/ctb_richtext.svg" /> Rich Text (Markdown) {#rich-text-markdown}
+#### <img width="28" src="/img/assets/icons/v5/ctb_richtext.svg" /> Rich Text (Markdown) {#rich-text-markdown}
 
 The Rich Text (Markdown) field displays an editor with basic formatting options to manage rich text written in Markdown. This field can be used for long written content.
 
@@ -565,12 +642,6 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 </TabItem>
 
 </Tabs>
-
-#### Custom fields
-
-Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
-
-Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_component.svg" /> Components {#components}
 
@@ -640,81 +711,13 @@ After configuring the settings of the dynamic zone, its components must be confi
 When using dynamic zones, different components cannot have the same field name with different types (or with enumeration fields, different values).
 :::
 
-### Managing content-types
+#### Custom fields
 
-:::note development-only
-The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
-:::
+Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
 
-The Content-type Builder allows to manage any existing content-type or component, even if it is already being used in the Content Manager. They can only be managed one at a time.
+Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
-To manage a content-type or a component, click on its name in the Collection types, Single types or Components category.
-
-#### Editing content-types
-
-Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type or component, the right side of the Content-type Builder interface displays all available editing options.
-
-<ThemedImage
-  alt="Content-type Builder's edition interface"
-  sources={{
-    light: '/img/assets/content-type-builder/content-types-builder_edition.png',
-    dark: '/img/assets/content-type-builder/content-types-builder_edition_DARK.png',
-  }}
-/>
-
-- Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="1" /> allows to access the [basic settings](#editing-content-type-or-component-settings) of the content-type or component.
-- In the top right corner:
-  - the **Add new/another field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
-  - the **Configure the view** button allows to access the view configuration interface (see [Configuring the edit view](/user-docs/content-manager/configuring-view-of-content-type#configuring-the-edit-view))
-- Below the previous editing options, a table <ScreenshotNumberReference number="3" /> lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
-  - Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a field
-  - Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a field
-
-:::caution
-Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
-:::
-
-##### Editing content-type or component settings
-
-The settings of a content-type or component can be edited through the Content-type Builder. There are two tabs available: **Basic Settings** and **Advanced Settings**.
-
-###### Basic settings
-
-The **Basic Settings** tab allows to edit the following properties of the content-type or component:
-
-<ThemedImage
-  alt="Content-type Builder's basic settings"
-  sources={{
-    light: '/img/assets/content-type-builder/basic-settings.png',
-    dark: '/img/assets/content-type-builder/basic-settings_DARK.png',
-  }}
-/>
-
-* **Display name**: Name of the content-type or component as it will be displayed in the admin panel.
-* **API ID (singular)**: Name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
-* **API ID (plural)**: Plural name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
-* **Type**: Type of the content-type or component. It can be either a **Collection type** or a **Single type**.
-
-###### Advanced settings
-
-The **Advanced Settings** tab allows to edit the following properties of the content-type or component:
-
-<ThemedImage
-  alt="Content-type Builder's advanced settings"
-  sources={{
-    light: '/img/assets/content-type-builder/advanced-settings.png',
-    dark: '/img/assets/content-type-builder/advanced-settings_DARK.png',
-  }}
-/>
-
-* **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
-* **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
-
-<!--
-* **Review workflows**: Enable the [Review Workflows](/user-docs/settings/review-workflows) <EnterpriseBadge /> feature for the content-type. It is disabled by default.
--->
-
-#### Deleting content-types
+### Deleting content-types
 
 Content types and components can be deleted through the Content-type Builder. Deleting a content-type automatically deletes all entries from the Content Manager that were based on that content-type. The same goes for the deletion of a component, which is automatically deleted from every content-type or entry where it was used.
 
