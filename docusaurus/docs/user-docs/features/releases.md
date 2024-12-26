@@ -30,6 +30,37 @@ The Releases feature enables content managers to organize entries into container
   }}
 />
 
+## Configuration
+
+**Path to configure the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+
+### Creating a release
+
+1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner.  
+2. Give the release a name.
+3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication. Scheduling is currently a <FeatureFlagBadge /> feature (see [scheduling a release](/user-docs/releases/managing-a-release#scheduling-a-release) for details).
+4. Click the **Continue** button.
+
+:::tip
+Your releases can be renamed afterwards, by editing the release using the ![More icon](/img/assets/icons/v5/More.svg) then ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** buttons.
+:::
+
+<ThemedImage
+  alt="Adding a new release"
+  sources={{
+    light: '/img/assets/releases/new-release.png',
+    dark: '/img/assets/releases/new-release_DARK.png',
+  }}
+/>
+
+### Deleting a release
+
+Deleting a release will only delete the release itself, but not the content-type entries included in the release.
+
+1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+2. Select ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete**.
+3. In the confirmation dialog, click ![Delete icon](/img/assets/icons/v5/Trash.svg) **Confirm**.
+
 ## Usage
 
 **Path to use the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases and ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
@@ -48,27 +79,6 @@ From there, it is possible to:
 - view which releases are [scheduled](/user-docs/releases/managing-a-release#scheduling-a-release), and when they will be published (in the Pending tab) or have been published (in the Done tab),
 - and click on a release to [manage its content](/user-docs/releases/managing-a-release).
 -->
-
-### Creating a release
-
-**Path:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
-
-1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner.  
-2. Give the release a name.
-3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication. Scheduling is currently a <FeatureFlagBadge /> feature (see [scheduling a release](/user-docs/releases/managing-a-release#scheduling-a-release) for details).
-4. Click the **Continue** button.
-
-:::tip
-Your releases can be renamed afterwards, by editing the release using the ![More icon](/img/assets/icons/v5/More.svg) then ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** buttons.
-:::
-
-<ThemedImage
-  alt="Adding a new release"
-  sources={{
-    light: '/img/assets/releases/new-release.png',
-    dark: '/img/assets/releases/new-release_DARK.png',
-  }}
-/>
 
 <!--Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).-->
 
@@ -200,13 +210,3 @@ If some of your entries have a ![Fail icon](/img/assets/icons/v5/CrossCircle2.sv
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
 :::
-
-### Deleting a release
-
-**Path:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
-
-Deleting a release will only delete the release itself, but not the content-type entries included in the release.
-
-1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
-2. Select ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete**.
-3. In the confirmation dialog, click ![Delete icon](/img/assets/icons/v5/Trash.svg) **Confirm**.
