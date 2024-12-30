@@ -29,13 +29,13 @@ The Content-type Builder is from where the users of the admin panel create and e
   }}
 />
 
-From the Content-type Builder, administrators can create and manage content-types: collection types and single types but also components.
+From the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder, administrators can create and manage content-types: collection types and single types but also components.
 
 - Collection types are content-types that can manage several entries.
 - Single types are content-types that can only manage one entry.
 - Components are a data structure that can be used in multiple collection types and single types.
 
-All 3 are displayed as categories in the sub navigation of the Content-type Builder. In each category are listed all content-types and components that have already been created. You can edit these existing content-types and components or create new ones.
+All 3 are displayed as categories in the sub navigation of the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder. In each category are listed all content-types and components that have already been created. You can edit these existing content-types and components or create new ones.
 
 <!--
 From each category of the Content-type Builder sub navigation, it is possible to:
@@ -45,7 +45,7 @@ From each category of the Content-type Builder sub navigation, it is possible to
 -->
 
 :::tip
-Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the Content-type Builder sub navigation to find a specific collection type, single type, or component.
+Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder sub navigation to find a specific collection type, single type, or component.
 :::
 
 ## Usage
@@ -75,7 +75,7 @@ The Content-type Builder allows to create new content-types: single and collecti
 To create a new content-type:-->
 
 1. Choose whether you want to create a collection type or a single type.
-2. In the category of the content-type you want to create, click on **Create new collection/single type**.
+2. In the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder's category of the content-type you want to create, click on **Create new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
 4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
@@ -108,7 +108,7 @@ New content-types are only considered created once they have been saved. Saving 
 
 To create a new component:-->
 
-1. In the Components category of the Content-type Builder sub navigation, click on **Create new component**.
+1. In the Components category of the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder sub navigation, click on **Create new component**.
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Display name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.
@@ -255,7 +255,7 @@ The Content-type Builder is only accessible to create and update content-types w
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/content-manager/writing-content.md)).
 
-In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated.
+In the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated.
 
 <!--The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.-->
 
@@ -778,7 +778,7 @@ Content types and components can be deleted through the Content-type Builder. De
 
 <!--To delete a content-type or component:-->
 
-1. In the Content-type Builder sub navigation, click on the name of the content-type or component to delete.
+1. In the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder sub navigation, click on the name of the content-type or component to delete.
 2. In the edition interface of the chosen content-type or component, click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button on the right side of the content-type's or component's name.
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.
