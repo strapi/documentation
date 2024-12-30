@@ -20,6 +20,7 @@ The Content-type Builder is from where the users of the admin panel create and e
 
 ## Overview
 
+<!-- Replace with Guideflow -->
 <ThemedImage
   alt="Content-type Builder interface"
   sources={{
@@ -34,12 +35,14 @@ From the Content-type Builder, administrators can create and manage content-type
 - Single types are content-types that can only manage one entry.
 - Components are a data structure that can be used in multiple collection types and single types.
 
-All 3 are displayed as categories in the sub navigation of the Content-type Builder. In each category are listed all content-types and components that have already been created.
+All 3 are displayed as categories in the sub navigation of the Content-type Builder. In each category are listed all content-types and components that have already been created. You can edit these existing content-types and components or create new ones.
 
+<!--
 From each category of the Content-type Builder sub navigation, it is possible to:
 
 - click on an existing content-type or component to access it and edit it (see [Managing content-types](/user-docs/content-type-builder/managing-content-types)),
 - or create a new content-type or component (see [Creating content-types](/user-docs/content-type-builder/creating-new-content-type)).
+-->
 
 :::tip
 Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the Content-type Builder sub navigation to find a specific collection type, single type, or component.
@@ -67,9 +70,9 @@ The Content-type Builder allows to create new content-types: single and collecti
   }}
 />
 
-Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder sub navigation.
+<!--Content types are created from the Content-type Builder's Collection types and Single types categories, both displayed in the Content-type Builder sub navigation.
 
-To create a new content-type:
+To create a new content-type:-->
 
 1. Choose whether you want to create a collection type or a single type.
 2. In the category of the content-type you want to create, click on **Create new collection/single type**.
@@ -101,9 +104,9 @@ New content-types are only considered created once they have been saved. Saving 
   }}
 />
 
-Components are created from the same-named category of the Content-type Builder's sub navigation.
+<!--Components are created from the same-named category of the Content-type Builder's sub navigation.
 
-To create a new component:
+To create a new component:-->
 
 1. In the Components category of the Content-type Builder sub navigation, click on **Create new component**.
 2. In the component creation window, configure the base settings of the new component:
@@ -124,9 +127,9 @@ The Content-type Builder allows to manage any existing content-type or component
 
 To manage a content-type or a component, click on its name in the Collection types, Single types or Components category.-->
 
-### Editing content-types & components
+### Editing content-types
 
-Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type or component, the right side of the Content-type Builder interface displays all available editing options.
+<!--Managing a content-type or component can include editing the general settings and the fields, but also deleting the whole content-type or component. For any chosen content-type or component, the right side of the Content-type Builder interface displays all available editing options.-->
 
 <ThemedImage
   alt="Content-type Builder's edition interface"
@@ -136,6 +139,53 @@ Managing a content-type or component can include editing the general settings an
   }}
 />
 
+- Click on the **Add new/another field** button <ScreenshotNumberReference number="1" /> in the top right corner to add more fields to your content-type.
+- In the table that displays the fields of your content-type <ScreenshotNumberReference number="2" />, click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) and/or ![Delete icon](/img/assets/icons/v5/Trash.svg) buttons to respectively edit and/or delete these fields.
+- Click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="3" /> to access the basic and advanced settings of your content-type:
+
+  <Tabs groupId="CTSettings">
+
+  <TabItem value="CTBasicSettings" label="Basic settings">
+
+  The **Basic Settings** tab allows to edit the following properties of the content-type or component:
+
+  <ThemedImage
+    alt="Content-type Builder's basic settings"
+    sources={{
+      light: '/img/assets/content-type-builder/basic-settings.png',
+      dark: '/img/assets/content-type-builder/basic-settings_DARK.png',
+    }}
+  />
+
+  * **Display name**: Name of the content-type or component as it will be displayed in the admin panel.
+  * **API ID (singular)**: Name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
+  * **API ID (plural)**: Plural name of the content-type or component as it will be used in the API. It is automatically generated from the display name, but can be edited.
+  * **Type**: Type of the content-type or component. It can be either a **Collection type** or a **Single type**.
+
+  </TabItem>
+
+  <TabItem value="CTAdvancedSettings" label="Advanced settings">
+
+  The **Advanced Settings** tab allows to edit the following properties of the content-type or component:
+
+  <ThemedImage
+    alt="Content-type Builder's advanced settings"
+    sources={{
+      light: '/img/assets/content-type-builder/advanced-settings.png',
+      dark: '/img/assets/content-type-builder/advanced-settings_DARK.png',
+    }}
+  />
+
+  * **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
+  * **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
+
+  </TabItem>
+
+  </Tabs>
+
+- Click on the **Save** button <ScreenshotNumberReference number="4" /> to confirm any ongoing modification.
+
+<!--
 - Next to the name and optional description of the content-type or component, an ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="1" /> allows to access the [basic settings](#editing-content-type-or-component-settings) of the content-type or component.
 - In the top right corner:
   - the **Add new/another field** and **Save** buttons <ScreenshotNumberReference number="2" /> allow to respectively add another field to the content-type or component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)), or save any ongoing modification.
@@ -143,11 +193,13 @@ Managing a content-type or component can include editing the general settings an
 - Below the previous editing options, a table <ScreenshotNumberReference number="3" /> lists all the fields created and configured for the content-type or component. From the fields table, it is possible to:
   - Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a field
   - Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a field
+-->
 
 :::caution
 Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
 :::
 
+<!--
 #### Settings
 
 The settings of a content-type or component can be edited through the Content-type Builder. There are two tabs available: **Basic settings** and **Advanced settings**.
@@ -191,8 +243,9 @@ The **Advanced Settings** tab allows to edit the following properties of the con
 </TabItem>
 
 </Tabs>
+-->
 
-### Configuring fields for content-types
+### Configuring content-types fields
 
 <!--
 :::note Development-only
@@ -202,7 +255,9 @@ The Content-type Builder is only accessible to create and update content-types w
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/content-manager/writing-content.md)).
 
-In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated. The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.
+In the Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated.
+
+<!--The following documentation lists all existing regular fields but also tackles the specificities of components and dynamic zones. For each, you will find a definition, explanation of the form they take once in the Content Manager, and instructions to configure them.-->
 
 :::note
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
@@ -721,7 +776,7 @@ Each custom field type can have basic and advanced settings. The [Marketplace](h
 
 Content types and components can be deleted through the Content-type Builder. Deleting a content-type automatically deletes all entries from the Content Manager that were based on that content-type. The same goes for the deletion of a component, which is automatically deleted from every content-type or entry where it was used.
 
-To delete a content-type or component:
+<!--To delete a content-type or component:-->
 
 1. In the Content-type Builder sub navigation, click on the name of the content-type or component to delete.
 2. In the edition interface of the chosen content-type or component, click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button on the right side of the content-type's or component's name.
