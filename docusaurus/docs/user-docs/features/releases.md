@@ -32,11 +32,26 @@ The Releases feature enables content managers to organize entries into container
 
 ## Configuration
 
-**Path to configure the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
+To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also delete releases that are obsolete or irrelevant. You can also modify the releases' default timezone to use when scheduling a publication.
 
-To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also delete releases that are obsolete or irrelevant.
+### Choosing default timezone
+
+**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings
+
+1. Click on the _Default timezone_ dropdown list and choose the default timezone to use.
+2. Click **Save**.
+
+<ThemedImage
+  alt="Release settings"
+  sources={{
+    light: '/img/assets/releases/release-settings.png',
+    dark: '/img/assets/releases/release-settings_DARK.png',
+  }}
+/>
 
 ### Creating a release
+
+**Path to configure the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
 
 1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner.  
 2. Give the release a name.
@@ -67,6 +82,8 @@ You can rename a release. To do so, while on a release page:
 4. Click **Continue** to save the change.-->
 
 ### Deleting a release
+
+**Path to configure the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
 
 Deleting a release will only delete the release itself, but not the content-type entries included in the release.
 
