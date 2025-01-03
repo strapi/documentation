@@ -28,10 +28,6 @@ The Review Workflows feature allows you to create and manage workflows for your 
   }}
 />
 
-<!--
-You need to have a Super Admin role in your project's admin panel to see and have access to the Review Worklows feature configurations in the admin panel settings. Other roles must be granted the **Review workflows** permissions. See [Users, Roles, & Permissions](/user-docs/users-roles-permissions) for more information.
--->
-
 ## Configuration
 
 **Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings > Global settings > Review Workflows

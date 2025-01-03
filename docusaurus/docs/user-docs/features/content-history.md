@@ -11,7 +11,7 @@ tags:
 # Content History
 <EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
 
-The Content History feature, in the Content Manager, gives you the ability to browse and restore previous versions of documents created with the Content Manager.
+The Content History feature, in the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, gives you the ability to browse and restore previous versions of documents created with the Content Manager.
 
 :::prerequisites Identity Card of the Feature
 <Icon name="credit-card"/> **Plan:** Enterprise Edition, or Cloud Pro or Team plan. <br/>
@@ -33,10 +33,6 @@ sources={{
 **Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager <br/> From the edit view of a content type: click ![More icon](/img/assets/icons/v5/More.svg) (top right corner) then ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History**.
 
 ### Browsing Content History
-
-<!--Content History is accessible from the Edit View of any document created with the Content Manager.
-
-To browse Content History, while editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. -->
 
 With Content History, you can browse your content through:
 
@@ -65,7 +61,6 @@ You can choose to restore a previous version of a document. When restoring a ver
 
 To restore a version:
 
-<!-- 1. While editing a document in the Content Manager, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History** button. -->
 1. Browse the Content History and select a version via the sidebar on the right.
 2. Click the **Restore** button.
 3. In the _Confirmation_ window, click **Restore**.  

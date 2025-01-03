@@ -34,6 +34,8 @@ The Releases feature enables content managers to organize entries into container
 
 **Path to configure the feature:** ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases
 
+To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also delete releases that are obsolete or irrelevant.
+
 ### Creating a release
 
 1. Click the ![Plus icon](/img/assets/icons/v5/Plus.svg) **New Release** button in the upper right corner.  
@@ -53,6 +55,17 @@ Your releases can be renamed afterwards, by editing the release using the ![More
   }}
 />
 
+<!-- TO INTEGRATE IF THE CALLOUT ISN'T ENOUGH
+
+### Renaming a release
+
+You can rename a release. To do so, while on a release page:
+
+1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+2. Select ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit**.
+3. In the modal, change the name of the release in the _Name_ field.
+4. Click **Continue** to save the change.-->
+
 ### Deleting a release
 
 Deleting a release will only delete the release itself, but not the content-type entries included in the release.
@@ -69,54 +82,7 @@ Deleting a release will only delete the release itself, but not the content-type
 Since publishing an entry with a release means turning a draft entry into a published entry, Releases will not work if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is disabled for the content-type.
 :::
 
-<!--The Releases feature is used from ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) _Releases_, accessible via the main navigation of the admin panel.-->
-
-<!--
-From there, it is possible to:
-
-- [create a new release](/user-docs/releases/creating-a-release),
-- view pending and done releases,
-- view which releases are [scheduled](/user-docs/releases/managing-a-release#scheduling-a-release), and when they will be published (in the Pending tab) or have been published (in the Done tab),
-- and click on a release to [manage its content](/user-docs/releases/managing-a-release).
--->
-
-<!--Adding entries to a release must be done from the Content Manager. You can add a single entry to a release while creating or editing the entry [in the edit view](/user-docs/content-manager/adding-content-to-releases).-->
-
-<!-- Remove "Managing release" to get all H4 titles to H3 instead -->
-
-<!--### Managing a release
-
-Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
-
-<ThemedImage
-  alt="Release details"
-  sources={{
-    light: '/img/assets/releases/release-details.png',
-    dark: '/img/assets/releases/release-details_DARK.png',
-  }}
-/>
-
-From a release page, you can:
-
-- edit the release, to update its name or schedule it, or delete the release,
-- decide whether an entry will be published or unpublished with the release,
-- and publish the release.-->
-
-<!-- - [adjust the view](#choose-how-entries-are-grouped) to display entries grouped either by locale or by content-type, -->
-<!-- - edit a specific entry or [remove](#remove-entries-from-a-release) it from the release, -->
-
-<!--### Editing a release
-
-You can rename a release. To do so, while on a release page:
-
-1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
-2. Select ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit**.
-3. In the modal, change the name of the release in the _Name_ field.
-4. Click **Continue** to save the change.-->
-
 ### Including content in a release
-
-<!--Using the Releases feature, you can group several entries to publish them altogether. Adding entries to a release is done from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager. You can also remove an entry from a release while updating the entry.-->
 
 :::prerequisites
 - Before entries can be added to a release, you must create a release from the ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) Releases page.

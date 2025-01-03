@@ -11,7 +11,7 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Content Manager
 
-The Content Manager is from where the users of the admin panel write and manage their content.
+From the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, accessible via the main navigation of the admin panel, users can write and manage their content.
 
 :::prerequisites Identity Card of the Content Manager
 <Icon name="user"/> **Role & permission:** Minimum "Configure view" permissions in Roles > Plugins - Content Manager. <br/>
@@ -34,15 +34,15 @@ sources={{
 <iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
 </div>
 
-From the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, administrators can access the available collection and single content-types which were created beforehand using the Content-type Builder.
+The ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager contains the available collection and single content-types which were created beforehand using the Content-type Builder.
 
 Content can be created, managed and published from the 2 categories displayed in the sub navigation of the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager:
 
-- *Collection types*, which lists available content-types managing several entries. For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces:
+- *Collection types*, which lists available content-types managing several entries. For each available collection type, multiple entries can be created which is why each collection type is divided into 2 interfaces:
   - the list view, which displays a table with all entries created for that collection type.
   - the edit view, which focuses on a chosen entry of your collection type, and from where you can actually manage the content.
 
-- *Single types*, which lists available content-types with only one entry. Unlike collection types which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
+- *Single types*, which lists available content-types with only one entry. Unlike collection types, which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
 
 :::tip
 Click the search icons ![Search icon](/img/assets/icons/v5/Search.svg) to use a text search and find one of your content-types and/or entries more quickly!
@@ -50,32 +50,8 @@ Click the search icons ![Search icon](/img/assets/icons/v5/Search.svg) to use a 
 Specifically for your collection types' entries, you can also use the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button to set condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed)
 :::
 
-<!-- Integrated
+<!-- TO INTEGRATE IN THE PAGE? USE A GUIDEFLOW?
 
-The Content Manager is accessible from ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager* in the main navigation, which opens a sub navigation displaying 2 categories: _Collection types_ and _Single types_. Each category contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/content-type-builder/introduction-to-content-types-builder.md). From these 2 categories, administrators can create, manage, and publish content.
-
-:::tip
-Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the sub navigation to use a text search and find one of your content-types more quickly!
-:::
-
-### Collection types {#collection-types}
-
-The _Collection types_ category of the Content Manager displays the list of available collection types which are accessible from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager sub navigation.
-
-For each available collection type multiple entries can be created which is why each collection type is divided into 2 interfaces: the list view and the edit view (see [Writing content](/user-docs/content-manager/writing-content)).
-
-The list view of a collection type displays all entries created for that collection type.
-
-<ThemedImage
-  alt="List view of a collection type in the Content Manager"
-  sources={{
-    light: '/img/assets/content-manager/content-manager_list-view.png',
-    dark: '/img/assets/content-manager/content-manager_list-view_DARK.png',
-  }}
-/>
--->
-
-<!-- To integrate? Guideflow?
 From the list view, it is possible to:
 
 - create a new entry <ScreenshotNumberReference number="1" />,
@@ -94,7 +70,8 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 :::
 -->
 
-<!-- Won't be integrated
+<!-- WON'T BE INTEGRATED - TO BE VALIDATED
+
 #### Filtering entries {#filtering-entries}
 
 Right above the list view table, on the left side of the interface, a ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
@@ -120,64 +97,6 @@ When active, filters are displayed next to the ![Filters icon](/img/assets/icons
 :::
 -->
 
-<!-- Integrated
-#### Creating a new entry
-
-On the top right side of the list view interface, an **Create new entry** button is displayed. It allows to create a new entry for your collection type.
-
-Clicking on the new entry button will redirect you to the edit view, where you will be able to write the content of the new entry (see [Writing content](/user-docs/content-manager/writing-content)).
-
-:::note
-New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
-:::
--->
-
-<!-- Integrated
-#### Configuring the table fields
-
-Above the list view table, on the right, a settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) is displayed. It allows to temporarily choose which fields to display in the table or to access permanent view settings.
-
-:::note 
-Configuring the displayed field of the table in the way detailed below is only temporary: the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. For permanent configurations, go to the list view configuration interface by clicking on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) and clicking on the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)).
-:::
-
-<ThemedImage
-  alt="Displayed fields in the settings of a list view in the Content Manager"
-  sources={{
-    light: '/img/assets/content-manager/content-manager_displayed-fields.png',
-    dark: '/img/assets/content-manager/content-manager_displayed-fields_DARK.png',
-  }}
-/>
-
-To temporarily configure the fields displayed in the table:
-
-1. Click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg).
-2. Tick the boxes associated with the field you want to be displayed in the table.
-3. Untick the boxes associated with the fields you do not want to be displayed in the table.
-
-:::tip
-Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
-:::
--->
-
-<!-- Integrated
-### Single types {#single-types}
-
-The _Single types_ category of the Content Manager displays the list of available single types, which are accessible from the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager sub navigation.
-
-Unlike collection types which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
-
-Clicking on a single type will directly redirect you to the edit view, where you will be able to write the content of your single type (see [Writing content](/user-docs/content-manager/writing-content)).
-
-<ThemedImage
-  alt="Single type in the Content Manager"
-  sources={{
-    light: '/img/assets/content-manager/content-manager_single-type.png',
-    dark: '/img/assets/content-manager/content-manager_single-type_DARK.png',
-  }}
-/>
--->
-
 ## Configuration
 
 Both the list view and the edit view can be configured, and the former can either be configured temporarily or permanently.
@@ -192,7 +111,8 @@ By configuring temporarily the list view, the configurations will be reset as so
 2. Tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
-<!--
+<!-- MAY BE REMOVED - NOT SURE ABOUT RELEVANCE
+
 :::tip
 Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
 :::
@@ -208,7 +128,7 @@ Relational fields can also be displayed in the list view. Please refer to [Confi
 
 #### Permanent & advanced configuration
 
-By configuring permanently the list view, you not only ensure that they aren't resetted at every page refresh or navigation, but you also have access to more options (e.g. enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.).
+By configuring permanently the list view, you not only ensure that they are not resetted at every page refresh or navigation, but you also have access to more options (e.g. enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.).
 
 :::note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
@@ -276,8 +196,6 @@ Note also that relational fields have a couple limitations when it comes to sort
 </Tabs>
 
 ### Configuring the edit view
-
-<!--In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg) button is displayed, which leads to the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.-->
 
 <ThemedImage
   alt="Configuring the edit view of the Content Manager"
@@ -357,9 +275,12 @@ To write or edit content:
 New entries are only considered created once some of their content has been written and saved once. Only then will the new entry be listed in the list view.
 :::
 
+<!-- MAY BE REMOVED - NOT SURE ABOUT RELEVANCE
+
 :::info
-If Draft & Publish is enabled for your content-type (it's enabled by default), the fields work the same way whether you are editing the draft or published version. See [Saving, publishing, and deleting content](/user-docs/content-manager/saving-and-publishing-content) for more information about the Draft & Publish feature.
+If Draft & Publish is enabled for your content-type (it's enabled by default), the fields work the same way whether you are editing the draft or published version.
 :::
+-->
 
 | Field name  | Instructions                                                                                                                                                                                                                                                                                                                                                              |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -507,7 +428,9 @@ I want to assign a category to each of my restaurants, therefore I have establis
 In the Content Manager, from the edit view of my Restaurant entries, I can manage the Category relational field, and choose which entry of Category is relevant for my restaurant.
 </details>
 
-<!--The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.-->
+<!-- MAY BE REMOVED - FEELS LIKE REPETITION
+
+The relational fields of a content-type are displayed among regular fields. For each relational field is displayed a drop-down list containing all available entry titles. It allows to choose which entry the relational fields should point to. You can either choose one or several entries depending on the type of relation that was established.-->
 
 <ThemedImage
   alt="Relational fields in the edit view"
@@ -575,8 +498,8 @@ Entries from multiple-choice relational fields can be reordered, indicated by a 
 :::
 
 :::note
-- If the Draft & Publish feature (see [Saving, publishing and deleting content](/user-docs/content-manager/saving-and-publishing-content)) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
-- If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
+- If the Draft & Publish feature is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
+- If the Internationalization plugin is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
 :::
 
 <!-- Add a section "Managing entries" here with the explanations of the list view interface? Or before "Creating & Writing content"? Or maybe have 1. "Creating & managing entries" 2. "Writing content"? Or just use a Guideflow? -->
