@@ -13,12 +13,12 @@ tags:
 ---
 
 # Audit Logs
-<EnterpriseBadge withLinkIcon link="https://strapi.io/pricing-self-hosted" /> <CloudTeamBadge/>
+<EnterpriseBadge /> <CloudTeamBadge/>
 
 The Audit Logs feature provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise Edition or Cloud Team plan. <br/>
+<Icon name="credit-card"/> **Plan:** Growth or Enterprise Plan, or Cloud Team plan. <br/>
 <Icon name="user"/> **Role & permission:** Super Admin role in the project's admin panel. <br/>
 <Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.

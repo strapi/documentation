@@ -210,7 +210,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/data-management.html",
-			"destination": "/dev-docs/data-management"
+			"destination": "/user-docs/features/data-management"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/database-migrations.html",
@@ -515,7 +515,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/plugins/i18n.html",
-			"destination": "/dev-docs/i18n"
+			"destination": "/user-docs/features/internationalization"
 		},
 		{
 			"source": "/developer-docs/latest/development/plugins-development.html",
@@ -1235,7 +1235,7 @@
     },
     {
       "source": "/dev-docs/api/rest/filters-locale-publication#publication-state",
-      "destination": "/dev-docs/api/rest/filters-locale-publication#status"
+      "destination": "/dev-docs/api/rest/status"
     },
     {
       "source": "/dev-docs/admin-panel-customization#access-url",
@@ -1315,79 +1315,79 @@
     },
     {
       "source": "/dev-docs/plugins/i18n",
-      "destination": "/dev-docs/i18n"
+      "destination": "/user-docs/features/internationalization"
     },
     {
       "source": "/dev-docs/plugins/i18n#configuration-of-the-default-locale",
-      "destination": "/dev-docs/i18n"
+      "destination": "/user-docs/features/internationalization"
     },
     {
       "source": "/dev-docs/plugins/i18n#installation",
-      "destination": "/dev-docs/i18n"
+      "destination": "/user-docs/features/internationalization"
     },
     {
       "source": "/dev-docs/plugins/i18n#usage-with-the-rest-api",
-      "destination": "/dev-docs/i18n#rest"
+      "destination": "/dev-docs/api/rest/locale"
     },
     {
       "source": "/dev-docs/plugins/i18n#getting-localized-entries-with-the-locale-parameter",
-      "destination": "/dev-docs/i18n#rest-get-all"
+      "destination": "/dev-docs/api/rest/locale-get-all"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-a-new-localized-entry",
-      "destination": "/dev-docs/i18n#rest-create"
+      "destination": "/dev-docs/api/rest/locale#rest-delete"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-a-localization-for-an-existing-entry",
-      "destination": "/dev-docs/i18n#rest-put"
+      "destination": "/dev-docs/api/rest/locale-put"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-a-localization-for-a-collection-type",
-      "destination": "/dev-docs/i18n#rest-put-collection-type"
+      "destination": "/dev-docs/api/rest/locale-put-collection-type"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-a-localization-for-a-single-type",
-      "destination": "/dev-docs/i18n#rest-put-single-type"
+      "destination": "/dev-docs/api/rest/locale-put-single-type"
     },
     {
       "source": "/dev-docs/plugins/i18n#updating-an-entry",
-      "destination": "/dev-docs/i18n#rest-put"
+      "destination": "/dev-docs/api/rest/locale-put"
     },
     {
       "source": "/dev-docs/plugins/i18n#usage-with-the-graphql-plugin",
-      "destination": "/dev-docs/i18n#graphql"
+      "destination": "/user-docs/features/internationalization#graphql"
     },
     {
       "source": "/dev-docs/plugins/i18n#getting-localized-entries-with-graphql",
-      "destination": "/dev-docs/i18n#graphql-fetch-all"
+      "destination": "/user-docs/features/internationalization#graphql-fetch-all"
     },
     {
       "source": "/dev-docs/plugins/i18n#fetching-a-collection-type",
-      "destination": "/dev-docs/i18n#graphql-fetch-all"
+      "destination": "/user-docs/features/internationalization#graphql-fetch-all"
     },
     {
       "source": "dev-docs/plugins/i18n#fetching-a-single-type",
-      "destination": "/dev-docs/i18n#graphql-fetch-all"
+      "destination": "/user-docs/features/internationalization#graphql-fetch-all"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-new-localized-entries-with-graphql",
-      "destination": "/dev-docs/i18n#graphql-create"
+      "destination": "/dev-docs/api/graphql#graphql-create"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-a-new-localization-for-a-collection-type",
-      "destination": "/dev-docs/i18n#graphql-create"
+      "destination": "/dev-docs/api/graphql#graphql-create"
     },
     {
       "source": "/dev-docs/plugins/i18n#creating-a-new-localization-for-a-single-type",
-      "destination": "/dev-docs/i18n#graphql-create"
+      "destination": "/dev-docs/api/graphql#graphql-create"
     },
     {
       "source": "/dev-docs/plugins/i18n#updating-a-localized-single-type-with-graphql",
-      "destination": "/dev-docs/i18n#graphl-update"
+      "destination": "/user-docs/features/internationalization#graphl-update"
     },
     {
       "source": "/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql",
-      "destination": "/dev-docs/i18n#graphql-delete"
+      "destination": "/dev-docs/api/graphql#graphql-delete"
     },
     {
       "source": "/dev-docs/migration/v3-to-v4/code/configuration",

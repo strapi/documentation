@@ -1,7 +1,7 @@
 ---
 title: GraphQL plugin
 displayed_sidebar: cmsSidebar
-toc_max_heading_level: 5
+toc_max_heading_level: 6
 description: Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
 tags:
 - admin panel 
@@ -19,29 +19,37 @@ tags:
 
 # GraphQL plugin
 
-By default Strapi create [REST endpoints](/dev-docs/api/rest#endpoints) for each of your content-types. With the GraphQL plugin, you will be able to add a GraphQL endpoint to fetch and mutate your content.
+By default Strapi create [REST endpoints](/dev-docs/api/rest#endpoints) for each of your content-types. The GraphQL plugin adds a GraphQL endpoint to fetch and mutate your content. With the GraphQL plugin installed, you can use the Apollo Server-based GraphQL Playground to interactively build your queries and mutations and read documentation tailored to your content types.
 
-:::strapi Looking for the GraphQL API documentation?
-The [GraphQL API reference](/dev-docs/api/graphql) describes queries, mutations and parameters you can use to interact with your API using Strapi's GraphQL plugin.
+:::prerequisites Identity Card of the Plugin
+<Icon name="navigation-arrow"/> **Location:** Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.<br/>
+<Icon name="package"/> **Package name:** `@strapi/plugin-graphql`  <br/>
+<Icon name="plus-square"/> **Additional resources:** [Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-graphql) <br/>
 :::
 
-## Usage
+<ThemedImage
+  alt="GraphQL playground use example"
+  sources={{
+    light:'/img/assets/apis/use-graphql-playground.gif',
+    dark:'/img/assets/apis/use-graphql-playground_DARK.gif',
+  }}
+/>
 
-To get started with GraphQL in your application, please install the plugin first. To do that, open your terminal and run the following command:
+## Installation
+
+To install the GraphQL plugin, run the following command in your terminal:
 
 <Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-<TabItem value="yarn" label="yarn">
-
-```bash
+```sh
 yarn add @strapi/plugin-graphql
 ```
 
 </TabItem>
+<TabItem value="npm" label="NPM">
 
-<TabItem value="npm" label="npm">
-
-```bash
+```sh
 npm install @strapi/plugin-graphql
 ```
 
@@ -49,27 +57,37 @@ npm install @strapi/plugin-graphql
 
 </Tabs>
 
-Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Playground** that will help you to write your GraphQL queries and mutations.
+Once installed, the GraphQL playground is accessible at the `/graphql` URL and can be used to interactively build your queries and mutations and read documentation tailored to your content-types.
 
-:::note
-The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql)).
-:::
+Once the plugin is installed, the **GraphQL Playground** is accessible at the `/graphql` route (e.g., [localhost:1337/graphql](http://localhost:1337/graphql)) when your Strapi application server is running.
 
 ## Configuration
 
+Most configuration options for the Documentation plugin are handled via your Strapi project's code, though the GraphQL playground also offers some non-specific Strapi settings.
+
+### Admin panel settings
+
+The Strapi admin panel does not provide Strapi-specific settings for the GraphQL plugin. However, the GraphQL Playground accessible at the `/graphql` route is an embedded Apollo Server playground, so it includes all configuration and settings available with such an instance. Please refer to the official [GraphQL playground documentation](https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground) for details.
+
+### Code-based configuration
+
 Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql)).
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be set with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+Apollo Server options can be set with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL playground to track the response time of each part of your query. From `Apollo Server` version 3.9 default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration (for details, see [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/)).
 
 :::caution
 The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
+:::
+
+:::note
+The GraphQL Playground is enabled by default for both the development and staging environments, but disabled in production environments. Set the `playgroundAlways` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql)).
 :::
 
 <Tabs groupId="js-ts">
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./config/plugins.js"
+```js title="/config/plugins.js"
 
 module.exports = {
   //
@@ -92,7 +110,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./config/plugins.ts"
+```ts title="/config/plugins.ts"
 
 export default {
   //
@@ -115,7 +133,7 @@ export default {
 
 </Tabs>
 
-## Shadow CRUD
+#### Shadow CRUD
 
 To simplify and automate the build of the GraphQL schema, we introduced the Shadow CRUD feature. It automatically generates the type definitions, queries, mutations and resolvers based on your models.
 
@@ -123,7 +141,7 @@ To simplify and automate the build of the GraphQL schema, we introduced the Shad
 
 If you've generated an API called `Document` using [the interactive `strapi generate` CLI](/dev-docs/cli#strapi-generate) or the administration panel, your model looks like this:
 
-```json title="./src/api/[api-name]/content-types/document/schema.json"
+```json title="/src/api/[api-name]/content-types/document/schema.json"
 
 {
   "kind": "collectionType",
@@ -226,7 +244,7 @@ type Mutation {
 
 </details>
 
-## Customization
+#### Customization
 
 Strapi provides a programmatic API to customize GraphQL, which allows:
 
@@ -241,7 +259,7 @@ Strapi provides a programmatic API to customize GraphQL, which allows:
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/index.js"
+```js title="/src/index.js"
 
 module.exports = {
   /**
@@ -307,7 +325,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./src/index.ts"
+```ts title="/src/index.ts"
 
 export default {
   /**
@@ -373,11 +391,9 @@ export default {
 
 </Tabs>
 
-
-
 </details>
 
-### Disabling operations in the Shadow CRUD
+##### Disabling operations in the Shadow CRUD
 
 The `extension` [service](/dev-docs/backend-customization/services) provided with the GraphQL plugin exposes functions that can be used to disable operations on Content-Types:
 
@@ -417,7 +433,7 @@ strapi
   .disable()
 ```
 
-### Using getters
+##### Using getters
 
 The following getters can be used to retrieve information about operations allowed on content-types:
 
@@ -442,7 +458,7 @@ The following getters can be used to retrieve information about operations allow
 | `hasOutputEnabled()`  | Returns whether a field has output enabled    |
 | `hasFiltersEnabled()` | Returns whether a field has filtering enabled |
 
-### Extending the schema
+###### Extending the schema
 
 The schema generated by the Content API can be extended by registering an extension.
 
@@ -468,7 +484,7 @@ The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/).
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/index.js"
+```js title="/src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -523,7 +539,7 @@ export default {
 </details>
 :::
 
-#### Custom configuration for resolvers
+###### Custom configuration for resolvers
 
 A resolver is a GraphQL query or mutation handler (i.e. a function, or a collection of functions, that generate(s) a response for a GraphQL query or mutation). Each field has a default resolver.
 
@@ -533,7 +549,7 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 * [policies with the `policies`](#policies) key
 * and [middlewares with the `middlewares`](#middlewares) key
 
-##### Authorization configuration
+###### Authorization configuration
 
 By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/dev-docs/configurations/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
 
@@ -561,7 +577,7 @@ To change how the authorization is configured, use the resolver configuration de
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/index.js"
+```js title="/src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -598,7 +614,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./src/index.ts"
+```ts title="/src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -636,7 +652,7 @@ export default {
 </Tabs>
 </details>
 
-##### Policies
+###### Policies
 
 [Policies](/dev-docs/backend-customization/policies) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].policies` key.
 
@@ -655,7 +671,7 @@ The `context` object gives access to:
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/index.js"
+```js title="/src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -695,7 +711,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./src/index.ts"
+```ts title="/src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -737,7 +753,7 @@ export default {
 
 </details>
 
-##### Middlewares
+###### Middlewares
 
 [Middlewares](/dev-docs/backend-customization/middlewares) can be applied to a GraphQL resolver through the `resolversConfig.[MyResolverName].middlewares` key. The only difference between the GraphQL and REST implementations is that the `config` key becomes `options`.  
 
@@ -756,7 +772,7 @@ Middlewares with GraphQL can even act on nested resolvers, which offer a more gr
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title"./src/index.js"
+```js title"/src/index.js"
 
 module.exports = {
   register({ strapi }) {
@@ -823,7 +839,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title"./src/index.ts"
+```ts title"/src/index.ts"
 
 export default {
   register({ strapi }) {
@@ -893,11 +909,32 @@ export default {
 
 </details>
 
-## Usage with the Users & Permissions plugin
+##### Security
+
+GraphQL is a query language allowing users to use a broader panel of inputs than traditional REST APIs. GraphQL APIs are inherently prone to security risks, such as credential leakage and denial of service attacks, that can be reduced by taking appropriate precautions.
+
+###### Disable introspection and playground in production
+
+In production environments, disabling the GraphQL Playground and the introspection query is recommended.
+If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql), it is already disabled in production by default.
+
+###### Limit max depth and complexity
+
+A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/dev-docs/configurations/plugins#graphql) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
+
+:::tip
+To increase GraphQL security even further, 3rd-party tools can be used. See the guide about [using GraphQL Armor with Strapi on the forum](https://forum.strapi.io/t/use-graphql-armor-with-strapi/).
+:::
+
+## Usage
+
+The GraphQL plugin adds a GraphQL endpoint accessible and provides access to a GraphQL playground, accessing at the `/graphql` route of the Strapi admin panel, to interactively build your queries and mutations and read documentation tailored to your content types. For detailed instructions on how to use the GraphQL Playground, please refer to the official [Apollo Server documentation](https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground).
+
+### Usage with the Users & Permissions plugin
 
 The [Users & Permissions plugin](/dev-docs/plugins/users-permissions) is an optional plugin that allows protecting the API with a full authentication process.
 
-### Registration
+#### Registration
 
 Usually you need to sign up or register before being recognized as a user then perform authorized requests.
 
@@ -920,7 +957,7 @@ mutation {
 
 You should see a new user is created in the `Users` collection type in your Strapi admin panel.
 
-### Authentication
+#### Authentication
 
 To perform authorized requests, you must first get a JWT:
 
@@ -938,8 +975,7 @@ mutation {
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Playground.
 
-
-## API tokens
+#### Usage with API tokens
 
 To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 
@@ -955,20 +991,10 @@ Using API tokens in the the GraphQL playground requires adding the authorization
 Replace `<TOKEN>` with your API token generated in the Strapi Admin panel.
 :::
 
-## Security
+### GraphQL API
 
-GraphQL is a query language allowing users to use a broader panel of inputs than traditional REST APIs. GraphQL APIs are inherently prone to security risks, such as credential leakage and denial of service attacks, that can be reduced by taking appropriate precautions.
+The GraphQL plugin adds a GraphQL endpoint that can accessed through Strapi's GraphQL API:
 
-
-### Disable introspection and playground in production
-
-In production environments, disabling the GraphQL Playground and the introspection query is recommended.
-If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql), it is already disabled in production by default.
-
-### Limit max depth and complexity
-
-A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/dev-docs/configurations/plugins#graphql) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
-
-:::tip
-To increase GraphQL security even further, 3rd-party tools can be used. See the guide about [using GraphQL Armor with Strapi on the forum](https://forum.strapi.io/t/use-graphql-armor-with-strapi/).
-:::
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the Strapi's GraphQL API." link="/dev-docs/api/graphql"/>
+</CustomDocCardsWrapper>

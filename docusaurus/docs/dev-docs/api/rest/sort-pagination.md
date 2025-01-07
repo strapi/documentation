@@ -57,7 +57,7 @@ You can sort by multiple fields by passing fields in a `sort` array.
 </Request>
 
 <details>
-<summary><QsForQueryTitle /></summary>
+<summary>JavaScript query (built with the qs library):</summary>
 
 <QsForQueryBody />
 
@@ -138,7 +138,7 @@ Using the `sort` parameter and defining `:asc` or  `:desc` on sorted fields, you
 </Request>
 
 <details>
-<summary><QsForQueryTitle /></summary>
+<summary>JavaScript query (built with the qs library):</summary>
 
 <QsForQueryBody />
 
@@ -235,7 +235,7 @@ To paginate results by page, use the following parameters:
 </Request>
 
 <details>
-<summary><QsForQueryTitle /></summary>
+<summary>JavaScript query (built with the qs library):</summary>
 
 <QsForQueryBody />
 
@@ -298,7 +298,7 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 </Request>
 
 <details>
-<summary><QsForQueryTitle /></summary>
+<summary>JavaScript query (built with the qs library):</summary>
 
 <QsForQueryBody />
 

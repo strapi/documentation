@@ -46,7 +46,7 @@ Some plugins can be further extended through the configuration of _providers_, p
 
 Currently, the only plugins designed to work with providers are the:
 
-* [Email plugin](/dev-docs/plugins/email/), and
+* [Email plugin](/user-docs/features/email/), and
 * Media Library plugin (implemented via the [Upload plugin](/dev-docs/plugins/upload/)).
 
 ## Custom fields

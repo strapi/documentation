@@ -66,7 +66,7 @@ For each locale, the table displays the default ISO code of the locale, its opti
 Administrators can add and manage as many locales as they want. There can however only be one locale set as the default one for the whole Strapi application.
 
 :::note
-It is not possible to create custom locales. Locales can only be created based on [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/v4.0.0/packages/plugins/i18n/server/constants/iso-locales.json) set by Strapi.
+It is not possible to create custom locales. Locales can only be created based on [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json) set by Strapi.
 :::
 
 To add a new locale:
@@ -76,6 +76,10 @@ To add a new locale:
 3. (optional) In the *Locale display name* textbox, write a new display name for your new locale.
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
 5. Click on the **Save** button to confirm the addition of your new locale.
+
+### Code-based configuration
+
+A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/dev-docs/configurations/environment#strapi) can be configured to set the default locale for your environment. The value used for this variable should be an ISO country code from [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json).
 
 ## Usage
 
@@ -97,3 +101,18 @@ To translate content in another locale:
 :::tip
 Click on the ![Dowload icon](/img/assets/icons/v5/Download.svg) *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
 :::
+
+### Usage with APIs
+
+Localized content can be requested, created, updated, and deleted for a given locale through the various front-end APIs accessible from [Strapi's Content API](/dev-docs/api/content-api):
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="REST API" description="Learn how to use the locale parameter with the REST API." link="/dev-docs/api/rest/locale"/>
+<CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the locale parameter with GraphQL API." link="/dev-docs/api/graphql#locale"/>
+</CustomDocCardsWrapper>
+
+On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the locale parameter with the Document Service API." link="/dev-docs/api/document-service/locale"/>
+</CustomDocCardsWrapper>

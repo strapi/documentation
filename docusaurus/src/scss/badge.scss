@@ -152,6 +152,13 @@
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
+  &--growth {
+    --custom-badge-background-color: var(--strapi-primary-600);
+    --custom-badge-color: white;
+    --custom-badge-tooltip-background-color: var(--strapi-primary-100);
+    --custom-badge-tooltip-color: var(--custom-badge-background-color);
+  }
+
   &--pro {
     --custom-badge-background-color: var(--strapi-primary-600);
     --custom-badge-color: #fff;
@@ -171,6 +178,12 @@
     --custom-badge-color: #fff;
     --custom-badge-tooltip-background-color: var(--strapi-success-100);
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
+  }
+
+  &__link {
+    .strapi-icons {
+      // vertical-align: bottom;
+    }
   }
 
   &--content {
@@ -253,6 +266,7 @@ main .badge--developer,
 main .badge--team,
 main .badge--pro,
 main .badge--enterprise,
+main .badge--growth,
 main .badge--version {
   .badge__tooltip {
     @include badge-tooltip();
@@ -508,6 +522,11 @@ h2 .badge {
       --custom-badge-color: var(--strapi-neutral-1000);
       --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
       --custom-badge-tooltip-color: var(--strapi-warning-100);
+    }
+    &--growth {
+      --custom-badge-background-color: #4945ff;
+      --custom-badge-color: white;
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
     }
     &--alpha,
     &--beta,

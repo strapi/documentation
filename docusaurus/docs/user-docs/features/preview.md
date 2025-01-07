@@ -8,7 +8,7 @@ tags:
 - preview
 ---
 
-# Static Preview <BetaBadge />
+# Static Preview
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
@@ -29,10 +29,6 @@ With the Preview feature, you can preview your front end application directly fr
 <Icon name="toggle-left"/> **Activation:** Should be configured in the `config/admin` file. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
 :::
-
-<!-- <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
-<iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
-</div> -->
 
 ## Configuration
 
@@ -65,7 +61,7 @@ preview: {
 
 #### Allowed origins
 
-Controls which domains can access previews:
+The Preview feature configuration is stored in the `preview` object of [the `config/admin` file](/dev-docs/configurations/admin-panel) and consists of 3 key components:
 
 ```javascript title="config/admin.ts|js" {5}
 // …
@@ -186,12 +182,18 @@ const getPreviewPathname = (uid, { locale, document }): string => {
       }
       return `/blog/${slug}`; // Individual article page
     }
+    default: {
+      return null;
+    }
   }
-  return "/"; // Default fallback route
 };
 
 // … main export (see step 3)
 ```
+
+:::note
+Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching front-end page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the admin panel. This is how you enable or disable preview per content type.
+:::
 
 #### 3. Add handler logic
 
@@ -220,17 +222,18 @@ export default ({ env }) => {
           const document = await strapi.documents(uid).findOne({ documentId });
           
           // Generate the preview pathname based on content type and document
-          const previewPathname = getPreviewPathname(uid, { locale, document });
+          const pathname = getPreviewPathname(uid, { locale, document });
 
-          // For published content, return direct URL
-          if (status === "published") {
-            return `${clientUrl}${previewPathname}`;
+          // Disable preview if the pathname is not found
+          if (!pathname) {
+            return null;
           }
 
-          // For draft content, use Next.js draft mode, passing it a secret key
+          // Use Next.js draft mode passing it a secret key and the content-type status
           const urlSearchParams = new URLSearchParams({
-            url: previewPathname,
-            secret: previewSecret, // Add security token
+            url: pathname,
+            secret: previewSecret,
+            status,
           });
           return `${clientUrl}/api/preview?${urlSearchParams}`;
         },
@@ -238,8 +241,8 @@ export default ({ env }) => {
     },
   };
 };
-```
 
+```
 #### 4. Set up the front-end preview route
 
 Setting up the front-end preview route is highly dependent on the framework used for your front-end application.
@@ -258,6 +261,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get("secret");
   const url = searchParams.get("url");
+  const status = searchParams.get("status");
 
   // Check the secret and next parameters
   // This secret should only be known to this route handler and the CMS
@@ -266,12 +270,23 @@ export async function GET(request: Request) {
   }
 
   // Enable Draft Mode by setting the cookie
-  draftMode().enable();
+  if (status === "published") {
+    draftMode().disable();
+  } else {
+    draftMode().enable();
+  }
 
   // Redirect to the path from the fetched post
+  // We don't redirect to searchParams.slug as that might lead to open redirect vulnerabilities
   redirect(url || "/");
 }
 ```
+
+#### 5. Allow the front-end to be embedded
+
+On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-origins) allows the admin panel to load the front-end window in an iframe. But allowing the embedding works both ways, so on the front-end side, you also need to allow the window to be embedded in Strapi's admin panel.
+
+This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
 
 ## Usage
 

@@ -12,7 +12,7 @@ tags:
 
 # Data transfer
 
-The `strapi transfer` command streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
+The `strapi transfer` command is part of the [Data Management feature](/user-docs/features/data-management) and streams your data from one Strapi instance to another Strapi instance. The `transfer` command uses strict schema matching, meaning your two Strapi instances need to be exact copies of each other except for the contained data. The default `transfer` command transfers your content (entities and relations), files (assets), project configuration, and schemas. The command allows you to transfer data:
 
 - from a local Strapi instance to a remote Strapi instance
 - from a remote Strapi instance to a local Strapi instance

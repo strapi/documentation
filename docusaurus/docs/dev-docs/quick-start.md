@@ -16,8 +16,6 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
-<EnterpriseBadge /><CloudTeamBadge /><CloudDevBadge /><CloudProBadge /><AlphaBadge /><BetaBadge /><FeatureFlagBadge feature="Static Preview"/><VersionBadge version="5.1.1" />
-
 Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
 *Estimated completion time: 5-10 minutes*
@@ -444,7 +442,7 @@ Keep on creating amazing content!
 :::
 
 :::tip Tip: Transfer data between your local and Strapi Cloud projects
-The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/dev-docs/data-management) to transfer data between projects.
+The databases for your Strapi Cloud project and your local project are different. This means that data is not automatically synchronized between your Strapi Cloud and local projects. You can use the [data management system](/user-docs/features/data-management) to transfer data between projects.
 :::
 
 ## <Icon name="fast-forward"/> What to do next?

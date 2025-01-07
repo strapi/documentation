@@ -172,3 +172,19 @@ To unpublish several entries at the same time:
 1. From the list view of the Content Manager, select your entries to unpublish by ticking the box on the left side of the entries' record.
 2. Click on the **Unpublish** button located above the header of the table.
 3. In the confirmation dialog box, confirm your choice by clicking again on the **Unpublish** button.
+
+### Usage with APIs
+
+Draft or published content can be requested, created, updated, and deleted using the `status` parameter through the various front-end APIs accessible from [Strapi's Content API](/dev-docs/api/content-api):
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="REST API" description="Learn how to use the status parameter with the REST API." link="/dev-docs/api/rest/status"/>
+<CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the status parameter with GraphQL API." link="/dev-docs/api/graphql#status"/>
+</CustomDocCardsWrapper>
+
+On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the status parameter with the Document Service API." link="/dev-docs/api/document-service/status"/>
+</CustomDocCardsWrapper>
+
