@@ -2,7 +2,7 @@
 title: Internationalization (i18n)  is now part of the strapi core
 description: Internationalization (i18n) is now part of the Strapi core and no longer a plugin, and this impacts how the locale parameter is sent and accessed.
 sidebar_label: i18n part of strapi core
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - Internationalization (i18n)

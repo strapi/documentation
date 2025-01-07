@@ -2,6 +2,7 @@
 title: Extending the Document Service behavior
 description: This document provides information about the middlewares in the Document Service API.
 toc_max_heading_level: 4
+sidebar_label: Middlewares
 displayed_sidebar: cmsSidebar
 ---
 

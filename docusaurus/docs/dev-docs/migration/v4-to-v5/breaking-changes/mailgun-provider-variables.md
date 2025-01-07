@@ -2,7 +2,7 @@
 title: Some Mailgun provider legacy variables are not supported
 description: In Strapi 5, some variables have been renamed for the Mailgun provider options, dropping support for some legacy variables that were deprecated in Strapi v4.
 sidebar_label: Mailgun provider options
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - providers

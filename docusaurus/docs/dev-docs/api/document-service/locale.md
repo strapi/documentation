@@ -2,6 +2,7 @@
 title: Using the locale parameter with the Document Service API
 description: Use Strapi's Document Service API to work with locale versions with your queries.
 displayed_sidebar: cmsSidebar
+sidebar_label: Locale
 tags:
 - API
 - Content API
@@ -21,7 +22,7 @@ tags:
 
 # Document Service API: Using the `locale` parameter
 
-By default the [Document Service API](/dev-docs/api/document-service) returns the default locale version of documents (which is 'en', i.e. the English version, unless another default locale has been set for the application, see [User Guide](/user-docs/settings/internationalization)). This page describes how to use the `locale` parameter to get or manipulate data only for specific locales.
+By default the [Document Service API](/dev-docs/api/document-service) returns the default locale version of documents (which is 'en', i.e. the English version, unless another default locale has been set for the application, see [Internationalization (i18n) feature](/user-docs/features/internationalization)). This page describes how to use the `locale` parameter to get or manipulate data only for specific locales.
 
 ## Get a locale version with `findOne()` {#find-one}
 

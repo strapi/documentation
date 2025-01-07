@@ -2,7 +2,7 @@
 title: The admin panel RBAC system has been updated
 description: In Strapi 5, there is no `content-manager_rbacManager` anymore, and the regular permissions system is used instead.
 sidebar_label: content-manager_rbacManager removed
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content manager

@@ -8,10 +8,8 @@ tags:
 - Strapi Cloud
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Creating a release
-<EnterpriseBadge /> <CloudTeamBadge />
+<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
 
 The ![Releases icon](/img/assets/icons/v5/PaperPlane.svg) [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 

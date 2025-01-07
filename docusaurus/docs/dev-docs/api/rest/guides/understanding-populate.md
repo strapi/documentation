@@ -1,7 +1,7 @@
 ---
 title: Understanding populate
 description: Learn what populating means and how you can use the populate parameter in your REST API queries to add additional fields to your responses.
-displayed_sidebar: restApiSidebar
+displayed_sidebar: cmsSidebar
 toc_max_heading_level: 6
 tags:
 - API

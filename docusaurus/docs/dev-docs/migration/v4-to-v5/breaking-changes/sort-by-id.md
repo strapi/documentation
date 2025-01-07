@@ -2,7 +2,7 @@
 title: Sorting by id is no longer possible to sort by chronological order
 description: In Strapi 5, sorting by id is no longer possible to sort by chronological order, and you should use createdAt instead.
 sidebar_label: Sort chronologically with createdAt
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - content API

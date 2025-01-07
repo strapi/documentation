@@ -59,6 +59,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   padding-left: 14px;
   padding-right: 2px;
 
+  &.thin-scrollbar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
   &__caret {
     margin: 0 0 0 3px;
     padding: 0;
@@ -69,9 +74,23 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   &__caret,
-  &__caret:before {
+  &__caret:before,
+  &__link--sublist-caret::after,
+  &__list-item-collapsible .menu__link--sublist-caret::after {
+    background: var(--ifm-menu-link-sublist-icon) 50% / 1.25rem 1.25rem;;
     height: 16px;
     width: 16px;
+  }
+
+  .menu__list-item-collapsible {
+    a {
+      color: var(--strapi-neutral-600);
+    }
+
+    button.clean-btn.menu__caret {
+      position: inherit;
+      top: 5px;
+    }
   }
 
   &__list {
@@ -124,7 +143,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       --ifm-menu-color-active: var(--strapi-neutral-800);
 
       &:after {
-        display: none;
+        // display: none;
       }
     }
 
@@ -243,6 +262,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           // TODO: use fill version
         }
       /**
+       * Note: The pointer-events: none declarations below are used to
+       * disabling click on categories, but we need to keep the link for the breadcrumbs
+       */
+      /**
        * Custom icons for categories
        * Using https://phosphoricons.com
        */
@@ -255,21 +278,25 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-features > .menu__list-item-collapsible a {
+        pointer-events: none;
         &::before {
           content: '\E922';
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-configurations > .menu__list-item-collapsible a {
+        pointer-events: none;
         &::before {
           content: '\E87C';
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-development > .menu__list-item-collapsible a {
+        pointer-events: none;
         &::before {
           content: '\E586';
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-plugins > .menu__list-item-collapsible a {
+        pointer-events: none;
         &::before {
           content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><path d='M165.78,224H208a16,16,0,0,0,16-16V170.35A8,8,0,0,0,212.94,163a23.37,23.37,0,0,1-8.94,1.77c-13.23,0-24-11.1-24-24.73s10.77-24.73,24-24.73a23.37,23.37,0,0,1,8.94,1.77A8,8,0,0,0,224,109.65V72a16,16,0,0,0-16-16H171.78a35.36,35.36,0,0,0,.22-4,36,36,0,0,0-72,0,35.36,35.36,0,0,0,.22,4H64A16,16,0,0,0,48,72v32.22a35.36,35.36,0,0,0-4-.22,36,36,0,0,0,0,72,35.36,35.36,0,0,0,4-.22V208a16,16,0,0,0,16,16h42.22'></path></svg>");
           position: relative;
@@ -277,12 +304,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-api > .menu__list-item-collapsible a {
+        pointer-events: none;
         &::before {
           content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><rect width='16' height='16' fill='rgb(142,142,169)'/><path d='M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,120,47.65,76,128,32l80.35,44Zm8,99.64V133.83l80-43.78v85.76Z'/></svg>");
           // content: '\E1DA';
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-upgrade > .menu__list-item-collapsible a {
+        pointer-events: none;
         &::before {
           content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><rect width='16' height='16' fill='rgb(142,142,169)'/><path d='M240,56V96a16,16,0,0,1-16,16H187.5L93.88,213.43A8,8,0,0,1,88,216H32a16,16,0,0,1-16-16V160a16,16,0,0,1,16-16H68.5L162.12,42.57A8,8,0,0,1,168,40h56A16,16,0,0,1,240,56Zm-34.34,90.34a8,8,0,0,0-11.32,0l-24,24a8,8,0,0,0,11.32,11.32L192,171.31V208a8,8,0,0,0,16,0V171.31l10.34,10.35a8,8,0,0,0,11.32-11.32Z'/></svg>");
         }
@@ -305,8 +334,34 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 
   @include medium-up {
+    [class*="collapseSidebar"]::after,
+    [class*="expandButton"]::after {
+        font-family: "Phosphor";
+        position: relative;
+        top: 0;
+        left: 0;
+        color: var(--strapi-neutral-600);
+        font-weight: 500;
+    }
+
     [class*="collapseSidebar"] {
       border-bottom: none;
+      min-height: 38px;
+
+      &::after {
+        content:'\E128';
+      }
+    }
+    // svg {
+    //   display: none;
+    // }
+    [class*="expandButton"] {
+      svg {
+        display: none;
+      }
+      &::after {
+        content:'\E12A';
+      }
     }
   }
 }

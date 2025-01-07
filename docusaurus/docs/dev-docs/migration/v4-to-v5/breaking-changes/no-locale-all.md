@@ -2,7 +2,7 @@
 title: locale=all can not be used to query all locales
 description: In Strapi 5, it's no longer possible to get all localized versions with the '?locale=all' parameter.
 sidebar_label: No locale=all support
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - locale
@@ -54,7 +54,7 @@ Getting documents (collection types or single types) in all locales at the same 
 
 ### Notes
 
-Additional information on what is possible to do with `locale` in Strapi 5 is available in the [REST API](/dev-docs/i18n#rest), [GraphQL API](/dev-docs/i18n#graphql), and [Document Service API](/dev-docs/api/document-service/locale) reference documentations.
+Additional information on what is possible to do with `locale` in Strapi 5 is available in the [REST API](/dev-docs/api/rest/locale), [GraphQL API](/dev-docs/api/graphql#locale), and [Document Service API](/dev-docs/api/document-service/locale) reference documentations.
 
 ### Manual procedure
 

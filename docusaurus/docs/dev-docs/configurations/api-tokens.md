@@ -12,11 +12,7 @@ tags:
 - REST API
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # API tokens
-
-<NotV5 />
 
 Authentication strategies in Strapi can either be based on the use of the [Users & Permissions plugin](/user-docs/users-roles-permissions) or on the built-in API token feature.
 

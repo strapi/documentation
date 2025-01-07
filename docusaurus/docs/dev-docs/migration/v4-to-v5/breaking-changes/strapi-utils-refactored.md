@@ -2,7 +2,7 @@
 title: strapi-utils is refactored
 description: In Strapi 5, the 'strapi-utils' core package has been refactored. This page lists the additions, removals, and other updates.
 sidebar_label: strapi-utils refactored
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - strapi-utils

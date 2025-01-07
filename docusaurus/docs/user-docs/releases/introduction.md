@@ -11,7 +11,7 @@ pagination_next: user-docs/releases/creating-a-release
 ---
 
 # Releases
-<EnterpriseBadge /> <CloudTeamBadge/>
+<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge/>
 
 Releases enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
 

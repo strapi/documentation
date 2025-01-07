@@ -1,7 +1,7 @@
 ---
 title: MySQL v5 unsupported
 description: MySQL v5 is not supported in Strapi v5 anymore.
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - database

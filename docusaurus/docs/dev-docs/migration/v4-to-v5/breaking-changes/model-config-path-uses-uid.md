@@ -2,7 +2,7 @@
 title: Model config path uses uid instead of dot notation
 description: Modules like `api::myapi` and `plugin::upload` should no longer be accessed in the Strapi config using `api.myapi` and `plugin.upload`, but instead using `api::myapi` and `plugin::upload`.
 sidebar_label: Model config path uses uid
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - configuration

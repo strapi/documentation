@@ -2,7 +2,7 @@
 title: Reserved attributes and content-types names
 description: In Strapi 5, some attributes and content types names are reserved, and all fields or content types using the reserved names should be renamed before migrating to prevent data loss.
 sidebar_label: Reserved names
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - models

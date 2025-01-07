@@ -2,7 +2,7 @@
 title: helper-plugin removed
 description: In Strapi 5, the `helper-plugin` is removed. A whole migration reference is available for plugin developers, and codemods will automatically handle some changes.
 sidebar_label: helper-plugin removed
-displayed_sidebar: devDocsMigrationV5Sidebar
+displayed_sidebar: cmsSidebar
 tags:
  - breaking changes
  - plugins development

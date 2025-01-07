@@ -2,6 +2,7 @@
 title: Command Line Interface
 displayed_sidebar: cmsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
+sidebar_label: Strapi CLI
 tags:
   - Command Line Interface (CLI)
   - strapi develop
@@ -13,11 +14,7 @@ tags:
   - strapi report
 ---
 
-import NotV5 from '/docs/snippets/\_not-updated-to-v5.md'
-
 # Command Line Interface (CLI)
-
-<NotV5 />
 
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
 
@@ -114,7 +111,7 @@ Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) doc
 
 ## strapi export
 
-[Exports your project data](/dev-docs/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
+[Exports your project data](/user-docs/features/data-management). The default settings create a `.tar` file, compressed using `gzip` and encrypted using `aes-128-ecb`.
 
 ```bash
 strapi export
@@ -144,7 +141,7 @@ strapi export --no-encrypt
 
 ## strapi import
 
-[Imports data](/dev-docs/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+[Imports data](/user-docs/features/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
 
 ```bash
 strapi import

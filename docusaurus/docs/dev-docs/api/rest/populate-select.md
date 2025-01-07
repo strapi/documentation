@@ -2,7 +2,8 @@
 title: Populate and Select
 description: Use Strapi's REST API to populate or select certain fields.
 sidebarDepth: 3
-displayed_sidebar: restApiSidebar
+sidebar_label: Populate & Select
+displayed_sidebar: cmsSidebar
 tags:
 - API
 - Content API
@@ -17,7 +18,6 @@ tags:
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
 # REST API: Population & Field Selection
 
@@ -157,7 +157,7 @@ The easiest way to build complex queries with multiple-level population is to us
 
 ### Combining Population with other operators
 
-By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters-locale-publication), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
+By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
 
 :::caution
 The population and pagination operators cannot be combined.

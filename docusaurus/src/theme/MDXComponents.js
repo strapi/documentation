@@ -18,7 +18,7 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
-import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, CloudDevBadge, CloudProBadge, CloudTeamBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
+import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, CloudDevBadge, CloudProBadge, CloudTeamBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
 import {
@@ -30,6 +30,7 @@ import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
 import Icon from '../components/Icon';
+import Guideflow from '../components/Guideflow';
 
 export default {
   // Re-use the default mapping
@@ -51,6 +52,7 @@ export default {
   BetaBadge,
   FeatureFlagBadge,
   EnterpriseBadge,
+  GrowthBadge,
   NewBadge,
   UpdatedBadge,
   CloudDevBadge,
@@ -71,6 +73,7 @@ export default {
   MultiLanguageSwitcher,
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
+  Guideflow,
   Annotation,
   Icon,
   /**

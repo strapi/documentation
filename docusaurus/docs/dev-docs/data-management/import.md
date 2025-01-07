@@ -13,13 +13,9 @@ tags:
 - tar.gz.enc file 
 ---
 
-import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
-
 # Data import
 
-<NotV5 />
-
-The `strapi import` command is used to import data from a file. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
+The `strapi import` command is part of the [Data Management feature](/user-docs/features/data-management) and used to import data from a file. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,
 - entities: all of your content,
