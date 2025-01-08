@@ -55,69 +55,69 @@ export default {
   ],
   categories: [
     {
-      cardLink: '/user-docs/intro',
-      cardTitle: 'User Guide',
-      cardDescription: 'Get the most out of the admin panel with our user guide',
+      cardLink: '/dev-docs/quick-start',
+      cardTitle: 'CMS Documentation',
+      cardDescription: 'Learn how to set up, configure, use, and customize the Strapi headless CMS',
       cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
       linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
       linksIconColor: 'blue',
       links: [
         {
-          label: 'Content-Types Builder',
-          to: '/user-docs/content-type-builder/creating-new-content-type',
+          label: 'Quick Start Guide',
+          to: '/dev-docs/quick-start',
         },
         {
           label: 'Content Manager',
-          to: '/user-docs/content-manager/writing-content',
+          to: '/user-docs/features/content-manager',
         },
         {
-          label: 'Draft & Publish',
-          to: '/user-docs/content-manager/saving-and-publishing-content',
+          label: 'Content-type Builder',
+          to: '/user-docs/features/content-type-builder',
         },
         {
-          label: 'Releases',
-          to: '/user-docs/releases/introduction',
+          label: 'APIs',
+          to: '/dev-docs/api/content-api',
         },
         {
-          label: 'Settings',
-          to: '/user-docs/settings/introduction',
+          label: 'Customization',
+          to: '/dev-docs/customization',
         },
       ],
     },
-    {
-      cardLink: '/dev-docs/intro',
-      cardTitle: 'Developer Docs',
-      cardDescription: 'All you need to get your project up-and-running, and become a Strapi expert',
-      cardImgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
-      linksIconSrc: require('@site/static/img/assets/icons/code.svg').default,
-      linksIconColor: 'green',
-      links: [
-        {
-          label: 'REST API',
-          to: '/dev-docs/api/rest',
-        },
-        {
-          label: 'GraphQL API',
-          to: '/dev-docs/api/graphql',
-        },
-        {
-          label: 'Document Service API',
-          to: '/dev-docs/api/document-service',
-        },
-        {
-          label: 'Plugin SDK',
-          to: '/dev-docs/plugins/development/create-a-plugin',
-        },
-        {
-          label: 'Upgrade to Strapi 5',
-          to: '/dev-docs/migration/v4-to-v5/introduction-and-faq',
-        },
-      ],
-    },
+    // {
+    //   cardLink: '/dev-docs/intro',
+    //   cardTitle: 'Developer Docs',
+    //   cardDescription: 'All you need to get your project up-and-running, and become a Strapi expert',
+    //   cardImgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
+    //   linksIconSrc: require('@site/static/img/assets/icons/code.svg').default,
+    //   linksIconColor: 'green',
+    //   links: [
+    //     {
+    //       label: 'REST API',
+    //       to: '/dev-docs/api/rest',
+    //     },
+    //     {
+    //       label: 'GraphQL API',
+    //       to: '/dev-docs/api/graphql',
+    //     },
+    //     {
+    //       label: 'Document Service API',
+    //       to: '/dev-docs/api/document-service',
+    //     },
+    //     {
+    //       label: 'Plugin SDK',
+    //       to: '/dev-docs/plugins/development/create-a-plugin',
+    //     },
+    //     {
+    //       label: 'Upgrade to Strapi 5',
+    //       to: '/dev-docs/migration/v4-to-v5/introduction-and-faq',
+    //     },
+    //   ],
+    // },
     {
       cardLink: '/cloud/intro',
       cardTitle: 'Cloud Documentation',
-      cardDescription: 'Learn how to deploy and manage projects on Strapi Cloud',
+      cardDescription: 'Learn how to deploy and manage Strapi projects hosted on Strapi Cloud',
       cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,
       linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
       linksIconColor: 'purple',
