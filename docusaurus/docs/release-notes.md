@@ -26,14 +26,18 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
  
 ## 5.5.1
-### <Icon name=pen-nib /> Chore, fixes, typos, and other improvement
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+#### User Guide
+- [Update User Guide intro. for stable new homepage](https://github.com/strapi/documentation/pull/2338)
 
 #### Dev Docs
 - [Fix typo in react-router-dom-6.md](https://github.com/strapi/documentation/pull/2337)
 - [Use yarn/npm tabs in Strapi CLI examples](https://github.com/strapi/documentation/pull/2332)
 
 #### Strapi Cloud
-- [chore: removed account preferences section from cloud doc](https://github.com/strapi/documentation/pull/2333)
+- [Remove account preferences section from cloud docs](https://github.com/strapi/documentation/pull/2333)
+
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
