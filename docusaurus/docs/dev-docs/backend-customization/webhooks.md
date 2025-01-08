@@ -206,7 +206,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
 | [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [review workflows](/user-docs/settings/review-workflows)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
-| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi and the <CloudTeamBadge /> plan for Strapi Cloud. |
+| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is only available with the <GrowthBadge /> or <EnterpriseBadge /> plan of Strapi CMS and the <CloudTeamBadge /> plan for Strapi Cloud. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
@@ -443,7 +443,7 @@ This event is triggered only when you delete a media through the media interface
 ### `review-workflows.updateEntryStage`
 <EnterpriseBadge/>
 
-This event is only available with the <EnterpriseBadge/> edition of Strapi.<br />The event is triggered when content is moved to a new review stage (see [Review Workflows](/user-docs/settings/review-workflows)).
+This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />The event is triggered when content is moved to a new review stage (see [Review Workflows](/user-docs/settings/review-workflows)).
 
 **Example payload**
 
@@ -473,7 +473,7 @@ This event is only available with the <EnterpriseBadge/> edition of Strapi.<br /
 ```
 
 ### `releases.publish`  {#releases-publish}
-<EnterpriseBadge/><CloudTeamBadge/>
+<GrowthBadge/><EnterpriseBadge/><CloudTeamBadge/>
 
 The event is triggered when a [release](/user-docs/releases/introduction) is published.
 

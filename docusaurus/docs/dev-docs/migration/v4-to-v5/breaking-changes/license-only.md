@@ -64,4 +64,4 @@ A similar result can be achieved in Strapi v4 by adding the `lockIcon` property.
 
 ### Manual migration
 
-If your custom Strapi v4 code uses the `lockIcon` property to highlight a paid feature that requires an <EnterpriseBadge /> license, search and replace `lockIcon: true` by `licenseOnly: true`.
+If your custom Strapi v4 code uses the `lockIcon` property to highlight a paid feature that requires a <GrowthBadge /> or an <EnterpriseBadge /> plan, search and replace `lockIcon: true` by `licenseOnly: true`.

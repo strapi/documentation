@@ -64,22 +64,16 @@ const sidebars = {
           id: 'user-docs/features/content-history'
         },
         {
-          type: 'category',
+          type: 'doc',
           label: 'Data Management',
-          collapsed: true,
-          // link: {type: 'doc', id: 'dev-docs/data-management'},
-          items: [
-            'user-docs/settings/transfer-tokens',
-            'dev-docs/data-management/import',
-            'dev-docs/data-management/export',
-            'dev-docs/data-management/transfer',
-          ]
+          id: 'user-docs/features/data-management'
         },
         {
           type: 'doc',
           label: 'Draft & Publish',
           id: 'user-docs/features/draft-and-publish'
         },
+        'user-docs/features/email',
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
@@ -127,8 +121,8 @@ const sidebars = {
           items: [
             {
               type: 'doc',
-              label: 'Sentry',
-              id: 'dev-docs/plugins/sentry',
+              label: 'Documentation',
+              id: 'dev-docs/plugins/documentation',
             },
             {
               type: 'doc',
@@ -137,13 +131,8 @@ const sidebars = {
             },
             {
               type: 'doc',
-              label: 'Documentation',
-              id: 'dev-docs/plugins/documentation',
-            },
-            {
-              type: 'doc',
-              label: 'Email',
-              id: 'dev-docs/plugins/email',
+              label: 'Sentry',
+              id: 'dev-docs/plugins/sentry',
             },
           ]
         },
@@ -154,6 +143,7 @@ const sidebars = {
       type: 'category',
       label: 'APIs',
       className: 'category-api',
+      link: {type: 'doc', id:'dev-docs/api/content-api'},
       collapsible: false,
       collapsed: false,
       items: [
@@ -162,6 +152,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'REST API',
+          link: {type: 'doc', id:'dev-docs/api/rest'},
           collapsed: true,
           items: [
             {
@@ -170,10 +161,13 @@ const sidebars = {
               label: 'Endpoints'
             },
             'dev-docs/api/rest/parameters',
-            'dev-docs/api/rest/filters-locale-publication',
+            'dev-docs/api/rest/filters',
+            'dev-docs/api/rest/locale',
+            'dev-docs/api/rest/status',
             'dev-docs/api/rest/populate-select',
             'dev-docs/api/rest/relations',
             'dev-docs/api/rest/sort-pagination',
+            'dev-docs/api/rest/upload',
             'dev-docs/api/rest/interactive-query-builder',
             'dev-docs/api/rest/guides/intro',
           ]
@@ -182,6 +176,7 @@ const sidebars = {
         {
           type: 'category',
           label: 'Document Service API',
+          link: {type: 'doc', id:'dev-docs/api/document-service'},
           collapsed: true,
           items: [
             {
@@ -222,7 +217,12 @@ const sidebars = {
         'dev-docs/configurations/functions',
         'dev-docs/configurations/middlewares',
         'dev-docs/configurations/plugins',
-        'dev-docs/providers',
+        {
+          type: 'doc',
+          id: 'dev-docs/providers',
+          label: 'Email & Upload Providers'
+        },
+        'dev-docs/configurations/users-and-permissions-providers',
         'dev-docs/configurations/server',
         'dev-docs/configurations/sso',
         'dev-docs/configurations/typescript',
@@ -769,7 +769,7 @@ const sidebars = {
   //           {
   //             type: 'link',
   //             label: 'Filtering',
-  //             href: '/dev-docs/api/rest/filters-locale-publication#filtering'
+  //             href: '/dev-docs/api/rest/filters'
   //           },
   //           {
   //             type: 'link',
@@ -784,12 +784,12 @@ const sidebars = {
   //           {
   //             type: 'link',
   //             label: 'Locale',
-  //             href: '/dev-docs/api/rest/filters-locale-publication#locale',
+  //             href: '/dev-docs/api/rest/locale',
   //           },
   //           {
   //             type: 'link',
   //             label: 'Status',
-  //             href: '/dev-docs/api/rest/filters-locale-publication#status',
+  //             href: '/dev-docs/api/rest/status',
   //           },
   //         ],
   //       },

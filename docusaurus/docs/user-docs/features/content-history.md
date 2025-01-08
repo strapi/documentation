@@ -9,12 +9,12 @@ tags:
 ---
 
 # Content History
-<EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
+<GrowthBadge /> <EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
 
-The Content History feature, in the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, gives you the ability to browse and restore previous versions of documents created with the Content Manager.
+The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the Content Manager.
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise Edition, or Cloud Pro or Team plan. <br/>
+<Icon name="credit-card"/> **Plan:** Growth or Enterprise plan, or Cloud Pro or Team plan. <br/>
 <Icon name="user"/> **Role & permission:** None. <br/>
 <Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.

@@ -1,57 +1,34 @@
 ---
-title: Internationalization (i18n)
-displayed_sidebar: cmsSidebar
-toc_max_heading_level: 4
-description: Instructions on how to use Strapi Content API with the Internationalization (i18n) optional plugin
+title: Locale
+description: Browse the REST API reference for the locale parameter to take advantage of the Internationalization feature through REST.
+toc_max_heading_level: 5
 tags:
-- collection type
-- documentId
-- locale
-- GraphQL API
-- Internationalization (i18n)
 - REST API
-- single type
+- Internationalization
+- API
+- locale
+- Content API
+- find
+- interactive query builder
+- qs library
 ---
 
+import QsIntroFull from '/docs/snippets/qs-intro-full.md'
+import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
+import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
-# 🌍 Internationalization (i18n)
+# REST API: `locale`
 
-The Internationalization (i18n) feature allows Strapi users to create, manage and distribute localized content in different languages, called "locales". For more information about the concept of internationalization, please refer to the
-[W3C definition](https://www.w3.org/International/questions/qa-i18n.en#i18n).
-
-The i18n feature:
-
-- allows admin panel users to create several localized versions of their content (see [User Guide](/user-docs/content-manager/translating-content))
-- allows developers to build localized projects by fetching and consuming the right content depending on the country/language of the audience.
-
-:::info
-The i18n feature does not automatically translate the users' content nor adapt the admin interface to languages specificities (e.g., displaying the admin panel in Right To Left format).
-:::
-
-:::note Notes
-* In Strapi 5, i18n is no longer a plugin and is installed by default. You can still decide to [enable/disable it on a content-type](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-content-type), and [enable/disable it at the field-level ](/user-docs/content-type-builder/configuring-fields-content-type) in an i18n-enabled content-type.
-* Since i18n is part of the Strapi core, this might affect how some parameters are sent to the Content Manager (see the [related breaking change entry](/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale)).
-:::
-
-## Configuration of the default locale
-
-A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/dev-docs/configurations/environment#strapi) can be configured to set the default locale for your environment. The value used for this variable should be an ISO country code (see [full list of available locales](https://github.com/strapi/strapi/blob/v4.0.0/packages/plugins/i18n/server/constants/iso-locales.json)).
-<!-- TODO v5: the link might change once v5 is out, don't forget to update it -->
-
-This is useful when a Strapi application is deployed in production, with the i18n feature installed and enabled for your content types the first time. On a fresh i18n installation, `en` is set as default locale. If the database does not contain any locale, and no `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` is set for the environment, all documents of content types that have localization enabled will be automatically migrated to the `en` locale.
-
-## Use `locale` with the REST API {#rest}
-
-The Internationalization (i18n) feature adds new abilities to the [REST API](/dev-docs/api/rest). 
+The [Internationalization (i18n) feature](/user-docs/features/internationalization) adds new abilities to the [REST API](/dev-docs/api/rest).
 
 :::prerequisites
-To work with API content for a locale, please ensure the locale has been already [added to Strapi in the admin panel](/user-docs/settings/internationalization).
+To work with API content for a locale, please ensure the locale has been already [added to Strapi in the admin panel](/user-docs/features/internationalization#settings).
 :::
 
-The `locale` [API parameter](/dev-docs/api/rest/parameters) can be used to work documents only for a specified locale. `locale` takes a locale code as a value (see [full list of available locales](https://github.com/strapi/strapi/blob/v4.0.0/packages/plugins/i18n/server/constants/iso-locales.json)).
+The `locale` [API parameter](/dev-docs/api/rest/parameters) can be used to work with documents only for a specified locale. `locale` takes a locale code as a value (see [full list of available locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json)).
 
 :::tip
-If the `locale` parameter is not defined, it will be set to the default locale. `en` is the default locale when a new Strapi project is created, but another locale can be [set as the default locale](/user-docs/settings/internationalization) in the admin panel.
+If the `locale` parameter is not defined, it will be set to the default locale. `en` is the default locale when a new Strapi project is created, but another locale can be [set as the default locale](/user-docs/features/internationalization#settings) in the admin panel.
 
 For instance, by default, a GET request to `/api/restaurants` will return the same response as a request to `/api/restaurants?locale=en`.
 :::
@@ -84,10 +61,7 @@ The following table lists the new possible use cases added by i18n to the REST A
 </TabItem>
 </Tabs>
 
-### Get all documents in a specific locale {#rest-get-all}
-
-<!-- ? locale=all does not work any more, right? -->
-<!-- Use `all` as a value for the locale code, as in `http://localhost:1337/api/restaurants?locale=all`, to fetch entries for all locales that have been configured in the admin panel. -->
+### `GET` Get all documents in a specific locale {#rest-get-all}
 
 <ApiCall>
 
@@ -137,7 +111,7 @@ The following table lists the new possible use cases added by i18n to the REST A
 </Response>
 </ApiCall>
 
-### Get a document in a specific locale {#rest-get}
+### `GET` Get a document in a specific locale {#rest-get}
 
 To get a specific document in a given locale, add the `locale` parameter to the query:
 
@@ -232,7 +206,7 @@ To get a specific single type document in a given locale, add the `locale` param
 
 </ApiCall>
 
-### Create a new localized document for a collection type {#rest-create}
+### `POST` Create a new localized document for a collection type {#rest-create}
 
 To create a localized document from scratch, send a POST request to the Content API. Depending on whether you want to create it for the default locale or for another locale, you might need to pass the `locale` parameter in the request's body
 
@@ -322,7 +296,7 @@ To create a localized entry for a locale different from the default one, add the
 </Response>
 </ApiCall>
 
-### Create a new, or update an existing, locale version for an existing document {#rest-update}
+### `PUT` Create a new, or update an existing, locale version for an existing document {#rest-update}
 
 With `PUT` requests sent to an existing document, you can:
 
@@ -434,7 +408,7 @@ To create a new locale for an existing single type document, add the `locale` pa
 
 <br/>
 
-### Delete a locale version of a document {#rest-delete}
+### `DELETE` Delete a locale version of a document {#rest-delete}
 
 To delete a locale version of a document, send a `DELETE` request with the appropriate `locale` parameter.
 
@@ -459,148 +433,3 @@ To delete only a specific locale version of a single type document, add the `loc
 `DELETE /api/homepage?locale=fr`
 
 </Request>
-
-## Use `locale` with the GraphQL API {#graphql}
-
-The i18n feature adds new features to the [GraphQL API](/dev-docs/api/graphql):
-
-- The `locale` field is added to the GraphQL schema.
-- GraphQL can be used:
-  - to query documents for a specific locale with the `locale` argument
-  - for mutations to [create](#graphql-create), [update](#graphql-update), and [delete](#graphql-delete) documents for a specific locale
-
-### Fetch all documents in a specific locale {#graphql-fetch-all}
-
-To fetch all documents <DocumentDefinition/> for a specific locale, pass the `locale` argument to the query:
-
-<ApiCall>
-
-<Request> 
-
-```graphql
-query {
-  restaurants(locale: "fr") {
-    documentId
-    name
-    locale
-  }
-}
-```
-
-</Request>
-
-<Response>
-
-```json
-{
-  "data": {
-    "restaurants": [
-      {
-        "documentId": "a1b2c3d4e5d6f7g8h9i0jkl",
-        "name": "Restaurant Biscotte",
-        "locale": "fr"
-      },
-      {
-        "documentId": "m9n8o7p6q5r4s3t2u1v0wxyz",
-        "name": "Pizzeria Arrivederci",
-        "locale": "fr"
-      },
-    ]
-  }
-}
-```
-
-</Response>
-
-</ApiCall>
-
-### Fetch a document in a specific locale {#graphql-fetch}
-
-To fetch a documents <DocumentDefinition/> for a specific locale, pass the `documentId` and the `locale` arguments to the query:
-
-<ApiCall>
-
-<Request title="Example query"> 
-
-```graphql
-query Restaurant($documentId: ID!, $locale: I18NLocaleCode) {
-  restaurant(documentId: "a1b2c3d4e5d6f7g8h9i0jkl", locale: "fr") {
-    documentId
-    name
-    description
-    locale
-  }
-}
-```
-
-</Request>
-
- <Response title="Example response"> 
-
-```json
-{
-  "data": {
-    "restaurant": {
-      "documentId": "lviw819d5htwvga8s3kovdij",
-      "name": "Restaurant Biscotte",
-      "description": "Bienvenue au restaurant Biscotte!",
-      "locale": "fr"
-    }
-  }
-}
-```
-
-</Response>
-</ApiCall>
-
-### Create a new localized document {#graphql-create}
-
-The `locale` field can be passed to create a localized document <DocumentDefinition/> for a specific locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/dev-docs/api/graphql#create-a-new-document)).
-
-```graphql title="Example: Create a new restaurant for the French locale"
-mutation CreateRestaurant($data: RestaurantInput!, $locale: I18NLocaleCode) {
-  createRestaurant(
-    data: {
-      name: "Brasserie Bonjour",
-      description: "Description in French goes here"
-    },
-    locale: "fr"
-  ) {
-  documentId
-  name
-  description
-  locale
-}
-```
-
-### Update a document for a specific locale {#graphql-update}
-
-A `locale` argument can be passed in the mutation to update a document <DocumentDefinition/> for a given locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/dev-docs/api/graphql#update-an-existing-document)).
-
-```graphql title="Example: Update the description field of restaurant for the French locale"
-mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!, $locale: I18NLocaleCode) {
-  updateRestaurant(
-    documentId: "a1b2c3d4e5d6f7g8h9i0jkl"
-    data: {
-      description: "New description in French"
-    },
-    locale: "fr"
-  ) {
-  documentId
-  name
-  description
-  locale
-}
-```
-
-### Delete a locale for a document {#graphql-delete}
-
-Pass the `locale` argument in the mutation to delete a specific localization for a document <DocumentDefinition/>:
-
-```graphql
-mutation DeleteRestaurant($documentId: ID!, $locale: I18NLocaleCode) {
-  deleteRestaurant(documentId: "xzmzdo4k0z73t9i68a7yx2kk", locale: "fr") {
-    documentId
-  }
-}
-```

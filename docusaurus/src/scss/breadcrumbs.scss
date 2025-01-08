@@ -16,6 +16,11 @@
   padding: var(--custom-breadcrumbs-pt) 0 0;
 
   &__item {
+    // Use this to remove the Home breadcrumb entirely 👇
+    // &:first-of-type {
+    //   display: none;
+    // }
+
     /**
      * Replace home icon by text*
      */

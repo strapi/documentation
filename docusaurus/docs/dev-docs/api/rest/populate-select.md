@@ -157,7 +157,7 @@ The easiest way to build complex queries with multiple-level population is to us
 
 ### Combining Population with other operators
 
-By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters-locale-publication), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
+By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
 
 :::caution
 The population and pagination operators cannot be combined.

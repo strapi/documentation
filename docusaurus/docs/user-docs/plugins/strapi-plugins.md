@@ -20,7 +20,7 @@ Strapi builds and maintains plugins that extend the functionality of a core Stra
 :::note
 
 - Some Strapi Starters and Templates might install additional plugins beyond the default plugins listed below.
-- If plugin options are only available with an [Enterprise edition license](https://strapi.io/pricing-self-hosted), they are marked with  <EnterpriseBadge /> in this reference guide.
+- If plugin options are only available with a [paid plan](https://strapi.io/pricing-self-hosted), they are marked with a <GrowthBadge /> or an <EnterpriseBadge /> badge in this reference guide.
 - All plugin installations can be confirmed in ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings > Plugins* in the admin panel.
 
 :::
@@ -64,13 +64,13 @@ The Users & Permissions plugin impacts several parts of the admin panel. The tab
 | Content-type Builder | <ul>Creation of a default collection type "User" which allows for the management of the end users, the end-user roles and their permissions. This collection type cannot be deleted and the composing fields cannot be edited, but the addition of new fields is possible. </ul> |
 | Content Manager | <ul>Addition of the default "User" collection type that allows for the management of end-user accounts (see [Managing end-user accounts](/user-docs/users-roles-permissions/managing-end-users)). <ul><li>By default, the following fields are available: Username, Email, Password, as well as Confirmed and Blocked as boolean fields.</li> <li>The "User" collection type has a relation established with the "Role" collection type. All end-user accounts must have a designated role: by default, the end user is attributed the end-user role set as default, but that role can be changed via the end-user entries directly in the Content Manager.</li></ul> </ul> |
 
-### <img width="28" src="/img/assets/plugins/EmailPlugin.png" /> Email plugin {#email}
+<!-- ### <img width="28" src="/img/assets/plugins/EmailPlugin.png" /> Email plugin {#email}
 
-The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator. More information about the email plugin is available in the [Developer Documentation](/dev-docs/plugins/email).
+The Email plugin allows users to send email from the server or from external providers such as Sendgrid. The Email plugin is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator. More information about the email plugin is available in the [Developer Documentation](/user-docs/features/email).
 
 | Section impacted | Options and settings |
 |------------------|----------------------|
-| Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Users and Permissions > Roles* </li></ul>|
+| Settings         | <ul><li>Addition of "Email plugin" setting section, which contains a "Configuration" sub-section. In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.</li> <li>Addition of "Email" to the permissions for authenticated and public users. In the Email section the ability to send emails via the API can be enabled or disabled. <br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Users and Permissions > Roles* </li></ul>| -->
 
 ## Additional plugins
 

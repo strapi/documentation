@@ -11,7 +11,7 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Content Manager
 
-From the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, accessible via the main navigation of the admin panel, users can write and manage their content.
+From the <Icon name="feather" /> Content Manager, accessible via the main navigation of the admin panel, users can write and manage their content.
 
 :::prerequisites Identity Card of the Content Manager
 <Icon name="user"/> **Role & permission:** Minimum "Configure view" permissions in Roles > Plugins - Content Manager. <br/>
@@ -34,7 +34,7 @@ sources={{
 <iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
 </div>
 
-The ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager contains the available collection and single content-types which were created beforehand using the Content-type Builder.
+The <Icon name="feather" /> Content Manager contains the available collection and single content-types which were created beforehand using the Content-type Builder.
 
 Content can be created, managed and published from the 2 categories displayed in the sub navigation of the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager:
 
@@ -440,9 +440,6 @@ The relational fields of a content-type are displayed among regular fields. For 
   }}
 />
 
-<Tabs groupId="RelationalFields">
-
-<TabItem value="OneChoice" label="One-choice relational fields">
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 

@@ -11,7 +11,7 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Content-type Builder
 
-From the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder, accessible via the main navigation of the admin panel, users can create and edit their content types.
+From the <Icon name="layout" /> Content-type Builder, accessible via the main navigation of the admin panel, users can create and edit their content types.
 
 :::prerequisites Identity Card of the Content-type Builder
 <Icon name="user"/> **Role & permission:** Minimum "Read" permission in Roles > Plugins - Content Type Builder. <br/>
@@ -29,7 +29,7 @@ From the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder, acce
   }}
 />
 
-The ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder allows the creation and management of content-types, which can be:
+The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 
 - Collection types: content-types that can manage several entries.
 - Single types: content-types that can only manage one entry.

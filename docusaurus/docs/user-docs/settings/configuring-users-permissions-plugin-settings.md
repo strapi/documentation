@@ -28,7 +28,7 @@ To enable and configure a provider:
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
 2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the provider to enable and configure.
 3. In the provider edition window, click on the **TRUE** button of the *Enable* option.
-4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](/dev-docs/plugins/users-permissions#setting-up-the-provider---examples)).
+4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](/dev-docs/configurations/users-and-permissions-providers#setting-up-the-provider---examples)).
 5. Click on the **Save** button.
 
 :::note

@@ -55,4 +55,4 @@ An undefined `allowedFields` is treated as an empty array, and no fields are acc
 
 ### Manual procedure
 
-A codemod should handle this migration. If not, please refer to the documentation on how to [register allowed fields for the Users & Permissions plugin](/dev-docs/plugins/users-permissions#registration).
+A codemod should handle this migration. If not, please refer to the documentation on how to [register allowed fields for the Users & Permissions plugin](/user-docs/features/users-permissions#registration-configuration).

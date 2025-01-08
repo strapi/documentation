@@ -17,7 +17,7 @@ tags:
 
 # Data export
 
-The `strapi export` command is used to export data from a local Strapi instance. By default, the `strapi export` command exports data as an encrypted and compressed `tar.gz.enc` file which includes:
+The `strapi export` command is part of the [Data Management feature](/user-docs/features/data-management) and used to export data from a local Strapi instance. By default, the `strapi export` command exports data as an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,
 - entities: all of your content,

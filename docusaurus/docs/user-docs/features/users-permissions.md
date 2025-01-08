@@ -10,7 +10,7 @@ tags:
 
 # Users & Permissions
 
-The Users & Permissions feature allows the management of the end-users of a Strapi project.
+The Users & Permissions feature allows the management of the end-users of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
 :::prerequisites Identity Card of the Feature
 <Icon name="credit-card"/> **Plan:** Free feature. <br/>
@@ -20,6 +20,8 @@ The Users & Permissions feature allows the management of the end-users of a Stra
 :::
 
 ## Configuration
+
+<br/>
 
 ### Configuring end-user roles
 
@@ -113,7 +115,7 @@ When ticking an action or permission box, related bound routes of the API are di
 
 ### Configuring providers
 
-The Users & Permissions plugin allows to enable and configure providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with the Users & Permissions plugin installed.
+Users & Permissions allows enabling and configuring providers, for end users to login via a third-party provider to access the content of a front-end application through the Strapi application API. By default, a list of providers is available including one, "Email", enabled by default for all Strapi applications with Users & Permissions enabled.
 
 <ThemedImage
   alt="Providers interface"
@@ -128,11 +130,11 @@ To enable and configure a provider:
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
 2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the provider to enable and configure.
 3. In the provider edition window, click on the **TRUE** button of the *Enable* option.
-4. Fill in the provider's configurations. Each provider has its own specific set of configurations, detailed in our developer documentation (see [Setting up the provider](/dev-docs/plugins/users-permissions#setting-up-the-provider---examples)).
+4. Fill in the provider's configurations. Each provider has its own specific set of configurations (see [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers)).
 5. Click on the **Save** button.
 
-:::note
-Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [Developer documentation](/dev-docs/providers)).
+:::tip
+Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [the dedicated guide](/dev-docs/configurations/users-and-permissions-providers/new-provider-guide)).
 :::
 
 <!---
@@ -167,9 +169,9 @@ To configure and edit email templates:
 | Shipper name   | Indicate the name of the shipper of the email.                                                   |
 | Shipper email  | Indicate the email address of the shipper of the email.                                          |
 | Response email | (optional) Indicate the email address to which responses emails from the end users will be sent. |
-| Subject        | Write the subject of the email. Variables can be used (see [Developer documentation](https://strapi.io/documentation/developer-docs/latest/development/plugins/users-permissions.html#templating-emails)).             |
+| Subject        | Write the subject of the email. Variables can be used (see [templating emails](#templating-emails)).             |
 
-4. Edit the content of the email in the "Message" textbox. Email templates content is in HTML and uses variables (see [Developer documentation](https://docs.strapi.io/developer-docs/latest/plugins/users-permissions.html#templating-emails)).
+4. Edit the content of the email in the "Message" textbox. Email templates content is in HTML and uses variables (see [templating emails](#templating-emails)).
 5. Click on the **Finish** button.
 
 ### Configuring advanced settings
@@ -197,6 +199,225 @@ All settings related to the Users & Permissions plugin are managed from the *Adv
 | Redirection url                      | Indicate the URL of the page where end users should be redirected after confirming their Strapi account.                                                           |
 
 3. Click the **Save** button.
+
+### Code-based configuration
+
+While most of the Users & Permissions settings are handled via the admin panel, some more specific settings can be fine-tuned by configuring and customizing your Strapi project's code.
+
+#### JWT configuration
+
+You can configure the JWT generation by using the [plugins configuration file](/dev-docs/configurations/plugins).
+
+Strapi uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to generate the JWT.
+
+Available options:
+
+- `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/dev-docs/configurations/environment#strapi).
+- `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br/>
+  Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+
+module.exports = ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+      jwt: {
+        expiresIn: '7d',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+
+export default ({ env }) => ({
+  // ...
+  'users-permissions': {
+    config: {
+      jwt: {
+        expiresIn: '7d',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+:::warning
+Setting JWT expiry for more than 30 days is **not recommended** due to security concerns.
+:::
+
+#### Registration configuration
+
+If you have added any additional fields in your User **model** <Annotation>Models, also called content-types in Strapi, define a representation of the data structure.<br/>Users are a special type of built-in content-type found in any new Strapi application. You can customize the Users model, adding more fields for instance, like any other models.<br/>For more information, please refer to the [models](/dev-docs/backend-customization/models) documentation.</Annotation> that need to be accepted on registration, you need to added them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/dev-docs/configurations/plugins), otherwise they will not be accepted.
+
+The following example shows how to ensure a field called "nickname" is accepted by the API on user registration:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  // ...
+  "users-permissions": {
+    config: {
+      register: {
+        allowedFields: ["nickname"],
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Templating emails
+
+By default this plugin comes with two templates: reset password and email address confirmation. The templates use [Lodash's `template()` method](https://lodash.com/docs/4.17.15#template) to populate the variables.
+
+You can update these templates under **Plugins** > **Roles & Permissions** > **Email Templates** tab in the admin panel (see [configuring email templates](#configuring-email-templates)).
+
+The following variables can be used:
+
+<Tabs>
+<TabItem value="reset-password" label="Reset password">
+
+<br/>
+- `USER` (object)
+  - `username`
+  - `email`
+- `TOKEN` corresponds to the token generated to be able to reset the password.
+- `URL` is the link where the user will be redirected after clicking on it in the email.
+- `SERVER_URL` is the absolute server url (configured in server configuration).
+
+</TabItem>
+
+<TabItem value="email-address-confirmation" label="Email address confirmation">
+
+<br/>
+- `USER` (object)
+  - `username`
+  - `email`
+- `CODE` corresponds to the CODE generated to be able confirm the user email.
+- `URL` is the Strapi backend URL that confirms the code (by default `/auth/email-confirmation`).
+- `SERVER_URL` is the absolute server url (configured in server configuration).
+
+</TabItem>
+
+</Tabs>
+
+#### Security configuration
+
+JWTs can be verified and trusted because the information is digitally signed. To sign a token a _secret_ is required. By default Strapi generates and stores it in `/extensions/users-permissions/config/jwt.js`.
+
+This is useful during development but for security reasons it is recommended to set a custom token via an environment variable `JWT_SECRET` when deploying to production.
+
+By default you can set a `JWT_SECRET` environment variable and it will be used as secret. If you want to use another variable you can update the configuration file.
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/extensions/users-permissions/config/jwt.js"
+
+module.exports = {
+  jwtSecret: process.env.SOME_ENV_VAR,
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/extensions/users-permissions/config/jwt.ts"
+
+export default {
+  jwtSecret: process.env.SOME_ENV_VAR,
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Creating a custom callback validator
+
+By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
+
+<ThemedImage
+  alt="Users & Permissions configuration"
+  sources={{
+      light: '/img/assets/users-permissions/sso-config-custom-validator.png',
+      dark: '/img/assets/users-permissions/sso-config-custom-validator_DARK.png'
+    }}
+/>
+
+If you need to configure a custom handler to accept other URLs, you can create a callback `validate` function in your plugins.js for the `users-permissions` plugin.
+
+```tsx title="/config/plugins.js|ts"
+  // ... other plugins configuration ...
+  // Users & Permissions configuration
+  'users-permissions': {
+    enabled: true,
+    config: {
+      callback: {
+        validate: (cbUrl, options) => {
+          // cbUrl is where Strapi is being asked to redirect the auth info
+          // that was received from the provider to
+
+          // in this case, we will only validate that the 
+          // if using a base url, you should always include the trailing slash
+          // although in real-world usage you should also include the full paths
+          if (cbUrl.startsWith('https://myproxy.mysite.com/') || 
+              cbUrl.startsWith('https://mysite.com/')) {
+            return;
+          }
+
+          // Note that you MUST throw an error to fail validation
+          // return values are not checked
+          throw new Error('Invalid callback url');
+        },
+      },
+    },
+  },
+```
 
 ## Usage
 
@@ -232,3 +453,150 @@ To create a new end-user account:
 | Role      | (optional) Indicate the role that should be granted to the new end user. If this field is not filled in, the end user will be attributed the role set as default (see [Managing Users & Permissions plugin settings](../settings/configuring-users-permissions-plugin-settings)). |
 
 4. Click on the **Save** button.
+
+### API usage
+
+Each time an API request is sent the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
+
+:::note
+When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
+:::
+
+#### Identifier
+
+The `identifier` param can be an email or username, as in the following examples:
+
+<Tabs>
+
+<TabItem value="Axios" title="Axios">
+
+```js
+import axios from 'axios';
+
+// Request API.
+axios
+  .post('http://localhost:1337/api/auth/local', {
+    identifier: 'user@strapi.io',
+    password: 'strapiPassword',
+  })
+  .then(response => {
+    // Handle success.
+    console.log('Well done!');
+    console.log('User profile', response.data.user);
+    console.log('User token', response.data.jwt);
+  })
+  .catch(error => {
+    // Handle error.
+    console.log('An error occurred:', error.response);
+  });
+```
+
+</TabItem>
+
+<TabItem value="Postman" title="Postman">
+
+If you use **Postman**, set the **body** to **raw** and select **JSON** as your data format:
+
+```json
+{
+  "identifier": "user@strapi.io",
+  "password": "strapiPassword"
+}
+```
+
+If the request is successful you will receive the **user's JWT** in the `jwt` key:  
+
+```json
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU",
+    "user": {
+        "id": 1,
+        "username": "user",
+        ...
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+#### Token usage
+
+The `jwt` may then be used for making permission-restricted API requests. To make an API request as a user place the JWT into an `Authorization` header of the `GET` request.
+
+Any request without a token will assume the `public` role permissions by default. Modify the permissions of each user's role in the admin dashboard.
+
+Authentication failures return a `401 (unauthorized)` error.
+
+The `token` variable is the `data.jwt` received when logging in or registering.
+
+```js
+import axios from 'axios';
+
+const token = 'YOUR_TOKEN_HERE';
+
+// Request API.
+axios
+  .get('http://localhost:1337/posts', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  .then(response => {
+    // Handle success.
+    console.log('Data: ', response.data);
+  })
+  .catch(error => {
+    // Handle error.
+    console.log('An error occurred:', error.response);
+  });
+```
+
+#### User registration
+
+Creating a new user in the database with a default role as 'registered' can be done like in the following example:
+
+```js
+import axios from 'axios';
+
+// Request API.
+// Add your own code here to customize or restrict how the public can register new users.
+axios
+  .post('http://localhost:1337/api/auth/local/register', {
+    username: 'Strapi user',
+    email: 'user@strapi.io',
+    password: 'strapiPassword',
+  })
+  .then(response => {
+    // Handle success.
+    console.log('Well done!');
+    console.log('User profile', response.data.user);
+    console.log('User token', response.data.jwt);
+  })
+  .catch(error => {
+    // Handle error.
+    console.log('An error occurred:', error.response);
+  });
+```
+
+#### User object in Strapi context
+
+The `user` object is available to successfully authenticated requests.
+
+The authenticated `user` object is a property of `ctx.state`.
+
+```js
+create: async ctx => {
+  const { id } = ctx.state.user;
+
+  const depositObj = {
+    ...ctx.request.body,
+    depositor: id,
+  };
+
+  const data = await strapi.services.deposit.add(depositObj);
+
+  // Send 201 `created`
+  ctx.created(data);
+};
+```

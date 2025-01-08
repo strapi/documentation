@@ -6,10 +6,118 @@
   background-color: #7B79FF;
 }
 
+// Modal
+
+.mantine-Paper-root {
+  box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.2);
+  // border: 1px solid var(--strapi-neutral-150);
+}
+
+// Header
+
+.mantine-Modal-header {
+  background-color: var(--strapi-neutral-0);
+  border-bottom: solid 1px var(--strapi-neutral-150);
+
+  // Close button
+
+  .mantine-CloseButton-root {
+    background-color: var(--strapi-neutral-0);
+
+    &:hover {
+      background-color: var(--strapi-neutral-100);
+    }
+  }
+}
+
+// Disclaimer
+
+.mantine-Modal-body>.mantine-Modal-body>div:first-of-type>div:first-of-type {
+  background-color: var(--strapi-neutral-100);
+  margin-top: 0;
+  margin-bottom: 4px;
+  padding: 12px;
+
+  .mantine-Group-root {
+    background-color: var(--strapi-neutral-100);
+
+    .mantine-Text-root {
+      color: var(--strapi-neutral-600);
+    }
+  }
+}
+
+// Input
+
+.mantine-InputWrapper-root {
+
+  textarea {
+    background-color: var(--strapi-neutral-0);
+    border-radius: 8px;
+
+    &::placeholder {
+      color: var(--strapi-neutral-300) !important;
+    }
+  }
+
+  // Button
+
+  .mantine-UnstyledButton-root {
+    border: solid 1px var(--strapi-primary-600);
+    border-radius: 4px;
+  }
+}
+
+// Buttons
+
+.mantine-Button-root {
+  background-color: var(--strapi-neutral-100) !important;
+  border-radius: 4px; // Changing the border radius to match the DS
+
+  &:hover {
+    background-color: var(--strapi-neutral-150) !important;
+  }
+}
+
+// Last texts
+
+.mantine-Modal-body>.mantine-Modal-body>div:last-of-type>div:last-of-type {
+
+  .mantine-Text-root {
+    color: var(--strapi-neutral-600);
+  }
+}
+
+.mantine-Popover-dropdown {
+  border: solid 1px var(--strapi-neutral-150);
+}
+
 @include dark {
+
+  // Modal
+  .mantine-Paper-root {
+    background-color: #181826;
+    box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.8);
+  }
+
+  // Header
+  .mantine-Modal-header {
+    background-color: var(--strapi-neutral-100);
+    border-bottom: solid 1px var(--strapi-neutral-150);
+
+    // Close button
+    .mantine-CloseButton-root {
+      background-color: var(--strapi-neutral-100);
+
+      &:hover {
+        background-color: var(--strapi-neutral-0);
+      }
+    }
+  }
+
+  // Body
   .mantine-Modal-body * {
-    background-color: transparent;
-    color: white;
+    color: var(--strapi-neutral-800);
   }
 
   .mantine-Popover-dropdown {
@@ -20,19 +128,9 @@
   .mantine-Modal-body,
   .mantine-Modal-header,
   .mantine-Group-root {
-    background-color: #181826;
-    color: #F6F6F9;
-
-    code, span, ol {
-      color: #F6F6F9;
-    }
 
     code {
       background-color: black;
-    }
-
-    a {
-      color: var(--strapi-primary-500);
     }
 
     pre {
@@ -41,30 +139,64 @@
   }
 
   .mantine-Modal-body {
+
     .mantine-InputWrapper-root {
-      background-color: black;
-      border-radius: 8px;
+
       textarea {
+        background-color: var(--strapi-neutral-100);
         border-color: var(--strapi-neutral-200);
-        &::placeholder {
-          color: var(--strapi-neutral-300);
-        }
+
         &:focus {
-          border-color: var(--strapi-neutral-800);
+          border-color: var(--strapi-primary-600);
         }
+      }
+
+      // Button
+      .mantine-UnstyledButton-root {
+        border: solid 1px #4945FF;
+        border-radius: 4px;
       }
     }
   }
 
-  .mantine-Modal-body > .mantine-Modal-body > div:first-of-type > div:first-of-type {
-    background-color: var(--strapi-neutral-150);
+
+  .mantine-Alert-root {
+    background-color: transparent;
+    border: solid 1px var(--strapi-neutral-200);
+  }
+
+  // Disclaimer
+  .mantine-Modal-body>.mantine-Modal-body>div:first-of-type>div:first-of-type {
+    background-color: var(--strapi-neutral-0);
+
     .mantine-Group-root {
-      background-color: var(--strapi-neutral-150);
+      background-color: var(--strapi-neutral-0);
+
+      .mantine-Text-root {
+        color: var(--strapi-neutral-700);
+      }
     }
   }
 
+  .mantine-Stack-root>div:first-of-type {
+    // background-color: aqua;
+  }
+
+  // Last texts
+  .mantine-Modal-body>.mantine-Modal-body>div:last-of-type>div:last-of-type {
+
+    .mantine-Text-root {
+      color: var(--strapi-neutral-600);
+    }
+  }
+
+  // Buttons
   .mantine-Button-root,
-  .mantine-Tooltip-tooltip {
-    background-color: black !important;
+  .mantine-UnstyledButton-root {
+    background-color: var(--strapi-neutral-0) !important;
+
+    &:hover {
+      background-color: var(--strapi-neutral-150) !important;
+    }
   }
 }
