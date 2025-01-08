@@ -219,7 +219,7 @@ main() {
                     echo "### <Icon name="pen-nib" /> Updated content" > "$TEMP_DIR/${section}_header"
                     ;;
                 "chore")
-                    echo "### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvement" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements" > "$TEMP_DIR/${section}_header"
                     ;;
             esac
 
