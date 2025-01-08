@@ -6,15 +6,6 @@ tags:
 - admin panel
 - users & permissions
 - api tokens
-- authenticated role
-- JSON Web Tokens (JWT)
-- JWT configuration
-- keycloak
-- ngrok
-- provider
-- public role
-- password
-- Users, Roles & Permissions 
 ---
 
 # Users & Permissions

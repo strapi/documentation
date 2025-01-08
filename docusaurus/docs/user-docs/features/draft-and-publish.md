@@ -53,23 +53,11 @@ To enable Draft & Publish:
 
 ## Usage
 
-<!--The Draft & Publish feature is visible and used from the ![Content icon](/img/assets/icons/v5/Feather.svg) *Content Manager*, accessible via the main navigation of the admin panel. Edit any content type of your choice (with Draft & Publish enabled) to see and follow the documentation below.-->
-
 With Draft & Publish enabled, the Content Manager's edit view indicates the current status of your content type's entry at the top of the interface. Your content can have 3 statuses:
 
 - <span style={{color:"#5cb176"}}>Published</span>: The content was previously published. There are no pending draft changes saved.
 - <span style={{color:"#ac73e6"}}>Modified</span>: The content was previously published. You made some changes to the draft version and saved these changes, but the changes have not been published yet.
 - <span style={{color:"#7b79ff"}}>Draft</span>: The content has never been published yet.
-
-<!--
-| Status name | Description |
-|------------|--------------|
-| <span style={{color:"#5cb176"}}>Published</span> | The content was previously published.<br/>There are no pending draft changes saved. |
-| <span style={{color:"#ac73e6"}}>Modified</span> | The content was previously published.<br/>You made some changes to the draft version and saved these changes, but the changes have not been published yet. |
-| <span style={{color:"#7b79ff"}}>Draft</span> | The content has never been published yet. |
--->
-  
-<!--In the Content Manager edit view (the view you see when editing an entry), the current status of an entry is indicated at the top of the interface, just below the entry title.-->
 
 ### Working with drafts
 

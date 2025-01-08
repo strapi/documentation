@@ -30,6 +30,10 @@ With the Preview feature, you can preview your front end application directly fr
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
 :::
 
+<!-- <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
+<iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
+</div> -->
+
 ## Configuration
 
 :::note Notes
@@ -61,7 +65,7 @@ preview: {
 
 #### Allowed origins
 
-The Preview feature configuration is stored in the `preview` object of [the `config/admin` file](/dev-docs/configurations/admin-panel) and consists of 3 key components:
+Controls which domains can access previews:
 
 ```javascript title="config/admin.ts|js" {5}
 // …
