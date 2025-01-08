@@ -440,6 +440,9 @@ The relational fields of a content-type are displayed among regular fields. For 
   }}
 />
 
+<Tabs groupId="RelationalFields">
+
+<TabItem value="OneChoice" label="One-choice relational fields">
 
 Many-to-one, one-to-one, and one-way types of relation only allow to choose one entry per relational field.
 
