@@ -163,6 +163,17 @@
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
+  &--sso {
+    --custom-badge-background-color: var(--strapi-purple);
+    --custom-badge-color: var(--strapi-neutral-0);
+    --custom-badge-border-color: var(--strapi-purple);
+    --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
+
+    a {
+      color: inherit;
+    }
+  }
+
   &--pro {
     --custom-badge-background-color: var(--strapi-primary-600);
     --custom-badge-color: #fff;
@@ -271,6 +282,7 @@ main .badge--team,
 main .badge--pro,
 main .badge--enterprise,
 main .badge--growth,
+main .badge--sso,
 main .badge--version {
   .badge__tooltip {
     @include badge-tooltip();
