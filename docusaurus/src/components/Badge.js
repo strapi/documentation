@@ -108,6 +108,18 @@ export function GrowthBadge(props) {
   );
 }
 
+export function SsoBadge(props) {
+  return (
+    <Badge
+      variant="SSO"
+      link="https://strapi.io/pricing-self-hosted"
+      icon="feather"
+      tooltip="This feature is available with the SSO add-on."
+      {...props}
+    />
+  );
+}
+
 export function CloudProBadge(props) {
   return (
     <Badge

@@ -46,7 +46,7 @@ Some specific features require additional configuration:
 | [Lifecycle functions](/dev-docs/configurations/functions) | In the `/src/index` file | Optionally used to perform various actions that happen during the server lifecycle. Includes the `register`, `bootstrap`, and `destroy` functions. |
 | [Cron jobs](/dev-docs/configurations/cron) | <ul><li>In the `/config/server` file to enable the feature</li><li>In a dedicated, optional `cron-tasks` file that can be used to declare the jobs</li></ul> | Required to setup CRON jobs for the server. |
 | [Environment variables](/dev-docs/configurations/environment) | In dedicated files and folders for the environment (e.g., `config/env/production/server`) | Optionally used to define different environments and their variables. |
-| [Single Sign-On (SSO)](/dev-docs/configurations/sso) <EnterpriseBadge /> | In the `config/admin` file | Required to use the Entreprise-only SSO feature if enabled on your project. |
+| [Single Sign-On (SSO)](/dev-docs/configurations/sso) <EnterpriseBadge /> <SsoBadge /> | In the `config/admin` file | Required to use the SSO feature if enabled on your project. |
 | [Feature flags](/dev-docs/configurations/features) | In the `config/features` file | Optional for a typical, stable Strapi application.<br/>Only required to enable [future flags](/dev-docs/configurations/features).|
 
 ## Guides

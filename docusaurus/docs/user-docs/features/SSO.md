@@ -8,7 +8,8 @@ tags:
 - Single Sign-On
 ---
 
-# Single Sign-On (SSO) <EnterpriseBadge />
+# Single Sign-On (SSO)
+<EnterpriseBadge /> <SsoBadge />
 
 The Single Sign-On (SSO) feature can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 
