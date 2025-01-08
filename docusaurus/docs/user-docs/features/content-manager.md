@@ -103,6 +103,8 @@ Both the list view and the edit view can be configured, and the former can eithe
 
 ### Configuring the list view
 
+<br/>
+
 #### Temporary configuration
 
 By configuring temporarily the list view, the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. This configuration allows to temporarily choose which fields to display in the list view's table.
