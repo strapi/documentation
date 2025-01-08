@@ -25,6 +25,32 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
  
+## 5.5.1
+### <Icon name=pen-nib /> Chore, fixes, typos, and other improvement
+
+#### Dev Docs
+- [Fix typo in react-router-dom-6.md](https://github.com/strapi/documentation/pull/2337)
+- [Use yarn/npm tabs in Strapi CLI examples](https://github.com/strapi/documentation/pull/2332)
+
+#### Strapi Cloud
+- [chore: removed account preferences section from cloud doc](https://github.com/strapi/documentation/pull/2333)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
+<a href="https://github.com/johannesscheiermann" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19613511?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="johannesscheiermann"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.5.0
 
 <Icon name="sparkle" /> The Strapi Docs website now has a brand new design! We hope you like it as much as we loved creating it.
