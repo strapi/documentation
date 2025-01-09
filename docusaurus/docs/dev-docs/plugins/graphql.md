@@ -56,7 +56,7 @@ npm install @strapi/plugin-graphql
 Then, start your app and open your browser at [http://localhost:1337/graphql](http://localhost:1337/graphql). You should now be able to access the **GraphQL Sandbox** that will help you to write your GraphQL queries and mutations.
 
 :::note
-The GraphQL Sandbox is enabled by default in all environments except production. Set the `landingPage` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql-configuration)).
+The GraphQL Sandbox is enabled by default in all environments except production. Set the `landingPage` configuration option to `true` to also enable the GraphQL Playground in production environments (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql)).
 :::
 
 ## Configuration
