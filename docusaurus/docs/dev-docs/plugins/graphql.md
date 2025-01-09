@@ -204,7 +204,7 @@ To add them globally, you can merge the following into your middleware configura
 }
 ```
 
-To add these exceptions only for the /graphql path (recommended), you can create a new middleware to handle it. For example:
+To add these exceptions only for the `/graphql` path (recommended), you can create a new middleware to handle it. For example:
 
 <Tabs groupId="js-ts">
 
