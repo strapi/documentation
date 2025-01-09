@@ -85,7 +85,7 @@ The following configuration options are supported by the GraphQL plugin and can 
 
 ### Example
 
-Below is an example of how to use these options in a Strapi configuration file:
+The following is an example of how to use these options in a Strapi configuration file:
 
 <Tabs groupId="js-ts">
 
