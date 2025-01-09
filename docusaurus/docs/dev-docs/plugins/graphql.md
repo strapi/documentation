@@ -1086,7 +1086,7 @@ GraphQL is a query language allowing users to use a broader panel of inputs than
 ### Disable introspection and Sandbox in production
 
 In production environments, disabling the GraphQL Sandbox and the introspection query is strongly recommended.
-If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql-configuration), it is already disabled in production by default.
+If you haven't edited the [configuration file](/dev-docs/configurations/plugins#graphql), it is already disabled in production by default.
 
 ### Limit max depth and complexity
 
