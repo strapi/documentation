@@ -71,7 +71,7 @@ The maximum number of items returned by the response is limited to 100 by defaul
 
 ## GraphQL Configuration Options
 
-Here is a detailed list of configuration options supported by the GraphQL plugin. These options can be defined in the `config/plugins.js` (JavaScript) or `config/plugins.ts` (TypeScript) file.
+The following configuration options are supported by the GraphQL plugin and can be defined in the `config/plugins` file:
 
 | Option             | Type                | Description                                                                                                                                                      | Default Value | Notes                                               |
 | ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------- |
