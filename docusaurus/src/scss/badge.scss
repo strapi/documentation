@@ -150,6 +150,10 @@
     --custom-badge-color: var(--strapi-neutral-0);
     --custom-badge-tooltip-background-color: var(--strapi-warning-100);
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
+
+    a {
+      color: inherit;
+    }
   }
 
   &--growth {
@@ -278,6 +282,7 @@ main .badge--team,
 main .badge--pro,
 main .badge--enterprise,
 main .badge--growth,
+main .badge--sso,
 main .badge--version {
   .badge__tooltip {
     @include badge-tooltip();
