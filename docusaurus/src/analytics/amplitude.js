@@ -4,9 +4,12 @@ let amplitudeInstance = null;
 
 // Utility to get cookie by name
 const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
+  if (typeof window !== 'undefined') {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  }
   return null;
 };
 
@@ -17,7 +20,7 @@ const getGoogleAnalyticsClientId = () => {
     const parts = gaCookie.split('.');
     return parts.length === 4 ? `${parts[2]}.${parts[3]}` : null;
   }
-  return 'localhost';
+  return null;
 };
 
 export const initializeAmplitude = () => {
@@ -33,7 +36,7 @@ export const initializeAmplitude = () => {
 
     // Initialize Amplitude with the client ID as the deviceId
     amplitudeInstance = amplitude.init(apiKey, googleAnalyticsClientId, {
-      deviceId: googleAnalyticsClientId, // Fallback to default deviceId if GA ID is not found
+      ...(googleAnalyticsClientId && { deviceId: googleAnalyticsClientId }),
       autocapture: true,
     });
   }
