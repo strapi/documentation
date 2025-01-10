@@ -104,6 +104,10 @@ const config = {
       'data-modal-body-padding-top': '20px',
       async: true,
     },
+    {
+      src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
+      async: true,
+    },
   ],
   stylesheets: [
     {
