@@ -50,8 +50,7 @@ module.exports = { up };
 3. Fill in the template by adding actual migration code inside the `up()` function.
 `up()` receives a [Knex instance](https://knexjs.org/), already in a transaction state, that can be used to run the database queries.
 
-<details>
-<summary>Example of migration file</summary>
+Example of migration file:
 
 ```jsx title="./database/migrations/2022.05.10T00.00.00.name-of-my-migration.js"
 
@@ -73,16 +72,13 @@ module.exports = {
 };
 ```
 
-</details>
-
 ### Using Strapi Instance for migrations
 
 :::danger
 If a user opts not to use Knex directly for migrations and instead utilizes the Strapi instance, it is important to wrap the migration code with `strapi.db.transaction()`. Failure to do so may result in migrations not rolling back if an error occurs.
 :::
 
-<details>
-<summary>Example of migration file with Strapi instance</summary>
+Example of migration file with Strapi instance:
 
 ```jsx title="./database/migrations/2022.05.10T00.00.00.name-of-my-migration.js"
 module.exports = {
@@ -91,7 +87,7 @@ module.exports = {
       // Your migration code here
 
       // Example: creating new entries
-      await strapi.entityService.create('api::article.article', {
+      await strapi.documents('api::article.article').create({
         data: {
           title: 'My Article',
         },
@@ -103,5 +99,3 @@ module.exports = {
   },
 };
 ```
-
-</details>
