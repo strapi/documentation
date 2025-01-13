@@ -24,8 +24,6 @@ const getGoogleAnalyticsClientId = () => {
 };
 
 export const initializeAmplitude = () => {
-  const apiKey = process.env.REACT_APP_AMPLITUDE_API_KEY;
-
   // Check if we're already initialized
   if (!amplitudeInstance) {
     // Extract the Google Analytics Client ID
@@ -35,10 +33,14 @@ export const initializeAmplitude = () => {
     }
 
     // Initialize Amplitude with the client ID as the deviceId
-    amplitudeInstance = amplitude.init(apiKey, googleAnalyticsClientId, {
-      ...(googleAnalyticsClientId && { deviceId: googleAnalyticsClientId }),
-      autocapture: true,
-    });
+    amplitudeInstance = amplitude.init(
+      '181a95e5a6b8053f7ffb7da9f0ef7ef4', // This key is Public
+      googleAnalyticsClientId,
+      {
+        ...(googleAnalyticsClientId && { deviceId: googleAnalyticsClientId }),
+        autocapture: true,
+      }
+    );
   }
 };
 
@@ -59,4 +61,6 @@ export const amplitudeTrack = (eventName, eventProperties) => {
   }
 };
 
-initializeAmplitude();
+if (typeof document !== 'undefined') {
+  initializeAmplitude();
+}

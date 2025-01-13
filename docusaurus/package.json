@@ -27,7 +27,6 @@
     "docusaurus-plugin-hubspot": "^1.0.1",
     "docusaurus-plugin-image-zoom": "^0.1.1",
     "docusaurus-plugin-sass": "^0.2.3",
-    "docusaurus2-dotenv": "^1.4.0",
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "embla-carousel-wheel-gestures": "^3.0.0",

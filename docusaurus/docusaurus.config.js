@@ -327,7 +327,6 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
-    'docusaurus2-dotenv',
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
