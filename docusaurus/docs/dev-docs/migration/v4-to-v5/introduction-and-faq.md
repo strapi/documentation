@@ -9,9 +9,13 @@ tags:
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
-The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until March 2026.
+The latest major version of Strapi is Strapi 5.
 
 Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
+
+:::note
+Strapi 5 is the latest stable version, but Strapi v4 is still supported until March 2026, which means security fixes are still applied to v4 (see [Strapi release notes](https://github.com/strapi/strapi/releases)).
+:::
 
 ## Available resources
 
