@@ -25,7 +25,7 @@ const getGoogleAnalyticsClientId = () => {
 
 export const initializeAmplitude = () => {
   // Check if we're already initialized
-  if (!amplitudeInstance) {
+  if (!amplitudeInstance && process.env.NODE_ENV === 'production') {
     // Extract the Google Analytics Client ID
     const googleAnalyticsClientId = getGoogleAnalyticsClientId();
     if (!googleAnalyticsClientId) {
