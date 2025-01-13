@@ -20,6 +20,7 @@ Users invited to collaborate on a project, called maintainers, do not have the s
 - Cannot share the project themselves to someone else
 - Cannot delete the project from the project settings
 - Cannot access the *Billing* section of project settings
+- Cannot adjust repository settings, including reconnecting repositories
 
 ## Sharing a project
 
