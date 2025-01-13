@@ -16,6 +16,10 @@ If there is no specific migration guide between your current version and the lat
 [Plugins extension](/dev-docs/plugins/users-permissions) that create custom code or modify existing code will need to be updated and compared to the changes in the repository. Not updating the plugin extensions could break the application.
 :::
 
+:::note
+Strapi 5 is out, but Strapi v4 is still supported until March 2026, which means security fixes are still applied to v4 (see [Strapi release notes](https://github.com/strapi/strapi/releases)). When you're ready to upgrade, please refer to the [Strapi 5 upgrade documentation](https://docs.strapi.io/dev-docs/migration/v4-to-v5/introduction-and-faq).
+:::
+
 ## v4 migration guides
 
 - [Migration guide from 4.0.0+ to 4.0.6](/dev-docs/migration/v4/migration-guide-4.0.0-to-4.0.6)
