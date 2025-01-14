@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const {themes} = require('prism-react-renderer');
+const { themes } = require('prism-react-renderer');
 // const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
@@ -25,7 +25,8 @@ const config = {
   },
 
   headTags: [
-    { // Useful for SEO even if we don't have multiple languages
+    {
+      // Useful for SEO even if we don't have multiple languages
       tagName: 'link',
       attributes: {
         rel: 'alternate',
@@ -91,15 +92,20 @@ const config = {
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
       'data-button-hide': 'true',
-      'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
+      'data-modal-disclaimer':
+        'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
       // 'data-modal-open-on-command-k': 'true',
-      'data-modal-override-open-class': "kapa-widget-button",
+      'data-modal-override-open-class': 'kapa-widget-button',
       'data-modal-title-ask-ai': 'Ask your question',
       'data-modal-border-radius': '4px',
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
+      async: true,
+    },
+    {
+      src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
       async: true,
     },
   ],
@@ -118,7 +124,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
+          editUrl:
+            'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             keywords: [
               // Admonitions defaults
@@ -178,7 +185,7 @@ const config = {
         appId: '392RJ63O14',
         apiKey: 'ed62374a794e8da5accb298e13618614',
         indexName: 'strapiDocsNextstrapiDocsNext',
-     },
+      },
       navbar: {
         hideOnScroll: false,
         logo: {
@@ -192,14 +199,14 @@ const config = {
             docId: 'user-docs/intro',
             position: 'left',
             // label: 'CMS',
-            html: '<i class="ph-fill ph-feather"></i> User Guide'
+            html: '<i class="ph-fill ph-feather"></i> User Guide',
           },
           {
             type: 'doc',
             docId: 'dev-docs/intro',
             position: 'left',
             // label: 'CMS',
-            html: '<i class="ph-fill ph-computer-tower"></i> Dev Docs'
+            html: '<i class="ph-fill ph-computer-tower"></i> Dev Docs',
           },
           {
             type: 'doc',
@@ -222,44 +229,44 @@ const config = {
             items: [
               {
                 label: "What's new?",
-                href: '/dev-docs/whats-new'
+                href: '/dev-docs/whats-new',
               },
               {
-                label: "Release notes",
-                href: '/release-notes'
+                label: 'Release notes',
+                href: '/release-notes',
               },
               {
-                label: "FAQ",
-                href: '/dev-docs/faq'
+                label: 'FAQ',
+                href: '/dev-docs/faq',
               },
               {
-                label: "Community & Support",
-                href: '/dev-docs/community'
+                label: 'Community & Support',
+                href: '/dev-docs/community',
               },
               {
-                label: "Usage information",
-                href: '/dev-docs/usage-information'
+                label: 'Usage information',
+                href: '/dev-docs/usage-information',
               },
-            ]
+            ],
           },
           {
             title: 'Additional resources',
             items: [
               {
                 label: 'v4 Docs',
-                href: 'https://docs-v4.strapi.io'
+                href: 'https://docs-v4.strapi.io',
               },
               {
                 label: 'Contributor Docs',
-                href: 'https://contributor.strapi.io'
+                href: 'https://contributor.strapi.io',
               },
               {
                 label: 'Strapi Design System',
-                href: 'https://design-system.strapi.io/'
+                href: 'https://design-system.strapi.io/',
               },
               {
                 label: 'v3 Docs (unsupported)',
-                href: 'https://docs-v3.strapi.io'
+                href: 'https://docs-v3.strapi.io',
               },
             ],
           },
@@ -326,6 +333,7 @@ const config = {
      * related to the Docusaurus canary build or not.
      */
   ],
+  clientModules: [require.resolve('./src/analytics/amplitude.js')],
 };
 
 module.exports = config;
