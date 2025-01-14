@@ -46,7 +46,6 @@ The CLI command consists of the following arguments:
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
 | `--verbose` | Enable verbose logs. |
 
-:::
 
 ## Name the export file
 

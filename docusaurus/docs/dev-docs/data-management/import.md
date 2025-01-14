@@ -46,7 +46,7 @@ The CLI command consists of the following arguments:
 | `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
 | `--verbose` | Enable verbose logs. |
 
-:::
+
 
 ## Specify the import file
 
