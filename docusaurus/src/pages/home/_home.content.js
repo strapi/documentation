@@ -63,8 +63,8 @@ export default {
       linksIconColor: 'blue',
       links: [
         {
-          label: 'Quick Start Guide',
-          to: '/dev-docs/quick-start',
+          label: 'Installation',
+          to: '/dev-docs/installation',
         },
         {
           label: 'Content Manager',
