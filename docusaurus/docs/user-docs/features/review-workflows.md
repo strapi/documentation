@@ -9,12 +9,12 @@ tags:
 ---
 
 # Review Workflows
-<EnterpriseBadge />
+<EnterpriseBadge /> <CloudTeamBadge />
 
 The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise Edition. <br/>
+<Icon name="credit-card"/> **Plan:** Enterprise Plan or Team Plan. <br/>
 <Icon name="user"/> **Role & permission:** Super Admin role in project's admin panel. <br/>
 <Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
@@ -30,7 +30,7 @@ The Review Workflows feature allows you to create and manage workflows for your 
 
 ## Configuration
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings > Global settings > Review Workflows
+**Path to configure the feature:** <Icon name="gear-six" /> Settings > Global settings > Review Workflows
 
 For the review workflows to be usable in the Content Manager, the default one should be configured or a new one should be created.
 
@@ -38,7 +38,7 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 
 ### Creating a new workflow
 
-1. Click on the **Create new workflow** button or on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) of a workflow.
+1. Click on the **Create new workflow** button or on the edit button <Icon name="pencil-simple" /> of a workflow.
 2. In the workflow edit interface, configure the new workflow:
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
@@ -69,7 +69,7 @@ The maximum number of [workflows and stages per workflow is limited](https://str
 4. Select *Roles* that can change the stage, if the entity is currently in that review stage.
 5. Click on the **Save** button.
 
-By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/v5/Drag.svg) button.
+By default new stages are appended, but they can be reordered anytime using the <Icon name="dots-six-vertical" classes="ph-bold" /> button.
 
 :::tip
 To set up roles for each stage, you can either click "Apply to all stages" to apply the current roles to all other stages of the workflow or use "Duplicate stage" of the stage context menu.
@@ -83,14 +83,14 @@ To set up roles for each stage, you can either click "Apply to all stages" to ap
 
 #### Deleting a stage
 
-To delete a stage, click ![More](/img/assets/icons/v5/More.svg) in the context menu of the stage, then **Delete**.
+To delete a stage, click <Icon name="dots-three-outline" /> in the context menu of the stage, then **Delete**.
 
 If you delete a stage that has pending reviews, the reviews will be moved to first stage in the workflow. Every workflow needs to
 contain at least one stage and therefore it is not possible to delete the last stage.
 
 ### Deleting a workflow
 
-To delete a workflow click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) of a workflow in the list view.
+To delete a workflow click on the delete button <Icon name="trash" /> of a workflow in the list view.
 
 :::note
 It is not possible to delete the last workflow.
@@ -98,11 +98,11 @@ It is not possible to delete the last workflow.
 
 ## Usage
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
+**Path to use the feature:** <Icon name="feather" /> Content Manager
 
 ### Change review stage
 
-As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow (see [Managing Review Workflows](/user-docs/settings/review-workflows)).
+As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow.
 
 To change the review stage of your content:
 
