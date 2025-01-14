@@ -551,7 +551,7 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 
 ###### Authorization configuration
 
-By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/dev-docs/configurations/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
+By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/user-docs/features/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
 
 <details>
 <summary> Authorization with the Users & Permissions plugin</summary>

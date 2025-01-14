@@ -12,7 +12,7 @@ tags:
 
 # API Tokens
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/dev-docs/configurations/api-tokens)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*.
+API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/user-docs/features/api-tokens)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*.
 
 :::prerequisites Identity Card of the Feature
 <Icon name="credit-card"/> **Plan:** Free feature. <br/>

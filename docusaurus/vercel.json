@@ -170,7 +170,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html",
-			"destination": "/dev-docs/configurations/api-tokens"
+			"destination": "/user-docs/features/api-tokens"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html",

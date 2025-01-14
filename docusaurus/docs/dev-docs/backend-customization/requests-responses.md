@@ -110,7 +110,7 @@ The `ctx.state.auth` object gives access to information related to the authentic
 
 | Parameter                     | Description                                                                                  | Type     |
 | ------------------------------| -------------------------------------------------------------------------------------------- | -------- |
-| `ctx.state.auth.strategy`     | Information about the currently used authentication strategy ([Users & Permissions plugin](/dev-docs/plugins/users-permissions) or [API tokens](/dev-docs/configurations/api-tokens)) | `Object` |
+| `ctx.state.auth.strategy`     | Information about the currently used authentication strategy ([Users & Permissions plugin](/dev-docs/plugins/users-permissions) or [API tokens](/user-docs/features/api-tokens)) | `Object` |
 | `ctx.state.auth.strategy.name`| Name of the currently used strategy                                                          | `String` |
 | `ctx.state.auth.credentials`  | The user's credentials                                                                      | `String` |
 <!-- ? ctx.state.auth.strategy seems to include the authenticate and verify functions. should we document them somewhere? -->
