@@ -42,9 +42,12 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     npx create-strapi-app@4.25.19 my-project
     # 'npx' runs a command from an npm package
     # 'create-strapi-app' is the Strapi package
-    # '@4.25.19' indicates which version of Strapi to install (see the [releases notes on GitHub](https://github.com/strapi/strapi/releases) to find the latest 4.x.x version)
+    # '@4.25.19' indicates which version of Strapi to install 
     # 'my-project' is the name of your Strapi project
     ```
+    :::tip
+    Please refer to the [releases notes on GitHub](https://github.com/strapi/strapi/releases) to find the latest 4.x.x version number.
+    :::
     
     </TabItem>
     
