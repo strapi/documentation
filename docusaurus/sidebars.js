@@ -87,7 +87,7 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Role-Based Access Control (RBAC)',
-          id: 'user-docs/features/RBAC',
+          id: 'user-docs/features/rbac',
         },
         {
           type: 'doc',
@@ -102,7 +102,7 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Single Sign-On (SSO)',
-          id: 'user-docs/features/SSO',
+          id: 'user-docs/features/sso',
         },
         {
           type: 'doc',
