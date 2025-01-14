@@ -36,6 +36,18 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     <Tabs groupId="yarn-npm">
 
+    <TabItem value="npm" label="NPM">
+
+    ```bash
+    npx create-strapi-app@4.25.19 my-project
+    # 'npx' runs a command from an npm package
+    # 'create-strapi-app' is the Strapi package
+    # '@4.25.19' indicates which version of Strapi to install (see the [releases notes on GitHub](https://github.com/strapi/strapi/releases) to find the latest 4.x.x version)
+    # 'my-project' is the name of your Strapi project
+    ```
+    
+    </TabItem>
+    
     <TabItem value="yarn" label="Yarn">
 
     ```bash
@@ -47,28 +59,16 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     
     </TabItem>
 
-    <TabItem value="npm" label="NPM">
-
-    ```bash
-    npx create-strapi-app@latest my-project
-    # 'npx' runs a command from an npm package
-    # 'create-strapi-app' is the Strapi package
-    # '@latest' indicates that the latest version of Strapi is used
-    # 'my-project' is the name of your Strapi project
-    ```
-    
-    </TabItem>
-
     </Tabs>
 
-2. Choose an installation type:
+1. Choose an installation type:
 
    - `Quickstart (recommended)`, which uses the default database (SQLite)
    - `Custom (manual settings)`, which allows to choose your preferred database
 
-3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
+2. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
 
-4. (Custom installation type only) Name your project's database.
+3. (Custom installation type only) Name your project's database.
 
 ### CLI installation options
 
@@ -84,12 +84,6 @@ The above installation guide only covers the basic installation option using the
 For more information on available flags, see our [CLI documentation](/dev-docs/cli).
 
 Strapi also offers a starters CLI to create a project with a pre-made frontend application (see [our dedicated blog post](https://strapi.io/blog/announcing-the-strapi-starter-cli)).
-
-:::tip
-Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi-app@experimental`.
-
-Please use these experimental builds at your own risk. It is not recommended to use them in production.
-:::
 
 ### Skipping the Strapi Cloud login step
 
