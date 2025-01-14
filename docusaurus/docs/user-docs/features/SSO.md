@@ -1,7 +1,7 @@
 ---
 title: Single Sign-On (SSO)
 description: Learn to use the SSO feature which manages authentication through an identity provider.
-toc_max_heading_level: 5
+toc_max_heading_level: 6
 tags:
 - admin panel
 - SSO
@@ -22,13 +22,17 @@ sources={{
 />
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise plan. <br/>
+<Icon name="credit-card"/> **Plan:** Enterprise plan or SSO add-on. <br/>
 <Icon name="user"/> **Role & permission:** Read & Update permissions in Roles > Settings - Single Sign-On. <br/>
 <Icon name="toggle-left"/> **Activation:** Disabled by default. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
 :::
 
 ## Configuration
+
+General settings for SSO are available in the admin panel, and additional SSO providers can be configured via your Strapi project's code.
+
+### Admin panel settings
 
 1. Go to the *Global settings > Single Sign-On* sub-section of the settings interface.
 2. Define your chosen new settings:
@@ -54,6 +58,14 @@ In the meantime, the only way to get in if the Super Admin can't log in is to te
     dark: '/img/assets/settings/settings-sso_DARK.png',
   }}
 />
+
+### Code-based configuration
+
+The SSO configuration lives in [the `/config/admin` file](/dev-docs/configurations/admin-panel). The following dedicated guide will help you configure additional sign-in and sign-up methods for the Strapi admin panel:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="sign-in" title="Configuring SSO providers" description="Learn how to configure SSO providers through your Strapi project's code." link="/dev-docs/configurations/guides/configure-sso"/>
+</CustomDocCardsWrapper>
 
 ## Usage
 

@@ -223,7 +223,6 @@ const sidebars = {
         },
         'dev-docs/configurations/users-and-permissions-providers',
         'dev-docs/configurations/server',
-        'dev-docs/configurations/sso',
         'dev-docs/configurations/typescript',
         {
           type: 'category',
@@ -235,6 +234,7 @@ const sidebars = {
             'dev-docs/configurations/guides/public-assets',
             'dev-docs/configurations/guides/rbac',
             'dev-docs/configurations/guides/use-cron-jobs',
+            'dev-docs/configurations/guides/configure-sso',
           ]
         }
       ]

@@ -15,11 +15,11 @@ tags:
 
 # Admin panel configuration
 
-The `./config/admin.js` is used to define admin panel configuration for the Strapi application.
+The `/config/admin` file is used to define admin panel configuration for the Strapi application.
 
 ## Available options
 
-The `./config/admin.js` file can include the following parameters:
+The `/config/admin` file can include the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
@@ -29,7 +29,7 @@ The `./config/admin.js` file can include the following parameters:
 | `auth`                            | Authentication configuration                                                                                                                                                                       | object        | -                                                                                                                                   |
 | `auth.secret`                     | Secret used to encode JWT tokens                                                                                                                                                                   | string        | `undefined`                                                                                                                         |
 | `auth.domain`                     | Domain used within the cookie for SSO authentication <EnterpriseBadge /> <SsoBadge />)                                                                                                                             | string        | `undefined`                                                                                                                         |
-| `auth.providers`                  | List of authentication providers used for [SSO](/dev-docs/configurations/sso)                                                                                           | array(object) | -                                                                                                                                   |
+| `auth.providers`                  | List of authentication providers used for [SSO](/dev-docs/configurations/guides/configure-sso)                                                                                           | array(object) | -                                                                                                                                   |
 | `auth.options`                    | Options object passed to [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)                                                                                                                | object        | -                                                                                                                                   |
 | `auth.options.expiresIn`          | JWT expire time used in [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)                                                                                                                 | object        | `30d`                                                                                                                               |
 | `auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                             | object        | `{}`                                                                                                                                |
@@ -63,12 +63,12 @@ The `./config/admin.js` file can include the following parameters:
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
 :::
 
-## Configurations
+## Configuration examples {#configurations}
 
-The `./config/admin.js` file should at least include a minimal configuration with required parameters for authentication and [API tokens](/user-docs/features/api-tokens.md). Additional parameters can be included for a full configuration.
+The `/config/admin` file should at least include a minimal configuration with required parameters for authentication and [API tokens](/user-docs/features/api-tokens.md). Additional parameters can be included for a full configuration.
 
 :::note
-[Environmental configurations](/dev-docs/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `./config/server.js`.
+[Environmental configurations](/dev-docs/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `/config/server`.
 :::
 
 <Tabs>
