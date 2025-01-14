@@ -15,7 +15,7 @@ tags:
 
 # How to create custom conditions for Role-Based Access Control (RBAC)
 
-Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles).
+Role-Based Access Control (RBAC) is an approach to restricting access to some users. In a Strapi application, users of the admin panel are administrators. Their roles and permissions are [configured in the admin panel](/user-docs/features/rbac#configuring-administrator-roles).
 
 ## Declaring new conditions
 
@@ -23,7 +23,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 
 - `displayName` (string): the condition name as shown in the admin panel,
 - `name` (string): the condition name, kebab-cased,
-- `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/users-roles-permissions/configuring-administrator-roles#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
+- `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/user-docs/features/RBAC#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
 - `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
@@ -97,7 +97,7 @@ To be available in the admin panel, conditions should be declared and registered
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/index.js"
+```js title="/src/index.js"
 
 module.exports = async () => {
   await strapi.admin.services.permission.conditionProvider.register({
@@ -113,7 +113,7 @@ module.exports = async () => {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./src/index.ts"
+```ts title="/src/index.ts"
 
 export default async () => {
   await strapi.admin.services.permission.conditionProvider.register({
@@ -135,7 +135,7 @@ To register multiple conditions, defined as an array of [condition objects](#dec
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./src/index.js"
+```js title="/src/index.js"
 
 const conditions = [
   {
@@ -168,8 +168,7 @@ module.exports = {
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts
-// path: ./src/index.ts
+```ts title="/src/index.ts"
 
 const conditions = [
   {

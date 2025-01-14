@@ -45,6 +45,9 @@ By default, 3 administrator roles are defined for any Strapi application:
 - Editor: to be able to create content, and manage and publish any content.
 - Super Admin: to be able to access all features and settings. This is the role attributed by default to the first administrator at the creation of the Strapi application.
 
+Additional conditions can be created by following the dedicated guide:
+
+
 ### Creating a new role
 
 On the top right side of the *Administration panel > Roles* interface, an **Add new role** button is displayed. It allows to create a new role for administrators of your Strapi application.
@@ -172,9 +175,12 @@ For each permission of each category, a ![Settings icon](/img/assets/icons/v5/Co
 - the administrator must be the creator,
 - the administrator must have the same role as the creator.
 
-:::note
-Other custom conditions can be available if they have been created beforehand for your Strapi application (see [Role-Based Access Control](/dev-docs/configurations/guides/rbac)).
-:::
+Other custom conditions can be available if they have been created beforehand for your Strapi application. The following dedicated guide helps you create additional custom conditions:
+<CustomDocCardsWrapper>
+<CustomDocCard icon="" title="Creating custom RBAC conditions" description="Learn how to create custom RBAC conditions from scratch by customizing the code of your Strapi application." link="/dev-docs/configurations/guides/rbac" />
+</CustomDocCardsWrapper>
+
+<br/>
 
 <ThemedImage
   alt="Custom conditions"
