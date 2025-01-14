@@ -23,7 +23,7 @@ The Role-Based Access Control (RBAC) feature allows the management of the admini
 />
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** RBAC is a free feature. <br/>
+<Icon name="credit-card"/> **Plan:** Free feature. <br/>
 <Icon name="user"/> **Role & permission:** CRUD permissions in Roles > Settings - Users & Roles. <br/>
 <Icon name="toggle-left"/> **Activation:** Available and activated by default. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
