@@ -209,7 +209,6 @@ const sidebars = {
         },
         'dev-docs/configurations/admin-panel',
         'dev-docs/configurations/api',
-        'dev-docs/configurations/api-tokens',
         'dev-docs/configurations/cron',
         'dev-docs/configurations/database',
         'dev-docs/configurations/environment',
