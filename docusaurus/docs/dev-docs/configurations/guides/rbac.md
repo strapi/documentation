@@ -27,7 +27,7 @@ Declare a single condition as an object, and multiple conditions as an array of 
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
 - `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))
 
-Declare and register conditions in the global [`bootstrap` function](/dev-docs/configurations/functions#bootstrap) found in `./src/index.js` (see [Registering conditions](#registering-conditions)).
+Declare and register conditions in the global [`bootstrap` function](/dev-docs/configurations/functions#bootstrap) found in `/src/index.js` (see [Registering conditions](#registering-conditions)).
 
 :::note
 The condition `name` property acts as a unique id within its namespace, that is either the plugin if the `plugin` property is defined, or the root namespace.
@@ -91,7 +91,7 @@ const condition = {
 
 ## Registering conditions
 
-To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/dev-docs/configurations/functions#bootstrap) found in `./src/index`. Register a single condition with the `conditionProvider.register()` method:
+To be available in the admin panel, conditions should be declared and registered in the global [`bootstrap` function](/dev-docs/configurations/functions#bootstrap) found in `/src/index`. Register a single condition with the `conditionProvider.register()` method:
 
 <Tabs groupId="js-ts">
 
