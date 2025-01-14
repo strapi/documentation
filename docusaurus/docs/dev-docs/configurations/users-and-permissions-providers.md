@@ -1,5 +1,5 @@
 ---
-title: Users & Permissions providers
+title: Users & Permissions Providers
 # description: todo
 displayed_sidebar: cmsSidebar
 tags:
