@@ -11,27 +11,24 @@ tags:
 pagination_next: cloud/getting-started/cloud-fundamentals
 ---
 
-# Welcome to the Strapi Cloud Docs!
+# Welcome to the Strapi Cloud Documentation!
 
-<SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
+<!--
+<SubtleCallout title="Strapi Cloud & Strapi CMS docs" emoji="📍">
 
-The documentation for Strapi contains 3 main sections, accessible from the top navigation bar:
+There are 2 Strapi documentations, one for each Strapi product:
 
-- 🧑‍💻 The **[Developer Docs](/dev-docs/intro)** contain all the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
-- 🧑‍🏫 The **[User Guide](/user-docs/intro)** is all about using Strapi's admin panel.
-- ☁️ The **Strapi Cloud** documentation that you're currently reading is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
+- <Icon name="cloud" /> The **Cloud documentation**, that you're currently reading, which is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
+- <Icon name="feather" /> The **[CMS documentation](/dev-docs/intro)** contains all the information related to the admin panel as well as all the technical information related to the setup, advanced usage, customization and update of your Strapi 5 application.
 
 </SubtleCallout>
+-->
 
-This documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi Cloud account and applications.
+The Strapi Cloud documentation contains all information related to the setup, deployment, update and customization of your Strapi Cloud account and applications. 
 
-## What is Strapi Cloud
-
-[Strapi Cloud](https://strapi.io/cloud) is a hosting platform that allows you to deploy your Strapi applications in a matter of minutes. It is a fully managed content platform built on top of Strapi, the leading open-source headless CMS.
-
-Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
-
-## What you will find here
+:::strapi What is Strapi Cloud?
+[Strapi Cloud](https://strapi.io/cloud) is a hosting platform that allows you to deploy your Strapi applications. It is a fully managed content platform <Annotation>**🤝 Why Strapi Cloud?**<br />Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. <br /> Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. <br /> Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.</Annotation> built on top of Strapi, the open-source headless CMS.
+:::
 
 :::prerequisites
 The typical workflow, which is recommended by the Strapi team, is:
@@ -41,7 +38,7 @@ The typical workflow, which is recommended by the Strapi team, is:
 4. Deploy the application with Strapi Cloud.
 :::
 
-The Strapi Cloud documentation that you are currently reading is organised in topics in a order that should correspond to your journey with the product. The following cards, on which you can click, will redirect you to the main topics and steps of your Strapi Cloud journey.
+The Strapi Cloud documentation is organised in topics in a order that should correspond to your journey with the product. The following cards, on which you can click, will redirect you to the main topics and steps.
 
 <CustomDocCardsWrapper>
   <CustomDocCard emoji="☁️" title="Project creation" description="Step-by-step guide to guide you through the creation and deployment of a Strapi Cloud project." link="/cloud/getting-started/deployment" />
