@@ -34,10 +34,6 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
 1. In a terminal, run the following command:
 
-    <Tabs groupId="yarn-npm">
-
-    <TabItem value="npm" label="NPM">
-
     ```bash
     npx create-strapi-app@4 my-project
     # 'npx' runs a command from an npm package
@@ -48,30 +44,15 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     :::tip
     Please refer to the [releases notes on GitHub](https://github.com/strapi/strapi/releases) to find the latest 4.x.x version number.
     :::
-    
-    </TabItem>
-    
-    <TabItem value="yarn" label="Yarn">
 
-    ```bash
-    yarn create strapi-app my-project
-    # 'yarn create' creates a new project
-    # 'strapi-app' is the Strapi package
-    # 'my-project' is the name of your Strapi project
-    ```
-    
-    </TabItem>
-
-    </Tabs>
-
-1. Choose an installation type:
+2. Choose an installation type:
 
    - `Quickstart (recommended)`, which uses the default database (SQLite)
    - `Custom (manual settings)`, which allows to choose your preferred database
 
-2. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
+3. (Custom installation type only) Among the list of databases, choose a database for your Strapi project.
 
-3. (Custom installation type only) Name your project's database.
+4. (Custom installation type only) Name your project's database.
 
 ### CLI installation options
 
