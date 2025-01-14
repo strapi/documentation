@@ -36,7 +36,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 1. Run the following command in a terminal:
 
     ```bash
-    npx create-strapi-app@4.25.11 my-strapi-project --quickstart
+    npx create-strapi-app@4.25.19 my-strapi-project --quickstart
     ```
 
 2. The terminal will invite you to create a Strapi Cloud account and start a free, 14-day trial. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
