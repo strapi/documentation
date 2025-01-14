@@ -16,7 +16,7 @@ import ConfigDone from '/docs/snippets/u-and-p-provider-config-done.md'
 The present page explains how to setup the Keycloak provider for the [Users & Permissions feature](/user-docs/features/users-permissions).
 
 :::prerequisites
-You have the [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers).
+You have read the [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers).
 :::
 
 ## Keycloak configuration
