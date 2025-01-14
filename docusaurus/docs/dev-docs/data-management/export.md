@@ -31,6 +31,21 @@ The following documentation details the available options to customize your data
 :::caution
 * Admin users and API tokens are not exported.
 * Media from a 3rd party provider (e.g., Cloudinary or AWS S3) are not included in the export as those files do not exist in the upload folders.
+
+:::
+
+The CLI command consists of the following arguments:
+
+| Option         | Description                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-f, --file <file>` | Name to use for the exported file (without extensions). |
+| `-k, --key <string>` | Provide encryption key in command instead of using the prompt. |
+| `--no-encrypt` |  Disables the encryption of the output file. |
+| `--no-compress` | Disables gzip compression of output file. |
+| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
+| `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--verbose` | Enable verbose logs. |
+
 :::
 
 ## Name the export file

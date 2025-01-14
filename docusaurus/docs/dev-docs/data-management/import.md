@@ -34,6 +34,20 @@ The following documentation details the available options to customize your data
 
 :::
 
+The CLI command consists of the following arguments:
+
+| Option         | Description                                                                                                                                  |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-f, --file <file>` | Path and filename for the Strapi export file you want to import |
+| `-k, --key <string>` | Provide encryption key in command instead of using the prompt |
+| `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
+| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
+| `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
+| `--verbose` | Enable verbose logs. |
+
+:::
+
 ## Specify the import file
 
 To import data into a Strapi instance use the `strapi import` command in the destination project root directory. Specify the file to be imported using the `-f` or `--file` option. The filename, extension, and path are required. If the file is encrypted, you are prompted for the encryption key before the import starts.
