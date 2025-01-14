@@ -39,10 +39,10 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     <TabItem value="npm" label="NPM">
 
     ```bash
-    npx create-strapi-app@4.25.19 my-project
+    npx create-strapi-app@4 my-project
     # 'npx' runs a command from an npm package
     # 'create-strapi-app' is the Strapi package
-    # '@4.25.19' indicates which version of Strapi to install 
+    # '@4' asks to install the latest v4.x.x version of Strapi 
     # 'my-project' is the name of your Strapi project
     ```
     :::tip
