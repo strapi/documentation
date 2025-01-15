@@ -24,7 +24,7 @@ The `strapi import` command is used to import data from a file. By default, the 
 - schemas,
 - the `metadata.json` file.
 
-The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/dev-docs/cli#strapi-import).
+The following documentation presents some use cases and options to customize your data import. The import command and all of the available options are run using the Strapi CLI. All the available options are detailed in the [CLI reference documentation](/dev-docs/cli#strapi-import).
 
 :::warning
 
