@@ -35,10 +35,10 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 1. In a terminal, run the following command:
 
     ```bash
-    npx create-strapi-app@4 my-project
+    npx create-strapi-app@legacy my-project
     # 'npx' runs a command from an npm package
     # 'create-strapi-app' is the Strapi package
-    # '@4' asks to install the latest v4.x.x version of Strapi 
+    # '@legacy' asks to install the latest v4.x.x version of Strapi 
     # 'my-project' is the name of your Strapi project
     ```
     :::tip
