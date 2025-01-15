@@ -159,7 +159,7 @@ module.exports = ({ env }) => {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/plugins.ts"
-export default {
+export default ({ env }) => {
   graphql: {
     config: {
       endpoint: '/graphql',
