@@ -192,3 +192,9 @@ npm run develop
 </TabItem>
 
 </Tabs>
+
+:::info Where is my content?
+For self-hosted Strapi projects, all your content is saved in a database file (by default, SQLite) found in the `.tmp` subfolder in your project's folder. So anytime you start the Strapi application from the folder where you created your Strapi project, your content will be available (see [database configuration](/dev-docs/configurations/database) for additional information).
+
+If the content was added to a Strapi Cloud project, it is stored in the database managed with your Strapi Cloud project (see [advanced database configuration for Strapi Cloud](/cloud/advanced/database) for additional information).
+:::
