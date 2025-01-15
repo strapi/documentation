@@ -4,9 +4,10 @@ description: Learn how to use the Releases feature that enables content managers
 toc_max_heading_level: 5
 tags:
 - admin panel
+- features
 - Enterprise feature
-- Releases feature
-- Strapi Cloud
+- Growth feature
+- Cloud Team feature
 pagination_next: user-docs/releases/creating-a-release
 ---
 

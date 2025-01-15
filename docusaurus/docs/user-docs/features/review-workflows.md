@@ -4,8 +4,9 @@ description: Learn how to use the Review Workflows feature that enables the crea
 toc_max_heading_level: 5
 tags:
 - admin panel
+- features
 - Enterprise feature
-- Review Workflows feature
+- Cloud Team feature
 ---
 
 # Review Workflows
