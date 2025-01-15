@@ -53,7 +53,7 @@ From the dashboard's header of a chosen project, you can:
 - use the navigation path to navigate between your projects and environments <ScreenshotNumberReference number="1" />,
 - use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="2" />,
 - use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="3" />,
-- choose which environment to visualise for the project <ScreenshotNumberReference number="4" />,
+- choose which environment to visualise for the project or add a new environment <ScreenshotNumberReference number="4" />,
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="5" />.
 
 Your project's dashboard also displays:
