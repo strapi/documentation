@@ -237,11 +237,13 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 | ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
 | `‑‑no‑encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
 | `‑‑no‑compress`     |   -    | Disables file compression.                                                                                                 |
+| `-f, --file <file>` | Name to use for the exported file (without extensions). |
 | `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
 | `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
 | `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
 | `--only`            | string | Include only these data. The available types are: `content`, `files`, and `config`.                                        |
 | `-h`, <br/>`--help` |   -    | Displays help for the `strapi export` command.                                                                             |
+| `--verbose` | Enable verbose logs. |
 
 **Examples**
 
@@ -298,6 +300,11 @@ npm run strapi import
 | `-k,` `--key`  | string | Provide the encryption key in the command instead of a subsequent prompt. |
 | `-f`, `--file` | string | Path and filename with extension for the data to be imported.             |
 | `-h`, `--help` | -      | Display the `strapi import` help commands.                                |
+| `--force`      | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                            |
+| `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
+| `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
+| `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
+| `--verbose` | Enable verbose logs. |
 
 **Examples**
 
