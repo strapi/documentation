@@ -26,7 +26,7 @@ The `strapi export` command is used to export data from a local Strapi instance.
 - schemas,
 - the `metadata.json` file.
 
-The following documentation details the available options to customize your data export. The export command and all of the available options are run using the [Strapi CLI](/dev-docs/cli#strapi-export).
+The following documentation presents some use cases and options to customize your data export. The export command and all of the available options are run using the Strapi CLI. All the available options are detailed in the [CLI reference documentation](/dev-docs/cli#strapi-export).
 
 :::caution
 * Admin users and API tokens are not exported.
