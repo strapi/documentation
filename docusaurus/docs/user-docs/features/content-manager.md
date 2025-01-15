@@ -36,18 +36,18 @@ sources={{
 
 The <Icon name="feather" /> Content Manager contains the available collection and single content-types which were created beforehand using the Content-type Builder.
 
-Content can be created, managed and published from the 2 categories displayed in the sub navigation of the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager:
+Content can be created, managed and published from the 2 categories displayed in the sub navigation of the <Icon name="feather" /> Content Manager:
 
-- *Collection types*, which lists available content-types managing several entries. For each available collection type, multiple entries can be created which is why each collection type is divided into 2 interfaces:
+- *Collection types*, which lists available content-types managing several entries. For each available collection type, multiple entries can be created, which is why each collection type is divided into 2 interfaces:
   - the list view, which displays a table with all entries created for that collection type.
   - the edit view, which focuses on a chosen entry of your collection type, and from where you can actually manage the content.
 
 - *Single types*, which lists available content-types with only one entry. Unlike collection types, which have multiple entries, single types are not created for multiple uses. In other words, there can only be one default entry per available single type. There is therefore no list view in the Single types category.
 
 :::tip
-Click the search icons ![Search icon](/img/assets/icons/v5/Search.svg) to use a text search and find one of your content-types and/or entries more quickly!
+Click the search icons <Icon name="magnifying-glass" classes="ph-bold" /> to use a text search and find one of your content-types and/or entries more quickly!
 
-Specifically for your collection types' entries, you can also use the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button to set condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed)
+Specifically for your collection types' entries, you can also use the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button to set condition-based filters, which add to one another (i.e., if you set several conditions, only the entries that match all the conditions will be displayed).
 :::
 
 <!-- TO INTEGRATE IN THE PAGE? USE A GUIDEFLOW?
@@ -59,8 +59,8 @@ From the list view, it is possible to:
 - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#i18n) is enabled, filter by locale to display only the entries [translated](/user-docs/content-manager/translating-content) in a chosen locale <ScreenshotNumberReference number="4" />,
 - configure the fields displayed in the table of the list view <ScreenshotNumberReference number="5" />,
 - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, see the status of each entry <ScreenshotNumberReference number="6" />,
-- perform actions on a specific entry by clicking on ![More icon](/img/assets/icons/v5/More.svg) <ScreenshotNumberReference number="7" /> at the end of the row:
-  - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete ![Delete icon](/img/assets/icons/v5/Trash.svg) (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content#deleting-content)) the entry,
+- perform actions on a specific entry by clicking on <Icon name="dots-three-outline" /> <ScreenshotNumberReference number="7" /> at the end of the row:
+  - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/user-docs/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete <Icon name="trash"/> (see [Deleting content](/user-docs/content-manager/saving-and-publishing-content#deleting-content)) the entry,
   - if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) or discard its changes,
   - if [Internationalization (i18n)](/user-docs/plugins/strapi-plugins#i18n) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
 - select multiple entries to simultaneously [publish, unpublish](/user-docs/content-manager/saving-and-publishing-content#bulk-publishing-and-unpublishing), or [delete](/user-docs/content-manager/saving-and-publishing-content#deleting-content).
@@ -74,7 +74,7 @@ Sorting can be enabled for most fields displayed in the list view table (see [Co
 
 #### Filtering entries {#filtering-entries}
 
-Right above the list view table, on the left side of the interface, a ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
+Right above the list view table, on the left side of the interface, a <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button is displayed. It allows to set one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the entries that match all the conditions will be displayed).
 
 <ThemedImage
   alt="Filters in the Content Manager"
@@ -86,14 +86,14 @@ Right above the list view table, on the left side of the interface, a ![Filters 
 
 To set a new filter:
 
-1. Click on the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button.
+1. Click on the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button.
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. Enter the value(s) of the condition in the remaining textbox.
 5. Click on the **Add filter** button.
 
 :::note
-When active, filters are displayed next to the ![Filters icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
+When active, filters are displayed next to the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button. They can be removed by clicking on the delete icon <Icon name="x" />.
 :::
 -->
 
@@ -109,7 +109,7 @@ Both the list view and the edit view can be configured, and the former can eithe
 
 By configuring temporarily the list view, the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. This configuration allows to temporarily choose which fields to display in the list view's table.
 
-1. Click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg).
+1. Click on the settings button <Icon name="gear-six" />.
 2. Tick the boxes associated with the field you want to be displayed in the table.
 3. Untick the boxes associated with the fields you do not want to be displayed in the table.
 
@@ -130,10 +130,10 @@ Relational fields can also be displayed in the list view. Please refer to [Confi
 
 #### Permanent & advanced configuration
 
-By configuring permanently the list view, you not only ensure that they are not resetted at every page refresh or navigation, but you also have access to more options (e.g. enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.).
+By configuring permanently the list view, you not only ensure that they are not reset at every page refresh or navigation, but you also have access to more options (e.g., enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.).
 
 :::note
-The configurations only apply to the list view of the collection type from which the settings are accessed (i.e. disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
+The configurations only apply to the list view of the collection type from which the settings are accessed (i.e., disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
 :::
 
 <ThemedImage
@@ -148,7 +148,7 @@ The configurations only apply to the list view of the collection type from which
 
 <TabItem value="ListViewSettings" label="Settings">
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** to be redirected to the list view configuration interface.
+1. In the list view of your collection type, click on the settings button <Icon name="gear-six" /> then <Icon name="list-plus" classes="ph-bold" /> **Configure the view** to be redirected to the list view configuration interface.
 2. In the Settings area, define your chosen new settings:
 
 | Setting name           | Instructions                                                                                       |
@@ -166,11 +166,11 @@ The configurations only apply to the list view of the collection type from which
 
 <TabItem value="ListViewDisplay" label="View">
 
-1. In the list view of your collection type, click on the settings button ![Cog icon](/img/assets/icons/v5/Cog.svg) then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** to be redirected to the list view configuration interface.
+1. In the list view of your collection type, click on the settings button <Icon name="gear-six" /> then <Icon name="list-plus" classes="ph-bold" /> **Configure the view** to be redirected to the list view configuration interface.
 2. In the View area, define what fields to display in the list view table, and in what order:
    - Click the add button ![Add icon](/img/assets/icons/v5/Plus.svg) to add a new field.
-   - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.
-   - Click the reorder button ![Drag icon](/img/assets/icons/v5/Drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+   - Click the delete button <Icon name="x" /> to remove a field.
+   - Click the reorder button <Icon name="dots-six-vertical" classes="ph-bold" /> and drag and drop it to the place you want it to be displayed among the other fields.
 3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to access its available own settings:
 
 | Setting name              | Instructions                                                              |
@@ -211,7 +211,7 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 <TabItem value="EditViewSettings" label="Settings">
 
-1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
+1. In the edit view of your content-type, click on the <Icon name="dots-three-outline" /> button then <Icon name="list-plus" classes="ph-bold" /> **Configure the view**.
 2. In the Settings area, define your chosen new settings:
 
 | Setting name    | Instructions                                                                          |
@@ -224,11 +224,11 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 <TabItem value="EditViewDisplay" label="View">
 
-1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
+1. In the edit view of your content-type, click on the <Icon name="dots-three-outline" /> button then <Icon name="list-plus" classes="ph-bold" /> **Configure the view**.
 2. In the View area, define what fields (including relational fields) to display in the list view table, in what order and what size:
    - Click the ![Add icon](/img/assets/icons/v5/Plus.svg) **Insert another field** button to add a new field.
-   - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.
-   - Click the reorder button ![Drag icon](/img/assets/icons/v5/Drag.svg) and drag and drop it to the place you want it to be displayed among the other fields.
+   - Click the delete button <Icon name="x" /> to remove a field.
+   - Click the reorder button <Icon name="dots-six-vertical" classes="ph-bold" /> and drag and drop it to the place you want it to be displayed among the other fields.
 3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) of a field to access its available settings:
 
 | Setting name    | Instructions                                                                              |
@@ -254,9 +254,11 @@ Note also that the settings are defined for the component itself, which means th
 
 ## Usage
 
+<br/>
+
 ### Creating & Writing content
 
-In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/content-type-builder).
+In Strapi, writing content consists in filling up fields, which are meant to contain specific content (e.g. text, numbers, media, etc.). These fields were configured for the collection or single type beforehand, through the [Content-type Builder](/user-docs/features/content-type-builder).
 
 <ThemedImage
   alt="Edit view to write content"
@@ -268,7 +270,7 @@ In Strapi, writing content consists in filling up fields, which are meant to con
 
 To write or edit content:
 
-1. In the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager:
+1. In the <Icon name="feather" /> Content Manager:
     - Either click on the **Create new entry** button in the top right corner of the collection type of your choice to create a new entry,
     - Or access the edit view of your already created collection type's entry or single type.
 2. Write your content, following the available field schema. You can refer to the table below for more information and instructions on how to fill up each field type.
@@ -288,20 +290,20 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Text        | Write your content in the textbox.                                                                                                                                                                                                                                                                                                                                        |
 | Rich text (Markdown) | Write your textual content in the editor, in Markdown. Some basic formatting options (titles, bold, italics, underline) are available in the top bar of the editor to apply to selected text. A **Preview mode/Markdown mode** button to switch between modes is also available. <br /><br /> 💡 The box can be expanded by clicking on **Expand** in the bottom bar. It displays side by side, at the same time, the textbox that you can edit and the preview. |
-| Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon ![Reorder icon](/img/assets/icons/v5/Drag.svg) on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
+| Rich text (Blocks) | Write and manage your content in the editor, which automatically renders live all additions/updates. In the Blocks editor, paragraphs behave as blocks of text: hovering on a paragraph will display an icon <Icon name="dots-six-vertical" classes="ph-bold"/> on which to click to reorder the content. Options to format or enrich the content are also accessible from the top bar of the editor (basic formatting options, code, links, image etc.). <!-- <br /><br /> 💡 Type `/` in the editor to have access to the list of all available options and select one. --> <br /><br /> 💡 You can use text formatting keyboard shortcuts in the Blocks editor (e.g. bold, italics, underline, and pasting link). |
 | Number      | Write your number in the textbox. Up and down arrows, displayed on the right of the box, allow to increase or decrease the current number indicated in the textbox.                                                                                                                                                                                                       |
 | Date        | 1. Click the date and/or time box. <br /> 2. Type the date and time or choose a date using the calendar and/or a time from the list. The calendar view fully supports keyboard-based navigation. |
-| Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/user-docs/media-library) or from a [folder](/user-docs/media-library/organizing-assets-with-folders.md) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
-| Relation    | Choose an entry from the drop-down list. See [Managing relational fields](/user-docs/content-manager/managing-relational-fields.md) for more information.                                                                                                                                                                                                          |
+| Media       | 1. Click the media area. <br /> 2. Choose an asset from the [Media Library](/user-docs/features/media-library) or from a [folder](/user-docs/features/media-library#organizing-assets-with-folders) if you created some, or click the **Add more assets** button to add a new file to the Media Library. <br /><br /> 💡 It is possible to drag and drop the chosen file in the media area.                                                                                                                                   |
+| Relation    | Choose an entry from the drop-down list. See [relational fields](#relational-fields) for more information.                                                                                                                                                                                                          |
 | Boolean     | Click on **TRUE** or **FALSE**.                                                                                                                                                                                                                                                                                                                                               |
 | JSON        | Write your content, in JSON format, in the code textbox.                                                                                                                                                                                                                                                                                                                  |
 | Email       | Write a complete and valid email address.                                                                                                                                                                                                                                                                                                                                 |
-| Password    | Write a password. <br /><br /> 💡 Click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon, displayed on the right of the box, to show the password.                                                                                                                                                                                                                                                                |
+| Password    | Write a password. <br /><br /> 💡 Click the <Icon name="eye" /> icon, displayed on the right of the box, to show the password.                                                                                                                                                                                                                                                                |
 | Enumeration | 1. Click the drop-down list. <br /> 2. Choose an entry from the list.                                                                                                                                                                                                                                                                                                       |
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows automatically generating a UID based on the content type name.                                                                                                                                                                                                |
 
 :::note
-Filling out a [custom field](/user-docs/content-type-builder/configuring-fields-content-type.md#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
+Filling out a [custom field](/user-docs/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
 :::
 
 #### Components
@@ -335,10 +337,10 @@ Non-repeatable components are a combination of fields that can be used only once
 
 By default, the combination of fields is not directly displayed in the edit view:
 
-1. Click on the add button ![Add icon](/img/assets/icons/v5/PlusCircle.svg) to add the component.
+1. Click on the add button <Icon name="plus-circle" /> to add the component.
 2. Fill in the fields of the component.
 
-To delete the non-repeatable component, click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg), located in the top right corner of the component area.
+To delete the non-repeatable component, click on the delete button <Icon name="trash"/>, located in the top right corner of the component area.
 
 </TabItem>
 
@@ -357,14 +359,14 @@ Repeatable components are also a combination of fields, but they allow the creat
 
 To add a new entry and display its combination of fields:
 
-1. Click on the add button ![Add icon](/img/assets/icons/v5/PlusCircle.svg) to add the component.
+1. Click on the add button <Icon name="plus-circle" /> to add the component.
 2. Fill in the fields of the component.
 3. (optional) Click on the **Add an entry** button and fill in the fields again.
 
 The repeatable component entries can be reordered or deleted directly in the edit view, using buttons displayed on the right of the entry area.
 
-- Use the drag & drop button ![Drag icon](/img/assets/icons/v5/Drag.svg) to reorder entries of your repeatable component.
-- Use the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete an entry from your repeatable component.
+- Use the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> to reorder entries of your repeatable component.
+- Use the delete button <Icon name="trash"/> to delete an entry from your repeatable component.
 
 :::note
 Unlike regular fields, the order of the entries of a repeatable component is important. It should correspond exactly to how end users will read/see the content.
@@ -394,17 +396,17 @@ Dynamic zones are a combination of components, which themselves are composed of 
   }}
 />
 
-1. Click on the ![Add icon](/img/assets/icons/v5/PlusCircle.svg) **Add a component to [dynamic zone name]** button.
+1. Click on the <Icon name="plus-circle" /> **Add a component to [dynamic zone name]** button.
 2. Choose a component available for the dynamic zone.
 3. Fill in the fields of the component.
 
 Dynamic zones' components can also be reordered or deleted directly in the edit view, using buttons displayed in the top right corner of the component area.
 
-- Use the drag & drop button ![Drag icon](/img/assets/icons/v5/Drag.svg) to reorder components in your dynamic zone.
-- Use the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a component from your dynamic zone.
+- Use the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> to reorder components in your dynamic zone.
+- Use the delete button <Icon name="trash"/> to delete a component from your dynamic zone.
 
 :::tip
-You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button ![Drag icon](/img/assets/icons/v5/Drag.svg) and use the arrow keys to then re-order, pressing Space again to drop the item.
+You can also use the keyboard to reorder components: focus the component using Tab, press Space on the drag & drop button <Icon name="dots-six-vertical" classes="ph-bold" /> and use the arrow keys to then re-order, pressing Space again to drop the item.
 :::
 
 :::note
@@ -418,7 +420,7 @@ Relation-type fields added to a content-type allow establishing a relation with 
 The content of relational fields is written from the edit view of the content-type they belong to. However, relational fields can point to one or several entries of the other collection type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
 
 <details>
-<summary>Example</summary>
+<summary>Example:</summary>
 
 In my Strapi admin panel I have created 2 collection types:
 
@@ -428,6 +430,8 @@ In my Strapi admin panel I have created 2 collection types:
 I want to assign a category to each of my restaurants, therefore I have established a relation between my 2 collection types: restaurants can have one category.
 
 In the Content Manager, from the edit view of my Restaurant entries, I can manage the Category relational field, and choose which entry of Category is relevant for my restaurant.
+<br/>
+
 </details>
 
 <!-- MAY BE REMOVED - FEELS LIKE REPETITION
@@ -462,7 +466,7 @@ To select the only relevant relational field's entry:
 1. In the content-type's edit view, click on the drop-down list of the relational field.
 2. Among the list of entries, choose one.
 
-To remove the entry selected in the drop-down list, click on the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg).
+To remove the entry selected in the drop-down list, click on the delete button <Icon name="x" />.
 
 </TabItem>
 
@@ -487,7 +491,7 @@ To select the relevant relational field's entries:
 
 To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/v5/Cross.svg) in the selected entries list.
 
-Entries from multiple-choice relational fields can be reordered, indicated by a drag button ![Drag icon](/img/assets/icons/v5/Drag.svg). To move an entry, click and hold it, drag it to the desired position, then release it.
+Entries from multiple-choice relational fields can be reordered, indicated by a drag button <Icon name="dots-six-vertical" classes="ph-bold" />. To move an entry, click and hold it, drag it to the desired position, then release it.
 
 </TabItem>
 
@@ -500,8 +504,8 @@ Entries from multiple-choice relational fields can be reordered, indicated by a 
 :::
 
 :::note
-- If the Draft & Publish feature is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
-- If the Internationalization plugin is installed, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
+- If the [Draft & Publish feature](/user-docs/features/draft-and-publish) is activated for the content-type the relational field belongs to, you will notice blue or green dots next to the entries names in the drop-down list. They indicate the status of the entry, respectively draft or published content.
+- If the [Internationalization (i18n) feature](/user-docs/features/internationalization) is enabled for the content-type, the list of entries may be limited or differ from one locale to another. Only relevant entries that can possibly be chosen for a relational field will be listed.
 :::
 
 <!-- Add a section "Managing entries" here with the explanations of the list view interface? Or before "Creating & Writing content"? Or maybe have 1. "Creating & managing entries" 2. "Writing content"? Or just use a Guideflow? -->
@@ -510,8 +514,8 @@ Entries from multiple-choice relational fields can be reordered, indicated by a 
 
 You can delete content by deleting any entry of a collection type, or the default entry of a single type.
 
-1. In the edit view of the entry, click on ![More icon](/img/assets/icons/v5/More.svg) at the top right of the interface, and click the **Delete document** button.<br/>If Internationalization is enabled for the content-type, you can also choose to delete only the currently selected locale by clicking on the **Delete locale** button.
+1. In the edit view of the entry, click on <Icon name="dots-three-outline" /> at the top right of the interface, and click the **Delete document** button.<br/>If Internationalization is enabled for the content-type, you can also choose to delete only the currently selected locale by clicking on the **Delete locale** button.
 2. In the window that pops up, click on the **Confirm** button to confirm the deletion.
 
 :::tip
-You can delete entries from the list view of a collection type, by clicking on ![More icon](/img/assets/icons/v5/More.svg)  on the right side of the entry's record in the table, then choosing the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
+You can delete entries from the list view of a collection type, by clicking on <Icon name="dots-three-outline" />  on the right side of the entry's record in the table, then choosing the <Icon name="trash"/> **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
