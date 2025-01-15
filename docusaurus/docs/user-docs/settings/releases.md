@@ -7,6 +7,7 @@ tags:
 ---
 
 # Releases
+<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
 
 The [Releases](/user-docs/releases/introduction) feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. The default timezone to use when scheduling a publication can be modified from <Icon name="gear-six" /> *Settings > Global settings > Releases*.
 
