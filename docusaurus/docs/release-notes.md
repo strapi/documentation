@@ -24,7 +24,57 @@ Strapi Docs now follow the **[semantic versioning](https://semver.org/)** philos
 New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
- 
+
+## 5.5.2
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+- [Add graphQL landingPage configuration and update Apollo playground to sandbox](https://github.com/strapi/documentation/pull/2343)
+- [Add the --verbose option to the data transfer command description](https://github.com/strapi/documentation/pull/2352)
+- [Removing the note about unmodified fields on the update](https://github.com/strapi/documentation/pull/2351)
+- [Fix typo in admonition](https://github.com/strapi/documentation/pull/2349)
+- [Fix Document Service API example typo](https://github.com/strapi/documentation/pull/2348)
+
+#### Strapi Cloud
+- [Update Cloud backups (restoration timestamp)](https://github.com/strapi/documentation/pull/2346)
+- [Add the SSO badge for the new, paid add-on](https://github.com/strapi/documentation/pull/2341)
+- [Update text for add environment button](https://github.com/strapi/documentation/pull/2299)
+
+#### Repository
+- [Add Amplitude's browser SDK and web experiment for future A/B testing](https://github.com/strapi/documentation/pull/2345)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/AtallahFatma" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26638076?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="AtallahFatma"/>
+</a>
+<a href="https://github.com/Mcastres" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/17828745?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Mcastres"/>
+</a>
+<a href="https://github.com/Qbject" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/65710914?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Qbject"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/giu1io" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6680957?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="giu1io"/>
+</a>
+<a href="https://github.com/innerdvations" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/999278?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="innerdvations"/>
+</a>
+<a href="https://github.com/maccomaccomaccomacco" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2686869?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="maccomaccomaccomacco"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.5.1
 ### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
 
