@@ -137,7 +137,7 @@ Here is an example of using a function to dynamically enable it:
 <TabItem value="javascript" label="JavaScript">
 
 ```javascript title="./config/plugins.js"
-module.exports = {
+module.exports = ({ env }) => {
   graphql: {
     config: {
       endpoint: '/graphql',
