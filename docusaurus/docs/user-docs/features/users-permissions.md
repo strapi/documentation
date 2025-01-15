@@ -6,6 +6,7 @@ tags:
 - admin panel
 - users & permissions
 - api tokens
+- features
 ---
 
 # Users & Permissions
@@ -29,7 +30,7 @@ The Users & Permissions feature allows the management of the end-users of a Stra
 
 With the [Users & Permissions plugin](../plugins/strapi-plugins#users-and-permissions) activated, it is possible to manage end users. This plugin is however not entirely managed and configured from one same place of the admin panel: end-user accounts are managed from the Content Manager (see [Managing end-user accounts](../users-roles-permissions/managing-end-users)) but end-user roles and permissions are managed in the Settings interface.-->
 
-The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the ![Settings icon](/img/assets/icons/v5/Cog.svg) _Settings_ sub navigation.
+The configurations of the end-user roles and permissions are available in the *Users & Permissions plugin* section of the <Icon name="gear-six" /> _Settings_ sub navigation.
 
 <ThemedImage
   alt="End-users roles interface"
@@ -48,7 +49,7 @@ From this interface, it is possible to:
 - or access information regarding an end-user role, and edit it (see [Editing a role](#editing-a-role)).
 
 :::tip
-Click the search button ![Search icon](/img/assets/icons/v5/Search.svg) above the table to use a text search and find one of your administrator roles more quickly!
+Click the search button <Icon name="magnifying-glass" classes="ph-bold" /> above the table to use a text search and find one of your administrator roles more quickly!
 :::
 
 By default, 2 end-user roles are defined for any Strapi application:
@@ -57,7 +58,7 @@ By default, 2 end-user roles are defined for any Strapi application:
 - Public: for end users to access content without being logged in to a front-end application.
 
 :::note
-The end-user role attributed by default to all new end users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-advanced-settings)).
+The end-user role attributed by default to all new end users can be defined in the *Advanced settings* sub-section of *Users & Permissions plugin* (see [Configuring advanced settings](#configuring-advanced-settings)).
 :::
 
 #### Creating a new role
@@ -73,8 +74,8 @@ Although the 2 default end-user roles cannot be deleted, the other ones can, as 
 
 To delete a role:
 
-1. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the role's record.
-2. In the deletion window, click on the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Confirm** button to confirm the deletion.
+1. Click on the delete button <Icon name="trash" /> on the right side of the role's record.
+2. In the deletion window, click on the <Icon name="trash" /> **Confirm** button to confirm the deletion.
 
 #### Editing a role
 
@@ -86,7 +87,7 @@ To delete a role:
   }}
 />
 
-The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of a front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+The role edition interface allows to edit the details of an end-user role as well as to configure in detail the permissions to access the content of a front-end application. It is accessible from *Users & Permissions plugin > Roles* either after clicking on the edit button <Icon name="pencil-simple" /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 ##### Editing role's details
 
@@ -128,9 +129,9 @@ Users & Permissions allows enabling and configuring providers, for end users to 
 To enable and configure a provider:
 
 1. Go to the *Users & Permissions plugin > Providers* sub-section of the settings interface.
-2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the provider to enable and configure.
+2. Click on the edit <Icon name="pencil-simple" /> button of the provider to enable and configure.
 3. In the provider edition window, click on the **TRUE** button of the *Enable* option.
-4. Fill in the provider's configurations. Each provider has its own specific set of configurations (see [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers)).
+4. Fill in the provider's configurations. Each provider has its own specific set of configurations (see [Users & Permissions providers documentation](/dev-docs/configurations/users-and-permissions-providers#setting-up-the-provider---examples)).
 5. Click on the **Save** button.
 
 :::tip
@@ -139,7 +140,7 @@ Other providers that are not proposed by default by Strapi can be added manually
 
 <!---
 :::tip
-Click the search button ![Search icon](/img/assets/icons/v5/search.svg) above the table to use a text search and find one of your providers more quickly!
+Click the search button <Icon name="search" classes="ph-bold" /> above the table to use a text search and find one of your providers more quickly!
 :::
 --->
 
@@ -161,7 +162,7 @@ The Users & Permissions plugin uses 2 email templates, "Email address confirmati
 To configure and edit email templates:
 
 1. Go to the *Users & Permissions plugin > Email templates* sub-section of the settings interface.
-2. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of the email template to configure and edit.
+2. Click on the edit <Icon name="pencil-simple" /> button of the email template to configure and edit.
 3. Configure the email template:
 
 | Setting name   | Instructions |
@@ -192,10 +193,10 @@ All settings related to the Users & Permissions plugin are managed from the *Adv
 | Setting name  | Instructions         |
 | ------------------------------------ | --------------------------------------------------------------|
 | Default role for authenticated users | Click the drop-down list to choose the default role for new end users.                                                                                             |
-| One account per email address        | Click on the **TRUE** button to limit to 1 the number of end-user accounts with the same email address. Click on **FALSE** to disable this limitation and allow several end-user accounts to be associated with the same email address (e.g. `kai.doe@strapi.io` can be used when logging in via several different providers).  |
-| Enable sign-ups                      | Click on the **TRUE** button to enable end-user sign-ups. Click on **FALSE** to prevent end-user registration to your front-end application(s).                        |
+| One account per email address        | Click on the **TRUE** button to limit to 1 the number of end-user accounts with the same email address.<br/>Click on **FALSE** to disable this limitation and allow several end-user accounts to be associated with the same email address (e.g. `kai.doe@strapi.io` can be used when logging in via several different providers).  |
+| Enable sign-ups                      | Click on the **TRUE** button to enable end-user sign-ups.<br/>Click on **FALSE** to prevent end-user registration to your front-end application(s).                        |
 | Reset password page                  | Indicate the URL of the reset password page for your front-end application(s).                                                                                     |
-| Enable email confirmation            | Click on the **TRUE** button to enable end-user account confirmation by sending them a confirmation email. Click on **FALSE** to disable account confirmation.         |
+| Enable email confirmation            | Click on the **TRUE** button to enable end-user account confirmation by sending them a confirmation email.<br/>Click on **FALSE** to disable account confirmation.         |
 | Redirection url                      | Indicate the URL of the page where end users should be redirected after confirming their Strapi account.                                                           |
 
 3. Click the **Save** button.
@@ -259,7 +260,7 @@ export default ({ env }) => ({
 </Tabs>
 
 :::warning
-Setting JWT expiry for more than 30 days is **not recommended** due to security concerns.
+Setting JWT expiry for more than 30 days is not recommended due to security concerns.
 :::
 
 #### Registration configuration
@@ -421,7 +422,7 @@ If you need to configure a custom handler to accept other URLs, you can create a
 
 ## Usage
 
-With the Users & Permissions plugin, the end users and their account information are managed as a content-type. When the plugin is installed on a Strapi application, 3 collection types are automatically created (see [Users & Permissions plugin](/user-docs/plugins/strapi-plugins#users-and-permissions)), including "User" which is the only one available directly in the Content Manager.
+With the Users & Permissions plugin, the end users and their account information are managed as a content-type. When the plugin is installed on a Strapi application, 3 collection types are automatically created, including "User" which is the only one available directly in the Content Manager.
 
 <ThemedImage
   alt="Managing end users via the Content Manager"
@@ -431,10 +432,10 @@ With the Users & Permissions plugin, the end users and their account information
   }}
 />
 
-Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type (see [Introduction to the Content Manager](/user-docs/content-manager) for more information about the Content Manager).
+Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type (see [Introduction to the Content Manager](/user-docs/features/content-manager) for more information about the Content Manager).
 
 :::note
-If end users can register themselves on your front-end application (see [Managing Users & Permissions plugin settings](../settings/configuring-users-permissions-plugin-settings)), a new entry will automatically be created and the fields of that entry will be filled up with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.
+If end users can register themselves on your front-end application (see "Enable signups" option in [advanced settings](#configuring-advanced-settings)), a new entry will automatically be created and the fields of that entry will be filled up with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.
 :::
 
 To create a new end-user account:
@@ -450,7 +451,7 @@ To create a new end-user account:
 | Password  | (optional) Write a new password in the textbox. You can click on the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon for the password to be shown. |
 | Confirmed | (optional) Click **ON** for the end-user account to be confirmed.                                           |
 | Blocked   | (optional) Click **ON** to block the account of the end user, to prevent them to access content.            |
-| Role      | (optional) Indicate the role that should be granted to the new end user. If this field is not filled in, the end user will be attributed the role set as default (see [Managing Users & Permissions plugin settings](../settings/configuring-users-permissions-plugin-settings)). |
+| Role      | (optional) Indicate the role that should be granted to the new end user. If this field is not filled in, the end user will be attributed the role set as default (see "Default role" option in [advanced settings](#configuring-advanced-settings)). |
 
 4. Click on the **Save** button.
 
