@@ -30,7 +30,7 @@ sources={{
 
 ## Usage
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager <br/> From the edit view of a content type: click ![More icon](/img/assets/icons/v5/More.svg) (top right corner) then ![ClockCounterClockwise icon](/img/assets/icons/v5/ClockCounterClockwise.svg) **Content History**.
+**Path to use the feature:** <Icon name="feather" /> Content Manager <br/> From the edit view of a content type: click <Icon name="dots-three-outline" /> (top right corner) then <Icon name="clock-counter-clockwise" /> **Content History**.
 
 ### Browsing Content History
 
@@ -40,7 +40,7 @@ With Content History, you can browse your content through:
 - The sidebar on the right, which lists the total number of versions available, and for each version:
   - the date and time when the version was created,
   - the user who created it,
-  - and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content) for more information about document statuses).
+  - and whether its status is Draft, Modified, or Published (see [Draft & Publish](/user-docs/features/draft-and-publish) for more information about document statuses).
 
 
 <ThemedImage
@@ -57,7 +57,7 @@ The main view of Content History clearly states whether a field was inexistent, 
 
 ### Restoring a previous version
 
-You can choose to restore a previous version of a document. When restoring a version, the content of this version will override the content of the current draft version. The document switches to the Modified status and you will then be able to [publish](/user-docs/content-manager/saving-and-publishing-content#publishing-and-unpublishing) the content whenever you want.
+You can choose to restore a previous version of a document. When restoring a version, the content of this version will override the content of the current draft version. The document switches to the Modified status and you will then be able to [publish](/user-docs/features/draft-and-publish#publishing-a-draft) the content whenever you want.
 
 To restore a version:
 
@@ -66,7 +66,7 @@ To restore a version:
 3. In the _Confirmation_ window, click **Restore**.  
 
 :::note
-If the [Internationalization (i18n)](/user-docs/content-manager/translating-content) feature is enabled for the content-type, restoring a version with a unique field (i.e. a field whose content is the same for all locales) will restore the content of this field for all locales.
+If the [Internationalization (i18n)](/user-docs/features/internationalization) feature is enabled for the content-type, restoring a version with a unique field (i.e. a field whose content is the same for all locales) will restore the content of this field for all locales.
 :::
 
 <!-- Add illustration here -->
