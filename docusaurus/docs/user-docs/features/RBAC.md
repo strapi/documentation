@@ -52,6 +52,14 @@ On the top right side of the *Administration panel > Roles* interface, an **Add 
 To create a new role, click on the **Add new role** button.
 Clicking on the **Add new role** button will redirect you to the roles edition interface, where you will be able to edit the role's details and configure its permissions (see [Editing a role](#editing-roles-details)).
 
+<ThemedImage
+  alt="New role with RBAC"
+  sources={{
+    light: '/img/assets/users-permissions/new-role.png',
+    dark: '/img/assets/users-permissions/new-role_DARK.png',
+  }}
+/>
+
 :::tip
 In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg) to create a new role by duplicating an existing one.
 :::
@@ -205,13 +213,21 @@ Custom conditions can only be set for permissions that have been ticked to be gr
 
 The *Users* sub-section of *Administration panel* displays a table listing all the administrators of your Strapi application.
 
+<ThemedImage
+  alt="Users interface"
+  sources={{
+    light: '/img/assets/users-permissions/usage-interface.png',
+    dark: '/img/assets/users-permissions/usage-interface_DARK.png',
+  }}
+/>
+
 From this interface, it is possible to:
 
 - make a textual search <ScreenshotNumberReference number="1" /> to find specific administrators,
 - set filters <ScreenshotNumberReference number="2" /> to find specific administrators,
 - create a new administrator account (see [Creating a new account](#creating-a-new-account)) <ScreenshotNumberReference number="3" />,
-- delete an administrator account (see [Deleting an account](#deleting-an-account)),
-- or access information regarding an administrator account, and edit it (see [Editing an account](#editing-an-account)).
+- delete an administrator account <ScreenshotNumberReference number="4" /> (see [Deleting an account](#deleting-an-account)),
+- or access information regarding an administrator account, and edit it <ScreenshotNumberReference number="5" /> (see [Editing an account](#editing-an-account)).
 
 For each administrator listed in the table, their main account information are displayed, including name, email and attributed role. The status of their account is also indicated: active or inactive, depending on whether the administrator has already logged in to activate the account or not.
 
@@ -248,6 +264,14 @@ To create a new administrator account:
 :::note
 The administrator invitation URL is accessible from the administrator's account until it has been activated.
 :::
+
+<ThemedImage
+  alt="User invitation"
+  sources={{
+    light: '/img/assets/users-permissions/invite-new-user.png',
+    dark: '/img/assets/users-permissions/invite-new-user_DARK.png',
+  }}
+/>
 
 ### Deleting an account
 

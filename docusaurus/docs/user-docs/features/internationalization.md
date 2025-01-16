@@ -77,6 +77,14 @@ To add a new locale:
 4. (optional) In the Advanced settings tab, tick the *Set as default locale* setting to make your new locale the default one for your Strapi application.
 5. Click on the **Save** button to confirm the addition of your new locale.
 
+<ThemedImage
+  alt="Adding new locale with i18n"
+  sources={{
+    light: '/img/assets/settings/new-locale-i18n.png',
+    dark: '/img/assets/settings/new-locale-i18n_DARK.png',
+  }}
+/>
+
 ### Code-based configuration
 
 A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/dev-docs/configurations/environment#strapi) can be configured to set the default locale for your environment. The value used for this variable should be an ISO country code from [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json).
@@ -101,6 +109,14 @@ To translate content in another locale:
 :::tip
 Click on the ![Dowload icon](/img/assets/icons/v5/Download.svg) *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
 :::
+
+<ThemedImage
+  alt="Managing locales with i18n"
+  sources={{
+    light: '/img/assets/content-manager/locale-i18n.png',
+    dark: '/img/assets/content-manager/locale-i18n_DARK.png',
+  }}
+/>
 
 ### Usage with APIs
 
