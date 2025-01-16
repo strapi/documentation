@@ -34,7 +34,7 @@ The Audit Logs feature provides a searchable and filterable display of all activ
 
 ## Usage
 
-**Path to use the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings > Administration Panel - Audit Logs
+**Path to use the feature:** <Icon name="gear-six" /> Settings > Administration Panel - Audit Logs
 
 The Audit Logs feature logs the following events:
 
@@ -73,7 +73,7 @@ By default, all logs are displayed in reverse chronological order. You can filte
 
 ### Accessing log details
 
-For any log item, click the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
+For any log item, click the <Icon name="eye" /> icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
 <ThemedImage
   alt="Log details modal"
