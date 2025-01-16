@@ -56,6 +56,14 @@ h4, .markdown > h4 {
   line-height: var(--strapi-line-height-lg);
 }
 
+.markdown h2 > img,
+.markdown h3 > img,
+.markdown h4 > img {
+  margin-bottom: 0 !important;
+  vertical-align: bottom;
+  margin-right: 8px;
+}
+
 p {
   color: var(--strapi-neutral-700);
 }
