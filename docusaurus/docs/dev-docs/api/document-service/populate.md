@@ -314,7 +314,8 @@ To populate while updating documents:
 <Request title="Example request">
 
 ```js
-strapi.documents("api::article.article").update("cjld2cjxh0000qzrmn831i7rn", {
+strapi.documents("api::article.article").update({
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   data: {
     title: "Test Article Update",
   },
@@ -351,7 +352,8 @@ To populate while publishing documents (same behavior with `unpublish()` and `di
 <Request title="Example request">
 
 ```js
-strapi.documents("api::article.article").publish("cjld2cjxh0000qzrmn831i7rn", {
+strapi.documents("api::article.article").publish({
+  documentId: "cjld2cjxh0000qzrmn831i7rn",
   populate: ["headerImage"],
 });
 ```
