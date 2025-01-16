@@ -101,6 +101,10 @@ Clicking on the **Manage** button for any environment will redirect you to the e
   }}
 />
 
+:::tip
+A new environment can also be added from the [project dashboard](/cloud/projects/overview#accessing-a-projects-dashboard).
+:::
+
 To create a new environment:
 
 1. Click on the **Add a new environment** button.
