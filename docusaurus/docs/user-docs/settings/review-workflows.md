@@ -63,7 +63,7 @@ To add a new stage in the review workflows:
 4. Select *Roles* that can change the stage, if the entity is currently in that review stage.
 5. Click on the **Save** button.
 
-By default new stages are appended, but they can be reordered anytime using the ![drag & drop](/img/assets/icons/v5/Drag.svg) button.
+By default new stages are appended, but they can be reordered anytime using the <Icon name="dots-six-vertical" /> button.
 
 :::tip
 To set up roles for each stage, you can either click "Apply to all stages" to apply the current roles to all other stages of the workflow or use "Duplicate stage" of the stage context menu.
