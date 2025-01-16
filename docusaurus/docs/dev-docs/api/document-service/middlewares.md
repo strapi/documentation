@@ -347,7 +347,7 @@ Failing to do this will break the Strapi application.
 ```js
 const applyTo = ['api::article.article'];
 
-strapi.documents.use((context, next) => {
+strapi.documents.use(async (context, next) => {
   // Only run for certain content types
   if (!applyTo.includes(context.uid)) {
     return next();
