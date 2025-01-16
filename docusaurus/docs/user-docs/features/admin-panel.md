@@ -4,9 +4,7 @@ description: Learn to use the admin panel.
 toc_max_heading_level: 5
 tags:
 - admin panel
-- administration panel
 - profile
-- interface language
 - light mode
 - dark mode
 ---
@@ -60,7 +58,7 @@ sources={{
 1. Go to the *Change password* section of your profile.
 2. Fill in the following options:
 
-| Password modification |                                             |
+| Password modification | Instructions                                |
 | --------------------- | ------------------------------------------- |
 | Current password      | Write your current password in the textbox. |
 | Password              | Write the new password in the textbox.      |
@@ -69,7 +67,7 @@ sources={{
 3. Click on the **Save** button.
 
 :::tip
-You can click on the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon for the passwords to be shown.
+You can click on the <Icon name="eye" /> icon for the passwords to be shown.
 :::
 
 ### Choosing interface language
