@@ -35,13 +35,15 @@ The <Icon name="layout" /> Content-type Builder allows the creation and manageme
 - Single types: content-types that can only manage one entry.
 - Components: data structure that can be used in multiple collection types and single types. Although they are technically not proper content-types because they cannot exist independently, components are also created and managed through the Content-type Builder, in the same way as collection and single types.
 
-All 3 are displayed as categories in the sub navigation of the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder. In each category are listed all content-types and components that have already been created.
+All 3 are displayed as categories in the sub navigation of the <Icon name="layout" /> Content-type Builder. In each category are listed all content-types and components that have already been created.
 
 :::tip
-Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) in the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder sub navigation to find a specific collection type, single type, or component.
+Click the search icon <Icon name="magnifying-glass" classes="ph-bold" /> in the <Icon name="layout" /> Content-type Builder sub navigation to find a specific collection type, single type, or component.
 :::
 
 ## Usage
+
+<br/>
 
 ### Creating content-types
 
@@ -65,19 +67,20 @@ The Content-type Builder allows to create new content-types: single and collecti
 />
 
 1. Choose whether you want to create a collection type or a single type.
-2. In the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder's category of the content-type you want to create, click on **Create new collection/single type**.
+2. In the <Icon name="layout" /> Content-type Builder's category of the content-type you want to create, click on **Create new collection/single type**.
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
 4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
+
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-      | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Saving & publishing content](/user-docs/content-manager/saving-and-publishing-content#saving--publishing-content)). |
+      | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Draft & Publish](/user-docs/features/draft-and-publish)). |
       | Internationalization | Tick the checkbox to allow entries of the content-type to be translated into other locales. |
 <!--
 | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/user-docs/settings/review-workflows)). |
 -->
 6. Click on the **Continue** button.
-7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
+7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-content-types-fields)).
 8. Click on the **Save** button.
 
 :::caution
@@ -94,13 +97,13 @@ New content-types are only considered created once they have been saved. Saving 
   }}
 />
 
-1. In the Components category of the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder sub navigation, click on **Create new component**.
+1. In the Components category of the <Icon name="layout" /> Content-type Builder sub navigation, click on **Create new component**.
 2. In the component creation window, configure the base settings of the new component:
    - Write the name of the component in the *Display name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.
-   - _(optional)_ Choose an icon representing the new component. You can use the search ![Search icon](/img/assets/icons/v5/Search.svg) to find an icon instead of scrolling through the list.
+   - _(optional)_ Choose an icon representing the new component. You can use the search <Icon name="magnifying-glass" classes="ph-bold" /> to find an icon instead of scrolling through the list.
 3. Click on the **Continue** button.
-4. Add and configure chosen fields for your component (see [Configuring fields for content-types](/user-docs/content-type-builder/configuring-fields-content-type)).
+4. Add and configure chosen fields for your component (see [Configuring fields for content-types](#configuring-content-types-fields)).
 5. Click on the **Save** button.
 
 ### Editing content-types
@@ -116,8 +119,8 @@ The Content-type Builder allows to manage all existing content-types. For an cho
 />
 
 - Click on the **Add new/another field** button <ScreenshotNumberReference number="1" /> in the top right corner to add more fields to your content-type.
-- In the table that displays the fields of your content-type <ScreenshotNumberReference number="2" />, click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) and/or ![Delete icon](/img/assets/icons/v5/Trash.svg) buttons to respectively edit and/or delete these fields.
-- Click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button <ScreenshotNumberReference number="3" /> to access the basic and advanced settings of your content-type:
+- In the table that displays the fields of your content-type <ScreenshotNumberReference number="2" />, click on the <Icon name="pencil-simple" /> and/or <Icon name="trash" /> buttons to respectively edit and/or delete these fields.
+- Click on the <Icon name="pencil-simple" /> **Edit** button <ScreenshotNumberReference number="3" /> to access the basic and advanced settings of your content-type:
 
   <Tabs groupId="CTSettings">
 
@@ -176,7 +179,7 @@ The Content-type Builder is only accessible to create and update content-types w
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/content-manager/writing-content.md)).
 
-In the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated.
+In the <Icon name="layout" /> Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated.
 
 :::note
 Depending on what content-type or component is being created or edited, not all fields -including components and dynamic zones- are always available.
@@ -212,7 +215,7 @@ The Text field displays a textbox that can contain small text. This field can be
 | Default value  | Write the default value of the Text field.                                    |
 | RegExp pattern | Write a regular expression to make sure the value of the Text field matches a specific format. |
 | Private field  | Tick to make the field private and prevent it from being found via the API.   |
-| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.    |
 | Unique field   | Tick to prevent another field to be identical to this one.                    |
 | Maximum length | Tick to define a maximum number of characters allowed.                        |
@@ -242,7 +245,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
-| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 
 </TabItem>
 
@@ -273,7 +276,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Number field.                                |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum value  | Tick to define a maximum value allowed.                      |
@@ -304,7 +307,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Date field.                                  |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -332,7 +335,7 @@ The Password field displays a password field that is encrypted.
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Password field.                              |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -363,7 +366,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 |----------------|-----------------------------------------------------------------------------|
 | Select allowed types of media  | Click on the drop-down list to untick media types not allowed for this field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -427,7 +430,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Choose the default value of the Boolean field: *true*, *null* or *false*.   |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 
@@ -454,7 +457,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 | Setting name   | Instructions                                                                |
 |----------------|-----------------------------------------------------------------------------|
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 
 </TabItem>
@@ -481,7 +484,7 @@ The Email field displays an email address field with format validation to ensure
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Email field.                                 |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
@@ -511,7 +514,7 @@ The Password field displays a password field that is encrypted.
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Password field.                              |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -544,7 +547,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Default value  | Choose the default value of the Enumeration field.                          |
 | Name override for GraphQL | Write a custom GraphQL schema type to override the default one for the field. |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 
 </TabItem>
@@ -552,7 +555,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 </Tabs>
 
 :::caution
-Since Strapi v4.1.3, enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
+Enumeration values should always have an alphabetical character preceding any number as it could otherwise cause the server to crash without notice when the GraphQL plugin is installed.
 :::
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_uid.svg" /> UID {#uid}
@@ -608,7 +611,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 |----------------|-----------------------------------------------------------------------------|
 | Default value  | Write the default value of the Rich Text field.                             |
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the field to have a different value per locale. |
+| Enable localization for this field | (if [Internationalization plugin](/user-docs/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
@@ -623,7 +626,7 @@ Components are a combination of several fields. Components allow to create reusa
 
 When configuring a component through the Content-type Builder, it is possible to either:
 
-- create a new component by clicking on *Create a new component* (see [Creating a new component](/user-docs/content-type-builder/creating-new-content-type#creating-a-new-component)),
+- create a new component by clicking on *Create a new component* (see [Creating a new component](#new-component)),
 - or use an existing one by clicking on *Use an existing component*.
 
 <Tabs>
@@ -646,7 +649,7 @@ When configuring a component through the Content-type Builder, it is possible to
 | Private field  | Tick to make the field private and prevent it from being found via the API.             |
 | Maximum value  | For repeatable components only - Tick to define a maximum number of characters allowed. |
 | Minimum value  | For repeatable components only - Tick to define a minimum number of characters allowed. |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the component to be translated per available locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the component to be translated per available locale. |
 
 </TabItem>
 
@@ -673,7 +676,7 @@ Dynamic zones are a combination of components that can be added to content-types
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.              |
 | Maximum value  | Tick to define a maximum number of characters allowed.                                  |
 | Minimum value  | Tick to define a minimum number of characters allowed.                                  |
-| Enable localization for this field | (if [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
+| Enable localization for this field | (if [Internationalization](/user-docs/features/internationalization) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
 
 </TabItem>
 
@@ -695,8 +698,8 @@ Each custom field type can have basic and advanced settings. The [Marketplace](h
 
 Content types and components can be deleted through the Content-type Builder. Deleting a content-type automatically deletes all entries from the Content Manager that were based on that content-type. The same goes for the deletion of a component, which is automatically deleted from every content-type or entry where it was used.
 
-1. In the ![CTB icon](/img/assets/icons/v5/Layout.svg) Content-type Builder sub navigation, click on the name of the content-type or component to delete.
-2. In the edition interface of the chosen content-type or component, click on the ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit** button on the right side of the content-type's or component's name.
+1. In the <Icon name="layout" /> Content-type Builder sub navigation, click on the name of the content-type or component to delete.
+2. In the edition interface of the chosen content-type or component, click on the <Icon name="pencil-simple" /> **Edit** button on the right side of the content-type's or component's name.
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.
 
