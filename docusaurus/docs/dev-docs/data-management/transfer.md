@@ -37,6 +37,7 @@ The CLI command consists of the following arguments:
 | `--exclude`    | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                    |
 | `--only`       | Include only these data. The available types are: `content`, `files`, and `config`.                                                          |
 | `--throttle` | Time in milliseconds to inject an artificial delay between the "chunks" during a transfer. |
+| `--verbose` | Enable verbose logs. |
 
 :::caution
 Either `--to` or `--from` is required.
