@@ -18,6 +18,10 @@ img[src^="data:image/svg+xml"] {
   pointer-events: none;
 }
 
+li > img {
+  margin-bottom: 0 !important;
+}
+
 @include dark {
   img[src^="data:image/svg+xml"] {
     background-color: white;
