@@ -69,4 +69,10 @@ To restore a version:
 If the [Internationalization (i18n)](/user-docs/features/internationalization) feature is enabled for the content-type, restoring a version with a unique field (i.e. a field whose content is the same for all locales) will restore the content of this field for all locales.
 :::
 
-<!-- Add illustration here -->
+<ThemedImage
+alt="Restoring version with Content History"
+sources={{
+  light:'/img/assets/content-manager/restoring-content-history.png',
+  dark:'/img/assets/content-manager/restoring-content-history_DARK.png',
+}}
+/>

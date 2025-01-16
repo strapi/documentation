@@ -196,3 +196,11 @@ If some of your entries have a <Icon name="x-circle" color="rgb(190,51,33)" /> s
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
 :::
+
+<ThemedImage
+  alt="Release publish"
+  sources={{
+    light: '/img/assets/releases/publish-release.png',
+    dark: '/img/assets/releases/publish-release_DARK.png',
+  }}
+/>

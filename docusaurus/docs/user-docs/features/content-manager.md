@@ -517,5 +517,13 @@ You can delete content by deleting any entry of a collection type, or the defaul
 1. In the edit view of the entry, click on <Icon name="dots-three-outline" /> at the top right of the interface, and click the **Delete document** button.<br/>If Internationalization is enabled for the content-type, you can also choose to delete only the currently selected locale by clicking on the **Delete locale** button.
 2. In the window that pops up, click on the **Confirm** button to confirm the deletion.
 
+<ThemedImage
+  alt="Deleting entries"
+  sources={{
+    light: '/img/assets/content-manager/deleting-entries.png',
+    dark: '/img/assets/content-manager/deleting-entries_DARK.png',
+  }}
+/>
+
 :::tip
 You can delete entries from the list view of a collection type, by clicking on <Icon name="dots-three-outline" />  on the right side of the entry's record in the table, then choosing the <Icon name="trash"/> **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.

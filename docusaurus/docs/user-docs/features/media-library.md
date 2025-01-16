@@ -418,8 +418,8 @@ The Media Library displays all assets uploaded in the application, either via th
 <ThemedImage
   alt="Media Library overview, annotated"
   sources={{
-    light: '/img/assets/media-library/media-library_overview.png',
-    dark: '/img/assets/media-library/media-library_overview_DARK.png',
+    light: '/img/assets/media-library/media-library_overview2.png',
+    dark: '/img/assets/media-library/media-library_overview2_DARK.png',
   }}
 />
 
