@@ -71,11 +71,11 @@ The Strapi admin panel does not provide Strapi-specific settings for the GraphQL
 
 ### Code-based configuration
 
-Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/configurations/plugins#graphql)).
+Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/dev-docs/plugins/graphql#code-based-configuration)).
 
 #### Available options
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be passed directly to Apollo with the `graphql.config.apolloServer` [configuration object](/dev-docs/configurations/plugins#graphql). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be passed directly to Apollo with the `graphql.config.apolloServer` [configuration object](/dev-docs/plugins/graphql#code-based-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
 
 The [GraphQL plugin](/dev-docs/plugins/graphql) has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
 
@@ -1040,11 +1040,11 @@ GraphQL is a query language allowing users to use a broader panel of inputs than
 ### Disable introspection and Sandbox in production
 
 In production environments, disabling the GraphQL Sandbox and the introspection query is strongly recommended.
-If you haven't edited the [configuration file](#availabel-options), it is already disabled in production by default.
+If you haven't edited the [configuration file](#available-options), it is already disabled in production by default.
 
 ###### Limit max depth and complexity
 
-A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/dev-docs/configurations/plugins#graphql) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
+A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/dev-docs/plugins/graphql#code-based-configuration) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
 
 :::tip
 To increase GraphQL security even further, 3rd-party tools can be used. See the guide about [using GraphQL Armor with Strapi on the forum](https://forum.strapi.io/t/use-graphql-armor-with-strapi/).

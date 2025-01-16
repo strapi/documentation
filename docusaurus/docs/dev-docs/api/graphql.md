@@ -743,7 +743,7 @@ Pagination methods can not be mixed. Always use either `page` with `pageSize` or
 ```
 
 :::tip
-The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/dev-docs/configurations/plugins#graphql) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
+The default and maximum values for `pagination.limit` can be [configured in the `./config/plugins.js`](/dev-docs/plugins/graphql#code-based-configuration) file with the `graphql.config.defaultLimit` and `graphql.config.maxLimit` keys.
 :::
 
 ## `locale` {#locale}
