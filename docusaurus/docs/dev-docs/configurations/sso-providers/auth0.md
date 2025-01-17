@@ -1,9 +1,9 @@
 ---
-title: Keycloak - Admin SSO Provider
-description: Steps to configure Keycloak as a Strapi Admin SSO Provider
+title: Auth0 - Admin SSO Provider
+description: Steps to configure Auth0 as a Strapi Admin SSO Provider
 displayed_sidebar: cmsSidebar
-tags: 
-- keycloak
+tags:
+- auth0
 - additional configuration
 - admin panel
 - configuration
