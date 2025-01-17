@@ -155,6 +155,10 @@ The following table sums up possible populate use cases and their associated par
 The easiest way to build complex queries with multiple-level population is to use our [interactive query builder](/dev-docs/api/rest/interactive-query-builder) tool.
 :::
 
+:::note
+You cannot combine deep population with the `*` wildcard as `populate=*` will overwrite anything else when parsed by the `qs` package.
+:::
+
 ### Combining Population with other operators
 
 By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/dev-docs/api/rest/populate-select#field-selection), [filters](/dev-docs/api/rest/filters-locale-publication), and [sort](/dev-docs/api/rest/sort-pagination) in the population queries.
