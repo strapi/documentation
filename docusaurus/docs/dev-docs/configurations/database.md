@@ -35,40 +35,40 @@ The `/config/database.js|ts` file accepts 2 main configuration objects:
 
 ### `connection` configuration object
 
-| Parameter                                                | Description                                                                                           | Type      | Default |
-|----------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------|---------|
+| Parameter                                                | Description                                                                                                                                                                                                | Type      | Default |
+|----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|---------|
 | `client`                                                 | Database client to create the connection.<br/>Accepts the following values:<ul><li>`sqlite` for SQLite databases</li><li>`postgres` for PostgreSQL databases</li><li>`mysql` for MySQL databases</li></ul> | `String`  | -       |
-| `connection`                                             | Database [connection information](#connection-parameters)                                             | `Object`  | -       |
-| `debug`                                                  | Show database exchanges and errors.                                                                   | `Boolean` | `false` |
-| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                         | `Boolean` | `true`  |
-| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                 | `Object`  | -       |
-| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds) | `Integer` | `60000` |
+| `connection`                                             | Database [connection information](#connection-parameters)                                                                                                                                                  | `Object`  | -       |
+| `debug`                                                  | Show database exchanges and errors.                                                                                                                                                                        | `Boolean` | `false` |
+| `useNullAsDefault`<br/><br />_Optional, only for SQLite_ | Use `NULL` as a default value                                                                                                                                                                              | `Boolean` | `true`  |
+| `pool`<br /><br />_Optional_                             | [Database pooling options](#database-pooling-options)                                                                                                                                                      | `Object`  | -       |
+| `acquireConnectionTimeout`<br /><br />_Optional_         | How long knex will wait before throwing a timeout error when acquiring a connection (in milliseconds)                                                                                                      | `Integer` | `60000` |
 
 :::note
 Strapi only supports the following client values, and will automatically rewrite the `client` value to the following options before passing the configuration to Knex:
 
-| `client` value | Actual package used                                             |
-|----------------|-----------------------------------------------------------------|
-| sqlite         | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3)  |
-| mysql          | [mysql2](https://www.npmjs.com/package/mysql2)                  |
-| postgres       | [pg](https://www.npmjs.com/package/pg)                          |
+| `client` value | Actual package used                                            |
+|----------------|----------------------------------------------------------------|
+| sqlite         | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3) |
+| mysql          | [mysql2](https://www.npmjs.com/package/mysql2)                 |
+| postgres       | [pg](https://www.npmjs.com/package/pg)                         |
 :::
 
 #### Connection parameters
 
 The `connection.connection` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass database connection information and accepts the following parameters:
 
-| Parameter  | Description                                                                                                                   | Type                  |
-|------------|-------------------------------------------------------------------------------------------------------------------------------|-----------------------|
-| `connectionString`| Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+**           | `String`                  |
-| `host`     | Database host name. Default value: `localhost`.                                                                               | `String`              |
-| `port`     | Database port                                                                                                                 | `Integer`             |
-| `database` | Database name.                                                                                                                | `String`              |
-| `user`     | Username used to establish the connection                                                                                     | `String`              |
-| `password` | Password used to establish the connection                                                                                     | `String`              |
-| `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
-| `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
-| `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
+| Parameter          | Description                                                                                                                                                             | Type                  |
+|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+| `connectionString` | Database connection string. When set, it overrides the other `connection.connection` properties. To disable use an empty string: `''`. <br/> **Available in `v4.6.2`+** | `String`              |
+| `host`             | Database host name. Default value: `localhost`.                                                                                                                         | `String`              |
+| `port`             | Database port                                                                                                                                                           | `Integer`             |
+| `database`         | Database name.                                                                                                                                                          | `String`              |
+| `user`             | Username used to establish the connection                                                                                                                               | `String`              |
+| `password`         | Password used to establish the connection                                                                                                                               | `String`              |
+| `timezone`         | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php)                                           | `String`              |
+| `schema`           | Set the default database schema. **Used only for Postgres DB.**                                                                                                         | `String`              |
+| `ssl`              | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                                                                   | `Boolean` or `Object` |
 
 :::note
 Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
@@ -99,7 +99,7 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
 | Parameter        | Description                                                     | Type      | Default |
-| ---------------- | --------------------------------------------------------------- | --------- | ------- |
+|------------------|-----------------------------------------------------------------|-----------|---------|
 | `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
 | `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
 
@@ -522,7 +522,7 @@ For deployed versions of your application the database environment variables sho
 |-------------------------------------------------------|---------------------------------|
 | Virtual private server/virtual machine (e.g. AWS EC2) | `ecosystem.config.js` or `.env` |
 | DigitalOcean App Platform                             | `Environment Variables` table   |
-| Heroku                                                | `Config vars` table                   |
+| Heroku                                                | `Config vars` table             |
 
 ## Databases installation
 
@@ -636,3 +636,95 @@ $ \c my_strapi_db_name admin_user
 # Grant schema privileges to the user
 $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 ```
+
+### Dynamic Database Credentials
+
+When using a DaaS (database as a service) such as AWS RDS, Google Cloud SQL, or Azure Database for PostgreSQL, you may need to use dynamic credentials. Dynamic credentials are temporary credentials that are generated by the database service and are rotated periodically.
+
+To use dynamic credentials with Strapi, you will need to build a custom database config for your use-case (for fetching the rotating token). You will also need to download the certificate bundle from the database service and store it in your project.
+
+The following is an example of how to use dynamic credentials with [AWS RDS IAM authentication](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Connecting.html):
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="./config/env/production/database.js"
+// You will probably need to install this package
+const { Signer } = require('@aws-sdk/rds-signer');
+
+module.exports = ({ env }) => ({
+  connection: async () => {
+    const rdsIamSigner = new Signer({
+      hostname: env('DATABASE_HOST'),
+      port: env.int('DATABASE_PORT'),
+      username: env('DATABASE_USERNAME'),
+    });
+    let token = await rdsIamSigner.getAuthToken();
+    let expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+      
+    return {
+      client: env('DATABASE_CLIENT', 'postgres'),
+      connection: {
+        host: env('DATABASE_HOST'),
+        port: env.int('DATABASE_PORT'),
+        database: env('DATABASE_NAME'),
+        user: env('DATABASE_USERNAME'),
+        password: token,
+        ssl: {
+          // You can import the certificate bundle from the database service also
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false),
+        },
+        expirationChecker: () => {
+          let remainingTime = expiresAt - new Date();
+          return remainingTime <= 5;
+        }
+      }
+    }
+  }
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="./config/env/production/database.ts"
+// You will probably need to install this package
+import { Signer } from '@aws-sdk/rds-signer';
+
+export default ({ env }) => ({
+  connection: async () => {
+    const rdsIamSigner = new Signer({
+      hostname: env('DATABASE_HOST'),
+      port: env.int('DATABASE_PORT'),
+      username: env('DATABASE_USERNAME'),
+    });
+    let token = await rdsIamSigner.getAuthToken();
+    let expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+      
+    return {
+      client: env('DATABASE_CLIENT', 'postgres'),
+      connection: {
+        host: env('DATABASE_HOST'),
+        port: env.int('DATABASE_PORT'),
+        database: env('DATABASE_NAME'),
+        user: env('DATABASE_USERNAME'),
+        password: token,
+        ssl: {
+          // You can import the certificate bundle from the database service also
+          rejectUnauthorized: env.bool('DATABASE_SSL_SELF', false),
+        },
+        expirationChecker: () => {
+          let remainingTime = expiresAt - new Date();
+          return remainingTime <= 5;
+        }
+      }
+    }
+  }
+});
+```
+
+</TabItem>
+
+</Tabs>
