@@ -4,22 +4,21 @@ displayed_sidebar: devDocsSidebar
 toc_max_heading_level: 5
 description: Protect your API with a full authentication process based on JWT and manage the permissions between the groups of users.
 tags:
-- authenticated role
-- JSON Web Tokens (JWT)
-- JWT configuration
-- keycloak
-- ngrok
-- plugins
-- provider
-- public role
-- password
-- Users, Roles & Permissions 
+  - authenticated role
+  - JSON Web Tokens (JWT)
+  - JWT configuration
+  - keycloak
+  - ngrok
+  - plugins
+  - provider
+  - public role
+  - password
+  - Users, Roles & Permissions
 ---
 
 # Users & Permissions plugin
 
 The Users & Permissions plugin provides a full authentication process based on [JSON Web Tokens (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users. The Users & Permissions plugin is installed by default.
-
 
 The user guide describes how to use the [Users & Permissions plugin](/user-docs/users-roles-permissions) from the admin panel. The present page is more about the developer-related aspects of using the Users & Permissions plugin.
 
@@ -77,13 +76,13 @@ axios
     identifier: 'user@strapi.io',
     password: 'strapiPassword',
   })
-  .then(response => {
+  .then((response) => {
     // Handle success.
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -102,7 +101,7 @@ If you use **Postman**, set the **body** to **raw** and select **JSON** as your 
 }
 ```
 
-If the request is successful you will receive the **user's JWT** in the `jwt` key:  
+If the request is successful you will receive the **user's JWT** in the `jwt` key:
 
 ```json
 {
@@ -142,11 +141,11 @@ axios
       Authorization: `Bearer ${token}`,
     },
   })
-  .then(response => {
+  .then((response) => {
     // Handle success.
     console.log('Data: ', response.data);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -169,7 +168,6 @@ Available options:
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/plugins.js"
-
 module.exports = ({ env }) => ({
   // ...
   'users-permissions': {
@@ -188,7 +186,6 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/plugins.ts"
-
 export default ({ env }) => ({
   // ...
   'users-permissions': {
@@ -225,10 +222,10 @@ For example, if you have added a field called "nickname" that you wish to accept
 ```js title="./config/plugins.js"
 module.exports = ({ env }) => ({
   // ...
-  "users-permissions": {
+  'users-permissions': {
     config: {
       register: {
-        allowedFields: ["nickname"],
+        allowedFields: ['nickname'],
       },
     },
   },
@@ -243,10 +240,10 @@ module.exports = ({ env }) => ({
 ```ts title="./config/plugins.ts"
 export default ({ env }) => ({
   // ...
-  "users-permissions": {
+  'users-permissions': {
     config: {
       register: {
-        allowedFields: ["nickname"],
+        allowedFields: ['nickname'],
       },
     },
   },
@@ -257,7 +254,6 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
-
 
 #### Usage
 
@@ -274,13 +270,13 @@ axios
     email: 'user@strapi.io',
     password: 'strapiPassword',
   })
-  .then(response => {
+  .then((response) => {
     // Handle success.
     console.log('Well done!');
     console.log('User profile', response.data.user);
     console.log('User token', response.data.jwt);
   })
-  .catch(error => {
+  .catch((error) => {
     // Handle error.
     console.log('An error occurred:', error.response);
   });
@@ -288,15 +284,16 @@ axios
 
 ### Providers
 
- [Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest) allow you to use OAuth and OAuth2 providers to enable authentication in your application.
+[Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest) allow you to use OAuth and OAuth2 providers to enable authentication in your application.
 
 For a better understanding, review the following description of the login flow. The example uses `github` as the provider but it works the same for other providers.
 
 #### Understanding the login flow
 
 Let's say that:
-* Strapi's backend is located at: `strapi.website.com`, and
-* Your app frontend is located at: `website.com`
+
+- Strapi's backend is located at: `strapi.website.com`, and
+- Your app frontend is located at: `website.com`
 
 1. The user goes on your frontend app (`https://website.com`) and clicks on your button `connect with Github`.
 2. The frontend redirects the tab to the backend URL: `https://strapi.website.com/api/connect/github`.
@@ -320,7 +317,6 @@ Before setting up a provider you must specify the absolute url of your backend i
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="config/server.js"
-
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
@@ -333,14 +329,12 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="config/server.ts"
-
 export default ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
   url: env('', 'http://localhost:1337'),
 });
 ```
-
 
 </TabItem>
 
@@ -394,7 +388,6 @@ Don't forget to update the server url in the backend config file `config/server.
   - **The redirect URL to your front-end app**: `http://localhost:3000/connect/github/redirect`
 
 </TabItem>
-
 
 <TabItem value="Facebook" title="Facebook">
 
@@ -864,10 +857,10 @@ Don't forget to update the server url in the Strapi config file `./config/server
 - Click on "Create Client"
 - Enter the details of your organization and website.
 - There is a drop-down for "App Category" but no explanation of what the different categories mean.
-"Community" seems to work fine.
+  "Community" seems to work fine.
 - You can choose either version 1 or version 2 of the API - neither are actively developed.
-Version 2 is probably the best choice. See their
-[developer docs](https://docs.patreon.com/#introduction) for more detail.
+  Version 2 is probably the best choice. See their
+  [developer docs](https://docs.patreon.com/#introduction) for more detail.
 - Under "Redirect URI's" enter `https://your-site.com/api/connect/patreon/callback`
 - Save the client details and you will then see the Client ID and Client Secret.
 
@@ -927,25 +920,25 @@ You can also use the `register` lifecycle function to create your own custom pro
 module.exports = {
   register({ strapi }) {
     strapi
-      .plugin("users-permissions")
-      .service("providers-registry")
-      .add("example-provider-name", {
-        icon: "",
+      .plugin('users-permissions')
+      .service('providers-registry')
+      .add('example-provider-name', {
+        icon: '',
         enabled: true,
         grantConfig: {
-          key: "",
-          secret: "",
+          key: '',
+          secret: '',
           callback: `${strapi.config.server.url}/auth/example-provider-name/callback`,
-          scope: ["email"],
-          authorize_url: "https://awesome.com/authorize",
-          access_url: "https://awesome.com/token",
+          scope: ['email'],
+          authorize_url: 'https://awesome.com/authorize',
+          access_url: 'https://awesome.com/token',
           oauth: 2,
         },
         async authCallback({ accessToken, providers, purest }) {
           // use whatever you want here to get the user info
           return {
-            username: "test",
-            email: "test",
+            username: 'test',
+            email: 'test',
           };
         },
       });
@@ -953,7 +946,7 @@ module.exports = {
 };
 ```
 
-For additional information on parameters passed to `grantConfig`, please refer to the  [`grant` documentation](https://github.com/simov/grant). For additional information about `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
+For additional information on parameters passed to `grantConfig`, please refer to the [`grant` documentation](https://github.com/simov/grant). For additional information about `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
 
 #### Setup the frontend
 
@@ -973,7 +966,7 @@ Now you can make authenticated requests. More info here: [token usage](#token-us
   - **A session/cookie/cache problem**: You can try again in a private tab.
   - **The incorrect use of a domain with ngrok**: Check your urls and make sure that you use the ngrok url instead of `http://localhost:1337`. Don't forget to check the backend url set in the example app at `src/config.js`.
 - **You can't access your admin panel**: It's most likely because you built it with the backend url set with a ngrok url and you stopped/restarted ngrok. You need to replace the backend url with the new ngrok url and run `yarn build` or `npm run build` again.
-:::
+  :::
 
 ### Reset password
 
@@ -1016,10 +1009,10 @@ axios
   .post('http://localhost:1337/api/auth/forgot-password', {
     email: 'user@strapi.io', // user's email
   })
-  .then(response => {
+  .then((response) => {
     console.log('Your user received an email');
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('An error occurred:', error.response);
   });
 ```
@@ -1041,10 +1034,10 @@ axios
     password: 'userNewPassword',
     passwordConfirmation: 'userNewPassword',
   })
-  .then(response => {
+  .then((response) => {
     console.log("Your user's password has been reset.");
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('An error occurred:', error.response);
   });
 ```
@@ -1098,13 +1091,20 @@ axios
   .post(`http://localhost:1337/api/auth/send-email-confirmation`, {
     email: 'user@strapi.io', // user's email
   })
-  .then(response => {
+  .then((response) => {
     console.log('Your user received an email');
   })
-  .catch(error => {
+  .catch((error) => {
     console.error('An error occurred:', error.response);
   });
 ```
+
+### Email confirmation error redirection
+
+If a user or an automated security system opens the confirmation link multiple times, they may see a raw 403 error in cases when the account is already confirmed. To provide a better user experience, Strapi can now redirect the user to a custom URL instead of displaying the default error. You can set this **Error confirmation redirection URL** directly in the **Advanced settings** of the **Users & Permissions** plugin’s admin panel:
+
+- If a custom URL is provided, users who encounter a repeated or invalid confirmation link will be redirected there instead of seeing the 403 error.
+- If no URL is set, the default 403 error is shown, preserving the existing behavior.
 
 ## User object in Strapi context
 
@@ -1113,7 +1113,7 @@ The `user` object is available to successfully authenticated requests.
 The authenticated `user` object is a property of `ctx.state`.
 
 ```js
-create: async ctx => {
+create: async (ctx) => {
   const { id } = ctx.state.user;
 
   const depositObj = {
@@ -1289,7 +1289,6 @@ By default you can set a `JWT_SECRET` environment variable and it will be used a
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./extensions/users-permissions/config/jwt.js"
-
 module.exports = {
   jwtSecret: process.env.SOME_ENV_VAR,
 };
@@ -1300,7 +1299,6 @@ module.exports = {
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./extensions/users-permissions/config/jwt.ts"
-
 export default {
   jwtSecret: process.env.SOME_ENV_VAR,
 };
@@ -1319,8 +1317,8 @@ You can learn more about configuration [here](/dev-docs/configurations).
 By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
 
 <ThemedImage
-  alt="Users & Permissions configuration"
-  sources={{
+alt="Users & Permissions configuration"
+sources={{
       light: '/img/assets/users-permissions/sso-config-custom-validator.png',
       dark: '/img/assets/users-permissions/sso-config-custom-validator_DARK.png'
     }}
@@ -1339,10 +1337,10 @@ If you need to configure a custom handler to accept other URLs, you can create a
           // cbUrl is where Strapi is being asked to redirect the auth info
           // that was received from the provider to
 
-          // in this case, we will only validate that the 
+          // in this case, we will only validate that the
           // if using a base url, you should always include the trailing slash
           // although in real-world usage you should also include the full paths
-          if (cbUrl.startsWith('https://myproxy.mysite.com/') || 
+          if (cbUrl.startsWith('https://myproxy.mysite.com/') ||
               cbUrl.startsWith('https://mysite.com/')) {
             return;
           }
@@ -1373,7 +1371,7 @@ To add password validation at the API level, you can create a custom function pa
           }
 
           if (value.length > 24) {
-            // throws default error message 
+            // throws default error message
             return false;
           }
 
@@ -1382,3 +1380,4 @@ To add password validation at the API level, you can create a custom function pa
       },
     },
   },
+```
