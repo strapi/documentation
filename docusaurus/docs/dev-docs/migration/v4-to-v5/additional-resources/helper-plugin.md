@@ -595,7 +595,7 @@ A lot of the internals have been reworked and split. We are exposing a main expe
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 
 // After
-import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin/hooks';
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
 ```
 
 Some common use cases are listed below:
