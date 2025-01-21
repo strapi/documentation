@@ -381,6 +381,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
           --ifm-menu-color-active: var(--strapi-primary-500);
         }
       }
+
+      &__list-item-collapsible .menu__link {
+        color: var(--strapi-neutral-700);
+      }
     }
   }
 }
