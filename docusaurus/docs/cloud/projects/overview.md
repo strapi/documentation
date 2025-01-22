@@ -27,6 +27,7 @@ The *Projects* page displays a list of all your Strapi Cloud projects. From here
 Each project card displays the following information:
 
 * the project name
+* the last successful deployment’s date of the Production environment
 * the current status of the project:
     * *Disconnected*, if the project repository is not connected to Strapi Cloud
     * *Suspended*, if the project has been suspended (refer to [Project suspension](/cloud/getting-started/usage-billing#project-suspension) to reactivate the project)
