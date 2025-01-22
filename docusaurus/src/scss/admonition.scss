@@ -159,6 +159,10 @@
     i {
       color: var(--strapi-primary-600);
     }
+
+    a {
+      color: var(--strapi-primary-600) !important;
+    }
   }
 
   &--subtle {
