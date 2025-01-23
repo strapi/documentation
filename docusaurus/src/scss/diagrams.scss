@@ -8,12 +8,15 @@ main:has(.docusaurus-mermaid-container) {
   .table-of-contents__link--active {
     display: none;
   }
+  .docusaurus-mermaid-container * {
+    font-size: .85rem;
+  }
 }
 
 .custom-mermaid-layout {
   .docusaurus-mermaid-container {
     * {
-      font-size: 1rem;
+      font-size: .85rem;
       transition: transform ease-in-out .2s;
     }
 
