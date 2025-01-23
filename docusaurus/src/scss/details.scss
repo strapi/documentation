@@ -1,4 +1,5 @@
 /** Component: Details/Accordion */
+@use './mixins' as *;
 
 details.alert {
   --docusaurus-details-decoration-color: var(--strapi-neutral-800);

@@ -1,4 +1,5 @@
 /** Component: Code Block */
+@use './mixins' as *;
 
 :root {
   --custom-code-block-background-color: var(--strapi-neutral-0);

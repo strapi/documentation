@@ -1,4 +1,5 @@
 /** Component: CustomDocCardWrapper */
+@use './mixins' as *;
 
 .custom-cards-wrapper {
   display: flex;

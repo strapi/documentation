@@ -1,4 +1,5 @@
 /** Component: Alert */
+@use './mixins' as *;
 
 .theme-admonition {
   --custom-admonition-background-color: transparent;

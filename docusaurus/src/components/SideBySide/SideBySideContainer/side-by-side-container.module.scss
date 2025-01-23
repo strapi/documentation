@@ -1,6 +1,6 @@
 /** Component: Side by Side Container */
 
-@import '../../../scss/_mixins.scss';
+@use '../../../scss/_mixins.scss' as *;
 
 :root {
   --sbs-container-gap: var(--strapi-spacing-6);

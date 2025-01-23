@@ -1,4 +1,5 @@
 /** Element: Code */
+@use './mixins' as *;
 
 :root body {
   --custom-code-background-color: var(--strapi-primary-100);

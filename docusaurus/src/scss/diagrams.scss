@@ -1,6 +1,7 @@
 /**
  * Mermaid.js-based diagram styles
  */
+@use './mixins' as *;
 
 main:has(.docusaurus-mermaid-container) {
   .table-of-contents__left-border:has(a.table-of-contents__link--active),

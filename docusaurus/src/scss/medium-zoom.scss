@@ -1,4 +1,5 @@
 /** Component: Medium Zoom */
+@use './mixins' as *;
 
 .medium-zoom {
   &-overlay {

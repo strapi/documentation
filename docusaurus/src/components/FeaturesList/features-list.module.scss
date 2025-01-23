@@ -1,6 +1,6 @@
 /** Component: Features List */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-features-list-gap: var(--strapi-spacing-2);

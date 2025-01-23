@@ -1,3 +1,5 @@
+@use './mixins' as *;
+
 .my-custom-search-bar {
   display: flex;
   flex-direction: row;

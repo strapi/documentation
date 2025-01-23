@@ -1,4 +1,5 @@
 /** General: Images */
+@use './mixins' as *;
 
 /** Dark Mode images border */
 .theme-doc-markdown.markdown [class*="themedImage--dark"],

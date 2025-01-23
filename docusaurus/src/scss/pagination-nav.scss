@@ -1,4 +1,5 @@
 /** Component: Pagination Nav */
+@use './mixins' as *;
 
 .pagination-nav {
   --ifm-spacing-horizontal: var(--strapi-spacing-4);

@@ -1,6 +1,6 @@
 /** Component: Side by Side Column */
 
-@import '../../../scss/_mixins.scss';
+@use '../../../scss/_mixins.scss' as *;
 
 @include medium-up {
   .sbs-column {

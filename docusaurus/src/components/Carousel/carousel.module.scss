@@ -1,6 +1,6 @@
 /** Component: Carousel */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-carousel-theme-color: var(--strapi-primary-500);

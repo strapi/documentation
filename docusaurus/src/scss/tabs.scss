@@ -1,4 +1,5 @@
 /** Component: Tab */
+@use './mixins' as *;
 
 :root body {
   --custom-tabs-px: var(--strapi-spacing-5);

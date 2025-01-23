@@ -4,6 +4,8 @@
  * in docusarus.config.js
  */
 
+ @use './mixins' as *;
+
 [class*="announcementBar"] {
   min-height: 44px;
   color: var(--strapi-neutral-800);

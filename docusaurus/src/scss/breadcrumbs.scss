@@ -1,4 +1,5 @@
 /** Component: Breadcrumbs */
+@use './mixins' as *;
 
 .breadcrumbs {
   --ifm-breadcrumb-item-background-active: transparent;

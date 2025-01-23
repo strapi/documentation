@@ -1,5 +1,7 @@
 /** Core: Docusaurus/Infima Style Tokens Overrides */
 
+@use './mixins' as *;
+
 :root {
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 

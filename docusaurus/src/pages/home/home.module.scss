@@ -1,5 +1,5 @@
 /** Page: Home */
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-home-faded-bg-display: block;

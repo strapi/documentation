@@ -1,6 +1,6 @@
 /** Component: MultiLanguageSwitcher / Request / Response */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --custom-strapi-docs-mls-color: var(--strapi-neutral-800);

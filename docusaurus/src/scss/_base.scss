@@ -1,5 +1,9 @@
 /** Base: General Styles */
 
+@use './tokens.scss' as *;
+@use './tokens-overrides' as *;
+@use './mixins' as *;
+
 :root {
   --custom-selection-background-color: var(--strapi-primary-600);
 }

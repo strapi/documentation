@@ -1,4 +1,5 @@
 /** Component: Markdown */
+@use './mixins' as *;
 
 $selector-markdown: ".theme-doc-markdown.markdown";
 

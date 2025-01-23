@@ -1,6 +1,6 @@
 /** Component: Link with Arrow */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-lwa-icon-ml: var(--strapi-spacing-2);

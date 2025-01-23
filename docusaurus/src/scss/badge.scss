@@ -1,4 +1,6 @@
 /** Component: Badges (alpha, beta, plans, feature flags, new/updated…) */
+@use './mixins' as *;
+
 @mixin badge-tooltip {
   --custom-badge-tooltip-width: 220px;
   font-weight: 400;

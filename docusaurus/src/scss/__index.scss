@@ -5,44 +5,45 @@
  */
 
 /** Core */
-@import '_mixins.scss';
-@import '_tokens.scss';
-@import '_tokens-overrides.scss';
+@use '__tokens-index' as *;
+@forward 'mixins';
+@forward 'tokens';
+@forward 'tokens-overrides';
 
 /** Base */
-@import '_fonts.scss';
-@import '_base.scss';
+@forward 'fonts';
+@forward 'base';
 
 /** Components */
-@import 'admonition.scss';
-@import 'api-call.scss';
-@import 'announcement-bar.scss';
-@import 'badge.scss';
-@import 'breadcrumbs.scss';
-@import 'card.scss';
-@import 'code.scss';
-@import 'code-block.scss';
-@import 'columns.scss';
-@import 'container.scss';
-@import 'custom-doc-cards.scss';
-@import 'details.scss';
-@import 'footer.scss';
-@import 'grid.scss';
-@import 'icons.scss';
-@import 'images.scss';
-@import 'markdown.scss';
-@import 'medium-zoom.scss';
-@import 'navbar.scss';
-@import 'pagination-nav.scss';
-@import 'search.scss';
-@import 'scene.scss';
-@import 'sidebar.scss';
-@import 'table.scss';
-@import 'tabs.scss';
-@import 'table-of-contents.scss';
-@import 'typography.scss';
-@import 'kapa.scss';
-@import 'diagrams.scss';
-@import 'custom-search-bar.scss';
-@import 'release-notes.scss';
-@import 'guideflow.scss';
+@use 'admonition.scss';
+@use 'api-call.scss';
+@use 'announcement-bar.scss';
+@use 'badge.scss';
+@use 'breadcrumbs.scss';
+@use 'card.scss';
+@use 'code.scss';
+@use 'code-block.scss';
+@use 'columns.scss';
+@use 'container.scss';
+@use 'custom-doc-cards.scss';
+@use 'details.scss';
+@use 'footer.scss';
+@use 'grid.scss';
+@use 'icons.scss';
+@use 'images.scss';
+@use 'markdown.scss';
+@use 'medium-zoom.scss';
+@use 'navbar.scss';
+@use 'pagination-nav.scss';
+@use 'search.scss';
+@use 'scene.scss';
+@use 'sidebar.scss';
+@use 'table.scss';
+@use 'tabs.scss';
+@use 'table-of-contents.scss';
+@use 'typography.scss';
+@use 'kapa.scss';
+@use 'diagrams.scss';
+@use 'custom-search-bar.scss';
+@use 'release-notes.scss';
+@use 'guideflow.scss';

@@ -1,4 +1,5 @@
 /** Component: Search */
+@use './mixins' as *;
 
 :root body {
   --docsearch-hit-height: 56px;

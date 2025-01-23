@@ -1,4 +1,5 @@
 /** Component: API Call / Request / Response */
+@use './mixins' as *;
 
 :root {
   --custom-api-call-color: var(--strapi-neutral-800);
