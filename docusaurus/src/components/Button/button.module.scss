@@ -1,6 +1,6 @@
 /** Component: Button */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 .button {
   --strapi-button-background-color: var(--strapi-primary-600);

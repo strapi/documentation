@@ -1,5 +1,6 @@
 /** Component: Table of Contents (a.k.a. secondary navigation)
     + on page TOC on mobile */
+@use './mixins' as *;
 
 .table-of-contents {
   --custom-toc-py: var(--strapi-spacing-1);

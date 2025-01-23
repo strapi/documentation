@@ -1,6 +1,6 @@
 /** Component: Hero */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-hero-py: var(--strapi-spacing-6);

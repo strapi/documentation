@@ -1,4 +1,5 @@
 /** Component: Grid */
+@use './mixins' as *;
 
 .row {
   --custom-grid-spacing: var(--strapi-spacing-2);

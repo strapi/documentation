@@ -1,6 +1,6 @@
 /** Component: Annotation */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 .annotation {
   --strapi-docs-annotation-toggle-background-active: var(--custom-selection-background-color);

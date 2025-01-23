@@ -1,4 +1,5 @@
 /** General: Typography */
+@use './mixins' as *;
 
 :root {
   --custom-heading-decorative-line-color: var(--strapi-neutral-150);

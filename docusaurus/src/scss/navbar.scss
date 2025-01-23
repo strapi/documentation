@@ -1,4 +1,5 @@
 /** Component: Navbar */
+@use './mixins' as *;
 
 $selector-color-mode-toggle-button: 'button[class*="ColorModeToggle"]';
 $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';

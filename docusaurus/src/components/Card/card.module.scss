@@ -1,6 +1,6 @@
 /** Component: Card */
 
-@import '../../scss/_mixins.scss';
+@use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-card-background: var(--strapi-neutral-0);
