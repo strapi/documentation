@@ -360,8 +360,10 @@ strapi.documents.use(async (context, next) => {
 
   const result = await next();
 
-  // do something with the result before returning it
-  return result
+  // Modify the result as necessary before returning it
+  result.retrievedAt = Date.now();
+
+  return result;
 });
 ```
 
