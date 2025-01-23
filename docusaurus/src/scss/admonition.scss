@@ -90,7 +90,7 @@
     border-color: var(--strapi-neutral-200);
     margin-bottom: 76px;
 
-    a {
+    a:not(.badge__link) {
       color: var(--strapi-primary-600);
     }
 
@@ -159,6 +159,10 @@
 
     i {
       color: var(--strapi-primary-600);
+    }
+
+    a {
+      color: var(--strapi-primary-600) !important;
     }
   }
 

@@ -546,6 +546,9 @@ h2 .badge {
       --custom-badge-color: white;
       --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
     }
+    &--sso {
+      --custom-badge-color: white;
+    }
     &--alpha,
     &--beta,
     &--featureflag,

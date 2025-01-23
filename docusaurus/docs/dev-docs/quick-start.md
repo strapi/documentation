@@ -32,7 +32,7 @@ We will first create a new Strapi project on your machine by running a command i
 
 Follow the steps below by clicking on the togglable content to read more instructions.
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }} open>
+<details open>
 <summary>Step 1: Run the installation script and create a Strapi Cloud account</summary>
 
 ### Step 1: Run the installation script and create a Strapi Cloud account
@@ -76,7 +76,7 @@ As you will see in the terminal, your project is now building locally.
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 2: Register the first local administrator user</summary>
 
 ### Step 2: Register the first local administrator user
@@ -119,7 +119,7 @@ If the server is not already running, in your terminal, `cd` into the `my-strapi
 
 The Content-Type Builder helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details >
 
 <summary>Step 1: Create a "Restaurant" collection type</summary>
 
@@ -150,7 +150,7 @@ Once Strapi has restarted, "Restaurant" is listed under ![Content Manager icon](
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 2: Create a "Category" collection type</summary>
 
 ### Step 2: Create a "Category" collection type
@@ -242,7 +242,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
 
 ### Step 1: Log in to the admin panel of your new Strapi Cloud project
@@ -278,7 +278,7 @@ Any project hosted on Strapi Cloud is accessible from its own URL, something lik
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 2: Create an entry for the "Restaurant" collection type</summary>
 
 
@@ -302,7 +302,7 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 3: Add Categories</summary>
 
 #### Step 3: Add Categories
@@ -331,7 +331,7 @@ Now, we will add a category to a restaurant:
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 4: Set Roles & Permissions</summary>
 
 ### Step 4: Set Roles & Permissions
@@ -356,7 +356,7 @@ sources={{
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 5: Publish the content</summary>
 
 ### Step 5: Publish the content
@@ -383,7 +383,7 @@ sources={{
 
 </details>
 
-<details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
+<details>
 <summary>Step 6: Use the API</summary>
 
 ### Step 6: Use the API

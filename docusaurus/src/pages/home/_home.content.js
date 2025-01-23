@@ -7,19 +7,6 @@ export default {
   },
   carousel: [
     {
-      title: 'Learn what’s new in Strapi 5',
-      description: (
-        <>
-          {'Have a quick tour of the new and updated features available in the Strapi 5 documentation!'}
-        </>
-      ),
-      button: {
-        label: 'What’s new?',
-        decorative: '✨',
-        to: '/dev-docs/whats-new',
-      },
-    },
-    {
       title: 'Can’t wait to use Strapi?',
       description: (
         <>
@@ -33,6 +20,19 @@ export default {
         label: 'Quick start',
         decorative: '🚀',
         to: '/dev-docs/quick-start',
+      },
+    },
+    {
+      title: 'Learn what’s new in Strapi 5',
+      description: (
+        <>
+          {'Have a quick tour of the new and updated features available in the Strapi 5 documentation!'}
+        </>
+      ),
+      button: {
+        label: 'What’s new?',
+        decorative: '✨',
+        to: '/dev-docs/whats-new',
       },
     },
     {
@@ -55,7 +55,7 @@ export default {
   ],
   categories: [
     {
-      cardLink: '/dev-docs/quick-start',
+      cardLink: '/dev-docs/intro',
       cardTitle: 'CMS Documentation',
       cardDescription: 'Learn how to set up, configure, use, and customize the Strapi headless CMS',
       cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
