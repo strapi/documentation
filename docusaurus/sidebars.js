@@ -18,7 +18,7 @@ const sidebars = {
     { // Getting Started
       type: 'category',
       label: 'Getting Started',
-      className: 'category-getting-started',
+      className: 'category-cms-getting-started',
       collapsible: false,
       items: [
         'dev-docs/quick-start',
@@ -46,7 +46,7 @@ const sidebars = {
       type: 'category',
       label: 'Features',
       collapsible: false,
-      className: 'category-features',
+      className: 'category-cms-features',
       items: [
         {
           type: 'doc',
@@ -142,7 +142,7 @@ const sidebars = {
     { // APIs
       type: 'category',
       label: 'APIs',
-      className: 'category-api',
+      className: 'category-cms-api',
       link: {type: 'doc', id:'dev-docs/api/content-api'},
       collapsible: false,
       collapsed: false,
@@ -198,7 +198,7 @@ const sidebars = {
       label: 'Configurations',
       collapsed: false,
       collapsible: false,
-      className: 'category-configurations',
+      className: 'category-cms-configurations',
       items: [
         {
           type: 'doc',
@@ -240,7 +240,7 @@ const sidebars = {
     { // Development
       type: 'category',
       label: 'Development',
-      className: 'category-development',
+      className: 'category-cms-development',
       collapsible: false,
       collapsed: false,
       items: [
@@ -300,7 +300,7 @@ const sidebars = {
     { // Plugins
       type: 'category',
       label: 'Plugins',
-      className: 'category-plugins',
+      className: 'category-cms-plugins',
       collapsible: false,
       collapsed: false,
       items: [
@@ -334,7 +334,7 @@ const sidebars = {
     { // Upgrades
       type: 'category',
       label: 'Upgrades',
-      className: 'category-upgrade',
+      className: 'category-cms-upgrade',
       collapsible: false,
       collapsed: false,
       items: [
@@ -520,14 +520,12 @@ const sidebars = {
     },
   ],
   cloudSidebar: [
-    {
+    { // Getting Started
       type: "category",
       collapsed: false,
       label: "Getting Started",
-      link: {
-        type: "doc",
-        id: "cloud/getting-started/intro",
-      },
+      collapsible: false,
+      className: "category-cloud-getting-started",
       items: [
         "cloud/getting-started/intro",
         {
@@ -541,23 +539,26 @@ const sidebars = {
         {
           type: "category",
           label: "Project deployment",
-          link: { type: "doc", id: "cloud/getting-started/deployment-options" },
           customProps: {
             updated: false,
           },
           items: [
             {
               type: "doc",
+              id: "cloud/getting-started/deployment-options",
+            },
+            {
+              type: "doc",
               id: "cloud/getting-started/deployment",
               customProps: {
-                updated: true,
+                updated: false,
               },
             },
             {
               type: "doc",
               id: "cloud/getting-started/deployment-cli",
               customProps: {
-                new: true,
+                new: false,
               },
              },
           ],
@@ -577,14 +578,12 @@ const sidebars = {
         },
       ],
     },
-    {
+    { // Projects Management
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Projects management",
-      link: {
-        type: "doc",
-        id: "cloud/projects/overview",
-      },
+      className: "category-cloud-projects",
       items: [
         "cloud/projects/overview",
         {
@@ -592,31 +591,30 @@ const sidebars = {
           label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
-            updated: true,
+            updated: false,
           },
         },
         "cloud/projects/collaboration",
         "cloud/projects/runtime-logs",
       ],
     },
-    {
+    { // Deployments
       type: "category",
       collapsed: false,
+      collapsible: false,
       label: "Deployments",
-      link: {
-        type: "doc",
-        id: "cloud/projects/deploys",
-      },
-      items: ["cloud/projects/deploys", "cloud/projects/deploys-history"],
+      className: "category-cloud-deployments",
+      items: [
+        "cloud/projects/deploys",
+        "cloud/projects/deploys-history"
+      ],
     },
-    {
+    { // Account Management
       type: "category",
       collapsed: false,
+      collapsible: false,
+      className: "category-cloud-account",
       label: "Account management",
-      link: {
-        type: "doc",
-        id: "cloud/account/account-settings",
-      },
       items: [
         "cloud/account/account-settings",
         {
@@ -629,33 +627,29 @@ const sidebars = {
         },
       ],
     },
-    {
+    { // CLI
       type: "category",
       collapsed: false,
+      collapsible: false,
+      className: "category-cloud-cli",
       label: "Command Line Interface",
-      link: {
-        type: "doc",
-        id: "cloud/cli/cloud-cli",
-      },
       items: [
         {
           type: "doc",
           id: "cloud/cli/cloud-cli",
           label: "Strapi Cloud CLI",
           customProps: {
-            new: true,
+            new: false,
           },
         },
       ],
     },
-    {
+    { // Advanced configurations
       type: "category",
       collapsed: false,
+      collapsible: false,
+      className: "category-cloud-configurations",
       label: "Advanced configuration",
-      link: {
-        type: "doc",
-        id: "cloud/advanced/database",
-      },
       items: [
         "cloud/advanced/database",
         {
@@ -677,7 +671,7 @@ const sidebars = {
       ],
     },
   ],
-  // cmsSidebar: [
+  // devDocsRestApiSidebar: [
   //   {
   //     type: 'link',
   //     label: '⬅️ Back to Dev Docs content',
