@@ -435,7 +435,7 @@ Registering new end users in a front-end application with the Users & Permission
 4. Click on the **Save** button.
 
 :::note
-If end users can register themselves on your front-end application (see "Enable signups" option in [advanced settings](#configuring-advanced-settings)), a new entry will automatically be created and the fields of that entry will be filled up with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.
+If end users can register themselves on your front-end application (see "Enable signups" option in [advanced settings](#advanced-settings)), a new entry will automatically be created and the fields of that entry will be filled up with the information indicated by the end user. All fields can however be edited by an administrator of the Strapi application.
 :::
 
 ### API usage

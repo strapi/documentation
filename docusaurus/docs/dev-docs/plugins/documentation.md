@@ -300,4 +300,4 @@ There are 2 ways to update the documentation after making changes to your API:
 
 ### Authenticating requests
 
-Strapi is secured by default, which means that most of your endpoints require the user to be authorized. If the CRUD action has not been set to Public in the [Users & Permissions plugin](/user-docs/features/users-permissions#configuring-end-user-roles) then you must provide your JSON web token (JWT). To do this, while viewing the API Documentation, click the **Authorize** button and paste your JWT in the _bearerAuth_ _value_ field.
+Strapi is secured by default, which means that most of your endpoints require the user to be authorized. If the CRUD action has not been set to Public in the [Users & Permissions feature](/user-docs/features/users-permissions#roles) then you must provide your JSON web token (JWT). To do this, while viewing the API Documentation, click the **Authorize** button and paste your JWT in the _bearerAuth_ _value_ field.

@@ -375,7 +375,7 @@ export default {
 
 #### Responsive Images
 
-When the [`Responsive friendly upload` admin panel setting](#admin-panel-settings) is enabled, the plugin will generate the following responsive image sizes:
+When the [`Responsive friendly upload` admin panel setting](#admin-panel-configuration) is enabled, the plugin will generate the following responsive image sizes:
 
 | Name    | Largest dimension |
 | :------ | :--------- |

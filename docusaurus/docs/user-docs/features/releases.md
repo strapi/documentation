@@ -105,7 +105,7 @@ Since publishing an entry with a release means turning a draft entry into a publ
 
 :::prerequisites
 - Before entries can be added to a release, you must create a release from the <Icon name="paper-plane-tilt" /> Releases page.
-- Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/user-docs/features/users-permissions#configuring-roles-permissions)).
+- Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/user-docs/features/users-permissions)).
 :::
 
 #### One entry at a time

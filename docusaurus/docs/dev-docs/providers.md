@@ -15,7 +15,7 @@ Providers add an extension to the core capabilities of the plugin, for example t
 
 There are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
-A provider can be configured to be [private](#creating-private-providers) to ensure asset URLs will be signed for secure access.
+A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
 ## Installing providers
 
