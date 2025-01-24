@@ -86,7 +86,7 @@ The `uid` property is the unique identifier of each strategy and is generally fo
 
 ### Displaying providers logos
 
-By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/getting-started/setting-up-admin-panel#accessing-the-admin-panel) of the admin panel unless [a security exception is added through middlewares configuration](/dev-docs/configurations/middlewares#security), as in the following example:
+By default, Strapi security policy does not allow loading images from external URLs, so provider logos will not show up on the [login screen](/user-docs/features/admin-panel#usage) of the admin panel unless [a security exception is added through middlewares configuration](/dev-docs/configurations/middlewares#security), as in the following example:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">

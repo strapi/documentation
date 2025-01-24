@@ -8,6 +8,7 @@ tags:
 - email
 - lifecycle hooks
 - services
+- features
 ---
 
 # Email
@@ -37,9 +38,9 @@ Most configuration options for the Email feature are handled via your Strapi pro
   }}
 />
 
-In the Configuration section, only the email address field under "Test email delivery" is modifiable by users. A **send test email** button sends a test email.
+In the Configuration interface, only the email address field under "Test email delivery" is modifiable by users. A **Send test email** button sends a test email.
 
-This page is only visible if the current role has the "Access the Email Settings page" permission enabled:
+This page is only visible if the current role has the "Access the Email Settings page" permission enabled (see [RBAC feature](/user-docs/features/rbac) documentation for more information):
 
 <ThemedImage
   alt="Email configuration"

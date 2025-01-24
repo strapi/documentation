@@ -30,9 +30,9 @@ There are a few factors that you should keep in mind when using the admin panel,
 
 - **License and Pricing Plans** <br/> Some features's availability or limits depend on whether your application is using the free Community Edition, the [Growth plan](https://strapi.io/pricing-self-hosted), or the [Enterprise plan](https://strapi.io/pricing-self-hosted). Look for the <GrowthBadge /> and <EnterpriseBadge /> badges in the docs.
 
-- **Roles and Permissions** <br/> Some features and the content itself are ruled by a system of permissions that can be defined at a detailed level. Depending on your role and permissions, you may not be able to access all the features and options. Read the RBAC feature documentation for more information.
+- **Roles and Permissions** <br/> Some features and the content itself are ruled by a system of permissions that can be defined at a detailed level. Depending on your role and permissions, you may not be able to access all the features and options. Read the [RBAC feature documentation](/user-docs/features/RBAC) for more information.
 
-- **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the <FeatureFlagBadge /> badge in the docs and read the [Features](/dev-docs/configurations/features#enabling-a-future-flag) documentation for more information.
+- **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the <FeatureFlagBadge /> badge in the docs and read the [Features documentation](/dev-docs/configurations/features#enabling-a-future-flag) for more information.
 :::
 
 <Guideflow lightId="dkd2m1lsgr" darkId="dkd2mjlugr"/>
@@ -111,7 +111,7 @@ To access the admin panel:
 3. Click on the **Login** button. You should be redirected to the homepage of the admin panel.
 
 :::note
-If you prefer or are required to log in via an SSO provider, please refer to the Single Sign-On documentation.
+If you prefer or are required to log in via an SSO provider, please refer to the [Single Sign-On documentation](/user-docs/features/sso).
 :::
 
 <ThemedImage

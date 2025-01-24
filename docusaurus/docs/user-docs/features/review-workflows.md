@@ -7,6 +7,7 @@ tags:
 - features
 - Enterprise feature
 - Cloud Team feature
+- review workflows
 ---
 
 # Review Workflows
@@ -33,7 +34,7 @@ The Review Workflows feature allows you to create and manage workflows for your 
 
 **Path to configure the feature:** <Icon name="gear-six" /> Settings > Global settings > Review Workflows
 
-For the review workflows to be usable in the Content Manager, the default one should be configured or a new one should be created.
+For the review workflows to be usable in the [Content Manager](/user-docs/features/content-manager), the default one should be configured or a new one should be created.
 
 The default workflow is configured to have 4 stages: To do, In progress, Ready to review, and Reviewed. All 4 stages can be edited, reordered or deleted as needed, and it is also possible to add new stages.
 
@@ -101,11 +102,9 @@ It is not possible to delete the last workflow.
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager
 
-### Change review stage
+### Changing review stage
 
 As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow.
-
-To change the review stage of your content:
 
 1. Access the edit view of your content-type.
 2. In the *Review Workflows* box on the right side of the interface, click on the _Review stage_ drop-down list.
@@ -119,11 +118,9 @@ To change the review stage of your content:
   }}
 />
 
-### Define assignee
+### Defining assignee
 
 Entries of a review workflow content type can be assigned to any admin user in Strapi for review.
-
-To define the assignee of your content:
 
 1. Access the edit view of your content-type.
 2. In the *Review Workflows* box on the right side of the interface, click on the _Assignee_ drop-down list.

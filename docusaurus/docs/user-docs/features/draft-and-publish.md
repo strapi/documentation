@@ -4,11 +4,12 @@ description: Learn how you can use the Draft & Publish feature of Strapi 5 to ma
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 5
 tags:
- - Content Manager
- - Content type Builder
- - Draft & Publish
+ - content manager
+ - content type builder
+ - draft & publish
  - publishing a draft
  - unpublishing content
+ - features
 ---
 
 # Draft & Publish
@@ -36,9 +37,7 @@ The Draft & Publish feature allows to manage drafts for your content.
 
 For your content types to be managed with Draft & Publish in the Content Manager, the feature must be enabled through the Content-type Builder. Draft & Publish can be configured for each content type.
 
-To enable Draft & Publish:
-
-1. Either edit an already created content type of your choice, or create a new content type (see Content Type Builder documentation for more information).
+1. Either edit an already created content type of your choice, or create a new content type (see [Content Type Builder](/user-docs/features/content-type-builder) documentation for more information).
 2. Go to the **Advanced settings** tab.
 3. Tick the Draft & Publish option.
 4. Click the **Finish** button.
@@ -53,7 +52,7 @@ To enable Draft & Publish:
 
 ## Usage
 
-With Draft & Publish enabled, the Content Manager's edit view indicates the current status of your content type's entry at the top of the interface. Your content can have 3 statuses:
+With Draft & Publish enabled, the [Content Manager's edit view](/user-docs/features/content-manager#overview) indicates the current status of your content type's entry at the top of the interface. Your content can have 3 statuses:
 
 - <span style={{color:"#5cb176"}}>Published</span>: The content was previously published. There are no pending draft changes saved.
 - <span style={{color:"#ac73e6"}}>Modified</span>: The content was previously published. You made some changes to the draft version and saved these changes, but the changes have not been published yet.
@@ -61,7 +60,7 @@ With Draft & Publish enabled, the Content Manager's edit view indicates the curr
 
 ### Working with drafts
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
 
 While editing a document, you can see 2 tabs:
 
@@ -79,13 +78,13 @@ While editing a document, you can see 2 tabs:
 By default, each newly created content is a draft. Drafts can be modified and saved at will, using the **Save** button in the _Entry_ box on the right side of the interface, until they are ready to be published.
 
 Once you made changes to a draft, you have 3 possible options, all available in the _Entry_ box on the right side of the interface:
-- **Publish** your document (see [publishing a draft](#publishing-a-draft)),
+- **Publish** your document (see [Publishing a draft](#publishing-a-draft)),
 - **Save** your draft for later retrieval,
 - or discard changes, by clicking on ![More icon](/img/assets/icons/v5/More.svg) and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
 
 ### Publishing a draft
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
 
 To publish a draft, click on the **Publish** button in the _Entry_ box on the right side of the interface.
 
@@ -109,12 +108,12 @@ When a document has both a draft and a published version available, the publishe
 />
 
 :::tip
-To schedule publication, i.e., convert a draft to a published entry at a given date and time, you can [include it in a release](/user-docs/content-manager/adding-content-to-releases) and [schedule the publication](/user-docs/releases/creating-a-release) of the release.
+To schedule publication (i.e. convert a draft to a published entry at a given date and time) you can include it in a release and schedule the publication of that release. Please refer to the [Releases feature](/user-docs/features/releases) documentation for more information.
 :::
 
 ### Unpublishing content
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
 
 To unpublish a previously published content: from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
@@ -136,12 +135,12 @@ If the draft version of the document contains content different from the publish
 
 ### Bulk actions
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, list view of your content type
+**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, list view of your content type
 
-Selecting multiple entries from the Content Manager's list view will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
+Selecting multiple entries from the [Content Manager's list view](/user-docs/features/content-manager#overview) will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
 
 :::caution
-If the [Internationalization plugin](/user-docs/plugins/strapi-plugins#i18n) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
+If the [Internationalization feature](/user-docs/features/internationalization) is installed, the bulk publish/unpublish actions only apply to the currently selected locale.
 :::
 
 <ThemedImage

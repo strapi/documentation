@@ -8,11 +8,12 @@ tags:
 - admin panel
 - authentication
 - users & permissions
+- features
 ---
 
 # API Tokens
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/user-docs/features/api-tokens)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*.
+API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/dev-docs/api/content-api)).
 
 :::prerequisites Identity Card of the Feature
 <Icon name="credit-card"/> **Plan:** Free feature. <br/>
@@ -35,27 +36,25 @@ Most configuration options for API tokens are available in the admin panel, and 
 
 ### Admin panel settings
 
-The *API Tokens* settings sub-section displays a table listing all of the created API tokens.
+**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*
 
-The table displays each API token's name, description, date of creation, and date of last use. From the table, administrators can also:
+The *API Tokens* interface displays a table listing all of the created API tokens. More specifically, it displays each API token's name, description, date of creation, and date of last use.
 
-- Click on the ![edit button](/img/assets/icons/v5/Pencil.svg) to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
-- Click on the ![delete button](/img/assets/icons/v5/Trash.svg) to delete an API token.
+From there, you have the possibility to:
+
+- click on the ![edit button](/img/assets/icons/v5/Pencil.svg) to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
+- click on the ![delete button](/img/assets/icons/v5/Trash.svg) to delete an API token.
 
 #### Creating a new API token
 
-To create a new API token:
-
 1. Click on the **Create new API Token** button.
 2. In the API token edition interface, configure the new API token:
-
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
     | Name           | Write the name of the API token.                                         |
     | Description    | (optional) Write a description for the API token.                        |
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
-
 3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
 4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/v5/Duplicate.svg).
 
@@ -72,8 +71,6 @@ For security reasons, API tokens are only shown right after they have been creat
 :::
 
 #### Regenerating an API token
-
-To regenerate an API token:
 
 1. Click on the API token's edit button.
 2. Click on the **Regenerate** button.

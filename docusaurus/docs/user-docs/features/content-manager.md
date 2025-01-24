@@ -5,6 +5,11 @@ toc_max_heading_level: 4
 tags:
 - admin panel
 - content manager
+- list view
+- edit view
+- component
+- dynamic zone
+- relational field
 ---
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
@@ -34,7 +39,7 @@ sources={{
 <iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
 </div>
 
-The <Icon name="feather" /> Content Manager contains the available collection and single content-types which were created beforehand using the Content-type Builder.
+The <Icon name="feather" /> Content Manager contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/features/content-type-builder).
 
 Content can be created, managed and published from the 2 categories displayed in the sub navigation of the <Icon name="feather" /> Content Manager:
 
@@ -420,7 +425,7 @@ Relation-type fields added to a content-type allow establishing a relation with 
 The content of relational fields is written from the edit view of the content-type they belong to. However, relational fields can point to one or several entries of the other collection type, this is why in the Content Manager it is possible to manage a content-type's relational fields to choose which entries are relevant.
 
 <details>
-<summary>Example:</summary>
+<summary>Example of relational fields</summary>
 
 In my Strapi admin panel I have created 2 collection types:
 
@@ -526,4 +531,4 @@ You can delete content by deleting any entry of a collection type, or the defaul
 />
 
 :::tip
-You can delete entries from the list view of a collection type, by clicking on <Icon name="dots-three-outline" />  on the right side of the entry's record in the table, then choosing the <Icon name="trash"/> **Delete document** button.<br/>If Internationalization is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
+You can delete entries from the list view of a collection type, by clicking on <Icon name="dots-three-outline" />  on the right side of the entry's record in the table, then choosing the <Icon name="trash"/> **Delete document** button.<br/>If [Internationalization](/user-docs/features/internationalization) is enabled for the content-type, **Delete document** deletes all locales while **Delete locale** only deletes the currently listed locale.
