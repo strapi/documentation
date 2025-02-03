@@ -40,7 +40,7 @@ In the admin panel, some Media Library settings are available via the Global Set
 
 #### Configuring settings
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings > Global Settings > Media Library.
+**Path to configure the feature:** <Icon name="gear-six" /> Settings > Global Settings > Media Library.
 
 1. Define your chosen new Media Library settings:
     | Setting name   | Instructions   | Default value |
