@@ -232,11 +232,12 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 
 **Example:**
 
-```jsx title="my-plugin/admin/src/index.js"
+```jsx title="my-plugin/admin/src/index.ts"
 import PluginIcon from './components/PluginIcon';
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
 
 export default {
-  register(app) {
+  register(app: StrapiApp) {
     app.addMenuLink({
       to: '/plugins/my-plugin',
       icon: PluginIcon,
@@ -254,6 +255,8 @@ export default {
   bootstrap() {},
 };
 ```
+
+If using typescript
 
 ### Settings API
 
