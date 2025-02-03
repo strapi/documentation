@@ -135,7 +135,7 @@ If the draft version of the document contains content different from the publish
 
 ### Bulk actions
 
-**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, list view of your content type
+**Path:** <Icon name="feather" /> Content Manager, list view of your content type
 
 Selecting multiple entries from the [Content Manager's list view](/user-docs/features/content-manager#overview) will display additional buttons to publish or unpublish several entries simultaneously. This is what is called "bulk publishing/unpublishing".
 
