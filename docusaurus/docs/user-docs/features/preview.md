@@ -293,7 +293,7 @@ This requires the front-end application to have its own header directive, the CS
 
 ## Usage
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
 
 Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/user-docs/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
 
