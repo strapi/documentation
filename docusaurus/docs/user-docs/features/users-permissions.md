@@ -421,7 +421,7 @@ With the Users & Permissions feature, the end users and their account informatio
 
 Registering new end users in a front-end application with the Users & Permissions plugin consists in adding a new entry to the User collection type.
 
-1. Go to the User collection type in the ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager.
+1. Go to the User collection type in the <Icon name="feather" /> Content Manager.
 2. Click on the **Create new entry** button in the top right corner.
 3. Fill in the default fields of the entry. Additional fields added specifically for your Strapi application by your administrators may be displayed as well.
     | Field     | Instructions    |
