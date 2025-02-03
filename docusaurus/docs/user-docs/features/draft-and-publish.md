@@ -60,7 +60,7 @@ With Draft & Publish enabled, the [Content Manager's edit view](/user-docs/featu
 
 ### Working with drafts
 
-**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path:** <Icon name="feather" /> Content Manager, edit view of your content type
 
 While editing a document, you can see 2 tabs:
 
