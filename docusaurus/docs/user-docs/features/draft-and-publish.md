@@ -113,7 +113,7 @@ To schedule publication (i.e. convert a draft to a published entry at a given da
 
 ### Unpublishing content
 
-**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path:** <Icon name="feather" /> Content Manager, edit view of your content type
 
 To unpublish a previously published content: from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
