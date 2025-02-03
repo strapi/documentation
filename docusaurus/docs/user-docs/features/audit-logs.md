@@ -10,6 +10,7 @@ tags:
 - Enterprise feature
 - payload
 - Strapi Cloud
+- features
 ---
 
 # Audit Logs

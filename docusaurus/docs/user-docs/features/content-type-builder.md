@@ -5,6 +5,10 @@ toc_max_heading_level: 5
 tags:
 - admin panel
 - content type builder
+- content types
+- component
+- dynamic zone
+- custom field
 ---
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
@@ -84,7 +88,7 @@ The Content-type Builder allows to create new content-types: single and collecti
 8. Click on the **Save** button.
 
 :::caution
-New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-type Builder, and cannot be used in the Content Manager.
+New content-types are only considered created once they have been saved. Saving is only possible if at least one field has been added and properly configured. If these steps have not been done, a content-type cannot be created, listed in its category in the Content-type Builder, and cannot be used in the [Content Manager](/user-docs/features/content-manager).
 :::
 
 #### New component
@@ -155,8 +159,8 @@ The Content-type Builder allows to manage all existing content-types. For an cho
     }}
   />
 
-  * **Draft & Publish**: Enable the [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) feature for the content-type or component. It is disabled by default.
-  * **Internationalization**: Enable the [Internationalization](/user-docs/content-manager/translating-content) feature for the content-type or component. It is disabled by default.
+  * **Draft & Publish**: Enable the [Draft & Publish](/user-docs/features/draft-and-publish) feature for the content-type or component. It is disabled by default.
+  * **Internationalization**: Enable the [Internationalization](/user-docs/features/internationalization) feature for the content-type or component. It is disabled by default.
 
   </TabItem>
 
@@ -177,7 +181,7 @@ The Content-type Builder is only accessible to create and update content-types w
 :::
 -->
 
-Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Writing content](/user-docs/content-manager/writing-content.md)).
+Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Creating & Writing content](/user-docs/features/content-manager#creating--writing-content)).
 
 In the <Icon name="layout" /> Content-type Builder, fields can be added at the creation of a new content-type or component, or afterward when a content-type or component is edited or updated.
 

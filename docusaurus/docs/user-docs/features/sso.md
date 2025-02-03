@@ -5,13 +5,21 @@ toc_max_heading_level: 6
 tags:
 - admin panel
 - SSO
-- Single Sign-On
+- single sign-on
+- features
 ---
 
 # Single Sign-On (SSO)
 <EnterpriseBadge /> <SsoBadge />
 
 The Single Sign-On (SSO) feature can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
+
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Enterprise plan or SSO add-on. <br/>
+<Icon name="user"/> **Role & permission:** Read & Update permissions in Roles > Settings - Single Sign-On. <br/>
+<Icon name="toggle-left"/> **Activation:** Disabled by default. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 <ThemedImage
 alt="Login page"
@@ -21,29 +29,23 @@ sources={{
   }}
 />
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise plan or SSO add-on. <br/>
-<Icon name="user"/> **Role & permission:** Read & Update permissions in Roles > Settings - Single Sign-On. <br/>
-<Icon name="toggle-left"/> **Activation:** Disabled by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 ## Configuration
 
 General settings for SSO are available in the admin panel, and additional SSO providers can be configured via your Strapi project's code.
 
 ### Admin panel settings
 
-1. Go to the *Global settings > Single Sign-On* sub-section of the settings interface.
-2. Define your chosen new settings:
+**Path to configure the feature:** <Icon name="gear-six" /> *Global settings > Single Sign-On*
+
+1. In the *Single Sign-On* interface, define your chosen new settings:
 
 | Setting name      | Instructions      |
 | ----------------- | ---------------------|
 | Auto-registration | Click on **True** to allow the automatic creation of a new Strapi administrator when an SSO login does not match an existing Strapi administrator account. If this setting is set on **False**, new Strapi administrators accounts must be created manually beforehand. |
 | Default role      | Choose among the drop-down list the role to attribute by default to auto-registered Strapi administrators through SSO login.           |
-| Local authentication lock-out | Choose among the drop-down list the [roles](/user-docs/users-roles-permissions) for which the local authentication capabilities are disabled.<br />Users locked out of local authentication will be forced to use SSO to login and will not be able to change or reset their password. |
+| Local authentication lock-out | Choose among the drop-down list the roles for which the local authentication capabilities are disabled (see [RBAC feature](/user-docs/users-roles-permissions) documentation).<br />Users locked out of local authentication will be forced to use SSO to login and will not be able to change or reset their password. |
 
-3. Click the **Save** button.
+2. Click the **Save** button.
 
 :::danger
 Don't select _Super Admin_ in the roles list for the _Local authentication lock-out_. If _Super Admin_ is selected, it becomes possible to accidentally lock oneself out of the Strapi admin panel entirely. A fix will be provided soon.

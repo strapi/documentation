@@ -5,9 +5,7 @@ description: Learn to use the Media Library which allows to display and manage a
 toc_max_heading_level: 5
 tags:
 - admin panel
-- Content-type Builder
-- filters
-- introduction
+- features
 - media library
 ---
 
@@ -15,7 +13,14 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Media Library
 
-The Media Library is the Strapi feature that displays all assets uploaded in the Strapi application and allows users to manage them.
+The <Icon name="images" /> Media Library is the Strapi feature that displays all assets uploaded in the Strapi application and allows users to manage them.
+
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Free feature. <br/>
+<Icon name="user"/> **Role & permission:** Minimum "Access the Media Library" permission in Roles > Plugins - Upload. <br/>
+<Icon name="toggle-left"/> **Activation:** Available and activated by default. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 <ThemedImage
   alt="Media Library overview, annotated"
@@ -25,20 +30,25 @@ The Media Library is the Strapi feature that displays all assets uploaded in the
   }}
 />
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Media Library is a free feature. <br/>
-<Icon name="user"/> **Role & permission:** Minimum "Access the Media Library" permission in Roles > Plugins - Upload. <br/>
-<Icon name="toggle-left"/> **Activation:** Available and activated by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 ## Configuration
 
 Some configuration options for the Media Library are available in the admin panel, and some are handled via your Strapi project's code.
 
-### Admin panel settings
+### Admin panel configuration
 
-The Media Library settings allow controlling the format, file size, and orientation of uploaded assets.
+In the admin panel, some Media Library settings are available via the Global Settings to manage the format, file size, and orientation of uploaded assets. It is also possible, directly via the Media Library to configure the view.
+
+#### Configuring settings
+
+**Path to configure the feature:** <Icon name="gear-six" /> Settings > Global Settings > Media Library.
+
+1. Define your chosen new Media Library settings:
+    | Setting name   | Instructions   | Default value |
+    | -------------------------- | ----------------------- |---------------|
+    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
+    | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
+    | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
+2. Click on the **Save** button.
 
 <ThemedImage
   alt="Media Library settings"
@@ -48,16 +58,28 @@ The Media Library settings allow controlling the format, file size, and orientat
   }}
 />
 
-1. Go to ![Settings icon](/img/assets/icons/v5/Cog.svg) Settings > Global Settings > Media Library.
-2. Define your chosen new settings:
+#### Configuring the view
 
-    | Setting name   | Instructions   | Default value |
-    | -------------------------- | ----------------------- |---------------|
-    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
-    | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
-    | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
+**Path to configure the feature:** ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library
 
-3. Click on the **Save** button.
+1. Click on the ![Settings icon](/img/assets/icons/v5/Cog.svg) button just above the list of folders and assets, on the right side of the interface.
+2. Configure the Media Library view, following the instructions below:
+    | Setting name              | Instructions                                                              |
+    | ------------------------- | ------------------------------------------------------------------------- |
+    | Entries per page          | Use the dropdown to define the number of assets displayed by default per page. |
+    | Default sort order        | Use the dropdown to define the default order in which assets are displayed. This can be overriden when sorting assets in the Media Library. |
+
+:::note
+Both settings are used as the defaults in the Media Library and in the Content Manager's media upload modal. These settings are global across the entire Strapi project for all users.
+:::
+
+<ThemedImage
+  alt="Configure the view"
+  sources={{
+    light: '/img/assets/media-library/media-library_configure-the-view.png',
+    dark: '/img/assets/media-library/media-library_configure-the-view_DARK.png',
+  }}
+/>
 
 ### Code-based configuration
 
@@ -353,7 +375,7 @@ export default {
 
 #### Responsive Images
 
-When the [`Responsive friendly upload` admin panel setting](#admin-panel-settings) is enabled, the plugin will generate the following responsive image sizes:
+When the [`Responsive friendly upload` admin panel setting](#admin-panel-configuration) is enabled, the plugin will generate the following responsive image sizes:
 
 | Name    | Largest dimension |
 | :------ | :--------- |
@@ -413,7 +435,11 @@ Breakpoint changes will only apply to new images, existing images will not be re
 
 ## Usage
 
-The Media Library displays all assets uploaded in the application, either via the Media Library itself or via the Content Manager when managing a media field. Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/user-docs/content-manager/writing-content#filling-up-fields).
+**Path to use the feature:** ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library
+
+The Media Library displays all assets uploaded in the application, either via the ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
+
+Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/user-docs/content-manager/writing-content#filling-up-fields).
 
 <ThemedImage
   alt="Media Library overview, annotated"
@@ -434,6 +460,7 @@ From the Media Library, it is possible to:
 Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
 :::
 
+<!--
 ### Filtering assets
 
 Right above the list of folders and assets, on the left side of the interface, a ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
@@ -457,7 +484,9 @@ To set a new filter:
 :::note
 When active, filters are displayed next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
 :::
+-->
 
+<!--
 ### Sorting assets
 
 <ThemedImage
@@ -469,30 +498,30 @@ When active, filters are displayed next to the ![Filter icon](/img/assets/icons/
 />
 
 Just above the list of folders and assets and next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
-
-### Configuring the view
-
-Just above the list of folders and assets, on the right side of the interface, there is a group of 3 buttons. Click on ![Settings icon](/img/assets/icons/v5/Cog.svg) to configure the default view for the Media library.
-
-<ThemedImage
-  alt="Configure the view"
-  sources={{
-    light: '/img/assets/media-library/media-library_configure-the-view.png',
-    dark: '/img/assets/media-library/media-library_configure-the-view_DARK.png',
-  }}
-/>
-
-From there you can:
-
-- Use the **Entries per page** dropdown to define the number of assets displayed by default
-- Use the **Default sort order** dropdown the define the default order in which assets are displayed. This can be overriden when you [sort assets](#sorting-assets) in the Media Library.
-
-Both settings are used as the defaults in the Media Library and in the [Content Manager media upload modal](/user-docs/content-manager/writing-content#filling-up-fields). The settings saved here are global across the entire Strapi project for all users.
-
+-->
 
 ### Adding assets
 
-The Media Library displays all assets uploaded in the application, either via the [Media Library](/user-docs/media-library) or the [Content Manager](/user-docs/content-manager/writing-content.md#filling-up-fields) when managing a media field.
+<details>
+<summary>List of media types and extensions supported by the Media Library</summary>
+
+| Media type | Supported extensions                                            |
+| ---------- | --------------------------------------------------------------- |
+| Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
+| Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
+| Audio      | - MP3<br />- WAV<br />- OGG                                         |
+| File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
+<br/>
+
+</details>
+
+1. Click the **Add new assets** button in the upper right corner of the Media Library.
+2. Choose whether you want to upload the new asset from your computer or from an URL:
+    - from the computer, either drag & drop the asset directly or browse files on your system,
+    - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
+3. (optional) Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-individual-assets)).
+4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
+5. Click on **Upload assets to the library**.
 
 <ThemedImage
   alt="Add new assets window"
@@ -502,32 +531,13 @@ The Media Library displays all assets uploaded in the application, either via th
   }}
 />
 
-To add new assets to the media library:
-
-1. Click the **Add new assets** button in the upper right corner of the Media Library.
-2. Choose whether you want to upload the new asset from your computer or from an URL:
-    - from the computer, either drag & drop the asset directly or browse files on your system,
-    - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
-3. (optional) Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [editing and deleting assets](/user-docs/media-library/managing-assets.md)).
-4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
-5. Click on **Upload assets to the library**.
-
-A variety of media types and extensions are supported by the Media Library:
-
-| Media type | Supported extensions                                            |
-| ---------- | --------------------------------------------------------------- |
-| Image      | - JPEG<br />- PNG<br />- GIF<br />- SVG<br />- TIFF<br />- ICO<br />- DVU   |
-| Video      | - MPEG<br />- MP4<br />- MOV (Quicktime)<br />- WMV<br />- AVI<br />- FLV |
-| Audio      | - MP3<br />- WAV<br />- OGG                                         |
-| File       | - CSV<br />- ZIP<br />- PDF<br />- XLS, XLSX<br />- JSON                |
-
 ### Managing individual assets
 
-The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped. To manage an asset, click on its Edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button.
+The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
 
 #### Editing assets
 
-Clicking on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of an asset opens up a "Details" window, with all the available options.
+Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of an asset to open up the "Details" window, where all the available asset management options are available.
 
 <ThemedImage
   alt="Annotated asset details window screenshot"
@@ -541,29 +551,21 @@ Clicking on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of an 
   - click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete the asset,
   - click on the download button ![Download icon](/img/assets/icons/v5/Download.svg) to download the asset,
   - click on the copy link button ![Copy link icon](/img/assets/icons/v5/Link.svg) to copy the asset's link to the clipboard,
-  - optionally, click on the crop button ![Copy link icon](/img/assets/icons/v5/Crop.svg) to enter cropping mode for the image (see [cropping images](#cropping-images)).
-- On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders.md)) for the asset <ScreenshotNumberReference number="3" />.
+  - optionally, click on the crop button ![Copy link icon](/img/assets/icons/v5/Crop.svg) to enter cropping mode for the image (see [Cropping images](#cropping-images)).
+- On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset <ScreenshotNumberReference number="3" />.
 - At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
 
 #### Moving assets
-
-An individual asset can be moved to a folder when editing its details.
-
-To move an asset:
 
 1. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button for the asset to be moved.
 2. In the window that pops up, click the _Location_ field and choose a different folder from the drop-down list.
 3. Click **Save** to confirm.
 
 :::note
-Assets can also be moved to other folders from the main view of the Media Library (see [organizing assets with folders](/user-docs/media-library/organizing-assets-with-folders.md#moving-assets-to-a-folder)). This includes the ability to move several assets simultaneously.
+Assets can also be moved to other folders from the main view of the Media Library (see [Organizing assets with folders](#organizing-assets-with-folders)). This includes the ability to move several assets simultaneously.
 :::
 
 #### Cropping images
-
-Images can be cropped when editing the asset's details.
-
-To crop an image:
 
 1. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button for the asset to be cropped.
 2. In the window that pops up, click the crop button ![Crop icon](/img/assets/icons/v5/Crop.svg) to enter cropping mode.
@@ -573,10 +575,6 @@ To crop an image:
 5. Click **Finish** to save changes to the file.
 
 #### Deleting assets
-
-An individual asset can be deleted when editing its details.
-
-To delete an asset:
 
 1. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button for the asset to be deleted.
 2. In the window that pops up, click the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) in the control buttons bar above the asset's preview.
@@ -588,15 +586,13 @@ Assets can also be deleted individually or in bulk from the main view of the Med
 
 ### Organizing assets with folders
 
-Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/user-docs/content-manager/writing-content).
+Folders in the Media Library help you organize uploaded assets. Folders sit at the top of the Media Library view or are accessible from the Media field popup when using the [Content Manager](/user-docs/features/content-manager).
 
 From the Media Library, it is possible to view the list of folders and browse a folder's content, create new folders, edit an existing folder, move assets to a folder, and delete a folder.
 
 :::note
-Folders follow the permission system of assets (see [Users, Roles & Permissions](/user-docs/users-roles-permissions)). It is not yet possible to define specific permissions for a folder.
+Folders follow the permission system of assets (see [Users & Permissions feature](/user-docs/features/users-permissions)). It is not yet possible to define specific permissions for a folder.
 :::
-
-#### Browsing folders
 
 By default, the Media Library displays folders and assets created at the root level. Clicking a folder navigates to this folder, and displays the following elements:
 
@@ -622,8 +618,6 @@ The breadcrumb navigation can also be used to go back to a parent folder: click 
 
 #### Adding folders
 
-To create a new folder in the Media Library:
-
 1. Click on **Add new folder** in the upper right of the Media Library interface.
 2. In the window that pops up, type a name for the new folder in the _Name_ field.
 3. (optional) In the _Location_ drop-down list, choose a location for the new folder. The default location is the active folder.
@@ -637,6 +631,11 @@ There is no limit to how deep your folders hierarchy can go, but bear in mind it
 
 Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
 
+1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
+2. Click the ![Move icon](/img/assets/icons/v5/Folder.svg) **Move** button at the top of the interface.
+3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
+4. Click **Move**.
+
 <ThemedImage
   alt="'Move elements to' popup"
   sources={{
@@ -645,20 +644,9 @@ Assets and folders can be moved to another folder from the root view of the Medi
   }}
 />
 
-To bulk move assets and folders to another folder:
-
-1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the ![Move icon](/img/assets/icons/v5/Folder.svg) **Move** button at the top of the interface.
-3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
-4. Click **Move**.
-
-:::note
-An individual asset can also be moved to a folder when [editing the asset](/user-docs/media-library/managing-assets.md).
-:::
-
 #### Editing folders
 
-Once created, a folder can be renamed, moved or deleted. To manage a single folder:
+Once created, a folder can be renamed, moved or deleted.
 
 1. In the Folders part of the Media library, hover the folder to be edited and click its edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg).
 2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
@@ -667,8 +655,6 @@ Once created, a folder can be renamed, moved or deleted. To manage a single fold
 #### Deleting folders
 
 Deleting a folder can be done either from the list of folders of the Media Library, or when editing a single folder.
-
-To delete a folder, from the Media Library:
 
 1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
 2. Click the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete** button above the Folders list.

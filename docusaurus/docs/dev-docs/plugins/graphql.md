@@ -1056,7 +1056,7 @@ The GraphQL plugin adds a GraphQL endpoint accessible and provides access to a G
 
 ### Usage with the Users & Permissions plugin
 
-The [Users & Permissions plugin](/dev-docs/plugins/users-permissions) is an optional plugin that allows protecting the API with a full authentication process.
+The [Users & Permissions plugin](/user-docs/features/users-permissions) is an optional plugin that allows protecting the API with a full authentication process.
 
 #### Registration
 

@@ -15,7 +15,7 @@ Providers add an extension to the core capabilities of the plugin, for example t
 
 There are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../user-docs/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
 
-A provider can be configured to be [private](#creating-private-providers) to ensure asset URLs will be signed for secure access.
+A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
 ## Installing providers
 
@@ -386,7 +386,7 @@ If you want to create your own provider without publishing it on npm you can fol
 4. Update your `/config/plugins.js|ts` file to [configure the provider](#configuring-providers).
 5. Finally, run `yarn` or `npm install` to install your new custom provider.
 
-### Creating private providers
+### Private providers
 
 You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
 

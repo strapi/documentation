@@ -6,11 +6,19 @@ toc_max_heading_level: 4
 tags:
 - content manager
 - preview
+- features
 ---
 
 # Static Preview
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
+
+:::prerequisites Identity Card of the Feature
+<Icon name="credit-card"/> **Plan:** Free feature.<br/>
+<Icon name="user"/> **Role & permission:** Read permissions in Roles > Plugins - Users & Permissions. <br/>
+<Icon name="toggle-left"/> **Activation:** Should be configured in the `config/admin` file. <br/>
+<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
+:::
 
 <!-- TODO: add a dark mode screenshot -->
 <ThemedImage
@@ -20,15 +28,6 @@ With the Preview feature, you can preview your front end application directly fr
     dark: '/img/assets/content-manager/previewing-content.png',
   }}
 />
-
-
-
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature.<br/>
-<Icon name="user"/> **Role & permission:** Read permissions in Roles > Plugins - Users & Permissions. <br/>
-<Icon name="toggle-left"/> **Activation:** Should be configured in the `config/admin` file. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
 
 <!-- <div style={{position: 'relative', paddingBottom: 'calc(54.43121693121693% + 50px)', height: '0'}}>
 <iframe id="zpen5g4t8p" src="https://app.guideflow.com/embed/zpen5g4t8p" width="100%" height="100%" style={{overflow:'hidden', position:'absolute', border:'none'}} scrolling="no" allow="clipboard-read; clipboard-write" webkitallowfullscreen mozallowfullscreen allowfullscreen allowtransparency="true"></iframe>
@@ -110,7 +109,7 @@ The strategy for the front end application to query draft or published content i
 - redirecting to a dedicated preview route like `/preview?path=your-path`(this is, for instance, how [Next's draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) works)
 - or using a different domain for previews like `preview.mysite.com/your-path`.
 
-When [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content.md) is enabled for your content-type, you can also directly leverage Strapi's `status` parameter to handle the logic within the Preview handler, using the following generic approach:
+When [Draft & Publish](/user-docs/features/draft-and-publish) is enabled for your content-type, you can also directly leverage Strapi's `status` parameter to handle the logic within the Preview handler, using the following generic approach:
 
 ```javascript
 async handler(uid, { documentId, locale, status }) {
@@ -294,7 +293,9 @@ This requires the front-end application to have its own header directive, the CS
 
 ## Usage
 
-When the Preview feature is properly set up, an **Open preview** button is visible on the right in the Edit View of the Content Manager. Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel:
+**Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
+
+Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/user-docs/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
 
 <!-- TODO: add a dark mode GIF -->
 <ThemedImage
@@ -308,7 +309,7 @@ When the Preview feature is properly set up, an **Open preview** button is visib
 From the Preview screen, you can:
 
 - click the close button ![Close button](/img/assets/icons/close-icon.svg) in the upper left corner to go back to the Edit View of the Content Manager,
-- switch between previewing the draft and the published version (if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type),
+- switch between previewing the draft and the published version (if [Draft & Publish](/user-docs/features/draft-and-publish) is enabled for the content-type),
 - and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
 :::caution

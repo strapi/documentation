@@ -4,14 +4,15 @@ description: Learn how you can use the Content History feature of Strapi 5 to br
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 5
 tags:
- - Content Manager
- - Content History
+ - content manager
+ - content history
+ - features
 ---
 
 # Content History
 <GrowthBadge /> <EnterpriseBadge/> <CloudProBadge/> <CloudTeamBadge/>
 
-The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the Content Manager.
+The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/user-docs/features/content-manager).
 
 :::prerequisites Identity Card of the Feature
 <Icon name="credit-card"/> **Plan:** Growth or Enterprise plan, or Cloud Pro or Team plan. <br/>
@@ -57,9 +58,7 @@ The main view of Content History clearly states whether a field was inexistent, 
 
 ### Restoring a previous version
 
-You can choose to restore a previous version of a document. When restoring a version, the content of this version will override the content of the current draft version. The document switches to the Modified status and you will then be able to [publish](/user-docs/features/draft-and-publish#publishing-a-draft) the content whenever you want.
-
-To restore a version:
+You can choose to restore a previous version of a document. When restoring a version, the content of this version will override the content of the current draft version. The document switches to the Modified status and you will then be able to publish the content whenever you want (see [Publishing a draft](/user-docs/features/draft-and-publish#publishing-a-draft)).
 
 1. Browse the Content History and select a version via the sidebar on the right.
 2. Click the **Restore** button.

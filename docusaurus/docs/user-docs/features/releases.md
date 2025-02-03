@@ -8,6 +8,7 @@ tags:
 - Enterprise feature
 - Growth feature
 - Cloud Team feature
+- releases
 pagination_next: user-docs/releases/creating-a-release
 ---
 
@@ -33,7 +34,7 @@ The Releases feature enables content managers to organize entries into container
 
 ## Configuration
 
-To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also delete releases that are obsolete or irrelevant. You can also modify the releases' default timezone to use when scheduling a publication.
+To be able to include your content in releases, and to schedule and publish those releases, you must first create them. You can also modify the releases' default timezone to use when scheduling a publication, as well as deleting releases that are obsolete or irrelevant.
 
 ### Choosing default timezone
 
@@ -84,7 +85,7 @@ You can rename a release. To do so, while on a release page:
 
 ### Deleting a release
 
-**Path to configure the feature:** <Icon name="paper-plane-tilt" /> Releases
+**Path:** <Icon name="paper-plane-tilt" /> Releases
 
 Deleting a release will only delete the release itself, but not the content-type entries included in the release.
 
@@ -104,7 +105,7 @@ Since publishing an entry with a release means turning a draft entry into a publ
 
 :::prerequisites
 - Before entries can be added to a release, you must create a release from the <Icon name="paper-plane-tilt" /> Releases page.
-- Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/user-docs/features/users-permissions#configuring-roles-permissions)).
+- Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/user-docs/features/users-permissions)).
 :::
 
 #### One entry at a time
