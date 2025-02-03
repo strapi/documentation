@@ -84,7 +84,7 @@ Once you made changes to a draft, you have 3 possible options, all available in 
 
 ### Publishing a draft
 
-**Path:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path:** <Icon name="feather" /> Content Manager, edit view of your content type
 
 To publish a draft, click on the **Publish** button in the _Entry_ box on the right side of the interface.
 
