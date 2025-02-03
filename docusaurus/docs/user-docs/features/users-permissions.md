@@ -407,7 +407,7 @@ The Users & Permissions feature can be used both via the admin panel, to create 
 
 ### Admin panel usage
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager
+**Path to use the feature:** <Icon name="feather" /> Content Manager
 
 With the Users & Permissions feature, the end users and their account information are managed as a content-type. When Users & Permissions is installed on a Strapi application, 3 collection types are automatically created, including "User" which is the only one available directly in the Content Manager.
 
