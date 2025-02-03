@@ -43,7 +43,7 @@ The *API Tokens* interface displays a table listing all of the created API token
 From there, you have the possibility to:
 
 - click on the <Icon name="pencil-simple" /> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
-- click on the ![delete button](/img/assets/icons/v5/Trash.svg) to delete an API token.
+- click on the <Icon name="trash" /> to delete an API token.
 
 #### Creating a new API token
 
