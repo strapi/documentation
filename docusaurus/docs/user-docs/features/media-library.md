@@ -13,7 +13,7 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Media Library
 
-The ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library is the Strapi feature that displays all assets uploaded in the Strapi application and allows users to manage them.
+The <Icon name="images" /> Media Library is the Strapi feature that displays all assets uploaded in the Strapi application and allows users to manage them.
 
 :::prerequisites Identity Card of the Feature
 <Icon name="credit-card"/> **Plan:** Free feature. <br/>
