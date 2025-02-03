@@ -169,6 +169,10 @@ const sidebars = {
         },
         {
           type: 'doc',
+          id: 'dev-docs/api/sdk-js',
+        },
+        {
+          type: 'doc',
           id: 'dev-docs/api/graphql',
         },
         // {
