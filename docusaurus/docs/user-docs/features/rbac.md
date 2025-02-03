@@ -32,7 +32,7 @@ The Role-Based Access Control (RBAC) feature allows the management of the admini
 
 ## Configuration
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel > Roles*
+**Path to configure the feature:** <Icon name="gear-six" /> *Settings > Administration panel > Roles*
 
 The *Roles* interface displays all created roles for the administrators of your Strapi application.
 
