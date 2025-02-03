@@ -213,7 +213,7 @@ Other custom conditions can be available if they have been created beforehand fo
 
 ## Usage
 
-**Path to use the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration panel > Users*
+**Path to use the feature:** <Icon name="gear-six" /> *Settings > Administration panel > Users*
 
 The *Users* interface displays a table listing all the administrators of your Strapi application. More specifically, for each administrator listed in the table, their main account information are displayed, including name, email and attributed role. The status of their account is also indicated: active or inactive, depending on whether the administrator has already logged in to activate the account or not.
 
