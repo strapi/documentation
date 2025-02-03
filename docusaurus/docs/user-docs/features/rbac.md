@@ -86,7 +86,7 @@ Administrator roles can be deleted from the *Administration panel > Roles* inter
 
 The role edition interface allows to edit the details of an administrator role as well as configure in detail the permissions to all sections of your Strapi application.
 
-It is accessible from *Administration panel > Roles* either after clicking on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
+It is accessible from *Administration panel > Roles* either after clicking on the edit button <Icon name="pencil-simple" /> on the right side of a role's record, or after clicking on the **Add new role** button (see [Creating a new role](#creating-a-new-role)).
 
 :::caution
 It isn't possible to edit the permissions of the Super Admin role. All configurations are in read-only mode.
