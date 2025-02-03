@@ -256,8 +256,6 @@ export default {
 };
 ```
 
-If using typescript
-
 ### Settings API
 
 The Settings API allows:
