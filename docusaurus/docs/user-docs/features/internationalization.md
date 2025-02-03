@@ -32,7 +32,7 @@ The Internationalization feature allows to manage content in different languages
 
 ## Configuration
 
-Before being usable in the Content Manager, the Internationalization feature must be configured from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings*, and it should be enabled on your content types from the ![CTB icon](/img/assets/icons/v5/Layout.svg) _Content-type Builder_.
+Before being usable in the Content Manager, the Internationalization feature must be configured from <Icon name="gear-six" /> *Settings*, and it should be enabled on your content types from the <Icon name="layout" /> _Content-type Builder_.
 
 ### Content-type Builder
 
