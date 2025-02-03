@@ -71,7 +71,7 @@ In the *Roles* interface, from the table, you can click on the duplicate button 
 Administrator roles can be deleted from the *Administration panel > Roles* interface. However, they can only be deleted once they are no more attributed to any administrator of the Strapi application.
 
 1. Make sure the role you wish to delete is not attributed to any administrator anymore.
-2. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the role's record.
+2. Click on the delete button <Icon name="trash" /> on the right side of the role's record.
 3. In the deletion window, click on the **Confirm** button to confirm the deletion.
 
 ### Editing a role
