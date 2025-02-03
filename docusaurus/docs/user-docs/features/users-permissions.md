@@ -428,7 +428,7 @@ Registering new end users in a front-end application with the Users & Permission
     | --------- | ---------------------------- |
     | Username  | Write the username of the end user.    |
     | Email     | Write the complete email address of the end user in the textbox.   |
-    | Password  | (optional) Write a new password in the textbox. You can click on the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon for the password to be shown. |
+    | Password  | (optional) Write a new password in the textbox. You can click on the <Icon name="eye" /> icon for the password to be shown. |
     | Confirmed | (optional) Click **ON** for the end-user account to be confirmed.                                           |
     | Blocked   | (optional) Click **ON** to block the account of the end user, to prevent them to access content.            |
     | Role      | (optional) Indicate the role that should be granted to the new end user. If this field is not filled in, the end user will be attributed the role set as default (see "Default role" option in [advanced settings](#advanced-settings)). |
