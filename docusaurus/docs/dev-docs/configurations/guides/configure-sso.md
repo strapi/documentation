@@ -1,6 +1,6 @@
 ---
 title: SSO configuration
-sidebar_label: How to configure SSO
+sidebar_label: Configure SSO
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 6
 description: Strapi's SSO allows you to configure additional sign-in and sign-up methods for your administration panel. It requires an Enterprise Edition with a Gold plan.
