@@ -675,7 +675,7 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 
 ###### Authorization configuration
 
-By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/user-docs/features/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
+By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/user-docs/features/api-tokens) or through the [Users & Permissions plugin](#usage-with-users--permissions). The Users & Permissions plugin offers a more granular control.
 
 <details>
 <summary> Authorization with the Users & Permissions plugin</summary>
@@ -1054,14 +1054,13 @@ To increase GraphQL security even further, 3rd-party tools can be used. See the 
 
 The GraphQL plugin adds a GraphQL endpoint accessible and provides access to a GraphQL playground, accessing at the `/graphql` route of the Strapi admin panel, to interactively build your queries and mutations and read documentation tailored to your content types. For detailed instructions on how to use the GraphQL Playground, please refer to the official [Apollo Server documentation](https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground).
 
-### Usage with the Users & Permissions plugin
+### Usage with Users & Permissions
 
-The [Users & Permissions plugin](/user-docs/features/users-permissions) is an optional plugin that allows protecting the API with a full authentication process.
+The [Users & Permissions plugin](/user-docs/features/users-permissions) feature allows protecting the API with a full authentication process.
 
 #### Registration
 
 Usually you need to sign up or register before being recognized as a user then perform authorized requests.
-
 
 <Request title="Mutation">
 
