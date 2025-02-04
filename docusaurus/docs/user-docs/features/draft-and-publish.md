@@ -33,7 +33,7 @@ The Draft & Publish feature allows to manage drafts for your content.
 
 ## Configuration
 
-**Path to configure the feature:** ![CTB icon](/img/assets/icons/v5/Layout.svg) Content Type Builder
+**Path to configure the feature:** <Icon name="layout" /> Content Type Builder
 
 For your content types to be managed with Draft & Publish in the Content Manager, the feature must be enabled through the Content-type Builder. Draft & Publish can be configured for each content type.
 

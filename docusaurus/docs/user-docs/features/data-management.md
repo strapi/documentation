@@ -33,7 +33,7 @@ Some configuration options for the Data Management feature are available in the 
 A `transfer.token.salt` should be defined in the `config/admin` configuration file (see [code-based configuration](#code-based-configuration)).
 :::
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Transfer Tokens*
+**Path to configure the feature:** <Icon name="gear-six" /> *Settings > Global settings > Transfer Tokens*
 
 Transfer tokens allow users to authorize the `strapi transfer` CLI command (see [Data transfer](/dev-docs/data-management/transfer) documentation).
 
@@ -49,8 +49,8 @@ The *Transfer Tokens* interface displays a table listing all of the created Tran
 
 From there, administrators can also:
 
-- Click on the ![edit button](/img/assets/icons/v5/Pencil.svg) to edit a transfer token's name, description, or type, or [regenerate the token](#regenerating-a-transfer-token).
-- Click on the ![delete button](/img/assets/icons/v5/Trash.svg) to delete a Transfer token.
+- Click on the <Icon name="pencil-simple" /> to edit a transfer token's name, description, or type, or [regenerate the token](#regenerating-a-transfer-token).
+- Click on the <Icon name="trash" /> to delete a Transfer token.
 
 #### Creating a new transfer token
 
@@ -62,7 +62,7 @@ From there, administrators can also:
     | Description    | (optional) Write a description for the Transfer token.                        |
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*.      |
     | Token type | Choose a token type:<ul><li>*Push* to allow transfers from local to remote instances only,</li><li>*Pull* to allow transfers from remote to local instances only,</li><li>or *Full Access* to allow both types of transfer.</li></ul>      |
-3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/v5/Duplicate.svg).
+3. Click on the **Save** button. The new Transfer token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
 <ThemedImage
   alt="Custom Transfer Token"
