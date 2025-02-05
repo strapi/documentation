@@ -40,7 +40,7 @@ Since publishing an entry with a release means turning a draft entry into a publ
 
 You can rename a release. To do so, while on a release page:
 
-1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel.
 2. Select ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit**.
 3. In the modal, change the name of the release in the _Name_ field.
 4. Click **Continue** to save the change.
@@ -54,7 +54,7 @@ You can schedule a release:
 - or once the release is already created, by editing it.
 
 To schedule an existing release, while on a release page:
-1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel.
 2. Select ![Edit icon](/img/assets/icons/v5/Pencil.svg) **Edit**.
 3. In the modal, check the **Schedule release** checkbox.
 4. Select a date, time, and timezone for the release to be published.
@@ -78,7 +78,7 @@ A release includes multiple entries. You can set the state of each entry with th
 
 ## Removing entries from a release
 
-Entries can be removed from a release. To do so, click the ![More icon](/img/assets/icons/v5/More.svg) at the end of the row of an entry and select the **Remove from release** button.
+Entries can be removed from a release. To do so, click the <Icon name="dots-three-outline" /> at the end of the row of an entry and select the **Remove from release** button.
 
 ## Publishing a release
 
@@ -90,7 +90,7 @@ The _Status_ column displays the status of each entry:
    - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry is ready to  be published with the release
    - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
    
-If some of your entries have a ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![More icon](/img/assets/icons/v5/More.svg) and the **Edit the entry** button to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+If some of your entries have a ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the <Icon name="dots-three-outline" /> and the **Edit the entry** button to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
 
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
@@ -100,6 +100,6 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 You can delete a release. Deleting a release will only delete the release itself, but not the content-type entries included in the release. To delete a release, while on the release page:
 
-1. Click on the ![More icon](/img/assets/icons/v5/More.svg) button in the top right corner of the admin panel.
+1. Click on the <Icon name="dots-three-outline" /> button in the top right corner of the admin panel.
 2. Select ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete**.
 3. In the confirmation dialog, click ![Delete icon](/img/assets/icons/v5/Trash.svg) **Confirm**.

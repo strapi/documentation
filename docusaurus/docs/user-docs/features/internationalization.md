@@ -54,7 +54,7 @@ For your content types to be translatable with Internationalization in the Conte
 
 ### Settings
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global Settings > Internationalization*
+**Path to configure the feature:** <Icon name="gear-six" /> *Settings > Global Settings > Internationalization*
 
 The *Internationalization* interface displays a table listing all locales available for the Strapi application. By default, only the English locale is configured and set as the default locale. 
 

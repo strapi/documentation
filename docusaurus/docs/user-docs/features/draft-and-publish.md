@@ -80,7 +80,7 @@ By default, each newly created content is a draft. Drafts can be modified and sa
 Once you made changes to a draft, you have 3 possible options, all available in the _Entry_ box on the right side of the interface:
 - **Publish** your document (see [Publishing a draft](#publishing-a-draft)),
 - **Save** your draft for later retrieval,
-- or discard changes, by clicking on ![More icon](/img/assets/icons/v5/More.svg) and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
+- or discard changes, by clicking on <Icon name="dots-three-outline" /> and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
 
 ### Publishing a draft
 
@@ -115,11 +115,11 @@ To schedule publication (i.e. convert a draft to a published entry at a given da
 
 **Path:** <Icon name="feather" /> Content Manager, edit view of your content type
 
-To unpublish a previously published content: from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
+To unpublish a previously published content: from the _Draft_ tab, click on <Icon name="dots-three-outline" /> in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
 If the draft version of the document contains content different from the published version, you can decide what to do with both content when unpublishing:
 
-1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
+1. From the _Draft_ tab, click on <Icon name="dots-three-outline" /> in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 2. In the Confirmation dialog that opens, you can choose to:
     - **Unpublish and keep last draft**, so that all the content you currently have in the _Draft_ tab is preserved, but the all the content from the _Published_ tab is definitely gone
     - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab

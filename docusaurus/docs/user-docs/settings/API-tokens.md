@@ -14,7 +14,7 @@ tags:
 * The *Global settings > API Tokens* sub-section of the settings interface is accessible in the admin panel only if the _API tokens > Read_ permission is granted.
 :::
 
-API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/user-docs/features/api-tokens)). Administrators can manage API tokens from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*.
+API tokens allow users to authenticate REST and GraphQL API queries (see [Developer Documentation](/user-docs/features/api-tokens)). Administrators can manage API tokens from <Icon name="gear-six" /> *Settings > Global settings > API Tokens*.
 
 <ThemedImage
   alt="API tokens"
@@ -46,7 +46,7 @@ To create a new API token:
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 
 3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
-4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/v5/Duplicate.svg).
+4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
 <ThemedImage
   alt="Custom API token"

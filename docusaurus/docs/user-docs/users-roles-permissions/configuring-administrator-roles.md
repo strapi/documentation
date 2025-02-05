@@ -6,7 +6,7 @@ sidebar_position: 2
 
 # Configuring administrator roles (RBAC)
 
-Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings* sub navigation.
+Administrators are the users of an admin panel of a Strapi application. Administrator accounts and roles are managed with the Role-Based Access Control (RBAC) feature. It is available in the *Administration panel* section of the <Icon name="gear-six" /> *Settings* sub navigation.
 
 The *Administration panel* section is divided into 2 sub-sections: *Roles* and *Users* (see [Managing administrators](./managing-administrators)).
 
@@ -154,7 +154,7 @@ Settings permissions can be configured for all settings accessible from *General
 
 ### Setting custom conditions for permissions
 
-For each permission of each category, a ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
+For each permission of each category, a <Icon name="gear-six" /> **Settings** button is displayed. It allows to push the permission configuration further by defining additional conditions for the administrators to be granted the permission. There are 2 default additional conditions:
 
 - the administrator must be the creator,
 - the administrator must have the same role as the creator.
@@ -173,7 +173,7 @@ Other custom conditions can be available if they have been created beforehand fo
 
 To set custom conditions:
 
-1. Click on the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button of the permission already granted for the role.
+1. Click on the <Icon name="gear-six" /> **Settings** button of the permission already granted for the role.
 2. In the *Define conditions* window, each available permission can be customized with a specific condition. Click on the drop-down list related to the permission you want to customize.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
@@ -181,9 +181,9 @@ To set custom conditions:
 4. Click on the **Apply** button.
 
 :::tip
-Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button.
+Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the <Icon name="gear-six" /> **Settings** button.
 :::
 
 :::caution
-Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the <Icon name="gear-six" /> **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::

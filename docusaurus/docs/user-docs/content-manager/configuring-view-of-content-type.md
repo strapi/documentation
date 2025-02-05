@@ -80,7 +80,7 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 ## Configuring the edit view
 
-In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg) button is displayed, which leads to the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
+In the edit view of a content-type, a <Icon name="dots-three-outline" /> button is displayed, which leads to the ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view** button. It allows to access the configurations that can be set for the edit view of the content-type, such as the entry title, and the display of the fields of the content-type, including the relational ones.
 
 <ThemedImage
   alt="Configuring the edit view of the Content Manager"
@@ -92,7 +92,7 @@ In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg
 
 ### Edit view settings
 
-1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
+1. In the edit view of your content-type, click on the <Icon name="dots-three-outline" /> button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
 2. In the Settings area, define your chosen new settings:
 
 | Setting name    | Instructions                                                                          |
@@ -103,7 +103,7 @@ In the edit view of a content-type, a ![More icon](/img/assets/icons/v5/More.svg
 
 ### Edit view display
 
-1. In the edit view of your content-type, click on the ![More icon](/img/assets/icons/v5/More.svg) button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
+1. In the edit view of your content-type, click on the <Icon name="dots-three-outline" /> button then ![List + icon](/img/assets/icons/v5/ListPlus.svg) **Configure the view**.
 2. In the View area, define what fields (including relational fields) to display in the list view table, in what order and what size:
    - Click the ![Add icon](/img/assets/icons/v5/Plus.svg) **Insert another field** button to add a new field.
    - Click the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to remove a field.

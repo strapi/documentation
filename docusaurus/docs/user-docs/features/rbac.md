@@ -190,7 +190,7 @@ There are 2 default additional conditions:
   }}
 />
 
-1. Click on the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button of the permission already granted for the role.
+1. Click on the <Icon name="gear-six" /> **Settings** button of the permission already granted for the role.
 2. In the *Define conditions* window, each available permission can be customized with a specific condition. Click on the drop-down list related to the permission you want to customize.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
@@ -198,11 +198,11 @@ There are 2 default additional conditions:
 4. Click on the **Apply** button.
 
 :::tip
-Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button.
+Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the <Icon name="gear-six" /> **Settings** button.
 :::
 
 :::caution
-Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the <Icon name="gear-six" /> **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::
 
 Other custom conditions can be available if they have been created beforehand for your Strapi application. The following dedicated guide helps you create additional custom conditions:

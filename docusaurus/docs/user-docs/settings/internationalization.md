@@ -9,7 +9,7 @@ tags:
 
 # Configuring Internationalization locales
 
-The [Internationalization feature](/user-docs/plugins/strapi-plugins.md#i18n) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Internationalization*.
+The [Internationalization feature](/user-docs/plugins/strapi-plugins.md#i18n) allows to manage content in different languages, called "locales". Once the Internationalization plugin is installed in a Strapi application (see [Installing plugins via the Marketplace](/user-docs/plugins/installing-plugins-via-marketplace.md)), administrators can manage locales from <Icon name="gear-six" /> *Settings > Global settings > Internationalization*.
 
 <ThemedImage
   alt="i18n settings"

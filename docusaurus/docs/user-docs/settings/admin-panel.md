@@ -8,7 +8,7 @@ tags:
 
 # Customizing the logo
 
-The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Overview*.
+The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified from <Icon name="gear-six" /> *Settings > Global settings > Overview*.
 
 :::note
 Both logos can also be customized programmatically via the Strapi application's configuration files (see [Developer Documentation](/dev-docs/admin-panel-customization/options#logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.

@@ -8,7 +8,7 @@ tags:
 
 # Releases
 
-The [Releases](/user-docs/releases/introduction) feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. The default timezone to use when scheduling a publication can be modified from ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > Releases*.
+The [Releases](/user-docs/releases/introduction) feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. The default timezone to use when scheduling a publication can be modified from <Icon name="gear-six" /> *Settings > Global settings > Releases*.
 
 <!-- TODO: update screenshots and a dark mode one when I can actually test the feature -->
 <ThemedImage
