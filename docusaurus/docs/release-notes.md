@@ -1,6 +1,7 @@
 ---
 title: Release notes
 description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
+toc_max_heading_level: 2
 custom_edit_url: null
 ---
 
@@ -24,6 +25,58 @@ Strapi Docs now follow the **[semantic versioning](https://semver.org/)** philos
 New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
+
+## 5.5.4
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+- [Update Doc Service API middleware example](https://github.com/strapi/documentation/pull/2368)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Gkleinereva" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/23621633?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Gkleinereva"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 5.5.3
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+#### Dev Docs
+- [Fix incorrect import of unstable_useContentManagerContext in Helper-plugin migration reference](https://github.com/strapi/documentation/pull/2367)
+- [Fix typo in v4 → v5 step-by-step for GraphQL plugin](https://github.com/strapi/documentation/pull/2360)
+- [Fix bug in the middlewares example](https://github.com/strapi/documentation/pull/2358)
+- [Fix populate examples for Document Service API](https://github.com/strapi/documentation/pull/2356)
+
+#### Strapi Cloud
+- [Add last successful deployment’s date of the Production environment](https://github.com/strapi/documentation/pull/2361)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/AhmedMuhsingez" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/76662243?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="AhmedMuhsingez"/>
+</a>
+<a href="https://github.com/Qbject" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/65710914?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Qbject"/>
+</a>
+<a href="https://github.com/ahulterstrom" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/55113250?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ahulterstrom"/>
+</a>
+<a href="https://github.com/olegStrapier" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/148060535?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="olegStrapier"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
 
 ## 5.5.2
 
