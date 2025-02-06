@@ -1,9 +1,9 @@
 ---
-title: Keycloak - Admin SSO Provider
-description: Steps to configure Keycloak as a Strapi Admin SSO Provider
+title: Gitlab - Admin SSO Provider
+description: Steps to configure Gitlab as a Strapi Admin SSO Provider
 displayed_sidebar: cmsSidebar
-tags: 
-- keycloak
+tags:
+- gitlab
 - additional configuration
 - admin panel
 - configuration
