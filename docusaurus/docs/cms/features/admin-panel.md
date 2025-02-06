@@ -32,7 +32,7 @@ There are a few factors that you should keep in mind when using the admin panel,
 
 - **Roles and Permissions** <br/> Some features and the content itself are ruled by a system of permissions that can be defined at a detailed level. Depending on your role and permissions, you may not be able to access all the features and options. Read the [RBAC feature documentation](/cms/features/rbac) for more information.
 
-- **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the <FeatureFlagBadge /> badge in the docs and read the [Features documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
+- **Future flags** <br/> Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback. These experimental features require enabling the corresponding future flags. Look for the <FeatureFlagBadge /> badge in the docs and read the [Feature flags documentation](/cms/configurations/features#enabling-a-future-flag) for more information.
 :::
 
 <Guideflow lightId="dkd2m1lsgr" darkId="dkd2mjlugr"/>
