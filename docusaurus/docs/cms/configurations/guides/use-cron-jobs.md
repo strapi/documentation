@@ -1,5 +1,5 @@
 ---
-title: Use cron jobs
+title: How to use cron jobs
 description: Learn how to use the strapi.cron object to list, add, or remove cron jobs from your code.
 tags:
 - configuration
