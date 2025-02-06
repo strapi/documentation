@@ -256,7 +256,6 @@ export default {
   },
   bootstrap() {},
 };
-</TabItem>
 
 <TabItem value="ts" label="TypeScript">
 // my-plugin/admin/src/index.ts
