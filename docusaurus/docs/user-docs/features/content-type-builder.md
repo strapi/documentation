@@ -25,13 +25,15 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 ## Overview
 
 <!-- Replace with Guideflow -->
-<ThemedImage
+<!-- <ThemedImage
   alt="Content-type Builder interface"
   sources={{
     light: '/img/assets/content-type-builder/content-types-builder.png',
     dark: '/img/assets/content-type-builder/content-types-builder_DARK.png',
   }}
-/>
+/> -->
+
+<Guideflow lightId="vkm9jeqb2p" darkId="lpnz47qtep" />
 
 The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 

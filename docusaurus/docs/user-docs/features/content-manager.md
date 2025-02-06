@@ -36,7 +36,7 @@ sources={{
 -->
 
 <!-- TODO: create dark mode version and replace the darkId value -->
-<Guideflow lightId="zpen5g4t8p" darkId="zpen5g4t8p" />
+<Guideflow lightId="zpen5g4t8p" darkId="9r22q12szr" />
 
 The <Icon name="feather" /> Content Manager contains the available collection and single content-types which were created beforehand using the [Content-type Builder](/user-docs/features/content-type-builder).
 
