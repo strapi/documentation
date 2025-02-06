@@ -2,7 +2,8 @@ import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 
 export default function Guideflow({ lightId, darkId }) {
-  const { isDarkTheme } = useColorMode();
+  const { colorMode } = useColorMode();
+  const isDarkTheme = colorMode === "dark";
 
   if (!lightId) return null;
 
@@ -21,7 +22,6 @@ export default function Guideflow({ lightId, darkId }) {
       paddingBottom: 'calc(69.3342776203966% + 50px)',
       height: '0'
     }}>
-
       <iframe
         src={`https://app.guideflow.com/embed/${lightId}`}
         style={{
