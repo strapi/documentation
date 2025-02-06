@@ -258,7 +258,7 @@ export default {
 };
 
 <TabItem value="ts" label="TypeScript">
-// my-plugin/admin/src/index.ts
+```ts title="my-plugin/admin/src/index.ts"
 import PluginIcon from './components/PluginIcon';
 import type { StrapiApp } from '@strapi/admin/strapi-admin';
 
