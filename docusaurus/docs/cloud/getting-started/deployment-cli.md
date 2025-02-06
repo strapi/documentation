@@ -19,7 +19,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
 
 - Be a first-time Strapi Cloud user: you must never have deployed a project with Strapi Cloud before, and your free trial must still be available.
 - Have a Google, GitHub or GitLab account.
-- Have an already created Strapi project (see [Installing from CLI in the Developer Documentation](/dev-docs/installation/cli)), stored locally. The project must be less than 100MB.
+- Have an already created Strapi project (see [Installing from CLI in the Developer Documentation](/cms/installation/cli)), stored locally. The project must be less than 100MB.
 - Have available storage in your hard drive where the temporary folder of your operating system is stored.
 :::
 

@@ -11,7 +11,7 @@ const FeatureList = [
         Learn how to play with Strapi's Admin Panel and quickly build and add content by reading the User Guide.
       </>
     ),
-    link: '/docs/user-docs/intro'
+    link: '/docs/cms/intro'
   },
   {
     title: 'Developer',
@@ -31,7 +31,7 @@ const FeatureList = [
         Learn how to consume Strapi's REST APIs by reading our API reference documentation.
       </>
     ),
-    link: '/docs/dev-docs/api/rest'
+    link: '/docs/cms/api/rest'
   },
 ];
 

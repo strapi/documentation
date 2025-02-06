@@ -19,7 +19,7 @@ pagination_next: cloud/getting-started/cloud-fundamentals
 There are 2 Strapi documentations, one for each Strapi product:
 
 - <Icon name="cloud" /> The **Cloud documentation**, that you're currently reading, which is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
-- <Icon name="feather" /> The **[CMS documentation](/dev-docs/intro)** contains all the information related to the admin panel as well as all the technical information related to the setup, advanced usage, customization and update of your Strapi 5 application.
+- <Icon name="feather" /> The **[CMS documentation](/cms/intro)** contains all the information related to the admin panel as well as all the technical information related to the setup, advanced usage, customization and update of your Strapi 5 application.
 
 </SubtleCallout>
 -->

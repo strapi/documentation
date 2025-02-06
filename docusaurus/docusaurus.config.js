@@ -180,7 +180,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'dev-docs/intro',
+            docId: 'cms/intro',
             position: 'left',
             // label: 'CMS',
             html: '<i class="ph-fill ph-feather"></i> CMS'
@@ -206,7 +206,7 @@ const config = {
             items: [
               {
                 label: "What's new?",
-                href: '/dev-docs/whats-new'
+                href: '/cms/whats-new'
               },
               {
                 label: "Release notes",
@@ -214,15 +214,15 @@ const config = {
               },
               {
                 label: "FAQ",
-                href: '/dev-docs/faq'
+                href: '/cms/faq'
               },
               {
                 label: "Community & Support",
-                href: '/dev-docs/community'
+                href: '/cms/community'
               },
               {
                 label: "Usage information",
-                href: '/dev-docs/usage-information'
+                href: '/cms/usage-information'
               },
             ]
           },
