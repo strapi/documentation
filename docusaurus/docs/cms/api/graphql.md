@@ -578,7 +578,7 @@ mutation Mutation($updateUploadFileId: ID!, $info: FileInfoInput) {
 ```
 
 :::tip
-If upload mutations return a forbidden access error, ensure proper permissions are set for the Upload plugin (see [User Guide](/cms/users-roles-permissions/configuring-end-users-roles#editing-a-role)).
+If upload mutations return a forbidden access error, ensure proper permissions are set for the Upload plugin (see [User Guide](/cms/features/users-permissions/configuring-end-users-roles#editing-a-role)).
 :::
 
 #### Delete an uploaded media file
@@ -594,7 +594,7 @@ mutation DeleteUploadFile($deleteUploadFileId: ID!) {
 ```
 
 :::tip
-If upload mutations return a forbidden access error, ensure proper permissions are set for the Upload plugin (see [User Guide](/cms/users-roles-permissions/configuring-end-users-roles#editing-a-role)).
+If upload mutations return a forbidden access error, ensure proper permissions are set for the Upload plugin (see [User Guide](/cms/features/users-permissions/configuring-end-users-roles#editing-a-role)).
 :::
 
 ## Filters

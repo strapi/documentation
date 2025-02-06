@@ -686,7 +686,7 @@ For instance, if a 'Category' content-type exists and is queried through GraphQL
 
 To query a single category, which is done with the `Query.category` handler, the request is allowed if the the `findOne` permission is given.
 
-Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/cms/users-roles-permissions/configuring-administrator-roles#editing-a-role).
+Please refer to the user guide on how to [define permissions with the Users & Permissions plugin](/cms/features/users-permissions/configuring-administrator-roles#editing-a-role).
 </details>
 
 To change how the authorization is configured, use the resolver configuration defined at `resolversConfig.[MyResolverName]`. The authorization can be configured:

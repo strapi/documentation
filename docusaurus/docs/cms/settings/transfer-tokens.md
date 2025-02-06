@@ -11,7 +11,7 @@ tags:
 # Managing transfer tokens
 
 :::prerequisites
-* Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/cms/users-roles-permissions/configuring-administrator-roles#plugins-and-settings)).
+* Administrators can create, read, update, or delete transfer tokens only if proper permissions are granted (see [Configuring administrator roles](/cms/features/users-permissions/configuring-administrator-roles#plugins-and-settings)).
 * The *Global settings > Transfer Tokens* sub-section of the settings interface is accessible in the admin panel only if the _Transfer tokens > Read_ permission is granted.
 * A `transfer.token.salt` should be defined in the admin panel configuration file (see [Developer Documentation](/cms/configurations/admin-panel)).
 :::

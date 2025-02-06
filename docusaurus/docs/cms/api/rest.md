@@ -19,7 +19,7 @@ The REST API allows accessing the [content-types](/cms/backend-customization/mod
 This section of the documentation is for the REST API reference. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
-All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions plugin](/cms/users-roles-permissions/configuring-end-users-roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
+All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions feature](/cms/features/users-permissions/configuring-end-users-roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
 :::
 
 :::note

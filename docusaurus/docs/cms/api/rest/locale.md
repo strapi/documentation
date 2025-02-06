@@ -315,7 +315,7 @@ When creating a localization for existing localized entries, the body of the req
 :::
 
 :::tip
-The Content-Type should have the [`createLocalization` permission](/cms/users-roles-permissions/configuring-administrator-roles#collection-and-single-types) enabled, otherwise the request will return a `403: Forbidden` status.
+The Content-Type should have the [`createLocalization` permission](/cms/features/users-permissions/configuring-administrator-roles#collection-and-single-types) enabled, otherwise the request will return a `403: Forbidden` status.
 :::
 
 :::note

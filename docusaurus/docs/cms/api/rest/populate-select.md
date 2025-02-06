@@ -122,7 +122,7 @@ The REST API by default does not populate any type of fields, so it will not pop
 The `populate` parameter can be used alone or [in combination with with multiple operators](#combining-population-with-other-operators) to have much more control over the population.
 
 :::caution
-The `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated (see [User Guide](/cms/users-roles-permissions/configuring-end-users-roles#editing-a-role) for additional information on how to enable `find` permissions for content-types).
+The `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated (see [User Guide](/cms/features/users-permissions/configuring-end-users-roles#editing-a-role) for additional information on how to enable `find` permissions for content-types).
 :::
 
 :::note

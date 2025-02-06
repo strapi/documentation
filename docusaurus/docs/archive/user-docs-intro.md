@@ -51,7 +51,7 @@ Clicking on any of the following cards will direct you to the introductory page 
   <CustomDocCard emoji="📚" title="Content Type Builder" description="Build your data structure by creating and managing content-types." link="/cms/content-type-builder" />
   <CustomDocCard emoji="🗃️" title="Media Library" description="Upload and manage all assets and organize them into folders." link="/cms/media-library" />
   <CustomDocCard emoji="📅" title="Releases" description="Arrange entries into containers for publishing and unpublishing actions." link="/cms/releases/introduction"/>
-  <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/cms/users-roles-permissions"/>
+  <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/cms/features/users-permissions"/>
   <CustomDocCard emoji="⚙️" title="General Settings" description="Access features needed set up your Strapi admin panel." link="/cms/settings/introduction" />
 </CustomDocCardsWrapper>
 
