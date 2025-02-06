@@ -258,6 +258,8 @@ export default {
 };
 ```
 
+</TabItem>
+
 <TabItem value="ts" label="TypeScript">
 
 ```ts title="my-plugin/admin/src/index.ts"
@@ -285,7 +287,7 @@ export default {
 ```
 
 </TabItem>
-<Tabs>
+</Tabs>
 
 ### Settings API
 
