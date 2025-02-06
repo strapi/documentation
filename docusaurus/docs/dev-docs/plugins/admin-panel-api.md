@@ -232,8 +232,6 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 
 **Example:**
 
-In the main admin file `my-plugin/admin/src/index.ts` of your plugin:
-
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
