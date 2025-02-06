@@ -1,7 +1,7 @@
 ---
 title: Including content in a release
 description: Instructions to include content in a release
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
 - admin panel
 - Enterprise feature

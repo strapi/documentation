@@ -1,7 +1,7 @@
 ---
 title: Introduction to the Content Manager
 sidebar_position: 1
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 slug: /cms/content-manager
 description: Introduction to the Content Manager which allows to write content for collection types and single types.
 pagination_next: cms/content-manager/configuring-view-of-content-type

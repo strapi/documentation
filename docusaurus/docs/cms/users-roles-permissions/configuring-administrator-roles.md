@@ -1,6 +1,6 @@
 ---
 title: Configuring administrator roles
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 sidebar_position: 2
 ---
 

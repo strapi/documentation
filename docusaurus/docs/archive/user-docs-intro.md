@@ -1,5 +1,5 @@
 ---
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 description: The Strapi User Guide contains the functional documentation related to all features available in the main navigation of your Strapi application.
 # sidebar_label: Welcome!
 tags:

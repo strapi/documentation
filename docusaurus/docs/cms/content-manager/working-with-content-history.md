@@ -1,7 +1,7 @@
 ---
 title: Browsing Content History
 description: Learn how you can use the Content History feature of Strapi 5 to browse and restore previous versions of documents from the Content Manager.
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 tags:
  - Content Manager
  - Content History

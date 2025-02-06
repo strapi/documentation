@@ -1,6 +1,6 @@
 ---
 title: Managing administrator accounts
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 sidebar_position: 3
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Setting up the admin panel
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 description: How to setup your Strapi Admin Panel
 tags:
 - admin panel

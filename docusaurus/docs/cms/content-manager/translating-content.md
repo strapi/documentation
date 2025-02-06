@@ -1,6 +1,6 @@
 ---
 title: Translating content
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 description: Instructions to translate content in various locales with i18n plugin.
 sidebar_position: 5
 tags:

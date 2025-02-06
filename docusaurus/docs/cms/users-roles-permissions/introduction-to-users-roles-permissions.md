@@ -1,7 +1,7 @@
 ---
 title: Introduction to users, roles & permissions
 slug: /cms/users-roles-permissions
-displayed_sidebar: userDocsSidebar
+displayed_sidebar: cmsSidebar
 pagination_next: cms/users-roles-permissions/configuring-administrator-roles
 sidebar_position: 1
 ---
