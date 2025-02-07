@@ -94,6 +94,7 @@ You can click on the description of any breaking change in the following tables 
 | [`documentId` should be used instead of `id` in API calls](/cms/migration/v4-to-v5/breaking-changes/use-document-id) | Yes | 👷 Partly |
 | [Database lifecycle hooks are triggered differently based on Document Service API methods](/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | Yes | No |
 | [The `publicationState` parameter is not supported and replaced by `status`](/cms/migration/v4-to-v5/breaking-changes/publication-state-removed) | Yes | ✅ Yes |
+| [Content types with Draft & Publish disabled always have the publishedAt value set to a date](/cms/migration/v4-to-v5/breaking-changes/publishedat-always-set-when-dandp-disabled) | Yes | No |
 | [Sorting by id is no longer possible to sort by chronological order](/cms/migration/v4-to-v5/breaking-changes/sort-by-id) | Yes | ✅ Yes |
 | [There is no `findPage()` method with the Document Service API](/cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service) | Yes | No |
 | [Some attributes and content-types names are reserved by Strapi](/cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
