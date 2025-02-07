@@ -88,6 +88,7 @@ const config = {
        * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
        */
       src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+      'data-user-analytics-fingerprint-enabled': 'true',
       'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',

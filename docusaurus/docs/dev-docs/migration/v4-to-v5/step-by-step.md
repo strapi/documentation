@@ -12,7 +12,7 @@ import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # Step-by-step guide to upgrade to Strapi 5
 
-The latest major version of Strapi is Strapi 5, which is currently provided as a Release Candidate (RC) version, not as a stable version yet.
+The latest major version of Strapi is Strapi 5.
 
 The present page is meant to be used as step-by-step instructions for upgrading your Strapi v4 application to Strapi 5.
 

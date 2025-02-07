@@ -232,7 +232,10 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 
 **Example:**
 
-```jsx title="my-plugin/admin/src/index.js"
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="my-plugin/admin/src/index.js"
 import PluginIcon from './components/PluginIcon';
 
 export default {
@@ -254,6 +257,37 @@ export default {
   bootstrap() {},
 };
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="my-plugin/admin/src/index.ts"
+import PluginIcon from './components/PluginIcon';
+import type { StrapiApp } from '@strapi/admin/strapi-admin';
+
+export default {
+  register(app: StrapiApp) {
+    app.addMenuLink({
+      to: '/plugins/my-plugin',
+      icon: PluginIcon,
+      intlLabel: {
+        id: 'my-plugin.plugin.name',
+        defaultMessage: 'My plugin',
+      },
+      Component: () => 'My plugin',
+      permissions: [], // permissions to apply to the link
+      position: 3, // position in the menu
+      licenseOnly: true, // mark the feature as a paid one not available in your license
+    });
+    app.registerPlugin({ ... });
+  },
+  bootstrap() {},
+};
+```
+
+</TabItem>
+</Tabs>
 
 ### Settings API
 

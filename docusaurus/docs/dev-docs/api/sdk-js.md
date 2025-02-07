@@ -135,7 +135,6 @@ await articles.delete('article-id');
 ### Working with single types
 
 Single types in Strapi represent unique content entries that exist only once (e.g., the homepage settings or site-wide configurations). The JavaScript SDK provides a `single()` method to interact with these resources, with the following methods available:
-
 | Parameter | Description                                                                                  |
 | ----------| -------------------------------------------------------------------------------------------- |
 | `find(queryParams?)`  | Fetch the document.        |
