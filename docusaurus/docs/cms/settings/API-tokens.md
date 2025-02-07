@@ -10,7 +10,7 @@ tags:
 # Managing API tokens
 
 :::prerequisites
-* Administrators can create, read, update, or delete API tokens only if proper permissions are granted (see [Configuring administrator roles](/cms/features/users-permissions/configuring-administrator-roles#plugins-and-settings)).
+* Administrators can create, read, update, or delete API tokens only if proper permissions are granted (see [Configuring administrator roles](/cms/features/rbac#plugins-and-settings)).
 * The *Global settings > API Tokens* sub-section of the settings interface is accessible in the admin panel only if the _API tokens > Read_ permission is granted.
 :::
 

@@ -16,7 +16,7 @@ Using the [Releases](/cms/releases/introduction) feature, you can group several 
 
 :::prerequisites
 - Before entries can be added to a release, you must create a release from the [Releases](/cms/releases/creating-a-release) page.
-- Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/cms/features/users-permissions/configuring-administrator-roles#plugins-and-settings)).
+- Adding content to a release requires the appropriate permissions for the Content-Releases plugin (see [configuring administrator roles](/cms/features/rbac#plugins-and-settings)).
 :::
 
 ## Adding multiple entries to a release
