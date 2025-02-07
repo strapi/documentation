@@ -160,3 +160,7 @@ const updatedHomepage = await homepage.update(
 // Delete the homepage content
 await homepage.delete();
 ```
+
+:::strapi Additional information
+More details about the Strapi JavaScript SDK might be found in the [package's README](https://github.com/strapi/sdk-js/blob/main/README.md).
+:::
