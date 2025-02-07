@@ -11,7 +11,12 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "find-orphans": "node scripts/find-orphans.js",
+    "find-orphans:cms": "node scripts/find-orphans.js --docs-dir ./docs/cms",
+    "find-orphans:cloud": "node scripts/find-orphans.js --docs-dir ./docs/cloud",
+    "find-orphans:json": "node scripts/find-orphans.js --json > orphaned-pages.json",
+    "find-orphans:report": "node scripts/find-orphans.js --report > orphaned-pages-report.txt"
   },
   "dependencies": {
     "@docusaurus/core": "3.5.2",

@@ -1,0 +1,4753 @@
+{
+  "totalFiles": 341,
+  "results": [
+    {
+      "file": "snippets/_do-not-migrate-to-v5-yet.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/_not-updated-to-v5.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/backend-customization-feedback-cta.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-affecting-plugins.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-handled-by-codemod.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-not-affecting-plugins.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-not-handled-by-codemod.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-page-migration-intro.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-partially-handled-by-codemod.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/build-npm-yarn.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/codemods-modify-source-code.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/content-source-map-requirements.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/database-require.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/develop-npm-yarn.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/entity-query-knex.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/hardware-require.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/install-npm-yarn.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/installation-prerequisites.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/integration-guides-soon-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/operating-system-require.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/qs-for-query-title.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/qs-intro-short.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/temp-upgrade-rc.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/u-and-p-provider-config-done.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    }
+  ],
+  "allResults": [
+    {
+      "file": "archive/advanced-features.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/customization.md",
+        "cms/features/internationalization.md",
+        "cms/cli.md",
+        "cms/typescript.md",
+        "cms/providers.md",
+        "cms/templates.md",
+        "cms/features/data-management.md",
+        "cms/database-migrations.md",
+        "cms/database-transactions.md",
+        "cms/testing.md",
+        "cms/error-handling.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "archive/user-docs-intro.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/intro.md",
+        "cloud/intro.md",
+        "cms/getting-started/user-guide-fundamentals.md",
+        "cms/getting-started/setting-up-admin-panel.md",
+        ".md",
+        "cms/content-manager.md",
+        "cms/content-type-builder.md",
+        "cms/media-library.md",
+        "cms/releases/introduction.md",
+        "cms/features/users-permissions.md",
+        "cms/settings/introduction.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/account/account-billing.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/CreditCard.svg",
+        "img/assets/icons/Invoice.svg",
+        "img/assets/icons/more.svg",
+        "cloud/projects/settings.md",
+        "snippets/invoices-statuses.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/account/account-settings.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "img/assets/icons/CreditCard.svg",
+        "img/assets/icons/Invoice.svg",
+        "img/assets/icons/Faders.svg",
+        "cloud/account/account-billing.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/advanced/database.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/projects/settings.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/advanced/email.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/advanced/upload.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/cli/cloud-cli.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/getting-started/deployment-cli.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/caching.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "express.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/cloud-fundamentals.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/getting-started/usage-billing.md",
+        "cloud/projects/collaboration.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/deployment-cli.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/projects/settings.md",
+        "cloud/account/account-billing.md",
+        "cms/installation/cli.md",
+        "cloud/projects/deploys.md",
+        "cloud/cli/cloud-cli.md",
+        "cloud/projects/overview.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/deployment-options.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/getting-started/deployment-cli.md",
+        "cloud/getting-started/deployment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/deployment.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "cloud/projects/settings.md",
+        "cloud/account/account-billing.md",
+        "cloud/projects/collaboration.md",
+        "cloud/projects/deploys.md",
+        "cloud/advanced/database.md",
+        "cms/configurations/environment/",
+        "cms/configurations/database.md",
+        "img/assets/icons/edit.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/intro.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/intro.md",
+        "cloud/projects/settings.md",
+        "cloud/account/account-billing.md",
+        "cloud/getting-started/usage-billing.md",
+        "cloud/projects/collaboration.md",
+        "cloud/projects/deploys.md",
+        "cloud/projects/overview.md",
+        "cloud/getting-started/deployment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/getting-started/usage-billing.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/releases/introduction.md",
+        "img/assets/icons/CreditCard.svg",
+        "cloud/projects/settings.md",
+        "cloud/account/account-billing.md",
+        "cms/settings/audit-logs.md",
+        "cms/settings/review-workflows.md",
+        "cms/content-manager/working-with-content-history.md",
+        "mailto:support@strapi.io"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/collaboration.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/deploys-history.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/Eye.svg",
+        "img/assets/icons/ONHOLDCarretDown.svg",
+        "img/assets/icons/ONHOLDCarretUp.svg",
+        "img/assets/icons/duplicate.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/deploys.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cloud/projects/settings.md",
+        "cloud/cli/cloud-cli.md",
+        "cloud/projects/deploys-history.md",
+        "img/assets/icons/clear.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/notifications.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/projects/deploys-history.md",
+        "img/assets/icons/notifications.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/overview.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/more.svg",
+        "cloud/projects/settings.md",
+        "cloud/getting-started/usage-billing.md",
+        "cloud/projects/collaboration.md",
+        "cloud/projects/deploys.md",
+        "cloud/projects/deploys-history.md",
+        "img/assets/icons/settings.svg",
+        "cloud/projects/runtime-logs.md",
+        "src/components/ScreenshotNumberReference.jsx"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/runtime-logs.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": false
+    },
+    {
+      "file": "cloud/projects/settings.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "img/assets/icons/CreditCard.svg",
+        "img/assets/icons/Invoice.svg",
+        "snippets/invoices-statuses.md",
+        "img/assets/icons/Faders.svg",
+        "cloud/account/account-billing.md",
+        "cloud/getting-started/usage-billing.md",
+        "cloud/projects/collaboration.md",
+        "cloud/projects/overview.md",
+        "cloud/getting-started/deployment.md",
+        "img/assets/icons/edit.svg",
+        "img/assets/icons/settings.svg",
+        "img/assets/icons/v5/Stack.svg",
+        "img/assets/icons/MapTrifold.svg",
+        "img/assets/icons/ArrowClockwise.svg",
+        "img/assets/icons/Browsers.svg",
+        "img/assets/icons/code2.svg",
+        "img/assets/icons/v5/CheckCircle.svg",
+        "img/assets/icons/Clock.svg",
+        "img/assets/icons/v5/CrossCircle2.svg",
+        "img/assets/icons/delete.svg",
+        "../../cms/configurations/environment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization/bundlers.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "snippets/backend-customization-feedback-cta.md",
+        "vite.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization/deployment.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization.md",
+        "cms/admin-panel-customization/host-port-path.md",
+        "cms/deployment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization/extension.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/admin-panel-customization/options.md",
+        "cms/plugins-development/admin-panel-api.md",
+        "cms/admin-panel-customization/wysiwyg-editor.md",
+        "snippets/hot-reloading-admin-panel.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization/host-port-path.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/admin-panel-customization.md",
+        "cms/admin-panel-customization/deployment.md",
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/server.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization/options.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/getting-started/setting-up-admin-panel.md",
+        ".md",
+        "cms/admin-panel-customization/host-port-path.md",
+        "snippets/hot-reloading-admin-panel.md",
+        "cms/admin-panel-customization.md",
+        "cms/project-structure.md",
+        "cms/plugins-development/plugins-extension.md",
+        "cms/settings/admin-panel.md",
+        "img/assets/development/config-auth-logo.png",
+        "img/assets/development/config-menu-logo.png",
+        "./extensions/my-logo.png",
+        "./extensions/logo.png",
+        "./extensions/favicon.png",
+        "./extensions/my-auth-logo.png",
+        "./extensions/my-menu-logo.png"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization/wysiwyg-editor.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/admin-panel-api.md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/admin-panel-customization/extension.md",
+        "./extensions/components/MyNewWYSIGWYG.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/admin-panel-customization.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/admin-panel-customization/host-port-path.md",
+        "cms/admin-panel-customization/options.md",
+        "cms/admin-panel-customization/wysiwyg-editor.md",
+        "cms/admin-panel-customization/deployment.md",
+        "cms/admin-panel-customization/extension.md",
+        "cms/admin-panel-customization/bundlers.md",
+        "cms/settings/configuring-users-permissions-plugin-settings.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/content-api.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/customization.md",
+        "cms/content-manager.md",
+        "cms/content-type-builder.md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/plugins/graphql.md",
+        "cms/api/document-service.md",
+        "cms/plugins-development/developing-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/fields.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/api/document-service/populate.md",
+        "snippets/id-in-responses.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/filters.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/locale.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        "cms/api/document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/middlewares.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization.md",
+        "cms/api/document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/populate.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/api/document-service/fields.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/sort-pagination.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service/status.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document-service.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/backend-customization.md",
+        "cms/api/document-service/populate.md",
+        "cms/api/document-service/fields.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/api/query-engine.md",
+        "cms/api/content-api.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/api/rest/relations.md",
+        "cms/api/document-service/locale.md",
+        "cms/api/document-service/status.md",
+        "cms/api/document-service/filters.md",
+        "cms/api/document-service/sort-pagination.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/document.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager.md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/api/content-api.md",
+        "cms/content-manager/translating-content.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/entity-service/components-dynamic-zones.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/entity-service.md",
+        "cms/backend-customization/models.md",
+        "snippets/entity-service-deprecated.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/entity-service/crud.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        "cms/api/query-engine.md",
+        "cms/api/entity-service.md",
+        "snippets/entity-service-deprecated.md",
+        "cms/api/entity-service/populate.md",
+        "cms/api/entity-service/filter.md",
+        "cms/api/entity-service/order-pagination.md",
+        "snippets/managing-relations.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/entity-service/filter.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/entity-service.md",
+        "snippets/entity-service-deprecated.md",
+        "cms/api/entity-service/crud.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/entity-service/order-pagination.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/entity-service.md",
+        "snippets/entity-service-deprecated.md",
+        "cms/api/entity-service/crud.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/entity-service/populate.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/entity-service.md",
+        "snippets/entity-service-deprecated.md",
+        "cms/api/entity-service/filter.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/entity-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization.md",
+        "cms/api/content-api.md",
+        "cms/backend-customization/models.md",
+        "snippets/entity-service-deprecated.md",
+        "cms/api/entity-service/populate.md",
+        "cms/api/entity-service/filter.md",
+        "cms/api/entity-service/order-pagination.md",
+        "cms/api/entity-service/crud.md",
+        "cms/api/query-engine/",
+        "cms/backend-customization/services.md",
+        "cms/api/entity-service/components-dynamic-zones.md",
+        "snippets/entity-query-knex.md",
+        "snippets/backend-custom-intro-crosslink.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/graphql/locale.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/graphql.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/graphql.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "cms/media-library.md",
+        "cms/api/graphql.md",
+        "cms/plugins/graphql.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/backend-customization/models.md",
+        "cms/plugins/upload.md",
+        "cms/content-type-builder/creating-new-content-type.md",
+        "cms/api/rest/populate-select.md",
+        "cms/features/users-permissions/configuring-end-users-roles.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/query-engine/bulk-operations.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/query-engine/filtering/",
+        "snippets/consider-document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/query-engine/filtering.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/query-engine/",
+        "snippets/consider-document-service.md",
+        "cms/api/query-engine/single-operations.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/query-engine/order-pagination.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/query-engine.md",
+        "snippets/consider-document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/query-engine/populating.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/consider-document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/query-engine/single-operations.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/backend-customization/models.md",
+        "snippets/managing-relations.md",
+        "cms/api/query-engine/filtering/",
+        "snippets/consider-document-service.md",
+        "cms/api/query-engine/order-pagination/",
+        "cms/api/query-engine/populating/"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/query-engine.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization.md",
+        "cms/api/content-api.md",
+        "snippets/entity-query-knex.md",
+        "snippets/backend-custom-intro-crosslink.md",
+        "snippets/consider-document-service.md",
+        "cms/api/query-engine/single-operations.md",
+        "cms/api/query-engine/bulk-operations.md",
+        "cms/api/query-engine/filtering.md",
+        "cms/api/query-engine/populating.md",
+        "cms/api/query-engine/order-pagination.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/filters.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        "cms/api/rest.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/api/rest/populate-select.md",
+        "snippets/qs-intro-full.md",
+        "snippets/qs-for-query-body.md",
+        "snippets/qs-for-query-title.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/guides/intro.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest.md",
+        "cms/api/rest/guides/understanding-populate.md",
+        "cms/api/rest/guides/populate-creator-fields.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/guides/populate-creator-fields.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        "cms/api/rest.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/guides/understanding-populate.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/api/rest.md",
+        "cms/api/rest/populate-select.md",
+        "snippets/qs-intro-full.md",
+        "snippets/qs-for-query-body.md",
+        "snippets/qs-for-query-title.md",
+        "cms/api/rest/guides/populate-creator-fields.md",
+        "img/assets/rest-api/populate-foodadvisor-diagram1.png",
+        "img/assets/rest-api/populate-foodadvisor-diagram2.png",
+        "img/assets/rest-api/populate-foodadvisor-diagram3.png",
+        "cms/api/rest/interactive-query-builder.md",
+        "img/assets/rest-api/ctb-article-components-structure.png",
+        "img/assets/rest-api/ctb-blocks-dynamic-zone-structure.png",
+        "img/assets/rest-api/ctb-blocks-dynamic-zone-structure-2.png",
+        "snippets/_not-updated-to-v5.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/interactive-query-builder.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest.md",
+        "cms/api/rest/parameters.md",
+        "cms/configurations/api.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/locale.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "cms/api/rest.md",
+        "snippets/qs-intro-full.md",
+        "snippets/qs-for-query-body.md",
+        "snippets/qs-for-query-title.md",
+        "cms/api/rest/parameters.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/parameters.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest.md",
+        "cms/api/rest/populate-select.md",
+        "cms/api/rest/interactive-query-builder.md",
+        "cms/api/rest/filters.md",
+        "cms/api/rest/locale.md",
+        "cms/api/rest/status.md",
+        "cms/api/rest/sort-pagination.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/populate-select.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/rest.md",
+        "cms/backend-customization/models.md",
+        "cms/api/rest/populate-select.md",
+        "cms/features/users-permissions/configuring-end-users-roles.md",
+        "snippets/qs-intro-full.md",
+        "snippets/qs-for-query-body.md",
+        "snippets/qs-for-query-title.md",
+        "cms/api/rest/guides/understanding-populate.md",
+        "cms/api/rest/guides/populate-creator-fields.md",
+        "cms/api/rest/interactive-query-builder.md",
+        "cms/api/rest/filters.md",
+        "cms/api/rest/sort-pagination.md",
+        "cms/migration/v4-to-v5/breaking-changes/new-response-format.md",
+        "cms/api/rest/guides/intro.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/relations.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/rest.md",
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-manager/translating-content.md",
+        "cms/plugins/upload.md",
+        "cms/content-manager/managing-relational-fields.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/sort-pagination.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/rest.md",
+        "snippets/qs-intro-full.md",
+        "snippets/qs-for-query-body.md",
+        "snippets/qs-for-query-title.md",
+        "cms/configurations/api.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/status.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "snippets/qs-intro-full.md",
+        "snippets/qs-for-query-body.md",
+        "snippets/qs-for-query-title.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest/upload.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/backend-customization/models.md",
+        "cms/features/media-library.md",
+        "formdata-node.md",
+        "node-fetch.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/api/rest.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        "cms/error-handling.md",
+        ".md",
+        "cms/api/rest/relations.md",
+        "cms/backend-customization/models.md",
+        "cms/content-type-builder/creating-new-content-type.md",
+        "cms/api/rest/populate-select.md",
+        "cms/features/users-permissions/configuring-end-users-roles.md",
+        "cms/api/rest/parameters.md",
+        "cms/api/rest/locale.md",
+        "cms/migration/v4-to-v5/breaking-changes/new-response-format.md",
+        "cms/api/rest/guides/intro.md",
+        "cms/features/media-library.md",
+        "cms/quick-start.md",
+        "cms/features/api-tokens.md",
+        "cms/api/rest/upload.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/controllers.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        ".md",
+        "cms/backend-customization.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/requests-responses.md",
+        "cms/plugins-development/server-api.md",
+        "cms/backend-customization/examples/services-and-controllers.md",
+        "cms/backend-customization/examples.md",
+        "@strapi/strapi.md",
+        "@strapi/utils.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/examples/authentication.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "snippets/_not-updated-to-v5.md",
+        "cms/backend-customization/examples/services-and-controllers.md",
+        "cms/backend-customization/examples.md",
+        "react.md",
+        "formik.md",
+        "@nextui-org/react.md",
+        "@/components/layout.md",
+        "@/utils.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/examples/middlewares.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/_not-updated-to-v5.md",
+        "cms/backend-customization/examples.md",
+        "cms/backend-customization/middlewares.md",
+        "cms/backend-customization/examples/policies.md",
+        "img/assets/backend-customization/tutorial-spreadsheet-url.png"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/examples/policies.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/error-handling.md",
+        ".md",
+        "cms/api/entity-service.md",
+        "snippets/_not-updated-to-v5.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/examples/services-and-controllers.md",
+        "cms/backend-customization/examples.md",
+        "react.md",
+        "formik.md",
+        "@nextui-org/react.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/examples/routes.md",
+        "next/router.md",
+        "../../../../../utils.md",
+        "react-hot-toast.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/examples/routes.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/_not-updated-to-v5.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/examples.md",
+        "cms/backend-customization/examples/policies.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/examples/middlewares.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/examples/services-and-controllers.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "cms/error-handling.md",
+        ".md",
+        "cms/content-manager.md",
+        "cms/api/rest.md",
+        "cms/api/entity-service.md",
+        "cms/backend-customization/services.md",
+        "cms/content-type-builder/creating-new-content-type.md",
+        "snippets/_not-updated-to-v5.md",
+        "cms/backend-customization/requests-responses.md",
+        "cms/backend-customization/examples.md",
+        "react.md",
+        "formik.md",
+        "@nextui-org/react.md",
+        "cms/backend-customization/examples/policies.md",
+        "next/router.md",
+        "../../../../../utils.md",
+        "cms/backend-customization/examples/authentication.md",
+        "cms/features/email.md",
+        "cms/backend-customization/controllers.md",
+        "dlv.md",
+        "date-fns.md",
+        "./new-review.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/examples.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager.md",
+        "cms/content-type-builder.md",
+        "cms/backend-customization.md",
+        "snippets/_not-updated-to-v5.md",
+        "cms/quick-start.md",
+        "cms/backend-customization/examples/services-and-controllers.md",
+        "cms/backend-customization/examples/policies.md",
+        "cms/backend-customization/examples/routes.md",
+        "cms/backend-customization/examples/middlewares.md",
+        "cms/backend-customization/examples/authentication.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/middlewares.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        "cms/backend-customization.md",
+        "cms/project-structure.md",
+        "cms/plugins/graphql.md",
+        "cms/backend-customization/routes.md",
+        "cms/plugins-development/server-api.md",
+        "cms/configurations/middlewares.md",
+        "snippets/middleware-types.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/models.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        "cms/cli.md",
+        "cms/typescript.md",
+        ".md",
+        "cms/content-type-builder.md",
+        "cms/project-structure.md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service.md",
+        "cms/api/rest/guides/populate-creator-fields.md",
+        "cms/content-type-builder/introduction-to-content-types-builder.md",
+        "cms/content-type-builder/configuring-fields-content-type.md",
+        "cms/api/document-service/middlewares.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/policies.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/backend-customization.md",
+        "cms/project-structure.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/controllers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/requests-responses.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/backend-customization.md",
+        "cms/api/rest.md",
+        "cms/backend-customization/services.md",
+        "cms/api/rest/populate-select.md",
+        "cms/api/rest/parameters.md",
+        "cms/api/rest/filters.md",
+        "cms/api/rest/locale.md",
+        "cms/api/rest/status.md",
+        "cms/api/rest/sort-pagination.md",
+        "cms/features/api-tokens.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/controllers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/routes.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        ".md",
+        "cms/backend-customization.md",
+        "cms/project-structure.md",
+        "cms/api/rest.md",
+        "cms/backend-customization/models.md",
+        "cms/features/api-tokens.md",
+        "cms/backend-customization/routes.md",
+        "@strapi/strapi.md",
+        "cms/backend-customization/middlewares.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/controllers.md",
+        "cms/plugins/strapi-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/services.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        ".md",
+        "cms/backend-customization.md",
+        "cms/project-structure.md",
+        "cms/api/document-service.md",
+        "cms/backend-customization/models.md",
+        "cms/plugins-development/server-api.md",
+        "@strapi/strapi.md",
+        "cms/backend-customization/controllers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization/webhooks.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/releases/introduction.md",
+        "cms/settings/review-workflows.md",
+        "cms/backend-customization/models.md",
+        "img/assets/concepts/webhooks/home.png",
+        "img/assets/concepts/webhooks/create.png",
+        "img/assets/concepts/webhooks/trigger_start.png",
+        "img/assets/concepts/webhooks/trigger.png",
+        "img/assets/concepts/webhooks/trigger_result.png",
+        "img/assets/concepts/webhooks/disable.png",
+        "img/assets/concepts/webhooks/list.png"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/backend-customization.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/intro.md",
+        "cms/admin-panel-customization.md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/plugins/graphql.md",
+        "cms/api/document-service.md",
+        "cms/api/query-engine.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/requests-responses.md",
+        "cms/backend-customization/examples.md",
+        "cms/backend-customization/middlewares.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/controllers.md",
+        "cms/api/document-service/middlewares.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/cli.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/typescript.md",
+        "cms/features/data-management.md",
+        "cms/database-migrations.md",
+        "cms/installation/cli.md",
+        "cloud/cli/cloud-cli.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/middlewares.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/controllers.md",
+        "cms/plugins/installing-plugins-via-marketplace.md",
+        "cms/configurations/environment.md",
+        "cms/data-management/transfer.md",
+        "cms/settings/transfer-tokens.md",
+        "cms/plugins-development/create-a-plugin.md",
+        "cms/usage-information.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/community.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/admin-panel.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "cms/settings/audit-logs.md",
+        "cms/settings/configuring-users-permissions-plugin-settings.md",
+        "cms/features/api-tokens.md",
+        "cms/features/email.md",
+        "cms/configurations/environment.md",
+        "cms/data-management/transfer.md",
+        "cms/configurations/guides/configure-sso.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/api.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest/sort-pagination.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/cron.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/configurations/server.md",
+        "cms/configurations/guides/use-cron-jobs.md",
+        "./cron-tasks.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/database.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/installation/cli.md",
+        "cms/quick-start.md",
+        "cms/upgrades.md",
+        "path.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/environment.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "cms/configurations/guides/access-cast-environment-variables.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/features.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/releases/managing-a-release.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/functions.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/typescript.md",
+        ".md",
+        "cms/plugins-development/plugins-extension.md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/plugins-development/server-api.md",
+        "cms/configurations/environment.md",
+        "cms/configurations/users-and-permissions-providers/new-provider-guide.md",
+        "cms/configurations/guides/rbac.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/guides/access-cast-environment-variables.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/guides/access-cast-environment-variables.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/guides/access-configuration-values.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/guides/access-cast-environment-variables.md",
+        "cms/configurations.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/guides/configure-sso.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/admin-panel-customization/host-port-path.md",
+        "cms/configurations/admin-panel.md",
+        "snippets/_not-updated-to-v5.md",
+        "cms/configurations/middlewares.md",
+        "cms/features/sso.md",
+        "cms/features/admin-panel.md",
+        "cms/configurations/sso-providers/google.md",
+        "cms/configurations/sso-providers/github.md",
+        "cms/configurations/sso-providers/discord.md",
+        "cms/configurations/sso-providers/microsoft.md",
+        "cms/configurations/sso-providers/keycloak.md",
+        "cms/configurations/sso-providers/okta.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/guides/public-assets.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/guides/rbac.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/rbac.md",
+        "cms/configurations/functions.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/guides/use-cron-jobs.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/cron.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/middlewares.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/error-handling.md",
+        ".md",
+        "cms/configurations/server.md",
+        "cms/backend-customization/requests-responses.md",
+        "cms/plugins-development/server-api.md",
+        "snippets/middleware-types.md",
+        "cms/plugins/installing-plugins-via-marketplace.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/plugins.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/project-structure.md",
+        "cms/plugins/graphql.md",
+        "cms/features/media-library.md",
+        "cms/plugins-development/server-api.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/server.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/configurations/environment.md",
+        "cms/data-management/transfer.md",
+        "cms/configurations/cron.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/sso-providers/discord.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/features/sso.md",
+        "passport-discord.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/sso-providers/github.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/features/sso.md",
+        "passport-github2.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/sso-providers/google.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/features/sso.md",
+        "passport-google-oauth2.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/sso-providers/keycloak.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/features/sso.md",
+        "passport-keycloak-oauth2-oidc.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/sso-providers/microsoft.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/features/sso.md",
+        "passport-azure-ad-oauth2.md",
+        "jsonwebtoken.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/sso-providers/okta.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/features/sso.md",
+        "passport-okta-oauth20.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/typescript.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/typescript.md",
+        ".md",
+        "cms/project-structure.md",
+        "cms/typescript/development.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/auth-zero.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/aws-cognito.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/cas.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/discord.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/facebook.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/github.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/google.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/instagram.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/keycloak.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/linkedin.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/new-provider-guide.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/configurations/server.md",
+        "cms/plugins-development/plugins-extension.md",
+        "cms/plugins/graphql.md",
+        "cms/configurations/functions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "axios.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/patreon.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/reddit.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/twitch.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/twitter.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers/vk.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "snippets/u-and-p-provider-config-done.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations/users-and-permissions-providers.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/users-and-permissions-providers/new-provider-guide.md",
+        "cms/configurations/users-and-permissions-providers/auth-zero.md",
+        "cms/configurations/users-and-permissions-providers/aws-cognito.md",
+        "cms/configurations/users-and-permissions-providers/cas.md",
+        "cms/configurations/users-and-permissions-providers/discord.md",
+        "cms/configurations/users-and-permissions-providers/facebook.md",
+        "cms/configurations/users-and-permissions-providers/github.md",
+        "cms/configurations/users-and-permissions-providers/google.md",
+        "cms/configurations/users-and-permissions-providers/instagram.md",
+        "cms/configurations/users-and-permissions-providers/keycloak.md",
+        "cms/configurations/users-and-permissions-providers/linkedin.md",
+        "cms/configurations/users-and-permissions-providers/patreon.md",
+        "cms/configurations/users-and-permissions-providers/reddit.md",
+        "cms/configurations/users-and-permissions-providers/twitch.md",
+        "cms/configurations/users-and-permissions-providers/twitter.md",
+        "cms/configurations/users-and-permissions-providers/vk.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/configurations.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/database.md",
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/server.md",
+        "cms/project-structure.md",
+        "cms/configurations/api.md",
+        "cms/features/api-tokens.md",
+        "cms/configurations/middlewares.md",
+        "cms/configurations/environment.md",
+        "cms/configurations/guides/configure-sso.md",
+        "cms/configurations/guides/access-cast-environment-variables.md",
+        "cms/configurations/guides/rbac.md",
+        "cms/configurations/functions.md",
+        "cms/configurations/cron.md",
+        "cms/configurations/plugins.md",
+        "cms/configurations/typescript.md",
+        "cms/configurations/features.md",
+        "cms/configurations/guides/public-assets.md",
+        "cms/configurations/guides/access-configuration-values.md",
+        "@site/src/components/ProjectStructureConfigFiles.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/adding-content-to-releases.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/releases/introduction.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/releases/managing-a-release.md",
+        "cms/releases/creating-a-release.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/PaperPlane.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/configuring-view-of-content-type.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/ListPlus.svg",
+        "img/assets/icons/v5/Plus.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Drag.svg",
+        "img/assets/icons/v5/Pencil.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/introduction-to-content-manager.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-manager/translating-content.md",
+        "cms/content-type-builder/introduction-to-content-types-builder.md",
+        "cms/plugins/strapi-plugins.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/ListPlus.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Feather.svg",
+        "img/assets/icons/v5/Search.svg",
+        "writing-content.md",
+        "cms/content-manager/writing-content.md",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/CrossCircle.svg",
+        "img/assets/icons/v5/delete-locale.svg",
+        "../content-manager/configuring-view-of-content-type.md",
+        "img/assets/icons/v5/Filter.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/managing-relational-fields.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/_not-updated-to-v5.md",
+        "cms/plugins/strapi-plugins.md",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Drag.svg",
+        "writing-content.md",
+        "saving-and-publishing-content.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/reviewing-content.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/settings/review-workflows.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/saving-and-publishing-content.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "img/assets/icons/v5/CheckCircle.svg",
+        "img/assets/icons/v5/CrossCircle2.svg",
+        "cms/plugins/strapi-plugins.md",
+        "cms/releases/creating-a-release.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/CrossCircle.svg",
+        "cms/content-type-builder/managing-content-types.md",
+        "cms/content-manager/adding-content-to-releases.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/translating-content.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins/strapi-plugins.md",
+        "writing-content.md",
+        "../settings/internationalization.md",
+        "img/assets/icons/world.svg",
+        "img/assets/icons/world_striked.svg",
+        "img/assets/icons/v5/Download.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/working-with-content-history.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-manager/translating-content.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/ClockCounterClockwise.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-manager/writing-content.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-type-builder.md",
+        "cms/media-library.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-manager/managing-relational-fields.md",
+        "cms/content-type-builder/configuring-fields-content-type.md",
+        "img/assets/icons/v5/Drag.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "cms/media-library/organizing-assets-with-folders.md",
+        "img/assets/icons/v5/Eye.svg",
+        "img/assets/icons/v5/PlusCircle.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-type-builder/configuring-fields-content-type.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-type-builder/creating-new-content-type.md",
+        "cms/plugins/strapi-plugins.md",
+        "cms/plugins/installing-plugins-via-marketplace.md",
+        "cms/content-manager/writing-content.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-type-builder/creating-new-content-type.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/settings/review-workflows.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-type-builder/configuring-fields-content-type.md",
+        "img/assets/icons/v5/Search.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-type-builder/introduction-to-content-types-builder.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-type-builder/creating-new-content-type.md",
+        "img/assets/icons/v5/Search.svg",
+        "cms/content-type-builder/managing-content-types.md",
+        "img/assets/icons/v5/Layout.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/content-type-builder/managing-content-types.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/settings/review-workflows.md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-manager/translating-content.md",
+        "cms/content-type-builder/configuring-fields-content-type.md",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "cms/content-manager/configuring-view-of-content-type.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/customization.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/installation/cli.md",
+        "cms/configurations/database.md",
+        "cms/backend-customization.md",
+        "cms/admin-panel-customization.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/data-management/export.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        "cms/features/data-management.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/data-management/import.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        "cms/features/data-management.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/data-management/transfer.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/data-management.md",
+        "cms/configurations/admin-panel.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/quick-start.md",
+        "cms/configurations/environment.md",
+        "cms/settings/transfer-tokens.md",
+        "cms/data-management/export.md",
+        "cms/data-management/import.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/database-migrations.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/database.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/database-transactions.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/deployment.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/data-management.md",
+        "cloud/intro.md",
+        "cms/configurations/database.md",
+        "cms/deployment.md",
+        "cms/admin-panel-customization/deployment.md",
+        "cms/configurations.md",
+        "cms/typescript/development.md",
+        "cms/installation.md",
+        "snippets/database-require.md",
+        "snippets/hardware-require.md",
+        "snippets/operating-system-require.md",
+        "snippets/installation-prerequisites.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/error-handling.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/api/document-service.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/api/rest/sort-pagination.md",
+        "@strapi/strapi.md",
+        "@strapi/utils.md",
+        "cms/backend-customization/middlewares.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/controllers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/faq.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/typescript.md",
+        "cloud/projects/settings.md",
+        "cms/configurations/server.md",
+        "cms/plugins-development/plugins-extension.md",
+        "cms/data-management/transfer.md",
+        "cms/configurations/users-and-permissions-providers/new-provider-guide.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/admin-panel.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/sso.md",
+        "cms/features/rbac.md",
+        "cms/configurations/features.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/api-tokens.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/configurations/admin-panel.md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/api/content-api.md",
+        "cms/configurations/environment.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Duplicate.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/audit-logs.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/content-history.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        "cms/features/content-manager.md",
+        "cms/features/draft-and-publish.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/content-manager.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/content-manager/translating-content.md",
+        "cms/features/media-library.md",
+        "cms/plugins/strapi-plugins.md",
+        "img/assets/icons/v5/Plus.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "cms/content-manager/writing-content.md",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/CrossCircle.svg",
+        "img/assets/icons/v5/delete-locale.svg",
+        "../content-manager/configuring-view-of-content-type.md",
+        "cms/features/draft-and-publish.md",
+        "cms/features/content-type-builder.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/content-type-builder.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "cms/settings/review-workflows.md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/plugins/installing-plugins-via-marketplace.md",
+        "cms/features/content-manager.md",
+        "cms/features/draft-and-publish.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/data-management.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/environment.md",
+        "cms/data-management/transfer.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "cms/data-management/export.md",
+        "cms/data-management/import.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/draft-and-publish.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "img/assets/icons/v5/CheckCircle.svg",
+        "img/assets/icons/v5/CrossCircle2.svg",
+        "cms/api/graphql.md",
+        "cms/api/content-api.md",
+        "cms/api/document-service/status.md",
+        "cms/api/rest/status.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/CrossCircle.svg",
+        "img/assets/icons/v5/Layout.svg",
+        "cms/features/content-manager.md",
+        "cms/features/content-type-builder.md",
+        "cms/features/releases.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/email.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        ".md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/backend-customization/controllers.md",
+        "cms/features/rbac.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/internationalization.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/graphql.md",
+        "cms/api/content-api.md",
+        "cms/api/document-service/locale.md",
+        "cms/api/rest/locale.md",
+        "cms/configurations/environment.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Feather.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/Download.svg",
+        "img/assets/icons/v5/Layout.svg",
+        "cms/features/content-manager.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/media-library.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        ".md",
+        "cms/media-library.md",
+        "cms/features/users-permissions.md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/configurations/server.md",
+        "cms/api/rest/upload.md",
+        "cms/configurations/middlewares.md",
+        "cms/configurations/functions.md",
+        "cms/configurations/plugins.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Search.svg",
+        "cms/content-manager/writing-content.md",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/Filter.svg",
+        "img/assets/icons/v5/Download.svg",
+        "cms/media-library/organizing-assets-with-folders.md",
+        "cms/features/content-manager.md",
+        "img/assets/icons/v5/Images.svg",
+        "cms/media-library/adding-assets.md",
+        "img/assets/icons/v5/List.svg",
+        "img/assets/icons/v5/GridFour.svg",
+        "img/assets/icons/v5/Link.svg",
+        "img/assets/icons/v5/Crop.svg",
+        "img/assets/icons/v5/Check.svg",
+        "img/assets/icons/v5/Folder.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/preview.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/configurations/admin-panel.md",
+        "cms/features/content-manager.md",
+        "cms/features/draft-and-publish.md",
+        "img/assets/icons/v5/Link.svg",
+        "img/assets/icons/close-icon.svg",
+        "next/headers.md",
+        "next/navigation.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/rbac.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/internationalization.md",
+        ".md",
+        "cms/features/users-permissions.md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "cms/features/media-library.md",
+        "cms/configurations/guides/rbac.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "cms/features/content-manager.md",
+        "cms/features/content-type-builder.md",
+        "img/assets/icons/v5/CaretDown.svg",
+        "img/assets/icons/v5/Mail.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/releases.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/releases/managing-a-release.md",
+        "cms/features/draft-and-publish.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/review-workflows.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/content-manager.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/sso.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/admin-panel.md",
+        "cms/configurations/guides/configure-sso.md",
+        "img/assets/icons/v5/More.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/features/users-permissions.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/backend-customization/models.md",
+        "cms/configurations/environment.md",
+        "cms/configurations/users-and-permissions-providers/new-provider-guide.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "axios.md",
+        "cms/configurations/plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/getting-started/setting-up-admin-panel.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Eye.svg",
+        "cms/settings/single-sign-on.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/getting-started/user-guide-fundamentals.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/features.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/installation/cli.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/templates.md",
+        "cloud/intro.md",
+        ".md",
+        "cloud/cli/cloud-cli.md",
+        "cloud/advanced/database.md",
+        "cms/configurations/database.md",
+        "cms/deployment.md",
+        "cms/quick-start.md",
+        "snippets/installation-prerequisites.md",
+        "img/assets/installation/prompts.png"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/installation/docker.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/installation/cli.md",
+        "cms/quick-start.md",
+        "snippets/docker-env-table.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/installation.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/installation/cli.md",
+        "cms/installation/docker.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/11ty.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md",
+        "",
+        "restaurants/{{ restaurant.id }}/",
+        "categories/{{ category.id }}/"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/angular.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md",
+        "@angular/core.md",
+        "@angular/platform-browser.md",
+        "@angular/common/http.md",
+        "./app.component",
+        "rxjs.md",
+        "@angular/forms.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/dart.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/flutter.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/gatsby.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "react.md",
+        "snippets/integration-guides-soon-removed.md",
+        "gatsby.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/go.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/graphql.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/graphql.md",
+        "snippets/integration-guides-soon-removed.md",
+        "cms/integrations/react.md",
+        "cms/integrations/vue-js.md",
+        "@apollo/client.md",
+        "graphql-tag.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/gridsome.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md",
+        "'categories/' + category.id"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/jekyll.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/laravel.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md",
+        "cms/integrations/php.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/next-js.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "react.md",
+        "axios.md",
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/nuxt-js.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md",
+        "~/types.md",
+        "`${$route.path}/restaurant/create`.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/php.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/python.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/react.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/quick-start.md",
+        "react.md",
+        "axios.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/ruby.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/sapper.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "axios.md",
+        "snippets/integration-guides-soon-removed.md",
+        "svelte.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/svelte.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "axios.md",
+        "snippets/integration-guides-soon-removed.md",
+        "svelte.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/integrations/vue-js.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "axios.md",
+        "snippets/integration-guides-soon-removed.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/intro.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/customization.md",
+        "cloud/intro.md",
+        "cms/project-structure.md",
+        "cms/api/content-api.md",
+        "cms/quick-start.md",
+        "cms/configurations.md",
+        "cms/installation.md",
+        "cms/migration/v4-to-v5/introduction-and-faq.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/media-library/adding-assets.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/media-library.md",
+        "img/assets/icons/v5/Pencil.svg",
+        "cms/content-manager/writing-content.md",
+        "managing-assets.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/media-library/introduction-to-the-media-library.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Search.svg",
+        "cms/content-manager/writing-content.md",
+        "img/assets/icons/v5/Filter.svg",
+        "cms/media-library/organizing-assets-with-folders.md",
+        "img/assets/icons/v5/Images.svg",
+        "cms/media-library/adding-assets.md",
+        "img/assets/icons/v5/List.svg",
+        "img/assets/icons/v5/GridFour.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/media-library/managing-assets.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/Download.svg",
+        "cms/media-library/organizing-assets-with-folders.md",
+        "img/assets/icons/v5/Link.svg",
+        "img/assets/icons/v5/Crop.svg",
+        "img/assets/icons/v5/Check.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/media-library/organizing-assets-with-folders.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/media-library.md",
+        "cms/features/users-permissions.md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Search.svg",
+        "cms/content-manager/writing-content.md",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/Folder.svg",
+        "cms/media-library/managing-assets.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/document-service.md",
+        "cms/api/document-service/status.md",
+        "cms/api/document-service/middlewares.md",
+        "cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated.md",
+        "cms/upgrade-tool.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/additional-resources/helper-plugin.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "@strapi/helper-plugin.md",
+        "@strapi/strapi/admin.md",
+        "@strapi/design-system.md",
+        "@strapi/design-system/v2.md",
+        "react-router-dom.md",
+        "@strapi/strapi/admin/hooks.md",
+        "my-link.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/additional-resources/introduction.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/migration/v4-to-v5/introduction-and-faq.md",
+        "cms/migration/v4-to-v5/step-by-step.md",
+        "cms/migration/v4-to-v5/additional-resources/plugins-migration.md",
+        "cms/migration/v4-to-v5/additional-resources/helper-plugin.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/additional-resources/plugins-migration.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "cms/api/document-service.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/plugins-development/create-a-plugin.md",
+        "cms/migration/v4-to-v5/step-by-step.md",
+        "cms/migration/v4-to-v5/additional-resources/helper-plugin.md",
+        "cms/plugins-development/plugin-sdk.md",
+        "cms/plugins-development/plugin-structure.md",
+        "cms/migration/v4-to-v5/breaking-changes.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/document-service.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/database-columns.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/database-identifiers-shortened.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/default-index-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/default-input-validation.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization/controllers.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/admin-panel-api.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/api/document-service/middlewares.md",
+        "cms/upgrade-tool.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "cms/migration/v4-to-v5/breaking-changes/use-document-id.md",
+        "cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/publication-state-removed.md",
+        "snippets/breaking-change-partially-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/fetch.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/get-where-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/graphql-api-updated.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/graphql.md",
+        "cms/plugins/graphql.md",
+        "cms/migration/v4-to-v5/breaking-changes/new-response-format.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/additional-resources/helper-plugin.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-partially-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/inject-content-manager-component.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/admin-panel-api.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/is-supported-image-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/koa-body-v6.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/license-only.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/admin-panel-api.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/mailgun-provider-variables.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-partially-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/mysql5-unsupported.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/installation/cli.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md",
+        "cms/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/new-response-format.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/api/document-service/sort-pagination.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/no-locale-all.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/graphql.md",
+        "cms/api/document-service/locale.md",
+        "cms/api/rest/locale.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest/populate-select.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest.md",
+        "cms/plugins/upload.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/database.md",
+        "cms/upgrade-tool.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/database.md",
+        "cms/upgrade-tool.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md",
+        "cms/migration/v4-to-v5/breaking-changes/mysql5-unsupported.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/publication-state-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/graphql.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/api/document-service/status.md",
+        "cms/api/rest/status.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/publishedat-always-set-when-dandp-disabled.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/react-router-dom-6.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/admin-panel-api.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/register-allowed-fields.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/server.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "img/assets/migration/webhooks-populated-relations.png"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/server.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/server-default-log-level.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/middlewares.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/server-proxy.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/server.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/sort-by-id.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md",
+        "cms/api/document.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/strapi-container.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/strapi-imports.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "@strapi/strapi.md",
+        "cms/upgrade-tool.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-partially-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/strapi-utils-refactored.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "@strapi/utils.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/strict-requirements-config-files.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/templates.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/templates.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/backend-customization-feedback-cta.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/use-document-id.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated.md",
+        "cms/migration/v4-to-v5/step-by-step.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-partially-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/vite.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/admin-panel-customization/bundlers.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/webpack-aliases-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-affecting-plugins.md",
+        "snippets/breaking-change-not-handled-by-codemod.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes/yarn-not-default.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/installation/cli.md",
+        "snippets/breaking-change-page-intro.md",
+        "snippets/breaking-change-page-migration-intro.md",
+        "snippets/breaking-change-not-handled-by-codemod.md",
+        "snippets/breaking-change-not-affecting-plugins.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/breaking-changes.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/new-response-format.md",
+        "cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated.md",
+        "cms/upgrade-tool.md",
+        "cms/migration/v4-to-v5/breaking-changes/use-document-id.md",
+        "cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/publication-state-removed.md",
+        "cms/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql.md",
+        "cms/migration/v4-to-v5/breaking-changes/mysql5-unsupported.md",
+        "cms/migration/v4-to-v5/breaking-changes/database-columns.md",
+        "cms/migration/v4-to-v5/breaking-changes/database-identifiers-shortened.md",
+        "cms/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite.md",
+        "cms/migration/v4-to-v5/breaking-changes/yarn-not-default.md",
+        "cms/migration/v4-to-v5/breaking-changes/vite.md",
+        "cms/migration/v4-to-v5/breaking-changes/react-router-dom-6.md",
+        "cms/migration/v4-to-v5/breaking-changes/koa-body-v6.md",
+        "cms/migration/v4-to-v5/breaking-changes/webpack-aliases-removed.md",
+        "cms/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4.md",
+        "cms/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options.md",
+        "cms/migration/v4-to-v5/breaking-changes/strict-requirements-config-files.md",
+        "cms/migration/v4-to-v5/breaking-changes/server-default-log-level.md",
+        "cms/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid.md",
+        "cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations.md",
+        "cms/migration/v4-to-v5/breaking-changes/default-index-removed.md",
+        "cms/migration/v4-to-v5/breaking-changes/server-proxy.md",
+        "cms/migration/v4-to-v5/breaking-changes/fetch.md",
+        "cms/migration/v4-to-v5/breaking-changes/strapi-imports.md",
+        "cms/migration/v4-to-v5/breaking-changes/is-supported-image-removed.md",
+        "cms/migration/v4-to-v5/breaking-changes/strapi-utils-refactored.md",
+        "cms/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale.md",
+        "cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated.md",
+        "cms/migration/v4-to-v5/breaking-changes/inject-content-manager-component.md",
+        "cms/migration/v4-to-v5/breaking-changes/mailgun-provider-variables.md",
+        "cms/migration/v4-to-v5/breaking-changes/license-only.md",
+        "cms/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state.md",
+        "cms/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten.md",
+        "cms/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated.md",
+        "cms/migration/v4-to-v5/breaking-changes/get-where-removed.md",
+        "cms/migration/v4-to-v5/breaking-changes/default-input-validation.md",
+        "cms/migration/v4-to-v5/breaking-changes/graphql-api-updated.md",
+        "cms/migration/v4-to-v5/breaking-changes/sort-by-id.md",
+        "cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved.md",
+        "cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation.md",
+        "cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/introduction-and-faq.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/projects/settings.md",
+        "cloud/cli/cloud-cli.md",
+        "cms/upgrade-tool.md",
+        "cms/migration/v4-to-v5/step-by-step.md",
+        "cms/migration/v4-to-v5/breaking-changes.md",
+        "cms/migration/v4-to-v5/additional-resources/introduction.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v4-to-v5/step-by-step.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/projects/settings.md",
+        "cms/plugins/graphql.md",
+        "cms/api/document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service.md",
+        "cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service.md",
+        "cms/migration/v4-to-v5/breaking-changes/new-response-format.md",
+        "cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated.md",
+        "cms/upgrade-tool.md",
+        "cms/migration/v4-to-v5/additional-resources/helper-plugin.md",
+        "cms/migration/v4-to-v5/breaking-changes.md",
+        "cms/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql.md",
+        "cms/migration/v4-to-v5/breaking-changes/mysql5-unsupported.md",
+        "cms/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite.md",
+        "cms/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options.md",
+        "cms/migration/v4-to-v5/breaking-changes/strict-requirements-config-files.md",
+        "cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated.md",
+        "cms/migration/v4-to-v5/breaking-changes/graphql-api-updated.md",
+        "snippets/_do-not-migrate-to-v5-yet.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/migration/v5/migration-guide-5.0.0-to-5.0.1.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "cms/configurations/middlewares.md",
+        "cms/plugins/documentation.md",
+        "snippets/migrate-plugins-extension-caution.md",
+        "snippets/build-npm-yarn.md",
+        "snippets/develop-npm-yarn.md",
+        "snippets/install-npm-yarn.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/documentation.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/plugins-development/admin-panel-api.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Eye.svg",
+        "img/assets/icons/v5/info.svg",
+        "img/assets/icons/v5/ArrowClockwise.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/graphql.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/plugins/graphql.md",
+        "cms/backend-customization/services.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/features/api-tokens.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/middlewares.md",
+        "cms/backend-customization/policies.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/installing-plugins-via-marketplace.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/v5/ShoppingCart.svg",
+        "img/assets/icons/v5/official-market.svg",
+        "img/assets/icons/v5/verified-marketplace.svg",
+        "img/assets/icons/v5/ExternalLink.svg",
+        "cms/installation/cli/"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/introduction-to-plugins.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/content-manager.md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/content-type-builder/configuring-fields-content-type.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/ShoppingCart.svg",
+        "cms/content-type-builder/",
+        "cms/plugins/upload/",
+        "../plugins/installing-plugins-via-marketplace.md",
+        "./installing-plugins-via-marketplace.md",
+        "cms/features/email/",
+        "cms/content-manager/writing-content/"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/sentry.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/guides/access-cast-environment-variables.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/strapi-plugins.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager.md",
+        "cms/settings/configuring-users-permissions-plugin-settings.md",
+        "cms/api/graphql.md",
+        "cms/plugins/graphql.md",
+        "cms/content-manager/translating-content.md",
+        "cms/content-type-builder/creating-new-content-type.md",
+        "cms/features/users-permissions/configuring-end-users-roles.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/features/email.md",
+        "cms/content-type-builder/configuring-fields-content-type.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Plus.svg",
+        "img/assets/icons/v5/Search.svg",
+        "cms/plugins/installing-plugins-via-marketplace/",
+        "cms/settings/internationalization.md",
+        "cms/features/users-permissions/managing-end-users.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins/upload.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "cms/media-library.md",
+        "cms/configurations/server.md",
+        "cms/api/graphql.md",
+        "formdata-node.md",
+        "node-fetch.md",
+        "cms/configurations/middlewares.md",
+        "cms/configurations/plugins.md",
+        "cms/media-library/organizing-assets-with-folders.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/admin-panel-api.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/intro.md",
+        ".md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/plugins-development/server-api.md",
+        "cms/plugins-development/create-a-plugin.md",
+        "@strapi/helper-plugin.md",
+        "cms/plugins-development/plugin-structure.md",
+        "cms/plugins-development/content-manager-apis.md",
+        "./components/PluginIcon.md",
+        "./pluginId.md",
+        "@strapi/admin/strapi-admin.md",
+        "./reducers.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/content-manager-apis.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/content-manager.md",
+        "cms/plugins-development/admin-panel-api.md",
+        "img/assets/content-manager-apis/add-edit-view-side-panel.png",
+        "img/assets/content-manager-apis/add-document-action-header.png",
+        "img/assets/content-manager-apis/add-document-action-panel.png",
+        "img/assets/content-manager-apis/add-document-action-tablerow.png",
+        "img/assets/content-manager-apis/add-document-header-action.png",
+        "img/assets/content-manager-apis/add-bulk-action.png",
+        "@strapi/content-manager/strapi-admin.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/create-a-plugin.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        ".md",
+        "cms/configurations/plugins.md",
+        "cms/plugins-development/plugin-sdk.md",
+        "cms/plugins-development/plugin-structure.md",
+        "node:path.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/custom-fields.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/plugins-development/admin-panel-api.md",
+        "cms/plugins-development/developing-plugins.md",
+        "cms/backend-customization/models.md",
+        "cms/plugins-development/server-api.md",
+        "react.md",
+        "cms/configurations/functions.md",
+        "cms/content-manager/configuring-view-of-content-type.md",
+        "snippets/custom-field-requires-plugin.md",
+        "./components/ColorPicker/ColorPickerIcon.md",
+        "react-intl.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/developing-plugins.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/plugins-development/admin-panel-api.md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/plugins-development/server-api.md",
+        "cms/plugins-development/create-a-plugin.md",
+        "cms/plugins-development/plugin-structure.md",
+        "cms/plugins-development/guides/store-and-access-data.md",
+        "cms/plugins-development/guides/pass-data-from-server-to-admin.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/guides/pass-data-from-server-to-admin.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/plugins-development/developing-plugins.md",
+        "snippets/_not-updated-to-v5.md",
+        "axios.md",
+        "../../api/foobar.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/guides/store-and-access-data.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/content-type-builder.md",
+        "cms/plugins-development/developing-plugins.md",
+        "cms/api/query-engine.md",
+        "cms/api/entity-service.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "snippets/_not-updated-to-v5.md",
+        "cms/backend-customization/routes.md",
+        "cms/backend-customization/controllers.md",
+        "cms/plugins-development/guides/pass-data-from-server-to-admin.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/plugin-sdk.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/create-a-plugin.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/plugin-structure.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/intro.md",
+        "cms/backend-customization.md",
+        "cms/plugins-development/admin-panel-api.md",
+        "cms/plugins-development/developing-plugins.md",
+        "cms/plugins-development/server-api.md",
+        "cms/plugins-development/create-a-plugin.md",
+        "@site/src/components/PluginStructure.js"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/plugins-extension.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/project-structure.md",
+        "cms/plugins-development/developing-plugins.md",
+        "cms/backend-customization/models.md",
+        "cms/plugins-development/server-api.md",
+        "cms/plugins/installing-plugins-via-marketplace.md",
+        "cms/configurations/functions.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/plugins-development/server-api.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions.md",
+        "cms/backend-customization.md",
+        "cms/plugins-development/admin-panel-api.md",
+        "cms/plugins-development/custom-fields.md",
+        "cms/api/document-service.md",
+        "cms/backend-customization/models.md",
+        "cms/backend-customization/services.md",
+        "cms/backend-customization/routes.md",
+        "@strapi/strapi.md",
+        "cms/backend-customization/policies.md",
+        "cms/backend-customization/controllers.md",
+        "cms/configurations/middlewares.md",
+        "cms/plugins-development/create-a-plugin.md",
+        "cms/configurations/functions.md",
+        "cms/configurations/plugins.md",
+        "cms/plugins-development/plugin-structure.md",
+        "./controllers.md",
+        "./controller-a.md",
+        "./controller-b.md",
+        "./services.md",
+        "./service-a.md",
+        "./service-b.md",
+        "./policies.md",
+        "./policy-a.md",
+        "./policy-b.md",
+        "your-middleware.md",
+        "./middlewares.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/project-structure.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/typescript.md",
+        "@site/src/components/ProjectStructure.js"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/providers.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/settings/configuring-users-permissions-plugin-settings.md",
+        "cms/features/media-library.md",
+        "cms/features/email.md",
+        "cms/configurations/middlewares.md",
+        "cms/configurations/environment.md",
+        "cms/configurations/plugins.md",
+        "../../../cms/plugins/installing-plugins-via-marketplace.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/quick-start.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/data-management.md",
+        "cms/intro.md",
+        "cloud/intro.md",
+        "cms/content-type-builder.md",
+        "cms/backend-customization.md",
+        "cms/admin-panel-customization.md",
+        "cms/api/rest.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Feather.svg",
+        "img/assets/icons/v5/Layout.svg",
+        "cms/installation.md",
+        "snippets/installation-prerequisites.md",
+        "img/assets/quick-start-guide/qsg-questions-answers-terminal.png",
+        "img/assets/icons/v5/ctb_relation_manytomany.svg",
+        "img/assets/quick-start-guide/qsg-strapi-cloud-terminal-questions.png"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/releases/creating-a-release.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/releases/introduction.md",
+        "cms/releases/managing-a-release.md",
+        "img/assets/icons/v5/PaperPlane.svg",
+        "img/assets/icons/v5/Plus.svg",
+        "cms/content-manager/adding-content-to-releases.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/releases/introduction.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/releases/managing-a-release.md",
+        "cms/releases/creating-a-release.md",
+        "img/assets/icons/v5/PaperPlane.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/releases/managing-a-release.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/releases/introduction.md",
+        "img/assets/icons/v5/CheckCircle.svg",
+        "img/assets/icons/v5/CrossCircle2.svg",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/releases/creating-a-release.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Trash.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/API-tokens.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/features/api-tokens.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/admin-panel.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/admin-panel-customization/options.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Plus.svg",
+        "img/assets/icons/v5/ArrowClockwise.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/audit-logs.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/v5/Eye.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/configuring-users-permissions-plugin-settings.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/providers.md",
+        "cms/configurations/users-and-permissions-providers.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "../users-roles-permissions/configuring-end-users-roles.md",
+        "img/assets/icons/v5/search.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/internationalization.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins/strapi-plugins.md",
+        "cms/plugins/installing-plugins-via-marketplace.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Trash.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/introduction.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/settings/audit-logs.md",
+        "cms/settings/review-workflows.md",
+        "cms/settings/admin-panel.md",
+        "cms/settings/configuring-users-permissions-plugin-settings.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/plugins/strapi-plugins.md",
+        "cms/settings/transfer-tokens.md",
+        "img/assets/icons/v5/Cog.svg",
+        "cms/settings/single-sign-on.md",
+        "cms/settings/internationalization.md",
+        "cms/settings/API-tokens.md",
+        "cms/settings/media-library-settings.md",
+        "cms/settings/releases.md",
+        "cms/features/users-permissions/managing-administrators.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/media-library-settings.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/media-library.md",
+        "img/assets/icons/v5/Cog.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/releases.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/releases/introduction.md",
+        "img/assets/icons/v5/Cog.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/review-workflows.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/features/users-permissions.md",
+        "img/assets/icons/v5/More.svg",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "cms/content-manager/reviewing-content.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/single-sign-on.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/features/users-permissions.md",
+        "img/assets/icons/v5/Cog.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/settings/transfer-tokens.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/configurations/admin-panel.md",
+        "cms/features/users-permissions/configuring-administrator-roles.md",
+        "cms/data-management/transfer.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/setup-deployment.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/quick-start.md",
+        "installation.md",
+        "configurations.md",
+        "deployment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/templates.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/installation/cli.md",
+        "cms/project-structure.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/testing.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization/controllers.md",
+        "cms/configurations/environment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/typescript/adding-support-to-existing-project.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/project-structure.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/typescript/development.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md",
+        "cms/typescript.md",
+        ".md",
+        "cms/plugins-development/developing-plugins.md",
+        "@strapi/strapi.md",
+        "cms/configurations/typescript.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/typescript.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/installation/cli.md",
+        "cms/project-structure.md",
+        "cms/typescript/development.md",
+        "cms/configurations/typescript.md",
+        "cms/typescript/adding-support-to-existing-project.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/upgrade-tool.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/upgrades.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/introduction-and-faq.md",
+        "cms/upgrade-tool.md",
+        "snippets/build-npm-yarn.md",
+        "snippets/develop-npm-yarn.md",
+        "snippets/install-npm-yarn.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/usage-information.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "mailto:privacy@strapi.io"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/users-roles-permissions/configuring-administrator-roles.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/plugins/strapi-plugins.md",
+        "cms/configurations/guides/rbac.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/CaretDown.svg",
+        "./managing-administrators.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/users-roles-permissions/configuring-end-users-roles.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "cms/settings/configuring-users-permissions-plugin-settings.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Pencil.svg",
+        "img/assets/icons/v5/Search.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "../plugins/strapi-plugins.md",
+        "../users-roles-permissions/managing-end-users.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/users-roles-permissions/introduction-to-users-roles-permissions.md",
+      "inSidebar": true,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/v5/Cog.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/users-roles-permissions/managing-administrators.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        ".md",
+        "src/components/ScreenshotNumberReference.jsx",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Cross.svg",
+        "img/assets/icons/v5/Duplicate.svg",
+        "img/assets/icons/v5/Trash.svg",
+        "img/assets/icons/v5/Mail.svg",
+        "configuring-administrator-roles.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/users-roles-permissions/managing-end-users.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager.md",
+        "cms/plugins/strapi-plugins.md",
+        "img/assets/icons/v5/Cog.svg",
+        "img/assets/icons/v5/Feather.svg",
+        "img/assets/icons/v5/Eye.svg",
+        "../users-roles-permissions/configuring-end-users-roles.md",
+        "../settings/configuring-users-permissions-plugin-settings.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "cms/whats-new.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/content-manager/working-with-content-history.md",
+        "cms/api/rest.md",
+        "cms/api/graphql.md",
+        "cms/api/document-service.md",
+        "cms/content-manager/saving-and-publishing-content.md",
+        "cms/migration/v4-to-v5/introduction-and-faq.md",
+        "cms/upgrade-tool.md",
+        "cms/migration/v4-to-v5/step-by-step.md",
+        "cms/plugins-development/plugin-sdk.md",
+        "cms/migration/v4-to-v5/breaking-changes.md",
+        "cms/api/document.md",
+        "cms/migration/v4-to-v5/additional-resources/introduction.md",
+        "tags.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "release-notes.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/whats-new.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/_do-not-migrate-to-v5-yet.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/_not-updated-to-v5.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/backend-custom-intro-crosslink.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/backend-customization.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/backend-customization-feedback-cta.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-affecting-plugins.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-handled-by-codemod.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-not-affecting-plugins.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-not-handled-by-codemod.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-page-intro.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/breaking-changes.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/breaking-change-page-migration-intro.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/breaking-change-partially-handled-by-codemod.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/build-npm-yarn.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/codemods-modify-source-code.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/consider-document-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/consider-strapi-cloud.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cloud/intro.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/content-source-map-requirements.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/custom-field-requires-plugin.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/create-a-plugin.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/database-require.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/develop-npm-yarn.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/docker-env-table.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/configurations/environment.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/entity-query-knex.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/entity-service-deprecated.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/hardware-require.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/hot-reloading-admin-panel.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/cli.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/id-in-responses.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/breaking-changes/use-document-id.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/install-npm-yarn.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/installation-prerequisites.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/integration-guides-soon-removed.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/invoices-statuses.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "img/assets/icons/download.svg"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/managing-relations.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest/relations.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/middleware-types.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service.md",
+        "cms/backend-customization/routes.md",
+        "cms/plugins-development/server-api.md",
+        "cms/configurations/middlewares.md",
+        "cms/api/document-service/middlewares.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/migrate-plugins-extension-caution.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/plugins-development/plugins-extension.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/operating-system-require.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/qs-for-query-body.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest/interactive-query-builder.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/qs-for-query-title.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/qs-intro-full.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/rest/interactive-query-builder.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/qs-intro-short.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/recommend-entity-service.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [
+        "cms/api/document-service.md"
+      ],
+      "isOrphaned": false
+    },
+    {
+      "file": "snippets/temp-upgrade-rc.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    },
+    {
+      "file": "snippets/u-and-p-provider-config-done.md",
+      "inSidebar": false,
+      "inDocusaurusConfig": false,
+      "referencedBy": [],
+      "isOrphaned": true
+    }
+  ]
+}
