@@ -7,6 +7,9 @@ main:has(.docusaurus-mermaid-container) {
   .table-of-contents__link--active {
     display: none;
   }
+  .docusaurus-mermaid-container svg {
+    font-size: .9rem !important;
+  }
 }
 
 .custom-mermaid-layout {

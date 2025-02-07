@@ -22,6 +22,8 @@ From a front-end application, your content can be accessed through Strapi's Cont
 - by default through the [REST API](/dev-docs/api/rest)
 - and also through the [GraphQL API](/dev-docs/api/graphql) if you installed the Strapi built-in [GraphQL plugin](/dev-docs/plugins/graphql).
 
+You can also use the [JavaScript SDK](/dev-docs/api/sdk-js) to interact with the REST API.
+
 REST and GraphQL APIs represent the top-level layers of the Content API exposed to external applications. Strapi also provides 2 lower-level APIs:
 
 - The [Document Service API](/dev-docs/api/document-service) is the recommended API to interact with your application's database within the [backend server](/dev-docs/customization) or through [plugins](/dev-docs/plugins). The Document Service is the layer that handles **documents** <DocumentDefinition /> as well as Strapi's complex data structures like components and dynamic zones.
@@ -30,8 +32,8 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
 <ThemedImage
 alt="Content APIs diagram"
 sources={{
-  light: '/img/assets/diagrams/apis.png',
-  dark: '/img/assets/diagrams/apis_DARK.png'
+  light: '/img/assets/diagrams/apis-v2.png',
+  dark: '/img/assets/diagrams/apis-v2_DARK.png'
 }}
 />
 
@@ -44,6 +46,8 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="↕️" title="REST API" description="Query the Content API from a front-end application through REST." link="/dev-docs/api/rest" />
 
 <CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/dev-docs/api/graphql" />
+
+<CustomDocCard emoji="↕️" title="JavaScript SDK" description="Interact with the REST API through the JavaScript SDK." link="/dev-docs/api/sdk-js" />
 
 <CustomDocCard emoji="🔃" title="Document Service API" description="Query your data through the backend server or plugins." link="/dev-docs/api/document-service" />
 
