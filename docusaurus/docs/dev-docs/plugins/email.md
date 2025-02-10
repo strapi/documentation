@@ -27,37 +27,51 @@ The Email plugin requires a provider and a provider configuration in the `config
 [`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email plugin. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers. The [Providers](/dev-docs/providers) documentation has instructions for changing providers, configuring providers, and creating a new email provider.
 :::
 
-## Email Configuration Options
+## Sending emails with a controller or service
 
-Plugins configuration are defined in the `config/plugins.js` file or `config/plugins.ts` file. For provider specific configuration please see the [Providers](/dev-docs/providers) documentation for detailed installation and configuration instructions.
+The Email plugin has an `email` [service](/dev-docs/backend-customization/services) that contains 2 functions to send emails:
 
-| Option                    | Type            | Description                                                                                                                                            | Default Value  | Notes    |
-|---------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|----------|
-| `provider`                | `string`        | The email provider to use.                                                                                                                             | `sendmail`     | Required |
-| `providerOptions`         | `object`        | The email provider options.                                                                                                                            | `{}`           | Optional |
-| `providerOptions.apiKey`  | `string`        | The API key for the email provider.                                                                                                                    | `''`           | Optional |
-| `settings`                | `object`        | The email settings.                                                                                                                                    | `{}`           | Optional |
-| `settings.defaultFrom`    | `string`        | The default email address to use as the sender.                                                                                                        | `''`           | Optional |
-| `settings.defaultReplyTo` | `string`        | The default email address to use as the reply-to address.                                                                                              | `''`           | Optional |
-| `ratelimit`               | `object`        | The email rate limit settings.                                                                                                                         | `{}`           | Optional |
-| `ratelimit.enabled`       | `boolean`       | Whether to enable rate limiting.                                                                                                                       | `true`         | Optional |
-| `ratelimit.interval`      | `string`        | The interval for rate limiting in minutes.                                                                                                             | `5`            | Optional |
-| `ratelimit.max`           | `number`        | The maximum number of requests allowed during the interval.                                                                                            | `5`            | Optional |
-| `ratelimit.delayAfter`    | `number`        | The number of requests allowed before rate limiting is applied.                                                                                        | `1`            | Optional |
-| `ratelimit.timeWait`      | `number`        | Time to wait before responding to a request (in milliseconds).                                                                                         | `1`            | Optional |
-| `ratelimit.prefixKey`     | `string`        | The prefix for the rate limit key.                                                                                                                     | `${userEmail}` | Optional |
-| `ratelimit.whitelist`     | `array(string)` | Array of IP addresses to whitelist from rate limiting.                                                                                                 | `[]`           | Optional |
-| `ratelimit.store`         | `object`        | Rate limiting storage location and for more information please see the [`koa2-ratelimit documentation`](https://www.npmjs.com/package/koa2-ratelimit). | `MemoryStore`  | Optional |
+* `send()` directly contains the email contents,
+* `sendTemplatedEmail()` consumes data from the Content Manager to populate emails, streamlining programmatic emails.
+
+### Using the `send()` function
+
+To trigger an email in response to a user action add the `send()` function to a [controller](/dev-docs/backend-customization/controllers) or [service](/dev-docs/backend-customization/services). The send function has the following properties:
+
+| Property  | Type     | Format        | Description                                           |
+|-----------|----------|---------------|-------------------------------------------------------|
+| `from`    | `string` | email address | If not specified, uses `defaultFrom` in `plugins.js`. |
+| `to`      | `string` | email address | Required                                              |
+| `cc`      | `string` | email address | Optional                                              |
+| `bcc`     | `string` | email address | Optional                                              |
+| `replyTo` | `string` | email address | Optional                                              |
+| `subject` | `string` | -             | Required                                              |
+| `text`    | `string` | -             | Either `text` or `html` is required.                  |
+| `html`    | `string` | HTML          | Either `text` or `html` is required.                  |
+
+```js title="This code example can be used in a controller or a service path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js"
+
+  await strapi.plugins['email'].services.email.send({
+    to: 'valid email address',
+    from: 'your verified email address', //e.g. single sender verification in SendGrid
+    cc: 'valid email address',
+    bcc: 'valid email address',
+    replyTo: 'valid email address',
+    subject: 'The Strapi Email plugin worked successfully',
+    text: 'Hello world!',
+    html: 'Hello world!',
+  }),
+```
 
 ### Using the `sendTemplatedEmail()` function
 
 The `sendTemplatedEmail()` function is used to compose emails from a template. The function compiles the email from the available properties and then sends the email. To use the `sendTemplatedEmail()` function, define the `emailTemplate` object and add the function to a controller or service. The function calls the `emailTemplate` object, and can optionally call the `emailOptions` and `data` objects:
 
-| Parameter                     | Description                                                                                                                                | Type     | Default |
-|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }     |
-| `emailTemplate`               | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }     |
-| `data`  <br/> Optional        | Contains the data used to compile the templates                                                                                            | `object` | { }     |
+| Parameter       | Description                                                                                                                                | Type     | Default |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
+| `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
+| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
+| `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 ```js title="This code example can be used in a controller or a service path: ./src/api/{api name}/controllers/{api name}.js or ./src/api/{api name}/services/{api name}.js"
 
