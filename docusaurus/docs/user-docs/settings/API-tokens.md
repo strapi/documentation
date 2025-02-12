@@ -19,8 +19,8 @@ API tokens allow users to authenticate REST and GraphQL API queries (see [Develo
 <ThemedImage
   alt="API tokens"
   sources={{
-    light: '/img/assets/settings/settings_api-token.png',
-    dark: '/img/assets/settings/settings_api-token_DARK.png',
+    light: '/img/assets/settings/settings_pregen-api-tokens.png',
+    dark: '/img/assets/settings/settings_pregen-api-tokens_DARK.png',
   }}
 />
 
@@ -30,6 +30,10 @@ The table displays each API token's name, description, date of creation, and dat
 
 - Click on the <Icon name="pencil-simple" /> to edit an API token's name, description, type, duration or [regenerate the token](#regenerating-an-api-token).
 - Click on the <Icon name="trash"/> to delete an API token.
+
+:::note
+Strapi pre-generates 2 API tokens for you, a Full access one and a Read-only one. Since tokens can be only seen once after creation, you have to [regenerate](#regenerating-an-api-token) them before using them.
+:::
 
 ## Creating a new API token
 
