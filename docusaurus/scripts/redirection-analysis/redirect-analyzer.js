@@ -95,7 +95,7 @@ function archiveOldReports() {
       const timestamp = creationDate.toISOString().replace(/[:.]/g, '-');
       const baseFilename = path.basename(filename, path.extname(filename));
       const extension = path.extname(filename);
-      const newFilename = path.join(ARCHIVES_DIR, `${baseFilename}-${timestamp}${extension}`);
+      const newFilename = path.join(ARCHIVES_DIR, `${timestamp}-${baseFilename}-${extension}`);
       
       fs.renameSync(filename, newFilename);
       console.log(`Archived file ${filename} → ${newFilename}`);
