@@ -169,7 +169,7 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'dev-docs/api/sdk-js',
+          id: 'dev-docs/api/client',
         },
         {
           type: 'doc',

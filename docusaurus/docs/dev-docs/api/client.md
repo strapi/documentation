@@ -1,16 +1,17 @@
 ---
-title: JavaScript SDK
+title: Strapi Client
+description: The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.  
 displayed_sidebar: devDocsSidebar
 tags:
 - API
 - Content API
 - documentId
-- JavaScript SDK
+- Strapi Client
 ---
 
-# JavaScript SDK
+# Strapi Client
 
-The Strapi JavaScript SDK simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. This guide walks you through setting up the JavaScript SDK, configuring authentication, and using its key features effectively.
+The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. This guide walks you through setting up the Strapi Client, configuring authentication, and using its key features effectively.
 
 ## Getting Started
 :::prerequisites
@@ -20,27 +21,27 @@ The Strapi JavaScript SDK simplifies interactions with your Strapi back end, pro
 
 ### Installation
 
-To use the JavaScript SDK in your project, install it as a dependency using your preferred package manager:
+To use the Strapi Client in your project, install it as a dependency using your preferred package manager:
 
   <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
 
   ```bash
-  yarn add @strapi/sdk-js
+  yarn add @strapi/client
   ```
 
   </TabItem>
   <TabItem value="npm" label="NPM">
 
   ```bash
-  npm install @strapi/sdk-js
+  npm install @strapi/client
   ```
 
   </TabItem>
   <TabItem value="pnpm" label="pnpm">
 
   ```bash
-    pnpm add @strapi/sdk-js
+    pnpm add @strapi/client
   ```
 
   </TabItem>
@@ -48,32 +49,32 @@ To use the JavaScript SDK in your project, install it as a dependency using your
 
 ### Basic configuration
 
-To start interacting with your Strapi back end, initialize the JavaScript SDK and set the base API URL:
+To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
 ```js
-import { strapi } from '@strapi/sdk-js';
+import { strapi } from '@strapi/client';
 
-const sdk = strapi({ baseURL: 'http://localhost:1337/api' });
+const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
 
-If you're using the JavaScript SDK in a browser environment, you can include it using a `<script>` tag:
+If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag:
 
 ```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
-<script src="https://cdn.jsdelivr.net/npm/@strapi/sdk-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@strapi/client"></script>
 
 <script>
-  const sdk = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
+  const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
 </script>
 ```
 
 ### Authentication
 
-The JavaScript SDK supports different authentication strategies to access protected resources in your Strapi back end.
+The Strapi Client supports different authentication strategies to access protected resources in your Strapi back end.
 
-If your Strapi instance uses API tokens, configure the JavaScript SDK as follows:
+If your Strapi instance uses API tokens, configure the Strapi Client as follows:
 
 ```js
-const sdk = strapi({
+const client = strapi({
   baseURL: 'http://localhost:1337/api',
   auth: 'your-api-token-here',
 });
@@ -83,7 +84,7 @@ This allows your requests to include the necessary authentication credentials au
 
 ## API Reference
 
-The JavaScript SDK provides the following key properties and methods for interacting with your Strapi back end:
+The Strapi Client provides the following key properties and methods for interacting with your Strapi back end:
 
 | Parameter | Description                                                                                  |
 | ----------| -------------------------------------------------------------------------------------------- |
@@ -94,15 +95,15 @@ The JavaScript SDK provides the following key properties and methods for interac
 
 ### General purpose fetch
 
-The JavaScript SDK provides access to the underlying JavaScript `fetch` function to make direct API requests. The request is always relative to the base URL provided during SDK initialization:
+The Strapi Client provides access to the underlying JavaScript `fetch` function to make direct API requests. The request is always relative to the base URL provided during client initialization:
 
 ```js
-const result = await strapiSdk.fetch('articles', { method: 'GET' });
+const result = await client.fetch('articles', { method: 'GET' });
 ```
 
 ### Working with collection types
 
-Collection types in Strapi are entities with multiple entries (e.g., a blog with many posts). The JavaScript SDK provides a `collection()` method to interact with these resources, with the following methods available:
+Collection types in Strapi are entities with multiple entries (e.g., a blog with many posts). The Strapi Client provides a `collection()` method to interact with these resources, with the following methods available:
 
 | Parameter | Description                                                                                  |
 | ----------| -------------------------------------------------------------------------------------------- |
@@ -114,12 +115,15 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 
 **Usage examples:**
 ```js
-const articles = sdk.collection('articles');
+const articles = client.collection('articles');
 
-// Fetch all English articles sorted by title
-const allArticles = await articles.find({ locale: 'en', sort: 'title' });
+// Fetch all english articles sorted by title
+const allArticles = await articles.find({
+  locale: 'en',
+  sort: 'title',
+});
 
-// Fetch a single article by ID
+// Fetch a single article
 const singleArticle = await articles.findOne('article-document-id');
 
 // Create a new article
@@ -134,7 +138,7 @@ await articles.delete('article-id');
 
 ### Working with single types
 
-Single types in Strapi represent unique content entries that exist only once (e.g., the homepage settings or site-wide configurations). The JavaScript SDK provides a `single()` method to interact with these resources, with the following methods available:
+Single types in Strapi represent unique content entries that exist only once (e.g., the homepage settings or site-wide configurations). The Strapi Client provides a `single()` method to interact with these resources, with the following methods available:
 | Parameter | Description                                                                                  |
 | ----------| -------------------------------------------------------------------------------------------- |
 | `find(queryParams?)`  | Fetch the document.        |
@@ -143,7 +147,7 @@ Single types in Strapi represent unique content entries that exist only once (e.
 
 **Usage examples:**
 ```js
-const homepage = sdk.single('homepage');
+const homepage = client.single('homepage');
 
 // Fetch the default homepage content
 const defaultHomepage = await homepage.find();
@@ -162,5 +166,5 @@ await homepage.delete();
 ```
 
 :::strapi Additional information
-More details about the Strapi JavaScript SDK might be found in the [package's README](https://github.com/strapi/sdk-js/blob/main/README.md).
+More details about the Strapi Strapi Client might be found in the [package's README](https://github.com/strapi/client-js/blob/main/README.md).
 :::

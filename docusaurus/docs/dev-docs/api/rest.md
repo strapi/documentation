@@ -30,8 +30,8 @@ By default, the REST API responses only include top-level fields and does not po
 The Upload plugin (which handles media found in the [Media Library](/user-docs/media-library)) has a specific API described in the [Upload plugin documentation](/dev-docs/plugins/upload).
 :::
 
-:::strapi Strapi SDK <NewBadge />
-Strapi has just released a new SDK, currently in beta. Early documentation is available on the [repository](https://github.com/strapi/sdk-js) while we are integrating it into the official REST API reference.
+:::strapi Strapi Client
+The [Strapi Client](/dev-docs/api/client) library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. 
 :::
 
 ## Endpoints
