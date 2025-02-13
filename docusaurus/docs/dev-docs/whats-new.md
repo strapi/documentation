@@ -25,6 +25,8 @@ Strapi 5 brings many new features and improvements, and this page quickly highli
 
 <Icon name="puzzle-piece" /> The **[Plugin SDK](/dev-docs/plugins/development/plugin-sdk)** is a new CLI tool that helps you develop and publish Strapi plugins.
 
+<Icon name="plugs" /> The **[Strapi Client](/dev-docs/api/client)** library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
+
 <Icon name="escalator-up" /> Another whole new CLI **[upgrade tool](/dev-docs/upgrade-tool)** will help you migrate to any patch, minor, and major version of Strapi, automating most of the common tasks through codemods.
 
 <Icon name="hard-hat" /> Also, we have some resources ready to help you **[upgrade to Strapi 5](/dev-docs/migration/v4-to-v5/introduction-and-faq)**, including a [step-by-step guide](/dev-docs/migration/v4-to-v5/step-by-step), a list of [breaking changes](/dev-docs/migration/v4-to-v5/breaking-changes) and [specific resources](/dev-docs/migration/v4-to-v5/additional-resources/introduction) to read for when you will consider upgrading to Strapi 5.
