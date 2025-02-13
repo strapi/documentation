@@ -6,12 +6,12 @@ const cliProgress = require('cli-progress');
 
 // Script configuration
 const VERBOSE = true;
-const OLD_STRUCTURE_PATH = './scripts/redirection-analysis/old-structure';
-const NEW_STRUCTURE_PATH = './scripts/redirection-analysis/new-structure';
+const OLD_STRUCTURE_PATH = './old-structure';
+const NEW_STRUCTURE_PATH = './new-structure';
 const PATH_PREFIX = '/docusaurus/docs';
 
 // Path configurations
-const RESULTS_DIR = './scripts/redirection-analysis/results';
+const RESULTS_DIR = './results';
 const ARCHIVES_DIR = path.join(RESULTS_DIR, 'archives');
 const DETAILED_LOG_FILE = path.join(RESULTS_DIR, 'redirect-analysis-detailed.log');
 const REPORT_FILE = path.join(RESULTS_DIR, 'redirect-analysis-report.md');
