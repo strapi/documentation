@@ -56,7 +56,7 @@ The CLI will generate some code required to use your plugin, which includes the 
 - and a basic [controller](/cms/backend-customization/controllers), [service](/cms/backend-customization/services), and [route](/cms/backend-customization/routes) for the content-type
 
 :::tip
-You may want to create the whole structure of your content-types either entirely with the CLI generator or by directly creating and editing `schema.json` files. We recommend you first create a simple content-type with the CLI generator and then leverage the [Content-Type Builder](/cms/content-type-builder) in the admin panel to edit your content-type.
+You may want to create the whole structure of your content-types either entirely with the CLI generator or by directly creating and editing `schema.json` files. We recommend you first create a simple content-type with the CLI generator and then leverage the [Content-Type Builder](/cms/features/content-type-builder) in the admin panel to edit your content-type.
 
 If your content-type is not visible in the admin panel, you might need to set the `content-manager.visible` and `content-type-builder.visible` parameters to `true` in the `pluginOptions` object of the content-type schema:
 

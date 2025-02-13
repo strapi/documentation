@@ -77,9 +77,9 @@ The following are the main topics to take into account when using the Document S
 
 * There is no `findPage()` method anymore in Strapi 5.<br/>👉 see [the related breaking change entry](/cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service).
 
-* The [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature has been updated in Strapi 5 and this is reflected in the Document Service API:
+* The [Draft & Publish](/cms/features/draft-and-publish) feature has been updated in Strapi 5 and this is reflected in the Document Service API:
   - `publicationState` is replaced by `status`<br/>👉 see [the related breaking change entry](/cms/migration/v4-to-v5/breaking-changes/publication-state-removed).
-  - New methods are introduced to handle the updated [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature:
+  - New methods are introduced to handle the updated [Draft & Publish](/cms/features/draft-and-publish) feature:
     - [`publish()`](/cms/api/document-service#publish),
     - [`unpublish()`](/cms/api/document-service#unpublish),
     - and [`discardDraft()`](/cms/api/document-service#discarddraft).

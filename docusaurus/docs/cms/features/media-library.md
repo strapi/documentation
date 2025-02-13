@@ -439,7 +439,7 @@ Breakpoint changes will only apply to new images, existing images will not be re
 
 The Media Library displays all assets uploaded in the application, either via the ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
 
-Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/content-manager/writing-content#filling-up-fields).
+Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
 
 <ThemedImage
   alt="Media Library overview, annotated"
@@ -451,7 +451,7 @@ Assets uploaded to the Media Library can be inserted into content-types using th
 
 From the Media Library, it is possible to:
 
-- upload a new asset (see [adding assets](/cms/media-library/adding-assets)) or create a new folder (see [organizing assets with folders](/cms/media-library/organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
+- upload a new asset (see [adding assets](/cms/features/media-library#adding-assets)) or create a new folder (see [organizing assets with folders](/cms/features/media-library#organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
 - sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more easily,
 - toggle between the list view ![List icon](/img/assets/icons/v5/List.svg) and the grid view ![Grid icon](/img/assets/icons/v5/GridFour.svg) to display assets, access settings ![Settings icon](/img/assets/icons/v5/Cog.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](/img/assets/icons/v5/Search.svg) <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
 - and view, navigate through, and manage folders <ScreenshotNumberReference number="4" />.
@@ -608,7 +608,7 @@ By default, the Media Library displays folders and assets created at the root le
   }}
 />
 
-From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/cms/media-library)).
+From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/cms/features/media-library)).
 
 To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
 

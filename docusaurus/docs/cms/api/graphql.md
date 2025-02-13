@@ -70,7 +70,7 @@ When a content-type is added to your project, 2 automatically generated GraphQL 
 <details>
 <summary>Singular API ID vs. Plural API ID:</summary>
 
-Singular API ID and Plural API ID values are defined when creating a content-type in the Content-Type Builder, and can be found while editing a content-type in the admin panel (see [User Guide](/cms/content-type-builder/creating-new-content-type)). You can define custom API IDs while creating the content-type, but these can not modified afterwards.
+Singular API ID and Plural API ID values are defined when creating a content-type in the Content-Type Builder, and can be found while editing a content-type in the admin panel (see [User Guide](/cms/features/content-type-builder#creating-content-types)). You can define custom API IDs while creating the content-type, but these can not modified afterwards.
 
 <ThemedImage
 alt="Screenshot of the Content-Type Builder to retrieve singular and plural API IDs"
@@ -381,7 +381,7 @@ The following example fetches data for the `label` attribute of a "Closingperiod
 
 ### Fetch draft or published versions {#status}
 
-If the [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature is enabled for the content-type, you can add a `status` parameter to queries to fetch draft or published versions of documents <DocumentDefinition/>:
+If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled for the content-type, you can add a `status` parameter to queries to fetch draft or published versions of documents <DocumentDefinition/>:
 
 ```graphql title="Example: Fetch draft versions of documents"
 query Query($status: PublicationStatus) {
@@ -538,7 +538,7 @@ Currently, mutations on media fields use Strapi v4 `id`, not Strapi 5 `documentI
 
 Media fields mutations use files `id`. However, GraphQL API queries in Strapi 5 do not return `id` anymore. Media files `id` can be found:
 
-- either in the [Media Library](/cms/media-library) from the admin panel,
+- either in the [Media Library](/cms/features/media-library) from the admin panel,
 
   <ThemedImage
     alt="Media Library screenshot highlighting how to find a media file id"

@@ -45,7 +45,7 @@ This page will teach about the following advanced topics:
 
 **💭 Context:**
 
-Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding content to the "Reviews" collection type through the [Content Manager](/cms/content-manager).
+Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding content to the "Reviews" collection type through the [Content Manager](/cms/features/content-manager).
 
 Let's add a small front-end component to restaurant pages. This component will allow a user to write a review directly from the front-end website.
 
@@ -311,7 +311,7 @@ This service is an advanced code example using the [Email](/cms/features/email) 
 
 :::prerequisites
 - You have setup a [provider for the Email plugin](/cms/features/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
-- In Strapi's admin panel, you have [created an `Email` single type](/cms/content-type-builder/creating-new-content-type#creating-a-new-content-type) that contains a `from` Text field to define the sender email address.
+- In Strapi's admin panel, you have [created an `Email` single type](/cms/features/content-type-builder#creating-content-types) that contains a `from` Text field to define the sender email address.
 :::
 
 </SideBySideColumn>

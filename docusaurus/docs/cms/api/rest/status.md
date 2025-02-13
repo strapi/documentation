@@ -23,7 +23,7 @@ import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published.
 
 :::prerequisites
-The [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature should be enabled.
+The [Draft & Publish](/cms/features/draft-and-publish) feature should be enabled.
 :::
 
 Queries can accept a `status` parameter to fetch documents based on their status:

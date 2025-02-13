@@ -39,7 +39,7 @@ In the following tables:
 - `:singularApiId` refers to the value of the "API ID (Singular)" field of the content-type,
 - and `:pluralApiId` refers to the value of the "API ID (Plural)" field of the content-type.
 
-These values are defined when creating a content-type in the Content-Type Builder, and can be found while editing a content-type in the admin panel (see [User Guide](/cms/content-type-builder/creating-new-content-type)). For instance, by default, for an "Article" content-type:
+These values are defined when creating a content-type in the Content-Type Builder, and can be found while editing a content-type in the admin panel (see [User Guide](/cms/features/content-type-builder#creating-content-types)). For instance, by default, for an "Article" content-type:
 
 - `:singularApiId` will be `article`
 - `:pluralApiId` will be `articles`

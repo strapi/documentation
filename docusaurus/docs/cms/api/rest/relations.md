@@ -15,7 +15,7 @@ tags:
 
 Defining relations between content-types (that are designated as entities in the database layers) is connecting entities with each other.
 
-Relations between content-types can be managed through the [admin panel](/cms/content-manager/managing-relational-fields#managing-multiple-choice-relational-fields) or through [REST API](/cms/api/rest) or [Document Service API](/cms/api/document-service) requests.
+Relations between content-types can be managed through the [admin panel](/cms/features/content-manager#relational-fields) or through [REST API](/cms/api/rest) or [Document Service API](/cms/api/document-service) requests.
 
 Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
 
@@ -26,7 +26,7 @@ Relations can be connected, disconnected or set through the Content API by passi
 | [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
 
 :::note
-When [Internationalization (i18n)](/cms/content-manager/translating-content) is enabled on the content-type, you can also pass a locale to set relations for a specific locale, as in this Document Service API example:
+When [Internationalization (i18n)](/cms/features/internationalization) is enabled on the content-type, you can also pass a locale to set relations for a specific locale, as in this Document Service API example:
 
 ```js
 await strapi.documents('api::restaurant.restaurant').update({ 
@@ -281,7 +281,7 @@ categories: [
 
 ### Edge cases: Draft & Publish or i18n disabled
 
-When some built-in features of Strapi 5 are disabled for a content-type, such as [Draft & Publish](/cms/content-manager/saving-and-publishing-content) and [Internationalization (i18)](/cms/content-manager/translating-content), the `connect` parameter might be used differently:
+When some built-in features of Strapi 5 are disabled for a content-type, such as [Draft & Publish](/cms/features/draft-and-publish) and [Internationalization (i18)](/cms/features/internationalization), the `connect` parameter might be used differently:
 
 **Relation from a `Category` with i18n _off_ to an `Article` with i18n _on_:**
 

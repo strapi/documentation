@@ -180,7 +180,7 @@ sources={{
 </details>
 
 :::callout <Icon name="confetti" /> Congratulations!
-You have just created a basic data structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/cms/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
+You have just created a basic data structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/cms/features/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
 :::
 
 ## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud

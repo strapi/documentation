@@ -113,4 +113,4 @@ There are currently no available future flags. This section will be updated once
 
 | Property name     | Related feature                              | Suggested environment variable name       |
 | ----------------- | -------------------------------------------- | ----------------------------------------- |
-| `contentReleasesScheduling` | [Releases Scheduling](/cms/releases/managing-a-release#scheduling-a-release) | `STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING` | -->
+| `contentReleasesScheduling` | [Releases Scheduling](/cms/features/releases#usage) | `STRAPI_FUTURE_CONTENT_RELEASES_SCHEDULING` | -->

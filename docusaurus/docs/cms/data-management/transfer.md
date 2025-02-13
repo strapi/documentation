@@ -44,7 +44,7 @@ Either `--to` or `--from` is required.
 :::
 
 :::tip Tips
-* Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/cms/settings/transfer-tokens). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
+* Data transfers are authorized by transfer tokens, which are [managed from the admin panel](/cms/features/data-management#admin-panel-settings). From the admin panel, you can manage role-based permissions to tokens including `view`, `create`, `read`, `regenerate` and `delete`.
 * It might be convenient to store your transfer tokens into [environment variables](/cms/configurations/environment) to avoid copying/pasting. Just ensure that these tokens are not pushed to public repositories.
 :::
 
@@ -73,7 +73,7 @@ server {
 A salt transfer token should be defined in the [admin panel configuration](/cms/configurations/admin-panel) file.
 :::
 
-The `strapi transfer` command requires a transfer token issued by the destination instance. To generate a transfer token in the admin panel use the instructions in the [User Guide](/cms/settings/transfer-tokens).
+The `strapi transfer` command requires a transfer token issued by the destination instance. To generate a transfer token in the admin panel use the instructions in the [User Guide](/cms/features/data-management#admin-panel-settings).
 
 ## Setup and run the data transfer
 
@@ -303,7 +303,7 @@ npm run build && npm run start
 </Tabs>
 
 2. Register an admin user.
-3. [Create and copy a transfer token](/cms/settings/transfer-tokens).
+3. [Create and copy a transfer token](/cms/features/data-management#admin-panel-settings).
 4. Leave the server running.
 
 ### Transfer your data

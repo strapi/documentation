@@ -16,7 +16,7 @@ tags:
 
 # Strapi APIs to access your content
 
-Once you've created and configured a Strapi project, created a data structure with the [Content-Type Builder](/cms/content-type-builder) and started adding data through the [Content Manager](/cms/content-manager), you likely would like to access your content.
+Once you've created and configured a Strapi project, created a data structure with the [Content-Type Builder](/cms/features/content-type-builder) and started adding data through the [Content Manager](/cms/features/content-manager), you likely would like to access your content.
 
 From a front-end application, your content can be accessed through Strapi's Content API, which is exposed:
 - by default through the [REST API](/cms/api/rest)

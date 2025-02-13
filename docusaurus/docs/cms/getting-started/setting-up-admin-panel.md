@@ -36,7 +36,7 @@ To access the admin panel:
 ### Using SSO for authentication {#using-sso}
 <EnterpriseBadge /> <SsoBadge />
 
-If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](/cms/settings/single-sign-on)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
+If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](/cms/features/sso)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
 
 To do so, in the login page of your Strapi application, click on a chosen provider. If you cannot see your provider, click the ![More icon](/img/assets/icons/v5/More.svg) button to access the full list of all available providers. You will be redirected to your provider's own login page where you will be able to authenticate.
 

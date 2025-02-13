@@ -83,7 +83,7 @@ The Content-type Builder allows to create new content-types: single and collecti
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Draft & Publish](/cms/features/draft-and-publish)). |
       | Internationalization | Tick the checkbox to allow entries of the content-type to be translated into other locales. |
 <!--
-| Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/cms/settings/review-workflows)). |
+| Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/cms/features/review-workflows#configuration)). |
 -->
 6. Click on the **Continue** button.
 7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-content-types-fields)).

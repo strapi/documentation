@@ -322,8 +322,8 @@ export default ({ env }) => ({
 </div>
 
 :::note Notes
-- [Folders](/cms/media-library/organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
-- The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
+- [Folders](/cms/features/media-library#organizing-assets-with-folders) are an admin panel-only feature and are not part of the Content API (REST or GraphQL). Files uploaded through REST are located in the automatically created "API Uploads" folder.
+- The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
 :::
 
 

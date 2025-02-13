@@ -27,7 +27,7 @@ The [REST API](/cms/api/rest) offers the ability to filter results found with it
 Using optional Strapi features can provide some more filters:
 
 - If the [Internationalization (i18n) plugin](/cms/features/internationalization) is enabled on a content-type, it's possible to filter by locale.
-- If the [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled, it's possible to filter based on a `published` (default) or `draft` status.
+- If the [Draft & Publish](/cms/features/draft-and-publish) is enabled, it's possible to filter based on a `published` (default) or `draft` status.
 
 :::tip
 <QsIntroFull />

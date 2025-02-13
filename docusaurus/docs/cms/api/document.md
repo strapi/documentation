@@ -20,7 +20,7 @@ A **document** in Strapi 5 is an API-only concept. A document represents all the
 
 A single type contains a unique document, and a collection type can contain several documents.
 
-When you use the admin panel, the concept of a document is never mentioned and not necessary for the end user. Users create and edit **entries** in the [Content Manager](/cms/content-manager). For instance, as a user, you either list the entries for a given locale, or edit the draft version of a specific entry in a given locale.
+When you use the admin panel, the concept of a document is never mentioned and not necessary for the end user. Users create and edit **entries** in the [Content Manager](/cms/features/content-manager). For instance, as a user, you either list the entries for a given locale, or edit the draft version of a specific entry in a given locale.
 
 However, at the API level, the value of the fields of an entry can actually have:
 
@@ -31,7 +31,7 @@ The bucket that includes the content of all the draft and published versions for
 
 Manipulating documents with the [Document Service API](/cms/api/document-service) will help you create, retrieve, update, and delete documents or a specific subset of the data they contain.
 
-The following diagrams represent all the possible variations of content depending on which features, such as [Internationalization (i18n)](/cms/content-manager/translating-content) and [Draft & Publish](/cms/content-manager/saving-and-publishing-content), are enabled for a content-type:
+The following diagrams represent all the possible variations of content depending on which features, such as [Internationalization (i18n)](/cms/features/internationalization) and [Draft & Publish](/cms/features/draft-and-publish), are enabled for a content-type:
 
 <Tabs>
 <TabItem value="document-only" label="Neither i18n nor Draft & Publish enabled">

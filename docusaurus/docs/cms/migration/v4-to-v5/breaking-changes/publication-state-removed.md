@@ -19,7 +19,7 @@ import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # `publicationState` is removed and replaced by `status`
 
-In Strapi 5, the [Draft & Publish feature](/cms/content-manager/saving-and-publishing-content) has been reworked, and the Content API, including REST, GraphQL, and Document Service APIs accept a new `status` parameter.
+In Strapi 5, the [Draft & Publish feature](/cms/features/draft-and-publish) has been reworked, and the Content API, including REST, GraphQL, and Document Service APIs accept a new `status` parameter.
 
 <Intro />
 

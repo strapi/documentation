@@ -23,7 +23,7 @@ There are 2 different types of models in Strapi:
 - content-types, which can be collection types or single types, depending on how many entries they manage,
 - and components that are data structures re-usable in multiple content-types.
 
-If you are just starting out, it is convenient to generate some models with the [Content-type Builder](/cms/content-type-builder) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
+If you are just starting out, it is convenient to generate some models with the [Content-type Builder](/cms/features/content-type-builder) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
 
 ## Model creation
 
@@ -49,7 +49,7 @@ In [TypeScript](/cms/typescript.md)-enabled projects, schema typings can be gene
 
 ### Components {#components-creation}
 
-Component models can't be created with CLI tools. Use the [Content-type Builder](/cms/content-type-builder) or create them manually.
+Component models can't be created with CLI tools. Use the [Content-type Builder](/cms/features/content-type-builder) or create them manually.
 
 Components models are stored in the `./src/components` folder. Every component has to be inside a subfolder, named after the category the component belongs to (see [project structure](/cms/project-structure)).
 
@@ -111,7 +111,7 @@ Many types of attributes are available:
 
 - scalar types (e.g. strings, dates, numbers, booleans, etc.),
 - Strapi-specific types, such as:
-  - `media` for files uploaded through the [Media library](/cms/content-type-builder/configuring-fields-content-type#media)
+  - `media` for files uploaded through the [Media library](/cms/features/content-type-builder#media)
   - `relation` to describe a [relation](#relations) between content-types
   - `customField` to describe [custom fields](#custom-fields) and their specific keys
   - `component` to define a [component](#components-json) (i.e. a data structure usable in multiple content-types)

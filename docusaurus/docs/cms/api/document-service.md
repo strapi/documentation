@@ -14,7 +14,7 @@ tags:
 
 The Document Service API is built on top of the **Query Engine API** <Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/cms/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi data structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/cms/api/content-api) and [backend customization](/cms/backend-customization) introductions.</Annotation> and used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** <DocumentDefinition />.
 
-With the Document Service API, you can also [count](#count) documents and, if [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled on the content-type, perform Strapi-specific features such as [publishing](#publish)/[unpublishing](#unpublish) documents and [discarding drafts](#discarddraft).
+With the Document Service API, you can also [count](#count) documents and, if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type, perform Strapi-specific features such as [publishing](#publish)/[unpublishing](#unpublish) documents and [discarding drafts](#discarddraft).
 
 :::strapi Entity Service API is deprecated in Strapi 5
 The Document Service API is meant to replace the Entity Service API used in Strapi v4 ([see Strapi v4 documentation](https://docs-v4.strapi.io/cms/api/entity-service)). Additional information on how to transition away from the Entity Service API to the Document Service API can be found in the related [migration reference](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
@@ -36,7 +36,7 @@ Syntax: `findOne(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | `documentId` | Document id | | `ID` |
 | [`locale`](/cms/api/document-service/locale#find-one)|  Locale of the documents to create. | Default locale | String or `undefined` |
-| [`status`](/cms/api/document-service/status#find-one) | _If [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/cms/api/document-service/status#find-one) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`fields`](/cms/api/document-service/fields#findone)   | [Select fields](/cms/api/document-service/fields#findone) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
@@ -83,7 +83,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#find-first) |  Locale of the documents to find. | Default locale | String or `undefined` |
-| [`status`](/cms/api/document-service/status#find-first) | _If [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/cms/api/document-service/status#find-first) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#findfirst)   | [Select fields](/cms/api/document-service/fields#findfirst) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -171,7 +171,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#find-many) |  Locale of the documents to find. | Default locale | String or `undefined` |
-| [`status`](/cms/api/document-service/status#find-many) | _If [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/cms/api/document-service/status#find-many) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#findmany)   | [Select fields](/cms/api/document-service/fields#findmany) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -314,7 +314,7 @@ Syntax: `create(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#create) | Locale of the documents to create. | Default locale | String or `undefined` |
 | [`fields`](/cms/api/document-service/fields#create)   | [Select fields](/cms/api/document-service/fields#create) to return   | All fields<br/>(except those not populated by default)  | Object |
-| [`status`](/cms/api/document-service/status#create) | _If [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while creating it  | -| `'published'` |
+| [`status`](/cms/api/document-service/status#create) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while creating it  | -| `'published'` |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
 ### Example
@@ -350,7 +350,7 @@ await strapi.documents('api::restaurant.restaurant').create({
 </ApiCall>
 
 :::tip
-If the [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature is enabled on the content-type, you can automatically publish a document while creating it (see [`status` documentation](/cms/api/document-service/status#create)).
+If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled on the content-type, you can automatically publish a document while creating it (see [`status` documentation](/cms/api/document-service/status#create)).
 :::
 
 ## `update()`
@@ -367,7 +367,7 @@ Syntax: `update(parameters: Params) => Promise<Document>`
 | [`locale`](/cms/api/document-service/locale#update) | Locale of the document to update. | Default locale | String or `null` |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#update)   | [Select fields](/cms/api/document-service/fields#update) to return   | All fields<br/>(except those not populate by default)  | Object |
-| [`status`](/cms/api/document-service/status#update) | _If [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while updating it  | - | `'published'` |
+| [`status`](/cms/api/document-service/status#update) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while updating it  | - | `'published'` |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
 :::tip
@@ -491,7 +491,7 @@ await strapi.documents('api::restaurant.restaurant').delete(
 
 Publishes one or multiple locales of a document.
 
-This method is only available if [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled on the content-type.
+This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
 
 Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
@@ -556,7 +556,7 @@ await strapi.documents('api::restaurant.restaurant').publish(
 
 Unpublishes one or all locale versions of a document, and returns how many locale versions were unpublished.
 
-This method is only available if [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled on the content-type.
+This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
 
 Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
@@ -611,7 +611,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 Discards draft data and overrides it with the published version.
 
-This method is only available if [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled on the content-type.
+This method is only available if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type.
 
 Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
@@ -673,7 +673,7 @@ Syntax: `count(parameters: Params) => number`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#count) | Locale of the documents to count | Default locale | String or `null` |
-| [`status`](/cms/api/document-service/status#count) | _If [Draft & Publish](/cms/content-manager/saving-and-publishing-content) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`status`](/cms/api/document-service/status#count) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 
 :::note

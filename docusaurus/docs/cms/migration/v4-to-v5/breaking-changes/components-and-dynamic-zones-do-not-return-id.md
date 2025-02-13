@@ -75,7 +75,7 @@ The response of components and dynamic zones in the REST API does not contain an
   
 * In Strapi 5:
 
-  * The [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature has been reworked and documents <DocumentDefinition/> can have both a draft and a published version.
+  * The [Draft & Publish](/cms/features/draft-and-publish) feature has been reworked and documents <DocumentDefinition/> can have both a draft and a published version.
   * The default behaviour of the Content API is to return published data, for instance `PUT /category/:id` can be used to update the draft version of a document and publish it.
   * The REST API response returns the published version, so using the `id` would resort to trying to update the draft version of a component or dynamic zone with the unique identifier of its published version, which is not possible.
   * Trying to partially update a component will result in the following error: `Some of the provided components in component are not related to the entity`.

@@ -17,7 +17,7 @@ import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md
 
 # Database lifecycle hooks are triggered differently with the Document Service API methods
 
-In Strapi 5, database lifecycle hooks are triggered differently with the various [Document Service API](/cms/api/document-service) methods, mainly due to the new way the [Draft & Publish](/cms/content-manager/saving-and-publishing-content) feature works.
+In Strapi 5, database lifecycle hooks are triggered differently with the various [Document Service API](/cms/api/document-service) methods, mainly due to the new way the [Draft & Publish](/cms/features/draft-and-publish) feature works.
 
 The majority of use cases should only use the Document Service. The Document Service API handles Draft & Publish, i18n, and any underlying strapi logic.
 
