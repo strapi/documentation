@@ -1078,6 +1078,10 @@
 		{
 			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.html",
 			"destination": "/dev-docs/migration-guides"
-		}
+		},
+    {
+      "source": "/developer-docs/latest/update-migration-guides/migration-guides.html#v3-to-v4-migration-guide",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration-guides#v3-to-v4-migration-guides"
+    }
 	]
 }
