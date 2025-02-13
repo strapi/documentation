@@ -136,9 +136,9 @@ The Plugins and Settings categories both display a sub-category per available pl
 
 <TabItem value="plugins" label="Plugins">
 
-By default, plugins permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions plugin allowing to manage end users). Each plugin has its own specific set of permissions.
+By default, packages permissions can be configured for the [Content-type Builder](/cms/features/content-type-builder), [Upload (i.e. Media Library)](/cms/features/media-library), the [Content Manager](/cms/features/content-manager), and [Users & Permissions](/cms/features/users-permissions) (i.e. the Users & Permissions feature allowing to manage end users). Each package has its own specific set of permissions.
 
-| Plugin name          | Permissions |
+| Package name          | Permissions |
 | -------------------- | ----------- |
 | Content-Releases <br /> *(Releases)* | <ul><li>General</li><ul><li>"Read" - gives access to the Releases feature</li><li>"Create" - allows to create releases</li><li>"Edit" - allows to edit releases</li><li>"Delete" - allows to delete releases</li><li>"Publish" - allows to publish releases</li><li>"Remove an entry from a release"</li><li>"Add an entry to a release"</li></ul></ul> |
 | Content-Manager | <ul><li>Single types</li><ul><li>"Configure view" - allows to configure the edit view of a single type</li></ul></ul><ul><li>Collection types</li><ul><li>"Configure view" - allows to configure the edit view of a collection type</li></ul></ul><ul><li>Components</li><ul><li>"Configure Layout" - allows to configure the layout of a component</li></ul></ul> |

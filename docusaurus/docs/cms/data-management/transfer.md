@@ -17,6 +17,8 @@ The `strapi transfer` command is part of the [Data Management feature](/cms/feat
 - from a local Strapi instance to a remote Strapi instance
 - from a remote Strapi instance to a local Strapi instance
 
+The following documentation details the available options to customize your data transfer. The transfer command and all of the available options are run using the [Strapi CLI](/cms/cli#strapi-transfer).
+
 :::caution
 
 * If you are using an SQLite database in the destination instance other database connections will be blocked while the `transfer` operation is running.

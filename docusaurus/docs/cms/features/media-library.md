@@ -87,9 +87,9 @@ The Media Library is powered in the backend server by the Upload package, which 
 
 #### Additional providers
 
-By default Strapi provides a [provider](/cms/providers) that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available should you want to upload your files to another location.
+By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available should you want to upload your files to another location.
 
-The providers maintained by Strapi are the following. Clicking on a card will redirect you to their Strapi Marketplace page:
+The providers maintained by Strapi are the following. Clicking on a card will redirect you to their Strapi Marketplace or npm page:
 
 <CustomDocCardsWrapper>
 <CustomDocCard 
@@ -608,7 +608,7 @@ By default, the Media Library displays folders and assets created at the root le
   }}
 />
 
-From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library (see [introduction to Media Library](/cms/features/media-library)).
+From this dedicated folder view, folders and assets can be managed, filtered, sorted and searched just like from the main Media Library.
 
 To navigate back to the parent folder, one level up, use the **Back** button at the top of the interface.
 

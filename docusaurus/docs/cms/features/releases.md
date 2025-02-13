@@ -119,7 +119,7 @@ Since publishing an entry with a release means turning a draft entry into a publ
 The *Releases* box on the right should show which release(s) the entry is included in.
 
 :::info
-If [Releases scheduling](/cms/features/releases#usage) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
+If [Releases scheduling](/cms/features/releases#scheduling-a-release) is enabled and the entry is added to a scheduled release, the release date and time will also be displayed.
 :::
 
 #### Multiple entries at a time

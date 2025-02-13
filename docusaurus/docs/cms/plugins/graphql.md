@@ -71,13 +71,13 @@ The Strapi admin panel does not provide Strapi-specific settings for the GraphQL
 
 ### Code-based configuration
 
-Plugins configuration are defined in the `config/plugins.js` file. This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin (see [plugins configuration documentation](/cms/plugins/graphql#code-based-configuration)).
+Plugins configuration are defined in [the `config/plugins.js` file](/cms/configurations/plugins). This configuration file can include a `graphql.config` object to define specific configurations for the GraphQL plugin.
 
 #### Available options
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be passed directly to Apollo with the `graphql.config.apolloServer` [configuration object](/cms/plugins/graphql#code-based-configuration). Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be passed directly to Apollo with the `graphql.config.apolloServer` configuration object. Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
 
-The [GraphQL plugin](/cms/plugins/graphql) has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
+The GraphQL plugin has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
 
 | Option             | Type                | Description                                                                                                                                                      | Default Value | Notes                                               |
 | ------------------ | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------- |
@@ -519,7 +519,7 @@ export default {
 
 ##### Disabling operations in the Shadow CRUD
 
-The `extension` [service](/cms/backend-customization/services) provided with the GraphQL plugin exposes functions that can be used to disable operations on Content-Types:
+The `extension` service provided with the GraphQL plugin exposes functions that can be used to disable operations on Content-Types:
 
 | Content-type function | Description                                    | Argument type    | Possible argument values |
 | --------------------  | ---------------------------------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -1054,9 +1054,9 @@ To increase GraphQL security even further, 3rd-party tools can be used. See the 
 
 The GraphQL plugin adds a GraphQL endpoint accessible and provides access to a GraphQL playground, accessing at the `/graphql` route of the Strapi admin panel, to interactively build your queries and mutations and read documentation tailored to your content types. For detailed instructions on how to use the GraphQL Playground, please refer to the official [Apollo Server documentation](https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground).
 
-### Usage with the Users & Permissions plugin
+### Usage with the Users & Permissions feature {#usage-with-the-users--permissions-plugin}
 
-The [Users & Permissions plugin](/cms/features/users-permissions) is an optional plugin that allows protecting the API with a full authentication process.
+The [Users & Permissions feature](/cms/features/users-permissions) allows protecting the API with a full authentication process.
 
 #### Registration
 

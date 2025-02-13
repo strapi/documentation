@@ -106,7 +106,7 @@ const sidebars = {
         },
         {
           type: 'doc',
-          label: 'Static Preview',
+          label: 'Preview',
           id: 'cms/features/preview',
         },
         {

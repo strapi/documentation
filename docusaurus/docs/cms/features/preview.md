@@ -1,5 +1,5 @@
 ---
-title: Static Preview
+title: Preview
 description: With the Preview feature, you can preview your front-end directly from the Content Manager
 displayedSidebar: userSidebar
 toc_max_heading_level: 4
@@ -9,7 +9,7 @@ tags:
 - features
 ---
 
-# Static Preview
+# Preview
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 

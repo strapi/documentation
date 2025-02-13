@@ -51,6 +51,8 @@ The entry file for the Admin Panel API is `[plugin-name]/admin/src/index.js`. Th
 
 ## Lifecycle functions
 
+<br/>
+
 ### register()
 
 **Type:** `Function`

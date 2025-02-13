@@ -136,7 +136,7 @@ The above installation guide only covers the basic installation option using the
 
 :::note Notes
 * If you do not pass a `--use-yarn|npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
-* For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database#configuration-structure).
+* For additional information about database configuration, please refer to the [database configuration documentation](/cms/configurations/database).
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
 

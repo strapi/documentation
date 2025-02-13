@@ -102,7 +102,7 @@ sources={{
 </details>
 
 :::callout <Icon name="confetti" /> Congratulations!
-You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/cms/intro), or proceed to part B below.
+You have just created a new Strapi project! You can start playing with Strapi and discover the [Content Manager](/cms/features/content-manager) by yourself, or proceed to part B below.
 :::
 
 ## <Icon name="wrench" /> Part B: Build your data structure with the Content-type Builder
@@ -450,6 +450,6 @@ The databases for your Strapi Cloud project and your local project are different
 Now that you know the basics of creating and publishing content with Strapi, we encourage you to explore and dig deeper into some Strapi features:
 
 <Icon name="arrow-fat-right"/> learn how to use Strapi's [REST](/cms/api/rest) API to query the content,<br/>
-<Icon name="arrow-fat-right"/> learn more about Strapi features by browsing the [User Guide](/cms/intro),<br/>
+<Icon name="arrow-fat-right"/> learn more about Strapi features by browsing the <Icon name="backpack" /> **Features** category,<br/>
 <Icon name="arrow-fat-right"/> learn more about Strapi Cloud projects by reading the [Cloud Documentation](/cloud/intro),<br/>
 <Icon name="arrow-fat-right"/> and [customize your Strapi back end](/cms/backend-customization) and [admin panel](/cms/admin-panel-customization) for advanced use cases.<br/>
