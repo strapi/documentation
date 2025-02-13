@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const redirects = require('./redirects');
+// const redirects = require('./redirects');
 const {themes} = require('prism-react-renderer');
 // const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
@@ -305,12 +305,12 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: redirects,
-      }
-    ]
+    // [ // Disabled
+    //   '@docusaurus/plugin-client-redirects',
+    //   {
+    //     redirects: redirects,
+    //   }
+    // ]
     /**
      * Seems like we have an issue where a medium-zoom--hidden class is applied on the second, top-most (z-index wise) image,
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's

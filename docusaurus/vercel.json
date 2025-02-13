@@ -1,6 +1,1631 @@
 {
   "redirects": [
     {
+      "source": "/dev-docs/advanced-features",
+      "destination": "/cms/customization",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/users-permissions",
+      "destination": "/cms/features/users-and-permissions",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/using-plugins",
+      "destination": "/cms/plugins-development/developing-plugins",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins",
+      "destination": "/cms/plugins-development/developing-plugins",
+      "permanent": true
+    },
+    {
+      "source": "/status",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/adding-content-to-releases",
+      "destination": "/cms/features/releases#including-content-in-a-release",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/configuring-view-of-content-type",
+      "destination": "/cms/features/content-manager#configuration",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/managing-relational-fields",
+      "destination": "/cms/features/content-manager#relational-fields",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/reviewing-content",
+      "destination": "/cms/features/review-workflows",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/translating-content",
+      "destination": "/cms/features/internationalization",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/writing-content",
+      "destination": "/cms/features/content-manager",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-type-builder/creating-new-content-type",
+      "destination": "/cms/features/content-type-builder#creating-content-types",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-type-builder/introduction-to-content-types-builder",
+      "destination": "/cms/features/content-type-builder",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-type-builder/managing-content-types",
+      "destination": "/cms/features/content-type-builder#editing-content-types",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/intro",
+      "destination": "/cms/intro",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/media-library/adding-assets",
+      "destination": "/cms/features/media-library#adding-assets",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/media-library/introduction-to-the-media-library",
+      "destination": "/cms/features/media-library",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/media-library/managing-assets",
+      "destination": "/cms/features/media-library#managing-individual-assets",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/media-library/organizing-assets-with-folders",
+      "destination": "/cms/features/media-library#organizing-assets-with-folders",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/admin-panel",
+      "destination": "/cms/features/admin-panel",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/configuring-users-permissions-plugin-settings",
+      "destination": "/cms/features/users-permissions#admin-panel-configuration",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/internationalization",
+      "destination": "/cms/features/internationalization#settings",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/introduction",
+      "destination": "/cms/features/admin-panel",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/media-library-settings",
+      "destination": "/cms/features/media-library#configuration",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/releases",
+      "destination": "/cms/features/releases#configuration",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/single-sign-on",
+      "destination": "/cms/features/sso",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/configuring-end-users-roles",
+      "destination": "/cms/features/users-permissions#roles",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/introduction-to-users-roles-permissions",
+      "destination": "/cms/features/users-permissions",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/managing-administrators",
+      "destination": "/cms/features/rbac#usage",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/managing-end-users",
+      "destination": "/cms/features/users-permissions#usage",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/11ty",
+      "destination": "https://strapi.io/integrations/11ty-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/angular",
+      "destination": "https://strapi.io/integrations/angular-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/dart",
+      "destination": "https://strapi.io/integrations/dart-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/flutter",
+      "destination": "https://strapi.io/integrations/flutter-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/gatsby",
+      "destination": "https://strapi.io/integrations/gatsby-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/go",
+      "destination": "https://strapi.io/integrations/go-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/graphql",
+      "destination": "/cms/plugins/graphql",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/gridsome",
+      "destination": "https://strapi.io/integrations/gridsome-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/jekyll",
+      "destination": "https://strapi.io/integrations/jekyll-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/laravel",
+      "destination": "https://strapi.io/integrations/laravel-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/next-js",
+      "destination": "https://strapi.io/integrations/nextjs-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/nuxt-js",
+      "destination": "https://strapi.io/integrations/nuxtjs-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/php",
+      "destination": "https://strapi.io/integrations/php-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/python",
+      "destination": "https://strapi.io/integrations/python-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/react",
+      "destination": "https://strapi.io/integrations/react-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/ruby",
+      "destination": "https://strapi.io/integrations/ruby-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/sapper",
+      "destination": "https://strapi.io/integrations/sapper-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/svelte",
+      "destination": "https://strapi.io/integrations/svelte-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations/vue-js",
+      "destination": "https://strapi.io/integrations/vuejs-cms",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/integrations",
+      "destination": "https://strapi.io/integrations",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
+      "destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
+      "destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/digitalocean",
+      "destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/digitalocean-app-platform",
+      "destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html",
+      "destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
+      "destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/google-app-engine",
+      "destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
+      "destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/heroku",
+      "destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html",
+      "destination": "https://strapi.io/integrations/aws",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/amazon-aws",
+      "destination": "https://strapi.io/integrations/aws",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html",
+      "destination": "https://strapi.io/integrations/azure",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/azure",
+      "destination": "https://strapi.io/integrations/azure",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html",
+      "destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/process-manager",
+      "destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/nginx-proxy",
+      "destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html",
+      "destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html",
+      "destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/haproxu-proxy",
+      "destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html",
+      "destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment/caddy-proxy",
+      "destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/guides/process-manager.html",
+      "destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/guides/external-data.html",
+      "destination": "https://strapi.io/integrations",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html",
+      "destination": "https://forum.strapi.io/t/qovery-deployment/21931",
+      "permanent": true
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.html",
+      "destination": "https://forum.strapi.io/t/render-deployment/21932",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/configuration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/configuration",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/content-type-schema",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/content-type-schema",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/controllers",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/controllers",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/dependencies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/dependencies",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/global-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/global-middlewares",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/graphql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/graphql",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/policies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/policies",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/route-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/route-middlewares",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/routes",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/routes",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/services",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/services",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code-migration",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/backend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/backend",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/frontend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/frontend",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/strapi-global",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/strapi-global",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/theming",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/theming",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/translations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/translations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/webpack",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/webpack",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/wysiwyg",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/wysiwyg",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/bundlers",
+      "destination": "/cms/admin-panel-customization/bundlers",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/deployment",
+      "destination": "/cms/admin-panel-customization/deployment",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/extension",
+      "destination": "/cms/admin-panel-customization/extension",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/host-port-path",
+      "destination": "/cms/admin-panel-customization/host-port-path",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/options",
+      "destination": "/cms/admin-panel-customization/options",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/wysiwyg-editor",
+      "destination": "/cms/admin-panel-customization/wysiwyg-editor",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization",
+      "destination": "/cms/admin-panel-customization",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/content-api",
+      "destination": "/cms/api/content-api",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/fields",
+      "destination": "/cms/api/document-service/fields",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/filters",
+      "destination": "/cms/api/document-service/filters",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/locale",
+      "destination": "/cms/api/document-service/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/middlewares",
+      "destination": "/cms/api/document-service/middlewares",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/populate",
+      "destination": "/cms/api/document-service/populate",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/sort-pagination",
+      "destination": "/cms/api/document-service/sort-pagination",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service/status",
+      "destination": "/cms/api/document-service/status",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document-service",
+      "destination": "/cms/api/document-service",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/document",
+      "destination": "/cms/api/document",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/entity-service/components-dynamic-zones",
+      "destination": "/cms/api/entity-service/components-dynamic-zones",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/entity-service/crud",
+      "destination": "/cms/api/entity-service/crud",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/entity-service/filter",
+      "destination": "/cms/api/entity-service/filter",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/entity-service/order-pagination",
+      "destination": "/cms/api/entity-service/order-pagination",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/entity-service/populate",
+      "destination": "/cms/api/entity-service/populate",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/entity-service",
+      "destination": "/cms/api/entity-service",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/graphql/locale",
+      "destination": "/cms/api/graphql/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/graphql",
+      "destination": "/cms/api/graphql",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/query-engine/bulk-operations",
+      "destination": "/cms/api/query-engine/bulk-operations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/query-engine/filtering",
+      "destination": "/cms/api/query-engine/filtering",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/query-engine/order-pagination",
+      "destination": "/cms/api/query-engine/order-pagination",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/query-engine/populating",
+      "destination": "/cms/api/query-engine/populating",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/query-engine/single-operations",
+      "destination": "/cms/api/query-engine/single-operations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/query-engine",
+      "destination": "/cms/api/query-engine",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/filters",
+      "destination": "/cms/api/rest/filters",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/guides/intro",
+      "destination": "/cms/api/rest/guides/intro",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/guides/populate-creator-fields",
+      "destination": "/cms/api/rest/guides/populate-creator-fields",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/guides/understanding-populate",
+      "destination": "/cms/api/rest/guides/understanding-populate",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/interactive-query-builder",
+      "destination": "/cms/api/rest/interactive-query-builder",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/locale",
+      "destination": "/cms/api/rest/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/parameters",
+      "destination": "/cms/api/rest/parameters",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/populate-select",
+      "destination": "/cms/api/rest/populate-select",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/relations",
+      "destination": "/cms/api/rest/relations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/sort-pagination",
+      "destination": "/cms/api/rest/sort-pagination",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/status",
+      "destination": "/cms/api/rest/status",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/upload",
+      "destination": "/cms/api/rest/upload",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest",
+      "destination": "/cms/api/rest",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/controllers",
+      "destination": "/cms/backend-customization/controllers",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/examples/authentication",
+      "destination": "/cms/backend-customization/examples/authentication",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/examples/middlewares",
+      "destination": "/cms/backend-customization/examples/middlewares",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/examples/policies",
+      "destination": "/cms/backend-customization/examples/policies",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/examples/routes",
+      "destination": "/cms/backend-customization/examples/routes",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/examples/services-and-controllers",
+      "destination": "/cms/backend-customization/examples/services-and-controllers",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/examples",
+      "destination": "/cms/backend-customization/examples",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/middlewares",
+      "destination": "/cms/backend-customization/middlewares",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/models",
+      "destination": "/cms/backend-customization/models",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/policies",
+      "destination": "/cms/backend-customization/policies",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/requests-responses",
+      "destination": "/cms/backend-customization/requests-responses",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/routes",
+      "destination": "/cms/backend-customization/routes",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/services",
+      "destination": "/cms/backend-customization/services",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization/webhooks",
+      "destination": "/cms/backend-customization/webhooks",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/backend-customization",
+      "destination": "/cms/backend-customization",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/cli",
+      "destination": "/cms/cli",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/community",
+      "destination": "/cms/community",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/admin-panel",
+      "destination": "/cms/configurations/admin-panel",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/api",
+      "destination": "/cms/configurations/api",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/cron",
+      "destination": "/cms/configurations/cron",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/database",
+      "destination": "/cms/configurations/database",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/environment",
+      "destination": "/cms/configurations/environment",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/features",
+      "destination": "/cms/configurations/features",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/functions",
+      "destination": "/cms/configurations/functions",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/guides/access-cast-environment-variables",
+      "destination": "/cms/configurations/guides/access-cast-environment-variables",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/guides/access-configuration-values",
+      "destination": "/cms/configurations/guides/access-configuration-values",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/guides/configure-sso",
+      "destination": "/cms/configurations/guides/configure-sso",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/guides/public-assets",
+      "destination": "/cms/configurations/guides/public-assets",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/guides/rbac",
+      "destination": "/cms/configurations/guides/rbac",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/guides/use-cron-jobs",
+      "destination": "/cms/configurations/guides/use-cron-jobs",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/middlewares",
+      "destination": "/cms/configurations/middlewares",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/plugins",
+      "destination": "/cms/configurations/plugins",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/server",
+      "destination": "/cms/configurations/server",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso-providers/discord",
+      "destination": "/cms/configurations/sso-providers/discord",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso-providers/github",
+      "destination": "/cms/configurations/sso-providers/github",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso-providers/google",
+      "destination": "/cms/configurations/sso-providers/google",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso-providers/keycloak",
+      "destination": "/cms/configurations/sso-providers/keycloak",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso-providers/microsoft",
+      "destination": "/cms/configurations/sso-providers/microsoft",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso-providers/okta",
+      "destination": "/cms/configurations/sso-providers/okta",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/typescript",
+      "destination": "/cms/configurations/typescript",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/auth-zero",
+      "destination": "/cms/configurations/users-and-permissions-providers/auth-zero",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/aws-cognito",
+      "destination": "/cms/configurations/users-and-permissions-providers/aws-cognito",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/cas",
+      "destination": "/cms/configurations/users-and-permissions-providers/cas",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/discord",
+      "destination": "/cms/configurations/users-and-permissions-providers/discord",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/facebook",
+      "destination": "/cms/configurations/users-and-permissions-providers/facebook",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/github",
+      "destination": "/cms/configurations/users-and-permissions-providers/github",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/google",
+      "destination": "/cms/configurations/users-and-permissions-providers/google",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/instagram",
+      "destination": "/cms/configurations/users-and-permissions-providers/instagram",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/keycloak",
+      "destination": "/cms/configurations/users-and-permissions-providers/keycloak",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/linkedin",
+      "destination": "/cms/configurations/users-and-permissions-providers/linkedin",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/new-provider-guide",
+      "destination": "/cms/configurations/users-and-permissions-providers/new-provider-guide",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/patreon",
+      "destination": "/cms/configurations/users-and-permissions-providers/patreon",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/reddit",
+      "destination": "/cms/configurations/users-and-permissions-providers/reddit",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/twitch",
+      "destination": "/cms/configurations/users-and-permissions-providers/twitch",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/twitter",
+      "destination": "/cms/configurations/users-and-permissions-providers/twitter",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers/vk",
+      "destination": "/cms/configurations/users-and-permissions-providers/vk",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/users-and-permissions-providers",
+      "destination": "/cms/configurations/users-and-permissions-providers",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations",
+      "destination": "/cms/configurations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/custom-fields",
+      "destination": "/cms/plugins-development/custom-fields",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/customization",
+      "destination": "/cms/customization",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/data-management/export",
+      "destination": "/cms/data-management/export",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/data-management/import",
+      "destination": "/cms/data-management/import",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/data-management/transfer",
+      "destination": "/cms/data-management/transfer",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/database-migrations",
+      "destination": "/cms/database-migrations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/database-transactions",
+      "destination": "/cms/database-transactions",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/deployment",
+      "destination": "/cms/deployment",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/error-handling",
+      "destination": "/cms/error-handling",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/faq",
+      "destination": "/cms/faq",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/installation/cli",
+      "destination": "/cms/installation/cli",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/installation/docker",
+      "destination": "/cms/installation/docker",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/installation",
+      "destination": "/cms/installation",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/intro",
+      "destination": "/cms/intro",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service",
+      "destination": "/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/additional-resources/helper-plugin",
+      "destination": "/cms/migration/v4-to-v5/additional-resources/helper-plugin",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/additional-resources/introduction",
+      "destination": "/cms/migration/v4-to-v5/additional-resources/introduction",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/additional-resources/plugins-migration",
+      "destination": "/cms/migration/v4-to-v5/additional-resources/plugins-migration",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/admin-panel-rbac-store-updated",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/components-and-dynamic-zones-do-not-return-id",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/core-service-methods-use-document-service",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/database-columns",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/database-columns",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/database-identifiers-shortened",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/database-identifiers-shortened",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/default-index-removed",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/default-index-removed",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/default-input-validation",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/default-input-validation",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/edit-view-layout-and-list-view-layout-rewritten",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/entity-service-deprecated",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/fetch",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/fetch",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/get-where-removed",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/get-where-removed",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/graphql-api-updated",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/i18n-content-manager-locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/inject-content-manager-component",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/inject-content-manager-component",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/is-supported-image-removed",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/is-supported-image-removed",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/koa-body-v6",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/koa-body-v6",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/license-only",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/license-only",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/mailgun-provider-variables",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/mailgun-provider-variables",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/model-config-path-uses-uid",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/mysql5-unsupported",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/mysql5-unsupported",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/new-response-format",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/new-response-format",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/no-find-page-in-document-service",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/no-locale-all",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/no-locale-all",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/only-better-sqlite3-for-sqlite",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/only-mysql2-package-for-mysql",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/publication-state-removed",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/publication-state-removed",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/publishedat-always-set-when-dandp-disabled",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/publishedat-always-set-when-dandp-disabled",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/react-router-dom-6",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/react-router-dom-6",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/redux-content-manager-app-state",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/register-allowed-fields",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/register-allowed-fields",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/remove-webhook-populate-relations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/removed-support-for-some-env-options",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/server-default-log-level",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/server-default-log-level",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/server-proxy",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/server-proxy",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/sort-by-id",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/sort-by-id",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/strapi-container",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/strapi-container",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/strapi-imports",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/strapi-imports",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/strapi-utils-refactored",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/strapi-utils-refactored",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/strict-requirements-config-files",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/strict-requirements-config-files",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/templates",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/templates",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/upgrade-to-apollov4",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/use-document-id",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/use-document-id",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/vite",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/vite",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/webpack-aliases-removed",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/webpack-aliases-removed",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/yarn-not-default",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes/yarn-not-default",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/introduction-and-faq",
+      "destination": "/cms/migration/v4-to-v5/introduction-and-faq",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/step-by-step",
+      "destination": "/cms/migration/v4-to-v5/step-by-step",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v5/migration-guide-5.0.0-to-5.0.1",
+      "destination": "/cms/migration/v5/migration-guide-5.0.0-to-5.0.1",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/admin-panel-api",
+      "destination": "/cms/plugins-development/admin-panel-api",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/content-manager-apis",
+      "destination": "/cms/plugins-development/content-manager-apis",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/developing-plugins",
+      "destination": "/cms/plugins-development/developing-plugins",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/development/create-a-plugin",
+      "destination": "/cms/plugins-development/create-a-plugin",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/development/plugin-sdk",
+      "destination": "/cms/plugins-development/plugin-sdk",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/development/plugin-structure",
+      "destination": "/cms/plugins-development/plugin-structure",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/documentation",
+      "destination": "/cms/plugins/documentation",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/graphql",
+      "destination": "/cms/plugins/graphql",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/guides/pass-data-from-server-to-admin",
+      "destination": "/cms/plugins-development/guides/pass-data-from-server-to-admin",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/guides/store-and-access-data",
+      "destination": "/cms/plugins-development/guides/store-and-access-data",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/sentry",
+      "destination": "/cms/plugins/sentry",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/server-api",
+      "destination": "/cms/plugins-development/server-api",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/upload",
+      "destination": "/cms/plugins/upload",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins-extension",
+      "destination": "/cms/plugins-development/plugins-extension",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/project-structure",
+      "destination": "/cms/project-structure",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/providers",
+      "destination": "/cms/providers",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/quick-start",
+      "destination": "/cms/quick-start",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/setup-deployment",
+      "destination": "/cms/setup-deployment",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/templates",
+      "destination": "/cms/templates",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/testing",
+      "destination": "/cms/testing",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/typescript/adding-support-to-existing-project",
+      "destination": "/cms/typescript/adding-support-to-existing-project",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/typescript/development",
+      "destination": "/cms/typescript/development",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/typescript",
+      "destination": "/cms/typescript",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/upgrade-tool",
+      "destination": "/cms/upgrade-tool",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/upgrades",
+      "destination": "/cms/upgrades",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/usage-information",
+      "destination": "/cms/usage-information",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/whats-new",
+      "destination": "/cms/whats-new",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/introduction-to-content-manager",
+      "destination": "/cms/features/draft-and-publish",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/saving-and-publishing-content",
+      "destination": "/cms/features/draft-and-publish",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/working-with-content-history",
+      "destination": "/cms/features/content-history",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-type-builder/configuring-fields-content-type",
+      "destination": "/cms/features/content-type-builder",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/admin-panel",
+      "destination": "/cms/features/admin-panel",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/api-tokens",
+      "destination": "/cms/features/api-tokens",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/audit-logs",
+      "destination": "/cms/features/audit-logs",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/content-history",
+      "destination": "/cms/features/content-history",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/content-manager",
+      "destination": "/cms/features/content-manager",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/content-type-builder",
+      "destination": "/cms/features/content-type-builder",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/data-management",
+      "destination": "/cms/features/data-management",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/draft-and-publish",
+      "destination": "/cms/features/draft-and-publish",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/email",
+      "destination": "/cms/features/email",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/internationalization",
+      "destination": "/cms/features/internationalization",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/media-library",
+      "destination": "/cms/features/media-library",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/preview",
+      "destination": "/cms/features/preview",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/rbac",
+      "destination": "/cms/features/rbac",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/releases",
+      "destination": "/cms/features/releases",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/review-workflows",
+      "destination": "/cms/features/review-workflows",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/sso",
+      "destination": "/cms/features/sso",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/features/users-permissions",
+      "destination": "/cms/features/users-permissions",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/getting-started/setting-up-admin-panel",
+      "destination": "/cms/getting-started/setting-up-admin-panel",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/getting-started/user-guide-fundamentals",
+      "destination": "/cms/getting-started/user-guide-fundamentals",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/plugins/installing-plugins-via-marketplace",
+      "destination": "/cms/plugins/installing-plugins-via-marketplace",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/plugins/introduction-to-plugins",
+      "destination": "/cms/plugins/introduction-to-plugins",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/plugins/strapi-plugins",
+      "destination": "/cms/plugins/strapi-plugins",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/API-tokens",
+      "destination": "/cms/features/api-tokens",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/audit-logs",
+      "destination": "/cms/features/audit-logs",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/review-workflows",
+      "destination": "/cms/features/review-workflows",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/settings/transfer-tokens",
+      "destination": "/cms/features/data-management",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/configuring-administrator-roles",
+      "destination": "/cms/features/rbac",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/intro#strapi-community",
       "destination": "/dev-docs/community",
       "permanent": true
@@ -359,6 +1984,1503 @@
       "source": "/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql",
       "destination": "/dev-docs/i18n#graphql-delete",
       "permanent": true
+    },
+		{
+			"source": "/cloud/",
+			"destination": "/cloud/intro"
+		},
+    {
+      "source": "/developer-docs/latest/getting-started/quick-start.html%23_1-install-strapi-and-create-a-new-project",
+      "destination": "/dev-docs/quick-start"
+    },
+    {
+      "source": "/user-docs/intro%23using-sso-for-authentication-",
+      "destination": "/user-docs/getting-started/setting-up-admin-panel#using-sso-for-authentication-"
+    },
+    {
+      "source": "/dev-docs/whatsnew",
+      "destination": "/dev-docs/whats-new"
+    },
+		{
+			"source": "/dev-docs/deployment/strapi-cloud",
+			"destination": "/cloud/intro"
+		},
+    {
+      "source": "/dev-docs/deployment/optional-software-guides",
+      "destination": "/dev-docs/deployment#additional-resources"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click.html",
+      "destination": "https://strapi.io/integrations/digital-ocean"
+    },
+    {
+      "source": "/developer-docs/latest/setup-deployment-guides/installation/digitalocean-one-click",
+      "destination": "https://strapi.io/integrations/digital-ocean"
+    },
+    {
+      "source": "/dev-docs/deployment/digitalocean",
+      "destination": "https://strapi.io/integrations/digital-ocean"
+    },
+		{
+			"source": "/developer-docs",
+			"destination": "/dev-docs"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/introduction.html",
+			"destination": "/dev-docs/intro"
+		},
+		{
+			"source": "/developer-docs/latest/guides/auth-request.html",
+			"destination": "/dev-docs/intro"
+		},
+		{
+			"source": "/dev-docs",
+			"destination": "/dev-docs/intro"
+		},
+		{
+			"source": "/dev-docs/",
+			"destination": "/dev-docs/intro"
+		},
+		{
+			"source": "/user-docs/getting-started/introduction.html",
+			"destination": "/user-docs"
+		},
+		{
+			"source": "/user-docs/getting-started/introduction",
+			"destination": "/user-docs/intro"
+		},
+		{
+			"source": "/user-docs/settings/managing-global-settings",
+			"destination": "/user-docs/settings/admin-panel"
+		},
+		{
+			"source": "/user-docs/users-roles-permissions/introduction-to-users-roles-permissions",
+			"destination": "/user-docs/users-roles-permissions"
+		},
+		{
+			"source": "/user-docs/content-manager/introduction-to-content-manager",
+			"destination": "/user-docs/content-manager"
+		},
+		{
+			"source": "/user-docs",
+			"destination": "/user-docs/intro"
+		},
+		{
+			"source": "/user-docs/",
+			"destination": "/user-docs/intro"
+		},
+		{
+			"source": "/developer-docs/latest/development/admin-customization.html",
+			"destination": "/dev-docs/admin-panel-customization"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/webhooks.html",
+			"destination": "/dev-docs/backend-customization/webhooks"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/policies.html",
+			"destination": "/dev-docs/backend-customization/policies"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/routes.html",
+			"destination": "/dev-docs/backend-customization/routes"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/middlewares.html",
+			"destination": "/dev-docs/backend-customization/middlewares"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/models.html",
+			"destination": "/dev-docs/backend-customization/models"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/requests-responses.html",
+			"destination": "/dev-docs/backend-customization/requests-responses"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/services.html",
+			"destination": "/dev-docs/backend-customization/services"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization/controllers.html",
+			"destination": "/dev-docs/backend-customization/controllers"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization",
+			"destination": "/dev-docs/backend-customization"
+		},
+		{
+			"source": "/developer-docs/latest/development/backend-customization.html",
+			"destination": "/dev-docs/backend-customization"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/cli/CLI.html",
+			"destination": "/dev-docs/cli"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/required/server.html",
+			"destination": "/dev-docs/configurations/server"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/required/databases.html",
+			"destination": "/dev-docs/configurations/database"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/admin-panel.html",
+			"destination": "/dev-docs/configurations/admin-panel"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/required/admin-panel.html",
+			"destination": "/dev-docs/configurations/admin-panel"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/typescript.html",
+			"destination": "/dev-docs/configurations/typescript"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html",
+			"destination": "/dev-docs/configurations/middlewares"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/plugins.html",
+			"destination": "/dev-docs/configurations/plugins"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html",
+			"destination": "/dev-docs/configurations/guides/public-assets"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html",
+			"destination": "/user-docs/features/api-tokens"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/functions.html",
+			"destination": "/dev-docs/configurations/functions"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/environment.html",
+			"destination": "/dev-docs/configurations/environment"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html",
+			"destination": "/dev-docs/configurations/guides/configure-sso"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html",
+			"destination": "/dev-docs/configurations/cron"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/rbac.html",
+			"destination": "/dev-docs/configurations/guides/rbac"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api.html",
+			"destination": "/dev-docs/configurations/api"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations.html",
+			"destination": "/dev-docs/configurations"
+		},
+		{
+			"source": "/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html",
+			"destination": "/user-docs/content-type-builder"
+		},
+		{
+			"source": "/developer-docs/latest/development/custom-fields",
+			"destination": "/dev-docs/custom-fields"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/data-management.html",
+			"destination": "/user-docs/features/data-management"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-migrations.html",
+			"destination": "/dev-docs/database-migrations"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean.html",
+			"destination": "/dev-docs/deployment/digitalocean"
+		},
+		{
+			"source": "/dev-docs/deployment/digitalocean-app-platform",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+  	{
+			"source": "/dev-docs/deployment/digitalocean",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/digitalocean-app-platform.html",
+			"destination": "https://strapi.io/integrations/digital-ocean",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html",
+			"destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/google-app-engine",
+      "destination": "https://forum.strapi.io/t/strapi-v4-on-google-app-engine/28629",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/heroku.html",
+			"destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
+		},
+    {
+			"source": "/dev-docs/deployment/heroku",
+			"destination": "https://strapi.io/integrations/heroku",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/amazon-aws.html",
+			"destination": "https://strapi.io/integrations/aws"
+		},
+    {
+			"source": "/dev-docs/deployment/amazon-aws",
+			"destination": "https://strapi.io/integrations/aws",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/azure.html",
+			"destination": "https://strapi.io/integrations/azure"
+		},
+    {
+      "source": "/dev-docs/deployment/azure",
+      "destination": "https://strapi.io/integrations/azure",
+      "permanent": true
+    },
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/process-manager.html",
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+		},
+		{
+      "source": "/dev-docs/deployment/process-manager",
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/nginx-proxy",
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
+		},
+   	{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html",
+			"destination": "https://forum.strapi.io/t/nginx-proxing-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/haproxy-proxy.html",
+			"destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
+		},
+    {
+      "source": "/dev-docs/deployment/haproxu-proxy",
+      "destination": "https://forum.strapi.io/t/haproxy-proxying-with-strapi/",
+      "permanent": true
+    },
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/optional-software/caddy-proxy.html",
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/dev-docs/deployment/caddy-proxy",
+			"destination": "https://forum.strapi.io/t/caddy-proxying-with-strapi/",
+      "permanent": true
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/strapi-cloud.html",
+			"destination": "/dev-docs/deployment/strapi-cloud"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment.html",
+			"destination": "/dev-docs/deployment"
+		},
+    {
+      "source": "/dev-docs/api/document-service/select",
+      "destination": "/dev-docs/api/document-service/fields"
+    },
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/populate.html",
+			"destination": "/dev-docs/api/entity-service/populate"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/components-dynamic-zones.html",
+			"destination": "/dev-docs/api/entity-service/components-dynamic-zones"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/filter.html",
+			"destination": "/dev-docs/api/entity-service/filter"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/crud.html",
+			"destination": "/dev-docs/api/entity-service/crud"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service/order-pagination.html",
+			"destination": "/dev-docs/api/entity-service/order-pagination"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/entity-service-api.html",
+			"destination": "/dev-docs/api/entity-service"
+		},
+		{
+			"source": "/developer-docs/latest/development/error-handling.html",
+			"destination": "/dev-docs/error-handling"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/error-handling.html",
+			"destination": "/dev-docs/error-handling"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/introduction",
+			"destination": "/"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/introduction.html",
+			"destination": "/"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/troubleshooting.html",
+			"destination": "/dev-docs/faq"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/usage-information.html",
+			"destination": "/dev-docs/usage-information"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/global-strapi/api-reference.html",
+			"destination": "/dev-docs/cli"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/graphql-api.html",
+			"destination": "/dev-docs/api/graphql"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/installation/docker.html",
+			"destination": "/dev-docs/installation/docker"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/installation/cli.html",
+			"destination": "/dev-docs/installation/cli"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/installation.html",
+			"destination": "/dev-docs/installation"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/gridsome.html",
+			"destination": "/dev-docs/integrations/gridsome"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/react.html",
+			"destination": "/dev-docs/integrations/react"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/vue-js.html",
+			"destination": "/dev-docs/integrations/vue-js"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/svelte.html",
+			"destination": "/dev-docs/integrations/svelte"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/sapper.html",
+			"destination": "/dev-docs/integrations/sapper"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/gatsby.html",
+			"destination": "/dev-docs/integrations/gatsby"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/ruby.html",
+			"destination": "/dev-docs/integrations/ruby"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/python.html",
+			"destination": "/dev-docs/integrations/python"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/php.html",
+			"destination": "/dev-docs/integrations/php"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/next-js.html",
+			"destination": "/dev-docs/integrations/next-js"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/nuxt-js.html",
+			"destination": "/dev-docs/integrations/nuxt-js"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/laravel.html",
+			"destination": "/dev-docs/integrations/laravel"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/jekyll.html",
+			"destination": "/dev-docs/integrations/jekyll"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/graphql.html",
+			"destination": "/dev-docs/integrations/graphql"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/go.html",
+			"destination": "/dev-docs/integrations/go"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/flutter.html",
+			"destination": "/dev-docs/integrations/flutter"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/dart.html",
+			"destination": "/dev-docs/integrations/dart"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/angular.html",
+			"destination": "/dev-docs/integrations/angular"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations/11ty.html",
+			"destination": "/dev-docs/integrations/11ty"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/content-api/integrations.html",
+			"destination": "/dev-docs/integrations"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/update-version.html",
+			"destination": "/dev-docs/upgrades"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides.html",
+			"destination": "/dev-docs/upgrades"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/admin-panel.html",
+			"destination": "/dev-docs/plugins/admin-panel-api"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/plugin-api-reference/server.html",
+			"destination": "/dev-docs/plugins/server-api"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/email.html",
+			"destination": "/dev-docs/plugins/email"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/users-permissions.html",
+			"destination": "/dev-docs/plugins/users-permissions"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/documentation.html",
+			"destination": "/dev-docs/plugins/documentation"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/upload.html",
+			"destination": "/dev-docs/plugins/upload"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/sentry.html",
+			"destination": "/dev-docs/plugins/sentry"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/graphql.html",
+			"destination": "/dev-docs/plugins/graphql"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/i18n.html",
+			"destination": "/user-docs/features/internationalization"
+		},
+		{
+			"source": "/developer-docs/latest/development/plugins-development.html",
+			"destination": "/dev-docs/plugins/developing-plugins"
+		},
+		{
+			"source": "/dev-docs/plugins-development",
+			"destination": "/dev-docs/plugins/developing-plugins"
+		},
+		{
+			"source": "/developer-docs/latest/development/plugins-extension.html",
+			"destination": "/dev-docs/plugins-extension"
+		},
+		{
+			"source": "/developer-docs/latest/plugins/plugins.html",
+			"destination": "/dev-docs/plugins"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/file-structure",
+			"destination": "/dev-docs/project-structure"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/file-structure.html",
+			"destination": "/dev-docs/project-structure"
+		},
+		{
+			"source": "/developer-docs/latest/development/providers.html",
+			"destination": "/dev-docs/providers"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.html",
+			"destination": "/dev-docs/api/query-engine/filtering"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/order-pagination.html",
+			"destination": "/dev-docs/api/query-engine/order-pagination"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/populating.html",
+			"destination": "/dev-docs/api/query-engine/populating"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/single-operations.html",
+			"destination": "/dev-docs/api/query-engine/single-operations"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/bulk-operations.html",
+			"destination": "/dev-docs/api/query-engine/bulk-operations"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine-api.html",
+			"destination": "/dev-docs/api/query-engine"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/quick-start",
+			"destination": "/dev-docs/quick-start"
+		},
+		{
+			"source": "/developer-docs/latest/getting-started/quick-start.html",
+			"destination": "/dev-docs/quick-start"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api.html",
+			"destination": "/dev-docs/api/rest"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html",
+			"destination": "/dev-docs/api/rest/parameters"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/filtering-locale-publication.html",
+			"destination": "/dev-docs/api/rest/filters-locale-publication"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/populating-fields.html",
+			"destination": "/dev-docs/api/rest/populate-select"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/relations.html",
+			"destination": "/dev-docs/api/rest/relations"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/sort-pagination.html",
+			"destination": "/dev-docs/api/rest/sort-pagination"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html",
+			"destination": "/dev-docs/configurations/database#sqlite"
+		},
+    {
+			"source": "/dev-docs/configurations/database/sqlite",
+			"destination": "/dev-docs/configurations/database#sqlite"
+		},
+    {
+			"source": "/dev-docs/configurations/sqlite",
+			"destination": "/dev-docs/configurations/database#sqlite"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/installation/templates.html",
+			"destination": "/dev-docs/templates"
+		},
+		{
+			"source": "/developer-docs/latest/development/typescript.html",
+			"destination": "/dev-docs/typescript"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/unit-testing.html",
+			"destination": "/dev-docs/testing"
+		},
+		{
+			"source": "/user-docs/latest/users-roles-permissions/managing-administrators.html",
+			"destination": "/user-docs/users-roles-permissions/managing-administrators.html"
+		},
+		{
+			"source": "/user-docs/latest/users-roles-permissions/managing-end-users.html",
+			"destination": "/user-docs/users-roles-permissions/managing-end-users"
+		},
+		{
+			"source": "/user-docs/latest/users-roles-permissions/introduction-to-users-roles-permissions.html",
+			"destination": "/user-docs/users-roles-permissions/introduction-to-users-roles-permissions"
+		},
+		{
+			"source": "/user-docs/latest/users-roles-permissions/configuring-end-users-roles.html",
+			"destination": "/user-docs/users-roles-permissions/configuring-end-users-roles"
+		},
+		{
+			"source": "/user-docs/latest/users-roles-permissions/configuring-administrator-roles.html",
+			"destination": "/user-docs/users-roles-permissions/configuring-administrator-roles"
+		},
+		{
+			"source": "/user-docs/latest/settings/managing-global-settings.html",
+			"destination": "/user-docs/settings/managing-global-settings"
+		},
+		{
+			"source": "/user-docs/latest/settings/configuring-users-permissions-plugin-settings.html",
+			"destination": "/user-docs/settings/configuring-users-permissions-plugin-settings"
+		},
+		{
+			"source": "/user-docs/latest/settings/audit-logs.html",
+			"destination": "/user-docs/settings/audit-logs"
+		},
+		{
+			"source": "/user-docs/latest/plugins/strapi-plugins.html",
+			"destination": "/user-docs/plugins/strapi-plugins"
+		},
+		{
+			"source": "/user-docs/latest/plugins/introduction-to-plugins.html",
+			"destination": "/user-docs/plugins/introduction-to-plugins"
+		},
+		{
+			"source": "/user-docs/latest/plugins/installing-plugins-via-marketplace.html",
+			"destination": "/user-docs/plugins/installing-plugins-via-marketplace"
+		},
+		{
+			"source": "/user-docs/latest/media-library/organizing-assets-with-folders.html",
+			"destination": "/user-docs/media-library/organizing-assets-with-folders"
+		},
+		{
+			"source": "/user-docs/latest/media-library/organizing-assets-with-folders.html",
+			"destination": "/user-docs/media-library/organizing-assets-with-folders"
+		},
+		{
+			"source": "/user-docs/latest/media-library/managing-assets.html",
+			"destination": "/user-docs/media-library/managing-assets"
+		},
+		{
+			"source": "/user-docs/latest/media-library/introduction-to-media-library.html",
+			"destination": "/user-docs/media-library/introduction-to-media-library"
+		},
+		{
+			"source": "/user-docs/latest/media-library/adding-assets.html",
+			"destination": "/user-docs/media-library/adding-assets"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
+			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+		},
+		{
+			"source": "/user-docs/latest/getting-started/introduction.html",
+			"destination": "/user-docs/getting-started/introduction"
+		},
+		{
+			"source": "/user-docs/latest/content-types-builder/managing-content-types.html",
+			"destination": "/user-docs/content-types-builder/managing-content-types"
+		},
+		{
+			"source": "/user-docs/latest/content-types-builder/introduction-to-content-types-builder.html",
+			"destination": "/user-docs/content-types-builder/introduction-to-content-types-builder"
+		},
+		{
+			"source": "/user-docs/latest/content-types-builder/creating-new-content-type.html",
+			"destination": "/user-docs/content-types-builder/creating-new-content-type"
+		},
+		{
+			"source": "/user-docs/latest/content-types-builder/configuring-fields-content-type.html",
+			"destination": "/user-docs/content-types-builder/configuring-fields-content-type"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/writing-content.html",
+			"destination": "/user-docs/content-manager/writing-content"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/translating-content.html",
+			"destination": "/user-docs/content-manager/translating-content"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
+			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/saving-and-publishing-content.html",
+			"destination": "/user-docs/content-manager/saving-and-publishing-content"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/managing-relational-fields.html",
+			"destination": "/user-docs/content-manager/managing-relational-fields"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
+			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/introduction-to-content-manager.html",
+			"destination": "/user-docs/content-manager/introduction-to-content-manager"
+		},
+		{
+			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
+			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html",
+			"destination": "/dev-docs/migration/v3-to-v4/plugin/enable-plugin"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/update-folder-structure.html",
+			"destination": "/dev-docs/migration/v3-to-v4/plugin/update-folder-structure"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-back-end.html",
+			"destination": "/dev-docs/migration/v3-to-v4/plugin/update-folder-structure"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/migrate-front-end.html",
+			"destination": "/dev-docs/migration/v3-to-v4/plugin/update-folder-structure"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin-migration.html",
+			"destination": "/dev-docs/migration/v3-to-v4/plugin-migration"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code-migration.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code-migration"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/content-type-schema.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code-migration/backend/content-type-schema"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/theming.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/theming"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/strapi-global.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/strapi-global"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/frontend"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/services.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/services"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/routes.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/routes"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/route-middlewares.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/route-middlewares"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/policies.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/policies"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/graphql.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/graphql"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/global-middlewares.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/global-middlewares"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/dependencies.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/dependencies"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/controllers.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/controllers"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend/configuration.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/configuration"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/translations.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/translations"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo-sql-cheatsheet.html",
+			"destination": "/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/data-migration.html",
+			"destination": "/dev-docs/migration/v3-to-v4/data-migration"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/wysiwyg.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/wysiwyg"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/frontend/webpack.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code/webpack"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql.html",
+			"destination": "/dev-docs/migration/v3-to-v4/data/sql"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/data/sql-relations.html",
+			"destination": "/dev-docs/migration/v3-to-v4/data/sql-relations"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/data/mongo.html",
+			"destination": "/dev-docs/migration/v3-to-v4/data/mongo"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/code/backend.html",
+			"destination": "/dev-docs/migration/v3-to-v4/code-migration"
+		},
+		{
+			"source": "/dev-docs/api/admin-panel-api",
+			"destination": "/dev-docs/plugins/admin-panel-api"
+		},
+		{
+			"source": "/dev-docs/api/server-api",
+			"destination": "/dev-docs/plugins/server-api"
+		},
+		{
+			"source": "/dev-docs/user-docs/settings/managing-global-settings",
+			"destination": "/dev-docs/user-docs/settings/managing-global-settings"
+		},
+		{
+			"source": "/developer-",
+			"destination": "/dev-docs"
+		},
+		{
+			"source": "/developer-docs",
+			"destination": "/dev-docs"
+		},
+		{
+			"source": "/developer-docs/getting-started/troublshooting.html",
+			"destination": "/dev-docs/faq"
+		},
+		{
+			"source": "/developer-docs/latest/concepts/draft-and-publish.html",
+			"destination": "/user-docs/content-manager/saving-and-publishing-content"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api/filtering-locale-publication.html",
+			"destination": "/dev-docs/api/rest/filters-locale-publication"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest/relations-reordering.html",
+			"destination": "/dev-docs/api/rest/relations"
+		},
+		{
+			"source": "/developer-docs/latest/developer-resources/database-pabase-apis-reference/rest-reference/rest-api.html",
+			"destination": "/dev-docs/api/rest"
+		},
+		{
+			"source": "/dev-docs/api/plugins/server",
+			"destination": "/dev-docs/plugins/server-api"
+		},
+		{
+			"source": "/dev-docs/api/plugins/admin",
+			"destination": "/dev-docs/plugins/admin-panel-api"
+		},
+		{
+			"source": "/dev-docs/api/plugins/admin-panel",
+			"destination": "/dev-docs/plugins/admin-panel-api"
+		},
+		{
+			"source": "/developer-docs/latest/development/custom-field.html",
+			"destination": "/dev-docs/custom-fields"
+		},
+		{
+			"source": "/developer-docs/latest/development/custom-fields.html",
+			"destination": "/dev-docs/custom-fields"
+		},
+		{
+			"source": "/dev-docs/custom-field",
+			"destination": "/dev-docs/custom-fields"
+		},
+		{
+			"source": "/developer-docs/latest/guides/draft.html",
+			"destination": "/user-docs/content-manager/saving-and-publishing-content#publishing-a-draft"
+		},
+		{
+			"source": "/developer-docs/latest/guides/external-data.html",
+			"destination": "/dev-docs/integrations"
+		},
+		{
+			"source": "/developer-docs/latest/guides/jwt-validation.html",
+			"destination": "/dev-docs/plugins/users-permissions#jwt-configuration"
+		},
+		{
+			"source": "/developer-docs/latest/guides/process-manager.html",
+			"destination": "https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/"
+		},
+		{
+			"source": "/developer-docs/latest/guides/registering-a-field-in-admin.html",
+			"destination": "/dev-docs/custom-fields"
+		},
+		{
+			"source": "/developer-docs/latest/guides/unit-testing.html",
+			"destination": "/dev-docs/testing"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/21yunbox.html",
+			"destination": "/dev-docs/deployment"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/google-app-engine.html.",
+			"destination": "/dev-docs/deployment"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/qovery.html",
+			"destination": "/dev-docs/deployment"
+		},
+		{
+			"source": "/developer-docs/latest/setup-deployment-guides/deployment/hosting-guides/render.html",
+			"destination": "/dev-docs/deployment"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-1-to-3.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.0.x-to-3.1.x.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.1.x-to-3.2.x.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.2.3-to-3.2.4.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.2.5-to-3.3.0.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.3.x-to-3.4.0.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-3.4.x-to-3.4.4.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.1-to-alpha.12.2.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.3-to-alpha.12.4.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.5-to-alpha.12.6.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.6-to-alpha.12.7.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.12.7-to-alpha.13.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.13-to-alpha.13.1.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.1-to-alpha.14.2.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.2-to-alpha.14.3.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.4-to-alpha.14.5.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.14.5-to-alpha.15.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.15-to-alpha.16.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.16-to-alpha.17.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.17-to-alpha.18.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.18-to-alpha.19.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.19-to-alpha.20.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.20-to-alpha.21.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.21-to-alpha.22.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.22-to-alpha.23.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.23-to-alpha.24.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.24-to-alpha.25.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.25-to-alpha.26.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.26-to-beta.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.7.4-to-alpha.8.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.8-to-alpha.9.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-alpha.9-to-alpha.10.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.15-to-beta.16.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.16-to-beta.17.4.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.17-to-beta.18.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.18-to-beta.19.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.19-to-beta.19.4.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.19-to-beta.20.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+		{
+			"source": "/developer-docs/latest/update-migration-guides/migration-guides/migration-guide-beta.20-to-3.0.0.html",
+			"destination": "/dev-docs/migration-guides"
+		},
+    {
+      "source": "/dev-docs/integrations/11ty",
+      "destination": "https://strapi.io/integrations/11ty-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/11ty",
+      "destination": "https://strapi.io/integrations/11ty-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/dart",
+      "destination": "https://strapi.io/integrations/dart-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/flutter",
+      "destination": "https://strapi.io/integrations/flutter-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/gatsby",
+      "destination": "https://strapi.io/integrations/gatsby-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/gridsome",
+      "destination": "https://strapi.io/integrations/gridsome-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/go",
+      "destination": "https://strapi.io/integrations/go-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/jekyll",
+      "destination": "https://strapi.io/integrations/jekyll-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/laravel",
+      "destination": "https://strapi.io/integrations/laravel-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/next-js",
+      "destination": "https://strapi.io/integrations/nextjs-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/nuxt-js",
+      "destination": "https://strapi.io/integrations/nuxtjs-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/php",
+      "destination": "https://strapi.io/integrations/php-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/python",
+      "destination": "https://strapi.io/integrations/python-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/react",
+      "destination": "https://strapi.io/integrations/react-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/ruby",
+      "destination": "https://strapi.io/integrations/ruby-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/sapper",
+      "destination": "https://strapi.io/integrations/sapper-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/svelte",
+      "destination": "https://strapi.io/integrations/svelte-cms"
+    },
+    {
+      "source": "/dev-docs/integrations/vue",
+      "destination": "https://strapi.io/integrations/vuejs-cms"
+    },
+    {
+      "source": "/dev-docs/integrations",
+      "destination": "https://strapi.io/integrations"
+    },
+    {
+      "source": "/dev-docs/update-version",
+      "destination": "/dev-docs/upgrades"
+    },
+    {
+      "source": "/dev-docs/intro#strapi-community",
+      "destination": "/dev-docs/community"
+    },
+    {
+      "source": "/dev-docs/configurations/rbac",
+      "destination": "/dev-docs/configurations/guides/rbac"
+    },
+    {
+      "source": "/dev-docs/configurations/public-assets",
+      "destination": "/dev-docs/configurations/guides/public-assets"
+    },
+    {
+      "source": "/dev-docs/api/rest#get-entries",
+      "destination": "/dev-docs/api/rest#get-all"
+    },
+    {
+      "source": "/dev-docs/api/rest#get-an-entry",
+      "destination": "/dev-docs/api/rest#get"
+    },
+    {
+      "source": "/dev-docs/api/rest#create-an-entry",
+      "destination": "/dev-docs/api/rest#create"
+    },
+    {
+      "source": "/dev-docs/api/rest#update-an-entry",
+      "destination": "/dev-docs/api/rest#update"
+    },
+    {
+      "source": "/dev-docs/api/rest#delete-an-entry",
+      "destination": "/dev-docs/api/rest#delete"
+    },
+    {
+      "source": "/dev-docs/api/rest/populate-select#combining-population-with-other-operators",
+      "destination": "/dev-docs/api/rest/populate-select#population"
+    },
+    {
+      "source": "/dev-docs/api/rest/filters-locale-publication#publication-state",
+      "destination": "/dev-docs/api/rest/status"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#access-url",
+      "destination": "/dev-docs/admin-panel-customization/host-port-path"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#host-and-port",
+      "destination": "/dev-docs/admin-panel-customization/host-port-path"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#configuration-options",
+      "destination": "/dev-docs/admin-panel-customization/options"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#locales",
+      "destination": "/dev-docs/admin-panel-customization/options#locales"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#logos",
+      "destination": "/dev-docs/admin-panel-customization/options#logos"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#favicon",
+      "destination": "/dev-docs/admin-panel-customization/options#favicon"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#tutorial-videos",
+      "destination": "/dev-docs/admin-panel-customization/options#tutorial-videos"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#releases-notifications",
+      "destination": "/dev-docs/admin-panel-customization/options#releases-notifications"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#theme-extension",
+      "destination": "/dev-docs/admin-panel-customization/options#theme-extension"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#wysiwyg-editor",
+      "destination": "/dev-docs/admin-panel-customization/wysiwyg-editor"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#email-templates",
+      "destination": "/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#bundlers-experimental",
+      "destination": "/dev-docs/admin-panel-customization/bundlers"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#webpack",
+      "destination": "/dev-docs/admin-panel-customization/bundlers#webpack"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#vite",
+      "destination": "/dev-docs/admin-panel-customization/bundlers#vite"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#extension",
+      "destination": "/dev-docs/admin-panel-customization/extension"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#deployment",
+      "destination": "/dev-docs/admin-panel-customization/deployment"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#same-server",
+      "destination": "/dev-docs/admin-panel-customization/deployment#same-server"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#different-servers",
+      "destination": "/dev-docs/admin-panel-customization/deployment#different-servers"
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization#extending-translations",
+      "destination": "/dev-docs/admin-panel-customization/options#extending-translations"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n",
+      "destination": "/user-docs/features/internationalization"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#configuration-of-the-default-locale",
+      "destination": "/user-docs/features/internationalization"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#installation",
+      "destination": "/user-docs/features/internationalization"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#usage-with-the-rest-api",
+      "destination": "/dev-docs/api/rest/locale"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#getting-localized-entries-with-the-locale-parameter",
+      "destination": "/dev-docs/api/rest/locale-get-all"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-new-localized-entry",
+      "destination": "/dev-docs/api/rest/locale#rest-delete"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-localization-for-an-existing-entry",
+      "destination": "/dev-docs/api/rest/locale-put"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-localization-for-a-collection-type",
+      "destination": "/dev-docs/api/rest/locale-put-collection-type"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-localization-for-a-single-type",
+      "destination": "/dev-docs/api/rest/locale-put-single-type"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#updating-an-entry",
+      "destination": "/dev-docs/api/rest/locale-put"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#usage-with-the-graphql-plugin",
+      "destination": "/user-docs/features/internationalization#graphql"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#getting-localized-entries-with-graphql",
+      "destination": "/user-docs/features/internationalization#graphql-fetch-all"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#fetching-a-collection-type",
+      "destination": "/user-docs/features/internationalization#graphql-fetch-all"
+    },
+    {
+      "source": "dev-docs/plugins/i18n#fetching-a-single-type",
+      "destination": "/user-docs/features/internationalization#graphql-fetch-all"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-new-localized-entries-with-graphql",
+      "destination": "/dev-docs/api/graphql#graphql-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-new-localization-for-a-collection-type",
+      "destination": "/dev-docs/api/graphql#graphql-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#creating-a-new-localization-for-a-single-type",
+      "destination": "/dev-docs/api/graphql#graphql-create"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#updating-a-localized-single-type-with-graphql",
+      "destination": "/user-docs/features/internationalization#graphl-update"
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql",
+      "destination": "/dev-docs/api/graphql#graphql-delete"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/configuration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/configuration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/content-type-schema",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/content-type-schema"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/controllers",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/controllers"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/dependencies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/dependencies"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/global-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/global-middlewares"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/graphql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/graphql"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/policies",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/policies"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/route-middlewares",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/route-middlewares"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/routes",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/routes"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/services",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/services"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/backend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/backend"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/frontend",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/frontend"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/strapi-global",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/strapi-global"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/theming",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/theming"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/translations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/translations"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/webpack",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/webpack"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/code/wysiwyg",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/wysiwyg"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/update-folder-structure",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/update-folder-structure"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/migrate-back-end",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-back-end"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/migrate-front-end",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/migrate-front-end"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/plugin/enable-plugin",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/plugin/enable-plugin"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data-migration",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data-migration"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/sql",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/sql"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/sql-relations",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/sql-relations"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/mongo",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo"
+    },
+    {
+      "source": "/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet",
+      "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet"
     }
   ]
 }
