@@ -6,7 +6,7 @@ description: All the migration guides for a Strapi application.
 # Migration guides
 
 :::strapi Looking for the v3 to v4 migration guide?
-The v3 to v4 migration guides are located in the [v4 documentation](https://docs.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html#v3-to-v4-migration-guide)
+The v3 to v4 migration guides are located in the [v4 documentation](https://docs-v4.strapi.io/developer-docs/latest/update-migration-guides/migration-guides.html#v3-to-v4-migration-guide)
 :::
 
 Migrations are necessary when upgrades to Strapi include breaking changes. The migration guides are sequential, meaning if there is more than 1 migration guide between your current version and the latest release, follow each guide in order. If there is no specific migration guide between your current version and the latest release follow the [Update Strapi guide](update-version.md).
