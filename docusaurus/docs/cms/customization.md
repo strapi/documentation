@@ -3,7 +3,6 @@ title: Customization
 description: Learn more about Strapi 5 customization possibilities
 displayed_sidebar: cmsSidebar
 sidebar_label: Customization
-pagination_prev: archive/advanced-features
 pagination_next: cms/plugins-development/developing-plugins
 tags:
 - admin panel

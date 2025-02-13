@@ -4,7 +4,6 @@ description: Learn more about Strapi 5's Content API
 displayed_sidebar: cmsSidebar
 sidebar_label: APIs Introduction
 pagination_prev: cms/setup-deployment
-pagination_next: archive/advanced-features
 tags:
 - concepts
 - Document Service API
