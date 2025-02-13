@@ -1,6 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+const redirects = require('./redirects');
 const {themes} = require('prism-react-renderer');
 // const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
@@ -307,12 +308,7 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: [
-          {
-            to: 'https://strapi.io/integrations',
-            from: '/test-integrations-redir'
-          }
-        ]
+        redirects: redirects,
       }
     ]
     /**

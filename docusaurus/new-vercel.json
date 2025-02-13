@@ -1,0 +1,204 @@
+  {
+    from: '/user-docs/intro%23using-sso-for-authentication-',
+    to: '/user-docs/getting-started/setting-up-admin-panel#using-sso-for-authentication-'
+  },
+  {
+    from: '/user-docs/intro%23using-sso-for-authentication-',
+    to: '/user-docs/getting-started/setting-up-admin-panel#using-sso-for-authentication-'
+  },
+  {
+    from: '/dev-docs/deployment/optional-software-guides',
+    to: '/dev-docs/deployment#additional-resources'
+  },
+  {
+    from: '/developer-docs/latest/setup-deployment-guides/configurations/databases/sqlite.html',
+    to: '/dev-docs/configurations/database#sqlite'
+  },
+  {
+    from: '/dev-docs/configurations/database/sqlite',
+    to: '/dev-docs/configurations/database#sqlite'
+  },
+  {
+    from: '/dev-docs/configurations/sqlite',
+    to: '/dev-docs/configurations/database#sqlite'
+  },
+  {
+    from: '/dev-docs/intro#strapi-community',
+    to: '/dev-docs/community'
+  },
+  {
+    from: '/dev-docs/api/rest#get-an-entry',
+    to: '/dev-docs/api/rest#get'
+  },
+  {
+    from: '/dev-docs/api/rest#get-entries',
+    to: '/dev-docs/api/rest#get-all'
+  },
+  {
+    from: '/dev-docs/api/rest#create-an-entry',
+    to: '/dev-docs/api/rest#create'
+  },
+  {
+    from: '/dev-docs/api/rest#update-an-entry',
+    to: '/dev-docs/api/rest#update'
+  },
+  {
+    from: '/dev-docs/api/rest#delete-an-entry',
+    to: '/dev-docs/api/rest#delete'
+  },
+  {
+    from: '/dev-docs/api/rest/populate-select#combining-population-with-other-operators',
+    to: '/dev-docs/api/rest/populate-select#population'
+  },
+  {
+    from: '/dev-docs/api/rest/filters-locale-publication#publication-state',
+    to: '/dev-docs/api/rest/status'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#access-url',
+    to: '/dev-docs/admin-panel-customization/host-port-path'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#host-and-port',
+    to: '/dev-docs/admin-panel-customization/host-port-path'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#configuration-options',
+    to: '/dev-docs/admin-panel-customization/options'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#locales',
+    to: '/dev-docs/admin-panel-customization/options#locales'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#logos',
+    to: '/dev-docs/admin-panel-customization/options#logos'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#favicon',
+    to: '/dev-docs/admin-panel-customization/options#favicon'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#tutorial-videos',
+    to: '/dev-docs/admin-panel-customization/options#tutorial-videos'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#releases-notifications',
+    to: '/dev-docs/admin-panel-customization/options#releases-notifications'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#theme-extension',
+    to: '/dev-docs/admin-panel-customization/options#theme-extension'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#wysiwyg-editor',
+    to: '/dev-docs/admin-panel-customization/wysiwyg-editor'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#email-templates',
+    to: '/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-email-templates'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#bundlers-experimental',
+    to: '/dev-docs/admin-panel-customization/bundlers'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#webpack',
+    to: '/dev-docs/admin-panel-customization/bundlers#webpack'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#vite',
+    to: '/dev-docs/admin-panel-customization/bundlers#vite'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#extension',
+    to: '/dev-docs/admin-panel-customization/extension'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#deployment',
+    to: '/dev-docs/admin-panel-customization/deployment'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#same-server',
+    to: '/dev-docs/admin-panel-customization/deployment#same-server'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#different-servers',
+    to: '/dev-docs/admin-panel-customization/deployment#different-servers'
+  },
+  {
+    from: '/dev-docs/admin-panel-customization#extending-translations',
+    to: '/dev-docs/admin-panel-customization/options#extending-translations'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#configuration-of-the-default-locale',
+    to: '/user-docs/features/internationalization'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#installation',
+    to: '/user-docs/features/internationalization'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#usage-with-the-rest-api',
+    to: '/dev-docs/api/rest/locale'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#getting-localized-entries-with-the-locale-parameter',
+    to: '/dev-docs/api/rest/locale-get-all'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-a-new-localized-entry',
+    to: '/dev-docs/api/rest/locale#rest-delete'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-a-localization-for-an-existing-entry',
+    to: '/dev-docs/api/rest/locale-put'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-a-localization-for-a-collection-type',
+    to: '/dev-docs/api/rest/locale-put-collection-type'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-a-localization-for-a-single-type',
+    to: '/dev-docs/api/rest/locale-put-single-type'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#updating-an-entry',
+    to: '/dev-docs/api/rest/locale-put'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#usage-with-the-graphql-plugin',
+    to: '/user-docs/features/internationalization#graphql'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#getting-localized-entries-with-graphql',
+    to: '/user-docs/features/internationalization#graphql-fetch-all'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#fetching-a-collection-type',
+    to: '/user-docs/features/internationalization#graphql-fetch-all'
+  },
+  {
+    from: 'dev-docs/plugins/i18n#fetching-a-single-type',
+    to: '/user-docs/features/internationalization#graphql-fetch-all'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-new-localized-entries-with-graphql',
+    to: '/dev-docs/api/graphql#graphql-create'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-a-new-localization-for-a-collection-type',
+    to: '/dev-docs/api/graphql#graphql-create'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#creating-a-new-localization-for-a-single-type',
+    to: '/dev-docs/api/graphql#graphql-create'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#updating-a-localized-single-type-with-graphql',
+    to: '/user-docs/features/internationalization#graphl-update'
+  },
+  {
+    from: '/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql',
+    to: '/dev-docs/api/graphql#graphql-delete'
+  },
