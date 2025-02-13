@@ -8,7 +8,6 @@ tags:
 - Content-type Builder
 - introduction
 - single type 
-pagination_next: cms/content-type-builder/creating-new-content-type
 ---
 
 # Introduction to the Content-type Builder

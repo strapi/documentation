@@ -1,7 +1,6 @@
 ---
 title: TypeScript
 description: Get started with TypeScript for your Strapi application
-pagination_next: cms/typescript/development
 tags:
 - introduction
 - typescript

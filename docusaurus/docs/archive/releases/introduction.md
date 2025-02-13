@@ -7,7 +7,6 @@ tags:
 - introduction
 - Releases feature
 - Strapi Cloud
-pagination_next: cms/releases/creating-a-release
 ---
 
 # Releases

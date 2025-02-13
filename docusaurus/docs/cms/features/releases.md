@@ -9,7 +9,6 @@ tags:
 - Growth feature
 - Cloud Team feature
 - releases
-pagination_next: cms/releases/creating-a-release
 ---
 
 # Releases

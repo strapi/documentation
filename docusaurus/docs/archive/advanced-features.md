@@ -2,8 +2,6 @@
 title: Advanced features
 description: Learn more about Strapi 5 advanced features
 displayed_sidebar: cmsSidebar
-pagination_prev: cms/api/content-api
-pagination_next: cms/customization
 unlisted: true
 tags:
 - backend server

@@ -9,7 +9,6 @@ tags:
 - filters
 - introduction
 - media library
-pagination_next: cms/media-library/adding-assets
 ---
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';

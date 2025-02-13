@@ -6,7 +6,6 @@ tags:
 - admin panel
 - introduction
 - Users, Roles & Permissions
-pagination_next: cms/settings/configuring-users-permissions-plugin-settings
 ---
 
 The ![Settings icon](/img/assets/icons/v5/Cog.svg) _Settings_ section in the main navigation of the admin panel includes all the required set-up information that determines how an administrator interacts with and manages their Strapi application. 
