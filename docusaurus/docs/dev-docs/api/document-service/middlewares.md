@@ -370,5 +370,6 @@ strapi.documents.use(async (context, next) => {
 <br/>
 
 :::strapi Lifecycle hooks
-The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table).
+* The Document Service API triggers various database lifecycle hooks based on which method is called. For a complete reference, see [Document Service API: Lifecycle hooks](/dev-docs/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service#table).
+* You might find additional information on the topic of Document Service middlewares vs. lifecycle hooks in a [Strapi blog article](https://strapi.io/blog/what-are-document-service-middleware-and-what-happened-to-lifecycle-hooks-1).
 :::
