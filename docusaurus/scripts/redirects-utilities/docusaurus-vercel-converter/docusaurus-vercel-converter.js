@@ -7,10 +7,10 @@ const fs = require('fs');
 
 // Configuration object with default values
 const config = {
-    inputFile: 'vercel.json',          // Default input file
-    outputFile: 'redirects.js',        // Default output file
-    mode: 'to-from',                   // 'to-from' or 'to-source'
-    outputFormat: 'js'                 // 'js' or 'json'
+    inputFile: 'vercel.json',              // Default input file
+    outputFile: 'redirects-converted.js',  // Default output file
+    mode: 'to-from',                       // 'to-from' or 'to-source'
+    outputFormat: 'js'                     // 'js' or 'json'
 };
 
 /**
