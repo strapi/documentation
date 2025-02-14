@@ -86,6 +86,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Preview',
+          id: 'cms/features/preview',
+        },
+        {
+          type: 'doc',
           label: 'Role-Based Access Control (RBAC)',
           id: 'cms/features/rbac',
         },
@@ -103,11 +108,6 @@ const sidebars = {
           type: 'doc',
           label: 'Single Sign-On (SSO)',
           id: 'cms/features/sso',
-        },
-        {
-          type: 'doc',
-          label: 'Preview',
-          id: 'cms/features/preview',
         },
         {
           type: 'doc',
