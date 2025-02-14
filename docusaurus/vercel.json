@@ -3486,6 +3486,116 @@
     {
       "source": "/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet",
       "destination": "https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/data/mongo-sql-cheatsheet"
+    },
+    {
+      "source": "/dev-docs/api/client",
+      "destination": "/cms/api/client", 
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/filters-locale-publication",
+      "destination": "/cms/api/rest/filters",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/filters-locale-publication#locale",
+      "destination": "/cms/api/rest/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/filters-locale-publication#filtering",
+      "destination": "/cms/api/rest/filters",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/api/rest/filters-locale-publication#status",
+      "destination":"/cms/api/rest/status",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/api-tokens",
+      "destination": "/cms/features/api-tokens",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/data-management",
+      "destination": "/cms/features/data-management",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n",
+      "destination": "/cms/features/internationalization",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/migration/v4-to-v5/breaking-changes/publishedat-removed",
+      "destination": "/cms/migration/v4-to-v5/breaking-changes",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/email",
+      "destination": "/cms/features/email",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/preview",
+      "destination": "/cms/features/preview",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/typescript/development/api-reference",
+      "destination": "/cms/typescript/development/api-reference",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/typescript/development/guides/documents-and-entries",
+      "destination": "/cms/typescript/development/guides/documents-and-entries",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager",
+      "destination": "/cms/features/content-manager",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-manager/previewing-content",
+      "destination": "/cms/features/preview",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/content-type-builder",
+      "destination": "/cms/features/content-type-builder",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/media-library",
+      "destination": "/cms/features/media-library", 
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/plugins",
+      "destination": "/cms/plugins/installing-plugins-via-marketplace",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/releases/creating-a-release",
+      "destination": "/cms/features/releases#creating-a-release",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/releases/introduction",
+      "destination": "/cms/features/releases",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/releases/managing-a-release",
+      "destination": "/cms/features/releases#usage",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions",
+      "destination": "/cms/features/users-permissions",
+      "permanent": true
     }
   ]
 }
