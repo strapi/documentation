@@ -32,7 +32,7 @@ export default {
       button: {
         label: 'What’s new?',
         decorative: '✨',
-        to: '/cms/whats-new',
+        to: '/whats-new',
       },
     },
     {

@@ -171,6 +171,7 @@ const sidebars = {
             'cms/api/rest/guides/intro',
           ]
         },
+        'cms/api/client',
         'cms/api/graphql',
         {
           type: 'category',
