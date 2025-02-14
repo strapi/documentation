@@ -36,7 +36,7 @@ This will use default settings:
 You can customize the behavior using command line arguments:
 
 ```bash
-node convert-redirects.js --input=my-redirects.json --output=converted.js --mode=to-source
+node docusaurus-vercel-converter.js --input=my-redirects.json --output=converted.js --mode=to-source
 ```
 
 ### Available Options
