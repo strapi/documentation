@@ -88,12 +88,12 @@ If an error occurs, the script will display an error message and exit with code 
 
 1. Convert from Vercel format to module format:
 ```bash
-node convert-redirects.js --input=vercel.json --output=redirects.js --mode=to-from
+node docusaurus-vercel-converter.js --input=vercel.json --output=redirects.js --mode=to-from
 ```
 
 2. Convert from module format to Vercel format:
 ```bash
-node convert-redirects.js --input=redirects.js --output=vercel.json --mode=to-source
+node docusaurus-vercel-converter.js --input=redirects.js --output=vercel.json --mode=to-source
 ```
 
 ## Contributing
