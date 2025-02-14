@@ -1,0 +1,14 @@
+{
+  "excludeFolders": [
+      "cloud",
+      "legacy",
+      "archive"
+  ],
+  "exclude": [
+      "/internal/",
+      "test-",
+      "release-notes",
+      "/404",
+      "/tags"
+  ]
+}
