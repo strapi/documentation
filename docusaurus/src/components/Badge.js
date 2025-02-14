@@ -76,7 +76,7 @@ export function FeatureFlagBadge(props) {
   return (
     <Badge
       variant={props.feature ?? "Feature Flag"}
-      link="/dev-docs/configurations/features"
+      link="/cms/configurations/features"
       icon="toggle-right"
       tooltip={`This feature requires ${props.feature ? 'the ' + props.feature + ' feature flag' : 'a feature flag'} to be enabled.`}
       {...props}

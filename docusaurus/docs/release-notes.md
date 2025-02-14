@@ -578,7 +578,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.0.0
 
-_The following is an extensive list of all the pull requests that were merged since we started working on Strapi 5 documentation. For a quicker tour, please refer to the [What's new page](/dev-docs/whats-new)._
+_The following is an extensive list of all the pull requests that were merged since we started working on Strapi 5 documentation. For a quicker tour, please refer to the [What's new page](/cms/whats-new)._
 
 ### <Icon name="sparkle" /> New content
 

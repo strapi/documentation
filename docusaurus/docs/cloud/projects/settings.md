@@ -399,7 +399,7 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 ### Variables
 
-Environment variables (more information in the [Developer Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
+Environment variables (more information in the [Developer Documentation](../../cms/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
 <ThemedImage
   alt="Project variables"

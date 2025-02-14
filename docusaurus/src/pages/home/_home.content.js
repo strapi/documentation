@@ -11,7 +11,7 @@ export default {
       description: (
         <>
           {'Learn Strapi in a nutshell with our '}
-          <a href="https://docs.strapi.io/dev-docs/quick-start" target="_blank">quick start guide</a>
+          <a href="https://docs.strapi.io/cms/quick-start" target="_blank">quick start guide</a>
           {', or request a '}
           <a href="https://strapi.io/demo" target="_blank">live demo</a>!
         </>
@@ -19,7 +19,7 @@ export default {
       button: {
         label: 'Quick start',
         decorative: '🚀',
-        to: '/dev-docs/quick-start',
+        to: '/cms/quick-start',
       },
     },
     {
@@ -32,7 +32,7 @@ export default {
       button: {
         label: 'What’s new?',
         decorative: '✨',
-        to: '/dev-docs/whats-new',
+        to: '/cms/whats-new',
       },
     },
     {
@@ -55,7 +55,7 @@ export default {
   ],
   categories: [
     {
-      cardLink: '/dev-docs/intro',
+      cardLink: '/cms/intro',
       cardTitle: 'CMS Documentation',
       cardDescription: 'Learn how to set up, configure, use, and customize the Strapi headless CMS',
       cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
@@ -64,28 +64,28 @@ export default {
       links: [
         {
           label: 'Installation',
-          to: '/dev-docs/installation',
+          to: '/cms/installation',
         },
         {
           label: 'Content Manager',
-          to: '/user-docs/features/content-manager',
+          to: '/cms/features/content-manager',
         },
         {
           label: 'Content-type Builder',
-          to: '/user-docs/features/content-type-builder',
+          to: '/cms/features/content-type-builder',
         },
         {
           label: 'APIs',
-          to: '/dev-docs/api/content-api',
+          to: '/cms/api/content-api',
         },
         {
           label: 'Customization',
-          to: '/dev-docs/customization',
+          to: '/cms/customization',
         },
       ],
     },
     // {
-    //   cardLink: '/dev-docs/intro',
+    //   cardLink: '/cms/intro',
     //   cardTitle: 'Developer Docs',
     //   cardDescription: 'All you need to get your project up-and-running, and become a Strapi expert',
     //   cardImgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
@@ -94,23 +94,23 @@ export default {
     //   links: [
     //     {
     //       label: 'REST API',
-    //       to: '/dev-docs/api/rest',
+    //       to: '/cms/api/rest',
     //     },
     //     {
     //       label: 'GraphQL API',
-    //       to: '/dev-docs/api/graphql',
+    //       to: '/cms/api/graphql',
     //     },
     //     {
     //       label: 'Document Service API',
-    //       to: '/dev-docs/api/document-service',
+    //       to: '/cms/api/document-service',
     //     },
     //     {
     //       label: 'Plugin SDK',
-    //       to: '/dev-docs/plugins/development/create-a-plugin',
+    //       to: '/cms/plugins-development/create-a-plugin',
     //     },
     //     {
     //       label: 'Upgrade to Strapi 5',
-    //       to: '/dev-docs/migration/v4-to-v5/introduction-and-faq',
+    //       to: '/cms/migration/v4-to-v5/introduction-and-faq',
     //     },
     //   ],
     // },

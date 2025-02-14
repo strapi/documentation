@@ -41,10 +41,10 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
   - Assets bandwidth is the amount of bandwidth used by your assets.
   - API requests are the number of requests made to your APIs. This includes requests to the GraphQL and REST APIs, excluding requests for file and media assets counted towards CDN bandwidth and storage.
 - CMS features:
-  - Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/user-docs/settings/audit-logs) for more information).
-  - Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
-  - Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/user-docs/settings/review-workflows) for more information).
-  - Content History refers to the maximum numbers of days kept in history (see [Content History in User Guide](/user-docs/content-manager/working-with-content-history))
+  - Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/cms/features/audit-logs) for more information).
+  - Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/cms/features/releases) for more information).
+  - Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/cms/features/review-workflows#configuration) for more information).
+  - Content History refers to the maximum numbers of days kept in history (see [Content History in User Guide](/cms/features/content-history))
 - Cloud specific feature:
   - Backups refers to the automatic backups of Strapi Cloud projects (see [Backups documentation](/cloud/projects/settings#backups) for more information on the feature).
   - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments) documentation for more information on the feature).

@@ -9,7 +9,7 @@
 
 # Order is important; the last matching pattern takes the most
 # precedence. When someone opens a pull request that only
-# modifies code-related files, only @pwizla or @udimberto and 
+# modifies code-related files, only @pwizla or @udimberto and
 # not the global owner(s) will be requested for a review.
 *.js    @pwizla
 *.jsx   @pwizla
@@ -20,12 +20,12 @@
 # With this configuration, @pwizla owns any files in the dev-docs
 # directory located in docusaurus/docs and any of its
 # subdirectories.
-/docusaurus/docs/dev-docs/ @pwizla
+/docusaurus/docs/cms/ @pwizla
 
 # With this configuration, @meganelacheny owns any files in the user-docs
 # directory located in docusaurus/docs and any of its
 # subdirectories.
-/docusaurus/docs/user-docs/ @meganelacheny
+/docusaurus/docs/cms/ @meganelacheny
 
 # In this example, any change inside the `/docusaurus/docs/cloud` directory
 # will require approval from @pwizla or @meganelacheny.

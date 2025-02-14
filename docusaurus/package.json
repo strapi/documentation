@@ -11,7 +11,9 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "release-notes": "bash ./scripts/release-notes-script.sh",
+    "redirections-analysis": "node ./scripts/redirection-analysis/redirect-analyzer.js"
   },
   "dependencies": {
     "@docusaurus/core": "3.5.2",
