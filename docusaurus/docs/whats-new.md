@@ -8,11 +8,11 @@ custom_edit_url: null
 
 Strapi 5 brings many new features and improvements, and this page quickly highlights the most important documentation changes.
 
-<Icon name="newspaper" /> The **[Draft & Publish](/user-docs/content-manager/saving-and-publishing-content)** feature has been fully reworked. When Draft & Publish is enabled, the Content Manager edit view shows 2 different tabs, one for the draft version and one for the published version, and both can handle different content.
+<Icon name="newspaper" /> The **[Draft & Publish](/cms/features/draft-and-publish)** feature has been fully reworked. When Draft & Publish is enabled, the Content Manager edit view shows 2 different tabs, one for the draft version and one for the published version, and both can handle different content.
 
-<Icon name="magic-wand"/> The new **[Content History](/user-docs/content-manager/working-with-content-history)** feature allows you to view and restore previous versions of your content from the Content Manager.
+<Icon name="magic-wand"/> The new **[Content History](/cms/features/content-history)** feature allows you to view and restore previous versions of your content from the Content Manager.
 
-<Icon name="eye" /> The new **[Preview](/user-docs/content-manager/previewing-content)** feature allows you to preview your content in your front end application directly from Strapi's admin panel.
+<Icon name="eye" /> The new **[Preview](/cms/features/preview)** feature allows you to preview your content in your front end application directly from Strapi's admin panel.
 
 <Icon name="file"/> Strapi 5 now use **[documents](/dev-docs/api/document)** and introduces a new **[Document Service API](/dev-docs/api/document-service)** to replace the Entity Service API from v4, leveraging the new Draft & Publish system and paving the way for more upcoming features.
 
