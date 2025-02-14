@@ -46,7 +46,7 @@ module.exports = [
 
 2. Run the script:
 ```bash
-node dedupe-redirects.js
+node compare-redirects-and-vercel.js
 ```
 
 ## Output
