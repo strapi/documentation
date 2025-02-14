@@ -46,6 +46,8 @@ The following operators are available:
 
 ## Attribute operators
 
+<br/>
+
 ### `$not`
 
 Negates the nested condition(s).
