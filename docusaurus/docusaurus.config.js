@@ -110,7 +110,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/v6/main/docusaurus', // TODO change back to next then main for production releases          admonitions: {
+          editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus', // TODO change back to next then main for production releases          admonitions: {
           admonitions: {
             keywords: [
               // Admonitions defaults
