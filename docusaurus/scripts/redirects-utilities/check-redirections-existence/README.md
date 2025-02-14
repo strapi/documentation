@@ -19,7 +19,7 @@ A Node.js script that helps you identify URLs in your Docusaurus documentation t
 
 ## Installation
 
-1. Copy the `check-redirects.js` file into your `scripts` folder, alongside the URL extraction script.
+1. Copy the `check-redirects.js` file into your `scripts` folder, alongside the URL extraction script (found in the `/all-urls-extractor` folder).
 
 ## Configuration
 
