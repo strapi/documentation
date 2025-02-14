@@ -1472,7 +1472,7 @@
     },
     {
       "source": "/dev-docs/whats-new",
-      "destination": "/cms/whats-new",
+      "destination": "/whats-new",
       "permanent": true
     },
     {

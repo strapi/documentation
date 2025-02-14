@@ -207,7 +207,7 @@ const config = {
             items: [
               {
                 label: "What's new?",
-                href: '/cms/whats-new'
+                href: '/whats-new'
               },
               {
                 label: "Release notes",

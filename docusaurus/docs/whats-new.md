@@ -1,4 +1,10 @@
-# What's new in Strapi 5 docs?
+---
+custom_edit_url: null
+---
+
+<br/>
+
+# What's new in Strapi docs?
 
 Strapi 5 brings many new features and improvements, and this page quickly highlights the most important documentation changes.
 
