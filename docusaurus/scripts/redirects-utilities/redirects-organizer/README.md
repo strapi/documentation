@@ -34,7 +34,7 @@ module.exports = [
 Run the script using Node.js:
 
 ```bash
-node organize-redirects.js
+node redirects-organizer.js
 ```
 
 The script will:
