@@ -20,8 +20,10 @@ A Node.js script that converts redirect rules between different formats:
 
 ### Basic Usage
 
+From this folder, run:
+
 ```bash
-node convert-redirects.js
+node docusaurus-vercel-converter.js
 ```
 
 This will use default settings:
