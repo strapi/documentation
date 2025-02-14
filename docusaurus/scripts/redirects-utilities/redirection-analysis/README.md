@@ -26,7 +26,7 @@ cd ..
 
 2. Install dependencies:
 ```bash
-yarn add gray-matter string-similarity cli-progress
+yarn
 ```
 
 ## Usage
