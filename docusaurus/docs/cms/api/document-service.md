@@ -90,6 +90,8 @@ Syntax:  `findFirst(parameters: Params) => Document`
 
 ### Examples
 
+<br />
+
 #### Generic example
 
 By default, `findFirst()` returns the draft version, in the default locale, of the first document for the passed unique identifier (collection type id or single type id):
