@@ -10,7 +10,7 @@ const darkCodeTheme = themes.dracula;
 const config = {
   title: 'Strapi 5 Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs-next.strapi.io/',
+  url: 'https://docs-next.strapi.io',
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
@@ -24,8 +24,6 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
-
-  noIndex: true, // remove for docs.strapi.io
 
   markdown: {
     mermaid: true,
