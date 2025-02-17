@@ -182,6 +182,8 @@ Syntax: `findMany(parameters: Params) => Document[]`
 
 ### Examples
 
+<br />
+
 #### Generic example
 
 When no parameter is passed, `findMany()` returns the draft version in the default locale for each document:
@@ -685,6 +687,8 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 :::
 
 ### Examples
+
+<br />
 
 #### Generic example
 
