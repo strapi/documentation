@@ -1,5 +1,5 @@
+User-agent: AlgoliaDocSearch-Crawler
+Allow: /
+
 User-agent: *
 Disallow: /
-
-User-agent: AlgoliaBot
-Allow: /
