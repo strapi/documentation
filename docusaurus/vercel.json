@@ -21,6 +21,11 @@
       "permanent": true
     },
     {
+      "source": "/cms/plugins/developing-plugins",
+      "destination": "/cms/plugins-development/developing-plugins",
+      "permanent": true,
+    },
+    {
       "source": "/status",
       "destination": "/",
       "permanent": true
@@ -99,6 +104,11 @@
       "source": "/user-docs/settings/admin-panel",
       "destination": "/cms/features/admin-panel",
       "permanent": true
+    },
+    {
+      "source": "/cms/gurations/admin-panel",
+      "destination": "/cms/configurations/admin-panel",
+      "permanent": true,
     },
     {
       "source": "/user-docs/settings/configuring-users-permissions-plugin-settings",
@@ -786,6 +796,11 @@
       "permanent": true
     },
     {
+      "source": "/cms/gurations/cron",
+      "destination": "/cms/configurations/cron",
+      "permanent": true,
+    },
+    {
       "source": "/dev-docs/configurations/database",
       "destination": "/cms/configurations/database",
       "permanent": true
@@ -1399,6 +1414,11 @@
       "source": "/dev-docs/plugins/server-api",
       "destination": "/cms/plugins-development/server-api",
       "permanent": true
+    },
+    {
+      "source": "/cms/ns/server-api",
+      "destination": "/cms/plugins-development/server-api",
+      "permanent": true,
     },
     {
       "source": "/dev-docs/plugins/upload",
@@ -2154,6 +2174,11 @@
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html",
 			"destination": "/dev-docs/configurations/guides/public-assets"
 		},
+    {
+      "source:": "/cms/configurations/public-assets",
+      "destination": "/cms/configurations/guides/public-assets",
+      "permanent": true,
+    },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html",
 			"destination": "/user-docs/features/api-tokens"
@@ -2851,6 +2876,16 @@
 			"source": "/dev-docs/api/server-api",
 			"destination": "/dev-docs/plugins/server-api"
 		},
+    {
+      "source": "/cms/plugins/server-api",
+      "destination": "/cms/plugins-development/server-api",
+      "permanent": true,
+    },
+    {
+      "source": "/cms/plugins/admin-panel-api",
+      "destination": "/cms/plugins-development/admin-panel-api",
+      "permanent": true,
+    },
 		{
 			"source": "/dev-docs/user-docs/settings/managing-global-settings",
 			"destination": "/dev-docs/user-docs/settings/managing-global-settings"
