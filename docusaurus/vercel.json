@@ -3627,7 +3627,6 @@
       "destination": "/cms/configurations/guides/public-assets",
       "permanent": true
     },
-
     {
       "source": "/cms/plugins/server-api",
       "destination": "/cms/plugins-development/server-api",
@@ -3716,6 +3715,11 @@
     {
       "source": "/dev-docs/i18n#graphql-delete",
       "destination": "/cms/api/graphql#locale-delete",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/cli#ts-generate",
+      "destination": "/cms/cli#strapi-ts",
       "permanent": true
     }
   ]
