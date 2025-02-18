@@ -3626,6 +3626,97 @@
       "source": "/cms/configurations/public-assets",
       "destination": "/cms/configurations/guides/public-assets",
       "permanent": true
+    },
+
+    {
+      "source": "/cms/plugins/server-api",
+      "destination": "/cms/plugins-development/server-api",
+      "permanent": true
+    },
+    {
+      "source": "/cms/plugins/admin-panel-api",
+      "destination": "/cms/plugins-development/admin-panel-api",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/cli#ts-generate",
+      "destination": "/cms/cli#strapi-ts",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso",
+      "destination": "/cms/configurations/guides/configure-sso",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#discord",
+      "destination": "/cms/configurations/sso-providers/discord",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#github",
+      "destination": "/cms/configurations/sso-providers/github",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#google",
+      "destination": "/cms/configurations/sso-providers/google",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#keycloak",
+      "destination": "/cms/configurations/sso-providers/keycloak",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#microsoft",
+      "destination": "/cms/configurations/sso-providers/microsoft",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#okta",
+      "destination": "/cms/configurations/sso-providers/okta",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/plugins/i18n#usage-with-the-rest-api",
+      "destination": "/cms/api/rest/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#rest",
+      "destination": "/cms/api/rest/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql",
+      "destination": "/cms/api/graphql#locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-fetch-all",
+      "destination": "/cms/api/graphql#locale-fetch-all",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-fetch",
+      "destination": "/cms/api/graphql#locale-fetch",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-create",
+      "destination": "/cms/api/graphql#locale-create",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-update",
+      "destination": "/cms/api/graphql#locale-update",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-delete",
+      "destination": "/cms/api/graphql#locale-delete",
+      "permanent": true
     }
   ]
 }
