@@ -1428,7 +1428,7 @@
     {
       "source": "/cms/ns/server-api",
       "destination": "/cms/plugins-development/server-api",
-      "permanent": true,
+      "permanent": true
     },
     {
       "source": "/dev-docs/plugins/upload",
@@ -2222,7 +2222,7 @@
     {
       "source:": "/cms/configurations/public-assets",
       "destination": "/cms/configurations/guides/public-assets",
-      "permanent": true,
+      "permanent": true
     },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html",
@@ -2924,12 +2924,12 @@
     {
       "source": "/cms/plugins/server-api",
       "destination": "/cms/plugins-development/server-api",
-      "permanent": true,
+      "permanent": true
     },
     {
       "source": "/cms/plugins/admin-panel-api",
       "destination": "/cms/plugins-development/admin-panel-api",
-      "permanent": true,
+      "permanent": true
     },
 		{
 			"source": "/dev-docs/user-docs/settings/managing-global-settings",
