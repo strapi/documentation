@@ -3618,8 +3618,8 @@
       "permanent": true
     },
     {
-      "source:": "/cms/configurations/public-assets",
-      "destination": "/cms/configurations/guides/public-assets",
+      "source": "/cms/plugins/server-api",
+      "destination": "/cms/plugins-development/server-api",
       "permanent": true
     }
   ]
