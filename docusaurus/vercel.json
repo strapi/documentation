@@ -116,6 +116,11 @@
       "permanent": true
     },
     {
+      "source:": "/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-providers",
+      "destination": "/cms/features/users-permissions#providers",
+      "permanent": true
+    },
+    {
       "source": "/user-docs/settings/internationalization",
       "destination": "/cms/features/internationalization#settings",
       "permanent": true
