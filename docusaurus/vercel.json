@@ -21,6 +21,11 @@
       "permanent": true
     },
     {
+      "source": "/cms/plugins/developing-plugins",
+      "destination": "/cms/plugins-development/developing-plugins",
+      "permanent": true
+    },
+    {
       "source": "/status",
       "destination": "/",
       "permanent": true
