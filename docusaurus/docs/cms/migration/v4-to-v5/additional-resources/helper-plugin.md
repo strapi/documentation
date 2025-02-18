@@ -15,6 +15,8 @@ It lists every export that existed in the `helper-plugin` package, in alphabetic
 
 ## Components
 
+<br/>
+
 ### AnErrorOccurred
 
 This component has been removed and refactored to be part of the `Page` component exported from `@strapi/strapi/admin`. You should use the `Page` component from there:
@@ -662,6 +664,8 @@ const { publish, unpublish } = useDocumentActions();
 
 ## Features
 
+<br/>
+
 ### AppInfo
 
 This feature has been moved to `@strapi/admin` and only the hook `useStrapiApp` is now exported.
@@ -749,6 +753,8 @@ This feature has been moved to `@strapi/admin` and only the hook `useStrapiApp` 
 This feature has been moved to the `@strapi/admin` package and only the `useTracking` hook is exported.
 
 ## Hooks
+
+<br/>
 
 ### useAPIErrorHandler
 
@@ -868,6 +874,8 @@ This hook has been removed and not replaced. If you feel like you need this hook
 
 ## Icons
 
+<br/>
+
 ### SortIcon
 
 This component has been removed and not replaced. If you feel like you need this function, please open an issue on the Strapi repository to discuss your usecase.
@@ -877,6 +885,8 @@ This component has been removed and not replaced. If you feel like you need this
 This component has been removed and not replaced. If you feel like you need this function, please open an issue on the Strapi repository to discuss your usecase.
 
 ## Utils
+
+<br/>
 
 ### awaitToJs
 
