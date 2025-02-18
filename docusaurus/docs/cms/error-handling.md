@@ -154,8 +154,8 @@ These error classes are imported through the `@strapi/utils` package and can be 
 See the [default error classes](#default-error-classes) section for more information on the error classes provided by Strapi.
 :::
 
-<details>
-<summary>Example: Throwing an error in a service</summary>
+#### Example: Throwing an error in a service**
+
 This example shows wrapping a [core service](/cms/backend-customization/services#extending-core-services) and doing a custom validation on the `create` method:
 
 <Tabs groupId="js-ts">
@@ -216,11 +216,7 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 
 </Tabs>
 
-
-</details>
-
-<details>
-<summary>Example: Throwing an error in a model lifecycle</summary>
+#### Example: Throwing an error in a model lifecycle**
 
 This example shows building a [custom model lifecycle](/cms/backend-customization/models#lifecycle-hooks) and being able to throw an error that stops the request and will return proper error messages to the admin panel. Generally you should only throw an error in `beforeX` lifecycles, not `afterX` lifecycles.
 
@@ -271,8 +267,6 @@ export default {
 
 </Tabs>
 
-</details>
-
 ### Policies
 
 [Policies](/cms/backend-customization/policies) are a special type of middleware that are executed before a controller. They are used to check if the user is allowed to perform the action or not. If the user is not allowed to perform the action and a `return false` is used then a generic error will be thrown. As an alternative, you can throw a custom error message using a nested class extensions from the Strapi `ForbiddenError` class, `ApplicationError` class (see [Default error classes](#default-error-classes) for both classes), and finally the [Node `Error` class](https://nodejs.org/api/errors.html#errors_class_error).
@@ -282,8 +276,7 @@ The `PolicyError` class is available from `@strapi/utils` package and accepts 2 
 - the first parameter of the function is the error `message`
 - (optional) the second parameter is the object that will be set as `details` in the response received; a best practice is to set a `policy` key with the name of the policy that threw the error.
 
-<details>
-<summary>Example: Throwing a PolicyError in a custom policy</summary>
+#### Example: Throwing a PolicyError in a custom policy
 
 This example shows building a [custom policy](/cms/backend-customization/policies) that will throw a custom error message and stop the request.
 
@@ -337,8 +330,6 @@ export default (policyContext, config, { strapi }) => {
 </TabItem>
 
 </Tabs>
-
-</details>
 
 ### Default error classes
 
