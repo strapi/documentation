@@ -9,7 +9,7 @@ main:has(.docusaurus-mermaid-container) {
     display: none;
   }
   .docusaurus-mermaid-container * {
-    font-size: .85rem;
+    font-size: .85rem !important;
   }
 }
 

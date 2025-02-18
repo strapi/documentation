@@ -22,27 +22,20 @@ From a front-end application, your content can be accessed through Strapi's Cont
 - by default through the [REST API](/cms/api/rest)
 - and also through the [GraphQL API](/cms/api/graphql) if you installed the Strapi built-in [GraphQL plugin](/cms/plugins/graphql).
 
+You can also use the [Strapi Client](/cms/api/client) library to interact with the REST API.
+
 REST and GraphQL APIs represent the top-level layers of the Content API exposed to external applications. Strapi also provides 2 lower-level APIs:
 
 - The [Document Service API](/cms/api/document-service) is the recommended API to interact with your application's database within the [backend server](/cms/customization) or through [plugins](/cms/plugins-development/developing-plugins). The Document Service is the layer that handles **documents** <DocumentDefinition /> as well as Strapi's complex data structures like components and dynamic zones.
 - The Query Engine API interacts with the database layer at a lower level and is used under the hood to execute database queries. It gives unrestricted internal access to the database layer, but is not aware of any advanced Strapi features that Strapi 5 can handle, like Draft & Publish, Internationalization, Content History, and more.<br/>⚠️ In most, if not all, use cases, you should use the Document Service API instead.
 
-```mermaid
-  flowchart BT
-      database[(Database)] <--> queryEngine[Query Engine API]
-      subgraph Strapi backend
-          direction BT
-          queryEngine <--> documentService[Document Service API]
-          documentService <--> content([Your content])
-          content <--> rest[REST API]
-          content <--> graphql[GraphQL API]
-      end
-      rest <==> frontend{{Your frontend application}}
-      graphql <==> frontend
-      click rest "/cms/api/rest"
-      click graphql "/cms/api/graphql"
-      click documentService "/cms/api/document-service"
-```
+<ThemedImage
+alt="Content APIs diagram"
+sources={{
+  light: '/img/assets/diagrams/apis-v2.png',
+  dark: '/img/assets/diagrams/apis-v2_DARK.png'
+}}
+/>
 
 <br/>
 
@@ -53,6 +46,8 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="↕️" title="REST API" description="Query the Content API from a front-end application through REST." link="/cms/api/rest" />
 
 <CustomDocCard emoji="↕️" title="GraphQL API" description="Query the Content API  from a front-end application through GraphQL." link="/cms/api/graphql" />
+
+<CustomDocCard emoji="↕️" title="Strapi Client" description="Interact with the REST API through the Strapi Client library." link="/cms/api/client" />
 
 <CustomDocCard emoji="🔃" title="Document Service API" description="Query your data through the backend server or plugins." link="/cms/api/document-service" />
 
