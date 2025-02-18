@@ -3731,6 +3731,11 @@
       "source": "/dev-docs/configurations/sso",
       "destination": "/cms/configurations/guides/configure-sso",
       "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso#setting-up-provider-configuration",
+      "destination":"/cms/configurations/guides/configure-sso#setting-up-provider-configuration",
+      "permanent": true
     }
   ]
 }
