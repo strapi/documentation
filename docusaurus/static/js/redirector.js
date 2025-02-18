@@ -43,8 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     '/user-docs/settings/configuring-users-permissions-plugin-settings': {
       '_default': '/cms/features/users-permissions',
-      'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings'
-    }
+      'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings',
+      'configuring-providers': '/cms/features/users-permissions#providers',
+    },
+    // '/user-docs/users-roles-permissions/configuring-end-users-roles': {
+    //   '_default': '/cms/features/users-permissions', 
+    //   'creating-a-new-role': '/cms/features/users-permissions#creating-a-new-role',
+    //   'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
+    // }
   };
 
   // Combine all redirects

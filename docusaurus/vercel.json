@@ -152,7 +152,7 @@
     },
     {
       "source": "/user-docs/users-roles-permissions/configuring-end-users-roles",
-      "destination": "/cms/features/users-permissions#roles",
+      "destination": "/cms/features/users-permissions",
       "permanent": true
     },
     {
