@@ -3608,39 +3608,80 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#google",
+      "source": "/dev-docs/configurations/sso",
+      "has": [
+        {
+          "type": "query",
+          "key": "_fragment",
+          "value": "discord"
+        }
+      ],
+      "destination": "/cms/configurations/sso-providers/discord",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso",
+      "has": [
+        {
+          "type": "query",
+          "key": "_fragment",
+          "value": "github"
+        }
+      ],
+      "destination": "/cms/configurations/sso-providers/github",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso",
+      "has": [
+        {
+          "type": "query",
+          "key": "_fragment",
+          "value": "google"
+        }
+      ],
       "destination": "/cms/configurations/sso-providers/google",
       "permanent": true
     },
     {
       "source": "/dev-docs/configurations/sso",
-      "destination": "/cms/configurations/guides/configure-sso",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/configurations/sso#discord",
-      "destination": "/cms/configurations/sso-providers/discord",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/configurations/sso#github",
-      "destination": "/cms/configurations/sso-providers/github",
-      "permanent": true
-    },
-
-    {
-      "source": "/dev-docs/configurations/sso#keycloak",
-      "destination": "/cms/configurations/sso-providers/keycloak",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/configurations/sso#microsoft",
+      "has": [
+        {
+          "type": "query",
+          "key": "_fragment",
+          "value": "microsoft"
+        }
+      ],
       "destination": "/cms/configurations/sso-providers/microsoft",
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#okta",
+      "source": "/dev-docs/configurations/sso",
+      "has": [
+        {
+          "type": "query",
+          "key": "_fragment",
+          "value": "okta"
+        }
+      ],
       "destination": "/cms/configurations/sso-providers/okta",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso",
+      "has": [
+        {
+          "type": "query",
+          "key": "_fragment",
+          "value": "keycloak"
+        }
+      ],
+      "destination": "/cms/configurations/sso-providers/keycloak",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso",
+      "destination": "/cms/configurations/guides/configure-sso",
       "permanent": true
     },
     {
