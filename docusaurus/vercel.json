@@ -3616,6 +3616,11 @@
       "source": "/cms/ns/server-api",
       "destination": "/cms/plugins-development/server-api",
       "permanent": true
+    },
+    {
+      "source:": "/cms/configurations/public-assets",
+      "destination": "/cms/configurations/guides/public-assets",
+      "permanent": true
     }
   ]
 }
