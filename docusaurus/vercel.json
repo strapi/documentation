@@ -3723,7 +3723,7 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/cli#ts-generate",
+      "source": "/cms/cli#ts-generate",
       "destination": "/cms/cli#strapi-ts",
       "permanent": true
     },
