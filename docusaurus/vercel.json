@@ -3611,6 +3611,11 @@
       "source": "/cms/gurations/cron",
       "destination": "/cms/configurations/cron",
       "permanent": true
+    },
+    {
+      "source": "/cms/ns/server-api",
+      "destination": "/cms/plugins-development/server-api",
+      "permanent": true
     }
   ]
 }
