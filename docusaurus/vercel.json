@@ -23,7 +23,7 @@
     {
       "source": "/cms/plugins/developing-plugins",
       "destination": "/cms/plugins-development/developing-plugins",
-      "permanent": true,
+      "permanent": true
     },
     {
       "source": "/status",
