@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'graphql-create': '/cms/api/graphql#locale-create',
       'graphql-update': '/cms/api/graphql#locale-update',
       'graphql-delete': '/cms/api/graphql#locale-delete'
+    },
+    '/user-docs/settings/configuring-users-permissions-plugin-settings': {
+      '_default': '/cms/features/users-permissions',
+      'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings'
     }
   };
 
