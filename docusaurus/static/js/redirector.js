@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'google': '/cms/configurations/sso-providers/google',
       'microsoft': '/cms/configurations/sso-providers/microsoft',
       'okta': '/cms/configurations/sso-providers/okta',
-      'keycloak': '/cms/configurations/sso-providers/keycloak'
+      'keycloak-openid-connect': '/cms/configurations/sso-providers/keycloak'
     }
   };
 
