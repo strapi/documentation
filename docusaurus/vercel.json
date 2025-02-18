@@ -122,7 +122,7 @@
     },
     {
       "source": "/user-docs/settings/configuring-users-permissions-plugin-settings#configuring-advanced-settings",
-      "destination": "/cms/features/users-permissions#providers",
+      "destination": "/cms/features/users-permissions#advanced-settings",
       "permanent": true
     },
     {
