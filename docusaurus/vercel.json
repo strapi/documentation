@@ -826,11 +826,6 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/guides/configure-sso",
-      "destination": "/cms/configurations/guides/configure-sso",
-      "permanent": true
-    },
-    {
       "source": "/dev-docs/configurations/guides/public-assets",
       "destination": "/cms/configurations/guides/public-assets",
       "permanent": true
@@ -2143,7 +2138,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/sso.html",
-			"destination": "/dev-docs/configurations/guides/configure-sso"
+			"destination": "/cms/configurations/guides/configure-sso"
 		},
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/cronjobs.html",
@@ -3619,7 +3614,7 @@
     },
     {
       "source": "/dev-docs/configurations/sso",
-      "destination": "/cms/configurations/guides/configure-sso",
+      "destination": "/cms/features/sso",
       "permanent": true
     },
     {
