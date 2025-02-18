@@ -896,11 +896,6 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso",
-      "destination": "/cms/features/sso",
-      "permanent": true
-    },
-    {
       "source": "/dev-docs/configurations/users-and-permissions-providers/auth-zero",
       "destination": "/cms/configurations/users-and-permissions-providers/auth-zero",
       "permanent": true
