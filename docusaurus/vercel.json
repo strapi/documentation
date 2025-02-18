@@ -108,7 +108,7 @@
     {
       "source": "/cms/gurations/admin-panel",
       "destination": "/cms/configurations/admin-panel",
-      "permanent": true,
+      "permanent": true
     },
     {
       "source": "/user-docs/settings/configuring-users-permissions-plugin-settings",
@@ -803,7 +803,7 @@
     {
       "source": "/cms/gurations/cron",
       "destination": "/cms/configurations/cron",
-      "permanent": true,
+      "permanent": true
     },
     {
       "source": "/dev-docs/configurations/database",
