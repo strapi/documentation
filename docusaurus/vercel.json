@@ -21,11 +21,6 @@
       "permanent": true
     },
     {
-      "source": "/cms/plugins/developing-plugins",
-      "destination": "/cms/plugins-development/developing-plugins",
-      "permanent": true
-    },
-    {
       "source": "/status",
       "destination": "/",
       "permanent": true
@@ -103,11 +98,6 @@
     {
       "source": "/user-docs/settings/admin-panel",
       "destination": "/cms/features/admin-panel",
-      "permanent": true
-    },
-    {
-      "source": "/cms/gurations/admin-panel",
-      "destination": "/cms/configurations/admin-panel",
       "permanent": true
     },
     {
@@ -776,11 +766,6 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/cli#ts-generate",
-      "destination": "/cms/cli#strapi-ts",
-      "permanent": true
-    },
-    {
       "source": "/dev-docs/community",
       "destination": "/cms/community",
       "permanent": true
@@ -797,11 +782,6 @@
     },
     {
       "source": "/dev-docs/configurations/cron",
-      "destination": "/cms/configurations/cron",
-      "permanent": true
-    },
-    {
-      "source": "/cms/gurations/cron",
       "destination": "/cms/configurations/cron",
       "permanent": true
     },
@@ -871,37 +851,32 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso",
-      "destination": "/cms/configurations/guides/configure-sso",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/configurations/sso#discord",
+      "source": "/dev-docs/configurations/sso-providers/discord",
       "destination": "/cms/configurations/sso-providers/discord",
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#github",
+      "source": "/dev-docs/configurations/sso-providers/github",
       "destination": "/cms/configurations/sso-providers/github",
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#google",
+      "source": "/dev-docs/configurations/sso-providers/google",
       "destination": "/cms/configurations/sso-providers/google",
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#keycloak",
+      "source": "/dev-docs/configurations/sso-providers/keycloak",
       "destination": "/cms/configurations/sso-providers/keycloak",
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#microsoft",
+      "source": "/dev-docs/configurations/sso-providers/microsoft",
       "destination": "/cms/configurations/sso-providers/microsoft",
       "permanent": true
     },
     {
-      "source": "/dev-docs/configurations/sso#okta",
+      "source": "/dev-docs/configurations/sso-providers/okta",
       "destination": "/cms/configurations/sso-providers/okta",
       "permanent": true
     },
@@ -1426,11 +1401,6 @@
       "permanent": true
     },
     {
-      "source": "/cms/ns/server-api",
-      "destination": "/cms/plugins-development/server-api",
-      "permanent": true
-    },
-    {
       "source": "/dev-docs/plugins/upload",
       "destination": "/cms/plugins/upload",
       "permanent": true
@@ -1942,12 +1912,7 @@
     },
     {
       "source": "/dev-docs/plugins/i18n#usage-with-the-rest-api",
-      "destination": "/cms/api/rest/locale",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#rest",
-      "destination": "/cms/api/rest/locale",
+      "destination": "/dev-docs/i18n#rest",
       "permanent": true
     },
     {
@@ -1983,11 +1948,6 @@
     {
       "source": "/dev-docs/plugins/i18n#usage-with-the-graphql-plugin",
       "destination": "/dev-docs/i18n#graphql",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#graphql",
-      "destination": "/cms/api/graphql#locale",
       "permanent": true
     },
     {
@@ -2028,31 +1988,6 @@
     {
       "source": "/dev-docs/plugins/i18n#deleting-a-localization-for-a-single-type-with-graphql",
       "destination": "/dev-docs/i18n#graphql-delete",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#graphql-fetch-all",
-      "destination": "/cms/api/graphql#locale-fetch-all",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#graphql-fetch",
-      "destination": "/cms/api/graphql#locale-fetch",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#graphql-create",
-      "destination": "/cms/api/graphql#locale-create",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#graphql-update",
-      "destination": "/cms/api/graphql#locale-update",
-      "permanent": true
-    },
-    {
-      "source": "/dev-docs/i18n#graphql-delete",
-      "destination": "/cms/api/graphql#locale-delete",
       "permanent": true
     },
 		{
@@ -2219,11 +2154,6 @@
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/public-assets.html",
 			"destination": "/dev-docs/configurations/guides/public-assets"
 		},
-    {
-      "source:": "/cms/configurations/public-assets",
-      "destination": "/cms/configurations/guides/public-assets",
-      "permanent": true
-    },
 		{
 			"source": "/developer-docs/latest/setup-deployment-guides/configurations/optional/api-tokens.html",
 			"destination": "/user-docs/features/api-tokens"
@@ -2921,16 +2851,6 @@
 			"source": "/dev-docs/api/server-api",
 			"destination": "/dev-docs/plugins/server-api"
 		},
-    {
-      "source": "/cms/plugins/server-api",
-      "destination": "/cms/plugins-development/server-api",
-      "permanent": true
-    },
-    {
-      "source": "/cms/plugins/admin-panel-api",
-      "destination": "/cms/plugins-development/admin-panel-api",
-      "permanent": true
-    },
 		{
 			"source": "/dev-docs/user-docs/settings/managing-global-settings",
 			"destination": "/dev-docs/user-docs/settings/managing-global-settings"
