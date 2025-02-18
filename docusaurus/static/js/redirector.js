@@ -1,4 +1,3 @@
-// Save this file in static/js/redirector.js
 document.addEventListener('DOMContentLoaded', () => {
   // SSO provider redirections
   const ssoRedirects = {
@@ -34,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'rest-put-single-type': '/cms/api/rest/locale#rest-put-single-type',
       'rest-delete': '/cms/api/rest/locale#rest-delete',
       'rest-delete-collection-type': '/cms/api/rest/locale#rest-delete-collection-type',
+      'rest-delete-single-type': '/cms/api/rest/locale#rest-delete-single-type',
       'graphql': '/cms/api/graphql#locale',
       'graphql-fetch-all': '/cms/api/graphql#locale-fetch-all',
       'graphql-fetch': '/cms/api/graphql#locale-fetch',
