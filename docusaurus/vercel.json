@@ -3613,6 +3613,11 @@
       "permanent": true
     },
     {
+      "source": "/dev-docs/configurations/sso#google",
+      "destination": "/cms/configurations/sso-providers/google",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/sso",
       "destination": "/cms/configurations/guides/configure-sso",
       "permanent": true
@@ -3627,11 +3632,7 @@
       "destination": "/cms/configurations/sso-providers/github",
       "permanent": true
     },
-    {
-      "source": "/dev-docs/configurations/sso#google",
-      "destination": "/cms/configurations/sso-providers/google",
-      "permanent": true
-    },
+
     {
       "source": "/dev-docs/configurations/sso#keycloak",
       "destination": "/cms/configurations/sso-providers/keycloak",
