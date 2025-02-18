@@ -112,7 +112,7 @@
     },
     {
       "source": "/user-docs/settings/configuring-users-permissions-plugin-settings",
-      "destination": "/cms/features/users-permissions#admin-panel-configuration",
+      "destination": "/cms/features/users-permissions",
       "permanent": true
     },
     {
