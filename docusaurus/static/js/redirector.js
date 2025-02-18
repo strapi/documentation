@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     '/dev-docs/i18n': {
       '_default': '/cms/features/internationalization',
+      'rest': '/cms/api/rest/locale',
       'rest-get-all': '/cms/api/rest/locale#rest-get-all',
       'rest-get': '/cms/api/rest/locale#rest-get',
       'rest-create': '/cms/api/rest/locale#rest-create',
