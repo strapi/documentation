@@ -57,6 +57,8 @@ Deploying databases along with Strapi is covered in the [databases guide](/cms/c
 
 ### Application Configuration
 
+<br/>
+
 #### 1. Configure
 
 We recommend using environment variables to configure your application based on the environment, for example:

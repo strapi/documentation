@@ -71,6 +71,8 @@ Errors thrown by the GraphQL API are included in the response that has the follo
 
 ## Throwing errors
 
+<br/>
+
 ### Controllers and middlewares
 
 The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/cms/backend-customization/controllers) or [middleware](/cms/backend-customization/middlewares) respond with the correct status and body.
