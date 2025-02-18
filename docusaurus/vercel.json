@@ -3721,6 +3721,16 @@
       "source": "/dev-docs/cli#ts-generate",
       "destination": "/cms/cli#strapi-ts",
       "permanent": true
+    },
+    {
+      "source": "/dev-docs/cli#ts-generate",
+      "destination": "/cms/cli#strapi-ts",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/configurations/sso",
+      "destination": "/cms/configurations/guides/configure-sso",
+      "permanent": true
     }
   ]
 }
