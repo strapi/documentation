@@ -1942,7 +1942,12 @@
     },
     {
       "source": "/dev-docs/plugins/i18n#usage-with-the-rest-api",
-      "destination": "/dev-docs/i18n#rest",
+      "destination": "/cms/api/rest/locale",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#rest",
+      "destination": "/cms/api/rest/locale",
       "permanent": true
     },
     {
@@ -1978,6 +1983,11 @@
     {
       "source": "/dev-docs/plugins/i18n#usage-with-the-graphql-plugin",
       "destination": "/dev-docs/i18n#graphql",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql",
+      "destination": "/cms/api/graphql#locale",
       "permanent": true
     },
     {
