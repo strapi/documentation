@@ -33,7 +33,7 @@ const config = {
 
   scripts: [
     {
-      src: '/js/sso-redirector.js',
+      src: '/js/redirector.js',
       async: false, // Load synchronously to ensure it runs before page navigation
     },
     {
