@@ -3606,6 +3606,11 @@
         "source": "/cms/gurations/admin-panel",
         "destination": "/cms/configurations/admin-panel",
         "permanent": true
+    },
+    {
+      "source": "/cms/gurations/cron",
+      "destination": "/cms/configurations/cron",
+      "permanent": true
     }
   ]
 }
