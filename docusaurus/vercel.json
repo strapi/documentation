@@ -162,7 +162,17 @@
     },
     {
       "source": "/user-docs/users-roles-permissions/managing-administrators",
-      "destination": "/cms/features/rbac#usage",
+      "destination": "/cms/features/rbac",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/managing-administrators#creating-a-new-account",
+      "destination": "/cms/features/rbac#creating-a-new-account",
+      "permanent": true
+    },
+    {
+      "source": "/user-docs/users-roles-permissions/managing-administrators#deleting-an-account",
+      "destination": "/cms/features/rbac#deleting-an-account",
       "permanent": true
     },
     {
