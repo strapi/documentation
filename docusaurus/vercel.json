@@ -3606,6 +3606,6 @@
         "source": "/cms/gurations/admin-panel",
         "destination": "/cms/configurations/admin-panel",
         "permanent": true
-    },
+    }
   ]
 }
