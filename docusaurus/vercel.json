@@ -2030,6 +2030,31 @@
       "destination": "/dev-docs/i18n#graphql-delete",
       "permanent": true
     },
+    {
+      "source": "/dev-docs/i18n#graphql-fetch-all",
+      "destination": "/cms/api/graphql#locale-fetch-all",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-fetch",
+      "destination": "/cms/api/graphql#locale-fetch",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-create",
+      "destination": "/cms/api/graphql#locale-create",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-update",
+      "destination": "/cms/api/graphql#locale-update",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/i18n#graphql-delete",
+      "destination": "/cms/api/graphql#locale-delete",
+      "permanent": true
+    },
 		{
 			"source": "/cloud/",
 			"destination": "/cloud/intro"

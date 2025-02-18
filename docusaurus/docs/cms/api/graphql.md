@@ -461,7 +461,7 @@ mutation CreateCategory {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/cms/api/graphql#graphql-create)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [create a new localized document](/cms/api/graphql#locale-create)).
 :::
 
 ### Update an existing document
@@ -489,7 +489,7 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!) {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/cms/api/graphql#graphql-update)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can create a document for a specific locale (see [i18n documentation](/cms/api/graphql#locale-update)).
 :::
 
 #### Update relations
@@ -527,7 +527,7 @@ mutation DeleteRestaurant {
 ```
 
 :::tip
-If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/cms/api/graphql#graphql-delete)).
+If the Internationalization (i18n) feature is enabled for your content-type, you can delete a specific localized version of a document (see [i18n documentation](/cms/api/graphql#locale-delete)).
 :::
 
 ### Mutations on media files
@@ -753,9 +753,9 @@ The [Internationalization (i18n)](/cms/features/internationalization) feature ad
 - The `locale` field is added to the GraphQL schema.
 - GraphQL can be used:
   - to query documents for a specific locale with the `locale` argument
-  - for mutations to [create](#graphql-create), [update](#graphql-update), and [delete](#graphql-delete) documents for a specific locale
+  - for mutations to [create](#locale-create), [update](#locale-update), and [delete](#locale-delete) documents for a specific locale
 
-### Fetch all documents in a specific locale {#graphql-fetch-all}
+### Fetch all documents in a specific locale {#locale-fetch-all}
 
 To fetch all documents <DocumentDefinition/> for a specific locale, pass the `locale` argument to the query:
 
@@ -800,7 +800,7 @@ query {
 
 </ApiCall>
 
-### Fetch a document in a specific locale {#graphql-fetch}
+### Fetch a document in a specific locale {#locale-fetch}
 
 To fetch a documents <DocumentDefinition/> for a specific locale, pass the `documentId` and the `locale` arguments to the query:
 
@@ -839,7 +839,7 @@ query Restaurant($documentId: ID!, $locale: I18NLocaleCode) {
 </Response>
 </ApiCall>
 
-### Create a new localized document {#graphql-create}
+### Create a new localized document {#locale-create}
 
 The `locale` field can be passed to create a localized document <DocumentDefinition/> for a specific locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/cms/api/graphql#create-a-new-document)).
 
@@ -859,7 +859,7 @@ mutation CreateRestaurant($data: RestaurantInput!, $locale: I18NLocaleCode) {
 }
 ```
 
-### Update a document for a specific locale {#graphql-update}
+### Update a document for a specific locale {#locale-update}
 
 A `locale` argument can be passed in the mutation to update a document <DocumentDefinition/> for a given locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/cms/api/graphql#update-an-existing-document)).
 
@@ -879,7 +879,7 @@ mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!, $locale: I1
 }
 ```
 
-### Delete a locale for a document {#graphql-delete}
+### Delete a locale for a document {#locale-delete}
 
 Pass the `locale` argument in the mutation to delete a specific localization for a document <DocumentDefinition/>:
 
