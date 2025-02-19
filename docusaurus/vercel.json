@@ -3573,6 +3573,11 @@
       "permanent": true
     },
     {
+      "source": "/user-docs/releases/managing-a-release",
+      "destination": "/cms/features/releases",
+      "permanent": true
+    },
+    {
       "source": "/user-docs/releases/introduction",
       "destination": "/cms/features/releases",
       "permanent": true
