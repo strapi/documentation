@@ -72,7 +72,7 @@ By default, all logs are displayed in reverse chronological order. You can filte
   }}
 />
 
-### Accessing log details
+### Accessing log details {#log-details}
 
 For any log item, click the <Icon name="eye" /> icon to access a modal with more details about that action. In the modal, the *Payload* section displays the details in an interactive JSON component, enabling you to expand and collapse the JSON object.
 
