@@ -56,7 +56,6 @@ Feel free to [share your feedback](https://forms.gle/D1SXb8kYBVR7qijp6)!
 
 ### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
 
-#### Repository
 - [🎨 More design fixes for CMS Docs](https://github.com/strapi/documentation/pull/2366)
 - [🎨 Design fixes for the new design](https://github.com/strapi/documentation/pull/2276)
 - [🎨 New design](https://github.com/strapi/documentation/pull/2245)
