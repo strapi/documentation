@@ -1501,11 +1501,6 @@
       "permanent": true
     },
     {
-      "source": "/user-docs/settings/audit-logs#events-logged",
-      "destination": "/cms/features/audit-logs#usage",
-      "permanent": true
-    },
-    {
       "source": "/user-docs/features/content-history",
       "destination": "/cms/features/content-history",
       "permanent": true

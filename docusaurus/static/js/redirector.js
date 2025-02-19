@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'editing-roles-details': '/cms/features/users-permissions#editing-a-role',
       'configuring-roles-permissions': '/cms/features/users-permissions#editing-a-role',
       'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
+    },
+    '/user-docs/settings/audit-logs': {
+      '_default': '/cms/features/audit-logs',
+      'events-logged': '/cms/features/audit-logs#usage'
     }
   };
 
