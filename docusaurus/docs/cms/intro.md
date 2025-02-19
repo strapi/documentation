@@ -3,7 +3,7 @@ sidebar_label: 'Introduction'
 description: The Strapi CMS documentation contains all the admin panel related information and the technical information related to the setup, advanced usage, customization, and update of your Strapi 5 application.
 displayed_sidebar: cmsSidebar
 slug: /cms/intro
-pagination_next: cms/setup-deployment
+pagination_next: cms/quick-start
 sidebar_position: 1
 tags:
  - introduction
