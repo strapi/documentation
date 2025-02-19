@@ -1572,7 +1572,7 @@
     },
     {
       "source": "/user-docs/getting-started/setting-up-admin-panel",
-      "destination": "/cms/getting-started/setting-up-admin-panel",
+      "destination": "/cms/features/admin-panel",
       "permanent": true
     },
     {
