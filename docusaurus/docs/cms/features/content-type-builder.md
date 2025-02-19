@@ -86,7 +86,7 @@ The Content-type Builder allows to create new content-types: single and collecti
 | Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/cms/features/review-workflows#configuration)). |
 -->
 6. Click on the **Continue** button.
-7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-content-types-fields)).
+7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-fields-content-type)).
 8. Click on the **Save** button.
 
 :::caution
@@ -109,7 +109,7 @@ New content-types are only considered created once they have been saved. Saving 
    - Select an available category, or enter in the textbox a new category name to create one.
    - _(optional)_ Choose an icon representing the new component. You can use the search <Icon name="magnifying-glass" classes="ph-bold" /> to find an icon instead of scrolling through the list.
 3. Click on the **Continue** button.
-4. Add and configure chosen fields for your component (see [Configuring fields for content-types](#configuring-content-types-fields)).
+4. Add and configure chosen fields for your component (see [Configuring fields for content-types](#configuring-fields-content-type)).
 5. Click on the **Save** button.
 
 ### Editing content-types
@@ -174,7 +174,7 @@ The Content-type Builder allows to manage all existing content-types. For an cho
 Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
 :::
 
-### Configuring content-types fields
+### Configuring content-types fields {#configuring-fields-content-type}
 
 <!-- MAY BE REMOVED - FEELS REDUNDANT WITH ID CARD 
 
