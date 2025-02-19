@@ -531,7 +531,7 @@ Just above the list of folders and assets and next to the ![Filter icon](/img/as
   }}
 />
 
-### Managing individual assets
+### Managing individual assets {#managing-assets}
 
 The Media Library allows managing assets, which includes modifying assets' file details and location, downloading and copying the link of the assets file, and deleting assets. Image files can also be cropped.
 
