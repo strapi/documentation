@@ -60,13 +60,13 @@ From the list view, it is possible to:
 
 - create a new entry <ScreenshotNumberReference number="1" />,
 - make a textual search <ScreenshotNumberReference number="2" /> or set filters <ScreenshotNumberReference number="3" /> to find specific entries,
-- if [Internationalization (i18n)](/cms/plugins/strapi-plugins#i18n) is enabled, filter by locale to display only the entries [translated](/cms/features/internationalization) in a chosen locale <ScreenshotNumberReference number="4" />,
+- if [Internationalization (i18n)](/cms/features/internationalization) is enabled, filter by locale to display only the entries [translated](/cms/features/internationalization) in a chosen locale <ScreenshotNumberReference number="4" />,
 - configure the fields displayed in the table of the list view <ScreenshotNumberReference number="5" />,
 - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, see the status of each entry <ScreenshotNumberReference number="6" />,
 - perform actions on a specific entry by clicking on <Icon name="dots-three-outline" /> <ScreenshotNumberReference number="7" /> at the end of the row:
   - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete <Icon name="trash"/> (see [Deleting content](/cms/features/draft-and-publish#deleting-content)) the entry,
   - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) or discard its changes,
-  - if [Internationalization (i18n)](/cms/plugins/strapi-plugins#i18n) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
+  - if [Internationalization (i18n)](/cms/features/internationalization) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
 - select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-publishing-and-unpublishing), or [delete](/cms/features/draft-and-publish#deleting-content).
 
 :::tip

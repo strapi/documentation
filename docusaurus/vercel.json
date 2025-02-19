@@ -1592,7 +1592,7 @@
     },
     {
       "source": "/user-docs/plugins/strapi-plugins",
-      "destination": "/cms/plugins/strapi-plugins",
+      "destination": "/cms/plugins/installing-plugins-via-marketplace",
       "permanent": true
     },
     {
@@ -2632,10 +2632,6 @@
 		{
 			"source": "/user-docs/latest/settings/audit-logs.html",
 			"destination": "/user-docs/settings/audit-logs"
-		},
-		{
-			"source": "/user-docs/latest/plugins/strapi-plugins.html",
-			"destination": "/user-docs/plugins/strapi-plugins"
 		},
 		{
 			"source": "/user-docs/latest/plugins/introduction-to-plugins.html",
