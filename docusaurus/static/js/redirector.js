@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '_default': '/cms/features/users-permissions',
       'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings',
       'configuring-providers': '/cms/features/users-permissions#providers',
+      'configuring-email-templates': '/cms/features/users-permissions#email-templates'
     },
     '/user-docs/users-roles-permissions/configuring-end-users-roles': {
       '_default': '/cms/features/users-permissions', 
