@@ -1,6 +1,6 @@
 ---
 title: Users & Permissions Providers
-# description: todo
+description: Learn how to setup providers for the Users & Permissions feature, or create your own.
 displayed_sidebar: cmsSidebar
 tags:
 - users and permissions
