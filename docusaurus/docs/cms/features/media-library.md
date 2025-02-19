@@ -519,7 +519,7 @@ Just above the list of folders and assets and next to the ![Filter icon](/img/as
 2. Choose whether you want to upload the new asset from your computer or from an URL:
     - from the computer, either drag & drop the asset directly or browse files on your system,
     - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
-3. (optional) Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-individual-assets)).
+3. (optional) Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
 4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
 5. Click on **Upload assets to the library**.
 
