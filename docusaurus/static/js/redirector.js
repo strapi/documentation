@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '/user-docs/users-roles-permissions/configuring-end-users-roles': {
       '_default': '/cms/features/users-permissions', 
       'editing-roles-details': '/cms/features/users-permissions#editing-a-role',
+      'configuring-roles-permissions': '/cms/features/users-permissions#editing-a-role',
       'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
     }
   };
