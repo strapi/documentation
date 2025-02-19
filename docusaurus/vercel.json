@@ -1577,7 +1577,7 @@
     },
     {
       "source": "/user-docs/getting-started/user-guide-fundamentals",
-      "destination": "/cms/getting-started/user-guide-fundamentals",
+      "destination": "/cms/features/admin-panel",
       "permanent": true
     },
     {

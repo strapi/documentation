@@ -68,6 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
       'gatsby': '/cms/plugins/installing-plugins-via-marketplace',
       'custom-fields': '/cms/plugins-development/custom-fields'
     },
+    '/user-docs/getting-started/setting-up-admin-panel': {
+      '_default': '/cms/features/admin-panel',
+      'using-sso-for-authentication': '/cms/features/admin-panel#usage',
+      'accessing-the-admin-panel': '/cms/features/admin-panel',
+      'changing-your-password': '/cms/features/admin-panel#changing-account-password',
+      'setting-up-your-administrator-profile': '/cms/features/admin-panel#configuration'
+    }
   };
 
   // Combine all redirects
