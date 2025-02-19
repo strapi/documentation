@@ -56,7 +56,18 @@ document.addEventListener('DOMContentLoaded', () => {
     '/user-docs/settings/audit-logs': {
       '_default': '/cms/features/audit-logs',
       'events-logged': '/cms/features/audit-logs#usage'
-    }
+    },
+    '/user-docs/plugins/strapi-plugins': {
+      '_default': '/cms/plugins/installing-plugins-via-marketplace',
+      'i18n': '/cms/features/internationalization',
+      'graphql': '/cms/plugins/graphql',
+      'sentry': '/cms/plugins/sentry',
+      'documentation': '/cms/plugins/documentation',
+      'email': '/cms/features/email',
+      'seo': '/cms/plugins/installing-plugins-via-marketplace',
+      'gatsby': '/cms/plugins/installing-plugins-via-marketplace',
+      'custom-fields': '/cms/plugins-development/custom-fields'
+    },
   };
 
   // Combine all redirects
