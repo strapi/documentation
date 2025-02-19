@@ -97,7 +97,7 @@
     },
     {
       "source": "/user-docs/media-library/managing-assets",
-      "destination": "/cms/features/media-library#managing-individual-assets",
+      "destination": "/cms/features/media-library",
       "permanent": true
     },
     {
