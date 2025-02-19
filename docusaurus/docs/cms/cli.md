@@ -121,8 +121,8 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 | Option              |  Type  | Description                                                                                                                |
 | ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
-| `‑‑no‑encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
-| `‑‑no‑compress`     |   -    | Disables file compression.                                                                                                 |
+| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.   |
+| `--no-compress`     |   -    | Disables file compression.      |
 | `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
 | `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
 | `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
