@@ -1,6 +1,7 @@
 ---
 title: Release notes
 description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
+toc_max_heading_level: 2
 custom_edit_url: null
 ---
 
@@ -22,8 +23,57 @@ Strapi Docs now follow the **[semantic versioning](https://semver.org/)** philos
 - **Patch version** (5.1.1, 5.1.2…): **Content updates**, including improvement or extension of existing pages, code examples fixes, and typos.
 
 New versions (minor or patch) are generally released weekly, on Wednesdays.
+<br/>
 
 </details>
+
+## 6.0.0-beta.1
+
+<br/>
+
+Version 6.0.0 of Strapi Docs is the biggest rewrite of documentation to date!<br/><Icon name="sparkle"/> This release includes:
+
+- _Merge of Dev Docs & User Guide_: You now have one documentation per Strapi product: CMS and Cloud.
+- _New Features section & pages_: Everything feature-related is in the new “Features” section of the CMS doc's navigation and each feature is now fully documented in one page.
+- _Simplified navigation_: Many users reported frustration because of the too many levels and inconsistent behaviours in the navigation—both issues have been fixed and the navigation design has been improved for better readability.
+- _More visuals throughout the docs_: We're slowly adding new interactive demos in pages to offer another way to learn about Strapi. Check out [Admin Panel](/cms/features/admin-panel), [Content Manager](/cms/features/content-manager), and [Content-type Builder](/cms/features/content-type-builder) pages to try the demos!
+
+Feel free to [share your feedback](https://forms.gle/D1SXb8kYBVR7qijp6)!
+
+### <Icon name="sparkle" /> New content
+
+<br/>
+
+#### CMS Docs
+- [CMS folder reorganization](https://github.com/strapi/documentation/pull/2375)
+- [New CMS documentation - More improvements & additions](https://github.com/strapi/documentation/pull/2359)
+- [Proofread & improve CMS docs pages - pt. 2](https://github.com/strapi/documentation/pull/2369)
+- [Proofread & improve CMS docs pages - pt. 1](https://github.com/strapi/documentation/pull/2350)
+- [RBAC & SSO (Dev Docs) rework for CMS Docs](https://github.com/strapi/documentation/pull/2347)
+- [New Features pages with User Guide content](https://github.com/strapi/documentation/pull/2288)
+- [New Features pages with Dev Docs content](https://github.com/strapi/documentation/pull/2309)
+- [CMS Docs (alpha)](https://github.com/strapi/documentation/pull/2340)
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+#### Repository
+- [🎨 More design fixes for CMS Docs](https://github.com/strapi/documentation/pull/2366)
+- [🎨 Design fixes for the new design](https://github.com/strapi/documentation/pull/2276)
+- [🎨 New design](https://github.com/strapi/documentation/pull/2245)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 5.5.2
 
