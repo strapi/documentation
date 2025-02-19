@@ -234,6 +234,10 @@ const config = {
             title: 'Additional resources',
             items: [
               {
+                label: 'v5 Docs (User Guide, Dev Docs, Cloud Docs)',
+                href: 'https://docs.strapi.io'
+              },
+              {
                 label: 'v4 Docs',
                 href: 'https://docs-v4.strapi.io'
               },
