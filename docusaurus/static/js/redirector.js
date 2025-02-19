@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
       'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings',
       'configuring-providers': '/cms/features/users-permissions#providers',
     },
-    // '/user-docs/users-roles-permissions/configuring-end-users-roles': {
-    //   '_default': '/cms/features/users-permissions', 
-    //   'creating-a-new-role': '/cms/features/users-permissions#creating-a-new-role',
-    //   'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
-    // }
+    '/user-docs/users-roles-permissions/configuring-end-users-roles': {
+      '_default': '/cms/features/users-permissions', 
+      'editing-roles-details': '/cms/features/users-permissions#editing-a-role',
+      'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
+    }
   };
 
   // Combine all redirects
