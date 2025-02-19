@@ -43,13 +43,11 @@ If you're totally new to **Strapi** <Annotation>**💡 Did you know?**<br />The 
 
 The table of content of the Strapi CMS documentation displays 7 main sections in an order that should correspond to your journey with the product. Click on the cards to be redirected to the introduction of the section, or to the most read page of that section.
 
-
-
 <CustomDocCardsWrapper>
 
 <CustomDocCard icon="rocket" title="Getting Started" description="Install and deploy Strapi, then start using the admin panel. Recommended read for beginners!" link="/cms/installation" />
 
-<CustomDocCard icon="backpack" title="Features" description="Learn about the Strapi features, and how to configure and use them." link="" />
+<CustomDocCard icon="backpack" title="Features" description="Learn about the Strapi features, and how to configure and use them." link="/cms/features/api-tokens" />
 
 <CustomDocCard icon="cube" title="APIs" description="Query your content with REST, GraphQL, and Strapi's lower-level APIs." link="/cms/api/content-api" />
 
@@ -57,7 +55,7 @@ The table of content of the Strapi CMS documentation displays 7 main sections in
 
 <CustomDocCard icon="laptop" title="Development" description="Customize the Strapi server and admin panel. Learn about the most advanced options for your project." link="/cms/customization" />
 
-<CustomDocCard icon="puzzle-piece" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="" />
+<CustomDocCard icon="puzzle-piece" title="Plugins" description="Use Strapi built-in plugins or develop your own plugins." link="/cms/plugins/installing-plugins-via-marketplace" />
 
 <CustomDocCard icon="escalator-up" title="Upgrade" description="Upgrade your application to the most recent Strapi versions." link="/cms/migration/v4-to-v5/introduction-and-faq" />
 
@@ -73,5 +71,5 @@ The table of content of the Strapi CMS documentation displays 7 main sections in
 :::strapi Information for beginner developers
 Some parts of the CMS documentation (e.g. APIs, Configuration, Development) are mostly intended to developers and assume some prior knowledge of the JavaScript ecosystem.
 
-If you also make your first steps with JavaScript web development while discovering Strapi, we encourage you to read more about [JavaScript](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics) and [npm](https://docs.npmjs.com/about-npm). If applicable to your project, you can also learn about [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) before diving deeper into these technical parts of the CMS documentation.
+If you also make your first steps with JavaScript web development while discovering Strapi, we encourage you to read more about <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics)">JavaScript</a> and [npm](https://docs.npmjs.com/about-npm). If applicable to your project, you can also learn about [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) before diving deeper into these technical parts of the CMS documentation.
 :::

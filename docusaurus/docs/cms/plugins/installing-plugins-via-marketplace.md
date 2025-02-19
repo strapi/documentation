@@ -11,7 +11,7 @@ tags:
 
 # Using the Marketplace
 
-The Marketplace is where users can find additional plugins to customize Strapi applications, and additional providers to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
+Strapi comes with built-in plugins such as [Documentation](/cms/plugins/documentation), [GraphQL](/cms/plugins/graphql), and [Sentry](/cms/plugins/sentry). The Marketplace is where users can find additional plugins to customize Strapi applications, and additional providers to extend plugins. The Marketplace is located in the admin panel, indicated by ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
 :::note strapi In-app Marketplace vs. Market website
 The Marketplace in the admin panel displays all existing plugins, regardless of the version of Strapi they are for. All plugins can also be discoverable through the [Strapi Market](https://market.strapi.io) website.
@@ -38,7 +38,7 @@ The Plugins and Providers tabs display each plugin/provider on individual cards 
 
 In the top right corner of the Marketplace, the **Submit plugin** button redirects to the Strapi Market where it is possible to submit your own plugin and provider.
 
-:::tip TIPS
+:::tip Tips
 
 - The search bar displays incremental search results based on the plugin/provider name and description.
 - Use the "Sort by" button or set filters to find plugins more easily.
@@ -47,13 +47,13 @@ In the top right corner of the Marketplace, the **Submit plugin** button redirec
 
 ## Installing Marketplace plugins and providers
 
-:::note
-Marketplace plugins and providers are installed and deleted from the user's terminal ([see Developer Documentation](/cms/installation/cli/)).
-:::
-
 To install a new plugin or provider via the Marketplace:
 
 1. Go to the ![Marketplace icon](/img/assets/icons/v5/ShoppingCart.svg) *Marketplace*.
 2. Choose the **Plugins** tab to browse available plugins or the **Providers** tab to browse available providers.
 3. Choose an available plugin/provider and click on the **More** ![ExternalLink icon](/img/assets/icons/v5/ExternalLink.svg) button.
 4. Once redirected to the Strapi Market website, follow the plugin/provider-specific implementation instructions.
+
+:::strapi Developing Strapi plugins
+Can't find a plugin that suits your use case? Feel free to [create your own](/cms/plugins-development/developing-plugins)!
+:::
