@@ -6,6 +6,7 @@ unlisted: true
 ---
 
 import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
+import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # Filtering with the Entity Service API
 
@@ -14,6 +15,8 @@ import ESdeprecated from '/docs/snippets/entity-service-deprecated.md'
 The [Entity Service API](/cms/api/entity-service) offers the ability to filter results found with its [findMany()](/cms/api/entity-service/crud#findmany) method.
 
 Results are filtered with the `filters` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.
+
+<DeepFilteringBlogLink/>
 
 ## Logical operators
 

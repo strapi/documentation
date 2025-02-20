@@ -15,6 +15,8 @@ tags:
 - sort
 ---
 
+import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
+
 # GraphQL API
 
 The GraphQL API allows performing queries and mutations to interact with the [content-types](/cms/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/cms/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
@@ -647,6 +649,8 @@ The following operators are available:
   }
 }
 ```
+
+<DeepFilteringBlogLink />
 
 ## Sorting
 

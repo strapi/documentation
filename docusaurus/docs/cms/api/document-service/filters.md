@@ -11,6 +11,8 @@ tags:
 - logical operators
 ---
 
+import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
+
 # Document Service API: Filters
 
 The [Document Service API](/cms/api/document-service) offers the ability to filter results.
@@ -43,6 +45,8 @@ The following operators are available:
 | [`$or`](#or)                     | Joins the filters in an "or" expression  |
 | [`$and`](#and)                   | Joins the filters in an "and" expression |
 | [`$not`](#not)                   | Joins the filters in an "not" expression |
+
+<DeepFilteringBlogLink />
 
 ## Attribute operators
 

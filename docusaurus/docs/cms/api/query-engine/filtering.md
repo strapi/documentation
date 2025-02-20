@@ -12,6 +12,7 @@ tags:
 ---
 
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
+import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # Filtering with the Query Engine API
 
@@ -20,6 +21,8 @@ import ConsiderDocumentService from '/docs/snippets/consider-document-service.md
 The [Query Engine API](/cms/api/query-engine/) offers the ability to filter results found with its [findMany()](/cms/api/query-engine/single-operations#findmany) method.
 
 Results are filtered with the `where` parameter that accepts [logical operators](#logical-operators) and [attribute operators](#attribute-operators). Every operator should be prefixed with `$`.
+
+<DeepFilteringBlogLink />
 
 ## Logical operators
 
