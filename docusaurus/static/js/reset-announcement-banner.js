@@ -45,7 +45,6 @@
     setStorageItem(STORAGE_KEY, BANNER_RESET_DATE);
     
     // Optional: minimalist notification, commented out by default
-    /*
     const notificationElement = document.createElement('div');
     notificationElement.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#f8f9fa; padding:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.2); z-index:1000; font-size:12px;';
     notificationElement.innerHTML = 'We\'ve updated important announcements. <button style="background:none; border:none; text-decoration:underline; cursor:pointer; font-size:12px;">OK</button>';
@@ -60,7 +59,6 @@
         document.body.removeChild(notificationElement);
       }
     }, 5000);
-    */
   }
   
   function checkBannerVersion() {
