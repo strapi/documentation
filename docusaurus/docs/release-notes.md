@@ -76,6 +76,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.5.2
 
+<br/>
+
 ### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
@@ -125,6 +127,9 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 
 ## 5.5.1
+
+<br/>
+
 ### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
 
 #### User Guide
@@ -202,7 +207,12 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 
 ## 5.4.0
+
+<br/>
+
 ### <Icon name="sparkle" /> New content
+
+<br/>
 
 #### Repository
 - [First iteration of Growth plan](https://github.com/strapi/documentation/pull/2303)
@@ -237,7 +247,11 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.3.0
 
+<br/>
+
 ### <Icon name="sparkle" /> New content
+
+<br/>
 
 #### Dev Docs
 - [Setting up the Preview feature](https://github.com/strapi/documentation/pull/2295)
@@ -247,10 +261,14 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ### <Icon name="pen-nib" /> Updated content
 
+<br/>
+
 #### Strapi Cloud
 - [Rename a project](https://github.com/strapi/documentation/pull/2300)
 
 ### <Icon name="broom" />Chore, fixes, typos, and other improvements
+
+<br/>
 
 #### Dev Docs
 - [Update cross-link to U&P plugin from dev docs routes documentation](https://github.com/strapi/documentation/pull/2305)
@@ -275,6 +293,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 
 ## 5.2.2
+
+<br/>
 
 ### <Icon name="broom" />Chore, fixes, typos, and other improvements
 
@@ -305,6 +325,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 
 ## 5.2.1
+
+<br/>
 
 ### <Icon name="pen-nib" /> Updated content
 
@@ -358,13 +380,19 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.2.0
 
+<br/>
+
 ### <Icon name="sparkle" /> New content
+
+<br/>
 
 #### Dev Docs
 
 - [Add WIP API Reference and Guides for TypeScript](https://github.com/strapi/documentation/pull/2266)
 
 ### <Icon name="pen-nib" /> Updated content
+
+<br/>
 
 #### Dev Docs
 
@@ -375,6 +403,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 - [Integration between the Releases and Review Workflows features](https://github.com/strapi/documentation/pull/2273)
 
 ### <Icon name="broom" />Chore, fixes, typos, and other improvements
+
+<br/>
 
 #### Cloud
 
@@ -423,6 +453,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.1.3
 
+<br/>
+
 ### <Icon name="broom" />Chore, fixes, typos, and other improvements
 
 - [Improve instructions for upgrading to Apollo v4](https://github.com/strapi/documentation/pull/2271)
@@ -448,7 +480,11 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.1.2
 
+<br/>
+
 ### <Icon name="pen-nib" /> Updated content
+
+<br/>
 
 #### Dev Docs
 
@@ -488,7 +524,11 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.1.1
 
+<br/>
+
 ### <Icon name="pen-nib" /> Updated content
+
+<br/>
 
 #### Strapi Cloud
 
@@ -565,13 +605,19 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.1.0
 
+<br/>
+
 ### <Icon name="sparkle" /> New content
+
+<br/>
 
 #### Cloud Docs
 
 * [Multi-Environments](https://github.com/strapi/documentation/pull/2229)
 
 ### <Icon name="pen-nib" /> Updated content
+
+<br/>
 
 #### User Guide
 
@@ -582,6 +628,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 * [Clarify helper-plugin migration guide](https://github.com/strapi/documentation/pull/2230)
 
 ### <Icon name="broom" />Chore, fixes, typos, and other improvements
+
+<br/>
 
 #### Dev Docs
 
@@ -630,6 +678,8 @@ This release was made possible thanks to the following contributors. Thank you! 
 _The following is an extensive list of all the pull requests that were merged since we started working on Strapi 5 documentation. For a quicker tour, please refer to the [What's new page](/whats-new)._
 
 ### <Icon name="sparkle" /> New content
+
+<br/>
 
 #### Dev Docs
 
@@ -689,6 +739,8 @@ _The following is an extensive list of all the pull requests that were merged si
 * [New homepage](https://github.com/strapi/documentation/pull/2087) 
 
 ### <Icon name="pen-nib" /> Updated content
+
+<br/>
 
 #### Dev Docs
 
