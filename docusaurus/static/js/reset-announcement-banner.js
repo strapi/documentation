@@ -3,7 +3,7 @@
   const COOKIE_NAME = 'docusaurus.announcement.dismiss';
   const STORAGE_KEY = 'docusaurus.announcement.version';
   // Change this value whenever you want to force banner display for all users
-  const BANNER_RESET_DATE = '2025-02-20';
+  const BANNER_RESET_DATE = '2025-02-20';  // Update this date to force a reset
   
   // Use localStorage instead of cookies for version tracking
   function getStorageItem(key) {
@@ -41,6 +41,9 @@
     // Remove the cookie that hides the banner (if it exists)
     removeCookie(COOKIE_NAME);
     
+    // For debugging - add a console log to confirm reset happened
+    console.log('[Banner Reset] Banner reset triggered. Reset date:', BANNER_RESET_DATE);
+    
     // Update the stored version
     setStorageItem(STORAGE_KEY, BANNER_RESET_DATE);
     
@@ -65,14 +68,21 @@
     const storedVersion = getStorageItem(STORAGE_KEY);
     const dismissCookie = getCookie(COOKIE_NAME);
     
-    // Only reset if:
-    // 1. The banner has been dismissed (cookie exists)
-    // 2. The stored version is different from current version (or doesn't exist)
-    if (dismissCookie && storedVersion !== BANNER_RESET_DATE) {
+    // Debug info
+    console.log('[Banner Check] Current reset date:', BANNER_RESET_DATE);
+    console.log('[Banner Check] Stored version:', storedVersion);
+    console.log('[Banner Check] Dismiss cookie exists:', dismissCookie ? "Yes" : "No");
+    
+    // Force reset banner even if cookie doesn't exist for immediate testing
+    if (storedVersion !== BANNER_RESET_DATE) {
+      console.log('[Banner Check] Version mismatch - resetting banner');
       resetAnnouncementBanner();
-    } else if (!storedVersion) {
+    } else {
+      console.log('[Banner Check] Version matches - no reset needed');
       // Just store the current version if not already stored
-      setStorageItem(STORAGE_KEY, BANNER_RESET_DATE);
+      if (!storedVersion) {
+        setStorageItem(STORAGE_KEY, BANNER_RESET_DATE);
+      }
     }
   }
   
