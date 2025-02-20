@@ -3,7 +3,7 @@
   const COOKIE_NAME = 'docusaurus.announcement.dismiss';
   const STORAGE_KEY = 'docusaurus.announcement.version';
   // Change this value whenever you want to force banner display for all users
-  const BANNER_VERSION = '2025-02-20';
+  const BANNER_RESET_DATE = '2025-02-20';
   
   // Use localStorage instead of cookies for version tracking
   function getStorageItem(key) {
@@ -42,7 +42,7 @@
     removeCookie(COOKIE_NAME);
     
     // Update the stored version
-    setStorageItem(STORAGE_KEY, BANNER_VERSION);
+    setStorageItem(STORAGE_KEY, BANNER_RESET_DATE);
     
     // Optional: minimalist notification, commented out by default
     /*
@@ -70,11 +70,11 @@
     // Only reset if:
     // 1. The banner has been dismissed (cookie exists)
     // 2. The stored version is different from current version (or doesn't exist)
-    if (dismissCookie && storedVersion !== BANNER_VERSION) {
+    if (dismissCookie && storedVersion !== BANNER_RESET_DATE) {
       resetAnnouncementBanner();
     } else if (!storedVersion) {
       // Just store the current version if not already stored
-      setStorageItem(STORAGE_KEY, BANNER_VERSION);
+      setStorageItem(STORAGE_KEY, BANNER_RESET_DATE);
     }
   }
   
