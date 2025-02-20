@@ -8,6 +8,9 @@ main:has(.docusaurus-mermaid-container):not(:has(.dont_hide_secondary_bar)) {
   .table-of-contents__link--active {
     display: none;
   }
+}
+
+main:has(.docusaurus-mermaid-container) {
   .docusaurus-mermaid-container * {
     font-size: .85rem !important;
   }
