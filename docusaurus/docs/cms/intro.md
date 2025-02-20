@@ -71,5 +71,5 @@ The table of content of the Strapi CMS documentation displays 7 main sections in
 :::strapi Information for beginner developers
 Some parts of the CMS documentation (e.g. APIs, Configuration, Development) are mostly intended to developers and assume some prior knowledge of the JavaScript ecosystem.
 
-If you also make your first steps with JavaScript web development while discovering Strapi, we encourage you to read more about <ExternalLink to="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics" name="JavaScript" /> and [npm](https://docs.npmjs.com/about-npm). If applicable to your project, you can also learn about [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) before diving deeper into these technical parts of the CMS documentation.
+If you also make your first steps with JavaScript web development while discovering Strapi, we encourage you to read more about <ExternalLink to="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics" text="JavaScript" /> and [npm](https://docs.npmjs.com/about-npm). If applicable to your project, you can also learn about [TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) before diving deeper into these technical parts of the CMS documentation.
 :::
