@@ -15,7 +15,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   // SSO provider redirections
   const ssoRedirects = {
-    '/dev-docs/configurations/sso': {
+    '/dev-docs/configurations/sso': { // base URL
+      /**
+       * Anything that is not '_default' is for an anchor
+       * e.g., 'discord' = base URL + '#' + 'discord'
+       * = redirection for /dev-docs/configurations/sso#discord
+       */
       '_default': '/cms/configurations/guides/configure-sso',
       'discord': '/cms/configurations/sso-providers/discord',
       'github': '/cms/configurations/sso-providers/github',
