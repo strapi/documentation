@@ -1,11 +1,11 @@
 ---
 title: Installation
 description: Learn many different options to install Strapi and getting started on using it.
+pagination_next: cms/features/admin-panel
 tags:
 - introduction
 - installation
 - Command Line Interface (CLI)
-pagination_next: cms/installation/cli
 ---
 
 # Installation

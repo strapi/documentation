@@ -1,6 +1,8 @@
 ---
 title: Docker
 displayed_sidebar: cmsSidebar
+pagination_prev: cms/installation/cli
+pagination_next: cms/features/admin-panel
 description: Quickly create a Docker container from a local project.
 tags:
 - installation

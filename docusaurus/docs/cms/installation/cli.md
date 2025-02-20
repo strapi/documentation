@@ -2,6 +2,8 @@
 title: CLI
 displayed_sidebar: cmsSidebar
 description: Fast-track local install for getting Strapi running on your computer in less than a minute.
+pagination_prev: cms/installation
+pagination_next: cms/installation/docker
 tags:
 - installation
 - Command Line Interface (CLI)
