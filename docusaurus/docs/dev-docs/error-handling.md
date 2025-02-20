@@ -172,7 +172,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
     // Throwing an error will prevent the restaurant from being created
     if (!okay) {
-      throw new ApplicationError('Something went wrong', { foo: 'bar' });
+      throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
     }
   
     const result = await super.create(params);
@@ -199,7 +199,7 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 
     // Throwing an error will prevent the restaurant from being created
     if (!okay) {
-      throw new ApplicationError('Something went wrong', { foo: 'bar' });
+      throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
     }
   
     const result = await super.create(params);
@@ -237,7 +237,7 @@ module.exports = {
 
     // Throwing an error will prevent the entity from being created
     if (!okay) {
-      throw new ApplicationError('Something went wrong', { foo: 'bar' });
+      throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
     }
   },
 };
@@ -259,7 +259,7 @@ export default {
 
     // Throwing an error will prevent the entity from being created
     if (!okay) {
-      throw new ApplicationError('Something went wrong', { foo: 'bar' });
+      throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
     }
   },
 };
@@ -300,7 +300,7 @@ module.exports = (policyContext, config, { strapi }) => {
   if (isAllowed) {
     return true;
   } else {
-    throw new PolicyError('You are not allowed to perform this action', {
+    throw new errors.PolicyError('You are not allowed to perform this action', {
       policy: 'my-policy',
       myCustomKey: 'myCustomValue',
     });
@@ -324,7 +324,7 @@ export default (policyContext, config, { strapi }) => {
   if (isAllowed) {
     return true;
   } else {
-    throw new PolicyError('You are not allowed to perform this action', {
+    throw new errors.PolicyError('You are not allowed to perform this action', {
       policy: 'my-policy',
       myCustomKey: 'myCustomValue',
     });
@@ -354,7 +354,7 @@ The `ApplicationError` class is a generic error class for application errors and
 | `details` | `object` | Object to define additional details | `{}` |
 
 ```js
-throw new ApplicationError('Something went wrong', { foo: 'bar' });
+throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
 ```
 
 </TabItem>
@@ -386,7 +386,7 @@ The `PaginationError` class is a specific error class that is typically used whe
 | `message` | `string` | The error message | `Invalid pagination` |
 
 ```js
-throw new PaginationError('Exceeded maximum pageSize limit');
+throw new errors.PaginationError('Exceeded maximum pageSize limit');
 ```
 
 </TabItem>
@@ -400,7 +400,7 @@ The `NotFoundError` class is a generic error class for throwing `404` status cod
 | `message` | `string` | The error message | `Entity not found` |
 
 ```js
-throw new NotFoundError('These are not the droids you are looking for');
+throw new errors.NotFoundError('These are not the droids you are looking for');
 ```
 
 </TabItem>
@@ -414,7 +414,7 @@ The `ForbiddenError` class is a specific error class used when a user either doe
 | `message` | `string` | The error message | `Forbidden access` |
 
 ```js
-throw new ForbiddenError('Ah ah ah, you didn\'t say the magic word');
+throw new errors.ForbiddenError('Ah ah ah, you didn\'t say the magic word');
 ```
 
 </TabItem>
@@ -428,7 +428,7 @@ The `UnauthorizedError` class is a specific error class used when a user doesn't
 | `message` | `string` | The error message | `Unauthorized` |
 
 ```js
-throw new UnauthorizedError('You shall not pass!');
+throw new errors.UnauthorizedError('You shall not pass!');
 ```
 
 </TabItem>
@@ -442,7 +442,7 @@ The `NotImplementedError` class is a specific error class used when the incoming
 | `message` | `string` | The error message | `This feature isn't implemented` |
 
 ```js
-throw new NotImplementedError('This isn\'t implemented', { feature: 'test', implemented: false });
+throw new errors.NotImplementedError('This isn\'t implemented', { feature: 'test', implemented: false });
 ```
 
 </TabItem>
@@ -456,7 +456,7 @@ The `PayloadTooLargeError` class is a specific error class used when the incomin
 | `message` | `string` | The error message | `Entity too large` |
 
 ```js
-throw new PayloadTooLargeError('Uh oh, the file too big!');
+throw new errors.PayloadTooLargeError('Uh oh, the file too big!');
 ```
 
 </TabItem>
@@ -471,7 +471,7 @@ The `PolicyError` class is a specific error designed to be used with [route poli
 | `details` | `object` | Object to define additional details | `{}` |
 
 ```js
-throw new PolicyError('Something went wrong', { policy: 'my-policy' });
+throw new errors.PolicyError('Something went wrong', { policy: 'my-policy' });
 ```
 
 </TabItem>
