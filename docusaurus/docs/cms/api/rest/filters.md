@@ -279,20 +279,14 @@ await request(`/api/books?${query}`);
 
 Deep filtering is filtering on a relation's fields.
 
-<br />
-
-:::caution
-
-- Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
+:::note
+- Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these data structures (see [`populate` documentation](/cms/api/rest/populate-select#population))
+<!-- - It is not possible to filter on dynamic zones or media fields. -->
 - Deep filtering isn't available for some polymorphic relations such as media fields, but it works on dynamic zones.
-
 :::
 
-:::note
-
-- Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these data structures (see [`populate` documentation](/cms/api/rest/populate-select#population))
-- It is not possible to filter on dynamic zones or media fields.
-
+:::caution
+Querying your API with deep filters may cause performance issues.  If one of your deep filtering queries is too slow, we recommend building a custom route with an optimized version of the query.
 :::
 
 <DeepFilteringBlogLink />
