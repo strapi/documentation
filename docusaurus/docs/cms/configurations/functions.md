@@ -16,6 +16,8 @@ tags:
 
 # Functions
 
+<div className="dont_hide_secondary_bar">
+
 The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/cms/typescript) project) includes global [register](#register), [bootstrap](#bootstrap) and [destroy](#destroy) functions that can be used to add dynamic and logic-based configurations.
 
 The functions can be synchronous, asynchronous, or return a promise.
@@ -31,6 +33,8 @@ flowchart TB
     click C "#bootstrap"
     click D "/cms/backend-customization/requests-responses"
 ```
+
+</div>
 
 ## Synchronous function
 
