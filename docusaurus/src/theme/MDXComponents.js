@@ -31,6 +31,7 @@ import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
 import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
+import { ExternalLink } from '../components/ExternalLink';
 
 export default {
   // Re-use the default mapping
@@ -77,6 +78,7 @@ export default {
   Guideflow,
   Annotation,
   Icon,
+  ExternalLink,
   /**
    * Reusable annotation components go below👇
    */
