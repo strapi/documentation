@@ -281,8 +281,7 @@ Deep filtering is filtering on a relation's fields.
 
 :::note
 - Relations, media fields, components, and dynamic zones are not populated by default. Use the `populate` parameter to populate these data structures (see [`populate` documentation](/cms/api/rest/populate-select#population))
-<!-- - It is not possible to filter on dynamic zones or media fields. -->
-- Deep filtering isn't available for some polymorphic relations such as media fields, but it works on dynamic zones.
+- You can filter what you populate, you can also filter nested relations, but you can't use filters for polymorphic data structures (such as media fields and dynamic zones).
 :::
 
 :::caution
