@@ -1,3 +1,17 @@
+/**
+ * Custom redirector script
+ * to handle complex redirection cases
+ * that the vercel.json file can't manage.
+ * 
+ * For instance, the Vercel server is not aware
+ * of the anchors part in the URL (what's after the #)
+ * so we're redirecting these edge use cases client-side.
+ * 
+ * Please ensure that the main URLs have at least
+ * one fallback URL in the vercel.json file, in case
+ * the user has disabled JavaScript or the script
+ * does not work.
+ */
 document.addEventListener('DOMContentLoaded', () => {
   // SSO provider redirections
   const ssoRedirects = {
@@ -20,12 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     '/dev-docs/i18n': {
       '_default': '/cms/features/internationalization',
+      // REST-related anchors - all point to sections within the same page
       'rest': '/cms/api/rest/locale',
       'rest-get-all': '/cms/api/rest/locale#rest-get-all',
       'rest-get': '/cms/api/rest/locale#rest-get',
       'rest-create': '/cms/api/rest/locale#rest-create',
-      'get-one-collection-type': '/cms/api/rest/locale#get-one-collection-type',
-      'get-one-single-type': '/cms/api/rest/locale#get-one-single-type',
       'rest-create-default-locale': '/cms/api/rest/locale#rest-create-default-locale',
       'rest-create-specific-locale': '/cms/api/rest/locale#rest-create-specific-locale',
       'rest-update': '/cms/api/rest/locale#rest-update',
@@ -34,13 +47,21 @@ document.addEventListener('DOMContentLoaded', () => {
       'rest-delete': '/cms/api/rest/locale#rest-delete',
       'rest-delete-collection-type': '/cms/api/rest/locale#rest-delete-collection-type',
       'rest-delete-single-type': '/cms/api/rest/locale#rest-delete-single-type',
+      // Collection-type and single-type specific anchors
+      'get-one-collection-type': '/cms/api/rest/locale#get-one-collection-type',
+      'get-one-single-type': '/cms/api/rest/locale#get-one-single-type',
+      // GraphQL-related anchors
       'graphql': '/cms/api/graphql#locale',
       'graphql-fetch-all': '/cms/api/graphql#locale-fetch-all',
       'graphql-fetch': '/cms/api/graphql#locale-fetch',
       'graphql-create': '/cms/api/graphql#locale-create',
       'graphql-update': '/cms/api/graphql#locale-update',
       'graphql-delete': '/cms/api/graphql#locale-delete'
-    },
+    }
+  };
+
+  // User docs redirections
+  const userDocsRedirects = {
     '/user-docs/settings/configuring-users-permissions-plugin-settings': {
       '_default': '/cms/features/users-permissions',
       'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings',
@@ -78,7 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Combine all redirects
-  const allRedirects = {...ssoRedirects, ...i18nRedirects};
+  const allRedirects = {
+    ...ssoRedirects,
+    ...i18nRedirects,
+    ...userDocsRedirects
+  };
 
   // Get current path and hash
   const path = window.location.pathname;
