@@ -6,3 +6,9 @@ article {
     top: 2px;
   }
 }
+
+.strapi-icons.external-link::before {
+  text-decoration: none !important;
+  position: relative;
+  top: -2px;
+}
