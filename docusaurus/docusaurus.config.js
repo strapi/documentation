@@ -96,6 +96,10 @@ const config = {
       'data-modal-body-padding-top': '20px',
       async: true,
     },
+    {
+      src: '/js/reset-announcement-banner.js',
+      async: true,
+    },
   ],
   stylesheets: [
     {
