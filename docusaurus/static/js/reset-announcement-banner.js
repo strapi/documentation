@@ -1,15 +1,16 @@
 (function() {
   // Configuration
   const COOKIE_NAME = 'docusaurus.announcement.dismiss';
-  const RESET_INTERVAL_DAYS = 30; // Reinit every 30 days
-  const STORAGE_KEY = 'docusaurus.last.announcement.reset';
+  const STORAGE_KEY = 'docusaurus.announcement.version';
+  // Change this value whenever you want to force banner display for all users
+  const BANNER_VERSION = '2025-02-20';
   
-  // Use localStorage instead of cookies
+  // Use localStorage instead of cookies for version tracking
   function getStorageItem(key) {
     try {
       return localStorage.getItem(key);
     } catch (e) {
-      // In case of error (private mode, etc.)
+      // Handle errors (private mode, etc.)
       return null;
     }
   }
@@ -19,7 +20,7 @@
       localStorage.setItem(key, value);
       return true;
     } catch (e) {
-      // In case of errors (private mode, localStorage full, etc.)
+      // Handle errors (private mode, storage full, etc.)
       return false;
     }
   }
@@ -32,22 +33,22 @@
   }
   
   function removeCookie(name) {
-    // Supprimer le cookie qui masque la bannière
+    // Remove the cookie that hides the banner
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Lax`;
   }
   
   function resetAnnouncementBanner() {
-    // Delete cookie hiding banner (if existing)
+    // Remove the cookie that hides the banner (if it exists)
     removeCookie(COOKIE_NAME);
     
-    // Store last reinitialization date
-    setStorageItem(STORAGE_KEY, new Date().toISOString());
+    // Update the stored version
+    setStorageItem(STORAGE_KEY, BANNER_VERSION);
     
-    // Option: small non-intrusive notification, hidden by default
+    // Optional: minimalist notification, commented out by default
     /*
     const notificationElement = document.createElement('div');
     notificationElement.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#f8f9fa; padding:10px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.2); z-index:1000; font-size:12px;';
-    notificationElement.innerHTML = 'Nous avons mis à jour les annonces importantes. <button style="background:none; border:none; text-decoration:underline; cursor:pointer; font-size:12px;">OK</button>';
+    notificationElement.innerHTML = 'We\'ve updated important announcements. <button style="background:none; border:none; text-decoration:underline; cursor:pointer; font-size:12px;">OK</button>';
     document.body.appendChild(notificationElement);
     
     notificationElement.querySelector('button').addEventListener('click', function() {
@@ -62,32 +63,25 @@
     */
   }
   
-  function checkAndResetBanner() {
-    const lastReset = getStorageItem(STORAGE_KEY);
+  function checkBannerVersion() {
+    const storedVersion = getStorageItem(STORAGE_KEY);
     const dismissCookie = getCookie(COOKIE_NAME);
     
-    // If announcementBar was hidden
-    if (dismissCookie) {
-      if (!lastReset) {
-        // First execution
-        setStorageItem(STORAGE_KEY, new Date().toISOString());
-      } else {
-        // Check time interval
-        const lastResetDate = new Date(lastReset);
-        const currentDate = new Date();
-        const daysDifference = Math.floor((currentDate - lastResetDate) / (1000 * 60 * 60 * 24));
-        
-        if (daysDifference >= RESET_INTERVAL_DAYS) {
-          resetAnnouncementBanner();
-        }
-      }
+    // Only reset if:
+    // 1. The banner has been dismissed (cookie exists)
+    // 2. The stored version is different from current version (or doesn't exist)
+    if (dismissCookie && storedVersion !== BANNER_VERSION) {
+      resetAnnouncementBanner();
+    } else if (!storedVersion) {
+      // Just store the current version if not already stored
+      setStorageItem(STORAGE_KEY, BANNER_VERSION);
     }
   }
   
   // Execute after page load
   if (document.readyState === 'complete') {
-    checkAndResetBanner();
+    checkBannerVersion();
   } else {
-    window.addEventListener('load', checkAndResetBanner);
+    window.addEventListener('load', checkBannerVersion);
   }
 })();
