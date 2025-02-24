@@ -19,8 +19,8 @@ import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md
 In Strapi 5, `Strapi` is a subclass of the `Container` class to make it simpler to access services and unify the service access with one method.
 
 <Intro />
-<YesPlugins />
-<NoCodemods />
+<YesPlugins /><NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

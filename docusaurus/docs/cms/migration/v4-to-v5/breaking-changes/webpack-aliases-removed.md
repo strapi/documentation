@@ -13,16 +13,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # Webpack Aliases are removed
 
 In Strapi v5, webpack aliases are removed ensuring better compatibility and reduced dependency conflicts.
 
 <Intro />
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

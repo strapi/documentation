@@ -11,16 +11,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The `getWhere()` method for permission provider instances has been removed
 
 In Strapi 5, the `getWhere()` method for permission provider instances has been removed, and users should first get the provider values, then filter them.
 
 <Intro />
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

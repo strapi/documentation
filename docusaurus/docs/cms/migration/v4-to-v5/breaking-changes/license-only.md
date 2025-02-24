@@ -12,8 +12,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # `lockIcon` property replaced by `licenseOnly`
 
@@ -22,9 +20,7 @@ Strapi 5 adds a new `licenseOnly` boolean property to pass in the `addMenuLink`,
 A similar result can be achieved in Strapi v4 by adding the `lockIcon` property.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

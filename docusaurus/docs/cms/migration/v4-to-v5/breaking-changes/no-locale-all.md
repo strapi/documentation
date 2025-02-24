@@ -23,8 +23,8 @@ In Strapi 5, it's no longer possible to get all localized versions of a content 
 
 <Intro />
 
-<YesPlugins />
-<NoCodemods />
+<YesPlugins /><NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

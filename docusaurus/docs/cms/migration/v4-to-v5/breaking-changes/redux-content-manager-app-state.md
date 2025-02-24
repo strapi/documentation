@@ -12,16 +12,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The ContentManagerAppState redux is modified
 
 In Strapi 5, the redux store for the Content Manager has been changed and some redux actions were removed. Notably, the `useContentManagerInitData` redux state for the Content Manager has been refactored to remove `ModelsContext`. Users might be relying on the original structure in a middleware or subscriber; doing so this will break their application.
 
 <Intro />
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

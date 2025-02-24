@@ -12,17 +12,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # `injectContentManagerComponent()` removed
 
 In Strapi 5, the `injectContentManagerComponent` method is removed because the Content Manager is now a plugin. The [Admin Panel API](/cms/plugins-development/admin-panel-api#injecting-components) method is replaced by `getPlugin('content-manager').injectComponent()`.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

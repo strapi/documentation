@@ -21,8 +21,9 @@ import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 Strapi 5 can only use the `mysql2` package for MySQL databases, and the `client` value for it must be set to `mysql`.
 
 <Intro />
-<NoPlugins/>
-<YesCodemods />
+<BreakingChangeIdCard
+  codemod
+/>
 
 ## Breaking change description
 

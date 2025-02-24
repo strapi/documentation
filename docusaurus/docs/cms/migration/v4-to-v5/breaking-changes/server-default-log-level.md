@@ -11,16 +11,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Server log level is `http`
 
 You can adjust the server log level in the configuration to control how much detail you see in your server logs. If you want to see more or less verbose logs in your server logs, this feature allows you to customize it according to your needs.
 
 <Intro />
-<NoPlugins />
-<NoCodemods />
+<BreakingChangeIdCard />
 
 ## Breaking change description
 

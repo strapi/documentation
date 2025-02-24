@@ -12,17 +12,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Some attributes and content types names are reserved
 
 In Strapi 5, some attributes and content types names are reserved, and all fields or content types in Strapi v4 using these reserved names should be renamed before migrating to Strapi 5 to prevent data loss.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

@@ -17,8 +17,8 @@ import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md
 
 Templates have been fully rewritten in Strapi 5 and now are standalone, regular Strapi applications, making it easier to create, distribute, and reuse them.
 <Intro />
-<NoPlugins />
-<NoCodemods />
+<NoPlugins /><NoCodemods />
+<BreakingChangeIdCard />
 
 ## Breaking change description
 

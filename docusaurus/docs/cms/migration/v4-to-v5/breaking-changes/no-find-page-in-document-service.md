@@ -11,16 +11,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # No `findPage()` in Document Service API
 
 In Strapi 5, the [Document Service API](/cms/api/document-service) replaces the Entity Service API. There is no `findPage()` method available in the Document Service API and users should use the `findMany()` method instead.
 
 <Intro />
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 
