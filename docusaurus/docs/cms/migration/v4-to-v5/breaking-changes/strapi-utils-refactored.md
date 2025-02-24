@@ -11,8 +11,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # `strapi-utils` refactored
 
@@ -20,8 +18,11 @@ In Strapi 5, the `strapi-utils` core package has been refactored. This page list
 
 <Intro />
 
-<YesPlugins />
-<YesCodemods />
+<BreakingChangeIdCard
+  plugins
+  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/utils-public-interface.code.ts"
+  codemodName="utils-public-interface"
+/>
 
 ## List of changes
 

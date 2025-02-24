@@ -3,7 +3,6 @@ title: Only the `better-sqlite3` package is supported for the SQLite client
 description: In Strapi 5, users can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
 sidebar_label: Only better-sqlite3 for sqlite 
 displayed_sidebar: cmsSidebar
-unlisted: true
 tags:
  - breaking changes
  - database
@@ -13,16 +12,17 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Only the `better-sqlite3` package is supported for the SQLite client
 
 Strapi 5 can only use the `better-sqlite3` package for SQLite databases, and the `client` value for it must be set to `sqlite`.
 
 <Intro />
-<NoPlugins/>
-<YesCodemods />
+
+<BreakingChangeIdCard
+  codemodName="sqlite3-to-better-sqlite3"
+  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/sqlite3-to-better-sqlite3.json.ts"
+/>
 
 ## Breaking change description
 

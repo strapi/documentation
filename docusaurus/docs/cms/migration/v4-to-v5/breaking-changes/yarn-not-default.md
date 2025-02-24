@@ -11,16 +11,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
 
 # The CLI default package manager is not yarn anymore
 
 In Strapi v5, the command used to run dependencies installation is the one used to actually install them.
 
 <Intro />
-<NoPlugins />
-<NoCodemods />
+<BreakingChangeIdCard />
 
 ## Breaking change description
 

@@ -12,8 +12,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Strapi users `react-router-dom` v6
 
@@ -21,8 +19,11 @@ Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-do
 
  <Intro />
 
-<YesPlugins />
-<YesCodemods />
+<BreakingChangeIdCard
+  plugins
+  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-router-dom.json.ts"
+  codemodName="dependency-upgrade-react-router-dom"
+/>
 
 ## Breaking change description
 

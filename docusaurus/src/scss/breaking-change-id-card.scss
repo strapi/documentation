@@ -1,0 +1,59 @@
+/** Component: Breaking Change Id Card */
+@use './mixins' as *;
+
+.breaking-change-id-card {
+  border: solid 1px var(--strapi-neutral-200);
+  padding: 2em;
+
+  .breaking-change {
+    &-question {
+      font-weight: bold;
+      padding: .2em 0;
+    
+      &__label {
+        margin-right: .5em;
+      }
+
+      &__answer {
+        &--positive {
+          color: var(--strapi-success-600)
+        }
+        &--negative {
+          color: var(--strapi-danger-600)
+        }
+        &--neutral {
+          color: var(--strapi-warning-600)
+        }
+      }
+    }
+
+    &__info {
+      margin-top: 1em;
+    }
+
+    &-codemod-link {
+      font-size: .9em;
+      
+      code {
+        background-color: var(--strapi-neutral-100);
+        font-size: .9em;
+      }
+    }
+  }
+
+  .strapi-icons::before {
+    font-size: 18px;
+    margin-right: 2px;
+  }
+}
+
+@include dark {
+  .breaking-change-id-card .breaking-change-question__answer {
+    &--negative {
+      color: var(--strapi-danger-500);
+    }
+    &--positive {
+      color: var(--strapi-success-500);
+    }
+  }
+}

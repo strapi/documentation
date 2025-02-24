@@ -14,8 +14,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # `publicationState` is removed and replaced by `status`
 
@@ -23,8 +21,11 @@ In Strapi 5, the [Draft & Publish feature](/cms/features/draft-and-publish) has 
 
 <Intro />
 
-<YesPlugins />
-<YesCodemods />
+<BreakingChangeIdCard
+  plugins
+  codemodName="entity-service-document-service"
+  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/entity-service-document-service.code.ts"
+/>
 
 ## Breaking change description
 

@@ -11,16 +11,19 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import PartialCodemods from '/docs/snippets/breaking-change-partially-handled-by-codemod.md'
 
 # Model config path uses uid instead of dot notation
 
 In Strapi 5, to retrieve config values you will need to use `config.get('plugin::upload.myconfigval')` or `config.get('api::myapi.myconfigval')`
 
 <Intro />
-<YesPlugins />
-<PartialCodemods />
+
+<BreakingChangeIdCard
+  plugins
+  codemodPartly
+  codemodName="use-uid-for-config-namespace"
+  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts"
+/>
 
 ## Breaking change description
 

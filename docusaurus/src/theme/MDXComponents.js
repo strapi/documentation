@@ -32,6 +32,7 @@ import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } f
 import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
 import { ExternalLink } from '../components/ExternalLink';
+import BreakingChangeIdCard from '../components/BreakingChangeIdCard';
 
 export default {
   // Re-use the default mapping
@@ -79,6 +80,7 @@ export default {
   Annotation,
   Icon,
   ExternalLink,
+  BreakingChangeIdCard,
   /**
    * Reusable annotation components go below👇
    */
