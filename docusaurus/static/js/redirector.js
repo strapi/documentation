@@ -118,22 +118,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const contentManagerRedirects = {
     '/user-docs/content-manager': {
       '_default': '/cms/features/content-manager',
-      'filtering-entries': '/cms/features/content-manager',
+      'filtering-entries': '/cms/features/content-manager#overview',
       'single-types': '/cms/features/content-manager#overview',
       'collection-types': '/cms/features/content-manager#overview',
       'creating-a-new-entry': '/cms/features/content-manager#creating--writing-content',
+      'configuring-the-table-fields': '/cms/features/content-manager#configuring-the-list-view',
     },
     '/user-docs/content-manager/managing-relational-fields': {
       '_default': '/cms/features/content-manager#relational-fields',
       'managing-one-choice-relational-fields': '/cms/features/content-manager#relational-fields',
       'managing-multiple-choice-relational-fields': '/cms/features/content-manager#relational-fields',
+      https://docs-next.strapi.io/user-docs/content-manager/configuring-view-of-content-type
     },
     '/user-docs/content-manager/configuring-view-of-content-type': {
-      '_default': '/cms/features/content-manager',
+      '_default': '/cms/features/content-manager#configuration',
       'edit-view-settings': '/cms/features/content-manager#configuring-the-edit-view',
+      'edit-view-display': '/cms/features/content-manager#configuring-the-edit-view',
       'list-view-display': '/cms/features/content-manager#configuring-the-list-view',
-      'configuring-the-list-view': '/cms/features/content-manager#configuring-the-list-view',
       'list-view-settings': '/cms/features/content-manager#configuring-the-list-view',
+      'configuring-the-list-view': '/cms/features/content-manager#configuring-the-list-view',
     }
   }
 

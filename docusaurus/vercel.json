@@ -46,11 +46,6 @@
       "permanent": true
     },
     {
-      "source": "/user-docs/content-manager/managing-relational-fields",
-      "destination": "/cms/features/content-manager#relational-fields",
-      "permanent": true
-    },
-    {
       "source": "/user-docs/content-manager/reviewing-content",
       "destination": "/cms/features/review-workflows",
       "permanent": true
