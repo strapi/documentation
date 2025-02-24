@@ -102,7 +102,7 @@ It is not possible to delete the last workflow.
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager
 
-### Changing review stage
+### Changing review stage {#change-review-stage}
 
 As content is created and revised among your team, you can change the review stage of the content to any stage defined in the review workflow.
 
@@ -118,7 +118,7 @@ As content is created and revised among your team, you can change the review sta
   }}
 />
 
-### Defining assignee
+### Defining assignee {#change-assignee}
 
 Entries of a review workflow content type can be assigned to any admin user in Strapi for review.
 
