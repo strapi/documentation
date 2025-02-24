@@ -173,7 +173,12 @@ main() {
 
     # Initialize file
     rm -f "$OUTPUT_FILE"
-    echo "## $MILESTONE_TITLE" > "$OUTPUT_FILE"
+    
+    # Remove 'v' prefix from milestone title if present
+    CLEAN_MILESTONE_TITLE=$(echo "$MILESTONE_TITLE" | sed 's/^v//')
+    
+    echo "## $CLEAN_MILESTONE_TITLE" > "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"  # Empty line for readability in Markdown
     echo "<br />" >> "$OUTPUT_FILE"
 
     # Fetch PRs
