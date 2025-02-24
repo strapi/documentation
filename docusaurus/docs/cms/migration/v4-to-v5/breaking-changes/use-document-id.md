@@ -93,6 +93,8 @@ Documents are identified by their `documentId`:
 
 ## Migration
 
+<MigrationIntro />
+
 ### Notes
 
 - This breaking change impacts routes and relations.
