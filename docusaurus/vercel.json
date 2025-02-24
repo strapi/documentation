@@ -1481,6 +1481,11 @@
       "permanent": true
     },
     {
+      "source": "/user-docs/content-manager/managing-relational-fields",
+      "destination": "/cms/features/content-manager",
+      "permanent": true
+    },
+    {
       "source": "/user-docs/features/admin-panel",
       "destination": "/cms/features/admin-panel",
       "permanent": true
