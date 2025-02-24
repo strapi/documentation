@@ -218,14 +218,17 @@ main() {
             case "$section" in
                 "new_content")
                     echo "### <Icon name='sparkle' /> New content" > "$TEMP_DIR/${section}_header"
+                    echo "" >> "$TEMP_DIR/${section}_header"  # Empty line for readability in Markdown
                     echo "<br />" >> "$TEMP_DIR/${section}_header"
                     ;;
                 "updated_content")
                     echo "### <Icon name='pen-nib' /> Updated content" > "$TEMP_DIR/${section}_header"
+                    echo "" >> "$TEMP_DIR/${section}_header"  # Empty line for readability in Markdown
                     echo "<br />" >> "$TEMP_DIR/${section}_header"
                     ;;
                 "chore")
                     echo "### <Icon name='broom' /> Chore, fixes, typos, and other improvements" > "$TEMP_DIR/${section}_header"
+                    echo "" >> "$TEMP_DIR/${section}_header"  # Empty line for readability in Markdown
                     echo "<br />" >> "$TEMP_DIR/${section}_header"
                     ;;
             esac
