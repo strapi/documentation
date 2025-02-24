@@ -66,23 +66,32 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // User docs redirections
-  const userDocsRedirects = {
+  const settingsRedirects = {
     '/user-docs/settings/configuring-users-permissions-plugin-settings': {
       '_default': '/cms/features/users-permissions',
       'configuring-advanced-settings': '/cms/features/users-permissions#advanced-settings',
       'configuring-providers': '/cms/features/users-permissions#providers',
       'configuring-email-templates': '/cms/features/users-permissions#email-templates'
     },
-    '/user-docs/users-roles-permissions/configuring-end-users-roles': {
+  };
+
+  const uAndpRedirects = {
+  '/user-docs/users-roles-permissions/configuring-end-users-roles': {
       '_default': '/cms/features/users-permissions', 
       'editing-roles-details': '/cms/features/users-permissions#editing-a-role',
       'configuring-roles-permissions': '/cms/features/users-permissions#editing-a-role',
       'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
     },
+  }
+
+  const auditLogsRedirects = {
     '/user-docs/settings/audit-logs': {
       '_default': '/cms/features/audit-logs',
       'events-logged': '/cms/features/audit-logs#usage'
     },
+  }
+    
+  const pluginRedirects = {
     '/user-docs/plugins/strapi-plugins': {
       '_default': '/cms/plugins/installing-plugins-via-marketplace',
       'i18n': '/cms/features/internationalization',
@@ -94,6 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
       'gatsby': '/cms/plugins/installing-plugins-via-marketplace',
       'custom-fields': '/cms/plugins-development/custom-fields'
     },
+  }
+
+  const adminPanelRedirects = {
     '/user-docs/getting-started/setting-up-admin-panel': {
       '_default': '/cms/features/admin-panel',
       'using-sso-for-authentication': '/cms/features/admin-panel#usage',
@@ -103,11 +115,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const contentManagerRedirects = {
+    '/user-docs/content-manager': {
+      '_default': '/cms/features/content-manager',
+      'filtering-entries': '/cms/features/content-manager',
+      'single-types': '/cms/features/content-manager#overview',
+      'collection-types': '/cms/features/content-manager#overview',
+      'creating-a-new-entry': '/cms/features/content-manager#creating--writing-content',
+    },
+    '/user-docs/content-manager/managing-relational-fields': {
+      '_default': '/cms/features/content-manager#relational-fields',
+      'managing-one-choice-relational-fields': '/cms/features/content-manager#relational-fields',
+      'managing-multiple-choice-relational-fields': '/cms/features/content-manager#relational-fields',
+    },
+    '/user-docs/content-manager/configuring-view-of-content-type': {
+      '_default': '/cms/features/content-manager',
+      'edit-view-settings': '/cms/features/content-manager#configuring-the-edit-view',
+      'list-view-display': '/cms/features/content-manager#configuring-the-list-view',
+      'configuring-the-list-view': '/cms/features/content-manager#configuring-the-list-view',
+      'list-view-settings': '/cms/features/content-manager#configuring-the-list-view',
+    }
+  }
+
   // Combine all redirects
   const allRedirects = {
     ...ssoRedirects,
     ...i18nRedirects,
-    ...userDocsRedirects
+    ...settingsRedirects,
+    ...uAndpRedirects,
+    ...auditLogsRedirects,
+    ...pluginRedirects,
+    ...adminPanelRedirects
   };
 
   // Get current path and hash
