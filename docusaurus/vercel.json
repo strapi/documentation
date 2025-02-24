@@ -42,7 +42,7 @@
     },
     {
       "source": "/user-docs/content-manager/configuring-view-of-content-type",
-      "destination": "/cms/features/content-manager#configuration",
+      "destination": "/cms/features/content-manager",
       "permanent": true
     },
     {
@@ -1467,7 +1467,7 @@
     },
     {
       "source": "/user-docs/content-manager/introduction-to-content-manager",
-      "destination": "/cms/features/draft-and-publish",
+      "destination": "/cms/features/content-manager",
       "permanent": true
     },
     {
@@ -1882,7 +1882,7 @@
     },
     {
       "source": "/developer-docs/latest/guides/draft.html",
-      "destination": "/user-docs/content-manager/saving-and-publishing-content#publishing-a-draft",
+      "destination": "/cms/features/draft-and-publish#publishing-a-draft",
       "permanent": true
     },
     {
@@ -2663,7 +2663,7 @@
 		},
 		{
 			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/user-docs/latest/getting-started/introduction.html",
@@ -2687,35 +2687,35 @@
 		},
 		{
 			"source": "/user-docs/latest/content-manager/writing-content.html",
-			"destination": "/user-docs/content-manager/writing-content"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/translating-content.html",
-			"destination": "/user-docs/content-manager/translating-content"
+			"destination": "/cms/features/internationalization"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/saving-and-publishing-content.html",
-			"destination": "/user-docs/content-manager/saving-and-publishing-content"
+			"destination": "/cms/features/draft-and-publish"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/managing-relational-fields.html",
-			"destination": "/user-docs/content-manager/managing-relational-fields"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/introduction-to-content-manager.html",
-			"destination": "/user-docs/content-manager/introduction-to-content-manager"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/user-docs/latest/content-manager/configuring-view-of-content-type.html",
-			"destination": "/user-docs/content-manager/configuring-view-of-content-type"
+			"destination": "/cms/features/content-manager"
 		},
 		{
 			"source": "/developer-docs/latest/update-migration-guides/migration-guides/v4/plugin/enable-plugin.html",
@@ -2855,7 +2855,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/concepts/draft-and-publish.html",
-			"destination": "/user-docs/content-manager/saving-and-publishing-content"
+			"destination": "/user-docs/cms/features/draft-and-publish"
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/rest-api/filtering-locale-publication.html",
@@ -2895,7 +2895,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/guides/draft.html",
-			"destination": "/user-docs/content-manager/saving-and-publishing-content#publishing-a-draft"
+			"destination": "/cms/features/draft-and-publish#publishing-a-draft"
 		},
 		{
 			"source": "/developer-docs/latest/guides/external-data.html",
