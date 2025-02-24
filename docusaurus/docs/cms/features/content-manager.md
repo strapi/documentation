@@ -105,7 +105,7 @@ When active, filters are displayed next to the <Icon name="funnel-simple" classe
 
 Both the list view and the edit view can be configured, and the former can either be configured temporarily or permanently.
 
-### Configuring the list view
+### Configuring the list view {#list-view-settings}
 
 <br/>
 
@@ -201,7 +201,7 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 </Tabs>
 
-### Configuring the edit view
+### Configuring the edit view {#edit-view-settings}
 
 <ThemedImage
   alt="Configuring the edit view of the Content Manager"
