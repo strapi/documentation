@@ -11,17 +11,16 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Database identifiers shortened in v5
 
 In Strapi 5, database identifiers can't be longer than 55 characters. <Intro />
 
-<NoPlugins />
-<YesCodemods />
-
-(_This breaking change is actually handled by a data migration script that runs when your Strapi project is upgraded to Strapi 5._)
+<BreakingChangeIdCard
+  plugins
+  codemod
+  info="(This breaking change is actually handled by a data migration script that runs when your Strapi project is upgraded to Strapi 5.)"
+/>
 
 ## Breaking change description
 

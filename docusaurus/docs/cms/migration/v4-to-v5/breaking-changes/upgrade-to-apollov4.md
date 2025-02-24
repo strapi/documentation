@@ -15,16 +15,13 @@ tags:
 import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.md'
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Apollo Server v3 upgraded to Apollo Server v4
 
 Strapi 5 has migrated to Apollo Server v4 and this might require some manual migration steps.
 
 <Intro />
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

@@ -13,17 +13,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Components and dynamic zones should be populated using the detailed population strategy (`on` fragments)
 
 In Strapi 5, components and dynamic zones should be populated using the detailed population strategy, with `on` fragments. The shared population strategy possible in Strapi v4 is no longer supported.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

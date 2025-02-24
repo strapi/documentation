@@ -11,9 +11,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
-
 
 # `defaultIndex` is removed from the `public` middleware configuration
 
@@ -21,8 +18,7 @@ In Strapi 5, the 'defaultIndex' option does not exist anymore and the root `/` U
 
  <Intro />
 
-<NoPlugins />
-<NoCodemods />
+<BreakingChangeIdCard />
 
 ## Breaking change description
 

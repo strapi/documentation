@@ -10,15 +10,12 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Strict requirements for configuration files
 
 Strapi 5 has strict requirements on the configuration filenames allowed to be loaded.
 <Intro />
-<NoPlugins />
-<NoCodemods />
+<BreakingChangeIdCard />
 
 ## Breaking change description
 

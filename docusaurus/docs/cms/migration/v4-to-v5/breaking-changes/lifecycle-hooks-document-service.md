@@ -12,8 +12,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Database lifecycle hooks are triggered differently with the Document Service API methods
 
@@ -24,9 +22,7 @@ The majority of use cases should only use the Document Service. The Document Ser
 However, the Document Service API might not suit all your use cases; the database layer is therefore exposed allowing you to do anything on the database without any restriction. Users would then need to resort to the database lifecycle hooks as a system to extend the database behaviour.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

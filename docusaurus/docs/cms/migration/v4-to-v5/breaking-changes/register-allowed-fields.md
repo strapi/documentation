@@ -11,17 +11,17 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
-
 
 # The Users & Permissions plugin's `register.allowedFields` configuration option defaults to `[]`
 
 In Strapi 5, the Users & Permissions plugin's `register.allowedFields` configuration option defaults to `[]`.
 
 <Intro />
-<NoPlugins />
-<YesCodemods />
+
+<BreakingChangeIdCard
+  codemodName="use-uid-for-config-namespace"
+  codemodLink="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts"
+/>
 
 ## Breaking change description
 

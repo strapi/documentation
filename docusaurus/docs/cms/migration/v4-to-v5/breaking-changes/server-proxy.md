@@ -11,16 +11,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 #  Server proxy configurations are grouped under the `server.proxy` object
 
 In Strapi 5, all proxy configuration options are now configured through the `server.proxy` object in `/config/server.js|ts`, whether they are for requests made within `strapi.fetch` or for the global proxy agent for the [koa](https://koajs.com/) server.
 
 <Intro />
-<NoPlugins />
-<NoCodemods />
+<BreakingChangeIdCard />
 
 ## Breaking change description
 

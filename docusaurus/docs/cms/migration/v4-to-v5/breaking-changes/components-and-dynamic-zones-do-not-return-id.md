@@ -14,15 +14,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
 
 # Components and dynamic zones do not return an `id`
 
 In Strapi 5, components and dynamic zones do not return an `id` with REST API requests so it's not possible to partially update them.
 
 <Intro />
-
-<YesPlugins/>
+<BreakingChangeIdCard plugins/>
 
 ## Breaking change description
 

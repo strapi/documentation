@@ -12,8 +12,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # REST API input is validated by default in controllers
 
@@ -26,9 +24,7 @@ Strapi methods exist both for [sanitization and validation in controllers](/cms/
 In Strapi 5, REST API input is validated by default in controllers, instead of accepting invalid data and sanitizing it silently.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

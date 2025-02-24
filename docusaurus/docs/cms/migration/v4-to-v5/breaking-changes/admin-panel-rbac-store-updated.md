@@ -12,16 +12,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # The admin panel RBAC system has been updated
 
 In Strapi 5, the `content-manager_rbacManager`, which is a section of Strapi's redux store for the admin panel, is removed and the regular permissions system is used instead. Additionally, the `useRBAC` hook is updated.
 
 <Intro/>
-<YesPlugins/>
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

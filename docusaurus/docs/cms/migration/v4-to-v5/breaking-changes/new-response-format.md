@@ -13,17 +13,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Strapi 5 has a new, flattened response format for REST API calls
 
 In Strapi 5, the REST API response format has been simplified and flattened. You can set the `Strapi-Response-Format: v4` header to use the old v4 format while you convert your code to fully take into account the new Strapi 5 response format.
 
 <Intro />
-
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 

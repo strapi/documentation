@@ -13,8 +13,6 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Strapi 5 uses `koa-body` v6
 
@@ -22,8 +20,7 @@ Strapi 5 uses [`koa-body`](https://github.com/koajs/koa-body) v6, which updates 
 
  <Intro />
 
-<YesPlugins />
-<NoCodemods />
+<BreakingChangeIdCard plugins />
 
 ## Breaking change description
 
