@@ -202,10 +202,8 @@ main() {
         if [ -n "$section" ]; then
             # Determine source
             source="repo"
-            if echo "$labels" | grep -q "source: Dev Docs"; then
-                source="dev_docs"
-            elif echo "$labels" | grep -q "source: User Guide"; then
-                source="user_guide"
+            if echo "$labels" | grep -q "source: CMS"; then
+                source="cms"
             elif echo "$labels" | grep -q "source: Strapi Cloud"; then
                 source="cloud"
             fi
@@ -213,23 +211,20 @@ main() {
             # Create section file if it doesn't exist
             case "$section" in
                 "new_content")
-                    echo "### <Icon name="sparkle" /> New content" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name='sparkle' /> New content" > "$TEMP_DIR/${section}_header"
                     ;;
                 "updated_content")
-                    echo "### <Icon name="pen-nib" /> Updated content" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name='pen-nib' /> Updated content" > "$TEMP_DIR/${section}_header"
                     ;;
                 "chore")
-                    echo "### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements" > "$TEMP_DIR/${section}_header"
+                    echo "### <Icon name='broom' /> Chore, fixes, typos, and other improvements" > "$TEMP_DIR/${section}_header"
                     ;;
             esac
 
             # Create source file if it doesn't exist
             case "$source" in
-                "dev_docs")
-                    echo "#### Dev Docs" > "$TEMP_DIR/${section}_${source}_header"
-                    ;;
-                "user_guide")
-                    echo "#### User Guide" > "$TEMP_DIR/${section}_${source}_header"
+                "cms")
+                    echo "#### CMS" > "$TEMP_DIR/${section}_${source}_header"
                     ;;
                 "cloud")
                     echo "#### Strapi Cloud" > "$TEMP_DIR/${section}_${source}_header"
@@ -253,7 +248,7 @@ main() {
         has_content=false
 
         # Check if we have content for this section
-        for source in "dev_docs" "user_guide" "cloud" "repo"; do
+        for source in "cms" "cloud" "repo"; do
             if [ -f "$TEMP_DIR/${section}_${source}_content" ] && [ -s "$TEMP_DIR/${section}_${source}_content" ]; then
                 has_content=true
                 break
@@ -271,7 +266,7 @@ main() {
             cat "$TEMP_DIR/${section}_header" >> "$OUTPUT_FILE"
 
             first_subsection=true
-            for source in "dev_docs" "user_guide" "cloud" "repo"; do
+            for source in "cms" "cloud" "repo"; do
                 if [ -f "$TEMP_DIR/${section}_${source}_content" ] && [ -s "$TEMP_DIR/${section}_${source}_content" ]; then
                     echo "" >> "$OUTPUT_FILE"
                     cat "$TEMP_DIR/${section}_${source}_header" >> "$OUTPUT_FILE"
