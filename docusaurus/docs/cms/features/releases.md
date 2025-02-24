@@ -139,7 +139,7 @@ If [Releases scheduling](/cms/features/releases#scheduling-a-release) is enabled
   }}
 />
 
-### Removing content from a release {#removing-entries-from-a-release}
+### Removing content from a release {#removing-an-entry-from-a-release}
 
 **Path:** Edit view of the <Icon name="feather" /> Content Manager
 
