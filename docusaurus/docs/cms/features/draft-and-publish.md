@@ -33,7 +33,7 @@ The Draft & Publish feature allows to manage drafts for your content.
 
 ## Configuration
 
-**Path to configure the feature:** ![CTB icon](/img/assets/icons/v5/Layout.svg) Content Type Builder
+**Path to configure the feature:** <Icon name="layout" /> Content Type Builder
 
 For your content types to be managed with Draft & Publish in the Content Manager, the feature must be enabled through the Content-type Builder. Draft & Publish can be configured for each content type.
 
@@ -80,7 +80,7 @@ By default, each newly created content is a draft. Drafts can be modified and sa
 Once you made changes to a draft, you have 3 possible options, all available in the _Entry_ box on the right side of the interface:
 - **Publish** your document (see [Publishing a draft](#publishing-a-draft)),
 - **Save** your draft for later retrieval,
-- or discard changes, by clicking on ![More icon](/img/assets/icons/v5/More.svg) and choosing ![Discard changes icon](/img/assets/icons/v5/CrossCircle.svg) **Discard changes**.
+- or discard changes, by clicking on <Icon name="dots-three-outline" /> and choosing <Icon name="x-circle" /> **Discard changes**.
 
 ### Publishing a draft
 
@@ -115,11 +115,11 @@ To schedule publication (i.e. convert a draft to a published entry at a given da
 
 **Path:** <Icon name="feather" /> Content Manager, edit view of your content type
 
-To unpublish a previously published content: from the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
+To unpublish a previously published content: from the _Draft_ tab, click on <Icon name="dots-three-outline" /> in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 
 If the draft version of the document contains content different from the published version, you can decide what to do with both content when unpublishing:
 
-1. From the _Draft_ tab, click on ![More icon](/img/assets/icons/v5/More.svg) in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
+1. From the _Draft_ tab, click on <Icon name="dots-three-outline" /> in the _Entry_ box on the right side of the interface and choose the **Unpublish** button.
 2. In the Confirmation dialog that opens, you can choose to:
     - **Unpublish and keep last draft**, so that all the content you currently have in the _Draft_ tab is preserved, but the all the content from the _Published_ tab is definitely gone
     - **Unpublish and replace last draft** to discard any existing content in the _Draft_ tab and replace it with the content of all fields from the _Published_ tab
@@ -158,9 +158,9 @@ To publish several entries at the same time:
 1. From the list view of the Content Manager, select your entries to publish by ticking the box on the left side of the entries' record.
 2. Click on the **Publish** button located above the header of the table.
 3. In the _Publish entries_ dialog, check the list of selected entries and their status:
-   - ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish: the entry can be published
-   - ![Fail icon](/img/assets/icons/v5/CrossCircle2.svg) "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
-4. (optional) If some of your entries have a ![Edit icon](/img/assets/icons/v5/CrossCircle2.svg) status, click the ![Edit icon](/img/assets/icons/v5/Pencil.svg) edit buttons to fix the issues until all entries have the ![Success icon](/img/assets/icons/v5/CheckCircle.svg) Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
+   - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to publish: the entry can be published
+   - <Icon name="x-circle" color="rgb(190,51,33)" /> "[field name] is required", "[field name] is too short" or "[field name] is too long": the entry cannot be published because of the issue stated in the red warning message.
+4. (optional) If some of your entries have a <Icon name="x-circle" color="rgb(190,51,33)" /> status, click the <Icon name="pencil-simple" /> edit buttons to fix the issues until all entries have the <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to publish status. Note that you will have to click on the **Refresh** button to update the _Publish entries_ dialog as you fix the various entries issues.
 5. Click the **Publish** button.
 6. In the confirmation dialog box, confirm your choice by clicking again on the **Publish** button.
 

@@ -36,7 +36,7 @@ Before being usable in the Content Manager, the Internationalization feature mus
 
 ### Content-type Builder
 
-**Path to configure the feature:** ![CTB icon](/img/assets/icons/v5/Layout.svg) _Content-type Builder_
+**Path to configure the feature:** <Icon name="layout" /> _Content-type Builder_
 
 For your content types to be translatable with Internationalization in the Content Manager, the feature must be enabled through the Content-type Builder. Internationalization can be configured for each content type and/or field.
 
@@ -54,14 +54,14 @@ For your content types to be translatable with Internationalization in the Conte
 
 ### Settings
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global Settings > Internationalization*
+**Path to configure the feature:** <Icon name="gear-six" /> *Settings > Global Settings > Internationalization*
 
 The *Internationalization* interface displays a table listing all locales available for the Strapi application. By default, only the English locale is configured and set as the default locale. 
 
 For each locale, the table displays the default ISO code of the locale, its optional display name and indicates if the locale is set as the default one. From the table, administrators can also:
 
-- Click on the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to edit a locale
-- Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete a locale
+- Click on the edit button <Icon name="pencil-simple" /> to edit a locale
+- Click on the delete button <Icon name="trash" /> to delete a locale
 
 #### Adding a new locale
 
@@ -91,7 +91,7 @@ A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configuratio
 
 ## Usage
 
-**Path to use the feature:** ![Content icon](/img/assets/icons/v5/Feather.svg) Content Manager, edit view of your content type
+**Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
 
 In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows to switch locales.
 
@@ -108,7 +108,7 @@ To translate content in another locale:
 3. Translate your content by filling up your content-type's fields. 
 
 :::tip
-Click on the ![Dowload icon](/img/assets/icons/v5/Download.svg) *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
+Click on the <Icon name="download-simple" /> *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
 :::
 
 <ThemedImage

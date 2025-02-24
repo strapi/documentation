@@ -60,9 +60,9 @@ In the admin panel, some Media Library settings are available via the Global Set
 
 #### Configuring the view
 
-**Path to configure the feature:** ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library
+**Path to configure the feature:** <Icon name="images" /> Media Library
 
-1. Click on the ![Settings icon](/img/assets/icons/v5/Cog.svg) button just above the list of folders and assets, on the right side of the interface.
+1. Click on the <Icon name="gear-six" /> button just above the list of folders and assets, on the right side of the interface.
 2. Configure the Media Library view, following the instructions below:
     | Setting name              | Instructions                                                              |
     | ------------------------- | ------------------------------------------------------------------------- |
@@ -435,9 +435,9 @@ Breakpoint changes will only apply to new images, existing images will not be re
 
 ## Usage
 
-**Path to use the feature:** ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library
+**Path to use the feature:** <Icon name="images" /> Media Library
 
-The Media Library displays all assets uploaded in the application, either via the ![Media Library icon](/img/assets/icons/v5/Images.svg) Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
+The Media Library displays all assets uploaded in the application, either via the <Icon name="images" /> Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
 
 Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).
 
@@ -453,17 +453,17 @@ From the Media Library, it is possible to:
 
 - upload a new asset (see [adding assets](/cms/features/media-library#adding-assets)) or create a new folder (see [organizing assets with folders](/cms/features/media-library#organizing-assets-with-folders)) <ScreenshotNumberReference number="1" />,
 - sort the assets and folders or set filters <ScreenshotNumberReference number="2" /> to find assets and folders more easily,
-- toggle between the list view ![List icon](/img/assets/icons/v5/List.svg) and the grid view ![Grid icon](/img/assets/icons/v5/GridFour.svg) to display assets, access settings ![Settings icon](/img/assets/icons/v5/Cog.svg) to [configure the view](#configuring-the-view), and make a textual search ![Search icon](/img/assets/icons/v5/Search.svg) <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
+- toggle between the list view <Icon name="list" classes="ph-bold"/> and the grid view <Icon name="squares-four"/> to display assets, access settings <Icon name="gear-six" /> to [configure the view](#configuring-the-view), and make a textual search <Icon name="magnifying-glass" classes="ph-bold" /> <ScreenshotNumberReference number="3" /> to find a specific asset or folder,
 - and view, navigate through, and manage folders <ScreenshotNumberReference number="4" />.
 
 :::tip
-Click the search icon ![Search icon](/img/assets/icons/v5/Search.svg) on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
+Click the search icon <Icon name="magnifying-glass" classes="ph-bold" /> on the right side of the user interface to use a text search and find one of your assets or folders more quickly!
 :::
 
 <!--
 ### Filtering assets
 
-Right above the list of folders and assets, on the left side of the interface, a ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
+Right above the list of folders and assets, on the left side of the interface, a !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button is displayed. It allows setting one or more condition-based filters, which add to one another (i.e. if you set several conditions, only the assets that match all the conditions will be displayed).
 
 <ThemedImage
   alt="Filters"
@@ -475,14 +475,14 @@ Right above the list of folders and assets, on the left side of the interface, a
 
 To set a new filter:
 
-1. Click on the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button.
+1. Click on the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button.
 2. Click on the 1st drop-down list to choose the field on which the condition will be applied.
 3. Click on the 2nd drop-down list to choose the type of condition to apply.
 4. For conditions based on the type of asset to filter, click on the 3rd drop-down list and choose a file type to include or exclude. For conditions based on date and time (i.e. _createdAt_ or _updatedAt_ fields), click on the left field to select a date and click on the right field to select a time.
 5. Click on the **Add filter** button.
 
 :::note
-When active, filters are displayed next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button. They can be removed by clicking on the delete icon ![Clear icon](/img/assets/icons/v5/Cross.svg).
+When active, filters are displayed next to the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button. They can be removed by clicking on the delete icon <Icon name="x" />.
 :::
 -->
 
@@ -497,7 +497,7 @@ When active, filters are displayed next to the ![Filter icon](/img/assets/icons/
   }}
 />
 
-Just above the list of folders and assets and next to the ![Filter icon](/img/assets/icons/v5/Filter.svg) **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
+Just above the list of folders and assets and next to the !<Icon name="funnel-simple" classes="ph-bold" /> **Filters** button, on the left side of the interface, a drop-down button is displayed. It allows to sort the assets by upload date, alphabetical order or date of update. Click on the drop-down button and select an option in the list to automatically display the sorted assets.
 -->
 
 ### Adding assets
@@ -519,7 +519,7 @@ Just above the list of folders and assets and next to the ![Filter icon](/img/as
 2. Choose whether you want to upload the new asset from your computer or from an URL:
     - from the computer, either drag & drop the asset directly or browse files on your system,
     - from an URL, type or copy and paste an URL(s) in the _URL_ field, making sure multiple URLs are separated by carriage returns, then click **Next**.
-3. (optional) Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
+3. (optional) Click the edit button <Icon name="pencil-simple" /> to view asset metadata and define a _File name_, _Alternative text_ and a _Caption_ for the asset (see [Managing individual assets](#managing-assets)).
 4. (optional) Add more assets by clicking **Add new assets** and going back to step 2.
 5. Click on **Upload assets to the library**.
 
@@ -537,7 +537,7 @@ The Media Library allows managing assets, which includes modifying assets' file 
 
 #### Editing assets
 
-Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of an asset to open up the "Details" window, where all the available asset management options are available.
+Click on the edit <Icon name="pencil-simple" /> button of an asset to open up the "Details" window, where all the available asset management options are available.
 
 <ThemedImage
   alt="Annotated asset details window screenshot"
@@ -548,16 +548,16 @@ Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button of an ass
 />
 
 - On the left, above the preview of the asset, control buttons <ScreenshotNumberReference number="1" /> allow performing various actions:
-  - click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) to delete the asset,
-  - click on the download button ![Download icon](/img/assets/icons/v5/Download.svg) to download the asset,
-  - click on the copy link button ![Copy link icon](/img/assets/icons/v5/Link.svg) to copy the asset's link to the clipboard,
-  - optionally, click on the crop button ![Copy link icon](/img/assets/icons/v5/Crop.svg) to enter cropping mode for the image (see [Cropping images](#cropping-images)).
+  - click on the delete button <Icon name="trash" /> to delete the asset,
+  - click on the download button <Icon name="download-simple"  /> to download the asset,
+  - click on the copy link button <Icon name="link" classes="ph-bold" /> to copy the asset's link to the clipboard,
+  - optionally, click on the crop button <Icon name="crop" classes="ph-bold" /> to enter cropping mode for the image (see [Cropping images](#cropping-images)).
 - On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset <ScreenshotNumberReference number="3" />.
 - At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
 
 #### Moving assets
 
-1. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button for the asset to be moved.
+1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be moved.
 2. In the window that pops up, click the _Location_ field and choose a different folder from the drop-down list.
 3. Click **Save** to confirm.
 
@@ -567,21 +567,21 @@ Assets can also be moved to other folders from the main view of the Media Librar
 
 #### Cropping images
 
-1. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button for the asset to be cropped.
-2. In the window that pops up, click the crop button ![Crop icon](/img/assets/icons/v5/Crop.svg) to enter cropping mode.
+1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be cropped.
+2. In the window that pops up, click the crop button <Icon name="crop" classes="ph-bold" /> to enter cropping mode.
 3. Crop the image using handles in the corners to resize the frame. The frame can also be moved by drag & drop.
-4. Click the crop ![Done icon](/img/assets/icons/v5/Check.svg) button to validate the new dimensions, and choose either to **crop the original asset** or to **duplicate & crop the asset** (i.e. to create a copy with the new dimensions while keeping the original asset untouched). Alternatively, click the stop cropping ![Cancel icon](/img/assets/icons/v5/Cross.svg) button to cancel and quit cropping mode.
+4. Click the crop <Icon name="check" classes="ph-bold" /> button to validate the new dimensions, and choose either to **crop the original asset** or to **duplicate & crop the asset** (i.e. to create a copy with the new dimensions while keeping the original asset untouched). Alternatively, click the stop cropping <Icon name="x" classes="ph-bold" /> button to cancel and quit cropping mode.
 <!-- TODO: ask devs because there seems to be a bug/unintuitive behavior:  choosing crop the original asset does not quit cropping mode 😅  -->
 5. Click **Finish** to save changes to the file.
 
 #### Deleting assets
 
-1. Click on the edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) button for the asset to be deleted.
-2. In the window that pops up, click the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) in the control buttons bar above the asset's preview.
+1. Click on the edit <Icon name="pencil-simple" /> button for the asset to be deleted.
+2. In the window that pops up, click the delete button <Icon name="trash" /> in the control buttons bar above the asset's preview.
 3. Click **Confirm**.
 
 :::tip
-Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon ![Delete icon](/img/assets/icons/v5/Trash.svg) at the top of the window, below the filters and sorting options.
+Assets can also be deleted individually or in bulk from the main view of the Media Library. Select assets by clicking on their checkbox in the top left corner, then click the Delete icon <Icon name="trash" /> at the top of the window, below the filters and sorting options.
 :::
 
 ### Organizing assets with folders
@@ -624,7 +624,7 @@ The breadcrumb navigation can also be used to go back to a parent folder: click 
 4. Click **Create**.
 
 :::note
-There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the ![Search icon](/img/assets/icons/v5/Search.svg) on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
+There is no limit to how deep your folders hierarchy can go, but bear in mind it might take some effort to reach a deeply nested subfolder, as the Media Library currently has no visual hierarchy indication. Searching for files using the <Icon name="magnifying-glass" classes="ph-bold" /> on the right side of the user interface might be a faster alternative to finding the asset you are looking for.
 :::
 
 #### Moving assets to a folder
@@ -632,7 +632,7 @@ There is no limit to how deep your folders hierarchy can go, but bear in mind it
 Assets and folders can be moved to another folder from the root view of the Media Library or from any view for a dedicated folder.
 
 1. Select assets and folder to be moved, by clicking the checkbox on the left of the folder name or clicking the asset itself.
-2. Click the ![Move icon](/img/assets/icons/v5/Folder.svg) **Move** button at the top of the interface.
+2. Click the <Icon name="folder" /> **Move** button at the top of the interface.
 3. In the _Move elements to_ pop-up window, select the new folder from the _Location_ drop-down list.
 4. Click **Move**.
 
@@ -648,7 +648,7 @@ Assets and folders can be moved to another folder from the root view of the Medi
 
 Once created, a folder can be renamed, moved or deleted.
 
-1. In the Folders part of the Media library, hover the folder to be edited and click its edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg).
+1. In the Folders part of the Media library, hover the folder to be edited and click its edit button <Icon name="pencil-simple" />.
 2. In the window that pops up, update the name and location with the _Name_ field and _Location_ drop-down list, respectively.
 3. Click **Save**.
 
@@ -657,11 +657,11 @@ Once created, a folder can be renamed, moved or deleted.
 Deleting a folder can be done either from the list of folders of the Media Library, or when editing a single folder.
 
 1. Click the checkbox on the left of the folder name. Multiple folders can be selected.
-2. Click the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete** button above the Folders list.
+2. Click the <Icon name="trash" /> **Delete** button above the Folders list.
 3. In the _Confirmation_ dialog, click **Confirm**.
 
 :::note
-A single folder can also be deleted when editing it: hover the folder, click on its edit icon ![Edit icon](/img/assets/icons/v5/Pencil.svg), and in the window that pops up, click the **Delete folder** button and confirm the deletion.
+A single folder can also be deleted when editing it: hover the folder, click on its edit icon <Icon name="pencil-simple" />, and in the window that pops up, click the **Delete folder** button and confirm the deletion.
 :::
 
 ### Usage with the REST API

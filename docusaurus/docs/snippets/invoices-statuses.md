@@ -6,6 +6,7 @@ Invoices can have any of the following statuses:
 - Not paid: the payment has failed and won't automatically be retried <!-- also need more info potentially -->
 - Voided: the invoice has been cancelled.
 
+<!-- ! There is no download icon like this in Phosphor Icons 🤷  -->
 :::tip
 Click the ![download icon](/img/assets/icons/download.svg) icon to download an invoice.
 :::

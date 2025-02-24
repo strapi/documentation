@@ -66,8 +66,8 @@ The Documentation plugin affects multiple parts of the admin panel. The followin
 
 | Section impacted    | Options and settings         |
 |------------------|-------------------------------------------------------------|
-| Documentation    | <ul>Addition of a new Documentation option in the main navigation ![Documentation plugin icon](/img/assets/icons/v5/info.svg) which shows a panel with buttons to ![Eye icon](/img/assets/icons/v5/Eye.svg) open and ![Regenerate icon](/img/assets/icons/v5/ArrowClockwise.svg) regenerate the documentation.</ul>        |
-| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not (see [restricting access](#restricting-access)).<br/> 👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab (see [Users & Permissions documentation](/cms/features/users-permissions)).<br/>👉 Path reminder: ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Administration Panel > Roles* </li></ul>| 
+| Documentation    | <ul>Addition of a new Documentation option in the main navigation <Icon name="info" /> which shows a panel with buttons to <Icon name="eye" /> open and <Icon name="arrow-clockwise" /> regenerate the documentation.</ul>        |
+| Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not (see [restricting access](#restricting-access)).<br/> 👉 Path reminder: <Icon name="gear-six" /> *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab (see [Users & Permissions documentation](/cms/features/users-permissions)).<br/>👉 Path reminder: <Icon name="gear-six" /> *Settings > Administration Panel > Roles* </li></ul>| 
 
 #### Restricting access to your API documentation {#restricting-access}
 
@@ -75,7 +75,7 @@ By default, your API documentation will be accessible by anyone.
 
 To restrict API documentation access, enable the **Restricted Access** option from the admin panel:
 
-1. Navigate to ![Cog icon](/img/assets/icons/v5/Cog.svg) *Settings* in the main navigation of the admin panel.
+1. Navigate to <Icon name="gear-six" /> *Settings* in the main navigation of the admin panel.
 2. Choose **Documentation**.
 3. Toggle **Restricted Access** to `ON`.
 4. Define a password in the `password` input.
@@ -283,7 +283,7 @@ module.exports = {
 
 ## Usage
 
-The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select ![Documentation plugin icon](/img/assets/icons/v5/info.svg) in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select <Icon name="info" /> in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
 
 :::tip
 Once the plugin is installed, the plugin user interface can be accessed at the following URL:

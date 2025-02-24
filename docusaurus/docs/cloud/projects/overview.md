@@ -32,7 +32,7 @@ Each project card displays the following information:
     * *Suspended*, if the project has been suspended (refer to [Project suspension](/cloud/getting-started/usage-billing#project-suspension) to reactivate the project)
     * *Incompatible version*, if the project is using a Strapi version that is not compatible with Strapi Cloud
 
-Each project card also displays a ![Menu icon](/img/assets/icons/more.svg) menu icon to access the following options:
+Each project card also displays a <Icon name="dots-three-outline" /> menu icon to access the following options:
 * **Visit App**: to be redirected to the application
 * **Go to Deployments**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
@@ -51,7 +51,7 @@ From the *Projects* page, click on any project card to access is dashboard. It d
 
 From the dashboard's header of a chosen project, you can:
 - use the **Share** button to invite users to collaborate on the project (see [Collaboration](/cloud/projects/collaboration)) and see the icons of those who have already been invited <ScreenshotNumberReference number="1" />,
-- use the ![Settings icon](/img/assets/icons/settings.svg) **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
+- use the <Icon name="gear-six" /> **Settings** button to access the settings of the project and its existing environments <ScreenshotNumberReference number="2" />,
 - choose which environment to visualise for the project or add a new environment <ScreenshotNumberReference number="4" />,
 - trigger a new deployment (see [Deployments management](/cloud/projects/deploys)) and visit your application <ScreenshotNumberReference number="4" />.
 

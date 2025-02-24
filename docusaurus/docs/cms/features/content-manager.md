@@ -64,8 +64,8 @@ From the list view, it is possible to:
 - configure the fields displayed in the table of the list view <ScreenshotNumberReference number="5" />,
 - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, see the status of each entry <ScreenshotNumberReference number="6" />,
 - perform actions on a specific entry by clicking on <Icon name="dots-three-outline" /> <ScreenshotNumberReference number="7" /> at the end of the row:
-  - edit ![Edit icon](/img/assets/icons/v5/Pencil.svg) (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg), or delete <Icon name="trash"/> (see [Deleting content](/cms/features/draft-and-publish#deleting-content)) the entry,
-  - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) unpublish the entry, ![Unpublish icon](/img/assets/icons/v5/CrossCircle.svg) or discard its changes,
+  - edit <Icon name="pencil-simple" /> (see [Writing content](/cms/features/content-manager/writing-content.md)), duplicate <Icon name="copy" />, or delete <Icon name="trash"/> (see [Deleting content](/cms/features/draft-and-publish#deleting-content)) the entry,
+  - if [Draft & Publish](/cms/features/draft-and-publish) is enabled, <Icon name="x-circle" /> unpublish the entry, <Icon name="x-circle" /> or discard its changes,
   - if [Internationalization (i18n)](/cms/features/internationalization) is enabled, ![Delete locale icon](/img/assets/icons/v5/delete-locale.svg) delete a given locale,
 - select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-publishing-and-unpublishing), or [delete](/cms/features/draft-and-publish#deleting-content).
 
@@ -172,10 +172,10 @@ The configurations only apply to the list view of the collection type from which
 
 1. In the list view of your collection type, click on the settings button <Icon name="gear-six" /> then <Icon name="list-plus" classes="ph-bold" /> **Configure the view** to be redirected to the list view configuration interface.
 2. In the View area, define what fields to display in the list view table, and in what order:
-   - Click the add button ![Add icon](/img/assets/icons/v5/Plus.svg) to add a new field.
+   - Click the add button <Icon name="plus" classes="ph-bold" /> to add a new field.
    - Click the delete button <Icon name="x" /> to remove a field.
    - Click the reorder button <Icon name="dots-six-vertical" classes="ph-bold" /> and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) to access its available own settings:
+3. Click the edit button <Icon name="pencil-simple" /> to access its available own settings:
 
 | Setting name              | Instructions                                                              |
 | ------------------------- | ------------------------------------------------------------------------- |
@@ -230,10 +230,10 @@ Note also that relational fields have a couple limitations when it comes to sort
 
 1. In the edit view of your content-type, click on the <Icon name="dots-three-outline" /> button then <Icon name="list-plus" classes="ph-bold" /> **Configure the view**.
 2. In the View area, define what fields (including relational fields) to display in the list view table, in what order and what size:
-   - Click the ![Add icon](/img/assets/icons/v5/Plus.svg) **Insert another field** button to add a new field.
+   - Click the <Icon name="plus" classes="ph-bold" /> **Insert another field** button to add a new field.
    - Click the delete button <Icon name="x" /> to remove a field.
    - Click the reorder button <Icon name="dots-six-vertical" classes="ph-bold" /> and drag and drop it to the place you want it to be displayed among the other fields.
-3. Click the edit button ![Edit icon](/img/assets/icons/v5/Pencil.svg) of a field to access its available settings:
+3. Click the edit button <Icon name="pencil-simple" /> of a field to access its available settings:
 
 | Setting name    | Instructions                                                                              |
 | --------------- | ----------------------------------------------------------------------------------------- |
@@ -493,7 +493,7 @@ To select the relevant relational field's entries:
 2. Among the list of entries, choose one.
 3. Repeat step 2 until all relevant entries have been chosen.
 
-To remove an entry, click on the cross button ![Cross icon](/img/assets/icons/v5/Cross.svg) in the selected entries list.
+To remove an entry, click on the cross button <Icon name="x" classes="ph-bold" /> in the selected entries list.
 
 Entries from multiple-choice relational fields can be reordered, indicated by a drag button <Icon name="dots-six-vertical" classes="ph-bold" />. To move an entry, click and hold it, drag it to the desired position, then release it.
 

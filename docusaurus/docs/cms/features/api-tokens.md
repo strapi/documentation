@@ -36,7 +36,7 @@ Most configuration options for API tokens are available in the admin panel, and 
 
 ### Admin panel settings
 
-**Path to configure the feature:** ![Settings icon](/img/assets/icons/v5/Cog.svg) *Settings > Global settings > API Tokens*
+**Path to configure the feature:** <Icon name="gear-six" /> *Settings > Global settings > API Tokens*
 
 The *API Tokens* interface displays a table listing all of the created API tokens. More specifically, it displays each API token's name, description, date of creation, and date of last use.
 
@@ -56,7 +56,7 @@ From there, you have the possibility to:
     | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
     | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
 3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
-4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button ![copy button](/img/assets/icons/v5/Duplicate.svg).
+4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
 <ThemedImage
   alt="Custom API token"

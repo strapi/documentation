@@ -74,5 +74,5 @@ The SSO configuration lives in [the `/config/admin` file](/cms/configurations/ad
 To access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account:
 
 1. Go to the URL of your Strapi application's admin panel.
-2. Click on a chosen provider, which logo should be displayed at the bottom of the login form. If you cannot see your provider, click the ![More icon](/img/assets/icons/v5/More.svg) button to access the full list of all available providers.
+2. Click on a chosen provider, which logo should be displayed at the bottom of the login form. If you cannot see your provider, click the <Icon name="dots-three-outline" /> button to access the full list of all available providers.
 3. You will be redirected to your provider's own login page where you will be able to authenticate.

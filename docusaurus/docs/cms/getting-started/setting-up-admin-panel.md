@@ -38,7 +38,7 @@ To access the admin panel:
 
 If your Strapi application was configured to allow authentication through SSO (see [Configuring Single Sign-On](/cms/features/sso)), you can access the admin panel using a specific provider instead of logging in with a regular Strapi administrator account.
 
-To do so, in the login page of your Strapi application, click on a chosen provider. If you cannot see your provider, click the ![More icon](/img/assets/icons/v5/More.svg) button to access the full list of all available providers. You will be redirected to your provider's own login page where you will be able to authenticate.
+To do so, in the login page of your Strapi application, click on a chosen provider. If you cannot see your provider, click the <Icon name="dots-three-outline" /> button to access the full list of all available providers. You will be redirected to your provider's own login page where you will be able to authenticate.
 
 ## Setting up your administrator profile
 
@@ -78,9 +78,9 @@ To change the password of your account:
 
 | Password modification |                                                                                                                  |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Current password      | Write your current password in the textbox. <br/> 💡 You can click on the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon for the password to be shown. |
-| Password              | Write the new password in the textbox. <br/> 💡 You can click on the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon for the password to be shown.      |
-| Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the ![Eye icon](/img/assets/icons/v5/Eye.svg) icon for the password to be shown. |
+| Current password      | Write your current password in the textbox. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown. |
+| Password              | Write the new password in the textbox. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown.      |
+| Password confirmation | Write the same new password in the textbox. <br/> 💡 You can click on the <Icon name="eye" /> icon for the password to be shown. |
 
 3. Click on the **Save** button.
 

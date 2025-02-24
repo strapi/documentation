@@ -63,7 +63,7 @@ You will be redirected to the roles edition interface, where you will be able to
 />
 
 :::tip
-In the *Roles* interface, from the table, you can click on the duplicate button ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg) to create a new role by duplicating an existing one.
+In the *Roles* interface, from the table, you can click on the duplicate button <Icon name="copy" /> to create a new role by duplicating an existing one.
 :::
 
 ### Deleting a role
@@ -190,19 +190,19 @@ There are 2 default additional conditions:
   }}
 />
 
-1. Click on the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button of the permission already granted for the role.
+1. Click on the <Icon name="gear-six" /> **Settings** button of the permission already granted for the role.
 2. In the *Define conditions* window, each available permission can be customized with a specific condition. Click on the drop-down list related to the permission you want to customize.
 3. Define the custom condition for the chosen permission. You can either:
    - Tick the Default option for all available additional conditions to be applied.
-   - Click on the arrow button ![Carret icon](/img/assets/icons/v5/CaretDown.svg) to see the available additional conditions and tick only the chosen one(s).
+   - Click on the arrow button <Icon name="caret-down" /> to see the available additional conditions and tick only the chosen one(s).
 4. Click on the **Apply** button.
 
 :::tip
-Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button.
+Once a custom condition is set for a permission, a dot is displayed next to the permission's name and the <Icon name="gear-six" /> **Settings** button.
 :::
 
 :::caution
-Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the ![Settings icon](/img/assets/icons/v5/Cog.svg) **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
+Custom conditions can only be set for permissions that have been ticked to be granted for the role. If not, when clicking the <Icon name="gear-six" /> **Settings** button, the window that opens will remain empty, as no custom condition option will be available.
 :::
 
 Other custom conditions can be available if they have been created beforehand for your Strapi application. The following dedicated guide helps you create additional custom conditions:
@@ -248,7 +248,7 @@ Sorting can be enabled for most fields displayed in the table. Click on a field 
   }}
 />
 
-1. Click on the ![Mail icon](/img/assets/icons/v5/Mail.svg) **Invite new user** button.
+1. Click on the <Icon name="envelope" /> **Invite new user** button.
 2. In the *Invite new user* window, fill in the Details information about the new administrator:
 
   | User information | Instructions                                                                 |
@@ -265,7 +265,7 @@ Sorting can be enabled for most fields displayed in the table. Click on a field 
   | Connect with SSO | (optional) Click **TRUE** or **FALSE** to connect the new administrator account with SSO.                       |
 
 4. Click on the **Invite user** button in the bottom right corner of the *Add new user* window.
-5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button ![Duplicate icon](/img/assets/icons/v5/Duplicate.svg) to copy the URL.
+5. A URL appears at the top of the window: it is the URL to send the new administrator for them to log in for the first time to your Strapi application. Click the copy button <Icon name="copy" /> to copy the URL.
 6. Click on the **Finish** button in the bottom right corner to finish the new administrator account creation. The new administrator should now be listed in the table.
 
 :::note
@@ -276,7 +276,7 @@ The administrator invitation URL is accessible from the administrator's account 
 
 It is possible to delete one or several administrator accounts at the same time.
 
-1. Click on the delete button ![Delete icon](/img/assets/icons/v5/Trash.svg) on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the ![Delete icon](/img/assets/icons/v5/Trash.svg) **Delete** button above the table.
+1. Click on the delete button <Icon name="trash" /> on the right side of the account's record, or select one or more accounts by ticking the boxes on the left side of the accounts' records then click on the <Icon name="trash" /> **Delete** button above the table.
 2. In the deletion window, click on the **Confirm** button to confirm the deletion.
 
 ### Editing an account
@@ -304,5 +304,5 @@ It is possible to delete one or several administrator accounts at the same time.
 
 3. (optional) In the *Roles* area, edit the role of the administrator:
   - Click on the drop-down list to choose a new role, and/or add it to the already attributed one.
-  - Click on the delete button ![Clear icon](/img/assets/icons/v5/Cross.svg) to delete an already attributed role.
+  - Click on the delete button <Icon name="x" classes="ph-bold" /> to delete an already attributed role.
 4. Click on the **Save** button in the top right corner.
