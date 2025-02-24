@@ -37,9 +37,11 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
   - the name of your Strapi Cloud project, used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs. The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the chosen hosting region for your Strapi Cloud project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the app's internal name for the project, which can be useful for debug & support purposes.
+- *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
+<!-- TODO: update screenshots and a dark mode one when I can actually test the feature -->
 <ThemedImage
   alt="Project settings page"
   sources={{
@@ -85,7 +87,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
 ### Environments {#environments}
-<CloudProBadge /> <CloudTeamBadge />
+<CloudProBadge /> <CloudScaleBadge />
 
 The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
@@ -126,7 +128,7 @@ If the creation of a new environment fails but you are still charged, try creati
 
 ### Billing & Usage
 
-The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to directly [manage the number of seats](#managing-projects-number-of-seats) and add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
+The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
 
 Through this tab, you also have the possibility to:
 - click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
@@ -146,23 +148,6 @@ Note also that if your usage indicates that another subscription plan would fit 
   }}
 />
 
-#### Managing project's number of seats
-
-You can manually add more seats or lower the number of seats for your project without necessarily upgrading or downgrading to another plan (see [full documentation on seats management](/cloud/getting-started/usage-billing#seats-management)).
-
-##### Adding more seats for the project
-
-1. In the <Icon name="credit-card" /> *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
-2. In the window that opens, select with the drop-down the number of Additional seats of your choice. The cost of the additional seats is automatically calculated and displayed in the window.
-3. (optional) Click **I have a discount code**, enter your discount code in the field, and click on the **Apply** button.
-4. Click the **Save** button to confirm. You will automatically be billed with the payment method defined in your profile.
-
-##### Removing seats from the project
-
-1. In the <Icon name="credit-card" /> *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
-2. In the window that opens, select with the drop-down the number of *Billed seats* you want to keep.
-3. Click the **Save button** to confirm. The new, lower number of seats will not be effective until the next month.
-
 ### Plans
 
 The <Icon name="map-trifold" /> *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
@@ -171,6 +156,7 @@ The <Icon name="map-trifold" /> *Plans* tab displays an overview of the availabl
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
 :::
 
+<!-- TODO: update the screenshot with new plans/features -->
 <ThemedImage
   alt="Project plans"
   sources={{
@@ -199,12 +185,12 @@ To upgrade your current plan to a higher one:
 
 #### Downgrading to another plan
 
-Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Team plan to the Pro plan on June 18th, your project will remain on the Team plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
+Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Scale plan to the Pro plan on June 18th, your project will remain on the Scale plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. You may also lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. You may also lose access to some features: for example, downgrading to the Essential plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional environments (i.e. extra environments that have been purchased, not the default or included environments). For instance, if you wish to downgrade from the Pro plan to the Developer plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
+Note also that you cannot downgrade if you have additional environments (i.e. extra environments that have been purchased, not the default or included environments). For instance, if you wish to downgrade from the Pro plan to the Essential plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
 :::
 
 To downgrade your current plan to a lower one:
@@ -314,13 +300,13 @@ Resetting an environment deletes all environments data and resets the variables 
 3. Click on the **Delete environment** button to confirm the deletion.
 
 ### Backups {#backups}
-<CloudProBadge /> <CloudTeamBadge /> <UpdatedBadge />
+<CloudProBadge /> <CloudScaleBadge /> <UpdatedBadge />
 
-The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
+The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Scale plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up and to have access to manual backups.
+- The backup feature is not available for Strapi Cloud projects using the free trial or the Essential plan. You will need to upgrade to either the Pro or Scale plan to have your project automatically backed up and to have access to manual backups.
 
 <!-- - Only project owners can restore a backup. Maintainers have access to the <Icon name="arrow-clockwise" /> *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
 
