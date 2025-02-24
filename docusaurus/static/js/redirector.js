@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
       '_default': '/cms/features/content-manager#relational-fields',
       'managing-one-choice-relational-fields': '/cms/features/content-manager#relational-fields',
       'managing-multiple-choice-relational-fields': '/cms/features/content-manager#relational-fields',
-      https://docs-next.strapi.io/user-docs/content-manager/configuring-view-of-content-type
     },
     '/user-docs/content-manager/configuring-view-of-content-type': {
       '_default': '/cms/features/content-manager#configuration',
