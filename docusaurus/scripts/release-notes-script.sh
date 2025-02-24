@@ -227,7 +227,7 @@ main() {
                     echo "#### CMS" > "$TEMP_DIR/${section}_${source}_header"
                     ;;
                 "cloud")
-                    echo "#### Strapi Cloud" > "$TEMP_DIR/${section}_${source}_header"
+                    echo "#### Cloud" > "$TEMP_DIR/${section}_${source}_header"
                     ;;
                 "repo")
                     echo "#### Repository" > "$TEMP_DIR/${section}_${source}_header"
