@@ -151,5 +151,75 @@ export default (config, webpack) => {
 ```
 
 :::caution
+When developing your plugin locally (using @strapi/sdk-plugin), your configuration in config/plugins.js might look like this:
+
+```js
+myplugin: {
+    enabled: true,
+    resolve: `./src/plugins/local-plugin`,
+  },
+```
+
+However, this setup can sometimes lead to errors such as:
+
+```js
+Error: 'X must be used within StrapiApp';
+```
+
+This error often occurs when your plugin attempts to import core Strapi functionality, for example using:
+
+```js
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+```
+
+Solution:
+To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi’s core modules as the main application, preventing conflicts and the associated errors.
+
+:::
+
+:::caution
 Because the server looks at the `server/src/index.ts|js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
 :::
+
+## Setting a local plugin in a monorepo environment without the Plugin SDK
+
+In a monorepo, you can configure your local plugin without using the Plugin SDK by adding two entry point files at the root of your plugin:
+
+Server Entry Point: `strapi-server.js` or `strapi-server.ts`
+Admin Entry Point: `strapi-admin.js` or `strapi-admin.ts`
+
+### Server Entry Point
+
+This file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
+
+```js
+module.exports = () => {
+  return {
+    register,
+    config,
+    controllers,
+    contentTypes,
+    routes,
+  };
+};
+```
+
+Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration.
+
+### Admin Entry Point
+
+This file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
+
+```js
+export default {
+  register(app) {},
+  bootstrap() {},
+  registerTrads({ locales }) {},
+};
+```
+
+This object includes methods to register your plugin with the admin app, perform bootstrapping actions, and handle translations.
+
+Example Setup
+For a complete example of how to structure your local plugin in a monorepo environment, check out our example setup in our monorepo:
+[Example Local Plugin Setup](https://github.com/strapi/strapi/tree/develop/examples/getstarted/src/plugins/local-plugin)
