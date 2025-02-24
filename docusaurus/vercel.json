@@ -42,7 +42,7 @@
     },
     {
       "source": "/user-docs/content-manager/configuring-view-of-content-type",
-      "destination": "/cms/features/content-manager",
+      "destination": "/cms/features/content-manager#configuration",
       "permanent": true
     },
     {
