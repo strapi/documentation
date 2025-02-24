@@ -174,6 +174,7 @@ main() {
     # Initialize file
     rm -f "$OUTPUT_FILE"
     echo "## $MILESTONE_TITLE" > "$OUTPUT_FILE"
+    echo "<br />" >> "$OUTPUT_FILE"
 
     # Fetch PRs
     prs=$(gh_api_get "issues?milestone=$MILESTONE&state=closed&pull_request")
