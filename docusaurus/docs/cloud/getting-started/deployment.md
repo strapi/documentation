@@ -57,6 +57,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
 2. You will be redirected to the first project deployment interface. This interface contains 3 steps: choosing a plan, connecting a remote git repository, and setting up the project.
 
+    <!-- TODO: update the screenshot with new plans/features -->
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
     sources={{
@@ -65,7 +66,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-3. Choose a plan for your Strapi Cloud project: either Developer, Pro, Team, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
+3. Choose a plan for your Strapi Cloud project: either Essential, Pro, Scale, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
     :::note Notes
     - Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
@@ -189,6 +190,7 @@ During the free trial, will be kept informed of the number of remaining free day
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
 
+    <!-- TODO: update the screenshot with new plans/features -->
     <ThemedImage
     alt="Payment & Billing"
     sources={{

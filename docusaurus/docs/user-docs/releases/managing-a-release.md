@@ -6,11 +6,10 @@ tags:
 - Growth feature
 - Enterprise feature
 - Releases feature
-- Strapi Cloud
 ---
 
 # Managing a release
-<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
+<GrowthBadge /> <EnterpriseBadge />
 
 Adding entries to a [release](/user-docs/releases/introduction) allow viewing them altogether on a single page.
 
