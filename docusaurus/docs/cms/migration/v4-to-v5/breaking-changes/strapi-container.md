@@ -11,15 +11,12 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import YesPlugins from '/docs/snippets/breaking-change-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # `Strapi` is a subclass of `Container`
 
 In Strapi 5, `Strapi` is a subclass of the `Container` class to make it simpler to access services and unify the service access with one method.
 
 <Intro />
-<YesPlugins /><NoCodemods />
 <BreakingChangeIdCard plugins />
 
 ## Breaking change description

@@ -13,17 +13,13 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import YesCodemods from '/docs/snippets/breaking-change-handled-by-codemod.md'
 
 # Only the `mysql2` package is supported for the MySQL client
 
 Strapi 5 can only use the `mysql2` package for MySQL databases, and the `client` value for it must be set to `mysql`.
 
 <Intro />
-<BreakingChangeIdCard
-  codemod
-/>
+<BreakingChangeIdCard codemod />
 
 ## Breaking change description
 

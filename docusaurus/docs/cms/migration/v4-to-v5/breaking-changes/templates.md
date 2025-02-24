@@ -10,14 +10,11 @@ tags:
 
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
-import NoPlugins from '/docs/snippets/breaking-change-not-affecting-plugins.md'
-import NoCodemods from '/docs/snippets/breaking-change-not-handled-by-codemod.md'
 
 # Templates are now standalone, regular Strapi applications
 
 Templates have been fully rewritten in Strapi 5 and now are standalone, regular Strapi applications, making it easier to create, distribute, and reuse them.
 <Intro />
-<NoPlugins /><NoCodemods />
 <BreakingChangeIdCard />
 
 ## Breaking change description
