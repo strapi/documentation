@@ -204,7 +204,7 @@ module.exports = () => {
 };
 ```
 
-Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration.
+Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration. For more details, please refer to the [Server API reference](/dev-docs/plugins/server-api).
 
 ### Admin entry point
 
@@ -218,7 +218,7 @@ export default {
 };
 ```
 
-This object includes methods to register your plugin with the admin app, perform bootstrapping actions, and handle translations.
+This object includes methods to register your plugin with the admin application, perform bootstrapping actions, and handle translations. For more details, please refer to the [Admin Panel API reference](/dev-docs/plugins/admin-panel-api).
 
 :::tip
 For a complete example of how to structure your local plugin in a monorepo environment, please check out our [example setup in the strapi/strapi monorepo](https://github.com/strapi/strapi/tree/develop/examples/getstarted/src/plugins/local-plugin).
