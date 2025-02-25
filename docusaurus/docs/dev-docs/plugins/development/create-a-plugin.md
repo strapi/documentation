@@ -206,7 +206,7 @@ module.exports = () => {
 
 Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration.
 
-### Admin Entry Point
+### Admin entry point
 
 This file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
 
