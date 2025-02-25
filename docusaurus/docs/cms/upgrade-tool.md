@@ -67,8 +67,7 @@ For instance, if the latest Strapi v4 version is v4.25.9:
 | v4.14.1                                | `npx @strapi/upgrade minor` | v4.25.9                                                                                    |
 | v4.14.1                                | `npx @strapi/upgrade major` | Nothing.<br/><br/>I first need to run `npx @strapi/upgrade minor` to upgrade to v4.25.9.   |
 | v4.25.9                                | `npx @strapi/upgrade major` | v5.0.0                                                                                     |
-
-
+| v4.14.1                                | `npx @strapi/upgrade latest` | v5.1.2 <br/><br/>A confirmation prompt appears to make sure the major version bump is intended. |
 
 ## Upgrade to a new version
 
@@ -109,6 +108,23 @@ npx @strapi/upgrade patch
 ```
 
 During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
+
+### Upgrade to the latest version
+
+Run the upgrade tool with the `latest` parameter to upgrade the project to the latest available version regardless of the current Strapi version:
+
+```bash
+npx @strapi/upgrade latest
+```
+
+During the upgrade process, the project dependencies are updated and installed, and the related codemods are executed (if any).
+
+:::note
+If a `major` version upgrade is detected, the upgrade tool displays a confirmation prompt to make sure the change is
+intended.
+
+In the scenario where the major bump isn't the desired option, see [the minor upgrade](#upgrade-to-a-minor-version).
+:::
 
 ## Run codemods only
 
