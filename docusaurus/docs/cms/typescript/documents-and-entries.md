@@ -57,6 +57,8 @@ In case of a mismatch or error, you can always [regenerate the types](/cms/types
 
 ## Usage
 
+<br />
+
 ### Generic entities
 
 When dealing with generic data, it is recommended to use non-parametrized forms of the `Data` types.
