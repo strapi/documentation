@@ -1,6 +1,7 @@
 ---
 title: TypeScript development
 description: Learn more about TypeScript usage with Strapi 5
+displayed_sidebar: cmsSidebar
 tags:
 - strapi() factory
 - strapi.compile() function
