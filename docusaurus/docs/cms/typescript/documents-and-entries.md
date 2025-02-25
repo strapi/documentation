@@ -148,6 +148,8 @@ function processUsageMetrics(
 
 ### Advanced use cases
 
+<br/>
+
 #### Entities subsets
 
 Using the types' second parameter (`TKeys`), it is possible to obtain a subset of an entity.
