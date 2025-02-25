@@ -208,7 +208,7 @@ Here, you export a function that returns your plugin's core components such as c
 
 ### Admin entry point
 
-This file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
+The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
 
 ```js
 export default {
