@@ -1436,6 +1436,11 @@
       "permanent": true
     },
     {
+      "source": "/dev-docs/typescript/development/guides",
+      "destination": "/cms/typescript#guides",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/typescript",
       "destination": "/cms/typescript",
       "permanent": true
