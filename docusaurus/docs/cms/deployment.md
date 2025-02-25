@@ -182,7 +182,7 @@ strapi.createStrapi(/* {...} */).start();
 :::caution
 
 If you are developing a `TypeScript`-based project you must provide the `distDir` option to start the server.
-For more information, consult the [TypeScript documentation](/cms/typescript/development#use-the-strapi-factory).
+For more information, consult the [TypeScript documentation](/cms/typescript/development#use-the-createstrapi-factory).
 :::
 
 ### Advanced configurations
