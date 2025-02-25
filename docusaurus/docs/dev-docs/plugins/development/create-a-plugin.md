@@ -221,4 +221,5 @@ export default {
 This object includes methods to register your plugin with the admin app, perform bootstrapping actions, and handle translations.
 
 ::: tip
-For a complete example of how to structure your local plugin in a monorepo environment, check out our example setup in our monorepo:
+For a complete example of how to structure your local plugin in a monorepo environment, check out our example setup in our monorepo: [Example Local Plugin Setup](https://github.com/strapi/strapi/tree/develop/examples/getstarted/src/plugins/local-plugin)
+:::
