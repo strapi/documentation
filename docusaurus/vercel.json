@@ -3535,12 +3535,12 @@
     },
     {
       "source": "/dev-docs/typescript/development/api-reference",
-      "destination": "/cms/typescript/development/api-reference",
+      "destination": "/cms/typescript/development",
       "permanent": true
     },
     {
       "source": "/dev-docs/typescript/development/guides/documents-and-entries",
-      "destination": "/cms/typescript/development/guides/documents-and-entries",
+      "destination": "/cms/typescript/documents-and-entries",
       "permanent": true
     },
     {
