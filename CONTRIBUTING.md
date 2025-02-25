@@ -4,7 +4,7 @@ Strapi’s documentation is open-source, hosted on GitHub in the present `strapi
 
 The Strapi Documentation team does not maintain blog articles hosted at [strapi.io/blog](https://strapi.io/blog) or any other educational or informational content not hosted on the [official documentation website](docs.strapi.io); these should not be subject to GitHub pull requests or issues on the present repository.
 
-We appreciate your interest and efforts to contribute to Strapi! Though all contributions are highly appreciated, we recommend you talk to a maintainer (`@pwizla` or `@meganelacheny`) prior to investing a lot of time in a pull request that may not align with the project roadmap or would modify the UI, UX, or any other part of the Strapi Documentation product experience. Please note that contributions, pull requests, and issues should be written in English. Please note that we also don't accept contributions that aim to promote a proprietary third-party tool, paid or not.
+We appreciate your interest and efforts to contribute to Strapi! Though all contributions are highly appreciated, we recommend you talk to a maintainer (`@pwizla` or `@meganelacheny`) prior to investing a lot of time in a pull request that may not align with the project roadmap or would modify the UI, UX, or any other part of the Strapi Documentation product experience. Please note that contributions, pull requests, and issues should be written in English. Please note that the official Strapi Documentation also does not intend to accept contributions to promote a proprietary third-party tool, paid or free.
 
 The Strapi Documentation team reviews pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
