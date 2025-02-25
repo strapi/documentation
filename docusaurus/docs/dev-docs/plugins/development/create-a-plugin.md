@@ -190,7 +190,7 @@ In a monorepo, you can configure your local plugin without using the Plugin SDK 
 
 ### Server entry point
 
-This file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
+The server entry point file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
 
 ```js
 module.exports = () => {
