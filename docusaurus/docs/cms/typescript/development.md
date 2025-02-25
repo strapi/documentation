@@ -7,7 +7,6 @@ tags:
 - strapi.compile() function
 - typescript
 - plugins development
-
 ---
 
 # TypeScript Development with Strapi 
@@ -108,7 +107,7 @@ Types should only be imported from `@strapi/strapi` to avoid breaking changes. T
 
 To start Strapi programmatically in a TypeScript project the Strapi instance requires the compiled code location. This section describes how to set and indicate the compiled code directory.
 
-### Use the `strapi()` factory {use-the-createstrapi-factory}
+### Use the `strapi()` factory {#use-the-createstrapi-factory}
 
 Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 
