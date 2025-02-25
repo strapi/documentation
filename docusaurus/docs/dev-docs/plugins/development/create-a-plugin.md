@@ -186,7 +186,7 @@ Because the server looks at the `server/src/index.ts|js` file to import your plu
 In a monorepo, you can configure your local plugin without using the Plugin SDK by adding 2 entry point files at the root of your plugin:
 
 - server entry point: `strapi-server.js` or `strapi-server.ts`
-Admin Entry Point: `strapi-admin.js` or `strapi-admin.ts`
+- admin entry point: `strapi-admin.js` or `strapi-admin.ts`
 
 ### Server Entry Point
 
