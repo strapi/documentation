@@ -2,63 +2,76 @@ import React from 'react';
 import Icon from './Icon';
 import { ExternalLink } from './ExternalLink';
 
+// Reusable component to display a question and its status
+const BreakingChangeQuestion = ({ iconName, question, status }) => {
+  const statusMap = {
+    yes: { class: 'breaking-change-question__answer--positive', text: 'Yes' },
+    partly: { class: 'breaking-change-question__answer--neutral', text: 'Partly' },
+    no: { class: 'breaking-change-question__answer--negative', text: 'No' }
+  };
+  
+  const { class: statusClass, text: statusText } = statusMap[status];
+  
+  return (
+    <div className="breaking-change-question">
+      <Icon name={iconName} />
+      <span className="breaking-change-question__label">
+        &nbsp;{question}
+      </span>
+      <span className={`breaking-change-question__answer ${statusClass}`}>
+        {statusText}
+      </span>
+    </div>
+  );
+};
+
 export default function BreakingChangeIdCard({
   plugins = false,
-  codemod = false, // used when we don't have a link to the codemod code
+  codemod = false,
   codemodPartly = false,
-  codemodName = false,
-  codemodLink = null,
-  info = null,
+  codemodName = '',
+  codemodLink = '',
+  info = '',
 }) {
-
+  // Define status for each question
+  const pluginsStatus = plugins ? 'yes' : 'no';
+  const codemodStatus = codemodPartly ? 'partly' : ((codemod || codemodName) ? 'yes' : 'no');
+  
+  // Define which type of link to codemod
+  let codemodLinkContent = null;
+  if (codemodName && codemodLink) {
+    codemodLinkContent = <ExternalLink to={codemodLink} text={codemodName} />;
+  } else if (codemodName) {
+    codemodLinkContent = <code>{codemodName}</code>;
+  } else if (codemodLink) {
+    codemodLinkContent = <ExternalLink to={codemodLink} text="the codemod's code" />;
+  }
+  
   return (
     <div className="breaking-change-id-card">
-      <div className="breaking-change-question">
-        <Icon name="plug" />
-        <span className="breaking-change-question__label">
-          &nbsp;Is this breaking change affecting plugins?
+      <BreakingChangeQuestion 
+        iconName="plug"
+        question="Is this breaking change affecting plugins?"
+        status={pluginsStatus}
+      />
+      
+      <BreakingChangeQuestion 
+        iconName="robot"
+        question="Is this breaking change automatically handled by a codemod?"
+        status={codemodStatus}
+      />
+      
+      {codemodLinkContent && (
+        <span className="breaking-change-codemod-link">
+          (see&nbsp;{codemodLinkContent})
         </span>
-        {plugins
-          ? <span className="breaking-change-question__answer breaking-change-question__answer--negative">Yes</span>
-          : <span className="breaking-change-question__answer breaking-change-question__answer--positive">No</span>}
-      </div>
-      <div className="breaking-change-question">
-        <Icon name="robot" />
-        <span className="breaking-change-question__label">
-          &nbsp;Is this breaking change automatically handled by a codemod?
-        </span>
-        {(codemod || codemodName) && !codemodPartly ? (
-          <span className="breaking-change-question__answer breaking-change-question__answer--positive">
-            Yes
-          </span>
-        ) : codemodPartly ? (
-          <span className="breaking-change-question__answer breaking-change-question__answer--neutral">
-            Partly
-          </span>
-        ) : (
-          <span className="breaking-change-question__answer breaking-change-question__answer--negative">
-            No
-          </span>
-        )}
-      </div>
-
-      {(codemodLink && codemodLink.length > 0 && codemodName) &&
-        <span className="breaking-change-codemod-link">
-          (see&nbsp;<ExternalLink to={codemodLink} text={codemodName} />)
-        </span>}
-
-      {(codemodName && codemodName.length > 0 && !codemodLink) &&
-        <span className="breaking-change-codemod-link">
-          (see&nbsp;<code>{codemodName}</code>)
-        </span>}
-
-      {(!codemodName && codemodLink && codemodLink.length > 0) &&
-        <span className="breaking-change-codemod-link">
-          (see&nbsp;<ExternalLink to={codemodLink} text="the codemod's code" />)
-        </span>}
-
-      {info && <div className="breaking-change__info"><em>{info}</em></div>}
+      )}
+      
+      {info && (
+        <div className="breaking-change__info">
+          <em>{info}</em>
+        </div>
+      )}
     </div>
   );
 }
-
