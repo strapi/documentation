@@ -295,21 +295,23 @@ This requires the front-end application to have its own header directive, the CS
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
 
-Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
+Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display a side panel with the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
 
 <!-- TODO: add a dark mode GIF -->
 <ThemedImage
   alt="Previewing content"
   sources={{
-    light: '/img/assets/content-manager/previewing-content.gif',
-    dark: '/img/assets/content-manager/previewing-content.gif',
+    light: '/img/assets/content-manager/previewing-content2.gif',
+    dark: '/img/assets/content-manager/previewing-content2.gif',
   }}
 />
 
-From the Preview screen, you can:
+Once the side panel for the Preview is open, you can:
 
 - click the close button <Icon name="x" classes="ph-bold" /> in the upper left corner to go back to the Edit View of the Content Manager,
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
+- expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview  full screen
+- use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled
 - and click the link icon <Icon name="link" classes="ph-bold"/> in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
 :::caution
