@@ -156,6 +156,8 @@ Because the server looks at the `server/src/index.ts|js` file to import your plu
 
 ### Configuration with a local plugin
 
+Since the Plugin SDK is primarily designed for developing plugins, not locally, the configuration needs to be adjusted manually for local plugins.
+
 When developing your plugin locally (using `@strapi/sdk-plugin`), your plugins configuration file looks like in the following example:
 
 ```js title="/config/plugins.js|ts"
