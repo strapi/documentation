@@ -188,7 +188,7 @@ In a monorepo, you can configure your local plugin without using the Plugin SDK 
 - server entry point: `strapi-server.js` or `strapi-server.ts`
 - admin entry point: `strapi-admin.js` or `strapi-admin.ts`
 
-### Server Entry Point
+### Server entry point
 
 This file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
 
