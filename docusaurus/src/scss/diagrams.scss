@@ -79,7 +79,6 @@ main:has(.docusaurus-mermaid-container) {
   }
 }
 
-/* src/css/custom.css */
 .mermaid-loading-container {
   display: flex;
   justify-content: center;
@@ -136,6 +135,7 @@ html[data-theme='dark'] .mermaid-loading {
 
 .mermaid-fallback-notice {
   font-style: italic;
+  margin-bottom: 1rem;
 }
 
 /* Animation for the fallback image */
@@ -145,4 +145,23 @@ html[data-theme='dark'] .mermaid-loading {
 
 .mermaid-fallback-image:hover {
   transform: scale(1.01);
+}
+
+.mermaid-download-link {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: var(--ifm-color-secondary-darkest);
+}
+
+html[data-theme='dark'] .mermaid-download-link {
+  color: var(--ifm-color-secondary-lighter);
+}
+
+.mermaid-download-link a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.mermaid-download-link a:hover {
+  text-decoration: underline;
 }
