@@ -33,7 +33,7 @@ import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
 import { ExternalLink } from '../components/ExternalLink';
 import BreakingChangeIdCard from '../components/BreakingChangeIdCard';
-import MermaidWithFallback from '../components/MermaidWithFallback';
+import MermaidWithFallback from '../components/MermaidWithFallback.js';
 
 export default {
   // Re-use the default mapping
