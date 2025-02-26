@@ -38,10 +38,14 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
   - the chosen hosting region for your Strapi Cloud project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the app's internal name for the project, which can be useful for debug & support purposes.
 - *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
+
+:::note
+If you don't see the Strapi CMS license key area, then it probably means that your subscription is a legacy one and does not support custom CMS license. Instead you already have one that is automatically included on your project.
+:::
+
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
-<!-- TODO: update screenshots and a dark mode one when I can actually test the feature -->
 <ThemedImage
   alt="Project settings page"
   sources={{
@@ -170,7 +174,6 @@ The <Icon name="map-trifold" /> *Plans* tab displays an overview of the availabl
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
 :::
 
-<!-- TODO: update the screenshot with new plans/features -->
 <ThemedImage
   alt="Project plans"
   sources={{
