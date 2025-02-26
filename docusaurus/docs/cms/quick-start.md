@@ -305,7 +305,7 @@ The restaurant is now listed in the _Collection types - Restaurant_ view of the 
 <details>
 <summary>Step 3: Add Categories</summary>
 
-#### Step 3: Add Categories
+### Step 3: Add Categories
 
 Let's go to <Icon name="feather" /> _Content Manager > Collection types - Category_ and create 2 categories:
 
