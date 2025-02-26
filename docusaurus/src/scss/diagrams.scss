@@ -10,6 +10,14 @@ main:has(.docusaurus-mermaid-container):not(:has(.dont_hide_secondary_bar)) {
   }
 }
 
+@include dark {
+  .document-concept-page {
+    .nodeLabel {
+      color: white !important;
+    }
+  }
+}
+
 main:has(.docusaurus-mermaid-container) {
   .docusaurus-mermaid-container * {
     font-size: .85rem !important;
@@ -77,4 +85,97 @@ main:has(.docusaurus-mermaid-container) {
       }
     }
   }
+}
+
+.mermaid-loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  margin: 2rem 0;
+  padding: 1rem;
+  border: 1px dashed var(--ifm-color-primary-light);
+  border-radius: 8px;
+  background-color: var(--ifm-color-primary-lightest);
+}
+
+html[data-theme='dark'] .mermaid-loading-container {
+  background-color: var(--ifm-color-primary-darkest);
+  border-color: var(--ifm-color-primary-light);
+}
+
+.mermaid-loading {
+  display: flex;
+  align-items: center;
+  color: var(--ifm-color-primary-dark);
+}
+
+html[data-theme='dark'] .mermaid-loading {
+  color: var(--ifm-color-primary-light);
+}
+
+/* Subtle loading animation */
+.mermaid-loading:before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 3px solid var(--ifm-color-primary-light);
+  border-top-color: transparent;
+  animation: mermaid-spinner 1s linear infinite;
+}
+
+@keyframes mermaid-spinner {
+  to { transform: rotate(360deg); }
+}
+
+.mermaid-fallback-container {
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.mermaid-fallback-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.mermaid-fallback-notice {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* Animation for the fallback image */
+.mermaid-fallback-image {
+  transition: transform 0.2s ease;
+}
+
+.mermaid-fallback-image:hover {
+  transform: scale(1.01);
+}
+
+.mermaid-download-link {
+  margin-top: 0.5rem;
+  color: var(--ifm-color-secondary-darkest);
+
+  i {
+    margin-right: .3rem;
+    &::before {
+      color: var(--strapi-primary-600);
+    }
+  }
+}
+
+html[data-theme='dark'] .mermaid-download-link {
+  color: var(--ifm-color-secondary-lighter);
+}
+
+.mermaid-download-link a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.mermaid-download-link a:hover {
+  text-decoration: underline;
 }

@@ -36,175 +36,45 @@ The following diagrams represent all the possible variations of content dependin
 <Tabs>
 <TabItem value="document-only" label="Neither i18n nor Draft & Publish enabled">
 
-```mermaid
-flowchart LR
-stX("Single type X <br>(e.g., homepage)")
-docX("Document X<br/>(e.g., the homepage)")
-docA(Document A)
-docB(Document B)
-docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
-ctA(Collection type A)
-ctB("Collection type B<br>(e.g., restaurants)")
-fieldA(Field A)
-fieldB(Field B)
-fieldC("Field C<br>(e.g., 'name')")
-
-content --- stX --- docX
-content --- ctA
-content --- ctB
-
-ctB --- docA
-ctB --- docB
-ctB --- docC
-
-docC --- fieldA
-docC --- fieldB
-docC --- fieldC
-
-classDef notHighlighted fill:transparent,stroke:none
-classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
-class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
-linkStyle default stroke:#8D5AF3
-class docC highlighted
-```
+<MermaidWithFallback
+    chartFile="/diagrams/document.mmd"
+    fallbackImage="/img/assets/diagrams/document.png"
+    fallbackImageDark="/img/assets/diagrams/document_DARK.png"
+    alt="Document diagram (no Draft & Publish, no i18n)"
+/>
 
 </TabItem>
 
 <TabItem value="dandp-only" label="Only Draft & Publish enabled">
 
-```mermaid
-flowchart LR
-stX("Single type X <br>(e.g., homepage)")
-docX("Document X<br/>(e.g., the homepage)")
-docA(Document A)
-docB(Document B)
-docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
-draftC(Draft Version)
-pubC(Published Version)
-ctA(Collection type A)
-ctB("Collection type B<br>(e.g., restaurants)")
-fieldA(Field A)
-fieldB(Field B)
-fieldC("Field C<br>(e.g., 'name')")
-
-content --- stX --- docX
-content --- ctA
-content --- ctB
-
-ctB --- docA
-ctB --- docB
-ctB --- docC
-
-docC --- draftC
-docC --- pubC
-
-pubC --- fieldA
-pubC --- fieldB
-pubC --- fieldC
-
-classDef notHighlighted fill:transparent,stroke:none
-classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
-class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
-linkStyle default stroke:#8D5AF3
-class docC highlighted
-```
+<MermaidWithFallback
+    chartFile="/diagrams/document-draft.mmd"
+    fallbackImage="/img/assets/diagrams/document-draft.png"
+    fallbackImageDark="/img/assets/diagrams/document-draft_DARK.png"
+    alt="Document diagram (only Draft & Publish, no i18n)"
+/>
 
 </TabItem>
 
 <TabItem value="i18n-only" label="Only i18n enabled">
 
-```mermaid
-flowchart LR
-stX("Single type X <br>(e.g., homepage)")
-docX("Document X<br/>(e.g., the homepage)")
-docA(Document A)
-docB(Document B)
-docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
-docLocA("Document Locale A<br>(e.g., 'en')")
-docLocB("Document Locale B<br><br>")
-docLocC(Document Locale C)
-ctA(Collection type A)
-ctB("Collection type B<br>(e.g., restaurants)")
-fieldA(Field A)
-fieldB(Field B)
-fieldC("Field C<br>(e.g., 'name')")
-
-content --- stX --- docX
-content --- ctA
-content --- ctB
-
-ctB --- docA
-ctB --- docB
-ctB --- docC
-
-docC --- docLocA
-docC --- docLocB
-docC --- docLocC
-
-docLocC --- fieldA
-docLocC --- fieldB
-docLocC --- fieldC
-
-classDef notHighlighted fill:transparent,stroke:none
-classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
-class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,fieldA,fieldB,fieldC notHighlighted
-linkStyle default stroke:#8D5AF3
-class docC highlighted
-```
+<MermaidWithFallback
+    chartFile="/diagrams/document-locales.mmd"
+    fallbackImage="/img/assets/diagrams/document-locales.png"
+    fallbackImageDark="/img/assets/diagrams/document-locales_DARK.png"
+    alt="Document diagram (only Draft & Publish, no i18n)"
+/>
 
 </TabItem>
 
 <TabItem value="i18n-and-dandp" label="i18n + Draft & Publish enabled" default>
 
-```mermaid
-flowchart LR
-stX("Single type X <br>(e.g., homepage)")
-docX("Document X<br/>(e.g., the homepage)")
-docA(Document A)
-docB(Document B)
-docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
-docLocA("Document Locale A<br>(e.g., 'en')")
-docLocB(Document Locale B)
-docLocC(Document Locale C)
-draftA(Draft Version)
-draftB(Draft Version)
-draftC(Draft Version)
-pubA(Published Version)
-pubC(Published Version)
-ctA(Collection type A)
-ctB("Collection type B<br>(e.g., restaurants)")
-fieldA(Field A)
-fieldB(Field B)
-fieldC("Field C<br>(e.g., 'name')")
-
-content --- stX --- docX
-content --- ctA
-content --- ctB
-
-ctB --- docA
-ctB --- docB
-ctB --- docC
-
-docC --- docLocA
-docC --- docLocB --- draftB
-docC --- docLocC
-
-docLocA --- draftA
-docLocA --- pubA
-
-docLocC --- draftC
-docLocC --- pubC
-
-pubC --- fieldA
-pubC --- fieldB
-pubC --- fieldC
-
-classDef notHighlighted fill:transparent,stroke:none
-classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
-class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
-linkStyle default stroke:#8D5AF3
-class docC highlighted
-```
+<MermaidWithFallback
+    chartFile="/diagrams/document-draft-locales.mmd"
+    fallbackImage="/img/assets/diagrams/document-draft-locales.png"
+    fallbackImageDark="/img/assets/diagrams/document-draft-locales_DARK.png"
+    alt="Document diagram (only Draft & Publish, no i18n)"
+/>
 
 </TabItem>
 </Tabs>

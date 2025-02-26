@@ -1,0 +1,47 @@
+flowchart LR
+  stX("Single type X <br>(e.g., homepage)")
+  docX("Document X<br/>(e.g., the homepage)")
+  docA(Document A)
+  docB(Document B)
+  docC("Document C<br>(e.g., a restaurant,<br/>'Biscotte Restaurant')")
+  docLocA("Document Locale A<br>(e.g., 'en')")
+  docLocB(Document Locale B)
+  docLocC(Document Locale C)
+  draftA(Draft Version)
+  draftB(Draft Version)
+  draftC(Draft Version)
+  pubA(Published Version)
+  pubC(Published Version)
+  ctA(Collection type A)
+  ctB("Collection type B<br>(e.g., restaurants)")
+  fieldA(Field A)
+  fieldB(Field B)
+  fieldC("Field C<br>(e.g., 'name')")
+
+  content --- stX --- docX
+  content --- ctA
+  content --- ctB
+
+  ctB --- docA
+  ctB --- docB
+  ctB --- docC
+
+  docC --- docLocA
+  docC --- docLocB --- draftB
+  docC --- docLocC
+
+  docLocA --- draftA
+  docLocA --- pubA
+
+  docLocC --- draftC
+  docLocC --- pubC
+
+  pubC --- fieldA
+  pubC --- fieldB
+  pubC --- fieldC
+
+  classDef notHighlighted fill:transparent,stroke:none
+  classDef highlighted fill:transparent,stroke:#8D5AF3,stroke-width:2px
+  class content,stX,docX,docA,docB,ctA,ctB,docLocA,docLocB,docLocC,draftA,draftB,draftC,pubA,pubB,pubC,fieldA,fieldB,fieldC notHighlighted
+  linkStyle default stroke:#8D5AF3
+  class docC highlighted
