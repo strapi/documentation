@@ -20,20 +20,19 @@ export default function DocusaurusMermaidFileFallback({
     ? fallbackImageDark 
     : fallbackImage;
   
-  // Download links component - extracted for reuse
-  const DownloadLinks = () => (
-    <div className="mermaid-download-links">
-      <small>
-        Download diagram: {' '}
-        <a href={fallbackImage} download target="_blank">Light version</a> {' '}
-        {fallbackImageDark && (
-          <>
-            | <a href={fallbackImageDark} download target="_blank">Dark version</a>
-          </>
-        )}
-      </small>
-    </div>
-  );
+  // Download link component - extracted for reuse
+  const DownloadLink = () => {
+    const linkText = colorMode === 'dark' ? 'Download diagram (dark version)' : 'Download diagram (light version)';
+    const linkHref = colorMode === 'dark' && fallbackImageDark ? fallbackImageDark : fallbackImage;
+    
+    return (
+      <div className="mermaid-download-link">
+        <small>
+          <a href={linkHref} download target="_blank">{linkText}</a>
+        </small>
+      </div>
+    );
+  };
 
   // Load chart content from file
   useEffect(() => {
@@ -145,7 +144,7 @@ export default function DocusaurusMermaidFileFallback({
         <div className="mermaid-fallback-notice">
           <em><small>Please note that the diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead.</small></em>
         </div>
-        <DownloadLinks />
+        <DownloadLink />
       </div>
     );
   }
@@ -157,7 +156,7 @@ export default function DocusaurusMermaidFileFallback({
       <div className="mermaid">
         {chartContent}
       </div>
-      <DownloadLinks />
+      <DownloadLink />
     </div>
   );
 }
