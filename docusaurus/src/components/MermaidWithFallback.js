@@ -1,5 +1,5 @@
 // src/components/DocusaurusMermaidFileFallback.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 
 export default function DocusaurusMermaidFileFallback({ 
@@ -13,6 +13,7 @@ export default function DocusaurusMermaidFileFallback({
   const [isLoading, setIsLoading] = useState(true);
   const [renderFailed, setRenderFailed] = useState(false);
   const { colorMode } = useColorMode();
+  const imgRef = useRef(null);
   
   // Determine which image to display based on the current theme
   const imageToShow = colorMode === 'dark' && fallbackImageDark 
@@ -54,9 +55,9 @@ export default function DocusaurusMermaidFileFallback({
         if (mermaidContainer) {
           const mermaidDiv = mermaidContainer.querySelector('.mermaid');
           
-          // Conditions to considérer le rendu comme échoué :
-          // 1. Pas de SVG (le diagramme n'a pas été rendu)
-          // 2. OU présence d'un message d'erreur de Mermaid (l'icône de bombe)
+          // Conditions for considering the render as failed:
+          // 1. No SVG (diagram wasn't rendered)
+          // 2. OR presence of a Mermaid error message (the bomb icon)
           if (
             !mermaidDiv.querySelector('svg') || 
             mermaidDiv.textContent.includes('Syntax error') ||
@@ -65,11 +66,43 @@ export default function DocusaurusMermaidFileFallback({
             setRenderFailed(true);
           }
         }
-      }, 1000);
+      }, 1000); // Check after 1 second
       
       return () => clearTimeout(timer);
     }
   }, [chartContent, isLoading, chartFile]);
+
+  // Initialize zoom on the fallback image
+  useEffect(() => {
+    // Only proceed if the image is rendered and the ref is set
+    if (renderFailed && imgRef.current) {
+      console.log('Setting up zoom on fallback image');
+      
+      // Dynamically import medium-zoom (which is likely used by the plugin)
+      import('medium-zoom').then((module) => {
+        const mediumZoom = module.default;
+        try {
+          // Apply zoom to our image
+          const zoom = mediumZoom(imgRef.current, {
+            margin: 24,
+            background: 'rgba(0, 0, 0, 0.7)',
+            scrollOffset: 0,
+          });
+          
+          console.log('Zoom successfully applied to image');
+          
+          // Return cleanup function
+          return () => {
+            zoom.detach();
+          };
+        } catch (error) {
+          console.error('Failed to apply zoom:', error);
+        }
+      }).catch(error => {
+        console.error('Failed to import medium-zoom:', error);
+      });
+    }
+  }, [renderFailed]);
   
   // Show loading state
   if (isLoading) {
@@ -87,9 +120,12 @@ export default function DocusaurusMermaidFileFallback({
     return (
       <div className={className || 'mermaid-fallback-container'}>
         <img 
+          ref={imgRef}
           src={imageToShow} 
           alt={alt || 'Diagram (fallback image)'} 
-          className="mermaid-fallback-image"
+          className="mermaid-fallback-image medium-zoom-image" 
+          data-zoomable="true"
+          style={{ cursor: 'zoom-in' }}
         />
         <div className="mermaid-fallback-notice">
           <em><small>Please note that the diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead.</small></em>
