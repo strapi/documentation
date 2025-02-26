@@ -33,6 +33,7 @@ import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
 import { ExternalLink } from '../components/ExternalLink';
 import BreakingChangeIdCard from '../components/BreakingChangeIdCard';
+import MermaidWithFallback from '../components/MermaidWithFallback';
 
 export default {
   // Re-use the default mapping
@@ -71,6 +72,7 @@ export default {
   InteractiveQueryBuilder,
   SubtleCallout,
   ThemedImage,
+  MermaidWithFallback,
   SideBySideColumn,
   SideBySideContainer,
   MultiLanguageSwitcher,
