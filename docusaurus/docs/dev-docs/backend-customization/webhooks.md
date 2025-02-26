@@ -507,12 +507,3 @@ The event is triggered when a [release](/user-docs/releases/introduction) is pub
 - Use secure, HTTPS endpoints for receiving webhooks.
 - Set up rate limiting to avoid being overwhelmed by multiple webhook requests.
 
-## Webhooks testing
-
-To test webhooks, you can use tools like:
-
-- **[Beeceptor](https://beeceptor.com/)** - A free online tool to inspect and debug webhook requests.
-- **[ngrok](https://ngrok.com/)** - Exposes your local development server to the internet, allowing you to test webhooks from external services.
-
-> **Note:** Use external tools with caution. Ensure they are from trusted sources and review their permissions before usage.
-
