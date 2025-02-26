@@ -25,17 +25,12 @@ Strapi includes 2 main components:
 
 From a bigger picture, this is how Strapi integrates in a typical, generic setup: Strapi includes 2 parts, a back-end server and an admin panel, and interact with a database (which stores data) and an external, front-end application that displays your data. Both parts of Strapi can be customized to some extent.
 
-```mermaid
-
-  flowchart LR
-    database[(Database)] --> backend[Back-end server]
-    subgraph Strapi
-        direction BT
-        backend --> frontend[Admin Panel]
-        frontend 
-    end
-    frontend --> external{{External, front-end applications}}
-```
+<MermaidWithFallback
+    chartFile="/diagrams/customization.mmd"
+    fallbackImage="/img/assets/diagrams/customization.png"
+    fallbackImageDark="/img/assets/diagrams/customization_DARK.png"
+    alt="Customization diagram"
+/>
 
 <br />
 

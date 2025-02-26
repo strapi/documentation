@@ -30,6 +30,13 @@ graph LR
     B --> A
 ```
 
+<MermaidWithFallback
+    chartFile="/diagrams/pass-data.mmd"
+    fallbackImage="/img/assets/diagrams/pass-data.png"
+    fallbackImageDark="/img/assets/diagrams/pass-data_DARK.png"
+    alt="Diagram to show how to pass data from server to admin"
+/>
+
 To pass data from the `/server` to `/admin` folder you would first [create a custom admin route](#create-a-custom-admin-route) and then [get the data returned in the admin panel](#get-the-data-in-the-admin-panel).
 
 ## Create a custom admin route
