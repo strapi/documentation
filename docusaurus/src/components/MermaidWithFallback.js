@@ -1,6 +1,7 @@
 // src/components/DocusaurusMermaidFileFallback.js
 import React, { useEffect, useState, useRef } from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
+import Icon from './Icon';
 
 export default function DocusaurusMermaidFileFallback({ 
   chartFile,
@@ -28,6 +29,7 @@ export default function DocusaurusMermaidFileFallback({
     return (
       <div className="mermaid-download-link">
         <small>
+          <Icon name="download" style={{marginRight: '.5rem'}}/>
           <a href={linkHref} download target="_blank">{linkText}</a>
         </small>
       </div>

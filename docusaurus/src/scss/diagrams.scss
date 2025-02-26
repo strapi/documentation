@@ -151,6 +151,13 @@ html[data-theme='dark'] .mermaid-loading {
   text-align: center;
   margin-top: 0.5rem;
   color: var(--ifm-color-secondary-darkest);
+
+  i {
+    margin-right: .3rem;
+    &::before {
+      color: var(--strapi-primary-600);
+    }
+  }
 }
 
 html[data-theme='dark'] .mermaid-download-link {
