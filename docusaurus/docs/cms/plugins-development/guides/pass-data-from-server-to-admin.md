@@ -24,12 +24,6 @@ When [developing a Strapi plugin](/cms/plugins-development/developing-plugins) y
 
 Passing data from the `/server` to the `/admin` folder can be done using the admin panel's Axios instance:
 
-```mermaid
-graph LR
-    A{Server} -->|Axios instance| B{Admin Panel}
-    B --> A
-```
-
 <MermaidWithFallback
     chartFile="/diagrams/pass-data.mmd"
     fallbackImage="/img/assets/diagrams/pass-data.png"
