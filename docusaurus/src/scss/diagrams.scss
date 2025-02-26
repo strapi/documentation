@@ -10,6 +10,14 @@ main:has(.docusaurus-mermaid-container):not(:has(.dont_hide_secondary_bar)) {
   }
 }
 
+@include dark {
+  .document-concept-page {
+    .nodeLabel {
+      color: white !important;
+    }
+  }
+}
+
 main:has(.docusaurus-mermaid-container) {
   .docusaurus-mermaid-container * {
     font-size: .85rem !important;
