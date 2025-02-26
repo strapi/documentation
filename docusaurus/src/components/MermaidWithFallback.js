@@ -20,6 +20,21 @@ export default function DocusaurusMermaidFileFallback({
     ? fallbackImageDark 
     : fallbackImage;
   
+  // Download links component - extracted for reuse
+  const DownloadLinks = () => (
+    <div className="mermaid-download-links">
+      <small>
+        Download diagram: {' '}
+        <a href={fallbackImage} download target="_blank">Light version</a> {' '}
+        {fallbackImageDark && (
+          <>
+            | <a href={fallbackImageDark} download target="_blank">Dark version</a>
+          </>
+        )}
+      </small>
+    </div>
+  );
+
   // Load chart content from file
   useEffect(() => {
     if (chartFile) {
@@ -128,8 +143,9 @@ export default function DocusaurusMermaidFileFallback({
           style={{ cursor: 'zoom-in' }}
         />
         <div className="mermaid-fallback-notice">
-          <small>Please note that the original, clickable diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead;  you can click on it to zoom in, and even right click and choose "Save as…" to download it and view it offline.</small>
+          <em><small>Please note that the diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead.</small></em>
         </div>
+        <DownloadLinks />
       </div>
     );
   }
@@ -141,6 +157,7 @@ export default function DocusaurusMermaidFileFallback({
       <div className="mermaid">
         {chartContent}
       </div>
+      <DownloadLinks />
     </div>
   );
 }
