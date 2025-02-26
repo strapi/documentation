@@ -128,7 +128,7 @@ export default function DocusaurusMermaidFileFallback({
           style={{ cursor: 'zoom-in' }}
         />
         <div className="mermaid-fallback-notice">
-          <em><small>Please note that the diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead.</small></em>
+          <small>Please note that the original, clickable diagram couldn't be rendered, probably due to a <a href="https://mermaid.js.org/">Mermaid.js</a> issue. A static image is displayed instead;  you can click on it to zoom in, and even right click and choose "Save as…" to download it and view it offline.</small>
         </div>
       </div>
     );
