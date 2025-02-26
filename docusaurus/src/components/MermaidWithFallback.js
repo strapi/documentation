@@ -1,56 +1,94 @@
-import React, { useEffect, useState, useRef } from 'react';
-import mermaid from 'mermaid';
+// src/components/DocusaurusMermaidFileFallback.js
+import React, { useEffect, useState } from 'react';
+import { useColorMode } from '@docusaurus/theme-common';
 
-export default function MermaidWithFallback({ chart, fallbackImage, alt, className }) {
+export default function DocusaurusMermaidFileFallback({ 
+  chartFile,
+  fallbackImage, 
+  fallbackImageDark, 
+  alt, 
+  className 
+}) {
+  const [chartContent, setChartContent] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const [renderFailed, setRenderFailed] = useState(false);
-  const mermaidRef = useRef(null);
+  const { colorMode } = useColorMode();
   
+  // Determine which image to display based on the current theme
+  const imageToShow = colorMode === 'dark' && fallbackImageDark 
+    ? fallbackImageDark 
+    : fallbackImage;
+  
+  // Load chart content from file
   useEffect(() => {
-    const renderMermaid = async () => {
-      if (mermaidRef.current) {
-        try {
-          // Check whether Mermaid is already initialized
-          if (!global.mermaidInitialized) {
-            mermaid.initialize({
-              startOnLoad: false,
-              theme: 'default',
-              securityLevel: 'loose',
-            });
-            global.mermaidInitialized = true;
+    if (chartFile) {
+      setIsLoading(true);
+      
+      fetch(chartFile)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Failed to load chart file: ${response.status} ${response.statusText}`);
           }
-          
-          // Delete previous content, if any
-          mermaidRef.current.innerHTML = chart;
-          
-          // Try and render diagram
-          await mermaid.run({
-            nodes: [mermaidRef.current],
-          });
-        } catch (error) {
-          console.error('Mermaid rendering failed:', error);
+          return response.text();
+        })
+        .then(content => {
+          console.log('Mermaid file loaded successfully:', chartFile);
+          setChartContent(content.trim());
+          setIsLoading(false);
+        })
+        .catch(error => {
+          console.error('Error loading Mermaid chart file:', error);
           setRenderFailed(true);
-        }
-      }
-    };
-    
-    renderMermaid();
-    
-    // Add a safety net - check after 3 seconds if rendering failed
-    const fallbackTimer = setTimeout(() => {
-      if (mermaidRef.current && !mermaidRef.current.querySelector('svg')) {
-        setRenderFailed(true);
-      }
-    }, 3000);
-    
-    return () => clearTimeout(fallbackTimer);
-  }, [chart]);
+          setIsLoading(false);
+        });
+    }
+  }, [chartFile]);
   
+  // Check if Mermaid rendering has succeeded
+  useEffect(() => {
+    if (!isLoading && chartContent) {
+      // Set a timer to check if Mermaid has rendered the diagram
+      const timer = setTimeout(() => {
+        // Look for the Mermaid container that we created
+        const mermaidContainer = document.querySelector(`.mermaid-container-${chartFile.replace(/[^a-zA-Z0-9]/g, '')}`);
+        if (mermaidContainer) {
+          const mermaidDiv = mermaidContainer.querySelector('.mermaid');
+          
+          // Conditions to considérer le rendu comme échoué :
+          // 1. Pas de SVG (le diagramme n'a pas été rendu)
+          // 2. OU présence d'un message d'erreur de Mermaid (l'icône de bombe)
+          if (
+            !mermaidDiv.querySelector('svg') || 
+            mermaidDiv.textContent.includes('Syntax error') ||
+            mermaidDiv.querySelector('.error-icon')
+          ) {
+            setRenderFailed(true);
+          }
+        }
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [chartContent, isLoading, chartFile]);
+  
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className={className || 'mermaid-loading-container'}>
+        <div className="mermaid-loading">
+          <em>Loading diagram...</em>
+        </div>
+      </div>
+    );
+  }
+  
+  // Show fallback image if rendering failed or file loading failed
   if (renderFailed) {
     return (
       <div className={className || 'mermaid-fallback-container'}>
         <img 
-          src={fallbackImage} 
-          alt={alt || 'Diagramme (fallback image)'} 
+          src={imageToShow} 
+          alt={alt || 'Diagram (fallback image)'} 
           className="mermaid-fallback-image"
         />
         <div className="mermaid-fallback-notice">
@@ -60,10 +98,12 @@ export default function MermaidWithFallback({ chart, fallbackImage, alt, classNa
     );
   }
   
+  // Use the mermaid class that Docusaurus expects to process
+  const uniqueClass = `mermaid-container-${chartFile.replace(/[^a-zA-Z0-9]/g, '')}`;
   return (
-    <div className={className || 'mermaid-container'}>
-      <div className="mermaid" ref={mermaidRef}>
-        {chart}
+    <div className={`${className || 'mermaid-container'} ${uniqueClass}`}>
+      <div className="mermaid">
+        {chartContent}
       </div>
     </div>
   );
