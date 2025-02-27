@@ -12,7 +12,7 @@
     },
     {
       "source": "/dev-docs/plugins/users-permissions",
-      "destination": "/cms/features/users-and-permissions",
+      "destination": "/cms/features/users-permissions",
       "permanent": true
     },
     {
