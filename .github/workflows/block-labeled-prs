@@ -1,0 +1,34 @@
+name: Block PRs with specific labels
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+
+jobs:
+  check-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for blocking labels
+        id: check_labels
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const blockingLabels = ["flag: don't merge"];
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            
+            const labelNames = labels.map(label => label.name);
+            const blockedLabels = labelNames.filter(label => 
+              blockingLabels.includes(label.toLowerCase())
+            );
+            
+            if (blockedLabels.length > 0) {
+              core.setFailed(`PR cannot be merged because it has the following blocking labels: ${blockedLabels.join(', ')}`);
+              return;
+            }
+            
+            console.log('No blocking labels found, PR can be merged');
