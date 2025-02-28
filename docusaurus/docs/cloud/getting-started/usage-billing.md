@@ -15,36 +15,25 @@ tags:
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
+Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage and Cloud specific features:
 
-| Feature | Free Trial | Developer | Pro | Team |
+| Feature | Free Trial | Essential | Pro | Scale |
 | --- | --- | --- | --- | --- |
-| **Seats** | 10  | 1 (up to 2 extra) | 5 (up to 15 extra) | 10 (up to 40 extra) |
-| **Database Entries**  | 1,000 | 1,000 | 100,000 | 1,000,000 |
-| **Assets Storage** | 5GB | 15GB | 150GB | 500GB |
-| **Assets Bandwidth** | 50GB | 50GB per month | 500GB per month | 1,000GB per month |
+| **Database Entries**  | 2,500 | Unlimited* | Unlimited* | Unlimited* |
+| **Assets Storage** | 25GB | 50GB | 250GB | 1000GB |
+| **Assets Bandwidth (per month)** | 25GB | 50GB | 500GB | 1,000GB |
 | **API Requests** | 10,000 | 100,000 | 1,000,000 | 10,000,000 |
-|  |  |  |  |  |
-| **Audit Logs** | 7 days retention | N/A | N/A | 7 days retention |
-| **Releases** | 3 pending releases | N/A | N/A | 3 pending releases |
-| **Review Workflows** | up to 2 | N/A | N/A | up to 2 |
-| **Content History** | 14 days retention | N/A | 14 days retention | 90 days retention |
 |  |  |  |  |  |
 | **Backups** | N/A | N/A | Weekly | Daily |
 | **Environments** | N/A | N/A | 0 included (up to 99 extra) | 1 included (up to 99 extra) |
+| **Emails (per month)** | 100 | Unlimited* | Unlimited* | Unlimited* |
 
 :::strapi Additional information on usage and features
 - General features & usage:
-  - Seats are the maximum number of users that can access the Strapi admin panel.
   - Database entries are the number of entries in your database.
   - Assets storage is the amount of storage used by your assets.
   - Assets bandwidth is the amount of bandwidth used by your assets.
   - API requests are the number of requests made to your APIs. This includes requests to the GraphQL and REST APIs, excluding requests for file and media assets counted towards CDN bandwidth and storage.
-- CMS features:
-  - Audit Logs refers to the maximum number of days for which the feature retains the activities that happened (see [Audit Logs in User Guide](/user-docs/settings/audit-logs) for more information).
-  - Releases refers to the maximum number of pending releases that can be created (see [Releases in User Guide](/user-docs/releases/introduction) for more information).
-  - Review Workflows refers to the maximum number of workflows that can be created and used (see [Review Workflows in User Guide](/user-docs/settings/review-workflows) for more information).
-  - Content History refers to the maximum numbers of days kept in history (see [Content History in User Guide](/user-docs/content-manager/working-with-content-history))
 - Cloud specific feature:
   - Backups refers to the automatic backups of Strapi Cloud projects (see [Backups documentation](/cloud/projects/settings#backups) for more information on the feature).
   - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments) documentation for more information on the feature).
@@ -52,26 +41,10 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 
 ## Environments management
 
-Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Team plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
+Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
 
 The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 150GB for assets storage, and overages will be charged the same way as for the production environment). Note however that the assets bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
 
-## Seats management
-
-Seats represent the maximum number of users that can access the Strapi admin panel. Each plan comes with a default number of seats. 
-
-You can add more seats either by upgrading to a higher plan, or manually adding individual seats as desired. Seats can be added from the <Icon name="credit-card" /> *Billing & Usage* tab of a project's settings (see [Managing project's number of seats](/cloud/projects/settings#managing-projects-number-of-seats)).
-
-There is however a maximum number of seats that can be added per plan:
-
-| Plan | Maximum Seats |
-| --- | --- |
-| **Free Trial** | 10 |
-| **Developer** | 3 |
-| **Pro** | 20 |
-| **Team** | 50 |
-
- 
 ## Billing
 
 Billing is based on the usage of your Strapi Cloud account and projects. You will be billed monthly for the usage of your account and applications. You can view your usage and billing information in the [Billing](https://cloud.strapi.io/profile/billing) section of your Strapi Cloud account.

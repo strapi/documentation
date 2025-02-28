@@ -206,7 +206,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
 | [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [review workflows](/user-docs/settings/review-workflows)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
-| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is available with the <GrowthBadge /> or the <EnterpriseBadge /> plan of Strapi and the <CloudTeamBadge /> plan for Strapi Cloud. |
+| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is available with the <GrowthBadge /> or the <EnterpriseBadge /> plan of Strapi. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
@@ -473,7 +473,7 @@ This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />Th
 ```
 
 ### `releases.publish`  {#releases-publish}
-<GrowthBadge /><EnterpriseBadge/><CloudTeamBadge/>
+<GrowthBadge /><EnterpriseBadge/>
 
 The event is triggered when a [release](/user-docs/releases/introduction) is published.
 

@@ -5,11 +5,10 @@ tags:
 - admin panel
 - review workflows
 - Enterprise feature
-- Strapi Cloud
 ---
 
 # Managing Review Workflows
-<EnterpriseBadge /> <CloudTeamBadge/>
+<EnterpriseBadge />
 
 The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
