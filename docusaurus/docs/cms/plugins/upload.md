@@ -326,8 +326,9 @@ export default ({ env }) => ({
 - The GraphQL API does not support uploading media files. To upload files, use the REST API or directly add files from the [Media Library](/cms/features/media-library) in the admin panel. Some GraphQL mutations to update or delete uploaded media files are still possible (see [GraphQL API documentation](/cms/api/graphql#mutations-on-media-files) for details).
 :::
 
-
 ## Examples
+
+<br/>
 
 ### Upload files
 
