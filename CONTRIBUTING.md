@@ -14,7 +14,6 @@ The Strapi Documentation team reviews pull requests and either merges, requests 
 Contributing to the Strapi documentation implies 2 steps:
 
 1. Learn how to use [Docusaurus](#-docusaurus), the tool used to write and generate Strapi's documentation.
-
 2. [Submit a pull request](#-pull-requests) for review.
 
 ## 🦖 Docusaurus
