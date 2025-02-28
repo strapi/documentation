@@ -359,7 +359,7 @@ export default {
 
 </Tabs>
 
-#### Creating a custom callback validator
+#### Creating a custom callback validator {#creating-a-custom-password-validation}
 
 By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
 

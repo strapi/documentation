@@ -1099,7 +1099,7 @@ mutation {
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Sandbox.
 
-#### Usage with API tokens
+#### Usage with API tokens {#api-tokens}
 
 To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 
