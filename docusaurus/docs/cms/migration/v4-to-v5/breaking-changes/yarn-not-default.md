@@ -48,6 +48,8 @@ Strapi detects what package manager you are using to run the CLI, and uses this 
 
 ## Migration
 
+<br/>
+
 ### Notes
 
 * Since Strapi detects the package manager used to run the command and uses it to install dependencies, this means the following example use cases will happen:

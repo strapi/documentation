@@ -125,6 +125,8 @@ const Panel: PanelComponent = ({
 
 ## Available APIs
 
+<br/>
+
 ### `addEditViewSidePanel`
 
 Use this to add new panels to the Edit view sidebar, just like in the following example where something is added to the Releases panel:
