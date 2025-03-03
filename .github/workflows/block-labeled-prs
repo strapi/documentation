@@ -3,6 +3,13 @@ name: Block PRs with specific labels
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize]
+    branches:
+      - main
+      - next
+  push:
+    branches:
+      - main
+      - next
 
 jobs:
   check-labels:
