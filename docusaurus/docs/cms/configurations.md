@@ -4,7 +4,7 @@ description: Learn how you can manage and customize the configuration of your St
 displayed_sidebar: cmsSidebar
 sidebar_label: Introduction
 pagination_prev: cms/installation
-pagination_next: cms/setup-deployment
+pagination_next: cms/configurations/admin-panel
 tags:
 - introduction
 - configuration
