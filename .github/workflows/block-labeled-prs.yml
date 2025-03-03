@@ -3,6 +3,13 @@ name: Block PRs with specific labels
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize]
+    branches:
+      - main
+      - next
+  push:
+    branches:
+      - main
+      - next
 
 jobs:
   check-labels:
@@ -14,7 +21,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const blockingLabels = ["flag: don't merge", "flag: merge pending release"];
+            const blockingLabels = ['do-not-merge', 'wip', 'work-in-progress'];
             const { data: labels } = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
