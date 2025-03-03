@@ -314,10 +314,6 @@ Once the side panel for the Preview is open, you can:
 - use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled
 - and click the link icon <Icon name="link" classes="ph-bold"/> in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
-:::info
-Please note that the side panel for Preview is currently in beta and only accessible if you installed strapi with the beta flag, with the following command: `npx create-strapi@beta`.
-:::
-
 :::caution
 When making updates to the content, first save them before clicking on Open Preview again, otherwise your latest updates will be lost. A pop up window will warn you about this behavior.
 :::
