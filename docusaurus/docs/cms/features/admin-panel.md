@@ -28,7 +28,7 @@ There are a few factors that you should keep in mind when using the admin panel,
 
 - **Development, Staging or Production Environment** <br/> Your content structure and application configuration change status: from development environment to production or staging environment once deployed. Some features are only available in development. Check the Identity Cards to know when features are usable.
 
-- **License and Pricing Plans** <br/> Some features's availability or limits depend on whether your application is using the free Community Edition, the [Growth plan](https://strapi.io/pricing-self-hosted), or the [Enterprise plan](https://strapi.io/pricing-self-hosted). Look for the <GrowthBadge /> and <EnterpriseBadge /> badges in the docs.
+- **License and Pricing Plans** <br/> Some features's availability or limits depend on whether your application is using the free Community Edition, the <ExternalLink to="https://strapi.io/pricing-self-hosted" text="Growth plan"/>, or the <ExternalLink to="https://strapi.io/pricing-self-hosted" text="Enterprise plan"/>. Look for the <GrowthBadge /> and <EnterpriseBadge /> badges in the docs.
 
 - **Roles and Permissions** <br/> Some features and the content itself are ruled by a system of permissions that can be defined at a detailed level. Depending on your role and permissions, you may not be able to access all the features and options. Read the [RBAC feature documentation](/cms/features/rbac) for more information.
 

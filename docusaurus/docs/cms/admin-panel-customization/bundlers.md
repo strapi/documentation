@@ -21,7 +21,7 @@ For simplification, the following documentation mentions the `strapi develop` co
 
 ## Vite
 
-In Strapi 5, [Vite](https://vitejs.dev/) is the default bundler that Strapi uses to build the admin panel. Vite will therefore be used by default when you run the `strapi develop` command.
+In Strapi 5, <ExternalLink to="https://vitejs.dev/" text="Vite"/> is the default bundler that Strapi uses to build the admin panel. Vite will therefore be used by default when you run the `strapi develop` command.
 
 To extend the usage of Vite, define a function that extends its configuration inside `/src/admin/vite.config.[js|ts]`:
 
@@ -67,7 +67,7 @@ export default (config) => {
 
 ## Webpack
 
-In Strapi 5, the default bundler is Vite. To use [webpack](https://webpack.js.org/) as a bundler you will need to pass it as an option to the `strapi develop` command:
+In Strapi 5, the default bundler is Vite. To use <ExternalLink to="https://webpack.js.org/" text="webpack"/> as a bundler you will need to pass it as an option to the `strapi develop` command:
 
 ```bash
 strapi develop --bundler=webpack

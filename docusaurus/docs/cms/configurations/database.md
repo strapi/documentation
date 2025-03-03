@@ -30,7 +30,7 @@ The CLI installation guide details [supported database and versions](/cms/instal
 
 The `/config/database.js|ts` file accepts 2 main configuration objects:
 
-- [`connection`](#connection-configuration-object) for database configuration options passed to [Knex.js](https://github.com/knex/knex)
+- [`connection`](#connection-configuration-object) for database configuration options passed to <ExternalLink to="https://github.com/knex/knex" text="Knex.js"/>
 - [`settings`](#settings-configuration-object) for Strapi-specific database settings
 
 ### `connection` configuration object
@@ -49,9 +49,9 @@ Strapi only supports the following client values, and will automatically rewrite
 
 | `client` value | Actual package used                                             |
 |----------------|-----------------------------------------------------------------|
-| sqlite         | [better-sqlite3](https://www.npmjs.com/package/better-sqlite3)  |
-| mysql          | [mysql2](https://www.npmjs.com/package/mysql2)                  |
-| postgres       | [pg](https://www.npmjs.com/package/pg)                          |
+| sqlite         | <ExternalLink to="https://www.npmjs.com/package/better-sqlite3" text="better-sqlite3"/>  |
+| mysql          | <ExternalLink to="https://www.npmjs.com/package/mysql2" text="mysql2"/>                  |
+| postgres       | <ExternalLink to="https://www.npmjs.com/package/pg" text="pg"/>                          |
 :::
 
 #### Connection parameters
@@ -66,20 +66,20 @@ The `connection.connection` object found in `./config/database.js` (or `./config
 | `database` | Database name.                                                                                                                | `String`              |
 | `user`     | Username used to establish the connection                                                                                     | `String`              |
 | `password` | Password used to establish the connection                                                                                     | `String`              |
-| `timezone` | Set the default behavior for local time. Default value: `utc` [Timezone options](https://www.php.net/manual/en/timezones.php) | `String`              |
+| `timezone` | Set the default behavior for local time. Default value: `utc` <ExternalLink to="https://www.php.net/manual/en/timezones.php" text="Timezone options"/> | `String`              |
 | `schema`   | Set the default database schema. **Used only for Postgres DB.**                                                               | `String`              |
 | `ssl`      | For SSL database connection.<br/> Use an object to pass certificate files as strings.                                         | `Boolean` or `Object` |
 
 :::note
-Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for [mysql](https://github.com/mysqljs/mysql#connection-options)). Check the database client documentation to know what parameters are available, for instance the [pg](https://node-postgres.com/apis/client#new-client), [mysql](https://github.com/mysqljs/mysql#connection-options), and [better-sqlite3](https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options) documentations.
+Depending on the database client used, more parameters can be set (e.g., `charset` and `collation` for <ExternalLink to="https://github.com/mysqljs/mysql#connection-options" text="mysql"/>). Check the database client documentation to know what parameters are available, for instance the <ExternalLink to="https://node-postgres.com/apis/client#new-client" text="pg"/>, <ExternalLink to="https://github.com/mysqljs/mysql#connection-options" text="mysql"/>, and <ExternalLink to="https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options" text="better-sqlite3"/> documentations.
 :::
 
 #### Database pooling options
 
-The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass [Tarn.js](https://github.com/vincit/tarn.js) database pooling options and accepts the following parameters:
+The `connection.pool` object optionally found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to pass <ExternalLink to="https://github.com/vincit/tarn.js" text="Tarn.js"/> database pooling options and accepts the following parameters:
 
 :::caution
-When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see the [Tarn.js pool](https://knexjs.org/guide/#pool) settings used by Knex.js for more information).
+When using Docker, change the pool `min` value to `0` as Docker will kill any idle connections, making it impossible to keep any open connections to the database (see the <ExternalLink to="https://knexjs.org/guide/#pool" text="Tarn.js pool"/> settings used by Knex.js for more information).
 :::
 
 | Parameter                   | Description                                                                                                                                                                                | Type       | Default |
@@ -92,7 +92,7 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 | `idleTimeoutMillis`         | Time in milliseconds before free database connections are destroyed                                                                                                                        | `Integer`  | `30000` |
 | `reapIntervalMillis`        | Time in milliseconds to check for idle database connections to destroy                                                                                                                     | `Integer`  | `1000`  |
 | `createRetryIntervalMillis` | Time in milliseconds to idle before retrying failed create actions                                                                                                                         | `Integer`  | `200`   |
-| `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the [Knex.js documentation](https://knexjs.org/#Installation-pooling) for more information | `Function` | -       |
+| `afterCreate`               | Callback function to execute custom logic when the pool acquires a new connection.<br/><br/>See the <ExternalLink to="https://knexjs.org/#Installation-pooling" text="Knex.js documentation"/> for more information | `Function` | -       |
 
 ### `settings` configuration object
 

@@ -175,7 +175,7 @@ Creating custom routers consists in creating a file that exports an array of obj
 
 <br/>
 
-Dynamic routes can be created using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the [PathToRegex](https://github.com/pillarjs/path-to-regexp) documentation.
+Dynamic routes can be created using parameters and regular expressions. These parameters will be exposed in the `ctx.params` object. For more details, please refer to the <ExternalLink to="https://github.com/pillarjs/path-to-regexp" text="PathToRegex"/> documentation.
 
 :::caution
 Routes files are loaded in alphabetical order. To load custom routes before core routes, make sure to name custom routes appropriately (e.g. `01-custom-routes.js` and `02-core-routes.js`).
@@ -245,7 +245,7 @@ Both [core routers](#configuring-core-routers) and [custom routers](#creating-cu
 [Policies](/cms/backend-customization/policies) can be added to a route configuration:
 
 - by pointing to a policy registered in `./src/policies`, with or without passing a custom configuration
-- or by declaring the policy implementation directly, as a function that takes `policyContext` to extend [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments (see [policies documentation](/cms/backend-customization/routes))
+- or by declaring the policy implementation directly, as a function that takes `policyContext` to extend <ExternalLink to="https://koajs.com/#context" text="Koa's context"/> (`ctx`) and the `strapi` instance as arguments (see [policies documentation](/cms/backend-customization/routes))
 
 <Tabs groupId="core-vs-custom-router">
 
@@ -386,7 +386,7 @@ export default {
 [Middlewares](/cms/backend-customization/middlewares) can be added to a route configuration:
 
 - by pointing to a middleware registered in `./src/middlewares`, with or without passing a custom configuration
-- or by declaring the middleware implementation directly, as a function that takes [Koa's context](https://koajs.com/#context) (`ctx`) and the `strapi` instance as arguments:
+- or by declaring the middleware implementation directly, as a function that takes <ExternalLink to="https://koajs.com/#context" text="Koa's context"/> (`ctx`) and the `strapi` instance as arguments:
 
 <Tabs groupId="core-vs-custom-router">
 

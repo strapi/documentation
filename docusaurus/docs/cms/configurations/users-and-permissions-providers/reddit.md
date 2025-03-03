@@ -26,7 +26,7 @@ Reddit accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the Reddit authorized applications preferences page at [https://www.reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
+1. Visit the Reddit authorized applications preferences page at <ExternalLink to="https://www.reddit.com/prefs/apps" text="https://www.reddit.com/prefs/apps"/>
 2. Click on the **create another app...** button near the bottom
 3. Select **web app** for the type
 4. Fill the **name** and **redirect uri** input in
@@ -35,7 +35,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Reddit** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`

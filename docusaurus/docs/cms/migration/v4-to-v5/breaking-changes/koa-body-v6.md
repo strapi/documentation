@@ -16,7 +16,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strapi 5 uses `koa-body` v6
 
-Strapi 5 uses [`koa-body`](https://github.com/koajs/koa-body) v6, which updates `formidable` to v2. This means uploaded files have new properties.
+Strapi 5 uses <ExternalLink to="https://github.com/koajs/koa-body" text="`koa-body`"/> v6, which updates `formidable` to v2. This means uploaded files have new properties.
 
  <Intro />
 
@@ -66,9 +66,9 @@ A user might still create custom endpoints and handle files with the `ctx` objec
 
 ### Notes
 
-- The official [`koa-body`](https://github.com/koajs/koa-body/blob/master/CHANGELOG.md) documentation lists the changes.
-- The official [`formidable`](https://github.com/node-formidable/formidable/blob/master/CHANGELOG.md#200) documentation lists the changes.
+- The official <ExternalLink to="https://github.com/koajs/koa-body/blob/master/CHANGELOG.md" text="`koa-body`"/> documentation lists the changes.
+- The official <ExternalLink to="https://github.com/node-formidable/formidable/blob/master/CHANGELOG.md#200" text="`formidable`"/> documentation lists the changes.
 
 ### Manual procedure
 
-Users need to manually update the properties used in their custom code, referring to the official [`koa-body`](https://github.com/koajs/koa-body) and [`formidable`](https://github.com/node-formidable/formidable) documentations.
+Users need to manually update the properties used in their custom code, referring to the official <ExternalLink to="https://github.com/koajs/koa-body" text="`koa-body`"/> and <ExternalLink to="https://github.com/node-formidable/formidable" text="`formidable`"/> documentations.

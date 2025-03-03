@@ -337,7 +337,7 @@ npm run strapi transfer -- --to http://localhost:1337/admin
 4. When the transfer is complete you can return to the second Strapi instance and see that the content is successfully transferred.
 
 :::tip
-In some cases you might receive a connection refused error targeting `localhost`. Try changing the address to [http://127.0.0.1:1337/admin](http://127.0.0.1:1337/admin).
+In some cases you might receive a connection refused error targeting `localhost`. Try changing the address to <ExternalLink to="http://127.0.0.1:1337/admin" text="http://127.0.0.1:1337/admin"/>.
 :::
 
 <FeedbackPlaceholder />

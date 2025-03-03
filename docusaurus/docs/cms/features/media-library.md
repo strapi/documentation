@@ -122,7 +122,7 @@ When using the default upload provider, the following specific configuration opt
 
 | Parameter                                   | Description                                                                                                         | Type    | Default |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------- | ------- |
-| `providerOptions.localServer`        | Options that will be passed to [koa-static](https://github.com/koajs/static) upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
+| `providerOptions.localServer`        | Options that will be passed to <ExternalLink to="https://github.com/koajs/static" text="koa-static"/> upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `209715200`<br/><br/>(200 MB in bytes, i.e., 200 x 1024 x 1024 bytes) |
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
 
@@ -192,7 +192,7 @@ export default () => ({
 
 #### Local server
 
-By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for [koa-static](https://github.com/koajs/static).
+By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for <ExternalLink to="https://github.com/koajs/static" text="koa-static"/>.
 
 You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following example sets the `max-age` header:
 
@@ -240,7 +240,7 @@ export default ({ env }) => ({
 The Strapi middleware in charge of parsing requests needs to be configured to support file sizes larger than the default of 200MB. This must be done in addition to provider options passed to the Upload package for `sizeLimit`.
 
 :::caution
-You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes. For instance, [Nginx](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) has a configuration setting called `client_max_body_size` that must be adjusted, since its default is only 1mb.
+You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes. For instance, <ExternalLink to="http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size" text="Nginx"/> has a configuration setting called `client_max_body_size` that must be adjusted, since its default is only 1mb.
 :::
 
 The middleware used by the Upload package is [the `body` middleware](/cms/configurations/middlewares#body). You can pass configuration to the middleware directly by setting it in the `/config/middlewares` file:

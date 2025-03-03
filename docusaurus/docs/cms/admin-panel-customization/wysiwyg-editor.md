@@ -13,7 +13,7 @@ tags:
 
 To change the default WYSIWYG editor provided with Strapi's admin panel, several options are at your disposal:
 
-- You can install a third-party plugin, such as one for CKEditor, by visiting [Strapi's Marketplace](https://market.strapi.io/).
+- You can install a third-party plugin, such as one for CKEditor, by visiting <ExternalLink to="https://market.strapi.io/" text="Strapi's Marketplace"/>.
 - You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/plugins-development/custom-fields)).
 - You can take advantage of Strapi's admin panel [extensions](/cms/admin-panel-customization/extension) system and leverage the [bootstrap lifecycle function](/cms/plugins-development/admin-panel-api#bootstrap) of the admin panel.
 

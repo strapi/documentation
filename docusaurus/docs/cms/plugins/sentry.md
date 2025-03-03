@@ -15,7 +15,7 @@ This plugin enables you to track errors in your Strapi application using Sentry.
 :::prerequisites Identity Card of the Plugin
 <Icon name="navigation-arrow"/> **Location:** Only usable and configurable via server code.<br/>
 <Icon name="package"/> **Package name:** `@strapi/plugin-sentry`  <br/>
-<Icon name="plus-square"/> **Additional resources:** [Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-sentry), [Sentry page](https://sentry.io/) <br/>
+<Icon name="plus-square"/> **Additional resources:** <ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-sentry" text="Strapi Marketplace page"/>, <ExternalLink to="https://sentry.io/" text="Sentry page"/> <br/>
 :::
 
 By using the Sentry plugin you can:
@@ -55,9 +55,9 @@ Create or edit your `/config/plugins` file to configure the Sentry plugin. The f
 
 | Property | Type | Default Value | Description |
 | -------- | ---- | ------------- |------------ |
-| `dsn` | string | `null` | Your Sentry [data source name](https://docs.sentry.io/product/sentry-basics/dsn-explainer/). |
+| `dsn` | string | `null` | Your Sentry <ExternalLink to="https://docs.sentry.io/product/sentry-basics/dsn-explainer/" text="data source name"/>. |
 | `sendMetadata` | boolean | `true` | Whether the plugin should attach additional information (e.g., OS, browser, etc.) to the events sent to Sentry. |
-| `init` | object | `{}` | A config object that is passed directly to Sentry during initialization (see official [Sentry documentation](https://docs.sentry.io/platforms/node/configuration/options/) for available options). |
+| `init` | object | `{}` | A config object that is passed directly to Sentry during initialization (see official <ExternalLink to="https://docs.sentry.io/platforms/node/configuration/options/" text="Sentry documentation"/> for available options). |
 
 The following is an example basic configuration:
 
@@ -198,7 +198,7 @@ This service exposes the following methods:
 
 | Method | Description | Parameters |
 | ------ | ----------- | ---------- |
-| `sendError()` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul> See the official [Sentry documentation](https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope) for more details. |
+| `sendError()` | Manually send errors to Sentry. | <ul><li><code>error</code>: The error to be sent.</li><li><code>configureScope</code>: Optional. Enables you to customize the error event.</li></ul> See the official <ExternalLink to="https://docs.sentry.io/platforms/node/enriching-events/scopes/#configuring-the-scope" text="Sentry documentation"/> for more details. |
 | `getInstance()` | Used for direct access to the Sentry instance. | - |
 
 The `sendError()` method can be used as follows:

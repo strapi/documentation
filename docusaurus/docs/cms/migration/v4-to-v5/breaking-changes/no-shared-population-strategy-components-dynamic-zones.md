@@ -29,7 +29,7 @@ In Strapi 5, components and dynamic zones should be populated using the detailed
 
 **In Strapi v4**
 
-You could use either [the shared or the detailed population strategy](https://docs-v4.strapi.io/cms/api/rest/guides/understanding-populate#populate-dynamic-zones) to populate components and dynamic zones in a REST API call.
+You could use either <ExternalLink to="https://docs-v4.strapi.io/cms/api/rest/guides/understanding-populate#populate-dynamic-zones" text="the shared or the detailed population strategy"/> to populate components and dynamic zones in a REST API call.
 
 </SideBySideColumn>
 

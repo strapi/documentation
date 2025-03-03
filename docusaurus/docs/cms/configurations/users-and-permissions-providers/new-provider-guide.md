@@ -51,7 +51,7 @@ module.exports = {
 };
 ```
 
-For additional information on parameters passed to `grantConfig`, please refer to the  [`grant` documentation](https://github.com/simov/grant). For additional information about `purest` please refer to [`purest` documentation](https://github.com/simov/purest).
+For additional information on parameters passed to `grantConfig`, please refer to the  <ExternalLink to="https://github.com/simov/grant" text="`grant` documentation"/>. For additional information about `purest` please refer to <ExternalLink to="https://github.com/simov/purest" text="`purest` documentation"/>.
 
 ### Frontend setup
 
@@ -207,10 +207,10 @@ axios
 ## Adding a new provider to your Strapi application
 
 :::info
-This documentation might not up-to-date with Strapi 5 and is a work in progress. In the meantime, [contributions](https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md) are most welcome.
+This documentation might not up-to-date with Strapi 5 and is a work in progress. In the meantime, <ExternalLink to="https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md" text="contributions"/> are most welcome.
 :::
 
-**[Grant](https://github.com/simov/grant) supplies configuration for a number of commonly used OAuth providers. [Custom](https://github.com/simov/grant#misc-custom-providers) providers are also supported**. <br/> You can view and try out the 200+ supported providers here: [OAuth Playground](https://grant.outofindex.com/).
+**<ExternalLink to="https://github.com/simov/grant" text="Grant"/> supplies configuration for a number of commonly used OAuth providers. <ExternalLink to="https://github.com/simov/grant#misc-custom-providers" text="Custom"/> providers are also supported**. <br/> You can view and try out the 200+ supported providers here: <ExternalLink to="https://grant.outofindex.com/" text="OAuth Playground"/>.
 
 ### Prepare your files
 
@@ -265,9 +265,9 @@ case 'discord': {
 
 This code creates a `Purest` object that gives us a generic way to interact with the provider's REST API.
 
-For more specs on using the `Purest` module, please refer to the [Official Purest Documentation](https://github.com/simov/purest)
+For more specs on using the `Purest` module, please refer to the <ExternalLink to="https://github.com/simov/purest" text="Official Purest Documentation"/>
 
-You may also want to take a look onto the numerous already made configurations [here](https://github.com/simov/purest-providers/blob/master/config/providers.json).
+You may also want to take a look onto the numerous already made configurations <ExternalLink to="https://github.com/simov/purest-providers/blob/master/config/providers.json" text="here"/>.
 
 ### Retrieve your user's information
 

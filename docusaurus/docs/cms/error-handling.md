@@ -77,7 +77,7 @@ Errors thrown by the GraphQL API are included in the response that has the follo
 
 The recommended way to throw errors when developing any custom logic with Strapi is to have the [controller](/cms/backend-customization/controllers) or [middleware](/cms/backend-customization/middlewares) respond with the correct status and body.
 
-This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the [http-errors documentation](https://github.com/jshttp/http-errors#list-of-all-constructors) but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
+This can be done by calling an error function on the context (i.e. `ctx`). Available error functions are listed in the <ExternalLink to="https://github.com/jshttp/http-errors#list-of-all-constructors" text="http-errors documentation"/> but their name should be lower camel-cased to be used by Strapi (e.g. `badRequest`).
 
 Error functions accept 2 parameters that correspond to the `error.message` and `error.details` attributes [received](#receiving-errors) by a developer querying the API:
 
@@ -146,7 +146,7 @@ export default async (ctx, next) => {
 
 ### Services and models lifecycles
 
-Once you are working at a deeper layer than the controllers or middlewares there are dedicated error classes that can be used to throw errors. These classes are extensions of [Node `Error` class](https://nodejs.org/api/errors.html#errors_class_error) and are specifically targeted for certain use-cases.
+Once you are working at a deeper layer than the controllers or middlewares there are dedicated error classes that can be used to throw errors. These classes are extensions of <ExternalLink to="https://nodejs.org/api/errors.html#errors_class_error" text="Node `Error` class"/> and are specifically targeted for certain use-cases.
 
 These error classes are imported through the `@strapi/utils` package and can be called from several different layers. The following examples use the service layer but error classes are not just limited to services and model lifecycles. When throwing errors in the model lifecycle layer, it's recommended to use the `ApplicationError` class so that proper error messages are shown in the admin panel.
 
@@ -269,7 +269,7 @@ export default {
 
 ### Policies
 
-[Policies](/cms/backend-customization/policies) are a special type of middleware that are executed before a controller. They are used to check if the user is allowed to perform the action or not. If the user is not allowed to perform the action and a `return false` is used then a generic error will be thrown. As an alternative, you can throw a custom error message using a nested class extensions from the Strapi `ForbiddenError` class, `ApplicationError` class (see [Default error classes](#default-error-classes) for both classes), and finally the [Node `Error` class](https://nodejs.org/api/errors.html#errors_class_error).
+[Policies](/cms/backend-customization/policies) are a special type of middleware that are executed before a controller. They are used to check if the user is allowed to perform the action or not. If the user is not allowed to perform the action and a `return false` is used then a generic error will be thrown. As an alternative, you can throw a custom error message using a nested class extensions from the Strapi `ForbiddenError` class, `ApplicationError` class (see [Default error classes](#default-error-classes) for both classes), and finally the <ExternalLink to="https://nodejs.org/api/errors.html#errors_class_error" text="Node `Error` class"/>.
 
 The `PolicyError` class is available from `@strapi/utils` package and accepts 2 parameters:
 
@@ -355,7 +355,7 @@ throw new errors.ApplicationError('Something went wrong', { foo: 'bar' });
 <!-- Not sure if it's worth keeping this tab or not as it's very specific to Strapi internal use-cases -->
 <!-- ::: tab Validation
 
-The `ValidationError` and `YupValidationError` classes are specific error classes designed to be used with the built in validations system and specifically format the errors coming from [Yup](https://www.npmjs.com/package/yup). The `ValidationError` does not accept any parameters but the `YupValidationError` accepts the following parameters:
+The `ValidationError` and `YupValidationError` classes are specific error classes designed to be used with the built in validations system and specifically format the errors coming from <ExternalLink to="https://www.npmjs.com/package/yup" text="Yup"/>. The `ValidationError` does not accept any parameters but the `YupValidationError` accepts the following parameters:
 
 | Parameter | Type | Description | Default |
 | --- | --- | --- | --- |

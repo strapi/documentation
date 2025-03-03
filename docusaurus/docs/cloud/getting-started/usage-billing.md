@@ -15,7 +15,7 @@ tags:
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
+Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Developer, Pro and Team (see <ExternalLink to="https://strapi.io/pricing-cloud" text="Pricing page"/>). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
 
 | Feature | Free Trial | Developer | Pro | Team |
 | --- | --- | --- | --- | --- |
@@ -74,7 +74,7 @@ There is however a maximum number of seats that can be added per plan:
  
 ## Billing
 
-Billing is based on the usage of your Strapi Cloud account and projects. You will be billed monthly for the usage of your account and applications. You can view your usage and billing information in the [Billing](https://cloud.strapi.io/profile/billing) section of your Strapi Cloud account.
+Billing is based on the usage of your Strapi Cloud account and projects. You will be billed monthly for the usage of your account and applications. You can view your usage and billing information in the <ExternalLink to="https://cloud.strapi.io/profile/billing" text="Billing"/> section of your Strapi Cloud account.
 
 ### Overages
 
@@ -92,11 +92,11 @@ Overages are charged according to the following rates:
 
 ### Project suspension
 
-Projects may end up in a **Suspended** state for various reasons, including: not paying the invoice, exceeding the limits of your free trial plan, or violating the [terms of service](https://strapi.io/cloud-legal). 
+Projects may end up in a **Suspended** state for various reasons, including: not paying the invoice, exceeding the limits of your free trial plan, or violating the <ExternalLink to="https://strapi.io/cloud-legal" text="terms of service"/>. 
 
 If your project is suspended, you will no longer be able to access the application or trigger new deployments. You will also be unable to access the Strapi admin panel.
 
-You can view the status of your project in the [Projects](https://cloud.strapi.io/projects) section of your Strapi Cloud account and you will be notified by email.
+You can view the status of your project in the <ExternalLink to="https://cloud.strapi.io/projects" text="Projects"/> section of your Strapi Cloud account and you will be notified by email.
 
 :::warning
 If you do not resolve the issue within 30 days, your suspended project will be deleted and all data will be permanently lost. To avoid this situation, you will be sent a first email when your project becomes suspended, then another email every 5 days until one week left, to remind you to solve the issue. The last week before the deletion of the project, you will be sent 3 more emails: 6 days, 3 days and 1 day before your project is finally deleted.

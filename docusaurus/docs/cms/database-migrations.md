@@ -8,7 +8,7 @@ description: Strapi database migrations are ways to modify the database
 Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature
-Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the [forum](https://forum.strapi.io/) or on the community [Discord](https://discord.strapi.io).
+Database migrations are experimental. This feature is still a work in progress and will continue to be updated and improved. In the meantime, feel free to ask for help on the <ExternalLink to="https://forum.strapi.io/" text="forum"/> or on the community <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
 :::
 
 ## Understanding database migration files
@@ -48,7 +48,7 @@ module.exports = { up };
 ```
 
 3. Fill in the template by adding actual migration code inside the `up()` function.
-`up()` receives a [Knex instance](https://knexjs.org/), already in a transaction state, that can be used to run the database queries.
+`up()` receives a <ExternalLink to="https://knexjs.org/" text="Knex instance"/>, already in a transaction state, that can be used to run the database queries.
 
 <details>
 <summary>Example of migration file</summary>

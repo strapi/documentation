@@ -24,7 +24,7 @@ This guide assumes you want to develop a plugin external to your Strapi project.
 :::
 
 :::prerequisites
-[yalc](https://www.npmjs.com/package/yalc) must be installed globally (with `npm install -g yalc` or `yarn global add yalc`).
+<ExternalLink to="https://www.npmjs.com/package/yalc" text="yalc"/> must be installed globally (with `npm install -g yalc` or `yarn global add yalc`).
 :::
 
 ## Getting started with the Plugin SDK

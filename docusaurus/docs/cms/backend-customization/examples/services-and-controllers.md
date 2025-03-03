@@ -25,7 +25,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
 :::
 
-From the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor), you can browse a list of restaurants accessible at [`localhost:3000/restaurants`](http://localhost:3000/restaurants). Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
+From the front-end website of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/>, you can browse a list of restaurants accessible at <ExternalLink to="http://localhost:3000/restaurants" text="`localhost:3000/restaurants`"/>. Clicking on any restaurant from the list will use the code included in the `/client` folder to display additional information about this restaurant. The content displayed on a restaurant page was created within Strapi's Content Manager and is retrieved by querying Strapi's REST API which uses code included in the `/api` folder.
 
 This page will teach about the following advanced topics:
 
@@ -45,7 +45,7 @@ This page will teach about the following advanced topics:
 
 **💭 Context:**
 
-Restaurant pages on the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding content to the "Reviews" collection type through the [Content Manager](/cms/features/content-manager).
+Restaurant pages on the front-end website of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> include a Reviews section that is read-only. Adding reviews requires logging in to Strapi's admin panel and adding content to the "Reviews" collection type through the [Content Manager](/cms/features/content-manager).
 
 Let's add a small front-end component to restaurant pages. This component will allow a user to write a review directly from the front-end website.
 
@@ -88,7 +88,7 @@ Additional information on endpoints for content types can be found in the [REST 
 
 **🧑‍💻 Code example:**
 
-In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could use the following code examples to:
+In the `/client` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, you could use the following code examples to:
 - create a new `pages/restaurant/RestaurantContent/Reviews/new-review.js` file,
 - and update the existing `components/pages/restaurant/RestaurantContent/Reviews/reviews.js`.
 
@@ -199,7 +199,7 @@ Controllers could contain any business logic to be executed when the client requ
 
 To illustrate the use of services, in this documentation the custom controller does not handle any responsibilities and delegates all the business logic to services.
 
-Let's say we would like to customize the back end of [FoodAdvisor](https://github.com/strapi/foodadvisor) to achieve the following scenario: when submitting the [previously added review form](#rest-api-queries-from-the-front-end) on the front-end website, Strapi will create a review in the back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
+Let's say we would like to customize the back end of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> to achieve the following scenario: when submitting the [previously added review form](#rest-api-queries-from-the-front-end) on the front-end website, Strapi will create a review in the back end and notify the restaurant owner by email. Translating this to Strapi back end customization means performing 3 actions:
 
 1. Creating a custom service to [create the review](#custom-service-creating-a-review).
 2. Creating a custom service to [send an email](#custom-service-sending-an-email-to-the-restaurant-owner).
@@ -213,7 +213,7 @@ Let's say we would like to customize the back end of [FoodAdvisor](https://githu
 
 By default, service files in Strapi includes basic boilerplate code that use the `createCoreService` factory function.
 
-Let's update the existing `review.js` service file for the "Reviews" collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) by replacing its code to create a review.
+Let's update the existing `review.js` service file for the "Reviews" collection type of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> by replacing its code to create a review.
 
 <SideBySideContainer>
 
@@ -243,7 +243,7 @@ Additional information can be found in the [request context](/cms/backend-custom
 
 **🧑‍💻 Code example:**
 
-To create such a service, in the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, replace the content of the `src/api/review/services/review.js` file with the following code:
+To create such a service, in the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, replace the content of the `src/api/review/services/review.js` file with the following code:
 
 ```jsx title="src/api/review/services/review.js"
 const { createCoreService } = require('@strapi/strapi').factories;
@@ -298,7 +298,7 @@ module.exports = createCoreService('api::review.review', ({ strapi }) => ({
 
 **💭 Context:**
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any automated email service feature.
+Out of the box, <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> does not provide any automated email service feature.
 
 Let's create an `email.js` service file to send an email. We could use it in a [custom controller](#custom-controller) to notify the restaurant owner whenever a new review is created on the front-end website.
 
@@ -310,7 +310,7 @@ This service is an advanced code example using the [Email](/cms/features/email) 
 <SideBySideColumn>
 
 :::prerequisites
-- You have setup a [provider for the Email plugin](/cms/features/email), for instance the [Sendmail](https://www.npmjs.com/package/@strapi/provider-email-sendmail) provider.
+- You have setup a [provider for the Email plugin](/cms/features/email), for instance the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-email-sendmail" text="Sendmail"/> provider.
 - In Strapi's admin panel, you have [created an `Email` single type](/cms/features/content-type-builder#creating-content-types) that contains a `from` Text field to define the sender email address.
 :::
 
@@ -353,7 +353,7 @@ Additional information can be found in the [Services](/cms/backend-customization
 
 **🧑‍💻 Code example:**
 
-To create such a service, in the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, create a new `src/api/email/services/email.js` file with the following code:
+To create such a service, in the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, create a new `src/api/email/services/email.js` file with the following code:
     
 ```jsx title="src/api/email/services/email.js"
 
@@ -398,7 +398,7 @@ In a controller's code, the `send` method from this email service can be called 
 
 By default, controllers files in Strapi includes basic boilerplate code that use the `createCoreController` factory function. This exposes basic methods to create, retrieve, update, and delete content when reaching the requested endpoint. The default code for the controllers can be customized to perform any business logic.
 
-Let's customize the default controller for the "Reviews" collection type of [FoodAdvisor](https://github.com/strapi/foodadvisor) with the following scenario: upon a `POST` request to the `/reviews` endpoint, the controller calls previously created services to both [create a review](#custom-service-creating-a-review) and [send an email](#custom-service-sending-an-email-to-the-restaurant-owner) to the restaurant's owner.
+Let's customize the default controller for the "Reviews" collection type of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> with the following scenario: upon a `POST` request to the `/reviews` endpoint, the controller calls previously created services to both [create a review](#custom-service-creating-a-review) and [send an email](#custom-service-sending-an-email-to-the-restaurant-owner) to the restaurant's owner.
 
 <SideBySideContainer>
 <SideBySideColumn>
@@ -426,7 +426,7 @@ Additional information can be found in the [controllers](/cms/backend-customizat
 
 **🧑‍💻 Code example:**
 
-In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, replace the content of the `src/api/review/controllers/review.js` file with one of the following code examples, depending on whether you previously created just [one custom service](#custom-service-creating-a-review) or both custom services for the review creation and the [email notification](#custom-service-sending-an-email-to-the-restaurant-owner):
+In the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, replace the content of the `src/api/review/controllers/review.js` file with one of the following code examples, depending on whether you previously created just [one custom service](#custom-service-creating-a-review) or both custom services for the review creation and the [email notification](#custom-service-sending-an-email-to-the-restaurant-owner):
 
 <Tabs>
 <TabItem value="create-only" label="Custom controller without email service">

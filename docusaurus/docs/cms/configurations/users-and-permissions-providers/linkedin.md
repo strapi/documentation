@@ -26,7 +26,7 @@ LinkedIn accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the Apps list page at [https://www.linkedin.com/developers/apps](https://www.linkedin.com/developers/apps)
+1. Visit the Apps list page at <ExternalLink to="https://www.linkedin.com/developers/apps" text="https://www.linkedin.com/developers/apps"/>
 2. Click on **Create app** button
 3. Fill the information:
    - **App name**: Strapi auth
@@ -41,7 +41,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **LinkedIn** provider
 3. Fill the information:
    - **Enable**: `ON`

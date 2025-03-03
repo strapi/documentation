@@ -88,7 +88,7 @@ sources={{
 
 <summary>Real-world examples of endpoints:</summary>
 
-The following endpoint examples are taken from the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
+The following endpoint examples are taken from the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application.
 
 <Tabs groupId="collection-single">
 

@@ -19,9 +19,9 @@ By default Strapi provides a [provider](/cms/providers) that uploads files to a 
 
 The providers maintained by Strapi include:
 
-- [Amazon S3](https://market.strapi.io/providers/@strapi-provider-upload-aws-s3)
-- [Cloudinary](https://market.strapi.io/providers/@strapi-provider-upload-cloudinary)
-- [Local](https://www.npmjs.com/package/@strapi/provider-upload-local)
+- <ExternalLink to="https://market.strapi.io/providers/@strapi-provider-upload-aws-s3" text="Amazon S3"/>
+- <ExternalLink to="https://market.strapi.io/providers/@strapi-provider-upload-cloudinary" text="Cloudinary"/>
+- <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-upload-local" text="Local"/>
 
 ## Configuration
 
@@ -29,7 +29,7 @@ This section details configuration options for the default upload provider. If u
 
 ### Local server
 
-By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for [koa-static](https://github.com/koajs/static).
+By default Strapi accepts `localServer` configurations for locally uploaded files. These will be passed as the options for <ExternalLink to="https://github.com/koajs/static" text="koa-static"/>.
 
 You can provide them by creating or editing the `./config/plugins.js` file. The following example sets the `max-age` header.
 
@@ -82,10 +82,10 @@ Currently the Strapi middleware in charge of parsing requests needs to be config
 
 :::caution
 You may also need to adjust any upstream proxies, load balancers, or firewalls to allow for larger file sizes.<br/>
-(e.g. [Nginx](http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size) has a config setting called `client_max_body_size` that will need to be adjusted since it's default is only 1mb.)
+(e.g. <ExternalLink to="http://nginx.org/en/docs/http/ngx_http_core_module.html#client_max_body_size" text="Nginx"/> has a config setting called `client_max_body_size` that will need to be adjusted since it's default is only 1mb.)
 :::
 
-The library we use is [`koa-body`](https://github.com/dlau/koa-body), and it uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files.
+The library we use is <ExternalLink to="https://github.com/dlau/koa-body" text="`koa-body`"/>, and it uses the <ExternalLink to="https://github.com/felixge/node-formidable" text="`node-formidable`"/> library to process files.
 
 You can pass configuration to the middleware directly by setting it in the [`body` middleware](/cms/configurations/middlewares#body) configuration in `./config/middlewares.js`:
 

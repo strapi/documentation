@@ -31,7 +31,7 @@ Throughout this developer documentation, 'back end' refers _exclusively_ to the 
 The [User Guide](/cms/intro) explains how to use the admin panel and the [admin panel customization section](/cms/admin-panel-customization) details the various customization options available for the admin panel.
 :::
 
-The Strapi back end runs an HTTP server based on [Koa](https://koajs.com/), a back-end JavaScript framework.
+The Strapi back end runs an HTTP server based on <ExternalLink to="https://koajs.com/" text="Koa"/>, a back-end JavaScript framework.
 
 Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
 

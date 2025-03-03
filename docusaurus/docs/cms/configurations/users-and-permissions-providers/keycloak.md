@@ -38,7 +38,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Keycloak** provider
 3. Fill the information:
    - Enable: `ON`

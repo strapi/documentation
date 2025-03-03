@@ -15,30 +15,30 @@ import DockerEnvTable from '/docs/snippets/docker-env-table.md'
 # Running Strapi in a Docker container
 
 :::caution
-Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on [Discord](https://discord.strapi.io).
+Strapi does not build any official container images. The following instructions are provided as a courtesy to the community. If you have any questions please reach out on <ExternalLink to="https://discord.strapi.io" text="Discord"/>.
 :::
 
 :::danger
  Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data such as dropped tables.
 :::
 
-The following documentation will guide you through building a custom [Docker](https://www.docker.com/) container with an existing Strapi project.
+The following documentation will guide you through building a custom <ExternalLink to="https://www.docker.com/" text="Docker"/> container with an existing Strapi project.
 
 Docker is an open platform that allows developing, shipping, and running applications by using containers (i.e. packages containing all the parts an application needs to function, such as libraries and dependencies). Containers are isolated from each other and bundle their own software, libraries, and configuration files; they can communicate with each other through well-defined channels.
 
 :::prerequisites
 
-- [Docker](https://www.docker.com/) installed on your machine
+- <ExternalLink to="https://www.docker.com/" text="Docker"/> installed on your machine
 - A [supported version of Node.js](/cms/installation/cli#preparing-the-installation)
 - An **existing Strapi 5 project**, or a new one created with the [Quick Start guide](/cms/quick-start.md)
-- (_optional_) [Yarn](https://yarnpkg.com/) installed on your machine
-- (_optional_) [Docker Compose](https://docs.docker.com/compose/) installed on your machine
+- (_optional_) <ExternalLink to="https://yarnpkg.com/" text="Yarn"/> installed on your machine
+- (_optional_) <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose"/> installed on your machine
 
 :::
 
 ## Development and/or Staging environments
 
-For working with Strapi locally on your host machine you can use the [Dockerfile](https://docs.docker.com/engine/reference/builder/), and if needed the [docker-compose.yml](https://docs.docker.com/compose/compose-file/) can also be used to start up a database container.
+For working with Strapi locally on your host machine you can use the <ExternalLink to="https://docs.docker.com/engine/reference/builder/" text="Dockerfile"/>, and if needed the <ExternalLink to="https://docs.docker.com/compose/compose-file/" text="docker-compose.yml"/> can also be used to start up a database container.
 
 Both methods require an existing Strapi project or a new one created (see [Quick Start guide](/cms/quick-start.md)).
 
@@ -54,7 +54,7 @@ If you are using `docker-compose`, you can skip setting the environment variable
 
 <DockerEnvTable components={props.components} />
 
-For more information on the `Dockerfile` and its commands, please refer to the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/cli/).
+For more information on the `Dockerfile` and its commands, please refer to the <ExternalLink to="https://docs.docker.com/engine/reference/commandline/cli/" text="official Docker documentation"/>.
 
 Sample `Dockerfile`:
 
@@ -120,7 +120,7 @@ CMD ["npm", "run", "develop"]
 The following `docker-compose.yml` can be used to start up a database container and a Strapi container along with a shared network for communication between the two.
 
 :::note
-For more information about running Docker compose and its commands, please refer to the [Docker Compose documentation](https://docs.docker.com/compose/).
+For more information about running Docker compose and its commands, please refer to the <ExternalLink to="https://docs.docker.com/compose/" text="Docker Compose documentation"/>.
 :::
 
 Sample `docker-compose.yml`:
@@ -420,7 +420,7 @@ CMD ["npm", "run", "start"]
 
 ### Building the production container
 
-Building production Docker images can have several options. The following example uses the `docker build` command to build a production Docker image for a Strapi project. However, it is recommended you review the [Docker documentation](https://docs.docker.com/engine/reference/commandline/build/) for more information on building Docker images with more advanced options.
+Building production Docker images can have several options. The following example uses the `docker build` command to build a production Docker image for a Strapi project. However, it is recommended you review the <ExternalLink to="https://docs.docker.com/engine/reference/commandline/build/" text="Docker documentation"/> for more information on building Docker images with more advanced options.
 
 To build a production Docker image for a Strapi project, run the following command:
 
@@ -436,17 +436,17 @@ docker build \
 
 After you have built a production Docker image for a Strapi project, you can publish the image to a Docker registry. Ideally for production usage this should be a private registry as your Docker image will contain sensitive information.
 
-Depending on your hosting provider you may need to use a different command to publish your image. It is recommended you review the [Docker documentation](https://docs.docker.com/engine/reference/commandline/push/) for more information on publishing Docker images with more advanced options.
+Depending on your hosting provider you may need to use a different command to publish your image. It is recommended you review the <ExternalLink to="https://docs.docker.com/engine/reference/commandline/push/" text="Docker documentation"/> for more information on publishing Docker images with more advanced options.
 
 Some popular hosting providers are:
 
-- [AWS ECR](https://aws.amazon.com/ecr/)
-- [Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/)
-- [GCP Container Registry](https://cloud.google.com/container-registry)
-- [Digital Ocean Container Registry](https://www.digitalocean.com/products/container-registry/)
-- [IBM Cloud Container Registry](https://www.ibm.com/cloud/container-registry)
-- [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
-- [Gitlab Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/)
+- <ExternalLink to="https://aws.amazon.com/ecr/" text="AWS ECR"/>
+- <ExternalLink to="https://azure.microsoft.com/en-us/services/container-registry/" text="Azure Container Registry"/>
+- <ExternalLink to="https://cloud.google.com/container-registry" text="GCP Container Registry"/>
+- <ExternalLink to="https://www.digitalocean.com/products/container-registry/" text="Digital Ocean Container Registry"/>
+- <ExternalLink to="https://www.ibm.com/cloud/container-registry" text="IBM Cloud Container Registry"/>
+- <ExternalLink to="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry" text="GitHub Container Registry"/>
+- <ExternalLink to="https://docs.gitlab.com/ee/user/packages/container_registry/" text="Gitlab Container Registry"/>
 
 ## Community tools
 
@@ -454,7 +454,7 @@ Several community tools are available to assist you in deploying Strapi to vario
 
 We strongly support our community efforts and encourage you to check out the following tools, please help support them by contributing to their development.
 
-If you would like to add your tool to this list, please open a pull request on the [Strapi documentation repository](https://github.com/strapi/documentation).
+If you would like to add your tool to this list, please open a pull request on the <ExternalLink to="https://github.com/strapi/documentation" text="Strapi documentation repository"/>.
 
 ### @strapi-community/dockerize
 
@@ -462,7 +462,7 @@ The `@strapi-community/dockerize` package is a CLI tool that can be used to gene
 
 To get started run `npx @strapi-community/dockerize@latest` within an existing Strapi project folder and follow the CLI prompts.
 
-For more information please see the official [GitHub repository](https://github.com/strapi-community/strapi-tool-dockerize) or the [npm package](https://www.npmjs.com/package/@strapi-community/dockerize).
+For more information please see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-dockerize" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/dockerize" text="npm package"/>.
 
 ### @strapi-community/deployify
 
@@ -470,7 +470,7 @@ The `@strapi-community/deployify` package is a CLI tool that can be used to depl
 
 To get started run `npx @strapi-community/deployify@latest` within an existing Strapi project folder and follow the CLI prompts.
 
-For more information please see the official [GitHub repository](https://github.com/strapi-community/strapi-tool-deployify) or the [npm package](https://www.npmjs.com/package/@strapi-community/deployify).
+For more information please see the official <ExternalLink to="https://github.com/strapi-community/strapi-tool-deployify" text="GitHub repository"/> or the <ExternalLink to="https://www.npmjs.com/package/@strapi-community/deployify" text="npm package"/>.
 
 ## Docker FAQ
 

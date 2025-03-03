@@ -190,7 +190,7 @@ While most of the Users & Permissions settings are handled via the admin panel, 
 
 You can configure the JWT generation by using the [plugins configuration file](/cms/configurations/plugins).
 
-Strapi uses [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) to generate the JWT.
+Strapi uses <ExternalLink to="https://www.npmjs.com/package/jsonwebtoken" text="jsonwebtoken"/> to generate the JWT.
 
 Available options:
 
@@ -292,7 +292,7 @@ export default ({ env }) => ({
 
 ### Templating emails
 
-By default this plugin comes with two templates: reset password and email address confirmation. The templates use [Lodash's `template()` method](https://lodash.com/docs/4.17.15#template) to populate the variables.
+By default this plugin comes with two templates: reset password and email address confirmation. The templates use <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash's `template()` method"/> to populate the variables.
 
 You can update these templates under **Plugins** > **Roles & Permissions** > **Email Templates** tab in the admin panel (see [configuring email templates](#email-templates)).
 
