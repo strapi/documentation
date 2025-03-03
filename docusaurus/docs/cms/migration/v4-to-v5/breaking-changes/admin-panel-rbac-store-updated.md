@@ -57,8 +57,8 @@ const canMain = allowedActions.canMain
 ### Notes
 
 <!-- TODO v5: update links when v5.contributor.strapi.io is hosted at contributor.strapi.io -->
-* A new RBAC API is available and users can utilise a middleware system to interact with calls (see [contributors documentation](https://contributor.strapi.io/exports/classes/StrapiApp#addrbacmiddleware)).
-* Additional information can be found in the Contributors Documentation, in the [Fetching permissions](https://contributor.strapi.io/docs/core/admin/permissions/frontend/fetching-permissions) and [Authentication](https://contributor.strapi.io/docs/core/admin/features/authentication) sections.
+* A new RBAC API is available and users can utilise a middleware system to interact with calls (see <ExternalLink to="https://contributor.strapi.io/exports/classes/StrapiApp#addrbacmiddleware" text="contributors documentation"/>).
+* Additional information can be found in the Contributors Documentation, in the <ExternalLink to="https://contributor.strapi.io/docs/core/admin/permissions/frontend/fetching-permissions" text="Fetching permissions"/> and <ExternalLink to="https://contributor.strapi.io/docs/core/admin/features/authentication" text="Authentication"/> sections.
 
 ### Manual migration
 

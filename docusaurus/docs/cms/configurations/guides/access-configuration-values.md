@@ -43,7 +43,7 @@ then the `server.host` key can be accessed as:
   strapi.config.get('server.host', 'defaultValueIfUndefined');
   ```
 
-Nested keys are accessible with the [dot notation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors#dot_notation).
+Nested keys are accessible with the <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors#dot_notation" text="dot notation"/>.
 
 :::note
 The filename is used as a prefix to access the configurations.

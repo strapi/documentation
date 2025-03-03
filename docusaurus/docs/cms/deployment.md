@@ -168,7 +168,7 @@ npm run start:win
 </Tabs>
 
 :::caution
-We highly recommend using [pm2](https://github.com/Unitech/pm2/) to manage your process.
+We highly recommend using <ExternalLink to="https://github.com/Unitech/pm2/" text="pm2"/> to manage your process.
 :::
 
 If you need a server.js file to be able to run `node server.js` instead of `npm run start` then create a `./server.js` file as follows:
@@ -196,7 +196,7 @@ If you want to host the administration on another server than the API, [please t
 * You have read the [general deployment guidelines](/cms/deployment#general-guidelines).
 :::
 
-The [integrations page](https://strapi.io/integrations) of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms:
+The <ExternalLink to="https://strapi.io/integrations" text="integrations page"/> of the Strapi website include information on how to integrate Strapi with many resources, including how to deploy Strapi on the following 3rd-party platforms:
 
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on AWS"  link="https://strapi.io/integrations/aws" />
 
@@ -208,7 +208,7 @@ The [integrations page](https://strapi.io/integrations) of the Strapi website in
 
 <br/>
 
-In addition, community-maintained guides for additional providers are available in the [Strapi Forum](https://forum.strapi.io/c/community-guides/28). This includes the following guides:
+In addition, community-maintained guides for additional providers are available in the <ExternalLink to="https://forum.strapi.io/c/community-guides/28" text="Strapi Forum"/>. This includes the following guides:
 
 <CustomDocCard emoji="🔗" small title="Proxying with Caddy" link="https://forum.strapi.io/t/caddy-proxying-with-strapi/" />
 <CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />

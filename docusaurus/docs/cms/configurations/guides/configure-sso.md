@@ -27,7 +27,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 :::
 
 :::caution
-- It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, [please refer to the dedicated GitHub issue](https://github.com/strapi/strapi/issues/9466#issuecomment-783587648).
+- It is currently not possible to associate a unique SSO provider to an email address used for a Strapi account, meaning that the access to a Strapi account cannot be restricted to only one SSO provider. For more information and workarounds to solve this issue, <ExternalLink to="https://github.com/strapi/strapi/issues/9466#issuecomment-783587648" text="please refer to the dedicated GitHub issue"/>.
 - Deploying the admin and backend on entirely different unrelated domains is not possible at this time when using SSO.
 :::
 
@@ -238,11 +238,11 @@ Its signature is the following: `void done(error: any, data: object);` and it fo
 
 Adding a new provider means adding a new way for your administrators to log-in.
 
-Strapi uses [Passport.js](http://www.passportjs.org/), which enables a large selection of providers. Any valid passport strategy that doesn't need additional custom data should therefore work with Strapi.
+Strapi uses <ExternalLink to="http://www.passportjs.org/" text="Passport.js"/>, which enables a large selection of providers. Any valid passport strategy that doesn't need additional custom data should therefore work with Strapi.
 
 :::caution
-Strategies such as [ldapauth](https://github.com/vesse/passport-ldapauth) don't work out of the box since they require extra data to be sent from the admin panel.
-If you want to add an LDAP provider to your application, you will need to write a [custom strategy](http://www.passportjs.org/packages/passport-custom/).
+Strategies such as <ExternalLink to="https://github.com/vesse/passport-ldapauth" text="ldapauth"/> don't work out of the box since they require extra data to be sent from the admin panel.
+If you want to add an LDAP provider to your application, you will need to write a <ExternalLink to="http://www.passportjs.org/packages/passport-custom/" text="custom strategy"/>.
 You can also use services such as Okta and Auth0 as bridge services.
 :::
 

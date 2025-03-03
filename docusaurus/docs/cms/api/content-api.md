@@ -52,7 +52,7 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="🔃" title="Document Service API" description="Query your data through the backend server or plugins." link="/cms/api/document-service" />
 
 :::strapi Integrations
-If you're looking for how to integrate Strapi with other platforms, such as Next.js and more, please refer to Strapi's [integrations pages](https://strapi.io/integrations).
+If you're looking for how to integrate Strapi with other platforms, such as Next.js and more, please refer to Strapi's <ExternalLink to="https://strapi.io/integrations" text="integrations pages"/>.
 :::
 
 </CustomDocCardsWrapper>

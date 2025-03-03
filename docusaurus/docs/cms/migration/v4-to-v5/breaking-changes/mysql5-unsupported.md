@@ -58,4 +58,4 @@ MySQL v8 is the minimum required version.
 No manual migration is required for the codebase of your Strapi application.
 Connection information will probably stay the same as in Strapi v4.
 
-However, to use Strapi v5, you must upgrade your MySQL database to version 8.0 (see additional information in the official [MySQL documentation](https://dev.mysql.com/doc/relnotes/mysql/8.0/en/)).
+However, to use Strapi v5, you must upgrade your MySQL database to version 8.0 (see additional information in the official <ExternalLink to="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/" text="MySQL documentation"/>).

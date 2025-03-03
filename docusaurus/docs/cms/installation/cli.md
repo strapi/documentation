@@ -73,7 +73,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     ```
 
     :::note
-    Yarn does not support passing the version tag such as `@latest`, as opposed to npm. If you experience unexpected results with yarn and the latest version of Strapi is not installed, you might need to [run the `yarn cache clean` command](https://yarnpkg.com/cli/cache/clean) to clean your Yarn cache.
+    Yarn does not support passing the version tag such as `@latest`, as opposed to npm. If you experience unexpected results with yarn and the latest version of Strapi is not installed, you might need to <ExternalLink to="https://yarnpkg.com/cli/cache/clean" text="run the `yarn cache clean` command"/> to clean your Yarn cache.
     :::
 
     </TabItem>
@@ -114,9 +114,9 @@ The above installation guide only covers the basic installation option using the
 | `--no-run` | Do not start the application after it is created |
 | `--ts`<br/>`--typescript` | Initialize the project with TypeScript (default) |
 | `--js`<br/>`--javascript` | Initialize the project with JavaScript  |
-| `--use-npm` | Force the usage of [npm](https://www.npmjs.com/) as the project package manager |
-| `--use-yarn` | Force the usage of [yarn](https://yarnpkg.com/) as the project package manager |
-| `--use-pnpm` | Force the usage of [pnpm](https://pnpm.io/) as the project package manager |
+| `--use-npm` | Force the usage of <ExternalLink to="https://www.npmjs.com/" text="npm"/> as the project package manager |
+| `--use-yarn` | Force the usage of <ExternalLink to="https://yarnpkg.com/" text="yarn"/> as the project package manager |
+| `--use-pnpm` | Force the usage of <ExternalLink to="https://pnpm.io/" text="pnpm"/> as the project package manager |
 | `--install`  | Install all dependencies, skipping the related CLI prompt |
 | `--no-install`  | Do not install all dependencies, skipping the related CLI prompt |
 | `--git-init` | Initialize a git repository, skipping the related CLI prompt |
@@ -160,14 +160,14 @@ If you want to host your project yourself and are not already familiar with GitH
 2. Run the `git init` command to initialize git for this folder.
 3. Run the `git add .` command to add all modified files to the git index.
 4. Run the `git commit -m "Initial commit"` command to create a commit with all the added changes.
-5. Log in to your GitHub account and [create a new repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories). Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
+5. Log in to your GitHub account and <ExternalLink to="https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories" text="create a new repository"/>. Give the new repository a name, for instance `my-first-strapi-project`, and remember this name.
 6. Go back to the terminal and push your local repository to GitHub:
 
   a. Run a command similar to the following: `git remote add origin git@github.com:yourname/my-first-strapi-project.git`, ensuring you replace `yourname` by your own GitHub profile name, and `my-first-strapi-project` by the actual name you used at step 4.
 
   b. Run the `git push --set-upstream origin main` command to finally push the commit to your GitHub repository.
 
-Additional information about using git with the command line interface can be found in the [official GitHub documentation](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git).
+Additional information about using git with the command line interface can be found in the <ExternalLink to="https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github#adding-a-local-repository-to-github-using-git" text="official GitHub documentation"/>.
 
 </details>
 

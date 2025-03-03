@@ -30,7 +30,7 @@ There are 2 use cases where you might want to extend the admin panel:
 
 :::strapi Additional resources
 * If you're searching for ways of replacing the default WYSIWYG editor, please refer to the [corresponding page](/cms/admin-panel-customization/wysiwyg-editor).
-* The [Strapi Design System documentation](https://design-system.strapi.io/?path=/docs/getting-started-welcome--docs) will also provide additional information on developing for Strapi's admin panel.
+* The <ExternalLink to="https://design-system.strapi.io/?path=/docs/getting-started-welcome--docs" text="Strapi Design System documentation"/> will also provide additional information on developing for Strapi's admin panel.
 :::
 
 <HotReloading />

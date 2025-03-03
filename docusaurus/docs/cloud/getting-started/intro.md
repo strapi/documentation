@@ -27,7 +27,7 @@ There are 2 Strapi documentations, one for each Strapi product:
 The Strapi Cloud documentation contains all information related to the setup, deployment, update and customization of your Strapi Cloud account and applications. 
 
 :::strapi What is Strapi Cloud?
-[Strapi Cloud](https://strapi.io/cloud) is a hosting platform that allows you to deploy your Strapi applications. It is a fully managed content platform <Annotation>**🤝 Why Strapi Cloud?**<br />Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. <br /> Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. <br /> Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.</Annotation> built on top of Strapi, the open-source headless CMS.
+<ExternalLink to="https://strapi.io/cloud" text="Strapi Cloud"/> is a hosting platform that allows you to deploy your Strapi applications. It is a fully managed content platform <Annotation>**🤝 Why Strapi Cloud?**<br />Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. <br /> Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. <br /> Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.</Annotation> built on top of Strapi, the open-source headless CMS.
 :::
 
 :::prerequisites
@@ -51,7 +51,7 @@ The Strapi Cloud documentation is organised in topics in a order that should cor
 </CustomDocCardsWrapper>
 
 :::strapi Welcome to the Strapi community!
-Strapi Cloud is built on top of Strapi, an open-source, community-oriented project. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the [roadmap](https://feedback.strapi.io) is open: as all insights are very important and will help steer the project in the right direction. Any community member is most welcome to share ideas and opinions there.
+Strapi Cloud is built on top of Strapi, an open-source, community-oriented project. The Strapi team has at heart to share their vision and build the future of Strapi with the Strapi community. This is why the <ExternalLink to="https://feedback.strapi.io" text="roadmap"/> is open: as all insights are very important and will help steer the project in the right direction. Any community member is most welcome to share ideas and opinions there.
 
-You can also join [GitHub](https://github.com/strapi/strapi), the [Forum](https://forum.strapi.io/), and the [Discord](https://discord.strapi.io) and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
+You can also join <ExternalLink to="https://github.com/strapi/strapi" text="GitHub"/>, the <ExternalLink to="https://forum.strapi.io/" text="Forum"/>, and the <ExternalLink to="https://discord.strapi.io" text="Discord"/> and benefit from the years of experience, knowledge, and contributions by the Strapi community as a whole.
 :::

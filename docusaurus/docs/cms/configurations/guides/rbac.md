@@ -37,7 +37,7 @@ The condition `name` property acts as a unique id within its namespace, that is 
 
 A condition can be applied to any permission, and the condition `handler` is used to verify the condition. The `handler` is a function returning a query object or a boolean value.
 
-Query objects are useful to verify conditions on the entities you read, create, update, delete or publish. They use the [sift.js](https://github.com/crcn/sift.js) library, but only with the following supported operators:
+Query objects are useful to verify conditions on the entities you read, create, update, delete or publish. They use the <ExternalLink to="https://github.com/crcn/sift.js" text="sift.js"/> library, but only with the following supported operators:
 
 - `$or`
 - `$and`

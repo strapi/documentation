@@ -42,19 +42,19 @@ Strapi does offer a feature known as [Data Transfer](/cms/data-management/transf
 
 ## User can't login to the admin panel
 
-With the release of the Strapi 3.0 beta version a fundamental change occurred in that the end users (REST and GraphQL users) were split from the Administrators (admin panel users) in such a way that normal users can not be given access to the admin panel. If you would like to read more on why this change was done, you can read the Strapi [blog post](https://strapi.io/blog/why-we-split-the-management-of-the-admin-users-and-end-users) about it.
+With the release of the Strapi 3.0 beta version a fundamental change occurred in that the end users (REST and GraphQL users) were split from the Administrators (admin panel users) in such a way that normal users can not be given access to the admin panel. If you would like to read more on why this change was done, you can read the Strapi <ExternalLink to="https://strapi.io/blog/why-we-split-the-management-of-the-admin-users-and-end-users" text="blog post"/> about it.
 
 Strapi has released the Admin & Permissions (RBAC - Role-Based Access Control) that does allow for some degree of control over what users can access within the admin panel and includes some field level permissions. You can also give roles specific permissions for things like content-types, single types, plugins, and settings.
 
 ## Why are my application's database and uploads resetting on PaaS-type services?
 
-If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, etc.) file systems are typically [ephemeral](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem) or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
+If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, etc.) file systems are typically <ExternalLink to="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem" text="ephemeral"/> or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
 
 It is recommended you use a database add-on like Heroku's PostgreSQL. For file uploads, you will need to use one of the 3rd party providers such as Cloudinary or AWS S3.
 
 ## How can I upgrade my free Strapi Cloud trial to a paid plan?
 
-Strapi Cloud provides a free, 14-day trial for up to 5 projects. Whenever you're ready to upgrade to one of the [paid plans](https://strapi.io/pricing-cloud), please use the _Plans_ section of your Strapi Cloud project's settings (see [Cloud documentation](/cloud/projects/settings#upgrading-to-another-plan) for more details).
+Strapi Cloud provides a free, 14-day trial for up to 5 projects. Whenever you're ready to upgrade to one of the <ExternalLink to="https://strapi.io/pricing-cloud" text="paid plans"/>, please use the _Plans_ section of your Strapi Cloud project's settings (see [Cloud documentation](/cloud/projects/settings#upgrading-to-another-plan) for more details).
 
 ## Can Strapi be run in serverless environments?
 
@@ -78,7 +78,7 @@ Strapi uses a system called [extension](/cms/plugins-development/plugins-extensi
 
 ## Can I add my own 3rd party auth provider?
 
-Yes, you can either follow the following [documentation](/cms/configurations/users-and-permissions-providers/new-provider-guide) or you can take a look at the [users-permissions](https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions) code and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
+Yes, you can either follow the following [documentation](/cms/configurations/users-and-permissions-providers/new-provider-guide) or you can take a look at the <ExternalLink to="https://github.com/strapi/strapi/tree/master/packages/plugins/users-permissions" text="users-permissions"/> code and submit a pull request to include the provider for everyone. Eventually Strapi does plan to move from the current grant/purest provider to a split natured system similar to the upload providers.
 
 There is currently no ETA on this migration however.
 
@@ -98,7 +98,7 @@ On Linux based operating systems you need root permissions to bind to any port b
 
 Likewise since Strapi is Node.js based, in order for changes with the SSL certificate to take place (say when it expires) you would need to restart your application for that change to take effect.
 
-Due to these two issues, it is recommended you use a proxy application such as [Nginx](https://forum.strapi.io/t/nginx-proxing-with-strapi/), [Caddy](https://forum.strapi.io/t/caddy-proxying-with-strapi/40616), [HAProxy](https://forum.strapi.io/t/haproxy-proxying-with-strapi/), Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/cms/configurations/server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
+Due to these two issues, it is recommended you use a proxy application such as <ExternalLink to="https://forum.strapi.io/t/nginx-proxing-with-strapi/" text="Nginx"/>, <ExternalLink to="https://forum.strapi.io/t/caddy-proxying-with-strapi/40616" text="Caddy"/>, <ExternalLink to="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" text="HAProxy"/>, Apache, Traefik, or many others to handle your edge routing to Strapi. There are settings in the environment [server.json](/cms/configurations/server) to handle upstream proxies. The proxy block requires all settings to be filled out and will modify any backend plugins such as authentication providers and the upload plugin to replace your standard `localhost:1337` with the proxy URL.
 
 ## Can I use TypeScript in a Strapi project?
 
@@ -114,9 +114,9 @@ Strapi in its current version requires dependency hoisting.
 
 By default, most package managers enable hoisting, however, if it's not functioning as expected, you can try enforcing it via your package manager's configuration.
 
-- If you are using npm or pnpm: Add `hoist=true` to your project's `.npmrc` file. Learn more about this from the [official pnpm documentation](https://pnpm.io/npmrc#hoist)
-- If you are using Yarn: Set `nmHoistingLimits` in your `.yarnrc` file. More details can be found in the [Yarn official documentation](https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits)
+- If you are using npm or pnpm: Add `hoist=true` to your project's `.npmrc` file. Learn more about this from the <ExternalLink to="https://pnpm.io/npmrc#hoist" text="official pnpm documentation"/>
+- If you are using Yarn: Set `nmHoistingLimits` in your `.yarnrc` file. More details can be found in the <ExternalLink to="https://yarnpkg.com/configuration/yarnrc#nmHoistingLimits" text="Yarn official documentation"/>
 
 ## Is X feature available yet?
 
-You can see the [public roadmap](https://feedback.strapi.io/) to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.
+You can see the <ExternalLink to="https://feedback.strapi.io/" text="public roadmap"/> to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.

@@ -25,7 +25,7 @@ The [Internationalization (i18n) feature](/cms/features/internationalization) ad
 To work with API content for a locale, please ensure the locale has been already [added to Strapi in the admin panel](/cms/features/internationalization#settings).
 :::
 
-The `locale` [API parameter](/cms/api/rest/parameters) can be used to work with documents only for a specified locale. `locale` takes a locale code as a value (see [full list of available locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json)).
+The `locale` [API parameter](/cms/api/rest/parameters) can be used to work with documents only for a specified locale. `locale` takes a locale code as a value (see <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json" text="full list of available locales"/>).
 
 :::tip
 If the `locale` parameter is not defined, it will be set to the default locale. `en` is the default locale when a new Strapi project is created, but another locale can be [set as the default locale](/cms/features/internationalization#settings) in the admin panel.

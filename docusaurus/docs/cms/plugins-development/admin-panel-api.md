@@ -24,7 +24,7 @@ tags:
 
 A Strapi plugin can interact with both the [back end](/cms/plugins-development/server-api) and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/cms/intro).
 
-The admin panel is a [React](https://reactjs.org/) application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
+The admin panel is a <ExternalLink to="https://reactjs.org/" text="React"/> application that can embed other React applications. These other React applications are the admin parts of each Strapi plugin.
 
 :::prerequisites
 You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin).
@@ -205,7 +205,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
 :::tip Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/plugins-development/custom-fields), for instance using the [CKEditor custom field plugin](https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor).
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/plugins-development/custom-fields), for instance using the <ExternalLink to="https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor" text="CKEditor custom field plugin"/>.
 :::
 
 :::info
@@ -222,7 +222,7 @@ The Menu API allows a plugin to add a new link to the main navigation through th
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
 | `icon`        | React Component       | Icon to display in the main navigation                                                                                                                                                                                   |
-| `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
+| `intlLabel`   | Object           | Label for the link, following the <ExternalLink to="https://formatjs.io/docs/react-intl" text="React Int'l"/> convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                      |
 | `permissions` | Array of Objects |  Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                                                                                         |
 | `position`    | Integer          | Position in the menu      |
@@ -306,7 +306,7 @@ All functions accept links as objects with the following parameters:
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `id`          | String           | React id                                                                                                                                                                                                                 |
 | `to`          | String           | Path the link should point to                                                                                                                                                                                            |
-| `intlLabel`   | Object           | Label for the link, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
+| `intlLabel`   | Object           | Label for the link, following the <ExternalLink to="https://formatjs.io/docs/react-intl" text="React Int'l"/> convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the link</li></ul> |
 | `Component`   | Async function   | Returns a dynamic import of the plugin entry point                                                                                                                                                                       |
 | `permissions` | Array of Objects | Permissions declared in the `permissions.js` file of the plugin                                                                                                                                                          |
 | `licenseOnly` | Boolean | If set to `true`, adds a lightning ⚡️ icon next to the icon or menu entry to indicate that the feature or plugin requires a paid license.<br/>(Defaults to `false`) |
@@ -321,7 +321,7 @@ The function takes 2 arguments:
 
 | Argument        | Type             | Description                                                                                                                                                                                                                                                                                                                   |
 | --------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| first argument  | Object           | Section label:<ul><li>`id` (String): section id</li><li>`intlLabel` (Object): localized label for the section, following the [React Int'l](https://formatjs.io/docs/react-intl) convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the section</li></ul></li></ul> |
+| first argument  | Object           | Section label:<ul><li>`id` (String): section id</li><li>`intlLabel` (Object): localized label for the section, following the <ExternalLink to="https://formatjs.io/docs/react-intl" text="React Int'l"/> convention, with:<ul><li>`id`: id used to insert the localized label</li><li>`defaultMessage`: default label for the section</li></ul></li></ul> |
 | second argument | Array of Objects | Links included in the section                                                                                                                                                                                                                                                                                                 |
 
 :::note
@@ -597,7 +597,7 @@ const MyCompo = () => {
 
 ### Reducers API
 
-Reducers are [Redux](https://redux.js.org/) reducers that can be used to share state between components. Reducers can be useful when:
+Reducers are <ExternalLink to="https://redux.js.org/" text="Redux"/> reducers that can be used to share state between components. Reducers can be useful when:
 
 * Large amounts of application state are needed in many places in the application.
 * The application state is updated frequently.
@@ -774,6 +774,6 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 ```
 
 :::note
-`EditViewLayout` and `ListViewLayout` are parts of the `useDocumentLayout` hook (see [source code](https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/hooks/useDocumentLayout.ts)).
+`EditViewLayout` and `ListViewLayout` are parts of the `useDocumentLayout` hook (see <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/hooks/useDocumentLayout.ts" text="source code"/>).
 :::
 

@@ -64,7 +64,7 @@ The table of content of the Strapi CMS documentation displays 7 main sections in
 :::tip Tips to make the best of the docs
 - If you already know exactly what you're searching for, use the search bar or navigate using the table of content.
 - If you prefer learning more about Strapi while looking at the project code structure, you can use the interactive [project structure](/cms/project-structure) page.
-- If demos are more your thing, feel free to watch the [video demo](https://youtu.be/zd0_S_FPzKg), or you can request a [live demo](https://strapi.io/demo).
+- If demos are more your thing, feel free to watch the <ExternalLink to="https://youtu.be/zd0_S_FPzKg" text="video demo"/>, or you can request a <ExternalLink to="https://strapi.io/demo" text="live demo"/>.
 - Try our AI assistant: Click or tap the **Ask AI** button and ask your questions using natural language. Watch it answer you in real time, then read recommended sources for more details.
 :::
 

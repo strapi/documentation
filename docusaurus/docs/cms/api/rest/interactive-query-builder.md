@@ -14,7 +14,7 @@ tags:
 
 A wide range of parameters can be used and combined to query your content with the [REST API](/cms/api/rest), which can result in long and complex query URLs.
 
-Strapi's codebase uses [the `qs` library](https://github.com/ljharb/qs) to parse and stringify nested JavaScript objects. It's recommended to use `qs` directly to generate complex query URLs instead of creating them manually.
+Strapi's codebase uses <ExternalLink to="https://github.com/ljharb/qs" text="the `qs` library"/> to parse and stringify nested JavaScript objects. It's recommended to use `qs` directly to generate complex query URLs instead of creating them manually.
 
 You can use the following interactive query builder tool to generate query URLs automatically:
 

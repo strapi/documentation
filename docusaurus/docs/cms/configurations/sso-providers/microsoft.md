@@ -18,7 +18,7 @@ You have read the [How to configure SSO guide](/cms/configurations/guides/config
 
 ## Installation
 
-Install [passport-azure-ad-oauth2](https://github.com/auth0/passport-azure-ad-oauth2#readme):
+Install <ExternalLink to="https://github.com/auth0/passport-azure-ad-oauth2#readme" text="passport-azure-ad-oauth2"/>:
 
 <Tabs groupId="yarn-npm">
 

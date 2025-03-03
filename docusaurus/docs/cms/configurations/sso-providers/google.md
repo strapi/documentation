@@ -18,7 +18,7 @@ You have read the [How to configure SSO guide](/cms/configurations/guides/config
 
 ## Installation
 
-Install [passport-google-oauth2](https://github.com/mstade/passport-google-oauth2):
+Install <ExternalLink to="https://github.com/mstade/passport-google-oauth2" text="passport-google-oauth2"/>:
 
 <Tabs groupId="yarn-npm">
 

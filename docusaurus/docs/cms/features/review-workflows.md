@@ -50,7 +50,7 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
 
 :::note
-The maximum number of [workflows and stages per workflow is limited](https://strapi.io/pricing-cloud).
+The maximum number of <ExternalLink to="https://strapi.io/pricing-cloud" text="workflows and stages per workflow is limited"/>.
 :::
 
 ### Editing a workflow

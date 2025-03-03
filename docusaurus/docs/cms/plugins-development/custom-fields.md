@@ -124,8 +124,8 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 | `pluginId`<br/><br/>(_optional_) | Name of the plugin creating the custom field<br/><br/>❗️ If defined, the `plugin` value on the server registration must have the same value (see [Registering a custom field on the server](#registering-a-custom-field-on-the-server))  | `String`                                             |
 | `type`                           | Existing Strapi data type the custom field will use<br/><br/>❗️ Relations, media, components, or dynamic zones cannot be used.               | `String`                                             |
 | `icon`<br/><br/>(_optional_)     | Icon for the custom field                                                                                                                    | `React.ComponentType`                                |
-| `intlLabel`                      | Translation for the name                                                                                                                     | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
-| `intlDescription`                | Translation for the description                                                                                                              | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `intlLabel`                      | Translation for the name                                                                                                                     | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/> |
+| `intlDescription`                | Translation for the description                                                                                                              | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/> |
 | `components`                     | Components needed to display the custom field in the Content Manager (see [components](#components))                                         |
 | `options`<br/><br/>(_optional_)  | Options to be used by the Content-type Builder (see [options](#options))                                                                     | `Object`                                             |
 
@@ -204,20 +204,20 @@ Custom field input components receive the following props:
 | Prop             | Description                                                                                                                                                                                                                               | Type                                                                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | `attribute`      | The attribute object with custom field's underlying Strapi type and options                                                                                                                                                               | `{ type: String, customField: String }`                              |
-| `description`    | The field description set in [configure the view](/cms/features/content-manager#edit-view-settings)                                                                                                  | [`IntlObject`](https://formatjs.io/docs/react-intl/)                 |
-| `placeholder`    | The field placeholder set in [configure the view](/cms/features/content-manager#edit-view-settings)                                                                                                  | [`IntlObject`](https://formatjs.io/docs/react-intl/)                 |
+| `description`    | The field description set in [configure the view](/cms/features/content-manager#edit-view-settings)                                                                                                  | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/>                 |
+| `placeholder`    | The field placeholder set in [configure the view](/cms/features/content-manager#edit-view-settings)                                                                                                  | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/>                 |
 | `hint`           | The field description set in [configure the view](/cms/features/content-manager#edit-view-settings) along with min/max [validation requirements](/cms/backend-customization/models#validations) | `String`                                                             |
 | `name`           | The field name set in the content-type builder                                                                                                                                                                                            | `String`                                                             |
-| `intlLabel`      | The field name set in the content-type builder or configure the view                                                                                                                                                                      | [`IntlObject`](https://formatjs.io/docs/react-intl/)                 |
+| `intlLabel`      | The field name set in the content-type builder or configure the view                                                                                                                                                                      | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/>                 |
 | `onChange`       | The handler for the input change event. The `name` argument references the field name. The `type` argument references the underlying Strapi type                                                                                          | `({ target: { name: String value: unknown type: String } }) => void` |
 | `contentTypeUID` | The content-type the field belongs to                                                                                                                                                                                                     | `String`                                                             |
 | `type`           | The custom field uid, for example `plugin::color-picker.color`                                                                                                                                                                            | `String`                                                             |
 | `value`          | The input value the underlying Strapi type expects                                                                                                                                                                                        | `unknown`                                                            |
 | `required`       | Whether or not the field is required                                                                                                                                                                                                      | `boolean`                                                            |
-| `error`          | Error received after validation                                                                                                                                                                                                           | [`IntlObject`](https://formatjs.io/docs/react-intl/)                 |
+| `error`          | Error received after validation                                                                                                                                                                                                           | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/>                 |
 | `disabled`       | Whether or not the input is disabled                                                                                                                                                                                                      | `boolean`                                                            |
 
-As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's [`forwardRef`](https://react.dev/reference/react/forwardRef) method; you should pass the corresponding `ref` to the `input` element.
+As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the `URLSearchParam` `field`. It's recommended that your input component is wrapped in React's <ExternalLink to="https://react.dev/reference/react/forwardRef" text="`forwardRef`"/> method; you should pass the corresponding `ref` to the `input` element.
 
 <details>
 <summary>Example: A custom text input</summary>
@@ -262,7 +262,7 @@ export default Input;
 </details>
 
 :::tip
-For a more detailed view of the props provided to the customFields and how they can be used check out the [`ColorPickerInput` file](https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPickerInput.tsx#L80-L95) in the Strapi codebase.
+For a more detailed view of the props provided to the customFields and how they can be used check out the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPickerInput.tsx#L80-L95" text="`ColorPickerInput` file"/> in the Strapi codebase.
 :::
 
 ### Options
@@ -273,11 +273,11 @@ For a more detailed view of the props provided to the customFields and how they 
 | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
 | `base`            | Settings available in the _Base settings_ tab of the field in the Content-type Builder                                                    | `Object` or `Array of Objects` |
 | `advanced`        | Settings available in the _Advanced settings_ tab of the field in the Content-type Builder                                                | `Object` or `Array of Objects` |
-| `validator`       | Validator function returning an object, used to sanitize input. Uses a [`yup` schema object](https://github.com/jquense/yup/tree/pre-v1). | `Function`                     |
+| `validator`       | Validator function returning an object, used to sanitize input. Uses a <ExternalLink to="https://github.com/jquense/yup/tree/pre-v1" text="`yup` schema object"/>. | `Function`                     |
 
 Both `base` and `advanced` settings accept an object or an array of objects, each object being a settings section. Each settings section could include:
 
-- a `sectionTitle` to declare the title of the section as an [`IntlObject`](https://formatjs.io/docs/react-intl/)
+- a `sectionTitle` to declare the title of the section as an <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/>
 - and a list of `items` as an array of objects.
 
 Each object in the `items` array can contain the following parameters:
@@ -286,7 +286,7 @@ Each object in the `items` array can contain the following parameters:
 | --------------- | ------------------------------------------------------------------ | ---------------------------------------------------- |
 | `name`          | Label of the input.<br/>Must use the `options.settingName` format. | `String`                                             |
 | `description`   | Description of the input to use in the Content-type Builder        | `String`                                             |
-| `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
+| `intlLabel`     | Translation for the label of the input                             | <ExternalLink to="https://formatjs.io/docs/react-intl/" text="`IntlObject`"/> |
 | `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
 
 <details>
@@ -381,5 +381,5 @@ export default {
 <!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 
 :::tip
-The Strapi codebase gives an example of how settings objects can be described: check the [`baseForm.ts`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.ts) file for the `base` settings and the [`advancedForm.ts`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.ts) file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an [`attributeOptions.js`](https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js) file.
+The Strapi codebase gives an example of how settings objects can be described: check the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.ts" text="`baseForm.ts`"/> file for the `base` settings and the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.ts" text="`advancedForm.ts`"/> file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js" text="`attributeOptions.js`"/> file.
 :::

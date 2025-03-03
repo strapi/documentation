@@ -16,7 +16,7 @@ The `cron.enabled` configuration option should be set to `true` in the `./config
 
 `cron` allows scheduling arbitrary functions for execution at specific dates, with optional recurrence rules. These functions are named cron jobs. `cron` only uses a single timer at any given time, rather than reevaluating upcoming jobs every second/minute.
 
-This feature is powered by the [`node-schedule`](https://www.npmjs.com/package/node-schedule) package.
+This feature is powered by the <ExternalLink to="https://www.npmjs.com/package/node-schedule" text="`node-schedule`"/> package.
 
 The `cron` format consists of:
 

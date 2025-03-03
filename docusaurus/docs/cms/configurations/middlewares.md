@@ -129,7 +129,7 @@ Global middlewares can be classified into different types depending on their ori
 | Application-level | Loaded from the `./src/middlewares` folder                                                                                                                                                                                              | `global::middleware-name`                                                                                            |
 | API-level         | Loaded from the `./src/api/[api-name]/middlewares` folder                                                                                                                                                                               | `api::api-name.middleware-name`                                                                                      |
 | Plugin            | Exported from `strapi-server.js` in the [`middlewares` property of the plugin interface](/cms/plugins-development/server-api#middlewares)                                                                                               | `plugin::plugin-name.middleware-name`                                                                                |
-| External          | Can be:<ul><li>either node modules installed with [npm](https://www.npmjs.com/search?q=strapi-middleware)</li><li>or local middlewares (i.e. custom middlewares created locally and configured in `./config/middlewares.js`.)</li></ul> | -<br/><br/>As they are directly configured and resolved from the configuration file, they have no naming convention. |
+| External          | Can be:<ul><li>either node modules installed with <ExternalLink to="https://www.npmjs.com/search?q=strapi-middleware" text="npm"/></li><li>or local middlewares (i.e. custom middlewares created locally and configured in `./config/middlewares.js`.)</li></ul> | -<br/><br/>As they are directly configured and resolved from the configuration file, they have no naming convention. |
 
 ## Optional configuration
 
@@ -163,7 +163,7 @@ Strapi's core includes the following internal middlewares, mostly used for perfo
 
 ### `body`
 
-The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body). Tt uses the [`node-formidable`](https://github.com/felixge/node-formidable) library to process files. `body` accepts the following options:
+The `body` middleware is based on <ExternalLink to="https://github.com/koajs/koa-body" text="koa-body"/>. Tt uses the <ExternalLink to="https://github.com/felixge/node-formidable" text="`node-formidable`"/> library to process files. `body` accepts the following options:
 
 | Option       | Description                                                                                                                             | Type                  | Default     |
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------|-----------------------|-------------|
@@ -173,9 +173,9 @@ The `body` middleware is based on [koa-body](https://github.com/koajs/koa-body).
 | `formLimit`  | The byte (if integer) limit of the form body                                                                                            | `String` or `Integer` | `56kb`      |
 | `textLimit`  | The byte (if integer) limit of the text body                                                                                            | `String` or `Integer` | `56kb`      |
 | `encoding`   | Sets encoding for incoming form fields                                                                                                  | `String`              | `utf-8`     |
-| `formidable` | Options to pass to the `formidable` multipart parser (see [node-formidable documentation](https://github.com/felixge/node-formidable)). | `Object`              | `undefined` |
+| `formidable` | Options to pass to the `formidable` multipart parser (see <ExternalLink to="https://github.com/felixge/node-formidable" text="node-formidable documentation"/>). | `Object`              | `undefined` |
 
-For a full list of available options for `koa-body`, check the [koa-body documentation](https://github.com/koajs/koa-body#options).
+For a full list of available options for `koa-body`, check the <ExternalLink to="https://github.com/koajs/koa-body#options" text="koa-body documentation"/>.
 
 <details>
 <summary> Example: Custom configuration for the body middleware </summary>
@@ -230,7 +230,7 @@ export default [
 
 ### `compression`
 
-The `compression` middleware is based on [koa-compress](https://github.com/koajs/compress). It accepts the following options:
+The `compression` middleware is based on <ExternalLink to="https://github.com/koajs/compress" text="koa-compress"/>. It accepts the following options:
 
 | Option            | Description                                                                | Type                  | Default    |
 |-------------------|----------------------------------------------------------------------------|-----------------------|------------|
@@ -287,7 +287,7 @@ export default [
 
 ### `cors`
 
-This security middleware is about cross-origin resource sharing (CORS) and is based on [@koa/cors](https://github.com/koajs/cors). It accepts the following options:
+This security middleware is about cross-origin resource sharing (CORS) and is based on <ExternalLink to="https://github.com/koajs/cors" text="@koa/cors"/>. It accepts the following options:
 
 | Option              | Type                                                      | Description          | Default value                                              |
 |---------------------|-----------------------------------------------------------|----------------------|------------------------------------------------------------|
@@ -359,7 +359,7 @@ The middleware doesn't have any configuration options.
 
 ### `favicon`
 
-The `favicon` middleware serves the favicon and is based on [koa-favicon](https://github.com/koajs/favicon). It accepts the following options:
+The `favicon` middleware serves the favicon and is based on <ExternalLink to="https://github.com/koajs/favicon" text="koa-favicon"/>. It accepts the following options:
 
 | Option   | Description                                      | Type      | Default value   |
 |----------|--------------------------------------------------|-----------|-----------------|
@@ -413,7 +413,7 @@ export default [
 
 #### `ip`
 
-The `ip` middleware is an IP filter middleware based on [koa-ip](https://github.com/nswbmw/koa-ip). It accepts the following options:
+The `ip` middleware is an IP filter middleware based on <ExternalLink to="https://github.com/nswbmw/koa-ip" text="koa-ip"/>. It accepts the following options:
 
 | Option      | Description     | Type    | Default value |
 |-------------|-----------------|---------|---------------|
@@ -475,7 +475,7 @@ export default [
 
 The `logger` middleware is used to log requests.
 
-To define a custom configuration for the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial [winstonjs](https://github.com/winstonjs/winston) logger configuration. The object will be merged with Strapi's default logger configuration on server start.
+To define a custom configuration for the `logger` middleware, create a dedicated configuration file (`./config/logger.js`). It should export an object that must be a complete or partial <ExternalLink to="https://github.com/winstonjs/winston" text="winstonjs"/> logger configuration. The object will be merged with Strapi's default logger configuration on server start.
 
 <details>
 <summary> Example: Custom configuration for the logger middleware</summary>
@@ -593,13 +593,13 @@ export default [
 
 ### `query`
 
-The `query` middleware is a query parser based on [qs](https://github.com/ljharb/qs). It accepts the following options:
+The `query` middleware is a query parser based on <ExternalLink to="https://github.com/ljharb/qs" text="qs"/>. It accepts the following options:
 
 | Option               | Description                                                                                                                      | Type      | Default value |
 |----------------------|----------------------------------------------------------------------------------------------------------------------------------|-----------|---------------|
-| `strictNullHandling` | Distinguish between null values and empty strings (see [qs documentation](https://github.com/ljharb/qs#handling-of-null-values)) | `Boolean` | `true`        |
-| `arrayLimit`         | Maximum index limit when parsing arrays (see [qs documentation](https://github.com/ljharb/qs#parsing-arrays))                    | `Number`  | `100`         |
-| `depth`              | Maximum depth of nested objects when parsing objects (see [qs documentation](https://github.com/ljharb/qs#parsing-objects))      | `Number`  | `20`          |
+| `strictNullHandling` | Distinguish between null values and empty strings (see <ExternalLink to="https://github.com/ljharb/qs#handling-of-null-values" text="qs documentation"/>) | `Boolean` | `true`        |
+| `arrayLimit`         | Maximum index limit when parsing arrays (see <ExternalLink to="https://github.com/ljharb/qs#parsing-arrays" text="qs documentation"/>)                    | `Number`  | `100`         |
+| `depth`              | Maximum depth of nested objects when parsing objects (see <ExternalLink to="https://github.com/ljharb/qs#parsing-objects" text="qs documentation"/>)      | `Number`  | `20`          |
 
 <details>
 <summary> Example: Custom configuration for the query middleware </summary>
@@ -656,7 +656,7 @@ The middleware doesn't have any configuration options.
 
 ### `public`
 
-The `public` middleware is a static file serving middleware, based on [koa-static](https://github.com/koajs/static). It accepts the following options:
+The `public` middleware is a static file serving middleware, based on <ExternalLink to="https://github.com/koajs/static" text="koa-static"/>. It accepts the following options:
 
 | Option         | Description                                         | Type      | Default value |
 |----------------|-----------------------------------------------------|-----------|---------------|
@@ -715,7 +715,7 @@ export default [
 
 ### `security`
 
-The security middleware is based on [koa-helmet](https://helmetjs.github.io/). It accepts the following options:
+The security middleware is based on <ExternalLink to="https://helmetjs.github.io/" text="koa-helmet"/>. It accepts the following options:
 
 | Option                      | Description                                                                                   | Type                  | Default value |
 |-----------------------------|-----------------------------------------------------------------------------------------------|-----------------------|---------------|
@@ -827,7 +827,7 @@ export default [
 
 ### `session`
 
-The `session` middleware allows the use of cookie-based sessions, based on [koa-session](https://github.com/koajs/session). It accepts the following options:
+The `session` middleware allows the use of cookie-based sessions, based on <ExternalLink to="https://github.com/koajs/session" text="koa-session"/>. It accepts the following options:
 
 | Option       | Description                                                                                                            | Type                     | Default value                           |
 |--------------|------------------------------------------------------------------------------------------------------------------------|--------------------------|-----------------------------------------|
