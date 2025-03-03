@@ -4,7 +4,7 @@ description: Deep dive into some specific REST API topics using guides that exte
 displayed_sidebar: cmsSidebar
 sidebar_label: Guides
 pagination_prev: cms/api/rest
-pagination_next: cms/api/rest/guides/understanding-populate
+pagination_next: cms/api/client
 tags:
 - API
 - Content API
