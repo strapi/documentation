@@ -78,3 +78,6 @@ Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be
 
 Users might need to adapt their custom code to how lifecycle hooks are triggered by Document Service API methods in Strapi 5.
 
+:::strapi Additional resources
+You might find additional information about lifecycle hooks in [this blog article](https://strapi.io/blog/when-to-use-lifecycle-hooks-in-strapi).
+:::
