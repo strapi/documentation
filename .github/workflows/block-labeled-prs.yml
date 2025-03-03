@@ -21,21 +21,29 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            // Define blocking labels
             const blockingLabels = ["flag: don't merge", "flag: merge pending release"];
-            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
             
-            const labelNames = labels.map(label => label.name);
-            const blockedLabels = labelNames.filter(label => 
-              blockingLabels.includes(label.toLowerCase())
-            );
-            
-            if (blockedLabels.length > 0) {
-              core.setFailed(`PR cannot be merged because it has the following blocking labels: ${blockedLabels.join(', ')}`);
-              return;
+            // Check if this is a pull request event
+            if (context.payload.pull_request) {
+              const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number
+              });
+              
+              const labelNames = labels.map(label => label.name);
+              const blockedLabels = labelNames.filter(label => 
+                blockingLabels.includes(label.toLowerCase())
+              );
+              
+              if (blockedLabels.length > 0) {
+                core.setFailed(`PR cannot be merged because it has the following blocking labels: ${blockedLabels.join(', ')}`);
+                return;
+              }
+              
+              console.log('No blocking labels found, PR can be merged');
+            } else {
+              // If this is a direct push, allow it to pass without checking
+              console.log('This is a direct push event, not a PR. Skipping label check.');
             }
-            
-            console.log('No blocking labels found, PR can be merged');
