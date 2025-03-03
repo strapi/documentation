@@ -34,7 +34,7 @@ export const initializeAmplitude = () => {
 
     // Initialize Amplitude with the client ID as the deviceId
     amplitudeInstance = amplitude.init(
-      '181a95e5a6b8053f7ffb7da9f0ef7ef4', // This key is Public
+      'b2903bdddb544d4b712bee3739f3cafd', // This key is Public
       googleAnalyticsClientId,
       {
         ...(googleAnalyticsClientId && { deviceId: googleAnalyticsClientId }),
