@@ -37,6 +37,10 @@ Once the side panel for the Preview is open, you can:
 - use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/user-docs/content-manager/reviewing-content) if enabled
 - and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
+:::info
+The side panel and its expand button are only available if you run the beta version of Strapi. In the stable version, the "Open Preview" button will open a full-screen preview.
+:::
+
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
