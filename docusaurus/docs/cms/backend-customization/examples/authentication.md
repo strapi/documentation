@@ -18,13 +18,13 @@ This page is part of the back end customization examples cookbook. Please ensure
 
 **💭 Context:**
 
-Out of the box, the front-end website of [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any log in functionality. Logging in is done by accessing Strapi's admin panel at [`localhost:1337/admin`](http://localhost:1337/admin`).
+Out of the box, the front-end website of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> does not provide any log in functionality. Logging in is done by accessing Strapi's admin panel at <ExternalLink to="http://localhost:1337/admin`" text="`localhost:1337/admin`"/>.
 
 <SideBySideContainer>
 
 <SideBySideColumn>
 
-Let's add a basic login page to the front-end, [Next.js](https://nextjs.org/)-powered website included in the `/client` folder of FoodAdvisor. The login page will be accessible at [`localhost:3000/auth/login`](http://localhost:3000/auth/login) and contain a typical email/password login form. This will allow programmatically authenticating API requests sent to Strapi.
+Let's add a basic login page to the front-end, <ExternalLink to="https://nextjs.org/" text="Next.js"/>-powered website included in the `/client` folder of FoodAdvisor. The login page will be accessible at <ExternalLink to="http://localhost:3000/auth/login" text="`localhost:3000/auth/login`"/> and contain a typical email/password login form. This will allow programmatically authenticating API requests sent to Strapi.
 
 </SideBySideColumn>
 
@@ -48,8 +48,8 @@ Create a front-end component to:
 
 1. to display a login form,
 2. send a request to the `/auth/local` route of the Strapi back-end server to authenticate,
-3. get a [JSON Web Token](https://en.wikipedia.org/wiki/JSON_Web_Token) (JWT),
-4. and store the JWT into the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) property of your browser for later retrieval and authentication of our requests.
+3. get a <ExternalLink to="https://en.wikipedia.org/wiki/JSON_Web_Token" text="JSON Web Token"/> (JWT),
+4. and store the JWT into the <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage" text="`localStorage`"/> property of your browser for later retrieval and authentication of our requests.
 
 </SideBySideColumn>
 
@@ -66,7 +66,7 @@ Additional information about JWT authentication can be found in the [Users & Per
 
 **🧑‍💻 Code example:**
 
-To achieve this, in the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could create a `pages/auth/login.js` file that contains the following example code.  Highlighted lines show the request sent to the `/auth/local` route provided by Strapi's Users & Permissions plugin:
+To achieve this, in the `/client` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, you could create a `pages/auth/login.js` file that contains the following example code.  Highlighted lines show the request sent to the `/auth/local` route provided by Strapi's Users & Permissions plugin:
 
 This file uses the formik package - install it using `yarn add formik` and restart the dev server.
 

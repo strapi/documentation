@@ -18,7 +18,7 @@ You have read the [How to configure SSO guide](/cms/configurations/guides/config
 
 ## Installation
 
-Install [passport-okta-oauth20](https://github.com/antoinejaussoin/passport-okta-oauth20/#readme):
+Install <ExternalLink to="https://github.com/antoinejaussoin/passport-okta-oauth20/#readme" text="passport-okta-oauth20"/>:
 
 <Tabs groupId="yarn-npm">
 

@@ -15,7 +15,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
 :::
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not provide any custom middlewares that could use incoming requests and perform some additional logic before executing the controller code.
+Out of the box, <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> does not provide any custom middlewares that could use incoming requests and perform some additional logic before executing the controller code.
 
 There are 2 types of middlewares in Strapi: **route middlewares** control access to a route while **global middlewares** have a wider scope (see reference documentation for [middlewares customization](/cms/backend-customization/middlewares)).
 
@@ -31,7 +31,7 @@ In essence, a middleware gets executed between a request arriving at the server 
 
 <SideBySideColumn>
 
-Let’s create a rudimentary example of an analytics dashboard made with Google Spreadsheets to have some insights on which restaurants pages of [FoodAdvisor](https://github.com/strapi/foodadvisor) are more visited.
+Let’s create a rudimentary example of an analytics dashboard made with Google Spreadsheets to have some insights on which restaurants pages of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> are more visited.
 
 </SideBySideColumn>
 
@@ -72,7 +72,7 @@ Additional information can be found in the [middlewares customization](/cms/back
 
 **🧑‍💻 Code example:**
 
-1. In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, create a `/restaurant/middlewares/utils.js` file with the following example code:
+1. In the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, create a `/restaurant/middlewares/utils.js` file with the following example code:
 
   <details>
   <summary>Example utility functions that could be used to read, write and update a Google spreadsheet:</summary>
@@ -81,7 +81,7 @@ Additional information can be found in the [middlewares customization](/cms/back
 
   ![Google Spreadsheet URL](/img/assets/backend-customization/tutorial-spreadsheet-url.png)
 
-  Additional information can be found in the official [Google Sheets API documentation](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values?hl=es-419).
+  Additional information can be found in the official <ExternalLink to="https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values?hl=es-419" text="Google Sheets API documentation"/>.
 
   ```jsx title="src/api/restaurant/middlewares/utils.js"
 

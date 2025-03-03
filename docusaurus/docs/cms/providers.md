@@ -13,7 +13,7 @@ tags:
 
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
-There are both official providers maintained by Strapi — discoverable via the [Marketplace](../../../cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via [npm](https://www.npmjs.com/).
+There are both official providers maintained by Strapi — discoverable via the <ExternalLink to="../../../cms/plugins/installing-plugins-via-marketplace" text="Marketplace"/> — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
 
 A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
@@ -63,7 +63,7 @@ npm install @strapi/provider-email-sendgrid --save
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](../../../cms/plugins/installing-plugins-via-marketplace) or [npm](https://www.npmjs.com/) to learn more.
+Each provider will have different configuration settings available. Review the respective entry for that provider in the <ExternalLink to="../../../cms/plugins/installing-plugins-via-marketplace" text="Marketplace"/> or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
 
 The following are example configurations for the Upload (Media Library) and Email features:
 
@@ -140,7 +140,7 @@ export default ({ env }) => ({
 </Tabs>
 
 :::note
-Strapi has a default [`security` middleware](/cms/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the [provider page](https://www.npmjs.com/package/@strapi/provider-upload-aws-s3) or the [middleware documentation](/cms/configurations/middlewares#security) for more information.
+Strapi has a default [`security` middleware](/cms/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-upload-aws-s3" text="provider page"/> or the [middleware documentation](/cms/configurations/middlewares#security) for more information.
 :::
 
 </TabItem>
@@ -220,7 +220,7 @@ You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` co
 
 ## Creating providers
 
-To implement your own custom provider you must [create a Node.js module](https://docs.npmjs.com/creating-node-js-modules).
+To implement your own custom provider you must <ExternalLink to="https://docs.npmjs.com/creating-node-js-modules" text="create a Node.js module"/>.
 
 The interface that must be exported depends on the plugin you are developing the provider for. The following are templates for the Upload (Media Library) and Email features:
 
@@ -360,9 +360,9 @@ In the send function you will have access to:
 * `settings` that contains configurations written in `plugins.js|ts`
 * `options` that contains options you send when you call the send function from the email plugin service
 
-You can review the [Strapi-maintained providers](https://github.com/strapi/strapi/tree/master/packages/providers) for example implementations.
+You can review the <ExternalLink to="https://github.com/strapi/strapi/tree/master/packages/providers" text="Strapi-maintained providers"/> for example implementations.
 
-After creating your new provider you can [publish it to npm](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages) to share with the community or [use it locally](#local-providers) for your project only.
+After creating your new provider you can <ExternalLink to="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" text="publish it to npm"/> to share with the community or [use it locally](#local-providers) for your project only.
 
 ### Local providers
 
@@ -370,7 +370,7 @@ If you want to create your own provider without publishing it on npm you can fol
 
 1. Create a `providers` folder in your application.
 2. Create your provider (e.g. `/providers/strapi-provider-<plugin>-<provider>`)
-3. Then update your `package.json` to link your `strapi-provider-<plugin>-<provider>` dependency to the [local path](https://docs.npmjs.com/files/package.json#local-paths) of your new provider.
+3. Then update your `package.json` to link your `strapi-provider-<plugin>-<provider>` dependency to the <ExternalLink to="https://docs.npmjs.com/files/package.json#local-paths" text="local path"/> of your new provider.
 
 ```json
 {

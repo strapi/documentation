@@ -12,7 +12,7 @@ tags:
 
 # Admin panel customization: Host, port, and path configuration
 
-By default, Strapi's [admin panel](/cms/admin-panel-customization) is exposed via [http://localhost:1337/admin](http://localhost:1337/admin). For security reasons, the host, port, and path can be updated.
+By default, Strapi's [admin panel](/cms/admin-panel-customization) is exposed via <ExternalLink to="http://localhost:1337/admin" text="http://localhost:1337/admin"/>. For security reasons, the host, port, and path can be updated.
 
 ## Update the admin panel's path only
 

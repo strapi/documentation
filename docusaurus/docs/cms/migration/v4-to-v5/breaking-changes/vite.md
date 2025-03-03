@@ -36,7 +36,7 @@ Webpack is the default bundler.
 
 **In Strapi 5**
 
-[Vite](https://vitejs.dev/) is the default bundler.
+<ExternalLink to="https://vitejs.dev/" text="Vite"/> is the default bundler.
 
 
 </SideBySideColumn>
@@ -49,4 +49,4 @@ Webpack is the default bundler.
 
 ### Manual procedure
 
-Users with custom webpack configurations need to convert to [Vite](https://vitejs.dev/) configurations, or alternatively set `--bundler=webpack` when starting the development server to keep the Strapi v4 behaviour; in the latter case, the terminal will issue a warning. Please refer to the [bundlers](/cms/admin-panel-customization/bundlers) documentation for additional details.
+Users with custom webpack configurations need to convert to <ExternalLink to="https://vitejs.dev/" text="Vite"/> configurations, or alternatively set `--bundler=webpack` when starting the development server to keep the Strapi v4 behaviour; in the latter case, the terminal will issue a warning. Please refer to the [bundlers](/cms/admin-panel-customization/bundlers) documentation for additional details.

@@ -25,11 +25,11 @@ Strapi is built around different types of plugins. Every default Strapi applicat
 
 These plugins are essential for your Strapi application to function and cannot be uninstalled.
 
-Additional plugins that you can use to extend and customize your Strapi applications are available in the [Marketplace](../plugins/installing-plugins-via-marketplace.md). This section focuses on how to install and manage these additional plugins.
+Additional plugins that you can use to extend and customize your Strapi applications are available in the /cms/plugins/installing-plugins-via-marketplace. This section focuses on how to install and manage these additional plugins.
 
 From the admin panel, administrators are allowed to:
 
-- discover additional plugins and [providers](#providers) in the <Icon name="shopping-cart" /> _Marketplace_ (see [Managing Marketplace plugins](./installing-plugins-via-marketplace.md))
+- discover additional plugins and [providers](#providers) in the <Icon name="shopping-cart" /> _Marketplace_ (see [Managing Marketplace plugins](/cms/plugins/installing-plugins-via-marketplace))
 - review the currently installed plugins and [providers](#providers) in <Icon name="gear-six" /> _Settings > Plugins_
 
 <ThemedImage
@@ -53,4 +53,4 @@ Currently, the only plugins designed to work with providers are the:
 
 Some plugins can add custom fields to Strapi (for additional information about creating custom fields plugins, see [Developer Docs](/cms/plugins-development/custom-fields)). Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components.
 
-Once added to Strapi (see [Marketplace](./installing-plugins-via-marketplace.md)), custom fields can be created in the [Content-type Builder](/cms/features/content-type-builder#custom-fields) and used in the [Content Manager](/cms/features/content-manager#creating--writing-content).
+Once added to Strapi (see [Marketplace](/cms/plugins/installing-plugins-via-marketplace)), custom fields can be created in the [Content-type Builder](/cms/features/content-type-builder#custom-fields) and used in the [Content Manager](/cms/features/content-manager#creating--writing-content).

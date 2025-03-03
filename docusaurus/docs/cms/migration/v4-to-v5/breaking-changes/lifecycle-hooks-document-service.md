@@ -32,7 +32,7 @@ However, the Document Service API might not suit all your use cases; the databas
 
 **In Strapi v4**
 
-In Strapi v4, lifecycle hooks work as documented in the [Strapi v4 documentation](https://docs-v4.strapi.io/cms/backend-customization/models#lifecycle-hooks).
+In Strapi v4, lifecycle hooks work as documented in the <ExternalLink to="https://docs-v4.strapi.io/cms/backend-customization/models#lifecycle-hooks" text="Strapi v4 documentation"/>.
 
 </SideBySideColumn>
 
@@ -79,5 +79,5 @@ Bulk actions lifecycles (`createMany`, `updateMany`, `deleteMany`) will never be
 Users might need to adapt their custom code to how lifecycle hooks are triggered by Document Service API methods in Strapi 5.
 
 :::strapi Additional resources
-You might find additional information about lifecycle hooks in [this blog article](https://strapi.io/blog/when-to-use-lifecycle-hooks-in-strapi).
+You might find additional information about lifecycle hooks in <ExternalLink to="https://strapi.io/blog/when-to-use-lifecycle-hooks-in-strapi" text="this blog article"/>.
 :::

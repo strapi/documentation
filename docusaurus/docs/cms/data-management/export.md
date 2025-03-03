@@ -64,7 +64,7 @@ npm run strapi export -- --file my-strapi-export
 The default `strapi export` command encrypts your project data using `aes-128-ecb` encryption and adds the file extension `.enc`. To use encryption you need to pass an encryption key using the `-k` or `--key` option or enter an encryption key when prompted. The encryption key is a `string` with no minimum character count.
 
 :::tip Encryption keys
-Strong encryption keys are encouraged to protect sensitive data in your project. [OpenSSL](https://www.openssl.org/) is a resource for generating encryption keys. The following example commands generate encryption keys in a terminal:
+Strong encryption keys are encouraged to protect sensitive data in your project. <ExternalLink to="https://www.openssl.org/" text="OpenSSL"/> is a resource for generating encryption keys. The following example commands generate encryption keys in a terminal:
 
 <Tabs>
 

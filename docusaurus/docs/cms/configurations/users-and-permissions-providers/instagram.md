@@ -27,10 +27,10 @@ Use `ngrok` to serve the backend app.
 ```
 ngrok http 1337
 ```
-Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/login-react)) with the generated ngrok url.
+Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/login-react" text="react login example app"/>) with the generated ngrok url.
 :::
 
-1. Visit the Developer Apps list page at [https://developers.facebook.com/apps/](https://developers.facebook.com/apps/)
+1. Visit the Developer Apps list page at <ExternalLink to="https://developers.facebook.com/apps/" text="https://developers.facebook.com/apps/"/>
 2. Click on **Add a New App** button
 3. Fill the **Display Name** in the modal and create the app
 4. Setup an **Instagram** product
@@ -45,7 +45,7 @@ Don't forget to update the server url in the backend config file `config/server.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Instagram** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`

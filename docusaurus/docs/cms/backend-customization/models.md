@@ -230,7 +230,7 @@ Database validations and settings are custom options passed directly onto the `t
 The `uid` type is used to automatically prefill the field value in the admin panel with a unique identifier (UID) (e.g. slugs for articles) based on 2 optional parameters:
 
 - `targetField` (string): If used, the value of the field defined as a target is used to auto-generate the UID.
-- `options` (string): If used, the UID is generated based on a set of options passed to [the underlying `uid` generator](https://github.com/sindresorhus/slugify). The resulting `uid` must match the following regular expression pattern: `/^[A-Za-z0-9-_.~]*$`.
+- `options` (string): If used, the UID is generated based on a set of options passed to <ExternalLink to="https://github.com/sindresorhus/slugify" text="the underlying `uid` generator"/>. The resulting `uid` must match the following regular expression pattern: `/^[A-Za-z0-9-_.~]*$`.
 
 #### Relations
 
@@ -602,7 +602,7 @@ Lifecycle hooks are functions that get triggered when Strapi queries are called.
 Lifecycle hooks can be customized declaratively or programmatically.
 
 :::caution
-Lifecycles hooks are not triggered when using directly the [knex](https://knexjs.org/) library instead of Strapi functions.
+Lifecycles hooks are not triggered when using directly the <ExternalLink to="https://knexjs.org/" text="knex"/> library instead of Strapi functions.
 :::
 
 :::strapi Document Service API: lifecycles and middlewares

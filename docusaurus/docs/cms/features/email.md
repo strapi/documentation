@@ -58,7 +58,7 @@ The Email feature requires a provider and a provider configuration in the `confi
 <CustomDocCard icon="plugs" title="Providers" description="Learn more about configuring and creating providers for the Email and Media Library features." link="/cms/providers"/>
 </CustomDocCardsWrapper>
 
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
+<ExternalLink to="https://www.npmjs.com/package/sendmail" text="`Sendmail`"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
 
 ## Usage
 
@@ -110,7 +110,7 @@ To use the `sendTemplatedEmail()` function, define the `emailTemplate` object an
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
 | `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
-| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
+| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash string templates"/> | `object` | { }      |
 | `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 The following code example can be used in a controller or a service:

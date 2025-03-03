@@ -18,7 +18,7 @@ You have read the [How to configure SSO guide](/cms/configurations/guides/config
 
 ## Installation
 
-Install [passport-github](https://github.com/cfsghost/passport-github):
+Install <ExternalLink to="https://github.com/cfsghost/passport-github" text="passport-github"/>:
 
 <Tabs groupId="yarn-npm">
 

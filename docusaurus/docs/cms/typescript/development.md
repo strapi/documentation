@@ -72,7 +72,7 @@ Types can be automatically generated on server restart by adding `autogenerate: 
 :::
 
 :::tip Tip: Using types in your front-end application
-To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution.
+To use Strapi types in your front-end application, you can <ExternalLink to="https://github.com/strapi-community/strapi-typed-fronend" text="use a workaround"/> until Strapi implements an official solution.
 :::
 
 ### Fix build issues with the generated types
