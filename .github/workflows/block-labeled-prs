@@ -21,7 +21,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const blockingLabels = ['do-not-merge', 'wip', 'work-in-progress'];
+            const blockingLabels = ["flag: don't merge", "flag: merge pending release"];
             const { data: labels } = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
