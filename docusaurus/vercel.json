@@ -1321,11 +1321,6 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/migration/v5/migration-guide-5.0.0-to-5.0.1",
-      "destination": "/cms/migration/v5/migration-guide-5.0.0-to-5.0.1",
-      "permanent": true
-    },
-    {
       "source": "/dev-docs/plugins/admin-panel-api",
       "destination": "/cms/plugins-development/admin-panel-api",
       "permanent": true
