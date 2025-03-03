@@ -776,4 +776,3 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 :::note
 `EditViewLayout` and `ListViewLayout` are parts of the `useDocumentLayout` hook (see <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/hooks/useDocumentLayout.ts" text="source code"/>).
 :::
-
