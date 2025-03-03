@@ -194,3 +194,7 @@ It can be used to gracefully:
 
 - stop [services](/cms/backend-customization/services) that are running
 - [clean up plugin actions](/cms/plugins-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+
+:::strapi Additional information
+You might find additional information in [this blog article](https://strapi.io/blog/how-to-use-register-function-to-customize-your-strapi-app) about registering lifecycle functions.
+:::
