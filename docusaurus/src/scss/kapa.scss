@@ -9,43 +9,20 @@
 }
 
 // Modal
+
 .mantine-Paper-root {
   box-shadow: 0px 24px 40px rgba(0, 0, 0, 0.2);
   // border: 1px solid var(--strapi-neutral-150);
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
 }
-
-#kapa-widget-portal {
-  div {
-    div {
-      div {
-        div.mantine-Modal-inner {
-          align-items: center !important;
-        }
-      }
-    }
-  }
-}
-
-.mantine-eyunaq {
-  align-items: center !important;
-  .mantine-Paper-root {
-    background-color: tomato !important;
-  }
-}
-
-// .mantine-Modal-inner {
-// }
 
 // Header
+
 .mantine-Modal-header {
   background-color: var(--strapi-neutral-0);
   border-bottom: solid 1px var(--strapi-neutral-150);
 
   // Close button
+
   .mantine-CloseButton-root {
     background-color: var(--strapi-neutral-0);
 
