@@ -79,10 +79,10 @@ export default function PageHome() {
       <main className={clsx(styles.home)}>
         <Hero id="homeHero">
           <Container>
-            <HeroTitle>
+            <HeroTitle className="heroTitle">
               {content.page.title}
             </HeroTitle>
-            <HeroDescription>
+            <HeroDescription className="heroDescription">
               {content.page.description}
             </HeroDescription>
           </Container>
