@@ -1,0 +1,100 @@
+@use '@site/src/scss/_mixins.scss' as mixins;
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+  margin-top: 10px;
+  max-width: 480px;
+}
+
+.button {
+  /* Complete reset */
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  text-align: inherit;
+  /* Custom styles */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  padding: 26px 34px 26px 26px;
+  z-index: 100;
+  color: var(--strapi-neutral-500, #8E8EA9);
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "SF Pro Text";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 111.111% */
+  letter-spacing: -0.36px;
+  border: solid 1px var(--strapi-neutral-200);
+
+  /* Effet de lueur comme dans l'image */
+  // box-shadow: 
+  //   0 0 5px 2px rgba(156, 91, 245, 0.7),
+  //   0 0 10px 4px rgba(156, 91, 245, 0.5),
+  //   0 0 15px 6px rgba(156, 91, 245, 0.3);
+  margin-bottom: 30px;
+
+  &:hover,
+  &.buttonHovered {
+    background-color: var(--strapi-alternative-600);
+    // background: rgba(255, 255, 255, 0.50);
+    // filter: blur(80px);
+    color: white;
+    // box-shadow: 0px 0px 24px 0px rgba(151, 54, 232), 0px 0px 250px 0px #9736E8;
+    // box-shadow: 0px 0px 24px 0px rgba(151, 54, 232, 1);
+    box-shadow: 0px 0px 24px 0px rgba(151, 54, 232, 0.60), 0px 0px 250px 0px #9736E8;
+    border: solid 1px var(--strapi-alternative-600) !important;
+
+    box-shadow: 
+      0 0 7px 3px rgba(156, 91, 245, 0.8),
+      0 0 12px 6px rgba(156, 91, 245, 0.6),
+      0 0 18px 9px rgba(156, 91, 245, 0.4);
+    
+    box-shadow: 
+      0 0 5px 2px rgba(156, 91, 245, 0.7),
+      0 0 10px 4px rgba(156, 91, 245, 0.5),
+      0 0 15px 6px rgba(156, 91, 245, 0.3),
+      0px 0px 250px 0px #9736E8;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.text {
+  font-weight: 500;
+}
+
+@include mixins.dark {
+  .button {
+    background-color: var(--strapi-neutral-0);
+    border: solid 1px var(--strapi-neutral-200);
+    border-radius: 4px;
+
+    &:hover,
+    &.buttonHovered {
+      background-color: var(--strapi-alternative-600);
+      border: solid 1px var(--strapi-alternative-600) !important;
+      color: white;
+      box-shadow: 0px 0px 24px 0px rgba(151, 54, 232), 0px 0px 250px 0px #9736E8;
+    }
+  }
+}

@@ -17,6 +17,7 @@ import {
   HeroDescription,
   HeroTitle,
   LinkWithArrow,
+  HomepageAIButton,
 } from '../../components';
 import content from './_home.content';
 
@@ -75,18 +76,19 @@ export default function PageHome() {
           `,
         }}
       />
-      <main className={clsx('font-poppins', styles.home)}>
+      <main className={clsx(styles.home)}>
         <Hero id="homeHero">
           <Container>
-            <HeroTitle>
+            <HeroTitle className="heroTitle">
               {content.page.title}
             </HeroTitle>
-            <HeroDescription>
+            <HeroDescription className="heroDescription">
               {content.page.description}
             </HeroDescription>
           </Container>
         </Hero>
-        <section
+        <HomepageAIButton />
+        {/* <section
           id="homeCarousel"
           className={styles.home__carousel}
         >
@@ -122,7 +124,7 @@ export default function PageHome() {
               ))}
             </Carousel>
           </Container>
-        </section>
+        </section> */}
         <section
           id="homeCategories"
           className={styles.home__categories}
