@@ -117,7 +117,7 @@ export default {
     {
       cardLink: '/cloud/intro',
       cardTitle: 'Cloud Documentation',
-      cardDescription: 'Learn how to deploy and manage Strapi projects hosted on Strapi Cloud',
+      cardDescription: 'Learn how to deploy and manage your Strapi projects hosted on Strapi Cloud',
       cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,
       linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
       linksIconColor: 'purple',
