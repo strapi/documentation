@@ -142,6 +142,43 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 <br/>
 
+## 5.6.3
+
+<br/>
+
+### <Icon name="pen-nib" /> Updated content
+
+<br/>
+
+#### Dev Docs
+- [Enhanced webhooks docs](https://github.com/strapi/documentation/pull/2391)
+
+#### Strapi Cloud
+- [New Cloud plans](https://github.com/strapi/documentation/pull/2394)
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+<br/>
+
+#### Dev Docs
+- [Fix descriptions for database parameters in CLI installation](https://github.com/strapi/documentation/pull/2404)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Goldbee2" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/56094194?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Goldbee2"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/ssganesh035" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/117903686?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ssganesh035"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.6.2
 
 ### <Icon name="pen-nib" /> Updated content
