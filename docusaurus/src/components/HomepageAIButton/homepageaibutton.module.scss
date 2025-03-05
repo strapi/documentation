@@ -88,6 +88,40 @@
     // box-shadow:
     //   0 0 30px 5px rgba(151,54,232,.0),
     //   0 0 250px 30px rgba(151, 54, 232, 1);
+
+    // Modification du gradient pour créer un halo plus large
+    // background-image: radial-gradient(
+    //   circle at center,
+    //   rgba(255, 255, 255, 0.4) 0%,
+    //   rgba(255, 255, 255, 0.2) 20%,
+    //   rgba(151, 54, 232, 0.8) 50%,
+    //   rgba(151, 54, 232, 1) 100%
+    // );
+
+    // background-image: radial-gradient(
+    //   circle at center,
+    //   rgba(255, 255, 255, 0.5) 0%,
+    //   rgba(255, 255, 255, 0.3) 30%,
+    //   rgba(151, 54, 232, 0.9) 60%,
+    //   rgba(151, 54, 232, 1) 100%
+    // );
+
+    // background-image: radial-gradient(
+    //   ellipse at center,
+    //   rgba(255, 255, 255, 0.5) 0%,
+    //   rgba(255, 255, 255, 0.3) 25%,
+    //   rgba(151, 54, 232, 0.9) 50%,
+    //   rgba(151, 54, 232, 1) 80%
+    // );
+
+    // Gradient plus lumineux et plus étendu
+    // background-image: radial-gradient(
+    //   circle at center,
+    //   rgba(255, 255, 255, 0.7) 0%,
+    //   rgba(255, 255, 255, 0.4) 15%,
+    //   rgba(176, 104, 233, 0.7) 40%,
+    //   rgba(151, 54, 232, 1) 70%
+    // );
   }
     
   &:hover::before,
