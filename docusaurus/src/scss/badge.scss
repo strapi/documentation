@@ -183,14 +183,14 @@
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--team {
+  &--scale {
     --custom-badge-background-color: rgb(154, 53, 242);
     --custom-badge-color: #fff;
     --custom-badge-tooltip-background-color: var(--strapi-alternative-100);
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
   }
 
-  &--developer {
+  &--essential {
     --custom-badge-background-color: var(--strapi-success-600);
     --custom-badge-color: #fff;
     --custom-badge-tooltip-background-color: var(--strapi-success-100);
@@ -280,7 +280,9 @@ main .badge--content {
 
 main .badge--featureflag,
 main .badge--developer,
+main .badge--essential,
 main .badge--team,
+main .badge--scale,
 main .badge--pro,
 main .badge--enterprise,
 main .badge--growth,
