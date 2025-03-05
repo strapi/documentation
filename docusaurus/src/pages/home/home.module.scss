@@ -10,6 +10,28 @@
   --strapi-home-huitd-margin: 15px 0 -15px;
 }
 
+:global(.heroTitle) {
+  color: var(--strapi-neutral-800) !important;
+  text-align: center;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: "SF Pro Display" !important;
+  font-size: 48px !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  line-height: 56px !important; /* 116.667% */
+}
+
+:global(.heroDescription) {
+  color: var(--text-neutral-tertiary-neutral-600, #666687) !important;
+  text-align: center !important;
+  font-feature-settings: 'liga' off, 'clig' off !important;
+  font-family: "SF Pro Text" !important;
+  font-size: 18px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 32px !important; /* 177.778% */
+}
+
 .home {
   position: relative;
   display: flex;
