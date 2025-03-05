@@ -2,6 +2,7 @@
 
 :root {
   --button-hover-border: rgba(255,255,255,.2);
+  --button-hover-transition-timing: 0.3s;
 }
 
 .container {
@@ -33,10 +34,8 @@
   width: 100%;
   padding: 1rem;
   border-radius: 4px;
-  transition: all 0.2s ease;
   cursor: pointer;
   padding: 26px 34px 26px 26px;
-  // z-index: 100;
   color: var(--strapi-neutral-500, #8E8EA9);
   font-feature-settings: 'liga' off, 'clig' off;
   font-family: "SF Pro Text";
@@ -61,7 +60,7 @@
     border-radius: 8px;
     z-index: -1;
     opacity: 0;
-    transition: opacity .3s ease;
+    transition: opacity var(--button-hover-transition-timing) ease;
     pointer-events: none;
   }
 
@@ -71,14 +70,27 @@
     color: white;
     border: solid 1px var(--button-hover-border);
     box-shadow: 
-      0 0 24px 0px rgba(151, 54, 232, 0.60),  // Première ombre (blur 24px)
-      0 0 250px 0px rgba(151, 54, 232, 1);    // Seconde ombre (blur 250px)
+      0 0 24px 0px rgba(151, 54, 232, 0.60);  // Première ombre (blur 24px)
+      // 0 0 250px 0px rgba(151, 54, 232, 1);    // Seconde ombre (blur 250px)
+    /** initial values */
+    // background-image: radial-gradient(
+    //   circle at center,
+    //   rgba(255, 255, 255, 0.5) 0%,
+    //   rgba(151, 54, 232, 1) 70%
+    // );
+    /** possibly best result 👇 **/
+    // background-image: radial-gradient(
+    //   circle at center,
+    //   rgba(255, 255, 255, 0.3) 0%,
+    //   rgba(255, 255, 255, 0) 200%,
+    // );
+
+    /** Autre effet plus prononcé pour le test */
     background-image: radial-gradient(
       circle at center,
       rgba(255, 255, 255, 0.3) 0%,
-      rgba(151, 54, 232, 1) 70%
+      var(--strapi-alternative-600) 100%
     );
-
     /** Marked effect for testing 👇*/
     // background-image: radial-gradient(
     //   circle at center,
