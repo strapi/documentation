@@ -1,5 +1,9 @@
 @use '@site/src/scss/_mixins.scss' as mixins;
 
+:root {
+  --button-hover-border: rgba(255,255,255,.2);
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -32,47 +36,71 @@
   transition: all 0.2s ease;
   cursor: pointer;
   padding: 26px 34px 26px 26px;
-  z-index: 100;
+  // z-index: 100;
   color: var(--strapi-neutral-500, #8E8EA9);
   font-feature-settings: 'liga' off, 'clig' off;
   font-family: "SF Pro Text";
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 20px; /* 111.111% */
+  line-height: 20px; 
   letter-spacing: -0.36px;
   border: solid 1px var(--strapi-neutral-200);
+  position: relative;
 
-  /* Effet de lueur comme dans l'image */
-  // box-shadow: 
-  //   0 0 5px 2px rgba(156, 91, 245, 0.7),
-  //   0 0 10px 4px rgba(156, 91, 245, 0.5),
-  //   0 0 15px 6px rgba(156, 91, 245, 0.3);
   margin-bottom: 30px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    bottom: -10px;
+    right: -10px;
+    background-color: rgba(151,54,232,.2);
+    border-radius: 8px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity .3s ease;
+    pointer-events: none;
+  }
 
   &:hover,
   &.buttonHovered {
     background-color: var(--strapi-alternative-600);
-    // background: rgba(255, 255, 255, 0.50);
-    // filter: blur(80px);
     color: white;
-    // box-shadow: 0px 0px 24px 0px rgba(151, 54, 232), 0px 0px 250px 0px #9736E8;
-    // box-shadow: 0px 0px 24px 0px rgba(151, 54, 232, 1);
-    box-shadow: 0px 0px 24px 0px rgba(151, 54, 232, 0.60), 0px 0px 250px 0px #9736E8;
-    border: solid 1px var(--strapi-alternative-600) !important;
+    border: solid 1px var(--button-hover-border);
+    box-shadow: 
+      0 0 24px 0px rgba(151, 54, 232, 0.60),  // Première ombre (blur 24px)
+      0 0 250px 0px rgba(151, 54, 232, 1);    // Seconde ombre (blur 250px)
+    background-image: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(151, 54, 232, 1) 70%
+    );
 
-    box-shadow: 
-      0 0 7px 3px rgba(156, 91, 245, 0.8),
-      0 0 12px 6px rgba(156, 91, 245, 0.6),
-      0 0 18px 9px rgba(156, 91, 245, 0.4);
+    /** Marked effect for testing 👇*/
+    // background-image: radial-gradient(
+    //   circle at center,
+    //   white 0%,
+    //   #9736E8 50%
+    // );
+    // box-shadow:
+    //   0 0 30px 5px rgba(151,54,232,.0),
+    //   0 0 250px 30px rgba(151, 54, 232, 1);
+  }
     
-    box-shadow: 
-      0 0 5px 2px rgba(156, 91, 245, 0.7),
-      0 0 10px 4px rgba(156, 91, 245, 0.5),
-      0 0 15px 6px rgba(156, 91, 245, 0.3),
-      0px 0px 250px 0px #9736E8;
+  &:hover::before,
+  &:hover::after {
+    opacity: 1;
+  }
+
+  > * {
+    position: relative;
+    z-index: 2;
   }
 }
+
 
 .icon {
   width: 20px;
@@ -84,17 +112,17 @@
 }
 
 @include mixins.dark {
-  .button {
-    background-color: var(--strapi-neutral-0);
-    border: solid 1px var(--strapi-neutral-200);
-    border-radius: 4px;
+  // .button {
+  //   background-color: var(--strapi-neutral-0);
+  //   border: solid 1px var(--strapi-neutral-200);
+  //   border-radius: 4px;
 
-    &:hover,
-    &.buttonHovered {
-      background-color: var(--strapi-alternative-600);
-      border: solid 1px var(--strapi-alternative-600) !important;
-      color: white;
-      box-shadow: 0px 0px 24px 0px rgba(151, 54, 232), 0px 0px 250px 0px #9736E8;
-    }
-  }
+  //   &:hover,
+  //   &.buttonHovered {
+  //     background-color: var(--strapi-alternative-600);
+  //     border: solid 1px var(--strapi-alternative-600) !important;
+  //     color: white;
+  //     // box-shadow: 0px 0px 24px 0px rgba(151, 54, 232), 0px 0px 250px 0px #9736E8;
+  //   }
+  // }
 }
