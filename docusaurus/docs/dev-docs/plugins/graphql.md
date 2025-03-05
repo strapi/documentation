@@ -69,7 +69,7 @@ Plugins configuration are defined in the `config/plugins.js` file. This configur
 The maximum number of items returned by the response is limited to 100 by default. This value can be changed using the `amountLimit` configuration option, but should only be changed after careful consideration: a large query can cause a DDoS (Distributed Denial of Service) and may cause abnormal load on your Strapi server, as well as your database server.
 :::
 
-## GraphQL Configuration Options
+## GraphQL configuration options
 
 The following configuration options are supported by the GraphQL plugin and can be defined in the `config/plugins` file:
 
@@ -180,7 +180,7 @@ export default ({ env }) => {
 
 </Tabs>
 
-### CORS exceptions for Landing Page
+### CORS exceptions for landing page
 
 If the landing page is enabled in production environments (which is not recommended), CORS headers for the Apollo Server landing page must be added manually.
 
