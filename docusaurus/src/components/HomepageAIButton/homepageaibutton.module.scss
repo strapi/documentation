@@ -70,8 +70,8 @@
     color: white;
     border: solid 1px var(--button-hover-border);
     box-shadow: 
-      0 0 24px 0px rgba(151, 54, 232, 0.60);  // Première ombre (blur 24px)
-      // 0 0 250px 0px rgba(151, 54, 232, 1);    // Seconde ombre (blur 250px)
+      0 0 24px 0px rgba(151, 54, 232, 0.60),  // Première ombre (blur 24px)
+      0 0 250px 0px rgba(151, 54, 232, 1);    // Seconde ombre (blur 250px)
     /** initial values */
     // background-image: radial-gradient(
     //   circle at center,
@@ -79,11 +79,11 @@
     //   rgba(151, 54, 232, 1) 70%
     // );
     /** possibly best result 👇 **/
-    // background-image: radial-gradient(
-    //   circle at center,
-    //   rgba(255, 255, 255, 0.3) 0%,
-    //   rgba(255, 255, 255, 0) 200%,
-    // );
+    background-image: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0) 200%,
+    );
 
     /** Autre effet plus prononcé pour le test */
     background-image: radial-gradient(
