@@ -95,7 +95,7 @@ To select the relevant relational field's entries:
 3. Repeat step 2 until all relevant entries have been chosen.
 
 :::tip
-All selected entries are listed right below the drop-down list. Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
+All selected entries are listed right below the drop-down list. Click on the name of an entry to display a modal from where you will be able to edit the relational field's content-type. For now, you can only edit a relation on-the-fly, and not create a new one. This feature is currently in beta and only available if you installed Strapi with the beta flag, with the following command `npx create-strapi@beta`.
 :::
 
 To remove an entry, click on the cross button <Icon name="x" classes="ph-bold" /> in the selected entries list.
