@@ -46,6 +46,7 @@
   letter-spacing: -0.36px;
   border: solid 1px var(--strapi-neutral-200);
   position: relative;
+  transition: background-color var(--button-hover-transition-timing) ease;
 
   margin-bottom: 30px;
 
