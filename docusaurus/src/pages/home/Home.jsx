@@ -5,6 +5,8 @@ import styles from './home.module.scss';
 import {
   Button,
   Card,
+  CardCta,
+  CardIcon,
   CardDescription,
   CardImg,
   CardImgBg,
@@ -19,6 +21,7 @@ import {
   LinkWithArrow,
   HomepageAIButton,
 } from '../../components';
+import Icon from '../../components/Icon';
 import content from './_home.content';
 
 const NAVBAR_TRANSLUCENT_UNTIL_SCROLL_Y = 36;
@@ -136,6 +139,9 @@ export default function PageHome() {
                 cardDescription: categoryItemCardDescription,
                 cardImgSrc: categoryItemCardImgSrc,
                 cardLink: categoryItemCardLink,
+                cardIconName: categoryItemCardIconName,
+                cardIconColor: categoryItemCardIconColor,
+                cardCtaText: categoryItemCardCtaText,
                 ...categoryItem
               }, categoryItemIndex) => {
                 return (
@@ -148,24 +154,26 @@ export default function PageHome() {
                     )}
                   >
                     <Card to={categoryItemCardLink}>
-                      {categoryItemCardTitle && <CardTitle withArrow>{categoryItemCardTitle}</CardTitle>}
+                      {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor}/>}
+                      {categoryItemCardTitle && <CardTitle >{categoryItemCardTitle}</CardTitle>}
                       {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
+                      {categoryItemCardLink && <CardCta withArrow to={categoryItemCardLink} text={categoryItemCardCtaText} color={categoryItemCardIconColor} className="category-card-cta" />}
                       {categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} />}
                     </Card>
-                    {categoryItem.links && (
+                    {/* {categoryItem.links && (
                       <FeaturesList
                         icon={categoryItem.linksIconSrc}
                         iconColor={categoryItem.linksIconColor}
                         items={categoryItem.links}
                       />
-                    )}
+                    )} */}
                   </div>
                 );
               })}
             </div>
           </Container>
         </section>
-        <section
+        {/* <section
           id="homeHelpUsImproveTheDocumentation"
           className={styles.home__huitd}
         >
@@ -178,7 +186,7 @@ export default function PageHome() {
               {content.huitd.label}
             </LinkWithArrow>
           </Container>
-        </section>
+        </section> */}
       </main>
     </Layout>
   );

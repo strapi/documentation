@@ -3,9 +3,12 @@
 @use '../../scss/_mixins.scss' as *;
 
 :root {
-  --strapi-card-background: var(--strapi-neutral-0);
   --strapi-card-border-color: #EDEDFF;
-  --strapi-card-border-radius: 10px;
+  --strapi-card-border-color-dark: var(--strapi-neutral-150);
+  --strapi-card-border-color-light: var(--strapi-neutral-150);
+  --strapi-card-border-radius: 4px;
+  --strapi-card-background-dark: linear-gradient(180deg, var(--strapi-neutral-100) 0%, var(--strapi-neutral-0) 100%);
+  --strapi-card-background-light: linear-gradient(180deg, var(--strapi-neutral-1000) 0%, var(--strapi-neutral-900) 100%);
   --strapi-card-box-shadow: 0 0 0 transparent;
   --strapi-card-content-delimited: 395px;
   --strapi-card-img-border-width: 5px;
@@ -16,8 +19,8 @@
   --strapi-card-overflow: hidden;
   --strapi-card-text-align: center;
   --strapi-card-gap: var(--strapi-spacing-2);
-  --strapi-card-px: var(--strapi-spacing-6);
-  --strapi-card-py: var(--strapi-spacing-6);
+  --strapi-card-px: var(--strapi-spacing-10);
+  --strapi-card-py: var(--strapi-spacing-10);
   --strapi-card-title-arrow-left: var(--strapi-card-gap);
   --strapi-card-title-color: #1D1B84;
   --strapi-card-title-font-size: 17px;
@@ -33,9 +36,10 @@
 .card {
   position: var(--strapi-card-position);
   overflow: var(--strapi-card-overflow);
-  background: var(--strapi-card-background);
+  // background: var(--strapi-card-background);
+  background-color: transparent;
   border-radius: var(--strapi-card-border-radius);
-  border: 1px solid var(--strapi-card-border-color);
+  border: 1px solid var(--strapi-card-border-color-light);
   box-shadow: var(--strapi-card-box-shadow);
   display: flex;
   flex-direction: column;
@@ -45,12 +49,30 @@
   text-align: var(--strapi-card-text-align);
   padding: var(--strapi-card-py) var(--strapi-card-px);
   transition: all 0.2s ease;
+  border: 1px solid var(--strapi-neutral-800);
+  background: var(--strapi-card-background-light);
+
+  /* Shadow */
+  box-shadow: var(--Shadow-X, 0px) var(--Shadow-Y, 1px) var(--Shadow-Blur, 10px) 0px var(--Shadow-Color, rgba(3, 3, 5, 0.35));
 
   &:focus, &:hover {
     --strapi-card-border-color: var(--strapi-card-hover-border-color);
     --strapi-card-title-arrow-left: var(--strapi-spacing-3);
     --strapi-card-img-bg-scale: var(--strapi-card-hover-img-bg-scale);
   }
+
+  &-category-icon-container {
+    display: flex;
+    padding: 12px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 4px;
+    background: #212134;
+  }
+
 
   &__title {
     display: block;
@@ -59,6 +81,14 @@
     font-weight: var(--strapi-card-title-font-weight);
     line-height: var(--strapi-card-title-line-height);
     margin: 0;
+
+    color:#FFF;
+    font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important; 
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    padding-top: 6px;
 
     &:after {
       content: none;
@@ -76,10 +106,12 @@
     --ifm-link-color: var(--strapi-card-description-color);
     --ifm-link-decoration: underline;
 
-    color: var(--strapi-card-description-color);
-    opacity: 0.8;
-    font-size: var(--strapi-card-description-font-size);
-    line-height: var(--strapi-card-description-line-height);
+    color:#A5A5BA;
+    font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important; 
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
   }
 
   &__img {
@@ -153,11 +185,17 @@
   }
 }
 
+.category-card-cta {
+  background-color: tomato !important;
+}
+
+/** Note: Icons size (icons at top of cards) is defined in icons.scss */
+
 /** Responsive */
 @include medium-up {
   :root {
-    --strapi-card-px: var(--strapi-spacing-8);
-    --strapi-card-py: var(--strapi-spacing-9);
+    --strapi-card-px: var(--strapi-spacing-10);
+    --strapi-card-py: var(--strapi-spacing-10);
   }
 
   .card {
@@ -195,7 +233,7 @@
 
 /** Dark mode */
 @include dark {
-  --strapi-card-border-color: var(--strapi-neutral-150);
+  --strapi-card-border-color: var(--strapi-card-border-color-dark);
   --strapi-card-title-color: var(--strapi-netral-1000);
   --strapi-card-description-color: var(--strapi-neutral-400);
   --strapi-card-img-border-color: rgba(255, 255, 255, 0.5);
@@ -203,7 +241,8 @@
 
   .card {
     &--cta {
-      --strapi-card-background: var(--strapi-neutral-0);
+      background: var(--strapi-card-background-dark);
+      border: solid 1px var(--strapi-card-border-color-dark);
 
       &:focus, &:hover {
         --strapi-card-border-color: #49494D;
