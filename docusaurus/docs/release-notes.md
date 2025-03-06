@@ -27,6 +27,40 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.0.0-beta.3
+<br />
+
+### <Icon name="pen-nib" /> Updated content
+
+<br />
+
+#### Strapi Cloud
+- [New Cloud plans (CMS docs)](https://github.com/strapi/documentation/pull/2396)
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [First draft of Iteration #1 for new homepage](https://github.com/strapi/documentation/pull/2416)
+- [Apply `<ExternalLink />` component where necessary](https://github.com/strapi/documentation/pull/2415)
+- [Fix pagination_next values](https://github.com/strapi/documentation/pull/2414)
+- [Mention lifecycle hooks blog article](https://github.com/strapi/documentation/pull/2413)
+- [Mention blog article about lifecycle functions](https://github.com/strapi/documentation/pull/2412)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.0.0-beta.2
 
 <br />
@@ -103,6 +137,43 @@ This release was made possible thanks to the following contributors. Thank you! 
 </a>
 <a href="https://github.com/pwizla" target="_blank">
     <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 5.6.3
+
+<br/>
+
+### <Icon name="pen-nib" /> Updated content
+
+<br/>
+
+#### Dev Docs
+- [Enhanced webhooks docs](https://github.com/strapi/documentation/pull/2391)
+
+#### Strapi Cloud
+- [New Cloud plans](https://github.com/strapi/documentation/pull/2394)
+
+### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+
+<br/>
+
+#### Dev Docs
+- [Fix descriptions for database parameters in CLI installation](https://github.com/strapi/documentation/pull/2404)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Goldbee2" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/56094194?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Goldbee2"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/ssganesh035" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/117903686?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ssganesh035"/>
 </a>
 </div>
 <br/>
