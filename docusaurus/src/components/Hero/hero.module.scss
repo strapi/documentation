@@ -1,15 +1,12 @@
 /** Component: Hero */
-
 @use '../../scss/_mixins.scss' as *;
 
 :root {
   --strapi-hero-py: var(--strapi-spacing-6);
   --strapi-hero-gap: var(--strapi-spacing-4);
-
   --strapi-hero-title-color: #1D1B84;
   --strapi-hero-title-font-size: var(--strapi-font-size-xl);
   --strapi-hero-title-line-height: 1.25;
-
   --strapi-hero-description-color: #4E6294;
   --strapi-hero-description-font-size: var(--strapi-font-size-lg);
   --strapi-hero-description-line-height: 1.25;
@@ -50,6 +47,8 @@
 
 /** Dark mode */
 @include dark {
-  --strapi-hero-title-color: white;
-  --strapi-hero-description-color: white;
+  :root {
+    --strapi-hero-title-color: #FFFFFF;
+    --strapi-hero-description-color: #A5A5BA;
+  }
 }

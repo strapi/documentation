@@ -14,22 +14,22 @@
   color: var(--strapi-neutral-800) !important;
   text-align: center;
   font-feature-settings: 'liga' off, 'clig' off;
-  font-family: "SF Pro Display" !important;
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   font-size: 48px !important;
   font-style: normal !important;
   font-weight: 600 !important;
-  line-height: 56px !important; /* 116.667% */
+  line-height: 56px !important;
 }
 
 :global(.heroDescription) {
   color: var(--text-neutral-tertiary-neutral-600, #666687) !important;
   text-align: center !important;
   font-feature-settings: 'liga' off, 'clig' off !important;
-  font-family: "SF Pro Text" !important;
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
   font-size: 18px !important;
   font-style: normal !important;
   font-weight: 400 !important;
-  line-height: 32px !important; /* 177.778% */
+  line-height: 32px !important; 
 }
 
 .home {
@@ -75,6 +75,7 @@
 
     &__item {
       margin: calc(var(--strapi-home-gap) / 2) 0;
+      // border: solid 10px tomato;
 
       &__links {
         display: flex;
@@ -117,6 +118,14 @@
   --strapi-home-faded-bg-display: none;
   --strapi-home-pb: var(--strapi-spacing-8);
   --strapi-home-huitd-link-background-color: var(--strapi-neutral-0);
+
+  :global(.heroTitle) {
+    color: var(--strapi-neutral-800) !important;
+  }
+
+  :global(.heroDescription) {
+    color: var(--strapi-neutral-400) !important;
+  }
 
   .home {
     &__huitd {
