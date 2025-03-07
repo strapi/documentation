@@ -88,6 +88,9 @@ const sidebars = {
           type: 'doc',
           label: 'Preview',
           id: 'cms/features/preview',
+          customProps: {
+            updated: true
+          }
         },
         {
           type: 'doc',
