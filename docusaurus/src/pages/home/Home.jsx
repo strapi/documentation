@@ -142,6 +142,7 @@ export default function PageHome() {
                 cardIconName: categoryItemCardIconName,
                 cardIconColor: categoryItemCardIconColor,
                 cardCtaText: categoryItemCardCtaText,
+                categoryType,
                 ...categoryItem
               }, categoryItemIndex) => {
                 return (
@@ -153,7 +154,7 @@ export default function PageHome() {
                       styles.home__categories__item,
                     )}
                   >
-                    <Card to={categoryItemCardLink}>
+                    <Card to={categoryItemCardLink} categoryType={categoryType}>
                       {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor}/>}
                       {categoryItemCardTitle && <CardTitle >{categoryItemCardTitle}</CardTitle>}
                       {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}

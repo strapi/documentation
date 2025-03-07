@@ -119,6 +119,14 @@
   --strapi-home-pb: var(--strapi-spacing-8);
   --strapi-home-huitd-link-background-color: var(--strapi-neutral-0);
 
+  :global(.heroTitle) {
+    color: var(--strapi-neutral-800) !important;
+  }
+
+  :global(.heroDescription) {
+    color: var(--strapi-neutral-400) !important;
+  }
+
   .home {
     &__huitd {
       &__link {

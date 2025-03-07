@@ -1,4 +1,4 @@
-import React from 'react';
+
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import styles from './card.module.scss';
@@ -125,6 +125,7 @@ export function CardCta({
 }
 
 export function Card({
+  categoryType,
   className,
   href,
   isContentDelimited,
@@ -145,6 +146,7 @@ export function Card({
         (isContentDelimited && styles['card--content-delimited']),
         (variant && styles[`card--${variant}`]),
         className,
+        categoryType ? `category-${categoryType}` : ''
       )}
       {...rest}
     />

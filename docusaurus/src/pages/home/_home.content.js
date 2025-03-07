@@ -55,6 +55,7 @@ export default {
   ],
   categories: [
     {
+      categoryType: "cms",
       cardLink: '/cms/intro',
       cardIconName: 'feather',
       cardIconColor: '#7B79FF',
@@ -118,6 +119,7 @@ export default {
     //   ],
     // },
     {
+      categoryType: "cloud",
       cardLink: '/cloud/intro',
       cardIconName: 'cloud',
       cardIconColor: '#66B7F1',

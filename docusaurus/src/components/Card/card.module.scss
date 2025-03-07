@@ -3,12 +3,12 @@
 @use '../../scss/_mixins.scss' as *;
 
 :root {
-  --strapi-card-border-color: #EDEDFF;
+  --strapi-card-border-color: var(--strapi-neutral-150);
   --strapi-card-border-color-dark: var(--strapi-neutral-150);
   --strapi-card-border-color-light: var(--strapi-neutral-150);
   --strapi-card-border-radius: 4px;
   --strapi-card-background-dark: linear-gradient(180deg, var(--strapi-neutral-100) 0%, var(--strapi-neutral-0) 100%);
-  --strapi-card-background-light: linear-gradient(180deg, var(--strapi-neutral-1000) 0%, var(--strapi-neutral-900) 100%);
+  --strapi-card-background-light: var(--strapi-neutral-0);
   --strapi-card-box-shadow: 0 0 0 transparent;
   --strapi-card-content-delimited: 395px;
   --strapi-card-img-border-width: 5px;
@@ -22,7 +22,7 @@
   --strapi-card-px: var(--strapi-spacing-10);
   --strapi-card-py: var(--strapi-spacing-10);
   --strapi-card-title-arrow-left: var(--strapi-card-gap);
-  --strapi-card-title-color: #1D1B84;
+  --strapi-card-title-color: var(--strapi-neutral-800);
   --strapi-card-title-font-size: 17px;
   --strapi-card-title-font-weight: 700;
   --strapi-card-title-line-height: 26px;
@@ -31,6 +31,17 @@
   --strapi-card-description-line-height: 24px;
   --strapi-card-hover-border-color: #D6D6FF;
   --strapi-card-hover-img-bg-scale: 1.15;
+  --strapi-card-container-icon-background-color-cms: var(--strapi-primary-100);
+  --strapi-card-container-icon-background-color-cloud: var(--strapi-secondary-100);
+}
+
+/* Ces sélecteurs doivent être en dehors du bloc card pour fonctionner correctement */
+:global(.category-cms) .card-category-icon-container {
+  background-color: var(--strapi-card-container-icon-background-color-cms);
+}
+
+:global(.category-cloud) .card-category-icon-container {
+  background-color: var(--strapi-card-container-icon-background-color-cloud);
 }
 
 .card {
@@ -40,7 +51,7 @@
   background-color: transparent;
   border-radius: var(--strapi-card-border-radius);
   border: 1px solid var(--strapi-card-border-color-light);
-  box-shadow: var(--strapi-card-box-shadow);
+  // box-shadow: var(--strapi-card-box-shadow);
   display: flex;
   flex-direction: column;
   gap: var(--strapi-card-gap);
@@ -49,11 +60,7 @@
   text-align: var(--strapi-card-text-align);
   padding: var(--strapi-card-py) var(--strapi-card-px);
   transition: all 0.2s ease;
-  border: 1px solid var(--strapi-neutral-800);
   background: var(--strapi-card-background-light);
-
-  /* Shadow */
-  box-shadow: var(--Shadow-X, 0px) var(--Shadow-Y, 1px) var(--Shadow-Blur, 10px) 0px var(--Shadow-Color, rgba(3, 3, 5, 0.35));
 
   &:focus, &:hover {
     --strapi-card-border-color: var(--strapi-card-hover-border-color);
@@ -70,9 +77,8 @@
     justify-content: center;
     gap: 8px;
     border-radius: 4px;
-    background: #212134;
+    background: var(--strapi-card-container-icon-background-color-cms);
   }
-
 
   &__title {
     display: block;
@@ -81,8 +87,6 @@
     font-weight: var(--strapi-card-title-font-weight);
     line-height: var(--strapi-card-title-line-height);
     margin: 0;
-
-    color:#FFF;
     font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important; 
     font-size: 28px;
     font-style: normal;
@@ -135,34 +139,7 @@
     }
   }
 
-  &--cloud {
-    --strapi-card-background:
-      radial-gradient(
-        133.72% 136.4% at 42.35% 0%,
-        #121170 45.12%,
-        #0B0B47 100%
-      ),
-      linear-gradient(
-        0deg,
-        #FFFFFF,
-        #FFFFFF
-      ),
-      #FFFFFF
-    ;
-    --strapi-card-title-color: #fff;
-    --strapi-card-description-color: #fff;
-  }
-
   &--cta {
-    --ifm-link-color: currentColor;
-    --strapi-card-background:
-      linear-gradient(
-        310deg,
-        rgba(168, 166, 255, 0.15) 1.16%,
-        rgba(226, 225, 255, 0.15) 69.23%
-      ),
-      #FFFFFF
-    ;
     --strapi-card-text-align: left;
     --strapi-card-gap: var(--strapi-spacing-2);
     --strapi-card-title-font-size: 21px;
@@ -185,10 +162,6 @@
   }
 }
 
-.category-card-cta {
-  background-color: tomato !important;
-}
-
 /** Note: Icons size (icons at top of cards) is defined in icons.scss */
 
 /** Responsive */
@@ -208,8 +181,8 @@
 
     &:focus, &:hover {
       &.card--cta {
-        --strapi-card-border-color: #D6D6FF;
-        --strapi-card-box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
+        // --strapi-card-border-color: #D6D6FF;
+        // --strapi-card-box-shadow: 0px 1px 4px rgba(33, 33, 52, 0.1);
       }
     }
 
@@ -234,20 +207,30 @@
 /** Dark mode */
 @include dark {
   --strapi-card-border-color: var(--strapi-card-border-color-dark);
-  --strapi-card-title-color: var(--strapi-netral-1000);
+  --strapi-card-title-color: var(--strapi-neutral-1000);
   --strapi-card-description-color: var(--strapi-neutral-400);
   --strapi-card-img-border-color: rgba(255, 255, 255, 0.5);
   --strapi-card-hover-border-color: #49494D;
+  
+  /* Définir des versions dark mode des couleurs de catégories */
+  --strapi-card-container-icon-background-color: var(--strapi-neutral-0);
+  --strapi-card-container-icon-background-color-cms: var(--strapi-neutral-0);
+  --strapi-card-container-icon-background-color-cloud: var(--strapi-neutral-0);
 
   .card {
+    background: var(--strapi-card-background-dark);
+
+    &-category-icon-container {
+      /* Couleur par défaut pour tous les conteneurs d'icônes */
+      background-color: var(--strapi-card-container-icon-background-color);
+    }
+
     &--cta {
-      background: var(--strapi-card-background-dark);
       border: solid 1px var(--strapi-card-border-color-dark);
 
       &:focus, &:hover {
         --strapi-card-border-color: #49494D;
         --strapi-card-color: var(--strapi-neutral-1000);
-
         --ifm-link-hover-color: var(--strapi-neutral-1000);
       }
     }
