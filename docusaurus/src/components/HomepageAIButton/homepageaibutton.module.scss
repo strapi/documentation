@@ -46,7 +46,11 @@
   letter-spacing: -0.36px;
   border: solid 1px var(--strapi-neutral-200);
   position: relative;
-  transition: background-color var(--button-hover-transition-timing) ease;
+  transition: 
+    background-color var(--button-hover-transition-timing) ease,
+    color var(--button-hover-transition-timing) ease,
+    border var(--button-hover-transition-timing) ease,
+    box-shadow var(--button-hover-transition-timing) ease;
 
   margin-bottom: 30px;
 
@@ -71,70 +75,14 @@
     color: white;
     border: solid 1px var(--button-hover-border);
     box-shadow: 
-      0 0 24px 0px rgba(151, 54, 232, 0.60),  // Première ombre (blur 24px)
-      0 0 250px 0px rgba(151, 54, 232, 1);    // Seconde ombre (blur 250px)
-    /** initial values */
-    // background-image: radial-gradient(
-    //   circle at center,
-    //   rgba(255, 255, 255, 0.5) 0%,
-    //   rgba(151, 54, 232, 1) 70%
-    // );
-    /** possibly best result 👇 **/
-    background-image: radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0) 200%,
-    );
-
-    /** Autre effet plus prononcé pour le test */
+      0 0 24px 0px rgba(151, 54, 232, 0.60),
+      0 0 250px 0px rgba(151, 54, 232, 1);
+    
     background-image: radial-gradient(
       circle at center,
       rgba(255, 255, 255, 0.3) 0%,
       var(--strapi-alternative-600) 100%
     );
-    /** Marked effect for testing 👇*/
-    // background-image: radial-gradient(
-    //   circle at center,
-    //   white 0%,
-    //   #9736E8 50%
-    // );
-    // box-shadow:
-    //   0 0 30px 5px rgba(151,54,232,.0),
-    //   0 0 250px 30px rgba(151, 54, 232, 1);
-
-    // Modification du gradient pour créer un halo plus large
-    // background-image: radial-gradient(
-    //   circle at center,
-    //   rgba(255, 255, 255, 0.4) 0%,
-    //   rgba(255, 255, 255, 0.2) 20%,
-    //   rgba(151, 54, 232, 0.8) 50%,
-    //   rgba(151, 54, 232, 1) 100%
-    // );
-
-    // background-image: radial-gradient(
-    //   circle at center,
-    //   rgba(255, 255, 255, 0.5) 0%,
-    //   rgba(255, 255, 255, 0.3) 30%,
-    //   rgba(151, 54, 232, 0.9) 60%,
-    //   rgba(151, 54, 232, 1) 100%
-    // );
-
-    // background-image: radial-gradient(
-    //   ellipse at center,
-    //   rgba(255, 255, 255, 0.5) 0%,
-    //   rgba(255, 255, 255, 0.3) 25%,
-    //   rgba(151, 54, 232, 0.9) 50%,
-    //   rgba(151, 54, 232, 1) 80%
-    // );
-
-    // Gradient plus lumineux et plus étendu
-    // background-image: radial-gradient(
-    //   circle at center,
-    //   rgba(255, 255, 255, 0.7) 0%,
-    //   rgba(255, 255, 255, 0.4) 15%,
-    //   rgba(176, 104, 233, 0.7) 40%,
-    //   rgba(151, 54, 232, 1) 70%
-    // );
   }
     
   &:hover::before,
@@ -148,7 +96,6 @@
   }
 }
 
-
 .icon {
   width: 20px;
   height: 20px;
@@ -159,17 +106,35 @@
 }
 
 @include mixins.dark {
-  // .button {
-  //   background-color: var(--strapi-neutral-0);
-  //   border: solid 1px var(--strapi-neutral-200);
-  //   border-radius: 4px;
-
-  //   &:hover,
-  //   &.buttonHovered {
-  //     background-color: var(--strapi-alternative-600);
-  //     border: solid 1px var(--strapi-alternative-600) !important;
-  //     color: white;
-  //     // box-shadow: 0px 0px 24px 0px rgba(151, 54, 232), 0px 0px 250px 0px #9736E8;
-  //   }
-  // }
+  .button {
+    background-color: var(--strapi-neutral-0);
+    border: solid 1px var(--strapi-neutral-200);
+    border-radius: 4px;
+    
+    /* Transition plus lente en mode sombre pour supprimer l'effet de flash */
+    transition: 
+      background-color 0.5s ease,
+      color 0.5s ease,
+      border 0.5s ease,
+      box-shadow 0.5s ease;
+    
+    /* Supprimer l'effet de background-image en hover pour mode sombre */
+    &:hover,
+    &.buttonHovered {
+      background-color: var(--strapi-alternative-600);
+      border: solid 1px var(--strapi-alternative-600);
+      color: white;
+      box-shadow: 
+        0 0 24px 0px rgba(151, 54, 232, 0.60),
+        0 0 250px 0px rgba(151, 54, 232, 1);
+      
+      /* Une transition de fond plus douce sans flash */
+      background-image: none;
+    }
+    
+    /* Animation plus douce du halo */
+    &::before {
+      transition: opacity 0.5s ease;
+    }
+  }
 }
