@@ -53,11 +53,6 @@
     left: 0;
     height: 448px;
     opacity: 0.5;
-    background: linear-gradient(
-      180deg,
-      var(--strapi-home-bg-color-start) 0%,
-      var(--strapi-home-bg-color-end) 90%
-    );
   }
 
   &__carousel {
