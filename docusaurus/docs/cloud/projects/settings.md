@@ -37,12 +37,7 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
   - the name of your Strapi Cloud project — used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs — and change it (see [Renaming project](#renaming-project)).
   - the chosen hosting region for your Strapi Cloud project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the app's internal name for the project, which can be useful for debug & support purposes.
-- *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
-
-:::note
-If you don't see the Strapi CMS license key area, then it probably means that your subscription is a legacy one and does not support custom CMS license. Instead you already have one that is automatically included on your project.
-:::
-
+- *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Adding CMS license key](#adding-cms-license-key)).
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
@@ -62,6 +57,20 @@ The project name is set at project creation (see [Project creation](/cloud/getti
 2. In the dialog, write the new project name of your choice in the *Project name* textbox.
 3. Click on the **Rename** button to confirm the project name modification.
 
+#### Adding CMS license key
+
+A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchases: please refer to the [Strapi Pricing page](https://strapi.io/pricing-self-hosted) for more information and/or to purchase a license.
+
+:::note
+If you don't see the *Strapi CMS license key* section, it probably means that your subscription is a legacy one and does not support custom CMS licenses. It means that you already have one that is automatically included on your project.
+:::
+
+1. In the *Strapi CMS license key* section, click on the **Add license** button.
+2. In the dialog, paste your license key in the field.
+3. Click on **Save**.
+
+To remove the Strapi CMS license from your Strapi Cloud project, you can click on the **Unlink license** button. This will also remove access and usage to the CMS features included in the previously added license.
+
 #### Modifying git repository & branch
 
 The GitHub or GitLab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to update the project's repository or switch to another git provider.
@@ -70,7 +79,7 @@ The GitHub or GitLab repository, branch and base directory for a Strapi Cloud pr
 Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
 :::
 
-
+1. In the *Connected git repository* section, click on the **Update repository** button. You will be redirected to another interface.
 2. (optional) If you wish to not only update the repository but switch to another git provider, click on the **Switch Git provider** button at the top right corner of the interface. You will be redirected to the chosen git provider's authorization settings before getting back to the *Update repository* interface.
 3. In the *Update repository* section, fill in the 2 available settings:
 
