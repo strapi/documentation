@@ -504,7 +504,7 @@ Entries from multiple-choice relational fields can be reordered, indicated by a 
 :::tip
 - Not all entries are listed by default: more can be displayed by clicking on the **Load more** button. Also, instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
 
-- Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
+- Click on the name of an entry to display a modal from where you will be able to edit the relational field's content-type. For now, you can only edit a relation on-the-fly and not create a new one.  This feature is currently in beta and only available if you installed Strapi with the beta flag, with the following command `npx create-strapi@beta`.
 :::
 
 :::note
