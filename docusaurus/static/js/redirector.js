@@ -81,6 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
       'editing-roles-details': '/cms/features/users-permissions#editing-a-role',
       'configuring-roles-permissions': '/cms/features/users-permissions#editing-a-role',
       'deleting-a-role': '/cms/features/users-permissions#deleting-a-role',
+      'reset-password': '/cms/features/users-permissions#email-templates',
+      'reset-password-1': '/cms/features/users-permissions#email-templates',
+      'email-validation': '/cms/features/users-permissions#email-templates',
+      'forgotten-password-ask-for-the-reset-password-link': '/cms/features/users-permissions#email-templates',
+      'reset-password-send-the-new-password': '/cms/features/users-permissions#email-templates',
+      'setup-the-frontend': '/cms/configurations/users-and-permissions-providers/new-provider-guide#frontend-setup',
+      'creating-a-custom-provider': '/cms/configurations/users-and-permissions-providers/new-provider-guide',
+      'keycloak-config': '/cms/configurations/users-and-permissions-providers/keycloak'
     },
   }
 
