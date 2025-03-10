@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'email-validation': '/cms/features/users-permissions#email-templates',
       'usage-1': '/cms/features/users-permissions',
       'understanding-the-login-flow': '/cms/configurations/users-and-permissions-providers#understanding-the-login-flow',
+      'setting-up-the-server-url': '/cms/configurations/users-and-permissions-providers#setting-up-the-server-url',
       'forgotten-password-ask-for-the-reset-password-link': '/cms/features/users-permissions#email-templates',
       'reset-password-send-the-new-password': '/cms/features/users-permissions#email-templates',
       'setup-the-frontend': '/cms/configurations/users-and-permissions-providers/new-provider-guide#frontend-setup',
