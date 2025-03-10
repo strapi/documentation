@@ -21,7 +21,6 @@ export function InteractiveQueryBuilder({
   const [queryString, setQueryString] = useState('');
   const [clipboardStatus, setClipboardStatus] = useState('');
   const [isEditorDisabled, setIsEditorDisabled] = useState(true);
-  const editorContainerRef = useRef(null);
 
   /**
    * Copy to Clipboard
@@ -125,7 +124,6 @@ export function InteractiveQueryBuilder({
           hint="Feel free to modify the code above."
         >
           <div
-            ref={editorContainerRef}
             onBlur={() => handleEditorBlur()}
             onClick={() => handleEditorFocus()}
             style={{ cursor: 'text' }}
