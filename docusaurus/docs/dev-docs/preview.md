@@ -278,7 +278,7 @@ This requires the front-end application to have its own header directive, the CS
 
 Strapi emits a `strapiUpdate` message to inform the front end that data has changed. 
 
-To track this, within your front-end application, add an event listener to listen to events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). The listener needs to filter through messages and react only to Strapi-initiated messages, then refresh the iframe.
+To track this, within your front-end application, add an event listener to listen to events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object. The listener needs to filter through messages and react only to Strapi-initiated messages, then refresh the iframe content.
 
 With Next.js, the recommended way to refresh the iframe content is with [the `router.refresh()` method](https://nextjs.org/docs/app/building-your-application/caching#routerrefresh).
 <!-- TODO: use ExternalLink compo. -->
