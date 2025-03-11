@@ -69,7 +69,7 @@ The Documentation plugin affects multiple parts of the admin panel. The followin
 | Documentation    | <ul>Addition of a new Documentation option in the main navigation <Icon name="info" /> which shows a panel with buttons to <Icon name="eye" /> open and <Icon name="arrow-clockwise" /> regenerate the documentation.</ul>        |
 | Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not (see [restricting access](#restricting-access)).<br/> 👉 Path reminder: <Icon name="gear-six" /> *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab (see [Users & Permissions documentation](/cms/features/users-permissions)).<br/>👉 Path reminder: <Icon name="gear-six" /> *Settings > Administration Panel > Roles* </li></ul>| 
 
-#### Restricting access to your API documentation {#restricting-access}
+#### Restricting access to your API documentation {#restrict-the-access-to-your-API-documentation}
 
 By default, your API documentation will be accessible by anyone.
 
@@ -131,7 +131,7 @@ The following is an example configuration:
 If you need to add a custom key, prefix it by `x-` (e.g., `x-strapi-something`).
 :::
 
-#### Creating a new version of the documentation
+#### Creating a new version of the documentation {#create-a-new-version-of-the-documentation}
 
 To create a new version, change the `info.version` key in the `settings.json` file:
 
@@ -163,9 +163,9 @@ If you do not want plugins to be included in documentation generation, provide a
 
 #### Overriding the generated documentation
 
-The Documentation plugins comes with 3 methods to override the generated documentation: [`excludeFromGeneration`](#exclude-from-generation), [`registerOverride`](#register-override), and [`mutateDocumentation`](#mutate-documentation).
+The Documentation plugins comes with 3 methods to override the generated documentation: [`excludeFromGeneration`](#excluding-from-generation), [`registerOverride`](#register-override), and [`mutateDocumentation`](#mutate-documentation).
 
-##### excludeFromGeneration() {#exclude-from-generation}
+##### excludeFromGeneration() {#excluding-from-generation}
 
 To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/cms/plugins-development/admin-panel-api#register).
 
@@ -291,7 +291,7 @@ Once the plugin is installed, the plugin user interface can be accessed at the f
 (e.g., <ExternalLink to="http://localhost:1337/documentation/v1.0.0" text="`localhost:1337/documentation/v1.0.0`"/>).
 :::
 
-### Regenerating documentation
+### Regenerating documentation {#regenerate-documentation}
 
 There are 2 ways to update the documentation after making changes to your API:
 

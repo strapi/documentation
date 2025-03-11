@@ -64,7 +64,7 @@ The Email feature requires a provider and a provider configuration in the `confi
 
 The Email feature uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application, either from the back-end server itself through a [controller or service](#controller-service), or from the admin panel, for example in response to an event (using [lifecycle hooks](#lifecycle-hook)). 
 
-### Sending emails with a controller or service {#controller-service}
+### Sending emails with a controller or service
 
 The Email feature has an `email` [service](/cms/backend-customization/services) that contains 2 functions to send emails:
 
@@ -136,7 +136,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-### Sending emails from a lifecycle hook {#lifecycle-hook}
+### Sending emails from a lifecycle hook
 
  To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). 
 
