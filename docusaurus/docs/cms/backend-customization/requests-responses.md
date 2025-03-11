@@ -10,7 +10,7 @@ tags:
 
 # Requests and Responses
 
-The Strapi back end server is based on [Koa](https://koajs.com/). When you send requests through the [REST API](/cms/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/cms/backend-customization/policies), [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services)).
+The Strapi back end server is based on <ExternalLink to="https://koajs.com/" text="Koa"/>. When you send requests through the [REST API](/cms/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/cms/backend-customization/policies), [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services)).
 
 `ctx` includes 3 main objects:
 
@@ -23,7 +23,7 @@ The request's context can also be accessed from anywhere in the code with the [`
 :::
 
 :::info
-In addition to the concepts and parameters described in the following documentation, you might find additional information in the [Koa request documentation](http://koajs.com/#request), [Koa Router documentation](https://github.com/koajs/router/blob/master/API.md) and [Koa response documentation](http://koajs.com/#response).
+In addition to the concepts and parameters described in the following documentation, you might find additional information in the <ExternalLink to="http://koajs.com/#request" text="Koa request documentation"/>, <ExternalLink to="https://github.com/koajs/router/blob/master/API.md" text="Koa Router documentation"/> and <ExternalLink to="http://koajs.com/#response" text="Koa response documentation"/>.
 :::
 
 <figure style={{width: '100%', margin: '0'}}>
@@ -140,12 +140,12 @@ The `ctx.response` object gives access to information related to the response th
 | `ctx.response.status` | Status code of the response. | `Integer` |
 | `ctx.response.message`| Status message of the response.<br/><br />By default, `response.message` is associated with `response.status`. | `String` |
 | `ctx.response.header`<br />`ctx.response.headers`| Header(s) sent with the response. | `Object` |
-| `ctx.response.length`| [`Content-Length`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Length) header value as a number when present, or deduces it from `ctx.body` when possible; otherwise, returns `undefined`. | `Integer` |
+| `ctx.response.length`| <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Length" text="`Content-Length`"/> header value as a number when present, or deduces it from `ctx.body` when possible; otherwise, returns `undefined`. | `Integer` |
 | `ctx.response.redirect`<br />`ctx.response.redirect(url, [alt])` | Performs a `302` redirect to the URL. The string "back" is special-cased to provide Referrer support; when Referrer is not present, alt or "/" is used.<br /><br />Example: `ctx.response.redirect('back', '/index.html');` | `Function` |
-| `ctx.response.attachment`<br /><br />`ctx.response.attachment([filename], [options])` | Sets [`Content-Disposition`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) header to "attachment" to signal the client to prompt for download. Optionally specify the filename of the download and some [options](https://github.com/jshttp/content-disposition#options). | `Function` |
-| `ctx.response.type`| [`Content-Type`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) header, void of parameters such as "charset". | `String` |
-| `ctx.response.lastModified`| [`Last-Modified`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified) header as a Date, if it exists. | `DateTime` |
-| `ctx.response.etag`| Sets the [`ETag`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) of a response including the wrapped "s.<br/>There is no corresponding `response.etag` getter. | `String` |
+| `ctx.response.attachment`<br /><br />`ctx.response.attachment([filename], [options])` | Sets <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition" text="`Content-Disposition`"/> header to "attachment" to signal the client to prompt for download. Optionally specify the filename of the download and some <ExternalLink to="https://github.com/jshttp/content-disposition#options" text="options"/>. | `Function` |
+| `ctx.response.type`| <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type" text="`Content-Type`"/> header, void of parameters such as "charset". | `String` |
+| `ctx.response.lastModified`| <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified" text="`Last-Modified`"/> header as a Date, if it exists. | `DateTime` |
+| `ctx.response.etag`| Sets the <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag" text="`ETag`"/> of a response including the wrapped "s.<br/>There is no corresponding `response.etag` getter. | `String` |
 <!-- I don't understand what these 5 last lines above mean, just copied and pasted them from the user's PR 🤷 — piwi -->
 
 ## Accessing the request context anywhere
@@ -194,5 +194,5 @@ module.exports = {
 ```
 
 :::note
-Strapi uses a Node.js feature called [AsyncLocalStorage](https://nodejs.org/docs/latest-v16.x/api/async_context.html#class-asynclocalstorage) to make the context available anywhere.
+Strapi uses a Node.js feature called <ExternalLink to="https://nodejs.org/docs/latest-v16.x/api/async_context.html#class-asynclocalstorage" text="AsyncLocalStorage"/> to make the context available anywhere.
 :::

@@ -26,7 +26,7 @@ Google accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the Google Developer Console at [https://console.developers.google.com/](https://console.developers.google.com/)
+1. Visit the Google Developer Console at <ExternalLink to="https://console.developers.google.com/" text="https://console.developers.google.com/"/>
 2. Click on the **Select a project** dropdown in the top menu
 3. Then click **NEW PROJECT** button
 4. Fill the **Project name** input and create
@@ -49,7 +49,7 @@ Wait a few seconds while the application is created.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Google** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`

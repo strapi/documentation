@@ -41,7 +41,7 @@ it is strongly recommended to review the modifications made before re-running th
 
 ## Version types
 
-Strapi version numbers respect the [semantic versioning](https://semver.org/) conventions:
+Strapi version numbers respect the <ExternalLink to="https://semver.org/" text="semantic versioning"/> conventions:
 
 <ThemedImage
   alt="Version numbers explained"

@@ -26,7 +26,7 @@ Twitch accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the Apps list page on the developer console at [https://dev.twitch.tv/console/apps](https://dev.twitch.tv/console/apps)
+1. Visit the Apps list page on the developer console at <ExternalLink to="https://dev.twitch.tv/console/apps" text="https://dev.twitch.tv/console/apps"/>
 2. Click on **Register Your Application** button
 3. Fill the information:
    - **Name**: Strapi auth
@@ -38,7 +38,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Twitch** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`

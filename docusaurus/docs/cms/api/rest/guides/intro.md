@@ -4,7 +4,7 @@ description: Deep dive into some specific REST API topics using guides that exte
 displayed_sidebar: cmsSidebar
 sidebar_label: Guides
 pagination_prev: cms/api/rest
-pagination_next: cms/api/rest/guides/understanding-populate
+pagination_next: cms/api/client
 tags:
 - API
 - Content API
@@ -28,7 +28,7 @@ The following guides, officially maintained by the Strapi Documentation team, co
 ## Additional resources
 
 :::strapi Want to help other users?
-Some of the additional resources listed in this section have been created for Strapi v4 and might not fully work with Strapi 5. If you want to update one of the following articles for Strapi 5, feel free to [propose an article](https://strapi.io/write-for-the-community) for the Write for the Community program.
+Some of the additional resources listed in this section have been created for Strapi v4 and might not fully work with Strapi 5. If you want to update one of the following articles for Strapi 5, feel free to <ExternalLink to="https://strapi.io/write-for-the-community" text="propose an article"/> for the Write for the Community program.
 :::
 
 Additional tutorials and guides can be found in the following blog posts:

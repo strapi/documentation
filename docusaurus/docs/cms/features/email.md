@@ -58,13 +58,13 @@ The Email feature requires a provider and a provider configuration in the `confi
 <CustomDocCard icon="plugs" title="Providers" description="Learn more about configuring and creating providers for the Email and Media Library features." link="/cms/providers"/>
 </CustomDocCardsWrapper>
 
-[`Sendmail`](https://www.npmjs.com/package/sendmail) is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
+<ExternalLink to="https://www.npmjs.com/package/sendmail" text="`Sendmail`"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
 
 ## Usage
 
 The Email feature uses the Strapi global API, meaning it can be called from anywhere inside a Strapi application, either from the back-end server itself through a [controller or service](#controller-service), or from the admin panel, for example in response to an event (using [lifecycle hooks](#lifecycle-hook)). 
 
-### Sending emails with a controller or service {#controller-service}
+### Sending emails with a controller or service
 
 The Email feature has an `email` [service](/cms/backend-customization/services) that contains 2 functions to send emails:
 
@@ -110,7 +110,7 @@ To use the `sendTemplatedEmail()` function, define the `emailTemplate` object an
 | Parameter       | Description                                                                                                                                | Type     | Default |
 |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
 | `emailOptions` <br/> Optional | Contains email addressing properties: `to`, `from`, `replyTo`, `cc`, and `bcc`                                                             | `object` | { }      |
-| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using [Lodash string templates](https://lodash.com/docs/4.17.15#template) | `object` | { }      |
+| `emailTemplate` | Contains email content properties: `subject`, `text`, and `html` using <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash string templates"/> | `object` | { }      |
 | `data`  <br/> Optional          | Contains the data used to compile the templates                                                                                            | `object` | { }      |
 
 The following code example can be used in a controller or a service:
@@ -136,7 +136,7 @@ await strapi.plugins['email'].services.email.sendTemplatedEmail(
 );
 ```
 
-### Sending emails from a lifecycle hook {#lifecycle-hook}
+### Sending emails from a lifecycle hook
 
  To trigger an email based on administrator actions in the admin panel use [lifecycle hooks](/cms/backend-customization/models#lifecycle-hooks) and the [`send()` function](#using-the-send-function). 
 

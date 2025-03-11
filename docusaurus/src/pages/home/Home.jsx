@@ -5,6 +5,8 @@ import styles from './home.module.scss';
 import {
   Button,
   Card,
+  CardCta,
+  CardIcon,
   CardDescription,
   CardImg,
   CardImgBg,
@@ -17,7 +19,9 @@ import {
   HeroDescription,
   HeroTitle,
   LinkWithArrow,
+  HomepageAIButton,
 } from '../../components';
+import Icon from '../../components/Icon';
 import content from './_home.content';
 
 const NAVBAR_TRANSLUCENT_UNTIL_SCROLL_Y = 36;
@@ -75,18 +79,19 @@ export default function PageHome() {
           `,
         }}
       />
-      <main className={clsx('font-poppins', styles.home)}>
+      <main className={clsx(styles.home)}>
         <Hero id="homeHero">
           <Container>
-            <HeroTitle>
+            <HeroTitle className="heroTitle">
               {content.page.title}
             </HeroTitle>
-            <HeroDescription>
+            <HeroDescription className="heroDescription">
               {content.page.description}
             </HeroDescription>
           </Container>
         </Hero>
-        <section
+        <HomepageAIButton />
+        {/* <section
           id="homeCarousel"
           className={styles.home__carousel}
         >
@@ -122,7 +127,7 @@ export default function PageHome() {
               ))}
             </Carousel>
           </Container>
-        </section>
+        </section> */}
         <section
           id="homeCategories"
           className={styles.home__categories}
@@ -134,6 +139,10 @@ export default function PageHome() {
                 cardDescription: categoryItemCardDescription,
                 cardImgSrc: categoryItemCardImgSrc,
                 cardLink: categoryItemCardLink,
+                cardIconName: categoryItemCardIconName,
+                cardIconColor: categoryItemCardIconColor,
+                cardCtaText: categoryItemCardCtaText,
+                categoryType,
                 ...categoryItem
               }, categoryItemIndex) => {
                 return (
@@ -145,25 +154,27 @@ export default function PageHome() {
                       styles.home__categories__item,
                     )}
                   >
-                    <Card to={categoryItemCardLink}>
-                      {categoryItemCardTitle && <CardTitle withArrow>{categoryItemCardTitle}</CardTitle>}
+                    <Card to={categoryItemCardLink} categoryType={categoryType}>
+                      {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor}/>}
+                      {categoryItemCardTitle && <CardTitle >{categoryItemCardTitle}</CardTitle>}
                       {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
+                      {categoryItemCardLink && <CardCta withArrow to={categoryItemCardLink} text={categoryItemCardCtaText} color={categoryItemCardIconColor} className="category-card-cta" />}
                       {categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} />}
                     </Card>
-                    {categoryItem.links && (
+                    {/* {categoryItem.links && (
                       <FeaturesList
                         icon={categoryItem.linksIconSrc}
                         iconColor={categoryItem.linksIconColor}
                         items={categoryItem.links}
                       />
-                    )}
+                    )} */}
                   </div>
                 );
               })}
             </div>
           </Container>
         </section>
-        <section
+        {/* <section
           id="homeHelpUsImproveTheDocumentation"
           className={styles.home__huitd}
         >
@@ -176,7 +187,7 @@ export default function PageHome() {
               {content.huitd.label}
             </LinkWithArrow>
           </Container>
-        </section>
+        </section> */}
       </main>
     </Layout>
   );

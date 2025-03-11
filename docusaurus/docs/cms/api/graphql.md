@@ -99,7 +99,7 @@ Documents <DocumentDefinition/> can be fetched by their `documentId`.
 
 ### Fetch multiple documents
 
-To fetch multiple documents <DocumentDefinition/> you can use simple, flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+To fetch multiple documents <DocumentDefinition/> you can use simple, flat queries or <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries:
 
 <Tabs groupId="flat-relay">
 
@@ -143,7 +143,7 @@ Relay-style queries can be used to fetch multiple documents and return meta info
 
 #### Fetch relations
 
-You can ask to include relation data in your flat queries or in your [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+You can ask to include relation data in your flat queries or in your <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries:
 
 <Tabs groupId="flat-relay">
 
@@ -295,7 +295,7 @@ The following example fetches the `url` attribute value for each `cover` media f
 }
 ```
 
-For multiple media fields, you can use flat queries or [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries:
+For multiple media fields, you can use flat queries or <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries:
 
 <Tabs groupId="flat-relay">
 
@@ -363,7 +363,7 @@ The following example fetches the `label`, `start_date`, and `end_date` attribut
 
 ### Fetch dynamic zone data
 
-Dynamic zones are union types in GraphQL so you need to use [fragments](https://www.apollographql.com/docs/react/data/fragments/) (i.e., with `...on`) to query the fields, passing the component name (with the `ComponentCategoryComponentname` syntax) to [`__typename`](https://www.apollographql.com/docs/apollo-server/schema/schema/#the-__typename-field):
+Dynamic zones are union types in GraphQL so you need to use <ExternalLink to="https://www.apollographql.com/docs/react/data/fragments/" text="fragments"/> (i.e., with `...on`) to query the fields, passing the component name (with the `ComponentCategoryComponentname` syntax) to <ExternalLink to="https://www.apollographql.com/docs/apollo-server/schema/schema/#the-__typename-field" text="`__typename`"/>:
 
 The following example fetches data for the `label` attribute of a "Closingperiod" component from the "Default" components category that can be added to the "dz" dynamic zone:
 
@@ -692,7 +692,7 @@ The sorting order can be defined with `:asc` (ascending order, default, can be o
 
 ## Pagination
 
-[Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries can accept a `pagination` parameter. Results can be paginated either by page or by offset.
+<ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries can accept a `pagination` parameter. Results can be paginated either by page or by offset.
 
 :::note
 Pagination methods can not be mixed. Always use either `page` with `pageSize` or `start` with `limit`.

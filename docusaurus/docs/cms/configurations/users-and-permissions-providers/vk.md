@@ -26,7 +26,7 @@ VK accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the Apps list page at [https://vk.com/apps?act=manage](https://vk.com/apps?act=manage)
+1. Visit the Apps list page at <ExternalLink to="https://vk.com/apps?act=manage" text="https://vk.com/apps?act=manage"/>
 2. Click on **Create app** button
 3. Fill the information:
    - **Title**: Strapi auth
@@ -40,7 +40,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **VK** provider
 3. Fill the information:
    - **Enable**: `ON`

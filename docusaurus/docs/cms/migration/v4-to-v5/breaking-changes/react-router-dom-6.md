@@ -15,7 +15,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # Strapi users `react-router-dom` v6
 
-Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-dom) v6. This impacts the links added to [settings](/cms/plugins-development/admin-panel-api#settings-api) or to the [menu](/cms/plugins-development/admin-panel-api#menu-api) using the Admin Panel API.
+Strapi 5 uses <ExternalLink to="https://www.npmjs.com/package/react-router-dom" text="`react-router-dom`"/> v6. This impacts the links added to [settings](/cms/plugins-development/admin-panel-api#settings-api) or to the [menu](/cms/plugins-development/admin-panel-api#menu-api) using the Admin Panel API.
 
  <Intro />
 
@@ -55,10 +55,10 @@ Strapi 5 uses [`react-router-dom`](https://www.npmjs.com/package/react-router-do
 
 ### Notes
 
-- The official React Router documentation explains [how to upgrade from v5](https://reactrouter.com/en/main/upgrading/v5).
+- The official React Router documentation explains <ExternalLink to="https://reactrouter.com/en/main/upgrading/v5" text="how to upgrade from v5"/>.
 - Absolute paths for menu or settings links are still supported but should yield a warning.
 
 ### Manual procedure
 
-This breaking change should be handled by a codemod (see the [full list of 5.0.0 codemods](https://github.com/strapi/strapi/tree/develop/packages/utils/upgrade/resources/codemods/5.0.0)).
+This breaking change should be handled by a codemod (see the <ExternalLink to="https://github.com/strapi/strapi/tree/develop/packages/utils/upgrade/resources/codemods/5.0.0" text="full list of 5.0.0 codemods"/>).
 Ensure that links added to [settings](/cms/plugins-development/admin-panel-api#settings-api) or to the [menu](/cms/plugins-development/admin-panel-api#menu-api) links using the Admin Panel API use relative paths.

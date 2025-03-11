@@ -1,6 +1,7 @@
 ---
 title: Content Manager APIs
 description: The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
+displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
 - admin panel API
@@ -97,7 +98,7 @@ interface EditViewContext {
 ```
 
 :::tip
-More information about types and APIs can be found in [Strapi's codebase, in the `/admin/src/content-manager.ts` file](https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/content-manager.ts).
+More information about types and APIs can be found in <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/core/content-manager/admin/src/content-manager.ts" text="Strapi's codebase, in the `/admin/src/content-manager.ts` file"/>.
 :::
 
 **Example:**
@@ -123,6 +124,8 @@ const Panel: PanelComponent = ({
 ```
 
 ## Available APIs
+
+<br/>
 
 ### `addEditViewSidePanel`
 

@@ -30,7 +30,7 @@ The following API parameters are available:
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
 | `pagination`       | Object        | [Page through entries](/cms/api/rest/sort-pagination.md#pagination) |
 
-Query parameters use the [LHS bracket syntax](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets) (i.e. they are encoded using square brackets `[]`).
+Query parameters use the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket syntax"/> (i.e. they are encoded using square brackets `[]`).
 
 :::tip
 A wide range of REST API parameters can be used and combined to query your content, which can result in long and complex query URLs.<br/>👉 You can use Strapi's [interactive query builder](/cms/api/rest/interactive-query-builder) tool to build query URLs more conveniently. 🤗

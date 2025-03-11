@@ -31,7 +31,7 @@ The content of this page might not be fully up-to-date with Strapi 5 yet:
 - All the conceptual information and explanations are correct and up-to-date.
 - However, in the examples, the response content might be slightly different.
 
-Examples will be fully up-to-date _after_ the Strapi 5.0.0 (stable version) release and as soon as the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application is upgraded to Strapi 5.
+Examples will be fully up-to-date _after_ the Strapi 5.0.0 (stable version) release and as soon as the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application is upgraded to Strapi 5.
 
 However, having slightly different response examples should not prevent you from grasping the essential concepts taught in this page.
 :::
@@ -41,7 +41,7 @@ When querying content-types with Strapi's [REST API](/cms/api/rest), by default,
 Populating in the context of the Strapi REST API means including additional content with your response by returning more fields than the ones returned by default. You use the [`populate` parameter](/cms/api/rest/populate-select#population) to achieve this.
 
 :::info
-Throughout this guide, examples are built with real data queried from the server included with the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application. To test examples by yourself, setup FoodAdvisor, start the server in the `/api/` folder, and ensure that proper `find` permissions are given for the queried content-types before sending your queries.
+Throughout this guide, examples are built with real data queried from the server included with the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application. To test examples by yourself, setup FoodAdvisor, start the server in the `/api/` folder, and ensure that proper `find` permissions are given for the queried content-types before sending your queries.
 :::
 
 The present guide will cover detailed explanations for the following use cases:
@@ -66,7 +66,7 @@ You can return all relations, media fields, components and dynamic zones with a 
 
 To populate everything 1 level deep, add the `populate=*` parameter to your query.
 
-The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application with and without populating everything 1 level deep:
+The following diagram compares data returned by the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application with and without populating everything 1 level deep:
 
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram1.png)
 
@@ -330,7 +330,7 @@ To populate deeply nested components, see the [populate components](#populate-co
 
 You can also populate specific relations and fields, by explicitly defining what to populate. This requires that you know the name of fields and relations to populate.
 
-Relations and fields populated this way can be 1 or several levels deep. The following diagram compares data returned by the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
+Relations and fields populated this way can be 1 or several levels deep. The following diagram compares data returned by the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application when you populate [1 level deep](#populate-1-level-deep-for-specific-relations) vs. [2 levels deep](#populate-several-levels-deep-for-specific-relations):
 
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram2.png)
 
@@ -392,14 +392,14 @@ Populate as an array<br/>(to populate many relations 1 level deep)
 
 You can populate specific relations 1 level deep by using the populate parameter as an array.
 
-Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets) (i.e., with square brackets `[]`), the parameter syntaxes to populate 1 level deep would look like the following:
+Since the REST API uses the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket notation"/> (i.e., with square brackets `[]`), the parameter syntaxes to populate 1 level deep would look like the following:
 
 | How many relations to populate | Syntax example    |
 |-------------------------------|--------------------|
 | Only 1 relation |  `populate[0]=a-relation-name`   |
 | Several relations | `populate[0]=relation-name&populate[1]=another-relation-name&populate[2]=yet-another-relation-name` |
 
-Let's compare and explain what happens with and without populating relations 1 level deep when sending queries to the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
+Let's compare and explain what happens with and without populating relations 1 level deep when sending queries to the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application:
 
 #### Example: Without `populate`
 
@@ -609,7 +609,7 @@ You can also populate specific relations several levels deep. For instance, when
 There is no limit on the number of levels that can be populated. However, the deeper the populates, the more the request will take time to be performed.
 :::
 
-Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), (i.e., with square brackets `[]`), for instance if you want to populate a relation nested inside another relation, the parameter syntax would look like the following:
+Since the REST API uses the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket notation"/>, (i.e., with square brackets `[]`), for instance if you want to populate a relation nested inside another relation, the parameter syntax would look like the following:
 
 `populate[first-level-relation-to-populate][populate][0]=second-level-relation-to-populate`
 
@@ -628,7 +628,7 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 :::
 
-The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various levels of relations between content-types. For instance:
+The <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application includes various levels of relations between content-types. For instance:
 
 - an `article` content-type includes a relation with the `category` content-type,
 - but a `category` can also be assigned to any `restaurant` content-type.
@@ -857,7 +857,7 @@ Notice that we now have the `restaurants` relation field included with the respo
 
 Components and dynamic zones are not included in responses by default and you need to explicitly populate each dynamic zones, components, and their nested components.
 
-Since the REST API uses the [LHS bracket notation](https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets), (i.e., with square brackets `[]`), you need to pass all elements in a `populate` array. Nested fields can also be passed, and the parameter syntax could look like the following:
+Since the REST API uses the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket notation"/>, (i.e., with square brackets `[]`), you need to pass all elements in a `populate` array. Nested fields can also be passed, and the parameter syntax could look like the following:
 
 `populate[0]=a-first-field&populate[1]=a-second-field&populate[2]=a-third-field&populate[3]=a-third-field.a-nested-field&populate[4]=a-third-field.a-nested-component.a-nested-field-within-the-component`
 
@@ -876,7 +876,7 @@ The syntax for advanced query parameters can be quite complex to build manually.
 
 :::
 
-The [FoodAdvisor](https://github.com/strapi/foodadvisor) example application includes various components and even components nested inside other components. For instance:
+The <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application includes various components and even components nested inside other components. For instance:
 
 - an `article` content-type includes a `seo` component <ScreenshotNumberReference number="1" />,
 - the `seo` component includes a nested, repeatable `metaSocial` component <ScreenshotNumberReference number="2" />,
@@ -1040,7 +1040,7 @@ Dynamic zones are highly dynamic content structures by essence. To populate dyna
 
 With the shared population strategy, you apply the same population to all the components of a dynamic zone.
 
-For instance, in the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
+For instance, in the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application:
 
 - A `blocks` dynamic zone exists the `article` content-type <ScreenshotNumberReference number="1" />.
 - The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different data structure containing various fields.
@@ -1252,7 +1252,7 @@ When we populate the `blocks` dynamic zone and apply a shared population strateg
 
 To do so, you can define per-component populate queries using the `on` property.
 
-For instance, in the [FoodAdvisor](https://github.com/strapi/foodadvisor) example application:
+For instance, in the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application:
 
 - A `blocks` dynamic zone exists the `article` content-type <ScreenshotNumberReference number="1" />.
 - The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different data structure containing various fields.

@@ -18,7 +18,7 @@ You have read the [How to configure SSO guide](/cms/configurations/guides/config
 
 ## Installation
 
-Install [passport-discord](https://github.com/nicholastay/passport-discord#readme):
+Install <ExternalLink to="https://github.com/nicholastay/passport-discord#readme" text="passport-discord"/>:
 
 <Tabs groupId="yarn-npm">
 

@@ -24,7 +24,7 @@ By default Strapi create [REST endpoints](/cms/api/rest#endpoints) for each of y
 :::prerequisites Identity Card of the Plugin
 <Icon name="navigation-arrow"/> **Location:** Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.<br/>
 <Icon name="package"/> **Package name:** `@strapi/plugin-graphql`  <br/>
-<Icon name="plus-square"/> **Additional resources:** [Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-graphql) <br/>
+<Icon name="plus-square"/> **Additional resources:** <ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-graphql" text="Strapi Marketplace page"/> <br/>
 :::
 
 <ThemedImage
@@ -59,7 +59,7 @@ npm install @strapi/plugin-graphql
 
 Once installed, the GraphQL sandbox is accessible at the `/graphql` URL and can be used to interactively build your queries and mutations and read documentation tailored to your content-types.
 
-Once the plugin is installed, the **GraphQL Sandbox** is accessible at the `/graphql` route (e.g., [localhost:1337/graphql](http://localhost:1337/graphql)) when your Strapi application server is running.
+Once the plugin is installed, the **GraphQL Sandbox** is accessible at the `/graphql` route (e.g., <ExternalLink to="http://localhost:1337/graphql" text="localhost:1337/graphql"/>) when your Strapi application server is running.
 
 ## Configuration
 
@@ -67,7 +67,7 @@ Most configuration options for the Documentation plugin are handled via your Str
 
 ### Admin panel settings
 
-The Strapi admin panel does not provide Strapi-specific settings for the GraphQL plugin. However, the GraphQL Playground accessible at the `/graphql` route is an embedded Apollo Server playground, so it includes all configuration and settings available with such an instance. Please refer to the official [GraphQL playground documentation](https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground) for details.
+The Strapi admin panel does not provide Strapi-specific settings for the GraphQL plugin. However, the GraphQL Playground accessible at the `/graphql` route is an embedded Apollo Server playground, so it includes all configuration and settings available with such an instance. Please refer to the official <ExternalLink to="https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground" text="GraphQL playground documentation"/> for details.
 
 ### Code-based configuration
 
@@ -75,7 +75,7 @@ Plugins configuration are defined in [the `config/plugins.js` file](/cms/configu
 
 #### Available options
 
-[Apollo Server](https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver) options can be passed directly to Apollo with the `graphql.config.apolloServer` configuration object. Apollo Server options can be used for instance to enable the [tracing feature](https://www.apollographql.com/docs/federation/metrics/), which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit [Apollo Server Docs](https://www.apollographql.com/docs/apollo-server/performance/cache-backends/).
+<ExternalLink to="https://www.apollographql.com/docs/apollo-server/api/apollo-server/#apolloserver" text="Apollo Server"/> options can be passed directly to Apollo with the `graphql.config.apolloServer` configuration object. Apollo Server options can be used for instance to enable the <ExternalLink to="https://www.apollographql.com/docs/federation/metrics/" text="tracing feature"/>, which is supported by the GraphQL Sandbox to track the response time of each part of your query. The `Apollo Server` default cache option is `cache: 'bounded'`. You can change it in the `apolloServer` configuration. For more information visit <ExternalLink to="https://www.apollographql.com/docs/apollo-server/performance/cache-backends/" text="Apollo Server Docs"/>.
 
 The GraphQL plugin has the following specific configuration options that should be declared in a `graphql.config` object within the `config/plugins` file. All parameters are optional:
 
@@ -592,14 +592,14 @@ The object describing the extension accepts the following parameters:
 
 | Parameter         | Type   | Description                                                                                  |
 | ----------------- | ------ | -------------------------------------------------------------------------------------------- |
-| `types`           | Array  | Allows extending the schema types using [Nexus](https://nexusjs.org/)-based type definitions |
-| `typeDefs`        | String | Allows extending the schema types using [GraphQL SDL](https://graphql.org/learn/schema/)     |
-| `plugins`         | Array  | Allows extending the schema using Nexus [plugins](https://nexusjs.org/docs/plugins)          |
+| `types`           | Array  | Allows extending the schema types using <ExternalLink to="https://nexusjs.org/" text="Nexus"/>-based type definitions |
+| `typeDefs`        | String | Allows extending the schema types using <ExternalLink to="https://graphql.org/learn/schema/" text="GraphQL SDL"/>     |
+| `plugins`         | Array  | Allows extending the schema using Nexus <ExternalLink to="https://nexusjs.org/docs/plugins" text="plugins"/>          |
 | `resolvers`       | Object | Defines custom resolvers                                                                     |
 | `resolversConfig` | Object | Defines [configuration options for the resolvers](#custom-configuration-for-resolvers), such as [authorization](#authorization-configuration), [policies](#policies) and [middlewares](#middlewares) |
 
 :::tip
-The `types` and `plugins` parameters are based on [Nexus](https://nexusjs.org/). To use them, register the extension as a function that takes `nexus` as a parameter:
+The `types` and `plugins` parameters are based on <ExternalLink to="https://nexusjs.org/" text="Nexus"/>. To use them, register the extension as a function that takes `nexus` as a parameter:
 
 <details>
 <summary> Example: </summary>
@@ -786,7 +786,7 @@ Policies directly implemented in `resolversConfig` are functions that take a `co
 The `context` object gives access to:
 
 * the `parent`, `args`, `context` and `info` arguments of the GraphQL resolver,
-* Koa's [context](https://koajs.com/#context) with `context.http` and [state](https://koajs.com/#ctx-state) with `context.state`.
+* Koa's <ExternalLink to="https://koajs.com/#context" text="context"/> with `context.http` and <ExternalLink to="https://koajs.com/#ctx-state" text="state"/> with `context.state`.
 
 <details>
 <summary> Example of GraphQL policies applied to resolvers</summary>
@@ -883,7 +883,7 @@ export default {
 
 The `middlewares` key is an array accepting a list of middlewares, each item in this list being either a reference to an already registered middleware or an implementation that is passed directly (see [middlewares configuration documentation](/cms/backend-customization/routes#middlewares)).
 
-Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's [`parent`, `args`, `context` and `info` objects](https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments) as arguments.
+Middlewares directly implemented in `resolversConfig` can take the GraphQL resolver's <ExternalLink to="https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments" text="`parent`, `args`, `context` and `info` objects"/> as arguments.
 
 :::tip
 Middlewares with GraphQL can even act on nested resolvers, which offer a more granular control than with REST.
@@ -1047,12 +1047,12 @@ If you haven't edited the [configuration file](#available-options), it is alread
 A malicious user could send a query with a very high depth, which could overload your server. Use the `depthLimit` [configuration parameter](/cms/plugins/graphql#code-based-configuration) to limit the maximum number of nested fields that can be queried in a single request. By default, `depthLimit` is set to 10 but can be set to a higher value during testing and development.
 
 :::tip
-To increase GraphQL security even further, 3rd-party tools can be used. See the guide about [using GraphQL Armor with Strapi on the forum](https://forum.strapi.io/t/use-graphql-armor-with-strapi/).
+To increase GraphQL security even further, 3rd-party tools can be used. See the guide about <ExternalLink to="https://forum.strapi.io/t/use-graphql-armor-with-strapi/" text="using GraphQL Armor with Strapi on the forum"/>.
 :::
 
 ## Usage
 
-The GraphQL plugin adds a GraphQL endpoint accessible and provides access to a GraphQL playground, accessing at the `/graphql` route of the Strapi admin panel, to interactively build your queries and mutations and read documentation tailored to your content types. For detailed instructions on how to use the GraphQL Playground, please refer to the official [Apollo Server documentation](https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground).
+The GraphQL plugin adds a GraphQL endpoint accessible and provides access to a GraphQL playground, accessing at the `/graphql` route of the Strapi admin panel, to interactively build your queries and mutations and read documentation tailored to your content types. For detailed instructions on how to use the GraphQL Playground, please refer to the official <ExternalLink to="https://www.apollographql.com/docs/apollo-server/v2/testing/graphql-playground" text="Apollo Server documentation"/>.
 
 ### Usage with the Users & Permissions feature {#usage-with-the-users--permissions-plugin}
 
@@ -1099,7 +1099,7 @@ mutation {
 
 Then on each request, send along an `Authorization` header in the form of `{ "Authorization": "Bearer YOUR_JWT_GOES_HERE" }`. This can be set in the HTTP Headers section of your GraphQL Sandbox.
 
-#### Usage with API tokens
+#### Usage with API tokens {#api-tokens}
 
 To use API tokens for authentication, pass the token in the `Authorization` header using the format `Bearer your-api-token`.
 

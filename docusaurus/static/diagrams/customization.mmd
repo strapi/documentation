@@ -1,0 +1,8 @@
+flowchart LR
+  database[(Database)] --> backend[Back-end server]
+  subgraph Strapi
+      direction BT
+      backend --> frontend[Admin Panel]
+      frontend 
+  end
+  frontend --> external{{External, front-end applications}}

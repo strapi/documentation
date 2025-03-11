@@ -12,3 +12,12 @@ article {
   position: relative;
   top: -2px;
 }
+
+// Homepage category icons at the top of cards
+.plugin-pages {
+  [class*="card-category-icon-container"] {
+    .strapi-icons::before {
+      font-size: 20px !important;
+    }
+  }
+}

@@ -15,7 +15,7 @@ Strapi comes with a predefined set of built-in providers for the [Users & Permis
 
 ## Understanding the login flow
 
-[Grant](https://github.com/simov/grant) and [Purest](https://github.com/simov/purest) allow you to use OAuth and OAuth2 providers to enable authentication in your application.
+<ExternalLink to="https://github.com/simov/grant" text="Grant"/> and <ExternalLink to="https://github.com/simov/purest" text="Purest"/> allow you to use OAuth and OAuth2 providers to enable authentication in your application.
 
 For a better understanding, review the following description of the login flow. The example uses `github` as the provider but it works the same for other providers.
 
@@ -32,7 +32,7 @@ Let's say that:
 7. The frontend (`http://website.com/connect/github/redirect`) calls the backend with `https://strapi.website.com/api/auth/github/callback?access_token=eyfvg` that returns the Strapi user profile with its `jwt`. <br/> (Under the hood, the backend asks Github for the user's profile and a match is done on Github user's email address and Strapi user's email address).
 8. The frontend now possesses the user's `jwt`, which means the user is connected and the frontend can make authenticated requests to the backend!
 
-An example of a frontend app that handles this flow can be found here: [react login example application](https://github.com/strapi/strapi-examples/tree/master/examples/login-react).
+An example of a frontend app that handles this flow can be found here: <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example application"/>.
 
 ## Setting up the server URL
 
@@ -67,14 +67,14 @@ export default ({ env }) => ({
 </Tabs>
 
 :::tip
-Later you will give this URL to your provider. <br/> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use [ngrok](https://ngrok.com/docs) (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (e.g., `url: env('', 'https://5299e8514242.ngrok.io'),`).
+Later you will give this URL to your provider. <br/> For development, some providers accept the use of localhost urls but many don't. In this case we recommend to use <ExternalLink to="https://ngrok.com/docs" text="ngrok"/> (`ngrok http 1337`) that will make a proxy tunnel from a url it created to your localhost url (e.g., `url: env('', 'https://5299e8514242.ngrok.io'),`).
 :::
 
 ## Setting up the provider - Examples
 
 Instead of a generic explanation we decided to show an example for each provider. You can also [create your own custom provider](/cms/configurations/users-and-permissions-providers/new-provider-guide).
 
-In the following examples, the frontend application will be the [react login example application](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)  running on `http://localhost:3000`, while Strapi (i.e., the backend server) will be running on `http://localhost:1337`.
+In the following examples, the frontend application will be the <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example application"/>  running on `http://localhost:3000`, while Strapi (i.e., the backend server) will be running on `http://localhost:1337`.
 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="plugs-connected" title="Auth0" description="Configure authentication through the Users & Permissions feature with Auth0." link="/cms/configurations/users-and-permissions-providers/auth-zero" />

@@ -27,10 +27,10 @@ Use `ngrok` to serve the backend app.
 ```
 ngrok http 1337
 ```
-Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use [react login example app](https://github.com/strapi/strapi-examples/tree/master/examples/login-react)) with the generated ngrok url.
+Don't forget to update the server url in the backend config file `config/server.js` and the server url in your frontend app (environment variable `REACT_APP_BACKEND_URL` if you use <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example app"/>) with the generated ngrok url.
 :::
 
-1. Visit the OAuth Apps list page [https://github.com/settings/developers](https://github.com/settings/developers)
+1. Visit the OAuth Apps list page <ExternalLink to="https://github.com/settings/developers" text="https://github.com/settings/developers"/>
 2. Click on **New OAuth App** button
 3. Fill the information (replace with your own ngrok url):
    - **Application name**: Strapi GitHub auth
@@ -40,7 +40,7 @@ Don't forget to update the server url in the backend config file `config/server.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **GitHub** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`

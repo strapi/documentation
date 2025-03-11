@@ -258,7 +258,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 </Tabs>
 
 :::strapi React renderer
-If using the Blocks editor, we recommend that you also use the [Strapi Blocks React Renderer](https://github.com/strapi/blocks-react-renderer) to easily render the content in a React frontend.
+If using the Blocks editor, we recommend that you also use the <ExternalLink to="https://github.com/strapi/blocks-react-renderer" text="Strapi Blocks React Renderer"/> to easily render the content in a React frontend.
 :::
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_number.svg" /> Number {#number}
@@ -696,9 +696,9 @@ When using dynamic zones, different components cannot have the same field name w
 
 #### Custom fields
 
-Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/cms/plugins/installing-plugins-via-marketplace.md) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
+Custom fields are a way to extend Strapi’s capabilities by adding new types of fields to content-types or components. Once installed (see [Marketplace](/cms/plugins/installing-plugins-via-marketplace) documentation), custom fields are listed in the _Custom_ tab when selecting a field for a content-type.
 
-Each custom field type can have basic and advanced settings. The [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields) lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
+Each custom field type can have basic and advanced settings. The <ExternalLink to="https://market.strapi.io/plugins?categories=Custom+fields" text="Marketplace"/> lists available custom fields, and hosts dedicated documentation for each custom field, including specific settings.
 
 ### Deleting content-types
 
@@ -710,7 +710,7 @@ Content types and components can be deleted through the Content-type Builder. De
 4. In the confirmation window, confirm the deletion.
 
 :::caution
-Deleting a content-type only deletes what was created and available from the Content-type Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related [GitHub issue](https://github.com/strapi/strapi/issues/1114).
+Deleting a content-type only deletes what was created and available from the Content-type Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related <ExternalLink to="https://github.com/strapi/strapi/issues/1114" text="GitHub issue"/>.
 :::
 
 <ThemedImage

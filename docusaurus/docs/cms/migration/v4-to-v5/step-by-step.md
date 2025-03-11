@@ -29,7 +29,7 @@ Before getting into the upgrade process itself, take the following precautions:
 
   If you are using SQLite with the default configuration (the default database provided with Strapi), your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
   
-  If you are using another type of database, please refer to their official documentation (see [PostgreSQL docs](https://www.postgresql.org/docs/) and [MySQL docs](https://dev.mysql.com/doc/)).
+  If you are using another type of database, please refer to their official documentation (see <ExternalLink to="https://www.postgresql.org/docs/" text="PostgreSQL docs"/> and <ExternalLink to="https://dev.mysql.com/doc/" text="MySQL docs"/>).
 
   If your project is hosted on Strapi Cloud, you can manually [create a backup](/cloud/projects/settings#creating-a-manual-backup).
 2. **Backup your code**:
@@ -37,7 +37,7 @@ Before getting into the upgrade process itself, take the following precautions:
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
 3. **Ensure the plugins you are using are compatible with Strapi 5**.
 
-  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the [Marketplace](https://market.strapi.io/plugins?version=v5) website.
+  To do so, list the plugins you are using, then check compatibility for each of them by reading their dedicated documentation on the <ExternalLink to="https://market.strapi.io/plugins?version=v5" text="Marketplace"/> website.
 
 ## Step 2: Run automated migrations
 
@@ -55,18 +55,18 @@ Strapi provides a tool to automate some parts of the upgrade to Strapi 5: the [u
 
   | Codemod name and GitHub code link | Description |
   |-----------------------------------|-------------|
-  | [comment-out-lifecycle-files](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/comment-out-lifecycle-files.code.ts) | Comment out lifecycles files in favor of [Document Service Middlewares](/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | 
-  | [dependency-remove-strapi-plugin-i18n](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-remove-strapi-plugin-i18n.json.ts) | Remove the i18n plugin dependency as i18n is now integrated into the core of Strapi |
-  | [dependency-upgrade-react-and-react-dom](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-and-react-dom.json.ts)  | Upgrade the react and react-dom dependencies | 
-  | [dependency-upgrade-react-router-dom](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-router-dom.json.ts)  | Upgrade the react-router-dom dependency |
-  | [dependency-upgrade-styled-components](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-styled-components.json.ts)  | Upgrade the styled-components dependency |
-  | [deprecate-helper-plugin](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/deprecate-helper-plugin.code.ts)  | Partly handle migrations from `@strapi/helper-plugin` |
-  | [entity-service-document-service](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/entity-service-document-service.code.ts)            | Partly handle the migration from the Entity Service API to the new Document Service API |
-  | [s3-keys-wrapped-in-credentials](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/s3-keys-wrapped-in-credentials.code.ts)            | Wrap the `accessKeyId` and `secretAccessKey` properties inside a `credentials` object for users using the `aws-s3` provider | 
-  | [sqlite3-to-better-sqlite3](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/sqlite3-to-better-sqlite3.json.ts)                                                                    | Update the sqlite dependency to better-sqlite3 | 
-  | [strapi-public-interface](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/strapi-public-interface.code.ts)                          | Transform `@strapi/strapi` imports to use the new public interface | 
-  | [use-uid-for-config-namespace](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts)                | Replace string dot format for config get/set/has with uid format for 'plugin' and 'api' namespace where possible | 
-  | [utils-public-interface](https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/utils-public-interface.code.ts)                            | Update utils to use the new public interface | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/comment-out-lifecycle-files.code.ts" text="comment-out-lifecycle-files"/> | Comment out lifecycles files in favor of [Document Service Middlewares](/cms/migration/v4-to-v5/breaking-changes/lifecycle-hooks-document-service) | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-remove-strapi-plugin-i18n.json.ts" text="dependency-remove-strapi-plugin-i18n"/> | Remove the i18n plugin dependency as i18n is now integrated into the core of Strapi |
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-and-react-dom.json.ts" text="dependency-upgrade-react-and-react-dom"/>  | Upgrade the react and react-dom dependencies | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-react-router-dom.json.ts" text="dependency-upgrade-react-router-dom"/>  | Upgrade the react-router-dom dependency |
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/dependency-upgrade-styled-components.json.ts" text="dependency-upgrade-styled-components"/>  | Upgrade the styled-components dependency |
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/deprecate-helper-plugin.code.ts" text="deprecate-helper-plugin"/>  | Partly handle migrations from `@strapi/helper-plugin` |
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/entity-service-document-service.code.ts" text="entity-service-document-service"/>            | Partly handle the migration from the Entity Service API to the new Document Service API |
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/s3-keys-wrapped-in-credentials.code.ts" text="s3-keys-wrapped-in-credentials"/>            | Wrap the `accessKeyId` and `secretAccessKey` properties inside a `credentials` object for users using the `aws-s3` provider | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/sqlite3-to-better-sqlite3.json.ts" text="sqlite3-to-better-sqlite3"/>                                                                    | Update the sqlite dependency to better-sqlite3 | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/strapi-public-interface.code.ts" text="strapi-public-interface"/>                          | Transform `@strapi/strapi` imports to use the new public interface | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/use-uid-for-config-namespace.code.ts" text="use-uid-for-config-namespace"/>                | Replace string dot format for config get/set/has with uid format for 'plugin' and 'api' namespace where possible | 
+  | <ExternalLink to="https://github.com/strapi/strapi/blob/develop/packages/utils/upgrade/resources/codemods/5.0.0/utils-public-interface.code.ts" text="utils-public-interface"/>                            | Update utils to use the new public interface | 
 
 :::tip
 If you develop Strapi plugins, other codemods handle some aspects of the helper-plugin deprecation. See the [related breaking change](/cms/migration/v4-to-v5/breaking-changes/helper-plugin-deprecated) for more information.

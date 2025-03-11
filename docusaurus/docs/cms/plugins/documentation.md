@@ -16,17 +16,17 @@ tags:
 
 # Documentation plugin
 
-The Documentation plugin automates your API documentation creation. It basically generates a swagger file. It follows the [Open API specification version](https://swagger.io/specification/).
+The Documentation plugin automates your API documentation creation. It basically generates a swagger file. It follows the <ExternalLink to="https://swagger.io/specification/" text="Open API specification version"/>.
 
 :::prerequisites Identity Card of the Plugin
 <Icon name="navigation-arrow"/> **Location:** Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.<br/>
 <Icon name="package"/> **Package name:** `@strapi/plugin-documentation`  <br/>
-<Icon name="plus-square"/> **Additional resources:** [Strapi Marketplace page](https://market.strapi.io/plugins/@strapi-plugin-documentation) <br/>
+<Icon name="plus-square"/> **Additional resources:** <ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-documentation" text="Strapi Marketplace page"/> <br/>
 :::
 
 <Guideflow lightId="5pvjz4zswp" darkId="6kw4vdwizp"/>
 
-If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the [OpenAPI specification](https://swagger.io/specification/). The Documentation plugin generates the [paths objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object) and [schema objects](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object) and converts all Strapi types to [OpenAPI data types](https://swagger.io/docs/specification/data-models/data-types/).
+If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the <ExternalLink to="https://swagger.io/specification/" text="OpenAPI specification"/>. The Documentation plugin generates the <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object" text="paths objects"/> and <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object" text="schema objects"/> and converts all Strapi types to <ExternalLink to="https://swagger.io/docs/specification/data-models/data-types/" text="OpenAPI data types"/>.
 
 The generated documentation JSON file can be found in your application at the following path: `src/extensions/documentation/documentation/<version>/full_documentation.json`
 
@@ -69,7 +69,7 @@ The Documentation plugin affects multiple parts of the admin panel. The followin
 | Documentation    | <ul>Addition of a new Documentation option in the main navigation <Icon name="info" /> which shows a panel with buttons to <Icon name="eye" /> open and <Icon name="arrow-clockwise" /> regenerate the documentation.</ul>        |
 | Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not (see [restricting access](#restricting-access)).<br/> 👉 Path reminder: <Icon name="gear-six" /> *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab (see [Users & Permissions documentation](/cms/features/users-permissions)).<br/>👉 Path reminder: <Icon name="gear-six" /> *Settings > Administration Panel > Roles* </li></ul>| 
 
-#### Restricting access to your API documentation {#restricting-access}
+#### Restricting access to your API documentation {#restrict-the-access-to-your-API-documentation}
 
 By default, your API documentation will be accessible by anyone.
 
@@ -83,7 +83,7 @@ To restrict API documentation access, enable the **Restricted Access** option 
 
 ### Code-based configuration
 
-To configure the Documentation plugin, create a `settings.json` file in the `src/extensions/documentation/config` folder. In this file, you can specify all your environment variables, licenses, external documentation links, and all the entries listed in the [specification](https://swagger.io/specification/). 
+To configure the Documentation plugin, create a `settings.json` file in the `src/extensions/documentation/config` folder. In this file, you can specify all your environment variables, licenses, external documentation links, and all the entries listed in the <ExternalLink to="https://swagger.io/specification/" text="specification"/>. 
 
 The following is an example configuration:
 
@@ -131,7 +131,7 @@ The following is an example configuration:
 If you need to add a custom key, prefix it by `x-` (e.g., `x-strapi-something`).
 :::
 
-#### Creating a new version of the documentation
+#### Creating a new version of the documentation {#create-a-new-version-of-the-documentation}
 
 To create a new version, change the `info.version` key in the `settings.json` file:
 
@@ -163,9 +163,9 @@ If you do not want plugins to be included in documentation generation, provide a
 
 #### Overriding the generated documentation
 
-The Documentation plugins comes with 3 methods to override the generated documentation: [`excludeFromGeneration`](#exclude-from-generation), [`registerOverride`](#register-override), and [`mutateDocumentation`](#mutate-documentation).
+The Documentation plugins comes with 3 methods to override the generated documentation: [`excludeFromGeneration`](#excluding-from-generation), [`registerOverride`](#register-override), and [`mutateDocumentation`](#mutate-documentation).
 
-##### excludeFromGeneration() {#exclude-from-generation}
+##### excludeFromGeneration() {#excluding-from-generation}
 
 To exclude certain APIs or plugins from being generated, use the `excludeFromGeneration` found on the documentation plugin’s `override` service in your application or plugin's [`register` lifecycle](/cms/plugins-development/admin-panel-api#register).
 
@@ -283,15 +283,15 @@ module.exports = {
 
 ## Usage
 
-The Documentation plugin visualizes your API using [Swagger UI](https://swagger.io/tools/swagger-ui/). To access the UI, select <Icon name="info" /> in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
+The Documentation plugin visualizes your API using <ExternalLink to="https://swagger.io/tools/swagger-ui/" text="Swagger UI"/>. To access the UI, select <Icon name="info" /> in the main navigation of the admin panel. Then click **Open documentation** to open the Swagger UI. Using the Swagger UI you can view all of the endpoints available on your API and trigger API calls.
 
 :::tip
 Once the plugin is installed, the plugin user interface can be accessed at the following URL:
 `<server-url>:<server-port>/documentation/<documentation-version>`
-(e.g., [`localhost:1337/documentation/v1.0.0`](http://localhost:1337/documentation/v1.0.0)).
+(e.g., <ExternalLink to="http://localhost:1337/documentation/v1.0.0" text="`localhost:1337/documentation/v1.0.0`"/>).
 :::
 
-### Regenerating documentation
+### Regenerating documentation {#regenerate-documentation}
 
 There are 2 ways to update the documentation after making changes to your API:
 

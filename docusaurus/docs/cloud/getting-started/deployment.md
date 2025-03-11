@@ -23,13 +23,13 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
-* Project(s) source code hosted on [GitHub](https://github.com) or [GitLab](https://about.gitlab.com/). The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
-* Specifically for GitLab: at least have "[Maintainer](https://docs.gitlab.com/ee/user/permissions.html)" permissions for the project to import on Strapi Cloud.
+* Project(s) source code hosted on <ExternalLink to="https://github.com" text="GitHub"/> or <ExternalLink to="https://about.gitlab.com/" text="GitLab"/>. The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
+* Specifically for GitLab: at least have "<ExternalLink to="https://docs.gitlab.com/ee/user/permissions.html" text="Maintainer"/>" permissions for the project to import on Strapi Cloud.
 :::
 
 ## Logging in to Strapi Cloud
 
-1. Navigate to the [Strapi Cloud](https://cloud.strapi.io) login page.
+1. Navigate to the <ExternalLink to="https://cloud.strapi.io" text="Strapi Cloud"/> login page.
 
 2. You have the options to **Log in with GitHub**, **Log in with Google** or **Log in with GitLab**. Choose your provider and log in. This initial login will create your Strapi Cloud account. Once logged in, you will be redirected to the Strapi Cloud *Projects* page where you can create your first Strapi Cloud project.
 
@@ -63,7 +63,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-3. Choose a plan for your Strapi Cloud project: either Developer, Pro, Team, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
+3. Choose a plan for your Strapi Cloud project: either Essential, Pro, Scale, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
     :::note Notes
     - Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
@@ -100,7 +100,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     
     4.c. Click on the **Create repository** button. A modal will confirm the creation of the repository.
 
-    4.d. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud access to the newly created repository (more information in the [GitHub documentation](https://docs.github.com/en/apps/overview)).
+    4.d. If you have already given Strapi Cloud access to all repositories of your GitHub account, go directly to the next step. If not, you will be redirected to a GitHub modal where you will have to allow Strapi Cloud access to the newly created repository (more information in the <ExternalLink to="https://docs.github.com/en/apps/overview" text="GitHub documentation"/>).
 
     4.e. Back in the project deployment interface, select your *Account* and the *Repository* you just created.
 
@@ -122,7 +122,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     Connect the GitHub or GitLab account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
     :::
 
-    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the [GitHub](https://docs.github.com/en/apps/overview) and [GitLab](https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications) documentations).
+    4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the <ExternalLink to="https://docs.github.com/en/apps/overview" text="GitHub"/> and <ExternalLink to="https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications" text="GitLab"/> documentations).
 
     4.c. Back in the project deployment interface, select your *Account* and a *Repository*. 
 

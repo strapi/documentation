@@ -260,13 +260,13 @@ const sidebars = {
               id: 'cms/backend-customization',
               label: 'How the backend server works'
             },
+            'cms/backend-customization/requests-responses',
             'cms/backend-customization/routes',
             'cms/backend-customization/policies',
             'cms/backend-customization/middlewares',
             'cms/backend-customization/controllers',
             'cms/backend-customization/services',
             'cms/backend-customization/models',
-            'cms/backend-customization/requests-responses',
             'cms/backend-customization/webhooks',
           ]
         },
@@ -324,11 +324,12 @@ const sidebars = {
               id: 'cms/plugins-development/developing-plugins'
             },
             'cms/plugins-development/create-a-plugin',
-            'cms/plugins-development/plugin-sdk',
             'cms/plugins-development/plugin-structure',
-            'cms/plugins-development/custom-fields',
+            'cms/plugins-development/plugin-sdk',
             'cms/plugins-development/admin-panel-api',
+            'cms/plugins-development/content-manager-apis',
             'cms/plugins-development/server-api',
+            'cms/plugins-development/custom-fields',
             'cms/plugins-development/plugins-extension',
           ]
         }

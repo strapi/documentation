@@ -25,7 +25,7 @@ Please be advised that Strapi are unable to provide support for third-party uplo
 :::prerequisites
 
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for a third-party upload provider (see [Strapi Market](https://market.strapi.io/providers)).
+- Credentials for a third-party upload provider (see <ExternalLink to="https://market.strapi.io/providers" text="Strapi Market"/>).
 
 :::
 
@@ -40,7 +40,7 @@ Configuring a third-party upload provider for use with Strapi Cloud requires 4 s
 
 ### Install the Provider Plugin
 
-Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+Using either `npm` or `yarn`, install the provider plugin in your local Strapi project as a package dependency by following the instructions in the respective entry for that provider in the <ExternalLink to="https://market.strapi.io/providers" text="Marketplace"/>.
 
 ### Configure the Provider
 
@@ -89,7 +89,7 @@ upload: {
 The file structure must match the above path exactly, or the configuration will not be applied to Strapi Cloud.
 :::
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](https://market.strapi.io/providers).
+Each provider will have different configuration settings available. Review the respective entry for that provider in the <ExternalLink to="https://market.strapi.io/providers" text="Marketplace"/>.
 
 **Example:**
 <Tabs groupId="js-ts">

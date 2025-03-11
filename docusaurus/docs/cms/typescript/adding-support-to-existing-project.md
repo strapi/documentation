@@ -1,6 +1,7 @@
 ---
 title: Adding TypeScript support 
 description: Learn how to add TypeScript support to an existing Strapi project.
+displayed_sidebar: cmsSidebar
 pagination_previous: cms/typescript/development
 tags:
 - allowJs flag

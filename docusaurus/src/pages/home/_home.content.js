@@ -3,7 +3,7 @@ import React from 'react';
 export default {
   page: {
     title: 'Strapi 5 Docs',
-    // description: 'Get set up in minutes to build any projects in hours instead of weeks.',
+    description: 'Get set up in minutes to build any projects in hours instead of weeks.',
   },
   carousel: [
     {
@@ -55,9 +55,13 @@ export default {
   ],
   categories: [
     {
+      categoryType: "cms",
       cardLink: '/cms/intro',
-      cardTitle: 'CMS Documentation',
+      cardIconName: 'feather',
+      cardIconColor: '#7B79FF',
+      cardTitle: 'CMS docs',
       cardDescription: 'Learn how to set up, configure, use, and customize the Strapi headless CMS',
+      cardCtaText: 'Read CMS docs',
       cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
       linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
       linksIconColor: 'blue',
@@ -115,9 +119,13 @@ export default {
     //   ],
     // },
     {
+      categoryType: "cloud",
       cardLink: '/cloud/intro',
-      cardTitle: 'Cloud Documentation',
-      cardDescription: 'Learn how to deploy and manage Strapi projects hosted on Strapi Cloud',
+      cardIconName: 'cloud',
+      cardIconColor: '#66B7F1',
+      cardTitle: 'Cloud docs',
+      cardDescription: 'Learn how to deploy and manage your Strapi projects hosted on Strapi Cloud',
+      cardCtaText: 'Read Cloud docs',
       cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,
       linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
       linksIconColor: 'purple',

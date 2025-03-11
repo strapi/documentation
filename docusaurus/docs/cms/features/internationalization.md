@@ -68,7 +68,7 @@ For each locale, the table displays the default ISO code of the locale, its opti
 Administrators can add and manage as many locales as they want. There can however only be one locale set as the default one for the whole Strapi application.
 
 :::note
-It is not possible to create custom locales. Locales can only be created based on [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json) set by Strapi.
+It is not possible to create custom locales. Locales can only be created based on <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json" text="the 500+ pre-created list of locales"/> set by Strapi.
 :::
 
 1. Click on the **Add new locale** button.
@@ -87,7 +87,7 @@ It is not possible to create custom locales. Locales can only be created based o
 
 ### Code-based configuration
 
-A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configurations/environment#strapi) can be configured to set the default locale for your environment. The value used for this variable should be an ISO country code from [the 500+ pre-created list of locales](https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json).
+A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configurations/environment#strapi) can be configured to set the default locale for your environment. The value used for this variable should be an ISO country code from <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json" text="the 500+ pre-created list of locales"/>.
 
 ## Usage
 

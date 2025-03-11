@@ -26,7 +26,7 @@ Discord accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the Apps list page on the developer portal at [https://discordapp.com/developers/applications/](https://discordapp.com/developers/applications/)
+1. Visit the Apps list page on the developer portal at <ExternalLink to="https://discordapp.com/developers/applications/" text="https://discordapp.com/developers/applications/"/>
 2. Click on **New application** button
 3. Fill the **name** and create
 4. Click on **OAuth2** in the left menu
@@ -37,7 +37,7 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Discord** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`
