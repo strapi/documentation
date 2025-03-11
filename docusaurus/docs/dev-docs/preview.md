@@ -80,7 +80,7 @@ preview: {
 // …
 ```
 
-An example of [URL generation logic](#2-add-url-generation-logic) in given in the following basic implementation guide.
+An example of [URL generation logic](#2-add-url-generation) in given in the following basic implementation guide.
 
 #### Previewing draft entries
 
@@ -103,7 +103,7 @@ async handler(uid, { documentId, locale, status }) {
 },
 ```
 
-A more detailed example using the draft mode of Next.js is given in the [basic implementation guide](#3-add-handler-logic).
+A more detailed example using the draft mode of Next.js is given in the [basic implementation guide](#3-add-handler).
 
 ## Basic implementation guide
 
@@ -111,7 +111,7 @@ Follow these steps to add Preview capabilities to your content types in Strapi a
 
 This guide uses a basic Next.js example, but the process applies to all frameworks with some variations. Strapi-related steps (prefixed with [Strapi]) remain mostly the same. Please refer to your front-end framework's documentation for specific implementation details.
 
-### 1. [Strapi] Create the Preview configuration
+### 1. [Strapi] Create the Preview configuration {#1-create-config}
 
 Create a new file `/config/admin.ts` (or update it if it exists) with the following basic structure:
 
@@ -131,7 +131,7 @@ export default ({ env }) => ({
 });
 ```
 
-### 2. [Strapi] Add URL generation logic
+### 2. [Strapi] Add URL generation logic {#2-add-url-generation}
 
 Add the URL generation logic with a `getPreviewPathname` function. The following example is taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
 
@@ -181,7 +181,7 @@ const getPreviewPathname = (uid, { locale, document }): string => {
 Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching front-end page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the admin panel. This is how you enable or disable preview per content type.
 :::
 
-### 3. [Strapi] Add handler logic
+### 3. [Strapi] Add handler logic {#3-add-handler}
 
 Create the complete configuration, expanding the basic configuration created in step 1. with the URL generation logic created in step 2., adding an appropriate handler logic:
 
@@ -229,7 +229,7 @@ export default ({ env }) => {
 };
 ```
 
-### 4. [Front end] Set up the front-end preview route
+### 4. [Front end] Set up the front-end preview route {#4-setup-frontend-route}
 
 Setting up the front-end preview route is highly dependent on the framework used for your front-end application.
 
@@ -268,13 +268,13 @@ export async function GET(request: Request) {
 }
 ```
 
-### 5. [Front end] Allow the front-end to be embedded
+### 5. [Front end] Allow the front-end to be embedded {#5-allow-frontend-embed}
 
 On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-origins) allows the admin panel to load the front-end window in an iframe. But allowing the embedding works both ways, so on the front-end side, you also need to allow the window to be embedded in Strapi's admin panel.
 
 This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
 
-### 6. [Front end] Detect changes in Strapi and refresh the front-end
+### 6. [Front end] Detect changes in Strapi and refresh the front-end {#6-refresh-frontend}
 
 Strapi emits a `strapiUpdate` message to inform the front end that data has changed. 
 
