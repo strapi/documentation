@@ -163,6 +163,7 @@
     --custom-badge-color: white;
     --custom-badge-tooltip-background-color: var(--strapi-primary-100);
     --custom-badge-tooltip-color: var(--custom-badge-background-color);
+
   }
 
   &--sso {
@@ -174,6 +175,11 @@
     a {
       color: inherit;
     }
+  }
+
+  &--growth a,
+  &--enterprise a {
+    color: white !important;
   }
 
   &--pro {
