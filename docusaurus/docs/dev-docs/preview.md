@@ -274,9 +274,94 @@ On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-orig
 
 This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
 
+### 6. [Front end] Detect changes in Strapi and refresh the front-end
+
+Strapi emits a `strapiUpdate` message to inform the front end that data has changed. 
+
+To track this, within your front-end application, add an event listener to listen to events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). The listener needs to filter through messages and react only to Strapi-initiated messages, then refresh the iframe.
+
+With Next.js, the recommended way to refresh the iframe content is with [the `router.refresh()` method](https://nextjs.org/docs/app/building-your-application/caching#routerrefresh).
+<!-- TODO: use ExternalLink compo. -->
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" >
+
+```tsx title="next/app/path/to/your/front/end/logic.jsx" {6-17}
+export default function MyClientComponent({...props}) {
+  // …
+  const router = useRouter();
+  
+  useEffect(() => {
+    const handleMessage = async (message) => {
+      if (
+        // Filters events emitted through the postMessage() API
+        message.origin === process.env.NEXT_PUBLIC_API_URL &&
+        message.data.type === "strapiUpdate"
+      ) { // Recommended way to refresh with Next.js
+        router.refresh();
+      }
+    };
+    
+    // Add the event listener
+    window.addEventListener("message", handleMessage);
+    
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [router]);
+  
+  // ...
+}
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript" >
+
+```tsx title="next/app/path/to/your/front/end/logic.tsx" {6-17}
+export default function MyClientComponent({
+  //…
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message: MessageEvent<any>) => {
+      if (
+        // Filters events emitted through the postMessage() API
+        message.origin === process.env.NEXT_PUBLIC_API_URL &&
+        message.data.type === "strapiUpdate"
+      ) { // Recommended way to refresh with Next.js
+        router.refresh();
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener("message", handleMessage);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [router]);
+
+  // …
+})
+```
+
+</TabItem>
+
+</Tabs>
+
+<details>
+<summary>Caching in Next.js:</summary>
+
+The persistence of [cache in the back end of Next.js](https://nextjs.org/docs/app/building-your-application/caching) may need additional steps where you would need to invalidate cache by sending an API call from the client side of Next to the server side which will handle the revalidation logic. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
+<br/>
+
+</details>
+
 ### Next steps
 
-Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves:
+Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
 
 1. Create or adapt your data fetching utility to check if draft mode is enabled
 2. Update your API calls to include the draft status parameter when appropriate
