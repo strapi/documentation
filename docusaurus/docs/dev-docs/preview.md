@@ -107,9 +107,9 @@ A more detailed example using the draft mode of Next.js is given in the [basic i
 
 ## Basic implementation guide
 
-Follow these steps to add Preview capabilities to your content types.
+Follow these steps to add Preview capabilities to your content types in Strapi and your front-end.
 
-### 1. Create the Preview configuration
+This guide uses a basic Next.js example, but the process applies to all frameworks with some variations. Strapi-related steps (prefixed with [Strapi]) remain mostly the same. Please refer to your front-end framework's documentation for specific implementation details.
 
 Create a new file `/config/admin.ts` (or update it if it exists) with the following basic structure:
 
