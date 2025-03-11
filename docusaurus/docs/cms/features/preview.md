@@ -40,8 +40,10 @@ With the Preview feature, you can preview your front end application directly fr
 
   ```bash
   CLIENT_URL=https://your-frontend-app.com
-  PREVIEW_SECRET=your-secret-key # optional, required with Next.js draft mode
+  PREVIEW_SECRET=your-secret-key
   ```
+
+  The `PREVIEW_SECRET` key is optional but required with Next.js draft mode.
 
 * A front-end application for your Strapi project should be already created and set up.
 :::
@@ -122,13 +124,13 @@ async handler(uid, { documentId, locale, status }) {
 },
 ```
 
-A more detailed example using the draft mode of Next.js is given in the [basic implementation guide](#3-add-handler-logic).
+A more detailed example using the draft mode of Next.js is given in the [basic implementation guide](#3-add-handler).
 
 ### Basic implementation guide
 
 Follow these steps to add Preview capabilities to your content types.
 
-#### 1. Create the Preview configuration
+#### 1. [Strapi] Create the Preview configuration {#1-create-config}
 
 Create a new file `/config/admin.ts` (or update it if it exists) with the following basic structure:
 
@@ -148,7 +150,7 @@ export default ({ env }) => ({
 });
 ```
 
-#### 2. Add URL generation logic
+#### 2. [Strapi] Add URL generation logic {#2-add-url-generation}
 
 Add the URL generation logic with a `getPreviewPathname` function. The following example is taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
 
@@ -198,7 +200,7 @@ const getPreviewPathname = (uid, { locale, document }): string => {
 Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching front-end page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the admin panel. This is how you enable or disable preview per content type.
 :::
 
-#### 3. Add handler logic
+#### 3. [Strapi] Add handler logic {#3-add-handler}
 
 Create the complete configuration, expanding the basic configuration created in step 1. with the URL generation logic created in step 2., adding an appropriate handler logic:
 
@@ -246,7 +248,7 @@ export default ({ env }) => {
 };
 
 ```
-#### 4. Set up the front-end preview route
+#### 4. [Front end] Set up the front-end preview route {#4-setup-frontend-route}
 
 Setting up the front-end preview route is highly dependent on the framework used for your front-end application.
 
@@ -285,17 +287,158 @@ export async function GET(request: Request) {
 }
 ```
 
-#### 5. Allow the front-end to be embedded
+#### 5. [Front end] Allow the front-end to be embedded {#5-allow-frontend-embed}
 
 On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-origins) allows the admin panel to load the front-end window in an iframe. But allowing the embedding works both ways, so on the front-end side, you also need to allow the window to be embedded in Strapi's admin panel.
 
 This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
 
+#### 6. [Front end] Detect changes in Strapi and refresh the front-end {#6-refresh-frontend}
+
+Strapi emits a `strapiUpdate` message to inform the front end that data has changed. 
+
+To track this, within your front-end application, add an event listener to listen to events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object. The listener needs to filter through messages and react only to Strapi-initiated messages, then refresh the iframe content.
+
+With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript" >
+
+```tsx title="next/app/path/to/your/front/end/logic.jsx" {6-17}
+export default function MyClientComponent({...props}) {
+  // …
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message) => {
+      if (
+        // Filters events emitted through the postMessage() API
+        message.origin === process.env.NEXT_PUBLIC_API_URL &&
+        message.data.type === "strapiUpdate"
+      ) { // Recommended way to refresh with Next.js
+        router.refresh();
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener("message", handleMessage);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [router]);
+
+  // ...
+}
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript" >
+
+```tsx title="next/app/path/to/your/front/end/logic.tsx" {6-17}
+export default function MyClientComponent({
+  //…
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message: MessageEvent<any>) => {
+      if (
+        // Filters events emitted through the postMessage() API
+        message.origin === process.env.NEXT_PUBLIC_API_URL &&
+        message.data.type === "strapiUpdate"
+      ) { // Recommended way to refresh with Next.js
+        router.refresh();
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener("message", handleMessage);
+
+    // Cleanup the event listener on unmount
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [router]);
+
+  // …
+})
+```
+
+</TabItem>
+
+</Tabs>
+
+<details>
+<summary>Caching in Next.js:</summary>
+
+In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-application/caching) may require additional steps. You might need to invalidate the cache by making an API call from the client side to the server, where the revalidation logic will be handled. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
+<br/>
+
+</details>
+
+#### [Front end] Next steps
+
+Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
+
+1. Create or adapt your data fetching utility to check if draft mode is enabled
+2. Update your API calls to include the draft status parameter when appropriate
+
+The following, taken from the <ExternalLink to="https://github.com/strapi/LaunchPad/tree/feat/preview" text="Launchpad" /> Strapi demo application, is an example of how to implement draft-aware data fetching in your Next.js front-end application:
+
+```typescript {8-18}
+import { draftMode } from "next/headers";
+import qs from "qs";
+
+export default async function fetchContentType(
+  contentType: string,
+  params: Record = {}
+): Promise {
+  // Check if Next.js draft mode is enabled
+  const { isEnabled: isDraftMode } = draftMode();
+  
+  try {
+    const queryParams = { ...params };
+    // Add status=draft parameter when draft mode is enabled
+    if (isDraftMode) {
+      queryParams.status = "draft";
+    }
+    
+    const url = `${baseURL}/${contentType}?${qs.stringify(queryParams)}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data from Strapi (url=${url}, status=${response.status})`
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching content:", error);
+    throw error;
+  }
+}
+```
+
+This utility method can then be used in your page components to fetch either draft or published content based on the preview state:
+
+```typescript
+// In your page component:
+const pageData = await fetchContentType('api::page.page', {
+  // Your other query parameters
+});
+```
+
 ## Usage
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
 
-Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display a side panel with the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
+:::strapi Preview with or without the side panel
+Based on your CMS plan, your experience with Preview will be different:
+- With the Free plan, Preview will be full screen only.
+- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
+:::
+
+Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
 
 <!-- TODO: add a dark mode GIF -->
 <ThemedImage
@@ -306,13 +449,15 @@ Once the Preview feature is properly set up, an **Open preview** button is visib
   }}
 />
 
-Once the side panel for the Preview is open, you can:
+Once the Preview is open, you can:
 
 - click the close button <Icon name="x" classes="ph-bold" /> in the upper left corner to go back to the Edit View of the Content Manager,
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
-- expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview  full screen
-- use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled
 - and click the link icon <Icon name="link" classes="ph-bold"/> in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
+
+Additionally, with <GrowthBadge /> and <EnterpriseBadge /> plans, you can:
+- expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview  full screen
+- and use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled.
 
 :::info
 Please note that the side panel for Preview is currently in beta and only accessible if you installed strapi with the beta flag, with the following command: `npx create-strapi@beta`.
