@@ -354,7 +354,7 @@ export default function MyClientComponent({
 <details>
 <summary>Caching in Next.js:</summary>
 
-The persistence of [cache in the back end of Next.js](https://nextjs.org/docs/app/building-your-application/caching) may need additional steps where you would need to invalidate cache by sending an API call from the client side of Next to the server side which will handle the revalidation logic. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
+In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-application/caching) may require additional steps. You might need to invalidate the cache by making an API call from the client side to the server, where the revalidation logic will be handled. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
 <br/>
 
 </details>
