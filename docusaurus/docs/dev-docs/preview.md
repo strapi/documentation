@@ -19,8 +19,10 @@ The present page describes how to set up the Preview feature in Strapi. Once set
 
   ```bash
   CLIENT_URL=https://your-frontend-app.com
-  PREVIEW_SECRET=your-secret-key # optional, required with Next.js draft mode
+  PREVIEW_SECRET=your-secret-key
   ```
+
+  The `PREVIEW_SECRET` is optional but required with Next.js draft mode.
 
 * A front-end application for your Strapi project should be already created and set up.
 :::
