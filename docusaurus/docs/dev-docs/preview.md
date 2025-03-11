@@ -111,6 +111,8 @@ Follow these steps to add Preview capabilities to your content types in Strapi a
 
 This guide uses a basic Next.js example, but the process applies to all frameworks with some variations. Strapi-related steps (prefixed with [Strapi]) remain mostly the same. Please refer to your front-end framework's documentation for specific implementation details.
 
+### 1. [Strapi] Create the Preview configuration
+
 Create a new file `/config/admin.ts` (or update it if it exists) with the following basic structure:
 
 ```javascript title="config/admin.ts"
@@ -129,7 +131,7 @@ export default ({ env }) => ({
 });
 ```
 
-### 2. Add URL generation logic
+### 2. [Strapi] Add URL generation logic
 
 Add the URL generation logic with a `getPreviewPathname` function. The following example is taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
 
@@ -179,7 +181,7 @@ const getPreviewPathname = (uid, { locale, document }): string => {
 Some content types don't need to have a preview if it doesn't make sense, hence the default case returning `null`. A Global single type with some site metadata, for example, will not have a matching front-end page. In these cases, the handler function should return `null`, and the preview UI will not be shown in the admin panel. This is how you enable or disable preview per content type.
 :::
 
-### 3. Add handler logic
+### 3. [Strapi] Add handler logic
 
 Create the complete configuration, expanding the basic configuration created in step 1. with the URL generation logic created in step 2., adding an appropriate handler logic:
 
@@ -227,12 +229,12 @@ export default ({ env }) => {
 };
 ```
 
-### 4. Set up the front-end preview route
+### 4. [Front end] Set up the front-end preview route
 
 Setting up the front-end preview route is highly dependent on the framework used for your front-end application.
 
 For instance, [Next.js draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) and
-[Nuxt preview mode](https://nuxt.com/docs/api/composables/use-preview-mode) provide additional documentation on how to implement the front-end part in their respective documentations.
+[Nuxt preview mode](https://nuxt.com/docs/api/composables/use-preview-mode) provide additional information on how to implement the front-end part in their respective documentations.
 
 If using Next.js, a basic implementation could be like in the following example taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
 
@@ -266,7 +268,7 @@ export async function GET(request: Request) {
 }
 ```
 
-### 5. Allow the front-end to be embedded
+### 5. [Front end] Allow the front-end to be embedded
 
 On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-origins) allows the admin panel to load the front-end window in an iframe. But allowing the embedding works both ways, so on the front-end side, you also need to allow the window to be embedded in Strapi's admin panel.
 
