@@ -33,13 +33,13 @@ Without these metrics, we wouldn't be able to make the right choices as we conti
 The following data is collected:
 
 - Unique project ID (generated with UUID)
-- Unique machine ID (generated with [node-machine-id](https://www.npmjs.com/package/node-machine-id))
+- Unique machine ID (generated with <ExternalLink to="https://www.npmjs.com/package/node-machine-id" text="node-machine-id"/>)
 - Environment state (development, staging, production)
 - System information (OS)
 - Build configurations
 
 :::caution GDPR
-Any identifiable data collected and aggregated is of a non-sensitive nature. We are compliant with the European GDPR recommendations (see our [Privacy Policy](https://strapi.io/privacy)). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and then anonymized.
+Any identifiable data collected and aggregated is of a non-sensitive nature. We are compliant with the European GDPR recommendations (see our <ExternalLink to="https://strapi.io/privacy" text="Privacy Policy"/>). We do not collect databases configurations, password or custom variables. Any data collected (as above) is secured, encrypted and then anonymized.
 :::
 
 :::note

@@ -70,7 +70,7 @@ From the list view, it is possible to:
 - select multiple entries to simultaneously [publish, unpublish](/cms/features/draft-and-publish#bulk-publishing-and-unpublishing), or [delete](/cms/features/draft-and-publish#deleting-content).
 
 :::tip
-Sorting can be enabled for most fields displayed in the list view table (see [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md)). Click on a field name, in the header of the table, to sort on that field.
+Sorting can be enabled for most fields displayed in the list view table (see <ExternalLink to="../content-manager/configuring-view-of-content-type.md" text="Configuring the views of a content-type"/>). Click on a field name, in the header of the table, to sort on that field.
 :::
 -->
 
@@ -120,7 +120,7 @@ By configuring temporarily the list view, the configurations will be reset as so
 <!-- MAY BE REMOVED - NOT SURE ABOUT RELEVANCE
 
 :::tip
-Relational fields can also be displayed in the list view. Please refer to [Configuring the views of a content-type](../content-manager/configuring-view-of-content-type.md) for more information on their specificities.
+Relational fields can also be displayed in the list view. Please refer to <ExternalLink to="../content-manager/configuring-view-of-content-type.md" text="Configuring the views of a content-type"/> for more information on their specificities.
 :::
 -->
 
@@ -307,7 +307,7 @@ If Draft & Publish is enabled for your content-type (it's enabled by default), t
 | UID         | Write a unique identifier in the textbox. A "Regenerate" button, displayed on the right of the box, allows automatically generating a UID based on the content type name.                                                                                                                                                                                                |
 
 :::note
-Filling out a [custom field](/cms/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the [Marketplace](https://market.strapi.io).
+Filling out a [custom field](/cms/features/content-type-builder#custom-fields) depends on the type of content handled by the field. Please refer to the dedicated documentation for each custom field hosted on the <ExternalLink to="https://market.strapi.io" text="Marketplace"/>.
 :::
 
 #### Components
@@ -504,7 +504,7 @@ Entries from multiple-choice relational fields can be reordered, indicated by a 
 :::tip
 - Not all entries are listed by default: more can be displayed by clicking on the **Load more** button. Also, instead of choosing an entry by scrolling the list, you can click any relational field drop-down list and type to search a specific entry.
 
-- Click on the name of an entry to be redirected to the edit view of the relational field's content-type. Make sure you save your page first, to avoid losing your last modifications.
+- Click on the name of an entry to display a modal from where you will be able to edit the relational field's content-type. For now, you can only edit a relation on-the-fly and not create a new one.  This feature is currently in beta and only available if you installed Strapi with the beta flag, with the following command `npx create-strapi@beta`.
 :::
 
 :::note

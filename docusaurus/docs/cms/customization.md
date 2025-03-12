@@ -3,7 +3,7 @@ title: Customization
 description: Learn more about Strapi 5 customization possibilities
 displayed_sidebar: cmsSidebar
 sidebar_label: Customization
-pagination_next: cms/plugins-development/developing-plugins
+pagination_next: cms/backend-customization
 tags:
 - admin panel
 - admin panel customization
@@ -25,17 +25,12 @@ Strapi includes 2 main components:
 
 From a bigger picture, this is how Strapi integrates in a typical, generic setup: Strapi includes 2 parts, a back-end server and an admin panel, and interact with a database (which stores data) and an external, front-end application that displays your data. Both parts of Strapi can be customized to some extent.
 
-```mermaid
-
-  flowchart LR
-    database[(Database)] --> backend[Back-end server]
-    subgraph Strapi
-        direction BT
-        backend --> frontend[Admin Panel]
-        frontend 
-    end
-    frontend --> external{{External, front-end applications}}
-```
+<MermaidWithFallback
+    chartFile="/diagrams/customization.mmd"
+    fallbackImage="/img/assets/diagrams/customization.png"
+    fallbackImageDark="/img/assets/diagrams/customization_DARK.png"
+    alt="Customization diagram"
+/>
 
 <br />
 
@@ -50,5 +45,5 @@ Click on any of the following cards to learn more about customization possibilit
 :::info
 Customizing the database or the external, front-end application are outside of the scope of the present documentation section.
 - You can learn more about databases usage with Strapi by reading the installation documentation, which lists [supported databases](/cms/installation/cli#preparing-the-installation), and the configuration documentation, which describes how to [configure a database](/cms/configurations/database) with your project.
-- You can learn more about how external front-end applications can interact with Strapi by reading the Strapi's [integration pages](https://strapi.io/integrations).
+- You can learn more about how external front-end applications can interact with Strapi by reading the Strapi's <ExternalLink to="https://strapi.io/integrations" text="integration pages"/>.
 :::

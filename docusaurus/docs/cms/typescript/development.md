@@ -1,12 +1,12 @@
 ---
 title: TypeScript development
 description: Learn more about TypeScript usage with Strapi 5
+displayed_sidebar: cmsSidebar
 tags:
 - strapi() factory
 - strapi.compile() function
 - typescript
 - plugins development
-
 ---
 
 # TypeScript Development with Strapi 
@@ -72,7 +72,7 @@ Types can be automatically generated on server restart by adding `autogenerate: 
 :::
 
 :::tip Tip: Using types in your front-end application
-To use Strapi types in your front-end application, you can [use a workaround](https://github.com/strapi-community/strapi-typed-fronend) until Strapi implements an official solution.
+To use Strapi types in your front-end application, you can <ExternalLink to="https://github.com/strapi-community/strapi-typed-fronend" text="use a workaround"/> until Strapi implements an official solution.
 :::
 
 ### Fix build issues with the generated types
@@ -107,7 +107,7 @@ Types should only be imported from `@strapi/strapi` to avoid breaking changes. T
 
 To start Strapi programmatically in a TypeScript project the Strapi instance requires the compiled code location. This section describes how to set and indicate the compiled code directory.
 
-### Use the `strapi()` factory
+### Use the `strapi()` factory {#use-the-createstrapi-factory}
 
 Strapi can be run programmatically by using the `strapi()` factory. Since the code of TypeScript projects is compiled in a specific directory, the parameter `distDir` should be passed to the factory to indicate where the compiled code should be read:
 

@@ -18,7 +18,7 @@ You have read the [How to configure SSO guide](/cms/configurations/guides/config
 
 ## Installation
 
-Install [passport-keycloak-oauth2-oidc](https://www.npmjs.com/package/passport-keycloak-oauth2-oidc):
+Install <ExternalLink to="https://www.npmjs.com/package/passport-keycloak-oauth2-oidc" text="passport-keycloak-oauth2-oidc"/>:
 
 <Tabs groupId="yarn-npm">
 

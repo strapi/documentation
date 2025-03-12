@@ -22,17 +22,12 @@ The `./src/index.js` file (or `./src/index.ts` file in a [TypeScript-based](/cms
 
 The functions can be synchronous, asynchronous, or return a promise.
 
-``` mermaid
-flowchart TB
-    A([The Strapi application starts.]) --> B{"register()"} 
-    B -- The Strapi application is setup. --> C
-    C{"bootstrap()"} -- The Strapi back-end server starts. --> D
-    D(Request)
-    D
-    click B "#register"
-    click C "#bootstrap"
-    click D "/cms/backend-customization/requests-responses"
-```
+<MermaidWithFallback
+    chartFile="/diagrams/functions.mmd"
+    fallbackImage="/img/assets/diagrams/functions.png"
+    fallbackImageDark="/img/assets/diagrams/functions_DARK.png"
+    alt="Lifecycle functions diagram"
+/>
 
 </div>
 
@@ -199,3 +194,7 @@ It can be used to gracefully:
 
 - stop [services](/cms/backend-customization/services) that are running
 - [clean up plugin actions](/cms/plugins-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+
+:::strapi Additional information
+You might find additional information in <ExternalLink to="https://strapi.io/blog/how-to-use-register-function-to-customize-your-strapi-app" text="this blog article"/> about registering lifecycle functions.
+:::

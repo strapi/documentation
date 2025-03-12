@@ -21,7 +21,7 @@ You can click on the description of any breaking change in the following tables 
 
 :::tip Tips
 * To view a full list of available codemods, run the `npx @strapi/upgrade codemods ls` command in your terminal.
-* To have a deeper look at the code executed by the codemods, head over to the [list of codemods](https://github.com/strapi/strapi/tree/develop/packages/utils/upgrade/resources/codemods/5.0.0) in the GitHub repository.
+* To have a deeper look at the code executed by the codemods, head over to the <ExternalLink to="https://github.com/strapi/strapi/tree/develop/packages/utils/upgrade/resources/codemods/5.0.0" text="list of codemods"/> in the GitHub repository.
 :::
 
 ## Database

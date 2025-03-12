@@ -18,7 +18,7 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
-import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, SsoBadge, CloudDevBadge, CloudProBadge, CloudTeamBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
+import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, SsoBadge, CloudEssentialBadge, CloudProBadge, CloudScaleBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
 import {
@@ -33,6 +33,7 @@ import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
 import { ExternalLink } from '../components/ExternalLink';
 import BreakingChangeIdCard from '../components/BreakingChangeIdCard';
+import MermaidWithFallback from '../components/MermaidWithFallback.js';
 
 export default {
   // Re-use the default mapping
@@ -58,9 +59,9 @@ export default {
   SsoBadge,
   NewBadge,
   UpdatedBadge,
-  CloudDevBadge,
+  CloudEssentialBadge,
   CloudProBadge,
-  CloudTeamBadge,
+  CloudScaleBadge,
   VersionBadge,
   Columns,
   ColumnLeft,
@@ -71,6 +72,7 @@ export default {
   InteractiveQueryBuilder,
   SubtleCallout,
   ThemedImage,
+  MermaidWithFallback,
   SideBySideColumn,
   SideBySideContainer,
   MultiLanguageSwitcher,

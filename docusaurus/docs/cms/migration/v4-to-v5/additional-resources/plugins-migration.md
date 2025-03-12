@@ -39,8 +39,8 @@ The manual steps include:
 ### Front-end changes
 
 - The Design System is upgraded to v2 in Strapi 5:
-  - 👉 A dedicated migration guide is [available in the Design System documentation](https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs).
-  - There are no big visual changes, except for [icons](https://design-system-git-main-strapijs.vercel.app/?path=/docs/foundations-icons-overview--docs).
+  - 👉 A dedicated migration guide is <ExternalLink to="https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs" text="available in the Design System documentation"/>.
+  - There are no big visual changes, except for <ExternalLink to="https://design-system-git-main-strapijs.vercel.app/?path=/docs/foundations-icons-overview--docs" text="icons"/>.
   - General Strapi v4 to Strapi 5 [breaking changes](/cms/migration/v4-to-v5/breaking-changes) might apply.
 - The `helper-plugin` has been removed. A [migration reference](/cms/migration/v4-to-v5/additional-resources/helper-plugin) is available to help you transition away from the `helper-plugin`.
 - Strapi does not alias dependencies any longer. The 4 dependencies that are expected to be used by all client facing code are declared at the project level (`react`, `react-dom`, `styled-components`, and `react-router-dom`). If you do not declare the dependencies that you use (e.g. `axios`), there is a likelihood users could face unforeseen issues with your plugin.

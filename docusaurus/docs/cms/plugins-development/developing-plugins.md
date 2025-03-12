@@ -14,10 +14,10 @@ tags:
 
 # Developing Strapi plugins
 
-Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the [Marketplace](https://market.strapi.io). Once created, your plugin can be:
+Strapi allows the development of plugins that work exactly like the built-in plugins or 3rd-party plugins available from the <ExternalLink to="https://market.strapi.io" text="Marketplace"/>. Once created, your plugin can be:
 
 - used as a local plugin, working only with a specific Strapi project,
-- or [submitted to the Marketplace](https://market.strapi.io/submit-plugin) to be shared with the community.
+- or <ExternalLink to="https://market.strapi.io/submit-plugin" text="submitted to the Marketplace"/> to be shared with the community.
 
 👉 To start developing a Strapi plugin:
 
@@ -51,5 +51,5 @@ Plugins can also be used to add [custom fields](/cms/plugins-development/custom-
 <br />
 
 :::strapi Additional resources
-The [contributors documentation](https://contributor.strapi.io/) can also include additional information useful while developing a Strapi plugin.
+The <ExternalLink to="https://contributor.strapi.io/" text="contributors documentation"/> can also include additional information useful while developing a Strapi plugin.
 :::

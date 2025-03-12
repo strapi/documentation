@@ -49,7 +49,7 @@ The log level defaults to `http`. This means that `silly`and `debug` level logs 
 
 The log level can be configured either in the `server.js` file as described in the following Manual migration section, or as described in the [middlewares configuration](/cms/configurations/middlewares#logger) documentation.
 
-[See the list of Winston log levels](https://www.npmjs.com/package/winston#logging-levels).
+<ExternalLink to="https://www.npmjs.com/package/winston#logging-levels" text="See the list of Winston log levels"/>.
 
 ### Manual migration
 

@@ -16,7 +16,7 @@ import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 This page is part of the back end customization examples cookbook. Please ensure you've read its [introduction](/cms/backend-customization/examples).
 :::
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not use any custom policies or route middlewares that could control access to content type endpoints.
+Out of the box, <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> does not use any custom policies or route middlewares that could control access to content type endpoints.
 
 In Strapi, controlling access to a content-type endpoint can be done either with a policy or route middleware:
 
@@ -29,7 +29,7 @@ In our example, let's use a policy.
 
 **💭 Context:**
 
-Let's say we would like to customize the backend of [FoodAdvisor](https://github.com/strapi/foodadvisor) to prevent restaurant owners from creating fake reviews for their businesses using a [form previously created](/cms/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) on the front-end website.
+Let's say we would like to customize the backend of <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> to prevent restaurant owners from creating fake reviews for their businesses using a [form previously created](/cms/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) on the front-end website.
 
 <SideBySideContainer>
 
@@ -58,7 +58,7 @@ Additional information can be found in the [Policies](/cms/backend-customization
 
 **🧑‍💻 Code example:**
 
-In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, create a new `src/api/review/policies/is-owner-review.js` file with the following code:
+In the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, create a new `src/api/review/policies/is-owner-review.js` file with the following code:
 
 ```jsx title="src/api/review/policies/is-owner-review.js"
 
@@ -108,7 +108,7 @@ Policies or route middlewares should be declared in the configuration of a route
 
 **💭 Context:**
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) sends a default error when a policy refuses access to a route. Let's say we want to customize the error sent when the [previously created custom policy](#creating-a-custom-policy) does not allow creating a review.
+Out of the box, <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> sends a default error when a policy refuses access to a route. Let's say we want to customize the error sent when the [previously created custom policy](#creating-a-custom-policy) does not allow creating a review.
 
 <SideBySideContainer>
 
@@ -134,7 +134,7 @@ Additional information can be found in the [Error handling](/cms/error-handling)
 
 **🧑‍💻 Code example:**
 
-In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, update the [previously created `is-owner-review` custom policy](#creating-a-custom-policy) as follows (highlighted lines are the only modified lines):
+In the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, update the [previously created `is-owner-review` custom policy](#creating-a-custom-policy) as follows (highlighted lines are the only modified lines):
 
 ```jsx title="src/api/review/policies/is-owner-review.js" showLineNumbers
 const { errors } = require('@strapi/utils');
@@ -244,13 +244,13 @@ When a policy refuses access to a route and the custom policy throws the custom 
 
 **💭 Context:**
 
-Out of the box, the Next.js-powered front-end website provided with [FoodAdvisor](https://github.com/strapi/foodadvisor) does not display errors or success messages on the front-end website when accessing content. For instance, the website will not inform the user when adding a new review with a [previously created form](/cms/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) is not possible.
+Out of the box, the Next.js-powered front-end website provided with <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> does not display errors or success messages on the front-end website when accessing content. For instance, the website will not inform the user when adding a new review with a [previously created form](/cms/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) is not possible.
 
 <SideBySideContainer>
 
 <SideBySideColumn>
 
-Let's say we want to customize the front end of FoodAdvisor to catch the custom error thrown by a [previously created custom policy](#creating-a-custom-policy) and display it to the user with a [React Hot Toast notification](https://github.com/timolins/react-hot-toast). As a bonus, another toast notification will be displayed when a review is successfully created.
+Let's say we want to customize the front end of FoodAdvisor to catch the custom error thrown by a [previously created custom policy](#creating-a-custom-policy) and display it to the user with a <ExternalLink to="https://github.com/timolins/react-hot-toast" text="React Hot Toast notification"/>. As a bonus, another toast notification will be displayed when a review is successfully created.
 
 </SideBySideColumn>
 
@@ -271,7 +271,7 @@ Let's say we want to customize the front end of FoodAdvisor to catch the custom 
 
 **🧑‍💻 Code example:**
 
-In the `/client` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, you could update the [previously created `new-review` component](/cms/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) as follows (modified lines are highlighted):
+In the `/client` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, you could update the [previously created `new-review` component](/cms/backend-customization/examples/services-and-controllers#rest-api-queries-from-the-front-end) as follows (modified lines are highlighted):
 
 <details>
 <summary>Example front-end code to display toast notifications for custom errors or successful review creation:</summary>

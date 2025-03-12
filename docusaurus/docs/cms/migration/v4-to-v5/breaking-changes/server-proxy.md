@@ -14,7 +14,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 #  Server proxy configurations are grouped under the `server.proxy` object
 
-In Strapi 5, all proxy configuration options are now configured through the `server.proxy` object in `/config/server.js|ts`, whether they are for requests made within `strapi.fetch` or for the global proxy agent for the [koa](https://koajs.com/) server.
+In Strapi 5, all proxy configuration options are now configured through the `server.proxy` object in `/config/server.js|ts`, whether they are for requests made within `strapi.fetch` or for the global proxy agent for the <ExternalLink to="https://koajs.com/" text="koa"/> server.
 
 <Intro />
 <BreakingChangeIdCard />

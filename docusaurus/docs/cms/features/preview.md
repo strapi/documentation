@@ -107,8 +107,8 @@ An example of [URL generation logic](#2-add-url-generation) in given in the foll
 
 The strategy for the front end application to query draft or published content is framework-specific. At least 3 strategies exist:
 
-- using a query parameter, having something like `/your-path?preview=true` (this is, for instance, how [Nuxt](https://nuxt.com/docs/api/composables/use-preview-modehow) works)
-- redirecting to a dedicated preview route like `/preview?path=your-path`(this is, for instance, how [Next's draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) works)
+- using a query parameter, having something like `/your-path?preview=true` (this is, for instance, how <ExternalLink to="https://nuxt.com/docs/api/composables/use-preview-modehow" text="Nuxt"/> works)
+- redirecting to a dedicated preview route like `/preview?path=your-path`(this is, for instance, how <ExternalLink to="https://nextjs.org/docs/app/building-your-application/configuring/draft-mode" text="Next's draft mode"/> works)
 - or using a different domain for previews like `preview.mysite.com/your-path`.
 
 When [Draft & Publish](/cms/features/draft-and-publish) is enabled for your content-type, you can also directly leverage Strapi's `status` parameter to handle the logic within the Preview handler, using the following generic approach:
@@ -152,7 +152,7 @@ export default ({ env }) => ({
 
 #### 2. [Strapi] Add URL generation logic {#2-add-url-generation}
 
-Add the URL generation logic with a `getPreviewPathname` function. The following example is taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
+Add the URL generation logic with a `getPreviewPathname` function. The following example is taken from the <ExternalLink to="https://github.com/strapi/LaunchPad/tree/feat/preview" text="Launchpad"/> Strapi demo application:
 
 ```typescript title="config/admin.ts"
 // Function to generate preview pathname based on content type and document
@@ -252,10 +252,10 @@ export default ({ env }) => {
 
 Setting up the front-end preview route is highly dependent on the framework used for your front-end application.
 
-For instance, [Next.js draft mode](https://nextjs.org/docs/app/building-your-application/configuring/draft-mode) and
-[Nuxt preview mode](https://nuxt.com/docs/api/composables/use-preview-mode) provide additional documentation on how to implement the front-end part in their respective documentations.
+For instance, <ExternalLink to="https://nextjs.org/docs/app/building-your-application/configuring/draft-mode" text="Next.js draft mode"/> and
+<ExternalLink to="https://nuxt.com/docs/api/composables/use-preview-mode" text="Nuxt preview mode"/> provide additional documentation on how to implement the front-end part in their respective documentations.
 
-If using Next.js, a basic implementation could be like in the following example taken from the [Launchpad](https://github.com/strapi/LaunchPad/tree/feat/preview) Strapi demo application:
+If using Next.js, a basic implementation could be like in the following example taken from the <ExternalLink to="https://github.com/strapi/LaunchPad/tree/feat/preview" text="Launchpad"/> Strapi demo application:
 
 ```typescript title="/next/api/preview/route.ts"
 import { draftMode } from "next/headers";
@@ -291,7 +291,7 @@ export async function GET(request: Request) {
 
 On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-origins) allows the admin panel to load the front-end window in an iframe. But allowing the embedding works both ways, so on the front-end side, you also need to allow the window to be embedded in Strapi's admin panel.
 
-This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
+This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see <ExternalLink to="https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy" text="Next.js docs"/>).
 
 #### 6. [Front end] Detect changes in Strapi and refresh the front-end {#6-refresh-frontend}
 

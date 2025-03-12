@@ -31,7 +31,7 @@ Throughout this developer documentation, 'back end' refers _exclusively_ to the 
 The [User Guide](/cms/intro) explains how to use the admin panel and the [admin panel customization section](/cms/admin-panel-customization) details the various customization options available for the admin panel.
 :::
 
-The Strapi back end runs an HTTP server based on [Koa](https://koajs.com/), a back-end JavaScript framework.
+The Strapi back end runs an HTTP server based on <ExternalLink to="https://koajs.com/" text="Koa"/>, a back-end JavaScript framework.
 
 Like any HTTP server, the Strapi back end receives requests and send responses. You can send requests to the Strapi back end to create, retrieve, update, or delete data through the [REST](/cms/api/rest) or [GraphQL](/cms/api/graphql) APIs.
 
@@ -64,54 +64,11 @@ If you prefer learning by reading examples and understanding how they can be use
 
 The following diagram represents how requests travel through the Strapi back end. You can click on any shape to jump to the relevant page in the documentation.
 
-```mermaid
-graph TB
-    request[Request] ---> globalMiddlewareA(("Global middleware<br/>before await next()"))
-    globalMiddlewareA --"Call next()"--> routePolicy{Route policy}
-    globalMiddlewareA --"Returns before next()<br>Goes back up in the middleware chain"-->globalMiddlewareB
-    routePolicy --Returns true--> routeMiddlewareA(("Route middleware<br/>before await next()"))
-    routePolicy --Returns false or an error-->globalMiddlewareB
-    routeMiddlewareA --"Returns before next()<br>Goes back up in the middleware chain"-->routeMiddlewareB
-    routeMiddlewareA --"Call next()"--> controllerA{{Controller}}
-    controllerA --"Call Service(s)"--> serviceA{{Service}}
-    controllerA --"Don't call Service(s)" --> routeMiddlewareB
-    serviceA --"Call Document Service" --> documentService{{Document Service}}
-    serviceA --"Don't call Document Service" --> controllerB
-    documentService --"Call Document Service Middleware"--> dsMiddlewareBefore{{Document Service Middleware}}
-    dsMiddlewareBefore[/"Document Service Middleware"<br> before\]
-    dsMiddlewareBefore --> queryEngine
-    dsMiddlewareBefore --"Don't call Query Engine" --> dsMiddlewareAfter
-    queryEngine{{"Query Engine"}} --> lifecyclesBefore[/Lifecycle<br> beforeX\] 
-    lifecyclesBefore[/Lifecycle<br> beforeX\] --> database[(Database)]
-    database --> lifecyclesAfter[\Lifecycle<br> afterX/]
-    lifecyclesAfter --> dsMiddlewareAfter[\"Document Service Middleware"<br> after/]
-    dsMiddlewareAfter --> serviceB{{"Service<br/>after Document Service call"}}
-    serviceB --> controllerB{{"Controller<br/>after service call"}}
-    controllerB --> routeMiddlewareB(("Route middleware<br/>after await next()"))
-    routeMiddlewareB --> globalMiddlewareB(("Global middleware<br/>after await next()"))
-    globalMiddlewareB --> response[Response]
-    linkStyle 3 stroke:green,color:green
-    linkStyle 4 stroke:red,color:red
-    linkStyle 2 stroke:purple,color:purple
-    linkStyle 5 stroke:purple,color:purple
-    click request "/cms/backend-customization/requests-responses"
-    click globalMiddlewareA "/cms/backend-customization/middlewares"
-    click globalMiddlewareB "/cms/backend-customization/middlewares"
-    click routePolicy "/cms/backend-customization/routes"
-    click routeMiddlewareA "/cms/backend-customization/routes"
-    click routeMiddlewareB "/cms/backend-customization/routes"
-    click controllerA "/cms/backend-customization/controllers"
-    click controllerB "/cms/backend-customization/controllers"
-    click serviceA "/cms/backend-customization/services"
-    click serviceB "/cms/backend-customization/services"
-    click documentService "/cms/api/document-service"
-    click lifecyclesBefore "/cms/backend-customization/models#lifecycle-hooks"
-    click queryEngine "/cms/api/query-engine/"
-    click lifecyclesAfter "/cms/backend-customization/models#lifecycle-hooks"
-    click response "/cms/backend-customization/requests-responses"
-    click queryEngine "/cms/api/query-engine"
-    click dsMiddlewareBefore "/cms/api/document-service/middlewares"
-    click dsMiddlewareAfter "/cms/api/document-service/middlewares"
-```
+<MermaidWithFallback
+    chartFile="/diagrams/backend-customization.mmd"
+    fallbackImage="/img/assets/diagrams/backend-customization.png"
+    fallbackImageDark="/img/assets/diagrams/backend-customization_DARK.png"
+    alt="Backend customization diagram"
+/>
 
 </div>

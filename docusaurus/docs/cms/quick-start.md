@@ -23,7 +23,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 :::prerequisites
 <InstallPrerequisites components={props.components} />
 
-You will also need to [install `git`](https://github.com/git-guides/install-git) and to have a [GitHub](https://github.com) account to deploy your project to Strapi Cloud.
+You will also need to <ExternalLink to="https://github.com/git-guides/install-git" text="install `git`"/> and to have a <ExternalLink to="https://github.com" text="GitHub"/> account to deploy your project to Strapi Cloud.
 :::
 
 ## <Icon name="rocket-launch"/> Part A: Create a new project with Strapi
@@ -89,7 +89,7 @@ As long as you stay in the `my-strapi-project` folder, you will just need to run
 
 By completing the form, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
 
-You now have access to the [admin panel](http://localhost:1337/admin):
+You now have access to the <ExternalLink to="http://localhost:1337/admin" text="admin panel"/>:
 
 <ThemedImage
 alt="Admin panel screenshot: dashboard"
@@ -107,9 +107,9 @@ You have just created a new Strapi project! You can start playing with Strapi an
 
 ## <Icon name="wrench" /> Part B: Build your data structure with the Content-type Builder
 
-The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
+The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application.
 
-The admin panel of a local Strapi project runs at [http://localhost:1337/admin](http://localhost:1337/admin). This is where you will spend most of your time creating and updating content.
+The admin panel of a local Strapi project runs at <ExternalLink to="http://localhost:1337/admin" text="http://localhost:1337/admin"/>. This is where you will spend most of your time creating and updating content.
 
 First we will build a data structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
 
@@ -127,7 +127,7 @@ The Content-Type Builder helps you create your data structure. When creating an 
 
 Your restaurants directory will eventually include many restaurants, so we need to create a "Restaurant" collection type. Then we can describe the fields to display when adding a new restaurant entry:
 
-1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to <Icon name="layout" /> [Content-Type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Click on the **Create your first Content type** button.<br />If it's not showing up, go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-Type Builder"/> in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Restaurant` for the _Display name_, and click **Continue**.  
 4. Click the Text field.
@@ -157,7 +157,7 @@ Once Strapi has restarted, "Restaurant" is listed under <Icon name="feather" /> 
 
 It would help getting a bit more organized if our restaurants directory had some categories. Let's create a "Category" collection type:
 
-1. Go to <Icon name="layout" /> [Content-type Builder](http://localhost:1337/admin/plugins/content-type-builder) in the main navigation.
+1. Go to <Icon name="layout" /> <ExternalLink to="http://localhost:1337/admin/plugins/content-type-builder" text="Content-type Builder"/> in the main navigation.
 2. Click on **Create new collection type**.
 3. Type `Category` for the _Display name_, and click **Continue**.
 4. Click the Text field.
@@ -249,7 +249,7 @@ Now that we have created a basic data structure with 2 collection types, "Restau
 
 Now that your Strapi Cloud project is created, let's log in into the project:
 
-1. From your [Strapi Cloud dashboard](https://cloud.strapi.io/projects), click the `my-strapi-project` project.
+1. From your <ExternalLink to="https://cloud.strapi.io/projects" text="Strapi Cloud dashboard"/>, click the `my-strapi-project` project.
 3. Click the **Visit app** button.
 4. In the new page that opens, complete the form to create the first administrator user of this Strapi Cloud project.
 

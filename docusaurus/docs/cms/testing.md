@@ -11,13 +11,13 @@ tags:
 # Unit testing
 
 :::strapi
-The Strapi blog has a tutorial on how to implement [API testing with Jest and Supertest](https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest) and [how to add unit tests to your Strapi plugin](https://strapi.io/blog/how-to-add-unit-tests-to-your-strapi-plugin).
+The Strapi blog has a tutorial on how to implement <ExternalLink to="https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest" text="API testing with Jest and Supertest"/> and <ExternalLink to="https://strapi.io/blog/how-to-add-unit-tests-to-your-strapi-plugin" text="how to add unit tests to your Strapi plugin"/>.
 :::
 
 In this guide we will see how you can run basic unit tests for a Strapi application using a testing framework.
 
-In this example we will use [Jest](https://jestjs.io/) Testing Framework with a focus on simplicity and
-[Supertest](https://github.com/visionmedia/supertest) Super-agent driven library for testing node.js HTTP servers using a fluent API.
+In this example we will use <ExternalLink to="https://jestjs.io/" text="Jest"/> Testing Framework with a focus on simplicity and
+<ExternalLink to="https://github.com/visionmedia/supertest" text="Supertest"/> Super-agent driven library for testing node.js HTTP servers using a fluent API.
 
 :::caution
 Please note that this guide will not work if you are on Windows using the SQLite database due to how windows locks the SQLite file.
@@ -27,7 +27,7 @@ Please note that this guide will not work if you are on Windows using the SQLite
 
 `Jest` contains a set of guidelines or rules used for creating and designing test cases - a combination of practices and tools that are designed to help testers test more efficiently.
 
-`Supertest` allows you to test all the `api` routes as they were instances of [http.Server](https://nodejs.org/api/http.md#http_class_http_server).
+`Supertest` allows you to test all the `api` routes as they were instances of <ExternalLink to="https://nodejs.org/api/http.md#http_class_http_server" text="http.Server"/>.
 
 `sqlite3` is used to create an on-disk database that is created and deleted between tests.
 
@@ -107,7 +107,7 @@ module.exports = ({ env }) => ({
 ## Create a Strapi instance
 
 In order to test anything we need to have a strapi instance that runs in the testing environment,
-basically we want to get instance of strapi app as object, similar like creating an instance for [process manager](https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/).
+basically we want to get instance of strapi app as object, similar like creating an instance for <ExternalLink to="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" text="process manager"/>.
 
 These tasks require adding some files - let's create a folder `tests` where all the tests will be put and inside it, next to folder `helpers` where main Strapi helper will be in file strapi.js.
 

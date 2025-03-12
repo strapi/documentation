@@ -15,7 +15,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The GraphQL API has been updated
 
-In Strapi 5, the GraphQL API has been updated. It handles the new, flattened response format (see [related breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format.md)), and can also now accept [Relay-style](https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/) queries.
+In Strapi 5, the GraphQL API has been updated. It handles the new, flattened response format (see [related breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format.md)), and can also now accept <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries.
 
 <Intro />
 <BreakingChangeIdCard plugins />

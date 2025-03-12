@@ -26,12 +26,12 @@ AWS Cognito accepts the `localhost` urls. <br/>
 The use of `ngrok` is not needed.
 :::
 
-1. Visit the AWS Management Console <br/> [https://aws.amazon.com/console/](https://aws.amazon.com/console/)
+1. Visit the AWS Management Console <br/> <ExternalLink to="https://aws.amazon.com/console/" text="https://aws.amazon.com/console/"/>
 2. If needed, select your **Region** in the top right corner next to the Support dropdown
 3. Select the **Services** dropdown in the top left corner
 4. Click on **Cognito** in the `Security, Identity & Compliance` section
 5. Then click on the **Manage User Pools** button
-6. If applicable either create or use an existing user pool. You will find hereafter a tutorial to create a User Pool <br/> [https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html](https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html)
+6. If applicable either create or use an existing user pool. You will find hereafter a tutorial to create a User Pool <br/> <ExternalLink to="https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html" text="https://docs.aws.amazon.com/cognito/latest/developerguide/tutorial-create-user-pool.html"/>
 7. Go to the **App clients** section in your cognito user pool and create a new client with the name `Strapi Auth` and set all the parameters and then click on **Create app client**
 8. You should now have an **App client id** and by clicking on the button **Show Details** you will be able to see the **App client secret**. Do copy those two values **App client id** and **App client secret** somewhere for later use when configuring the AWS Cognito provider in Strapi.
 9. Go to the **App integration section** and click on **App client settings**
@@ -42,13 +42,13 @@ The use of `ngrok` is not needed.
 
 ## Strapi configuration
 
-1. Visit the User & Permissions provider settings page at [http://localhost:1337/admin/settings/users-permissions/providers](http://localhost:1337/admin/settings/users-permissions/providers)
+1. Visit the User & Permissions provider settings page at <ExternalLink to="http://localhost:1337/admin/settings/users-permissions/providers" text="http://localhost:1337/admin/settings/users-permissions/providers"/>
 2. Click on the **Cognito** provider
 3. Fill the information (replace with your own client ID and secret):
    - **Enable**: `ON`
    - **Client ID**: fill in the **App client id** (`5bd7a786qdupjmi0b3s10vegdt`)
    - **Client Secret**: fill in the **App client secret** (`19c5c78dsfsdfssfsdfhpdb4nkpb145vesdfdsfsffgh7vwd6g45jlipbpb`)
    - **Host URI (Subdomain)**: fill in the URL value that you copied earlier (`myapp67b50345-67b50b17-local.auth.eu-central-1.amazoncognito.com`)
-   - **The redirect URL to your front-end app**: if you are using strapi react-login [https://github.com/strapi/strapi-examples/tree/master/examples/login-react/](https://github.com/strapi/strapi-examples/tree/master/examples/login-react/) use `http://localhost:3000/connect/cognito/redirect` but if you do not yet have a front-end app to test your Cognito configuration you can then use the following URL `http://localhost:1337/api/auth/cognito/callback`
+   - **The redirect URL to your front-end app**: if you are using strapi react-login <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react/" text="https://github.com/strapi/strapi-examples/tree/master/examples/login-react/"/> use `http://localhost:3000/connect/cognito/redirect` but if you do not yet have a front-end app to test your Cognito configuration you can then use the following URL `http://localhost:1337/api/auth/cognito/callback`
 
 <ConfigDone />

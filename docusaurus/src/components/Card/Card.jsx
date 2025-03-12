@@ -1,8 +1,26 @@
-import React from 'react';
+
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import styles from './card.module.scss';
+import Icon from '../Icon';
 import IconArrow from '@site/static/img/assets/icons/arrow-right.svg';
+
+export function CardIcon ({
+  children,
+  name,
+  color = '#000',
+  className,
+  ...rest
+}) {
+  return (
+    <div className={styles['card-category-icon-container']}>
+      <Icon
+        name={name}
+        color={color}
+      />
+    </div>
+  )
+}
 
 export function CardTitle({
   as,
@@ -79,7 +97,35 @@ export function CardImg({
   );
 }
 
+export function CardCta({
+  className,
+  to,
+  text,
+  color = '#000',
+  withArrow,
+  ...rest
+}) {
+  return (
+    <Link
+     className={className}
+     to={to}
+     style={{
+      color: color,
+      paddingTop: '50px',
+      paddingBottom: '50px',
+    }}>
+      {text}
+      {withArrow && (
+        <span className={styles.card__title__arrow}>
+          <IconArrow />
+        </span>
+      )}
+    </Link>
+  )
+}
+
 export function Card({
+  categoryType,
   className,
   href,
   isContentDelimited,
@@ -100,6 +146,7 @@ export function Card({
         (isContentDelimited && styles['card--content-delimited']),
         (variant && styles[`card--${variant}`]),
         className,
+        categoryType ? `category-${categoryType}` : ''
       )}
       {...rest}
     />

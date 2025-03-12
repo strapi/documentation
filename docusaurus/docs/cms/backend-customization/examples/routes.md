@@ -18,7 +18,7 @@ This page is part of the back end customization examples cookbook. Please ensure
 
 **💭 Context:**
 
-Out of the box, [FoodAdvisor](https://github.com/strapi/foodadvisor) does not control access to its content-type endpoints.
+Out of the box, <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> does not control access to its content-type endpoints.
 
 Let's say we [previously created a policy](/cms/backend-customization/examples/policies) to restrict access to the "Reviews" content-type to some conditions, for instance to prevent a restaurant's owner to create a review for their restaurants. We must now enable the policy on the route we use to create reviews.
 
@@ -49,7 +49,7 @@ Additional information can be found in the [Policies](/cms/backend-customization
 
 **🧑‍💻 Code example:**
 
-In the `/api` folder of the [FoodAdvisor](https://github.com/strapi/foodadvisor) project, replace the content of the `api/src/api/review/routes/review.js` file with the following code:
+In the `/api` folder of the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> project, replace the content of the `api/src/api/review/routes/review.js` file with the following code:
 
 ```jsx title="src/api/review/routes/review.js"
 

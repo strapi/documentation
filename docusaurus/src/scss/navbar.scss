@@ -440,6 +440,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
+.navbar {
+  border-bottom: 1px solid var(--strapi-neutral-150);
+}
+
 @include dark {
   .kapa-widget-button {
     button {
@@ -447,6 +451,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         fill: var(--strapi-neutral-800);
       }
     }
+  }
+
+  .navbar {
+    border-bottom-color: var(--strapi-neutral-150);
   }
 
   .navbar__link:not(.navbar__link--active) {

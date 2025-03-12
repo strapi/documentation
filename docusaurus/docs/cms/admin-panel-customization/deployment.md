@@ -47,7 +47,7 @@ npm run build
 
 </Tabs>
 
-This will replace the folder's content located at `./build`. Visit [http://localhost:1337/admin](http://localhost:1337/admin) to make sure customizations have been taken into account.
+This will replace the folder's content located at `./build`. Visit <ExternalLink to="http://localhost:1337/admin" text="http://localhost:1337/admin"/> to make sure customizations have been taken into account.
 
 ## Same server
 

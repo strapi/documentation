@@ -1,6 +1,6 @@
 import qs from 'qs';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { LiveEditor, LiveError, LivePreview, LiveProvider } from 'react-live';
 import { usePrismTheme } from '@docusaurus/theme-common';
 import { Button } from '../Button/Button';
@@ -20,6 +20,7 @@ export function InteractiveQueryBuilder({
   const [endpoint, setEndpoint] = useState(inheritEndpoint);
   const [queryString, setQueryString] = useState('');
   const [clipboardStatus, setClipboardStatus] = useState('');
+  const [isEditorDisabled, setIsEditorDisabled] = useState(true);
 
   /**
    * Copy to Clipboard
@@ -61,6 +62,14 @@ export function InteractiveQueryBuilder({
 
     setEndpoint(endpointChangedBeforeByUser);
   }, [localStorageKey]);
+
+  const handleEditorFocus = useCallback(() => {
+    setIsEditorDisabled(false);
+  }, []);
+
+  const handleEditorBlur = useCallback(() => {
+    setIsEditorDisabled(true);
+  }, []);
 
   return (
     <form
@@ -114,11 +123,18 @@ export function InteractiveQueryBuilder({
           label="Endpoint Query Parameters:"
           hint="Feel free to modify the code above."
         >
-          <LiveEditor
-            className={clsx(styles.iqb__editor)}
-            code={code}
-            onChange={setCode}
-          />
+          <div
+            onBlur={() => handleEditorBlur()}
+            onClick={() => handleEditorFocus()}
+            style={{ cursor: 'text' }}
+          >
+            <LiveEditor
+              className={clsx(styles.iqb__editor)}
+              code={code}
+              onChange={setCode}
+              disabled={isEditorDisabled}
+            />
+          </div>
         </FormField>
         <LiveError />
         <LivePreview />
