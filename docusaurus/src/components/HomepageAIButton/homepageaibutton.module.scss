@@ -5,136 +5,80 @@
   --button-hover-transition-timing: 0.3s;
 }
 
-.container {
-  display: flex;
-  justify-content: center;
-  margin: 2rem auto;
-  margin-top: 10px;
-  max-width: 480px;
-}
-
-.button {
-  /* Complete reset */
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: inherit;
-  cursor: pointer;
-  outline: none;
-  text-align: inherit;
-  /* Custom styles */
+.homepage-ai-button-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 1rem;
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.homepage-ai-button {
+  position: relative;
+  background-color: var(--strapi-neutral-0);
+  color: #c0c0cf;
   border-radius: 4px;
+  border: 1px solid #666687;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: solid 1px #DCDCE4;
   cursor: pointer;
   padding: 26px 34px 26px 26px;
   color: var(--strapi-neutral-500, #8E8EA9);
   font-feature-settings: 'liga' off, 'clig' off;
-  font-family: "SF Pro Text";
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important; 
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
   line-height: 20px; 
   letter-spacing: -0.36px;
-  border: solid 1px var(--strapi-neutral-200);
-  position: relative;
-  transition: 
-    background-color var(--button-hover-transition-timing) ease,
-    color var(--button-hover-transition-timing) ease,
-    border var(--button-hover-transition-timing) ease,
-    box-shadow var(--button-hover-transition-timing) ease;
+  overflow: hidden;
 
-  margin-bottom: 30px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -12px;
-    left: -12px;
-    bottom: -12px;
-    right: -12px;
-    background-color: rgba(151,54,232,.2);
-    border-radius: 12px;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity var(--button-hover-transition-timing) ease;
-    pointer-events: none;
+  > svg {
+    fill: #c0c0cf;
+    transition: all 0.3s ease-in-out;
   }
+  transition: all 0.3s ease-in-out;
 
-  &:hover,
-  &.buttonHovered {
-    background-color: var(--strapi-alternative-600);
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.homepage-ai-button:hover {
+  cursor: pointer;
+  background-color: #9736E8;
+  color: white;
+  box-shadow: 0 0px 400px 30px #ac73e6, 0 0px 2px 12px #9736e833;
+  p {
     color: white;
-    border: solid 1px var(--button-hover-border);
-    box-shadow: 
-      0 0 24px 0px rgba(151, 54, 232, 0.60),
-      0 0 250px 0px rgba(151, 54, 232, 1);
-    
-    background-image: radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.3) 0%,
-      var(--strapi-alternative-600) 100%
-    );
   }
-    
-  &:hover::before,
-  &:hover::after {
-    opacity: 1;
-  }
-
-  > * {
-    position: relative;
-    z-index: 2;
+  > svg {
+    fill: white;
   }
 }
 
-.icon {
-  width: 20px;
-  height: 20px;
+.homepage-ai-button::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.50);
+  height: 200px;
+  width: 200px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  border-radius: 50%;
+  filter: blur(80px);
 }
 
-.text {
-  font-weight: 500;
+.homepage-ai-button:hover::after {
+  opacity: 1;
 }
 
 @include mixins.dark {
-  .button {
-    background-color: var(--strapi-neutral-0);
-    border: solid 1px var(--strapi-neutral-200);
-    border-radius: 4px;
-    
-    /* Transition plus lente en mode sombre pour supprimer l'effet de flash */
-    transition: 
-      background-color 0.5s ease,
-      color 0.5s ease,
-      border 0.5s ease,
-      box-shadow 0.5s ease;
-    
-    /* Supprimer l'effet de background-image en hover pour mode sombre */
-    &:hover,
-    &.buttonHovered {
-      background-color: var(--strapi-alternative-600);
-      border: solid 1px var(--strapi-alternative-600);
-      color: white;
-      box-shadow: 
-        0 0 24px 0px rgba(151, 54, 232, 0.60),
-        0 0 250px 0px rgba(151, 54, 232, 1);
-      
-      /* Une transition de fond plus douce sans flash */
-      background-image: none;
-    }
-    
-    /* Animation plus douce du halo */
-    &::before {
-      transition: opacity 0.5s ease;
-    }
+  .homepage-ai-button {
+    border-color: #32324D;
   }
 }
