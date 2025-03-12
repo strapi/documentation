@@ -26,6 +26,45 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 5.6.4
+### <Icon name="pen-nib" /> Updated content
+
+#### Dev Docs
+- [Preview: Side panel](https://github.com/strapi/documentation/pull/2410)
+
+#### User Guide
+- [Update Content Manager to mention editing relations on the fly](https://github.com/strapi/documentation/pull/2407)
+
+#### Strapi Cloud
+- [Strapi Cloud settings: Environment Variables revamp](https://github.com/strapi/documentation/pull/2419)
+
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
+
+#### Strapi Cloud
+- [Use new Cloud plans screenshot](https://github.com/strapi/documentation/pull/2418)
+
+#### Repository
+- [Added disabled option for LiveEditor so that it does not steal focus - Closes issue #2409](https://github.com/strapi/documentation/pull/2423)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/ankit7201" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5596406?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ankit7201"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.6.3
 
 ### <Icon name="pen-nib" /> Updated content
