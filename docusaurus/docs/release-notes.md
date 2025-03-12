@@ -35,7 +35,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 <br/>
 
-#### Repository
+#### CMS
 - [Update Content Manager to mention editing relations on the fly](https://github.com/strapi/documentation/pull/2406)
 - [Preview: Side panel](https://github.com/strapi/documentation/pull/2400)
 
