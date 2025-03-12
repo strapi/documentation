@@ -181,13 +181,16 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-#### Dev Docs
+#### Dev Docs & User Guide
+
 - [Preview: Side panel](https://github.com/strapi/documentation/pull/2410)
 
 #### User Guide
+
 - [Update Content Manager to mention editing relations on the fly](https://github.com/strapi/documentation/pull/2407)
 
 #### Strapi Cloud
+
 - [Strapi Cloud settings: Environment Variables revamp](https://github.com/strapi/documentation/pull/2419)
 
 ### <Icon name="broom" /> Chore, fixes, typos, and other improvements
@@ -195,9 +198,11 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 
 #### Strapi Cloud
+
 - [Use new Cloud plans screenshot](https://github.com/strapi/documentation/pull/2418)
 
 #### Repository
+
 - [Added disabled option for LiveEditor so that it does not steal focus - Closes issue #2409](https://github.com/strapi/documentation/pull/2423)
 
 ***
