@@ -35,7 +35,7 @@ Once the Preview is open, you can:
 - switch between previewing the draft and the published version (if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type),
 - and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
-Additionally, , you can:
+Additionally, you can:
 - with <GrowthBadge /> and <EnterpriseBadge /> plans, expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview full screen,
 - and, with the <EnterpriseBadge /> plan, use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/user-docs/content-manager/reviewing-content) if enabled.
 
