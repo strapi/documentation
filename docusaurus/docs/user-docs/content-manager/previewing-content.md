@@ -29,16 +29,18 @@ Once the Preview feature is properly set up, an **Open preview** button is visib
   }}
 />
 
-Once the side panel for the Preview is open, you can:
+Once the Preview is open, you can:
 
 - click the close button ![Close button](/img/assets/icons/close-icon.svg) in the upper left corner to go back to the Edit View of the Content Manager,
 - switch between previewing the draft and the published version (if [Draft & Publish](/user-docs/content-manager/saving-and-publishing-content) is enabled for the content-type),
-- expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview  full screen
-- use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/user-docs/content-manager/reviewing-content) if enabled
 - and click the link icon ![Link icon](/img/assets/icons/v5/Link.svg) in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
+Additionally, , you can:
+- with <GrowthBadge /> and <EnterpriseBadge /> plans, expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview full screen,
+- and, with the <EnterpriseBadge /> plan and use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/user-docs/content-manager/reviewing-content) if enabled.
+
 :::info
-The side panel and its expand button are only available if you run the beta version of Strapi. In the stable version, the "Open Preview" button will open a full-screen preview.
+Please note that the side panel for Preview is currently in beta and only accessible if you installed strapi with the beta flag, with the following command: `npx create-strapi@beta`.
 :::
 
 :::note
