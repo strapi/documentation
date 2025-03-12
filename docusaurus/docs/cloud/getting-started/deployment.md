@@ -60,8 +60,8 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
     sources={{
-        light: '/img/assets/cloud/project-creation-1.1.png',
-        dark: '/img/assets/cloud/project-creation-1.1_DARK.png',
+        light: '/img/assets/cloud/project-creation-1.png',
+        dark: '/img/assets/cloud/project-creation-1_DARK.png',
     }}
     />
 
