@@ -27,6 +27,37 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## v6.0.0-beta.4
+
+<br/>
+
+### <Icon name="pen-nib" /> Updated content
+
+<br/>
+
+#### Repository
+- [Update Content Manager to mention editing relations on the fly](https://github.com/strapi/documentation/pull/2406)
+- [Preview: Side panel](https://github.com/strapi/documentation/pull/2400)
+
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
+
+<br/>
+
+#### Repository
+- [Improve homepage "Ask AI" button effect](https://github.com/strapi/documentation/pull/2424)
+- [Third draft of iteration #1 for new homepage](https://github.com/strapi/documentation/pull/2422)
+- [Second draft of iteration #1 for new homepage](https://github.com/strapi/documentation/pull/2420)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.0.0-beta.3
 <br />
 
@@ -37,7 +68,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 #### Strapi Cloud
 - [New Cloud plans (CMS docs)](https://github.com/strapi/documentation/pull/2396)
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 <br />
 
@@ -156,7 +187,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 #### Strapi Cloud
 - [New Cloud plans](https://github.com/strapi/documentation/pull/2394)
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 <br/>
 
@@ -199,7 +230,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.6.1
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 - [Update admin-panel-api.md](https://github.com/strapi/documentation/pull/2383)
@@ -228,7 +259,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 - [Pregenerated API tokens](https://github.com/strapi/documentation/pull/2380)
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 
@@ -270,7 +301,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.5.3
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 - [Fix incorrect import of unstable_useContentManagerContext in Helper-plugin migration reference](https://github.com/strapi/documentation/pull/2367)
@@ -307,7 +338,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 - [Add graphQL landingPage configuration and update Apollo playground to sandbox](https://github.com/strapi/documentation/pull/2343)
@@ -359,7 +390,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### User Guide
 - [Update User Guide intro. for stable new homepage](https://github.com/strapi/documentation/pull/2338)
