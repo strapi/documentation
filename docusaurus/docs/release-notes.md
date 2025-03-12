@@ -29,7 +29,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 ## 5.7.0
 ### <Icon name="pen-nib" /> Updated content
 
-#### Dev Docs
+#### Dev Docs & User Guide
 - [Preview: Side panel](https://github.com/strapi/documentation/pull/2410)
 
 #### User Guide
