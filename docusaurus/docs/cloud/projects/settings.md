@@ -37,6 +37,12 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
   - the name of your Strapi Cloud project — used to identify the project on the Cloud Dashboard, Strapi CLI, and deployment URLs — and change it (see [Renaming project](#renaming-project)).
   - the chosen hosting region for your Strapi Cloud project, meaning the geographical location of the servers where the project and its data and resources are stored. The hosting region is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and cannot be modified afterwards.
   - the app's internal name for the project, which can be useful for debug & support purposes.
+- *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
+
+:::note
+If you don't see the Strapi CMS license key area, then it probably means that your subscription is a legacy one and does not support custom CMS license. Instead you already have one that is automatically included on your project.
+:::
+
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
 - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
@@ -92,7 +98,7 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
-### Environments <CloudProBadge /> <CloudTeamBadge /> {#environments}
+### Environments <CloudProBadge /> <CloudScaleBadge /> {#environments}
 
 The ![Environments icon](/img/assets/icons/v5/Stack.svg) *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
@@ -136,7 +142,7 @@ If the creation of a new environment fails but you are still charged, try creati
 
 ### Billing & Usage
 
-The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to directly [manage the number of seats](#managing-projects-number-of-seats) and add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
+The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
 
 Through this tab, you also have the possibility to:
 - click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
@@ -159,23 +165,6 @@ Note also that if your usage indicates that another subscription plan would fit 
     dark: '/img/assets/cloud/settings_billing_DARK.png',
   }}
 />
-
-#### Managing project's number of seats
-
-You can manually add more seats or lower the number of seats for your project without necessarily upgrading or downgrading to another plan (see [full documentation on seats management](/cloud/getting-started/usage-billing#seats-management)).
-
-##### Adding more seats for the project
-
-1. In the <Icon name="credit-card" /> *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
-2. In the window that opens, select with the drop-down the number of Additional seats of your choice. The cost of the additional seats is automatically calculated and displayed in the window.
-3. (optional) Click **I have a discount code**, enter your discount code in the field, and click on the **Apply** button.
-4. Click the **Save** button to confirm. You will automatically be billed with the payment method defined in your profile.
-
-##### Removing seats from the project
-
-1. In the <Icon name="credit-card" /> *Billing & Usage* tab of your project's settings, click on the **Manage** button next to the displayed number of seats.
-2. In the window that opens, select with the drop-down the number of *Billed seats* you want to keep.
-3. Click the **Save button** to confirm. The new, lower number of seats will not be effective until the next month.
 
 ### Plans
 
@@ -213,12 +202,12 @@ To upgrade your current plan to a higher one:
 
 #### Downgrading to another plan
 
-Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Team plan to the Pro plan on June 18th, your project will remain on the Team plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
+Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Scale plan to the Pro plan on June 18th, your project will remain on the Scale plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. You may also lose access to some features: for example, downgrading to the Developer plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. You may also lose access to some features: for example, downgrading to the Essential plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional environments (i.e. extra environments that have been purchased, not the default or included environments). For instance, if you wish to downgrade from the Pro plan to the Developer plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
+Note also that you cannot downgrade if you have additional environments (i.e. extra environments that have been purchased, not the default or included environments). For instance, if you wish to downgrade from the Pro plan to the Essential plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
 :::
 
 To downgrade your current plan to a lower one:
@@ -330,13 +319,13 @@ Resetting an environment deletes all environments data and resets the variables 
 3. Click on the **Delete environment** button to confirm the deletion.
 
 ### Backups {#backups}
-<GrowthBadge /> <CloudProBadge /> <CloudTeamBadge />
+<CloudProBadge /> <CloudScaleBadge />
 
-The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Team plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
+The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Scale plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects using the free trial or the Developer plan. You will need to upgrade to either the Pro or Team plan to have your project automatically backed up and to have access to manual backups.
+- The backup feature is not available for Strapi Cloud projects using the free trial or the Essential plan. You will need to upgrade to either the Pro or Scale plan to have your project automatically backed up and to have access to manual backups.
 
 <!-- - Only project owners can restore a backup. Maintainers have access to the <Icon name="arrow-clockwise" /> *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
 
@@ -425,8 +414,23 @@ Environment variables (more information in the [Developer Documentation](../../d
   }}
 />
 
-In the <Icon name="code" classes="ph-bold" /> *Variables* tab, you can:
-- click the **Add variable** button to create a new variable
-- edit any variable, each being composed of a *Name* and a *Value*
-- click the <Icon name="trash-simple" /> delete button associated with any non-default variable to delete it
-- click the **Save** button to save any change made on the page
+In the <Icon name="code" classes="ph-bold" /> *Variables* tab are listed both the default and custom environment variables for your Strapi Cloud project. Each variable is composed of a *Name* and a *Value*.
+
+#### Managing environment variables
+
+Hovering on an environment variable, either default or custom, displays the following available options:
+
+- <Icon name="eye" /> **Show value** to replace the `*` characters with the actual value of a variable.
+- <Icon name="copy" /> **Copy to clipboard** to copy the value of a variable.
+- <Icon name="dots-three" /> **Actions** to access the <Icon name="pencil-simple" /> Edit and <Icon name="trash-simple" /> Delete buttons. Both options are only available for custom environment variables.
+  - When editing a variable, don't forget to confirm the changes by clicking on **Save**.
+  - When deleting a variable, you will be asked to click on a **Confirm** button to confirm the deletion.
+
+#### Creating custom environment variables
+
+Custom environment variables can be created for the Strapi Cloud project. Make sure to redeploy your project after creating or editing an environment variable.
+
+1. In the *Custom environment variables* section, click on the **Add variable** button.
+2. Write the *Name* and *Value* of the new environment variable in the same-named fields.
+3. (optional) Click on **Add another** to directly create one or more other custom environment variables.
+4. Click on the **Save** button to confirm the creation of the custom environment variables.
