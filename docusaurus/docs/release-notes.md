@@ -26,7 +26,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-## 5.6.4
+## 5.7.0
 ### <Icon name="pen-nib" /> Updated content
 
 #### Dev Docs
