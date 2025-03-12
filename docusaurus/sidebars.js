@@ -295,7 +295,7 @@ const sidebars = {
           label: 'Preview',
           id: 'dev-docs/preview',
           customProps: {
-            new: true
+            updated: true
           }
         },
         {
@@ -669,7 +669,7 @@ const sidebars = {
           type: 'doc',
           id: 'user-docs/content-manager/previewing-content',
           customProps: {
-            new: true
+            updated: true
           }
         },
         'user-docs/content-manager/adding-content-to-releases',
