@@ -7,11 +7,10 @@ tags:
 - admin panel
 - Enterprise feature
 - payload
-- Strapi Cloud
 ---
 
 # Audit Logs
-<EnterpriseBadge /> <CloudTeamBadge/>
+<EnterpriseBadge />
 
 The **Audit Logs** section provides a searchable and filterable display of all activities performed by users of the Strapi application.
 

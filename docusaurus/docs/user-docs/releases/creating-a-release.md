@@ -6,11 +6,10 @@ tags:
 - Growth feature
 - Enterprise feature
 - Releases feature
-- Strapi Cloud
 ---
 
 # Creating a release
-<GrowthBadge /> <EnterpriseBadge /> <CloudTeamBadge />
+<GrowthBadge /> <EnterpriseBadge />
 
 The <Icon name="paper-plane-tilt" /> [Releases](/user-docs/releases/introduction) page allows creating new releases that will be used to organize entries.
 
