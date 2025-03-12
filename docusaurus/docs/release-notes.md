@@ -27,7 +27,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-## v6.0.0-beta.4
+## 6.0.0-beta.4
 
 <br/>
 
