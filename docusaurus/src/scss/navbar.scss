@@ -442,6 +442,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 .navbar {
   border-bottom: 1px solid var(--strapi-neutral-150);
+  --ifm-navbar-shadow: none;
 }
 
 @include dark {
