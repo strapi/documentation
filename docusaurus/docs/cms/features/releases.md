@@ -16,7 +16,7 @@ tags:
 The Releases feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** CMS Enterprise Plan. <br/>
+<Icon name="credit-card"/> **Plan:** CMS Growth and Enterprise plans. <br/>
 <Icon name="user"/> **Role & permission:** Administrator role in the project's admin panel. <br/>
 <Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
