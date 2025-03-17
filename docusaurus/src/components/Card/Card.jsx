@@ -111,7 +111,7 @@ export function CardCta({
      to={to}
      style={{
       color: color,
-      paddingTop: '50px',
+      paddingTop: '15px',
       paddingBottom: '50px',
     }}>
       {text}
