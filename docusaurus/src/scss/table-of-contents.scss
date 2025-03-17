@@ -110,7 +110,16 @@ ul.table-of-contents__left-border {
     }
 
     > li {
-      border-left: solid 2px var(--strapi-neutral-100);
+      position: relative;
+      &::before {
+        content:'';
+        position: absolute;
+        height: calc(100% + 4px);
+        width: 2px;
+        background-color: var(--strapi-neutral-100);
+        left: -2px;
+        top: -2px;
+      }
     }
   }
 }
