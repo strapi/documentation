@@ -158,6 +158,15 @@ document.addEventListener('DOMContentLoaded', () => {
       'gatsby': '/cms/plugins/installing-plugins-via-marketplace',
       'custom-fields': '/cms/plugins-development/custom-fields'
     },
+    '/dev-docs/plugins/email': {
+      'sending-emails-from-a-lifecycle-hook': '/cms/features/email#lifecycle-hook',
+      'sending-emails-with-a-controller-or-service': '/cms/features/email#controller-service',
+    },
+    '/dev-docs/plugins/documentation': {
+      'restrict-the-access-to-your-api-documentation': '/cms/plugins/documentation#restrict-the-access-to-your-API-documentation',
+      'indicate-which-plugins-need-documentation-generated': '/cms/plugins/documentation#defining-which-plugins-need-documentation-generated',
+      'authenticated-requests': '/cms/plugins/documentation#authenticating-requests'
+    }
   }
 
   const adminPanelRedirects = {
