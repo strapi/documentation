@@ -471,19 +471,30 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
   }
 
-  .navbar__link--active[href^="/cms/"] {
-    background-color: var(--strapi-neutral-0);
-    color: var(--strapi-primary-600);
-  }
-
+  .navbar__link--active[href^="/cms/"],
   .navbar__link--active[href^="/cloud/"] {
-    background-color: var(--strapi-neutral-0);
-    color: var(--strapi-secondary-500);
+    background-color: var(--strapi-neutral-100);
+    color: var(--strapi-primary-600);
 
     i::before {
-      color: var(--strapi-secondary-500);
+      color: var(--strapi-primary-600);
     }
   }
+
+  .navbar__link:not(.navbar__link--active) {
+    &:hover {
+      background-color: var(--strapi-neutral-100) !important;
+    }
+  }
+
+  // .navbar__link--active[href^="/cloud/"] {
+  //   background-color: var(--strapi-neutral-0);
+  //   color: var(--strapi-secondary-500);
+
+  //   i::before {
+  //     color: var(--strapi-secondary-500);
+  //   }
+  // }
 
   button[class*="ColorModeToggle"],
   button[class*="toggleButton"] {
