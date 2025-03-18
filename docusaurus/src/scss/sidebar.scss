@@ -10,6 +10,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 .navbar-sidebar {
   --ifm-navbar-background-color: var(--strapi-neutral-0);
+  --docusaurus-collapse-button-bg: var(--strapi-primary-100);
 
   &__brand {
     --custom-navbar-sidebar-horizontal-padding: calc(var(--custom-navbar-items-gap) * 2);
@@ -440,5 +441,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         color: var(--strapi-neutral-700);
       }
     }
+  }
+
+  [class*="collapseSidebarButton"] {
+    background-color: var(--strapi-primary-100);
   }
 }

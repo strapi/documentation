@@ -446,6 +446,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 }
 
 @include dark {
+  .navbar {
+    background-color: var(--strapi-primary-100);
+  }
+
   .kapa-widget-button {
     button {
       svg {

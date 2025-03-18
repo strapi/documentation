@@ -189,8 +189,12 @@
 
 @include dark {
   .my-custom-search-bar {
-    background: var(--strapi-neutral-0);
+    background: var(--strapi-primary-100);
     border: var(--strapi-input-border);
     color: var(--strapi-dark-100);
+
+    &::after {
+      background: linear-gradient(360deg, rgba(255, 255, 255, 0) 0%, var(--strapi-primary-100) 100%);
+    }
   }
 }

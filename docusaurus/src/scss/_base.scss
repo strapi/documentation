@@ -64,6 +64,10 @@ main {
 
 /** Dark mode */
 @include dark {
+  body {
+    background-color: var(--strapi-primary-100);
+  }
+
   .container img[width="16"] {
     /* 'Temporary' fix while we figure a way to display white icons in dark mode 😅  */
     background-color: white;
