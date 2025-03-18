@@ -1531,11 +1531,6 @@
       "permanent": true
     },
     {
-      "source": "/user-docs/features/email",
-      "destination": "/cms/features/email",
-      "permanent": true
-    },
-    {
       "source": "/user-docs/features/internationalization",
       "destination": "/cms/features/internationalization",
       "permanent": true
@@ -2472,7 +2467,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/plugins/email.html",
-			"destination": "/dev-docs/plugins/email"
+			"destination": "/cms/features/email"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/users-permissions.html",
