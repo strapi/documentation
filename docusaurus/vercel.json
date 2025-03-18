@@ -2475,7 +2475,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/plugins/documentation.html",
-			"destination": "/dev-docs/plugins/documentation"
+			"destination": "/cms/plugins/documentation"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/upload.html",

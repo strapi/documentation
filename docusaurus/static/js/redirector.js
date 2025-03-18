@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     '/dev-docs/plugins/documentation': {
       '_default': '/cms/features/documentation',
-      'restrict-the-access-to-your-api-documentation': '/cms/plugins/documentation#restrict-the-access-to-your-API-documentation',
-      'indicate-which-plugins-need-documentation-generated': '/cms/plugins/documentation#defining-which-plugins-need-documentation-generated',
+      'restrict-the-access-to-your-api-documentation': '/cms/plugins/documentation#restrict-access',
+      'indicate-which-plugins-need-documentation-generated': '/cms/plugins/documentation#define-which-plugins',
       'authenticated-requests': '/cms/plugins/documentation#authenticating-requests'
     }
   }

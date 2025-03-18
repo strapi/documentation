@@ -69,7 +69,7 @@ The Documentation plugin affects multiple parts of the admin panel. The followin
 | Documentation    | <ul>Addition of a new Documentation option in the main navigation <Icon name="info" /> which shows a panel with buttons to <Icon name="eye" /> open and <Icon name="arrow-clockwise" /> regenerate the documentation.</ul>        |
 | Settings     | <ul><li>Addition of a "Documentation plugin" setting section, which controls whether the documentation endpoint is private or not (see [restricting access](#restrict-the-access-to-your-API-documentation)).<br/> 👉 Path reminder: <Icon name="gear-six" /> *Settings > Documentation plugin* </li><br/>  <li> Activation of role based access control for accessing, updating, deleting, and regenerating the documentation. Administrators can authorize different access levels to different types of users in the *Plugins* tab and the *Settings* tab (see [Users & Permissions documentation](/cms/features/users-permissions)).<br/>👉 Path reminder: <Icon name="gear-six" /> *Settings > Administration Panel > Roles* </li></ul>| 
 
-#### Restricting access to your API documentation {#restrict-the-access-to-your-API-documentation}
+#### Restricting access to your API documentation {#restrict-access}
 
 By default, your API documentation will be accessible by anyone.
 
@@ -145,7 +145,7 @@ To create a new version, change the `info.version` key in the `settings.json` fi
 
 This will automatically create a new version.
 
-#### Defining which plugins need documentation generated
+#### Defining which plugins need documentation generated {#define-which-plugins}
 
 If you want plugins to be included in documentation generation, they should be included in the `plugins` array in the `x-strapi-config` object. By default, the array is initialized with `["upload", "users-permissions"]`:
 
