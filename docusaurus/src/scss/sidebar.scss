@@ -48,7 +48,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 .menu {
   --custom-sidebar-caret-size: 1.25rem;
-  --custom-sidebar-menu-font-weight: 400;
+  --custom-sidebar-menu-font-weight: 500;
   --custom-sidebar-menu-padding-y: var(--strapi-spacing-4);
 
   --ifm-menu-color-background-active: transparent;
@@ -423,7 +423,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 /** Dark mode */
 @include dark {
-  --ifm-menu-color: var(--strapi-neutral-1000);
+  --ifm-menu-color: var(--strapi-neutral-400);
 
   .theme-doc-sidebar-container {
     .menu {
@@ -431,6 +431,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
       &__link--active {
         --ifm-menu-color-active: var(--strapi-neutral-800);
+        background-color: var(--strapi-neutral-0);
+        padding: 6px 8px 6px 16px;
+        position: relative;
+        left: -16px;
 
         &:not(.menu__link--sublist) {
           --ifm-menu-color-active: var(--strapi-primary-500);
@@ -438,7 +442,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
 
       &__list-item-collapsible .menu__link {
-        color: var(--strapi-neutral-700);
+        color: var(--strapi-neutral-400);
       }
     }
   }

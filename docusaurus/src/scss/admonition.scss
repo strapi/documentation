@@ -193,6 +193,11 @@
     --custom-admonition-background-color: var(--strapi-neutral-0);
     --custom-admonition-code-background-color: var(--strapi-neutral-150);
     --custom-admonition-border-color: var(--strapi-neutral-200);
+    --custom-admonition-title-color: var(--strapi-neutral-650);
+
+    &__heading {
+      color: var(--custom-admonition-title-color);
+    }
 
     &--info,
     &--callout,

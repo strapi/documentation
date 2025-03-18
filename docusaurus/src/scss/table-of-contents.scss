@@ -5,6 +5,7 @@
 .table-of-contents {
   --custom-toc-py: var(--strapi-spacing-1);
   --custom-toc-items-py: var(--strapi-spacing-1);
+  --custom-active-toc-link-color: var(--strapi-primary-600);
 
   --ifm-toc-padding-vertical: var(--custom-toc-py);
 
@@ -35,7 +36,8 @@
     }
 
     &--active {
-      color: var(--strapi-primary-600);
+      // color: var(--strapi-primary-600);
+      color: var(--custom-active-toc-link-color);
 
       &:before {
         content: " ";
@@ -209,4 +211,22 @@ ul.table-of-contents__left-border {
       background: var(--strapi-neutral-0);
     }
   }
+}
+
+@include dark {
+  .table-of-contents {
+    *:not([class*="active"]),
+    &::before,
+    &::after {
+      color: var(--strapi-neutral-400);
+    }
+
+    > li {
+      &::before {
+        background-color: var(--strapi-neutral-0);
+      }
+    }
+  }
+
+
 }

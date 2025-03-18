@@ -87,9 +87,9 @@ p, ul {
 /** Dark mode */
 @include dark {
   h1, h2, h3, h4, h5, h6 {
-    --ifm-heading-color: var(--strapi-neutral-900);
+    --ifm-heading-color: var(--strapi-neutral-1000) !important;
   }
-  p {
+  p, li {
     color: #A5A5BA;
   }
 }

@@ -478,6 +478,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   .navbar__link--active[href^="/cms/"] {
     background-color: var(--strapi-neutral-0);
     color: var(--strapi-primary-600);
+
+    i::before {
+      color: var(--strapi-primary-600);
+    }
   }
 
   .navbar__link--active[href^="/cloud/"] {
