@@ -67,6 +67,16 @@ main {
   body {
     background-color: var(--strapi-primary-100);
   }
+  
+  html, 
+  #__docusaurus,
+  .main-wrapper {
+    background-color: var(--strapi-primary-100);
+  }
+  
+  :root[data-theme='dark'] {
+    --ifm-background-color: var(--strapi-primary-100);
+  }
 
   .container img[width="16"] {
     /* 'Temporary' fix while we figure a way to display white icons in dark mode 😅  */
