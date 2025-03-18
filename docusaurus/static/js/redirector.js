@@ -159,10 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
       'custom-fields': '/cms/plugins-development/custom-fields'
     },
     '/dev-docs/plugins/email': {
+      '_default': '/cms/features/email',
       'sending-emails-from-a-lifecycle-hook': '/cms/features/email#lifecycle-hook',
       'sending-emails-with-a-controller-or-service': '/cms/features/email#controller-service',
     },
     '/dev-docs/plugins/documentation': {
+      '_default': '/cms/features/documentation',
       'restrict-the-access-to-your-api-documentation': '/cms/plugins/documentation#restrict-the-access-to-your-API-documentation',
       'indicate-which-plugins-need-documentation-generated': '/cms/plugins/documentation#defining-which-plugins-need-documentation-generated',
       'authenticated-requests': '/cms/plugins/documentation#authenticating-requests'
@@ -206,7 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ...uAndpRedirects,
     ...auditLogsRedirects,
     ...pluginRedirects,
-    ...adminPanelRedirects
+    ...adminPanelRedirects,
+    ...contentManagerRedirects
   };
 
   // Get current path and hash
