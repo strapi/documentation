@@ -153,6 +153,9 @@
 }
 
 @include dark {
+  .footer {
+    border-top-color: var(--strapi-neutral-150) !important;
+  }
   .footer::after {
     content: '';
     background: url('/img/logo-v5-dark.png') no-repeat;
