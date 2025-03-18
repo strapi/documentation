@@ -18,7 +18,6 @@
 .homepage-ai-button {
   position: relative;
   background-color: var(--strapi-neutral-0);
-  color: #c0c0cf;
   border-radius: 4px;
   border: 1px solid #666687;
   display: flex;
@@ -46,6 +45,7 @@
 
   p {
     margin-bottom: 0;
+    color: var(--strapi-neutral-500);
   }
 }
 
