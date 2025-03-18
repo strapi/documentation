@@ -37,6 +37,10 @@ const config = {
       async: false, // Load synchronously to ensure it runs before page navigation
     },
     {
+      src: '/js/folder-detector.js',
+      async: false,
+    },
+    {
       src: '/js/hotjar.js',
       type: 'module',
       async: true,

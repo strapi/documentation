@@ -29,6 +29,7 @@ main {
 
 /**
  * Experimental: Different identity based on URL
+ * DOES NOT SEEM TO WORK ANYMORE, maybe data hydration is done too late?
  */
 // html[class*="docs-doc-id-dev-docs"] {
 //   .navbar {
@@ -61,6 +62,21 @@ main {
     }
   }
 }
+
+/* Experimental: Another approach to style based on URL
+ * depends on folder-detector.js script
+ */
+// html[data-folder-source="cms"] {
+//   a {
+//     // color: var(--strapi-primary-600);
+//   }
+// }
+
+// html[data-folder-source="cloud"] {
+//    main a {
+//     color: var(--strapi-secondary-500) !important;
+//   }
+// }
 
 /** Dark mode */
 @include dark {
