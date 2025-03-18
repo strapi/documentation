@@ -229,6 +229,7 @@
     &--cta {
       border: solid 1px var(--strapi-card-border-color-dark);
       box-shadow: 0px 1px 10px 0px rgba(3, 3, 5, 0.35);
+      background: linear-gradient(180deg, var(--strapi-neutral-100) 0%, var(--strapi-neutral-0) 100%) !important;
 
       &:focus, &:hover {
         --strapi-card-border-color: #49494D;
