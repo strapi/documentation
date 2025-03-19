@@ -175,7 +175,7 @@ If you are using the free trial, the *Plan* tab shows a countdown of how many da
 :::
 
 :::info
-Strapi recently launched [new Cloud plans](https://strapi.io/pricing-cloud), including the Essential plan which replaces the Developer plan. For now, you can [downgrade](#downgrading-to-another-plan) or [upgrade](#upgrading-to-another-plan) to another plan directly from the Cloud dashboard, under the <Icon name="gear-six"/> **Settings** > <Icon name="map-trifold" /> **Plans** section.
+Strapi recently launched [new Cloud plans](https://strapi.io/pricing-cloud). For now, you can [downgrade](#downgrading-to-another-plan) or [upgrade](#upgrading-to-another-plan) to another plan directly from the Cloud dashboard, under the <Icon name="gear-six"/> **Settings** > <Icon name="map-trifold" /> **Plans** section.
 :::
 
 <ThemedImage
