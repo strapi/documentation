@@ -410,8 +410,8 @@ Environment variables (more information in the [CMS Documentation](../../dev-doc
 <ThemedImage
   alt="Project variables"
   sources={{
-    light: '/img/assets/cloud/settings_variables.png',
-    dark: '/img/assets/cloud/settings_variables_DARK.png',
+    light: '/img/assets/cloud/settings-variables2.png',
+    dark: '/img/assets/cloud/settings-variables2_DARK.png',
   }}
 />
 
