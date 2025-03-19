@@ -21,7 +21,7 @@ Strapi includes 2 main components:
 
 - The back-end part of Strapi is a **server** that receives requests and handles them to return responses that can surface the data you built and saved through the Content-Type Builder and Content Manager. The backend server is described in more details in the [Backend Customization introduction](/cms/backend-customization). Most of the parts of the backend server can be customized.
 
-- The front-end, user-facing part of Strapi is called the **admin panel**. The admin panel is the graphical user interface (GUI) that you use to build a data structure, create and manage content, and perform various other actions that can be managed by built-in or 3rd-party plugins.  Some parts of the admin panel can be customized.
+- The front-end, user-facing part of Strapi is called the **admin panel**. The admin panel is the graphical user interface (GUI) that you use to build a content structure, create and manage content, and perform various other actions that can be managed by built-in or 3rd-party plugins.  Some parts of the admin panel can be customized.
 
 From a bigger picture, this is how Strapi integrates in a typical, generic setup: Strapi includes 2 parts, a back-end server and an admin panel, and interact with a database (which stores data) and an external, front-end application that displays your data. Both parts of Strapi can be customized to some extent.
 

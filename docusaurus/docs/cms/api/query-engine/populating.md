@@ -73,7 +73,7 @@ strapi.db.query('api::article.article').findMany({
 });
 ```
 
-When dealing with polymorphic data structures (dynamic zones, polymorphic relations, etc...), it is possible to use populate fragments to have a better granularity on the populate strategy.
+When dealing with polymorphic content structures (dynamic zones, polymorphic relations, etc...), it is possible to use populate fragments to have a better granularity on the populate strategy.
 
 ```js
 strapi.db.query('api::article.article').findMany('api::article.article', {

@@ -26,9 +26,9 @@ You can use [Strapi Cloud](/cloud/intro) to quickly deploy and host your project
 :::
 
 :::tip
-If you already created a data structure with the Content-Type Builder and added some data through the Content Manager to your local (development) Strapi instance, you can leverage the [data management system](/cms/features/data-management) to transfer data from a Strapi instance to another one.
+If you already created a content structure with the Content-Type Builder and added some data through the Content Manager to your local (development) Strapi instance, you can leverage the [data management system](/cms/features/data-management) to transfer data from a Strapi instance to another one.
 
-Another possible workflow is to first create the data structure locally, push your project to a git-based repository, deploy the changes to production, and only then add content to the production instance.
+Another possible workflow is to first create the content structure locally, push your project to a git-based repository, deploy the changes to production, and only then add content to the production instance.
 :::
 
 ## General guidelines
