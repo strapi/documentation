@@ -1,6 +1,6 @@
 ---
 title: Models
-description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the data structure.
+description: Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the content structure.
 toc_max_heading_level: 4
 tags:
 - admin panel
@@ -16,14 +16,14 @@ tags:
 
 # Models
 
-As Strapi is a headless Content Management System (CMS), creating a data structure for the content is one of the most important aspects of using the software. Models define a representation of the data structure.
+As Strapi is a headless Content Management System (CMS), creating a content structure for the content is one of the most important aspects of using the software. Models define a representation of the content structure.
 
 There are 2 different types of models in Strapi:
 
 - content-types, which can be collection types or single types, depending on how many entries they manage,
-- and components that are data structures re-usable in multiple content-types.
+- and components that are content structures re-usable in multiple content-types.
 
-If you are just starting out, it is convenient to generate some models with the [Content-type Builder](/user-docs/content-type-builder) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's data structure. The generated model mappings can then be reviewed at the code level using this documentation.
+If you are just starting out, it is convenient to generate some models with the [Content-type Builder](/user-docs/content-type-builder) directly in the admin panel. The user interface takes over a lot of validation tasks and showcases all the options available to create the content's content structure. The generated model mappings can then be reviewed at the code level using this documentation.
 
 ## Model creation
 
@@ -59,7 +59,7 @@ The `schema.json` file of a model consists of:
 
 - [settings](#model-settings), such as the kind of content-type the model represents or the table name in which the data should be stored,
 - [information](#model-information), mostly used to display the model in the admin panel and access it through the REST and GraphQL APIs,
-- [attributes](#model-attributes), which describe the data structure of the model,
+- [attributes](#model-attributes), which describe the content structure of the model,
 - and [options](#model-options) used to defined specific behaviors on the model.
 
 ### Model settings
@@ -105,7 +105,7 @@ The `info` key in the model's schema describes information used to display the m
 
 ### Model attributes
 
-The data structure of a model consists of a list of attributes. Each attribute has a `type` parameter, which describes its nature and defines the attribute as a simple piece of data or a more complex structure used by Strapi.
+The content structure of a model consists of a list of attributes. Each attribute has a `type` parameter, which describes its nature and defines the attribute as a simple piece of data or a more complex structure used by Strapi.
 
 Many types of attributes are available:
 
@@ -114,7 +114,7 @@ Many types of attributes are available:
   - `media` for files uploaded through the [Media library](/user-docs/content-type-builder/configuring-fields-content-type#media)
   - `relation` to describe a [relation](#relations) between content-types
   - `customField` to describe [custom fields](#custom-fields) and their specific keys
-  - `component` to define a [component](#components-json) (i.e. a data structure usable in multiple content-types)
+  - `component` to define a [component](#components-json) (i.e. a content structure usable in multiple content-types)
   - `dynamiczone` to define a [dynamic zone](#dynamic-zones) (i.e. a flexible space based on a list of components)
   - and the `locale` and `localizations` types, only used by the [Internationalization (i18n) plugin](/dev-docs/i18n)
 
