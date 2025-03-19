@@ -174,6 +174,10 @@ The <Icon name="map-trifold" /> *Plans* tab displays an overview of the availabl
 If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
 :::
 
+:::info
+Strapi recently launched [new Cloud plans](https://strapi.io/pricing-cloud), including the Essential plan which replaces the Developer plan. For now, you can [downgrade](#downgrading-to-another-plan) or [upgrade](#upgrading-to-another-plan) to another plan directly from the Cloud dashboard, under the <Icon name="gear-six"/> **Settings** > <Icon name="map-trifold" /> **Plans** section.
+:::
+
 <ThemedImage
   alt="Project plans"
   sources={{
