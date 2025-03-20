@@ -127,11 +127,11 @@ The above installation guide only covers the basic installation option using the
 | `--skip-db` | Skip all database-related prompts and create a project with the default (SQLite) database |
 | `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details. |
 | `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
-| `--dbhost <dbhost>` | Define the database host to use by replacing `<dbclient>` in the command by the value of your choice |
-| `--dbport <dbport>` | Define the database port to use by replacing `<dbclient>` in the command by the value of your choice |
-| `--dbname <dbname>` | Define the database name to use by replacing `<dbclient>` in the command by the value of your choice |
-| `--dbusername <dbusername>` | Define the database username to use by replacing `<dbclient>` in the command by the value of your choice |
-| `--dbpassword <dbpassword>` | Define the database password to use by replacing `<dbclient>` in the command by the value of your choice |
+| `--dbhost <dbhost>` | Define the database host to use by replacing `<dbhost>` in the command by the value of your choice |
+| `--dbport <dbport>` | Define the database port to use by replacing `<dbport>` in the command by the value of your choice |
+| `--dbname <dbname>` | Define the database name to use by replacing `<dbname>` in the command by the value of your choice |
+| `--dbusername <dbusername>` | Define the database username to use by replacing `<dbusername>` in the command by the value of your choice |
+| `--dbpassword <dbpassword>` | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice |
 | `--dbssl <dbssl>` | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default) |
 | `--dbfile <dbfile>` | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice |
 | `--quickstart` | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. |
