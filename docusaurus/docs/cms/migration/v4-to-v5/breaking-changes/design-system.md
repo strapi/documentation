@@ -13,7 +13,7 @@ import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.
 
 # The Strapi Design System has been upgraded to v2
 
-The Strapi Design System has been completely updated in Strapi 5 with significant changes to component structure, APIs, and usage patterns.
+The <ExternalLink text="Strapi Design System" to="https://design-system.strapi.io" /> has been completely updated in Strapi 5 with significant changes to component structure, APIs, and usage patterns.
 
 <Intro />
 
