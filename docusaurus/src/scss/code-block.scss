@@ -90,7 +90,8 @@ pre.prism-code {
         color: var(--custom-code-block-plain-color) !important;
       }
 
-      &.property {
+      &.property,
+      &.inserted {
         color: var(--custom-code-block-property-color) !important;
       }
 
