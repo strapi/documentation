@@ -29,7 +29,7 @@ The <ExternalLink text="Strapi Design System" to="https://design-system.strapi.i
 
 **In Strapi v4**
 
-The Design System used a specific approach with direct imports, styled-components v5, and certain component APIs that have since been revised.
+Strapi Design System v1 used a specific approach with direct imports, styled-components v5, and certain component APIs that have since been revised.
 
 </SideBySideColumn>
 
@@ -37,7 +37,7 @@ The Design System used a specific approach with direct imports, styled-component
 
 **In Strapi 5**
 
-The Design System has been completely updated with a focus on accessibility, API consistency, and better typing support. Major changes include:
+Strapi Design System v2 has been completely updated with a focus on accessibility, API consistency, and better typing support. Major changes include:
 
 - Root imports instead of direct component paths
 - Styled-components upgraded to v6
