@@ -125,6 +125,7 @@ export function CardCta({
 }
 
 export function Card({
+  asCallToAction = false,
   categoryType,
   className,
   href,
@@ -133,7 +134,7 @@ export function Card({
   variant,
   ...rest
 }) {
-  const asCallToAction = !!(href || to);
+  const isCallToAction = !!(href || to || asCallToAction);
   const CardElement = (to ? Link : (href ? 'a' : 'div'));
 
   return (
@@ -142,7 +143,7 @@ export function Card({
       {...(!to ? {} : { to })}
       className={clsx(
         styles.card,
-        (asCallToAction && styles['card--cta']),
+        (isCallToAction && styles['card--cta']),
         (isContentDelimited && styles['card--content-delimited']),
         (variant && styles[`card--${variant}`]),
         className,

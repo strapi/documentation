@@ -154,7 +154,7 @@ export default function PageHome() {
                       styles.home__categories__item,
                     )}
                   >
-                    <Card to={categoryItemCardLink} categoryType={categoryType}>
+                    <Card categoryType={categoryType} asCallToAction>
                       {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor}/>}
                       {categoryItemCardTitle && <CardTitle >{categoryItemCardTitle}</CardTitle>}
                       {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
