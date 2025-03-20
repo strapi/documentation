@@ -174,8 +174,8 @@ Use the `plugin::your-plugin-slug.the-plugin-content-type-name` syntax for conte
 Here is how to find all the entries for the `my-plugin-content-type` collection type created for a plugin called `my-plugin`:
 
 ```js
-// Using the Entity Service API
-let data = await strapi.entityService.findMany('plugin::my-plugin.my-plugin-content-type');
+// Using the Document Service API
+let data = await strapi.documents('plugin::my-plugin.my-plugin-content-type').findMany();
 
 // Using the Query Engine API
 let data = await strapi.db.query('plugin::my-plugin.my-plugin-content-type').findMany();
