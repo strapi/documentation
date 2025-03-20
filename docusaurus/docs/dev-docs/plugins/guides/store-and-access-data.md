@@ -17,7 +17,7 @@ To store data with a Strapi [plugin](/dev-docs/plugins/developing-plugins), use 
 
 ## Create a content-type for your plugin
 
-To create a content-type with the CLI generator, run the following command in a terminal:
+To create a content-type with the CLI generator, run the following command in a terminal within the `server/src/` directory of your plugin:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
