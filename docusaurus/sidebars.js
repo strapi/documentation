@@ -169,7 +169,7 @@ const sidebars = {
         },
         {
           type: 'doc',
-          id: 'dev-docs/api/sdk-js',
+          id: 'dev-docs/api/client',
         },
         {
           type: 'doc',
@@ -295,7 +295,7 @@ const sidebars = {
           label: 'Preview',
           id: 'dev-docs/preview',
           customProps: {
-            new: true
+            updated: true
           }
         },
         {
@@ -565,7 +565,7 @@ const sidebars = {
               items: [
                 'dev-docs/plugins/guides/store-and-access-data',
                 'dev-docs/plugins/guides/pass-data-from-server-to-admin',
-                'dev-docs/plugins/development/create-a-plugin',
+                'dev-docs/plugins/guides/create-components-for-plugins',
               ],
             },
           ],
@@ -670,7 +670,7 @@ const sidebars = {
           type: 'doc',
           id: 'user-docs/content-manager/previewing-content',
           customProps: {
-            new: true
+            updated: true
           }
         },
         'user-docs/content-manager/adding-content-to-releases',

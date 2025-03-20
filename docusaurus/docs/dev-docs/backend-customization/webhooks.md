@@ -15,7 +15,7 @@ tags:
 
 # Webhooks
 
-Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third party providers to start some processing (CI, build, deployment ...).
+Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third-party providers to start some processing (CI, build, deployment ...).
 
 The way a webhook works is by delivering information to a receiving application through HTTP requests (typically POST requests).
 
@@ -69,7 +69,7 @@ export default {
 Most of the time, webhooks make requests to public URLs, therefore it is possible that someone may find that URL and send it wrong information.
 
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
-Another way is to define `defaultHeaders` to add to every webhook requests.
+Another way is to define `defaultHeaders` to add to every webhook request.
 
 You can configure these global headers by updating the file at `./config/server`:
 
@@ -206,7 +206,7 @@ By default Strapi webhooks can be triggered by the following events:
 | [`media.update`](#mediaupdate)    | Triggered when a media is updated.                    |
 | [`media.delete`](#mediadelete)    | Triggered when a media is deleted.                    |
 | [`review-workflows.updateEntryStage`](#review-workflowsupdateentrystage) | Triggered when content is moved between review stages (see [review workflows](/user-docs/settings/review-workflows)).<br />This event is only available with the <EnterpriseBadge /> edition of Strapi. |
-| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is available with the <GrowthBadge /> or the <EnterpriseBadge /> plan of Strapi and the <CloudTeamBadge /> plan for Strapi Cloud. |
+| [`releases.publish`](#releases-publish) | Triggered when a Release is published (see [Releases](/user-docs/releases/introduction)).<br />This event is available with the <GrowthBadge /> or the <EnterpriseBadge /> plan of Strapi. |
 
 \*only when `draftAndPublish` is enabled on this Content Type.
 
@@ -473,7 +473,7 @@ This event is only available with the <EnterpriseBadge/> plan of Strapi.<br />Th
 ```
 
 ### `releases.publish`  {#releases-publish}
-<GrowthBadge /><EnterpriseBadge/><CloudTeamBadge/>
+<GrowthBadge /><EnterpriseBadge/>
 
 The event is triggered when a [release](/user-docs/releases/introduction) is published.
 
@@ -498,3 +498,12 @@ The event is triggered when a [release](/user-docs/releases/introduction) is pub
     }
   }
 }
+```
+## Best practices for webhook handling
+
+- Validate incoming requests by checking headers and payload signatures.
+- Implement retries for failed webhook requests to handle transient errors.
+- Log webhook events for debugging and monitoring.
+- Use secure, HTTPS endpoints for receiving webhooks.
+- Set up rate limiting to avoid being overwhelmed by multiple webhook requests.
+

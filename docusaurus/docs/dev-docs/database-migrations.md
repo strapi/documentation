@@ -99,3 +99,45 @@ module.exports = {
   },
 };
 ```
+
+## Handling migrations with TypeScript code
+
+By default Strapi looks for migration files in the source directory rather than the build directory when using TypeScript. This means that TypeScript migrations won't be found and executed properly unless you configure Strapi to look in the right place.
+
+To enable TypeScript migrations in Strapi, you need to set the `useTypescriptMigrations` parameter to true in your database configuration. This setting tells Strapi to look for migrations in the build directory instead of the source directory.
+
+Here's how to configure it in your database settings:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```jsx title="/config/database.js"
+module.exports = ({ env }) => ({
+  connection: {
+    // Your database connection settings
+  },
+  settings: {
+    useTypescriptMigrations: true
+  }
+});
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```tsx title="/config/database.ts"
+export default ({ env }) => ({
+  connection: {
+    // Your database connection settings
+  },
+  settings: {
+    useTypescriptMigrations: true
+  }
+});
+```
+
+</TabItem>
+</Tabs>
+
+Additionally, if you want to continue using existing JavaScript migrations alongside TypeScript migrations, you can set `allowJs: true` in your `tsconfig.json` file's compiler options, as mentioned in the [database configuration documentation](/dev-docs/configurations/database#settings-configuration-object).

@@ -16,7 +16,7 @@ import InstallPrerequisites from '/docs/snippets/installation-prerequisites.md'
 
 # Quick Start Guide
 
-Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and data structure from scratch, then deploy your project to Strapi Cloud to add data from there.
+Strapi offers a lot of flexibility. Whether you want to go fast and quickly see the final result, or would rather dive deeper into the product, we got you covered. For this tutorial, we'll go for the DIY approach and build a project and content structure from scratch, then deploy your project to Strapi Cloud to add data from there.
 
 *Estimated completion time: 5-10 minutes*
 
@@ -108,19 +108,19 @@ sources={{
 You have just created a new Strapi project! You can start playing with Strapi and discover the product by yourself using our [User Guide](/user-docs/intro), or proceed to part B below.
 :::
 
-## <Icon name="wrench" /> Part B: Build your data structure with the Content-type Builder
+## <Icon name="wrench" /> Part B: Build your content structure with the Content-type Builder
 
 The installation script has just created an empty project. We will now guide you through creating a restaurants directory, inspired by our [FoodAdvisor](https://github.com/strapi/foodadvisor) example application.
 
 The admin panel of a local Strapi project runs at [http://localhost:1337/admin](http://localhost:1337/admin). This is where you will spend most of your time creating and updating content.
 
-First we will build a data structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
+First we will build a content structure for your content. This can only be done while in development mode, which is the default mode for projects that are created locally.
 
 :::tip
 If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
 :::
 
-The Content-Type Builder helps you create your data structure. When creating an empty project with Strapi, this is where to get the party started!
+The Content-Type Builder helps you create your content structure. When creating an empty project with Strapi, this is where to get the party started!
 
 <details>
 
@@ -183,7 +183,7 @@ sources={{
 </details>
 
 :::callout <Icon name="confetti" /> Congratulations!
-You have just created a basic data structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/user-docs/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
+You have just created a basic content structure for your Strapi project! You can keep on playing with the [Content-Type Builder](/user-docs/content-type-builder), or proceed to parts C and D below to discover Strapi Cloud and add actual content to your project.
 :::
 
 ## <Icon name="cloud" />️ Part C: Deploy to Strapi Cloud
@@ -243,7 +243,7 @@ Feel free to play with the Content-Type Builder even further and add more fields
 
 ## <Icon name="note-pencil" /> Part D: Add content to your Strapi Cloud project with the Content Manager
 
-Now that we have created a basic data structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
+Now that we have created a basic content structure with 2 collection types, "Restaurant" and "Category", and deployed your project to Strapi Cloud, let's use the Cloud to actually add content by creating new entries.
 
 <details>
 <summary>Step 1: Log in to the admin panel of your new Strapi Cloud project</summary>
