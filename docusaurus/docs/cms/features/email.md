@@ -58,7 +58,29 @@ The Email feature requires a provider and a provider configuration in the `confi
 <CustomDocCard icon="plugs" title="Providers" description="Learn more about configuring and creating providers for the Email and Media Library features." link="/cms/providers"/>
 </CustomDocCardsWrapper>
 
-<ExternalLink to="https://www.npmjs.com/package/sendmail" text="`Sendmail`"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
+<ExternalLink to="https://www.npmjs.com/package/sendmail" text="Sendmail"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
+
+#### Email Configuration Options
+
+Plugins configuration are defined in the `config/plugins.js` file or `config/plugins.ts` file. For provider specific configuration please see the [Providers](/cms/providers) documentation for detailed installation and configuration instructions.
+
+| Option                    | Type            | Description                                                                                                                                            | Default Value  | Notes    |
+|---------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|----------|
+| `provider`                | `string`        | The email provider to use.                                                                                                                             | `sendmail`     | Required |
+| `providerOptions`         | `object`        | The email provider options.                                                                                                                            | `{}`           | Optional |
+| `providerOptions.apiKey`  | `string`        | The API key for the email provider.                                                                                                                    | `''`           | Optional |
+| `settings`                | `object`        | The email settings.                                                                                                                                    | `{}`           | Optional |
+| `settings.defaultFrom`    | `string`        | The default email address to use as the sender.                                                                                                        | `''`           | Optional |
+| `settings.defaultReplyTo` | `string`        | The default email address to use as the reply-to address.                                                                                              | `''`           | Optional |
+| `ratelimit`               | `object`        | The email rate limit settings.                                                                                                                         | `{}`           | Optional |
+| `ratelimit.enabled`       | `boolean`       | Whether to enable rate limiting.                                                                                                                       | `true`         | Optional |
+| `ratelimit.interval`      | `string`        | The interval for rate limiting in minutes.                                                                                                             | `5`            | Optional |
+| `ratelimit.max`           | `number`        | The maximum number of requests allowed during the interval.                                                                                            | `5`            | Optional |
+| `ratelimit.delayAfter`    | `number`        | The number of requests allowed before rate limiting is applied.                                                                                        | `1`            | Optional |
+| `ratelimit.timeWait`      | `number`        | Time to wait before responding to a request (in milliseconds).                                                                                         | `1`            | Optional |
+| `ratelimit.prefixKey`     | `string`        | The prefix for the rate limit key.                                                                                                                     | `${userEmail}` | Optional |
+| `ratelimit.whitelist`     | `array(string)` | Array of IP addresses to whitelist from rate limiting.                                                                                                 | `[]`           | Optional |
+| `ratelimit.store`         | `object`        | Rate limiting storage location and for more information please see the <ExternalLink text="koa2-ratelimit documentation" to="https://www.npmjs.com/package/koa2-ratelimit"/>. | `MemoryStore`  | Optional |
 
 ## Usage
 
