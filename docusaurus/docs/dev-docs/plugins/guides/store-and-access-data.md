@@ -17,7 +17,7 @@ To store data with a Strapi [plugin](/dev-docs/plugins/developing-plugins), use 
 
 ## Create a content-type for your plugin
 
-To create a content-type with the CLI generator, run the following command in a terminal:
+To create a content-type with the CLI generator, run the following command in a terminal within the `server/src/` directory of your plugin:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -170,8 +170,8 @@ Use the `plugin::your-plugin-slug.the-plugin-content-type-name` syntax for conte
 Here is how to find all the entries for the `my-plugin-content-type` collection type created for a plugin called `my-plugin`:
 
 ```js
-// Using the Entity Service API
-let data = await strapi.entityService.findMany('plugin::my-plugin.my-plugin-content-type');
+// Using the Document Service API
+let data = await strapi.documents('plugin::my-plugin.my-plugin-content-type').findMany();
 
 // Using the Query Engine API
 let data = await strapi.db.query('plugin::my-plugin.my-plugin-content-type').findMany();

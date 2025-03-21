@@ -48,7 +48,7 @@ Clicking on any of the following cards will direct you to the introductory page 
 
 <CustomDocCardsWrapper>
   <CustomDocCard emoji="📝" title="Content Manager" description="Manage and publish all content types created with the Content-type Builder." link="/user-docs/content-manager" />
-  <CustomDocCard emoji="📚" title="Content Type Builder" description="Build your data structure by creating and managing content-types." link="/user-docs/content-type-builder" />
+  <CustomDocCard emoji="📚" title="Content Type Builder" description="Build your content structure by creating and managing content-types." link="/user-docs/content-type-builder" />
   <CustomDocCard emoji="🗃️" title="Media Library" description="Upload and manage all assets and organize them into folders." link="/user-docs/media-library" />
   <CustomDocCard emoji="📅" title="Releases" description="Arrange entries into containers for publishing and unpublishing actions." link="/user-docs/releases/introduction"/>
   <CustomDocCard emoji="🔐" title="Users, Roles & Permission" description="Assign permission to roles, which are then associated with users." link="/user-docs/users-roles-permissions"/>
