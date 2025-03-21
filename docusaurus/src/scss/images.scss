@@ -63,7 +63,7 @@ body:not(.medium-zoom--opened) .medium-zoom-image {
   
   &:hover {
     animation: zoomIn 0.3s ease forwards;
-    animation-delay: 500ms; // Délai avant le début de l'animation
+    animation-delay: 500ms;
     z-index: 100;
     
     &::after {
