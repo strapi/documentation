@@ -4,4 +4,5 @@ Before installing Strapi, the following requirements must be installed on your c
 - Your preferred Node.js package manager:
     - <ExternalLink to="https://docs.npmjs.com/cli/v6/commands/npm-install" text="npm"/> (`v6` and above)
     - <ExternalLink to="https://yarnpkg.com/getting-started/install" text="yarn"/>
+    - <ExternalLink to="https://pnpm.io/" text="pnpm" />
 - <ExternalLink to="https://www.python.org/downloads/" text="Python"/> (if using a SQLite database)
