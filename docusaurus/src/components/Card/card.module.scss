@@ -66,6 +66,9 @@
     --strapi-card-border-color: var(--strapi-card-hover-border-color);
     --strapi-card-title-arrow-left: var(--strapi-spacing-3);
     --strapi-card-img-bg-scale: var(--strapi-card-hover-img-bg-scale);
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 
   &-category-icon-container {
