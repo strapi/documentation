@@ -408,13 +408,14 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 ### Variables
 
-Environment variables (more information in the [Developer Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
+Environment variables (more information in the [CMS Documentation](../../dev-docs/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
 
+<!-- Screenshots need to be updated for March 19 release -->
 <ThemedImage
   alt="Project variables"
   sources={{
-    light: '/img/assets/cloud/settings_variables.png',
-    dark: '/img/assets/cloud/settings_variables_DARK.png',
+    light: '/img/assets/cloud/settings-variables2.png',
+    dark: '/img/assets/cloud/settings-variables2_DARK.png',
   }}
 />
 
@@ -426,15 +427,27 @@ Hovering on an environment variable, either default or custom, displays the foll
 
 - <Icon name="eye" /> **Show value** to replace the `*` characters with the actual value of a variable.
 - <Icon name="copy" /> **Copy to clipboard** to copy the value of a variable.
-- <Icon name="dots-three" /> **Actions** to access the <Icon name="pencil-simple" /> Edit and <Icon name="trash-simple" /> Delete buttons. Both options are only available for custom environment variables.
-  - When editing a variable, don't forget to confirm the changes by clicking on **Save**.
+- <Icon name="dots-three" /> **Actions** to access the <Icon name="pencil-simple" /> Edit and <Icon name="trash-simple" /> Delete buttons.
+  - When editing a default variable, the *Name* cannot be modified and the *Value* can only be automatically generated using the <Icon name="magic-wand" /> Generate value button. Don't forget to **Save** at the end.
+  - When editing a custom variable, both the *Name* and *Value* can be modified by writing something new or by using the <Icon name="magic-wand" /> Generate value button. Don't forget to **Save** at the end.
   - When deleting a variable, you will be asked to click on a **Confirm** button to confirm the deletion.
+
+<!-- Search bar to be confirmed for March 19 -->
+:::tip
+Use the search bar to find more quickly an environment variable in the list!
+:::
 
 #### Creating custom environment variables
 
 Custom environment variables can be created for the Strapi Cloud project. Make sure to redeploy your project after creating or editing an environment variable.
 
+<!-- Future iteration
+:::note
+Instead of creating a new custom environment variable from scratch, you can also import one by clicking on the **Import variables (.env)** button.
+:::
+-->
+
 1. In the *Custom environment variables* section, click on the **Add variable** button.
-2. Write the *Name* and *Value* of the new environment variable in the same-named fields.
+2. Write the *Name* and *Value* of the new environment variable in the same-named fields. Alternatively, you can click on the <Icon name="magic-wand" /> icon to generate automatically the name and value.
 3. (optional) Click on **Add another** to directly create one or more other custom environment variables.
 4. Click on the **Save** button to confirm the creation of the custom environment variables.
