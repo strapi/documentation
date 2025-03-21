@@ -166,5 +166,5 @@ await homepage.delete();
 ```
 
 :::strapi Additional information
-More details about the Strapi Strapi Client might be found in the [package's README](https://github.com/strapi/client-js/blob/main/README.md).
+More details about the Strapi Strapi Client might be found in the [package's README](https://github.com/strapi/client/blob/main/README.md).
 :::

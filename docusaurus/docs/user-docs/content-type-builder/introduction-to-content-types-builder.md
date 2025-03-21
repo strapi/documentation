@@ -29,7 +29,7 @@ From the Content-type Builder, administrators can create and manage content-type
 
 - Collection types are content-types that can manage several entries.
 - Single types are content-types that can only manage one entry.
-- Components are a data structure that can be used in multiple collection types and single types.
+- Components are a content structure that can be used in multiple collection types and single types.
 
 All 3 are displayed as categories in the sub navigation of the Content-type Builder. In each category are listed all content-types and components that have already been created.
 

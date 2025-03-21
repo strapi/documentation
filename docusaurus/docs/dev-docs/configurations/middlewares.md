@@ -333,7 +333,7 @@ export default [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['example.com', 'subdomain.example.com', 'someotherwebsite.org'],
+      origin: ['https://example.com', 'https://subdomain.example.com', 'https://someotherwebsite.org'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
       keepHeaderOnError: true,

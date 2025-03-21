@@ -77,7 +77,7 @@ const entries = await strapi.entityService.findMany('api::article.article', {
 
 ## Populate fragments
 
-When dealing with polymorphic data structures (dynamic zones, polymorphic relations, etc...), it is possible to use populate fragments to have a better granularity on the populate strategy.
+When dealing with polymorphic content structures (dynamic zones, polymorphic relations, etc...), it is possible to use populate fragments to have a better granularity on the populate strategy.
 
 ```js
 const entries = await strapi.entityService.findMany('api::article.article', {
