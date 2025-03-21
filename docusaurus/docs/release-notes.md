@@ -194,6 +194,60 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 <br/>
 
+## 5.8.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add a guide on how to create components for plugins](https://github.com/strapi/documentation/pull/2433)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### Cloud
+- [Project settings: Variables page revamp (pt. 2)](https://github.com/strapi/documentation/pull/2425)
+
+#### Repository
+- [Add use case for handling database migrations with TypeScript](https://github.com/strapi/documentation/pull/2432)
+- [Add Email plugin ratelimiting configuration options](https://github.com/strapi/documentation/pull/2377)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Cloud
+- [Add callout for downgrade/upgrade Cloud plans](https://github.com/strapi/documentation/pull/2428)
+
+#### Repository
+- [Fix broken link to Strapi client README](https://github.com/strapi/documentation/pull/2436)
+- [Fix missing location for content-type generation command in Store and Access Data (plugins dev) guide](https://github.com/strapi/documentation/pull/2434)
+- [Fix Node versions in installation snippet](https://github.com/strapi/documentation/pull/2431)
+- [Convert example in Store and Access Data guide from ES to DS](https://github.com/strapi/documentation/pull/2430)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pastelmind" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/29533079?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pastelmind"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 5.7.0
 
 <br/>
