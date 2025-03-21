@@ -3715,7 +3715,8 @@
     },
     {
       "source": "/dev-docs/configurations/sso",
-      "destination": "/cms/configurations/guides/configure-sso"
+      "destination": "/cms/configurations/guides/configure-sso",
+      "permanent": true
     }
   ]
 }
