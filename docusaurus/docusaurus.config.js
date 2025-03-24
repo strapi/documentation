@@ -72,7 +72,8 @@ const config = {
       async: true,
     },
     {
-      src: 'https://unpkg.com/@phosphor-icons/web',
+      // src: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
+      src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1', // fallback
       async: true,
     },
     {
@@ -104,7 +105,17 @@ const config = {
   ],
   stylesheets: [
     {
-      href: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
+      href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css', // fallback
+      type: 'text/css',
+      rel: 'stylesheet',
+    },
+    {
+      href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css', // fallback
+      type: 'text/css',
+      rel: 'stylesheet',
+    },
+    {
+      href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css', // fallback
       type: 'text/css',
       rel: 'stylesheet',
     },
