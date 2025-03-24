@@ -103,25 +103,50 @@ export function CardCta({
   text,
   color = '#000',
   withArrow,
+  asPlainContent = false,
   ...rest
 }) {
-  return (
-    <Link
-     className={className}
-     to={to}
-     style={{
-      color: color,
-      paddingTop: '15px',
-      paddingBottom: '50px',
-    }}>
+  const contentJSX = (
+    <>
       {text}
       {withArrow && (
         <span className={styles.card__title__arrow}>
           <IconArrow />
         </span>
       )}
+    </>
+  );
+
+  if (asPlainContent) {
+    return (
+      <div 
+        className={className} 
+        style={{
+          color: color,
+          paddingTop: '15px',
+          paddingBottom: '50px',
+        }}
+        {...rest}
+      >
+        {contentJSX}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      className={className}
+      to={to}
+      style={{
+        color: color,
+        paddingTop: '15px',
+        paddingBottom: '50px',
+      }}
+      {...rest}
+    >
+      {contentJSX}
     </Link>
-  )
+  );
 }
 
 export function Card({
