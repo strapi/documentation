@@ -98,6 +98,31 @@ By default, the chosen interface mode is based on your browser's mode. You can h
 Keep in mind that choosing an interface mode only applies to your account on the admin panel.
 :::
 
+### Customizing the logo
+
+**Path to configure the admin panel:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
+
+The default Strapi logos, displayed in the main navigation of a Strapi application and the authentication pages, can be modified.
+
+1. Click on the upload area for *Menu logo* or *Auth logo*.
+2. Upload your chosen logo, either by browsing files, drag & dropping the file in the right area, or by using a URL. The logo shouldn't be more than 750x750px. 
+3. Click on the **Upload logo** button in the upload window.
+4. Click on the **Save** button in the top right corner.
+
+Once uploaded, the new logo can be replaced with another one <Icon name="plus" classes="ph-bold"/>, or reset <Icon name="arrow-clockwise" classes="ph-bold"/> with the default Strapi logo or the logo set in the configuration files.
+
+:::note
+Both logos can also be customized programmatically via the Strapi application's configuration files (see [Admin panel customization](/dev-docs/admin-panel-customization/options#logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
+:::
+
+<ThemedImage
+  alt="Custom logo settings"
+  sources={{
+    light: '/img/assets/settings/settings_custom-logo.png',
+    dark: '/img/assets/settings/settings_custom-logo_DARK.png',
+  }}
+/>
+
 ## Usage
 
 :::caution
