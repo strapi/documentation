@@ -97,8 +97,8 @@ export default {
       cardTitle: 'Cloud docs',
       cardDescription: 'Learn how to deploy and manage your Strapi projects hosted on Strapi Cloud',
       cardCtaText: 'Read Cloud docs',
-      cardImgSrc: require('@site/static/img/assets/cloud/cloud-screenshot-for-homepage.png').default,
-      cardImgSrcDark: require('@site/static/img/assets/cloud/collaboration-projectview_DARK.png').default, // Optionally use a darker version of the image
+      cardImgSrc: require('@site/static/img/assets/home/cloud-screenshot-for-homepage.png').default,
+      cardImgSrcDark: require('@site/static/img/assets/home/cloud-screenshot-for-homepage_DARK.png').default, // Optionally use a darker version of the image
       linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
       linksIconColor: 'purple',
       links: [
