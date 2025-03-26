@@ -10,7 +10,7 @@ const darkCodeTheme = themes.dracula;
 const config = {
   title: 'Strapi 5 Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs-next.strapi.io',
+  url: 'https://docs.strapi.io',
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
@@ -128,7 +128,7 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/next/docusaurus', // TODO change back to next then main for production releases          admonitions: {
+          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             keywords: [
               // Admonitions defaults
@@ -194,8 +194,8 @@ const config = {
         hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-beta.png',
-          srcDark: 'img/logo-beta-dark.png',
+          src: 'img/logo.png',
+          srcDark: 'img/logo-dark.png',
         },
         items: [
           {
