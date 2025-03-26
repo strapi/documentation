@@ -240,4 +240,8 @@
       }
     }
   }
+
+  [class*="card__img"] {
+    border: none !important;
+  }
 }
