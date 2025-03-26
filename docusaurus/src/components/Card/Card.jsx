@@ -166,12 +166,28 @@ export function Card({
   ...rest
 }) {
   const isCallToAction = !!(href || to || asCallToAction);
-  const CardElement = (to ? Link : (href ? 'a' : 'div'));
+  
+  let CardElement;
+  let linkProps = {};
+  
+  if (to) {
+    CardElement = Link;
+    linkProps = { to };
+  } else if (href) {
+    if (href.startsWith('/')) {
+      CardElement = Link;
+      linkProps = { to: href };
+    } else {
+      CardElement = 'a';
+      linkProps = { href, target: '_blank' };
+    }
+  } else {
+    CardElement = 'div';
+  }
   
   return (
     <CardElement
-      {...(!href ? {} : { href, target: '_blank' })}
-      {...(!to ? {} : { to })}
+      {...linkProps}
       className={clsx(
         styles.card,
         (isCallToAction && styles['card--cta']),
