@@ -102,7 +102,7 @@ const config = {
       async: true,
     },
     {
-      src: '/js/reset-announcement-banner.js',
+      src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
       async: true,
     },
   ],
