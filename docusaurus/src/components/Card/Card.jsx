@@ -1,4 +1,3 @@
-
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import styles from './card.module.scss';
@@ -10,13 +9,16 @@ export function CardIcon ({
   name,
   color = '#000',
   className,
+  isDarkTheme = false,
   ...rest
 }) {
+  const iconColor = isDarkTheme ? color : color;
+  
   return (
     <div className={styles['card-category-icon-container']}>
       <Icon
         name={name}
-        color={color}
+        color={iconColor}
       />
     </div>
   )
@@ -30,7 +32,6 @@ export function CardTitle({
   ...rest
 }) {
   const TitleElement = (as || 'h3');
-
   return (
     <TitleElement
       className={clsx(
@@ -55,7 +56,6 @@ export function CardDescription({
   ...rest
 }) {
   const DescriptionElement = (as || 'div');
-
   return (
     <DescriptionElement
       className={clsx(
@@ -84,6 +84,7 @@ export function CardImgBg({
 
 export function CardImg({
   className,
+  isDarkTheme = false,
   ...rest
 }) {
   return (
@@ -91,6 +92,7 @@ export function CardImg({
       className={clsx(
         styles['card__img'],
         className,
+        isDarkTheme ? styles['card__img--dark'] : ''
       )}
       {...rest}
     />
@@ -104,8 +106,11 @@ export function CardCta({
   color = '#000',
   withArrow,
   asPlainContent = false,
+  isDarkTheme = false,
   ...rest
 }) {
+  const ctaColor = isDarkTheme ? (color === '#000' ? '#FFFFFF' : color) : color;
+  
   const contentJSX = (
     <>
       {text}
@@ -116,13 +121,13 @@ export function CardCta({
       )}
     </>
   );
-
+  
   if (asPlainContent) {
     return (
       <div 
-        className={className} 
+        className={clsx(className, isDarkTheme ? styles['card-cta--dark'] : '')} 
         style={{
-          color: color,
+          color: ctaColor,
           paddingTop: '15px',
           paddingBottom: '50px',
         }}
@@ -132,13 +137,13 @@ export function CardCta({
       </div>
     );
   }
-
+  
   return (
     <Link
-      className={className}
+      className={clsx(className, isDarkTheme ? styles['card-cta--dark'] : '')}
       to={to}
       style={{
-        color: color,
+        color: ctaColor,
         paddingTop: '15px',
         paddingBottom: '50px',
       }}
@@ -157,22 +162,40 @@ export function Card({
   isContentDelimited,
   to,
   variant,
+  isDarkTheme = false,
   ...rest
 }) {
   const isCallToAction = !!(href || to || asCallToAction);
-  const CardElement = (to ? Link : (href ? 'a' : 'div'));
-
+  
+  let CardElement;
+  let linkProps = {};
+  
+  if (to) {
+    CardElement = Link;
+    linkProps = { to };
+  } else if (href) {
+    if (href.startsWith('/')) {
+      CardElement = Link;
+      linkProps = { to: href };
+    } else {
+      CardElement = 'a';
+      linkProps = { href, target: '_blank' };
+    }
+  } else {
+    CardElement = 'div';
+  }
+  
   return (
     <CardElement
-      {...(!href ? {} : { href, target: '_blank' })}
-      {...(!to ? {} : { to })}
+      {...linkProps}
       className={clsx(
         styles.card,
         (isCallToAction && styles['card--cta']),
         (isContentDelimited && styles['card--content-delimited']),
         (variant && styles[`card--${variant}`]),
         className,
-        categoryType ? `category-${categoryType}` : ''
+        categoryType ? `category-${categoryType}` : '',
+        isDarkTheme ? styles['card--dark'] : ''
       )}
       {...rest}
     />
