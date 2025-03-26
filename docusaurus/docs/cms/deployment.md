@@ -214,3 +214,7 @@ In addition, community-maintained guides for additional providers are available 
 <CustomDocCard emoji="🔗" small title="Proxying with HAProxy" link="https://forum.strapi.io/t/haproxy-proxying-with-strapi/" />
 <CustomDocCard emoji="🔗" small title="Proxying with NGinx" link="https://forum.strapi.io/t/nginx-proxing-with-strapi/" />
 <CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
+
+:::strapi Multi-tenancy
+If you're looking for multi-tenancy options, the Strapi Blog has a <ExternalLink text="comprehensive guide" to="https://strapi.io/blog/multi-tenancy-in-strapi-a-comprehensive-guide" />.
+:::
