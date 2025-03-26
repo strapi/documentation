@@ -101,7 +101,7 @@ preview: {
 // …
 ```
 
-An example of [URL generation logic](#2-add-url-generation-logic) in given in the following basic implementation guide.
+An example of [URL generation logic](#2-add-url-generation) in given in the following basic implementation guide.
 
 ##### Previewing draft entries
 
