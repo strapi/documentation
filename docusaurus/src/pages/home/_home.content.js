@@ -62,7 +62,7 @@ export default {
       cardTitle: 'CMS docs',
       cardDescription: 'Learn how to set up, configure, use, and customize the Strapi headless CMS',
       cardCtaText: 'Read CMS docs',
-      cardImgSrc: require('@site/static/img/assets/home/preview--user-guides.jpg').default,
+      cardImgSrc: require('@site/static/img/assets/home/cms-screenshot-for-homepage.png').default,
       linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
       linksIconColor: 'blue',
       links: [
@@ -126,7 +126,7 @@ export default {
       cardTitle: 'Cloud docs',
       cardDescription: 'Learn how to deploy and manage your Strapi projects hosted on Strapi Cloud',
       cardCtaText: 'Read Cloud docs',
-      cardImgSrc: require('@site/static/img/assets/home/preview--cloud-docs.png').default,
+      cardImgSrc: require('@site/static/img/assets/cloud/cloud-screenshot-for-homepage.png').default,
       linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
       linksIconColor: 'purple',
       links: [
