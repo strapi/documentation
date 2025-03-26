@@ -56,6 +56,10 @@
     font-size: var(--strapi-font-size-sm);
     line-height: var(--strapi-line-height-sm);
     padding-left: 0;
+    color: var(--strapi-neutral-400);
+    font-weight: 500;
+    left: -16px;
+    position: relative;
 
     &::before {
       content: '\E30C';
@@ -65,6 +69,10 @@
       font-size: 16px;
       position: relative;
       top: 2px;
+    }
+
+    &:hover {
+      color: var(--strapi-primary-600);
     }
   }
 
