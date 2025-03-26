@@ -323,7 +323,7 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | In the main navigation | `config.menu.logo`          |
 
 :::note
-Both logos can also be customized directly via the admin panel.
+Both logos can also be customized directly via the admin panel (see [Customizing the logo](/cms/features/admin-panel)).
 Logos uploaded via the admin panel supersede any logo set through the configuration files.
 :::
 
