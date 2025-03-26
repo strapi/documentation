@@ -7,7 +7,7 @@ export default {
   },
   carousel: [
     {
-      title: 'Can’t wait to use Strapi?',
+      title: "Can't wait to use Strapi?",
       description: (
         <>
           {'Learn Strapi in a nutshell with our '}
@@ -23,14 +23,14 @@ export default {
       },
     },
     {
-      title: 'Learn what’s new in Strapi 5',
+      title: "Learn what's new in Strapi 5",
       description: (
         <>
           {'Have a quick tour of the new and updated features available in the Strapi 5 documentation!'}
         </>
       ),
       button: {
-        label: 'What’s new?',
+        label: "What's new?",
         decorative: '✨',
         to: '/whats-new',
       },
@@ -63,6 +63,7 @@ export default {
       cardDescription: 'Learn how to set up, configure, use, and customize the Strapi headless CMS',
       cardCtaText: 'Read CMS docs',
       cardImgSrc: require('@site/static/img/assets/home/cms-screenshot-for-homepage.png').default,
+      cardImgSrcDark: require('@site/static/img/assets/home/cms-screenshot-for-homepage_DARK.png').default, // Optionally use a darker version of the image
       linksIconSrc: require('@site/static/img/assets/icons/feather.svg').default,
       linksIconColor: 'blue',
       links: [
@@ -88,36 +89,6 @@ export default {
         },
       ],
     },
-    // {
-    //   cardLink: '/cms/intro',
-    //   cardTitle: 'Developer Docs',
-    //   cardDescription: 'All you need to get your project up-and-running, and become a Strapi expert',
-    //   cardImgSrc: require('@site/static/img/assets/home/preview--dev-docs.jpg').default,
-    //   linksIconSrc: require('@site/static/img/assets/icons/code.svg').default,
-    //   linksIconColor: 'green',
-    //   links: [
-    //     {
-    //       label: 'REST API',
-    //       to: '/cms/api/rest',
-    //     },
-    //     {
-    //       label: 'GraphQL API',
-    //       to: '/cms/api/graphql',
-    //     },
-    //     {
-    //       label: 'Document Service API',
-    //       to: '/cms/api/document-service',
-    //     },
-    //     {
-    //       label: 'Plugin SDK',
-    //       to: '/cms/plugins-development/create-a-plugin',
-    //     },
-    //     {
-    //       label: 'Upgrade to Strapi 5',
-    //       to: '/cms/migration/v4-to-v5/introduction-and-faq',
-    //     },
-    //   ],
-    // },
     {
       categoryType: "cloud",
       cardLink: '/cloud/intro',
@@ -127,6 +98,7 @@ export default {
       cardDescription: 'Learn how to deploy and manage your Strapi projects hosted on Strapi Cloud',
       cardCtaText: 'Read Cloud docs',
       cardImgSrc: require('@site/static/img/assets/cloud/cloud-screenshot-for-homepage.png').default,
+      cardImgSrcDark: require('@site/static/img/assets/cloud/collaboration-projectview_DARK.png').default, // Optionally use a darker version of the image
       linksIconSrc: require('@site/static/img/assets/icons/cloud.svg').default,
       linksIconColor: 'purple',
       links: [
@@ -159,4 +131,28 @@ export default {
     label: 'Help us improve the documentation',
     href: 'https://github.com/strapi/documentation',
   },
+  
+  // Ajout des palettes de couleurs pour le mode sombre
+  darkMode: {
+    colors: {
+      primary: '#4945FF',
+      background: '#181826',
+      cardBackground: '#232338',
+      text: '#FFFFFF',
+      textSecondary: '#A5A5BA',
+      borderColor: '#2F2F47',
+    }
+  },
+  
+  // Palettes pour le mode clair
+  lightMode: {
+    colors: {
+      primary: '#4945FF',
+      background: '#FFFFFF',
+      cardBackground: '#F5F5F5',
+      text: '#000000',
+      textSecondary: '#666666',
+      borderColor: '#EEEEEE',
+    }
+  }
 };
