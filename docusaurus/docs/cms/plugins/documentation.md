@@ -145,7 +145,7 @@ To create a new version, change the `info.version` key in the `settings.json` fi
 
 This will automatically create a new version.
 
-#### Defining which plugins need documentation generated
+#### Defining which plugins need documentation generated {#define-which-plugins}
 
 If you want plugins to be included in documentation generation, they should be included in the `plugins` array in the `x-strapi-config` object. By default, the array is initialized with `["upload", "users-permissions"]`:
 

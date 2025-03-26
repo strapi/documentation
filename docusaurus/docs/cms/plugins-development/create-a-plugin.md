@@ -153,3 +153,73 @@ export default (config, webpack) => {
 :::caution
 Because the server looks at the `server/src/index.ts|js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
 :::
+
+### Configuration with a local plugin
+
+Since the Plugin SDK is primarily designed for developing plugins, not locally, the configuration needs to be adjusted manually for local plugins.
+
+When developing your plugin locally (using `@strapi/sdk-plugin`), your plugins configuration file looks like in the following example:
+
+```js title="/config/plugins.js|ts"
+myplugin: {
+  enabled: true,
+  resolve: `./src/plugins/local-plugin`,
+},
+```
+
+However, this setup can sometimes lead to errors such as the following:
+
+```js
+Error: 'X must be used within StrapiApp';
+```
+
+This error often occurs when your plugin attempts to import core Strapi functionality, for example using:
+
+```js
+import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
+```
+
+To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi’s core modules as the main application, preventing conflicts and the associated errors.
+
+## Setting a local plugin in a monorepo environment without the Plugin SDK
+
+In a monorepo, you can configure your local plugin without using the Plugin SDK by adding 2 entry point files at the root of your plugin:
+
+- server entry point: `strapi-server.js|ts`
+- admin entry point: `strapi-admin.js|ts`
+
+### Server entry point
+
+The server entry point file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
+
+```js
+module.exports = () => {
+  return {
+    register,
+    config,
+    controllers,
+    contentTypes,
+    routes,
+  };
+};
+```
+
+Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration. For more details, please refer to the [Server API reference](/cms/plugins-development/server-api).
+
+### Admin entry point
+
+The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
+
+```js
+export default {
+  register(app) {},
+  bootstrap() {},
+  registerTrads({ locales }) {},
+};
+```
+
+This object includes methods to register your plugin with the admin application, perform bootstrapping actions, and handle translations. For more details, please refer to the [Admin Panel API reference](/cms/plugins-development/admin-panel-api).
+
+:::tip
+For a complete example of how to structure your local plugin in a monorepo environment, please check out our <ExternalLink to="https://github.com/strapi/strapi/tree/develop/examples/getstarted/src/plugins/local-plugin" text="example setup in the strapi/strapi repository" />.
+:::

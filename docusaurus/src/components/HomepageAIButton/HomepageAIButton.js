@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
-import styles from './homepageaibutton.module.scss';
-import clsx from 'clsx';
+import styles from './homepageaibutton.module.scss'
 import Icon from '../Icon'
 
-const HomepageAIButton = () => {
-  const [isHovered, setIsHovered] = useState(false);
-
+export default function HomepageAIButton() {
   return (
-    <div className={styles.container}>
-      <button
-        className={clsx(
-          styles.button,
-          isHovered && styles.buttonHovered,
-          'kapa-widget-button'
-        )}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <Icon name="sparkle" />&nbsp;<span className={styles.text}>Ask anything to AI</span>
+    <div className={styles['homepage-ai-button-container']}>
+      <button className={`${styles['homepage-ai-button']} kapa-widget-button`}>
+        <Icon name="sparkle" />
+        <p>Ask anything to AI</p>
       </button>
     </div>
   );
-};
-
-export default HomepageAIButton;
+}

@@ -94,6 +94,8 @@ The Content API returns attributes of requested content without wrapping them in
 
 ## Migration
 
+<br/>
+
 ### Notes
 
 To use the Strapi v4 response format, set the following header: `Strapi-Response-Format: v4`. 

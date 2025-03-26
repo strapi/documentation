@@ -48,6 +48,8 @@ A similar result can be achieved in Strapi v4 by adding the `lockIcon` property.
 
 ## Migration
 
+<br/>
+
 ### Notes
 
 * Passing `licenseOnly: true` will add a lightning icon ⚡️, so that:

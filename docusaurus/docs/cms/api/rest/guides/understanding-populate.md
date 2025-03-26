@@ -335,7 +335,7 @@ Relations and fields populated this way can be 1 or several levels deep. The fol
 ![Diagram with populate use cases with FoodAdvisor data ](/img/assets/rest-api/populate-foodadvisor-diagram2.png)
 
 <SubtleCallout emoji="🤓" title="Different populating strategies for similar results">
-Depending on your data structure, you might get similar data presented in different ways with different queries. For instance, the FoodAdvisor example application includes the article, category, and restaurant content-types that are all in relation to each other in different ways. This means that if you want to get data about the 3 content-types in a single GET request, you have 2 options:
+Depending on your content structure, you might get similar data presented in different ways with different queries. For instance, the FoodAdvisor example application includes the article, category, and restaurant content-types that are all in relation to each other in different ways. This means that if you want to get data about the 3 content-types in a single GET request, you have 2 options:
 
 - query articles and populate categories, plus populate the nested relation between categories and restaurants ([2 levels deep population](#populate-several-levels-deep-for-specific-relations))
 - query categories and populate both articles and restaurants because categories have a 1st level relation with the 2 other content-types ([1 level deep](#populate-1-level-deep-for-specific-relations))
@@ -1043,7 +1043,7 @@ With the shared population strategy, you apply the same population to all the co
 For instance, in the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application:
 
 - A `blocks` dynamic zone exists the `article` content-type <ScreenshotNumberReference number="1" />.
-- The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different data structure containing various fields.
+- The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different content structure containing various fields.
 
 ![FoodAdvisor's 'blocks' dynamic zone structure in the Content-Type Builder](/img/assets/rest-api/ctb-blocks-dynamic-zone-structure.png)
 
@@ -1255,7 +1255,7 @@ To do so, you can define per-component populate queries using the `on` property.
 For instance, in the <ExternalLink to="https://github.com/strapi/foodadvisor" text="FoodAdvisor"/> example application:
 
 - A `blocks` dynamic zone exists the `article` content-type <ScreenshotNumberReference number="1" />.
-- The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different data structure containing various fields.
+- The dynamic zone includes 3 different components: `relatedArticles` <ScreenshotNumberReference number="2" />, `faq` <ScreenshotNumberReference number="3" />, and `CtaCommandLine` <ScreenshotNumberReference number="4" />. All components have a different content structure containing various fields.
 - The `relatedArticles` component has an `articles` relation <ScreenshotNumberReference number="5" /> with the article content-type.
 
 ![FoodAdvisor's 'blocks' dynamic zone structure in the Content-Type Builder](/img/assets/rest-api/ctb-blocks-dynamic-zone-structure-2.png)

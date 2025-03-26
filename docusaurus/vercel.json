@@ -1531,11 +1531,6 @@
       "permanent": true
     },
     {
-      "source": "/user-docs/features/email",
-      "destination": "/cms/features/email",
-      "permanent": true
-    },
-    {
       "source": "/user-docs/features/internationalization",
       "destination": "/cms/features/internationalization",
       "permanent": true
@@ -1858,6 +1853,11 @@
     {
       "source": "/dev-docs/admin-panel-customization#extending-translations",
       "destination": "/dev-docs/admin-panel-customization/options#extending-translations",
+      "permanent": true
+    },
+    {
+      "source": "/dev-docs/admin-panel-customization/options",
+      "destination": "/cms/admin-panel-customization/options",
       "permanent": true
     },
     {
@@ -2472,7 +2472,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/plugins/email.html",
-			"destination": "/dev-docs/plugins/email"
+			"destination": "/cms/features/email"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/users-permissions.html",
@@ -2480,7 +2480,7 @@
 		},
 		{
 			"source": "/developer-docs/latest/plugins/documentation.html",
-			"destination": "/dev-docs/plugins/documentation"
+			"destination": "/cms/plugins/documentation"
 		},
 		{
 			"source": "/developer-docs/latest/plugins/upload.html",

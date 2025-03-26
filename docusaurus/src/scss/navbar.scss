@@ -409,8 +409,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
    * since we can't rely on --active classes
    * since our nav is fully custom
    */
-  html[class*="docs-doc-id-dev-docs"],
-  html[class*="docs-doc-id-user-docs"] {
+  html[class*="docs-doc-id-cms"],
+  html[class*="docs-doc-id-cloud"] {
     .navbar .custom-mobile-navbar__item:has(.mobile-navbar__cms-link) {
       background-color: var(--strapi-neutral-100);
 
@@ -442,6 +442,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 .navbar {
   border-bottom: 1px solid var(--strapi-neutral-150);
+  --ifm-navbar-shadow: none;
 }
 
 @include dark {
@@ -457,13 +458,43 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     border-bottom-color: var(--strapi-neutral-150);
   }
 
-  .navbar__link:not(.navbar__link--active) {
+  .navbar__link {
     color: var(--strapi-neutral-400);
 
-    &:hover {
+    &:not(.navbar__link--active):hover {
+      color: var(--strapi-neutral-700) !important;
+      background-color: var(--strapi-neutral-0) !important;
+    
+      i::before {
+        color: var(--strapi-neutral-700);
+      }
+    }
+  }
+
+  .navbar__link--active[href^="/cms/"],
+  .navbar__link--active[href^="/cloud/"] {
+    background-color: var(--strapi-neutral-100);
+    color: var(--strapi-primary-600);
+
+    i::before {
       color: var(--strapi-primary-600);
     }
   }
+
+  .navbar__link:not(.navbar__link--active) {
+    &:hover {
+      background-color: var(--strapi-neutral-100) !important;
+    }
+  }
+
+  // .navbar__link--active[href^="/cloud/"] {
+  //   background-color: var(--strapi-neutral-0);
+  //   color: var(--strapi-secondary-500);
+
+  //   i::before {
+  //     color: var(--strapi-secondary-500);
+  //   }
+  // }
 
   button[class*="ColorModeToggle"],
   button[class*="toggleButton"] {

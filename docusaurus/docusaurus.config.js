@@ -72,7 +72,8 @@ const config = {
       async: true,
     },
     {
-      src: 'https://unpkg.com/@phosphor-icons/web',
+      // src: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
+      src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1', // fallback
       async: true,
     },
     {
@@ -104,7 +105,17 @@ const config = {
   ],
   stylesheets: [
     {
-      href: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
+      href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css', // fallback
+      type: 'text/css',
+      rel: 'stylesheet',
+    },
+    {
+      href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css', // fallback
+      type: 'text/css',
+      rel: 'stylesheet',
+    },
+    {
+      href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/bold/style.css', // fallback
       type: 'text/css',
       rel: 'stylesheet',
     },
@@ -239,10 +250,6 @@ const config = {
             title: 'Additional resources',
             items: [
               {
-                label: 'v5 Docs (User Guide, Dev Docs, Cloud Docs)',
-                href: 'https://docs.strapi.io'
-              },
-              {
                 label: 'v4 Docs',
                 href: 'https://docs-v4.strapi.io'
               },
@@ -299,9 +306,7 @@ const config = {
       prism: {
         theme: darkCodeTheme,
         darkTheme: darkCodeTheme,
-        prism: {
-          additionalLanguages: ['bash', 'diff', 'json'],
-        },
+        additionalLanguages: ['bash', 'diff', 'json'],
       },
       zoom: {
         // selector: '.markdown :not(em) > img', // temporarily disabled to ensure it works with themed images

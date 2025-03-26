@@ -15,7 +15,7 @@ tags:
 
 # Webhooks
 
-Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third party providers to start some processing (CI, build, deployment ...).
+Webhook is a construct used by an application to notify other applications that an event occurred. More precisely, webhook is a user-defined HTTP callback. Using a webhook is a good way to tell third-party providers to start some processing (CI, build, deployment ...).
 
 The way a webhook works is by delivering information to a receiving application through HTTP requests (typically POST requests).
 
@@ -69,7 +69,7 @@ export default {
 Most of the time, webhooks make requests to public URLs, therefore it is possible that someone may find that URL and send it wrong information.
 
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
-Another way is to define `defaultHeaders` to add to every webhook requests.
+Another way is to define `defaultHeaders` to add to every webhook request.
 
 You can configure these global headers by updating the file at `./config/server`:
 
@@ -498,3 +498,12 @@ The event is triggered when a [release](/cms/features/releases) is published.
     }
   }
 }
+```
+
+## Best practices for webhook handling
+
+- Validate incoming requests by checking headers and payload signatures.
+- Implement retries for failed webhook requests to handle transient errors.
+- Log webhook events for debugging and monitoring.
+- Use secure, HTTPS endpoints for receiving webhooks.
+- Set up rate limiting to avoid being overwhelmed by multiple webhook requests.

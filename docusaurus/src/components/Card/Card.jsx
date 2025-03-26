@@ -103,28 +103,54 @@ export function CardCta({
   text,
   color = '#000',
   withArrow,
+  asPlainContent = false,
   ...rest
 }) {
-  return (
-    <Link
-     className={className}
-     to={to}
-     style={{
-      color: color,
-      paddingTop: '50px',
-      paddingBottom: '50px',
-    }}>
+  const contentJSX = (
+    <>
       {text}
       {withArrow && (
         <span className={styles.card__title__arrow}>
           <IconArrow />
         </span>
       )}
+    </>
+  );
+
+  if (asPlainContent) {
+    return (
+      <div 
+        className={className} 
+        style={{
+          color: color,
+          paddingTop: '15px',
+          paddingBottom: '50px',
+        }}
+        {...rest}
+      >
+        {contentJSX}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      className={className}
+      to={to}
+      style={{
+        color: color,
+        paddingTop: '15px',
+        paddingBottom: '50px',
+      }}
+      {...rest}
+    >
+      {contentJSX}
     </Link>
-  )
+  );
 }
 
 export function Card({
+  asCallToAction = false,
   categoryType,
   className,
   href,
@@ -133,7 +159,7 @@ export function Card({
   variant,
   ...rest
 }) {
-  const asCallToAction = !!(href || to);
+  const isCallToAction = !!(href || to || asCallToAction);
   const CardElement = (to ? Link : (href ? 'a' : 'div'));
 
   return (
@@ -142,7 +168,7 @@ export function Card({
       {...(!to ? {} : { to })}
       className={clsx(
         styles.card,
-        (asCallToAction && styles['card--cta']),
+        (isCallToAction && styles['card--cta']),
         (isContentDelimited && styles['card--content-delimited']),
         (variant && styles[`card--${variant}`]),
         className,

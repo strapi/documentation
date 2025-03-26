@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'setup-the-frontend': '/cms/configurations/users-and-permissions-providers/new-provider-guide#frontend-setup',
       'creating-a-custom-provider': '/cms/configurations/users-and-permissions-providers/new-provider-guide',
       'auth0': '/cms/configurations/users-and-permissions-providers/auth-zero',
-      'auth-zero-config': '/cms/configurations/users-and-permissions-providers/auth-zero',
-      'auth-zero-strapi-config': '/cms/configurations/users-and-permissions-providers/auth-zero#strapi-configuration',
+      'auth0-config': '/cms/configurations/users-and-permissions-providers/auth-zero',
+      'auth0-strapi-config': '/cms/configurations/users-and-permissions-providers/auth-zero#strapi-configuration',
       'aws-cognito': '/cms/configurations/users-and-permissions-providers/aws-cognito',
       'aws-cognito-config': '/cms/configurations/users-and-permissions-providers/aws-cognito#aws-cognito-configuration',
       'aws-cognito-strapi-config': '/cms/configurations/users-and-permissions-providers/aws-cognito#strapi-configuration',
@@ -158,6 +158,17 @@ document.addEventListener('DOMContentLoaded', () => {
       'gatsby': '/cms/plugins/installing-plugins-via-marketplace',
       'custom-fields': '/cms/plugins-development/custom-fields'
     },
+    '/dev-docs/plugins/email': {
+      '_default': '/cms/features/email',
+      'sending-emails-from-a-lifecycle-hook': '/cms/features/email#lifecycle-hook',
+      'sending-emails-with-a-controller-or-service': '/cms/features/email#controller-service',
+    },
+    '/dev-docs/plugins/documentation': {
+      '_default': '/cms/plugins/documentation',
+      'restrict-the-access-to-your-api-documentation': '/cms/plugins/documentation#restrict-access',
+      'indicate-which-plugins-need-documentation-generated': '/cms/plugins/documentation#define-which-plugins',
+      'authenticated-requests': '/cms/plugins/documentation#authenticating-requests'
+    }
   }
 
   const adminPanelRedirects = {
@@ -197,7 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ...uAndpRedirects,
     ...auditLogsRedirects,
     ...pluginRedirects,
-    ...adminPanelRedirects
+    ...adminPanelRedirects,
+    ...contentManagerRedirects
   };
 
   // Get current path and hash

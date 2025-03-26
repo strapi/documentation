@@ -28,8 +28,8 @@ The Strapi CMS documentation focuses on Strapi 5 and will take you through the c
 <ThemedImage
 alt="Homepage of the Admin Panel"
 sources={{
-    light: '/img/assets/getting-started/admin-panel-homepage.png',
-    dark: '/img/assets/getting-started/admin-panel-homepage_DARK.png',
+    light: '/img/assets/getting-started/admin-panel-homepage-2.png',
+    dark: '/img/assets/getting-started/admin-panel-homepage-2_DARK.png',
   }}
 />
 

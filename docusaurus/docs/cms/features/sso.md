@@ -15,7 +15,7 @@ tags:
 The Single Sign-On (SSO) feature can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 
 :::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise plan or SSO add-on. <br/>
+<Icon name="credit-card"/> **Plan:** Enterprise plan, or SSO add-on with the Growth plan. <br/>
 <Icon name="user"/> **Role & permission:** Read & Update permissions in Roles > Settings - Single Sign-On. <br/>
 <Icon name="toggle-left"/> **Activation:** Disabled by default. <br/>
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.

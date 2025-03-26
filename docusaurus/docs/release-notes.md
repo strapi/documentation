@@ -27,6 +27,58 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.0.0-beta.5
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Fixes AI button blurry box shadow](https://github.com/strapi/documentation/pull/2426)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/HichamELBSI" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/7756284?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="HichamELBSI"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.0.0-beta.4
+
+<br/>
+
+### <Icon name="pen-nib" /> Updated content
+
+<br/>
+
+#### CMS
+- [Update Content Manager to mention editing relations on the fly](https://github.com/strapi/documentation/pull/2406)
+- [Preview: Side panel](https://github.com/strapi/documentation/pull/2400)
+
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
+
+<br/>
+
+#### Repository
+- [Improve homepage "Ask AI" button effect](https://github.com/strapi/documentation/pull/2424)
+- [Third draft of iteration #1 for new homepage](https://github.com/strapi/documentation/pull/2422)
+- [Second draft of iteration #1 for new homepage](https://github.com/strapi/documentation/pull/2420)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.0.0-beta.3
 <br />
 
@@ -37,7 +89,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 #### Strapi Cloud
 - [New Cloud plans (CMS docs)](https://github.com/strapi/documentation/pull/2396)
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 <br />
 
@@ -142,6 +194,111 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 <br/>
 
+## 5.8.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add a guide on how to create components for plugins](https://github.com/strapi/documentation/pull/2433)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### Cloud
+- [Project settings: Variables page revamp (pt. 2)](https://github.com/strapi/documentation/pull/2425)
+
+#### Repository
+- [Add use case for handling database migrations with TypeScript](https://github.com/strapi/documentation/pull/2432)
+- [Add Email plugin ratelimiting configuration options](https://github.com/strapi/documentation/pull/2377)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Cloud
+- [Add callout for downgrade/upgrade Cloud plans](https://github.com/strapi/documentation/pull/2428)
+
+#### Repository
+- [Fix broken link to Strapi client README](https://github.com/strapi/documentation/pull/2436)
+- [Fix missing location for content-type generation command in Store and Access Data (plugins dev) guide](https://github.com/strapi/documentation/pull/2434)
+- [Fix Node versions in installation snippet](https://github.com/strapi/documentation/pull/2431)
+- [Convert example in Store and Access Data guide from ES to DS](https://github.com/strapi/documentation/pull/2430)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pastelmind" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/29533079?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pastelmind"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 5.7.0
+
+<br/>
+
+### <Icon name="pen-nib" /> Updated content
+
+<br/>
+
+#### Dev Docs & User Guide
+
+- [Preview: Side panel](https://github.com/strapi/documentation/pull/2410)
+
+#### User Guide
+
+- [Update Content Manager to mention editing relations on the fly](https://github.com/strapi/documentation/pull/2407)
+
+#### Strapi Cloud
+
+- [Strapi Cloud settings: Environment Variables revamp](https://github.com/strapi/documentation/pull/2419)
+
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
+
+<br/>
+
+#### Strapi Cloud
+
+- [Use new Cloud plans screenshot](https://github.com/strapi/documentation/pull/2418)
+
+#### Repository
+
+- [Added disabled option for LiveEditor so that it does not steal focus - Closes issue #2409](https://github.com/strapi/documentation/pull/2423)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/ankit7201" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5596406?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ankit7201"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 5.6.3
 
 <br/>
@@ -156,7 +313,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 #### Strapi Cloud
 - [New Cloud plans](https://github.com/strapi/documentation/pull/2394)
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 <br/>
 
@@ -199,7 +356,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.6.1
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 - [Update admin-panel-api.md](https://github.com/strapi/documentation/pull/2383)
@@ -228,7 +385,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 - [Pregenerated API tokens](https://github.com/strapi/documentation/pull/2380)
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 
@@ -270,7 +427,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 ## 5.5.3
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 - [Fix incorrect import of unstable_useContentManagerContext in Helper-plugin migration reference](https://github.com/strapi/documentation/pull/2367)
@@ -307,7 +464,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### Dev Docs
 - [Add graphQL landingPage configuration and update Apollo playground to sandbox](https://github.com/strapi/documentation/pull/2343)
@@ -359,7 +516,7 @@ This release was made possible thanks to the following contributors. Thank you! 
 
 <br/>
 
-### <Icon name="pen-nib" /> Chore, fixes, typos, and other improvements
+### <Icon name="broom" /> Chore, fixes, typos, and other improvements
 
 #### User Guide
 - [Update User Guide intro. for stable new homepage](https://github.com/strapi/documentation/pull/2338)

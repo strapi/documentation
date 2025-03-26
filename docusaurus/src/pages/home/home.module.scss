@@ -64,6 +64,7 @@
   }
 
   &__categories {
+    margin-bottom: 28px; // spacing before footer
     .row {
       --custom-grid-spacing: var(--strapi-spacing-4);
     }

@@ -45,6 +45,8 @@ const values = provider.values().filter(value => value.foo === 42 && value.bar =
 
 ## Migration
 
+<br/>
+
 ### Manual procedure
 
 Users need to manually update their code if using the `getWhere()` method, using the following example as a guide:

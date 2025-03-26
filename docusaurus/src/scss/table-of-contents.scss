@@ -84,14 +84,14 @@ main .table-of-contents {
 }
 
 ul.table-of-contents__left-border {
-  margin-bottom: -10px;
+  margin-bottom: 0;
 }
 
 /** Responsive */
 @include medium-up {
   .table-of-contents {
     --custom-toc-items-py: var(--strapi-spacing-2);
-    margin-top: 74px;
+    margin-top: 70px;
     font-weight: 500;
 
     &::before {
@@ -105,12 +105,21 @@ ul.table-of-contents__left-border {
     &::after {
       content: 'On this page';
       position: absolute;
-      top: 68px;
+      top: 65px;
       left: 40px;
     }
 
     > li {
-      border-left: solid 2px var(--strapi-neutral-100);
+      position: relative;
+      &::before {
+        content:'';
+        position: absolute;
+        height: calc(100% + 4px);
+        width: 2px;
+        background-color: var(--strapi-neutral-100);
+        left: -2px;
+        top: -2px;
+      }
     }
   }
 }

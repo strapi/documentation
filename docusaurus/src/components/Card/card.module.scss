@@ -66,6 +66,9 @@
     --strapi-card-border-color: var(--strapi-card-hover-border-color);
     --strapi-card-title-arrow-left: var(--strapi-spacing-3);
     --strapi-card-img-bg-scale: var(--strapi-card-hover-img-bg-scale);
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 
   &-category-icon-container {
@@ -147,6 +150,7 @@
     --strapi-card-title-line-height: 28px;
     --ifm-link-decoration: none;
     --ifm-link-hover-decoration: none;
+    box-shadow: 0px 1px 4px 0px rgba(24, 24, 38, 0.10);
   }
 
   &--content-delimited {
@@ -227,6 +231,7 @@
 
     &--cta {
       border: solid 1px var(--strapi-card-border-color-dark);
+      box-shadow: 0px 1px 10px 0px rgba(3, 3, 5, 0.35);
 
       &:focus, &:hover {
         --strapi-card-border-color: #49494D;

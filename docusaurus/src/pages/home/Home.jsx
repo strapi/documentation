@@ -154,11 +154,21 @@ export default function PageHome() {
                       styles.home__categories__item,
                     )}
                   >
-                    <Card to={categoryItemCardLink} categoryType={categoryType}>
+                    <Card categoryType={categoryType} href={categoryItemCardLink} asCallToAction>
                       {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor}/>}
-                      {categoryItemCardTitle && <CardTitle >{categoryItemCardTitle}</CardTitle>}
+                      {categoryItemCardTitle && <CardTitle>{categoryItemCardTitle}</CardTitle>}
                       {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
-                      {categoryItemCardLink && <CardCta withArrow to={categoryItemCardLink} text={categoryItemCardCtaText} color={categoryItemCardIconColor} className="category-card-cta" />}
+                      {/* Use asPlainContent=true when parent Card already has asCallToAction */}
+                      {categoryItemCardLink && 
+                        <CardCta 
+                          asPlainContent={true} 
+                          withArrow={true} 
+                          to={categoryItemCardLink} 
+                          text={categoryItemCardCtaText} 
+                          color={categoryItemCardIconColor} 
+                          className="category-card-cta" 
+                        />
+                      }
                       {categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} />}
                     </Card>
                     {/* {categoryItem.links && (

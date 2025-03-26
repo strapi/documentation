@@ -43,6 +43,8 @@ The `node-fetch` module is not used anymore. `strapi.fetch` calls the native `fe
 
 ## Migration
 
+<br/>
+
 ### Notes
 
 * The parameters are mostly compatible but there are some differences.

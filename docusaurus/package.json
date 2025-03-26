@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "6.0.0-beta.3",
+  "version": "6.0.0-beta.5",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -27,7 +27,7 @@
     "clsx": "^1.2.1",
     "docusaurus-plugin-hubspot": "^1.0.1",
     "docusaurus-plugin-image-zoom": "^0.1.1",
-    "docusaurus-plugin-sass": "^0.2.3",
+    "docusaurus-plugin-sass": "^0.2.6",
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "embla-carousel-wheel-gestures": "^3.0.0",
@@ -35,7 +35,7 @@
     "qs": "^6.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.58.3"
+    "sass": ">=1.58.3 <2.0.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.5.2",
