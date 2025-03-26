@@ -27,6 +27,48 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.0.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add Design System breaking changes summary](https://github.com/strapi/documentation/pull/2435)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add custom logo doc in Admin Panel page + link in Admin Panel Customi…](https://github.com/strapi/documentation/pull/2439)
+- [Preview: Side panel (stable, CMS) ](https://github.com/strapi/documentation/pull/2411)
+
+#### Cloud
+- [Various Cloud docs updates](https://github.com/strapi/documentation/pull/2440)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Add support for dark mode to new homepage cards](https://github.com/strapi/documentation/pull/2442)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.0.0-beta.5
 
 <br />
