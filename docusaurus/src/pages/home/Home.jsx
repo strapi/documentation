@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import styles from './home.module.scss';
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import {
   Button,
   Card,
@@ -11,14 +12,10 @@ import {
   CardImg,
   CardImgBg,
   CardTitle,
-  Carousel,
-  CarouselSlide,
   Container,
-  FeaturesList,
   Hero,
   HeroDescription,
   HeroTitle,
-  LinkWithArrow,
   HomepageAIButton,
 } from '../../components';
 import Icon from '../../components/Icon';
@@ -28,11 +25,35 @@ const NAVBAR_TRANSLUCENT_UNTIL_SCROLL_Y = 36;
 
 export default function PageHome() {
   const [isNavbarTranslucent, setIsNavbarTranslucent] = useState(true);
+  const isBrowser = useIsBrowser();
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  
+  const themeColors = isDarkTheme 
+    ? content.darkMode.colors 
+    : content.lightMode.colors;
 
-  /**
-   * Scroll Listener to apply the "translucent" visual effect to navbar,
-   * behavior which happens only at Home Page.
-   */
+  useEffect(() => {
+    if (isBrowser) {
+      // Détecte le thème initial
+      setIsDarkTheme(document.documentElement.getAttribute('data-theme') === 'dark');
+      
+      // Configure un observateur pour détecter les changements de thème
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'data-theme') {
+            setIsDarkTheme(document.documentElement.getAttribute('data-theme') === 'dark');
+          }
+        });
+      });
+      
+      observer.observe(document.documentElement, { attributes: true });
+      
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, [isBrowser]);
+
   useEffect(() => {
     function scrollListener() {
       setIsNavbarTranslucent(window.scrollY <= NAVBAR_TRANSLUCENT_UNTIL_SCROLL_Y);
@@ -50,13 +71,14 @@ export default function PageHome() {
     <Layout
       title={content.page.title}
       description={content.page.description}
+      wrapperClassName={isDarkTheme ? 'dark-theme-layout' : 'light-theme-layout'}
     >
       {isNavbarTranslucent && (
         <style
           dangerouslySetInnerHTML={{
             __html: `
               .navbar {
-                --ifm-navbar-background-color: transparent;
+                --ifm-navbar-background-color: ${isDarkTheme ? 'rgba(24, 24, 38, 0.8)' : 'transparent'};
                 --ifm-navbar-shadow: none;
               }
             `
@@ -67,8 +89,13 @@ export default function PageHome() {
         dangerouslySetInnerHTML={{
           __html: `
             html[data-theme='dark'] {
-              --ifm-background-color: #181826;
-              --ifm-navbar-background-color: #181826;
+              --ifm-background-color: ${themeColors.background};
+              --ifm-navbar-background-color: ${themeColors.background};
+              --ifm-color-primary: ${themeColors.primary};
+              --ifm-heading-color: ${themeColors.text};
+              --ifm-font-color-base: ${themeColors.textSecondary};
+              --ifm-card-background-color: ${themeColors.cardBackground};
+              --ifm-card-border-color: ${themeColors.borderColor};
 
               --strapi-primary-600: #4945FF;
             }
@@ -76,11 +103,40 @@ export default function PageHome() {
             html[data-theme='dark'] .navbar .DocSearch-Button {
               background: var(--strapi-neutral-0);
             }
+            
+            html[data-theme='dark'] .heroTitle, 
+            html[data-theme='dark'] .heroDescription {
+              color: ${themeColors.text};
+            }
+            
+            html[data-theme='dark'] .category-cms {
+              border-color: var(--ifm-card-border-color);
+              background-color: var(--ifm-card-background-color);
+            }
+            
+            html[data-theme='dark'] .category-cloud {
+              border-color: var(--ifm-card-border-color);
+              background-color: var(--ifm-card-background-color);
+            }
+            
+            html[data-theme='dark'] .card-cta--dark {
+              color: var(--ifm-color-primary);
+            }
+            
+            html[data-theme='light'] {
+              --ifm-background-color: ${content.lightMode.colors.background};
+              --ifm-navbar-background-color: ${content.lightMode.colors.background};
+              --ifm-color-primary: ${content.lightMode.colors.primary};
+              --ifm-heading-color: ${content.lightMode.colors.text};
+              --ifm-font-color-base: ${content.lightMode.colors.textSecondary};
+              --ifm-card-background-color: ${content.lightMode.colors.cardBackground};
+              --ifm-card-border-color: ${content.lightMode.colors.borderColor};
+            }
           `,
         }}
       />
-      <main className={clsx(styles.home)}>
-        <Hero id="homeHero">
+      <main className={clsx(styles.home, isDarkTheme ? styles.homeDark : '')}>
+        <Hero id="homeHero" className={isDarkTheme ? styles.heroDark : ''}>
           <Container>
             <HeroTitle className="heroTitle">
               {content.page.title}
@@ -90,44 +146,7 @@ export default function PageHome() {
             </HeroDescription>
           </Container>
         </Hero>
-        <HomepageAIButton />
-        {/* <section
-          id="homeCarousel"
-          className={styles.home__carousel}
-        >
-          <Container>
-            <Carousel>
-              {content.carousel.map(({
-                backgroundImgSrc: carouselCardBackgroundImgSrc,
-                title: carouselCardTitle,
-                description: carouselCardDescription,
-                button: carouselCardButtonProps,
-                ...carouselCardRest
-              }, carouselItemIndex) => (
-                <CarouselSlide key={`pageHomeCarouselItem${carouselItemIndex}`}>
-                  <Card isContentDelimited {...carouselCardRest}>
-                    {carouselCardBackgroundImgSrc && (
-                      <CardImgBg src={carouselCardBackgroundImgSrc} />
-                    )}
-                    {carouselCardTitle && (
-                      <CardTitle as="h2">{carouselCardTitle}</CardTitle>
-                    )}
-                    {carouselCardDescription && (
-                      <CardDescription>{carouselCardDescription}</CardDescription>
-                    )}
-                    {carouselCardButtonProps && (
-                      <div className={styles.home__carousel__cta}>
-                        <Button size="huge" {...carouselCardButtonProps}>
-                          {carouselCardButtonProps.children || carouselCardButtonProps.label}
-                        </Button>
-                      </div>
-                    )}
-                  </Card>
-                </CarouselSlide>
-              ))}
-            </Carousel>
-          </Container>
-        </section> */}
+        <HomepageAIButton className={isDarkTheme ? styles.aiButtonDark : ''} />
         <section
           id="homeCategories"
           className={styles.home__categories}
@@ -154,11 +173,15 @@ export default function PageHome() {
                       styles.home__categories__item,
                     )}
                   >
-                    <Card categoryType={categoryType} href={categoryItemCardLink} asCallToAction>
-                      {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor}/>}
+                    <Card 
+                      categoryType={categoryType} 
+                      href={categoryItemCardLink} 
+                      asCallToAction
+                      isDarkTheme={isDarkTheme}
+                    >
+                      {categoryItemCardIconName && <CardIcon name={categoryItemCardIconName} color={categoryItemCardIconColor} isDarkTheme={isDarkTheme} />}
                       {categoryItemCardTitle && <CardTitle>{categoryItemCardTitle}</CardTitle>}
                       {categoryItemCardDescription && <CardDescription>{categoryItemCardDescription}</CardDescription>}
-                      {/* Use asPlainContent=true when parent Card already has asCallToAction */}
                       {categoryItemCardLink && 
                         <CardCta 
                           asPlainContent={true} 
@@ -166,38 +189,20 @@ export default function PageHome() {
                           to={categoryItemCardLink} 
                           text={categoryItemCardCtaText} 
                           color={categoryItemCardIconColor} 
-                          className="category-card-cta" 
+                          className="category-card-cta"
+                          isDarkTheme={isDarkTheme}
                         />
                       }
-                      {categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} />}
+                      {isDarkTheme && categoryItem.cardImgSrcDark 
+                        ? <CardImg src={categoryItem.cardImgSrcDark} isDarkTheme={isDarkTheme} /> 
+                        : categoryItemCardImgSrc && <CardImg src={categoryItemCardImgSrc} isDarkTheme={isDarkTheme} />}
                     </Card>
-                    {/* {categoryItem.links && (
-                      <FeaturesList
-                        icon={categoryItem.linksIconSrc}
-                        iconColor={categoryItem.linksIconColor}
-                        items={categoryItem.links}
-                      />
-                    )} */}
                   </div>
                 );
               })}
             </div>
           </Container>
         </section>
-        {/* <section
-          id="homeHelpUsImproveTheDocumentation"
-          className={styles.home__huitd}
-        >
-          <Container>
-            <LinkWithArrow
-              apart
-              className={styles.home__huitd__link}
-              {...content.huitd}
-            >
-              {content.huitd.label}
-            </LinkWithArrow>
-          </Container>
-        </section> */}
       </main>
     </Layout>
   );
