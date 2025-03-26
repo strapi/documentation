@@ -36,6 +36,11 @@
       "permanent": true
     },
     {
+      "source": "/user-docs/intro",
+      "destination": "/cms/intro",
+      "permanent": true
+    },
+    {
       "source": "/user-docs/content-manager/adding-content-to-releases",
       "destination": "/cms/features/releases#including-content-in-a-release",
       "permanent": true
