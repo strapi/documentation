@@ -291,12 +291,35 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 
 | Option              | Type                                                      | Description          | Default value                                              |
 |---------------------|-----------------------------------------------------------|----------------------|------------------------------------------------------------|
-| `origin`            | Configure the `Access-Control-Allow-Origin` header        | `String` or `Array`  | `'*'`                                                      |
+| `origin`            | Configure the `Access-Control-Allow-Origin` header        | `String` or `Array` or `Function`  | `'*'`                                                      |
 | `maxAge`            | Configure the `Access-Control-Max-Age` header, in seconds | `String` or `Number` | `31536000`                                                 |
 | `credentials`       | Configure the `Access-Control-Allow-Credentials` header   | `Boolean`            | `true`                                                     |
 | `methods`           | Configure the `Access-Control-Allow-Methods` header       | `Array` or `String`  | `['GET', 'POST', 'PUT', 'DELETE', 'HEAD', 'OPTIONS']`      |
 | `headers`           | Configure the `Access-Control-Allow-Headers` header       | `Array` or `String`  | Request headers passed in `Access-Control-Request-Headers` |
 | `keepHeaderOnError` | Add set headers to `err.header` if an error is thrown     | `Boolean`            | `false`                                                    |
+
+`origin` can take a Function as parameter following this signature 
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: (ctx): string | string[] => {
+        const origin = ctx.request.header.origin;
+        if (origin === 'http://localhost:3000') {
+          return origin; // The returns will be part of the Access-Control-Allow-Origin header
+        }
+        
+        return ''; // Fail cors check
+      }
+    },
+  },
+  // ...
+]
+```
 
 <details>
 <summary> Example: Custom configuration for the cors middleware</summary>
