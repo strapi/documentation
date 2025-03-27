@@ -298,28 +298,6 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 | `headers`           | Configure the `Access-Control-Allow-Headers` header       | `Array` or `String`  | Request headers passed in `Access-Control-Request-Headers` |
 | `keepHeaderOnError` | Add set headers to `err.header` if an error is thrown     | `Boolean`            | `false`                                                    |
 
-`origin` can take a Function as parameter following this signature 
-
-```ts title="./config/middlewares.ts"
-
-export default [
-  // ...
-  {
-    name: 'strapi::cors',
-    config: {
-      origin: (ctx): string | string[] => {
-        const origin = ctx.request.header.origin;
-        if (origin === 'http://localhost:3000') {
-          return origin; // The returns will be part of the Access-Control-Allow-Origin header
-        }
-        
-        return ''; // Fail cors check
-      }
-    },
-  },
-  // ...
-]
-```
 
 <details>
 <summary> Example: Custom configuration for the cors middleware</summary>
@@ -371,6 +349,34 @@ export default [
 </Tabs>
 
 
+
+</details>
+
+<details>
+<summary> Example: Custom configuration for the cors middleware within a function as parameter</summary>
+
+`origin` can take a Function as parameter following this signature 
+
+```ts title="./config/middlewares.ts"
+
+export default [
+  // ...
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: (ctx): string | string[] => {
+        const origin = ctx.request.header.origin;
+        if (origin === 'http://localhost:3000') {
+          return origin; // The returns will be part of the Access-Control-Allow-Origin header
+        }
+        
+        return ''; // Fail cors check
+      }
+    },
+  },
+  // ...
+]
+```
 
 </details>
 
