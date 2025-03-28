@@ -7,7 +7,7 @@ export default function HomepageAIButton() {
     <div className={styles['homepage-ai-button-container']}>
       <button className={`${styles['homepage-ai-button']} kapa-widget-button`}>
         <Icon name="sparkle" />
-        <p>Ask anything to AI</p>
+        <p>Ask AI anything</p>
       </button>
     </div>
   );

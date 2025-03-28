@@ -3,7 +3,7 @@ import React from 'react';
 export default {
   page: {
     title: 'Strapi 5 Docs',
-    description: 'Get set up in minutes to build any projects in hours instead of weeks.',
+    description: 'Get set up in minutes to build any project in hours instead of weeks.',
   },
   carousel: [
     {
