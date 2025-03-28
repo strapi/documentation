@@ -55,7 +55,7 @@ There are many more configuration and customization options available. See the f
 
 <CustomDocCardsWrapper>
   <CustomDocCard icon="panorama" title="Code-based configuration" description="Configure the appearance, security, and features of the Strapi admin panel via the /config/admin file." link="/cms/configurations/admin-panel" />
-  <CustomDocCard emoji="💻" title="Customization" description="Match your branding, replace the WYSIWYG editor, configure the bundler, extend features, and more." link="/cms/admin-panel-customization" />
+  <CustomDocCard icon="wrench" title="Customization" description="Match your branding, replace the WYSIWYG editor, configure the bundler, extend features, and more." link="/cms/admin-panel-customization" />
 </CustomDocCardsWrapper>
 
 ### Modifying profile information (name, email, username)
