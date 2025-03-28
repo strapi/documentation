@@ -32,6 +32,7 @@ Additional official Strapi documentation websites cover different content:
 - Documentation for contributors, which include more in-depth and experimental content for developers who actively maintain and contribute to Strapi, is hosted at [contributor.strapi.io](https://contributor.strapi.io). This experimental documentation is maintained by Strapi engineers and any issue should be reported to the [`strapi/strapi`](https://github.com/strapi/strapi/issues/new/choose) repository.
 - Documentation for the Strapi Design System is hosted at [design-system.strapi.io](https://design-system.strapi.io/) and maintained by Strapi front-end engineers in its [dedicated repository](https://github.com/strapi/design-system/).
 
+
 ## Contribution requirements
 
 The following are required if you are submitting pull requests to the documentation:
