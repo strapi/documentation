@@ -2,7 +2,6 @@
 title: Testing
 displayed_sidebar: cmsSidebar
 description: Learn how to test your Strapi application.
-unlisted: true
 tags:
 - auth endpoint controller
 - environment
