@@ -191,7 +191,6 @@ const config = {
          appId: '392RJ63O14',
          apiKey: '2470d74a1f395f5017994e7b17a77bf8',
          indexName: 'crawler_strapi_cmsDocs',
-         insights: true,
       },
       navbar: {
         hideOnScroll: false,
