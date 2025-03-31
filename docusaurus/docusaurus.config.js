@@ -89,10 +89,10 @@ const config = {
       'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
-      'data-modal-override-open-class-search': 'DocSearch-Button',
-      'data-modal-title-search': 'Search Strapi Docs',
+      // 'data-modal-override-open-class-search': 'DocSearch-Button',
+      // 'data-modal-title-search': 'Search Strapi Docs',
       'data-modal-open-on-command-k': 'true',
-      'data-search-mode-enabled': true,
+      // 'data-search-mode-enabled': true,
       'data-modal-override-open-class': "kapa-widget-button",
       'data-modal-title-ask-ai': 'Ask your question',
       'data-modal-border-radius': '4px',
@@ -187,12 +187,12 @@ const config = {
           hideable: true,
         },
       },
-      // algolia: {
-      //    appId: '392RJ63O14',
-      //    apiKey: 'ed62374a794e8da5accb298e13618614',
-      //    indexName: 'crawler_strapi_cmsDocs',
-      //    insights: true,
-      // },
+      algolia: {
+         appId: '392RJ63O14',
+         apiKey: 'ed62374a794e8da5accb298e13618614',
+         indexName: 'cmsDocs',
+         insights: true,
+      },
       navbar: {
         hideOnScroll: false,
         logo: {
