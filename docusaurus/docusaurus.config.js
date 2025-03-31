@@ -189,7 +189,7 @@ const config = {
       },
       algolia: {
          appId: '392RJ63O14',
-         apiKey: '2470d74a1f395f5017994e7b17a77bf8',
+         apiKey: 'ed62374a794e8da5accb298e13618614',
          indexName: 'strapi_newCmsCrawler_march2025',
       },
       navbar: {
