@@ -107,7 +107,7 @@ An example of [URL generation logic](#2-add-url-generation) in given in the foll
 
 The strategy for the front end application to query draft or published content is framework-specific. At least 3 strategies exist:
 
-- using a query parameter, having something like `/your-path?preview=true` (this is, for instance, how <ExternalLink to="https://nuxt.com/docs/api/composables/use-preview-modehow" text="Nuxt"/> works)
+- using a query parameter, having something like `/your-path?preview=true` (this is, for instance, how <ExternalLink to="https://nuxt.com/docs/api/composables/use-preview-mode" text="Nuxt"/> works)
 - redirecting to a dedicated preview route like `/preview?path=your-path`(this is, for instance, how <ExternalLink to="https://nextjs.org/docs/app/building-your-application/configuring/draft-mode" text="Next's draft mode"/> works)
 - or using a different domain for previews like `preview.mysite.com/your-path`.
 
