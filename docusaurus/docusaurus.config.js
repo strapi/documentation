@@ -191,9 +191,9 @@ const config = {
          appId: '392RJ63O14',
          apiKey: '2470d74a1f395f5017994e7b17a77bf8',
          indexName: 'strapi_newCmsCrawler_march2025',
-         searchParameters: {
-          facetFilters: []
-         },
+        //  searchParameters: {
+        //   facetFilters: []
+        //  },
       },
       navbar: {
         hideOnScroll: false,
