@@ -30,7 +30,8 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 ## 6.0.1
 
 <br />
-### <Icon name='pen-nib' /> Updated content
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
 <br />
 
