@@ -188,7 +188,7 @@ If you are using the free trial, the *Plan* tab shows a countdown of how many da
 :::info
 Strapi recently launched [new Cloud plans](https://strapi.io/pricing-cloud). For now, you can [downgrade](#downgrading-to-another-plan) or [upgrade](#upgrading-to-another-plan) to another plan directly from the Cloud dashboard, under the <Icon name="gear-six"/> **Settings** > <Icon name="map-trifold" /> **Plans** section.
 
-Also, be aware that if you created a project before the release of these new plans, then your plan might be a *legacy* one - which means your plan is deprecated but is still supported by Strapi Cloud. You will have the possibility to **sidegrade** if you want to change your plan to the new equivalent one (see [downgrade section](#downgrading-to-another-plan)).
+If your project was created before the new plans were released, it may be on a *legacy* plan—deprecated but still supported. You can sidegrade to a new plan if desired (see [downgrade section](https://github.com/strapi/documentation/pull/2451/files#downgrading-to-another-plan)).
 :::
 
 <ThemedImage
