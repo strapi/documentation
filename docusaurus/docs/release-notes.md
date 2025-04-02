@@ -36,12 +36,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 #### CMS
 - [Improve cors documentation](https://github.com/strapi/documentation/pull/2444)
-
-### <Icon name='broom' /> Chore, fixes, typos, and other improvements
-
-<br />
-
-#### CMS
 - [fix broken link in preview.md](https://github.com/strapi/documentation/pull/2450)
 - [Update step-by-step.md for Strapi 5 migration](https://github.com/strapi/documentation/pull/2449)
 - [Add cross links for admin panel configuration and customization](https://github.com/strapi/documentation/pull/2447)
