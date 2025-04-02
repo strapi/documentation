@@ -27,6 +27,51 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.0.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Improve cors documentation](https://github.com/strapi/documentation/pull/2444)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [fix broken link in preview.md](https://github.com/strapi/documentation/pull/2450)
+- [Update step-by-step.md for Strapi 5 migration](https://github.com/strapi/documentation/pull/2449)
+- [Add cross links for admin panel configuration and customization](https://github.com/strapi/documentation/pull/2447)
+- [Unhide Testing page](https://github.com/strapi/documentation/pull/2446)
+
+#### Cloud
+- [Adding a small note about Cloud sidegrade and display new ui](https://github.com/strapi/documentation/pull/2451)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/HonzaTuron" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/20155254?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="HonzaTuron"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/oktapodia" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2752200?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="oktapodia"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/ztxone" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/39146381?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ztxone"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.0.0
 
 <br />
