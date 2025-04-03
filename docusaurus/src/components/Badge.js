@@ -127,7 +127,7 @@ export function SsoBadge(props) {
       variant="SSO"
       link="https://strapi.io/pricing-self-hosted"
       icon="plus"
-      iconClasses="ph ph-plus"
+      iconClasses="ph ph-plus ph-bold"
       tooltip="This feature is available with the SSO add-on."
       {...props}
     />
