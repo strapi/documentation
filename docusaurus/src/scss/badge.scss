@@ -167,15 +167,17 @@
   }
 
   &--sso {
-    --custom-badge-background-color: black;
+    --custom-badge-background-color: #33324D;
     --custom-badge-color: var(--strapi-neutral-0);
-    --custom-badge-border-color: var(--strapi-black);
+    --custom-badge-border-color: #33324D;
     --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
 
     a {
       color: inherit;
     }
   }
+
+
 
   &--growth a,
   &--enterprise a {
@@ -555,7 +557,11 @@ h2 .badge {
       --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
     }
     &--sso {
-      --custom-badge-color: white;
+      --custom-badge-color: #242432;
+      --custom-badge-background-color: #DCDCE3;
+      --custom-badge-border-color: #32324D;
+      --custom-badge-tooltip-color: #DCDCE3;
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
     }
     &--alpha,
     &--beta,
