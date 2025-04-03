@@ -167,9 +167,9 @@
   }
 
   &--sso {
-    --custom-badge-background-color: var(--strapi-purple);
+    --custom-badge-background-color: black;
     --custom-badge-color: var(--strapi-neutral-0);
-    --custom-badge-border-color: var(--strapi-purple);
+    --custom-badge-border-color: var(--strapi-black);
     --custom-badge-tooltip-background-color: var(--custom-badge-background-color);
 
     a {
