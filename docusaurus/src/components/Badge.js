@@ -9,6 +9,7 @@ export default function Badge({
   noLink = false,
   variant = '',
   icon,
+  iconClasses,
   feature,
   version,
   tooltip,
@@ -32,7 +33,13 @@ export default function Badge({
         <>
           {(variant === "Updated" || variant === "New") ? (
             <>
-              <span><Icon name={icon}/><span className="badge__text">{variant}</span></span>
+              <span>
+                <Icon
+                  name={icon}
+                  {...(iconClasses ? { classes: iconClasses } : {})}
+                />
+                <span className="badge__text">{variant}</span>
+              </span>
               <span className="badge__tooltip">{tooltip}</span>
             </>
           ) : (
@@ -45,7 +52,13 @@ export default function Badge({
         </>
       ) : (
         <a className="badge__link" href={link}>
-          {icon && <Icon name={icon} />}{variant}
+          {icon && (
+            <Icon 
+              name={icon} 
+              {...(iconClasses ? { classes: iconClasses } : {})}
+            />
+          )}
+          {variant}
           <span className="badge__tooltip">{tooltip}</span>
         </a>
       )}
@@ -113,7 +126,8 @@ export function SsoBadge(props) {
     <Badge
       variant="SSO"
       link="https://strapi.io/pricing-self-hosted"
-      icon="feather"
+      icon="plus"
+      iconClasses="ph ph-plus ph-bold"
       tooltip="This feature is available with the SSO add-on."
       {...props}
     />
