@@ -177,7 +177,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "You are viewing an all-new version of Strapi Docs 🧑🏽‍🔬 Feel free to <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/D1SXb8kYBVR7qijp6'>give your feedback!</a>",
+          "🚀 StrapiConf 2025 – May 13 | Big product updates, expert talks & more! <a target='_blank' rel='noopener noreferrer' href='https://conf.strapi.io/'>Save your spot →</a>",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
