@@ -91,7 +91,7 @@ const config = {
       'data-button-bg-color': '#32324D',
       // 'data-modal-override-open-class-search': 'DocSearch-Button',
       // 'data-modal-title-search': 'Search Strapi Docs',
-      'data-modal-open-on-command-k': 'true',
+      // 'data-modal-open-on-command-k': 'true',
       // 'data-search-mode-enabled': true,
       'data-modal-override-open-class': "kapa-widget-button",
       'data-modal-title-ask-ai': 'Ask your question',
