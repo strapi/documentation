@@ -6,7 +6,7 @@
   --custom-code-block-background-color-highlighted: var(--strapi-neutral-500);
   --custom-code-block-color: var(--strapi-neutral-800);
   --custom-code-block-comment-color: var(--strapi-neutral-500);
-  --custom-code-block-key-color: var(--strapi-success-300);
+  --custom-code-block-key-color: var(--strapi-success-600);
   --custom-code-block-keyword-color: var(--strapi-success-700);
   --custom-code-block-number-color: var(--strapi-success-600);
   --custom-code-block-punctuation-color: var(--strapi-neutral-800);
@@ -313,6 +313,7 @@ pre.prism-code {
   --custom-code-block-punctuation-color: var(--strapi-primary-200);
   --custom-code-block-value-color: var(--strapi-neutral-900);
   --custom-code-block-keyword-color: var(--strapi-code-purple);
+  --custom-code-block-key-color: var(--strapi-success-300);
   --custom-code-block-number-color: var(--strapi-code-green);
   --custom-code-block-property-color: var(--strapi-code-light-green);
   --custom-code-block-literal-property-color: var(--strapi-code-light-green);
