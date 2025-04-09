@@ -21,15 +21,15 @@ API tokens allow users to authenticate REST and GraphQL API queries (see [APIs i
   </IdentityCardItem>
   
   <IdentityCardItem icon="user" title="Role and permission">
-    Minimum "Access the API tokens settings page" in Roles > Settings - API tokens.
+    Minimum "Access the API tokens settings page" in Roles > Settings - API tokens
   </IdentityCardItem>
   
   <IdentityCardItem icon="toggle-right" title="Activation">
-    Available by default.
+    Available by default
   </IdentityCardItem>
   
   <IdentityCardItem icon="desktop" title="Environment">
-    Available in both Development & Production environment.
+    Available in both Development & Production environment
   </IdentityCardItem>
 </IdentityCard>
 

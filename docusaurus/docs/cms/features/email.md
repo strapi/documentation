@@ -16,10 +16,10 @@ tags:
 The Email feature enables Strapi applications to send emails from a server or an external provider.
 
 <IdentityCard>
-  <IdentityCardItem icon="credit-card" title="Plan">Free feature. </IdentityCardItem>
-  <IdentityCardItem icon="user" title="Role & permission">Email > "send" permission for the user to send emails via the backend server. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-right" title="Activation">Available by default. </IdentityCardItem>
-  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Email > "send" permission for the user to send emails via the backend server</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
 ## Configuration

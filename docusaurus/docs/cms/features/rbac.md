@@ -16,10 +16,10 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 The Role-Based Access Control (RBAC) feature allows the management of the administrators, who are the users of the admin panel. More specifically, RBAC manages the administrators' accounts and roles.
 
 <IdentityCard>
-  <IdentityCardItem icon="credit-card" title="Plan">Free feature. </IdentityCardItem>
-  <IdentityCardItem icon="user" title="Role & permission">CRUD permissions in Roles > Settings - Users & Roles. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-right" title="Activation">Available and activated by default. </IdentityCardItem>
-  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.  </IdentityCardItem>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">CRUD permissions in Roles > Settings - Users & Roles</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available and activated by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

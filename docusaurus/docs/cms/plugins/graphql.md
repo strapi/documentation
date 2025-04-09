@@ -22,7 +22,7 @@ tags:
 By default Strapi create [REST endpoints](/cms/api/rest#endpoints) for each of your content-types. The GraphQL plugin adds a GraphQL endpoint to fetch and mutate your content. With the GraphQL plugin installed, you can use the Apollo Server-based GraphQL Sandbox to interactively build your queries and mutations and read documentation tailored to your content types.
 
 <IdentityCard isPlugin>
-  <IdentityCardItem icon="navigation-arrow" title="Location">Usable via the admin panel. Configured through both admin panel and server code, with different sets of options</IdentityCardItem>
+  <IdentityCardItem icon="navigation-arrow" title="Location">Usable via the admin panel.<br/>Configured through both admin panel and server code, with different sets of options.</IdentityCardItem>
   <IdentityCardItem icon="package" title="Package name">`@strapi/plugin-graphql`  </IdentityCardItem>
   <IdentityCardItem icon="plus-square" title="Additional resources"><ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-graphql" text="Strapi Marketplace page"/> </IdentityCardItem>
 </IdentityCard>

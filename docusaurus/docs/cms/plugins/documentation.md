@@ -20,7 +20,7 @@ The Documentation plugin automates your API documentation creation. It basically
 
 <IdentityCard isPlugin>
   <IdentityCardItem icon="navigation-arrow" title="Location">
-    Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.
+    Usable via the admin panel.<br/>Configured through both admin panel and server code, with different sets of options.
   </IdentityCardItem>
   <IdentityCardItem icon="package" title="Package name">
     `@strapi/plugin-documentation`
