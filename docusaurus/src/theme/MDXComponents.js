@@ -34,6 +34,7 @@ import Guideflow from '../components/Guideflow';
 import { ExternalLink } from '../components/ExternalLink';
 import BreakingChangeIdCard from '../components/BreakingChangeIdCard';
 import MermaidWithFallback from '../components/MermaidWithFallback.js';
+import IdentityCard, { IdentityCardItem } from '../components/IdentityCard';
 
 export default {
   // Re-use the default mapping
@@ -83,6 +84,8 @@ export default {
   Icon,
   ExternalLink,
   BreakingChangeIdCard,
+  IdentityCard,
+  IdentityCardItem,
   /**
    * Reusable annotation components go below👇
    */

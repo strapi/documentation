@@ -13,12 +13,12 @@ tags:
 
 The Users & Permissions feature allows the management of the end-users <Annotation>💡 **What are end users?** <br/> End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.</Annotation> of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature. <br/>
-<Icon name="user"/> **Role & permission:** CRUD permissions in Roles > Plugins - Users & Permissions. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">CRUD permissions in Roles > Plugins - Users & Permissions</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
+</IdentityCard>
 
 ## Admin panel configuration
 

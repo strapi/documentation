@@ -15,12 +15,12 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 The <Icon name="images" /> Media Library is the Strapi feature that displays all assets uploaded in the Strapi application and allows users to manage them.
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature. <br/>
-<Icon name="user"/> **Role & permission:** Minimum "Access the Media Library" permission in Roles > Plugins - Upload. <br/>
-<Icon name="toggle-left"/> **Activation:** Available and activated by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Minimum "Access the Media Library" permission in Roles > Plugins - Upload</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available and activated by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
+</IdentityCard>
 
 <ThemedImage
   alt="Media Library overview, annotated"

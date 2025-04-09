@@ -13,12 +13,12 @@ tags:
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature.<br/>
-<Icon name="user"/> **Role & permission:** Read permissions in Roles > Plugins - Users & Permissions. <br/>
-<Icon name="toggle-left"/> **Activation:** Should be configured in the `config/admin` file. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature.<br/>Side panel available only with CMS Growth and Enterprise plans.</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Read permissions in Roles > Plugins - Users & Permissions</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Should be configured in the `config/admin` file</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
+</IdentityCard>
 
 <!-- TODO: add a dark mode screenshot -->
 <ThemedImage

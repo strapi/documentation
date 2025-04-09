@@ -14,12 +14,12 @@ tags:
 
 The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** CMS Enterprise Plan. <br/>
-<Icon name="user"/> **Role & permission:** Super Admin role in project's admin panel. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise Plan</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Super Admin role in project's admin panel</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default, if required plan</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
+</IdentityCard>
 
 <ThemedImage
   alt="Review Stage column"

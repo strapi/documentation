@@ -16,12 +16,12 @@ tags:
 
 The Draft & Publish feature allows to manage drafts for your content.
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature. <br/>
-<Icon name="user"/> **Role & permission:** None. <br/>
-<Icon name="toggle-left"/> **Activation:** Available but disabled by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">None</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available but disabled by default</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
+</IdentityCard>
 
 <ThemedImage
   alt="Editing draft version"

@@ -1,0 +1,201 @@
+/** Component: Identity Card */
+@use '../../scss/_mixins.scss' as *;
+
+.identity-card {
+  --identity-card-header-font-size: 11px;
+  --identity-card-header-line-height: 16px;
+  --identity-card-header-font-weight: 600;
+  --identity-card-content-font-size: 14px;
+  --identity-card-content-line-height: 20px;
+  --identity-card-content-font-weight: 400;
+  --identity-card-code-font-size: 13px;
+  border: 1px solid var(--strapi-neutral-150);
+  border-radius: 4px;
+  background-color: var(--strapi-neutral-0);
+  overflow: hidden;
+  margin-bottom: 40px;
+
+  &__header {
+    background-color: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-600);
+    text-transform: uppercase;
+    font-size: var(--identity-card-header-font-size) !important;
+    line-height: var(--identity-card-header-line-height);
+    font-weight: var(--identity-card-header-font-weight);
+    padding: 8px 10px 6px;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid var(--strapi-neutral-150);
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  &__item {
+    padding: 18px;
+    border-bottom: 1px solid var(--strapi-neutral-150);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    &-icon {
+      margin-right: 8px;
+      color: var(--strapi-neutral-500);
+
+      i::before {
+        position: relative;
+        top: -3px;
+        font-size: 12px;
+      }
+    }
+
+    &-title {
+      color: var(--strapi-neutral-600);
+      font-size: var(--identity-card-header-font-size);
+      font-weight: var(--identity-card-header-font-weight);
+      line-height: var(--identity-card-header-line-height);
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+
+    &-content,
+    &-content p {
+      color: var(--strapi-neutral-800);
+      font-size: 14px; 
+      line-height: 20px;
+
+      code {
+        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-700);
+        border-color: var(--strapi-neutral-200);
+        font-size: var(--identity-card-code-font-size);
+      }
+    }
+
+    &-content a {
+      font-size: 14px !important;
+    }
+
+    &-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--strapi-primary-600);
+      font-weight: 600;
+      font-size: 13px;
+      margin-top: 8px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      i {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  // 2x2 grid layout
+  &:not(&--plugin) {
+    .identity-card__content {
+      @include medium-up {
+        grid-template-columns: 1fr 1fr;
+        
+        .identity-card__item {
+          border-right: 1px solid var(--strapi-neutral-150);
+          
+          &:nth-child(2n) {
+            border-right: none;
+          }
+          
+          &:nth-last-child(1),
+          &:nth-last-child(2):nth-child(odd) {
+            border-bottom: none;
+          }
+          
+          // If number of elements is odd, last one takes full width
+          &:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include dark {
+  .identity-card {
+    background-color: #212134;
+    border-color: #4a4a6a;
+
+    &__header {
+      background-color: var(--strapi-neutral-150);
+      color: var(--strapi-neutral-400);
+      border-color: #4a4a6a;
+    }
+
+    &__item {
+      border-color: #4a4a6a;
+
+      &-title {
+        color: var(--strapi-neutral-400);
+      }
+
+      &-content * {
+        color: #DCDCE4;
+      }
+
+      &-icon {
+        color: #a5a5ba;
+      }
+
+      &-link {
+        color: var(--strapi-primary-500);
+      }
+    }
+
+    // For dark mode layout
+    &:not(&--plugin) {
+      .identity-card__content {
+        @include medium-up {
+          .identity-card__item {
+            border-right-color: #4a4a6a;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Specific adjustements for links in ADDITIONAL RESOURCES
+.identity-card__item:has(a) .identity-card__item-content a {
+  color: var(--strapi-primary-600);
+  font-weight: 500;
+  font-size: 13px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 12px;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+  
+  i {
+    margin-left: 4px;
+  }
+}
+
+@include dark {
+  .identity-card__item:has(a) .identity-card__item-content a {
+    color: var(--strapi-primary-500);
+  }
+}
