@@ -22,6 +22,24 @@ API tokens allow users to authenticate REST and GraphQL API queries (see [APIs i
 <Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
 :::
 
+<IdentityCard>
+  <IdentityCardItem icon="layout" title="PLAN">
+    Free feature
+  </IdentityCardItem>
+  
+  <IdentityCardItem icon="user-gear" title="ROLE AND PERMISSION">
+    Minimum "Access the API tokens settings page" in Roles > Settings - API tokens.
+  </IdentityCardItem>
+  
+  <IdentityCardItem icon="power" title="ACTIVATION">
+    Available by default.
+  </IdentityCardItem>
+  
+  <IdentityCardItem icon="cloud" title="ENVIRONMENT">
+    Available in both Development & Production environment.
+  </IdentityCardItem>
+</IdentityCard>
+
 <ThemedImage
   alt="API tokens"
   sources={{

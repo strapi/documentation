@@ -24,6 +24,18 @@ The Documentation plugin automates your API documentation creation. It basically
 <Icon name="plus-square"/> **Additional resources:** <ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-documentation" text="Strapi Marketplace page"/> <br/>
 :::
 
+<IdentityCard isPlugin>
+  <IdentityCardItem icon="navigation-arrow" title="Location">
+    Usable via the admin panel. Configured through both admin panel and server code, with different sets of options.
+  </IdentityCardItem>
+    <IdentityCardItem icon="package" title="Package name">
+    `@strapi/plugin-documentation`
+  </IdentityCardItem>
+    <IdentityCardItem icon="plus-square" title="Additional resources">
+    <ExternalLink to="https://market.strapi.io/plugins/@strapi-plugin-documentation" text="Strapi Marketplace page" />
+  </IdentityCardItem>
+</IdentityCard>
+
 <Guideflow lightId="5pvjz4zswp" darkId="6kw4vdwizp"/>
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the <ExternalLink to="https://swagger.io/specification/" text="OpenAPI specification"/>. The Documentation plugin generates the <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object" text="paths objects"/> and <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object" text="schema objects"/> and converts all Strapi types to <ExternalLink to="https://swagger.io/docs/specification/data-models/data-types/" text="OpenAPI data types"/>.
