@@ -15,27 +15,20 @@ tags:
 
 API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)).
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Free feature. <br/>
-<Icon name="user"/> **Role & permission:** Minimum "Access the API tokens settings page" in Roles > Settings - API tokens. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
-
 <IdentityCard>
-  <IdentityCardItem icon="layout" title="PLAN">
+  <IdentityCardItem icon="layout" title="Plan">
     Free feature
   </IdentityCardItem>
   
-  <IdentityCardItem icon="user-gear" title="ROLE AND PERMISSION">
+  <IdentityCardItem icon="user-gear" title="Role and permission">
     Minimum "Access the API tokens settings page" in Roles > Settings - API tokens.
   </IdentityCardItem>
   
-  <IdentityCardItem icon="power" title="ACTIVATION">
+  <IdentityCardItem icon="toggle-right" title="Activation">
     Available by default.
   </IdentityCardItem>
   
-  <IdentityCardItem icon="cloud" title="ENVIRONMENT">
+  <IdentityCardItem icon="desktop" title="Environment">
     Available in both Development & Production environment.
   </IdentityCardItem>
 </IdentityCard>

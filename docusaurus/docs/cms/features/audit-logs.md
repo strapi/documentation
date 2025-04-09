@@ -17,12 +17,12 @@ tags:
 
 The Audit Logs feature provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Enterprise plan. <br/>
-<Icon name="user"/> **Role & permission:** Super Admin role in the project's admin panel. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Enterprise plan.</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">Super Admin role in the project's admin panel.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-left" title="Activation">Available by default, if required plan.</IdentityCardItem>
+  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+</IdentityCard>
 
 <ThemedImage
   alt="Audit Logs panel"

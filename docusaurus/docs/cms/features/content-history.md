@@ -14,12 +14,12 @@ tags:
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
 
-:::prerequisites Identity Card of the Feature
-<Icon name="credit-card"/> **Plan:** Growth or Enterprise plan<br/>
-<Icon name="user"/> **Role & permission:** None. <br/>
-<Icon name="toggle-left"/> **Activation:** Available by default, if required plan. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="credit-card" title="Plan">Growth or Enterprise plan</IdentityCardItem>
+  <IdentityCardItem icon="user" title="Role & permission">None.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-left" title="Activation">Available by default, if required plan.</IdentityCardItem>
+  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+</IdentityCard>
 
 <ThemedImage
 alt="Accessing the Content History of a document"
