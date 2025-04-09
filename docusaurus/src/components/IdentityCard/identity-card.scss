@@ -1,0 +1,178 @@
+/** Component: Identity Card */
+@use '../../scss/_mixins.scss' as *;
+
+.identity-card {
+  border: 1px solid var(--strapi-neutral-150);
+  border-radius: 4px;
+  background-color: var(--strapi-neutral-0);
+  overflow: hidden;
+  margin-bottom: 16px;
+
+  &__header {
+    background-color: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-600);
+    font-size: 12px; // Réduit de 14px à 12px
+    font-weight: 600;
+    padding: 8px 16px;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid var(--strapi-neutral-150);
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  &__item {
+    padding: 16px;
+    border-bottom: 1px solid var(--strapi-neutral-150);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    &-icon {
+      margin-right: 8px;
+      color: var(--strapi-neutral-500);
+      
+      i::before {
+        font-size: 14px; // Réduit de 16px à 14px
+      }
+    }
+
+    &-title {
+      color: var(--strapi-neutral-600);
+      font-size: 11px; // Réduit de 14px à 11px
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+
+    &-content {
+      color: var(--strapi-neutral-800);
+      font-size: 13px; // Réduit de 14px à 13px
+      line-height: 19px; // Ajusté pour le meilleur espacement
+    }
+
+    &-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--strapi-primary-600);
+      font-weight: 600;
+      font-size: 13px; // Ajusté
+      margin-top: 8px;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      i {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  // Pour la mise en page des fonctionnalités (grille 2x2 sur desktop)
+  &:not(&--plugin) {
+    .identity-card__content {
+      @include medium-up {
+        grid-template-columns: 1fr 1fr;
+        
+        .identity-card__item {
+          border-right: 1px solid var(--strapi-neutral-150);
+          
+          &:nth-child(2n) {
+            border-right: none;
+          }
+          
+          &:nth-last-child(1),
+          &:nth-last-child(2):nth-child(odd) {
+            border-bottom: none;
+          }
+          
+          // Si le nombre d'éléments est impair, le dernier prend toute la largeur
+          &:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+          }
+        }
+      }
+    }
+  }
+}
+
+/** Mode sombre */
+@include dark {
+  .identity-card {
+    background-color: #212134;
+    border-color: #4a4a6a;
+
+    &__header {
+      background-color: #181826;
+      color: #ffffff;
+      border-color: #4a4a6a;
+    }
+
+    &__item {
+      border-color: #4a4a6a;
+
+      &-title {
+        color: #ffffff;
+      }
+
+      &-content {
+        color: #ffffff;
+      }
+
+      &-icon {
+        color: #a5a5ba;
+      }
+
+      &-link {
+        color: var(--strapi-primary-500);
+      }
+    }
+
+    // Pour la mise en page des fonctionnalités en mode sombre
+    &:not(&--plugin) {
+      .identity-card__content {
+        @include medium-up {
+          .identity-card__item {
+            border-right-color: #4a4a6a;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Ajustements spécifiques pour les liens dans ADDITIONAL RESOURCES
+.identity-card__item:has(a) .identity-card__item-content a {
+  color: var(--strapi-primary-600);
+  font-weight: 500;
+  font-size: 13px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 12px;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+  
+  i {
+    margin-left: 4px;
+  }
+}
+
+@include dark {
+  .identity-card__item:has(a) .identity-card__item-content a {
+    color: var(--strapi-primary-500);
+  }
+}
