@@ -20,8 +20,8 @@ The Audit Logs feature provides a searchable and filterable display of all activ
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Enterprise plan.</IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Super Admin role in the project's admin panel.</IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Available by default, if required plan.</IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default, if required plan.</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

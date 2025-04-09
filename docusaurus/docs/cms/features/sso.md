@@ -17,8 +17,8 @@ The Single Sign-On (SSO) feature can be made available on a Strapi application t
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Enterprise plan, or SSO add-on with the Growth plan. </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Read & Update permissions in Roles > Settings - Single Sign-On. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Disabled by default. </IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.  </IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Disabled by default. </IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.  </IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

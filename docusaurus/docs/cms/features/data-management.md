@@ -20,7 +20,7 @@ The Data Management feature can be used to import, export, or transfer data. Dat
   <IdentityCardItem icon="credit-card" title="Plan">Free feature.</IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Minimum "Access the transfer tokens settings page" permission in Roles > Settings - Transfer tokens.</IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">Available and activated if a transfer salt is defined.</IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
 </IdentityCard>
 
 ## Configuration

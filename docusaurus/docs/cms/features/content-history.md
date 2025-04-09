@@ -17,8 +17,8 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Growth or Enterprise plan</IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">None.</IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Available by default, if required plan.</IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default, if required plan.</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

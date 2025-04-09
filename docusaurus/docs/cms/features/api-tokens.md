@@ -20,7 +20,7 @@ API tokens allow users to authenticate REST and GraphQL API queries (see [APIs i
     Free feature
   </IdentityCardItem>
   
-  <IdentityCardItem icon="user-gear" title="Role and permission">
+  <IdentityCardItem icon="user" title="Role and permission">
     Minimum "Access the API tokens settings page" in Roles > Settings - API tokens.
   </IdentityCardItem>
   

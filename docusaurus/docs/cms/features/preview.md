@@ -16,8 +16,8 @@ With the Preview feature, you can preview your front end application directly fr
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature.</IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Read permissions in Roles > Plugins - Users & Permissions. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Should be configured in the `config/admin` file. </IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Should be configured in the `config/admin` file. </IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
 </IdentityCard>
 
 <!-- TODO: add a dark mode screenshot -->

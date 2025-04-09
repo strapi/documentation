@@ -18,8 +18,8 @@ The Internationalization feature allows to manage content in different languages
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature. </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">None. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Available but disabled by default. </IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available but disabled by default. </IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

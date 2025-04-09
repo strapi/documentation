@@ -18,8 +18,8 @@ The <Icon name="images" /> Media Library is the Strapi feature that displays all
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature. </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Minimum "Access the Media Library" permission in Roles > Plugins - Upload. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Available and activated by default. </IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available and activated by default. </IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage

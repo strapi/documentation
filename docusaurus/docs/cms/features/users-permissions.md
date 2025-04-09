@@ -16,8 +16,8 @@ The Users & Permissions feature allows the management of the end-users <Annotati
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">Free feature. </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">CRUD permissions in Roles > Plugins - Users & Permissions. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Available by default. </IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment. </IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default. </IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment. </IdentityCardItem>
 </IdentityCard>
 
 ## Admin panel configuration

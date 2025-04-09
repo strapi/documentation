@@ -17,8 +17,8 @@ The Review Workflows feature allows you to create and manage workflows for your 
 <IdentityCard>
   <IdentityCardItem icon="credit-card" title="Plan">CMS Enterprise Plan. </IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Super Admin role in project's admin panel. </IdentityCardItem>
-  <IdentityCardItem icon="toggle-left" title="Activation">Available by default, if required plan. </IdentityCardItem>
-  <IdentityCardItem icon="laptop" title="Environment">Available in both Development & Production environment.  </IdentityCardItem>
+  <IdentityCardItem icon="toggle-right" title="Activation">Available by default, if required plan. </IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.  </IdentityCardItem>
 </IdentityCard>
 
 <ThemedImage
