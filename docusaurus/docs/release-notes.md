@@ -27,6 +27,35 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.0.2
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [New design for features & plugins identity cards](https://github.com/strapi/documentation/pull/2456)
+- [Fix issue #2378](https://github.com/strapi/documentation/pull/2454)
+- [Update SSO badge style](https://github.com/strapi/documentation/pull/2453)
+- [Add missing factory method in TypeScript development example](https://github.com/strapi/documentation/pull/2452)
+
+#### Repository
+- [Fix `key` token color in code blocks](https://github.com/strapi/documentation/pull/2455)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/kasperjha" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/49387825?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kasperjha"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.0.1
 
 <br />
