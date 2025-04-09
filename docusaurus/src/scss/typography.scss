@@ -105,6 +105,11 @@ p, ul {
   text-decoration: none !important;
 }
 
+.identity-card + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
 /** Dark mode */
 @include dark {
   h1, h2, h3, h4, h5, h6 {
