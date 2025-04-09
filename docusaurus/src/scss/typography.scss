@@ -84,6 +84,27 @@ p, ul {
   font-weight: 600;
 }
 
+.markdown a i.strapi-icons.external-link,
+.markdown a .strapi-icons.external-link {
+  display: inline-block;
+  text-decoration: none !important;
+}
+
+.markdown a i.strapi-icons::before,
+.markdown a .strapi-icons.external-link::before {
+  display: inline-block;
+  text-decoration: none !important;
+}
+
+.markdown a:hover i.strapi-icons,
+.markdown a:active i.strapi-icons,
+.markdown a:focus i.strapi-icons,
+.markdown a:hover .strapi-icons.external-link,
+.markdown a:active .strapi-icons.external-link,
+.markdown a:focus .strapi-icons.external-link {
+  text-decoration: none !important;
+}
+
 /** Dark mode */
 @include dark {
   h1, h2, h3, h4, h5, h6 {
