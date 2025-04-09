@@ -2,18 +2,26 @@
 @use '../../scss/_mixins.scss' as *;
 
 .identity-card {
+  --identity-card-header-font-size: 11px;
+  --identity-card-header-line-height: 16px;
+  --identity-card-header-font-weight: 600;
+  --identity-card-content-font-size: 14px;
+  --identity-card-content-line-height: 20px;
+  --identity-card-content-font-weight: 400;
   border: 1px solid var(--strapi-neutral-150);
   border-radius: 4px;
   background-color: var(--strapi-neutral-0);
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 40px;
 
   &__header {
     background-color: var(--strapi-neutral-100);
     color: var(--strapi-neutral-600);
-    font-size: 12px; // Réduit de 14px à 12px
-    font-weight: 600;
-    padding: 8px 16px;
+    text-transform: uppercase;
+    font-size: var(--identity-card-header-font-size) !important;
+    line-height: var(--identity-card-header-line-height);
+    font-weight: var(--identity-card-header-font-weight);
+    padding: 8px 10px 6px;
     letter-spacing: 0.4px;
     border-bottom: 1px solid var(--strapi-neutral-150);
   }
@@ -24,7 +32,7 @@
   }
 
   &__item {
-    padding: 16px;
+    padding: 18px;
     border-bottom: 1px solid var(--strapi-neutral-150);
 
     &:last-child {
@@ -34,30 +42,33 @@
     &-header {
       display: flex;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
 
     &-icon {
       margin-right: 8px;
       color: var(--strapi-neutral-500);
-      
+
       i::before {
-        font-size: 14px; // Réduit de 16px à 14px
+        position: relative;
+        top: -3px;
+        font-size: 12px;
       }
     }
 
     &-title {
       color: var(--strapi-neutral-600);
-      font-size: 11px; // Réduit de 14px à 11px
-      font-weight: 500;
+      font-size: var(--identity-card-header-font-size);
+      font-weight: var(--identity-card-header-font-weight);
+      line-height: var(--identity-card-header-line-height);
       text-transform: uppercase;
       letter-spacing: 0.2px;
     }
 
-    &-content {
+    &-content p {
       color: var(--strapi-neutral-800);
-      font-size: 13px; // Réduit de 14px à 13px
-      line-height: 19px; // Ajusté pour le meilleur espacement
+      font-size: 14px; 
+      line-height: 20px;
     }
 
     &-link {
@@ -65,7 +76,7 @@
       align-items: center;
       color: var(--strapi-primary-600);
       font-weight: 600;
-      font-size: 13px; // Ajusté
+      font-size: 13px;
       margin-top: 8px;
       text-decoration: none;
 
@@ -79,7 +90,7 @@
     }
   }
 
-  // Pour la mise en page des fonctionnalités (grille 2x2 sur desktop)
+  // 2x2 grid layout
   &:not(&--plugin) {
     .identity-card__content {
       @include medium-up {
@@ -97,7 +108,7 @@
             border-bottom: none;
           }
           
-          // Si le nombre d'éléments est impair, le dernier prend toute la largeur
+          // If number of elements is odd, last one takes full width
           &:last-child:nth-child(odd) {
             grid-column: 1 / -1;
           }
@@ -107,15 +118,14 @@
   }
 }
 
-/** Mode sombre */
 @include dark {
   .identity-card {
     background-color: #212134;
     border-color: #4a4a6a;
 
     &__header {
-      background-color: #181826;
-      color: #ffffff;
+      background-color: var(--strapi-neutral-150);
+      color: var(--strapi-neutral-400);
       border-color: #4a4a6a;
     }
 
@@ -123,11 +133,11 @@
       border-color: #4a4a6a;
 
       &-title {
-        color: #ffffff;
+        color: var(--strapi-neutral-400);
       }
 
-      &-content {
-        color: #ffffff;
+      &-content * {
+        color: #DCDCE4;
       }
 
       &-icon {
@@ -139,7 +149,7 @@
       }
     }
 
-    // Pour la mise en page des fonctionnalités en mode sombre
+    // For dark mode layout
     &:not(&--plugin) {
       .identity-card__content {
         @include medium-up {
@@ -152,7 +162,7 @@
   }
 }
 
-// Ajustements spécifiques pour les liens dans ADDITIONAL RESOURCES
+// Specific adjustements for links in ADDITIONAL RESOURCES
 .identity-card__item:has(a) .identity-card__item-content a {
   color: var(--strapi-primary-600);
   font-weight: 500;
