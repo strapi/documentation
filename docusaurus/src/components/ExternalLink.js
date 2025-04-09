@@ -4,6 +4,6 @@ import Icon from './Icon';
 
 export const ExternalLink = ({to, text}) => (
   <Link to={to}>
-    {text}&nbsp;<Icon name="arrow-square-out" classes="ph-fill external-link" />
+    {text}<Icon name="arrow-square-out" classes="ph-fill external-link" />
   </Link>
 )
