@@ -27,7 +27,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-## 6.0.2
+## 6.1.0
 
 <br />
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
