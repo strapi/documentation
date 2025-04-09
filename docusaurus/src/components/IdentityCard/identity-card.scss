@@ -8,6 +8,7 @@
   --identity-card-content-font-size: 14px;
   --identity-card-content-line-height: 20px;
   --identity-card-content-font-weight: 400;
+  --identity-card-code-font-size: 13px;
   border: 1px solid var(--strapi-neutral-150);
   border-radius: 4px;
   background-color: var(--strapi-neutral-0);
@@ -65,10 +66,22 @@
       letter-spacing: 0.2px;
     }
 
+    &-content,
     &-content p {
       color: var(--strapi-neutral-800);
       font-size: 14px; 
       line-height: 20px;
+
+      code {
+        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-700);
+        border-color: var(--strapi-neutral-200);
+        font-size: var(--identity-card-code-font-size);
+      }
+    }
+
+    &-content a {
+      font-size: 14px !important;
     }
 
     &-link {
