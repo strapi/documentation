@@ -1,0 +1,20 @@
+@use './mixins' as *;
+
+@include medium-up {
+  footer .theme-edit-this-page {
+    display: none;
+  }
+}
+
+a.theme-edit-this-page {
+  font-size: 12px;
+  position: relative;
+  padding-top: 48px !important;
+  left: 16px;
+    
+  svg {
+    width: 12px;
+    position: relative;
+    top: 3px;
+  }
+}

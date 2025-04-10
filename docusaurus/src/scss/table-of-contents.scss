@@ -1,212 +1,235 @@
 /** Component: Table of Contents (a.k.a. secondary navigation)
     + on page TOC on mobile */
-@use './mixins' as *;
+    @use './mixins' as *;
 
-.table-of-contents {
-  --custom-toc-py: var(--strapi-spacing-1);
-  --custom-toc-items-py: var(--strapi-spacing-1);
-
-  --ifm-toc-padding-vertical: var(--custom-toc-py);
-
-  font-size: var(--strapi-font-size-xs);
-  border-left: none;
-
-  > li {
-    margin: 0 var(--ifm-toc-padding-horizontal);
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 18px;
-  }
-
-  &__link {
-    --custom-table-of-contents-link-active-before-left: -16px;
-
-    position: relative;
-    font-weight: 400;
-    line-height: 16px;
-    padding-bottom: 10px;
-
-    @include transition;
-
-    &:hover {
-      &:not(.table-of-contents__link--active) {
-        --ifm-color-primary: var(--strapi-neutral-900);
+    .table-of-contents {
+      --custom-toc-py: var(--strapi-spacing-1);
+      --custom-toc-items-py: var(--strapi-spacing-1);
+    
+      --ifm-toc-padding-vertical: var(--custom-toc-py);
+    
+      font-size: var(--strapi-font-size-xs);
+      border-left: none;
+      max-height: calc(100vh - (var(--ifm-navbar-height) + 8rem)) !important;
+    
+      > li {
+        margin: 0 var(--ifm-toc-padding-horizontal);
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 18px;
+      }
+    
+      &__link {
+        --custom-table-of-contents-link-active-before-left: -16px;
+    
+        position: relative;
+        font-weight: 400;
+        line-height: 16px;
+        padding-bottom: 10px;
+    
+        @include transition;
+    
+        &:hover {
+          &:not(.table-of-contents__link--active) {
+            --ifm-color-primary: var(--strapi-neutral-900);
+          }
+        }
+    
+        &--active {
+          color: var(--strapi-primary-600);
+    
+          &:before {
+            content: " ";
+            position: absolute;
+            top: -2px;
+            bottom: 8px;
+            --custom-table-of-contents-link-active-before-left: -20px;
+            left: var(--custom-table-of-contents-link-active-before-left);
+            width: 2px;
+            border-radius: 0 2px 2px 0;
+            background-color: var(--strapi-primary-600);
+          }
+        }
+    
+        img {
+          display: inline-block;
+          vertical-align: bottom;
+          max-width: 22px;
+          margin-right: 2px;
+        }
+      }
+    
+      > li > ul > li .table-of-contents__link::before {
+        --custom-table-of-contents-link-active-before-left: -36px;
+      }
+    
+      > li > ul > li > ul > li .table-of-contents__link::before {
+        --custom-table-of-contents-link-active-before-left: -52px;
       }
     }
-
-    &--active {
-      color: var(--strapi-primary-600);
-
-      &:before {
-        content: " ";
-        position: absolute;
-        top: -2px;
-        bottom: 8px;
-        --custom-table-of-contents-link-active-before-left: -20px;
-        left: var(--custom-table-of-contents-link-active-before-left);
-        width: 2px;
-        border-radius: 0 2px 2px 0;
-        background-color: var(--strapi-primary-600);
+    
+    /**
+     * Improve style for secondary nav "code"-formatted headings
+     */
+    main .table-of-contents {
+      code {
+        font-size: var(--strapi-font-size-xxs);
+        background-color: transparent;
+        border: none;
+        color: inherit;
+        padding: 0;
+        font-weight: 600;
+        position: relative;
+        top: -1px;
       }
     }
-
-    img {
-      display: inline-block;
-      vertical-align: bottom;
-      max-width: 22px;
-      margin-right: 2px;
+    
+    /* Target the edit-this-page element with higher specificity */
+    .table-of-contents .theme-edit-this-page--secondary,
+    [class*="tableOfContents"] .theme-edit-this-page--secondary,
+    div.theme-edit-this-page--secondary {
+      // background-color: green !important;
     }
-  }
-
-  > li > ul > li .table-of-contents__link::before {
-    --custom-table-of-contents-link-active-before-left: -36px;
-  }
-
-  > li > ul > li > ul > li .table-of-contents__link::before {
-    --custom-table-of-contents-link-active-before-left: -52px;
-  }
-}
-
-/**
- * Improve style for secondary nav "code"-formatted headings
- */
-main .table-of-contents {
-  code {
-    font-size: var(--strapi-font-size-xxs);
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    padding: 0;
-    font-weight: 600;
-    position: relative;
-    top: -1px;
-  }
-}
-
-ul.table-of-contents__left-border {
-  margin-bottom: 0;
-}
-
-/** Responsive */
-@include medium-up {
-  .table-of-contents {
-    --custom-toc-items-py: var(--strapi-spacing-2);
-    margin-top: 70px;
-    font-weight: 500;
-
-    &::before {
-      content: '\e484';
-      font-family: "Phosphor";
-      font-size: 16px;
+    
+    /* Additional selector targeting direct link inside */
+    .theme-edit-this-page--secondary a {
+      // background-color: green !important;
+      font-size: 12px;
       position: relative;
-      top: -9px;
-      left: 6px;
-    }
-    &::after {
-      content: 'On this page';
-      position: absolute;
-      top: 65px;
-      left: 40px;
-    }
+      left: 16px;
+      top: 24px;
 
-    > li {
-      position: relative;
-      &::before {
-        content:'';
-        position: absolute;
-        height: calc(100% + 4px);
-        width: 2px;
-        background-color: var(--strapi-neutral-100);
-        left: -2px;
-        top: -2px;
+      svg {
+        width: 12px;
+        position: relative;
+        top: 4px;
       }
     }
-  }
-}
-
-
-@include medium-down {
-  div[class*="tocCollapsible"] {
-    background-color: transparent;
-    border-radius: 4px;
-    border: solid 1px var(--strapi-neutral-200);
-    font-size: var(--strapi-font-size-sm);
-    padding: 10px 5px;
-    margin-bottom: 56px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-  }
-
-  div[class*="tocCollapsibleContent"] {
-    border: none;
-    padding-top: 0;
-    box-shadow: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-
-    ul {
-      border-top: none;
-      margin-top: 0;
-
-      li {
-        margin-left: 0;
-        padding-left: 16px;
+    
+    ul.table-of-contents__left-border {
+      margin-bottom: 0;
+    }
+    
+    /** Responsive */
+    @include medium-up {
+      .table-of-contents {
+        --custom-toc-items-py: var(--strapi-spacing-2);
+        margin-top: 70px;
+        font-weight: 500;
+    
+        &::before {
+          content: '\e484';
+          font-family: "Phosphor";
+          font-size: 16px;
+          position: relative;
+          top: -9px;
+          left: 6px;
+        }
+        &::after {
+          content: 'On this page';
+          position: absolute;
+          top: 65px;
+          left: 40px;
+        }
+    
+        > li {
+          position: relative;
+          &::before {
+            content:'';
+            position: absolute;
+            height: calc(100% + 4px);
+            width: 2px;
+            background-color: var(--strapi-neutral-100);
+            left: -2px;
+            top: -2px;
+          }
+        }
       }
     }
-
-    > ul {
-      border-left: solid 1px var(--strapi-neutral-100);
-      margin-left: 5px;
-      margin-top: 10px;
-      padding-top: 0;
-
-      > li:first-child {
-        margin-top: 0;
+    
+    
+    @include medium-down {
+      div[class*="tocCollapsible"] {
+        background-color: transparent;
+        border-radius: 4px;
+        border: solid 1px var(--strapi-neutral-200);
+        font-size: var(--strapi-font-size-sm);
+        padding: 10px 5px;
+        margin-bottom: 56px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+      }
+    
+      div[class*="tocCollapsibleContent"] {
+        border: none;
+        padding-top: 0;
+        box-shadow: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    
+        ul {
+          border-top: none;
+          margin-top: 0;
+    
+          li {
+            margin-left: 0;
+            padding-left: 16px;
+          }
+        }
+    
+        > ul {
+          border-left: solid 1px var(--strapi-neutral-100);
+          margin-left: 5px;
+          margin-top: 10px;
+          padding-top: 0;
+    
+          > li:first-child {
+            margin-top: 0;
+          }
+        }
+      }
+      button[class*="tocCollapsibleButton"] {
+        position: relative;
+        padding-left: 35px;
+        background: transparent;
+    
+        &::before {
+          content: '\e484';
+          font-family: "Phosphor";
+          font-size: 16px;
+          position: absolute;
+          top: 5px;
+          left: 10px;
+        }
+    
+        &::after {
+          content: "";
+          display: inline-block;
+          border: none;
+          background: transparent;
+          width: 8px;
+          height: 8px;
+          border-right: 1px solid var(--strapi-neutral-600);
+          border-bottom: 1px solid var(--strapi-neutral-600);
+          transform: rotate(-45deg);
+          transform-origin: 50%;
+          transition: transform .3s ease;
+        }
+      }
+    
+      button[class*="tocCollapsibleButtonExpanded"] {
+        &::after {
+          transform: rotate(45deg);
+          position: absolute;
+          top: 8px;
+          right: 12px;
+        }
       }
     }
-  }
-  button[class*="tocCollapsibleButton"] {
-    position: relative;
-    padding-left: 35px;
-    background: transparent;
-
-    &::before {
-      content: '\e484';
-      font-family: "Phosphor";
-      font-size: 16px;
-      position: absolute;
-      top: 5px;
-      left: 10px;
+    
+    @include medium-down {
+      @include dark {
+        button[class*="tocCollapsibleButton"] {
+          background: var(--strapi-neutral-0);
+        }
+      }
     }
-
-    &::after {
-      content: "";
-      display: inline-block;
-      border: none;
-      background: transparent;
-      width: 8px;
-      height: 8px;
-      border-right: 1px solid var(--strapi-neutral-600);
-      border-bottom: 1px solid var(--strapi-neutral-600);
-      transform: rotate(-45deg);
-      transform-origin: 50%;
-      transition: transform .3s ease;
-    }
-  }
-
-  button[class*="tocCollapsibleButtonExpanded"] {
-    &::after {
-      transform: rotate(45deg);
-      position: absolute;
-      top: 8px;
-      right: 12px;
-    }
-  }
-}
-
-@include medium-down {
-  @include dark {
-    button[class*="tocCollapsibleButton"] {
-      background: var(--strapi-neutral-0);
-    }
-  }
-}
