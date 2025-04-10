@@ -49,6 +49,12 @@
     .tabs + .margin-top--md {
       margin-top: 0 !important; // Simplified, removed redundant line
     }
+    
+    // Remove border for nested tabs container
+    [role="tabpanel"] .tabs-container {
+      border: none;
+      border-radius: 0;
+    }
   }
   
   // Tab element styles (role="tab" attribute)
