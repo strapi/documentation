@@ -47,7 +47,7 @@
     }
 
     &-icon {
-      margin-right: 8px;
+      margin-right: 6px;
       color: var(--strapi-neutral-500);
 
       i::before {
@@ -78,6 +78,10 @@
         border-color: var(--strapi-neutral-200);
         font-size: var(--identity-card-code-font-size);
       }
+    }
+
+    &-content p {
+      margin-bottom: 0;
     }
 
     &-content a {
