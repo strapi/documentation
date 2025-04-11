@@ -120,6 +120,10 @@ details {
   }
 }
 
+[role="tabpanel"] p {
+  padding: 12px 12px 0 12px;
+}
+
 /** Dark mode */
 @include dark {
   :root body {
