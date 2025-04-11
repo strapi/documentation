@@ -1,60 +1,113 @@
 /** Component: Tab */
 @use './mixins' as *;
 
+// Variables
 :root body {
+  // Using variables to make future changes easier
   --custom-tabs-px: var(--strapi-spacing-5);
   --custom-tabs-py: var(--strapi-spacing-2);
-
   --ifm-tabs-padding-horizontal: var(--custom-tabs-px);
   --ifm-tabs-padding-vertical: var(--custom-tabs-py);
+  --tabs-item-height: 36px;
+  --tabs-item-border-radius: 4px;
+  --tabs-item-margin: 10px 4px;
+  --tabs-item-padding: 4px 12px;
+  --tabs-active-bg: var(--strapi-primary-100);
 }
 
+// Main tabs styles
 .tabs {
   border-bottom: solid 1px var(--strapi-neutral-100);
-
+  
+  // Tab item styles
   &__item {
     border-top: 2px solid transparent;
     border-bottom-width: 2px;
     padding-bottom: 18px !important;
     font-weight: 600;
-
+    
     &:hover {
       background-color: transparent;
       color: var(--strapi-primary-600);
     }
   }
-
+  
   &:not(.tabs__item--active) {
     color: var(--strapi-neutral-600);
   }
-
+  
+  // Container styles
   &-container {
+    border-radius: 4px;
+    border: solid 1px var(--strapi-neutral-150);
+    overflow: hidden; // Prevents children from overflowing the border-radius
+    
     .margin-top--md {
       margin-top: 24px !important;
     }
-
+    
     .tabs + .margin-top--md {
-      margin-top: 6px !important;
+      margin-top: 0 !important; // Simplified, removed redundant line
+    }
+    
+    // Remove border for nested tabs container
+    [role="tabpanel"] .tabs-container {
+      border: none;
+      border-radius: 0;
     }
   }
-
-  /** Tabs inside Tabs */
+  
+  // Tab element styles (role="tab" attribute)
+  [role="tab"] {
+    border-bottom: none;
+    height: var(--tabs-item-height);
+    padding: var(--tabs-item-padding);
+    text-align: center;
+    gap: 8px;
+    border-radius: var(--tabs-item-border-radius);
+    margin: var(--tabs-item-margin) !important;
+    
+    &:nth-child(1) {
+      margin-left: 10px !important;
+    }
+  }
+  
+  // Active tab styles
+  [aria-selected="true"] {
+    border-bottom: none;
+    height: var(--tabs-item-height);
+    padding: var(--tabs-item-padding);
+    text-align: center;
+    gap: 8px;
+    border-radius: var(--tabs-item-border-radius);
+    background-color: var(--tabs-active-bg);
+  }
+  
+  // Nested tabs
   + div {
     [role="tabpanel"] {
       .tabs {
         font-size: var(--strapi-font-size-ssm);
-
+        
         &__item {
           &--active {
             --ifm-tabs-color-active-border: transparent;
-
             background-color: var(--ifm-hover-overlay);
           }
         }
-
+        
         + [class*="margin-top"] {
           margin-top: 0 !important;
         }
+      }
+      
+      // Remove borders from code blocks inside tabs
+      [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
+        border: none !important;
+      }
+
+      [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
+        margin: 22px 20px;
       }
     }
   }
@@ -63,12 +116,25 @@
 /** Tabs inside Details component */
 details {
   .tabs {
-    --ifm-tabs-color-active-border: var(--strapi-)
+    --ifm-tabs-color-active-border: var(--strapi-neutral-150); // Added value here
   }
 }
 
+[role="tabpanel"] p {
+  padding: 12px 12px 0 12px;
+}
+
+/** Dark mode */
 @include dark {
+  :root body {
+    --tabs-active-bg: rgba(73, 69, 255, 0.2); // Slightly different background in dark mode
+  }
+  
   .tabs__item:not(.tabs__item--active) {
     color: var(--strapi-neutral-400);
+  }
+  
+  [aria-selected="true"] {
+    color: var(--strapi-primary-500); // Different text color in dark mode
   }
 }

@@ -81,7 +81,6 @@ The default configuration created with any new project should at least include t
 <TabItem value="javascript" label="JavaScript">
 
 ```js title="./config/admin.js"
-
 module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
