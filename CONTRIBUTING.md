@@ -29,7 +29,7 @@ Strapi’s documentation includes 3 big sections, 2 for the CMS and 1 for Strapi
 
 | Section name      | Target content                                                    | Folder                        | Branch name prefix |
 | ------------------| ----------------------------------------------------------------- | ----------------------------- | ------------------ |
-| [CMS Docs](https://docs.strapi.io/user-docs) | For all things related to Strapi CMS | `/docusaurus/docs/cms/` | `cms/`            |
+| [CMS Docs](https://docs.strapi.io/cms) | For all things related to Strapi CMS | `/docusaurus/docs/cms/` | `cms/`            |
 | [Cloud Docs](https://docs.strapi.io/cloud) | For all things related to Strapi Cloud                            | `/docusaurus/docs/cloud/`     | `cloud/`           |
 
 ℹ️ In the rare case of a pull request that impacts multiple parts of the repository (for instance user guide + dev docs), please prefix your branch with `repo/`.
