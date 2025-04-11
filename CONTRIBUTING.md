@@ -29,9 +29,8 @@ Strapi’s documentation includes 3 big sections, 2 for the CMS and 1 for Strapi
 
 | Section name      | Target content                                                    | Folder                        | Branch name prefix |
 | ------------------| ----------------------------------------------------------------- | ----------------------------- | ------------------ |
-| [User Guide](https://docs.strapi.io/user-docs)        | For all things related to the Strapi's admin panel | `/docusaurus/docs/cms/` | `user/`            |
-| [Developer Docs](https://docs.strapi.io/dev-docs)    | For all things that are not<br/>manageable from the admin panel       | `/docusaurus/docs/cms/`  | `dev/`             |
-| [Strapi Cloud Docs](https://docs.strapi.io/cloud) | For all things related to Strapi Cloud                            | `/docusaurus/docs/cloud/`     | `cloud/`           |
+| [CMS Docs](https://docs.strapi.io/cms) | For all things related to Strapi CMS | `/docusaurus/docs/cms/` | `cms/`            |
+| [Cloud Docs](https://docs.strapi.io/cloud) | For all things related to Strapi Cloud                            | `/docusaurus/docs/cloud/`     | `cloud/`           |
 
 ℹ️ In the rare case of a pull request that impacts multiple parts of the repository (for instance user guide + dev docs), please prefix your branch with `repo/`.
 
@@ -87,7 +86,7 @@ To submit your contribution for review:
     ✏️ If your pull request is not ready for review yet, choose the “[Create draft pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)” in the dropdown. The Strapi documentation team will review your pull request only when you will mark it as “[Ready for review](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request)”.
    
 4. _(optional — if not set, the Strapi Documentation team will set or update this for you)_:<br/>Add GitHub labels for:
-   - the section of the documentation targeted by the pull request: `source: User Guide`, `source: Dev Docs`, or `source: Strapi Cloud`
+   - the section of the documentation targeted by the pull request: `source: CMS` or `source: Strapi Cloud`
    - the type of updates introduced by the pull request: 
      - `pr: new content` for new features,
      - `pr: updated content` for significant (20+ lines) updates to existing features,
