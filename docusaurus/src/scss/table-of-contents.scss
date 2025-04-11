@@ -122,6 +122,11 @@ ul.table-of-contents__left-border {
       }
     }
   }
+
+  [class*="contributeLink"] {
+    margin-top: 24px;
+    margin-left: 14px;
+  }
 }
 
 
@@ -134,6 +139,10 @@ ul.table-of-contents__left-border {
     padding: 10px 5px;
     margin-bottom: 56px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+
+    [class*="contributeLink"] {
+      display: none;
+    }
   }
 
   div[class*="tocCollapsibleContent"] {

@@ -93,6 +93,10 @@
       padding: 16px;
     }
   }
+
+  .theme-doc-footer-edit-meta-row {
+    display: none;
+  }
 }
 
 @include small-down {
