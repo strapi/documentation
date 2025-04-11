@@ -23,7 +23,7 @@ export default function ContributeLink() {
                  'https://github.com/strapi/documentation/edit/main/docusaurus';
   
   // Construct the full edit URL using the document path
-  const fullEditUrl = `${editUrl}/${activeDoc.id}.md`;
+  const fullEditUrl = `${editUrl}/docs/${activeDoc.id}.md`;
   
   // Use the translated string from i18n
   const editThisPageMessage = translate({
@@ -35,7 +35,7 @@ export default function ContributeLink() {
   return (
     <div className={clsx(styles.contributeLink)}>
       <a href={fullEditUrl} target="_blank" rel="noopener noreferrer">
-        <Icon name="pencil" /> {editThisPageMessage}
+        <Icon name="pencil" /> <span>{editThisPageMessage}</span>
       </a>
     </div>
   );
