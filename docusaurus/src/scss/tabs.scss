@@ -102,8 +102,12 @@
       }
       
       // Remove borders from code blocks inside tabs
-      [class*="codeBlockContainer"] {
+      [class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) {
         border: none !important;
+      }
+
+      [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
+        margin: 22px 20px;
       }
     }
   }
