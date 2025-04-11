@@ -35,7 +35,7 @@ export default function ContributeLink() {
   return (
     <div className={clsx(styles.contributeLink)}>
       <a href={fullEditUrl} target="_blank" rel="noopener noreferrer">
-        <Icon name="pencil" /> <span>{editThisPageMessage}</span>
+        <Icon name="pencil-simple" /> <span>{editThisPageMessage}</span>
       </a>
     </div>
   );
