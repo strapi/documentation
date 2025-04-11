@@ -177,6 +177,31 @@ export default {
 
 </Tabs>
 
+### Limit concurrent uploads
+
+By default, Strapi does not limit concurrent uploads into the media library. On low ram environments, you might face some Out Of Memory (OOM). This setting is dedicated to limit the concurrency of uploads to 1 to reduce the stress on the ram with sharp
+
+<Tabs>
+
+<TabItem value="typescript" label="TypeScript">
+
+```js title="path: ./config/plugins.ts"
+
+export default {
+  // ...
+  upload: {
+    config: {
+      limitConcurrentUploads: true
+    }
+  }
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+
 ### Upload request timeout
 
 By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads. To make it possible for users with slow internet connection to upload large files, it might be required to increase this timeout limit. The recommended way to do it is by setting the `http.serverOptions.requestTimeout` parameter in the `config/server.js|ts` file (see [server configuration](/cms/configurations/server).
