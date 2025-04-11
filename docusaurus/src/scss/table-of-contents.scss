@@ -123,10 +123,9 @@ ul.table-of-contents__left-border {
     }
   }
 
-  // For "contribute" link in right TOC
-  .table-of-contents + div:has(.contributeLink) {
-    position: sticky;
-    top: calc(var(--ifm-navbar-height) + 70px);
+  [class*="contributeLink"] {
+    margin-top: 24px;
+    margin-left: 14px;
   }
 }
 

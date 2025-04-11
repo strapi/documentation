@@ -1,22 +1,25 @@
 .contributeLink {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--strapi-neutral-200);
-  
   a {
     display: flex;
     align-items: center;
     color: var(--strapi-primary-600);
-    font-size: var(--strapi-font-size-sm);
+    font-size: var(--strapi-font-size-xs);
     font-weight: 500;
     text-decoration: none;
     
     &:hover {
-      text-decoration: underline;
+      text-decoration: none; 
+    }
+    
+    span {
+      &:hover {
+        text-decoration: underline; 
+      }
     }
     
     i {
       margin-right: 0.5rem;
+      text-decoration: none !important;
     }
   }
 }
@@ -24,8 +27,6 @@
 /* Dark mode styles */
 :global(html[data-theme='dark']) {
   .contributeLink {
-    border-top-color: var(--strapi-neutral-150);
-    
     a {
       color: var(--strapi-primary-500);
     }
