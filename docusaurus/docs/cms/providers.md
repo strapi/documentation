@@ -13,7 +13,7 @@ tags:
 
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
-There are both official providers maintained by Strapi — discoverable via the <ExternalLink to="../../../cms/plugins/installing-plugins-via-marketplace" text="Marketplace"/> — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
+There are both official providers maintained by Strapi — discoverable via the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
 
 A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
@@ -63,7 +63,7 @@ npm install @strapi/provider-email-sendgrid --save
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the <ExternalLink to="../../../cms/plugins/installing-plugins-via-marketplace" text="Marketplace"/> or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
 
 The following are example configurations for the Upload (Media Library) and Email features:
 

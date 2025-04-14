@@ -59,7 +59,7 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 `connect` can be used in combination with [`disconnect`](#disconnect).
 
 :::caution
-`connect` can not be used for media attributes (see [Upload plugin documentation](/cms/plugins/upload#examples) for more details).
+`connect` can not be used for media attributes
 :::
 
 <Tabs groupId="shorthand-longhand">
