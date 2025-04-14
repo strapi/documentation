@@ -46,4 +46,4 @@ You must upload the file first, and then create the entry with the created file 
 
 ### Migration procedure
 
-Users must update their custom code, first sending a [POST call to the Upload API at `/api/upload/`](/cms/plugins/upload#upload-files), then creating an entry with a [POST call to the REST API at `/api`](/cms/api/rest#create) with the created file id.
+Users must update their custom code, first sending a [POST call to the Upload API at `/api/upload/`](/cms/api/rest/upload), then creating an entry with a [POST call to the REST API at `/api`](/cms/api/rest#create) with the created file id.

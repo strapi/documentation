@@ -19,10 +19,10 @@ import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 
 # GraphQL API
 
-The GraphQL API allows performing queries and mutations to interact with the [content-types](/cms/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/cms/plugins/graphql.md). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
+The GraphQL API allows performing queries and mutations to interact with the [content-types](/cms/backend-customization/models#content-types) through Strapi's [GraphQL plugin](/cms/plugins/graphql). Results can be [filtered](#filters), [sorted](#sorting) and [paginated](#pagination).
 
 :::prerequisites
-To use the GraphQL API, install the [GraphQL](/cms/plugins/graphql.md) plugin:
+To use the GraphQL API, install the [GraphQL](/cms/plugins/graphql) plugin:
 
 <Tabs groupId="yarn-npm">
 <TabItem value="yarn" label="Yarn">
@@ -56,7 +56,7 @@ Once installed, the GraphQL playground is accessible at the `/graphql` URL and c
 <br/>
 
 :::note No GraphQL API to upload media files
-The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/plugins/upload#endpoints) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
+The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
 ## Queries

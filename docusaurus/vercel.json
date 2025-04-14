@@ -1396,11 +1396,6 @@
       "permanent": true
     },
     {
-      "source": "/dev-docs/plugins/upload",
-      "destination": "/cms/plugins/upload",
-      "permanent": true
-    },
-    {
       "source": "/dev-docs/plugins-extension",
       "destination": "/cms/plugins-development/plugins-extension",
       "permanent": true
@@ -1602,7 +1597,7 @@
     },
     {
       "source": "/user-docs/plugins/introduction-to-plugins",
-      "destination": "/cms/plugins/introduction-to-plugins",
+      "destination": "/cms/plugins/installing-plugins-via-marketplace",
       "permanent": true
     },
     {
