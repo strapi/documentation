@@ -10,8 +10,6 @@ export default function ContributeLink() {
   const {siteConfig} = useDocusaurusContext();
   const {activeDoc} = useActiveDocContext();
   
-  console.log('activeDoc:', activeDoc);
-  
   // Early return if no activeDoc
   if (!activeDoc) {
     return null;
