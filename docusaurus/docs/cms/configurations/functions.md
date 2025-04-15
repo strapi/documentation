@@ -165,7 +165,7 @@ It can be used to:
 - [extend plugins](/cms/plugins-development/plugins-extension#extending-a-plugins-interface)
 - extend [content-types](/cms/backend-customization/models) programmatically
 - load some [environment variables](/cms/configurations/environment)
-- register a [custom field](/cms/plugins-development/custom-fields) that would be used only by the current Strapi application,
+- register a [custom field](/cms/features/custom-fields) that would be used only by the current Strapi application,
 - register a [custom provider for the Users & Permissions plugin](/cms/configurations/users-and-permissions-providers/new-provider-guide).
 
 `register()` is the very first thing that happens when a Strapi application is starting. This happens _before_ any setup process and you don't have any access to database, routes, policies, or any other backend server elements within the `register()` function.

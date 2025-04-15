@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'email': '/cms/features/email',
       'seo': '/cms/plugins/installing-plugins-via-marketplace',
       'gatsby': '/cms/plugins/installing-plugins-via-marketplace',
-      'custom-fields': '/cms/plugins-development/custom-fields'
+      'custom-fields': '/cms/features/custom-fields'
     },
     '/dev-docs/plugins/email': {
       '_default': '/cms/features/email',
