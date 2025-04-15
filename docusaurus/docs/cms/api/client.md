@@ -167,7 +167,7 @@ await homepage.delete();
 
 ### Working with files
 
-The Strapi Client provides access to the Strapi Media Library through the Upload plugin via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
+The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
 
 The following methods are available for working with files:
 
