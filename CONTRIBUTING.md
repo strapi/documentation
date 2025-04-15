@@ -42,7 +42,7 @@ The Strapi Documentation team has created a complete style guide for you to make
 
 👉 [Strapi Documentation Style Guide](STYLE_GUIDE.pdf) 
 
-💁 While writing, please consider the [12 Rules of Technical Writing](https://handbook.strapi.io/user-success-manual/12-rules-of-technical-writing) that the Strapi Documentation team will use to assess the quality and consistency of the contribution. 😊
+💁 While writing, please consider the [12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) that the Strapi Documentation team will use to assess the quality and consistency of the contribution. 😊
 
 ⚠️ **Important: Please disable any linter or automatic formatting tool(s)** before saving and submitting your files. Not doing so could, at best, add unnecessary formatting changes to the submitted PR or, at worst, prevent Docusaurus from properly rendering some pages.
 
