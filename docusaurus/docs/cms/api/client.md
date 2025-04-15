@@ -165,6 +165,61 @@ const updatedHomepage = await homepage.update(
 await homepage.delete();
 ```
 
+### Working with files
+
+The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
+
+The following methods are available for working with files:
+
+| Method | Description |
+|--------|-------------|
+| `find(params?)` | Retrieves a list of file metadata based on optional query parameters |
+| `findOne(fileId)` | Retrieves the metadata for a single file by its ID |
+| `update(fileId, fileInfo)` | Updates metadata for an existing file |
+| `delete(fileId)` | Deletes a file by its ID |
+
+**Usage examples:**
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
+
+// Find all file metadata
+const allFiles = await client.files.find();
+console.log(allFiles);
+
+// Find file metadata with filtering and sorting
+const imageFiles = await client.files.find({
+  filters: {
+    mime: { $contains: 'image' }, // Only get image files
+    name: { $contains: 'avatar' }, // Only get files with 'avatar' in the name
+  },
+  sort: ['name:asc'], // Sort by name in ascending order
+});
+
+// Find file metadata by ID
+const file = await client.files.findOne(1);
+console.log(file.name); // The file name
+console.log(file.url); // The file URL
+console.log(file.mime); // The file MIME type
+
+// Update file metadata
+const updatedFile = await client.files.update(1, {
+  name: 'New file name',
+  alternativeText: 'Descriptive alt text for accessibility',
+  caption: 'A caption for the file',
+});
+
+// Delete a file by ID
+const deletedFile = await client.files.delete(1);
+console.log('File deleted successfully');
+console.log('Deleted file ID:', deletedFile.id);
+console.log('Deleted file name:', deletedFile.name);
+```
+
 :::strapi Additional information
 More details about the Strapi Strapi Client might be found in the <ExternalLink to="https://github.com/strapi/client/blob/main/README.md" text="package's README"/>.
 :::
