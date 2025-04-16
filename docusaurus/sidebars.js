@@ -89,9 +89,6 @@ const sidebars = {
           type: 'doc',
           label: 'Preview',
           id: 'cms/features/preview',
-          customProps: {
-            updated: true
-          }
         },
         {
           type: 'doc',
@@ -175,7 +172,14 @@ const sidebars = {
             'cms/api/rest/guides/intro',
           ]
         },
-        'cms/api/client',
+        {
+          type: 'doc',
+          label: 'Strapi Client',
+          id: 'cms/api/client',
+          customProps: {
+            updated: true,
+          }
+        },
         'cms/api/graphql',
         {
           type: 'category',

@@ -165,7 +165,7 @@ const updatedHomepage = await homepage.update(
 await homepage.delete();
 ```
 
-### Working with files
+### Working with files <NewBadge />
 
 The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
 
