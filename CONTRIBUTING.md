@@ -84,7 +84,7 @@ To submit your contribution for review:
 3. Click the “Create pull request” button to create the pull request effectively.
     
     ✏️ If your pull request is not ready for review yet, choose the “[Create draft pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)” in the dropdown. The Strapi documentation team will review your pull request only when you will mark it as “[Ready for review](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/changing-the-stage-of-a-pull-request)”. 
-   ⚠️ Please use Draft PRs to work incrementally. A PR that is not marked as draft is considered ready for review and merge once approved, unless it documents a feature that is not merged yet. There is no need to write "ready to merge" in the comments.
+   ⚠️ Please use Draft PRs to work incrementally. A PR that is not marked as draft is considered ready for review and merge once approved, unless it documents a feature that is not merged yet. There is no need to write "ready to merge" in the PR description or comments.
    
 4. _(optional — if not set, the Strapi Documentation team will set or update this for you)_:<br/>Add GitHub labels for:
    - the section of the documentation targeted by the pull request: `source: CMS` or `source: Strapi Cloud`
