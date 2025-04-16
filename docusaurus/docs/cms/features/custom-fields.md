@@ -1,5 +1,5 @@
 ---
-title: Custom fields
+title: Custom Fields
 description: Learn how you can use custom fields to extend Strapi's content-types capabilities.
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 5
@@ -15,7 +15,7 @@ tags:
 
 import CustomFieldRequiresPlugin from '/docs/snippets/custom-field-requires-plugin.md'
 
-# Custom fields
+# Custom Fields
 
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or added to Strapi via plugins, custom fields can be used in the Content-Type Builder and Content Manager just like built-in fields.
 
