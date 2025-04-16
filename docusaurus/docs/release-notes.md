@@ -27,6 +27,53 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.2.0
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Rewrite Custom fields documentation as a feature page](https://github.com/strapi/documentation/pull/2469)
+- [Add `files` to Strapi Client docs](https://github.com/strapi/documentation/pull/2463)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix plugin init command](https://github.com/strapi/documentation/pull/2467)
+- [Remove unused plugins files](https://github.com/strapi/documentation/pull/2462)
+- [Update suggested npm production Dockerfile](https://github.com/strapi/documentation/pull/2458)
+
+#### Cloud
+- [Add caution about custom domains and Strapi Cloud assets URLs](https://github.com/strapi/documentation/pull/2470)
+
+#### Repository
+- [Fix identity cards design](https://github.com/strapi/documentation/pull/2461)
+- [Move contribution link to secondary table of contents on larger viewports](https://github.com/strapi/documentation/pull/2460)
+- [New tabs design](https://github.com/strapi/documentation/pull/2459)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/ClaXXX" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/58471398?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ClaXXX"/>
+</a>
+<a href="https://github.com/jozzhart" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/662502?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jozzhart"/>
+</a>
+<a href="https://github.com/maccomaccomaccomacco" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2686869?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="maccomaccomaccomacco"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.1.0
 
 <br />
