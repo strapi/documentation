@@ -80,6 +80,9 @@ The optional `inputSize` object, when specified, must contain all of the followi
 
 In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/cms/plugins-development/developing-plugins)):
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```js title="/src/plugins/color-picker/server/register.js"
 "use strict";
 
@@ -97,7 +100,17 @@ module.exports = ({ strapi }) => {
 };
 ```
 
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+</TabItem>
+</Tabs>
+
 The custom field could also be declared directly within the `strapi-server.js` file if you didn't have the plugin code scaffolded by the CLI generator:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/color-picker/strapi-server.js"
 module.exports = {
@@ -115,6 +128,13 @@ module.exports = {
   },
 };
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+</TabItem>
+</Tabs>
 
 #### Registering a custom field in the admin panel
 
@@ -148,6 +168,9 @@ The `app.customFields` object exposes a `register()` method on the `StrapiApp` i
 
 In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/cms/plugins-development/developing-plugins.md)):
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```jsx title="/src/plugins/color-picker/admin/src/index.js"
 import ColorPickerIcon from "./components/ColorPicker/ColorPickerIcon";
 
@@ -171,9 +194,9 @@ export default {
       icon: ColorPickerIcon, // don't forget to create/import your icon component
       components: {
         Input: async () =>
-          import(
-            /* webpackChunkName: "input-component" */ "./components/Input"
-          ),
+          import('./components/Input').then((module) => ({
+            default: module.Input,
+          })),
       },
       options: {
         // declare options here
@@ -185,6 +208,13 @@ export default {
 };
 ```
 
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+</TabItem>
+</Tabs>
+
 ##### Components
 
 `app.customFields.register()` must pass a `components` object with an `Input` React component to use in the Content Manager's edit view.
@@ -193,6 +223,9 @@ export default {
 
 In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/cms/plugins-development/developing-plugins.md)):
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```jsx title="./src/plugins/color-picker/admin/src/index.js"
 export default {
   register(app) {
@@ -200,13 +233,22 @@ export default {
       // …
       components: {
         Input: async () =>
-          import(/* webpackChunkName: "input-component" */ "./Input"),
+          import('./components/Input').then((module) => ({
+            default: module.Input,
+          })),
       },
       // …
     });
   },
 };
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+</TabItem>
+
+</Tabs>
 
 <details>
 <summary>Props passed to the custom field <code>Input</code> component:</summary>
@@ -235,6 +277,9 @@ As of Strapi v4.13.0, fields in the Content Manager can be auto-focussed via the
 **Example: A custom text input**
 
 In the following example we're providing a custom text input that is controlled. All inputs should be controlled otherwise their data will not be submitted on save.
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 
 ```jsx title="/src/plugins/<plugin-name>/admin/src/components/Input.js"
 import * as React from "react";
@@ -270,6 +315,13 @@ const Input = React.forwardRef((props, ref) => {
 
 export default Input;
 ```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+</TabItem>
+
+</Tabs>
 
 :::tip
 For a more detailed view of the props provided to the customFields and how they can be used check out the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/plugins/color-picker/admin/src/components/ColorPickerInput.tsx#L80-L95" text="ColorPickerInput file"/> in the Strapi codebase.
@@ -307,6 +359,9 @@ Each object in the `items` array can contain the following parameters:
 **Example: Declaring options for an example "color" custom field:**
 
 In the following example, the `color-picker` plugin was created using the CLI generator (see [plugins development](/cms/plugins-development/developing-plugins.md)):
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
 
 ```jsx title="/src/plugins/color-picker/admin/src/index.js"
 // imports go here (ColorPickerIcon, pluginId, yup package…)
@@ -390,11 +445,18 @@ export default {
 };
 ```
 
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
 <!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 
 :::tip
 The Strapi codebase gives an example of how settings objects can be described: check the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.ts" text="`baseForm.ts`"/> file for the `base` settings and the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.ts" text="`advancedForm.ts`"/> file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js" text="`attributeOptions.js`"/> file.
 :::
+
+</TabItem>
+</Tabs>
 
 ## Usage
 
@@ -429,7 +491,7 @@ As compared to how other types of models are defined, custom fields' attributes 
 
 **Example: A simple `color` custom field model definition:**
 
-```json title="./src/api/[apiName]/[content-type-name]/content-types/schema.json"
+```json title="/src/api/[apiName]/[content-type-name]/content-types/schema.json"
 
 {
   // …
