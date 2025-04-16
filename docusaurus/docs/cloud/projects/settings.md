@@ -419,6 +419,12 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 
 3. Click on the **Save** button.
 
+:::caution Custom domains and assets
+When using custom domains, these domains do not apply to the URLs of uploaded assets. Uploaded assets keep the Strapi Cloud project-based URL.
+
+This means that, if your custom domain is hosted at `https://my-custom-domain.com` and your Strapi Cloud project name is `my-strapi-cloud-instance`, API calls will still return URLs such as `https://my-strapi-cloud-instance.media.strapiapp.com/example.png`.
+:::
+
 ### Variables
 
 Environment variables (more information in the [CMS Documentation](/cms/configurations/environment)) are used to configure the environment of your Strapi application, such as the database connection.
