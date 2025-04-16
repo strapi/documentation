@@ -38,6 +38,11 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 - [Rewrite Custom fields documentation as a feature page](https://github.com/strapi/documentation/pull/2469)
 - [Add `files` to Strapi Client docs](https://github.com/strapi/documentation/pull/2463)
 
+#### Repository
+
+- [Move contribution link to secondary table of contents on larger viewports](https://github.com/strapi/documentation/pull/2460)
+- [New tabs design](https://github.com/strapi/documentation/pull/2459)
+
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
 <br />
@@ -52,8 +57,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 #### Repository
 - [Fix identity cards design](https://github.com/strapi/documentation/pull/2461)
-- [Move contribution link to secondary table of contents on larger viewports](https://github.com/strapi/documentation/pull/2460)
-- [New tabs design](https://github.com/strapi/documentation/pull/2459)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
