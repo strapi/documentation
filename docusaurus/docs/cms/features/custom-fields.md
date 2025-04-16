@@ -28,7 +28,7 @@ Custom fields extend Strapi’s capabilities by adding new types of fields to co
 
 ## Configuration
 
-Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields). For these, no other configuration is required, and you can start using them (see [usage](#usage)).
+Ready-made custom fields can be found on the [Marketplace](https://market.strapi.io/plugins?categories=Custom+fields). Once installed these, no other configuration is required, and you can start using them (see [usage](#usage)).
 
 You can also develop your own custom field.
 
