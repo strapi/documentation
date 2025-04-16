@@ -84,8 +84,6 @@ In the following example, the `color-picker` plugin was created using the CLI ge
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/color-picker/server/register.js"
-"use strict";
-
 module.exports = ({ strapi }) => {
   strapi.customFields.register({
     name: "color",
@@ -103,6 +101,21 @@ module.exports = ({ strapi }) => {
 </TabItem>
 
 <TabItem value="ts" label="TypeScript">
+
+```ts title="/src/plugins/color-picker/server/register.ts"
+export default ({ strapi }: { strapi: any }) => {
+  strapi.customFields.register({
+    name: "color",
+    plugin: "color-picker",
+    type: "string",
+    inputSize: {
+      // optional
+      default: 4,
+      isResizable: true,
+    },
+  });
+};
+```
 
 </TabItem>
 </Tabs>
@@ -132,6 +145,23 @@ module.exports = {
 </TabItem>
 
 <TabItem value="ts" label="TypeScript">
+
+```ts title="/src/plugins/color-picker/strapi-server.ts"
+export default {
+  register({ strapi }: { strapi: any }) {
+    strapi.customFields.register({
+      name: "color",
+      plugin: "color-picker",
+      type: "text",
+      inputSize: {
+        // optional
+        default: 4,
+        isResizable: true,
+      },
+    });
+  },
+};
+```
 
 </TabItem>
 </Tabs>
@@ -212,6 +242,43 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
+```ts title="/src/plugins/color-picker/admin/src/index.ts"
+import ColorPickerIcon from "./components/ColorPicker/ColorPickerIcon";
+
+export default {
+  register(app) {
+    // ... app.addMenuLink() goes here
+    // ... app.registerPlugin() goes here
+
+    app.customFields.register({
+      name: "color",
+      pluginId: "color-picker", // the custom field is created by a color-picker plugin
+      type: "string", // the color will be stored as a string
+      intlLabel: {
+        id: "color-picker.color.label",
+        defaultMessage: "Color",
+      },
+      intlDescription: {
+        id: "color-picker.color.description",
+        defaultMessage: "Select any color",
+      },
+      icon: ColorPickerIcon, // don't forget to create/import your icon component
+      components: {
+        Input: async () =>
+          import('./components/Input').then((module) => ({
+            default: module.Input,
+          })),
+      },
+      options: {
+        // declare options here
+      },
+    });
+  },
+
+  // ... bootstrap() goes here
+};
+```
+
 </TabItem>
 </Tabs>
 
@@ -226,7 +293,7 @@ In the following example, the `color-picker` plugin was created using the CLI ge
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```jsx title="./src/plugins/color-picker/admin/src/index.js"
+```jsx title="/src/plugins/color-picker/admin/src/index.js"
 export default {
   register(app) {
     app.customFields.register({
@@ -246,8 +313,25 @@ export default {
 </TabItem>
 
 <TabItem value="ts" label="TypeScript">
-</TabItem>
 
+```jsx title="/src/plugins/color-picker/admin/src/index.js"
+export default {
+  register(app) {
+    app.customFields.register({
+      // …
+      components: {
+        Input: async () =>
+          import('./components/Input').then((module) => ({
+            default: module.Input,
+          })),
+      },
+      // …
+    });
+  },
+};
+```
+
+</TabItem>
 </Tabs>
 
 <details>
@@ -317,10 +401,44 @@ export default Input;
 ```
 
 </TabItem>
-
 <TabItem value="ts" label="TypeScript">
-</TabItem>
 
+```tsx title="/src/plugins/<plugin-name>/admin/src/components/Input.ts"
+import * as React from "react";
+
+import { useIntl } from "react-intl";
+
+const Input = React.forwardRef((props, ref) => {
+  const { attribute, disabled, intlLabel, name, onChange, required, value } =
+    props; // these are just some of the props passed by the content-manager
+
+  const { formatMessage } = useIntl();
+
+  const handleChange = (e) => {
+    onChange({
+      target: { name, type: attribute.type, value: e.currentTarget.value },
+    });
+  };
+
+  return (
+    <label>
+      {formatMessage(intlLabel)}
+      <input
+        ref={ref}
+        name={name}
+        disabled={disabled}
+        value={value}
+        required={required}
+        onChange={handleChange}
+      />
+    </label>
+  );
+});
+
+export default Input;
+```
+
+</TabItem>
 </Tabs>
 
 :::tip
@@ -449,14 +567,96 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
+```tsx title="/src/plugins/color-picker/admin/src/index.ts"
+// imports go here (ColorPickerIcon, pluginId, yup package…)
+
+export default {
+  register(app) {
+    // ... app.addMenuLink() goes here
+    // ... app.registerPlugin() goes here
+    app.customFields.register({
+      // …
+      options: {
+        base: [
+          /*
+            Declare settings to be added to the "Base settings" section
+            of the field in the Content-Type Builder
+          */
+          {
+            sectionTitle: {
+              // Add a "Format" settings section
+              id: "color-picker.color.section.format",
+              defaultMessage: "Format",
+            },
+            items: [
+              // Add settings items to the section
+              {
+                /*
+                  Add a "Color format" dropdown
+                  to choose between 2 different format options
+                  for the color value: hexadecimal or RGBA
+                */
+                intlLabel: {
+                  id: "color-picker.color.format.label",
+                  defaultMessage: "Color format",
+                },
+                name: "options.format",
+                type: "select",
+                value: "hex", // option selected by default
+                options: [
+                  // List all available "Color format" options
+                  {
+                    key: "hex",
+                    defaultValue: "hex",
+                    value: "hex",
+                    metadatas: {
+                      intlLabel: {
+                        id: "color-picker.color.format.hex",
+                        defaultMessage: "Hexadecimal",
+                      },
+                    },
+                  },
+                  {
+                    key: "rgba",
+                    value: "rgba",
+                    metadatas: {
+                      intlLabel: {
+                        id: "color-picker.color.format.rgba",
+                        defaultMessage: "RGBA",
+                      },
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        advanced: [
+          /*
+            Declare settings to be added to the "Advanced settings" section
+            of the field in the Content-Type Builder
+          */
+        ],
+        validator: (args) => ({
+          format: yup.string().required({
+            id: "options.color-picker.format.error",
+            defaultMessage: "The color format is required",
+          }),
+        }),
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+</Tabs>
+
 <!-- TODO: replace these tip and links by proper documentation of all the possible shapes and parameters for `options` -->
 
 :::tip
 The Strapi codebase gives an example of how settings objects can be described: check the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/baseForm.ts" text="`baseForm.ts`"/> file for the `base` settings and the <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/advancedForm.ts" text="`advancedForm.ts`"/> file for the `advanced` settings. The base form lists the settings items inline but the advanced form gets the items from an <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/core/content-type-builder/admin/src/components/FormModal/attributes/attributeOptions.js" text="`attributeOptions.js`"/> file.
 :::
-
-</TabItem>
-</Tabs>
 
 ## Usage
 
