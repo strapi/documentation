@@ -30,6 +30,10 @@ The Documentation plugin automates your API documentation creation. It basically
   </IdentityCardItem>
 </IdentityCard>
 
+:::caution Unmaintained plugin
+The Documentation plugin is not actively maintained and may not work with Strapi 5.
+:::
+
 <Guideflow lightId="5pvjz4zswp" darkId="6kw4vdwizp"/>
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the <ExternalLink to="https://swagger.io/specification/" text="OpenAPI specification"/>. The Documentation plugin generates the <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object" text="paths objects"/> and <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object" text="schema objects"/> and converts all Strapi types to <ExternalLink to="https://swagger.io/docs/specification/data-models/data-types/" text="OpenAPI data types"/>.
