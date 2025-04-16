@@ -40,7 +40,7 @@ Strapi provides the following programmatic APIs for plugins to hook into some of
 </CustomDocCardsWrapper>
 
 :::strapi Custom fields plugins
-Plugins can also be used to add [custom fields](/cms/plugins-development/custom-fields) to Strapi.
+Plugins can also be used to add [custom fields](/cms/features/custom-fields) to Strapi.
 :::
 
 ## Guides

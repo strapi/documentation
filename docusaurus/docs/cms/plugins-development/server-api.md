@@ -56,7 +56,7 @@ The `/src/server/index.js` file at the root of the plugin folder exports the req
 
 ### register()
 
-This function is called to load the plugin, before the application is [bootstrapped](#bootstrap), in order to register [permissions](/cms/features/users-permissions), the server part of [custom fields](/cms/plugins-development/custom-fields#registering-a-custom-field-on-the-server), or database migrations.
+This function is called to load the plugin, before the application is [bootstrapped](#bootstrap), in order to register [permissions](/cms/features/users-permissions), the server part of [custom fields](/cms/features/custom-fields#registering-a-custom-field-on-the-server), or database migrations.
 
 **Type**: `Function`
 

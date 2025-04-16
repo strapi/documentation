@@ -982,7 +982,7 @@
     },
     {
       "source": "/dev-docs/custom-fields",
-      "destination": "/cms/plugins-development/custom-fields",
+      "destination": "/cms/features/custom-fields",
       "permanent": true
     },
     {

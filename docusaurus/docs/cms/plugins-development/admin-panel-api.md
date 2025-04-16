@@ -205,7 +205,7 @@ The Admin Panel API allows a plugin to take advantage of several small APIs to p
 | Register a hook                          | [Hooks API](#hooks-api)                 | [`registerHook()`](#hooks-api)                    | [`bootstrap()`](#bootstrap)   |
 
 :::tip Replacing the WYSIWYG
-The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/plugins-development/custom-fields), for instance using the <ExternalLink to="https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor" text="CKEditor custom field plugin"/>.
+The WYSIWYG editor can be replaced by taking advantage of [custom fields](/cms/features/custom-fields), for instance using the <ExternalLink to="https://market.strapi.io/plugins/@ckeditor-strapi-plugin-ckeditor" text="CKEditor custom field plugin"/>.
 :::
 
 :::info

@@ -102,6 +102,10 @@ details.alert {
   a:hover {
     text-decoration: var(--ifm-link-decoration);
   }
+
+  code {
+    background-color: inherit;
+  }
 }
 
 @include dark {

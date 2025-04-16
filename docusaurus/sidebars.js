@@ -63,6 +63,7 @@ const sidebars = {
           label: 'Content History',
           id: 'cms/features/content-history'
         },
+        'cms/features/custom-fields',
         {
           type: 'doc',
           label: 'Data Management',
@@ -329,7 +330,6 @@ const sidebars = {
             'cms/plugins-development/admin-panel-api',
             'cms/plugins-development/content-manager-apis',
             'cms/plugins-development/server-api',
-            'cms/plugins-development/custom-fields',
             'cms/plugins-development/plugins-extension',
             'cms/plugins-development/guides/pass-data-from-server-to-admin',
             'cms/plugins-development/guides/store-and-access-data',
