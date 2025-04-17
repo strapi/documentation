@@ -75,6 +75,14 @@ const sidebars = {
           id: 'cms/features/draft-and-publish'
         },
         'cms/features/email',
+        { 
+          type: 'doc',
+          label: 'Homepage',
+          id: 'cms/features/homepage',
+          customProps: {
+            new: true,
+          }
+        },
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
