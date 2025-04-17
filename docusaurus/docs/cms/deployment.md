@@ -215,6 +215,12 @@ In addition, community-maintained guides for additional providers are available 
 <CustomDocCard emoji="🔗" small title="Proxying with NGinx" link="https://forum.strapi.io/t/nginx-proxing-with-strapi/" />
 <CustomDocCard emoji="🔗" small title="Using the PM2 process manager" link="https://forum.strapi.io/t/how-to-use-pm2-process-manager-with-strapi/" />
 
+<br/>
+
+The following external guide(s), not officially maintained by Strapi, might also help deploy Strapi on various environments:
+
+<CustomDocCard icon="arrow-square-out" small title="[Microsoft Community] Deploying on Azure" link="https://techcommunity.microsoft.com/blog/appsonazureblog/strapi-on-app-service-quick-start/4401398" />
+
 :::strapi Multi-tenancy
 If you're looking for multi-tenancy options, the Strapi Blog has a <ExternalLink text="comprehensive guide" to="https://strapi.io/blog/multi-tenancy-in-strapi-a-comprehensive-guide" />.
 :::
