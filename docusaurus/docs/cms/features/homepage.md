@@ -307,6 +307,9 @@ export default MyWidget;
 </TabItem>
 </Tabs>
 
+
+<!-- TODO: document the "Data management" part from the RFC: see https://www.notion.so/strapi/Homepage-widgets-API-RFC-1988f3598074807493e1f594b66dd82d?pvs=4#1998f35980748019966acb49feaf27e3 -->
+
 ###### Widget helper components
 
 Strapi provides several helper components to maintain a consistent user experience across widgets:
