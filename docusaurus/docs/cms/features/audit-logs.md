@@ -15,6 +15,8 @@ tags:
 # Audit Logs
 <EnterpriseBadge />
 
+<VersionBadge version="4.6.0" />
+
 The Audit Logs feature provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
 <IdentityCard>
