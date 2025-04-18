@@ -21,13 +21,7 @@ The Review Workflows feature allows you to create and manage workflows for your 
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<ThemedImage
-  alt="Review Stage column"
-  sources={{
-    light: '/img/assets/content-manager/review-workflow-list-view.png',
-    dark: '/img/assets/content-manager/review-workflow-list-view_DARK.png',
-  }}
-/>
+<Guideflow lightId="zpez8vgs3p" darkId="lpx4d4zs4k"/>
 
 ## Configuration
 

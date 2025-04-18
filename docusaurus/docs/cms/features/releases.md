@@ -22,13 +22,7 @@ The Releases feature enables content managers to organize entries into container
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<ThemedImage
-  alt="List of Releases"
-  sources={{
-    light: '/img/assets/releases/releases-overview2.png',
-    dark: '/img/assets/releases/releases-overview2_DARK.png',
-  }}
-/>
+<Guideflow lightId="3r3wvy5tnk" darkId="xrgw472swp"/>
 
 ## Configuration
 

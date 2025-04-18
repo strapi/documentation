@@ -23,13 +23,7 @@ The Draft & Publish feature allows to manage drafts for your content.
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<ThemedImage
-  alt="Editing draft version"
-  sources={{
-    light: '/img/assets/content-manager/editing_draft_version3.png',
-    dark: '/img/assets/content-manager/editing_draft_version3_DARK.png',
-  }}
-/>
+<Guideflow lightId="3r3wj5lbnk" darkId="ok8y5xehxp"/>
 
 ## Configuration
 

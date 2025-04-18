@@ -22,13 +22,7 @@ The Role-Based Access Control (RBAC) feature allows the management of the admini
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<ThemedImage
-  alt="Administrator roles interface"
-  sources={{
-    light: '/img/assets/users-permissions/administrator_roles.png',
-    dark: '/img/assets/users-permissions/administrator_roles_DARK.png',
-  }}
-/>
+<Guideflow lightId="gky9n4mtdp" darkId="zkjloxzaep"/>
 
 ## Configuration
 
