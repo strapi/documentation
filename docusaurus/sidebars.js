@@ -75,14 +75,7 @@ const sidebars = {
           id: 'cms/features/draft-and-publish'
         },
         'cms/features/email',
-        { 
-          type: 'doc',
-          label: 'Homepage',
-          id: 'cms/features/homepage',
-          customProps: {
-            new: true,
-          }
-        },
+
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
@@ -300,6 +293,14 @@ const sidebars = {
             'cms/admin-panel-customization/options',
             'cms/admin-panel-customization/wysiwyg-editor',
           ]
+        },
+        { 
+          type: 'doc',
+          label: 'Homepage customization',
+          id: 'cms/admin-panel-customization/homepage',
+          customProps: {
+            new: true,
+          }
         },
         'cms/cli',
         {

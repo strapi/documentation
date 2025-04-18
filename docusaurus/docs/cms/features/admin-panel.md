@@ -21,6 +21,10 @@ sources={{
   }}
 />
 
+:::tip
+You can [create your own widgets](/cms/admin-panel-customization/homepage) to customize the admin panel's homepage.
+:::
+
 ## Overview
 
 :::prerequisites
