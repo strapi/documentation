@@ -60,7 +60,7 @@ Once you deployed your project, if you visit the Strapi Cloud dashboard, you may
 
 **Alias:** `strapi cloud:link`
 
-Links project in current folder to an existing project in Strapi Cloud.
+Links project in the current folder to an existing project in Strapi Cloud.
 
 ```bash
 strapi link

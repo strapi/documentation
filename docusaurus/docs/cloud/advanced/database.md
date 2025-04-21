@@ -19,7 +19,7 @@ Strapi Cloud provides a pre-configured PostgreSQL database by default. However, 
 
 :::prerequisites
 - A local Strapi project running on `v4.8.2+`.
-- Credentials for external database.
+- Credentials for an external database.
 - If using an existing database, the schema must match the Strapi project schema.
 :::
 

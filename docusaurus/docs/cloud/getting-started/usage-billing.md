@@ -15,14 +15,14 @@ tags:
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarises Strapi Cloud usage-based pricing tiers, for general features & usage, CMS features and Cloud specific features:
+Strapi Cloud offers 5 free 14 days trials for all new accounts, and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing tiers, for general features and usage:
 
 | Feature | Free Trial | Essential | Pro | Scale |
 | --- | --- | --- | --- | --- |
 | **Database Entries**  | 2,500 | Unlimited* | Unlimited* | Unlimited* |
 | **Assets Storage** | 25GB | 50GB | 250GB | 1000GB |
 | **Assets Bandwidth (per month)** | 25GB | 50GB | 500GB | 1,000GB |
-| **API Requests** | 10,000 | 100,000 | 1,000,000 | 10,000,000 |
+| **API Requests (per month)** | 10,000 | 100,000 | 1,000,000 | 10,000,000 |
 |  |  |  |  |  |
 | **Backups** | N/A | N/A | Weekly | Daily |
 | **Environments** | N/A | N/A | 0 included (up to 99 extra) | 1 included (up to 99 extra) |
@@ -43,7 +43,7 @@ Strapi Cloud offers a free 14 days trial for all new accounts, and 3 paid plans:
 
 Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
 
-The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 150GB for assets storage, and overages will be charged the same way as for the production environment). Note however that the assets bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
+The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 250GB for assets storage, and overages will be charged the same way as for the production environment). Note however that the assets bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
  
 ## Billing
 
@@ -51,17 +51,17 @@ Billing is based on the usage of your Strapi Cloud account and projects. You wil
 
 ### Overages
 
-If you exceed the limits of your plan for API Requests, Asset Bandwidth, or Asset Storage, you will be charged for the corresponding overages. 
+If you exceed the limits of your plan for API Requests, Assets Bandwidth, or Assets Storage, you will be charged for the corresponding overages. 
 
-For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
+For example, if you exceed the 500GB limit in assets bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
 
 Overages are charged according to the following rates:
 
 | Feature | Rate |
 | --- | --- |
 | **API Requests** | $1.50 / 25k requests |
-| **Asset Bandwidth** | $30.00 / 100GB |
-| **Asset Storage** | $0.60 / GB per month |
+| **Assets Bandwidth** | $30.00 / 100GB |
+| **Assets Storage** | $0.60 / GB per month |
 
 ### Project suspension
 
@@ -77,7 +77,7 @@ If you do not resolve the issue within 30 days, your suspended project will be d
 
 #### Project suspension after subscription cancellation
 
-If you don't pay the invoice, the subscription of your project will automatically be cancelled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/account-billing#account-billing)).
+If you don't pay the invoice, the subscription of your project will automatically be canceled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/account-billing#account-billing)).
 
 1. Log into the billing modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
 2. Go back to the homepage of the billing modal, listing subscriptions and billing options.

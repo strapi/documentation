@@ -19,7 +19,7 @@ tags:
 Strapi Cloud comes with a local upload provider out of the box. However, it can also be configured to utilize a third-party upload provider, if needed.
 
 :::caution
-Please be advised that Strapi are unable to provide support for third-party upload providers.
+Please be advised that Strapi is unable to provide support for third-party upload providers.
 :::
 
 :::prerequisites

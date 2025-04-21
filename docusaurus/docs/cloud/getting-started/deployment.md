@@ -63,11 +63,11 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-3. Choose a plan for your Strapi Cloud project: either Essential, Pro, Scale, or the 14-days free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
+3. Choose a plan for your Strapi Cloud project: either Essential, Pro, Scale, or the 14-day free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
     :::note Notes
-    - Strapi Cloud offers a free trial for only one project and you will not need to share your credit card details to deploy your first project. Once the free trial has already been used for a previous project, the option will no longer appear in the plan selection.
-    - You can't upload HTML files to Strapi Cloud during your free trial.
+    - Strapi Cloud offers 5 free trial projects and you will not need to share your credit card details to deploy your first project. Once the free trials have already been used for a previous project, the option will no longer appear in the plan selection.
+    - You can't upload HTML files to Strapi Cloud during your free trials.
     :::
 
 4. Connect a git repository to your new Strapi Cloud project.
@@ -147,10 +147,10 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Display name | Write the name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`). |
     | Git branch   | Choose from the drop-down the default branch to use for this deployment. This uses the default branch of the repository. |
     | Deploy on push | Check the box to automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes. |
-    | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be New York in North America (default) or Amsterdam in Europe. |
+    | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West), Asia (Southeast) or Oceania. |
 
     :::note
-    The Git branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the project name and hosting region setting can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
@@ -180,7 +180,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 :::strapi No billing step for free trials
 If you chose the free trial, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project. 
 
-During the free trial, will be kept informed of the number of remaining free days. You will then be notified by email and via the Strapi Cloud dashboard whenever it is time to fill in your billing information to move to a paid plan.
+During the free trial, you will be kept informed of the number of remaining free days. You will then be notified by email and via the Strapi Cloud dashboard whenever it is time to fill in your billing information to move to a paid plan.
 
 👉 Skip to step 5 of the section below to finalise the creation of your project.
 :::

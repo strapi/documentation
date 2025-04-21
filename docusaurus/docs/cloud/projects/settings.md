@@ -58,9 +58,9 @@ The project name is set at project creation (see [Project creation](/cloud/getti
 2. In the dialog, write the new project name of your choice in the *Project name* textbox.
 3. Click on the **Rename** button to confirm the project name modification.
 
-#### Adding CMS license key
+#### Adding a CMS license key
 
-A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchases: please refer to the <ExternalLink text="Strapi Pricing page" to="https://strapi.io/pricing-self-hosted"/> for more information and/or to purchase a license.
+A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the <ExternalLink text="Strapi Pricing page" to="https://strapi.io/pricing-self-hosted"/> for more information and/or to purchase a license.
 
 :::note
 If you don't see the *Strapi CMS license key* section, it probably means that your subscription is a legacy one and does not support custom CMS licenses. It means that you already have one that is automatically included on your project.
@@ -102,7 +102,7 @@ Updating the git repository could result in the loss of the project and its data
 
 #### Deleting Strapi Cloud project
 
-You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be cancelled.
+You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be canceled.
 
 1. In the *Delete project* section of the <Icon name="faders" /> *General* tab, click on the **Delete project** button.
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
@@ -379,7 +379,7 @@ If you need to restore a backup of your project:
 
 1. In the <Icon name="arrow-clockwise" /> *Backups* section, click on the **Restore backup** button.
 2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
-3. Click on the **Restore** button of the dialog. Once the restoration finished, your project will be back to the state it was at the time of the chosen backup. You will be able to see the restoration timestamp and the backup restored in the <Icon name="arrow-clockwise"/> *Backups* tab.
+3. Click on the **Restore** button of the dialog. Once the restoration is finished, your project will be back to the state it was at the time of the chosen backup. You will be able to see the restoration timestamp and the backup restored in the <Icon name="arrow-clockwise"/> *Backups* tab.
 4. The timestamp of the last completed restoration will be displayed to help you track when the project was last restored.
 
 ### Domains

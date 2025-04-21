@@ -17,7 +17,7 @@ tags:
 Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize another email provider, if needed.
 
 :::caution
-Please be advised that Strapi are unable to provide support for third-party email providers.
+Please be advised that Strapi is unable to provide support for third-party email providers.
 
 :::
 

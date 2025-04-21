@@ -26,10 +26,10 @@ It displays a list of the latest notifications for all your existing projects. C
 
 The following notifications can be listed in the Notifications center:
 
-- *Deploy completed*: when a deployment is successfully done.
+- *deployment completed*: when a deployment is successfully done.
 - *Build failed*: when a deployment fails during the build stage.
-- *Deploy failed*: when a deployment fails during the deployment stage.
-- *Deploy triggered*: when a deployment is triggered by a new push to the connected repository. This notification is however not sent when the deployment is triggered manually.
+- *deployment failed*: when a deployment fails during the deployment stage.
+- *deployment triggered*: when a deployment is triggered by a new push to the connected repository. This notification is however not sent when the deployment is triggered manually.
 
 :::note
 All notifications older than 30 days are automatically removed from the Notification center.

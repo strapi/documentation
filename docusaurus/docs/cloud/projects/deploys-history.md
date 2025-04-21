@@ -1,7 +1,7 @@
 ---
-title: Deploy history & logs
+title: Deployment history & logs
 displayed_sidebar: cloudSidebar
-description: View projects' deploy history and logs.
+description: View projects' deployment history and logs.
 canonicalUrl: https://docs.strapi.io/cloud/deploys-history.html
 sidebar_position: 1
 tags:
@@ -12,11 +12,11 @@ tags:
 - Strapi Cloud project
 ---
 
-# Deploy history and logs
+# Deployment history and logs
 
-For each Strapi Cloud project, you can access the history of all deployments that occured and their details including build and deploy logs. This information is available in the *Deployments* tab.
+For each Strapi Cloud project, you can access the history of all deployments that occurred and their details including build and deployment logs. This information is available in the *Deployments* tab.
 
-## Viewing deploy history
+## Viewing the deployment history
 
 In the *Deployments* tab is displayed a chronological list of cards with the details of all historical deployments for your project.
 
@@ -33,11 +33,11 @@ Each card displays the following information:
 - Deployment status:
     - *Deploying*
     - *Done*
-    - *Cancelled*
+    - *Canceled*
     - *Build failed*
-    - *Deploy failed*
+    - *Deployment failed*
 - Last deployment time (when the deployment was triggered and the duration)
-- Production branch
+- Branch
 
 ## Accessing deployment details & logs
 
@@ -59,6 +59,6 @@ Click the ![Copy button](/img/assets/icons/duplicate.svg) **Copy to clipboard** 
 
 In the right side of the *Deployment details* page is also displayed the following information:
 - *Commit*: the commit SHA <Annotation>💡 The commit SHA (or hash) is the unique ID of your commit, which refers to a specific change that was made at a specific time.</Annotation>, with a direct link to your git provider, and commit message used for this deployment
-- *Status*, which can be *Building*, *Deploying*, *Done*, *Cancelled*, *Build failed*, or *Deploy failed*
+- *Status*, which can be *Building*, *Deploying*, *Done*, *Canceled*, *Build failed*, or *Deployment failed*
 - *Source*: the branch and commit message for this deployment
-- *Duration*: the amount of time the deployment took and when it occured
+- *Duration*: the amount of time the deployment took and when it occurred
