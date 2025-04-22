@@ -10,7 +10,7 @@ tags:
 ---
 
 # Content History
-<GrowthBadge /> <EnterpriseBadge/>
+<GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
 
