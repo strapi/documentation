@@ -15,6 +15,8 @@ tags:
 
 # Data import
 
+<VersionBadge version="4.6.0" />
+
 The `strapi import` command is part of the [Data Management feature](/cms/features/data-management) and used to import data from a file. By default, the `strapi import` command imports data from an encrypted and compressed `tar.gz.enc` file which includes:
 
 - the project configuration,

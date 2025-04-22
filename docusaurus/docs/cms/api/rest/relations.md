@@ -165,6 +165,8 @@ const response = await fetch(
 
 ### Relations reordering
 
+<VersionBadge version="4.6.0" />
+
 Positional arguments can be passed to the longhand syntax of `connect` to define the order of relations.
 
 The longhand syntax accepts an array of objects, each object containing the `documentId` of the entry to be connected and an optional `position` object to define where to connect the relation.
