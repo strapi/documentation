@@ -16,7 +16,7 @@ tags:
 
 For each Strapi Cloud project, you can access the history of all deployments that occurred and their details including build and deployment logs. This information is available in the *Deployments* tab.
 
-## Viewing the deployment history
+## Viewing the deployment history {#viewing-deploy-history}
 
 In the *Deployments* tab is displayed a chronological list of cards with the details of all historical deployments for your project.
 
