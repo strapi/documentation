@@ -34,12 +34,12 @@ Each project card displays the following information:
 
 Each project card also displays a <Icon name="dots-three-outline" /> menu icon to access the following options:
 * **Visit App**: to be redirected to the application
-* **Go to Deployments**: to be redirected to the [*Deploys*](/cloud/projects/deploys) page
+* **Go to Deployments**: to be redirected to the [*Deployment*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
 
 ## Accessing a project's dashboard
 
-From the *Projects* page, click on any project card to access is dashboard. It displays the project and environment details and gives access to the deployment history and all available settings.
+From the *Projects* page, click on any project card to access its dashboard. It displays the project and environment details and gives access to the deployment history and all available settings.
 
 <ThemedImage
   alt="Project overview"
@@ -58,9 +58,10 @@ From the dashboard's header of a chosen project, you can:
 Your project's dashboard also displays:
 - the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) <ScreenshotNumberReference number="5" />
 - the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
-  - the number of API calls and database entries,
+  - the number of API calls,
   - the current usage for assets bandwidth and storage,
   - the name of the branch and a **Manage** button to be redirect to the branch settings (see [Modifying git repository & branch](/cloud/projects/settings#modifying-git-repository--branch)),
   - the name of the base directory,
-  - the Strapi version number.
+  - the Strapi version number,
+  - the Strapi app's url.
 
