@@ -21,13 +21,7 @@ The Content History feature, in the <Icon name="feather" /> Content Manager, giv
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<ThemedImage
-alt="Accessing the Content History of a document"
-sources={{
-  light:'/img/assets/content-manager/accessing-content-history.png',
-  dark:'/img/assets/content-manager/accessing-content-history_DARK.png',
-}}
-/>
+<Guideflow lightId="9r2m2y1sok" darkId="er566mli6p"/>
 
 ## Usage
 

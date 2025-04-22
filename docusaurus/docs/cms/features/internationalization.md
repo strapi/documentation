@@ -22,13 +22,7 @@ The Internationalization feature allows to manage content in different languages
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
-<ThemedImage
-  alt="i18n settings"
-  sources={{
-    light: '/img/assets/settings/settings-i18n.png',
-    dark: '/img/assets/settings/settings-i18n_DARK.png',
-  }}
-/>
+<Guideflow lightId="zkj5431ser" darkId="vkm9nn0t3p"/>
 
 ## Configuration
 
