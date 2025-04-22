@@ -58,7 +58,7 @@ The project name is set at project creation (see [Project creation](/cloud/getti
 2. In the dialog, write the new project name of your choice in the *Project name* textbox.
 3. Click on the **Rename** button to confirm the project name modification.
 
-#### Adding a CMS license key
+#### Adding a CMS license key {#adding-cms-license-key}
 
 A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the <ExternalLink text="Strapi Pricing page" to="https://strapi.io/pricing-self-hosted"/> for more information and/or to purchase a license.
 
