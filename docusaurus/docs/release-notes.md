@@ -27,6 +27,50 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.2.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add Guideflows to feature pages](https://github.com/strapi/documentation/pull/2473)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Display required version for audit logs, data export and import, and relations reordering](https://github.com/strapi/documentation/pull/2475)
+- [Add link to external guide about deploying Strapi on Azure](https://github.com/strapi/documentation/pull/2472)
+- [Fix screenshot description in Cloud projects overview](https://github.com/strapi/documentation/pull/2471)
+
+#### Cloud
+- [Fix various Cloud docs typos](https://github.com/strapi/documentation/pull/2476)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Mike-pw" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/82603294?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Mike-pw"/>
+</a>
+<a href="https://github.com/campos20" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/10170850?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="campos20"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.2.0
 
 <br />
