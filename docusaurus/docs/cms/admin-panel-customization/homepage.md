@@ -32,7 +32,10 @@ If you recently created a Strapi project, the Homepage may also display a quick 
 
 ## Adding custom widgets <FeatureFlagBadge feature="unstableWidgetsApi"/>
 
-The ability to add custom widgets to the Homepage is an experimental feature that needs to be enabled through a feature flag.
+To add a custom widget, you need to:
+
+- register it
+- create a widget component
 
 ### Enabling the feature flag
 
@@ -66,42 +69,15 @@ export default ({ env }) => ({
 
 </Tabs>
 
-After enabling the feature flag and restarting your application, the Homepage will be able to display custom widgets registered by plugins.
+After enabling the feature flag and restarting your application, the Homepage will be able to display the registered custom widgets.
 
 ### Registering custom widgets
 
-You can extend the Homepage by developing custom widgets through plugins (see [plugins development](/cms/plugins-development/developing-plugins) for an introduction on creating Strapi plugins). This section covers how to use the Widgets API to create your own widgets.
+The recommended way to create a widget is through a Strapi plugin (see [plugins development](/cms/plugins-development/developing-plugins) for additional information on how to create a plugin). But like [custom fields](/cms/features/custom-fields), you can also register a widget through the [application's global `register()` lifecycle](/cms/configurations/functions#register).
 
-:::note
-The recommended way to create a widget is through a Strapi plugin, but, just like for [custom fields](/cms/features/custom-fields), you can also register a widget through the [application's `register()` lifecycle](/cms/configurations/functions#register).
-:::
+To register a widget, use `app.widgets.register()`.
 
-#### Widget API reference
-
-Widgets are registered using the `app.widgets.register()` method during a plugin's [bootstrap phase](/cms/plugins-development/server-api#bootstrap). This method can take either a single widget configuration object or an array of configuration objects. Each widget configuration object can accept the following properties:
-
-| Property    | Type                   | Description                                           | Required |
-|-------------|------------------------|-------------------------------------------------------|----------|
-| `icon`      | `React.ComponentType`  | Icon component to display beside the widget title     | Yes      |
-| `title`     | `MessageDescriptor`    | Title for the widget with translation support         | Yes      |
-| `component` | `() => Promise<React.ComponentType>` | Async function that returns the widget component | Yes      |
-| `id`        | `string`               | Unique identifier for the widget                      | Yes      |
-| `link`      | `Object`               | Optional link to add to the widget (see [link object properties](#link-object-properties))| No       |
-| `pluginId`  | `string`               | ID of the plugin registering the widget               | No       |
-| `permissions` | `Permission[]`       | Permissions required to view the widget               | No       |
-
-##### Link object properties
-
-If you want to add a link to your widget (e.g., to navigate to a detailed view), you can provide a `link` object with the following properties:
-
-| Property | Type              | Description                                    | Required |
-|----------|-------------------|------------------------------------------------|----------|
-| `label`  | `MessageDescriptor` | The text to display for the link               | Yes      |
-| `href`   | `string`          | The URL where the link should navigate to      | Yes      |
-
-#### Registering a widget
-
-Widgets are registered in the plugin's admin `index` file, in [the `register` function](/cms/plugins-development/server-api#register):
+If you're building a plugin, use this in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-api#register) in the `index` file. If you're adding the widget to just one Strapi application, without a plugin, use the global `register()` lifecycle method instead.
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
@@ -180,7 +156,31 @@ export default {
 </TabItem>
 </Tabs>
 
-#### Implementing a widget component
+#### Widget API reference
+
+The `app.widgets.register()` method can take either a single widget configuration object or an array of configuration objects. Each widget configuration object can accept the following properties:
+
+| Property    | Type                   | Description                                           | Required |
+|-------------|------------------------|-------------------------------------------------------|----------|
+| `icon`      | `React.ComponentType`  | Icon component to display beside the widget title     | Yes      |
+| `title`     | `MessageDescriptor`    | Title for the widget with translation support         | Yes      |
+| `component` | `() => Promise<React.ComponentType>` | Async function that returns the widget component | Yes      |
+| `id`        | `string`               | Unique identifier for the widget                      | Yes      |
+| `link`      | `Object`               | Optional link to add to the widget (see link object properties)| No       |
+| `pluginId`  | `string`               | ID of the plugin registering the widget               | No       |
+| `permissions` | `Permission[]`       | Permissions required to view the widget               | No       |
+
+**Link object properties:**
+
+If you want to add a link to your widget (e.g., to navigate to a detailed view), you can provide a `link` object with the following properties:
+
+| Property | Type              | Description                                    | Required |
+|----------|-------------------|------------------------------------------------|----------|
+| `label`  | `MessageDescriptor` | The text to display for the link               | Yes      |
+| `href`   | `string`          | The URL where the link should navigate to      | Yes      |
+
+
+### Creating a widget component
 
 Widget components should be designed to display content in a compact and informative way. Here's how to implement a basic widget component:
 
@@ -325,10 +325,11 @@ Strapi provides several helper components to maintain a consistent user experien
 
 These components help maintain a consistent look and feel across different widgets.
 
-#### Complete example: Content metrics widget
+## Example: Adding a content metrics widget
 
-Below is a complete example of creating a content metrics widget that displays a count of different content types in your Strapi application:
+The following is a complete example of creating a content metrics widget that displays a count of different content types entries saved in your Strapi application:
 
+<!-- TODO: update code with my own repo's code -->
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
 
@@ -634,7 +635,7 @@ export default [
 </TabItem>
 </Tabs>
 
-#### Adding a widget to the sidebar
+### Adding a widget to the sidebar
 
 If you want to create a more detailed view that works alongside your widget, you can add a link to it:
 
