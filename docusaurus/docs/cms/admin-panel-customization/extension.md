@@ -26,14 +26,14 @@ There are 2 use cases where you might want to extend the admin panel:
 
 :::strapi Additional resources
 * If you're searching for ways of replacing the default WYSIWYG editor, please refer to the [corresponding page](/cms/admin-panel-customization/wysiwyg-editor).
-* The  will also provide additional information on developing for Strapi's admin panel.
+* The [Admin Panel API for plugins](/cms/plugins-development/admin-panel-api) will also provide additional information on developing for Strapi's admin panel.
 :::
-
-
 
 ## Adding a Widget to the Sidebar
 
-Strapi allows you to extend the admin panel by adding custom widgets to the sidebar. This feature enables you to integrate additional functionality or information directly into the main navigation area of the admin panel.
+Strapi allows you to extend the admin panel by adding custom widgets to the sidebar. This feature enables you to integrate additional functionality or information directly into the main navigation area of the admin panel. Custom sidebar widgets can enhance the user experience by providing quick access to important data, custom actions, or external resources.
+
+### Implementation
 
 To add a widget to the sidebar, you need to use the `admin.injectComponent` method in your `src/admin/app.js` file. Here's an example of how to implement this:
 
@@ -56,8 +56,31 @@ In this example:
   - `name`: A unique identifier for your widget.
   - `Component`: A React component that defines what will be rendered in the sidebar.
 
-You can replace the simple string `'Hello World'` with a more complex React component to create a fully functional widget. This component can include any custom logic, state management, or API calls you need for your specific use case.
+### Customizing Your Widget
 
-By leveraging this feature, you can enhance the admin panel with tailored functionality, such as displaying summary data, providing quick access to specific content types, or integrating with external services directly from the sidebar.
+While the example above shows a simple string being rendered, you can replace it with a more complex React component to create a fully functional widget. This component can include:
 
-Remember to follow Strapi's design guidelines and best practices when creating your custom widget to ensure a consistent user experience across the admin panel.
+- Custom logic and state management
+- API calls to fetch and display data
+- Interactive elements like buttons or forms
+- Styling to match your application's design
+
+For example, you could create a widget that displays a summary of recent content entries or provides quick access to frequently used features.
+
+### Best Practices
+
+When creating a custom sidebar widget, consider the following best practices:
+
+1. **Performance**: Ensure your widget doesn't negatively impact the admin panel's performance, especially if it makes API calls or processes large amounts of data.
+
+2. **Design Consistency**: Follow Strapi's design guidelines to maintain a consistent look and feel within the admin panel.
+
+3. **Responsiveness**: Make sure your widget works well on different screen sizes, as the sidebar may be collapsed on smaller screens.
+
+4. **Error Handling**: Implement proper error handling to gracefully manage any issues that may occur, such as failed API requests.
+
+5. **Internationalization**: If your widget includes text, consider using Strapi's internationalization features to support multiple languages.
+
+6. **Accessibility**: Ensure your widget is accessible, following web accessibility guidelines (WCAG) for all interactive elements.
+
+By leveraging this feature, you can enhance the admin panel with tailored functionality that meets the specific needs of your project or organization. Custom sidebar widgets offer a powerful way to extend Strapi's capabilities and improve the overall user experience for content managers and administrators.
