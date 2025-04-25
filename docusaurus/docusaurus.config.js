@@ -10,7 +10,7 @@ const darkCodeTheme = themes.dracula;
 const inkeepConfig = {
   baseSettings: {
     // see https://docusaurus.io/docs/deployment#using-environment-variables to use docusaurus environment variables
-    apiKey: "INKEEP_API_KEY", // required
+    apiKey: "f4154c2f6dea81c2d345ba760fb87e3b3f453bfa33ac8655", // required
     primaryBrandColor: "#4945FF", // required -- your brand color, the widget color scheme is derived from this
     organizationDisplayName: "Strapi",
     // ...optional settings
