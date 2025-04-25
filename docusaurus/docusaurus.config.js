@@ -12,7 +12,7 @@ const inkeepConfig = {
     // see https://docusaurus.io/docs/deployment#using-environment-variables to use docusaurus environment variables
     apiKey: "INKEEP_API_KEY", // required
     primaryBrandColor: "#4945FF", // required -- your brand color, the widget color scheme is derived from this
-    organizationDisplayName: "Strapi Docs",
+    organizationDisplayName: "Strapi",
     // ...optional settings
     theme: {
       // optional path to a custom stylesheet
