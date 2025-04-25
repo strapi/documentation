@@ -6,6 +6,46 @@ const {themes} = require('prism-react-renderer');
 // const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
+/** Inkeep config */
+const inkeepConfig = {
+  baseSettings: {
+    // see https://docusaurus.io/docs/deployment#using-environment-variables to use docusaurus environment variables
+    apiKey: "INKEEP_API_KEY", // required
+    primaryBrandColor: "#4945FF", // required -- your brand color, the widget color scheme is derived from this
+    organizationDisplayName: "Strapi Docs",
+    // ...optional settings
+    theme: {
+      // optional path to a custom stylesheet
+      styles: [
+        // {
+        //   key: "main",
+        //   type: "link",
+        //   value: "/path/to/stylesheets",
+        // },
+      ],
+      syntaxHighlighter: {
+        // lightTheme: lightCodeTheme, // optional -- pass in the Prism theme you're using
+        darkTheme: darkCodeTheme, // optional -- pass in the Prism theme you're using
+      },
+    }
+  },
+  modalSettings: {
+    // optional settings
+  },
+  searchSettings: {
+    // optional settings
+  },
+  aiChatSettings: {
+    // optional settings
+    aiAssistantAvatar: "/img/logo-beta.png", // optional -- use your own AI assistant avatar
+    exampleQuestions: [
+      "How to install Strapi 5?",
+      "What's new in Strapi 5?",
+      "How to host on Strapi Cloud?",
+    ],
+  },
+}
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Strapi 5 Documentation',
@@ -343,6 +383,14 @@ const config = {
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
      * related to the Docusaurus canary build or not.
      */
+    ["@inkeep/cxkit-docusaurus", {
+      SearchBar: {
+        ...inkeepConfig,
+      },
+      ChatButton: {
+        ...inkeepConfig,
+      },
+    }],
   ],
 };
 
