@@ -37,7 +37,7 @@ const inkeepConfig = {
   },
   aiChatSettings: {
     // optional settings
-    aiAssistantAvatar: "/img/logo-beta.png", // optional -- use your own AI assistant avatar
+    aiAssistantAvatar: "/img/logo-monogram.png", // optional -- use your own AI assistant avatar
     exampleQuestions: [
       "How to install Strapi 5?",
       "What's new in Strapi 5?",
