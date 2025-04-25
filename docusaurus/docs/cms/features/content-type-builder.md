@@ -35,6 +35,16 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 <Guideflow lightId="vkm9jeqb2p" darkId="lpnz47qtep" />
 
+:::strapi Content Type Builder updates
+<BetaBadge /> Interface modifications and new options are available in the Content-type Builder, including:
+- tags to indicate the status of the fields and content types: "N" for new, "M" for modified and "D" for deleted,
+- an `*` beside required fields in the list view,
+- a drag & drop button in the list view, to reorder the fields,
+- and collapse button for dynamic zones and components.
+
+The **Save** button has also been moved to the Content-type Builder navigation which lists all content types and components. This, along with the status tags, allows you to work on several content types and components at the same time. **Revert**, **Undo** and **Discard changes** button have also been added, which also work globally on all content types and components.
+:::
+
 The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 
 - Collection types: content-types that can manage several entries.
@@ -77,14 +87,10 @@ The Content-type Builder allows to create new content-types: single and collecti
 3. In the content-type creation window, write the name of the new content-type in the *Display name* textbox.
 4. Check the *API ID* to make sure the automatically pre-filled values are correct. Collection type names are indeed automatically pluralized when displayed in the Content Manager. It is recommended to opt for singular names, but the *API ID* field allows to fix any pluralization mistake.
 5. (optional) In the Advanced Settings tab, configure the available settings for the new content-type:
-
       | Setting name    | Instructions                                                                                                                                     |
       |-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
       | Draft & publish | Tick the checkbox to allow entries of the content-type to be managed as draft versions, before they are published (see [Draft & Publish](/cms/features/draft-and-publish)). |
       | Internationalization | Tick the checkbox to allow entries of the content-type to be translated into other locales. |
-<!--
-| Review workflows | <EnterpriseBadge /> Tick the checkbox to allow entries of the content-type to be managed through defined review stages (see [Managing Review Workflows](/cms/features/review-workflows#configuration)). |
--->
 6. Click on the **Continue** button.
 7. Add and configure chosen fields for your content-type (see [Configuring fields for content-types](#configuring-fields-content-type)).
 8. Click on the **Save** button.
