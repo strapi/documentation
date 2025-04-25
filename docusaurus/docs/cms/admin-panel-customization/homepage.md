@@ -172,10 +172,10 @@ The `app.widgets.register()` method can take either a single widget configuratio
 
 If you want to add a link to your widget (e.g., to navigate to a detailed view), you can provide a `link` object with the following properties:
 
-| Property | Type              | Description                                    | Required |
-|----------|-------------------|------------------------------------------------|----------|
+| Property | Type                | Description                                    | Required |
+|----------|---------------------|------------------------------------------------|----------|
 | `label`  | `MessageDescriptor` | The text to display for the link               | Yes      |
-| `href`   | `string`          | The URL where the link should navigate to      | Yes      |
+| `href`   | `string`            | The URL where the link should navigate to      | Yes      |
 
 ### Creating a widget component
 
@@ -330,60 +330,96 @@ The following is a complete example of creating a content metrics widget that di
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
 
-```jsx title="src/plugins/content-metrics/admin/src/index.js"
-import { ChartBar } from '@strapi/icons';
-import pluginId from './pluginId';
+```jsx title="src/plugins/content-metrics/admin/src/index.js" {28-42}
+import { PLUGIN_ID } from './pluginId';
+import { Initializer } from './components/Initializer';
+import { PluginIcon } from './components/PluginIcon';
+import { Stethoscope } from '@strapi/icons'
 
 export default {
   register(app) {
-    app.registerPlugin({
-      id: pluginId,
-      name: 'Content Metrics',
+    app.addMenuLink({
+      to: `plugins/${PLUGIN_ID}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${PLUGIN_ID}.plugin.name`,
+        defaultMessage: PLUGIN_ID,
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
+        return App;
+      },
     });
-    
+
+    app.registerPlugin({
+      id: PLUGIN_ID,
+      initializer: Initializer,
+      isReady: false,
+      name: PLUGIN_ID,
+    });
+
+    // Registers the widget
     app.widgets.register({
-      icon: ChartBar,
+      icon: Stethoscope,
       title: {
-        id: `${pluginId}.widget.metrics.title`,
-        defaultMessage: 'Content Overview',
+        id: `${PLUGIN_ID}.widget.metrics.title`, 
+        defaultMessage: 'Content Metrics',
       },
       component: async () => {
         const component = await import('./components/MetricsWidget');
         return component.default;
       },
       id: 'content-metrics',
-      pluginId: pluginId,
+      pluginId: PLUGIN_ID, 
     });
   },
-  
+
+  async registerTrads({ locales }) {
+    return Promise.all(
+      locales.map(async (locale) => {
+        try {
+          const { default: data } = await import(`./translations/${locale}.json`);
+          return { data, locale };
+        } catch {
+          return { data: {}, locale };
+        }
+      })
+    );
+  },
+
   bootstrap() {},
 };
 ```
 
 ```jsx title="src/plugins/content-metrics/admin/src/components/MetricsWidget/index.js"
-import React, { useState, useEffect } from 'react';
-import { Widget } from '@strapi/admin/strapi-admin';
+iimport React, { useState, useEffect } from 'react';
 import { Table, Tbody, Tr, Td, Typography, Box } from '@strapi/design-system';
-import { useStrapiApp } from '@strapi/helper-plugin';
 
 const MetricsWidget = () => {
   const [loading, setLoading] = useState(true);
   const [metrics, setMetrics] = useState(null);
   const [error, setError] = useState(null);
-  const { getPlugin } = useStrapiApp();
   
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        // Make a request to a custom endpoint that returns content counts
-        const response = await fetch('/content-metrics/count');
+        const response = await fetch('/api/content-metrics/count');
         const data = await response.json();
+
+        const formattedData = {};
         
-        setMetrics(data);
+        if (data && typeof data === 'object') {
+          Object.keys(data).forEach(key => {
+            const value = data[key];
+            formattedData[key] = typeof value === 'number' ? value : String(value);
+          });
+        }
+        
+        setMetrics(formattedData);
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError(err);
+        setError(err.message || 'An error occurred');
         setLoading(false);
       }
     };
@@ -392,34 +428,40 @@ const MetricsWidget = () => {
   }, []);
   
   if (loading) {
-    return <Widget.Loading />;
+    return (
+      <Typography variant="omega">Loading content metrics...</Typography>
+    );
   }
   
   if (error) {
-    return <Widget.Error />;
+    return (
+      <Typography variant="omega" textColor="danger600">
+        Error: {String(error)}
+      </Typography>
+    );
   }
   
   if (!metrics || Object.keys(metrics).length === 0) {
-    return <Widget.NoData>No content types found</Widget.NoData>;
+    return (
+      <Typography variant="omega">No content types found</Typography>
+    );
   }
   
   return (
-    <Box padding={4}>
-      <Table>
-        <Tbody>
-          {Object.entries(metrics).map(([contentType, count]) => (
-            <Tr key={contentType}>
-              <Td>
-                <Typography variant="omega">{contentType}</Typography>
-              </Td>
-              <Td>
-                <Typography variant="omega" fontWeight="bold">{count}</Typography>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Box>
+    <Table>
+      <Tbody>
+        {Object.entries(metrics).map(([contentType, count], index) => (
+          <Tr key={index}>
+            <Td>
+              <Typography variant="omega">{String(contentType)}</Typography>
+            </Td>
+            <Td>
+              <Typography variant="omega" fontWeight="bold">{String(count)}</Typography>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 };
 
@@ -463,81 +505,117 @@ module.exports = ({ strapi }) => ({
 ```
 
 ```js title="src/plugins/content-metrics/server/src/routes/index.js"
-module.exports = [
-  {
-    method: 'GET',
-    path: '/count',
-    handler: 'metrics.getContentCounts',
-    config: {
-      policies: [],
-    },
+export default {
+  'content-api': {
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/count',
+        handler: 'metrics.getContentCounts',
+        config: {
+          policies: [],
+        },
+      },
+    ],
   },
-];
+};
 ```
 
 </TabItem>
 
-<TabItem value="typescript" label="TypeScript">
+<TabItem value="ts" label="TypeScript">
 
-```tsx title="src/plugins/content-metrics/admin/src/index.ts"
-import { ChartBar } from '@strapi/icons';
-import pluginId from './pluginId';
-import type { StrapiApp } from '@strapi/admin/strapi-admin';
+```jsx title="src/plugins/content-metrics/admin/src/index.js" {28-42}
+import { PLUGIN_ID } from './pluginId';
+import { Initializer } from './components/Initializer';
+import { PluginIcon } from './components/PluginIcon';
+import { Stethoscope } from '@strapi/icons'
 
 export default {
-  register(app: StrapiApp) {
-    app.registerPlugin({
-      id: pluginId,
-      name: 'Content Metrics',
+  register(app) {
+    app.addMenuLink({
+      to: `plugins/${PLUGIN_ID}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${PLUGIN_ID}.plugin.name`,
+        defaultMessage: PLUGIN_ID,
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
+        return App;
+      },
     });
-    
+
+    app.registerPlugin({
+      id: PLUGIN_ID,
+      initializer: Initializer,
+      isReady: false,
+      name: PLUGIN_ID,
+    });
+
+    // Registers the widget
     app.widgets.register({
-      icon: ChartBar,
+      icon: Stethoscope,
       title: {
-        id: `${pluginId}.widget.metrics.title`,
-        defaultMessage: 'Content Overview',
+        id: `${PLUGIN_ID}.widget.metrics.title`, 
+        defaultMessage: 'Content Metrics',
       },
       component: async () => {
         const component = await import('./components/MetricsWidget');
         return component.default;
       },
       id: 'content-metrics',
-      pluginId: pluginId,
+      pluginId: PLUGIN_ID, 
     });
   },
-  
+
+  async registerTrads({ locales }) {
+    return Promise.all(
+      locales.map(async (locale) => {
+        try {
+          const { default: data } = await import(`./translations/${locale}.json`);
+          return { data, locale };
+        } catch {
+          return { data: {}, locale };
+        }
+      })
+    );
+  },
+
   bootstrap() {},
 };
 ```
 
-```tsx title="src/plugins/content-metrics/admin/src/components/MetricsWidget/index.tsx"
-import React, { useState, useEffect } from 'react';
-import { Widget } from '@strapi/admin/strapi-admin';
+```jsx title="src/plugins/content-metrics/admin/src/components/MetricsWidget/index.js"
+iimport React, { useState, useEffect } from 'react';
 import { Table, Tbody, Tr, Td, Typography, Box } from '@strapi/design-system';
-import { useStrapiApp } from '@strapi/helper-plugin';
 
-interface ContentMetrics {
-  [contentType: string]: number;
-}
-
-const MetricsWidget: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [metrics, setMetrics] = useState<ContentMetrics | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const { getPlugin } = useStrapiApp();
+const MetricsWidget = () => {
+  const [loading, setLoading] = useState(true);
+  const [metrics, setMetrics] = useState(null);
+  const [error, setError] = useState(null);
   
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        // Make a request to a custom endpoint that returns content counts
-        const response = await fetch('/content-metrics/count');
+        const response = await fetch('/api/content-metrics/count');
         const data = await response.json();
+
+        const formattedData = {};
         
-        setMetrics(data);
+        if (data && typeof data === 'object') {
+          Object.keys(data).forEach(key => {
+            const value = data[key];
+            formattedData[key] = typeof value === 'number' ? value : String(value);
+          });
+        }
+        
+        setMetrics(formattedData);
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError(err instanceof Error ? err : new Error(String(err)));
+        setError(err.message || 'An error occurred');
         setLoading(false);
       }
     };
@@ -546,50 +624,56 @@ const MetricsWidget: React.FC = () => {
   }, []);
   
   if (loading) {
-    return <Widget.Loading />;
+    return (
+      <Typography variant="omega">Loading content metrics...</Typography>
+    );
   }
   
   if (error) {
-    return <Widget.Error />;
+    return (
+      <Typography variant="omega" textColor="danger600">
+        Error: {String(error)}
+      </Typography>
+    );
   }
   
   if (!metrics || Object.keys(metrics).length === 0) {
-    return <Widget.NoData>No content types found</Widget.NoData>;
+    return (
+      <Typography variant="omega">No content types found</Typography>
+    );
   }
   
   return (
-    <Box padding={4}>
-      <Table>
-        <Tbody>
-          {Object.entries(metrics).map(([contentType, count]) => (
-            <Tr key={contentType}>
-              <Td>
-                <Typography variant="omega">{contentType}</Typography>
-              </Td>
-              <Td>
-                <Typography variant="omega" fontWeight="bold">{count}</Typography>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </Box>
+    <Table>
+      <Tbody>
+        {Object.entries(metrics).map(([contentType, count], index) => (
+          <Tr key={index}>
+            <Td>
+              <Typography variant="omega">{String(contentType)}</Typography>
+            </Td>
+            <Td>
+              <Typography variant="omega" fontWeight="bold">{String(count)}</Typography>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+    </Table>
   );
 };
 
 export default MetricsWidget;
 ```
 
-```ts title="src/plugins/content-metrics/server/src/controllers/metrics.ts"
-import { Strapi } from '@strapi/strapi';
+```js title="src/plugins/content-metrics/server/src/controllers/metrics.js"
+'use strict';
 
-export default ({ strapi }: { strapi: Strapi }) => ({
+module.exports = ({ strapi }) => ({
   async getContentCounts(ctx) {
     try {
       // Get all content types
       const contentTypes = Object.keys(strapi.contentTypes)
         .filter(uid => uid.startsWith('api::'))
-        .reduce<Record<string, number>>((acc, uid) => {
+        .reduce((acc, uid) => {
           const contentType = strapi.contentTypes[uid];
           acc[contentType.info.displayName || uid] = 0;
           return acc;
@@ -616,35 +700,23 @@ export default ({ strapi }: { strapi: Strapi }) => ({
 });
 ```
 
-```ts title="src/plugins/content-metrics/server/src/routes/index.ts"
-export default [
-  {
-    method: 'GET',
-    path: '/count',
-    handler: 'metrics.getContentCounts',
-    config: {
-      policies: [],
-    },
+```js title="src/plugins/content-metrics/server/src/routes/index.js"
+export default {
+  'content-api': {
+    type: 'content-api',
+    routes: [
+      {
+        method: 'GET',
+        path: '/count',
+        handler: 'metrics.getContentCounts',
+        config: {
+          policies: [],
+        },
+      },
+    ],
   },
-];
+};
 ```
 
 </TabItem>
 </Tabs>
-
-### Adding a widget to the sidebar
-
-If you want to create a more detailed view that works alongside your widget, you can add a link to it:
-
-```jsx
-app.widgets.register({
-  // ... other properties
-  link: {
-    label: {
-      id: `${pluginId}.widget.metrics.link`,
-      defaultMessage: 'View detailed metrics',
-    },
-    href: `/plugins/${pluginId}`,
-  },
-});
-```
