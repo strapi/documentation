@@ -17,10 +17,10 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 From the <Icon name="layout" /> Content-type Builder, accessible via the main navigation of the admin panel, users can create and edit their content types.
 
-:::prerequisites Identity Card of the Content-type Builder
-<Icon name="user"/> **Role & permission:** Minimum "Read" permission in Roles > Plugins - Content Type Builder. <br/>
-<Icon name="laptop"/> **Environment:** Available in Development environment only.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="user" title="Role & permission">Minimum "Read" permission in Roles > Plugins - Content Type Builder.</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in Development environment only.</IdentityCardItem>
+</IdentityCard>
 
 ## Overview
 
