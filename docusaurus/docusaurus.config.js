@@ -3,7 +3,7 @@
 
 // const redirects = require('./redirects');
 const {themes} = require('prism-react-renderer');
-// const lightCodeTheme = themes.github;
+const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
 /** Inkeep config */
@@ -24,7 +24,7 @@ const inkeepConfig = {
         // },
       ],
       syntaxHighlighter: {
-        // lightTheme: lightCodeTheme, // optional -- pass in the Prism theme you're using
+        lightTheme: lightCodeTheme, // optional -- pass in the Prism theme you're using
         darkTheme: darkCodeTheme, // optional -- pass in the Prism theme you're using
       },
     }
