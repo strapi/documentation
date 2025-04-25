@@ -1,12 +1,14 @@
 import React from 'react';
-import SearchBar from '@theme-original/SearchBar';
-import Icon from '../../components/Icon.js'
+import { InkeepSearchButton, InkeepChatButton } from '../../components/Inkeep';
 
 export default function CustomSearchBarWrapper(props) {
   return (
     <div className="my-custom-search-bar">
-      <SearchBar {...props} />
-      <button className="kapa-widget-button"><span className="kapa-widget-button-text"><Icon name="sparkle"/>Ask AI</span></button>
+      {/* Bouton de recherche Inkeep */}
+      <InkeepSearchButton />
+      
+      {/* Bouton de chat IA Inkeep */}
+      <InkeepChatButton />
     </div>
   );
 }

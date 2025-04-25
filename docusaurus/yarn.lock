@@ -1862,7 +1862,7 @@
     unist-util-visit "^5.0.0"
     use-sync-external-store "^1.4.0"
 
-"@inkeep/cxkit-react@0.5.71":
+"@inkeep/cxkit-react@0.5.71", "@inkeep/cxkit-react@^0.5.71":
   version "0.5.71"
   resolved "https://registry.yarnpkg.com/@inkeep/cxkit-react/-/cxkit-react-0.5.71.tgz#ef63707c651453e9a9c19df266d8c8bd74cce720"
   integrity sha512-oF73PNUxyXYyqbJYKoNC82ZqZ20gH9qP5n/lPGO6JTj12SNNLIY7aqbAse5y11Qet3DNYZoO3OwEif1mS08hUQ==

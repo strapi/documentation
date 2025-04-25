@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import styles from './homepageaibutton.module.scss'
-import Icon from '../Icon'
+import React from 'react';
+import styles from './homepageaibutton.module.scss';
+import { InkeepHomepageButton } from '../Inkeep';
 
-export default function HomepageAIButton() {
+export default function HomepageAIButton(props) {
   return (
-    <div className={styles['homepage-ai-button-container']}>
-      <button className={`${styles['homepage-ai-button']} kapa-widget-button`}>
-        <Icon name="sparkle" />
-        <p>Ask AI anything</p>
-      </button>
-    </div>
+    <InkeepHomepageButton className={props.className} />
   );
 }
