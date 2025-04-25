@@ -73,11 +73,9 @@ After enabling the feature flag and restarting your application, the Homepage wi
 
 ### Registering custom widgets
 
-The recommended way to create a widget is through a Strapi plugin (see [plugins development](/cms/plugins-development/developing-plugins) for additional information on how to create a plugin). But like [custom fields](/cms/features/custom-fields), you can also register a widget through the [application's global `register()` lifecycle](/cms/configurations/functions#register).
-
-To register a widget, use `app.widgets.register()`.
-
-If you're building a plugin, use this in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-api#register) in the `index` file. If you're adding the widget to just one Strapi application, without a plugin, use the global `register()` lifecycle method instead.
+To register a widget, use `app.widgets.register()`:
+- in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-api#register) of the `index` file if you're building a plugin (recommended way),
+- or in the [application's global `register()` lifecycle method](/cms/configurations/functions#register) if you're adding the widget to just one Strapi application without a plugin.
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
@@ -178,7 +176,6 @@ If you want to add a link to your widget (e.g., to navigate to a detailed view),
 |----------|-------------------|------------------------------------------------|----------|
 | `label`  | `MessageDescriptor` | The text to display for the link               | Yes      |
 | `href`   | `string`          | The URL where the link should navigate to      | Yes      |
-
 
 ### Creating a widget component
 
@@ -312,7 +309,7 @@ export default MyWidget;
 
 <!-- TODO: document the "Data management" part from the RFC: see https://www.notion.so/strapi/Homepage-widgets-API-RFC-1988f3598074807493e1f594b66dd82d?pvs=4#1998f35980748019966acb49feaf27e3 -->
 
-##### Widget helper components
+#### Widget helper components reference
 
 Strapi provides several helper components to maintain a consistent user experience across widgets:
 
