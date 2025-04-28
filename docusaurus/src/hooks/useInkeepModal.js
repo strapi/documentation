@@ -52,10 +52,18 @@ export function useInkeepModal() {
           "What's new in Strapi 5?",
           "How to host my project on Strapi Cloud?"
         ],
+        isShareButtonVisible: true,
+        shareChatUrlBasePath: "https://docs-next.strapi.io/ask-ai",
       }}
       searchSettings={{
         placeholder: "Search...",
-        view: "dual-pane"
+        view: "dual-pane",
+        // tabs: [
+        //   "All", 
+        //   ["Docs", {isAlwaysVisible: true}],
+        //   "GitHub", 
+        //   "Forums"
+        // ]
       }}
       defaultView={view}
       forceDefaultView={true}
