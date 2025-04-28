@@ -152,7 +152,7 @@ export default {
 			  alternative700: '#8312d1',
 			  buttonNeutral0: '#ffffff',
 			  buttonPrimary500: '#7b79ff',
-			  // you can see other colors in the lin below
+			  // you can see other colors in the link below
 			  },
 		},
 		light:{
