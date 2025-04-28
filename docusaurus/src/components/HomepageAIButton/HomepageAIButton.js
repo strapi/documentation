@@ -1,83 +1,54 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { InkeepModalSearchAndChat } from "@inkeep/cxkit-react";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const searchFunctionsRef = useRef(null);
-  const chatFunctionsRef = useRef(null);
-  const modalFunctionsRef = useRef(null); // 👈 La nouvelle ref importante
+  const [view, setView] = useState("search"); // "search" or "chat"
 
   const handleOpenChange = useCallback((newOpen) => {
     setIsOpen(newOpen);
+    if (!newOpen) {
+      setView("search"); // Optional: reset view on close
+    }
   }, []);
 
-  const config = {
+  const baseConfig = {
     baseSettings: {
-      apiKey: "YOUR_API_KEY",
-      primaryBrandColor: "#000000",
-    },
-    searchSettings: {
-      placeholder: "Search...",
-      searchFunctionsRef,
-    },
-    aiChatSettings: {
-      aiAssistantName: "Keepie",
-      chatFunctionsRef,
+      apiKey: "f4154c2f6dea81c2d345ba760fb87e3b3f453bfa33ac8655",
+      primaryBrandColor: "#4945FF",
     },
     modalSettings: {
       isOpen,
       onOpenChange: handleOpenChange,
     },
-    widgetSettings: { // 👈 C'est ici qu'on branche modalFunctionsRef
-      widgetFunctionsRef: modalFunctionsRef,
+    aiChatSettings: {
+      aiAssistantName: "Keepie",
     },
+    searchSettings: {
+      placeholder: "Search...",
+    },
+    defaultView: view,
+    forceDefaultView: true,
   };
 
   const openSearch = () => {
+    setView("search");
     setIsOpen(true);
-    setTimeout(() => {
-      modalFunctionsRef.current?.setView("search");
-    }, 0);
   };
 
   const openChat = () => {
+    setView("chat");
     setIsOpen(true);
-    setTimeout(() => {
-      modalFunctionsRef.current?.setView("chat");
-    }, 0);
-  };
-
-  // Access search methods
-  const updateQuery = () => {
-    searchFunctionsRef.current?.updateQuery("Hello!");
-  };
-
-  // Access chat methods
-  const clearChat = () => {
-    chatFunctionsRef.current?.clearChat();
   };
 
   return (
     <>
-      {/* Open Search Button */}
-      <button onClick={openSearch}>
-        Open Search
-      </button>
+      {/* Your Custom Triggers */}
+      <button onClick={openSearch}>Open Search</button>
+      <button onClick={openChat}>Open Chat</button>
 
-      {/* Open Chat Button */}
-      <button onClick={openChat}>
-        Open Chat
-      </button>
-
-      {/* Modal Component */}
-      <InkeepModalSearchAndChat {...config} />
-
-      {/* Update Query */}
-      <button onClick={updateQuery}>Update Query</button>
-
-      {/* Clear Chat */}
-      <button onClick={clearChat}>Clear Chat</button>
+      {/* Single Inkeep Modal */}
+      <InkeepModalSearchAndChat key={view} {...baseConfig} />
     </>
   );
 };
