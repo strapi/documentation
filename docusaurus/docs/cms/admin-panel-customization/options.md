@@ -1,4 +1,3 @@
-
 ---
 title: Admin panel customization options
 description: Various options help you configure Strapi's administration panel behavior and look, so you can make it reflect your identity.
