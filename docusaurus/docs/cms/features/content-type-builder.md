@@ -24,17 +24,9 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 ## Overview
 
-<!-- Replace with Guideflow -->
-<!-- <ThemedImage
-  alt="Content-type Builder interface"
-  sources={{
-    light: '/img/assets/content-type-builder/content-types-builder.png',
-    dark: '/img/assets/content-type-builder/content-types-builder_DARK.png',
-  }}
-/> -->
-
 <Guideflow lightId="vkm9jeqb2p" darkId="lpnz47qtep" />
 
+<!--
 :::strapi Content Type Builder updates
 <BetaBadge /> Interface modifications and new options are available in the Content-type Builder, including:
 - tags to indicate the status of the fields and content types: "N" for new, "M" for modified and "D" for deleted,
@@ -44,6 +36,7 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 The **Save** button has also been moved to the Content-type Builder navigation which lists all content types and components. This, along with the status tags, allows you to work on several content types and components at the same time. **Revert**, **Undo** and **Discard changes** button have also been added, which also work globally on all content types and components.
 :::
+-->
 
 The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 
@@ -57,18 +50,21 @@ All 3 are displayed as categories in the sub navigation of the <Icon name="layou
 Click the search icon <Icon name="magnifying-glass" classes="ph-bold" /> in the <Icon name="layout" /> Content-type Builder sub navigation to find a specific collection type, single type, or component.
 :::
 
+In the Content-type Builder's sub navigation is also displayed a centralised **Save** button that applies for all content-types and components. Along with the display of statuses for both content-types/components and fields, this allows you to work on several content-types and components at the same time. The following statuses can be displayed:
+
+- `New` or `N` indicates that a content-type/component or field is new and hasn't been saved yet,
+- `Modified` or `M` indicates that a content-type/component or field has been modified since the last save,
+- `Deleted` or `D` indicates that a content-type/component or field has been deleted but that it will only be confirmed once saved.
+
+:::note
+Clicking on the **...** button next to **Save** gives access to other options, such as **Undo/Redo last change** and **Discard all changes**. These options are also centralised, meaning that they apply to the last action(s) that was/were done on all content-types, components and fields since the last time you saved.
+:::
+
 ## Usage
 
 <br/>
 
 ### Creating content-types
-
-<!-- MAY BE REMOVED - FEELS REDUNDANT WITH ID CARD
-
-:::note Development-only
-The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
-:::
--->
 
 The Content-type Builder allows to create new content-types: single and collection types, but also components.
 
@@ -125,20 +121,19 @@ The Content-type Builder allows to manage all existing content-types. For an cho
 <ThemedImage
   alt="Content-type Builder's edition interface"
   sources={{
-    light: '/img/assets/content-type-builder/content-types-builder_edition.png',
-    dark: '/img/assets/content-type-builder/content-types-builder_edition_DARK.png',
+    light: '/img/assets/content-type-builder/new_CTB.png',
+    dark: '/img/assets/content-type-builder/new_CTB_DARK.png',
   }}
 />
 
-- Click on the **Add new/another field** button <ScreenshotNumberReference number="1" /> in the top right corner to add more fields to your content-type.
-- In the table that displays the fields of your content-type <ScreenshotNumberReference number="2" />, click on the <Icon name="pencil-simple" /> and/or <Icon name="trash" /> buttons to respectively edit and/or delete these fields.
-- Click on the <Icon name="pencil-simple" /> **Edit** button <ScreenshotNumberReference number="3" /> to access the basic and advanced settings of your content-type:
+#### Settings
+
+1. Click on the <Icon name="pencil-simple" /> **Edit** button of your content-type to access its settings.
+2. Edit the available settings of your choice:
 
   <Tabs groupId="CTSettings">
 
   <TabItem value="CTBasicSettings" label="Basic settings">
-
-  The **Basic Settings** tab allows to edit the following properties of the content-type or component:
 
   <ThemedImage
     alt="Content-type Builder's basic settings"
@@ -157,8 +152,6 @@ The Content-type Builder allows to manage all existing content-types. For an cho
 
   <TabItem value="CTAdvancedSettings" label="Advanced settings">
 
-  The **Advanced Settings** tab allows to edit the following properties of the content-type or component:
-
   <ThemedImage
     alt="Content-type Builder's advanced settings"
     sources={{
@@ -173,21 +166,22 @@ The Content-type Builder allows to manage all existing content-types. For an cho
   </TabItem>
 
   </Tabs>
+3. Click the **Finish** button in the dialog.
+4. Click the **Save** button in the Content-Type Builder navigation.
 
-- Click on the **Save** button <ScreenshotNumberReference number="4" /> to confirm any ongoing modification.
+#### Fields
+
+From the table that lists the fields of your content-type, you can:
+- Click on the <Icon name="pencil-simple" /> button to access a field's basic and advanced settings to edit them
+- Click on the **Add another field** buttons to create a new field for the selected content-type
+- Click on the <Icon name="dots-six-vertical" classes="ph-bold"/> button and drag and drop any field to reorder the content-type's fields
+- Click on the <Icon name="trash" /> button to delete a field
 
 :::caution
 Editing a field allows renaming it. However, keep in mind that regarding the database, renaming a field means creating a whole new field and deleting the former one. Although nothing is deleted from the database, the data that was associated with the former field name will not be accessible from the admin panel of your application anymore.
 :::
 
 ### Configuring content-types fields {#configuring-fields-content-type}
-
-<!-- MAY BE REMOVED - FEELS REDUNDANT WITH ID CARD 
-
-:::note Development-only
-The Content-type Builder is only accessible to create and update content-types when your Strapi application is in a development environment, else it will be in a read-only mode in other environments.
-:::
--->
 
 Content-types are composed of one or several fields. Each field is designed to contain specific kind of data, filled up in the Content Manager (see [Creating & Writing content](/cms/features/content-manager#creating--writing-content)).
 
@@ -538,8 +532,6 @@ The Password field displays a password field that is encrypted.
 #### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration {#enum}
 
 The Enumeration field allows to configure a list of values displayed in a drop-down list.
-
-<!--- Add note about Enumeration fields known issues (i.e. recommending a relation using either oneWay or manyWay for some use-cases instead of enum) --->
 
 <Tabs>
 
