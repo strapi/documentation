@@ -706,6 +706,7 @@ Content types and components can be deleted through the Content-type Builder. De
 2. In the edition interface of the chosen content-type or component, click on the <Icon name="pencil-simple" /> **Edit** button on the right side of the content-type's or component's name.
 3. In the edition window, click on the **Delete** button.
 4. In the confirmation window, confirm the deletion.
+5. Click on the **Save** button in the Content-type Builder sub navigation.
 
 :::caution
 Deleting a content-type only deletes what was created and available from the Content-type Builder, and by extent from the admin panel of your Strapi application. All the data that was created based on that content-type is however kept in the database. For more information, please refer to the related <ExternalLink to="https://github.com/strapi/strapi/issues/1114" text="GitHub issue"/>.
@@ -714,7 +715,7 @@ Deleting a content-type only deletes what was created and available from the Con
 <ThemedImage
   alt="Deletion of content type in Content-type Builder"
   sources={{
-    light: '/img/assets/content-type-builder/ctb-delete.png',
-    dark: '/img/assets/content-type-builder/ctb-delete_DARK.png',
+    light: '/img/assets/content-type-builder/new_CTB_deletion.png',
+    dark: '/img/assets/content-type-builder/new_CTB_deletion_DARK.png',
   }}
 />
