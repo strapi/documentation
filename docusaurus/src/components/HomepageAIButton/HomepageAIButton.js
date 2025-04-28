@@ -1,9 +1,21 @@
+// HomepageAIButton.js
 import React from 'react';
 import styles from './homepageaibutton.module.scss';
-import { InkeepHomepageButton } from '../Inkeep';
+import Icon from '../Icon';
+import { useInkeepSimple } from '../Inkeep';
 
-export default function HomepageAIButton(props) {
+export default function HomepageAIButton({ className }) {
+  const { openChat } = useInkeepSimple();
+  
   return (
-    <InkeepHomepageButton className={props.className} />
+    <div className={styles['homepage-ai-button-container']}>
+      <button 
+        className={styles['homepage-ai-button']}
+        onClick={openChat}
+      >
+        <Icon name="sparkle" />
+        <p>Ask AI anything</p>
+      </button>
+    </div>
   );
 }

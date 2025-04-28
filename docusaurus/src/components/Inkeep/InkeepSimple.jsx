@@ -3,22 +3,21 @@ import {
   InkeepModalSearchAndChat
 } from "@inkeep/cxkit-react";
 
-// Créer un contexte pour Inkeep
 const InkeepContext = createContext(null);
 
-// Composant Provider qui va envelopper l'application
+// Provider component wrapping the application
 export function InkeepSimpleProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("search"); // "search" ou "chat"
+  const [activeTab, setActiveTab] = useState("search"); // "search" or "chat"
   const searchFunctionsRef = useRef(null);
   const chatFunctionsRef = useRef(null);
 
-  // Fonction pour gérer l'ouverture/fermeture de la modale
+  // Fonction to handle opening/closing the modal
   const handleOpenChange = useCallback((newOpen) => {
     setIsOpen(newOpen);
   }, []);
 
-  // Fonctions pour ouvrir la modale en mode recherche ou chat
+  // Functions to handle opening the modal in search or chat mode 
   const openSearch = useCallback(() => {
     setActiveTab("search");
     setIsOpen(true);
@@ -29,11 +28,11 @@ export function InkeepSimpleProvider({ children }) {
     setIsOpen(true);
   }, []);
 
-  // Configuration pour le composant InkeepModalSearchAndChat
+  // Configuration for InkeepModalSearchAndChat component
   const config = {
     baseSettings: {
       apiKey: "f4154c2f6dea81c2d345ba760fb87e3b3f453bfa33ac8655",
-      primaryBrandColor: "#4945FF", // Couleur principale de Strapi
+      primaryBrandColor: "#4945FF",
     },
     searchSettings: {
       placeholder: "Search…",
@@ -45,7 +44,7 @@ export function InkeepSimpleProvider({ children }) {
       exampleQuestions: [
         "How to install Strapi?",
         "What's new in Strapi 5?",
-        "Host to host my project on Strapi Cloud?",
+        "How to host my project on Strapi Cloud?",
       ],
       chatFunctionsRef,
     },
@@ -53,6 +52,7 @@ export function InkeepSimpleProvider({ children }) {
       isOpen,
       onOpenChange: handleOpenChange,
       defaultTab: activeTab, // Control active tab when opening
+      startOnMode: activeTab, // Forces initial mode
     },
   };
 
@@ -89,8 +89,15 @@ export function InkeepSearchButton({ className }) {
     <div 
       className={`DocSearch DocSearch-Button ${className || ''}`}
       onClick={openSearch}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+      }}
     >
-      <span className="DocSearch-Button-Placeholder">Search</span>
+      <span className="DocSearch-Button-Container" style={{ display: 'flex', alignItems: 'center' }}>
+        <span className="DocSearch-Button-Placeholder">Search</span>
+      </span>
     </div>
   );
 }
