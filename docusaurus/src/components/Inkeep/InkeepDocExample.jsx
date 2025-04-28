@@ -3,10 +3,8 @@ import { InkeepModalSearchAndChat } from "@inkeep/cxkit-react";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const searchFunctionsRef = useRef(null);
   const chatFunctionsRef = useRef(null);
-  const modalFunctionsRef = useRef(null); // 👈 La nouvelle ref importante
 
   const handleOpenChange = useCallback((newOpen) => {
     setIsOpen(newOpen);
@@ -29,23 +27,6 @@ const App = () => {
       isOpen,
       onOpenChange: handleOpenChange,
     },
-    widgetSettings: { // 👈 C'est ici qu'on branche modalFunctionsRef
-      widgetFunctionsRef: modalFunctionsRef,
-    },
-  };
-
-  const openSearch = () => {
-    setIsOpen(true);
-    setTimeout(() => {
-      modalFunctionsRef.current?.setView("search");
-    }, 0);
-  };
-
-  const openChat = () => {
-    setIsOpen(true);
-    setTimeout(() => {
-      modalFunctionsRef.current?.setView("chat");
-    }, 0);
   };
 
   // Access search methods
@@ -60,14 +41,9 @@ const App = () => {
 
   return (
     <>
-      {/* Open Search Button */}
-      <button onClick={openSearch}>
-        Open Search
-      </button>
-
-      {/* Open Chat Button */}
-      <button onClick={openChat}>
-        Open Chat
+      {/* Custom Trigger */}
+      <button onClick={() => setIsOpen(true)}>
+        Open Search and Chat Modal
       </button>
 
       {/* Modal Component */}
