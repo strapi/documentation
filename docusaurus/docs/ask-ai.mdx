@@ -1,0 +1,23 @@
+---
+title: Ask AI
+displayed_sidebar: cmsSidebar
+---
+
+import { InkeepEmbeddedSearchAndChat } from '@inkeep/cxkit-react';
+import { getInkeepBaseConfig } from '@site/src/hooks/useInkeepModal';
+
+# Ask AI
+
+export default function AskAIPage() {
+  const config = getInkeepBaseConfig();
+
+  return (
+    <div style={{ marginTop: '2rem' }}>
+      <InkeepEmbeddedSearchAndChat
+        {...config}
+        defaultView="chat"
+        forceDefaultView={true}
+      />
+    </div>
+  );
+}
