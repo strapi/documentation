@@ -183,7 +183,7 @@ export default {
 
 :::note
 You can see the full translation keys, for instance to change the welcome message, [on GitHub](https://github.com/strapi/strapi/blob/develop/packages/core/admin/admin/src/translations).
-also for the light and dar colros you can use this: [light - dark colors](https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes)
+Light and dark colors are also found [on GitHub](https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes).
 :::
 
 </TabItem>
