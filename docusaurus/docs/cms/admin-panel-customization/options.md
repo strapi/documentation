@@ -181,7 +181,7 @@ export default {
 };
 ```
 
-:::note Notes:  you can see the full traslation on this link below to change the welcome message,... etc.
+:::note
 [translation keys](https://github.com/strapi/strapi/blob/develop/packages/core/admin/admin/src/translations)
 also for the light and dar colros you can use this: [light - dark colors](https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes)
 :::
