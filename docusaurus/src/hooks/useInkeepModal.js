@@ -26,7 +26,7 @@ export function useInkeepModal() {
     <InkeepModalSearchAndChat
       key={view}
       baseSettings={{
-        apiKey: "f4154c2f6dea81c2d345ba760fb87e3b3f453bfa33ac8655",
+        apiKey: "c43431665c4e336c02def65c6f90a1e0d943dfe8066dcf43",
         primaryBrandColor: "#4945FF",
         organizationDisplayName: "Strapi",
         colorMode: {
