@@ -26,18 +26,6 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 <Guideflow lightId="vkm9jeqb2p" darkId="lpnz47qtep" />
 
-<!--
-:::strapi Content Type Builder updates
-<BetaBadge /> Interface modifications and new options are available in the Content-type Builder, including:
-- tags to indicate the status of the fields and content types: "N" for new, "M" for modified and "D" for deleted,
-- an `*` beside required fields in the list view,
-- a drag & drop button in the list view, to reorder the fields,
-- and collapse button for dynamic zones and components.
-
-The **Save** button has also been moved to the Content-type Builder navigation which lists all content types and components. This, along with the status tags, allows you to work on several content types and components at the same time. **Revert**, **Undo** and **Discard changes** button have also been added, which also work globally on all content types and components.
-:::
--->
-
 The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 
 - Collection types: content-types that can manage several entries.
