@@ -1,31 +1,36 @@
 import React from 'react';
-import { useInkeepModal } from '../../hooks/useInkeepModal'; // adapte le chemin
+import BrowserOnly from '@docusaurus/BrowserOnly';
 import Icon from '../../components/Icon.js';
 
-const CustomSearchBarWrapper = () => {
-  const { openSearch, openChat, modal } = useInkeepModal();
-
+export default function CustomSearchBarWrapper() {
   return (
-    <>
-      <div className="my-custom-search-bar">
-        {/* Search Button */}
-        <button onClick={openSearch} className="DocSearch DocSearch-Button">
-          <span className="DocSearch-Button-Placeholder">Search</span>
-        </button>
+    <BrowserOnly fallback={<div style={{ width: '100%', height: '40px' }} />}>
+      {() => {
+        const { useInkeepModal } = require('../../hooks/useInkeepModal');
+        const { openSearch, openChat, modal } = useInkeepModal();
 
-        {/* Ask AI Button */}
-        <button onClick={openChat} className="kapa-widget-button">
-          <span className="kapa-widget-button-text">
-            <Icon name="sparkle" />
-            Ask AI
-          </span>
-        </button>
-      </div>
+        return (
+          <>
+            <div className="my-custom-search-bar">
+              {/* Search Button */}
+              <button onClick={openSearch} className="DocSearch DocSearch-Button">
+                <span className="DocSearch-Button-Placeholder">Search</span>
+              </button>
 
-      {/* Modal */}
-      {modal}
-    </>
+              {/* Ask AI Button */}
+              <button onClick={openChat} className="kapa-widget-button">
+                <span className="kapa-widget-button-text">
+                  <Icon name="sparkle" />
+                  Ask AI
+                </span>
+              </button>
+            </div>
+
+            {/* Modal */}
+            {modal}
+          </>
+        );
+      }}
+    </BrowserOnly>
   );
-};
-
-export default CustomSearchBarWrapper;
+}

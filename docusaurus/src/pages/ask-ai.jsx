@@ -1,21 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@theme/Layout";
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import { useInkeepModal } from "../hooks/useInkeepModal"
+import BrowserOnly from "@docusaurus/BrowserOnly";
 
 export default function AskAIPage() {
   const isBrowser = useIsBrowser();
-  const { openChat, modal } = useInkeepModal(); 
-
-  useEffect(() => {
-    if (isBrowser) {
-      openChat(); 
-    }
-  }, [isBrowser, openChat]);
 
   return (
     <Layout title="Ask AI" description="Ask your questions to our AI assistant">
-      {modal}
+      {isBrowser && (
+        <BrowserOnly fallback={<div>Loading...</div>}>
+          {() => {
+            const { useInkeepModal } = require("../hooks/useInkeepModal");
+            const { openChat, modal } = useInkeepModal();
+
+            useEffect(() => {
+              openChat();
+            }, [openChat]);
+
+            return <>{modal}</>;
+          }}
+        </BrowserOnly>
+      )}
     </Layout>
   );
 }
