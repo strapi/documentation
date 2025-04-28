@@ -1,14 +1,16 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react';
 import { InkeepModalSearchAndChat } from "@inkeep/cxkit-react";
+import styles from './homepageaibutton.module.scss';
+import Icon from '../Icon';
 
-const App = () => {
+export default function HomepageAIButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [view, setView] = useState("search"); // "search" or "chat"
+  const [view, setView] = useState("chat"); // Always open initially in "chat"
 
   const handleOpenChange = useCallback((newOpen) => {
     setIsOpen(newOpen);
     if (!newOpen) {
-      setView("search"); // Optional: reset view on close
+      setView("chat"); // Reset to chat when closing
     }
   }, []);
 
@@ -22,7 +24,12 @@ const App = () => {
       onOpenChange: handleOpenChange,
     },
     aiChatSettings: {
-      aiAssistantName: "Keepie",
+      aiAssistantName: "the Strapi Docs AI assistant",
+      exampleQuestions: [
+        "How to install Strapi?",
+        "What's new in Strapi 5?",
+        "How to host my project on Strapi Cloud?"
+      ],
     },
     searchSettings: {
       placeholder: "Search...",
@@ -31,26 +38,25 @@ const App = () => {
     forceDefaultView: true,
   };
 
-  const openSearch = () => {
-    setView("search");
-    setIsOpen(true);
-  };
-
-  const openChat = () => {
-    setView("chat");
+  const openChatModal = () => {
+    setView("chat"); // Always set chat view
     setIsOpen(true);
   };
 
   return (
     <>
-      {/* Your Custom Triggers */}
-      <button onClick={openSearch}>Open Search</button>
-      <button onClick={openChat}>Open Chat</button>
+      <div className={styles['homepage-ai-button-container']}>
+        <button
+          className={`${styles['homepage-ai-button']} kapa-widget-button`}
+          onClick={openChatModal}
+        >
+          <Icon name="sparkle" />
+          <p>Ask AI anything</p>
+        </button>
+      </div>
 
-      {/* Single Inkeep Modal */}
+      {/* Modal Inkeep */}
       <InkeepModalSearchAndChat key={view} {...baseConfig} />
     </>
   );
-};
-
-export default App;
+}
