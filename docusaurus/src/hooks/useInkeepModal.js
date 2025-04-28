@@ -49,8 +49,9 @@ export function useInkeepModal() {
         introMessage: "Hi! I'm the Strapi Docs AI assistant.<br/>How can I help?",
         exampleQuestions: [
           "How to install Strapi?",
+          "How to host my project on Strapi Cloud?",
           "What's new in Strapi 5?",
-          "How to host my project on Strapi Cloud?"
+          "What are the breaking changes in Strapi 5?"
         ],
         isShareButtonVisible: true,
         shareChatUrlBasePath: "https://docs-next.strapi.io/ask-ai",
