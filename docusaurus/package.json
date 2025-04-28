@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "6.2.1",
+  "version": "6.4.0-beta.1",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
@@ -23,6 +23,8 @@
     "@docusaurus/preset-classic": "3.5.2",
     "@docusaurus/theme-live-codeblock": "3.5.2",
     "@docusaurus/theme-mermaid": "3.5.2",
+    "@inkeep/cxkit-docusaurus": "^0.5.71",
+    "@inkeep/cxkit-react": "^0.5.71",
     "@mdx-js/react": "^3.0.0",
     "classnames": "^2.5.1",
     "clsx": "^1.2.1",

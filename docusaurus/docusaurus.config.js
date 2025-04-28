@@ -3,8 +3,48 @@
 
 // const redirects = require('./redirects');
 const {themes} = require('prism-react-renderer');
-// const lightCodeTheme = themes.github;
+const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
+
+/** Inkeep config */
+const inkeepConfig = {
+  baseSettings: {
+    // see https://docusaurus.io/docs/deployment#using-environment-variables to use docusaurus environment variables
+    apiKey: "f4154c2f6dea81c2d345ba760fb87e3b3f453bfa33ac8655", // required
+    primaryBrandColor: "#4945FF", // required -- your brand color, the widget color scheme is derived from this
+    organizationDisplayName: "Strapi",
+    // ...optional settings
+    theme: {
+      // optional path to a custom stylesheet
+      styles: [
+        // {
+        //   key: "main",
+        //   type: "link",
+        //   value: "/path/to/stylesheets",
+        // },
+      ],
+      syntaxHighlighter: {
+        lightTheme: lightCodeTheme, // optional -- pass in the Prism theme you're using
+        darkTheme: darkCodeTheme, // optional -- pass in the Prism theme you're using
+      },
+    }
+  },
+  modalSettings: {
+    // optional settings
+  },
+  searchSettings: {
+    // optional settings
+  },
+  aiChatSettings: {
+    // optional settings
+    aiAssistantAvatar: "/img/logo-monogram.png", // optional -- use your own AI assistant avatar
+    exampleQuestions: [
+      "How to install Strapi 5?",
+      "What's new in Strapi 5?",
+      "How to host on Strapi Cloud?",
+    ],
+  },
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -76,31 +116,31 @@ const config = {
       src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1', // fallback
       async: true,
     },
-    {
-      /**
-       * Kapa AI widget script and parameters
-       * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
-       */
-      src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
-      'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
-      'data-project-name': 'Strapi',
-      'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
-      'data-button-hide': 'true',
-      'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
-      'data-project-color': '#4945FF',
-      'data-button-bg-color': '#32324D',
-      // 'data-modal-override-open-class-search': 'DocSearch-Button',
-      // 'data-modal-title-search': 'Search Strapi Docs',
-      // 'data-modal-open-on-command-k': 'true',
-      // 'data-search-mode-enabled': true,
-      'data-modal-override-open-class': "kapa-widget-button",
-      'data-modal-title-ask-ai': 'Ask your question',
-      'data-modal-border-radius': '4px',
-      'data-submit-query-button-bg-color': '#4945FF',
-      'data-modal-body-padding-top': '20px',
-      'data-modal-y-offset': "25vh",
-      async: true,
-    },
+    // {
+    //   /**
+    //    * Kapa AI widget script and parameters
+    //    * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
+    //    */
+    //   src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+    //   'data-website-id': 'f1838a12-ad58-4224-9fab-2f0704eeeb52',
+    //   'data-project-name': 'Strapi',
+    //   'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
+    //   'data-button-hide': 'true',
+    //   'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
+    //   'data-project-color': '#4945FF',
+    //   'data-button-bg-color': '#32324D',
+    //   // 'data-modal-override-open-class-search': 'DocSearch-Button',
+    //   // 'data-modal-title-search': 'Search Strapi Docs',
+    //   // 'data-modal-open-on-command-k': 'true',
+    //   // 'data-search-mode-enabled': true,
+    //   'data-modal-override-open-class': "kapa-widget-button",
+    //   'data-modal-title-ask-ai': 'Ask your question',
+    //   'data-modal-border-radius': '4px',
+    //   'data-submit-query-button-bg-color': '#4945FF',
+    //   'data-modal-body-padding-top': '20px',
+    //   'data-modal-y-offset': "25vh",
+    //   async: true,
+    // },
     {
       src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
       async: true,
@@ -343,6 +383,14 @@ const config = {
      * actually hiding the image when zoomed in. Found no related issue in the plugin's repo, might have to dig whether it's
      * related to the Docusaurus canary build or not.
      */
+    ["@inkeep/cxkit-docusaurus", {
+      SearchBar: {
+        ...inkeepConfig,
+      },
+      ChatButton: {
+        ...inkeepConfig,
+      },
+    }],
   ],
 };
 

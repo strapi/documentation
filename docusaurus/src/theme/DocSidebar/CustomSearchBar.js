@@ -1,12 +1,36 @@
 import React from 'react';
-import SearchBar from '@theme-original/SearchBar';
-import Icon from '../../components/Icon.js'
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import Icon from '../../components/Icon.js';
 
-export default function CustomSearchBarWrapper(props) {
+export default function CustomSearchBarWrapper() {
   return (
-    <div className="my-custom-search-bar">
-      <SearchBar {...props} />
-      <button className="kapa-widget-button"><span className="kapa-widget-button-text"><Icon name="sparkle"/>Ask AI</span></button>
-    </div>
+    <BrowserOnly fallback={<div style={{ width: '100%', height: '40px' }} />}>
+      {() => {
+        const { useInkeepModal } = require('../../hooks/useInkeepModal');
+        const { openSearch, openChat, modal } = useInkeepModal();
+
+        return (
+          <>
+            <div className="my-custom-search-bar">
+              {/* Search Button */}
+              <button onClick={openSearch} className="DocSearch DocSearch-Button">
+                <span className="DocSearch-Button-Placeholder">Search</span>
+              </button>
+
+              {/* Ask AI Button */}
+              <button onClick={openChat} className="kapa-widget-button">
+                <span className="kapa-widget-button-text">
+                  <Icon name="sparkle" />
+                  Ask AI
+                </span>
+              </button>
+            </div>
+
+            {/* Modal */}
+            {modal}
+          </>
+        );
+      }}
+    </BrowserOnly>
   );
 }
