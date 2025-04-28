@@ -8,7 +8,7 @@ const InkeepContext = createContext(null);
 // Provider component wrapping the application
 export function InkeepSimpleProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("search"); // "search" or "chat"
+  const [activeView, setView] = useState("search"); // "search" or "chat"
   const searchFunctionsRef = useRef(null);
   const chatFunctionsRef = useRef(null);
 
@@ -19,12 +19,12 @@ export function InkeepSimpleProvider({ children }) {
 
   // Functions to handle opening the modal in search or chat mode 
   const openSearch = useCallback(() => {
-    setActiveTab("search");
+    setView("search");
     setIsOpen(true);
   }, []);
 
   const openChat = useCallback(() => {
-    setActiveTab("chat");
+    setView("chat");
     setIsOpen(true);
   }, []);
 
@@ -39,7 +39,7 @@ export function InkeepSimpleProvider({ children }) {
       searchFunctionsRef,
     },
     aiChatSettings: {
-      aiAssistantName: "Assistant Strapi",
+      aiAssistantName: "the Strapi AI Docs assistant",
       botAvatarSrc: "https://strapi.io/assets/favicon-32x32.png",
       exampleQuestions: [
         "How to install Strapi?",
@@ -51,8 +51,8 @@ export function InkeepSimpleProvider({ children }) {
     modalSettings: {
       isOpen,
       onOpenChange: handleOpenChange,
-      defaultTab: activeTab, // Control active tab when opening
-      startOnMode: activeTab, // Forces initial mode
+      defaultTab: activeView, // Control active tab when opening
+      startOnMode: activeView, // Forces initial mode
     },
   };
 
