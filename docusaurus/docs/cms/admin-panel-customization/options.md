@@ -118,7 +118,7 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```jsx title="/src/admin/app.ts"
-// Note: you may see some ts errors, don't worry about it
+// Note: you may see some ts errors, don't worry about them
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
 import favicon from "./extensions/favicon.png";
