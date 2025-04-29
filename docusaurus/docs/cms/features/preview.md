@@ -567,10 +567,10 @@ const pageData = await fetchContentType('api::page.page', {
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
 
-:::strapi Preview with or without the side panel
+:::strapi Preview vs. Live Preview
 Based on your CMS plan, your experience with Preview will be different:
 - With the Free plan, Preview will be full screen only.
-- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
+- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you get access to Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
 :::
 
 Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
@@ -590,7 +590,7 @@ Once the Preview is open, you can:
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
 - and click the link icon <Icon name="link" classes="ph-bold"/> in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
 
-Additionally, you can:
+Additionally, with Live Preview, you can:
 - with <GrowthBadge /> and <EnterpriseBadge /> plans, expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview full screen,
 - and, with the <EnterpriseBadge /> plan, use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled.
 
