@@ -194,6 +194,8 @@ jobs:
             echo "Content files found:"
             echo "$CONTENT_FILES"
             echo "has_content_files=true" >> $GITHUB_OUTPUT
+            
+            # Stocker les fichiers dans un format utilisable par Bash
             echo "content_files<<EOF" >> $GITHUB_OUTPUT
             echo "$CONTENT_FILES" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
@@ -231,9 +233,12 @@ jobs:
             git fetch origin $SOURCE_BRANCH
           fi
           
-          # Get content files from PR
+          # Get content files from PR - Correction de la boucle for
           echo "Processing content files from PR..."
-          for file in ${{ steps.check-pr-files.outputs.content_files }}; do
+          echo "${{ steps.check-pr-files.outputs.content_files }}" | while IFS= read -r file; do
+            if [ -z "$file" ]; then
+              continue
+            fi
             echo "Processing file: $file"
             mkdir -p $(dirname "$file")
             git checkout FETCH_HEAD -- "$file"
