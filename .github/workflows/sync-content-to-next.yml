@@ -91,37 +91,49 @@ jobs:
           echo "Files in PR:"
           echo "$PR_FILES"
           
+          # Flag to track if we found any content files
+          FOUND_CONTENT_FILES=false
+          # Create a list of processed files
+          PROCESSED_FILES=""
+          
           # Process content files one by one
           echo "Processing content files from PR..."
-          FOUND_FILES=false
           
-          echo "$PR_FILES" | while read -r file; do
+          while read -r file; do
             if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
               echo "Processing content file: $file"
               mkdir -p $(dirname "$file")
               git checkout FETCH_HEAD -- "$file"
-              FOUND_FILES=true
+              FOUND_CONTENT_FILES=true
+              PROCESSED_FILES="$PROCESSED_FILES $file"
             fi
+          done <<< "$PR_FILES"
+          
+          # Exit if no content files were found
+          if [ "$FOUND_CONTENT_FILES" != "true" ]; then
+            echo "No content files found in PR"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            exit 0 # Exit with success but skip PR creation
+          fi
+          
+          # Debug: Show differences
+          echo "Showing diffs for processed files:"
+          for file in $PROCESSED_FILES; do
+            echo "Diff for $file:"
+            git diff HEAD -- "$file" || true
           done
           
-          # Check if we have changes
-          if git diff --quiet --exit-code; then
-            echo "No content files found or no changes detected"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Changes detected, will commit"
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          fi
+          # Always create PR regardless of detected changes
+          echo "has_changes=true" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
       - name: Commit and create PR
         if: steps.apply-changes.outputs.has_changes == 'true'
         run: |
-          # Commit changes
+          # Commit changes - force commit even if git thinks there are no changes
           git add .
-          git commit -m "Port PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} to next branch"
+          git commit --allow-empty -m "Port PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} to next branch"
           
           # Push branch
           git push origin next-port-pr${{ github.event.pull_request.number }}
