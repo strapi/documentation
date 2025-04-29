@@ -76,7 +76,8 @@ jobs:
           echo "Modified files:"
           echo "$MODIFIED_FILES"
           
-          INVALID_FILES=$(echo "$MODIFIED_FILES" | grep -v -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)')
+          # Correction de l'expression régulière pour correspondre correctement aux chemins
+          INVALID_FILES=$(echo "$MODIFIED_FILES" | grep -v -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/')
           
           if [ -z "$INVALID_FILES" ]; then
             echo "All files are in content folders. Proceeding."
@@ -106,9 +107,9 @@ jobs:
           
           echo "Attempting cherry-pick of commit ${{ steps.get-commit.outputs.commit_hash }}..."
           git cherry-pick ${{ steps.get-commit.outputs.commit_hash }} || {
-            if git diff --name-only --diff-filter=U | grep -q -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)'; then
+            if git diff --name-only --diff-filter=U | grep -q -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/'; then
               echo "Conflicts detected in content files, attempting to resolve..."
-              CONFLICTED_FILES=$(git diff --name-only --diff-filter=U | grep -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)')
+              CONFLICTED_FILES=$(git diff --name-only --diff-filter=U | grep -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/')
               echo "Conflicted files:"
               echo "$CONFLICTED_FILES"
               git add $(echo "$CONFLICTED_FILES")
@@ -166,8 +167,8 @@ jobs:
           echo "Files in PR:"
           echo "$PR_FILES"
           
-          # Check if all files are in allowed directories
-          INVALID_FILES=$(echo "$PR_FILES" | grep -v -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)')
+          # Correction de l'expression régulière pour correspondre correctement aux chemins
+          INVALID_FILES=$(echo "$PR_FILES" | grep -v -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/')
           
           if [ -z "$INVALID_FILES" ]; then
             echo "All files are in content folders. Proceeding."
@@ -210,7 +211,7 @@ jobs:
           
           # Get each modified file that matches our criteria
           echo "Getting content files from PR..."
-          CONTENT_FILES=$(echo "$PR_FILES" | grep -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)')
+          CONTENT_FILES=$(echo "$PR_FILES" | grep -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/')
           echo "Content files to port:"
           echo "$CONTENT_FILES"
           
@@ -286,9 +287,9 @@ jobs:
           echo "Attempting cherry-pick of merge commit ${{ steps.get-merge-commit.outputs.merge_commit }}..."
           # For a merge commit, we need to use -m 1 to cherry-pick the parent changes
           git cherry-pick -m 1 ${{ steps.get-merge-commit.outputs.merge_commit }} || {
-            if git diff --name-only --diff-filter=U | grep -q -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)'; then
+            if git diff --name-only --diff-filter=U | grep -q -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/'; then
               echo "Conflicts detected in content files, attempting to resolve..."
-              CONFLICTED_FILES=$(git diff --name-only --diff-filter=U | grep -E '^(docusaurus/docs/cms/|docusaurus/docs/cloud/|docusaurus/static/img/assets/)')
+              CONFLICTED_FILES=$(git diff --name-only --diff-filter=U | grep -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/')
               echo "Conflicted files:"
               echo "$CONFLICTED_FILES"
               git add $(echo "$CONFLICTED_FILES")
