@@ -173,50 +173,19 @@ jobs:
           echo "PR Title: ${{ github.event.pull_request.title }}"
           echo "Added Label: ${{ github.event.label.name }}"
 
-      - name: Check PR files
-        id: check-pr-files
-        run: |
-          echo "Checking PR files..."
-          # Get list of modified files in the PR
-          PR_FILES=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path')
-          echo "Files in PR:"
-          echo "$PR_FILES"
-          
-          # Check for content files
-          CONTENT_FILES=""
-          while IFS= read -r file; do
-            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
-              CONTENT_FILES="$CONTENT_FILES$file"$'\n'
-            fi
-          done <<< "$PR_FILES"
-
-          if [[ -n "$CONTENT_FILES" ]]; then
-            echo "Content files found:"
-            echo "$CONTENT_FILES"
-            echo "has_content_files=true" >> $GITHUB_OUTPUT
-            echo "content_files<<EOF" >> $GITHUB_OUTPUT
-            echo "$CONTENT_FILES" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          else
-            echo "No content files found."
-            echo "has_content_files=false" >> $GITHUB_OUTPUT
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
-
       - name: Create PR to next branch
-        if: steps.check-pr-files.outputs.has_content_files == 'true'
         run: |
           echo "Creating PR to next branch..."
           SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
           SOURCE_REPO="${{ github.event.pull_request.head.repo.full_name }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
           
           echo "Source Branch: $SOURCE_BRANCH"
           echo "Source Repo: $SOURCE_REPO"
           
           # Create a new branch based on next
-          TARGET_BRANCH="next-port-pr${{ github.event.pull_request.number }}"
+          TARGET_BRANCH="next-port-pr$PR_NUMBER"
           echo "Target Branch: $TARGET_BRANCH"
           
           git fetch origin next
@@ -231,18 +200,36 @@ jobs:
             git fetch origin $SOURCE_BRANCH
           fi
           
-          # Get content files from PR
+          # Get list of modified files in the PR
+          echo "Getting list of modified files in PR #$PR_NUMBER..."
+          PR_FILES=$(gh pr view $PR_NUMBER --json files --jq '.files[].path')
+          echo "Files in PR:"
+          echo "$PR_FILES"
+          
+          # Process only content files
           echo "Processing content files from PR..."
-          for file in ${{ steps.check-pr-files.outputs.content_files }}; do
-            echo "Processing file: $file"
-            mkdir -p $(dirname "$file")
-            git checkout FETCH_HEAD -- "$file"
-          done
+          FOUND_CONTENT_FILES=false
+          
+          # Traiter chaque fichier individuellement sans boucle for 
+          while IFS= read -r file; do
+            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+              echo "Processing content file: $file"
+              mkdir -p $(dirname "$file")
+              git checkout FETCH_HEAD -- "$file"
+              FOUND_CONTENT_FILES=true
+            fi
+          done <<< "$PR_FILES"
+          
+          # Vérifier si des fichiers de contenu ont été trouvés
+          if [ "$FOUND_CONTENT_FILES" != "true" ]; then
+            echo "No content files found in PR. Nothing to port."
+            exit 0
+          fi
           
           # Commit and push
           echo "Committing changes..."
           git add .
-          git commit -m "Port PR #${{ github.event.pull_request.number }}: $PR_TITLE to next branch"
+          git commit -m "Port PR #$PR_NUMBER: $PR_TITLE to next branch"
           
           echo "Pushing branch..."
           git push origin $TARGET_BRANCH
@@ -251,7 +238,7 @@ jobs:
           echo "Creating PR from $TARGET_BRANCH to next..."
           gh pr create --base next --head $TARGET_BRANCH \
             --title "[Port to next] $PR_TITLE" \
-            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label."
+            --body "Automatic port of PR #$PR_NUMBER to next branch.\n\nOriginal PR: #$PR_NUMBER\nCreated automatically after adding the 'temp - port to docs-next' label."
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
