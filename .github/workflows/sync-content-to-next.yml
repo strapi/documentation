@@ -138,14 +138,14 @@ jobs:
           # Push branch
           git push origin next-port-pr${{ github.event.pull_request.number }}
           
-          # Create PR
+          # Create PR with a special tag in the body to identify it later
           gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
             --title "[Port to next] ${{ github.event.pull_request.title }}" \
-            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label."
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->"
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
-  # Job for syncing merged PRs 
+  # Job for syncing merged PRs more intelligently
   sync-merged-pr:
     if: >-
       github.event_name == 'pull_request' &&
@@ -166,31 +166,123 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
-      - name: Cherry-pick and create PR
+      - name: Check for existing PR and decide strategy
+        id: check-existing
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          
+          # Check if there's an existing PR 
+          EXISTING_PR_NUMBER=$(gh pr list --base next --head "next-port-pr$PR_NUMBER" --state open --json number --jq '.[0].number')
+          
+          if [ -n "$EXISTING_PR_NUMBER" ]; then
+            echo "Existing PR found: #$EXISTING_PR_NUMBER"
+            
+            # Check if the PR body contains our marker
+            PR_BODY=$(gh pr view $EXISTING_PR_NUMBER --json body --jq '.body')
+            
+            if [[ "$PR_BODY" == *"SYNC_PR_MARKER"* ]]; then
+              echo "This is a PR created by our workflow, checking if it's been modified"
+              
+              # Check if there are review comments or the PR has been approved
+              REVIEW_COUNT=$(gh pr view $EXISTING_PR_NUMBER --json reviews --jq '.reviews | length')
+              
+              if [ "$REVIEW_COUNT" -gt 0 ]; then
+                echo "PR has reviews, will update the existing PR instead of replacing it"
+                echo "strategy=update" >> $GITHUB_OUTPUT
+                echo "existing_pr=$EXISTING_PR_NUMBER" >> $GITHUB_OUTPUT
+                exit 0
+              fi
+            fi
+            
+            echo "Will replace the existing PR with a new one based on the merge commit"
+            echo "strategy=replace" >> $GITHUB_OUTPUT
+            echo "existing_pr=$EXISTING_PR_NUMBER" >> $GITHUB_OUTPUT
+          else
+            echo "No existing PR found, will create a new one"
+            echo "strategy=create" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Create new branch from merge commit
+        id: create-branch
         run: |
           # Variables
           PR_NUMBER="${{ github.event.pull_request.number }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
           MERGE_COMMIT="${{ github.event.pull_request.merge_commit_sha }}"
-          BRANCH_NAME="sync-merged-pr$PR_NUMBER"
+          
+          # Use different branch name depending on strategy
+          if [ "${{ steps.check-existing.outputs.strategy }}" = "update" ]; then
+            BRANCH_NAME="next-port-pr$PR_NUMBER"
+            echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          else
+            BRANCH_NAME="sync-merged-pr$PR_NUMBER"
+            echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          fi
           
           # Create branch from next
           git fetch origin next
-          git checkout -b $BRANCH_NAME origin/next
+          
+          if [ "${{ steps.check-existing.outputs.strategy }}" = "update" ]; then
+            echo "Checking out existing branch $BRANCH_NAME"
+            git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME origin/next
+          else
+            echo "Creating new branch $BRANCH_NAME"
+            git checkout -b $BRANCH_NAME origin/next
+          fi
           
           # Try to cherry-pick
           if git cherry-pick -m 1 $MERGE_COMMIT; then
-            git push origin $BRANCH_NAME
-            
-            # Create PR 
-            gh pr create --base next --head $BRANCH_NAME \
-              --title "[Merged-sync] $PR_TITLE" \
-              --body "Synchronization of merged PR #$PR_NUMBER to next branch"
+            git push origin $BRANCH_NAME --force
+            echo "cherry_pick_success=true" >> $GITHUB_OUTPUT
           else
             echo "Cherry-pick failed, manual intervention needed"
             git cherry-pick --abort
-            exit 1
+            echo "cherry_pick_success=false" >> $GITHUB_OUTPUT
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Update existing PR
+        if: steps.check-existing.outputs.strategy == 'update' && steps.create-branch.outputs.cherry_pick_success == 'true'
+        run: |
+          EXISTING_PR="${{ steps.check-existing.outputs.existing_pr }}"
+          echo "Updating existing PR #$EXISTING_PR with latest merged changes"
+          
+          # Add comment explaining the update
+          gh pr comment $EXISTING_PR --body "This PR has been updated with the latest changes from the merged PR #${{ github.event.pull_request.number }}. The merge commit was cherry-picked to include all approved changes."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Close and replace existing PR
+        if: steps.check-existing.outputs.strategy == 'replace' && steps.create-branch.outputs.cherry_pick_success == 'true'
+        run: |
+          EXISTING_PR="${{ steps.check-existing.outputs.existing_pr }}"
+          BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          # Create the new PR first
+          NEW_PR=$(gh pr create --base next --head $BRANCH_NAME \
+            --title "[Merged-sync] $PR_TITLE" \
+            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main." \
+            --json number --jq '.number')
+            
+          # Now close the existing PR with a reference to the new one
+          gh pr close $EXISTING_PR --comment "This PR is replaced by the direct synchronization of the merge commit in #$NEW_PR"
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Create new PR
+        if: steps.check-existing.outputs.strategy == 'create' && steps.create-branch.outputs.cherry_pick_success == 'true'
+        run: |
+          BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          # Create new PR 
+          gh pr create --base next --head $BRANCH_NAME \
+            --title "[Merged-sync] $PR_TITLE" \
+            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main."
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
