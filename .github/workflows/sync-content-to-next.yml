@@ -1,0 +1,208 @@
+name: Sync Content to Next Branch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/cms/**'
+      - 'docs/cloud/**'
+      - 'static/img/assets/**'
+  pull_request:
+    types: [labeled, closed]
+
+jobs:
+  # Job 1: Automatic replication of commits pushed to main
+  cherry-pick-from-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CONTENT_SYNC_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Get latest commit that modified content
+        id: get-commit
+        run: |
+          COMMIT_HASH=$(git log -1 --format="%H" -- docs/cms docs/cloud static/img/assets)
+          COMMIT_MSG=$(git log -1 --format="%s" $COMMIT_HASH)
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "commit_msg=$COMMIT_MSG" >> $GITHUB_OUTPUT
+
+      - name: Check if commit modifies only content files
+        id: check-content-only
+        run: |
+          # Check if the commit touches only allowed folders
+          MODIFIED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ steps.get-commit.outputs.commit_hash }})
+          INVALID_FILES=$(echo "$MODIFIED_FILES" | grep -v -E '^(docs/cms/|docs/cloud/|static/img/assets/)')
+          
+          if [ -z "$INVALID_FILES" ]; then
+            echo "content_only=true" >> $GITHUB_OUTPUT
+          else
+            echo "content_only=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR to next branch
+        if: steps.check-content-only.outputs.content_only == 'true'
+        run: |
+          BRANCH_NAME="sync-content-$(date +%Y%m%d-%H%M%S)"
+          git fetch origin next
+          git checkout -b $BRANCH_NAME origin/next
+          
+          git cherry-pick ${{ steps.get-commit.outputs.commit_hash }} || {
+            if git diff --name-only --diff-filter=U | grep -q -E '^(docs/cms/|docs/cloud/|static/img/assets/)'; then
+              # Try to resolve simple conflicts in content files
+              git add $(git diff --name-only --diff-filter=U | grep -E '^(docs/cms/|docs/cloud/|static/img/assets/)')
+              git cherry-pick --continue
+            else
+              # If conflict involves other files, abort
+              git cherry-pick --abort
+              echo "Conflict detected in non-content files, cherry-pick aborted"
+              exit 1
+            fi
+          }
+          
+          git push origin $BRANCH_NAME
+          
+          # Create a PR with a title that includes reference to the original commit
+          gh pr create --base next --head $BRANCH_NAME \
+            --title "[Auto-sync] ${{ steps.get-commit.outputs.commit_msg }}" \
+            --body "Automatic synchronization of commit from main: ${{ steps.get-commit.outputs.commit_hash }}\n\nChanges applied automatically by GitHub Actions."
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+
+  # Job 2: Create PR to next when a PR is labeled
+  create-pr-for-labeled:
+    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'temp: port to docs-next'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CONTENT_SYNC_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Check if PR contains only content changes
+        id: check-pr-files
+        run: |
+          # Get list of modified files in the PR
+          PR_FILES=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path')
+          
+          # Check if all files are in allowed directories
+          INVALID_FILES=$(echo "$PR_FILES" | grep -v -E '^(docs/cms/|docs/cloud/|static/img/assets/)')
+          
+          if [ -z "$INVALID_FILES" ]; then
+            echo "content_only=true" >> $GITHUB_OUTPUT
+          else
+            echo "content_only=false" >> $GITHUB_OUTPUT
+            echo "Non-content files found: $INVALID_FILES"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+
+      - name: Create PR to next branch
+        if: steps.check-pr-files.outputs.content_only == 'true'
+        run: |
+          # Get source branch of the original PR
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          SOURCE_REPO="${{ github.event.pull_request.head.repo.full_name }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          # Create a new branch based on next
+          TARGET_BRANCH="next-port-pr${{ github.event.pull_request.number }}"
+          git fetch origin next
+          git checkout -b $TARGET_BRANCH origin/next
+          
+          # If PR comes from a fork, fetch its changes
+          if [ "$SOURCE_REPO" != "${{ github.repository }}" ]; then
+            git fetch "https://github.com/$SOURCE_REPO.git" $SOURCE_BRANCH
+          fi
+          
+          # Get each modified file that matches our criteria
+          for FILE in $(echo "$PR_FILES" | grep -E '^(docs/cms/|docs/cloud/|static/img/assets/)'); do
+            mkdir -p $(dirname "$FILE")
+            git checkout FETCH_HEAD -- "$FILE"
+          done
+          
+          # Commit and push
+          git add .
+          git commit -m "Port PR #${{ github.event.pull_request.number }}: $PR_TITLE to next branch"
+          git push origin $TARGET_BRANCH
+          
+          # Create PR to next
+          gh pr create --base next --head $TARGET_BRANCH \
+            --title "[Port to next] $PR_TITLE" \
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp: port to docs-next' label."
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+
+  # Job 3: Sync changes when a labeled PR is merged to main
+  sync-merged-pr:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'temp: port to docs-next')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.CONTENT_SYNC_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Get merge commit
+        id: get-merge-commit
+        run: |
+          MERGE_COMMIT=$(git log -1 --format="%H" ${{ github.event.pull_request.merge_commit_sha }})
+          echo "merge_commit=$MERGE_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Cherry-pick merge commit to next
+        run: |
+          BRANCH_NAME="sync-merged-pr${{ github.event.pull_request.number }}"
+          git fetch origin next
+          git checkout -b $BRANCH_NAME origin/next
+          
+          # For a merge commit, we need to use -m 1 to cherry-pick the parent changes
+          git cherry-pick -m 1 ${{ steps.get-merge-commit.outputs.merge_commit }} || {
+            if git diff --name-only --diff-filter=U | grep -q -E '^(docs/cms/|docs/cloud/|static/img/assets/)'; then
+              # Try to resolve simple conflicts in content files
+              git add $(git diff --name-only --diff-filter=U | grep -E '^(docs/cms/|docs/cloud/|static/img/assets/)')
+              git cherry-pick --continue
+            else
+              # If conflict involves other files, abort
+              git cherry-pick --abort
+              echo "Conflict detected in non-content files, cherry-pick aborted"
+              exit 1
+            fi
+          }
+          
+          git push origin $BRANCH_NAME
+          
+          # Find if there's an existing PR for this original PR
+          EXISTING_PORT_PR=$(gh pr list --base next --head "next-port-pr${{ github.event.pull_request.number }}" --json number --jq '.[0].number')
+          
+          if [ -n "$EXISTING_PORT_PR" ]; then
+            # If a PR already exists, close it and add a comment
+            gh pr close $EXISTING_PORT_PR --comment "This PR is replaced by the direct synchronization of the merge commit: #INSERT_NEW_PR_NUMBER_HERE"
+          fi
+          
+          # Create PR to next
+          gh pr create --base next --head $BRANCH_NAME \
+            --title "[Merged-sync] ${{ github.event.pull_request.title }}" \
+            --body "Synchronization of the merge commit from PR #${{ github.event.pull_request.number }} to next.\n\nThis PR replaces any previous port PR created for #${{ github.event.pull_request.number }}."
+        env:
+          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
