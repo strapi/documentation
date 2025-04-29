@@ -244,7 +244,7 @@ jobs:
           echo "Creating PR from $TARGET_BRANCH to next..."
           gh pr create --base next --head $TARGET_BRANCH \
             --title "[Port to next] $PR_TITLE" \
-            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'port-to-docs-next' label."
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label."
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
