@@ -12,22 +12,177 @@ on:
     types: [labeled, closed]
 
 jobs:
-  # Debug Job: Print event info
+  # Job for debugging purposes
   debug-event:
     runs-on: ubuntu-latest
     steps:
-      - name: Print event info
+      - name: Debug event
         run: |
           echo "Event name: ${{ github.event_name }}"
-          echo "Event action: ${{ github.event.action }}"
+          echo "Action: ${{ github.event.action }}"
+          echo "Repository: ${{ github.repository }}"
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "PR number: ${{ github.event.pull_request.number }}"
+            echo "PR title: ${{ github.event.pull_request.title }}"
             if [ "${{ github.event.action }}" = "labeled" ]; then
-              echo "Added label: ${{ github.event.label.name }}"
+              echo "Label: ${{ github.event.label.name }}"
             fi
           fi
 
-  # Job 1: Automatic replication of commits pushed to main
+  # Job: Create PR to next when a PR is labeled
+  create-pr-for-labeled:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'labeled' &&
+      github.event.label.name == 'temp - port to docs-next'
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Debug - PR info
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Added Label: ${{ github.event.label.name }}"
+
+      - name: Create branch from next
+        run: |
+          # Basic variables
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          SOURCE_REPO="${{ github.event.pull_request.head.repo.full_name }}"
+          TARGET_BRANCH="next-port-pr$PR_NUMBER"
+          
+          echo "Source Branch: $SOURCE_BRANCH"
+          echo "Source Repo: $SOURCE_REPO"
+          echo "Target Branch: $TARGET_BRANCH"
+          
+          # Fetch next branch
+          git fetch origin next
+          
+          # Create new branch based on next
+          git checkout -b $TARGET_BRANCH origin/next
+          
+          # Fetch source branch
+          if [ "$SOURCE_REPO" != "${{ github.repository }}" ]; then
+            echo "PR comes from a fork, fetching changes from $SOURCE_REPO"
+            git fetch "https://github.com/$SOURCE_REPO.git" $SOURCE_BRANCH
+          else
+            echo "PR is from the same repo"
+            git fetch origin $SOURCE_BRANCH
+          fi
+
+      - name: Apply content changes
+        id: apply-changes
+        run: |
+          # Get list of modified files in the PR
+          PR_FILES=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path')
+          echo "Files in PR:"
+          echo "$PR_FILES"
+          
+          # Process content files one by one
+          echo "Processing content files from PR..."
+          FOUND_FILES=false
+          
+          echo "$PR_FILES" | while read -r file; do
+            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+              echo "Processing content file: $file"
+              mkdir -p $(dirname "$file")
+              git checkout FETCH_HEAD -- "$file"
+              FOUND_FILES=true
+            fi
+          done
+          
+          # Check if we have changes
+          if git diff --quiet --exit-code; then
+            echo "No content files found or no changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "Changes detected, will commit"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Commit and create PR
+        if: steps.apply-changes.outputs.has_changes == 'true'
+        run: |
+          # Commit changes
+          git add .
+          git commit -m "Port PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} to next branch"
+          
+          # Push branch
+          git push origin next-port-pr${{ github.event.pull_request.number }}
+          
+          # Create PR
+          gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
+            --title "[Port to next] ${{ github.event.pull_request.title }}" \
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+  # Job for syncing merged PRs 
+  sync-merged-pr:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next')
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Cherry-pick and create PR
+        run: |
+          # Variables
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          MERGE_COMMIT="${{ github.event.pull_request.merge_commit_sha }}"
+          BRANCH_NAME="sync-merged-pr$PR_NUMBER"
+          
+          # Create branch from next
+          git fetch origin next
+          git checkout -b $BRANCH_NAME origin/next
+          
+          # Try to cherry-pick
+          if git cherry-pick -m 1 $MERGE_COMMIT; then
+            git push origin $BRANCH_NAME
+            
+            # Create PR 
+            gh pr create --base next --head $BRANCH_NAME \
+              --title "[Merged-sync] $PR_TITLE" \
+              --body "Synchronization of merged PR #$PR_NUMBER to next branch"
+          else
+            echo "Cherry-pick failed, manual intervention needed"
+            git cherry-pick --abort
+            exit 1
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+  # Job for automatic syncing of pushed commits
   cherry-pick-from-push:
     if: github.event_name == 'push'
     needs: debug-event
@@ -44,166 +199,41 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
-      - name: Get latest commit
-        id: get-commit
+      - name: Process push
         run: |
+          # Get the latest commit hash
           COMMIT_HASH=$(git log -1 --format="%H")
-          COMMIT_MSG=$(git log -1 --format="%s" $COMMIT_HASH)
-          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
-          echo "commit_msg=$COMMIT_MSG" >> $GITHUB_OUTPUT
-
-      - name: Create PR to next branch
-        run: |
-          # Get modified files in the commit
-          MODIFIED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ steps.get-commit.outputs.commit_hash }})
+          COMMIT_MSG=$(git log -1 --format="%s")
           
-          # Check if any file is in our content folders
-          CONTENT_FOUND=false
-          while IFS= read -r file; do
-            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
-              CONTENT_FOUND=true
-              break
-            fi
-          done <<< "$MODIFIED_FILES"
+          # Get changed files
+          CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH)
           
-          if [ "$CONTENT_FOUND" != "true" ]; then
-            echo "No content files found to sync"
+          # Check if any content files were changed
+          CONTENT_FILES=$(echo "$CHANGED_FILES" | grep -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/' || echo "")
+          
+          if [ -z "$CONTENT_FILES" ]; then
+            echo "No content files changed in this push"
             exit 0
           fi
           
-          # Create branch and cherry-pick
-          BRANCH_NAME="sync-content-$(date +%Y%m%d-%H%M%S)"
-          
-          git fetch origin next
-          git checkout -b $BRANCH_NAME origin/next
-          
-          git cherry-pick ${{ steps.get-commit.outputs.commit_hash }} || {
-            echo "Cherry-pick failed, attempting to resolve simple conflicts"
-            git cherry-pick --abort
-            exit 1
-          }
-          
-          git push origin $BRANCH_NAME
-          
-          gh pr create --base next --head $BRANCH_NAME \
-            --title "[Auto-sync] ${{ steps.get-commit.outputs.commit_msg }}" \
-            --body "Automatic synchronization of content from main"
-        env:
-          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
-
-  # Job 2: Create PR to next when a PR is labeled
-  create-pr-for-labeled:
-    if: >-
-      github.event_name == 'pull_request' &&
-      github.event.action == 'labeled' &&
-      github.event.label.name == 'temp - port to docs-next'
-    needs: debug-event
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
-
-      - name: Simple port of PR
-        run: |
-          # Setup git
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-          
-          # Get PR info
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
-          
-          echo "Creating port for PR #$PR_NUMBER: $PR_TITLE"
-          
-          # Prepare branches
-          TARGET_BRANCH="next-port-pr$PR_NUMBER"
-          
-          git fetch origin next
-          git checkout -b $TARGET_BRANCH origin/next
-          
-          # If it's a PR from the same repo, fetch it
-          git fetch origin $SOURCE_BRANCH
-          
-          # Get the raw list of changed files from GitHub CLI
-          PR_FILES_JSON=$(gh pr view $PR_NUMBER --json files --jq '.files[].path')
-          
-          echo "Files from PR:"
-          echo "$PR_FILES_JSON"
-          
-          # Parse and process files one by one
-          echo "$PR_FILES_JSON" | while read -r file; do
-            # Check if it's a content file
-            if [[ "$file" == docusaurus/docs/cms/* || "$file" == docusaurus/docs/cloud/* || "$file" == docusaurus/static/img/assets/* ]]; then
-              echo "Processing content file: $file"
-              mkdir -p $(dirname "$file")
-              git checkout origin/$SOURCE_BRANCH -- "$file"
-            fi
-          done
-          
-          # Check if we have changes
-          if ! git diff --staged --quiet; then
-            # We have changes to commit
-            git commit -m "Port PR #$PR_NUMBER: $PR_TITLE to next branch"
-            git push origin $TARGET_BRANCH
-            
-            gh pr create --base next --head $TARGET_BRANCH \
-              --title "[Port to next] $PR_TITLE" \
-              --body "Automatic port of PR #$PR_NUMBER to next branch"
-          else
-            echo "No content files to port"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
-
-  # Job 3: Sync changes when a labeled PR is merged to main
-  sync-merged-pr:
-    if: >-
-      github.event_name == 'pull_request' &&
-      github.event.action == 'closed' &&
-      github.event.pull_request.merged == true &&
-      contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next')
-    needs: debug-event
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
-
-      - name: Simple sync merged PR
-        run: |
-          # Setup git
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
-          
-          # Get PR info
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          PR_TITLE="${{ github.event.pull_request.title }}"
-          MERGE_COMMIT="${{ github.event.pull_request.merge_commit_sha }}"
-          
-          echo "Syncing merged PR #$PR_NUMBER: $PR_TITLE"
-          
           # Create branch from next
-          BRANCH_NAME="sync-merged-pr$PR_NUMBER"
+          BRANCH_NAME="sync-push-$(date +%Y%m%d-%H%M%S)"
           
           git fetch origin next
           git checkout -b $BRANCH_NAME origin/next
           
-          # Try cherry-pick
-          if git cherry-pick -m 1 $MERGE_COMMIT; then
+          # Try to cherry-pick
+          if git cherry-pick $COMMIT_HASH; then
             git push origin $BRANCH_NAME
             
+            # Create PR
             gh pr create --base next --head $BRANCH_NAME \
-              --title "[Merged-sync] $PR_TITLE" \
-              --body "Sync of merged PR #$PR_NUMBER to next branch"
+              --title "[Auto-sync] $COMMIT_MSG" \
+              --body "Automatic sync of commit from main"
           else
-            echo "Cherry-pick failed, aborting"
+            echo "Cherry-pick failed, manual intervention needed"
             git cherry-pick --abort
+            exit 1
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
