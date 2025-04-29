@@ -80,7 +80,7 @@ jobs:
 
   # Job 2: Create PR to next when a PR is labeled
   create-pr-for-labeled:
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'temp: port to docs-next'
+    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == "temp - port to docs-next"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
