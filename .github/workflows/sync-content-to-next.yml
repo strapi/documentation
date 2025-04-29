@@ -80,7 +80,7 @@ jobs:
 
   # Job 2: Create PR to next when a PR is labeled
   create-pr-for-labeled:
-    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'temp: port to docs-next'
+    if: github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == "temp - port to docs-next"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -144,13 +144,13 @@ jobs:
           # Create PR to next
           gh pr create --base next --head $TARGET_BRANCH \
             --title "[Port to next] $PR_TITLE" \
-            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp: port to docs-next' label."
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label."
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
   # Job 3: Sync changes when a labeled PR is merged to main
   sync-merged-pr:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'temp: port to docs-next')
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
