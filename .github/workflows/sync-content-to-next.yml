@@ -1,115 +1,360 @@
-Skip to content
-Navigation Menu
-strapi
-documentation
+name: Sync Content to Next Branch
 
-Type / to search
-Code
-Issues
-42
-Pull requests
-12
-Discussions
-Actions
-Projects
-3
-Security
-Insights
-Settings
-Sync Content to Next Branch
-Content-type Builder revamp (beta release) #11
-Jobs
-Run details
-create-pr-for-labeled
-failed now in 15s
-Search logs
-1s
-12s
-   * [new tag]           v5.6.1                  -> v5.6.1
-   * [new tag]           v5.6.2                  -> v5.6.2
-   * [new tag]           v5.6.3                  -> v5.6.3
-   * [new tag]           v5.6.4                  -> v5.6.4
-   * [new tag]           v5.7.0                  -> v5.7.0
-   * [new tag]           v5.8.0                  -> v5.8.0
-   * [new tag]           v6.0.0                  -> v6.0.0
-   * [new tag]           v6.0.0-beta             -> v6.0.0-beta
-   * [new tag]           v6.0.1                  -> v6.0.1
-   * [new tag]           v6.0.2                  -> v6.0.2
-   * [new tag]           v6.1.0                  -> v6.1.0
-   * [new tag]           v6.2.0                  -> v6.2.0
-   * [new tag]           v6.2.1                  -> v6.2.1
-   * [new ref]           0e88189ceae51cb70f44f3c5268dbe13dc122a67 -> pull/2479/merge
-Determining the checkout info
-Checking out the ref
-/usr/bin/git log -1 --format='%H'
-'0e88189ceae51cb70f44f3c5268dbe13dc122a67'
-0s
-Run git config user.name "GitHub Actions Bot"
-0s
-Run echo "PR Number: 2479"
-PR Number: 2479
-PR Title: Content-type Builder revamp (beta release)
-Added Label: temp - port to docs-next
-1s
-Run echo "Checking PR files..."
-Checking PR files...
-Files in PR:
-.github/workflows/sync-content-to-next.yml
-docusaurus/docs/cms/features/content-manager.md
-docusaurus/docs/cms/features/content-type-builder.md
-Content files found:
-docusaurus/docs/cms/features/content-manager.md
-docusaurus/docs/cms/features/content-type-builder.md
-1s
-Run echo "Creating PR to next branch..."
-  echo "Creating PR to next branch..."
-  SOURCE_BRANCH="cms/CTB-revamp"
-  SOURCE_REPO="strapi/documentation"
-  PR_TITLE="Content-type Builder revamp (beta release)"
-  
-  echo "Source Branch: $SOURCE_BRANCH"
-  echo "Source Repo: $SOURCE_REPO"
-  
-  # Create a new branch based on next
-  TARGET_BRANCH="next-port-pr2479"
-  echo "Target Branch: $TARGET_BRANCH"
-  
-  git fetch origin next
-  git checkout -b $TARGET_BRANCH origin/next
-  
-  # If PR comes from a fork, fetch its changes
-  if [ "$SOURCE_REPO" != "strapi/documentation" ]; then
-    echo "PR comes from a fork, fetching changes from $SOURCE_REPO"
-    git fetch "https://github.com/$SOURCE_REPO.git" $SOURCE_BRANCH
-  else
-    echo "PR is from the same repo"
-    git fetch origin $SOURCE_BRANCH
-  fi
-  
-  # Get content files from PR
-  echo "Processing content files from PR..."
-  for file in docusaurus/docs/cms/features/content-manager.md
-  docusaurus/docs/cms/features/content-type-builder.md
-  ; do
-    echo "Processing file: $file"
-    mkdir -p $(dirname "$file")
-    git checkout FETCH_HEAD -- "$file"
-  done
-  
-  # Commit and push
-  echo "Committing changes..."
-  git add .
-  git commit -m "Port PR #2479: $PR_TITLE to next branch"
-  
-  echo "Pushing branch..."
-  git push origin $TARGET_BRANCH
-  
-  # Create PR to next
-  echo "Creating PR from $TARGET_BRANCH to next..."
-  gh pr create --base next --head $TARGET_BRANCH \
-    --title "[Port to next] $PR_TITLE" \
-    --body "Automatic port of PR #2479 to next branch.\n\nOriginal PR: #2479\nCreated automatically after adding the 'temp - port to docs-next' label."
-  shell: /usr/bin/bash -e {0}
-  env:
-0s
-0s
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docusaurus/docs/cms/**'
+      - 'docusaurus/docs/cloud/**'
+      - 'docusaurus/static/img/assets/**'
+  pull_request:
+    types: [labeled, closed]
+
+jobs:
+  # Debug Job: Print event info
+  debug-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print event info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Event action: ${{ github.event.action }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "PR number: ${{ github.event.pull_request.number }}"
+            if [ "${{ github.event.action }}" = "labeled" ]; then
+              echo "Added label: ${{ github.event.label.name }}"
+            fi
+          fi
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "Pushed ref: ${{ github.ref }}"
+          fi
+
+  # Job 1: Automatic replication of commits pushed to main
+  cherry-pick-from-push:
+    if: github.event_name == 'push'
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Debug - List recent commits
+        run: |
+          echo "Recent commits on main:"
+          git log -n 5 --oneline
+
+      - name: Get latest commit
+        id: get-commit
+        run: |
+          COMMIT_HASH=$(git log -1 --format="%H")
+          COMMIT_MSG=$(git log -1 --format="%s" $COMMIT_HASH)
+          echo "Found commit: $COMMIT_HASH"
+          echo "Commit message: $COMMIT_MSG"
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "commit_msg=$COMMIT_MSG" >> $GITHUB_OUTPUT
+
+      - name: Check modified content files
+        id: check-files
+        run: |
+          echo "Checking modified files..."
+          
+          # Get modified files in the commit
+          MODIFIED_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ steps.get-commit.outputs.commit_hash }})
+          echo "Modified files:"
+          echo "$MODIFIED_FILES"
+          
+          # Check if any of the modified files are in our content directories
+          CONTENT_FILES=""
+          while IFS= read -r file; do
+            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+              CONTENT_FILES="$CONTENT_FILES$file"$'\n'
+            fi
+          done <<< "$MODIFIED_FILES"
+
+          if [[ -n "$CONTENT_FILES" ]]; then
+            echo "Content files found:"
+            echo "$CONTENT_FILES"
+            echo "has_content_files=true" >> $GITHUB_OUTPUT
+          else
+            echo "No content files found."
+            echo "has_content_files=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Debug - Check next branch
+        if: steps.check-files.outputs.has_content_files == 'true'
+        run: |
+          git fetch origin next
+          echo "Latest commits on next branch:"
+          git log origin/next -n 3 --oneline
+
+      - name: Create PR to next branch
+        if: steps.check-files.outputs.has_content_files == 'true'
+        run: |
+          echo "Creating PR to next branch..."
+          BRANCH_NAME="sync-content-$(date +%Y%m%d-%H%M%S)"
+          echo "New branch name: $BRANCH_NAME"
+          
+          git fetch origin next
+          git checkout -b $BRANCH_NAME origin/next
+          
+          echo "Attempting cherry-pick of commit ${{ steps.get-commit.outputs.commit_hash }}..."
+          git cherry-pick ${{ steps.get-commit.outputs.commit_hash }} || {
+            echo "Cherry-pick encountered conflicts, attempting to resolve..."
+            # Check if conflicts are only in content files
+            CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
+            echo "Conflicted files:"
+            echo "$CONFLICTED_FILES"
+            
+            # Only add content files
+            NON_CONTENT_CONFLICTS=false
+            for file in $CONFLICTED_FILES; do
+              if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+                git add "$file"
+                echo "Added: $file"
+              else
+                NON_CONTENT_CONFLICTS=true
+                echo "Non-content conflict: $file"
+              fi
+            done
+            
+            if [ "$NON_CONTENT_CONFLICTS" = true ]; then
+              echo "Conflicts in non-content files, aborting cherry-pick"
+              git cherry-pick --abort
+              exit 1
+            else
+              echo "Continuing cherry-pick..."
+              git cherry-pick --continue
+            fi
+          }
+          
+          echo "Cherry-pick successful, pushing branch..."
+          git push origin $BRANCH_NAME
+          
+          echo "Creating PR from $BRANCH_NAME to next..."
+          gh pr create --base next --head $BRANCH_NAME \
+            --title "[Auto-sync] ${{ steps.get-commit.outputs.commit_msg }}" \
+            --body "Automatic synchronization of commit from main: ${{ steps.get-commit.outputs.commit_hash }}\n\nChanges applied automatically by GitHub Actions."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+  # Job 2: Create PR to next when a PR is labeled
+  create-pr-for-labeled:
+    # On utilise une construction différente pour les labels avec espaces
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'labeled' &&
+      github.event.label.name == 'temp - port to docs-next'
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Debug - PR info
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Added Label: ${{ github.event.label.name }}"
+
+      - name: Check PR files
+        id: check-pr-files
+        run: |
+          echo "Checking PR files..."
+          # Get list of modified files in the PR
+          PR_FILES=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path')
+          echo "Files in PR:"
+          echo "$PR_FILES"
+          
+          # Check for content files
+          CONTENT_FILES=""
+          while IFS= read -r file; do
+            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+              CONTENT_FILES="$CONTENT_FILES$file"$'\n'
+            fi
+          done <<< "$PR_FILES"
+
+          if [[ -n "$CONTENT_FILES" ]]; then
+            echo "Content files found:"
+            echo "$CONTENT_FILES"
+            echo "has_content_files=true" >> $GITHUB_OUTPUT
+            echo "content_files<<EOF" >> $GITHUB_OUTPUT
+            echo "$CONTENT_FILES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "No content files found."
+            echo "has_content_files=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Create PR to next branch
+        if: steps.check-pr-files.outputs.has_content_files == 'true'
+        run: |
+          echo "Creating PR to next branch..."
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          SOURCE_REPO="${{ github.event.pull_request.head.repo.full_name }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          echo "Source Branch: $SOURCE_BRANCH"
+          echo "Source Repo: $SOURCE_REPO"
+          
+          # Create a new branch based on next
+          TARGET_BRANCH="next-port-pr${{ github.event.pull_request.number }}"
+          echo "Target Branch: $TARGET_BRANCH"
+          
+          git fetch origin next
+          git checkout -b $TARGET_BRANCH origin/next
+          
+          # If PR comes from a fork, fetch its changes
+          if [ "$SOURCE_REPO" != "${{ github.repository }}" ]; then
+            echo "PR comes from a fork, fetching changes from $SOURCE_REPO"
+            git fetch "https://github.com/$SOURCE_REPO.git" $SOURCE_BRANCH
+          else
+            echo "PR is from the same repo"
+            git fetch origin $SOURCE_BRANCH
+          fi
+          
+          # Get content files from PR
+          echo "Processing content files from PR..."
+          for file in ${{ steps.check-pr-files.outputs.content_files }}; do
+            echo "Processing file: $file"
+            mkdir -p $(dirname "$file")
+            git checkout FETCH_HEAD -- "$file"
+          done
+          
+          # Commit and push
+          echo "Committing changes..."
+          git add .
+          git commit -m "Port PR #${{ github.event.pull_request.number }}: $PR_TITLE to next branch"
+          
+          echo "Pushing branch..."
+          git push origin $TARGET_BRANCH
+          
+          # Create PR to next
+          echo "Creating PR from $TARGET_BRANCH to next..."
+          gh pr create --base next --head $TARGET_BRANCH \
+            --title "[Port to next] $PR_TITLE" \
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+  # Job 3: Sync changes when a labeled PR is merged to main
+  sync-merged-pr:
+    # On utilise une construction différente pour les labels avec espaces 
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next')
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Debug - Merged PR info
+        run: |
+          echo "Merged PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Merge commit: ${{ github.event.pull_request.merge_commit_sha }}"
+
+      - name: Get merge commit
+        id: get-merge-commit
+        run: |
+          echo "Getting merge commit..."
+          MERGE_COMMIT="${{ github.event.pull_request.merge_commit_sha }}"
+          echo "Merge commit: $MERGE_COMMIT"
+          echo "merge_commit=$MERGE_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Debug - Examine merge commit
+        run: |
+          echo "Examining merge commit details:"
+          git show ${{ steps.get-merge-commit.outputs.merge_commit }} --name-only
+
+      - name: Cherry-pick merge commit to next
+        run: |
+          echo "Creating PR to next branch..."
+          BRANCH_NAME="sync-merged-pr${{ github.event.pull_request.number }}"
+          echo "New branch name: $BRANCH_NAME"
+          
+          git fetch origin next
+          git checkout -b $BRANCH_NAME origin/next
+          
+          echo "Attempting cherry-pick of merge commit ${{ steps.get-merge-commit.outputs.merge_commit }}..."
+          # For a merge commit, we need to use -m 1 to cherry-pick the parent changes
+          git cherry-pick -m 1 ${{ steps.get-merge-commit.outputs.merge_commit }} || {
+            echo "Cherry-pick encountered conflicts, attempting to resolve..."
+            # Check if conflicts are only in content files
+            CONFLICTED_FILES=$(git diff --name-only --diff-filter=U)
+            echo "Conflicted files:"
+            echo "$CONFLICTED_FILES"
+            
+            # Only add content files
+            NON_CONTENT_CONFLICTS=false
+            for file in $CONFLICTED_FILES; do
+              if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+                git add "$file"
+                echo "Added: $file"
+              else
+                NON_CONTENT_CONFLICTS=true
+                echo "Non-content conflict: $file"
+              fi
+            done
+            
+            if [ "$NON_CONTENT_CONFLICTS" = true ]; then
+              echo "Conflicts in non-content files, aborting cherry-pick"
+              git cherry-pick --abort
+              exit 1
+            else
+              echo "Continuing cherry-pick..."
+              git cherry-pick --continue
+            fi
+          }
+          
+          echo "Cherry-pick successful, pushing branch..."
+          git push origin $BRANCH_NAME
+          
+          # Find if there's an existing PR for this original PR
+          echo "Checking for existing port PRs..."
+          EXISTING_PORT_PR=$(gh pr list --base next --head "next-port-pr${{ github.event.pull_request.number }}" --json number --jq '.[0].number')
+          
+          if [ -n "$EXISTING_PORT_PR" ]; then
+            # If a PR already exists, close it and add a comment
+            echo "Found existing PR #$EXISTING_PORT_PR, closing it..."
+            gh pr close $EXISTING_PORT_PR --comment "This PR is replaced by the direct synchronization of the merge commit: #INSERT_NEW_PR_NUMBER_HERE"
+          else
+            echo "No existing port PR found"
+          fi
+          
+          # Create PR to next
+          echo "Creating PR from $BRANCH_NAME to next..."
+          gh pr create --base next --head $BRANCH_NAME \
+            --title "[Merged-sync] ${{ github.event.pull_request.title }}" \
+            --body "Synchronization of the merge commit from PR #${{ github.event.pull_request.number }} to next.\n\nThis PR replaces any previous port PR created for #${{ github.event.pull_request.number }}."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
