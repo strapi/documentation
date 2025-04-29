@@ -14,7 +14,7 @@ tags:
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
 <IdentityCard>
-  <IdentityCardItem icon="credit-card" title="Plan">Free feature.<br/>Live Preview available only with the CMS Growth and Enterprise plans.</IdentityCardItem>
+  <IdentityCardItem icon="credit-card" title="Plan">Free feature<br/>Live Preview available only with the CMS Growth and Enterprise plans.</IdentityCardItem>
   <IdentityCardItem icon="user" title="Role & permission">Read permissions in Roles > Plugins - Users & Permissions</IdentityCardItem>
   <IdentityCardItem icon="toggle-right" title="Activation">Should be configured in the `config/admin` file</IdentityCardItem>
   <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
