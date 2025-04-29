@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
       - name: Set up Git
         run: |
@@ -76,7 +76,7 @@ jobs:
             --title "[Auto-sync] ${{ steps.get-commit.outputs.commit_msg }}" \
             --body "Automatic synchronization of commit from main: ${{ steps.get-commit.outputs.commit_hash }}\n\nChanges applied automatically by GitHub Actions."
         env:
-          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
   # Job 2: Create PR to next when a PR is labeled
   create-pr-for-labeled:
@@ -87,7 +87,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
       - name: Set up Git
         run: |
@@ -110,7 +110,7 @@ jobs:
             echo "Non-content files found: $INVALID_FILES"
           fi
         env:
-          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
       - name: Create PR to next branch
         if: steps.check-pr-files.outputs.content_only == 'true'
@@ -146,7 +146,7 @@ jobs:
             --title "[Port to next] $PR_TITLE" \
             --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp: port to docs-next' label."
         env:
-          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
   # Job 3: Sync changes when a labeled PR is merged to main
   sync-merged-pr:
@@ -157,7 +157,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
       - name: Set up Git
         run: |
@@ -205,4 +205,4 @@ jobs:
             --title "[Merged-sync] ${{ github.event.pull_request.title }}" \
             --body "Synchronization of the merge commit from PR #${{ github.event.pull_request.number }} to next.\n\nThis PR replaces any previous port PR created for #${{ github.event.pull_request.number }}."
         env:
-          GITHUB_TOKEN: ${{ secrets.CONTENT_SYNC_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
