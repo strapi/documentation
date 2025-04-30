@@ -27,6 +27,36 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.2.2
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Content-type Builder revamp (beta release)](https://github.com/strapi/documentation/pull/2479)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update theme extension (colors) in admin panel customization](https://github.com/strapi/documentation/pull/2478)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/soheilnikroo" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/62501144?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="soheilnikroo"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.2.1
 
 <br />
