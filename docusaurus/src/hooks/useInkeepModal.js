@@ -23,13 +23,14 @@ export function getInkeepBaseConfig() {
         : undefined, // ➡️ undefined côté serveur, pas d'erreur
     },
     transformSource: (source) => {
-      if (source.contentType === 'documentation') {
-        return {
-          ...source,
-          tabs: [...(source.tabs || []), 'Docs'],
-        };
+      const tabs = source.tabs || [];
+      if (source.url.includes("docs-next.strapi.io")) {
+        tabs.push("Docs");
       }
-      return source;
+      return {
+        ...source,
+        tabs,
+      };
     },
     aiChatSettings: {
       aiAssistantAvatar: "/img/logo-monogram.png",
