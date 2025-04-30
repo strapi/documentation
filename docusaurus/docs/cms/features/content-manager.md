@@ -18,10 +18,10 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 From the <Icon name="feather" /> Content Manager, accessible via the main navigation of the admin panel, users can write and manage their content.
 
-:::prerequisites Identity Card of the Content Manager
-<Icon name="user"/> **Role & permission:** Minimum "Configure view" permissions in Roles > Plugins - Content Manager. <br/>
-<Icon name="laptop"/> **Environment:** Available in both Development & Production environment.
-:::
+<IdentityCard>
+  <IdentityCardItem icon="user" title="Role & permission">Minimum "Configure view" permissions in Roles > Plugins - Content Manager.</IdentityCardItem>
+  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment.</IdentityCardItem>
+</IdentityCard>
 
 ## Overview
 
