@@ -329,7 +329,7 @@ These components help maintain a consistent look and feel across different widge
 
 ## Example: Adding a content metrics widget
 
-The following is a complete example of creating a content metrics widget that displays a count of different content types entries saved in your Strapi application.
+The following is a complete example of how to create a content metrics widget that displays the number of entries for each content type in your Strapi application.
 
 The end result will look like the following in your admin panel's <Icon name="house" /> Homepage:
 
