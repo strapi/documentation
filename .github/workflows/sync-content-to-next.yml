@@ -138,24 +138,10 @@ jobs:
           # Push branch
           git push origin next-port-pr${{ github.event.pull_request.number }}
           
-          # Create PR body in a temp file to preserve newlines
-          PR_BODY_FILE=$(mktemp)
-          cat > $PR_BODY_FILE << EOF
-Automatic port of PR #${{ github.event.pull_request.number }} to next branch.
-
-Original PR: #${{ github.event.pull_request.number }}
-Created automatically after adding the 'temp - port to docs-next' label.
-
-<!-- SYNC_PR_MARKER -->
-EOF
-          
-          # Create PR using the file for body content
+          # Create PR with a special tag in the body to identify it later
           gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
             --title "[Port to next] ${{ github.event.pull_request.title }}" \
-            --body-file $PR_BODY_FILE
-            
-          # Clean up
-          rm $PR_BODY_FILE
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->"
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
@@ -265,18 +251,7 @@ EOF
           echo "Updating existing PR #$EXISTING_PR with latest merged changes"
           
           # Add comment explaining the update
-          COMMENT_FILE=$(mktemp)
-          cat > $COMMENT_FILE << EOF
-This PR has been updated with the latest changes from the merged PR #${{ github.event.pull_request.number }}. 
-
-The merge commit was cherry-picked to include all approved changes.
-EOF
-          
-          # Add comment using the file
-          gh pr comment $EXISTING_PR --body-file $COMMENT_FILE
-          
-          # Clean up
-          rm $COMMENT_FILE
+          gh pr comment $EXISTING_PR --body "This PR has been updated with the latest changes from the merged PR #${{ github.event.pull_request.number }}. The merge commit was cherry-picked to include all approved changes."
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
@@ -287,32 +262,14 @@ EOF
           BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
           
-          # Create PR body file
-          PR_BODY_FILE=$(mktemp)
-          cat > $PR_BODY_FILE << EOF
-Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch.
-
-This PR contains the final state of the changes as they were merged to main.
-EOF
-          
           # Create the new PR first
           NEW_PR=$(gh pr create --base next --head $BRANCH_NAME \
             --title "[Merged-sync] $PR_TITLE" \
-            --body-file $PR_BODY_FILE \
+            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main." \
             --json number --jq '.number')
             
-          # Create comment body file
-          COMMENT_FILE=$(mktemp)
-          cat > $COMMENT_FILE << EOF
-This PR is replaced by the direct synchronization of the merge commit in #$NEW_PR
-EOF
-          
           # Now close the existing PR with a reference to the new one
-          gh pr close $EXISTING_PR --comment-file $COMMENT_FILE
-          
-          # Clean up
-          rm $PR_BODY_FILE
-          rm $COMMENT_FILE
+          gh pr close $EXISTING_PR --comment "This PR is replaced by the direct synchronization of the merge commit in #$NEW_PR"
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
@@ -322,21 +279,10 @@ EOF
           BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
           PR_TITLE="${{ github.event.pull_request.title }}"
           
-          # Create PR body file
-          PR_BODY_FILE=$(mktemp)
-          cat > $PR_BODY_FILE << EOF
-Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch.
-
-This PR contains the final state of the changes as they were merged to main.
-EOF
-          
           # Create new PR 
           gh pr create --base next --head $BRANCH_NAME \
             --title "[Merged-sync] $PR_TITLE" \
-            --body-file $PR_BODY_FILE
-          
-          # Clean up
-          rm $PR_BODY_FILE
+            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main."
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
@@ -384,21 +330,10 @@ EOF
           if git cherry-pick $COMMIT_HASH; then
             git push origin $BRANCH_NAME
             
-            # Create PR body file
-            PR_BODY_FILE=$(mktemp)
-            cat > $PR_BODY_FILE << EOF
-Automatic sync of commit from main.
-
-This PR contains changes pushed directly to the main branch.
-EOF
-            
             # Create PR
             gh pr create --base next --head $BRANCH_NAME \
               --title "[Auto-sync] $COMMIT_MSG" \
-              --body-file $PR_BODY_FILE
-              
-            # Clean up
-            rm $PR_BODY_FILE
+              --body "Automatic sync of commit from main"
           else
             echo "Cherry-pick failed, manual intervention needed"
             git cherry-pick --abort
