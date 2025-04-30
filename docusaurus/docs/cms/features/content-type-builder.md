@@ -35,8 +35,8 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 <Guideflow lightId="vkm9jeqb2p" darkId="lpnz47qtep" />
 
-:::strapi Content Type Builder updates
-<BetaBadge /> Interface modifications and new options are available in the Content-type Builder, including:
+:::strapi Content Type Builder updates <BetaBadge />
+Interface modifications and new options are available in the Content-type Builder, including:
 - tags to indicate the status of the fields and content types: "N" for new, "M" for modified and "D" for deleted,
 - an `*` beside required fields in the list view,
 - a drag & drop button in the list view, to reorder the fields,

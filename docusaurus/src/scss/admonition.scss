@@ -29,6 +29,7 @@
   /** Alert Title element */
   &__heading,
   mdxadmonitiontitle {
+    display: inline-block !important;
     color: var(--custom-admonition-heading-color);
     font-weight: var(--custom-admonition-heading-font-weight, 600);
     margin-bottom: var(--custom-admonition-heading-mb);
