@@ -43,11 +43,11 @@ export function getInkeepBaseConfig() {
       ],
       isShareButtonVisible: true,
       shareChatUrlBasePath: "https://docs-next.strapi.io/ask-ai",
-      tabs: ["All",  ["Docs", { isAlwaysVisible: true }], "GitHub", "Forums"],
     },
     searchSettings: {
       placeholder: "Search...",
       view: "dual-pane",
+      tabs: ["All",  ["Docs", { isAlwaysVisible: true }], "GitHub", "Forums"],
     }
   };
 }
