@@ -22,6 +22,15 @@ export function getInkeepBaseConfig() {
           }
         : undefined, // ➡️ undefined côté serveur, pas d'erreur
     },
+    transformSource: (source) => {
+      if (source.contentType === 'documentation') {
+        return {
+          ...source,
+          tabs: [...(source.tabs || []), 'Docs'],
+        };
+      }
+      return source;
+    },
     aiChatSettings: {
       aiAssistantAvatar: "/img/logo-monogram.png",
       introMessage: "Hi! I'm the Strapi Docs AI assistant.<br/>How can I help?",
