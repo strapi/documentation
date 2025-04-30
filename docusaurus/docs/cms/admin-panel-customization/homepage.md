@@ -30,14 +30,14 @@ These default widgets cannot currently be removed, but you can customize the Hom
 If you recently created a Strapi project, the Homepage may also display a quick tour above widgets if you haven't skipped it yet.
 :::
 
-## Adding custom widgets <FeatureFlagBadge feature="unstableWidgetsApi"/>
+## Adding custom widgets
 
 To add a custom widget, you need to:
 
 - register it
 - create a widget component
 
-### Enabling the feature flag
+<!-- ### Enabling the feature flag
 
 To enable custom widgets, set the `unstableWidgetsApi` feature flag to `true` in [the `config/features` file](/cms/configurations/features):
 
@@ -69,7 +69,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-After enabling the feature flag and restarting your application, the Homepage will be able to display the registered custom widgets.
+After enabling the feature flag and restarting your application, the Homepage will be able to display the registered custom widgets. -->
 
 ### Registering custom widgets
 
@@ -179,7 +179,9 @@ If you want to add a link to your widget (e.g., to navigate to a detailed view),
 
 ### Creating a widget component
 
-Widget components should be designed to display content in a compact and informative way. Here's how to implement a basic widget component:
+Widget components should be designed to display content in a compact and informative way. 
+
+Here's how to implement a basic widget component:
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
@@ -306,8 +308,11 @@ export default MyWidget;
 </TabItem>
 </Tabs>
 
+**Data management**:
 
-<!-- TODO: document the "Data management" part from the RFC: see https://www.notion.so/strapi/Homepage-widgets-API-RFC-1988f3598074807493e1f594b66dd82d?pvs=4#1998f35980748019966acb49feaf27e3 -->
+![Rendering and Data management](/img/assets/homepage-customization/rendering-data-management.png)
+
+The green box above represents the area where the user’s React component (from `widget.component` in the [API](#widget-api-reference)) is rendered. You can render whatever you like inside of this box. Everything outside that box is, however, rendered by Strapi. This ensures overall design consistency within the admin panel. The `icon`, `title`, and `link` (optional) properties provided in the API are used to display the widget.
 
 #### Widget helper components reference
 
@@ -326,7 +331,6 @@ These components help maintain a consistent look and feel across different widge
 
 The following is a complete example of creating a content metrics widget that displays a count of different content types entries saved in your Strapi application:
 
-<!-- TODO: update code with my own repo's code -->
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
 
