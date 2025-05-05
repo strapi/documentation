@@ -24,6 +24,7 @@ The `/config/admin` file can include the following parameters:
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `apiToken.salt`                   | Salt used to generate [API tokens](/cms/features/api-tokens)                                                                                                                            | string        | Random string                                                                                                                       |
+| `apiToken.secrets.encryptionKey`   | Encryption key used to set [API tokens visibility](/cms/features/api-tokens#ensuring-api-tokens-are-visible-in-the-admin-panel) in the admin panel | string | Random string |
 | `auditLogs.enabled`               | Enable or disable the [Audit Logs](/cms/features/audit-logs) feature                                                                                                                         | boolean       | `true`                                                                                                                              |
 | `auditLogs.retentionDays`         | How long [Audit Logs](/cms/features/audit-logs) are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._               | integer       | 90                                                                                                                                  |
 | `auth`                            | Authentication configuration                                                                                                                                                                       | object        | -                                                                                                                                   |
@@ -140,6 +141,9 @@ export default ({ env }) => ({
 module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
   },
   auditLogs: { // only accessible with an Enterprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),
@@ -195,6 +199,9 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
   },
   auditLogs: { // only accessible with an Enterprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),

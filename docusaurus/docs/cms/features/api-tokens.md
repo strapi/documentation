@@ -100,7 +100,7 @@ New API tokens are generated using a salt. This salt is automatically generated 
 
 The salt can be customized:
 
-- either by updating the string value for `apiToken.salt` in `./config/admin.js` (see [admin panel configuration documentation](/cms/configurations/admin-panel))
+- either by updating the string value for `apiToken.salt` in [your `/config/admin` file](/cms/configurations/admin-panel)
 - or by creating an `API_TOKEN_SALT` [environment variable](/cms/configurations/environment#strapi) in the `.env` file of the project
 
 :::caution
@@ -109,13 +109,39 @@ Changing the salt invalidates all the existing API tokens.
 
 #### Ensuring API tokens are visible in the admin panel
 
-To allow persistent visibility of API tokens in the admin panel, an encryption key must be provided in your `./config/admin.js` file under `secrets.encryptionKey`:
+To allow persistent visibility of API tokens in the admin panel, an encryption key must be provided in [your `/config/admin` file](/cms/configurations/admin-panel) under `apiToken.secrets.encryptionKey`:
 
-```js
-secrets: {
-  encryptionKey: env('ENCRYPTION_KEY'),
-},
+<Tabs groupId="js-ts">
+<TabItem label="JavaScript" value="js">
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // other config parameters
+  apiToken: {
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
+  }
+});
 ```
+
+</TabItem>
+
+<TabItem label="TypeScript" value="ts">
+
+```js title="/config/admin.ts"
+export default ({ env }) => ({
+  // other config parameters
+  apiToken: {
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
+  }
+});
+```
+
+</TabItem>
+</Tabs>
 
 This key is used to encrypt and decrypt token values. Without this key, tokens remain usable, but will not be viewable after initial display. New Strapi projects will have this key automatically generated.
 
