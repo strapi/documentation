@@ -107,7 +107,7 @@ The salt can be customized:
 Changing the salt invalidates all the existing API tokens.
 :::
 
-#### Encryption key requirements
+#### Ensuring API tokens are visible in the admin panel
 
 To allow persistent visibility of API tokens in the admin panel, an encryption key must be provided in your `./config/admin.js` file under `secrets.encryptionKey`:
 
