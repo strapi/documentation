@@ -86,6 +86,9 @@
   // Nested tabs
   + div {
     [role="tabpanel"] {
+      padding-left: 24px;
+      padding-right: 24px;
+
       .tabs {
         font-size: var(--strapi-font-size-ssm);
         
