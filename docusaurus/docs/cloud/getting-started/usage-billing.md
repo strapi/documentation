@@ -15,7 +15,7 @@ tags:
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-Strapi Cloud offers 5 free 14 days trials for all new accounts, and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing tiers, for general features and usage:
+Strapi Cloud offers 5 free 14 days trials for all new accounts, and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
 
 | Feature | Free Trial | Essential | Pro | Scale |
 | --- | --- | --- | --- | --- |
