@@ -17,7 +17,6 @@ This is a step-by-step guide for deploying your project on Strapi Cloud for the 
 :::prerequisites
 Before you can deploy your Strapi application on Strapi Cloud using the Command Line Interface, you need to have the following prerequisites:
 
-- Have at least 1 free trial still available.
 - Have a Google, GitHub or GitLab account.
 - Have an already created Strapi project (see [Installing from CLI in the CMS Documentation](/cms/installation/cli)), stored locally. The project must be less than 100MB.
 - Have available storage in your hard drive where the temporary folder of your operating system is stored.
@@ -74,6 +73,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Command 
   </Tabs>
 
 2. Follow the progression bar in the terminal until confirmation that the project was successfully deployed with Strapi Cloud.
+Deploying the project will create a new Strapi Cloud project on the Free plan.
 
 ### Automatically deploying subsequent changes
 
@@ -93,6 +93,5 @@ Automatic deployment is compatible with all other deployment methods, so once a 
 
 Now that you have deployed your project via the Command Line Interface, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
 
-- Fill in your [billing information](/cloud/account/account-billing) to prevent your project from being suspended at the end of the trial period.
 - Visit the Cloud dashboard to follow [insightful metrics and information](/cloud/projects/overview) on your Strapi project.
 - Check out the full [Command Line Interface documentation](/cloud/cli/cloud-cli) to learn about the other commands available.
