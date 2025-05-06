@@ -181,10 +181,6 @@ Note also that if your usage indicates that another subscription plan would fit 
 
 The <Icon name="map-trifold" /> *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
 
-:::note
-If you are using the free trial, the *Plan* tab shows a countdown of how many days you have left, as well as indications of the next steps. For more information about the free trial and project suspension, please refer to [Information on billing & usage](/cloud/getting-started/usage-billing).
-:::
-
 :::info
 Strapi recently launched [new Cloud plans](https://strapi.io/pricing-cloud). For now, you can [downgrade](#downgrading-to-another-plan) or [upgrade](#upgrading-to-another-plan) to another plan directly from the Cloud dashboard, under the <Icon name="gear-six"/> **Settings** > <Icon name="map-trifold" /> **Plans** section.
 
@@ -204,7 +200,7 @@ If your project was created before the new plans were released, it may be on a *
 Strapi Cloud plan upgrades to another, higher plan are immediate and can be managed for each project via the project settings.
 
 :::note
-When using the free trial, the buttons to upgrade to another plan are greyed out and unusable until you have filled in your billing information. Please refer to [Account billing details](/cloud/account/account-billing) for more information.
+When using the Free plan, the buttons to upgrade to another plan are greyed out and unusable until you have filled in your billing information. Please refer to [Account billing details](/cloud/account/account-billing) for more information.
 :::
 
 To upgrade your current plan to a higher one:
@@ -255,6 +251,7 @@ The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices fo
 In the *Profile > Invoices* tab, you will find the complete list of invoices for all your projects. Feel free to check the [dedicated documentation](/cloud/account/account-billing#account-invoices).
 :::
 
+No invoice is issued for the Free plan.
 
 ## Environment-level settings
 
@@ -342,7 +339,7 @@ The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and 
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects using the free trial or the Essential plan. You will need to upgrade to either the Pro or Scale plan to have your project automatically backed up and to have access to manual backups.
+- The backup feature is not available for Strapi Cloud projects using the Free or Essential plans. You will need to upgrade to either the Pro or Scale plan to have your project automatically backed up and to have access to manual backups.
 
 <!-- - Only project owners can restore a backup. Maintainers have access to the <Icon name="arrow-clockwise" /> *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
 
@@ -423,6 +420,10 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 When using custom domains, these domains do not apply to the URLs of uploaded assets. Uploaded assets keep the Strapi Cloud project-based URL.
 
 This means that, if your custom domain is hosted at `https://my-custom-domain.com` and your Strapi Cloud project name is `my-strapi-cloud-instance`, API calls will still return URLs such as `https://my-strapi-cloud-instance.media.strapiapp.com/example.png`.
+:::
+
+:::note
+Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
 :::
 
 ### Variables
