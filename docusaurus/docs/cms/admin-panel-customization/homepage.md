@@ -421,8 +421,9 @@ export default {
 The following file defines the widget's component and its logic. It's tapping into a specific controller and route that we'll create for the plugin:
 
 ```jsx title="src/plugins/content-metrics/admin/src/components/MetricsWidget/index.js"
-iimport React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Tbody, Tr, Td, Typography, Box } from '@strapi/design-system';
+import { Widget } from '@strapi/admin/strapi-admin'
 
 const MetricsWidget = () => {
   const [loading, setLoading] = useState(true);
@@ -435,6 +436,8 @@ const MetricsWidget = () => {
         const response = await fetch('/api/content-metrics/count');
         const data = await response.json();
 
+        console.log("data:", data);
+        
         const formattedData = {};
         
         if (data && typeof data === 'object') {
@@ -458,22 +461,18 @@ const MetricsWidget = () => {
   
   if (loading) {
     return (
-      <Typography variant="omega">Loading content metrics...</Typography>
+      <Widget.Loading />
     );
   }
   
   if (error) {
     return (
-      <Typography variant="omega" textColor="danger600">
-        Error: {String(error)}
-      </Typography>
+      <Widget.Error />
     );
   }
   
   if (!metrics || Object.keys(metrics).length === 0) {
-    return (
-      <Typography variant="omega">No content types found</Typography>
-    );
+    return <Widget.NoData>No content types found</Widget.NoData>;
   }
   
   return (
