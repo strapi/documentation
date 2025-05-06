@@ -41,6 +41,11 @@ Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see 
   - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments) documentation for more information on the feature).
 :::
 
+:::info Scale-to-zero and cold start on the Free plan
+On the Free plan, projects automatically scale down to zero after a short period of inactivity. When the application is accessed again—either through the frontend or via an API request—it may take a few seconds (up to a minute) before a response is returned.
+Upgrading to a paid plan disables scaling to zero and cold starts, resulting in instant response times at all times.
+:::
+
 ## Environments management
 
 Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
