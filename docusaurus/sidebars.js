@@ -210,7 +210,7 @@ const sidebars = {
       collapsible: false,
       className: 'category-cms-configurations',
       items: [
-        // Generic notce
+        // Generic notice
         {
           type: 'html',
           value: "This is a general information notice",
@@ -276,7 +276,85 @@ const sidebars = {
           id: 'cms/configurations',
         },
         'cms/configurations/admin-panel',
-        'cms/configurations/api',
+        {
+          type: 'doc',
+          label: 'Admin Panel',
+          id: 'cms/configurations/admin-panel',
+          customProps: {
+            noticeType: 'moved',
+            noticeIcon: 'arrow-bend-up-right',
+            noticeText: "Admin panel configuration has been moved to",
+            noticeLink: "/cms/customization/admin-panel",
+            noticeLinkText: "customization"
+          }
+        },
+
+        // {
+        //   type: 'doc',
+        //   label: 'Admin Panel',
+        //   id: 'cms/configurations/admin-panel',
+        //   customProps: {
+        //     noticeType: 'moved',
+        //     noticeIcon: 'arrow-bend-up-right',
+        //     noticeLink: "/cms/customization/admin-panel",
+        //     noticeText: "Admin panel configuration has been moved to", 
+        //     noticeLinkText: "customization",
+        //   }
+        // },
+        // {
+        //   type: 'doc',
+        //   label: 'Admin Panel',
+        //   id: 'cms/configurations/admin-panel',
+        //   customProps: {
+        //     noticeType: 'info',
+        //     noticeIcon: 'info',
+        //     noticeText: "This section is being updated", 
+        //   }
+        // },
+        // {
+        //   type: 'doc',
+        //   label: 'Admin Panel',
+        //   id: 'cms/configurations/admin-panel',
+        //   customProps: {
+        //     noticeType: 'warning',
+        //     noticeIcon: 'warning',
+        //     noticeLink: "/cms/api/new-api",
+        //     noticeLinkText: "See the new API",
+        //     noticeText: "This API is deprecated", 
+        //   }
+        // },
+        // {
+        //   type: 'doc',
+        //   label: 'Admin Panel',
+        //   id: 'cms/configurations/admin-panel',
+        //   customProps: {
+        //     noticeType: 'success',
+        //     noticeIcon: 'check-circle',
+        //     noticeLink: "/cms/features/new-feature",
+        //     noticeLinkText: "Learn more",
+        //     noticeText: "New feature available!", 
+        //   }
+        // },
+        // {
+        //   type: 'doc',
+        //   label: 'Admin Panel',
+        //   id: 'cms/configurations/admin-panel',
+        //   customProps: {
+        //     noticeType: 'error',
+        //     noticeText: "This page contains known issues", 
+        //     noticeIcon: 'warning-circle',
+        //   }
+        // },
+        {
+          type: 'doc',
+          label: 'API',
+          id: 'cms/configurations/api',
+          customProps: {
+            noticeType: 'default',
+            noticeIcon: 'info',
+            noticeText: "This is a general information notice", 
+          }
+        },
         'cms/configurations/cron',
         'cms/configurations/database',
         'cms/configurations/environment',
