@@ -130,7 +130,6 @@ Sample `docker-compose.yml`:
 <TabItem value="mysql" label="MySQL">
 
 ```yml title="./docker-compose.yml"
-version: "3"
 services:
   strapi:
     container_name: strapi
