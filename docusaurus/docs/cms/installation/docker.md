@@ -63,7 +63,7 @@ Sample `Dockerfile`:
 <TabItem value="yarn" label="yarn">
 
 ```dockerfile title="./Dockerfile"
-FROM node:18-alpine3.18
+FROM node:22-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
@@ -89,7 +89,7 @@ CMD ["yarn", "develop"]
 <TabItem value="npm" label="npm">
 
 ```dockerfile title="./Dockerfile"
-FROM node:18-alpine3.18
+FROM node:22-alpine
 # Installing libvips-dev for sharp Compatibility
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git
 ARG NODE_ENV=development
@@ -167,7 +167,7 @@ services:
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: mysql:5.7
+    image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_USER: ${DATABASE_USERNAME}
@@ -300,7 +300,7 @@ services:
     platform: linux/amd64 #for platform error on Apple M1 chips
     restart: unless-stopped
     env_file: .env
-    image: postgres:12.0-alpine
+    image: postgres:16.0-alpine
     environment:
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -344,7 +344,7 @@ The following `Dockerfile` can be used to build a production Docker image for a 
 
 ```dockerfile title="./Dockerfile.prod"
 # Creating multi-stage build for production
-FROM node:18-alpine AS build
+FROM node:22-alpine AS build
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -359,7 +359,7 @@ COPY . .
 RUN yarn build
 
 # Creating final production image
-FROM node:18-alpine
+FROM node:22-alpine
 RUN apk add --no-cache vips-dev
 ENV NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
