@@ -210,6 +210,57 @@ const sidebars = {
       collapsible: false,
       className: 'category-cms-configurations',
       items: [
+        // Migration notice (original case)
+        {
+          type: 'html',
+          value: "Admin panel configuration has been moved to customization",
+          customProps: {
+            noticeType: 'moved',
+            noticeIcon: 'arrow-bend-up-right',
+            noticeLink: "/cms/customization/admin-panel",
+            noticeLinkText: "customization",
+          }
+        },
+        // Information notice without link
+        {
+          type: 'html',
+          value: "This section is being updated",
+          customProps: {
+            noticeType: 'info',
+            noticeIcon: 'info',
+          }
+        },
+        // Warning notice with link
+        {
+          type: 'html',
+          value: "This API is deprecated",
+          customProps: {
+            noticeType: 'warning',
+            noticeIcon: 'warning',
+            noticeLink: "/cms/api/new-api",
+            noticeLinkText: "See the new API",
+          }
+        },
+        // Success notice
+        {
+          type: 'html',
+          value: "New feature available!",
+          customProps: {
+            noticeType: 'success',
+            noticeIcon: 'check-circle',
+            noticeLink: "/cms/features/new-feature",
+            noticeLinkText: "Learn more",
+          }
+        },
+        // Error notice
+        {
+          type: 'html',
+          value: "This page contains known issues",
+          customProps: {
+            noticeType: 'error',
+            noticeIcon: 'warning-circle',
+          }
+        },
         {
           type: 'doc',
           label: 'Configurations introduction',
