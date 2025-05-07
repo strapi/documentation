@@ -10,6 +10,7 @@ tags:
 ---
 
 # Homepage customization
+<VersionBadge version="5.13.0"/>
 
 The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel. By default, it provides an overview of your content with 2 default widgets:
 
@@ -35,47 +36,18 @@ If you recently created a Strapi project, the Homepage may also display a quick 
 To add a custom widget, you need to:
 
 - register it
-- create a widget component
-
-<!-- ### Enabling the feature flag
-
-To enable custom widgets, set the `unstableWidgetsApi` feature flag to `true` in [the `config/features` file](/cms/configurations/features):
-
-<Tabs groupId="js-ts">
-
-<TabItem value="js" label="JavaScript">
-
-```js title="config/features.js"
-module.exports = ({ env }) => ({
-  future: {
-    unstableWidgetsApi: true,
-  },
-});
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="config/features.ts"
-export default ({ env }) => ({
-  future: {
-    unstableWidgetsApi: true,
-  },
-});
-```
-
-</TabItem>
-
-</Tabs>
-
-After enabling the feature flag and restarting your application, the Homepage will be able to display the registered custom widgets. -->
+- create a widget component or install it from [Marketplace plugins](https://market.strapi.io).
 
 ### Registering custom widgets
 
 To register a widget, use `app.widgets.register()`:
 - in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-api#register) of the `index` file if you're building a plugin (recommended way),
 - or in the [application's global `register()` lifecycle method](/cms/configurations/functions#register) if you're adding the widget to just one Strapi application without a plugin.
+
+:::info
+The examples on the present page will cover registering a widget through a plugin. Most of the code should be reusable if you register the widget in the application's global `register()` lifecycle method, except you should not pass the `pluginId` property.
+:::
+
 
 <Tabs groupId="js-ts">
 <TabItem value="javascript" label="JavaScript">
@@ -103,6 +75,13 @@ export default {
         const component = await import('./components/MyWidget');
         return component.default;
       },
+      /**
+       * Use this instead if you used a named export for your component
+       */
+      // component: async () => {
+      //   const { Component } = await import('./components/MyWidget');
+      //   return Component;
+      // },
       id: 'my-custom-widget',
       pluginId: pluginId,
     });
@@ -141,6 +120,13 @@ export default {
         const component = await import('./components/MyWidget');
         return component.default;
       },
+      /**
+       * Use this instead if you used a named export for your component
+       */
+      // component: async () => {
+      //   const { Component } = await import('./components/MyWidget');
+      //   return Component;
+      // },
       id: 'my-custom-widget',
       pluginId: pluginId,
     });
@@ -153,6 +139,22 @@ export default {
 
 </TabItem>
 </Tabs>
+
+
+:::note The API requires Strapi 5.13+
+The `app.widgets.register` API only works with Strapi 5.13 and above. Trying to call the API with older versions of Strapi will crash the admin panel.
+Plugin developers who want to register widgets should either:
+- set `^5.13.0` as their `@strapi/strapi` peerDependency in their plugin `package.json`. This peer dependency powers the Marketplace's compatibility check.
+- or check if the API exists before calling it:
+
+  ```
+  if ('widgets' in app) {
+    // proceed with the registration
+  }
+  ```
+
+The peerDependency approach is recommended if the whole purpose of the plugin is to register widgets. The second approach makes more sense if a plugin wants to add a widget but most of its functionality is elsewhere.
+:::
 
 #### Widget API reference
 
@@ -287,7 +289,7 @@ const MyWidget: React.FC = () => {
   }
 
   if (!data || data.length === 0) {
-    return <Widget.NoData>No data available</Widget.NoData>;
+    return <Widget.NoData />;
   }
 
   return (
@@ -308,6 +310,12 @@ export default MyWidget;
 </TabItem>
 </Tabs>
 
+:::tip
+For simplicity, the example below uses data fetching directly inside a useEffect hook. While this works for demonstration purposes, it may not reflect best practices in production.
+
+For more robust solutions, consider alternative approaches recommended in the [React documentation](https://react.dev/learn/build-a-react-app-from-scratch#data-fetching). If you're looking to integrate a data fetching library, we recommend using [TanStackQuery](https://tanstack.com/query/v3/).
+:::
+
 **Data management**:
 
 ![Rendering and Data management](/img/assets/homepage-customization/rendering-data-management.png)
@@ -326,6 +334,8 @@ Strapi provides several helper components to maintain a consistent user experien
 | `Widget.NoPermissions` | Displays when user lacks required permissions | When the user cannot access the widget |
 
 These components help maintain a consistent look and feel across different widgets.
+You could render these components without children to get the default wording: `<Widget.Error />`
+or you could pass children to override the default copy and specify your own wording: `<Widget.Error>Your custom error message</Widget.Error>`.
 
 ## Example: Adding a content metrics widget
 
