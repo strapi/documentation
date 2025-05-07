@@ -20,16 +20,58 @@ export function getInkeepBaseConfig() {
               },
             },
           }
-        : undefined, // ➡️ undefined côté serveur, pas d'erreur
-    },
-    transformSource: (source) => {
-      if (source.contentType === 'documentation') {
+        : undefined, // ➡️ undefined on server side, no error
+      transformSource: (source) => {
+        const { url } = source;
+        if (!url) {
+          return source;
+        }
+        const urlPatterns = {
+          docs: 'docs.strapi.io',
+          docs_next: 'docs-next.strapi.io',
+          blog: 'strapi.io/blog',
+          strapi: 'strapi.io',
+          youtube: 'youtube.com',
+        }
+        const tabConfig = {
+          [urlPatterns.docs]: {
+            tab: 'Docs',
+          },
+          [urlPatterns.docs_next]: {
+            tab: 'Docs',
+          },
+          [urlPatterns.blog]: {
+            tab: 'Blog',
+          },
+          [urlPatterns.strapi]: {
+            tab: 'Strapi',
+          },
+          [urlPatterns.youtube]: {
+            tab: 'YouTube',
+          }
+        }
+        const matchingPattern = Object.keys(tabConfig).find((pattern) => url.includes(pattern))
+        const config = matchingPattern ? tabConfig[matchingPattern] : null
+        if (!config) {
+          return source;
+        }
+        const existingTabs = source.tabs ?? []
+        const tabExists = existingTabs.some((existingTab) =>
+          typeof existingTab === 'string'
+            ? existingTab === config.tab
+            : Array.isArray(existingTab) && existingTab[0] === config.tab,
+        )
+        const tabs = tabExists
+          ? existingTabs
+          : [
+            ...existingTabs,
+            [config.tab, { breadcrumbs: source.breadcrumbs }],
+          ]
         return {
           ...source,
-          tabs: [...(source.tabs || []), 'Docs'],
-        };
-      }
-      return source;
+          tabs,
+        }
+      },
     },
     aiChatSettings: {
       aiAssistantAvatar: "/img/logo-monogram.png",
@@ -68,7 +110,7 @@ export function getInkeepBaseConfig() {
     searchSettings: {
       placeholder: "Search...",
       view: "dual-pane",
-      tabs: ["All",  ["Docs", { isAlwaysVisible: true }], "GitHub", "Forums"],
+      tabs: [["Docs", { isAlwaysVisible: true }], "Blog", "Strapi", "GitHub", "YouTube", "All"],
     }
   };
 }
