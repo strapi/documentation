@@ -46,21 +46,21 @@ Before doing any public disclosure we do ask that you speak to us first to ensur
 
 Below is a breakdown of our security process in order to set expectations:
 
-- Initial submission of vulnerability via GitHub's Advisory system
-- Begin internal tracking and communication to reporter
-- Internal validation of vulnerability
-- Internal notification and scheduling for patch development
-- Begin development of patch
-- Validation of patch (Internal and with the reporter)
-- GitHub advisory cleanup
-- Requesting of CVE via GitHub
-- Disclosure and communication draft
-- Patch released with initial warning via patch notes
-- Email communication to Strapi Enterprise customers
-- Mandatory waiting period (between 2 to 8 weeks)
-- Publishing GitHub Advisory & CVE
-- Public disclosure (via blog post)
-- Email communication to Strapi Enterprise customers
+1. Initial submission of vulnerability via GitHub's Advisory system
+2. Begin internal tracking and communication to reporter
+3. Internal validation of vulnerability
+4. Internal notification and scheduling for patch development
+5. Begin development of patch
+6. Validation of patch (Internal and with the reporter)
+7. GitHub advisory cleanup
+8. Requesting of CVE via GitHub
+9. Disclosure and communication draft
+10. Patch released with initial warning via patch notes
+11. Email communication to Strapi Enterprise customers
+12. Mandatory waiting period (between 2 to 8 weeks)
+13. Publishing GitHub Advisory & CVE
+14. Public disclosure (via blog post)
+15. Email communication to Strapi Enterprise customers
 
 ## Other reporting platforms and bounties
 
