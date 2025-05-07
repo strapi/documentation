@@ -362,7 +362,7 @@ This widget can be added to Strapi by:
 2. re-using the code examples provided below.
 
 :::tip
-If you prefer a hands-on approach, you can reuse the following <ExternalLink to="https://codesandbox.io/p/github/pwizla/strapi-custom-widget-content-metrics/main" text="CodeSandbox link" />.
+If you prefer a hands-on approach, you can reuse the following <ExternalLink to="https://codesandbox.io/p/sandbox/github/pwizla/strapi-custom-widget-content-metrics" text="CodeSandbox link" />.
 :::
 
 <Tabs groupId="js-ts">
