@@ -25,14 +25,14 @@ Strapi CLI (Command Line Interface) installation scripts are the fastest way to 
 A supported database is also required for any Strapi project:
 
 | Database   | Recommended | Minimum |
-| ---------- | ----------- | ------- |
-| MySQL      | 8.0         | 8.0     |
-| MariaDB    | 10.6        | 10.5    |
-| PostgreSQL | 14.0        | 12.0    |
+|------------|-------------|---------|
+| MySQL      | 8.4         | 8.0     |
+| MariaDB    | 11.4        | 10.3    |
+| PostgreSQL | 17.0        | 14.0    |
 | SQLite     | 3           | 3       |
 
 :::caution
-Strapi does not support MongoDB.
+Strapi does not support MongoDB (or any NoSQL databases), nor does it support any "Cloud Native" databases (e.g., Amazon Aurora, Google Cloud SQL, etc.)
 :::
 
 ## Creating a Strapi project
@@ -113,32 +113,32 @@ Once all questions have been answered, the script will start creating the Strapi
 
 The above installation guide only covers the basic installation option using the CLI. There are other options that can be used when creating a new Strapi project, for example:
 
-| Option | Description |
-|--------|---------------------------------------------------------|
-| `--no-run` | Do not start the application after it is created |
-| `--ts`<br/>`--typescript` | Initialize the project with TypeScript (default) |
-| `--js`<br/>`--javascript` | Initialize the project with JavaScript  |
-| `--use-npm` | Force the usage of <ExternalLink to="https://www.npmjs.com/" text="npm"/> as the project package manager |
-| `--use-yarn` | Force the usage of <ExternalLink to="https://yarnpkg.com/" text="yarn"/> as the project package manager |
-| `--use-pnpm` | Force the usage of <ExternalLink to="https://pnpm.io/" text="pnpm"/> as the project package manager |
-| `--install`  | Install all dependencies, skipping the related CLI prompt |
-| `--no-install`  | Do not install all dependencies, skipping the related CLI prompt |
-| `--git-init` | Initialize a git repository, skipping the related CLI prompt |
-| `--no-git-init` | Do not initialize a git repository, skipping the related CLI prompt |
-| `--example`  | Add example data, skipping the related CLI prompt |
-| `--no-example`  | Do not add example data, skipping the related CLI prompt |
-| `--skip-cloud` |  Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step) |
-| `--skip-db` | Skip all database-related prompts and create a project with the default (SQLite) database |
-| `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details. |
-| `--dbclient <dbclient>` | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
-| `--dbhost <dbhost>` | Define the database host to use by replacing `<dbhost>` in the command by the value of your choice |
-| `--dbport <dbport>` | Define the database port to use by replacing `<dbport>` in the command by the value of your choice |
-| `--dbname <dbname>` | Define the database name to use by replacing `<dbname>` in the command by the value of your choice |
-| `--dbusername <dbusername>` | Define the database username to use by replacing `<dbusername>` in the command by the value of your choice |
-| `--dbpassword <dbpassword>` | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice |
-| `--dbssl <dbssl>` | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default) |
-| `--dbfile <dbfile>` | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice |
-| `--quickstart` | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode. |
+| Option                              | Description                                                                                                                                                                                                                                     |
+|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--no-run`                          | Do not start the application after it is created                                                                                                                                                                                                |
+| `--ts`<br/>`--typescript`           | Initialize the project with TypeScript (default)                                                                                                                                                                                                |
+| `--js`<br/>`--javascript`           | Initialize the project with JavaScript                                                                                                                                                                                                          |
+| `--use-npm`                         | Force the usage of <ExternalLink to="https://www.npmjs.com/" text="npm"/> as the project package manager                                                                                                                                        |
+| `--use-yarn`                        | Force the usage of <ExternalLink to="https://yarnpkg.com/" text="yarn"/> as the project package manager                                                                                                                                         |
+| `--use-pnpm`                        | Force the usage of <ExternalLink to="https://pnpm.io/" text="pnpm"/> as the project package manager                                                                                                                                             |
+| `--install`                         | Install all dependencies, skipping the related CLI prompt                                                                                                                                                                                       |
+| `--no-install`                      | Do not install all dependencies, skipping the related CLI prompt                                                                                                                                                                                |
+| `--git-init`                        | Initialize a git repository, skipping the related CLI prompt                                                                                                                                                                                    |
+| `--no-git-init`                     | Do not initialize a git repository, skipping the related CLI prompt                                                                                                                                                                             |
+| `--example`                         | Add example data, skipping the related CLI prompt                                                                                                                                                                                               |
+| `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
+| `--skip-cloud`                      | Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step)                                                                                                                                                     |
+| `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
+| `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details.                                                                            |
+| `--dbclient <dbclient>`             | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
+| `--dbhost <dbhost>`                 | Define the database host to use by replacing `<dbhost>` in the command by the value of your choice                                                                                                                                              |
+| `--dbport <dbport>`                 | Define the database port to use by replacing `<dbport>` in the command by the value of your choice                                                                                                                                              |
+| `--dbname <dbname>`                 | Define the database name to use by replacing `<dbname>` in the command by the value of your choice                                                                                                                                              |
+| `--dbusername <dbusername>`         | Define the database username to use by replacing `<dbusername>` in the command by the value of your choice                                                                                                                                      |
+| `--dbpassword <dbpassword>`         | Define the database password to use by replacing `<dbpassword>` in the command by the value of your choice                                                                                                                                      |
+| `--dbssl <dbssl>`                   | Define that SSL is used with the database, by passing `--dbssl=true` (No SSL by default)                                                                                                                                                        |
+| `--dbfile <dbfile>`                 | For SQLite databases, define the database file path to use by replacing `<dbclient>` in the command by the value of your choice                                                                                                                 |
+| `--quickstart`                      | (**Deprecated in Strapi 5**)<br/>Directly create the project in quickstart mode.                                                                                                                                                                |
 
 :::note Notes
 * If you do not pass a `--use-yarn|npm|pnpm` option, the installation script will use whatever package manager was used with the create command to install all dependencies (e.g., `npm create strapi` will install all the project's dependencies with npm).
