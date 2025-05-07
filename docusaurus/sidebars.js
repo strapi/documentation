@@ -210,10 +210,19 @@ const sidebars = {
       collapsible: false,
       className: 'category-cms-configurations',
       items: [
+        // Generic notce
+        {
+          type: 'html',
+          value: "This is a general information notice",
+          customProps: {
+            noticeType: 'default',
+            noticeIcon: 'info',
+          }
+        },
         // Migration notice (original case)
         {
           type: 'html',
-          value: "Admin panel configuration has been moved to customization",
+          value: "Admin panel configuration has been moved to",
           customProps: {
             noticeType: 'moved',
             noticeIcon: 'arrow-bend-up-right',

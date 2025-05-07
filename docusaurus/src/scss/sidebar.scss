@@ -443,14 +443,12 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-/* Styles pour les notices dans la sidebar */
 .sidebar-notice {
   &-item {
     padding: 0;
     margin: 6px 0;
   }
 
-  /* Style de base de la notice - toutes les propriétés regroupées ici */
   & {
     display: flex;
     padding: 8px 10px;
@@ -489,7 +487,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
   }
 
-  /* Variantes par type */
+  &--default {
+    border-left-color: var(--strapi-neutral-400);
+    background-color: var(--strapi-neutral-100);
+
+    .sidebar-notice-icon {
+      color: var(--strapi-neutral-600);
+    }
+  }
+
   &--info {
     border-left-color: var(--strapi-primary-600);
     background-color: var(--strapi-primary-100);
@@ -536,10 +542,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-  /* Mode sombre */
 @include dark {
   .sidebar-notice {
-    background-color: var(--strapi-neutral-100) !important;
+    background-color: var(--strapi-neutral-0) !important;
     border-left-color: var(--strapi-neutral-400);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
@@ -553,6 +558,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
     &-link {
       color: var(--strapi-primary-500);
+    }
+
+    &--default {
+      border-left-color: var(--strapi-neutral-400);
+
+      .sidebar-notice-icon {
+        color: var(--strapi-neutral-500);
+      }
     }
 
     &--info {
