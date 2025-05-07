@@ -140,14 +140,14 @@ export default {
 </TabItem>
 </Tabs>
 
-
 :::note The API requires Strapi 5.13+
 The `app.widgets.register` API only works with Strapi 5.13 and above. Trying to call the API with older versions of Strapi will crash the admin panel.
 Plugin developers who want to register widgets should either:
+
 - set `^5.13.0` as their `@strapi/strapi` peerDependency in their plugin `package.json`. This peer dependency powers the Marketplace's compatibility check.
 - or check if the API exists before calling it:
 
-  ```
+  ```js
   if ('widgets' in app) {
     // proceed with the registration
   }
