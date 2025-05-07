@@ -228,7 +228,7 @@ const MyWidget = () => {
   }
 
   if (!data || data.length === 0) {
-    return <Widget.NoData>No data available</Widget.NoData>;
+    return <Widget.NoData />;
   }
 
   return (
