@@ -16,10 +16,14 @@ The admin panel is the back office of your Strapi application. From the admin pa
 <ThemedImage
 alt="Homepage of the Admin Panel"
 sources={{
-    light: '/img/assets/getting-started/admin-panel-homepage.png',
-    dark: '/img/assets/getting-started/admin-panel-homepage_DARK.png',
+    light: '/img/assets/admin-homepage/admin-panel-homepage-with-tour.png',
+    dark: '/img/assets/admin-homepage/admin-panel-homepage-with-tour_DARK.png',
   }}
 />
+
+:::tip
+You can [create your own widgets](/cms/admin-panel-customization/homepage) to customize the admin panel's homepage.
+:::
 
 ## Overview
 
