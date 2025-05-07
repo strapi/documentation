@@ -1,4 +1,7 @@
 User-agent: *
 Disallow: /
 
+User-agent: Inkeep-Crawler
+Allow: /
+
 Sitemap: https://docs-next.strapi.io/sitemap.xml

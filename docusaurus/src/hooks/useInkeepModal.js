@@ -22,9 +22,40 @@ export function getInkeepBaseConfig() {
           }
         : undefined, // ➡️ undefined côté serveur, pas d'erreur
     },
+    transformSource: (source) => {
+      if (source.contentType === 'documentation') {
+        return {
+          ...source,
+          tabs: [...(source.tabs || []), 'Docs'],
+        };
+      }
+      return source;
+    },
     aiChatSettings: {
       aiAssistantAvatar: "/img/logo-monogram.png",
       introMessage: "Hi! I'm the Strapi Docs AI assistant.<br/>How can I help?",
+      getHelpOptions: [
+        {
+          name: "GitHub",
+          icon: {
+            builtIn: "FaGithub"
+          },
+          action: {
+            type: "open_link",
+            url: "https://github.com/strapi/strapi"
+          }
+        },
+        {
+          name: "Contact",
+          icon: {
+            builtIn: "IoChatbubblesOutline"
+          },
+          action: {
+            type: "open_link",
+            url: "https://strapi.io/contact"
+          }
+        }
+      ],
       exampleQuestions: [
         "How to install Strapi?",
         "How to host my project on Strapi Cloud?",
@@ -37,6 +68,7 @@ export function getInkeepBaseConfig() {
     searchSettings: {
       placeholder: "Search...",
       view: "dual-pane",
+      tabs: ["All",  ["Docs", { isAlwaysVisible: true }], "GitHub", "Forums"],
     }
   };
 }
