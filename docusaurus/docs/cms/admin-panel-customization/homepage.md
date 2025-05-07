@@ -33,14 +33,17 @@ If you recently created a Strapi project, the Homepage may also display a quick 
 
 ## Adding custom widgets
 
-To add a custom widget, you need to:
+To add a custom widget, you can:
 
-- register it
-- create a widget component or install it from [Marketplace plugins](https://market.strapi.io).
+- install a plugin from the [Marketplace](/cms/plugins/installing-plugins-via-marketplace)
+- or create and register your own widgets
+
+The present page will describe how to create and register your widgets.
 
 ### Registering custom widgets
 
 To register a widget, use `app.widgets.register()`:
+
 - in the plugin’s [`register` lifecycle method](/cms/plugins-development/server-api#register) of the `index` file if you're building a plugin (recommended way),
 - or in the [application's global `register()` lifecycle method](/cms/configurations/functions#register) if you're adding the widget to just one Strapi application without a plugin.
 
