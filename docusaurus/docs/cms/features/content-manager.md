@@ -54,6 +54,10 @@ Click the search icons <Icon name="magnifying-glass" classes="ph-bold" /> to use
 Specifically for your collection types' entries, you can also use the <Icon name="funnel-simple" classes="ph-bold" /> **Filters** button to set condition-based filters, which add to one another (i.e., if you set several conditions, only the entries that match all the conditions will be displayed).
 :::
 
+:::strapi Strapi AI
+A new AI-powered Content Manager is now available for testing in private beta. [Sign up now!](https://strapi.io/ai).
+:::
+
 <!-- TO INTEGRATE IN THE PAGE? USE A GUIDEFLOW?
 
 From the list view, it is possible to:
