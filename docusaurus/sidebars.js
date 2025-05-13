@@ -178,7 +178,7 @@ const sidebars = {
           label: 'Strapi Client',
           id: 'cms/api/client',
           customProps: {
-            updated: true,
+            new: true,
           }
         },
         'cms/api/graphql',
