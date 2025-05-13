@@ -423,7 +423,7 @@ const sidebars = {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
           customProps: {
-            updated: false,
+            updated: true,
           },
         },
         "cloud/getting-started/caching",
