@@ -24,7 +24,7 @@ From the <Icon name="layout" /> Content-type Builder, accessible via the main na
 
 ## Overview
 
-<Guideflow lightId="vkm9jeqb2p" darkId="lpnz47qtep" />
+<Guideflow lightId="lpnm3w1ber" darkId="zklmd4gijr" />
 
 The <Icon name="layout" /> Content-type Builder allows the creation and management of content-types, which can be:
 
