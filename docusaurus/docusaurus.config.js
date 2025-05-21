@@ -125,7 +125,7 @@ const config = {
       },
       algolia: {
         appId: '392RJ63O14',
-        apiKey: 'ed62374a794e8da5accb298e13618614',
+        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
         indexName: 'strapiv4Docs',
       },
       navbar: {
