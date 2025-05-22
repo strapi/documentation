@@ -2,7 +2,6 @@
 title: Customization
 description: Learn more about Strapi 5 customization possibilities
 displayed_sidebar: cmsSidebar
-sidebar_label: Customization
 pagination_next: cms/backend-customization
 tags:
 - admin panel
