@@ -47,7 +47,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will invite you to create a Strapi Cloud account and start a free, 14-day trial. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+2. The terminal will invite you to login or sign up. When you do, you'll receive a 30-day trial of Growth Strapi License that will be automatically applied to your created project. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
 
 3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 
@@ -70,7 +70,8 @@ Follow the steps below by clicking on the togglable content to read more instruc
 As you will see in the terminal, your project is now building locally.
 
 :::info
-* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi Cloud project.
+
+* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi servers.
 * Many more installation options are available. Please refer to the [installation documentation](/cms/installation) for details.
 :::
 
@@ -231,7 +232,7 @@ sources={{
 />
 
 :::callout <Icon name="confetti" /> Congratulations!
-Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-day free Strapi Cloud trial! You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
+Now your project is hosted on Strapi Cloud and accessible online. You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
 :::
 
 :::tip
