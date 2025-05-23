@@ -11,9 +11,10 @@
   color: var(--strapi-primary-600);
   font-size: var(--strapi-font-size-xs);
   font-weight: 500;
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: color var(--ifm-transition-fast, 0.15s) var(--ifm-transition-timing-default, ease-in-out);
 
   &:hover {
     text-decoration: none;
