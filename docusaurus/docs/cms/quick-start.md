@@ -47,7 +47,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will invite you to login or sign up. When you do, you'll receive a 30-day trial of Growth Strapi License that will be automatically applied to your created project. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge /> plan will be automatically applied to your project. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
 
 3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 

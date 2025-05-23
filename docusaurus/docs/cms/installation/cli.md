@@ -92,7 +92,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </Tabs>
 
-2. The terminal will ask you whether you want to `Login/Signup` or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to login, you'll receive a 30-day trial of Growth Strapi License that will be automatically applied to your created project. If you skip this step, the project will fall back to the Community Edition.
+2. The terminal will ask you whether you want to `Login/Signup` or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to login, you'll receive a 30-day trial of the <GrowthBadge /> plan that will be automatically applied to your created project. If you skip this step, the project will fall back to the CMS Free plan.
 
 3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
 
@@ -148,9 +148,9 @@ The above installation guide only covers the basic installation option using the
 
 ### Skipping the Strapi login step
 
-When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will provide you with a 30-day trial of Growth Strapi License that will be automatically applied to your created project. This will give you access to advanced CMS features.
+When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will provide you with a 30-day trial of the <GrowthBadge /> that will be automatically applied to your created project. This will give you access to advanced CMS features.
 
-If you prefer skipping this Strapi login part, use the arrow keys to select `Skip`. The script will resume and create a local project using the Community Edition.
+If you prefer skipping this Strapi login part, use the arrow keys to select `Skip`. The script will resume and create a local project using the CMS Free plan.
 
 You will be able to purchase a CMS license later by checking out our <ExternalLink to="https://strapi.io/pricing-self-hosted" text="pricing page"/>.
 
