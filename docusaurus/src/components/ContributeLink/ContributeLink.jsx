@@ -5,6 +5,7 @@ import {useActiveDocContext} from '@docusaurus/plugin-content-docs/client';
 import {translate} from '@docusaurus/Translate';
 import styles from './contribute-link.module.scss';
 import Icon from '../Icon';
+import CopyMarkdownButton from '../CopyMarkdownButton';
 
 export default function ContributeLink() {
   const {siteConfig} = useDocusaurusContext();
@@ -35,6 +36,7 @@ export default function ContributeLink() {
       <a href={fullEditUrl} target="_blank" rel="noopener noreferrer">
         <Icon name="pencil-simple" /> <span>{editThisPageMessage}</span>
       </a>
+      <CopyMarkdownButton Icon={Icon} />
     </div>
   );
 }
