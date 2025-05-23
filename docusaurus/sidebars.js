@@ -264,7 +264,6 @@ const sidebars = {
         },
         'cms/configurations/users-and-permissions-providers',
         'cms/configurations/server',
-        'cms/configurations/typescript',
         {
           type: 'category',
           label: 'Guides',
