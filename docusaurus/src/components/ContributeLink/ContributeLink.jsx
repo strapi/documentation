@@ -36,7 +36,7 @@ export default function ContributeLink() {
       <a href={fullEditUrl} target="_blank" rel="noopener noreferrer">
         <Icon name="pencil-simple" /> <span>{editThisPageMessage}</span>
       </a>
-      <CopyMarkdownButton />
+      <CopyMarkdownButton Icon={Icon} />
     </div>
   );
 }

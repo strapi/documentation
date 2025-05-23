@@ -1,7 +1,31 @@
 import React, { useState, useCallback } from 'react';
 
-const CopyMarkdownButton = ({ className, docId, docPath }) => {
+// Simple Icon component fallback if not available
+const IconFallback = ({ name, color = 'currentColor' }) => {
+  const getIcon = () => {
+    switch (name) {
+      case 'check-circle':
+        return '✓';
+      case 'warning-circle':
+        return '⚠';
+      case 'copy':
+      default:
+        return '📋';
+    }
+  };
+  
+  return (
+    <span style={{ color, fontSize: '14px', position: 'relative', top: '-1px' }}>
+      {getIcon()}
+    </span>
+  );
+};
+
+const CopyMarkdownButton = ({ className, docId, docPath, Icon }) => {
   const [copyStatus, setCopyStatus] = useState('');
+  
+  // Use provided Icon component or fallback
+  const IconComponent = Icon || IconFallback;
 
   const handleCopyMarkdown = useCallback(async () => {
     // Use props or try to get from current URL
@@ -72,11 +96,11 @@ const CopyMarkdownButton = ({ className, docId, docPath }) => {
   const getStatusIcon = () => {
     switch (copyStatus) {
       case 'success':
-        return '✓';
+        return 'check-circle';
       case 'error':
-        return '⚠';
+        return 'warning-circle';
       default:
-        return '📋';
+        return 'copy';
     }
   };
 
@@ -118,20 +142,16 @@ const CopyMarkdownButton = ({ className, docId, docPath }) => {
         opacity: copyStatus === 'success' ? 0.7 : 1,
       }}
     >
-      <span 
-        style={{
-          fontSize: '14px',
-          position: 'relative',
-          top: '-1px',
-          color: copyStatus === 'success' ? '#5CB176' :
-                 copyStatus === 'error' ? '#D02B20' :
-                 '#4945FF'
-        }}
-      >
-        {getStatusIcon()}
-      </span>
+      <IconComponent 
+        name={getStatusIcon()}
+        color={
+          copyStatus === 'success' ? '#2F6846' :
+          copyStatus === 'error' ? '#D02B20' :
+          '#4945FF'
+        }
+      />
       <span style={{ 
-        color: copyStatus === 'success' ? '#5CB176' :
+        color: copyStatus === 'success' ? '#2F6846' :
                copyStatus === 'error' ? '#D02B20' :
                '#4945FF'
       }}>
