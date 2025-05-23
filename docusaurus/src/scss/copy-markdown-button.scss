@@ -16,11 +16,7 @@
   transition: all 0.2s ease;
 
   &:hover {
-    text-decoration: underline;
-    
-    span {
-      text-decoration: underline;
-    }
+    text-decoration: none;
   }
 
   &:disabled {
@@ -30,14 +26,6 @@
 
   &--success {
     color: var(--strapi-success-600);
-    
-    &:hover {
-      text-decoration: none;
-      
-      span {
-        text-decoration: none;
-      }
-    }
   }
 
   &--error {
@@ -45,14 +33,15 @@
   }
 
   span {
-    color: inherit;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
-  // Icon positioning to match ContributeLink
   i {
+    margin-right: 0.5rem;
     position: relative;
     top: -1px;
-    margin-right: 0.5rem;
     text-decoration: none !important;
   }
 }
