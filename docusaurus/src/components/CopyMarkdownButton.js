@@ -121,7 +121,7 @@ const CopyMarkdownButton = ({ className, docId, docPath, Icon }) => {
         copyStatus === 'error' ? 'copy-markdown-button--error' : '',
         className || ''
       ].filter(Boolean).join(' ')}
-      title="Copy the raw markdown content of this page"
+      title="Copy the raw markdown content of this page. Use it in your favorite LLM!"
     >
       <IconComponent 
         name={getStatusIcon()}
