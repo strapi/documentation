@@ -213,14 +213,8 @@ I'm ready for your questions about this Strapi documentation!`;
         }}
       >
         {/* Robot icon */}
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '0.5rem' }}>
-          <rect x="3" y="11" width="18" height="10" rx="2" ry="2"/>
-          <circle cx="12" cy="5" r="2"/>
-          <path d="M12 7v4"/>
-          <line x1="8" y1="16" x2="8" y2="16"/>
-          <line x1="16" y1="16" x2="16" y2="16"/>
-        </svg>
-        <span style={{ marginRight: '0.25rem' }}>Send to AI</span>
+        <Icon name="robot" />
+        <span style={{ marginLeft: '.6rem', marginTop: '.1rem' }}>Send to AI</span>
         {/* Caret icon */}
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}>
           <polyline points="6,9 12,15 18,9"/>
@@ -256,10 +250,6 @@ I'm ready for your questions about this Strapi documentation!`;
             onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
           >
-            {/* Sparkle icon for ChatGPT */}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '10px' }}>
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-            </svg>
             <span>Send to ChatGPT</span>
           </button>
           <button
@@ -277,10 +267,6 @@ I'm ready for your questions about this Strapi documentation!`;
             onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
           >
-            {/* Chat circle icon for Claude */}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '10px' }}>
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            </svg>
             <span>Send to Claude</span>
           </button>
         </div>
@@ -311,12 +297,8 @@ I'm ready for your questions about this Strapi documentation!`;
             overflow: 'auto',
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
           }}>
-            <h3 style={{ margin: '0 0 16px 0', color: '#333', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {/* Clipboard icon */}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-              </svg>
+            <h3>
+              <Icon name="clipboard" />
               Copy this prompt to {currentAI}
             </h3>
             <p style={{ margin: '0 0 16px 0', color: '#666', fontSize: '14px' }}>
