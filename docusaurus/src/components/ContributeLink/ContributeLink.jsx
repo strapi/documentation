@@ -6,7 +6,7 @@ import {translate} from '@docusaurus/Translate';
 import styles from './contribute-link.module.scss';
 import Icon from '../Icon';
 import CopyMarkdownButton from '../CopyMarkdownButton';
-import SendToAIButton from '../SendToAIButton'; 
+import SendToAIButton from '../SendToAiButton'; 
 
 export default function ContributeLink() {
   const {siteConfig} = useDocusaurusContext();
