@@ -1,16 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import { useActiveDocContext } from '@docusaurus/plugin-content-docs/client';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import clsx from 'clsx';
-import Icon from './Icon';
 
-const CopyMarkdownButton = ({ className }) => {
+const CopyMarkdownButton = ({ className, docId, docPath }) => {
   const [copyStatus, setCopyStatus] = useState('');
-  const { activeDoc } = useActiveDocContext();
-  const { siteConfig } = useDocusaurusContext();
 
   const handleCopyMarkdown = useCallback(async () => {
-    if (!activeDoc) {
+    // Use props or try to get from current URL
+    const currentDocId = docId || getCurrentDocId();
+    const currentDocPath = docPath || getCurrentDocPath();
+    
+    if (!currentDocId && !currentDocPath) {
       setCopyStatus('error');
       setTimeout(() => setCopyStatus(''), 3000);
       return;
@@ -19,7 +17,9 @@ const CopyMarkdownButton = ({ className }) => {
     try {
       // Build the raw markdown URL from GitHub
       const baseUrl = 'https://raw.githubusercontent.com/strapi/documentation/main/docusaurus';
-      const markdownUrl = `${baseUrl}/docs/${activeDoc.id}.md`;
+      const markdownUrl = currentDocPath 
+        ? `${baseUrl}/${currentDocPath}` 
+        : `${baseUrl}/docs/${currentDocId}.md`;
       
       // Fetch the raw markdown content
       const response = await fetch(markdownUrl);
@@ -41,21 +41,42 @@ const CopyMarkdownButton = ({ className }) => {
       setCopyStatus('error');
       setTimeout(() => setCopyStatus(''), 3000);
     }
-  }, [activeDoc]);
+  }, [docId, docPath]);
 
-  // Don't render if no active document
-  if (!activeDoc) {
+  // Helper functions to get current document info from URL
+  const getCurrentDocId = () => {
+    if (typeof window === 'undefined') return null;
+    const path = window.location.pathname;
+    // Remove leading/trailing slashes and split
+    const segments = path.replace(/^\/|\/$/g, '').split('/');
+    // For paths like /cms/api/rest or /cloud/getting-started/intro
+    if (segments.length >= 2) {
+      return segments.join('/');
+    }
+    return null;
+  };
+
+  const getCurrentDocPath = () => {
+    if (typeof window === 'undefined') return null;
+    const path = window.location.pathname;
+    // Convert URL path to docs file path
+    const cleanPath = path.replace(/^\/|\/$/g, '');
+    return cleanPath ? `docs/${cleanPath}.md` : null;
+  };
+
+  // Don't render if no way to determine document
+  if (!docId && !docPath && !getCurrentDocId()) {
     return null;
   }
 
   const getStatusIcon = () => {
     switch (copyStatus) {
       case 'success':
-        return 'check-circle';
+        return '✓';
       case 'error':
-        return 'warning-circle';
+        return '⚠';
       default:
-        return 'copy';
+        return '📋';
     }
   };
 
@@ -74,41 +95,48 @@ const CopyMarkdownButton = ({ className }) => {
     <button
       onClick={handleCopyMarkdown}
       disabled={copyStatus === 'success'}
-      className={clsx(
+      className={[
         'copy-markdown-button',
-        {
-          'copy-markdown-button--success': copyStatus === 'success',
-          'copy-markdown-button--error': copyStatus === 'error',
-        },
-        className
-      )}
+        copyStatus === 'success' ? 'copy-markdown-button--success' : '',
+        copyStatus === 'error' ? 'copy-markdown-button--error' : '',
+        className || ''
+      ].filter(Boolean).join(' ')}
       title="Copy the raw markdown content of this page"
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '6px',
-        padding: '8px 12px',
-        border: '1px solid var(--strapi-neutral-200)',
-        borderRadius: '4px',
-        backgroundColor: 'var(--strapi-neutral-0)',
-        color: 'var(--strapi-neutral-700)',
-        fontSize: '13px',
+        gap: '0.5rem',
+        padding: '0',
+        border: 'none',
+        borderRadius: '0',
+        backgroundColor: 'transparent',
+        color: '#4945FF',
+        fontSize: '12px',
         fontWeight: '500',
         cursor: copyStatus === 'success' ? 'default' : 'pointer',
-        transition: 'all 0.2s ease',
+        textDecoration: 'none',
         opacity: copyStatus === 'success' ? 0.7 : 1,
       }}
     >
-      <Icon 
-        name={getStatusIcon()} 
-        classes="ph-fill"
-        color={
-          copyStatus === 'success' ? 'var(--strapi-success-600)' :
-          copyStatus === 'error' ? 'var(--strapi-danger-600)' :
-          'var(--strapi-neutral-500)'
-        }
-      />
-      {getStatusText()}
+      <span 
+        style={{
+          fontSize: '14px',
+          position: 'relative',
+          top: '-1px',
+          color: copyStatus === 'success' ? '#5CB176' :
+                 copyStatus === 'error' ? '#D02B20' :
+                 '#4945FF'
+        }}
+      >
+        {getStatusIcon()}
+      </span>
+      <span style={{ 
+        color: copyStatus === 'success' ? '#5CB176' :
+               copyStatus === 'error' ? '#D02B20' :
+               '#4945FF'
+      }}>
+        {getStatusText()}
+      </span>
     </button>
   );
 };
