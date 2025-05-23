@@ -6,6 +6,7 @@ import {translate} from '@docusaurus/Translate';
 import styles from './contribute-link.module.scss';
 import Icon from '../Icon';
 import CopyMarkdownButton from '../CopyMarkdownButton';
+import SendToAIButton from '../SendToAIButton'; 
 
 export default function ContributeLink() {
   const {siteConfig} = useDocusaurusContext();
@@ -37,6 +38,7 @@ export default function ContributeLink() {
         <Icon name="pencil-simple" /> <span>{editThisPageMessage}</span>
       </a>
       <CopyMarkdownButton Icon={Icon} />
+      <SendToAIButton Icon={Icon} />
     </div>
   );
 }
