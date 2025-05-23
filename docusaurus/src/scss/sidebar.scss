@@ -302,7 +302,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         &::before {
           content: '\E586';
           position: relative;
-          top: -1px;
+          top: -2px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-typescript > .menu__list-item-collapsible a {
@@ -326,7 +326,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         &::before {
           content: '\EAE8';
           position: relative;
-          top: -2px;
+          top: -1px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-api > .menu__list-item-collapsible a {

@@ -1,6 +1,7 @@
 ---
 title: Email
 displayed_sidebar: cmsSidebar
+toc_max_heading_level: 5
 description: Send email from your server or externals providers.
 tags:
 - admin panel
@@ -52,17 +53,13 @@ This page is only visible if the current role has the "Access the Email Settings
 
 ### Code-based configuration
 
-The Email feature requires a provider and a provider configuration in the `config/plugins.js` file or `config/plugins.ts` file. See the [Providers](/cms/providers) documentation for detailed installation and configuration instructions.
-
-<CustomDocCardsWrapper>
-<CustomDocCard icon="plugs" title="Providers" description="Learn more about configuring and creating providers for the Email and Media Library features." link="/cms/providers"/>
-</CustomDocCardsWrapper>
+The Email feature requires a provider and a provider configuration in the `config/plugins.js|ts` file. See [providers](#providers) for detailed installation and configuration instructions.
 
 <ExternalLink to="https://www.npmjs.com/package/sendmail" text="Sendmail"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
 
 #### Email Configuration Options
 
-Plugins configuration are defined in the `config/plugins.js` file or `config/plugins.ts` file. For provider specific configuration please see the [Providers](/cms/providers) documentation for detailed installation and configuration instructions.
+Plugins configuration are defined in the `config/plugins.js` file or `config/plugins.ts` file. Please see the [Providers](#providers) for detailed provider-specific installation and configuration instructions.
 
 | Option                    | Type            | Description                                                                                                                                            | Default Value  | Notes    |
 |---------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|----------|
@@ -81,6 +78,199 @@ Plugins configuration are defined in the `config/plugins.js` file or `config/plu
 | `ratelimit.prefixKey`     | `string`        | The prefix for the rate limit key.                                                                                                                     | `${userEmail}` | Optional |
 | `ratelimit.whitelist`     | `array(string)` | Array of IP addresses to whitelist from rate limiting.                                                                                                 | `[]`           | Optional |
 | `ratelimit.store`         | `object`        | Rate limiting storage location and for more information please see the <ExternalLink text="koa2-ratelimit documentation" to="https://www.npmjs.com/package/koa2-ratelimit"/>. | `MemoryStore`  | Optional |
+
+#### Providers
+
+The Email feature can be extended via the installation and configuration of additional providers.
+
+Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
+
+There are both official providers maintained by Strapi — discoverable via the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
+
+A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
+
+##### Installing providers
+
+New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
+
+For example, to install the Sendgrid provider:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+
+```bash
+yarn add @strapi/provider-email-sendgrid
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm install @strapi/provider-email-sendgrid --save
+```
+
+</TabItem>
+
+</Tabs>
+
+##### Configuring providers
+
+Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
+
+Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+
+The following is an example configuration for the Sendgrid provider:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+
+module.exports = ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'juliasedefdjian@strapi.io',
+        defaultReplyTo: 'juliasedefdjian@strapi.io',
+        testAddress: 'juliasedefdjian@strapi.io',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+
+export default ({ env }) => ({
+  // ...
+  email: {
+    config: {
+      provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
+      providerOptions: {
+        apiKey: env('SENDGRID_API_KEY'),
+      },
+      settings: {
+        defaultFrom: 'juliasedefdjian@strapi.io',
+        defaultReplyTo: 'juliasedefdjian@strapi.io',
+        testAddress: 'juliasedefdjian@strapi.io',
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
+:::note
+
+* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/cms/configurations/environment)).
+* Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
+* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/cms/features/users-permissions#templating-emails)).
+
+:::
+
+###### Configuration per environment
+
+When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
+
+You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` configuration file and it will be used to overwrite the default configuration.
+
+##### Creating providers
+
+To implement your own custom provider you must <ExternalLink to="https://docs.npmjs.com/creating-node-js-modules" text="create a Node.js module"/>.
+
+The interface that must be exported depends on the plugin you are developing the provider for. The following is a template for the Email feature:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js
+module.exports = {
+  init: (providerOptions = {}, settings = {}) => {
+    return {
+      send: async options => {},
+    };
+  },
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts
+export {
+  init: (providerOptions = {}, settings = {}) => {
+    return {
+      send: async options => {},
+    };
+  },
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+In the send function you will have access to:
+
+* `providerOptions` that contains configurations written in `plugins.js|ts`
+* `settings` that contains configurations written in `plugins.js|ts`
+* `options` that contains options you send when you call the send function from the email plugin service
+
+You can review the <ExternalLink to="https://github.com/strapi/strapi/tree/master/packages/providers" text="Strapi-maintained providers"/> for example implementations.
+
+After creating your new provider you can <ExternalLink to="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" text="publish it to npm"/> to share with the community or [use it locally](#local-providers) for your project only.
+
+###### Local providers
+
+If you want to create your own provider without publishing it on npm you can follow these steps:
+
+1. Create a `providers` folder in your application.
+2. Create your provider (e.g. `/providers/strapi-provider-<plugin>-<provider>`)
+3. Then update your `package.json` to link your `strapi-provider-<plugin>-<provider>` dependency to the <ExternalLink to="https://docs.npmjs.com/files/package.json#local-paths" text="local path"/> of your new provider.
+
+```json
+{
+  ...
+  "dependencies": {
+    ...
+    "strapi-provider-<plugin>-<provider>": "file:providers/strapi-provider-<plugin>-<provider>",
+    ...
+  }
+}
+```
+
+4. Update your `/config/plugins.js|ts` file to [configure the provider](#configuring-providers).
+5. Finally, run `yarn` or `npm install` to install your new custom provider.
+
+###### Private providers
+
+You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
+
+To enable private providers, you must implement the `isPrivate()` method and return `true`.
+
+In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
+
+Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
 
 ## Usage
 

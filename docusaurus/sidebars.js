@@ -251,7 +251,21 @@ const sidebars = {
         'cms/configurations/admin-panel',
         'cms/configurations/api',
         'cms/configurations/cron',
-        'cms/configurations/database',
+        {
+          type: 'category',
+          collapsed: true,
+          collapsible: true,
+          label: "Database",
+          items: [
+            {
+              type: 'doc',
+              id: 'cms/configurations/database',
+              label: 'Database configuration',
+            },
+            'cms/database-migrations',
+            'cms/database-transactions',
+          ]
+        },
         'cms/configurations/environment',
         'cms/configurations/features',
         // 'cms/configurations/functions', // TODO: moved to Development — add the TOC component here to highlight the move
@@ -356,8 +370,6 @@ const sidebars = {
         //   id: 'cms/typescript',
         //   label: 'TypeScript'
         // },
-        // 'cms/database-migrations', // ? TODO move to database configuration?
-        // 'cms/database-transactions', // ? TODO move to database configuration?
         'cms/error-handling',
         'cms/templates',
         'cms/testing',
