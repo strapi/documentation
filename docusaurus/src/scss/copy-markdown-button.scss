@@ -1,0 +1,73 @@
+/** Component: Copy Markdown Button */
+@use './mixins' as *;
+
+.copy-markdown-button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--strapi-primary-600);
+  font-size: var(--strapi-font-size-xs);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    text-decoration: underline;
+    
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  &--success {
+    color: var(--strapi-success-600);
+    
+    &:hover {
+      text-decoration: none;
+      
+      span {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &--error {
+    color: var(--strapi-danger-600);
+  }
+
+  span {
+    color: inherit;
+  }
+
+  // Icon positioning to match ContributeLink
+  i {
+    position: relative;
+    top: -1px;
+    margin-right: 0.5rem;
+    text-decoration: none !important;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .copy-markdown-button {
+    color: var(--strapi-primary-500);
+
+    &--success {
+      color: var(--strapi-success-500);
+    }
+
+    &--error {
+      color: var(--strapi-danger-500);
+    }
+  }
+}

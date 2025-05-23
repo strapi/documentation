@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 
 // Simple Icon component fallback if not available
-const IconFallback = ({ name, color = 'currentColor' }) => {
+const IconFallback = ({ name }) => {
   const getIcon = () => {
     switch (name) {
       case 'check-circle':
@@ -14,11 +14,7 @@ const IconFallback = ({ name, color = 'currentColor' }) => {
     }
   };
   
-  return (
-    <span style={{ color, fontSize: '14px', position: 'relative', top: '-1px' }}>
-      {getIcon()}
-    </span>
-  );
+  return <span>{getIcon()}</span>;
 };
 
 const CopyMarkdownButton = ({ className, docId, docPath, Icon }) => {
@@ -126,35 +122,11 @@ const CopyMarkdownButton = ({ className, docId, docPath, Icon }) => {
         className || ''
       ].filter(Boolean).join(' ')}
       title="Copy the raw markdown content of this page"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        padding: '0',
-        border: 'none',
-        borderRadius: '0',
-        backgroundColor: 'transparent',
-        color: '#4945FF',
-        fontSize: '12px',
-        fontWeight: '500',
-        cursor: copyStatus === 'success' ? 'default' : 'pointer',
-        textDecoration: 'none',
-        opacity: copyStatus === 'success' ? 0.7 : 1,
-      }}
     >
       <IconComponent 
         name={getStatusIcon()}
-        color={
-          copyStatus === 'success' ? '#2F6846' :
-          copyStatus === 'error' ? '#D02B20' :
-          '#4945FF'
-        }
       />
-      <span style={{ 
-        color: copyStatus === 'success' ? '#2F6846' :
-               copyStatus === 'error' ? '#D02B20' :
-               '#4945FF'
-      }}>
+      <span>
         {getStatusText()}
       </span>
     </button>
