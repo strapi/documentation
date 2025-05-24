@@ -47,7 +47,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will invite you to create a Strapi Cloud account and start a free, 14-day trial. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+2. The terminal will invite you to create a Strapi Cloud account. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
 
 3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 
@@ -187,7 +187,7 @@ You have just created a basic content structure for your Strapi project! You can
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud: Deploying your project on Strapi Cloud is done with a single command! 🚀
 
-To deploy your project on Strapi Cloud, in your terminal:
+To deploy your project for free to Strapi Cloud, in your terminal:
 
 1. If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press `Ctrl-C` to stop the server.
 2. Ensure you are in the folder of your Strapi project (if needed, run for instance `cd my-strapi-project` to reach this folder), and run the following command:
@@ -231,7 +231,7 @@ sources={{
 />
 
 :::callout <Icon name="confetti" /> Congratulations!
-Now your project is hosted on Strapi Cloud and accessible online. Enjoy your 14-day free Strapi Cloud trial! You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
+Now your project is hosted on Strapi Cloud and accessible online. You can learn more about Strapi Cloud by reading [its dedicated documentation](/cloud/intro) or proceed to part D to log in into your online Strapi project and add your first data from there.
 :::
 
 :::tip

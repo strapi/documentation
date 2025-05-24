@@ -59,7 +59,7 @@ Your project's dashboard also displays:
 - the *Deployments* and *Runtime logs* tabs, to see the deployments history (more details in [Deploy history and logs](/cloud/projects/deploys-history)) and the runtime logs of the project (see [dedicated documentation page](/cloud/projects/runtime-logs)) <ScreenshotNumberReference number="5" />
 - the project and environment details in a box on the right of the interface <ScreenshotNumberReference number="6" />, including:
   - the number of API calls,
-  - the current usage for assets bandwidth and storage,
+  - the current usage for asset bandwidth and storage,
   - the name of the branch and a **Manage** button to be redirect to the branch settings (see [Modifying git repository & branch](/cloud/projects/settings#modifying-git-repository--branch)),
   - the name of the base directory,
   - the Strapi version number,
