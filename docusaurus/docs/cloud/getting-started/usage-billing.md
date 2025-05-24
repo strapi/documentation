@@ -20,8 +20,8 @@ This page contains general information related to the usage and billing of your 
 | Feature                          | Free  | Essential | Pro | Scale |
 | -------------------------------- | ----- | --------- | --- | ----- |
 | **Database Entries**             | 500   | Unlimited* | Unlimited* | Unlimited* |
-| **Assets Storage**               | 10GB  | 50GB      | 250GB | 1,000GB |
-| **Assets Bandwidth (per month)** | 10GB  | 50GB      | 500GB | 1,000GB |
+| **Asset Storage**               | 10GB  | 50GB      | 250GB | 1,000GB |
+| **Asset Bandwidth (per month)** | 10GB  | 50GB      | 500GB | 1,000GB |
 | **API Requests (per month)**     | 10,000 | 100,000 | 1,000,000 | 10,000,000 |
 |  |  |  |  |  |
 | **Backups**                      | N/A | N/A | Weekly | Daily |
@@ -32,8 +32,8 @@ This page contains general information related to the usage and billing of your 
 :::strapi Additional information on usage and features
 - General features & usage:
   - Database entries are the number of entries in your database.
-  - Assets storage is the amount of storage used by your assets.
-  - Assets bandwidth is the amount of bandwidth used by your assets.
+  - Asset storage is the amount of storage used by your assets.
+  - Asset bandwidth is the amount of bandwidth used by your assets.
   - API requests are the number of requests made to your APIs. This includes requests to the GraphQL and REST APIs, excluding requests for file and media assets counted towards CDN bandwidth and storage.
 - Cloud specific feature:
   - Backups refers to the automatic backups of Strapi Cloud projects (see [Backups documentation](/cloud/projects/settings#backups) for more information on the feature).
@@ -50,7 +50,7 @@ Upgrading to a paid plan disables scaling to zero and cold starts, resulting in 
 
 Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
 
-The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 250GB for assets storage, and overages will be charged the same way as for the production environment). Note however that the assets bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
+The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 250GB for asset storage, and overages will be charged the same way as for the production environment). Note however that the asset bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
  
 ## Billing
 
@@ -62,17 +62,17 @@ Billing is based on the usage of your Strapi Cloud account and projects. You wil
 Overages are not allowed on the Free plan.
 :::
 
-If you exceed the limits of your plan for API Requests, Assets Bandwidth, or Assets Storage, you will be charged for the corresponding overages. 
+If you exceed the limits of your plan for API Requests, Asset Bandwidth, or Asset Storage, you will be charged for the corresponding overages. 
 
-For example, if you exceed the 500GB limit in assets bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
+For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
 
 Overages are charged according to the following rates:
 
 | Feature | Rate |
 | --- | --- |
 | **API Requests** | $1.50 / 25k requests |
-| **Assets Bandwidth** | $30.00 / 100GB |
-| **Assets Storage** | $0.60 / GB per month |
+| **Asset Bandwidth** | $30.00 / 100GB |
+| **Asset Storage** | $0.60 / GB per month |
 
 ### Project suspension
 
@@ -88,7 +88,7 @@ If you do not resolve the issue within 30 days, your suspended project will be d
 
 #### Project suspension for exceeding the Free plan limits
 
-When a project hosted with the Free plan exceeds either the API requests or the Assets Bandwidth limits, it will be suspended until the monthly allowance resets at the beginning of the following month.
+When a project hosted with the Free plan exceeds either the API requests or the Asset Bandwidth limits, it will be suspended until the monthly allowance resets at the beginning of the following month.
 
 While the project is suspended:
 
