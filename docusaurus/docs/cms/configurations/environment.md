@@ -95,3 +95,11 @@ yarn start                                   # uses host 127.0.0.1
 NODE_ENV=production yarn start               # uses host defined in .env. If not defined, uses 0.0.0.0
 HOST=10.0.0.1 NODE_ENV=production yarn start # uses host 10.0.0.1
 ```
+
+<br/>
+
+To learn deeper about how to use environment variables in your code, please refer to the following guide:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="chalkboard-simple" title="Access and cast variables" description="Learn how to access and cast environment variables with the env() utility." link="/cms/configurations/guides/access-cast-environment-variables" />
+</CustomDocCardsWrapper>

@@ -253,10 +253,10 @@ const sidebars = {
           label: 'Guides',
           collapsed: true,
           items: [
-            'cms/configurations/guides/access-cast-environment-variables',
+            // 'cms/configurations/guides/access-cast-environment-variables',  // TODO: removed from TOC and linked from configuration page - add TOC component?
             'cms/configurations/guides/access-configuration-values',
             'cms/configurations/guides/public-assets',
-            // 'cms/configurations/guides/rbac', // TODO: removed from TOC - add TOC component?
+            // 'cms/configurations/guides/rbac', // TODO: removed from TOC and linked from feature page - add TOC component?
             // 'cms/configurations/guides/use-cron-jobs', // TODO: removed from TOC and linked from configuration page - add TOC component?
             // 'cms/configurations/guides/configure-sso', // TODO: removed from TOC and linked from feature page - add TOC component?
           ]
