@@ -206,36 +206,6 @@ const sidebars = {
         }
       ]
     },
-    {
-      type: 'category',
-      label: 'TypeScript',
-      collapsed: false,
-      collapsible: false,
-      className: 'category-cms-typescript', // TODO: add CSS for icon
-      items: [
-        {
-          type: 'doc',
-          id: 'cms/typescript',
-          label: 'Introduction'
-        },
-        {
-          type: 'doc',
-          id: 'cms/configurations/typescript',
-          label: 'Configuration'
-        },
-        {
-          type: 'doc',
-          id: 'cms/typescript/development',
-          label: 'Development'
-        },
-        {
-          type: 'doc',
-          id: 'cms/typescript/documents-and-entries', // TODO: replace with an intro. file acting as an entrypoint to TS guides 
-          label: 'Guides' // TODO ensure label is overriden
-        }
-        // 'cms/typescript/adding-support-to-existing-project' // ? will be linked from the Guides page
-      ]
-    },
     { // Configurations
       type: 'category',
       label: 'Configurations',
@@ -373,6 +343,36 @@ const sidebars = {
         'cms/error-handling',
         'cms/templates',
         'cms/testing',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'TypeScript',
+      collapsed: false,
+      collapsible: false,
+      className: 'category-cms-typescript', // TODO: add CSS for icon
+      items: [
+        {
+          type: 'doc',
+          id: 'cms/typescript',
+          label: 'Introduction'
+        },
+        {
+          type: 'doc',
+          id: 'cms/configurations/typescript',
+          label: 'Configuration'
+        },
+        {
+          type: 'doc',
+          id: 'cms/typescript/development',
+          label: 'Development'
+        },
+        {
+          type: 'doc',
+          id: 'cms/typescript/guides',
+          label: 'Guides' // TODO ensure label is overriden
+        }
+        // 'cms/typescript/adding-support-to-existing-project' // ? will be linked from the Guides page
       ]
     },
     { // Command Line Interface
