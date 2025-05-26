@@ -66,7 +66,7 @@ In the meantime, the only way to get in if the Super Admin can't log in is to te
 The SSO configuration lives in [the `/config/admin` file](/cms/configurations/admin-panel). The following dedicated guide will help you configure additional sign-in and sign-up methods for the Strapi admin panel:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="sign-in" title="Configuring SSO providers" description="Learn how to configure SSO providers through your Strapi project's code." link="/cms/configurations/guides/configure-sso"/>
+<CustomDocCard icon="sign-in" title="How to configure SSO providers" description="Learn how to configure SSO providers through your Strapi project's code." link="/cms/configurations/guides/configure-sso"/>
 </CustomDocCardsWrapper>
 
 ## Usage

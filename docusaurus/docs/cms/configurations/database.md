@@ -1,6 +1,5 @@
 ---
 title: Database configuration
-sidebar_label: Database
 displayed_sidebar: cmsSidebar
 description: Strapi offers a single entry point file to configure its databases.
 tags:
@@ -14,16 +13,19 @@ tags:
 
 ---
 
+import SupportedDatabases from '/docs/snippets/supported-databases.md'
+
 # Database configuration
 
-The `./config/database.js` file (or the `./config/database.ts` file for TypeScript) is used to define database connections that will be used to store the application content.
+The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
+
+:::strapi Supported databases
+The following databases are supported by Strapi:
+<SupportedDatabases components={props.components} />
+:::
 
 :::warning
  Strapi applications are not meant to be connected to a pre-existing database, not created by a Strapi application, nor connected to a Strapi v3 database. The Strapi team will not support such attempts. Attempting to connect to an unsupported database may, and most likely will, result in lost data.
-:::
-
-:::strapi Supported databases
-The CLI installation guide details [supported database and versions](/cms/installation/cli.md#preparing-the-installation).
 :::
 
 ## Configuration structure

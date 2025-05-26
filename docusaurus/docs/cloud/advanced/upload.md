@@ -430,5 +430,5 @@ To deploy the project and utilize the third-party upload provider, push the chan
 Once the application finishes building, the project will use the new upload provider.
 
 :::strapi Custom Provider
-If you want to create a custom upload provider, please refer to the [Providers](/cms/providers#creating-providers) documentation in the CMS Documentation.
+If you want to create a custom upload provider, please refer to the [Providers](/cms/features/media-library#providers) documentation in the CMS Documentation.
 :::

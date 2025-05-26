@@ -1,15 +1,19 @@
 ---
-title: Providers
-description: Install and use providers to extend the functionality of available plugins.
+title: Media Library providers
+description: Learn how to configure 3rd-party providers for the Media Library feature, or create your own.
+displayed_sidebar: cmsSidebar
 tags:
-- environment
-- providers
-
+- media library
+- customization
 ---
 
-# Email and Upload Providers
+import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-list.md';
 
-2 Strapi features, [Email](/cms/features/email) and the [Media Library](/cms/features/media-library), can be extended via the installation and configuration of additional providers.
+# Media Library providers
+
+The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
+
+<MediaLibraryProvidersList />
 
 Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
 
@@ -21,38 +25,22 @@ A provider can be configured to be [private](#private-providers) to ensure asset
 
 New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
 
-For example:
+For example, to install the AWS S3 provider for the Upload (Media Library) feature::
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
-
-Install the AWS S3 provider for the Upload (Media Library) feature:
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn add @strapi/provider-upload-aws-s3
 ```
 
-Install the Sendgrid provider for the Email feature:
-
-```bash
-yarn add @strapi/provider-email-sendgrid
-```
-
 </TabItem>
 
-<TabItem value="npm" label="npm">
-
-Install the AWS S3 provider for the Upload (Media Library) feature:
+<TabItem value="npm" label="NPM">
 
 ```bash
 npm install @strapi/provider-upload-aws-s3 --save
-```
-
-Install the Sendgrid provider for the Email feature:
-
-```bash
-npm install @strapi/provider-email-sendgrid --save
 ```
 
 </TabItem>
@@ -65,11 +53,7 @@ Newly installed providers are enabled and configured in [the `/config/plugins` f
 
 Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
 
-The following are example configurations for the Upload (Media Library) and Email features:
-
-<Tabs>
-
-<TabItem value="Upload" label="Upload (Media Library)">
+The following is an example configuration for an AWS S3 Media Library provider:
 
 <Tabs groupId="js-ts">
 
@@ -139,78 +123,13 @@ export default ({ env }) => ({
 
 </Tabs>
 
-:::note
-Strapi has a default [`security` middleware](/cms/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-upload-aws-s3" text="provider page"/> or the [middleware documentation](/cms/configurations/middlewares#security) for more information.
-:::
-
-</TabItem>
-
-<TabItem value="Email" label="Email">
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="/config/plugins.js"
-
-module.exports = ({ env }) => ({
-  // ...
-  email: {
-    config: {
-      provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
-      providerOptions: {
-        apiKey: env('SENDGRID_API_KEY'),
-      },
-      settings: {
-        defaultFrom: 'juliasedefdjian@strapi.io',
-        defaultReplyTo: 'juliasedefdjian@strapi.io',
-        testAddress: 'juliasedefdjian@strapi.io',
-      },
-    },
-  },
-  // ...
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-
-export default ({ env }) => ({
-  // ...
-  email: {
-    config: {
-      provider: 'sendgrid', // For community providers pass the full package name (e.g. provider: 'strapi-provider-email-mandrill')
-      providerOptions: {
-        apiKey: env('SENDGRID_API_KEY'),
-      },
-      settings: {
-        defaultFrom: 'juliasedefdjian@strapi.io',
-        defaultReplyTo: 'juliasedefdjian@strapi.io',
-        testAddress: 'juliasedefdjian@strapi.io',
-      },
-    },
-  },
-  // ...
-});
-```
-
-</TabItem>
-
-</Tabs>
-
-:::note
-
+:::note Notes
+* Strapi has a default [`security` middleware](/cms/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-upload-aws-s3" text="provider page"/> or the [middleware documentation](/cms/configurations/middlewares#security) for more information.
 * When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/cms/configurations/environment)).
 * Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
 * When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/cms/features/users-permissions#templating-emails)).
 
 :::
-
-</TabItem>
-</Tabs>
 
 ### Configuration per environment
 
@@ -223,9 +142,6 @@ You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` co
 To implement your own custom provider you must <ExternalLink to="https://docs.npmjs.com/creating-node-js-modules" text="create a Node.js module"/>.
 
 The interface that must be exported depends on the plugin you are developing the provider for. The following are templates for the Upload (Media Library) and Email features:
-
-<Tabs>
-<TabItem value="Upload" label="Upload (Media Library)">
 
 <Tabs groupId="js-ts">
 
@@ -315,45 +231,6 @@ export default {
 
 </Tabs>
 
-</TabItem>
-
-<TabItem value="Email" label="Email">
-
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js
-module.exports = {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts
-export {
-  init: (providerOptions = {}, settings = {}) => {
-    return {
-      send: async options => {},
-    };
-  },
-};
-```
-
-</TabItem>
-
-</Tabs>
-
-</TabItem>
-</Tabs>
-
 In the send function you will have access to:
 
 * `providerOptions` that contains configurations written in `plugins.js|ts`
@@ -391,8 +268,6 @@ If you want to create your own provider without publishing it on npm you can fol
 You can set up a private provider, meaning that every asset URL displayed in the Content Manager will be signed for secure access.
 
 To enable private providers, you must implement the `isPrivate()` method and return `true`.
-
-
 
 In the backend, Strapi generates a signed URL for each asset using the `getSignedUrl(file)` method implemented in the provider. The signed URL includes an encrypted signature that allows the user to access the asset (but normally only for a limited time and with specific restrictions, depending on the provider).
 
@@ -487,5 +362,3 @@ export = {
 </TabItem>
 
 </Tabs>
-
-<FeedbackPlaceholder />
