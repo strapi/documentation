@@ -80,7 +80,7 @@ Both settings are used as the defaults in the Media Library and in the Content M
 
 The Media Library is powered in the backend server by the Upload package, which can be configured and extended through providers.
 
-#### Additional providers
+#### Providers
 
 <MediaLibraryProvidersList />
 
