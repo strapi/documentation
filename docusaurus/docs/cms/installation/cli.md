@@ -148,7 +148,7 @@ The above installation guide only covers the basic installation option using the
 
 ### Skipping the Strapi login step
 
-When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will provide you with a 30-day trial of the <GrowthBadge /> that will be automatically applied to your created project. This will give you access to advanced CMS features.
+When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will provide you with a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> that will be automatically applied to your created project. This will give you access to advanced CMS features.
 
 If you prefer skipping this Strapi login part, use the arrow keys to select `Skip`. The script will resume and create a local project using the CMS Free plan.
 
