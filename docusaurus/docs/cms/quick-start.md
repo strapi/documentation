@@ -188,7 +188,7 @@ You have just created a basic content structure for your Strapi project! You can
 
 Now that your beautiful first Strapi project is working locally, it's time for the world to see it live! The most straightforward way to host your project is to use Strapi Cloud: Deploying your project on Strapi Cloud is done with a single command! 🚀
 
-To deploy your project on Strapi Cloud, in your terminal:
+To deploy your project for free to Strapi Cloud, in your terminal:
 
 1. If the server for your local Strapi project is running, which should be the case if you followed this tutorial so far, press `Ctrl-C` to stop the server.
 2. Ensure you are in the folder of your Strapi project (if needed, run for instance `cd my-strapi-project` to reach this folder), and run the following command:

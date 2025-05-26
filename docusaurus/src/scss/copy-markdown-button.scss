@@ -1,0 +1,63 @@
+/** Component: Copy Markdown Button */
+@use './mixins' as *;
+
+.copy-markdown-button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--strapi-primary-600);
+  font-size: var(--strapi-font-size-xs);
+  font-weight: 500;
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--ifm-transition-fast, 0.15s) var(--ifm-transition-timing-default, ease-in-out);
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  &--success {
+    color: var(--strapi-success-700);
+  }
+
+  &--error {
+    color: var(--strapi-danger-600);
+  }
+
+  span {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  i {
+    margin-right: 0.5rem;
+    position: relative;
+    top: -1px;
+    text-decoration: none !important;
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .copy-markdown-button {
+    color: var(--strapi-primary-500);
+
+    &--success {
+      color: var(--strapi-success-500);
+    }
+
+    &--error {
+      color: var(--strapi-danger-500);
+    }
+  }
+}
