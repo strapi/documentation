@@ -15,7 +15,7 @@ tags:
 
 import NotV5 from '/docs/snippets/_not-updated-to-v5.md'
 
-# How to configure SSO
+# How to configure SSO providers
 <EnterpriseBadge/> <SsoBadge />
 
 [Single Sign-On (SSO)](/cms/features/sso) on Strapi allows you to configure additional sign-in and sign-up methods for the Strapi admin panel.

@@ -343,7 +343,7 @@ This service is an advanced code example using the [Email](/cms/features/email) 
 
 <SubtleCallout title="Related concepts">
 
-Additional information can be found in the [Services](/cms/backend-customization/services), [Entity Service API](/cms/api/entity-service), [Email plugin](/cms/features/email) and [Providers](/cms/providers) documentation.
+Additional information can be found in the [Services](/cms/backend-customization/services), [Entity Service API](/cms/api/entity-service) and [Email feature](/cms/features/email) documentation.
 
 </SubtleCallout>
 

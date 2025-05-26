@@ -225,7 +225,7 @@ If these files don't exist you will need to copy from your `node_modules` or the
 
 We will go step by step.
 
-### Configure your Provider Request
+### Configure your provider request
 
 Configure the new provider in the `Provider.js` file at the `getProfile` function.
 
@@ -237,7 +237,7 @@ The `getProfile` takes three params:
 
 Here is an example that uses the `discord` provider.
 
-### Configure your oauth generic information
+### Configure your OAuth generic information
 
 ```js
 case 'discord': {

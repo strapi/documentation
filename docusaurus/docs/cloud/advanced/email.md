@@ -290,5 +290,5 @@ To deploy the project and utilize another party email provider, push the changes
 Once the application finishes building, the project will use the new email provider.
 
 :::strapi Custom Provider
-If you want to create a custom email provider, please refer to the [Providers](/cms/providers#creating-providers) documentation in the CMS Documentation.
+If you want to create a custom email provider, please refer to the [Email providers](/cms/features/email#providers) documentation in the CMS Documentation.
 :::
