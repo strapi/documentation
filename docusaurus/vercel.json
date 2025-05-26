@@ -861,6 +861,11 @@
       "permanent": true
     },
     {
+      "source": "/cms/configurations/guides/public-assets",
+      "destination": "/cms/features/media-library#public-assets",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/guides/rbac",
       "destination": "/cms/configurations/guides/rbac",
       "permanent": true
