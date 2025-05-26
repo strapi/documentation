@@ -256,7 +256,7 @@ const sidebars = {
             'cms/configurations/guides/access-cast-environment-variables',
             'cms/configurations/guides/access-configuration-values',
             'cms/configurations/guides/public-assets',
-            'cms/configurations/guides/rbac',
+            // 'cms/configurations/guides/rbac', // TODO: removed from TOC - add TOC component?
             'cms/configurations/guides/use-cron-jobs',
             'cms/configurations/guides/configure-sso',
           ]
