@@ -248,19 +248,19 @@ const sidebars = {
         // },
         // 'cms/configurations/users-and-permissions-providers', // TODO: removed from TOC - add the TOC component here to highlight where to find them now
         'cms/configurations/server',
-        {
-          type: 'category',
-          label: 'Guides',
-          collapsed: true,
-          items: [
-            // 'cms/configurations/guides/access-cast-environment-variables',  // TODO: removed from TOC and linked from configuration page - add TOC component?
-            'cms/configurations/guides/access-configuration-values',
-            // 'cms/configurations/guides/public-assets', // TODO: removed from TOC and included in Media Lib. feature page - add TOC component?
-            // 'cms/configurations/guides/rbac', // TODO: removed from TOC and linked from feature page - add TOC component?
-            // 'cms/configurations/guides/use-cron-jobs', // TODO: removed from TOC and linked from configuration page - add TOC component?
-            // 'cms/configurations/guides/configure-sso', // TODO: removed from TOC and linked from feature page - add TOC component?
-          ]
-        }
+        // {
+        //   type: 'category',
+        //   label: 'Guides',
+        //   collapsed: true,
+        //   items: [
+        //     // 'cms/configurations/guides/access-cast-environment-variables',  // TODO: removed from TOC and linked from configuration page - add TOC component?
+        //     // 'cms/configurations/guides/access-configuration-values', // TODO: removed from TOC and included into config. intro. page - add TOC component to highlight it?
+        //     // 'cms/configurations/guides/public-assets', // TODO: removed from TOC and included in Media Lib. feature page - add TOC component?
+        //     // 'cms/configurations/guides/rbac', // TODO: removed from TOC and linked from feature page - add TOC component?
+        //     // 'cms/configurations/guides/use-cron-jobs', // TODO: removed from TOC and linked from configuration page - add TOC component?
+        //     // 'cms/configurations/guides/configure-sso', // TODO: removed from TOC and linked from feature page - add TOC component?
+        //   ]
+        // }
       ]
     },
     { // Development
