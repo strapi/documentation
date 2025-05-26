@@ -246,7 +246,7 @@ const sidebars = {
           // id: 'cms/providers',
           // label: 'Email & Upload Providers'
         // },
-        'cms/configurations/users-and-permissions-providers',
+        // 'cms/configurations/users-and-permissions-providers', // TODO: removed from TOC - add the TOC component here to highlight where to find them now
         'cms/configurations/server',
         {
           type: 'category',
