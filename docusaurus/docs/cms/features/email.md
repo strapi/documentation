@@ -57,9 +57,9 @@ The Email feature requires a provider and a provider configuration in the `confi
 
 <ExternalLink to="https://www.npmjs.com/package/sendmail" text="Sendmail"/> is the default email provider in the Strapi Email feature. It provides functionality for the local development environment but is not production-ready in the default configuration. For production stage applications you need to further configure `Sendmail` or change providers.
 
-#### Email Configuration Options
+#### Email configuration options
 
-Plugins configuration are defined in the `config/plugins.js` file or `config/plugins.ts` file. Please see the [Providers](#providers) for detailed provider-specific installation and configuration instructions.
+Plugins configuration are defined in the `config/plugins.js` file or `config/plugins.ts` file. Please refer to [providers](#providers) for detailed provider-specific installation and configuration instructions.
 
 | Option                    | Type            | Description                                                                                                                                            | Default Value  | Notes    |
 |---------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|----------|
@@ -83,7 +83,7 @@ Plugins configuration are defined in the `config/plugins.js` file or `config/plu
 
 The Email feature can be extended via the installation and configuration of additional providers.
 
-Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
+Providers add an extension to the core capabilities of the plugin, for example to use Amazon SES for emails instead of Sendmail.
 
 There are both official providers maintained by Strapi — discoverable via the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
 

@@ -241,11 +241,11 @@ const sidebars = {
         // 'cms/configurations/functions', // TODO: moved to Development — add the TOC component here to highlight the move
         'cms/configurations/middlewares',
         'cms/configurations/plugins',
-        {
-          type: 'doc',
-          id: 'cms/providers',
-          label: 'Email & Upload Providers'
-        },
+        // { // TODO: moved to Features - add the TOC component here to highlight the move
+          // type: 'doc',
+          // id: 'cms/providers',
+          // label: 'Email & Upload Providers'
+        // },
         'cms/configurations/users-and-permissions-providers',
         'cms/configurations/server',
         {
