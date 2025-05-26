@@ -92,7 +92,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </Tabs>
 
-2. The terminal will ask you whether you want to `Login/Signup` to Strapi Cloud (and start using your free 14-day trial projects), or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to skip this step, you will need to [host the project yourself](#skipping-the-strapi-cloud-login-step).
+2. The terminal will ask you whether you want to `Login/Signup` to Strapi Cloud, or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to skip this step, you will need to [host the project yourself](#skipping-the-strapi-cloud-login-step).
 
 2. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
 
@@ -148,12 +148,12 @@ The above installation guide only covers the basic installation option using the
 
 ### Skipping the Strapi Cloud login step
 
-When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free, 14-day trial [Strapi Cloud](/cloud/intro) project as described in the [Quick Start Guide](/cms/quick-start).
+When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free [Strapi Cloud](/cloud/intro) account as described in the [Quick Start Guide](/cms/quick-start).
 
-If you prefer skipping this Strapi Cloud login part, use the arrow keys to select `Skip`. The script will resume and create a local project. To deploy this project and host it online, you could later choose to:
+If you prefer skipping the Strapi Cloud login part, use the arrow keys to select `Skip`. The script will resume and create a local project. To deploy this project and host it online, you could later choose to:
 
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following the [deployment guide](/cms/deployment),
-- or use the [Cloud CLI](/cloud/cli/cloud-cli#) commands to login to Strapi Cloud and deploy your project there.
+- or use the [Cloud CLI](/cloud/cli/cloud-cli#) commands to login to Strapi Cloud and deploy your project there for free.
 
 If you want to host your project yourself and are not already familiar with GitHub, the following togglable content should get you started👇.
 
