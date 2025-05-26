@@ -867,7 +867,7 @@
     },
     {
       "source": "/dev-docs/configurations/guides/use-cron-jobs",
-      "destination": "/cms/configurations/guides/use-cron-jobs",
+      "destination": "/cms/configurations/cron",
       "permanent": true
     },
     {
@@ -3602,16 +3602,6 @@
     {
       "source": "/user-docs/users-roles-permissions",
       "destination": "/cms/features/users-permissions",
-      "permanent": true
-    },
-    {
-        "source": "/cms/gurations/admin-panel",
-        "destination": "/cms/configurations/admin-panel",
-        "permanent": true
-    },
-    {
-      "source": "/cms/gurations/cron",
-      "destination": "/cms/configurations/cron",
       "permanent": true
     },
     {
