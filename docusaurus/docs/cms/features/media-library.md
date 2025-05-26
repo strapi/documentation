@@ -10,6 +10,7 @@ tags:
 ---
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
+import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-list.md';
 
 # Media Library
 
@@ -79,31 +80,14 @@ Both settings are used as the defaults in the Media Library and in the Content M
 
 The Media Library is powered in the backend server by the Upload package, which can be configured and extended through providers.
 
-#### Additional providers
+#### Providers
 
-By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available should you want to upload your files to another location.
+<MediaLibraryProvidersList />
 
-The providers maintained by Strapi are the following. Clicking on a card will redirect you to their Strapi Marketplace or npm page:
+If you need to install other providers or create your own, please refer to the following guide:
 
 <CustomDocCardsWrapper>
-<CustomDocCard 
-  icon="shopping-cart" 
-  title="Amazon S3" 
-  description="Official provider for file uploads to Amazon S3."
-  link="https://market.strapi.io/providers/@strapi-provider-upload-aws-s3"
-/>
-<CustomDocCard 
-  icon="shopping-cart" 
-  title="Cloudinary" 
-  description="Official provider for media management with Cloudinary."
-  link="https://market.strapi.io/providers/@strapi-provider-upload-cloudinary"
-/>
-<CustomDocCard 
-  icon="shopping-cart" 
-  title="Local" 
-  description="Default provider for storing files locally on the server."
-  link="https://www.npmjs.com/package/@strapi/provider-upload-local"
-/>
+<CustomDocCard icon="plug" title="Media Library Providers" link="/cms/configurations/media-library-providers" description="Learn how you can add additional providers or create your own." />
 </CustomDocCardsWrapper>
 
 :::info
@@ -665,3 +649,17 @@ The Media Library feature has some endpoints that can accessed through Strapi's 
 <CustomDocCardsWrapper>
 <CustomDocCard icon="cube" title="Upload with the REST API" description="Learn how to use the Strapi's REST API to upload files through your code." link="/cms/api/rest/upload"/>
 </CustomDocCardsWrapper>
+
+### Use public assets in your code {#public-assets}
+
+Public assets are static files (e.g., images, video, CSS files, etc.) that you want to make accessible to the outside world.
+
+Because an API may need to serve static assets, every new Strapi project includes by default a folder named `/public`. Any file located in this directory is accessible if the request's path doesn't match any other defined route and if it matches a public file name (e.g. an image named `company-logo.png` in `./public/` is accessible through `/company-logo.png` URL).
+
+:::tip
+`index.html` files are served if the request corresponds to a folder name (`/pictures` url will try to serve `public/pictures/index.html` file).
+:::
+
+:::caution
+The dotfiles are not exposed. It means that every file name that starts with `.`, such as `.htaccess` or `.gitignore`, are not served.
+:::

@@ -300,8 +300,6 @@ export default {
 
 </Tabs>
 
-
-
 ## Enabling cron jobs
 
 To enable cron jobs, set `cron.enabled` to `true` in the [server configuration file](/cms/configurations/server) and declare the jobs:
@@ -344,6 +342,43 @@ export default ({ env }) => ({
 
 </Tabs>
 
-:::tip
-To learn more about using CRON jobs in your code, please refer to the [corresponding guide](/cms/configurations/guides/use-cron-jobs).
+## Adding or removing cron jobs
+
+Use `strapi.cron.add` anywhere in your custom code add CRON jobs to the Strapi instance:
+
+```js title="./src/plugins/my-plugin/strapi-server.js"
+module.exports = () => ({
+  bootstrap({ strapi }) {
+    strapi.cron.add({
+      // runs every second
+      myJob: {
+        task: ({ strapi }) => {
+          console.log("hello from plugin");
+        },
+        options: {
+          rule: "* * * * * *",
+        },
+      },
+    });
+  },
+});
+```
+
+Use `strapi.cron.remove` anywhere in your custom code to remove CRON jobs from the Strapi instance, passing in the key corresponding to the CRON job you want to remove:
+
+```js
+strapi.cron.remove("myJob");
+```
+
+:::note
+Cron jobs that are using the [key as the rule](/cms/configurations/cron#using-the-key-format) can not be removed.
 :::
+
+
+## Listing cron jobs
+
+Use `strapi.cron.jobs` anywhere in your custom code to list all the cron jobs that are currently running:
+
+```js
+strapi.cron.jobs
+```

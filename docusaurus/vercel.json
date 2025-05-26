@@ -861,13 +861,18 @@
       "permanent": true
     },
     {
+      "source": "/cms/configurations/guides/public-assets",
+      "destination": "/cms/features/media-library#public-assets",
+      "permanent": true
+    },
+    {
       "source": "/dev-docs/configurations/guides/rbac",
       "destination": "/cms/configurations/guides/rbac",
       "permanent": true
     },
     {
       "source": "/dev-docs/configurations/guides/use-cron-jobs",
-      "destination": "/cms/configurations/guides/use-cron-jobs",
+      "destination": "/cms/configurations/cron",
       "permanent": true
     },
     {
@@ -1407,7 +1412,7 @@
     },
     {
       "source": "/dev-docs/providers",
-      "destination": "/cms/providers",
+      "destination": "/cms/features/media-library#additional-providers",
       "permanent": true
     },
     {
@@ -2534,7 +2539,8 @@
 		},
 		{
 			"source": "/developer-docs/latest/development/providers.html",
-			"destination": "/dev-docs/providers"
+			"destination": "/cms/features/media-library-providers",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.html",
@@ -3601,16 +3607,6 @@
     {
       "source": "/user-docs/users-roles-permissions",
       "destination": "/cms/features/users-permissions",
-      "permanent": true
-    },
-    {
-        "source": "/cms/gurations/admin-panel",
-        "destination": "/cms/configurations/admin-panel",
-        "permanent": true
-    },
-    {
-      "source": "/cms/gurations/cron",
-      "destination": "/cms/configurations/cron",
       "permanent": true
     },
     {

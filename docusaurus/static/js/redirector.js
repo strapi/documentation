@@ -200,6 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // const typeScriptRedirects = {
+  //   '/cms/typescript': {
+  //     '_default': '/cms/typescript',
+  //     'guides': '/cms/typescript/guides'
+  //   }
+  // }
+
   // Combine all redirects
   const allRedirects = {
     ...ssoRedirects,
@@ -209,7 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ...auditLogsRedirects,
     ...pluginRedirects,
     ...adminPanelRedirects,
-    ...contentManagerRedirects
+    ...contentManagerRedirects,
+    // ...typeScriptRedirects
   };
 
   // Get current path and hash

@@ -278,25 +278,39 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         &::before {
           content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><path d='M152,224a8,8,0,0,1-8,8H112a8,8,0,0,1,0-16h32A8,8,0,0,1,152,224Zm71.62-68.17-12.36,55.63a16,16,0,0,1-25.51,9.11L158.51,200h-61L70.25,220.57a16,16,0,0,1-25.51-9.11L32.38,155.83a16.09,16.09,0,0,1,3.32-13.71l28.56-34.26a123.07,123.07,0,0,1,8.57-36.67c12.9-32.34,36-52.63,45.37-59.85a16,16,0,0,1,19.6,0c9.34,7.22,32.47,27.51,45.37,59.85a123.07,123.07,0,0,1,8.57,36.67l28.56,34.26A16.09,16.09,0,0,1,223.62,155.83Zm-139.23,34Q68.28,160.5,64.83,132.16L48,152.36,60.36,208l.18-.13ZM140,100a12,12,0,1,0-12,12A12,12,0,0,0,140,100Zm68,52.36-16.83-20.2q-3.42,28.28-19.56,57.69l23.85,18,.18.13Z'/></svg>");
           position: relative;
-          top: 2px;
+          top: 1px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-features > .menu__list-item-collapsible a {
         pointer-events: none;
         &::before {
           content: '\E922';
+          position: relative;
+          top: -2px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-configurations > .menu__list-item-collapsible a {
         pointer-events: none;
         &::before {
           content: '\E87C';
+          position: relative;
+          top: -2px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-development > .menu__list-item-collapsible a {
         pointer-events: none;
         &::before {
           content: '\E586';
+          position: relative;
+          top: -2px;
+        }
+      }
+      .theme-doc-sidebar-item-category-level-1.category-cms-typescript > .menu__list-item-collapsible a {
+        pointer-events: none;
+        &::before {
+          content: '\E914';
+          position: relative;
+          top: -1px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-plugins > .menu__list-item-collapsible a {
@@ -304,7 +318,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         &::before {
           content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><path d='M165.78,224H208a16,16,0,0,0,16-16V170.35A8,8,0,0,0,212.94,163a23.37,23.37,0,0,1-8.94,1.77c-13.23,0-24-11.1-24-24.73s10.77-24.73,24-24.73a23.37,23.37,0,0,1,8.94,1.77A8,8,0,0,0,224,109.65V72a16,16,0,0,0-16-16H171.78a35.36,35.36,0,0,0,.22-4,36,36,0,0,0-72,0,35.36,35.36,0,0,0,.22,4H64A16,16,0,0,0,48,72v32.22a35.36,35.36,0,0,0-4-.22,36,36,0,0,0,0,72,35.36,35.36,0,0,0,4-.22V208a16,16,0,0,0,16,16h42.22'></path></svg>");
           position: relative;
-          top: 2px;
+          top: 0px;
+        }
+      }
+      .theme-doc-sidebar-item-category-level-1.category-cms-cli > .menu__list-item-collapsible a {
+        pointer-events: none;
+        &::before {
+          content: '\EAE8';
+          position: relative;
+          top: -1px;
         }
       }
       .theme-doc-sidebar-item-category-level-1.category-cms-api > .menu__list-item-collapsible a {

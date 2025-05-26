@@ -116,9 +116,13 @@ By default, a list of providers is available including one, "Email", enabled by 
   }}
 />
 
-:::tip
-Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application (see [the dedicated guide](/cms/configurations/users-and-permissions-providers/new-provider-guide)).
-:::
+Other providers that are not proposed by default by Strapi can be added manually through the code of your Strapi application. Click on any of the following cards to get additional information on configuring or creating third-party providers:
+
+<CustomDocCardsWrapper>
+<CustomDocCard icon="question" title="Setting up providers" description="Learn how Users & Permissions providers work, understand the login flow, and see common examples." link="/cms/configurations/users-and-permissions-providers" />
+<CustomDocCard icon="list-plus" title="Creating a custom provider" description="Learn how to create your own custom provider for the Users & Permissions feature." link="/cms/configurations/users-and-permissions-providers/new-provider-guide" />
+</CustomDocCardsWrapper>
+
 
 <!---
 :::tip

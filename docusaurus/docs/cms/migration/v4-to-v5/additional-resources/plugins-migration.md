@@ -48,4 +48,4 @@ The manual steps include:
 
 ## Custom providers
 
-Custom [providers](/cms/providers) for the Email and Upload plugins need conversion only if they were using the Entity Service API (please refer to the [Entity Service API to Document Service API migration guide](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service)).
+Custom providers for the [Email](/cms/features/email#providers) and [Upload](/cms/features/media-library#providers) plugins need conversion only if they were using the Entity Service API (please refer to the [Entity Service API to Document Service API migration guide](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service)).

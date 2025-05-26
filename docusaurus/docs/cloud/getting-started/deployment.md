@@ -172,7 +172,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default one used by Strapi Cloud (see [database configuration](/cms/configurations/database#environment-variables-in-database-configurations) for more details). If you would like to revert and use Strapi's default database again, you have to remove your `DATABASE_` environment variables (no automatic migration implied).
 
-    You can also set up here a custom email provider. Sendgrid is set as the default one for the Strapi applications hosted on Strapi Cloud (see [providers configuration](/cms/providers#configuring-providers) for more details).
+    You can also set up here a custom email provider. Sendgrid is set as the default one for the Strapi applications hosted on Strapi Cloud (see [providers configuration](/cms/features/email#providers) for more details).
     :::
 
 ## Setting up billing details
