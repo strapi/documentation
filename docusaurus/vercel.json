@@ -1407,7 +1407,7 @@
     },
     {
       "source": "/dev-docs/providers",
-      "destination": "/cms/providers",
+      "destination": "/cms/features/media-library#additional-providers",
       "permanent": true
     },
     {
@@ -2534,7 +2534,8 @@
 		},
 		{
 			"source": "/developer-docs/latest/development/providers.html",
-			"destination": "/dev-docs/providers"
+			"destination": "/cms/features/media-library-providers",
+      "permanent": true
 		},
 		{
 			"source": "/developer-docs/latest/developer-resources/database-apis-reference/query-engine/filtering.html",
