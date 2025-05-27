@@ -2,6 +2,7 @@
 title: Admin panel configuration
 sidebar_label: Admin panel
 displayed_sidebar: cmsSidebar
+toc_max_heading_level: 2
 description: Strapi's admin panel offers a single entry point file for its configuration.
 tags:
 - admin panel
@@ -19,23 +20,33 @@ The `/config/admin` file is used to define admin panel configuration for the Str
 
 The present page acts as a reference for all the configuration parameters and values that you can find in the `/config/admin` file, grouped by topic. For additional information on how each feature works, please refer to links given in the introduction of each sub-section.
 
-## API Tokens
+## Admin panel behavior
 
-The [API tokens](/cms/features/api-tokens) feature can be configured with the following parameters:
+The admin panel behavior can be configured with the following parameters:
+
+| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `autoOpen`                        | Enable or disable administration opening on start.                                                                                                                                                 | boolean       | `true`                                                                                                                              |
+| `watchIgnoreFiles`                | Add custom files that should not be watched during development.<br/><br/> See more <ExternalLink to="https://github.com/paulmillr/chokidar#path-filtering" text="here" /> (property `ignored`).                                        | array(string) | `[]`                                                                                                                                |
+| `serveAdminPanel`                 | If false, the admin panel won't be served.<br/><br/>Note: the `index.html` will still be served                                            | boolean       | `true`                                                                                                                              |
+
+## API tokens
+
+The [API tokens](/cms/features/api-tokens) can be configured with the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `apiToken.salt`                   | Salt used to generate API tokens                                                                                                                            | string        | Random string                                                                                                                       |
 | `apiToken.secrets.encryptionKey`   | Encryption key used to set API tokens visibility in the admin panel | string | Random string |
 
-## Audit Logs
+## Audit logs
 
 The [Audit Logs](/cms/features/audit-logs) feature can be configured with the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | `auditLogs.enabled`               | Enable or disable the Audit Logs feature                                                                                                                         | boolean       | `true`                                                                                                                              |
-| `auditLogs.retentionDays`         | How long Audit Logs are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers._               | integer       | 90                                                                                                                                  |
+| `auditLogs.retentionDays`         | How long Audit Logs are kept, in days.<br /><br />_The behavior differs for self-hosted vs. Strapi Cloud customers, see the note under the table._               | integer       | 90                                                                                                                                  |
 
 :::note Retention days for self-hosted vs. Strapi Cloud users
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
@@ -59,23 +70,63 @@ The authentication system, including [SSO configuration](/cms/configurations/gui
 
 ## Server configuration
 
+By default, Strapi's admin panel is exposed via `http://localhost:1337/admin`. For security reasons, the host, port, and path can be updated.
+
+Unless you chose to deploy Strapi's back-end server and admin panel server on different servers (see [deployment](/cms/admin-panel-customization/deployment)), by default:
+- The back-end server and the admin panel server both run on the same host and port (`http://localhost:1337/`)
+- The admin panel is accessible at the `/admin` path while the back-end server is accessible at the `/api` path
+
 The server configuration for the admin panel can be configured with the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `url`                             | URL of your admin panel. Note: If the URL is relative, it will be concatenated with `url`.                                                                                | string        | `/admin`                                                                                                                            |
-| `host`                            | Use a different host for the admin panel. | string        | `localhost`                                                                                                                         |
-| `port`                            | Use a different port for the admin panel.                                                                                                       | string        | `8000`                                                                                                                              |
+| `url`                             | Path to access the admin panel. If the URL is relative, it will be concatenated with the server URL.<br/><br/>Example: `/dashboard` makes the admin panel accessible at `http://localhost:1337/dashboard`.                                                                                | string        | `/admin`                                                                                                                            |
+| `host`                            | Host for the admin panel server. | string        | `localhost`                                                                                                                         |
+| `port`                            | Port for the admin panel server. | string        | `8000`                                                                                                                              |
 
-## Admin panel behavior
+### Update the admin panel's path only
 
-The admin panel behavior can be configured with the following parameters:
+To make the admin panel accessible at another path, for instance at `http://localhost:1337/dashboard`, define or update the `url` property:
 
-| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
-|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `autoOpen`                        | Enable or disable administration opening on start.                                                                                                                                                 | boolean       | `true`                                                                                                                              |
-| `watchIgnoreFiles`                | Add custom files that should not be watched during development. See more here (property `ignored`).                                        | array(string) | `[]`                                                                                                                                |
-| `serveAdminPanel`                 | If false, the admin panel won't be served. Note: the `index.html` will still be served                                            | boolean       | `true`                                                                                                                              |
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  url: "/dashboard",
+});
+```
+
+Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin.[ts|js]` file should work if you left the `host` and `port` property values untouched in the [server configuration](/cms/configurations/server) file.
+
+### Update the admin panel's host and port
+
+If the admin panel and the back-end server are not hosted on the same server, you will need to update the host and port of the admin panel. For example, to host the admin panel on `my-host.com:3000`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  host: "my-host.com",
+  port: 3000,
+  // Additionally you can define another path instead of the default /admin one 👇
+  // url: '/dashboard' 
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```js title="/config/admin.ts"
+export default ({ env }) => ({
+  host: "my-host.com",
+  port: 3000,
+  // Additionally you can define another path instead of the default /admin one 👇
+  // url: '/dashboard'
+});
+```
+
+</TabItem>
+</Tabs>
 
 ## Feature flags
 
@@ -120,12 +171,15 @@ Transfer tokens for the [Data transfer](/cms/data-management/transfer) feature c
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| `transfer.token.salt`             | Salt used to generate Transfer tokens.<br/>If no transfer token salt is defined, transfer features will be disabled.               | string        | Random string                                                                                                                       |
+| `transfer.token.salt`             | Salt used to generate Transfer tokens.<br/><br/>If no transfer token salt is defined, transfer features will be disabled.               | string        | a random string                                                                                                                       |
 
+:::note Retention days for self-hosted vs. Strapi Cloud users
+For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
+:::
 
 ## Configuration examples {#configurations}
 
-The `/config/admin` file should at least include a minimal configuration with required parameters for authentication and [API tokens](/cms/features/api-tokens.md). Additional parameters can be included for a full configuration.
+The `/config/admin` file should at least include a minimal configuration with required parameters for [authentication](#authentication) and [API tokens](#api-tokens). Additional parameters can be included for a full configuration.
 
 :::note
 [Environmental configurations](/cms/configurations/environment.md) (i.e. using the `env()` helper) do not need to contain all the values so long as they exist in the default `/config/server`.
@@ -140,7 +194,7 @@ The default configuration created with any new project should at least include t
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./config/admin.js"
+```js title="/config/admin.js"
 module.exports = ({ env }) => ({
   apiToken: {
     salt: env('API_TOKEN_SALT', 'someRandomLongString'),
@@ -164,7 +218,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./config/admin.ts"
+```ts title="/config/admin.ts"
 
 export default ({ env }) => ({
   apiToken: {
@@ -195,7 +249,7 @@ export default ({ env }) => ({
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="./config/admin.js"
+```js title="/config/admin.js"
 
 module.exports = ({ env }) => ({
   apiToken: {
@@ -253,7 +307,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="./config/admin.ts"
+```ts title="/config/admin.ts"
 
 export default ({ env }) => ({
   apiToken: {
