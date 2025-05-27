@@ -17,6 +17,8 @@ tags:
 
 The `/config/admin` file is used to define admin panel configuration for the Strapi application.
 
+The present page acts as a reference for all the configuration parameters and values that you can find in the `/config/admin` file, grouped by topic. For additional information on how each feature works, please refer to links given in the introduction of each sub-section.
+
 ## API Tokens
 
 The [API tokens](/cms/features/api-tokens) feature can be configured with the following parameters:
