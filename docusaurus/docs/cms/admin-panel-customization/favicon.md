@@ -34,7 +34,7 @@ To replace the favicon:
 5. Rebuild, launch and revisit your Strapi app by running `yarn build && yarn develop` in the terminal.
 
 :::tip
-This same process may be used to replace the login logo (i.e. `AuthLogo`) and menu logo (i.e. `MenuLogo`) (see [logos customization documentation](#logos)).
+This same process may be used to replace the login logo (i.e. `AuthLogo`) and menu logo (i.e. `MenuLogo`) (see [logos customization documentation](/cms/admin-panel-customization/logos)).
 :::
 
 :::caution

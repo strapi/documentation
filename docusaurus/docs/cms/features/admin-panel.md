@@ -123,7 +123,7 @@ The default Strapi logos, displayed in the main navigation of a Strapi applicati
 Once uploaded, the new logo can be replaced with another one <Icon name="plus" classes="ph-bold"/>, or reset <Icon name="arrow-clockwise" classes="ph-bold"/> with the default Strapi logo or the logo set in the configuration files.
 
 :::note
-Both logos can also be customized programmatically via the Strapi application's configuration files (see [Admin panel customization](/cms/admin-panel-customization/options#logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
+Both logos can also be customized programmatically via the Strapi application's configuration files (see [Admin panel customization](/cms/admin-panel-customization/logos)). However, the logos uploaded via the admin panel supersedes any logo set through the configuration files.
 :::
 
 <ThemedImage
