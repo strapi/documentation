@@ -26,5 +26,5 @@ Depending on what you want to achieve, you might need to update different parts 
 | Choose and configure a bundler | By writing some code in dedicated configuration files found in the `src/admin` folder | [Bundlers](/cms/admin-panel-customization/bundlers) |
 | Replace or customize the WYSIWYG editor | _(Various strategies available, see related documentation)_ | [WYSIWYG editor](/cms/admin-panel-customization/wysiwyg-editor) |
 | Extend the admin panel | _(Various strategies available, see related documentation)_ | [Extension](/cms/admin-panel-customization/extension) |
-| Deploy the admin panel | _(Various strategies available, see related documentation)_ | [Deployment](/cms/admin-panel-customization/deployment) |
+| Deploy the admin panel | _(Various strategies available, see related documentation)_ | [Deployment](/cms/configurations/admin-panel#deployment) |
 | Customize the email templates | Directly from the admin panel through the settings for the Users & Permissions plugin | [User Guide for the Users&nbsp;&&nbsp;Permissions plugin](/cms/features/users-permissions#templating-emails) |

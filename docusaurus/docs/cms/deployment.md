@@ -187,7 +187,7 @@ For more information, consult the [TypeScript documentation](/cms/typescript/dev
 
 ### Advanced configurations
 
-If you want to host the administration on another server than the API, [please take a look at this dedicated section](/cms/admin-panel-customization/deployment).
+If you want to host the administration on another server than the API, [please take a look at this dedicated section](/cms/configurations/admin-panel#deployment).
 
 ## Additional resources
 
