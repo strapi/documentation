@@ -11,17 +11,17 @@ tags:
 
 # Locales & translations
 
-The admin panel always ships with English translations but can display additional languages. You can also override any text that appears in the interface.
-This page shows how to define your own locales and extend Strapi or plugin translations from the project codebase. For a broader view of branding options, see [Admin panel customization](/cms/admin-panel-customization).
+The admin panel always ships with English translations, but can display additional languages. You can also override any text that appears in the interface.
+The present page shows how to define your own locales and extend Strapi or plugin translations from the project codebase.
 
-## Locales
+## Defining locales
 
 To update the list of available locales in the admin panel, use the `config.locales` array:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```jsx title="./my-app/src/admin/app.js"
+```jsx title="/src/admin/app.js"
 export default {
   config: {
     locales: ["ru", "zh"],
@@ -34,7 +34,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```jsx title="./my-app/src/admin/app.ts"
+```jsx title="/src/admin/app.ts"
 export default {
   config: {
     locales: ["ru", "zh"],
@@ -46,21 +46,23 @@ export default {
 </TabItem>
 </Tabs>
 
-:::note NOTES
+:::note Notes
 
 - The `en` locale cannot be removed from the build as it is both the fallback (i.e. if a translation is not found in a locale, the `en` will be used) and the default locale (i.e. used when a user opens the administration panel for the first time).
 - The full list of available locales is accessible on <ExternalLink to="https://github.com/strapi/strapi/blob/v4.0.0/packages/plugins/i18n/server/constants/iso-locales.json" text="Strapi's Github repo"/>.
 
 :::
 
-### Extending translations
+## Extending translations
 
-Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files. These keys can be extended through the `config.translations` key:
+Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files.
+
+These keys can be extended through the `config.translations` key:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="./my-app/src/admin/app.js"
+```js title="/src/admin/app.js"
 export default {
   config: {
     locales: ["fr"],
@@ -82,7 +84,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./my-app/src/admin/app.ts"
+```js title="/src/admin/app.ts"
 export default {
   config: {
     locales: ["fr"],
@@ -103,12 +105,12 @@ export default {
 </TabItem>
 </Tabs>
 
-A plugin's key/value pairs are declared independently in the plugin's files at `./admin/src/translations/[language-name].json`. These key/value pairs can similarly be extended in the `config.translations` key by prefixing the key with the plugin's name (i.e. `[plugin name].[key]: 'value'`) as in the following example:
+A plugin's key/value pairs are declared independently in the plugin's files at `/admin/src/translations/[language-name].json`. These key/value pairs can similarly be extended in the `config.translations` key by prefixing the key with the plugin's name (i.e. `[plugin name].[key]: 'value'`) as in the following example:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="./my-app/src/admin/app.js"
+```js title="/src/admin/app.js"
 export default {
   config: {
     locales: ["fr"],
@@ -129,7 +131,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./my-app/src/admin/app.ts"
+```js title="/src/admin/app.ts"
 export default {
   config: {
     locales: ["fr"],
@@ -149,4 +151,4 @@ export default {
 </TabItem>
 </Tabs>
 
-If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
+If more translations files should be added, place them in the `/src/admin/extensions/translations` folder.

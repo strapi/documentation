@@ -11,7 +11,7 @@ tags:
 
 # Logos
 
-Strapi's admin panel displays its branding on both the login screen and in the main navigation. Replacing these images allows you to match the interface to your identity. This page shows how to override the two logo files via the admin panel configuration. If you prefer uploading them directly in the UI, see [Customizing the logo](/cms/features/admin-panel#customizing-the-logo).
+Strapi's admin panel displays its branding on both the login screen and in the main navigation. Replacing these images allows you to match the interface to your identity. The present page shows how to override the two logo files via the admin panel configuration. If you prefer uploading them directly in the UI, see [Customizing the logo](/cms/features/admin-panel#customizing-the-logo).
 
 The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the admin panel configuration:
 
@@ -21,7 +21,6 @@ The Strapi admin panel displays a logo in 2 different locations, represented by 
 | In the main navigation | `config.menu.logo`          |
 
 :::note
-Both logos can also be customized directly via the admin panel (see [Customizing the logo](/cms/features/admin-panel)).
 Logos uploaded via the admin panel supersede any logo set through the configuration files.
 :::
 
@@ -39,7 +38,7 @@ The logo handled by `config.menu.logo` logo is located in the main navigation at
 
 ### Updating logos
 
-To update the logos, put image files in the `/src/admin/extensions` folder, import these files in `src/admin/app.[tsx|js]` and update the corresponding keys as in the following example:
+To update the logos, put image files in the `/src/admin/extensions` folder, import these files in `src/admin/app` and update the corresponding keys as in the following example:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
