@@ -218,7 +218,68 @@ const sidebars = {
           label: 'Configurations introduction',
           id: 'cms/configurations',
         },
-        'cms/configurations/admin-panel',
+        {
+          type: 'category',
+          label: 'Admin panel',
+          collapsed: true,
+          items: [
+            {
+              type: 'link',
+              label: 'Introduction',
+              href: '/cms/configurations/admin-panel',
+            },
+            {
+              type: 'link',
+              label: 'Admin panel behavior',
+              href: '/cms/configurations/admin-panel#admin-panel-behavior'
+            },
+            {
+              type: 'link',
+              label: 'Admin panel server',
+              href: '/cms/configurations/admin-panel#admin-panel-server'
+            },
+            {
+              type: 'link',
+              label: 'API tokens',
+              href: '/cms/configurations/admin-panel#api-tokens'
+            },
+            {
+              type: 'link',
+              label: 'Audit Logs',
+              href: '/cms/configurations/admin-panel#audit-logs'
+            },
+            {
+              type: 'link',
+              label: 'Authentication',
+              href: '/cms/configurations/admin-panel#authentication'
+            },
+            {
+              type: 'link',
+              label: 'Feature flags',
+              href: '/cms/configurations/admin-panel#feature-flags'
+            },
+            {
+              type: 'link',
+              label: 'Forgot password',
+              href: '/cms/configurations/admin-panel#forgot-password'
+            },
+            {
+              type: 'link',
+              label: 'Rate limiting',
+              href: '/cms/configurations/admin-panel#rate-limiting'
+            },
+            {
+              type: 'link',
+              label: 'Transfer tokens',
+              href: '/cms/configurations/admin-panel#transfer-tokens'
+            },
+            {
+              type: 'link',
+              label: 'Examples',
+              href: '/cms/configurations/admin-panel#configuration-examples'
+            },
+          ]
+        },
         'cms/configurations/api',
         'cms/configurations/cron',
         {
