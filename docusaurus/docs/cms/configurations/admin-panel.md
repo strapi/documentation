@@ -137,6 +137,61 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
+### Deploy on different servers
+
+To deploy the admin panel and the back-end server on completely different servers, you need to configure both the server and admin configurations. This setup allows you to serve the admin panel from one domain (e.g., `http://yourfrontend.com`) while the API runs on another (e.g., `http://yourbackend.com`).
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./config/server.js"
+module.exports = ({ env }) => ({
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
+  url: "http://yourbackend.com",
+});
+```
+
+```js title="./config/admin.js"
+module.exports = ({ env }) => ({
+  /**
+   * Note: The administration will be accessible from the root of the domain 
+   * (ex: http://yourfrontend.com/)
+   */ 
+  url: "/",
+  serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```js title="./config/server.ts"
+export default ({ env }) => ({
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
+  url: "http://yourbackend.com",
+});
+```
+
+```js title="./config/admin.ts"
+export default ({ env }) => ({
+  /**
+   * Note: The administration will be accessible from the root of the domain 
+   * (ex: http://yourfrontend.com/)
+   */ 
+  url: "/",
+  serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
+});
+```
+
+</TabItem>
+</Tabs>
+
+With this configuration:
+- The admin panel will be accessible at `http://yourfrontend.com` 
+- All API requests from the panel will be sent to `http://yourbackend.com`
+- The backend server will not serve any static admin files due to `serveAdminPanel: false`
 ## Feature flags
 
 The feature flags can be configured with the following parameters:
