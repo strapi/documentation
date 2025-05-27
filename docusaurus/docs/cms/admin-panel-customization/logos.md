@@ -11,6 +11,8 @@ tags:
 
 # Logos
 
+Strapi's admin panel displays its branding on both the login screen and in the main navigation. Replacing these images allows you to match the interface to your identity. This page shows how to override the two logo files via the admin panel configuration. If you prefer uploading them directly in the UI, see [Customizing the logo](/cms/features/admin-panel#customizing-the-logo).
+
 The Strapi admin panel displays a logo in 2 different locations, represented by 2 different keys in the admin panel configuration:
 
 | Location in the UI     | Configuration key to update |
@@ -90,4 +92,3 @@ export default {
 :::note
 There is no size limit for image files set through the configuration files.
 :::
-

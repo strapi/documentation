@@ -10,6 +10,10 @@ tags:
 ---
 
 # Locales & translations
+
+The admin panel always ships with English translations but can display additional languages. You can also override any text that appears in the interface.
+This page shows how to define your own locales and extend Strapi or plugin translations from the project codebase. For a broader view of branding options, see [Admin panel customization](/cms/admin-panel-customization).
+
 ## Locales
 
 To update the list of available locales in the admin panel, use the `config.locales` array:
@@ -146,4 +150,3 @@ export default {
 </Tabs>
 
 If more translations files should be added, place them in `./src/admin/extensions/translations` folder.
-
