@@ -30,14 +30,147 @@ The admin panel behavior can be configured with the following parameters:
 | `watchIgnoreFiles`                | Add custom files that should not be watched during development.<br/><br/> See more <ExternalLink to="https://github.com/paulmillr/chokidar#path-filtering" text="here" /> (property `ignored`).                                        | array(string) | `[]`                                                                                                                                |
 | `serveAdminPanel`                 | If false, the admin panel won't be served.<br/><br/>Note: the `index.html` will still be served                                            | boolean       | `true`                                                                                                                              |
 
-Some UI elements of the admin panel can also be configured in the `src/admin/app.[tsx|js]` file:
+:::note config/admin vs. src/admin/app configurations
+Some UI elements of the admin panel must be configured in the `src/admin/app` file:
 
 **Tutorial videos**  
-To disable the information box containing the tutorial videos, set the `config.tutorials` key of the `src/admin/app.[tsx|js]` file to `false`.
+To disable the information box containing the tutorial videos, set the `config.tutorials` key to `false`.
 
 **Releases notifications**  
-To disable notifications about new Strapi releases, set the `config.notifications.releases` key of the `src/admin/app.[tsx|js]` file to `false`.
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key to `false`.
 
+```js title="/src/admin/app.js"
+const config = {
+  // … other customization options go here
+  tutorials: false,
+  notifications: { releases: false },
+};
+
+export default {
+  config,
+};
+```
+
+:::
+
+
+# Admin panel server 
+
+By default, Strapi's admin panel is exposed via `http://localhost:1337/admin`. For security reasons, the host, port, and path can be updated.
+
+Unless you chose to deploy Strapi's back-end server and admin panel server on different servers (see [deployment](/cms/admin-panel-customization/deployment)), by default:
+- The back-end server and the admin panel server both run on the same host and port (`http://localhost:1337/`)
+- The admin panel is accessible at the `/admin` path while the back-end server is accessible at the `/api` path
+
+The server configuration for the admin panel can be configured with the following parameters:
+
+| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `url`                             | Path to access the admin panel. If the URL is relative, it will be concatenated with the server URL.<br/><br/>Example: `/dashboard` makes the admin panel accessible at `http://localhost:1337/dashboard`.                                                                                | string        | `/admin`                                                                                                                            |
+| `host`                            | Host for the admin panel server. | string        | `localhost`                                                                                                                         |
+| `port`                            | Port for the admin panel server. | string        | `8000`                                                                                                                              |
+
+### Update the admin panel's path only
+
+To make the admin panel accessible at another path, for instance at `http://localhost:1337/dashboard`, define or update the `url` property:
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // … other configuration properties
+  url: "/dashboard",
+});
+```
+
+Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin` file should work if you left the `host` and `port` property values untouched in the back-end [server configuration](/cms/configurations/server) file.
+
+### Update the admin panel's host and port
+
+If the admin panel server and the back-end server are not hosted on the same server, you will need to update the host and port of the admin panel. For example, to host the admin panel on `my-host.com:3000`:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  host: "my-host.com",
+  port: 3000,
+  // Additionally you can define another path instead of the default /admin one 👇
+  // url: '/dashboard' 
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```js title="/config/admin.ts"
+export default ({ env }) => ({
+  host: "my-host.com",
+  port: 3000,
+  // Additionally you can define another path instead of the default /admin one 👇
+  // url: '/dashboard'
+});
+```
+
+</TabItem>
+</Tabs>
+
+### Deploy on different servers
+
+To deploy the admin panel and the back-end on completely different servers, you need to configure both the server (`/config/server`) and admin panel (`/config/admin-panel`) configurations.
+
+The following example setup allows you to serve the admin panel from one domain while the API runs on another:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/config/server.js"
+module.exports = ({ env }) => ({
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
+  url: "http://yourbackend.com",
+});
+```
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  /**
+   * Note: The administration will be accessible from the root of the domain 
+   * (ex: http://yourfrontend.com/)
+   */ 
+  url: "/",
+  serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
+});
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```js title="/config/server.ts"
+export default ({ env }) => ({
+  host: env("HOST", "0.0.0.0"),
+  port: env.int("PORT", 1337),
+  url: "http://yourbackend.com",
+});
+```
+
+```js title="/config/admin.ts"
+export default ({ env }) => ({
+  /**
+   * Note: The administration will be accessible from the root of the domain 
+   * (ex: http://yourfrontend.com/)
+   */ 
+  url: "/",
+  serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
+});
+```
+
+</TabItem>
+</Tabs>
+
+With this configuration:
+- The admin panel will be accessible at `http://yourfrontend.com` 
+- All API requests from the panel will be sent to `http://yourbackend.com`
+- The backend server will not serve any static admin files due to `serveAdminPanel: false`
 
 ## API tokens
 
@@ -77,7 +210,7 @@ The authentication system, including [SSO configuration](/cms/configurations/gui
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                 | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
 
-## Server configuration
+## Admin panel server 
 
 By default, Strapi's admin panel is exposed via `http://localhost:1337/admin`. For security reasons, the host, port, and path can be updated.
 
@@ -104,11 +237,11 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin.[ts|js]` file should work if you left the `host` and `port` property values untouched in the [server configuration](/cms/configurations/server) file.
+Since by default the back-end server and the admin panel server run on the same host and port, only updating the `config/admin` file should work if you left the `host` and `port` property values untouched in the back-end [server configuration](/cms/configurations/server) file.
 
 ### Update the admin panel's host and port
 
-If the admin panel and the back-end server are not hosted on the same server, you will need to update the host and port of the admin panel. For example, to host the admin panel on `my-host.com:3000`:
+If the admin panel server and the back-end server are not hosted on the same server, you will need to update the host and port of the admin panel. For example, to host the admin panel on `my-host.com:3000`:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -191,7 +324,8 @@ To deploy the admin panel and the back end (API) of Strapi on different servers,
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="./config/server.js"
+
+```js title="/config/server.js"
 module.exports = ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
@@ -199,12 +333,12 @@ module.exports = ({ env }) => ({
 });
 ```
 
-```js title="./config/admin.js"
+```js title="/config/admin.js"
 module.exports = ({ env }) => ({
   /**
-   * Note: The administration will be accessible from the root of the domain
+   * Note: The administration will be accessible from the root of the domain 
    * (ex: http://yourfrontend.com/)
-   */
+   */ 
   url: "/",
   serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
 });
@@ -214,7 +348,7 @@ module.exports = ({ env }) => ({
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```js title="/config/server.ts"
 export default ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
   port: env.int("PORT", 1337),
@@ -222,12 +356,12 @@ export default ({ env }) => ({
 });
 ```
 
-```js title="./config/admin.ts"
+```js title="/config/admin.ts"
 export default ({ env }) => ({
   /**
-   * Note: The administration will be accessible from the root of the domain
+   * Note: The administration will be accessible from the root of the domain 
    * (ex: http://yourfrontend.com/)
-   */
+   */ 
   url: "/",
   serveAdminPanel: false, // http://yourbackend.com will not serve any static admin files
 });
@@ -236,9 +370,10 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-After running `yarn build` with this configuration, the `build` folder will be created/overwritten. Use this folder to serve it from another server with the domain of your choice (e.g. `http://yourfrontend.com`).
-
-The administration URL will then be `http://yourfrontend.com` and every request from the panel will hit the backend at `http://yourbackend.com`.
+With this configuration:
+- The admin panel will be accessible at `http://yourfrontend.com` 
+- All API requests from the panel will be sent to `http://yourbackend.com`
+- The backend server will not serve any static admin files due to `serveAdminPanel: false`
 
 :::note
 If you add a path to the `url` option, it won't prefix your application. To do so, use a proxy server like Nginx (see [optional software deployment guides](/cms/deployment#additional-resources)).
