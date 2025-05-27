@@ -30,6 +30,15 @@ The admin panel behavior can be configured with the following parameters:
 | `watchIgnoreFiles`                | Add custom files that should not be watched during development.<br/><br/> See more <ExternalLink to="https://github.com/paulmillr/chokidar#path-filtering" text="here" /> (property `ignored`).                                        | array(string) | `[]`                                                                                                                                |
 | `serveAdminPanel`                 | If false, the admin panel won't be served.<br/><br/>Note: the `index.html` will still be served                                            | boolean       | `true`                                                                                                                              |
 
+Some UI elements of the admin panel can also be configured in the `src/admin/app.[tsx|js]` file:
+
+**Tutorial videos**  
+To disable the information box containing the tutorial videos, set the `config.tutorials` key of the `src/admin/app.[tsx|js]` file to `false`.
+
+**Releases notifications**  
+To disable notifications about new Strapi releases, set the `config.notifications.releases` key of the `src/admin/app.[tsx|js]` file to `false`.
+
+
 ## API tokens
 
 The [API tokens](/cms/features/api-tokens) can be configured with the following parameters:

@@ -442,14 +442,6 @@ This same process may be used to replace the login logo (i.e. `AuthLogo`) and me
 Make sure that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN.
 :::
 
-## Tutorial videos
-
-To disable the information box containing the tutorial videos, set the `config.tutorials` key of the `src/admin/app.[tsx|js]` file to `false`.
-
-## Releases notifications
-
-To disable notifications about new Strapi releases, set the `config.notifications.releases` key of the `src/admin/app.[tsx|js]` file to `false`.
-
 ## Theme extension
 
 Strapi applications can be displayed either in Light or Dark mode (see [administrator profile setup in the User Guide](/cms/getting-started/setting-up-admin-panel#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
