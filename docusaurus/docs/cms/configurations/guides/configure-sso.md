@@ -327,7 +327,7 @@ const strategyInstance = new Strategy(configuration, ({ email, username }, done)
 
 ### Authentication events
 
-The SSO feature adds a new [authentication event](/cms/configurations/admin-panel#available-options): `onSSOAutoRegistration`.
+The SSO feature adds a new [authentication event](/cms/configurations/admin-panel#authentication): `onSSOAutoRegistration`.
 
 This event is triggered whenever a user is created using the auto-register feature added by SSO.
 It contains the created user (`event.user`), and the provider used to make the registration (`event.provider`).

@@ -285,7 +285,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/backend-customization',
-              label: 'How the backend server works'
+              label: 'Overview'
             },
             'cms/backend-customization/requests-responses',
             'cms/backend-customization/routes',
@@ -305,11 +305,11 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
-              label: 'What\'s possible' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
+              label: 'Overview' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
             },
-            // 'cms/admin-panel-customization/logos', // TODO actual page to create
-            // 'cms/admin-panel-customization/favicon', // TODO actual page to create
-            // 'cms/admin-panel-customization/locales-translations', // TODO actual page to create
+            'cms/admin-panel-customization/logos',
+            'cms/admin-panel-customization/favicon',
+            'cms/admin-panel-customization/locales-translations',
             {
               type: 'doc',
               id: 'cms/admin-panel-customization/wysiwyg-editor',
@@ -317,6 +317,7 @@ const sidebars = {
             },
             'cms/admin-panel-customization/bundlers',
             // 'cms/admin-panel-customization/deployment', // TODO move where appropriate
+            'cms/admin-panel-customization/theme-extension',
             {
               type: 'doc',
               id: 'cms/admin-panel-customization/extension',

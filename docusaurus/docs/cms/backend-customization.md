@@ -28,7 +28,7 @@ But the Strapi software itself includes 2 different parts:
 
 Throughout this developer documentation, 'back end' refers _exclusively_ to the back-end part of Strapi.
 
-The [User Guide](/cms/intro) explains how to use the admin panel and the [admin panel customization section](/cms/admin-panel-customization) details the various customization options available for the admin panel.
+The [Getting Started > Admin panel page](/cms/features/admin-panel) gives an admin panel overview and the [admin panel customization section](/cms/admin-panel-customization) details the various customization options available for the admin panel.
 :::
 
 The Strapi back end runs an HTTP server based on <ExternalLink to="https://koajs.com/" text="Koa"/>, a back-end JavaScript framework.
