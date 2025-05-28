@@ -218,7 +218,68 @@ const sidebars = {
           label: 'Configurations introduction',
           id: 'cms/configurations',
         },
-        'cms/configurations/admin-panel',
+        {
+          type: 'category',
+          label: 'Admin panel',
+          collapsed: true,
+          items: [
+            {
+              type: 'link',
+              label: 'Introduction',
+              href: '/cms/configurations/admin-panel',
+            },
+            {
+              type: 'link',
+              label: 'Admin panel behavior',
+              href: '/cms/configurations/admin-panel#admin-panel-behavior'
+            },
+            {
+              type: 'link',
+              label: 'Admin panel server',
+              href: '/cms/configurations/admin-panel#admin-panel-server'
+            },
+            {
+              type: 'link',
+              label: 'API tokens',
+              href: '/cms/configurations/admin-panel#api-tokens'
+            },
+            {
+              type: 'link',
+              label: 'Audit Logs',
+              href: '/cms/configurations/admin-panel#audit-logs'
+            },
+            {
+              type: 'link',
+              label: 'Authentication',
+              href: '/cms/configurations/admin-panel#authentication'
+            },
+            {
+              type: 'link',
+              label: 'Feature flags',
+              href: '/cms/configurations/admin-panel#feature-flags'
+            },
+            {
+              type: 'link',
+              label: 'Forgot password',
+              href: '/cms/configurations/admin-panel#forgot-password'
+            },
+            {
+              type: 'link',
+              label: 'Rate limiting',
+              href: '/cms/configurations/admin-panel#rate-limiting'
+            },
+            {
+              type: 'link',
+              label: 'Transfer tokens',
+              href: '/cms/configurations/admin-panel#transfer-tokens'
+            },
+            {
+              type: 'link',
+              label: 'Examples',
+              href: '/cms/configurations/admin-panel#configuration-examples'
+            },
+          ]
+        },
         'cms/configurations/api',
         'cms/configurations/cron',
         {
@@ -285,7 +346,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/backend-customization',
-              label: 'How the backend server works'
+              label: 'Overview'
             },
             'cms/backend-customization/requests-responses',
             'cms/backend-customization/routes',
@@ -305,11 +366,11 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
-              label: 'What\'s possible' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
+              label: 'Overview' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
             },
-            // 'cms/admin-panel-customization/logos', // TODO actual page to create
-            // 'cms/admin-panel-customization/favicon', // TODO actual page to create
-            // 'cms/admin-panel-customization/locales-translations', // TODO actual page to create
+            'cms/admin-panel-customization/logos',
+            'cms/admin-panel-customization/favicon',
+            'cms/admin-panel-customization/locales-translations',
             {
               type: 'doc',
               id: 'cms/admin-panel-customization/wysiwyg-editor',
@@ -317,6 +378,7 @@ const sidebars = {
             },
             'cms/admin-panel-customization/bundlers',
             // 'cms/admin-panel-customization/deployment', // TODO move where appropriate
+            'cms/admin-panel-customization/theme-extension',
             {
               type: 'doc',
               id: 'cms/admin-panel-customization/extension',

@@ -16,7 +16,7 @@ By default, Strapi's [admin panel](/cms/admin-panel-customization) is exposed vi
 
 ## Update the admin panel's path only
 
-Unless you chose to deploy Strapi's back-end server and admin panel server on different servers (see [deployment](/cms/admin-panel-customization/deployment)), by default:
+Unless you chose to deploy Strapi's back-end server and admin panel server on different servers (see [deployment](/cms/configurations/admin-panel#deploy-on-different-servers)), by default:
 
 - The back-end server and the admin panel server of Strapi both run on the same host and port, which is `http://localhost:1337/`.
 - The admin panel is accessible at the `/admin` path while the back-end server is accessible at the `/api` path.
@@ -58,7 +58,7 @@ export default ({ env }) => ({
 
 ## Update the admin panel's host and port
 
-If the admin panel and the back-end server of Strapi are not hosted on the same server (see [deployment](/cms/admin-panel-customization/deployment)), you will need to update the host and port of the admin panel.
+If the admin panel and the back-end server of Strapi are not hosted on the same server (see [deployment](/cms/configurations/admin-panel#deploy-on-different-servers)), you will need to update the host and port of the admin panel.
 
 This is done in the admin panel configuration file, for example to host the admin panel on `my-host.com:3000` properties should be updated follows:
 

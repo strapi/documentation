@@ -23,7 +23,7 @@ For simplification, the following documentation mentions the `strapi develop` co
 
 In Strapi 5, <ExternalLink to="https://vitejs.dev/" text="Vite"/> is the default bundler that Strapi uses to build the admin panel. Vite will therefore be used by default when you run the `strapi develop` command.
 
-To extend the usage of Vite, define a function that extends its configuration inside `/src/admin/vite.config.[js|ts]`:
+To extend the usage of Vite, define a function that extends its configuration inside `/src/admin/vite.config`:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -74,10 +74,10 @@ strapi develop --bundler=webpack
 ```
 
 :::prerequisites
-Make sure to rename the default `webpack.config.example.js` file into `webpack.config.[js|ts]` before customizing webpack.
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.` before customizing webpack.
 :::
 
-In order to extend the usage of webpack v5, define a function that extends its configuration inside `/src/admin/webpack.config.[js|ts]`:
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `/src/admin/webpack.config.`:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
