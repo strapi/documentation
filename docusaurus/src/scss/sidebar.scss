@@ -60,21 +60,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   padding-left: 14px;
   padding-right: 2px;
 
-  .theme-doc-sidebar-item-category-level-1,
-  .theme-doc-sidebar-item-category-level-2 {
-    .menu__list-item-collapsible:has(.badge--content) {
-      margin-top: -6px;
-      margin-bottom: -6px;
-      min-height: 36px;
-      
-      .badge--content {
-        position: relative;
-        top: 0; // Reset du positionnement vertical
-        transform: translateY(50%); // Centrage parfait
-      }
-    }
-  }
-
   &.thin-scrollbar {
     padding-left: 16px;
     padding-right: 16px;
