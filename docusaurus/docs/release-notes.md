@@ -29,6 +29,8 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 ## 6.4.0
 
+This release marks some significant additions and rewrites. We've rethought the dev-related content in the CMS docs, with a clearer table of contents for the development, configuration, and customization aspects of Strapi. We've also added a handy "Copy Markdown" button to the navigation bar on the right, so you can easily copy & paste raw Markdown content from the page into your favorite LLM! Enjoy, and watch out for more AI-related features soon 👀
+
 <br />
 
 ### <Icon name='sparkle' /> New content
