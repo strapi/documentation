@@ -15,8 +15,8 @@
     "release-notes": "bash ./scripts/release-notes-script.sh",
     "redirections-analysis": "node ./scripts/redirection-analysis/redirect-analyzer.js",
     "generate-llms": "node scripts/generate-llms.js",
-    "dev:with-llms": "npm run generate-llms && docusaurus start --port 8080 --no-open",
-    "build:with-llms": "npm run generate-llms && docusaurus build"
+    "dev:with-llms": "yarn generate-llms && docusaurus start --port 8080 --no-open",
+    "build:with-llms": "yarn generate-llms && docusaurus build"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.12.2",
