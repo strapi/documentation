@@ -15,7 +15,7 @@ The **front-end part of Strapi** <Annotation>For a clarification on the distinct
 
 From a developer point of view, Strapi's admin panel is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application.
 
-Admin panel customization is done by tweaking the code of the `src/admin/app` fileor other files included in the `src/admin` folder (see [project structure](/cms/project-structure)). By doing so, you can:
+Admin panel customization is done by tweaking the code of the `src/admin/app` file or other files included in the `src/admin` folder (see [project structure](/cms/project-structure)). By doing so, you can:
 
 - Customize some parts of the admin panel to better reflect your brand identity (logos, favicon) or your language,
 - Replace some other parts of the admin panel, such as the Rich text editor and the bundler,
