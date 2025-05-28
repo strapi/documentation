@@ -1,5 +1,5 @@
 ---
-title: Customizing the WYSIWYG editor
+title: Customizing the rich text editor
 description: Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
 displayed_sidebar: cmsSidebar
 sidebar_label: Rich text editor
@@ -9,7 +9,7 @@ tags:
 - WYSIWYG editor
 ---
 
-# Change the default WYSIWYG editor
+# Change the default rich text editor
 
 Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in rich text editor. To change the default editor, several options are at your disposal:
 
