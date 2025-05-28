@@ -9,7 +9,7 @@ function llmsGeneratorPlugin(context, options) {
       
       try {
         // Import dynamique côté serveur avec le bon chemin
-        const DocusaurusLlmsGenerator = require(path.resolve(__dirname, '../../scripts/generate-llms'));
+        const DocusaurusLlmsGenerator = require(path.resolve(__dirname, '../scripts/generate-llms'));
         
         const generator = new DocusaurusLlmsGenerator({
           docsDir: options.docsDir || 'docs',
@@ -78,24 +78,11 @@ function llmsGeneratorPlugin(context, options) {
         };
       }
       return {};
-    },
-
-    async contentLoaded({ content, actions }) {
-      const { addRoute } = actions;
-      
-      // Ajoute les routes pour servir les fichiers
-      addRoute({
-        path: '/llms.txt',
-        component: '@site/src/components/LlmsRoute',
-        exact: true
-      });
-
-      addRoute({
-        path: '/llms-full.txt', 
-        component: '@site/src/components/LlmsFullRoute',
-        exact: true
-      });
     }
+
+    // SUPPRIMÉ : contentLoaded() qui créait les routes conflictuelles
+    // Les fichiers seront servis directement depuis /static/ en dev
+    // et depuis /build/ en production
   };
 }
 

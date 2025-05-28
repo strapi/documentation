@@ -257,11 +257,11 @@ const config = {
             items: [
               {
                 label: 'LLMs.txt',
-                href: '/llms.txt',
+                href: 'https://docs.strapi.io/llms.txt',
               },
               {
                 label: 'LLMs-full.txt',
-                href: '/llms-full.txt',
+                href: 'https://docs.strapi.io/llms-full.txt',
               },
               {
                 label: 'v4 Docs',
