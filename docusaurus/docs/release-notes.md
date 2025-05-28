@@ -27,6 +27,49 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.4.0
+
+<br />
+
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add "Copy Markdown" button](https://github.com/strapi/documentation/pull/2498)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Dev-related content rework, iteration #2 (admin panel configuration and customization)](https://github.com/strapi/documentation/pull/2505)
+- [Dev-related content rework, iteration #1](https://github.com/strapi/documentation/pull/2501)
+- [Content-type Builder revamp (stable release)](https://github.com/strapi/documentation/pull/2480)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Cloud
+- [Cloud Free plan edits for CMS docs ](https://github.com/strapi/documentation/pull/2500)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.3.1
 
 <br />
