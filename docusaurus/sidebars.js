@@ -222,6 +222,9 @@ const sidebars = {
           type: 'category',
           label: 'Admin panel',
           collapsed: true,
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'link',
@@ -362,11 +365,14 @@ const sidebars = {
           type: 'category',
           label: 'Admin panel customization',
           collapsed: true,
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
-              label: 'Overview' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
+              label: 'Overview'
             },
             'cms/admin-panel-customization/logos',
             'cms/admin-panel-customization/favicon',
