@@ -102,7 +102,7 @@ const config = {
       async: true,
     },
     {
-      src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
+      src: `https://cdn.amplitude.com/script/b2903bdddb544d4b712bee3739f3cafd.experiment.js`,
       async: true,
     },
   ],
