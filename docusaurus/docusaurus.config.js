@@ -328,6 +328,15 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
+    [ // Plugin to generate LLMs files
+      require.resolve('./plugins/llms-generator-plugin.js'),
+      {
+        docsDir: 'docs', // Chemin vers tes docs
+        sidebarPath: 'sidebars.js', // Chemin vers ta sidebar
+        siteName: 'Strapi Documentation', // Nom de ton site
+        generateInDev: true // Génère aussi en mode développement
+      }
+    ]
     // [ // Disabled
     //   '@docusaurus/plugin-client-redirects',
     //   {
