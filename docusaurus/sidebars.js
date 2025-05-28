@@ -290,6 +290,9 @@ const sidebars = {
           collapsed: true,
           collapsible: true,
           label: "Database",
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'doc',
