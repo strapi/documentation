@@ -82,9 +82,9 @@ Follow the steps below to create a new Strapi project, being sure to use the app
 
     </Tabs>
 
-2. The terminal will ask you whether you want to `Login/Signup` to Strapi Cloud, or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to skip this step, you will need to [host the project yourself](#skipping-the-strapi-cloud-login-step).
+2. The terminal will ask you whether you want to `Login/Signup` or `Skip` this step. Use arrow keys and press `Enter` to make your choice. If you choose to login, you'll receive a 30-day trial of the <GrowthBadge /> plan that will be automatically applied to your created project. If you skip this step, the project will fall back to the CMS Free plan.
 
-2. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
+3. The terminal will ask you a few questions. For each of them, if you press `Enter` instead of typing something, the default answer (Yes) will be used:
 
   ![Terminal prompts at installation](/img/assets/installation/prompts.png)
 
@@ -92,7 +92,7 @@ Follow the steps below to create a new Strapi project, being sure to use the app
   You can skip these questions using various options passed to the installation command. Please refer to the [table](#cli-installation-options) for the full list of available options.
   :::
 
-3. _(optional)_ If you answered `n` for "no" to the default (SQLite) database question, the CLI will ask for more questions about the database:
+4. _(optional)_ If you answered `n` for "no" to the default (SQLite) database question, the CLI will ask for more questions about the database:
 
     * Use arrow keys to select the database type you want, then press `Enter`.
     * Give the database a name, define the database host address and port, define the database admin username and password, and define whether the database will use a SSL connection.<br/>For any of these questions, if you press `Enter` without typing anything, the default value (indicated in parentheses in the terminal output) will be used.
@@ -117,7 +117,7 @@ The above installation guide only covers the basic installation option using the
 | `--no-git-init`                     | Do not initialize a git repository, skipping the related CLI prompt                                                                                                                                                                             |
 | `--example`                         | Add example data, skipping the related CLI prompt                                                                                                                                                                                               |
 | `--no-example`                      | Do not add example data, skipping the related CLI prompt                                                                                                                                                                                        |
-| `--skip-cloud`                      | Skip [Strapi Cloud login and project creation steps](#skipping-the-strapi-cloud-login-step)                                                                                                                                                     |
+| `--skip-cloud`                      | Skip [Strapi login and project creation steps](#skipping-the-strapi-login-step)                                                                                                                                                     |
 | `--skip-db`                         | Skip all database-related prompts and create a project with the default (SQLite) database                                                                                                                                                       |
 | `--template <template-name-or-url>` | Create the application based on a given template.<br/>Additional options for templates are available, see the [templates documentation](/cms/templates) for details.                                                                            |
 | `--dbclient <dbclient>`             | Define the database client to use by replacing `<dbclient>` in the command by one of the these values:<ul><li>`sql` for a SQLite database (default)</li><li>`postgres` for a PostgreSQL database</li><li>`mysql` for a MySQL database</li></ul> |
@@ -136,11 +136,17 @@ The above installation guide only covers the basic installation option using the
 * Experimental Strapi versions are released every Tuesday through Saturday at midnight GMT. You can create a new Strapi application based on the latest experimental release using `npx create-strapi@experimental`. Please use these experimental builds at your own risk. It is not recommended to use them in production.
 :::
 
-### Skipping the Strapi Cloud login step
+### Skipping the Strapi login step
 
-When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will create a free [Strapi Cloud](/cloud/intro) account as described in the [Quick Start Guide](/cms/quick-start).
+When the installation script runs, the terminal will first ask you if you want to login/signup. Choosing `Login/signup` will provide you with a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> that will be automatically applied to your created project. This will give you access to advanced CMS features.
 
-If you prefer skipping the Strapi Cloud login part, use the arrow keys to select `Skip`. The script will resume and create a local project. To deploy this project and host it online, you could later choose to:
+If you prefer skipping this Strapi login part, use the arrow keys to select `Skip`. The script will resume and create a local project using the CMS Free plan.
+
+You will be able to purchase a CMS license later by checking out our <ExternalLink to="https://strapi.io/pricing-self-hosted" text="pricing page"/>.
+
+### Hosting your project
+
+You can create a free [Strapi Cloud](/cloud/intro) project. To deploy this project and host it online, you can choose to:
 
 - host it yourself by pushing the project's code to a repository (e.g., on GitHub) before following the [deployment guide](/cms/deployment),
 - or use the [Cloud CLI](/cloud/cli/cloud-cli#) commands to login to Strapi Cloud and deploy your project there for free.
