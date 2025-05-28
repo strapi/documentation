@@ -383,14 +383,18 @@ main .badge--content:has(+ table) {
  */
 .menu .badge--content {
   > span {
-    position: relative;
-    top: -3px;
+    position: static;
+    top: auto;
   }
+
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+
   .badge__text {
     font-size: var(--strapi-font-size-xxs);
     font-weight: 600;
-    position: relative;
-    right: 2px;
+    line-height: 1;
   }
   .badge--new {
     min-width: 57px;
@@ -399,19 +403,23 @@ main .badge--content:has(+ table) {
     min-width: 84px;
   }
   .strapi-icons {
-    left: 1px;
+    position: static;
+    left: auto;
+    top: auto;
+    margin-right: 2px;
   }
   .badge__tooltip {
     display: none;
   }
 }
 .menu__link:has(.badge--content) {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  
   .badge--content {
     margin-left: 8px;
+    flex-shrink: 0;
   }
 }
 
