@@ -527,7 +527,7 @@
     },
     {
       "source": "/dev-docs/admin-panel-customization/options",
-      "destination": "/cms/admin-panel-customization/options",
+      "destination": "/cms/admin-panel-customization#available-customizations",
       "permanent": true
     },
     {
@@ -1872,7 +1872,7 @@
     },
     {
       "source": "/dev-docs/admin-panel-customization/options",
-      "destination": "/cms/admin-panel-customization/options",
+      "destination": "/cms/admin-panel-customization#available-customizations",
       "permanent": true
     },
     {
