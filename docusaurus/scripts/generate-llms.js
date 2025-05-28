@@ -13,24 +13,24 @@ class DocusaurusLlmsGenerator {
 
   async generate() {
     try {
-      console.log('🔍 Extraction des pages de documentation...');
+      console.log('🔍 Extracting documentation pages...');
       const pages = await this.extractAllPages();
-      console.log(`📄 ${pages.length} pages trouvées`);
+      console.log(`📄 ${pages.length} pages found`);
 
-      console.log('📝 Génération de llms.txt...');
+      console.log('📝 Generating llms.txt...');
       const llmsTxt = this.generateLlmsTxt(pages);
       await fs.ensureDir(this.outputDir);
       await fs.writeFile(path.join(this.outputDir, 'llms.txt'), llmsTxt);
 
-      console.log('📚 Génération de llms-full.txt...');
+      console.log('📚 Generating llms-full.txt...');
       const llmsFullTxt = this.generateLlmsFullTxt(pages);
       await fs.writeFile(path.join(this.outputDir, 'llms-full.txt'), llmsFullTxt);
 
-      console.log('✅ Fichiers LLMs générés avec succès !');
+      console.log('✅ LLMs files successfully generated !');
       console.log(`   - ${this.outputDir}/llms.txt`);
       console.log(`   - ${this.outputDir}/llms-full.txt`);
     } catch (error) {
-      console.error('❌ Erreur lors de la génération:', error);
+      console.error('❌ Error while trying to generate LLMs files:', error);
       throw error;
     }
   }
@@ -38,31 +38,31 @@ class DocusaurusLlmsGenerator {
   async extractAllPages() {
     const pages = [];
     
-    // Charge la configuration sidebar
+    // Load sidebar configuration
     const sidebarConfig = this.loadSidebarConfig();
     
-    // Parse chaque sidebar
+    // Parses every sidebar
     for (const [sidebarName, sidebarItems] of Object.entries(sidebarConfig)) {
       await this.processItems(sidebarItems, pages);
     }
 
-    // Trie les pages par URL pour un ordre cohérent
+    // Sort pages by URL for a consistent and clear order
     return pages.sort((a, b) => a.url.localeCompare(b.url));
   }
 
   loadSidebarConfig() {
     try {
-      // Supprime le cache pour recharger la config
+      // Deletes cache to reload config
       delete require.cache[require.resolve(path.resolve(this.sidebarPath))];
       return require(path.resolve(this.sidebarPath));
     } catch (error) {
-      console.warn(`⚠️ Impossible de charger ${this.sidebarPath}, utilisation du scan de dossier`);
+      console.warn(`⚠️ Failed to load ${this.sidebarPath}, using folder scan`);
       return this.fallbackToDirectoryScan();
     }
   }
 
   async fallbackToDirectoryScan() {
-    // Scan direct du dossier docs si sidebar.js n'est pas accessible
+    // Direct scan of docs/ folder if sidebar.js is not available
     const allFiles = await this.getAllMdFiles(this.docsDir);
     return { docs: allFiles.map(file => file.replace('.md', '')) };
   }
@@ -128,28 +128,28 @@ class DocusaurusLlmsGenerator {
             frontmatter
           });
           
-          break; // Arrête dès qu'un fichier est trouvé
+          break; // Stops once a file is found
         } catch (error) {
-          console.warn(`⚠️ Erreur lors du traitement de ${filePath}:`, error.message);
+          console.warn(`⚠️ Error while handling file ${filePath}:`, error.message);
         }
       }
     }
   }
 
   generatePageUrl(docId) {
-    // Supprime les préfixes courants et génère l'URL propre
+    // Deletes common prefixes and generates proper URL
     const cleanId = docId.replace(/^(docs\/|pages\/)/, '');
     return `${this.baseUrl}/${cleanId}`;
   }
 
   getTitleFromContent(content) {
-    // Extrait le premier h1 du contenu
+    // Extracts first h1 from content
     const match = content.match(/^#\s+(.+)$/m);
     return match ? match[1].trim() : null;
   }
 
   extractDescription(content) {
-    // Extrait le premier paragraphe non-vide
+    // Extracts first non-empty paragraph
     const lines = content.split('\n');
     for (const line of lines) {
       const trimmed = line.trim();
@@ -162,16 +162,16 @@ class DocusaurusLlmsGenerator {
 
   cleanContent(content) {
     return content
-      // Supprime les métadonnées frontmatter
+      // Deletes frontmatter metadata
       .replace(/^---[\s\S]*?---\n/, '')
-      // Supprime les composants React/MDX
+      // Deletes React/MDX components
       .replace(/<[A-Z][a-zA-Z]*[^>]*>[\s\S]*?<\/[A-Z][a-zA-Z]*>/g, '')
       .replace(/<[A-Z][a-zA-Z]*[^>]*\/>/g, '')
-      // Supprime les imports
+      // Deletes imports
       .replace(/^import\s+.*$/gm, '')
-      // Supprime les exports
+      // Deletes exports
       .replace(/^export\s+.*$/gm, '')
-      // Nettoie les lignes vides multiples
+      // Cleans up empty lines
       .replace(/\n\s*\n\s*\n/g, '\n\n')
       .trim();
   }
@@ -204,7 +204,7 @@ class DocusaurusLlmsGenerator {
 
 module.exports = DocusaurusLlmsGenerator;
 
-// Si le script est exécuté directement
+// If script is not directly executed
 if (require.main === module) {
   const generator = new DocusaurusLlmsGenerator({
     docsDir: 'docs',
