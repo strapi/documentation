@@ -9,7 +9,7 @@ tags:
 - plugins development
 ---
 
-# TypeScript Development with Strapi 
+# TypeScript development with Strapi 
 
 While developing a [TypeScript](/cms/typescript)-based application with Strapi, you can:
 
@@ -17,6 +17,10 @@ While developing a [TypeScript](/cms/typescript)-based application with Strapi, 
 - [generate typings](#generate-typings-for-content-types-schemas) for your project's content-types,
 - [start Strapi programmatically](#start-strapi-programmatically),
 - and follow some TypeScript-specific instructions for [plugins development](#develop-a-plugin-using-typescript).
+
+:::strapi Documents and entries
+More information and best practices on how to manipulate documents and entries with a TypeScript-based project can be found in the [dedicated guide](/cms/typescript/documents-and-entries).
+:::
 
 ## Use `Strapi` TypeScript typings
 

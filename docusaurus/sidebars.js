@@ -75,6 +75,7 @@ const sidebars = {
           id: 'cms/features/draft-and-publish'
         },
         'cms/features/email',
+
         {
           type: 'doc',
           label: 'Internationalization (i18n)',
@@ -89,6 +90,9 @@ const sidebars = {
           type: 'doc',
           label: 'Preview',
           id: 'cms/features/preview',
+          customProps: {
+            new: true,
+          }
         },
         {
           type: 'doc',
@@ -177,7 +181,7 @@ const sidebars = {
           label: 'Strapi Client',
           id: 'cms/api/client',
           customProps: {
-            updated: true,
+            new: true,
           }
         },
         'cms/api/graphql',
@@ -217,33 +221,46 @@ const sidebars = {
         'cms/configurations/admin-panel',
         'cms/configurations/api',
         'cms/configurations/cron',
-        'cms/configurations/database',
-        'cms/configurations/environment',
-        'cms/configurations/features',
-        'cms/configurations/functions',
-        'cms/configurations/middlewares',
-        'cms/configurations/plugins',
-        {
-          type: 'doc',
-          id: 'cms/providers',
-          label: 'Email & Upload Providers'
-        },
-        'cms/configurations/users-and-permissions-providers',
-        'cms/configurations/server',
-        'cms/configurations/typescript',
         {
           type: 'category',
-          label: 'Guides',
           collapsed: true,
+          collapsible: true,
+          label: "Database",
           items: [
-            'cms/configurations/guides/access-cast-environment-variables',
-            'cms/configurations/guides/access-configuration-values',
-            'cms/configurations/guides/public-assets',
-            'cms/configurations/guides/rbac',
-            'cms/configurations/guides/use-cron-jobs',
-            'cms/configurations/guides/configure-sso',
+            {
+              type: 'doc',
+              id: 'cms/configurations/database',
+              label: 'Database configuration',
+            },
+            'cms/database-migrations',
+            'cms/database-transactions',
           ]
-        }
+        },
+        'cms/configurations/environment',
+        'cms/configurations/features',
+        // 'cms/configurations/functions', // TODO: moved to Development — add the TOC component here to highlight the move
+        'cms/configurations/middlewares',
+        'cms/configurations/plugins',
+        // { // TODO: moved to Features - add the TOC component here to highlight the move
+          // type: 'doc',
+          // id: 'cms/providers',
+          // label: 'Email & Upload Providers'
+        // },
+        // 'cms/configurations/users-and-permissions-providers', // TODO: removed from TOC - add the TOC component here to highlight where to find them now
+        'cms/configurations/server',
+        // {
+        //   type: 'category',
+        //   label: 'Guides',
+        //   collapsed: true,
+        //   items: [
+        //     // 'cms/configurations/guides/access-cast-environment-variables',  // TODO: removed from TOC and linked from configuration page - add TOC component?
+        //     // 'cms/configurations/guides/access-configuration-values', // TODO: removed from TOC and included into config. intro. page - add TOC component to highlight it?
+        //     // 'cms/configurations/guides/public-assets', // TODO: removed from TOC and included in Media Lib. feature page - add TOC component?
+        //     // 'cms/configurations/guides/rbac', // TODO: removed from TOC and linked from feature page - add TOC component?
+        //     // 'cms/configurations/guides/use-cron-jobs', // TODO: removed from TOC and linked from configuration page - add TOC component?
+        //     // 'cms/configurations/guides/configure-sso', // TODO: removed from TOC and linked from feature page - add TOC component?
+        //   ]
+        // }
       ]
     },
     { // Development
@@ -253,8 +270,13 @@ const sidebars = {
       collapsible: false,
       collapsed: false,
       items: [
-        'cms/customization',
         {
+          type: 'doc',
+          id: 'cms/customization', // TODO: rename to Introduction
+          label: 'Introduction',
+        },
+        'cms/configurations/functions',
+        { // Backend customization
           type: 'category',
           label: 'Backend customization',
           collapsible: true,
@@ -275,7 +297,7 @@ const sidebars = {
             'cms/backend-customization/webhooks',
           ]
         },
-        {
+        { // Admin panel customization
           type: 'category',
           label: 'Admin panel customization',
           collapsed: true,
@@ -283,27 +305,84 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
-              label: 'What\'s possible'
+              label: 'What\'s possible' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
+            },
+            // 'cms/admin-panel-customization/logos', // TODO actual page to create
+            // 'cms/admin-panel-customization/favicon', // TODO actual page to create
+            // 'cms/admin-panel-customization/locales-translations', // TODO actual page to create
+            {
+              type: 'doc',
+              id: 'cms/admin-panel-customization/wysiwyg-editor',
+              label: 'Rich text editor',
             },
             'cms/admin-panel-customization/bundlers',
-            'cms/admin-panel-customization/deployment',
-            'cms/admin-panel-customization/extension',
-            'cms/admin-panel-customization/host-port-path',
-            'cms/admin-panel-customization/options',
-            'cms/admin-panel-customization/wysiwyg-editor',
+            // 'cms/admin-panel-customization/deployment', // TODO move where appropriate
+            {
+              type: 'doc',
+              id: 'cms/admin-panel-customization/extension',
+              label: 'Admin panel extension'
+            },
+            // 'cms/admin-panel-customization/host-port-path', // TODO move where appropriate
+            // 'cms/admin-panel-customization/options', // TODO move where appropriate or remove
           ]
         },
-        'cms/cli',
+        { 
+          type: 'doc',
+          label: 'Homepage customization',
+          id: 'cms/admin-panel-customization/homepage',
+          customProps: {
+            new: true,
+          }
+        },
+        // 'cms/cli', // TODO moved to its own category, add TOC component here to highlight it
+        // { // TODO moved to introduction, add TOC component here to highlight it
+        //   type: 'doc',
+        //   id: 'cms/typescript',
+        //   label: 'TypeScript'
+        // },
+        'cms/error-handling',
+        'cms/templates',
+        'cms/testing',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'TypeScript',
+      collapsed: false,
+      collapsible: false,
+      className: 'category-cms-typescript', // TODO: add CSS for icon
+      items: [
         {
           type: 'doc',
           id: 'cms/typescript',
-          label: 'TypeScript'
+          label: 'Introduction'
         },
-        'cms/database-migrations',
-        'cms/database-transactions',
-        'cms/testing',
-        'cms/error-handling',
-        'cms/templates',
+        {
+          type: 'doc',
+          id: 'cms/configurations/typescript',
+          label: 'Configuration'
+        },
+        {
+          type: 'doc',
+          id: 'cms/typescript/development',
+          label: 'Development'
+        },
+        {
+          type: 'doc',
+          id: 'cms/typescript/guides',
+          label: 'Guides' // TODO ensure label is overriden
+        }
+        // 'cms/typescript/adding-support-to-existing-project' // ? will be linked from the Guides page
+      ]
+    },
+    { // Command Line Interface
+      type: 'category',
+      label: 'Command Line Interface',
+      className: 'category-cms-cli', // TODO add CSS for icon
+      collapsed: false,
+      collapsible: false,
+      items: [
+        'cms/cli'
       ]
     },
     { // Plugins
@@ -414,7 +493,7 @@ const sidebars = {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
           customProps: {
-            updated: false,
+            updated: true,
           },
         },
         "cloud/getting-started/caching",

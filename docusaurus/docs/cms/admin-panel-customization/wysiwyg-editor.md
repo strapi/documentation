@@ -2,7 +2,7 @@
 title: Customizing the WYSIWYG editor
 description: Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
 displayed_sidebar: cmsSidebar
-sidebar_label: WYSIWYG editor
+sidebar_label: Rich text editor
 tags:
 - admin panel 
 - admin panel customization

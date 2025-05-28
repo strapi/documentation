@@ -177,7 +177,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-          "🚀 StrapiConf 2025 – May 13 | Big product updates, expert talks & more! <a target='_blank' rel='noopener noreferrer' href='https://conf.strapi.io/'>Save your spot →</a>",
+          "🚀 StrapiConf 2025 – May 13 | Big product reveals, expert talks & more! <a target='_blank' rel='noopener noreferrer' href='https://conf.strapi.io/'>Watch the keynote live at 10AM CEST →</a>",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
@@ -189,7 +189,7 @@ const config = {
       },
       algolia: {
         appId: '392RJ63O14',
-        apiKey: '2470d74a1f395f5017994e7b17a77bf8',
+        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
         indexName: 'strapi_newCmsCrawler_march2025',
         contextualSearch: false,
         searchParameters: {

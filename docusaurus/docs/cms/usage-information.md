@@ -23,7 +23,6 @@ However, these above actions alone are often insufficient to maintain an overall
 - How long does setting up a project take? If the global install time increases, does it mean that users are encountering issues or the process is simply too complicated?
 - What type of errors our users are facing?
 - What are the most used plugins?
-- Should we focus our efforts on being compatible with Node 16? Maybe our community uses version 16 in greater percentages than the global Node.js community?
 - And more...
 
 Without these metrics, we wouldn't be able to make the right choices as we continue to move forward with the roadmap and provide what you, the community and users, are asking for.

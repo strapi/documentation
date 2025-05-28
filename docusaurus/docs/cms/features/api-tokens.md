@@ -4,11 +4,11 @@ description: Learn how you can use API tokens to manage end-users authentication
 sidebar_position: 2
 toc_max_heading_level: 5
 tags:
-- api tokens
-- admin panel
-- authentication
-- users & permissions
-- features
+  - api tokens
+  - admin panel
+  - authentication
+  - users & permissions
+  - features
 ---
 
 # API Tokens
@@ -34,8 +34,8 @@ API tokens allow users to authenticate REST and GraphQL API queries (see [APIs i
 </IdentityCard>
 
 <ThemedImage
-  alt="API tokens"
-  sources={{
+alt="API tokens"
+sources={{
     light: '/img/assets/settings/settings_pregen-api-tokens.png',
     dark: '/img/assets/settings/settings_pregen-api-tokens_DARK.png',
   }}
@@ -47,9 +47,9 @@ Most configuration options for API tokens are available in the admin panel, and 
 
 ### Admin panel settings
 
-**Path to configure the feature:** <Icon name="gear-six" /> *Settings > Global settings > API Tokens*
+**Path to configure the feature:** <Icon name="gear-six" /> _Settings > Global settings > API Tokens_
 
-The *API Tokens* interface displays a table listing all of the created API tokens. More specifically, it displays each API token's name, description, date of creation, and date of last use.
+The _API Tokens_ interface displays a table listing all of the created API tokens. More specifically, it displays each API token's name, description, date of creation, and date of last use.
 
 From there, you have the possibility to:
 
@@ -57,32 +57,34 @@ From there, you have the possibility to:
 - click on the <Icon name="trash" /> to delete an API token.
 
 :::note
-Strapi pre-generates 2 API tokens for you, a Full access one and a Read-only one. Since tokens can be only seen once after creation, you have to [regenerate](#regenerating-an-api-token) them before using them.
+Strapi pre-generates 2 API tokens for you, a Full access one and a Read-only one. Since tokens can be only seen once without encryption configured, you may want to [regenerate](#regenerating-an-api-token) them after setting up an encryption key to make them permanently viewable.
 :::
 
 #### Creating a new API token
 
 1. Click on the **Create new API Token** button.
 2. In the API token edition interface, configure the new API token:
-    | Setting name   | Instructions                                                             |
-    | -------------- | ------------------------------------------------------------------------ |
-    | Name           | Write the name of the API token.                                         |
-    | Description    | (optional) Write a description for the API token.                        |
-    | Token duration | Choose a token duration: *7 days*, *30 days*, *90 days*, or *Unlimited*. |
-    | Token type     | Choose a token type: *Read-only*, *Full access*, or *Custom*.            |
-3. (optional) For the *Custom* token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
+   | Setting name | Instructions |
+   | -------------- | ------------------------------------------------------------------------ |
+   | Name | Write the name of the API token. |
+   | Description | (optional) Write a description for the API token. |
+   | Token duration | Choose a token duration: _7 days_, _30 days_, _90 days_, or _Unlimited_. |
+   | Token type | Choose a token type: _Read-only_, _Full access_, or _Custom_. |
+3. (optional) For the _Custom_ token type, define specific permissions for your API endpoints by clicking on the content-type name and using checkboxes to enable or disable permissions.
 4. Click on the **Save** button. The new API token will be displayed at the top of the interface, along with a copy button <Icon name="copy" />.
 
 <ThemedImage
-  alt="Custom API token"
-  sources={{
+alt="Custom API token"
+sources={{
     light: '/img/assets/settings/settings_api-token-custom.png',
     dark: '/img/assets/settings/settings_api-token-custom_DARK.png',
   }}
 />
 
-:::caution
-For security reasons, API tokens are only shown right after they have been created. When refreshing the page or navigating elsewhere in the admin panel, the newly created API token will be hidden and will not be displayed again.
+:::info Viewable tokens
+If an encryption key is configured in your Strapi project (`admin.secrets.encryptionKey`), the newly created and regenerated API tokens will be **viewable at any time** in the admin panel.
+
+If no encryption key is set, tokens will only be viewable **once**, immediately after creation or regeneration.
 :::
 
 #### Regenerating an API token
@@ -98,12 +100,50 @@ New API tokens are generated using a salt. This salt is automatically generated 
 
 The salt can be customized:
 
-- either by updating the string value for `apiToken.salt` in `./config/admin.js` (see [admin panel configuration documentation](/cms/configurations/admin-panel))
+- either by updating the string value for `apiToken.salt` in [your `/config/admin` file](/cms/configurations/admin-panel)
 - or by creating an `API_TOKEN_SALT` [environment variable](/cms/configurations/environment#strapi) in the `.env` file of the project
 
 :::caution
 Changing the salt invalidates all the existing API tokens.
 :::
+
+#### Ensuring API tokens are visible in the admin panel
+
+To allow persistent visibility of API tokens in the admin panel, an encryption key must be provided in [your `/config/admin` file](/cms/configurations/admin-panel) under `apiToken.secrets.encryptionKey`:
+
+<Tabs groupId="js-ts">
+<TabItem label="JavaScript" value="js">
+
+```js title="/config/admin.js"
+module.exports = ({ env }) => ({
+  // other config parameters
+  apiToken: {
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
+  }
+});
+```
+
+</TabItem>
+
+<TabItem label="TypeScript" value="ts">
+
+```js title="/config/admin.ts"
+export default ({ env }) => ({
+  // other config parameters
+  apiToken: {
+    secrets: {
+      encryptionKey: env('ENCRYPTION_KEY'),
+    },
+  }
+});
+```
+
+</TabItem>
+</Tabs>
+
+This key is used to encrypt and decrypt token values. Without this key, tokens remain usable, but will not be viewable after initial display. New Strapi projects will have this key automatically generated.
 
 ## Usage
 

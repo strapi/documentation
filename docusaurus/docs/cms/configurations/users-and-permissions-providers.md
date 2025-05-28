@@ -11,7 +11,9 @@ tags:
 
 # Users & Permissions providers
 
-Strapi comes with a predefined set of built-in providers for the [Users & Permissions feature](/cms/features/users-permissions). Custom providers can also be configured (see the [dedicated guide](/cms/configurations/users-and-permissions-providers/new-provider-guide)).
+Strapi comes with a predefined set of built-in providers for the [Users & Permissions feature](/cms/features/users-permissions). The present page explains how the login flow works, how to set up the server URL, and list many examples for common 3rd-party providers.
+
+If you're looking to create your own custom provider, please refer to the [dedicated guide](/cms/configurations/users-and-permissions-providers/new-provider-guide).
 
 ## Understanding the login flow
 

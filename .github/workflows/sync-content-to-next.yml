@@ -1,0 +1,343 @@
+name: Sync Content to Next Branch
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docusaurus/docs/cms/**'
+      - 'docusaurus/docs/cloud/**'
+      - 'docusaurus/static/img/assets/**'
+  pull_request:
+    types: [labeled, closed]
+
+jobs:
+  # Job for debugging purposes
+  debug-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug event
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Action: ${{ github.event.action }}"
+          echo "Repository: ${{ github.repository }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "PR number: ${{ github.event.pull_request.number }}"
+            echo "PR title: ${{ github.event.pull_request.title }}"
+            if [ "${{ github.event.action }}" = "labeled" ]; then
+              echo "Label: ${{ github.event.label.name }}"
+            fi
+          fi
+
+  # Job: Create PR to next when a PR is labeled
+  create-pr-for-labeled:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'labeled' &&
+      github.event.label.name == 'temp - port to docs-next'
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Debug - PR info
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "Added Label: ${{ github.event.label.name }}"
+
+      - name: Create branch from next
+        run: |
+          # Basic variables
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          SOURCE_REPO="${{ github.event.pull_request.head.repo.full_name }}"
+          TARGET_BRANCH="next-port-pr$PR_NUMBER"
+          
+          echo "Source Branch: $SOURCE_BRANCH"
+          echo "Source Repo: $SOURCE_REPO"
+          echo "Target Branch: $TARGET_BRANCH"
+          
+          # Fetch next branch
+          git fetch origin next
+          
+          # Create new branch based on next
+          git checkout -b $TARGET_BRANCH origin/next
+          
+          # Fetch source branch
+          if [ "$SOURCE_REPO" != "${{ github.repository }}" ]; then
+            echo "PR comes from a fork, fetching changes from $SOURCE_REPO"
+            git fetch "https://github.com/$SOURCE_REPO.git" $SOURCE_BRANCH
+          else
+            echo "PR is from the same repo"
+            git fetch origin $SOURCE_BRANCH
+          fi
+
+      - name: Apply content changes
+        id: apply-changes
+        run: |
+          # Get list of modified files in the PR
+          PR_FILES=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path')
+          echo "Files in PR:"
+          echo "$PR_FILES"
+          
+          # Flag to track if we found any content files
+          FOUND_CONTENT_FILES=false
+          # Create a list of processed files
+          PROCESSED_FILES=""
+          
+          # Process content files one by one
+          echo "Processing content files from PR..."
+          
+          while read -r file; do
+            if [[ "$file" =~ ^docusaurus/docs/cms/ || "$file" =~ ^docusaurus/docs/cloud/ || "$file" =~ ^docusaurus/static/img/assets/ ]]; then
+              echo "Processing content file: $file"
+              mkdir -p $(dirname "$file")
+              git checkout FETCH_HEAD -- "$file"
+              FOUND_CONTENT_FILES=true
+              PROCESSED_FILES="$PROCESSED_FILES $file"
+            fi
+          done <<< "$PR_FILES"
+          
+          # Exit if no content files were found
+          if [ "$FOUND_CONTENT_FILES" != "true" ]; then
+            echo "No content files found in PR"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            exit 0 # Exit with success but skip PR creation
+          fi
+          
+          # Debug: Show differences
+          echo "Showing diffs for processed files:"
+          for file in $PROCESSED_FILES; do
+            echo "Diff for $file:"
+            git diff HEAD -- "$file" || true
+          done
+          
+          # Always create PR regardless of detected changes
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Commit and create PR
+        if: steps.apply-changes.outputs.has_changes == 'true'
+        run: |
+          # Commit changes - force commit even if git thinks there are no changes
+          git add .
+          git commit --allow-empty -m "Port PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }} to next branch"
+          
+          # Push branch
+          git push origin next-port-pr${{ github.event.pull_request.number }}
+          
+          # Create PR with a special tag in the body to identify it later
+          gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
+            --title "[Port to next] ${{ github.event.pull_request.title }}" \
+            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->"
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+  # Job for syncing merged PRs more intelligently
+  sync-merged-pr:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'temp - port to docs-next')
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Check for existing PR and decide strategy
+        id: check-existing
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          
+          # Check if there's an existing PR 
+          EXISTING_PR_NUMBER=$(gh pr list --base next --head "next-port-pr$PR_NUMBER" --state open --json number --jq '.[0].number')
+          
+          if [ -n "$EXISTING_PR_NUMBER" ]; then
+            echo "Existing PR found: #$EXISTING_PR_NUMBER"
+            
+            # Check if the PR body contains our marker
+            PR_BODY=$(gh pr view $EXISTING_PR_NUMBER --json body --jq '.body')
+            
+            if [[ "$PR_BODY" == *"SYNC_PR_MARKER"* ]]; then
+              echo "This is a PR created by our workflow, checking if it's been modified"
+              
+              # Check if there are review comments or the PR has been approved
+              REVIEW_COUNT=$(gh pr view $EXISTING_PR_NUMBER --json reviews --jq '.reviews | length')
+              
+              if [ "$REVIEW_COUNT" -gt 0 ]; then
+                echo "PR has reviews, will update the existing PR instead of replacing it"
+                echo "strategy=update" >> $GITHUB_OUTPUT
+                echo "existing_pr=$EXISTING_PR_NUMBER" >> $GITHUB_OUTPUT
+                exit 0
+              fi
+            fi
+            
+            echo "Will replace the existing PR with a new one based on the merge commit"
+            echo "strategy=replace" >> $GITHUB_OUTPUT
+            echo "existing_pr=$EXISTING_PR_NUMBER" >> $GITHUB_OUTPUT
+          else
+            echo "No existing PR found, will create a new one"
+            echo "strategy=create" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Create new branch from merge commit
+        id: create-branch
+        run: |
+          # Variables
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          MERGE_COMMIT="${{ github.event.pull_request.merge_commit_sha }}"
+          
+          # Use different branch name depending on strategy
+          if [ "${{ steps.check-existing.outputs.strategy }}" = "update" ]; then
+            BRANCH_NAME="next-port-pr$PR_NUMBER"
+            echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          else
+            BRANCH_NAME="sync-merged-pr$PR_NUMBER"
+            echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          fi
+          
+          # Create branch from next
+          git fetch origin next
+          
+          if [ "${{ steps.check-existing.outputs.strategy }}" = "update" ]; then
+            echo "Checking out existing branch $BRANCH_NAME"
+            git checkout $BRANCH_NAME || git checkout -b $BRANCH_NAME origin/next
+          else
+            echo "Creating new branch $BRANCH_NAME"
+            git checkout -b $BRANCH_NAME origin/next
+          fi
+          
+          # Try to cherry-pick
+          if git cherry-pick -m 1 $MERGE_COMMIT; then
+            git push origin $BRANCH_NAME --force
+            echo "cherry_pick_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "Cherry-pick failed, manual intervention needed"
+            git cherry-pick --abort
+            echo "cherry_pick_success=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Update existing PR
+        if: steps.check-existing.outputs.strategy == 'update' && steps.create-branch.outputs.cherry_pick_success == 'true'
+        run: |
+          EXISTING_PR="${{ steps.check-existing.outputs.existing_pr }}"
+          echo "Updating existing PR #$EXISTING_PR with latest merged changes"
+          
+          # Add comment explaining the update
+          gh pr comment $EXISTING_PR --body "This PR has been updated with the latest changes from the merged PR #${{ github.event.pull_request.number }}. The merge commit was cherry-picked to include all approved changes."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Close and replace existing PR
+        if: steps.check-existing.outputs.strategy == 'replace' && steps.create-branch.outputs.cherry_pick_success == 'true'
+        run: |
+          EXISTING_PR="${{ steps.check-existing.outputs.existing_pr }}"
+          BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          # Create the new PR first
+          NEW_PR=$(gh pr create --base next --head $BRANCH_NAME \
+            --title "[Merged-sync] $PR_TITLE" \
+            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main." \
+            --json number --jq '.number')
+            
+          # Now close the existing PR with a reference to the new one
+          gh pr close $EXISTING_PR --comment "This PR is replaced by the direct synchronization of the merge commit in #$NEW_PR"
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Create new PR
+        if: steps.check-existing.outputs.strategy == 'create' && steps.create-branch.outputs.cherry_pick_success == 'true'
+        run: |
+          BRANCH_NAME="${{ steps.create-branch.outputs.branch_name }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          # Create new PR 
+          gh pr create --base next --head $BRANCH_NAME \
+            --title "[Merged-sync] $PR_TITLE" \
+            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main."
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+  # Job for automatic syncing of pushed commits
+  cherry-pick-from-push:
+    if: github.event_name == 'push'
+    needs: debug-event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_MAIN_TO_NEXT }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Process push
+        run: |
+          # Get the latest commit hash
+          COMMIT_HASH=$(git log -1 --format="%H")
+          COMMIT_MSG=$(git log -1 --format="%s")
+          
+          # Get changed files
+          CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r $COMMIT_HASH)
+          
+          # Check if any content files were changed
+          CONTENT_FILES=$(echo "$CHANGED_FILES" | grep -E '^docusaurus/docs/(cms|cloud)/|^docusaurus/static/img/assets/' || echo "")
+          
+          if [ -z "$CONTENT_FILES" ]; then
+            echo "No content files changed in this push"
+            exit 0
+          fi
+          
+          # Create branch from next
+          BRANCH_NAME="sync-push-$(date +%Y%m%d-%H%M%S)"
+          
+          git fetch origin next
+          git checkout -b $BRANCH_NAME origin/next
+          
+          # Try to cherry-pick
+          if git cherry-pick $COMMIT_HASH; then
+            git push origin $BRANCH_NAME
+            
+            # Create PR
+            gh pr create --base next --head $BRANCH_NAME \
+              --title "[Auto-sync] $COMMIT_MSG" \
+              --body "Automatic sync of commit from main"
+          else
+            echo "Cherry-pick failed, manual intervention needed"
+            git cherry-pick --abort
+            exit 1
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}

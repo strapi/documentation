@@ -27,6 +27,94 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.3.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### Cloud
+- [Free Cloud plan](https://github.com/strapi/documentation/pull/2492)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.3.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Homepage API](https://github.com/strapi/documentation/pull/2474)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Remove Node 18 support and misc. cleanup](https://github.com/strapi/documentation/pull/2486)
+- [Remove obsolete version attribute from Docker guide](https://github.com/strapi/documentation/pull/2485)
+- [Viewable API tokens in the admin panel](https://github.com/strapi/documentation/pull/2484)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Bassel17" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/37274596?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Bassel17"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/dominicracine" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/23481112?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="dominicracine"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.2.2
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Content-type Builder revamp (beta release)](https://github.com/strapi/documentation/pull/2479)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update theme extension (colors) in admin panel customization](https://github.com/strapi/documentation/pull/2478)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/soheilnikroo" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/62501144?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="soheilnikroo"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.2.1
 
 <br />

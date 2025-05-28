@@ -58,17 +58,12 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
     sources={{
-        light: '/img/assets/cloud/project-creation-1.png',
-        dark: '/img/assets/cloud/project-creation-1_DARK.png',
+        light: '/img/assets/cloud/project-creation-1-2.png',
+        dark: '/img/assets/cloud/project-creation-1-2_DARK.png',
     }}
     />
 
-3. Choose a plan for your Strapi Cloud project: either Essential, Pro, Scale, or the 14-day free trial. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
-
-    :::note Notes
-    - Strapi Cloud offers 5 free trial projects and you will not need to share your credit card details to deploy your first project. Once the free trials have already been used for a previous project, the option will no longer appear in the plan selection.
-    - You can't upload HTML files to Strapi Cloud during your free trials.
-    :::
+3. Choose a plan for your Strapi Cloud project: either Free, Essential, Pro, or Scale. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
 4. Connect a git repository to your new Strapi Cloud project.
 
@@ -116,10 +111,15 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     <TabItem value="OWN-REPO" label="Own existing repo & Strapi project">
 
+
     4.a. (optional) If you are deploying a project for the first time, you may first have to select a git provider: either GitHub or GitLab. If you already deployed a project with one git provider, you can afterward deploy another project using another provider by clicking on the **Switch git provider** button and selecting either GitHub or GitLab.
 
     :::tip
     Connect the GitHub or GitLab account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    :::
+    :::note
+
+    You can only connect a Github organization's repositories with Strapi Cloud paid plans. With the free plan, you can only connect a personal repository.
     :::
 
     4.b. If you have already given Strapi Cloud access to all repositories of your GitHub or GitLab account, go directly to the next step. If not, you will be redirected to a modal where you will have to allow Strapi Cloud permission to access some or all your repositories on GitHub/GitLab (more information in the <ExternalLink to="https://docs.github.com/en/apps/overview" text="GitHub"/> and <ExternalLink to="https://docs.gitlab.com/ee/integration/oauth_provider.html#view-all-authorized-applications" text="GitLab"/> documentations).
@@ -171,18 +171,18 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default one used by Strapi Cloud (see [database configuration](/cms/configurations/database#environment-variables-in-database-configurations) for more details). If you would like to revert and use Strapi's default database again, you have to remove your `DATABASE_` environment variables (no automatic migration implied).
-    
-    You can also set up here a custom email provider. Sendgrid is set as the default one for the Strapi applications hosted on Strapi Cloud (see [providers configuration](/cms/providers#configuring-providers) for more details).
+
+    You can also set up here a custom email provider. Sendgrid is set as the default one for the Strapi applications hosted on Strapi Cloud (see [providers configuration](/cms/features/email#providers) for more details).
     :::
 
 ## Setting up billing details
 
-:::strapi No billing step for free trials
-If you chose the free trial, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project. 
+:::strapi No billing step for the Free plan
+If you chose the free plan, this billing step will be skipped as you will not be asked to share your credit card details at the creation of the project.
 
-During the free trial, you will be kept informed of the number of remaining free days. You will then be notified by email and via the Strapi Cloud dashboard whenever it is time to fill in your billing information to move to a paid plan.
+To upgrade your project to a paid plan, you will need to fill in your billing information in the **Billing** section of your Profile.
 
-👉 Skip to step 5 of the section below to finalise the creation of your project.
+<Icon name="fast-forward" /> Skip to step 5 of the section below to finalise the creation of your project.
 :::
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
@@ -211,6 +211,5 @@ Create your Admin user after the initial deployment is complete. Do not share yo
 
 Now that you have deployed your project via the Cloud dashboard, we encourage you to explore the following ideas to have an even more complete Strapi Cloud experience:
 
-- If you chose the free trial during your first project deployment, make sure to fill in your [billing information](/cloud/account/account-billing) afterward to prevent your project from being suspended at the end of the trial period.
 - Invite other users to [collaborate on your project](/cloud/projects/collaboration).
 - Check out the [deployments management documentation](/cloud/projects/deploys) to learn how to trigger new deployments for your project.

@@ -118,6 +118,7 @@ export default {
 <TabItem value="ts" label="TypeScript">
 
 ```jsx title="/src/admin/app.ts"
+// Note: you may see some ts errors, don't worry about them
 import AuthLogo from "./extensions/my-logo.png";
 import MenuLogo from "./extensions/logo.png";
 import favicon from "./extensions/favicon.png";
@@ -142,16 +143,25 @@ export default {
     },
     // Override or extend the theme
     theme: {
-      colors: {
-        primary100: "#f6ecfc",
-        primary200: "#e0c1f4",
-        primary500: "#ac73e6",
-        primary600: "#9736e8",
-        primary700: "#8312d1",
-        danger700: "#b72b1a",
-      },
+	    dark:{
+	      colors: {
+			  alternative100: '#f6ecfc',
+			  alternative200: '#e0c1f4',
+			  alternative500: '#ac73e6',
+			  alternative600: '#9736e8',
+			  alternative700: '#8312d1',
+			  buttonNeutral0: '#ffffff',
+			  buttonPrimary500: '#7b79ff',
+			  // you can see other colors in the link below
+			  },
+		},
+		light:{
+			// you can see the light color here just like dark colors https://github.com/strapi/design-system/blob/main/packages/design-system/src/themes/lightTheme/light-colors.ts
+		},
+  },
     },
     // Extend the translations
+    // you can see the traslations keys here https://github.com/strapi/strapi/blob/develop/packages/core/admin/admin/src/translations
     translations: {
       fr: {
         "Auth.form.email.label": "test",
@@ -170,6 +180,11 @@ export default {
   bootstrap() {},
 };
 ```
+
+:::note
+You can see the full translation keys, for instance to change the welcome message, [on GitHub](https://github.com/strapi/strapi/blob/develop/packages/core/admin/admin/src/translations).
+Light and dark colors are also found [on GitHub](https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes).
+:::
 
 </TabItem>
 </Tabs>
@@ -445,5 +460,5 @@ To extend the theme, use either:
 - the `config.theme.dark` key for the Dark mode
 
 :::strapi Strapi Design System
-The default <ExternalLink to="https://github.com/strapi/design-system/tree/main/packages/strapi-design-system/src/themes" text="Strapi theme"/> defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The <ExternalLink to="https://design-system.strapi.io/" text="Strapi Design System"/> is fully customizable and has a dedicated <ExternalLink to="https://design-system-git-main-strapijs.vercel.app" text="StoryBook"/> documentation.
+The default <ExternalLink to="https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes" text="Strapi theme"/> defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The <ExternalLink to="https://design-system.strapi.io/" text="Strapi Design System"/> is fully customizable and has a dedicated <ExternalLink to="https://design-system-git-main-strapijs.vercel.app" text="StoryBook"/> documentation.
 :::

@@ -48,7 +48,7 @@ Mailgun provider options can not use the legacy `apiKey` and `host` variables an
 
 ### Notes
 
-A Mailgun provider configuration in the [plugins configuration file](/cms/providers#configuring-providers) could look like the following example in Strapi 5:
+A Mailgun [provider](/cms/features/email#providers) configuration in the [plugins configuration file](/cms/configurations/plugins) could look like the following example in Strapi 5:
 
 ```jsx title="/config/plugins.js"
 module.exports = ({ env }) => ({
