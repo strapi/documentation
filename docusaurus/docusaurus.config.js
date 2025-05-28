@@ -256,6 +256,14 @@ const config = {
             title: 'Additional resources',
             items: [
               {
+                label: 'LLMs.txt',
+                href: 'https://docs.strapi.io/llms.txt',
+              },
+              {
+                label: 'LLMs-full.txt',
+                href: 'https://docs.strapi.io/llms-full.txt',
+              },
+              {
                 label: 'v4 Docs',
                 href: 'https://docs-v4.strapi.io'
               },
@@ -328,6 +336,14 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
+    [ // Custom plugin to generate LLMs files
+      './plugins/llms-generator-plugin.js',  // ⬅️ Chemin depuis la racine
+      {
+        docsDir: 'docs',
+        sitebarPath: 'sidebars.js',
+        siteName: 'Strapi Documentation'
+      }
+    ]
     // [ // Disabled
     //   '@docusaurus/plugin-client-redirects',
     //   {
