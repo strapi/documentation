@@ -11,7 +11,7 @@ tags:
 
 # Theme extension
 
-The Strapi [admin panel](/cms/admin-panel-customization) can be displayed either in light or dark mode (see [profile setup](/cms/getting-started/setting-up-admin-panel#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
+Strapi's [admin panel](/cms/admin-panel-customization) can be displayed either in light or dark mode (see [profile setup](/cms/getting-started/setting-up-admin-panel#setting-up-your-administrator-profile)), and both can be extended through custom theme settings.
 
 To extend the theme, use either:
 

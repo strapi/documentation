@@ -16,7 +16,7 @@ tags:
 
 # Admin panel configuration
 
-The `/config/admin` file is used to define admin panel configuration for the Strapi application.
+The `/config/admin` file is used to define the [admin panel](/cms/features/admin-panel) configuration for the Strapi application.
 
 The present page acts as a reference for all the configuration parameters and values that you can find in the `/config/admin` file, grouped by topic. For additional information on how each feature works, please refer to links given in the introduction of each sub-section.
 
@@ -178,7 +178,7 @@ With this configuration:
 
 ## API tokens
 
-The [API tokens](/cms/features/api-tokens) can be configured with the following parameters:
+The [API tokens](/cms/features/api-tokens) feature can be configured with the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
@@ -237,7 +237,7 @@ The forgot password functionality, including [email templating](/cms/features/us
 
 ## Rate limiting
 
-The rate limiting for the admin panel's authentication endpoints can be configured with the following parameters. Additional configuration options come from the [koa2-ratelimit](https://www.npmjs.com/package/koa2-ratelimit) package:
+The rate limiting for the admin panel's authentication endpoints can be configured with the following parameters. Additional configuration options come from the <ExternalLink text="koa2-ratelimit" to="https://www.npmjs.com/package/koa2-ratelimit"/> package:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|

@@ -11,6 +11,8 @@ tags:
 
 # Favicon
 
+Strapi's [admin panel](/cms/admin-panel-customization) displays its branding on various places, including the [logo](/cms/admin-panel-customization/logos) and the favicon. Replacing these images allows you to match the interface and application to your identity.
+
 To replace the favicon:
 
 1. Create a `/src/admin/extensions/` folder if the folder does not already exist.

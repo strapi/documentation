@@ -11,7 +11,7 @@ tags:
 
 # Locales & translations
 
-The admin panel always ships with English translations, but can display additional languages. You can also override any text that appears in the interface.
+Strapi's [admin panel](/cms/admin-panel-customization) always ships with English translations, but can display additional languages. You can also override any text that appears in the interface.
 The present page shows how to define your own locales and extend Strapi or plugin translations from the project codebase.
 
 ## Defining locales
