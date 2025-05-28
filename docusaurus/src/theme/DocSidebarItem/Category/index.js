@@ -166,6 +166,8 @@ export default function DocSidebarItemCategory({
           href={collapsible ? hrefWithSSRFallback ?? '#' : hrefWithSSRFallback}
           {...props}>
           {label}
+          {customProps?.updated && <UpdatedBadge />}
+          {customProps?.new && <NewBadge />}
         </Link>
         {href && collapsible && (
           <CollapseButton
@@ -177,8 +179,6 @@ export default function DocSidebarItemCategory({
             }}
           />
         )}
-        {customProps?.new && <NewBadge />}
-        {customProps?.updated && <UpdatedBadge />}
       </div>
 
       <Collapsible lazy as="ul" className="menu__list" collapsed={collapsed}>

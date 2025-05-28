@@ -362,6 +362,9 @@ const sidebars = {
           type: 'category',
           label: 'Admin panel customization',
           collapsed: true,
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'doc',
