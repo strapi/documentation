@@ -114,7 +114,7 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
-### Deploy on different servers
+### Deploy on different servers {#deploy-on-different-servers}
 
 Unless you chose to deploy Strapi's back-end server and admin panel server on different servers, by default:
 - The back-end server and the admin panel server both run on the same host and port (`http://localhost:1337/`)
@@ -263,7 +263,7 @@ Transfer tokens for the [Data transfer](/cms/data-management/transfer) feature c
 For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the license information is used, unless a _smaller_ `retentionDays` value is defined in the `config/admin.js|ts` configuration file.
 :::
 
-## Configuration examples {#configurations}
+## Configuration examples
 
 The `/config/admin` file should at least include a minimal configuration with required parameters for [authentication](#authentication) and [API tokens](#api-tokens). Additional parameters can be included for a full configuration.
 
