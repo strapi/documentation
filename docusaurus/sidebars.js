@@ -222,6 +222,9 @@ const sidebars = {
           type: 'category',
           label: 'Admin panel',
           collapsed: true,
+          customProps: {
+            updated: true,
+          },
           items: [
             {
               type: 'link',
