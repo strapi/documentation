@@ -5,6 +5,7 @@ on:
       - main
 
 jobs:
+  # Generates LLM files before Vercel builds
   pre-build:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +19,7 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          cache-dependency-path: './docusaurus/package-lock.json'  # Ajout du './'
+          cache-dependency-path: 'docusaurus/package-lock.json'
 
       - name: 📦 Install dependencies
         working-directory: ./docusaurus
@@ -27,14 +28,14 @@ jobs:
       - name: 🤖 Generate and commit LLMs files
         working-directory: ./docusaurus
         run: |
-          # Generate files
+          # Génère les fichiers
           node scripts/generate-llms.js
           
           # Configure git
           git config --local user.email "action@github.com"
           git config --local user.name "LLMs Generator"
           
-          # Commit if changed
+          # Commit si changé
           git add static/llms*.txt
           if ! git diff --staged --quiet; then
             git commit -m "🤖 Update LLMs files [skip ci]"
@@ -48,4 +49,47 @@ jobs:
     runs-on: ubuntu-latest
     needs: pre-build
     steps:
-      # Le reste de ton workflow...
+      # Ton workflow existant exactement pareil...
+      - name: Get Vercel deployment URL
+        id: get-url-prod
+        uses: derrickmehaffy/vercel-preview-url@main
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          vercel_team_id: 'strapijs'
+          vercel_target: 'production'
+          vercel_app: 'documentation'
+          vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Wait for Vercel deploy to complete
+        uses: UnlyEd/github-action-await-vercel@v1.2.14
+        id: await-vercel-prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        with:
+          deployment-url: ${{ steps.get-url-prod.outputs.preview_url }}
+          timeout: 600
+
+      - name: Output debug status
+        run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
+
+      - name: Invalidate CloudFront Cache
+        uses: chetan/invalidate-cloudfront-action@v2
+        id: invalid-cloudfront-prod
+        env:
+          DISTRIBUTION: ${{ secrets.PROD_DISTRIBUTION }}
+          PATHS: "/*"
+          AWS_REGION: ${{ secrets.PROD_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Algolia crawler creation and crawl
+        uses: algolia/algoliasearch-crawler-github-actions@v1.1.9
+        id: update-algolia-index-prod
+        with:
+          crawler-user-id: ${{ secrets.CRAWLER_USER_ID }}
+          crawler-api-key: ${{ secrets.CRAWLER_API_KEY }}
+          algolia-app-id: ${{ secrets.ALGOLIA_APP_ID }}
+          algolia-api-key: ${{ secrets.ALGOLIA_API_KEY }}
+          site-url: 'https://docs.strapi.io'
+          crawler-name: 'cmsDocs'
