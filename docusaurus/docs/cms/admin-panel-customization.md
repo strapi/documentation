@@ -35,11 +35,35 @@ Most basic admin panel customizations will be done in the `/src/admin/app` file,
 
 Any file used by the `config` object (e.g., a custom logo) should be placed in a `/src/admin/extensions/` folder and imported inside `/src/admin/app.js`.
 
+<HotReloading />
+
+Before deployment, the admin panel needs to be built, by running the following command from the project's root directory:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```sh
+yarn build
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```sh
+npm run build
+```
+
+</TabItem>
+
+</Tabs>
+
+This will replace the folder's content located at `./build`. Visit <ExternalLink to="http://localhost:1337/admin" text="http://localhost:1337/admin"/> to make sure customizations have been taken into account.
+
 :::note Note: Admin panel extensions vs. plugins extensions
 By default, Strapi projects already contain another `extensions` folder in `/src` but it is for plugins extensions only (see [Plugins extension](/cms/plugins-development/plugins-extension)).
 :::
-
-<HotReloading />
 
 ## Available customizations
 
