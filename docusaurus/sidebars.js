@@ -345,9 +345,6 @@ const sidebars = {
           label: 'Backend customization',
           collapsible: true,
           collapsed: true,
-          customProps: {
-            updated: true,
-          },
           items: [
             {
               type: 'doc',
