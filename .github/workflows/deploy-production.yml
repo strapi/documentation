@@ -5,11 +5,51 @@ on:
       - main
 
 jobs:
-  deploy-prod:
+  # Generates LLM files before Vercel builds
+  pre-build:
     runs-on: ubuntu-latest
     steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Need to get actual deployment URL and not previous one
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'docusaurus/package-lock.json'
+
+      - name: 📦 Install dependencies
+        working-directory: ./docusaurus
+        run: npm ci
+
+      - name: 🤖 Generate and commit LLMs files
+        working-directory: ./docusaurus
+        run: |
+          # Génère les fichiers
+          node scripts/generate-llms.js
+          
+          # Configure git
+          git config --local user.email "action@github.com"
+          git config --local user.name "LLMs Generator"
+          
+          # Commit si changé
+          git add static/llms*.txt
+          if ! git diff --staged --quiet; then
+            git commit -m "🤖 Update LLMs files [skip ci]"
+            git push
+            echo "✅ LLMs files updated - Vercel will auto-redeploy"
+          else
+            echo "🔄 No changes in LLMs files"
+          fi
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: pre-build
+    steps:
+      # Ton workflow existant exactement pareil...
       - name: Get Vercel deployment URL
         id: get-url-prod
         uses: derrickmehaffy/vercel-preview-url@main
@@ -21,7 +61,6 @@ jobs:
           vercel_app: 'documentation'
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
 
-      # Waits for Vercel to finish building the docs
       - name: Wait for Vercel deploy to complete
         uses: UnlyEd/github-action-await-vercel@v1.2.14
         id: await-vercel-prod
@@ -29,12 +68,10 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           deployment-url: ${{ steps.get-url-prod.outputs.preview_url }}
-          timeout: 600 # wait 10 minutes before failing
+          timeout: 600
 
-      # Outputs the current URL and confirms ready status (for debugging purposes)
       - name: Output debug status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
-      # Clears Cloudfront cache
 
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
@@ -46,7 +83,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      # Updates the Algolia Search indexes
       - name: Algolia crawler creation and crawl
         uses: algolia/algoliasearch-crawler-github-actions@v1.1.9
         id: update-algolia-index-prod
