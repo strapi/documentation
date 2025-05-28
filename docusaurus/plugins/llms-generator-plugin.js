@@ -5,10 +5,10 @@ function llmsGeneratorPlugin(context, options) {
     name: 'llms-generator-plugin',
     
     async postBuild({ outDir, baseUrl }) {
-      console.log('🚀 Génération des fichiers LLMs...');
+      console.log('🚀 Generating LLM files...');
       
       try {
-        // Import dynamique côté serveur avec le bon chemin
+        // Dynamic import server-side with the right path
         const DocusaurusLlmsGenerator = require(path.resolve(__dirname, '../scripts/generate-llms'));
         
         const generator = new DocusaurusLlmsGenerator({
@@ -20,18 +20,18 @@ function llmsGeneratorPlugin(context, options) {
         });
         
         await generator.generate();
-        console.log('✅ Fichiers LLMs générés avec succès dans le build !');
+        console.log('✅ Successfully generated LLMs files in build !');
       } catch (error) {
-        console.error('❌ Erreur lors de la génération des fichiers LLMs:', error);
-        // Ne pas faire échouer le build pour cette erreur
+        console.error('❌ Error while trying to generate LLM files:', error);
+        // Don't make the build fail because of this error
       }
     },
 
     async loadContent() {
-      // Génère pendant le développement - UNIQUEMENT côté serveur
+      // Generate while development - only server-side
       if (process.env.NODE_ENV === 'development') {
         try {
-          // Import avec chemin absolu pour éviter les problèmes
+          // Absolute path import to avoid issues
           const DocusaurusLlmsGenerator = require(path.resolve(process.cwd(), 'scripts/generate-llms'));
           
           const generator = new DocusaurusLlmsGenerator({
@@ -43,17 +43,17 @@ function llmsGeneratorPlugin(context, options) {
           });
           
           await generator.generate();
-          console.log('✅ Fichiers LLMs générés pour le développement dans /static/');
+          console.log('✅ Successfully generated LLMs files for development in /static/');
         } catch (error) {
-          console.warn('⚠️ Génération LLMs en développement échouée:', error.message);
+          console.warn('⚠️ Failed generating LLMs files for development:', error.message);
         }
       }
       
-      return {}; // loadContent doit retourner quelque chose
+      return {}; // loadContent should return something
     },
 
     configureWebpack(config, isServer) {
-      // Ajoute les fallbacks pour éviter les erreurs Webpack côté client
+      // Add fallbacks to avoid Webpack errors client side
       if (!isServer) {
         return {
           resolve: {
@@ -80,9 +80,8 @@ function llmsGeneratorPlugin(context, options) {
       return {};
     }
 
-    // SUPPRIMÉ : contentLoaded() qui créait les routes conflictuelles
-    // Les fichiers seront servis directement depuis /static/ en dev
-    // et depuis /build/ en production
+    // Files are served directly from /static/ while on dev mode
+    // and from /build/ in production
   };
 }
 
