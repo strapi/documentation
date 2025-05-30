@@ -481,7 +481,7 @@ Both the `injectComponent()` and `getPlugin('content-manager').injectComponent()
 
 export default {
   bootstrap(app) {
-    app.getPlugin('content-manager').injectComponent()('editView', 'informations', {
+    app.getPlugin('content-manager').injectComponent('editView', 'informations', {
       name: 'my-plugin-my-compo',
       Component: () => 'my-compo',
     });
