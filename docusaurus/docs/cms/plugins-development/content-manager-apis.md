@@ -31,7 +31,7 @@ All Content Manager APIs works in the same way: to use them, call them on your p
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
   
   ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])`
+  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])
   ```
 
 - Passing a function that receives the current elements and return the new ones. This is useful if, for example, you want to add something in a specific position in the list, like in the following code:
