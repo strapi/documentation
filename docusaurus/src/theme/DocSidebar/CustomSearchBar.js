@@ -4,6 +4,86 @@ import {
 } from "@inkeep/cxkit-react";
 import Icon from '../../components/Icon.js';
 
+function getInkeepSearchConfig() {
+  const isBrowser = typeof document !== 'undefined';
+
+  return {
+    baseSettings: {
+      apiKey: "c43431665c4e336c02def65c6f90a1e0d943dfe8066dcf43",
+      primaryBrandColor: "#4945FF",
+      organizationDisplayName: "Strapi",
+      colorMode: isBrowser
+        ? {
+            sync: {
+              target: document.documentElement,
+              attributes: ["data-theme"],
+              isDarkMode: (attributes) => {
+                const currentTheme = attributes["data-theme"];
+                return currentTheme === "dracula" || currentTheme === "dark";
+              },
+            },
+          }
+        : undefined, // undefined on server side, no error
+      transformSource: (source) => {
+        const { url } = source;
+        if (!url) {
+          return source;
+        }
+        const urlPatterns = {
+          docs: 'docs.strapi.io',
+          docs_next: 'docs-next.strapi.io',
+          blog: 'strapi.io/blog',
+          strapi: 'strapi.io',
+          youtube: 'youtube.com',
+        }
+        const tabConfig = {
+          [urlPatterns.docs]: {
+            tab: 'Docs',
+          },
+          [urlPatterns.docs_next]: {
+            tab: 'Docs',
+          },
+          [urlPatterns.blog]: {
+            tab: 'Blog',
+          },
+          [urlPatterns.strapi]: {
+            tab: 'Strapi',
+          },
+          [urlPatterns.youtube]: {
+            tab: 'YouTube',
+          }
+        }
+        const matchingPattern = Object.keys(tabConfig).find((pattern) => url.includes(pattern))
+        const config = matchingPattern ? tabConfig[matchingPattern] : null
+        if (!config) {
+          return source;
+        }
+        const existingTabs = source.tabs ?? []
+        const tabExists = existingTabs.some((existingTab) =>
+          typeof existingTab === 'string'
+            ? existingTab === config.tab
+            : Array.isArray(existingTab) && existingTab[0] === config.tab,
+        )
+        const tabs = tabExists
+          ? existingTabs
+          : [
+            ...existingTabs,
+            [config.tab, { breadcrumbs: source.breadcrumbs }],
+          ]
+        return {
+          ...source,
+          tabs,
+        }
+      },
+    },
+    searchSettings: {
+      placeholder: "Search documentation...",
+      view: "dual-pane",
+      tabs: [["Docs", { isAlwaysVisible: true }], "Blog", "Strapi", "GitHub", "YouTube", "All"],
+    }
+  };
+}
+
 export default function CustomSearchBarWrapper(props) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,16 +92,10 @@ export default function CustomSearchBarWrapper(props) {
   }, []);
 
   const config = {
-    baseSettings: {
-      apiKey: "c43431665c4e336c02def65c6f90a1e0d943dfe8066dcf43", // Replace with your actual API key
-      primaryBrandColor: "#4945FF", // Strapi primary color
-    },
+    ...getInkeepSearchConfig(),
     modalSettings: {
       isOpen,
       onOpenChange: handleOpenChange,
-    },
-    searchSettings: {
-      placeholder: "Search documentation...",
     },
   };
 
@@ -59,7 +133,7 @@ export default function CustomSearchBarWrapper(props) {
         </button>
       </div>
 
-      {/* The Inkeep Modal Component - Search only */}
+      {/* The Inkeep Modal Component - Search only with advanced config */}
       <InkeepModalSearch {...config} />
     </>
   );
