@@ -187,15 +187,15 @@ const config = {
           hideable: true,
         },
       },
-      algolia: {
-        appId: '392RJ63O14',
-        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
-        indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
-        searchParameters: {
-          facetFilters: [] 
-        },
-      },
+      // algolia: {
+      //   appId: '392RJ63O14',
+      //   apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
+      //   indexName: 'strapi_newCmsCrawler_march2025',
+      //   contextualSearch: false,
+      //   searchParameters: {
+      //     facetFilters: [] 
+      //   },
+      // },
       navbar: {
         hideOnScroll: false,
         logo: {
