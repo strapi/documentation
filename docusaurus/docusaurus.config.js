@@ -12,14 +12,11 @@ const config = {
   tagline: 'Design APIs fast, manage content easily.',
   url: 'https://docs.strapi.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
+  onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'throw',
   onBrokenAnchors: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
-  // Even if you don't use internalization, you can use this field to set useful
-  // metadata like html lang. For example, if your site is Chinese, you may want
-  // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -72,9 +69,9 @@ const config = {
       async: true,
     },
     {
-      // src: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
-      src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1', // fallback
+      src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1',
       async: true,
+      defer: true,
     },
     {
       /**
@@ -106,6 +103,7 @@ const config = {
       async: true,
     },
   ],
+  
   stylesheets: [
     {
       href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css', // fallback
@@ -123,6 +121,7 @@ const config = {
       rel: 'stylesheet',
     },
   ],
+
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -187,15 +186,15 @@ const config = {
           hideable: true,
         },
       },
-      algolia: {
-        appId: '392RJ63O14',
-        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
-        indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
-        searchParameters: {
-          facetFilters: [] 
-        },
-      },
+      // algolia: {
+      //   appId: '392RJ63O14',
+      //   apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
+      //   indexName: 'strapi_newCmsCrawler_march2025',
+      //   contextualSearch: false,
+      //   searchParameters: {
+      //     facetFilters: [] 
+      //   },
+      // },
       navbar: {
         hideOnScroll: false,
         logo: {
@@ -337,12 +336,29 @@ const config = {
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
     [ // Custom plugin to generate LLMs files
-      './plugins/llms-generator-plugin.js',  // ⬅️ Chemin depuis la racine
+      './plugins/llms-generator-plugin.js',
       {
         docsDir: 'docs',
         sitebarPath: 'sidebars.js',
         siteName: 'Strapi Documentation'
       }
+    ],
+    // Plugin Orama - placé en premier pour éviter les conflits
+    [
+      "@orama/plugin-docusaurus-v3",
+      {
+        cloud: {
+          apiKey: "6NG5Tqf1adCPYUD9jOksloskVsKajXdf",
+          indexId: "oeqa1azo3nqy5num0irw3qzf",
+          deploy: "default",
+        },
+        searchbox: {
+          placeholder: "Search...",
+        },
+        searchButton: {
+          text: "Click here to search..."
+        }
+      },
     ]
     // [ // Disabled
     //   '@docusaurus/plugin-client-redirects',

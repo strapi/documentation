@@ -1,0 +1,24 @@
+/* Fixes pour éviter les conflits entre Orama et Phosphor Icons */
+
+/* Cache les icônes dupliquées d'Orama si nécessaire */
+.orama-search-box ph-caret-left,
+.orama-search-box ph-caret-right,
+.orama-search-box ph-magnifying-glass {
+  display: none !important;
+}
+
+/* Ou utilise les icônes CSS à la place */
+.orama-search-box .search-icon::before {
+  content: "🔍";
+  font-style: normal;
+}
+
+.orama-search-box .caret-left::before {
+  content: "←";
+  font-style: normal;
+}
+
+.orama-search-box .caret-right::before {
+  content: "→";
+  font-style: normal;
+}

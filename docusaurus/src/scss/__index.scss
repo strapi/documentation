@@ -15,6 +15,7 @@
 @forward 'base';
 
 /** Components */
+@use 'orama-fixes.scss';
 @use 'admonition.scss';
 @use 'api-call.scss';
 @use 'announcement-bar.scss';
