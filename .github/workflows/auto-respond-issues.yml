@@ -2,7 +2,13 @@ name: Auto-respond to Issues
 
 on:
   issues:
-    types: [opened]
+  types: [opened]
+  workflow_dispatch:
+  inputs:
+    issue_number:
+      description: 'Number of issue to handle'
+      required: true
+      type: string
 
 permissions:
   issues: write
@@ -31,12 +37,29 @@ jobs:
           script: |
             const axios = require('axios');
             
-            // Get issue details
-            const issue = context.payload.issue;
-            const issueTitle = issue.title;
-            const issueBody = issue.body || '';
-            const issueNumber = issue.number;
-            const issueAuthor = issue.user.login;
+            // Get issue details - handle both automatic and manual triggers
+            let issue, issueTitle, issueBody, issueNumber, issueAuthor;
+            
+            if (github.event.inputs?.issue_number) {
+              // Manual trigger - fetch issue details
+              const issueResponse = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: parseInt(github.event.inputs.issue_number)
+              });
+              issue = issueResponse.data;
+              issueTitle = issue.title;
+              issueBody = issue.body || '';
+              issueNumber = issue.number;
+              issueAuthor = issue.user.login;
+            } else {
+              // Automatic trigger - use context
+              issue = context.payload.issue;
+              issueTitle = issue.title;
+              issueBody = issue.body || '';
+              issueNumber = issue.number;
+              issueAuthor = issue.user.login;
+            }
             
             console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
             
