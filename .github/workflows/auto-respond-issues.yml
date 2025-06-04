@@ -75,7 +75,7 @@ jobs:
               "   - Be warm, welcoming, and supportive - this represents the Strapi brand",
               "   - Show empathy for the user's situation and acknowledge their effort in reporting the issue",
               "   - Use friendly language that makes the user feel valued in our community",
-              "",
+              "   - Keep the introduction concise and professional - avoid overly lengthy greetings",
               "2. **Technical Content:**",
               "   - Directly address the question or problem described",
               "   - Provide relevant code examples, configuration snippets, or step-by-step guidance when applicable",
@@ -89,8 +89,7 @@ jobs:
               "   - For complex issues, break down the response into clear, actionable steps",
               "   - If the issue seems like it requires core team attention, indicate that appropriately",
               "   - If suggesting feature requests or improvements, direct users to https://feedback.strapi.io",
-              "   - If the issue seems to be a product bug or core functionality issue rather than documentation, clearly mention this and tag @pwizla for potential transfer to strapi/strapi repository",
-              "",
+              "   - If the issue seems to be a product bug or core functionality issue rather than documentation, clearly mention this and format the username as `@pwizla` (with backticks) for potential transfer to strapi/strapi repository",              "",
               "Please craft a response that will be posted as an automated GitHub comment, so it should be complete and helpful on its own while being genuinely friendly and supportive."
             ].join('\n');
             
