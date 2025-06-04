@@ -27,6 +27,53 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.5.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add LLMs.txt and LLMs-full.txt generation](https://github.com/strapi/documentation/pull/2507)
+
+We've started adding <ExternalLink to="https://llmstxt.org/" text="llms.txt" /> support to the Strapi Docs. You can find the files in the footer or access them directly via the following links:
+- [`llms.txt`](https://docs.strapi.io/llms.txt)
+- [`llms-full.txt`](https://docs.strapi.io/llms-full.txt)
+
+![LLM files in the footer](/img/assets/llms/llms-footer.png)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Update app creation flow to include Growth free trial](https://github.com/strapi/documentation/pull/2496)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Admin Panel API typo in example](https://github.com/strapi/documentation/pull/2508)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/abdallahmz" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/55534657?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="abdallahmz"/>
+</a>
+<a href="https://github.com/martinschilliger" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/11884891?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="martinschilliger"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.4.0
 
 This release marks some significant additions and rewrites. We've rethought the dev-related content in the CMS docs, with a **clearer table of contents** for the development, configuration, and customization aspects of Strapi.
