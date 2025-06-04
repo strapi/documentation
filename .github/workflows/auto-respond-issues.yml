@@ -138,18 +138,39 @@ jobs:
               
               if (sources.length > 0) {
                 responseBody += `📚 **Relevant documentation:**\n`;
-                sources.forEach(source => {
-                  const url = source.source_url;
-                  let title = source.title || 'Documentation';
+                
+                // Process and format sources
+                const formattedSources = sources
+                  .filter(source => source.source_url && source.source_url.startsWith('http') && source.title !== 'Documentation')
+                  .map(source => {
+                    const url = source.source_url;
+                    let title = source.title || 'Documentation';
               
-                  // Handle pipe-separated title|subtitle format - use the first part as title
-                  if (title.includes('|')) {
-                    title = title.split('|')[0].trim();
-                  }
+                    // Handle pipe-separated title|subtitle format
+                    if (title.includes('|')) {
+                      const parts = title.split('|');
+                      const pageTitle = parts[0].trim();
+                      const sectionTitle = parts[1].trim();
+                      
+                      // If section title is different from page title, format as "Page - Section"
+                      if (sectionTitle && sectionTitle !== pageTitle) {
+                        title = `${pageTitle} - ${sectionTitle}`;
+                      } else {
+                        title = pageTitle;
+                      }
+                    }
               
-                  if (url && url.startsWith('http') && title !== 'Documentation') {
-                    responseBody += `- [${title}](${url})\n`;
-                  }
+                    return { title, url };
+                  })
+                  .sort((a, b) => a.title.localeCompare(b.title)); // Sort alphabetically by title
+              
+                // Remove duplicates (same title and URL)
+                const uniqueSources = formattedSources.filter((source, index, array) => 
+                  index === array.findIndex(s => s.title === source.title && s.url === source.url)
+                );
+              
+                uniqueSources.forEach(source => {
+                  responseBody += `- [${source.title}](${source.url})\n`;
                 });
                 responseBody += `\n`;
               }
