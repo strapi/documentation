@@ -47,7 +47,7 @@ Follow the steps below by clicking on the togglable content to read more instruc
 
     </TabItem>
 
-2. The terminal will invite you to create a Strapi Cloud account. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
+2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the <GrowthBadge tooltip="The CMS Growth plan includes the Live Preview, Releases, and Content History features."/> plan will be automatically applied to your project. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
 
 3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
 
@@ -70,7 +70,8 @@ Follow the steps below by clicking on the togglable content to read more instruc
 As you will see in the terminal, your project is now building locally.
 
 :::info
-* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi Cloud project.
+
+* The folder of your project will include a `.strapi-cloud.json` file used to link the local Strapi project on your machine to the Strapi servers.
 * Many more installation options are available. Please refer to the [installation documentation](/cms/installation) for details.
 :::
 
