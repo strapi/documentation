@@ -1,0 +1,55 @@
+name: Escalate Mentions
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  handle-mention:
+    runs-on: ubuntu-latest
+    if: contains(github.event.comment.body, '@pwizla')
+    steps:
+      - name: Process mention escalation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment;
+            const issue = context.payload.issue;
+            const commenter = comment.user.login;
+            
+            console.log(`Mention detected in issue #${issue.number} by ${commenter}`);
+            
+            // Add priority label
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              labels: ['needs-human-review', 'priority']
+            });
+            
+            // Remove auto-responded label if present
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: 'auto-responded'
+              });
+            } catch (error) {
+              // Label might not exist, ignore
+            }
+            
+            // Add a reaction to acknowledge the mention
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: comment.id,
+              content: 'eyes'
+            });
+            
+            // Optional: Send notification (if you have a webhook setup)
+            // You could integrate with Slack, Discord, or email here
