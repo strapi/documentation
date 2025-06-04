@@ -126,8 +126,7 @@ jobs:
               }
               
               // Format the response
-              let responseBody = `👋 Hello @${issueAuthor}! Thanks for opening this issue.\n\n`;
-              responseBody += `🤖 I've analyzed your question and here's what I found:\n\n`;
+              let responseBody = `🤖 I've analyzed your question and here's what I found:\n\n`;
               
               // Add uncertainty warning if needed
               if (isUncertain) {
@@ -151,7 +150,7 @@ jobs:
               responseBody += `---\n\n`;
               responseBody += `ℹ️ This response was generated automatically. `;
               responseBody += `If this doesn't fully answer your question or if you need further assistance, `;
-              responseBody += `please mention @pwizla in a comment and a human maintainer will help you.\n\n`;
+              responseBody += `please mention \`@pwizla\` in a comment and a human maintainer will help you.\n\n`;
               responseBody += `You can also try our [interactive AI chat](https://docs.strapi.io) for more detailed assistance.`;
               
               // Post the response
