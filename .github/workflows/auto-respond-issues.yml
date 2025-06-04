@@ -2,13 +2,13 @@ name: Auto-respond to Issues
 
 on:
   issues:
-  types: [opened]
+    types: [opened]
   workflow_dispatch:
-  inputs:
-    issue_number:
-      description: 'Number of issue to handle'
-      required: true
-      type: string
+    inputs:
+      issue_number:
+        description: 'Number of issue to handle'
+        required: true
+        type: string
 
 permissions:
   issues: write
