@@ -105,7 +105,7 @@ Please craft a response that will be posted as an automated GitHub comment, so i
                 }
               }, {
                 headers: {
-                  'X-API-Key': process.env.KAPA_API_TOKEN, // Use X-API-Key instead of Bearer
+                  'X-API-Key': process.env.KAPA_API_TOKEN,
                   'Content-Type': 'application/json',
                   'User-Agent': 'Strapi-Docs-GitHub-Bot/1.0'
                 },
@@ -227,8 +227,8 @@ Please craft a response that will be posted as an automated GitHub comment, so i
                 console.error('Response data:', error.response.data);
               }
               
-              // Fallback response
-              const fallbackResponse = `👋 Hello @${issueAuthor}! Thanks for opening this issue.\n\n`;
+              // Fallback response - Fixed string concatenation
+              let fallbackResponse = `👋 Hello @${issueAuthor}! Thanks for opening this issue.\n\n`;
               fallbackResponse += `🤖 I tried to analyze your question automatically but encountered a technical issue. `;
               fallbackResponse += `A human maintainer will review this soon.\n\n`;
               fallbackResponse += `In the meantime, you might find answers in our:\n`;
