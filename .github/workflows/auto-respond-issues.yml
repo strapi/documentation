@@ -120,7 +120,6 @@ jobs:
               // Extract response data - updated for actual Kapa response structure
               const aiResponse = kapaResponse.data.answer;
               const sources = kapaResponse.data.relevant_sources || [];
-              console.log('Raw sources data:', JSON.stringify(sources, null, 2));
               const isUncertain = kapaResponse.data.is_uncertain || false;
               
               if (!aiResponse) {
@@ -140,20 +139,16 @@ jobs:
               if (sources.length > 0) {
                 responseBody += `📚 **Relevant documentation:**\n`;
                 sources.forEach(source => {
+                  const url = source.source_url;
                   let title = source.title || 'Documentation';
-                  let url = source.source_url;
-    
-                  // Handle pipe-separated title|url format
-                  if (title.includes('|') && !url) {
-                    const parts = title.split('|');
-                    title = parts[0].trim();
-                    url = parts[1]?.trim();
+              
+                  // Handle pipe-separated title|subtitle format - use the first part as title
+                  if (title.includes('|')) {
+                    title = title.split('|')[0].trim();
                   }
-    
-                  if (url && url.startsWith('http')) {
+              
+                  if (url && url.startsWith('http') && title !== 'Documentation') {
                     responseBody += `- [${title}](${url})\n`;
-                  } else if (title && title !== 'Documentation') {
-                    responseBody += `- ${title}\n`;
                   }
                 });
                 responseBody += `\n`;
