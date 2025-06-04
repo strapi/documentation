@@ -41,8 +41,10 @@ jobs:
             console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
             
             // Skip if issue is from a maintainer/collaborator
-            const collaborators = ['pwizla']; // Add other maintainers
-            if (collaborators.includes(issueAuthor)) {
+            const collaborators = ['pwizla']; 
+            const isTesting = issueTitle.includes('[TEST]') || issueBody.includes('testing-auto-response');
+      
+            if (collaborators.includes(issueAuthor) && !isTesting) {
               console.log('Issue from maintainer, skipping auto-response');
               return;
             }
