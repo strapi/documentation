@@ -88,6 +88,8 @@ jobs:
               "   - Suggest where the user might find more resources (Discord, documentation sections, etc.)",
               "   - For complex issues, break down the response into clear, actionable steps",
               "   - If the issue seems like it requires core team attention, indicate that appropriately",
+              "   - If suggesting feature requests or improvements, direct users to https://feedback.strapi.io",
+              "   - If the issue seems to be a product bug or core functionality issue rather than documentation, clearly mention this and tag @pwizla for potential transfer to strapi/strapi repository",
               "",
               "Please craft a response that will be posted as an automated GitHub comment, so it should be complete and helpful on its own while being genuinely friendly and supportive."
             ].join('\n');
@@ -151,7 +153,8 @@ jobs:
               responseBody += `ℹ️ This response was generated automatically. `;
               responseBody += `If this doesn't fully answer your question or if you need further assistance, `;
               responseBody += `please mention \`@pwizla\` in a comment and a human maintainer will help you.\n\n`;
-              responseBody += `You can also try our [interactive AI chat](https://docs.strapi.io) for more detailed assistance.`;
+              responseBody += `You can also try our [interactive AI chat](https://docs.strapi.io) for more detailed assistance.\n\n`;
+              responseBody += `💡 For feature requests or product feedback, visit [feedback.strapi.io](https://feedback.strapi.io).`;
               
               // Post the response
               await github.rest.issues.createComment({
