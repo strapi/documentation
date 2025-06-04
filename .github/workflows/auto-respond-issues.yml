@@ -120,6 +120,7 @@ jobs:
               // Extract response data - updated for actual Kapa response structure
               const aiResponse = kapaResponse.data.answer;
               const sources = kapaResponse.data.relevant_sources || [];
+              console.log('Raw sources data:', JSON.stringify(sources, null, 2));
               const isUncertain = kapaResponse.data.is_uncertain || false;
               
               if (!aiResponse) {
