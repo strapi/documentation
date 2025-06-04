@@ -40,12 +40,12 @@ jobs:
             // Get issue details - handle both automatic and manual triggers
             let issue, issueTitle, issueBody, issueNumber, issueAuthor;
             
-            if (github.event.inputs?.issue_number) {
+            if (context.payload.inputs?.issue_number) {
               // Manual trigger - fetch issue details
               const issueResponse = await github.rest.issues.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: parseInt(github.event.inputs.issue_number)
+                issue_number: parseInt(context.payload.inputs.issue_number)
               });
               issue = issueResponse.data;
               issueTitle = issue.title;
