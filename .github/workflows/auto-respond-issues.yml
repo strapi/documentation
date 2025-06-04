@@ -139,10 +139,20 @@ jobs:
               if (sources.length > 0) {
                 responseBody += `📚 **Relevant documentation:**\n`;
                 sources.forEach(source => {
-                  const title = source.title || 'Documentation';
-                  const url = source.source_url;
-                  if (url) {
+                  let title = source.title || 'Documentation';
+                  let url = source.source_url;
+    
+                  // Handle pipe-separated title|url format
+                  if (title.includes('|') && !url) {
+                    const parts = title.split('|');
+                    title = parts[0].trim();
+                    url = parts[1]?.trim();
+                  }
+    
+                  if (url && url.startsWith('http')) {
                     responseBody += `- [${title}](${url})\n`;
+                  } else if (title && title !== 'Documentation') {
+                    responseBody += `- ${title}\n`;
                   }
                 });
                 responseBody += `\n`;
