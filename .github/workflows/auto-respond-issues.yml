@@ -59,36 +59,36 @@ jobs:
               `${cleanedBody}\n\n(Note: This is a brief issue description. The title "${issueTitle}" may contain additional context.)` :
               cleanedBody;
             
-            const query = `
-I need to provide a helpful, friendly, and comprehensive response to a GitHub issue from the Strapi community.
-
-**Issue Title:** ${issueTitle}
-
-**Issue Description:**
-${finalBody}
-
-Please provide a response that:
-
-1. **Tone & Approach:**
-   - Be warm, welcoming, and supportive - this represents the Strapi brand
-   - Show empathy for the user's situation and acknowledge their effort in reporting the issue
-   - Use friendly language that makes the user feel valued in our community
-
-2. **Technical Content:**
-   - Directly address the question or problem described
-   - Provide relevant code examples, configuration snippets, or step-by-step guidance when applicable
-   - Include links to official Strapi documentation that can help
-   - If the issue involves a bug, acknowledge it and provide workarounds if possible
-   - If it's a feature request, explain current alternatives or suggest next steps
-
-3. **Response Guidelines:**
-   - If you cannot find specific information to answer this question, be honest about it
-   - Suggest where the user might find more resources (Discord, documentation sections, etc.)
-   - For complex issues, break down the response into clear, actionable steps
-   - If the issue seems like it requires core team attention, indicate that appropriately
-
-Please craft a response that will be posted as an automated GitHub comment, so it should be complete and helpful on its own while being genuinely friendly and supportive.
-            `.trim();
+            const query = [
+              "I need to provide a helpful, friendly, and comprehensive response to a GitHub issue from the Strapi community.",
+              "",
+              "**Issue Title:** " + issueTitle,
+              "",
+              "**Issue Description:**",
+              finalBody,
+              "",
+              "Please provide a response that:",
+              "",
+              "1. **Tone & Approach:**",
+              "   - Be warm, welcoming, and supportive - this represents the Strapi brand",
+              "   - Show empathy for the user's situation and acknowledge their effort in reporting the issue",
+              "   - Use friendly language that makes the user feel valued in our community",
+              "",
+              "2. **Technical Content:**",
+              "   - Directly address the question or problem described",
+              "   - Provide relevant code examples, configuration snippets, or step-by-step guidance when applicable",
+              "   - Include links to official Strapi documentation that can help",
+              "   - If the issue involves a bug, acknowledge it and provide workarounds if possible",
+              "   - If it's a feature request, explain current alternatives or suggest next steps",
+              "",
+              "3. **Response Guidelines:**",
+              "   - If you cannot find specific information to answer this question, be honest about it",
+              "   - Suggest where the user might find more resources (Discord, documentation sections, etc.)",
+              "   - For complex issues, break down the response into clear, actionable steps",
+              "   - If the issue seems like it requires core team attention, indicate that appropriately",
+              "",
+              "Please craft a response that will be posted as an automated GitHub comment, so it should be complete and helpful on its own while being genuinely friendly and supportive."
+            ].join('\n');
             
             try {
               // Call Kapa AI Chat API
