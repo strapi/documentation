@@ -1699,9 +1699,8 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor
 
 Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in rich text editor. To change the default editor, several options are at your disposal:
 
-- You can install a third-party plugin, such as one for CKEditor, by visiting 
-
-</Tabs>
+- You can install a third-party plugin, such as one for CKEditor, by visiting .
+- You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/features/custom-fields)).
 
 
 
@@ -9558,7 +9557,7 @@ All Content Manager APIs works in the same way: to use them, call them on your p
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
   
   ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])`
+  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])
   ```
 
 - Passing a function that receives the current elements and return the new ones. This is useful if, for example, you want to add something in a specific position in the list, like in the following code:
@@ -11586,13 +11585,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 :::prerequisites
 
-2. The terminal will invite you to create a Strapi Cloud account. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
-
-3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
-
-4. Still in the browser tab, click **Continue with GitHub**. If you are not already logged in into GitHub with your current browser session, you might be redirected to a GitHub login page.
-
-5. Once logged in, the browser will display a "Congratulations, you're all set!" message and you can safely close the browser tab and get back to the terminal.
+2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the 
 
     </Tabs>
 
