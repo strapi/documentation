@@ -69,6 +69,7 @@ server {
 
 :::
 
+
 ## Generate a transfer token
 
 :::prerequisites
@@ -145,6 +146,14 @@ Initiating a data transfer depends on whether you want to push data to a remote 
 
 </TabItem>
 </Tabs>
+
+### Proxy support
+
+We support a proxy if you have `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` avaiable inside your env.
+
+:::prerequisites
+You must set an extra variable `GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE=''` [inside your env](https://github.com/gajus/global-agent?tab=readme-ov-file#environment-variables).
+:::
 
 ## Bypass all `transfer` command line prompts
 
