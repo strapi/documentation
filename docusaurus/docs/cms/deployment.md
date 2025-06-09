@@ -31,6 +31,10 @@ If you already created a content structure with the Content-Type Builder and add
 Another possible workflow is to first create the content structure locally, push your project to a git-based repository, deploy the changes to production, and only then add content to the production instance.
 :::
 
+:::caution
+For self-hosted Kubernetes deployments, we recommend using **npm** rather than **pnpm**. `pnpm` aggressive hoisting of dependencies can break native modules, such as `mysql2`— that your application may rely on. `npm` flatter, more predictable `node_modules` layout helps ensure native packages load correctly.
+:::
+
 ## General guidelines
 
 ### Hardware and software requirements
