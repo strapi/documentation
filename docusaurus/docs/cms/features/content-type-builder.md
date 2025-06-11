@@ -12,6 +12,7 @@ tags:
 ---
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
+import ConditionalFields from '/docs/snippets/conditional-fields.md'
 
 # Content-type Builder
 
@@ -217,6 +218,12 @@ The Text field displays a textbox that can contain small text. This field can be
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_richtextblocks.svg" /> Rich Text (Blocks) {#rich-text-blocks}
@@ -240,6 +247,12 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
@@ -278,6 +291,12 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_date.svg" /> Date {#date}
@@ -304,6 +323,12 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
@@ -336,6 +361,12 @@ The Password field displays a password field that is encrypted.
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 
@@ -363,6 +394,12 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Unique field   | Tick to prevent another field to be identical to this one.                  |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
@@ -402,6 +439,12 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean {#boolean}
@@ -430,6 +473,12 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_json.svg" /> JSON {#json}
@@ -453,6 +502,12 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
@@ -486,6 +541,12 @@ The Email field displays an email address field with format validation to ensure
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password {#password}
@@ -515,6 +576,12 @@ The Password field displays a password field that is encrypted.
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration {#enum}
@@ -541,6 +608,12 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 | Private field  | Tick to make the field private and prevent it from being found via the API. |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the field to have a different value per locale. |
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
@@ -577,6 +650,12 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 :::tip
@@ -607,6 +686,12 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 | Required field | Tick to prevent creating or saving an entry if the field is not filled in.  |
 | Maximum length | Tick to define a maximum number of characters allowed.                      |
 | Minimum length | Tick to define a minimum number of characters allowed.                      |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
@@ -645,6 +730,12 @@ When configuring a component through the Content-type Builder, it is possible to
 
 </TabItem>
 
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_dz.svg" /> Dynamic zones {#dynamiczones}
@@ -669,6 +760,12 @@ Dynamic zones are a combination of components that can be added to content-types
 | Maximum value  | Tick to define a maximum number of characters allowed.                                  |
 | Minimum value  | Tick to define a minimum number of characters allowed.                                  |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
+
+</TabItem>
+
+<TabItem value="condition" label="Condition <BetaBadge />">
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
