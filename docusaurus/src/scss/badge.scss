@@ -596,3 +596,62 @@ h2 .badge {
     }
   }
 }
+
+// main [role="tablist"] ~ .margin-top--md {
+//   [role="tabpanel"]:has(.badge) {
+//     // background-color: tomato;
+//     position: relative;
+
+//     .badge {
+//       // background-color: tomato;
+//       position: absolute;
+//       top: -4em;
+//       left: 10%;
+//       // position: absolute;
+//       display: inline-block;
+//       // top: 0;
+//       // left: 20px;
+//     }
+//   }
+
+// }
+// // main [role="tab"],
+// main [role="tab"] + [role="tabpanel"]:has(.badge) {
+//   background-color: yellow;
+// }
+// // [role="tab"] {
+// //   background-color: yellow;
+// // }
+
+// main [role="tablist"] ~ .margin-top--md {
+// }
+
+main [role="tablist"] + .margin-top--md:has([role="tabpanel"] .badge) {
+  position: relative;
+  z-index: -1;
+  // border: solid 1px blue;
+  padding-top: 57px;
+  top: -57px;
+  margin-bottom: -57px;
+}
+main [role="tablist"] + .margin-top--md:has([role="tabpanel"] .badge) [role="tabpanel"] .badge {
+  // background-color: yellow !important;
+  position: absolute;
+  top: 1.5em;
+  right: 43%;
+  // z-index: 100;
+}
+
+.tabs-container:has([role="tablist"] + .margin-top--md [role="tabpanel"] .badge) {
+  [role="tablist"] {
+    position: relative;
+    // display: flex;
+    // flex-direction: row;
+
+    [role="tab"] {
+      // border: solid 1px green;
+      // background-color: green !important;
+      // padding-right: 60px;
+    }
+  }
+}
