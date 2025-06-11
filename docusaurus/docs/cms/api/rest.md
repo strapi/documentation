@@ -134,7 +134,7 @@ The Upload package (which powers the [Media Library feature](/cms/features/media
 Strapi 5's Content API includes 2 major differences with Strapi v4:
 
 - The response format has been flattened, which means attributes are no longer nested in a `data.attributes` object and are directly accessible at the first level of the `data` object (e.g., a content-type's "title" attribute is accessed with `data.title`).
-- Strapi 5 now uses **documents** <DocumentDefinition/> and documents are accessed by their `documentId`.
+- Strapi 5 now uses **documents** <DocumentDefinition/> and documents are accessed by their `documentId` (see [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details)
 :::
 
 Requests return a response as an object which usually includes the following keys:
