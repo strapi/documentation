@@ -99,6 +99,7 @@ const config = {
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
       'data-modal-y-offset': "25vh",
+      'data-modal-size': '720px',
       async: true,
     },
     {
