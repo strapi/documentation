@@ -24,6 +24,9 @@
     border-radius: var(--strapi-spacing-1);
     transition: all 0.2s ease;
     text-decoration: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     
     &:hover {
       background-color: var(--strapi-neutral-100);
@@ -32,12 +35,30 @@
     }
 
     &:focus {
-      outline: 2px solid var(--strapi-primary-600);
-      outline-offset: 2px;
+      outline: none;
+      box-shadow: 0 0 0 2px var(--strapi-primary-200);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--strapi-primary-400);
     }
 
     &:active {
       transform: translateY(1px);
+    }
+  }
+
+  .expandable-cards-icon {
+    font-size: 14px;
+    transition: transform 0.2s ease;
+    
+    &--down {
+      margin-top: -2px;
+    }
+    
+    &--up {
+      margin-top: 2px;
     }
   }
 }
@@ -53,7 +74,13 @@
       }
 
       &:focus {
-        outline-color: var(--strapi-primary-400);
+        outline: none;
+        box-shadow: 0 0 0 2px var(--strapi-primary-800);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--strapi-primary-400);
       }
     }
   }

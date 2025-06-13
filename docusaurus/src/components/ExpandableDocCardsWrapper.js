@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Icon from './Icon';
 
 export default function ExpandableDocCardsWrapper({ 
   children, 
@@ -29,6 +30,10 @@ export default function ExpandableDocCardsWrapper({
             onClick={toggleExpanded}
             type="button"
           >
+            <Icon 
+              name={isExpanded ? "caret-up" : "caret-down"} 
+              classes={`ph-fill expandable-cards-icon ${isExpanded ? 'expandable-cards-icon--up' : 'expandable-cards-icon--down'}`}
+            />
             {isExpanded ? seeLessText : seeMoreText}
           </button>
         </div>
