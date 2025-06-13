@@ -9,24 +9,25 @@
   .expandable-cards-toggle {
     display: flex;
     justify-content: center;
-    margin-top: 24px;
+    margin-top: 16px;
+    margin-bottom: 32px;
   }
 
   .expandable-cards-button {
     background: none;
     border: none;
-    color: var(--strapi-primary-600);
+    color: var(--strapi-neutral-600);
     cursor: pointer;
-    font-size: var(--strapi-font-size-md);
-    font-weight: 500;
-    padding: 12px 24px;
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 400;
+    padding: 8px 16px;
     border-radius: var(--strapi-spacing-1);
     transition: all 0.2s ease;
     text-decoration: none;
     
     &:hover {
-      background-color: var(--strapi-primary-100);
-      color: var(--strapi-primary-700);
+      background-color: var(--strapi-neutral-100);
+      color: var(--strapi-neutral-800);
       text-decoration: none;
     }
 
@@ -44,11 +45,11 @@
 @include dark {
   .expandable-cards-wrapper {
     .expandable-cards-button {
-      color: var(--strapi-primary-400);
+      color: var(--strapi-neutral-400);
 
       &:hover {
-        background-color: var(--strapi-primary-900);
-        color: var(--strapi-primary-300);
+        background-color: var(--strapi-neutral-800);
+        color: var(--strapi-neutral-200);
       }
 
       &:focus {
