@@ -1,0 +1,59 @@
+/** Component: ExpandableDocCardsWrapper */
+@use './mixins' as *;
+
+.expandable-cards-wrapper {
+  .custom-cards-wrapper {
+    // Inherit existing styles from custom-doc-cards.scss
+  }
+
+  .expandable-cards-toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .expandable-cards-button {
+    background: none;
+    border: none;
+    color: var(--strapi-primary-600);
+    cursor: pointer;
+    font-size: var(--strapi-font-size-md);
+    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: var(--strapi-spacing-1);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    
+    &:hover {
+      background-color: var(--strapi-primary-100);
+      color: var(--strapi-primary-700);
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: 2px solid var(--strapi-primary-600);
+      outline-offset: 2px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+}
+
+@include dark {
+  .expandable-cards-wrapper {
+    .expandable-cards-button {
+      color: var(--strapi-primary-400);
+
+      &:hover {
+        background-color: var(--strapi-primary-900);
+        color: var(--strapi-primary-300);
+      }
+
+      &:focus {
+        outline-color: var(--strapi-primary-400);
+      }
+    }
+  }
+}
