@@ -100,6 +100,7 @@ const config = {
       'data-modal-body-padding-top': '20px',
       'data-modal-y-offset': "25vh",
       'data-modal-size': '720px',
+      'data-user-analytics-cookie-enabled': true,
       async: true,
     },
     {
