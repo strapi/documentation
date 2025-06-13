@@ -1,0 +1,87 @@
+/** Component: ExpandableDocCardsWrapper */
+@use './mixins' as *;
+
+.expandable-cards-wrapper {
+  .custom-cards-wrapper {
+    // Inherit existing styles from custom-doc-cards.scss
+  }
+
+  .expandable-cards-toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  .expandable-cards-button {
+    background: none;
+    border: none;
+    color: var(--strapi-neutral-600);
+    cursor: pointer;
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 400;
+    padding: 8px 16px;
+    border-radius: var(--strapi-spacing-1);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    
+    &:hover {
+      background-color: var(--strapi-neutral-100);
+      color: var(--strapi-neutral-800);
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--strapi-primary-200);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--strapi-primary-400);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  .expandable-cards-icon {
+    font-size: 14px;
+    transition: transform 0.2s ease;
+    
+    &--down {
+      margin-top: -2px;
+    }
+    
+    &--up {
+      margin-top: 2px;
+    }
+  }
+}
+
+@include dark {
+  .expandable-cards-wrapper {
+    .expandable-cards-button {
+      color: var(--strapi-neutral-400);
+
+      &:hover {
+        background-color: var(--strapi-neutral-800);
+        color: var(--strapi-neutral-200);
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--strapi-primary-800);
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--strapi-primary-400);
+      }
+    }
+  }
+}

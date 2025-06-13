@@ -78,7 +78,7 @@ Instead of a generic explanation we decided to show an example for each provider
 
 In the following examples, the frontend application will be the <ExternalLink to="https://github.com/strapi/strapi-examples/tree/master/examples/login-react" text="react login example application"/>  running on `http://localhost:3000`, while Strapi (i.e., the backend server) will be running on `http://localhost:1337`.
 
-<CustomDocCardsWrapper>
+<ExpandableDocCardsWrapper>
 <CustomDocCard icon="plugs-connected" title="Auth0" description="Configure authentication through the Users & Permissions feature with Auth0." link="/cms/configurations/users-and-permissions-providers/auth-zero" />
 <CustomDocCard icon="plugs-connected" title="AWS Cognito" description="Configure authentication through the Users & Permissions feature with AWS Cognito." link="/cms/configurations/users-and-permissions-providers/aws-cognito" />
 <CustomDocCard icon="plugs-connected" title="CAS" description="Configure authentication through the Users & Permissions feature with CAS." link="/cms/configurations/users-and-permissions-providers/cas" />
@@ -94,7 +94,7 @@ In the following examples, the frontend application will be the <ExternalLink to
 <CustomDocCard icon="plugs-connected" title="Twitch" description="Configure authentication through the Users & Permissions feature with Twitch." link="/cms/configurations/users-and-permissions-providers/twitch" />
 <CustomDocCard icon="plugs-connected" title="Twitter" description="Configure authentication through the Users & Permissions feature with Twitter." link="/cms/configurations/users-and-permissions-providers/twitter" />
 <CustomDocCard icon="plugs-connected" title="VK" description="Configure authentication through the Users & Permissions feature with VK." link="/cms/configurations/users-and-permissions-providers/vk" />
-</CustomDocCardsWrapper>
+</ExpandableDocCardsWrapper>
 
 If you want to create and add a new custom provider, please refer to the following guide:
 
