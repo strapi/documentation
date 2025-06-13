@@ -193,7 +193,7 @@ The Text field displays a textbox that can contain small text. This field can be
 
 <Tabs>
 
-<TabItem value="base" label="Base settings"> <BetaBadge />
+<TabItem value="base" label="Base settings">
 
 | Setting name | Instructions                                                                                            |
 |--------------|---------------------------------------------------------------------------------------------------------|
