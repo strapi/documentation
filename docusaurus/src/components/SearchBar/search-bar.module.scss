@@ -221,11 +221,343 @@
   }
 }
 
-/* Modal Customization */
-.DocSearch-Modal {
+/* Modal Customization with Preview Panel */
+:global(.DocSearch-Modal) {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  max-width: 90vw !important;
+  width: 1200px !important;
+  max-height: 80vh !important;
+}
+
+/* Two-column layout for results and preview */
+:global(.DocSearch-Hits) {
+  display: flex !important;
+  height: 60vh !important;
+  max-height: 500px !important;
+}
+
+/* Left column - Search results */
+:global(.search-results-column) {
+  flex: 0 0 50% !important;
+  overflow-y: auto !important;
+  border-right: 1px solid var(--docsearch-muted-color) !important;
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--docsearch-muted-color);
+    border-radius: 3px;
+  }
+}
+
+/* Two-column layout for results and preview */
+:global(.DocSearch-Hits) {
+  display: flex !important;
+  height: 60vh !important;
+  max-height: 500px !important;
+  overflow: hidden !important; /* Prevent parent scrolling */
+}
+
+/* Left column - Search results */
+:global(.search-results-column) {
+  flex: 0 0 50% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  border-right: 1px solid var(--docsearch-muted-color) !important;
+  height: 100% !important; /* Ensure full height for independent scrolling */
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--docsearch-muted-color);
+    border-radius: 3px;
+  }
+}
+
+/* Right column - Preview panel */
+:global(.preview-panel) {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: var(--docsearch-modal-background) !important;
+  height: 100% !important; /* Ensure full height */
+  overflow: hidden !important; /* Prevent panel from scrolling as a whole */
+  
+  :global(.preview-header) {
+    flex-shrink: 0 !important; /* Don't shrink the header */
+    padding: 16px 20px 12px !important;
+    border-bottom: 1px solid var(--docsearch-muted-color) !important;
+    background: var(--docsearch-searchbox-background) !important;
+    
+    :global(.preview-title) {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: var(--docsearch-text-color) !important;
+      margin: 0 !important;
+      line-height: 1.4 !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    :global(.preview-breadcrumb) {
+      font-size: 12px !important;
+      color: var(--docsearch-muted-color) !important;
+      margin-top: 4px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    :global(.preview-link) {
+      margin-top: 8px !important;
+      
+      a {
+        font-size: 12px !important;
+        color: var(--docsearch-primary-color) !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+  
+  :global(.preview-content) {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important; /* Prevent horizontal overflow */
+    padding: 20px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: var(--docsearch-text-color) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    
+    /* Ensure all content respects container width */
+    * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Style the preview content */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--docsearch-text-color) !important;
+      margin-top: 24px !important;
+      margin-bottom: 12px !important;
+      line-height: 1.3 !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    h1 { font-size: 20px !important; }
+    h2 { font-size: 18px !important; }
+    h3 { font-size: 16px !important; }
+    h4 { font-size: 14px !important; }
+    
+    p {
+      margin-bottom: 12px !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    /* Handle images */
+    img {
+      max-width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      margin: 12px 0 !important;
+    }
+    
+    /* Handle tables */
+    table {
+      width: 100% !important;
+      max-width: 100% !important;
+      table-layout: fixed !important;
+      border-collapse: collapse !important;
+      margin: 12px 0 !important;
+      font-size: 12px !important;
+    }
+    
+    th, td {
+      padding: 8px !important;
+      border: 1px solid var(--docsearch-muted-color) !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    code {
+      background: var(--docsearch-searchbox-background) !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      font-size: 12px !important;
+      color: var(--docsearch-primary-color) !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    pre {
+      background: var(--docsearch-searchbox-background) !important;
+      padding: 12px !important;
+      border-radius: 6px !important;
+      overflow-x: auto !important;
+      margin: 12px 0 !important;
+      max-width: 100% !important;
+      
+      code {
+        background: none !important;
+        padding: 0 !important;
+        white-space: pre !important;
+        word-wrap: normal !important;
+        overflow-wrap: normal !important;
+      }
+    }
+    
+    ul, ol {
+      margin: 12px 0 !important;
+      padding-left: 20px !important;
+    }
+    
+    li {
+      margin-bottom: 6px !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    blockquote {
+      border-left: 3px solid var(--docsearch-primary-color) !important;
+      margin: 16px 0 !important;
+      padding: 12px 16px !important;
+      background: var(--docsearch-searchbox-background) !important;
+      border-radius: 0 6px 6px 0 !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    /* Handle wide content like diagrams */
+    .mermaid, .plantuml, [class*="diagram"] {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      margin: 12px 0 !important;
+    }
+    
+    /* Custom scrollbar for content */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: var(--docsearch-muted-color);
+      border-radius: 3px;
+    }
+  }
+  
+  :global(.preview-content-area) {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important; /* Ensure content area doesn't overflow */
+  }
+  
+  :global(.preview-loading) {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--docsearch-muted-color) !important;
+    font-size: 14px !important;
+  }
+  
+  :global(.preview-placeholder) {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--docsearch-muted-color) !important;
+    text-align: center !important;
+    padding: 40px 20px !important;
+    
+    :global(.preview-placeholder-icon) {
+      font-size: 48px !important;
+      margin-bottom: 16px !important;
+      opacity: 0.5 !important;
+    }
+    
+    :global(.preview-placeholder-text) {
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+    }
+  }
+}
+
+/* Enhanced hit styling for hover and selection */
+:global(.DocSearch-Hit[data-hovered="true"]) {
+  background: var(--docsearch-searchbox-background) !important;
+  border-left: 3px solid var(--docsearch-primary-color) !important;
+  
+  .DocSearch-Hit-title {
+    color: var(--docsearch-primary-color) !important;
+  }
+}
+
+:global(.DocSearch-Hit[data-selected="true"]) {
+  background: var(--docsearch-primary-color) !important;
+  
+  * {
+    color: white !important;
+  }
+}
+
+/* Responsive adjustments */
+@include medium-down {
+  :global(.DocSearch-Modal) {
+    width: 95vw !important;
+    max-height: 90vh !important;
+  }
+  
+  :global(.DocSearch-Hits) {
+    flex-direction: column !important;
+    height: auto !important;
+    max-height: 70vh !important;
+  }
+  
+  :global(.search-results-column) {
+    flex: 0 0 40% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--docsearch-muted-color) !important;
+    max-height: 30vh !important;
+  }
+  
+  :global(.preview-panel) {
+    flex: 1 !important;
+    min-height: 300px !important;
+  }
 }
 
 .DocSearch-SearchBar {
