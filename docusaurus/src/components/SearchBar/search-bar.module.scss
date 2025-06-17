@@ -284,13 +284,13 @@
   }
 }
 
-/* Improved filter pills styles for better light mode visibility */
-.injected-filters {
+/* Global styles for injected filters (not module-scoped) */
+:global(.injected-filters) {
   padding: 12px 16px !important;
   border-bottom: 1px solid var(--docsearch-muted-color) !important;
   background: var(--docsearch-modal-background) !important;
 
-  .filter-title {
+  :global(.filter-title) {
     font-size: 12px !important;
     color: var(--docsearch-muted-color) !important;
     margin-bottom: 8px !important;
@@ -298,13 +298,13 @@
     letter-spacing: 0.5px !important;
   }
 
-  .filter-buttons {
+  :global(.filter-buttons) {
     display: flex !important;
     gap: 6px !important;
     flex-wrap: wrap !important;
   }
 
-  .filter-pill {
+  :global(.filter-pill) {
     padding: 6px 12px !important;
     border-radius: 16px !important;
     font-size: 12px !important;
@@ -314,12 +314,11 @@
     font-family: inherit !important;
     white-space: nowrap !important;
     
-    // Default state (inactive) - improved for light mode
+    /* Light mode - good visibility */
     background: #f8f9fa !important;
     color: #495057 !important;
     border: 1px solid #dee2e6 !important;
     font-weight: 500 !important;
-    opacity: 1 !important;
 
     &:hover {
       background: #e9ecef !important;
@@ -329,7 +328,7 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
     }
 
-    // Active state
+    /* Active state */
     &.active,
     &[data-active="true"] {
       background: var(--docsearch-primary-color) !important;
@@ -390,10 +389,10 @@
     color: var(--strapi-primary-700);
   }
 
-  // Dark mode filter pills - force transparent elegant styling to override JS inline styles
-  .injected-filters {
-    .filter-pill {
-      // Default state (inactive) in dark mode - transparent and elegant (highest priority)
+  /* Dark mode for globally injected filters */
+  :global(.injected-filters) {
+    :global(.filter-pill) {
+      /* Default state (inactive) in dark mode - transparent and elegant */
       background: rgba(255, 255, 255, 0.1) !important;
       color: rgba(255, 255, 255, 0.7) !important;
       border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -404,7 +403,7 @@
         border-color: rgba(255, 255, 255, 0.3) !important;
       }
 
-      // Active state in dark mode
+      /* Active state in dark mode */
       &.active,
       &[data-active="true"] {
         background: var(--docsearch-primary-color) !important;
