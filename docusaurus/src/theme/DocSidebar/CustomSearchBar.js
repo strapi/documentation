@@ -1,16 +1,54 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { DocSearch } from '@docsearch/react';
 import { useThemeConfig } from '@docusaurus/theme-common';
-import { filterResultsByContentType, getContentTypeFromPath } from '../../utils/searchConfig';
+import { filterResultsByContentType, getEnhancedContentType } from '../../utils/searchConfig';
 import Icon from '../../components/Icon.js';
 
+// Remplacez seulement cette partie dans votre CustomSearchBar.js :
+
 const SEARCH_FILTERS = [
-  { value: '', label: 'All content', icon: '🔍', color: 'neutral' },
-  { value: 'cms', label: 'CMS Docs', icon: '⚙️', color: 'primary' },
-  { value: 'cloud', label: 'Cloud Docs', icon: '☁️', color: 'secondary' },
-  { value: 'api', label: 'API Reference', icon: '🔌', color: 'success' },
-  { value: 'guides', label: 'Guides', icon: '📖', color: 'warning' },
-  { value: 'features', label: 'Features', icon: '✨', color: 'info' }
+  { 
+    value: '', 
+    label: 'All content', 
+    icon: '🔍', 
+    color: 'neutral' 
+  },
+  { 
+    value: 'getting-started', 
+    label: 'Getting Started', 
+    icon: '🚀', 
+    color: 'success'
+  },
+  { 
+    value: 'features', 
+    label: 'Features', 
+    icon: '✨', 
+    color: 'primary'
+  },
+  { 
+    value: 'development', 
+    label: 'Development', 
+    icon: '🔧', 
+    color: 'warning'
+  },
+  { 
+    value: 'api', 
+    label: 'APIs', 
+    icon: '🔌', 
+    color: 'info'
+  },
+  { 
+    value: 'configuration', 
+    label: 'Configuration', 
+    icon: '⚙️', 
+    color: 'secondary'
+  },
+  { 
+    value: 'cloud', 
+    label: 'Strapi Cloud', 
+    icon: '☁️', 
+    color: 'alternative'
+  }
 ];
 
 // Global variable to store current filter - accessible by transformItems
@@ -45,7 +83,7 @@ export default function CustomSearchBarWrapper(props) {
     // DEBUG: Check what contentTypes we detect
     const itemsWithTypes = transformedItems.map(item => {
       const url = new URL(item.url);
-      const detectedType = getContentTypeFromPath(url.pathname);
+      const detectedType = getEnhancedContentType(item);
       return { ...item, contentType: detectedType };
     });
     
