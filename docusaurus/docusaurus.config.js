@@ -6,6 +6,9 @@ const {themes} = require('prism-react-renderer');
 // const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
+// Import utility functions
+const { getContentTypeFromPath, getSectionFromPath } = require('./src/utils/searchConfig');
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Strapi 5 Documentation',
@@ -193,9 +196,68 @@ const config = {
         appId: '392RJ63O14',
         apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
         indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
+        // Optional: Additional search parameters
         searchParameters: {
-          facetFilters: [] 
+          facetFilters: [],
+          hitsPerPage: 20,
+          attributesToSnippet: ['content:20'],
+          snippetEllipsisText: '…',
+          // Enable highlighting
+          attributesToHighlight: [
+            'hierarchy.lvl0',
+            'hierarchy.lvl1', 
+            'hierarchy.lvl2',
+            'hierarchy.lvl3',
+            'content'
+          ],
+          // Boost certain attributes
+          customRanking: [
+            'desc(weight.page_rank)',
+            'desc(weight.level)',
+            'asc(weight.position)'
+          ],
+          // Configure distinct to avoid duplicate results
+          distinct: true,
+          // Configure typo tolerance
+          typoTolerance: 'min',
+          minWordSizefor1Typo: 4,
+          minWordSizefor2Typos: 8,
+        },
+        
+        // Context-aware search
+        contextualSearch: true,
+        
+        // Optional: Customize search page path
+        searchPagePath: 'search',
+        
+        // Optional: Replace search results URL
+        replaceSearchResultPathname: {
+          from: '/docs/', // or /build/docs/
+          to: '/',
+        },
+        
+        // Optional: Transform search items
+        transformItems: (items) => {
+          return items.map((item) => {
+            // Add custom properties
+            const url = new URL(item.url);
+            item.contentType = getContentTypeFromPath(url.pathname);
+            item.section = getSectionFromPath(url.pathname);
+            
+            // Enhance hierarchy
+            if (item.hierarchy) {
+              item.breadcrumb = Object.values(item.hierarchy)
+                .filter(Boolean)
+                .join(' › ');
+            }
+            
+            return item;
+          });
+        },
+        
+        // Optional: Custom insights
+        insights: {
+          enabled: false, // Enable analytics insights
         },
       },
       navbar: {
