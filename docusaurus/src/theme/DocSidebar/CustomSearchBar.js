@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { DocSearch } from '@docsearch/react';
 import { useThemeConfig } from '@docusaurus/theme-common';
-import { filterResultsByContentType } from '../../utils/searchConfig';
+import { filterResultsByContentType, getContentTypeFromPath } from '../../utils/searchConfig';
 import Icon from '../../components/Icon.js';
 
 const SEARCH_FILTERS = [
@@ -13,22 +13,63 @@ const SEARCH_FILTERS = [
   { value: 'features', label: 'Features', icon: '✨', color: 'info' }
 ];
 
+// Global variable to store current filter - accessible by transformItems
+let globalSelectedFilter = '';
+
 export default function CustomSearchBarWrapper(props) {
   const { algolia } = useThemeConfig();
   const [selectedFilter, setSelectedFilter] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Transform and filter items based on selected filter
+  // Update global variable when local state changes
+  useEffect(() => {
+    globalSelectedFilter = selectedFilter;
+    console.log('🌍 Global filter updated to:', globalSelectedFilter);
+  }, [selectedFilter]);
+
+  // Transform and filter items based on GLOBAL filter
   const transformItems = useCallback((items) => {
+    console.log('🔍 transformItems called with:', { 
+      globalSelectedFilter, 
+      localSelectedFilter: selectedFilter,
+      itemsCount: items.length, 
+      firstItemUrl: items[0]?.url 
+    });
+    
     // First, apply the original transform from config if it exists
     const originalTransform = algolia.transformItems;
     let transformedItems = originalTransform ? originalTransform(items) : items;
     
-    // Then apply our content type filter
-    const filteredItems = filterResultsByContentType(transformedItems, selectedFilter);
+    console.log('📝 After original transform:', transformedItems.length);
+    
+    // DEBUG: Check what contentTypes we detect
+    const itemsWithTypes = transformedItems.map(item => {
+      const url = new URL(item.url);
+      const detectedType = getContentTypeFromPath(url.pathname);
+      return { ...item, contentType: detectedType };
+    });
+    
+    console.log('🔬 Content types detected:', {
+      sample: itemsWithTypes.slice(0, 5).map(item => ({ 
+        url: item.url, 
+        pathname: new URL(item.url).pathname,
+        contentType: item.contentType 
+      }))
+    });
+    
+    // Then apply our content type filter using GLOBAL variable
+    const filteredItems = filterResultsByContentType(itemsWithTypes, globalSelectedFilter);
+    
+    console.log('✅ After our filter:', { 
+      filteredCount: filteredItems.length, 
+      usedFilter: globalSelectedFilter,
+      originalCount: itemsWithTypes.length,
+      VISIBLE_DIFFERENCE: itemsWithTypes.length !== filteredItems.length ? '🎯 FILTERING WORKED!' : '😐 No visual change expected',
+      sampleTypes: filteredItems.slice(0, 3).map(item => ({ url: item.url, contentType: item.contentType }))
+    });
     
     return filteredItems;
-  }, [selectedFilter, algolia.transformItems]);
+  }, [algolia.transformItems]); // Remove selectedFilter from deps
 
   // Inject filter UI into DocSearch modal
   useEffect(() => {
@@ -103,7 +144,13 @@ export default function CustomSearchBarWrapper(props) {
             button.addEventListener('click', (e) => {
               e.preventDefault();
               e.stopPropagation();
+              
+              console.log('🎯 Filter button clicked:', filter.value);
+              
+              // Update React state AND global variable immediately
               setSelectedFilter(filter.value);
+              globalSelectedFilter = filter.value;
+              console.log('🔄 Both filters updated to:', filter.value);
               
               // Update button styles immediately
               buttonsContainer.querySelectorAll('.filter-pill').forEach(btn => {
@@ -114,6 +161,31 @@ export default function CustomSearchBarWrapper(props) {
                 btn.style.fontWeight = isActiveBtn ? '600' : '500';
                 btn.style.opacity = isActiveBtn ? '1' : '0.7';
               });
+              
+              // Force a character change to trigger new search
+              const searchInput = document.querySelector('.DocSearch-Input');
+              if (searchInput && searchInput.value) {
+                const currentValue = searchInput.value;
+                console.log('🔄 Forcing re-search by adding/removing character');
+                
+                // Keep the input focused throughout the process
+                searchInput.focus();
+                
+                // Add a character, then remove it
+                searchInput.value = currentValue + 'x';
+                searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                
+                setTimeout(() => {
+                  searchInput.value = currentValue;
+                  searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+                  
+                  // Ensure input stays focused and cursor is at the end
+                  searchInput.focus();
+                  searchInput.setSelectionRange(currentValue.length, currentValue.length);
+                  
+                  console.log('✅ Character trick completed with focus maintained');
+                }, 100);
+              }
             });
 
             buttonsContainer.appendChild(button);
@@ -148,6 +220,7 @@ export default function CustomSearchBarWrapper(props) {
             // Add clear filter functionality
             indicator.querySelector('.clear-filter-btn').addEventListener('click', () => {
               setSelectedFilter('');
+              globalSelectedFilter = '';
               indicator.remove();
             });
             
@@ -177,6 +250,7 @@ export default function CustomSearchBarWrapper(props) {
           if (node.nodeType === 1 && node.classList?.contains('DocSearch-Container')) {
             setIsModalOpen(false);
             setSelectedFilter(''); // Reset filter when modal closes
+            globalSelectedFilter = ''; // Reset global too
           }
         });
       });
@@ -189,7 +263,7 @@ export default function CustomSearchBarWrapper(props) {
 
   return (
     <div className="my-custom-search-bar">
-      {/* Clean DocSearch - CORRECTION 1: "Search" au lieu de "Search documentation" */}
+      {/* Clean DocSearch */}
       <DocSearch
         {...algolia}
         transformItems={transformItems}
