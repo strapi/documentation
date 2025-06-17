@@ -26,3 +26,7 @@ docs/.vuepress/config.js
 docs/node_modules/**
 
 *.py
+
+# LLMs.txt files and related
+llms*.txt
+**/llms*.txt
