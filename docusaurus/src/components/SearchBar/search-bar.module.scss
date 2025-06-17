@@ -284,6 +284,69 @@
   }
 }
 
+/* Improved filter pills styles for better light mode visibility */
+.injected-filters {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--docsearch-muted-color) !important;
+  background: var(--docsearch-modal-background) !important;
+
+  .filter-title {
+    font-size: 12px !important;
+    color: var(--docsearch-muted-color) !important;
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .filter-buttons {
+    display: flex !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .filter-pill {
+    padding: 6px 12px !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    font-family: inherit !important;
+    white-space: nowrap !important;
+    
+    // Default state (inactive) - improved for light mode
+    background: #f8f9fa !important;
+    color: #495057 !important;
+    border: 1px solid #dee2e6 !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+
+    &:hover {
+      background: #e9ecef !important;
+      color: #343a40 !important;
+      border-color: #adb5bd !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    // Active state
+    &.active,
+    &[data-active="true"] {
+      background: var(--docsearch-primary-color) !important;
+      color: white !important;
+      border-color: var(--docsearch-primary-color) !important;
+      font-weight: 600 !important;
+      box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3) !important;
+
+      &:hover {
+        background: var(--docsearch-primary-color) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4) !important;
+      }
+    }
+  }
+}
+
 /* Dark mode support */
 @include dark {
   .enhanced-search-container {
@@ -326,6 +389,38 @@
     border-color: var(--strapi-primary-200);
     color: var(--strapi-primary-700);
   }
+
+  // Dark mode filter pills - force transparent elegant styling to override JS inline styles
+  .injected-filters {
+    .filter-pill {
+      // Default state (inactive) in dark mode - transparent and elegant (highest priority)
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+      }
+
+      // Active state in dark mode
+      &.active,
+      &[data-active="true"] {
+        background: var(--docsearch-primary-color) !important;
+        color: white !important;
+        border-color: var(--docsearch-primary-color) !important;
+        font-weight: 600 !important;
+        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3) !important;
+
+        &:hover {
+          background: var(--docsearch-primary-color) !important;
+          transform: translateY(-1px) !important;
+          box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4) !important;
+        }
+      }
+    }
+  }
 }
 
 /* Responsive Design */
@@ -348,14 +443,26 @@
     min-width: 120px;
     font-size: var(--strapi-font-size-xs);
   }
+
+  .injected-filters {
+    .filter-buttons {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+
+    .filter-pill {
+      text-align: center !important;
+    }
+  }
 }
 
 /* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
   .filter-toggle,
   .filter-option,
-  .clear-filter {
-    transition: none;
+  .clear-filter,
+  .filter-pill {
+    transition: none !important;
   }
 
   .filter-dropdown {
@@ -373,5 +480,14 @@
 
   .active-filter-indicator {
     border-width: 2px;
+  }
+
+  .injected-filters .filter-pill {
+    border-width: 2px !important;
+    
+    &.active,
+    &[data-active="true"] {
+      border-width: 3px !important;
+    }
   }
 }
