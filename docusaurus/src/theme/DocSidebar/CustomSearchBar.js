@@ -41,19 +41,18 @@ export default function CustomSearchBarWrapper(props) {
           filterContainer.className = 'injected-filters';
           filterContainer.style.cssText = `
             padding: 12px 16px;
-            border-bottom: 1px solid var(--strapi-neutral-200, #dcdce4);
-            background: var(--strapi-neutral-50, #f6f6f9);
+            border-bottom: 1px solid var(--docsearch-muted-color);
+            background: var(--docsearch-modal-background);
           `;
 
           // Create filter title
           const filterTitle = document.createElement('div');
-          filterTitle.textContent = 'Filter by content type:';
+          filterTitle.textContent = 'FILTER BY CONTENT TYPE:';
           filterTitle.style.cssText = `
             font-size: 12px;
-            color: var(--strapi-neutral-600, #666687);
+            color: var(--docsearch-muted-color);
             margin-bottom: 8px;
             font-weight: 600;
-            text-transform: uppercase;
             letter-spacing: 0.5px;
           `;
 
@@ -61,7 +60,7 @@ export default function CustomSearchBarWrapper(props) {
           const buttonsContainer = document.createElement('div');
           buttonsContainer.style.cssText = `
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
           `;
 
@@ -69,40 +68,51 @@ export default function CustomSearchBarWrapper(props) {
           SEARCH_FILTERS.forEach((filter) => {
             const button = document.createElement('button');
             button.textContent = `${filter.icon} ${filter.label}`;
+            button.className = 'filter-pill';
+            button.dataset.filterValue = filter.value;
+            
+            const isActive = selectedFilter === filter.value;
             button.style.cssText = `
-              padding: 6px 12px;
-              border: 1px solid var(--strapi-neutral-200, #dcdce4);
-              border-radius: 20px;
-              background: ${selectedFilter === filter.value ? 'var(--strapi-primary-600, #4945ff)' : 'var(--strapi-neutral-0, #ffffff)'};
-              color: ${selectedFilter === filter.value ? 'white' : 'var(--strapi-neutral-700, #32324d)'};
+              padding: 4px 12px;
+              border-radius: 16px;
+              background: ${isActive ? 'var(--docsearch-primary-color)' : 'transparent'};
+              color: ${isActive ? 'white' : 'var(--docsearch-text-color)'};
+              border: 1px solid ${isActive ? 'var(--docsearch-primary-color)' : 'var(--docsearch-muted-color)'};
               font-size: 12px;
               cursor: pointer;
               transition: all 0.2s ease;
-              font-weight: ${selectedFilter === filter.value ? '600' : '500'};
-              border: none;
+              font-weight: ${isActive ? '600' : '500'};
               outline: none;
+              opacity: ${isActive ? '1' : '0.7'};
             `;
 
             button.addEventListener('mouseenter', () => {
               if (selectedFilter !== filter.value) {
-                button.style.background = 'var(--strapi-neutral-100, #eaeaef)';
+                button.style.opacity = '1';
+                button.style.borderColor = 'var(--docsearch-primary-color)';
               }
             });
 
             button.addEventListener('mouseleave', () => {
               if (selectedFilter !== filter.value) {
-                button.style.background = 'var(--strapi-neutral-0, #ffffff)';
+                button.style.opacity = '0.7';
+                button.style.borderColor = 'var(--docsearch-muted-color)';
               }
             });
 
-            button.addEventListener('click', () => {
+            button.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
               setSelectedFilter(filter.value);
-              // Update all buttons
-              buttonsContainer.querySelectorAll('button').forEach(btn => {
-                const isActive = btn === button;
-                btn.style.background = isActive ? 'var(--strapi-primary-600, #4945ff)' : 'var(--strapi-neutral-0, #ffffff)';
-                btn.style.color = isActive ? 'white' : 'var(--strapi-neutral-700, #32324d)';
-                btn.style.fontWeight = isActive ? '600' : '500';
+              
+              // Update button styles immediately
+              buttonsContainer.querySelectorAll('.filter-pill').forEach(btn => {
+                const isActiveBtn = btn.dataset.filterValue === filter.value;
+                btn.style.background = isActiveBtn ? 'var(--docsearch-primary-color)' : 'transparent';
+                btn.style.color = isActiveBtn ? 'white' : 'var(--docsearch-text-color)';
+                btn.style.borderColor = isActiveBtn ? 'var(--docsearch-primary-color)' : 'var(--docsearch-muted-color)';
+                btn.style.fontWeight = isActiveBtn ? '600' : '500';
+                btn.style.opacity = isActiveBtn ? '1' : '0.7';
               });
             });
 
@@ -122,27 +132,35 @@ export default function CustomSearchBarWrapper(props) {
             indicator.className = 'active-filter-indicator';
             indicator.style.cssText = `
               padding: 8px 16px;
-              background: var(--strapi-primary-100, #f0f0ff);
-              border-bottom: 1px solid var(--strapi-primary-200, #d9d8ff);
+              background: var(--docsearch-primary-color);
+              color: white;
               font-size: 12px;
-              color: var(--strapi-primary-700, #271fe0);
               display: flex;
               align-items: center;
-              gap: 8px;
+              justify-content: space-between;
+              opacity: 0.9;
             `;
             indicator.innerHTML = `
               <span>Filtering by: <strong>${selectedFilterConfig.label}</strong></span>
-              <button style="background: none; border: none; color: var(--strapi-primary-600, #4945ff); cursor: pointer; font-size: 14px; padding: 0;" onclick="this.parentElement.style.display='none';">✕</button>
+              <button class="clear-filter-btn" style="background: none; border: none; color: white; cursor: pointer; font-size: 16px; padding: 0; opacity: 0.8;" title="Clear filter">✕</button>
             `;
+            
+            // Add clear filter functionality
+            indicator.querySelector('.clear-filter-btn').addEventListener('click', () => {
+              setSelectedFilter('');
+              indicator.remove();
+            });
             
             filterContainer.appendChild(indicator);
           }
         }
       };
 
-      // Try to inject immediately and also after a small delay for modal animation
-      setTimeout(injectFilterUI, 100);
-      setTimeout(injectFilterUI, 300);
+      // Try to inject with multiple attempts as modal loads
+      const attempts = [50, 150, 300];
+      attempts.forEach(delay => {
+        setTimeout(injectFilterUI, delay);
+      });
     }
   }, [isModalOpen, selectedFilter]);
 
@@ -169,19 +187,16 @@ export default function CustomSearchBarWrapper(props) {
     return () => observer.disconnect();
   }, []);
 
-  const selectedFilterConfig = SEARCH_FILTERS.find(f => f.value === selectedFilter) || SEARCH_FILTERS[0];
-
   return (
     <div className="my-custom-search-bar">
-      {/* Clean DocSearch without extra UI */}
+      {/* Clean DocSearch - CORRECTION 1: "Search" au lieu de "Search documentation" */}
       <DocSearch
         {...algolia}
         transformItems={transformItems}
-        placeholder={`Search ${selectedFilter ? selectedFilterConfig.label.toLowerCase() : 'documentation'}...`}
         translations={{
           button: {
-            buttonText: `Search ${selectedFilter ? selectedFilterConfig.label.toLowerCase() : 'documentation'}...`,
-            buttonAriaLabel: 'Search documentation'
+            buttonText: 'Search',
+            buttonAriaLabel: 'Search'
           }
         }}
       />
