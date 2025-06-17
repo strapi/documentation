@@ -84,7 +84,7 @@ export function createSearchConfig(baseConfig, contentType = 'all') {
 
 // Helper function to filter results client-side (since we can't use facetFilters on free plan)
 export function filterResultsByContentType(items, contentType) {
-  if (contentType === 'all' || !contentType) {
+  if (!contentType || contentType === '' || contentType === 'all') {
     return items;
   }
   

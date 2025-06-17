@@ -1,6 +1,377 @@
-/** Component: Search Bar */
+/** Enhanced Search Bar with Filters */
+@use '../../scss/mixins' as *;
 
+.enhanced-search-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--strapi-spacing-2);
+}
+
+/* Filter Section */
+.filter-section {
+  position: relative;
+  z-index: 10;
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-2);
+  padding: var(--strapi-spacing-2) var(--strapi-spacing-3);
+  background: var(--strapi-neutral-0);
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 6px;
+  font-size: var(--strapi-font-size-sm);
+  color: var(--strapi-neutral-600);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: fit-content;
+  min-width: 140px;
+  font-weight: 500;
+
+  &:hover {
+    border-color: var(--strapi-primary-600);
+    background: var(--strapi-neutral-50);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--strapi-primary-600);
+    box-shadow: 0 0 0 3px var(--strapi-primary-100);
+  }
+}
+
+.filter-icon {
+  font-size: 16px;
+}
+
+.filter-label {
+  font-weight: 500;
+  flex: 1;
+}
+
+.chevron {
+  font-size: 10px;
+  color: var(--strapi-neutral-400);
+  transition: transform 0.2s ease;
+  
+  .filter-toggle:hover & {
+    color: var(--strapi-primary-600);
+  }
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--strapi-neutral-0);
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 100;
+  min-width: 200px;
+  animation: fadeInDown 0.15s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-2);
+  width: 100%;
+  padding: var(--strapi-spacing-3);
+  background: none;
+  border: none;
+  color: var(--strapi-neutral-700);
+  font-size: var(--strapi-font-size-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  position: relative;
+
+  &:hover {
+    background: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-800);
+  }
+
+  &.active {
+    background: var(--strapi-primary-100);
+    color: var(--strapi-primary-700);
+    font-weight: 600;
+  }
+
+  // Color variants for different content types
+  &.primary.active { 
+    background: var(--strapi-primary-100); 
+    color: var(--strapi-primary-700); 
+  }
+  &.secondary.active { 
+    background: var(--strapi-secondary-100); 
+    color: var(--strapi-secondary-700); 
+  }
+  &.success.active { 
+    background: var(--strapi-success-100); 
+    color: var(--strapi-success-700); 
+  }
+  &.warning.active { 
+    background: var(--strapi-warning-100); 
+    color: var(--strapi-warning-700); 
+  }
+  &.info.active { 
+    background: var(--strapi-alternative-100); 
+    color: var(--strapi-alternative-700); 
+  }
+  &.neutral.active { 
+    background: var(--strapi-neutral-100); 
+    color: var(--strapi-neutral-700); 
+  }
+}
+
+.filter-option-icon {
+  font-size: 16px;
+}
+
+.checkmark {
+  margin-left: auto;
+  font-weight: bold;
+  color: currentColor;
+}
+
+/* Enhanced DocSearch Styles */
 .search-bar {
-  // TO DO: Customize the styles for Algolia's Search Bar.
-  display: block;
+  .DocSearch {
+    --docsearch-primary-color: var(--strapi-primary-600);
+    --docsearch-text-color: var(--strapi-neutral-800);
+    --docsearch-muted-color: var(--strapi-neutral-400);
+    --docsearch-container-background: rgba(101, 108, 133, 0.8);
+    --docsearch-modal-background: var(--strapi-neutral-0);
+    --docsearch-searchbox-background: var(--strapi-neutral-100);
+    --docsearch-searchbox-focus-background: var(--strapi-neutral-0);
+    --docsearch-searchbox-shadow: 0 0 0 2px var(--strapi-primary-600);
+    --docsearch-hit-color: var(--strapi-neutral-800);
+    --docsearch-hit-active-color: var(--strapi-neutral-0);
+    --docsearch-hit-background: var(--strapi-neutral-0);
+    --docsearch-hit-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --docsearch-key-gradient: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
+    --docsearch-key-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    --docsearch-footer-background: var(--strapi-neutral-50);
+    --docsearch-footer-shadow: 0 -1px 0 var(--strapi-neutral-200);
+    --docsearch-logo-color: var(--strapi-neutral-600);
+    --docsearch-highlight-color: var(--strapi-primary-600);
+  }
+
+  .DocSearch-Button {
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid var(--strapi-neutral-200);
+    background: var(--strapi-neutral-0);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      border-color: var(--strapi-primary-600);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:focus {
+      border-color: var(--strapi-primary-600);
+      box-shadow: 0 0 0 2px var(--strapi-primary-100);
+    }
+  }
+
+  .DocSearch-Search-Icon {
+    color: var(--strapi-primary-600);
+    width: 18px;
+    height: 18px;
+  }
+
+  .DocSearch-Button-Placeholder {
+    font-size: var(--strapi-font-size-sm);
+    color: var(--strapi-neutral-500);
+  }
+
+  .DocSearch-Button-Keys {
+    .DocSearch-Button-Key {
+      background: var(--docsearch-key-gradient);
+      box-shadow: var(--docsearch-key-shadow);
+      color: var(--strapi-neutral-600);
+      height: 20px;
+      width: auto;
+      min-width: 20px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  }
+}
+
+/* Modal Customization */
+.DocSearch-Modal {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.DocSearch-SearchBar {
+  padding: var(--strapi-spacing-4);
+  border-bottom: 1px solid var(--strapi-neutral-200);
+}
+
+.DocSearch-Form {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.DocSearch-Input {
+  font-size: var(--strapi-font-size-md);
+  padding-left: var(--strapi-spacing-6);
+}
+
+/* Active Filter Indicator */
+.active-filter-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-2);
+  padding: var(--strapi-spacing-1) var(--strapi-spacing-2);
+  background: var(--strapi-primary-100);
+  border: 1px solid var(--strapi-primary-200);
+  border-radius: 4px;
+  font-size: var(--strapi-font-size-xs);
+  color: var(--strapi-primary-700);
+  width: fit-content;
+}
+
+.indicator-text {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-1);
+}
+
+.clear-filter {
+  background: none;
+  border: none;
+  color: var(--strapi-primary-600);
+  cursor: pointer;
+  padding: 0;
+  font-size: 12px;
+  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--strapi-primary-200);
+    color: var(--strapi-primary-800);
+  }
+}
+
+/* Dark mode support */
+@include dark {
+  .enhanced-search-container {
+    .filter-toggle {
+      background: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-600);
+
+      &:hover {
+        background: var(--strapi-neutral-100);
+        border-color: var(--strapi-primary-600);
+      }
+    }
+
+    .filter-dropdown {
+      background: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .filter-option {
+      color: var(--strapi-neutral-700);
+
+      &:hover {
+        background: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-800);
+      }
+    }
+  }
+
+  .search-bar .DocSearch {
+    --docsearch-modal-background: var(--strapi-neutral-0);
+    --docsearch-searchbox-background: var(--strapi-neutral-100);
+    --docsearch-hit-background: var(--strapi-neutral-0);
+    --docsearch-footer-background: var(--strapi-neutral-50);
+  }
+
+  .active-filter-indicator {
+    background: var(--strapi-primary-100);
+    border-color: var(--strapi-primary-200);
+    color: var(--strapi-primary-700);
+  }
+}
+
+/* Responsive Design */
+@include medium-down {
+  .filter-dropdown {
+    position: fixed;
+    top: auto;
+    left: var(--strapi-spacing-4);
+    right: var(--strapi-spacing-4);
+    bottom: var(--strapi-spacing-4);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .enhanced-search-container {
+    gap: var(--strapi-spacing-1);
+  }
+
+  .filter-toggle {
+    min-width: 120px;
+    font-size: var(--strapi-font-size-xs);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .filter-toggle,
+  .filter-option,
+  .clear-filter {
+    transition: none;
+  }
+
+  .filter-dropdown {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .filter-option {
+    &.active {
+      border: 2px solid currentColor;
+    }
+  }
+
+  .active-filter-indicator {
+    border-width: 2px;
+  }
 }
