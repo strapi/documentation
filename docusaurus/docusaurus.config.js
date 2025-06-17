@@ -193,43 +193,20 @@ const config = {
         },
       },
       algolia: {
+        // Vos identifiants Algolia
         appId: '392RJ63O14',
         apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
         indexName: 'strapi_newCmsCrawler_march2025',
         
-        // Simplified search parameters for DocSearch free version
+        // Configuration basique qui fonctionne
+        contextualSearch: false, // ⬅️ IMPORTANT : Désactiver pour éviter les filtres automatiques
+        
+        // Paramètres de recherche basiques
         searchParameters: {
           hitsPerPage: 20,
-          attributesToSnippet: ['content:20'],
-          snippetEllipsisText: '…',
-          // Basic highlighting - supported by free version
-          attributesToHighlight: [
-            'hierarchy.lvl0',
-            'hierarchy.lvl1', 
-            'hierarchy.lvl2',
-            'hierarchy.lvl3',
-            'content'
-          ],
-          // Basic settings
-          distinct: true,
-          typoTolerance: 'min',
-          minWordSizefor1Typo: 4,
-          minWordSizefor2Typos: 8,
         },
         
-        // Context-aware search
-        contextualSearch: true,
-        
-        // Optional: Customize search page path
-        searchPagePath: 'search',
-        
-        // Optional: Replace search results URL
-        replaceSearchResultPathname: {
-          from: '/docs/', // or /build/docs/
-          to: '/',
-        },
-        
-        // Transform search items - this should work with free version
+        // Transform search items - garde votre logique de transformation
         transformItems: (items) => {
           return items.map((item) => {
             try {
