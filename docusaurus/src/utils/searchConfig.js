@@ -14,53 +14,55 @@ export function getSectionFromPath(pathname) {
   return segments[1] || 'general';
 }
 
-// Advanced search parameters for different content types
+// Simplified search parameters compatible with DocSearch free version
+const BASIC_SEARCH_PARAMS = {
+  hitsPerPage: 20,
+  attributesToSnippet: ['content:20'],
+  snippetEllipsisText: '…',
+  attributesToHighlight: [
+    'hierarchy.lvl0',
+    'hierarchy.lvl1', 
+    'hierarchy.lvl2',
+    'hierarchy.lvl3',
+    'content'
+  ],
+  distinct: true,
+  typoTolerance: 'min',
+  minWordSizefor1Typo: 4,
+  minWordSizefor2Typos: 8,
+};
+
+// Content type configurations for free version (without advanced features)
 const CONTENT_TYPE_CONFIGS = {
   api: {
-    attributesToRetrieve: [
-      'hierarchy',
-      'content',
-      'url',
-      'type',
-      'method', // for API endpoints
-      'parameters' // for API parameters
-    ],
     searchParameters: {
-      facetFilters: ['type:api'],
-      customRanking: ['desc(weight.method)', 'asc(weight.position)']
+      ...BASIC_SEARCH_PARAMS,
+      // We'll use client-side filtering instead of facetFilters
     }
   },
   guides: {
-    attributesToRetrieve: [
-      'hierarchy',
-      'content', 
-      'url',
-      'type',
-      'difficulty', // beginner, intermediate, advanced
-      'category'
-    ],
     searchParameters: {
-      facetFilters: ['type:guide'],
-      customRanking: ['desc(weight.difficulty)', 'desc(weight.popularity)']
+      ...BASIC_SEARCH_PARAMS,
     }
   },
   features: {
-    attributesToRetrieve: [
-      'hierarchy',
-      'content',
-      'url', 
-      'type',
-      'version', // feature version
-      'status' // stable, beta, experimental
-    ],
     searchParameters: {
-      facetFilters: ['type:feature'],
-      customRanking: ['desc(weight.status)', 'desc(weight.version)']
+      ...BASIC_SEARCH_PARAMS,
+    }
+  },
+  cms: {
+    searchParameters: {
+      ...BASIC_SEARCH_PARAMS,
+    }
+  },
+  cloud: {
+    searchParameters: {
+      ...BASIC_SEARCH_PARAMS,
     }
   }
 };
 
-// Enhanced DocSearch configuration factory
+// Enhanced DocSearch configuration factory for free version
 export function createSearchConfig(baseConfig, contentType = 'all') {
   if (contentType === 'all') {
     return baseConfig;
@@ -76,7 +78,18 @@ export function createSearchConfig(baseConfig, contentType = 'all') {
     searchParameters: {
       ...baseConfig.searchParameters,
       ...typeConfig.searchParameters
-    },
-    attributesToRetrieve: typeConfig.attributesToRetrieve
+    }
   };
+}
+
+// Helper function to filter results client-side (since we can't use facetFilters on free plan)
+export function filterResultsByContentType(items, contentType) {
+  if (contentType === 'all' || !contentType) {
+    return items;
+  }
+  
+  return items.filter(item => {
+    const itemContentType = item.contentType || getContentTypeFromPath(item.url);
+    return itemContentType === contentType;
+  });
 }

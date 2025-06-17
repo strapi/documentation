@@ -196,13 +196,13 @@ const config = {
         appId: '392RJ63O14',
         apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
         indexName: 'strapi_newCmsCrawler_march2025',
-        // Optional: Additional search parameters
+        
+        // Simplified search parameters for DocSearch free version
         searchParameters: {
-          facetFilters: [],
           hitsPerPage: 20,
           attributesToSnippet: ['content:20'],
           snippetEllipsisText: '…',
-          // Enable highlighting
+          // Basic highlighting - supported by free version
           attributesToHighlight: [
             'hierarchy.lvl0',
             'hierarchy.lvl1', 
@@ -210,15 +210,8 @@ const config = {
             'hierarchy.lvl3',
             'content'
           ],
-          // Boost certain attributes
-          customRanking: [
-            'desc(weight.page_rank)',
-            'desc(weight.level)',
-            'asc(weight.position)'
-          ],
-          // Configure distinct to avoid duplicate results
+          // Basic settings
           distinct: true,
-          // Configure typo tolerance
           typoTolerance: 'min',
           minWordSizefor1Typo: 4,
           minWordSizefor2Typos: 8,
@@ -236,28 +229,29 @@ const config = {
           to: '/',
         },
         
-        // Optional: Transform search items
+        // Transform search items - this should work with free version
         transformItems: (items) => {
           return items.map((item) => {
-            // Add custom properties
-            const url = new URL(item.url);
-            item.contentType = getContentTypeFromPath(url.pathname);
-            item.section = getSectionFromPath(url.pathname);
-            
-            // Enhance hierarchy
-            if (item.hierarchy) {
-              item.breadcrumb = Object.values(item.hierarchy)
-                .filter(Boolean)
-                .join(' › ');
+            try {
+              // Add custom properties
+              const url = new URL(item.url);
+              item.contentType = getContentTypeFromPath(url.pathname);
+              item.section = getSectionFromPath(url.pathname);
+              
+              // Enhance hierarchy
+              if (item.hierarchy) {
+                item.breadcrumb = Object.values(item.hierarchy)
+                  .filter(Boolean)
+                  .join(' › ');
+              }
+              
+              return item;
+            } catch (error) {
+              // Fallback if URL parsing fails
+              console.warn('Failed to transform search item:', error);
+              return item;
             }
-            
-            return item;
           });
-        },
-        
-        // Optional: Custom insights
-        insights: {
-          enabled: false, // Enable analytics insights
         },
       },
       navbar: {
