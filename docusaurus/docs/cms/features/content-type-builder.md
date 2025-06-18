@@ -12,6 +12,7 @@ tags:
 ---
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
+import ConditionalFields from '/docs/snippets/conditional-fields.md'
 
 # Content-type Builder
 
@@ -94,7 +95,7 @@ New content-types are only considered created once they have been saved. Saving 
 />
 
 1. In the Components category of the <Icon name="layout" /> Content-type Builder sub navigation, click on **Create new component**.
-2. In the component creation window, configure the base settings of the new component:
+2. In the component creation window, configure the basic settings of the new component:
    - Write the name of the component in the *Display name* textbox.
    - Select an available category, or enter in the textbox a new category name to create one.
    - _(optional)_ Choose an icon representing the new component. You can use the search <Icon name="magnifying-glass" classes="ph-bold" /> to find an icon instead of scrolling through the list.
@@ -193,7 +194,7 @@ The Text field displays a textbox that can contain small text. This field can be
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name | Instructions                                                                                            |
 |--------------|---------------------------------------------------------------------------------------------------------|
@@ -217,6 +218,12 @@ The Text field displays a textbox that can contain small text. This field can be
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_richtextblocks.svg" /> Rich Text (Blocks) {#rich-text-blocks}
@@ -225,7 +232,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name | Instructions                                    |
 |--------------|-------------------------------------------------|
@@ -243,6 +250,12 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 :::strapi React renderer
@@ -255,7 +268,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -278,6 +291,12 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_date.svg" /> Date {#date}
@@ -286,7 +305,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -307,6 +326,12 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
  
 #### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password
@@ -315,7 +340,7 @@ The Password field displays a password field that is encrypted.
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -336,6 +361,12 @@ The Password field displays a password field that is encrypted.
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 
@@ -345,7 +376,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -366,6 +397,12 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_relation.svg" /> Relation {#relation}
@@ -383,9 +420,9 @@ There are 6 different types of relations:
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
-Configuring the base settings of the Relation field consists in choosing with which existing content-type the relation should be established and the kind of relation. The edition window of the Relation field displays 2 grey boxes, each representing one of the content-types in relation. Between the grey boxes are displayed all possible relation types.
+Configuring the basic settings of the Relation field consists in choosing with which existing content-type the relation should be established and the kind of relation. The edition window of the Relation field displays 2 grey boxes, each representing one of the content-types in relation. Between the grey boxes are displayed all possible relation types.
 
 1. Click on the 2nd grey box to define the content-type B. It must be an already created collection type.
 2. Click on the icon representing the relation to establish between the content-types.
@@ -402,6 +439,12 @@ Configuring the base settings of the Relation field consists in choosing with wh
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean {#boolean}
@@ -410,7 +453,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -430,6 +473,12 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_json.svg" /> JSON {#json}
@@ -438,7 +487,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -456,6 +505,12 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_email.svg" /> Email {#email}
@@ -464,7 +519,7 @@ The Email field displays an email address field with format validation to ensure
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -486,6 +541,12 @@ The Email field displays an email address field with format validation to ensure
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_password.svg" /> Password {#password}
@@ -494,7 +555,7 @@ The Password field displays a password field that is encrypted.
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -515,6 +576,12 @@ The Password field displays a password field that is encrypted.
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_enum.svg" /> Enumeration {#enum}
@@ -523,7 +590,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name  | Instructions                                                    |
 |---------------|-----------------------------------------------------------------|
@@ -544,6 +611,12 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 :::caution
@@ -556,7 +629,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name   | Instructions                                                    |
 |----------------|-----------------------------------------------------------------|
@@ -577,6 +650,12 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 :::tip
@@ -589,7 +668,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name | Instructions                                      |
 |--------------|---------------------------------------------------|
@@ -610,6 +689,12 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_component.svg" /> Components {#components}
@@ -623,7 +708,7 @@ When configuring a component through the Content-type Builder, it is possible to
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name       | Instructions                                                    |
 |--------------------|-----------------------------------------------------------------|
@@ -645,6 +730,12 @@ When configuring a component through the Content-type Builder, it is possible to
 
 </TabItem>
 
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
+
+</TabItem>
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_dz.svg" /> Dynamic zones {#dynamiczones}
@@ -653,7 +744,7 @@ Dynamic zones are a combination of components that can be added to content-types
 
 <Tabs>
 
-<TabItem value="base" label="Base settings">
+<TabItem value="base" label="Basic settings">
 
 | Setting name       | Instructions                                                    |
 |--------------------|-----------------------------------------------------------------|
@@ -669,6 +760,12 @@ Dynamic zones are a combination of components that can be added to content-types
 | Maximum value  | Tick to define a maximum number of characters allowed.                                  |
 | Minimum value  | Tick to define a minimum number of characters allowed.                                  |
 | Enable localization for this field | (if [Internationalization](/cms/features/internationalization) is enabled for the content-type) Allow the dynamic zone to be translated per available locale. |
+
+</TabItem>
+
+<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+
+<ConditionalFields components={props.components} />
 
 </TabItem>
 
