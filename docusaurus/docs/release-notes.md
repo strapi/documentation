@@ -27,6 +27,40 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.6.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Conditional Fields (beta)](https://github.com/strapi/documentation/pull/2539)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Add tip about using copy markdown button and LLMs.txt files](https://github.com/strapi/documentation/pull/2543)
+- [Expandable card docs wrapper](https://github.com/strapi/documentation/pull/2541)
+- [Add configuration parameter to allow Kapa analytics](https://github.com/strapi/documentation/pull/2540)
+- [Add inline property to custom Badge component](https://github.com/strapi/documentation/pull/2538)
+- [Increase "Ask AI" modal width to 720px](https://github.com/strapi/documentation/pull/2536)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.5.0
 
 <br />
