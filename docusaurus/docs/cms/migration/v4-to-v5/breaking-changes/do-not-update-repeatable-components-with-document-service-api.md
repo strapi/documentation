@@ -1,6 +1,6 @@
 ---
 title: defaultIndex removed
-description: In Strapi 5, the 'defaultIndex' option is removed from the 'public' middleware.
+description: In Strapi 5, it's not recommended to update repeatable components with the Document Service API
 sidebar_label: defaultIndex removed
 displayed_sidebar: cmsSidebar
 tags:
@@ -12,7 +12,7 @@ tags:
 import Intro from '/docs/snippets/breaking-change-page-intro.md'
 import MigrationIntro from '/docs/snippets/breaking-change-page-migration-intro.md'
 
-#  Repeatable components can't be updated with the API in Strapi 5
+#  Updating repeatable components with the Document Service API is not recommended
 
 In Strapi 5, it's not recommended to update repeatable components with the API, due to some limitations of the new Document Service API.
 
@@ -78,4 +78,4 @@ PUT /articles/{documentId} // <== Update draft article
 }
 ```
 
-However, this would fail because the component id of the draft article is different from the published one.
+However, this would fail because the component id of the draft article is different from the published one. Therefore, it's not recommended to try to update repeatable components with the Document Service API.
