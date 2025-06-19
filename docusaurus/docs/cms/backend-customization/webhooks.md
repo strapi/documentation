@@ -507,3 +507,7 @@ The event is triggered when a [release](/cms/features/releases) is published.
 - Log webhook events for debugging and monitoring.
 - Use secure, HTTPS endpoints for receiving webhooks.
 - Set up rate limiting to avoid being overwhelmed by multiple webhook requests.
+
+:::tip
+If you want to learn more about how to use webhooks with Next.js, please have a look at the [dedicated blog article](https://strapi.io/blog/how-to-create-an-ssg-static-site-generation-application-with-strapi-webhooks-and-nextjs).
+:::
