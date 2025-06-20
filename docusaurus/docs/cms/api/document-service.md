@@ -380,7 +380,10 @@ To update a document and publish the new version right away, you can:
 
 - update its draft version with `update()`, then [publish it](#publish) with `publish()`,
 - or directly add `status: 'published'` along with the other parameters passed to `update()` (see [`status` documentation](/cms/api/document-service/status#update)).
+:::
 
+:::caution
+It's not recommended to update repeatable components with the Document Service API (see the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api.md) for more details).
 :::
 
 ### Example
