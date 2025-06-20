@@ -2117,10 +2117,6 @@ Syntax: `update(parameters: Params) => Promise
 
 </ApiCall>
 
-:::note
-It's not recommended to update repeatable components with the Document Service API (see the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api.md) for more details).
-:::
-
 <!-- ! not working -->
 <!-- #### Update many document locales
 
@@ -5933,6 +5929,10 @@ The event is triggered when a [release](/cms/features/releases) is published.
 - Use secure, HTTPS endpoints for receiving webhooks.
 - Set up rate limiting to avoid being overwhelmed by multiple webhook requests.
 
+:::tip
+If you want to learn more about how to use webhooks with Next.js, please have a look at the [dedicated blog article](https://strapi.io/blog/how-to-create-an-ssg-static-site-generation-application-with-strapi-webhooks-and-nextjs).
+:::
+
 
 
 # Command Line Interface
@@ -8884,7 +8884,7 @@ You can click on the description of any breaking change in the following tables 
 | [Some attributes and content-types names are reserved by Strapi](/cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
 | [Upload a file at entry creation is no longer possible](/cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
 | [Components and dynamic zones should be populated using the detailed population strategy](/cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |
-| [Repeatable components can't be updated with the Document Service API](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
+| [Updating repeatable components with the Document Service API is not recommended](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
 
 
 
