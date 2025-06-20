@@ -29,5 +29,5 @@ docs/node_modules/**
 *.py
 
 # LLMs.txt files and related
-llms*.txt
-**/llms*.txt
+# llms*.txt
+# **/llms*.txt
