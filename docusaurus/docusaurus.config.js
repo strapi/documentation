@@ -6,6 +6,9 @@ const {themes} = require('prism-react-renderer');
 // const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
 
+// Import utility functions
+const { getContentTypeFromPath, getSectionFromPath } = require('./src/utils/searchConfig');
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Strapi 5 Documentation',
@@ -190,12 +193,42 @@ const config = {
         },
       },
       algolia: {
+        // Vos identifiants Algolia
         appId: '392RJ63O14',
         apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
         indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
+        
+        // Configuration basique qui fonctionne
+        contextualSearch: false, // ⬅️ IMPORTANT : Désactiver pour éviter les filtres automatiques
+        
+        // Paramètres de recherche basiques
         searchParameters: {
-          facetFilters: [] 
+          hitsPerPage: 20,
+        },
+        
+        // Transform search items - garde votre logique de transformation
+        transformItems: (items) => {
+          return items.map((item) => {
+            try {
+              // Add custom properties
+              const url = new URL(item.url);
+              item.contentType = getContentTypeFromPath(url.pathname);
+              item.section = getSectionFromPath(url.pathname);
+              
+              // Enhance hierarchy
+              if (item.hierarchy) {
+                item.breadcrumb = Object.values(item.hierarchy)
+                  .filter(Boolean)
+                  .join(' › ');
+              }
+              
+              return item;
+            } catch (error) {
+              // Fallback if URL parsing fails
+              console.warn('Failed to transform search item:', error);
+              return item;
+            }
+          });
         },
       },
       navbar: {
