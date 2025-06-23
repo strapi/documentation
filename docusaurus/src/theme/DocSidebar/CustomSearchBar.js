@@ -139,17 +139,18 @@ export default function CustomSearchBarWrapper(props) {
     }
     
     if (resultCountElement) {
-      resultCountElement.textContent = `See all ${count} results`;
-      console.log(`Updated count to: ${count} results`);
+      if (count === 0) {
+        // Hide the "See all X results" when there are no results
+        resultCountElement.style.display = 'none';
+        console.log('Hidden result count (0 results)');
+      } else {
+        // Show and update the count
+        resultCountElement.style.display = '';
+        resultCountElement.textContent = `See all ${count} result${count === 1 ? '' : 's'}`;
+        console.log(`Updated count to: ${count} result${count === 1 ? '' : 's'}`);
+      }
     } else {
       console.log('Could not find result count element within modal');
-      // Log available text elements for debugging
-      const textElements = modal.querySelectorAll('p, span, div');
-      console.log('Available text elements in modal:', 
-        Array.from(textElements)
-          .filter(el => el.textContent.includes('See') || el.textContent.includes('results'))
-          .map(el => el.textContent)
-      );
     }
   };
 
