@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import SearchBar from '@theme-original/SearchBar';
+import { useThemeConfig } from '@docusaurus/theme-common';
 import { getEnhancedContentType, filterResultsByContentType } from '../../utils/searchConfig';
 import Icon from '../../components/Icon.js'
 
@@ -13,152 +14,216 @@ const SEARCH_FILTERS = [
   { value: 'configuration', label: 'Configuration', icon: '🛠️' }
 ];
 
-// Store all results for filtering
-let allResults = [];
+// Store all results from Algolia API
+let allAlgoliaResults = [];
+let lastSearchQuery = '';
 
 export default function CustomSearchBarWrapper(props) {
-  
-  // Function to store all search results when they appear
-  const storeSearchResults = () => {
-    const hits = document.querySelectorAll('.DocSearch-Hit');
-    if (hits.length === 0) return;
+  const { algolia } = useThemeConfig();
+  const searchClientRef = useRef(null);
 
-    // Prevent infinite logging - only store if length changed
-    if (allResults.length === hits.length) return;
+  // Initialize Algolia search client
+  useEffect(() => {
+    if (window.docsearch) {
+      // Try to get the search client from DocSearch
+      console.log('🔌 Initializing Algolia client...');
+    }
+  }, []);
 
-    allResults = Array.from(hits).map(hit => {
-      const link = hit.querySelector('a');
-      const url = link ? link.href : '';
-      const contentType = getEnhancedContentType({ url });
+  // Function to search Algolia directly and get ALL results
+  const searchAlgoliaDirectly = async (query) => {
+    if (!query || query === lastSearchQuery) return;
+    
+    try {
+      console.log(`🔍 Searching Algolia directly for: "${query}"`);
       
-      return {
-        element: hit,
-        url: url,
-        contentType: contentType
-      };
-    });
-    
-    // Debug logging (only when results change)
-    console.log(`=== STORING RESULTS ===`);
-    console.log(`Total hits found in DOM: ${hits.length}`);
-    console.log(`Total results stored: ${allResults.length}`);
-    
-    // Check if we need to scroll to load more results
-    const seeAllElement = document.querySelector('p[role="button"]');
-    if (seeAllElement && seeAllElement.textContent.includes('See all')) {
-      console.log(`⚠️  More results available: ${seeAllElement.textContent}`);
-      console.log(`DocSearch is probably paginating results - only showing first batch`);
+      // Use fetch to call Algolia directly
+      const response = await fetch(`https://${algolia.appId}-dsn.algolia.net/1/indexes/${algolia.indexName}/query`, {
+        method: 'POST',
+        headers: {
+          'X-Algolia-Application-Id': algolia.appId,
+          'X-Algolia-API-Key': algolia.apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query,
+          hitsPerPage: 1000, // Get up to 1000 results
+          ...algolia.searchParameters
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.hits) {
+        // Add contentType to each result
+        const resultsWithTypes = data.hits.map(hit => ({
+          ...hit,
+          contentType: getEnhancedContentType(hit)
+        }));
+        
+        allAlgoliaResults = resultsWithTypes;
+        lastSearchQuery = query;
+        
+        console.log(`✅ Got ${allAlgoliaResults.length} results from Algolia API`);
+        
+        // Show content type breakdown
+        const typeCounts = {};
+        allAlgoliaResults.forEach(result => {
+          typeCounts[result.contentType] = (typeCounts[result.contentType] || 0) + 1;
+        });
+        console.log('📊 Full content types:', typeCounts);
+        
+        return allAlgoliaResults;
+      }
+    } catch (error) {
+      console.error('❌ Algolia API error:', error);
     }
     
-    // Count by content type
-    const typeCounts = {};
-    allResults.forEach(result => {
-      typeCounts[result.contentType] = (typeCounts[result.contentType] || 0) + 1;
-    });
-    console.log('Content type breakdown:', typeCounts);
-    console.log(`======================`);
+    return [];
   };
 
-  // Function to apply filter by hiding/showing results
-  const applyFilter = (filterValue) => {
-    console.log(`Applying filter: ${filterValue}`);
-    
-    if (allResults.length === 0) {
-      storeSearchResults();
-    }
+  // Monitor search input to trigger our API search
+  const monitorSearchInput = () => {
+    const searchInput = document.querySelector('.DocSearch-Input');
+    if (!searchInput) return;
 
-    if (!filterValue || filterValue === '') {
-      // Show all results
-      allResults.forEach(result => {
-        result.element.style.display = '';
-      });
-      
-      // Show all sections
-      document.querySelectorAll('.DocSearch-Hit-source').forEach(section => {
-        section.style.display = '';
-      });
-      
-      // Update result count
-      updateResultCount(allResults.length);
-      
-      // Update empty state (clear it since we're showing all results)
-      updateEmptyState('', allResults.length);
-      
-      console.log(`Showing all ${allResults.length} results`);
+    // Remove any existing listener
+    searchInput.removeEventListener('input', handleSearchInput);
+    
+    // Add new listener
+    searchInput.addEventListener('input', handleSearchInput);
+  };
+
+  // Handle search input changes
+  const handleSearchInput = async (event) => {
+    const query = event.target.value.trim();
+    if (query.length >= 2) { // Start searching after 2 characters
+      await searchAlgoliaDirectly(query);
+    }
+  };
+
+  // Function to apply filter using our complete Algolia results
+  const applyFilter = (filterValue) => {
+    console.log(`🔍 Applying filter: "${filterValue}" on ${allAlgoliaResults.length} total results`);
+    
+    if (allAlgoliaResults.length === 0) {
+      console.log('⚠️ No Algolia results available for filtering');
       return;
     }
 
-    // Filter results based on content type
-    const resultsData = allResults.map(r => ({ url: r.url, contentType: r.contentType }));
-    const filteredData = filterResultsByContentType(resultsData, filterValue);
-    const filteredUrls = filteredData.map(r => r.url);
+    // Get DOM elements for the results currently shown
+    const currentHits = document.querySelectorAll('.DocSearch-Hit');
+    if (currentHits.length === 0) {
+      console.log('⚠️ No DOM results to filter');
+      return;
+    }
 
-    // Debug logging for filtering
-    console.log(`=== APPLYING FILTER: "${filterValue}" ===`);
-    console.log(`Total stored results: ${allResults.length}`);
-    console.log(`Results after filtering: ${filteredData.length}`);
-    console.log(`Filter matched URLs:`, filteredUrls.slice(0, 3));
+    console.log(`🔍 Debug: Found ${currentHits.length} DOM elements to work with`);
 
-    // Show/hide results
-    let visibleCount = 0;
-    const visibleSections = new Set();
+    if (!filterValue || filterValue === '') {
+      // Show all current DOM results
+      currentHits.forEach(hit => hit.style.display = '');
+      updateResultCount(allAlgoliaResults.length);
+      console.log(`👁️ Showing all results (${currentHits.length} in DOM, ${allAlgoliaResults.length} total)`);
+      return;
+    }
+
+    // Filter the complete Algolia results
+    const filteredResults = filterResultsByContentType(allAlgoliaResults, filterValue);
     
-    allResults.forEach(result => {
-      if (filteredUrls.includes(result.url)) {
-        result.element.style.display = '';
-        visibleCount++;
-        
-        // Track which sections have visible results
-        const section = result.element.closest('.DocSearch-Hit-source');
-        if (section) {
-          visibleSections.add(section);
+    console.log(`📊 Filter "${filterValue}": ${filteredResults.length} of ${allAlgoliaResults.length} results match`);
+    
+    // Debug: Log some sample URLs for comparison
+    console.log('🔍 Sample Algolia URLs:', filteredResults.slice(0, 3).map(r => r.url));
+    
+    const domUrls = Array.from(currentHits).map(hit => {
+      const link = hit.querySelector('a');
+      return link ? link.href : null;
+    }).filter(Boolean);
+    
+    console.log('🔍 Sample DOM URLs:', domUrls.slice(0, 3));
+
+    // Create flexible URL matching
+    const getUrlKey = (url) => {
+      try {
+        const urlObj = new URL(url);
+        return urlObj.pathname + urlObj.hash; // Use pathname + hash for matching
+      } catch {
+        return url;
+      }
+    };
+
+    // Create sets for faster lookup
+    const filteredUrlKeys = new Set(filteredResults.map(r => getUrlKey(r.url)));
+
+    // Show/hide DOM elements based on filtered URLs
+    let visibleCount = 0;
+    currentHits.forEach(hit => {
+      const link = hit.querySelector('a');
+      if (link) {
+        const domUrlKey = getUrlKey(link.href);
+        if (filteredUrlKeys.has(domUrlKey)) {
+          hit.style.display = '';
+          visibleCount++;
+        } else {
+          hit.style.display = 'none';
         }
       } else {
-        result.element.style.display = 'none';
+        hit.style.display = 'none';
       }
     });
 
-    console.log(`Actually visible elements: ${visibleCount}`);
-    console.log(`=============================`);
-
-    // Hide sections that have no visible results
-    document.querySelectorAll('.DocSearch-Hit-source').forEach(section => {
-      if (!visibleSections.has(section)) {
-        section.style.display = 'none';
-      } else {
-        section.style.display = '';
-      }
-    });
-    
-    // Update result count
-    updateResultCount(visibleCount);
-    
-    // Update empty state
+    updateResultCount(filteredResults.length); // Use total filtered count
     updateEmptyState(filterValue, visibleCount);
     
-    console.log(`Filter "${filterValue}": showing ${visibleCount} of ${allResults.length} results`);
+    console.log(`👁️ Showing ${visibleCount} DOM elements (${filteredResults.length} total match filter)`);
+    
+    // If no DOM elements are visible but we have filtered results, log for debugging
+    if (visibleCount === 0 && filteredResults.length > 0) {
+      console.log('🚨 URL mismatch detected:');
+      console.log('Expected URLs (from filter):', filteredResults.slice(0, 3).map(r => getUrlKey(r.url)));
+      console.log('Available URLs (from DOM):', domUrls.slice(0, 3).map(url => getUrlKey(url)));
+    }
   };
 
-    // Function to show/hide empty state message
+  // Update result count
+  const updateResultCount = (count) => {
+    const modal = document.querySelector('.DocSearch-Modal');
+    if (!modal) return;
+    
+    const allElements = modal.querySelectorAll('*');
+    for (const element of allElements) {
+      if (element.textContent.includes('See all') && 
+          element.textContent.includes('results') &&
+          !element.querySelector('*')) {
+        if (count === 0) {
+          element.style.display = 'none';
+        } else {
+          element.style.display = '';
+          element.textContent = `See all ${count} result${count === 1 ? '' : 's'}`;
+        }
+        break;
+      }
+    }
+  };
+
+  // Show empty state
   const updateEmptyState = (filterValue, visibleCount) => {
     const modal = document.querySelector('.DocSearch-Modal');
     if (!modal) return;
 
-    // Remove existing empty state message
     const existingEmptyState = modal.querySelector('.custom-empty-state');
     if (existingEmptyState) {
       existingEmptyState.remove();
     }
 
     if (visibleCount === 0 && filterValue) {
-      // Find the hits container to insert the empty state message
       const hitsContainer = modal.querySelector('.DocSearch-Hits') || 
                            modal.querySelector('.DocSearch-NoResults')?.parentElement;
       
       if (hitsContainer) {
         const filterLabel = SEARCH_FILTERS.find(f => f.value === filterValue)?.label || filterValue;
         
-        // Create empty state message using CSS classes
         const emptyState = document.createElement('div');
         emptyState.className = 'custom-empty-state';
         emptyState.innerHTML = `
@@ -172,10 +237,8 @@ export default function CustomSearchBarWrapper(props) {
           </button>
         `;
 
-        // Add event listener to the button
         const showAllBtn = emptyState.querySelector('#show-all-results-btn');
         if (showAllBtn) {
-          // Force white text color via inline style to ensure it works
           showAllBtn.style.color = 'white';
           showAllBtn.style.background = 'var(--docsearch-primary-color, #5468ff)';
           
@@ -183,7 +246,6 @@ export default function CustomSearchBarWrapper(props) {
             e.preventDefault();
             e.stopPropagation();
             
-            // Find and click the "All content" filter button
             const allContentButton = document.querySelector('[data-filter=""]');
             if (allContentButton) {
               allContentButton.click();
@@ -195,114 +257,48 @@ export default function CustomSearchBarWrapper(props) {
       }
     }
   };
-  const updateResultCount = (count) => {
-    // Search ONLY within the DocSearch modal for the result count
-    const modal = document.querySelector('.DocSearch-Modal');
-    if (!modal) return;
-    
-    // Look for the result count specifically within the modal
-    const possibleSelectors = [
-      '.DocSearch-Footer p',
-      '.DocSearch-Footer [role="button"]',
-      'p[role="button"]'
-    ];
-    
-    let resultCountElement = null;
-    for (const selector of possibleSelectors) {
-      const elements = modal.querySelectorAll(selector);
-      for (const element of elements) {
-        if (element.textContent.includes('See all')) {
-          resultCountElement = element;
-          break;
-        }
-      }
-      if (resultCountElement) break;
-    }
-    
-    // Fallback: find any element within modal containing "See all"
-    if (!resultCountElement) {
-      const allElements = modal.querySelectorAll('*');
-      for (const element of allElements) {
-        if (element.textContent.includes('See all') && 
-            element.textContent.includes('results') &&
-            !element.querySelector('*')) { // Make sure it's a leaf element
-          resultCountElement = element;
-          break;
-        }
-      }
-    }
-    
-    if (resultCountElement) {
-      if (count === 0) {
-        // Hide the "See all X results" when there are no results
-        resultCountElement.style.display = 'none';
-        console.log('Hidden result count (0 results)');
-      } else {
-        // Show and update the count
-        resultCountElement.style.display = '';
-        resultCountElement.textContent = `See all ${count} result${count === 1 ? '' : 's'}`;
-        console.log(`Updated count to: ${count} result${count === 1 ? '' : 's'}`);
-      }
-    } else {
-      console.log('Could not find result count element within modal');
-    }
-  };
 
-  // Function to inject filter buttons with filtering functionality
+  // Inject filter buttons
   const injectFilterButtons = () => {
     const searchBar = document.querySelector('.DocSearch-SearchBar');
     if (!searchBar || document.querySelector('.filter-buttons-container')) {
-      return; // Already injected or search bar not found
+      return;
     }
 
-    // Create container for filter buttons
     const container = document.createElement('div');
     container.className = 'filter-buttons-container';
 
-    // Create title
     const title = document.createElement('div');
     title.className = 'filter-title';
     title.textContent = 'FILTER BY CONTENT TYPE:';
 
-    // Create buttons container
     const buttonsDiv = document.createElement('div');
     buttonsDiv.className = 'filter-buttons';
 
-    let activeFilter = '';
-
-    // Create each filter button
     SEARCH_FILTERS.forEach(filter => {
       const button = document.createElement('button');
       button.textContent = `${filter.icon} ${filter.label}`;
       button.className = 'filter-button';
       button.dataset.filter = filter.value;
 
-      // Set "All content" as default active
       if (filter.value === '') {
         button.classList.add('active');
-        activeFilter = '';
       }
 
-      // Add click handler with actual filtering
       button.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
         
-        console.log(`Filter clicked: ${filter.value} (${filter.label})`);
+        console.log(`🎯 Filter clicked: ${filter.value} (${filter.label})`);
         
-        // Update active filter
-        activeFilter = filter.value;
-        
-        // Update button states using CSS classes
+        // Update active button
         buttonsDiv.querySelectorAll('.filter-button').forEach(btn => {
           btn.classList.toggle('active', btn.dataset.filter === filter.value);
         });
 
-        // Apply the filter
-        setTimeout(() => {
-          applyFilter(filter.value);
-        }, 100);
+        // Apply filter
+        applyFilter(filter.value);
         
         return false;
       });
@@ -312,43 +308,33 @@ export default function CustomSearchBarWrapper(props) {
 
     container.appendChild(title);
     container.appendChild(buttonsDiv);
-
-    // Insert the container after the search bar
     searchBar.parentNode.insertBefore(container, searchBar.nextSibling);
-
-    // Store results when buttons are injected
-    setTimeout(storeSearchResults, 200);
   };
 
-  // Monitor for DocSearch modal opening and results appearing
+  // Monitor for modal and setup
   useEffect(() => {
     let hasInjected = false;
     
     const checkForModal = () => {
       const modal = document.querySelector('.DocSearch-Modal');
-      const hits = document.querySelectorAll('.DocSearch-Hit');
       
       if (modal && !hasInjected) {
-        // Modal is open, inject buttons
+        // Modal opened
         setTimeout(() => {
           injectFilterButtons();
+          monitorSearchInput(); // Setup search monitoring
           hasInjected = true;
         }, 100);
       } else if (!modal && hasInjected) {
-        // Modal closed, reset
+        // Modal closed
         hasInjected = false;
-        allResults = [];
-      }
-
-      // Store results when they appear/change
-      if (hits.length > 0) {
-        setTimeout(storeSearchResults, 100);
+        allAlgoliaResults = [];
+        lastSearchQuery = '';
+        console.log('🔄 Modal closed, reset Algolia results');
       }
     };
 
-    // Check periodically for modal and results
-    const interval = setInterval(checkForModal, 200);
-
+    const interval = setInterval(checkForModal, 100);
     return () => clearInterval(interval);
   }, []);
 
