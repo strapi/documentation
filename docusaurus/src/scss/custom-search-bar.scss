@@ -201,6 +201,36 @@
     border: var(--strapi-input-border);
     color: var(--strapi-dark-100);
   }
+
+  // Dark mode styles for filter buttons
+  .filter-buttons-container {
+    .filter-button {
+      border-color: var(--docsearch-muted-color, #6b7280);
+      background: var(--docsearch-modal-background, #1e293b);
+      color: var(--docsearch-text-color, #f1f5f9);
+
+      &:hover {
+        background: var(--docsearch-searchbox-focus-background, #334155);
+      }
+
+      &.active {
+        background: var(--docsearch-primary-color, #5468ff) !important;
+        color: white !important;
+        border-color: var(--docsearch-primary-color, #5468ff) !important;
+      }
+    }
+  }
+
+  // Dark mode styles for empty state
+  .custom-empty-state {
+    .empty-title {
+      color: var(--docsearch-text-color, #f1f5f9);
+    }
+
+    .empty-description {
+      color: var(--docsearch-muted-color, #94a3b8);
+    }
+  }
 }
 
 // Styles for the filter buttons (injected in DocSearch modal)
@@ -229,49 +259,32 @@
     align-items: center;
     padding: 6px 12px;
     border-radius: 6px;
-    border: 1px solid var(--docsearch-muted-color, #ccc);
-    background: var(--docsearch-modal-background, white);
-    color: var(--docsearch-text-color, #333);
+    border: 1px solid #6b7280; // Bordure foncée pour light mode
+    background: #ffffff; // Blanc pur pour light mode
+    color: #111827; // Texte noir pour light mode
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
 
-    // Light mode: make inactive buttons more visible
-    @media (prefers-color-scheme: light) {
-      border-color: #d1d5db;
-      background: #f9fafb;
-      color: #374151;
-      
-      &:hover {
-        border-color: var(--docsearch-primary-color, #5468ff);
-        background: #f3f4f6;
-        transform: translateY(-1px);
-      }
-    }
-
-    // Dark mode: keep current styling
-    @media (prefers-color-scheme: dark) {
-      &:hover {
-        border-color: var(--docsearch-primary-color, #5468ff);
-        transform: translateY(-1px);
-      }
+    &:hover {
+      border-color: var(--docsearch-primary-color, #5468ff);
+      background: #f9fafb; // Léger gris au hover en light mode
+      transform: translateY(-1px);
     }
 
     &.active {
       background: var(--docsearch-primary-color, #5468ff);
-      color: white; // Force white text for better readability in both modes
+      color: white;
       border-color: var(--docsearch-primary-color, #5468ff);
     }
 
-    // Remove focus outline (the double border effect)
     &:focus {
       outline: none;
       box-shadow: none;
     }
 
-    // Remove any default button focus styles
     &:focus-visible {
       outline: none;
       box-shadow: 0 0 0 2px var(--docsearch-primary-color, #5468ff), 0 0 0 4px rgba(84, 104, 255, 0.2);
@@ -294,7 +307,7 @@
 
   .empty-title {
     margin: 0 0 8px 0;
-    color: var(--docsearch-text-color, #333);
+    color: #1f2937; // Couleur foncée pour light mode
     font-size: 16px;
     font-weight: 600;
   }
@@ -302,7 +315,7 @@
   .empty-description {
     margin: 0 0 16px 0;
     font-size: 14px;
-    color: var(--docsearch-muted-color, #666);
+    color: #4b5563; // Couleur foncée pour light mode
   }
 
   .show-all-button {
