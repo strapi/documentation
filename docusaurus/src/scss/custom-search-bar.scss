@@ -202,3 +202,132 @@
     color: var(--strapi-dark-100);
   }
 }
+
+// Styles for the filter buttons (injected in DocSearch modal)
+.filter-buttons-container {
+  padding: 16px;
+  border-bottom: 1px solid var(--docsearch-muted-color, #e1e5e9);
+  background: var(--docsearch-modal-background, #f8f9fa);
+
+  .filter-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--docsearch-muted-color, #656d76);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .filter-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--docsearch-muted-color, #ccc);
+    background: var(--docsearch-modal-background, white);
+    color: var(--docsearch-text-color, #333);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    // Light mode: make inactive buttons more visible
+    @media (prefers-color-scheme: light) {
+      border-color: #d1d5db;
+      background: #f9fafb;
+      color: #374151;
+      
+      &:hover {
+        border-color: var(--docsearch-primary-color, #5468ff);
+        background: #f3f4f6;
+        transform: translateY(-1px);
+      }
+    }
+
+    // Dark mode: keep current styling
+    @media (prefers-color-scheme: dark) {
+      &:hover {
+        border-color: var(--docsearch-primary-color, #5468ff);
+        transform: translateY(-1px);
+      }
+    }
+
+    &.active {
+      background: var(--docsearch-primary-color, #5468ff);
+      color: var(--docsearch-modal-background, white);
+      border-color: var(--docsearch-primary-color, #5468ff);
+    }
+
+    // Remove focus outline (the double border effect)
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    // Remove any default button focus styles
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--docsearch-primary-color, #5468ff), 0 0 0 4px rgba(84, 104, 255, 0.2);
+    }
+  }
+}
+
+// Styles for the empty state message
+.custom-empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--docsearch-muted-color, #666);
+  font-size: 14px;
+
+  .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .empty-title {
+    margin: 0 0 8px 0;
+    color: var(--docsearch-text-color, #333);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .empty-description {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    color: var(--docsearch-muted-color, #666);
+  }
+
+  .show-all-button {
+    padding: 8px 16px;
+    background: var(--docsearch-primary-color, #5468ff);
+    color: var(--docsearch-modal-background, white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+      transform: translateY(-1px);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--docsearch-primary-color, #5468ff), 0 0 0 4px rgba(84, 104, 255, 0.2);
+    }
+  }
+}
