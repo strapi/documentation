@@ -144,6 +144,10 @@ export default function CustomSearchBarWrapper(props) {
         // Add event listener to the button
         const showAllBtn = emptyState.querySelector('#show-all-results-btn');
         if (showAllBtn) {
+          // Force white text color via inline style to ensure it works
+          showAllBtn.style.color = 'white';
+          showAllBtn.style.background = 'var(--docsearch-primary-color, #5468ff)';
+          
           showAllBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
