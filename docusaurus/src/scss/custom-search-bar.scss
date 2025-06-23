@@ -261,7 +261,7 @@
 
     &.active {
       background: var(--docsearch-primary-color, #5468ff);
-      color: var(--docsearch-modal-background, white);
+      color: white; // Force white text for better readability in both modes
       border-color: var(--docsearch-primary-color, #5468ff);
     }
 
