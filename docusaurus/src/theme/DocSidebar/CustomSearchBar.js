@@ -102,6 +102,31 @@ export default function CustomSearchBarWrapper(props) {
     }
   };
 
+  // Function to create a DOM element for an Algolia result
+  const createResultElement = (result) => {
+    const hit = document.createElement('div');
+    hit.className = 'DocSearch-Hit';
+    
+    const link = document.createElement('a');
+    link.href = result.url;
+    link.className = 'DocSearch-Hit-Container';
+    
+    // Create the result content structure
+    link.innerHTML = `
+      <div class="DocSearch-Hit-Content">
+        <div class="DocSearch-Hit-Title">
+          ${result.hierarchy?.lvl0 || result.hierarchy?.title || 'Untitled'}
+        </div>
+        <div class="DocSearch-Hit-Path">
+          ${Object.values(result.hierarchy || {}).filter(Boolean).join(' › ')}
+        </div>
+      </div>
+    `;
+    
+    hit.appendChild(link);
+    return hit;
+  };
+
   // Function to apply filter using our complete Algolia results
   const applyFilter = (filterValue) => {
     console.log(`🔍 Applying filter: "${filterValue}" on ${allAlgoliaResults.length} total results`);
@@ -111,79 +136,59 @@ export default function CustomSearchBarWrapper(props) {
       return;
     }
 
-    // Get DOM elements for the results currently shown
-    const currentHits = document.querySelectorAll('.DocSearch-Hit');
-    if (currentHits.length === 0) {
-      console.log('⚠️ No DOM results to filter');
+    // Find the hits container
+    const hitsContainer = document.querySelector('.DocSearch-Hits');
+    if (!hitsContainer) {
+      console.log('⚠️ No hits container found');
       return;
     }
 
-    console.log(`🔍 Debug: Found ${currentHits.length} DOM elements to work with`);
+    console.log(`🔍 Ready to inject results into DOM`);
 
-    if (!filterValue || filterValue === '') {
-      // Show all current DOM results
-      currentHits.forEach(hit => hit.style.display = '');
-      updateResultCount(allAlgoliaResults.length);
-      console.log(`👁️ Showing all results (${currentHits.length} in DOM, ${allAlgoliaResults.length} total)`);
+    let resultsToShow = allAlgoliaResults;
+
+    if (filterValue && filterValue !== '') {
+      // Filter the complete Algolia results
+      resultsToShow = filterResultsByContentType(allAlgoliaResults, filterValue);
+      console.log(`📊 Filter "${filterValue}": ${resultsToShow.length} of ${allAlgoliaResults.length} results match`);
+    } else {
+      console.log(`👁️ Showing all ${allAlgoliaResults.length} results`);
+    }
+
+    // Clear existing results
+    hitsContainer.innerHTML = '';
+
+    if (resultsToShow.length === 0) {
+      updateResultCount(0);
+      updateEmptyState(filterValue, 0);
+      console.log(`👁️ No results to display`);
       return;
     }
 
-    // Filter the complete Algolia results
-    const filteredResults = filterResultsByContentType(allAlgoliaResults, filterValue);
+    // Create and inject new result elements
+    const fragment = document.createDocumentFragment();
     
-    console.log(`📊 Filter "${filterValue}": ${filteredResults.length} of ${allAlgoliaResults.length} results match`);
+    // Limit to reasonable number for performance
+    const maxResults = Math.min(resultsToShow.length, 50);
     
-    // Debug: Log some sample URLs for comparison
-    console.log('🔍 Sample Algolia URLs:', filteredResults.slice(0, 3).map(r => r.url));
+    for (let i = 0; i < maxResults; i++) {
+      const resultElement = createResultElement(resultsToShow[i]);
+      fragment.appendChild(resultElement);
+    }
     
-    const domUrls = Array.from(currentHits).map(hit => {
-      const link = hit.querySelector('a');
-      return link ? link.href : null;
-    }).filter(Boolean);
-    
-    console.log('🔍 Sample DOM URLs:', domUrls.slice(0, 3));
+    hitsContainer.appendChild(fragment);
 
-    // Create flexible URL matching
-    const getUrlKey = (url) => {
-      try {
-        const urlObj = new URL(url);
-        return urlObj.pathname + urlObj.hash; // Use pathname + hash for matching
-      } catch {
-        return url;
-      }
-    };
-
-    // Create sets for faster lookup
-    const filteredUrlKeys = new Set(filteredResults.map(r => getUrlKey(r.url)));
-
-    // Show/hide DOM elements based on filtered URLs
-    let visibleCount = 0;
-    currentHits.forEach(hit => {
-      const link = hit.querySelector('a');
-      if (link) {
-        const domUrlKey = getUrlKey(link.href);
-        if (filteredUrlKeys.has(domUrlKey)) {
-          hit.style.display = '';
-          visibleCount++;
-        } else {
-          hit.style.display = 'none';
-        }
-      } else {
-        hit.style.display = 'none';
-      }
+    updateResultCount(resultsToShow.length);
+    updateEmptyState(filterValue, resultsToShow.length > 0 ? maxResults : 0);
+    
+    console.log(`👁️ Injected ${maxResults} DOM elements (${resultsToShow.length} total results match)`);
+    
+    // Show content type breakdown of displayed results
+    const displayedTypeCounts = {};
+    resultsToShow.slice(0, maxResults).forEach(result => {
+      displayedTypeCounts[result.contentType] = (displayedTypeCounts[result.contentType] || 0) + 1;
     });
-
-    updateResultCount(filteredResults.length); // Use total filtered count
-    updateEmptyState(filterValue, visibleCount);
-    
-    console.log(`👁️ Showing ${visibleCount} DOM elements (${filteredResults.length} total match filter)`);
-    
-    // If no DOM elements are visible but we have filtered results, log for debugging
-    if (visibleCount === 0 && filteredResults.length > 0) {
-      console.log('🚨 URL mismatch detected:');
-      console.log('Expected URLs (from filter):', filteredResults.slice(0, 3).map(r => getUrlKey(r.url)));
-      console.log('Available URLs (from DOM):', domUrls.slice(0, 3).map(url => getUrlKey(url)));
-    }
+    console.log('📊 Displayed content types:', displayedTypeCounts);
   };
 
   // Update result count
