@@ -23,18 +23,40 @@ export default function CustomSearchBarWrapper(props) {
     const hits = document.querySelectorAll('.DocSearch-Hit');
     if (hits.length === 0) return;
 
+    // Prevent infinite logging - only store if length changed
+    if (allResults.length === hits.length) return;
+
     allResults = Array.from(hits).map(hit => {
       const link = hit.querySelector('a');
       const url = link ? link.href : '';
+      const contentType = getEnhancedContentType({ url });
       
       return {
         element: hit,
         url: url,
-        contentType: getEnhancedContentType({ url })
+        contentType: contentType
       };
     });
     
-    console.log(`Stored ${allResults.length} results for filtering`);
+    // Debug logging (only when results change)
+    console.log(`=== STORING RESULTS ===`);
+    console.log(`Total hits found in DOM: ${hits.length}`);
+    console.log(`Total results stored: ${allResults.length}`);
+    
+    // Check if we need to scroll to load more results
+    const seeAllElement = document.querySelector('p[role="button"]');
+    if (seeAllElement && seeAllElement.textContent.includes('See all')) {
+      console.log(`⚠️  More results available: ${seeAllElement.textContent}`);
+      console.log(`DocSearch is probably paginating results - only showing first batch`);
+    }
+    
+    // Count by content type
+    const typeCounts = {};
+    allResults.forEach(result => {
+      typeCounts[result.contentType] = (typeCounts[result.contentType] || 0) + 1;
+    });
+    console.log('Content type breakdown:', typeCounts);
+    console.log(`======================`);
   };
 
   // Function to apply filter by hiding/showing results
@@ -71,6 +93,12 @@ export default function CustomSearchBarWrapper(props) {
     const filteredData = filterResultsByContentType(resultsData, filterValue);
     const filteredUrls = filteredData.map(r => r.url);
 
+    // Debug logging for filtering
+    console.log(`=== APPLYING FILTER: "${filterValue}" ===`);
+    console.log(`Total stored results: ${allResults.length}`);
+    console.log(`Results after filtering: ${filteredData.length}`);
+    console.log(`Filter matched URLs:`, filteredUrls.slice(0, 3));
+
     // Show/hide results
     let visibleCount = 0;
     const visibleSections = new Set();
@@ -89,6 +117,9 @@ export default function CustomSearchBarWrapper(props) {
         result.element.style.display = 'none';
       }
     });
+
+    console.log(`Actually visible elements: ${visibleCount}`);
+    console.log(`=============================`);
 
     // Hide sections that have no visible results
     document.querySelectorAll('.DocSearch-Hit-source').forEach(section => {
