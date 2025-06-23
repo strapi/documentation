@@ -143,7 +143,7 @@ export default function CustomSearchBarWrapper(props) {
           <p style="margin: 0; font-size: 14px; color: #666;">
             Try searching for something else or use a different filter.
           </p>
-          <button onclick="document.querySelector('[data-filter=\\"\\"]').click()" 
+          <button id="show-all-results-btn"
                   style="
                     margin-top: 16px;
                     padding: 8px 16px;
@@ -154,12 +154,33 @@ export default function CustomSearchBarWrapper(props) {
                     cursor: pointer;
                     font-size: 12px;
                     transition: background 0.2s ease;
-                  "
-                  onmouseover="this.style.background='#4c63d2'"
-                  onmouseout="this.style.background='#5468ff'">
+                  ">
             Show all results
           </button>
         `;
+
+        // Add event listener to the button after creating it
+        const showAllBtn = emptyState.querySelector('#show-all-results-btn');
+        if (showAllBtn) {
+          showAllBtn.addEventListener('mouseenter', () => {
+            showAllBtn.style.background = '#4c63d2';
+          });
+          
+          showAllBtn.addEventListener('mouseleave', () => {
+            showAllBtn.style.background = '#5468ff';
+          });
+          
+          showAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Find and click the "All content" filter button
+            const allContentButton = document.querySelector('[data-filter=""]');
+            if (allContentButton) {
+              allContentButton.click();
+            }
+          });
+        }
 
         hitsContainer.appendChild(emptyState);
       }
