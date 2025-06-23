@@ -108,7 +108,7 @@ export default function CustomSearchBarWrapper(props) {
     console.log(`Filter "${filterValue}": showing ${visibleCount} of ${allResults.length} results`);
   };
 
-  // Function to show/hide empty state message
+    // Function to show/hide empty state message
   const updateEmptyState = (filterValue, visibleCount) => {
     const modal = document.querySelector('.DocSearch-Modal');
     if (!modal) return;
@@ -125,51 +125,25 @@ export default function CustomSearchBarWrapper(props) {
                            modal.querySelector('.DocSearch-NoResults')?.parentElement;
       
       if (hitsContainer) {
-        // Create empty state message
-        const emptyState = document.createElement('div');
-        emptyState.className = 'custom-empty-state';
-        emptyState.style.cssText = `
-          padding: 40px 20px;
-          text-align: center;
-          color: #666;
-          font-size: 14px;
-        `;
-
         const filterLabel = SEARCH_FILTERS.find(f => f.value === filterValue)?.label || filterValue;
         
+        // Create empty state message using CSS classes
+        const emptyState = document.createElement('div');
+        emptyState.className = 'custom-empty-state';
         emptyState.innerHTML = `
-          <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;">📄</div>
-          <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">No ${filterLabel} results found</h3>
-          <p style="margin: 0; font-size: 14px; color: #666;">
+          <div class="empty-icon">📄</div>
+          <h3 class="empty-title">No ${filterLabel} results found</h3>
+          <p class="empty-description">
             Try searching for something else or use a different filter.
           </p>
-          <button id="show-all-results-btn"
-                  style="
-                    margin-top: 16px;
-                    padding: 8px 16px;
-                    background: #5468ff;
-                    color: white;
-                    border: none;
-                    border-radius: 6px;
-                    cursor: pointer;
-                    font-size: 12px;
-                    transition: background 0.2s ease;
-                  ">
+          <button class="show-all-button" id="show-all-results-btn">
             Show all results
           </button>
         `;
 
-        // Add event listener to the button after creating it
+        // Add event listener to the button
         const showAllBtn = emptyState.querySelector('#show-all-results-btn');
         if (showAllBtn) {
-          showAllBtn.addEventListener('mouseenter', () => {
-            showAllBtn.style.background = '#4c63d2';
-          });
-          
-          showAllBtn.addEventListener('mouseleave', () => {
-            showAllBtn.style.background = '#5468ff';
-          });
-          
           showAllBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -249,31 +223,15 @@ export default function CustomSearchBarWrapper(props) {
     // Create container for filter buttons
     const container = document.createElement('div');
     container.className = 'filter-buttons-container';
-    container.style.cssText = `
-      padding: 16px;
-      border-bottom: 1px solid #e1e5e9;
-      background: #f8f9fa;
-    `;
 
     // Create title
     const title = document.createElement('div');
+    title.className = 'filter-title';
     title.textContent = 'FILTER BY CONTENT TYPE:';
-    title.style.cssText = `
-      font-size: 12px;
-      font-weight: 600;
-      color: #656d76;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      letter-spacing: 0.05em;
-    `;
 
     // Create buttons container
     const buttonsDiv = document.createElement('div');
-    buttonsDiv.style.cssText = `
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    `;
+    buttonsDiv.className = 'filter-buttons';
 
     let activeFilter = '';
 
@@ -283,74 +241,35 @@ export default function CustomSearchBarWrapper(props) {
       button.textContent = `${filter.icon} ${filter.label}`;
       button.className = 'filter-button';
       button.dataset.filter = filter.value;
-      button.style.cssText = `
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 12px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        background: white;
-        color: #333;
-        font-size: 12px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-      `;
 
       // Set "All content" as default active
       if (filter.value === '') {
-        button.style.background = '#5468ff';
-        button.style.color = 'white';
-        button.style.borderColor = '#5468ff';
+        button.classList.add('active');
         activeFilter = '';
       }
-
-      // Add hover effect
-      button.addEventListener('mouseenter', () => {
-        if (activeFilter !== filter.value) {
-          button.style.borderColor = '#5468ff';
-          button.style.transform = 'translateY(-1px)';
-        }
-      });
-
-      button.addEventListener('mouseleave', () => {
-        if (activeFilter !== filter.value) {
-          button.style.borderColor = '#ccc';
-          button.style.transform = 'translateY(0)';
-        }
-      });
 
       // Add click handler with actual filtering
       button.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        e.stopImmediatePropagation(); // Prevent any event bubbling
+        e.stopImmediatePropagation();
         
         console.log(`Filter clicked: ${filter.value} (${filter.label})`);
         
         // Update active filter
         activeFilter = filter.value;
         
-        // Update button styles
+        // Update button states using CSS classes
         buttonsDiv.querySelectorAll('.filter-button').forEach(btn => {
-          if (btn.dataset.filter === filter.value) {
-            btn.style.background = '#5468ff';
-            btn.style.color = 'white';
-            btn.style.borderColor = '#5468ff';
-          } else {
-            btn.style.background = 'white';
-            btn.style.color = '#333';
-            btn.style.borderColor = '#ccc';
-          }
+          btn.classList.toggle('active', btn.dataset.filter === filter.value);
         });
 
-        // Apply the filter with a small delay to ensure results are rendered
+        // Apply the filter
         setTimeout(() => {
           applyFilter(filter.value);
         }, 100);
         
-        return false; // Extra insurance to prevent default behavior
+        return false;
       });
 
       buttonsDiv.appendChild(button);
