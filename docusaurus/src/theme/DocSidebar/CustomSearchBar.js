@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import SearchBar from '@theme-original/SearchBar';
+import { getEnhancedContentType, filterResultsByContentType } from '../../utils/searchConfig';
 import Icon from '../../components/Icon.js'
 
 const SEARCH_FILTERS = [
@@ -12,9 +13,147 @@ const SEARCH_FILTERS = [
   { value: 'configuration', label: 'Configuration', icon: '🛠️' }
 ];
 
+// Store all results for filtering
+let allResults = [];
+
 export default function CustomSearchBarWrapper(props) {
   
-  // Function to inject filter buttons (visual only for now)
+  // Function to store all search results when they appear
+  const storeSearchResults = () => {
+    const hits = document.querySelectorAll('.DocSearch-Hit');
+    if (hits.length === 0) return;
+
+    allResults = Array.from(hits).map(hit => {
+      const link = hit.querySelector('a');
+      const url = link ? link.href : '';
+      
+      return {
+        element: hit,
+        url: url,
+        contentType: getEnhancedContentType({ url })
+      };
+    });
+    
+    console.log(`Stored ${allResults.length} results for filtering`);
+  };
+
+  // Function to apply filter by hiding/showing results
+  const applyFilter = (filterValue) => {
+    console.log(`Applying filter: ${filterValue}`);
+    
+    if (allResults.length === 0) {
+      storeSearchResults();
+    }
+
+    if (!filterValue || filterValue === '') {
+      // Show all results
+      allResults.forEach(result => {
+        result.element.style.display = '';
+      });
+      
+      // Show all sections
+      document.querySelectorAll('.DocSearch-Hit-source').forEach(section => {
+        section.style.display = '';
+      });
+      
+      // Update result count
+      updateResultCount(allResults.length);
+      console.log(`Showing all ${allResults.length} results`);
+      return;
+    }
+
+    // Filter results based on content type
+    const resultsData = allResults.map(r => ({ url: r.url, contentType: r.contentType }));
+    const filteredData = filterResultsByContentType(resultsData, filterValue);
+    const filteredUrls = filteredData.map(r => r.url);
+
+    // Show/hide results
+    let visibleCount = 0;
+    const visibleSections = new Set();
+    
+    allResults.forEach(result => {
+      if (filteredUrls.includes(result.url)) {
+        result.element.style.display = '';
+        visibleCount++;
+        
+        // Track which sections have visible results
+        const section = result.element.closest('.DocSearch-Hit-source');
+        if (section) {
+          visibleSections.add(section);
+        }
+      } else {
+        result.element.style.display = 'none';
+      }
+    });
+
+    // Hide sections that have no visible results
+    document.querySelectorAll('.DocSearch-Hit-source').forEach(section => {
+      if (!visibleSections.has(section)) {
+        section.style.display = 'none';
+      } else {
+        section.style.display = '';
+      }
+    });
+    
+    // Update result count
+    updateResultCount(visibleCount);
+    console.log(`Filter "${filterValue}": showing ${visibleCount} of ${allResults.length} results`);
+  };
+
+  // Function to update the result count display
+  const updateResultCount = (count) => {
+    // Search ONLY within the DocSearch modal for the result count
+    const modal = document.querySelector('.DocSearch-Modal');
+    if (!modal) return;
+    
+    // Look for the result count specifically within the modal
+    const possibleSelectors = [
+      '.DocSearch-Footer p',
+      '.DocSearch-Footer [role="button"]',
+      'p[role="button"]'
+    ];
+    
+    let resultCountElement = null;
+    for (const selector of possibleSelectors) {
+      const elements = modal.querySelectorAll(selector);
+      for (const element of elements) {
+        if (element.textContent.includes('See all')) {
+          resultCountElement = element;
+          break;
+        }
+      }
+      if (resultCountElement) break;
+    }
+    
+    // Fallback: find any element within modal containing "See all"
+    if (!resultCountElement) {
+      const allElements = modal.querySelectorAll('*');
+      for (const element of allElements) {
+        if (element.textContent.includes('See all') && 
+            element.textContent.includes('results') &&
+            !element.querySelector('*')) { // Make sure it's a leaf element
+          resultCountElement = element;
+          break;
+        }
+      }
+    }
+    
+    if (resultCountElement) {
+      resultCountElement.textContent = `See all ${count} results`;
+      console.log(`Updated count to: ${count} results`);
+    } else {
+      console.log('Could not find result count element within modal');
+      // Log available text elements for debugging
+      const textElements = modal.querySelectorAll('p, span, div');
+      console.log('Available text elements in modal:', 
+        Array.from(textElements)
+          .filter(el => el.textContent.includes('See') || el.textContent.includes('results'))
+          .map(el => el.textContent)
+      );
+    }
+  };
+
+  // Function to inject filter buttons with filtering functionality
   const injectFilterButtons = () => {
     const searchBar = document.querySelector('.DocSearch-SearchBar');
     if (!searchBar || document.querySelector('.filter-buttons-container')) {
@@ -50,6 +189,8 @@ export default function CustomSearchBarWrapper(props) {
       gap: 8px;
     `;
 
+    let activeFilter = '';
+
     // Create each filter button
     SEARCH_FILTERS.forEach(filter => {
       const button = document.createElement('button');
@@ -71,30 +212,59 @@ export default function CustomSearchBarWrapper(props) {
         white-space: nowrap;
       `;
 
+      // Set "All content" as default active
+      if (filter.value === '') {
+        button.style.background = '#5468ff';
+        button.style.color = 'white';
+        button.style.borderColor = '#5468ff';
+        activeFilter = '';
+      }
+
       // Add hover effect
       button.addEventListener('mouseenter', () => {
-        button.style.borderColor = '#5468ff';
-        button.style.transform = 'translateY(-1px)';
+        if (activeFilter !== filter.value) {
+          button.style.borderColor = '#5468ff';
+          button.style.transform = 'translateY(-1px)';
+        }
       });
 
       button.addEventListener('mouseleave', () => {
-        button.style.borderColor = '#ccc';
-        button.style.transform = 'translateY(0)';
+        if (activeFilter !== filter.value) {
+          button.style.borderColor = '#ccc';
+          button.style.transform = 'translateY(0)';
+        }
       });
 
-      // For now, just console.log when clicked (no filtering yet)
+      // Add click handler with actual filtering
       button.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation(); // Prevent any event bubbling
+        
         console.log(`Filter clicked: ${filter.value} (${filter.label})`);
         
-        // Visual feedback - highlight the clicked button
+        // Update active filter
+        activeFilter = filter.value;
+        
+        // Update button styles
         buttonsDiv.querySelectorAll('.filter-button').forEach(btn => {
-          btn.style.background = 'white';
-          btn.style.color = '#333';
+          if (btn.dataset.filter === filter.value) {
+            btn.style.background = '#5468ff';
+            btn.style.color = 'white';
+            btn.style.borderColor = '#5468ff';
+          } else {
+            btn.style.background = 'white';
+            btn.style.color = '#333';
+            btn.style.borderColor = '#ccc';
+          }
         });
-        button.style.background = '#5468ff';
-        button.style.color = 'white';
+
+        // Apply the filter with a small delay to ensure results are rendered
+        setTimeout(() => {
+          applyFilter(filter.value);
+        }, 100);
+        
+        return false; // Extra insurance to prevent default behavior
       });
 
       buttonsDiv.appendChild(button);
@@ -105,19 +275,38 @@ export default function CustomSearchBarWrapper(props) {
 
     // Insert the container after the search bar
     searchBar.parentNode.insertBefore(container, searchBar.nextSibling);
+
+    // Store results when buttons are injected
+    setTimeout(storeSearchResults, 200);
   };
 
-  // Monitor for DocSearch modal opening
+  // Monitor for DocSearch modal opening and results appearing
   useEffect(() => {
+    let hasInjected = false;
+    
     const checkForModal = () => {
       const modal = document.querySelector('.DocSearch-Modal');
-      if (modal) {
-        // Modal is open, inject buttons after a small delay
-        setTimeout(injectFilterButtons, 100);
+      const hits = document.querySelectorAll('.DocSearch-Hit');
+      
+      if (modal && !hasInjected) {
+        // Modal is open, inject buttons
+        setTimeout(() => {
+          injectFilterButtons();
+          hasInjected = true;
+        }, 100);
+      } else if (!modal && hasInjected) {
+        // Modal closed, reset
+        hasInjected = false;
+        allResults = [];
+      }
+
+      // Store results when they appear/change
+      if (hits.length > 0) {
+        setTimeout(storeSearchResults, 100);
       }
     };
 
-    // Check periodically for modal
+    // Check periodically for modal and results
     const interval = setInterval(checkForModal, 200);
 
     return () => clearInterval(interval);
