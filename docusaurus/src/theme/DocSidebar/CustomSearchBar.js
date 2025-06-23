@@ -58,6 +58,10 @@ export default function CustomSearchBarWrapper(props) {
       
       // Update result count
       updateResultCount(allResults.length);
+      
+      // Update empty state (clear it since we're showing all results)
+      updateEmptyState('', allResults.length);
+      
       console.log(`Showing all ${allResults.length} results`);
       return;
     }
@@ -97,10 +101,70 @@ export default function CustomSearchBarWrapper(props) {
     
     // Update result count
     updateResultCount(visibleCount);
+    
+    // Update empty state
+    updateEmptyState(filterValue, visibleCount);
+    
     console.log(`Filter "${filterValue}": showing ${visibleCount} of ${allResults.length} results`);
   };
 
-  // Function to update the result count display
+  // Function to show/hide empty state message
+  const updateEmptyState = (filterValue, visibleCount) => {
+    const modal = document.querySelector('.DocSearch-Modal');
+    if (!modal) return;
+
+    // Remove existing empty state message
+    const existingEmptyState = modal.querySelector('.custom-empty-state');
+    if (existingEmptyState) {
+      existingEmptyState.remove();
+    }
+
+    if (visibleCount === 0 && filterValue) {
+      // Find the hits container to insert the empty state message
+      const hitsContainer = modal.querySelector('.DocSearch-Hits') || 
+                           modal.querySelector('.DocSearch-NoResults')?.parentElement;
+      
+      if (hitsContainer) {
+        // Create empty state message
+        const emptyState = document.createElement('div');
+        emptyState.className = 'custom-empty-state';
+        emptyState.style.cssText = `
+          padding: 40px 20px;
+          text-align: center;
+          color: #666;
+          font-size: 14px;
+        `;
+
+        const filterLabel = SEARCH_FILTERS.find(f => f.value === filterValue)?.label || filterValue;
+        
+        emptyState.innerHTML = `
+          <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;">📄</div>
+          <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">No ${filterLabel} results found</h3>
+          <p style="margin: 0; font-size: 14px; color: #666;">
+            Try searching for something else or use a different filter.
+          </p>
+          <button onclick="document.querySelector('[data-filter=\\"\\"]').click()" 
+                  style="
+                    margin-top: 16px;
+                    padding: 8px 16px;
+                    background: #5468ff;
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 12px;
+                    transition: background 0.2s ease;
+                  "
+                  onmouseover="this.style.background='#4c63d2'"
+                  onmouseout="this.style.background='#5468ff'">
+            Show all results
+          </button>
+        `;
+
+        hitsContainer.appendChild(emptyState);
+      }
+    }
+  };
   const updateResultCount = (count) => {
     // Search ONLY within the DocSearch modal for the result count
     const modal = document.querySelector('.DocSearch-Modal');
