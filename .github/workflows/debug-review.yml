@@ -25,18 +25,16 @@ jobs:
           cd docusaurus
           yarn add --dev js-yaml glob
 
-      - name: Debug - Check file structure
+      - name: Debug - Check file structure in detail
         run: |
-          echo "=== Repository structure ==="
-          ls -la
-          echo "=== Docusaurus directory ==="
-          ls -la docusaurus/
-          echo "=== Scripts directory ==="
-          ls -la docusaurus/scripts/ || echo "scripts directory not found"
-          echo "=== Style validation directory ==="
-          ls -la docusaurus/scripts/style-validation/ || echo "style-validation directory not found"
-          echo "=== Docs directory ==="
-          ls -la docusaurus/docs/ | head -10
+          echo "=== Current working directory ==="
+          pwd
+          echo "=== Full repository structure ==="
+          find . -name "*.md" -o -name "*.mdx" | head -20
+          echo "=== Specifically looking for docs ==="
+          find . -type d -name "docs" 
+          echo "=== Content of any docs directories ==="
+          find . -type d -name "docs" -exec echo "=== {} ===" \; -exec ls -la {} \; | head -30
 
       - name: Test validation script existence
         run: |
@@ -69,18 +67,28 @@ jobs:
             echo "❌ YAML config NOT found"
           fi
 
-      - name: Try running validation with debug
+      - name: Try running validation with different paths
         run: |
           cd docusaurus
-          echo "=== Attempting to run validation ==="
-          if [ -f "scripts/style-validation/validate-content-style.js" ]; then
-            echo "Running validation script..."
-            node scripts/style-validation/validate-content-style.js --verbose || echo "Validation script failed"
+          echo "=== Current directory after cd ==="
+          pwd
+          echo "=== Looking for docs from here ==="
+          ls -la docs/ | head -10 || echo "No docs/ directory here"
+          
+          echo "=== Testing glob patterns ==="
+          echo "Pattern: docs/**/*.md"
+          node -e "const glob = require('glob'); console.log('Files found:', glob.sync('docs/**/*.{md,mdx}').slice(0, 10));"
+          
+          echo "=== Testing absolute patterns ==="
+          node -e "const glob = require('glob'); const path = require('path'); const pattern = path.join(process.cwd(), 'docs', '**/*.{md,mdx}'); console.log('Pattern:', pattern); console.log('Files found:', glob.sync(pattern).slice(0, 10));"
+          
+          echo "=== Manual test with specific files ==="
+          if [ -f "docs/cms/intro.md" ]; then
+            echo "Testing with specific file..."
+            node scripts/style-validation/validate-content-style.js --verbose docs/cms/intro.md || echo "Failed with specific file"
           else
-            echo "Creating minimal test to see what happens..."
-            mkdir -p scripts/style-validation
-            echo "console.log('Test script running'); process.exit(0);" > scripts/style-validation/test.js
-            node scripts/style-validation/test.js
+            echo "docs/cms/intro.md not found"
+            find . -name "intro.md" || echo "No intro.md found anywhere"
           fi
 
       - name: Check if results file was created
