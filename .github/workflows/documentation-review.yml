@@ -1,7 +1,5 @@
 name: Strapi Documentation Style Review
 
-name: Strapi Documentation Style Review
-
 on:
   # Temporarily disabled - uncomment to re-enable
   # pull_request:
