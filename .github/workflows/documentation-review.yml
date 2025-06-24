@@ -1,12 +1,16 @@
 name: Strapi Documentation Style Review
 
+name: Strapi Documentation Style Review
+
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-    paths:
-      - 'docusaurus/docs/**/*.md'
-      - 'docusaurus/docs/**/*.mdx'
+  # Temporarily disabled - uncomment to re-enable
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   paths:
+  #     - 'docusaurus/docs/**/*.md'
+  #     - 'docusaurus/docs/**/*.mdx'
   
+  # Keep manual trigger for internal testing
   workflow_dispatch:
     inputs:
       pr_number:
