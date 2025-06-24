@@ -18,13 +18,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: 'docusaurus/package-lock.json'
 
       - name: Install dependencies
         run: |
           cd docusaurus
-          npm ci
+          yarn add --dev js-yaml glob
 
       - name: Run Strapi 12 Rules validation
         id: validation
@@ -38,80 +36,45 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const path = require('path');
             
             try {
-              // Read validation results
               const resultsPath = 'docusaurus/style-check-results.json';
+              
+              if (!fs.existsSync(resultsPath)) {
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: '## ❌ Documentation Style Review Failed\n\nValidation script could not run. Check the logs.'
+                });
+                return;
+              }
+              
               const results = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
               
-              // Generate comment
               let comment = '## 🎯 Strapi Documentation Style Review\n\n';
-              comment += `*Based on Strapi's 12 Rules of Technical Writing*\n\n`;
-              
-              // Summary
-              comment += '### 📊 Summary\n';
+              comment += `### 📊 Summary\n`;
               comment += `- **Files checked:** ${results.summary.filesProcessed}\n`;
-              comment += `- **Total issues:** ${results.summary.totalIssues}\n`;
               comment += `- **Critical errors:** ${results.issues.errors.length} 🚨\n`;
               comment += `- **Warnings:** ${results.issues.warnings.length} ⚠️\n`;
               comment += `- **Suggestions:** ${results.issues.suggestions.length} 💡\n\n`;
               
               if (results.summary.totalIssues === 0) {
-                comment += '🎉 **Perfect!** Your documentation follows all 12 rules of technical writing.\n\n';
+                comment += '🎉 **Perfect!** Your documentation follows all 12 rules.\n\n';
               } else {
-                // Show critical errors
                 if (results.issues.errors.length > 0) {
                   comment += '### 🚨 Critical Issues (must fix)\n\n';
-                  results.issues.errors.slice(0, 5).forEach(error => {
+                  results.issues.errors.forEach(error => {
                     const fileName = error.file.replace(/^.*\/docs\//, 'docs/');
-                    comment += `**${fileName}:${error.line}**\n`;
-                    comment += `- ${error.message}\n`;
-                    if (error.suggestion) {
-                      comment += `- 💡 *${error.suggestion}*\n`;
-                    }
+                    comment += `**${fileName}:${error.line}** - ${error.message}\n`;
+                    if (error.suggestion) comment += `💡 ${error.suggestion}\n`;
                     comment += '\n';
                   });
-                  
-                  if (results.issues.errors.length > 5) {
-                    comment += `*... and ${results.issues.errors.length - 5} more critical issues*\n\n`;
-                  }
-                }
-                
-                // Show some warnings
-                if (results.issues.warnings.length > 0) {
-                  comment += '### ⚠️ Warnings (should address)\n\n';
-                  results.issues.warnings.slice(0, 3).forEach(warning => {
-                    const fileName = warning.file.replace(/^.*\/docs\//, 'docs/');
-                    comment += `**${fileName}:${warning.line}** - ${warning.message}\n`;
-                  });
-                  
-                  if (results.issues.warnings.length > 3) {
-                    comment += `\n*... and ${results.issues.warnings.length - 3} more warnings*\n`;
-                  }
-                  comment += '\n';
-                }
-                
-                // Show some suggestions
-                if (results.issues.suggestions.length > 0) {
-                  comment += '### 💡 Suggestions (improvements)\n\n';
-                  results.issues.suggestions.slice(0, 2).forEach(suggestion => {
-                    const fileName = suggestion.file.replace(/^.*\/docs\//, 'docs/');
-                    comment += `**${fileName}:${suggestion.line}** - ${suggestion.message}\n`;
-                  });
-                  
-                  if (results.issues.suggestions.length > 2) {
-                    comment += `\n*... and ${results.issues.suggestions.length - 2} more suggestions*\n`;
-                  }
-                  comment += '\n';
                 }
               }
               
-              // Add footer
-              comment += '---\n';
-              comment += '*🤖 Automated review based on [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing)*\n';
+              comment += '---\n*🤖 Based on Strapi\'s 12 Rules of Technical Writing*';
               
-              // Post comment
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
@@ -119,20 +82,15 @@ jobs:
                 body: comment
               });
               
-              // Set step output for potential failure
               if (results.issues.errors.length > 0) {
-                core.setFailed(`Found ${results.issues.errors.length} critical errors that must be fixed.`);
+                core.setFailed(`Found ${results.issues.errors.length} critical errors.`);
               }
               
             } catch (error) {
-              console.error('Error processing results:', error);
-              
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: '## ❌ Documentation Style Review Failed\n\n' +
-                      'There was an error running the style validation. Please check the GitHub Action logs.\n\n' +
-                      `Error: ${error.message}`
+                body: `## ❌ Error\n\n${error.message}`
               });
             }
