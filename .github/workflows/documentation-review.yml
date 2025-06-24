@@ -74,7 +74,7 @@ jobs:
                           'Validation script failed to run. Please check the GitHub Action logs.\n\n' +
                           'This might be due to missing files or configuration issues.'
                   });
-                } else if (github.event.inputs?.pr_number) {
+                } else if (github.event.inputs && github.event.inputs.pr_number) {
                   await github.rest.issues.createComment({
                     issue_number: parseInt(github.event.inputs.pr_number),
                     owner: context.repo.owner,
@@ -159,7 +159,7 @@ jobs:
               
               // Add trigger info for manual runs
               if (context.eventName === 'workflow_dispatch') {
-                comment += `*🔧 Manually triggered${github.event.inputs.pr_number ? ` for PR #${github.event.inputs.pr_number}` : ''}*\n\n`;
+                comment += `*🔧 Manually triggered${github.event.inputs && github.event.inputs.pr_number ? ` for PR #${github.event.inputs.pr_number}` : ''}*\n\n`;
               }
               
               // Post comment
@@ -171,7 +171,7 @@ jobs:
                   repo: context.repo.repo,
                   body: comment
                 });
-              } else if (github.event.inputs.pr_number) {
+              } else if (github.event.inputs && github.event.inputs.pr_number) {
                 // Manual run with PR number
                 await github.rest.issues.createComment({
                   issue_number: parseInt(github.event.inputs.pr_number),
@@ -203,7 +203,7 @@ jobs:
                         'There was an error running the style validation. Please check the GitHub Action logs.\n\n' +
                         `Error: ${error.message}`
                 });
-              } else if (github.event.inputs?.pr_number) {
+              } else if (github.event.inputs && github.event.inputs.pr_number) {
                 await github.rest.issues.createComment({
                   issue_number: parseInt(github.event.inputs.pr_number),
                   owner: context.repo.owner,
