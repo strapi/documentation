@@ -1,0 +1,332 @@
+# 🎯 Strapi's 12 Rules of Technical Writing
+# Converted from PDF to automated validation rules
+# DRI: Mégane Lacheny, Pierre Wizla
+# Last update: December 2024
+
+version: "1.0"
+name: "Strapi 12 Rules of Technical Writing"
+description: "Automated validation of Strapi's official technical writing guidelines"
+
+# ================================
+# 📝 CONTENT RULES - Core Writing Guidelines
+# ================================
+
+content_rules:
+  
+  # Rule 3: Adopt a direct and neutral tone
+  neutral_tone_no_jokes:
+    rule: "Adopt a direct and neutral tone: no jokes, no random emojis, no funny GIFs"
+    forbidden_words: ["funny", "hilarious", "awesome", "amazing", "cool", "super", "lol"]
+    forbidden_patterns: ["😄", "😂", "🤣", "😎", "🔥", "💯", "👌"]
+    severity: "warning"
+    enabled: true
+    suggestion: "Keep a professional, neutral tone in technical documentation"
+    
+  # Rule 4: Stick to simple English
+  simple_english_vocabulary:
+    rule: "Stick to simple English: one shouldn't need a dictionary"
+    complex_words: ["utilize", "facilitate", "demonstrate", "aforementioned", "subsequent", "therefore", "furthermore", "moreover", "consequently"]
+    replacement_suggestions:
+      "utilize": "use"
+      "facilitate": "help" 
+      "demonstrate": "show"
+      "aforementioned": "previous"
+      "subsequent": "next"
+      "therefore": "so"
+      "furthermore": "also"
+      "moreover": "also"
+      "consequently": "so"
+    severity: "suggestion"
+    enabled: true
+    
+  # Rule 5: Write concise, straight-to-the-point content
+  avoid_transitional_words:
+    rule: "Avoid transitional words and get immediately to the point"
+    forbidden_words: ["furthermore", "moreover", "consequently", "however", "nevertheless", "nonetheless", "therefore", "thus"]
+    severity: "warning"
+    enabled: true
+    suggestion: "Remove transitional words and be more direct"
+    
+  concise_content_structure:
+    rule: "Write short sentences and break content into sections"
+    max_sentence_length: 25  # words
+    max_paragraph_length: 4  # sentences
+    severity: "suggestion"
+    enabled: true
+    
+  # Rule 6: Never say something is "easy" or "difficult"
+  no_difficulty_adjectives:
+    rule: "Never say something is 'easy' or 'difficult'"
+    forbidden_words: ["easy", "simple", "difficult", "hard", "complex", "complicated", "straightforward", "trivial"]
+    forbidden_phrases: ["piece of cake", "child's play", "rocket science", "no-brainer"]
+    severity: "error"
+    enabled: true
+    suggestion: "Avoid subjective difficulty assessments - focus on clear instructions instead"
+    
+  # Rule 9: Keep away from ambiguity - consistent terminology
+  consistent_terminology:
+    rule: "Features, concepts and actions should always be designated by the same word"
+    avoid_synonyms: true
+    severity: "warning"
+    enabled: true
+    suggestion: "Use the same term consistently - don't look for synonyms in technical writing"
+    
+  avoid_jargon_abbreviations:
+    rule: "Avoid jargon and abbreviations as they are not internationally known"
+    check_acronyms: true
+    require_full_form_first_use: true
+    severity: "warning"
+    enabled: true
+    
+  # Rule 11: Avoid using too many pronouns
+  minimize_pronouns:
+    rule: "Avoid using pronouns too much - documentation is not about 'you' or 'we'"
+    discouraged_pronouns: ["you", "we", "us", "our", "your", "yours"]
+    max_pronouns_per_paragraph: 3
+    severity: "suggestion"
+    enabled: true
+    suggestion: "Focus on actions and explanations rather than addressing the reader directly"
+
+# ================================
+# 🏗️ STRUCTURE RULES - Content Organization
+# ================================
+
+structure_rules:
+  
+  # Rule 1: Remember your audience but don't assume anything
+  document_obvious_requirements:
+    rule: "Document the obvious - mention basic requirements and be specific about locations"
+    required_elements_for_procedures:
+      - "prerequisites or requirements mentioned"
+      - "specific admin panel sections mentioned"
+      - "exact file/folder paths specified"
+    severity: "warning"
+    enabled: true
+    
+  use_introductions:
+    rule: "Use introductions to define concepts mentioned in documentation"
+    check_for_intro_section: true
+    min_intro_length: 2  # sentences
+    severity: "suggestion"
+    enabled: true
+    
+  # Rule 2: Don't try reinventing the wheel
+  follow_style_guide:
+    rule: "Follow the Strapi documentation style guide for consistency"
+    reference_url: "https://strapi.notion.site/style-guide"
+    check_consistency: true
+    severity: "error"
+    enabled: true
+    
+  # Rule 7: Numbered lists for procedures
+  procedures_in_numbered_lists:
+    rule: "Directions must be displayed in numbered lists with one action per step"
+    detect_procedure_language: ["follow these steps", "to do this", "procedure", "instructions"]
+    require_numbered_lists: true
+    one_action_per_step: true
+    start_with_action_verb: true
+    severity: "error"
+    enabled: true
+    
+  # Rule 8: Replace enumerations with bullet lists
+  use_bullet_lists:
+    rule: "Replace enumerations with bullet lists, complex lists with tables"
+    detect_enumerations: true
+    max_inline_list_items: 3
+    suggest_table_for_complex: 10  # items
+    severity: "warning"
+    enabled: true
+
+# ================================
+# 🎨 FORMATTING RULES - Visual Presentation
+# ================================
+
+formatting_rules:
+  
+  # Rule 5: Visual formatting guidelines
+  numbers_as_numerals:
+    rule: "Write numbers as numerals instead of spelling them out"
+    convert_spelled_numbers: ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+    severity: "suggestion"
+    enabled: true
+    
+  avoid_unnecessary_parenthesis:
+    rule: "Avoid parenthesis except for acronym full forms and short examples"
+    check_parenthesis_usage: true
+    allowed_uses: ["acronym_definitions", "brief_examples"]
+    severity: "suggestion"
+    enabled: true
+    
+  # Rule 12: Don't overuse capital letters and bold
+  proper_text_formatting:
+    rule: "Don't overuse capital letters and bold - use proper content formatting"
+    no_all_caps_sentences: true
+    no_bold_sentences: true
+    max_consecutive_caps_words: 1
+    severity: "warning"
+    enabled: true
+    suggestion: "Use callouts or proper formatting instead of ALL CAPS or bold sentences"
+
+# ================================
+# 🖼️ MEDIA RULES - Illustrations and Visual Content
+# ================================
+
+media_rules:
+  
+  # Rule 10: Take advantage of illustrations
+  encourage_illustrations:
+    rule: "Use illustrations when explanations are complex or unclear"
+    suggest_illustrations_for: ["complex topics", "architecture", "step-by-step procedures"]
+    illustration_types:
+      screenshots: "for UI elements and interfaces"
+      schemas: "for architecture and infrastructure"
+      gifs: "for series of actions (use sparingly)"
+    severity: "suggestion"
+    enabled: true
+    
+  annotated_screenshots:
+    rule: "Screenshots should be annotated to help readers"
+    check_screenshot_context: true
+    require_alt_text: true
+    severity: "warning"
+    enabled: true
+
+# ================================
+# 🔍 STRAPI-SPECIFIC RULES
+# ================================
+
+strapi_specific_rules:
+  
+  # Based on Rule 1: Be specific about Strapi elements
+  specify_admin_panel_sections:
+    rule: "Precise exactly the admin panel section where actions should be performed"
+    require_specific_locations: true
+    admin_panel_sections: ["Content Manager", "Content-Type Builder", "Media Library", "Settings"]
+    severity: "warning"
+    enabled: true
+    
+  specify_file_folder_paths:
+    rule: "Mention exact file/folder paths in Strapi projects"
+    common_strapi_paths: ["/src/api/", "/config/", "/public/uploads/", "/src/admin/"]
+    require_path_specificity: true
+    severity: "warning"
+    enabled: true
+    
+  # Consistent Strapi terminology (Rule 9)
+  strapi_terminology_consistency:
+    rule: "Use consistent Strapi terminology throughout documentation"
+    strapi_terms:
+      "content-type": ["content type", "contentType", "content_type"]
+      "admin panel": ["dashboard", "backend", "admin interface"]
+      "collection type": ["collections", "collection"]
+      "single type": ["singleton", "single"]
+      "media library": ["media", "assets", "uploads"]
+    severity: "warning"
+    enabled: true
+
+# ================================
+# 🚨 HIGH PRIORITY VIOLATIONS
+# ================================
+
+critical_violations:
+  
+  # These rules should block PRs
+  easy_difficult_words:
+    rule: "CRITICAL: Never use 'easy' or 'difficult' - this can discourage readers"
+    words: ["easy", "simple", "difficult", "hard", "straightforward", "trivial", "complex", "complicated"]
+    severity: "error"
+    enabled: true
+    block_pr: true
+    
+  jokes_and_casual_tone:
+    rule: "CRITICAL: Maintain professional tone - no jokes or casual language"
+    patterns: ["😂", "lol", "haha", "funny", "joke", "kidding"]
+    severity: "error"
+    enabled: true
+    block_pr: true
+    
+  style_guide_compliance:
+    rule: "CRITICAL: Must follow Strapi documentation style guide"
+    check_compliance: true
+    severity: "error"
+    enabled: true
+    block_pr: true
+
+# ================================
+# 🎯 VALIDATION SETTINGS
+# ================================
+
+validation_settings:
+  
+  # Severity levels configuration
+  severity_levels:
+    error:
+      description: "Blocks PR - must be fixed"
+      exit_code: 1
+      
+    warning:
+      description: "Should be addressed - review required"
+      exit_code: 0
+      
+    suggestion:
+      description: "Improvement recommended"
+      exit_code: 0
+  
+  # File targeting
+  target_files:
+    include: ["docs/**/*.md", "docs/**/*.mdx"]
+    exclude: ["docs/legacy/**", "**/README.md"]
+  
+  # Rule groups for easy management
+  rule_groups:
+    tone_and_style: ["neutral_tone_no_jokes", "simple_english_vocabulary", "no_difficulty_adjectives"]
+    content_structure: ["procedures_in_numbered_lists", "use_bullet_lists", "concise_content_structure"]
+    strapi_specific: ["specify_admin_panel_sections", "strapi_terminology_consistency"]
+    formatting: ["numbers_as_numerals", "proper_text_formatting"]
+
+# ================================
+# 📊 REPORTING CONFIGURATION
+# ================================
+
+reporting:
+  
+  # Custom messages for each rule violation
+  custom_messages:
+    no_difficulty_adjectives: |
+      🚫 Rule 6 violation: Avoid saying something is "easy" or "difficult"
+      
+      What you wrote might discourage readers who find it challenging or make them feel inadequate.
+      ✅ Instead: Provide clear, step-by-step instructions without subjective assessments.
+      
+    neutral_tone_no_jokes: |
+      📝 Rule 3 violation: Maintain a direct and neutral tone
+      
+      Technical documentation should focus on clear information, not entertainment.
+      ✅ Instead: Use professional language that focuses on helping users achieve their goals.
+  
+  # Success messages
+  success_indicators:
+    - "✅ All 12 rules compliance verified"
+    - "📚 Content follows Strapi technical writing standards"
+    - "🎯 Professional tone maintained throughout"
+
+# ================================
+# 🔧 QUICK START TEMPLATES
+# ================================
+
+quick_rules:
+  
+  # Most common violations to catch first
+  starter_rules:
+    - "no_difficulty_adjectives"      # Rule 6 - Critical
+    - "neutral_tone_no_jokes"         # Rule 3 - Critical  
+    - "procedures_in_numbered_lists"  # Rule 7 - Structural
+    - "minimize_pronouns"             # Rule 11 - Style
+    - "use_bullet_lists"              # Rule 8 - Formatting
+  
+  # Advanced rules to add later
+  advanced_rules:
+    - "simple_english_vocabulary"     # Rule 4 - Vocabulary
+    - "avoid_transitional_words"      # Rule 5 - Conciseness
+    - "consistent_terminology"        # Rule 9 - Precision
+    - "encourage_illustrations"       # Rule 10 - Media

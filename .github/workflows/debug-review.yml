@@ -1,0 +1,120 @@
+name: Debug Strapi Documentation Style Review
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to validate (leave empty for current branch)'
+        required: false
+        type: string
+
+jobs:
+  debug-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd docusaurus
+          yarn add --dev js-yaml glob
+
+      - name: Debug - Check file structure in detail
+        run: |
+          echo "=== Current working directory ==="
+          pwd
+          echo "=== Full repository structure ==="
+          find . -name "*.md" -o -name "*.mdx" | head -20
+          echo "=== Specifically looking for docs ==="
+          find . -type d -name "docs" 
+          echo "=== Content of any docs directories ==="
+          find . -type d -name "docs" -exec echo "=== {} ===" \; -exec ls -la {} \; | head -30
+
+      - name: Test validation script existence
+        run: |
+          echo "=== Checking validation script ==="
+          if [ -f "docusaurus/scripts/style-validation/validate-content-style.js" ]; then
+            echo "✅ Validation script found"
+            echo "--- Script content preview ---"
+            head -20 docusaurus/scripts/style-validation/validate-content-style.js
+          else
+            echo "❌ Validation script NOT found"
+          fi
+
+      - name: Test rule parser existence
+        run: |
+          echo "=== Checking rule parser ==="
+          if [ -f "docusaurus/scripts/style-validation/rule-parser.js" ]; then
+            echo "✅ Rule parser found"
+          else
+            echo "❌ Rule parser NOT found"
+          fi
+
+      - name: Test YAML config existence
+        run: |
+          echo "=== Checking YAML config ==="
+          if [ -f "docusaurus/scripts/style-validation/style-rules.yml" ]; then
+            echo "✅ YAML config found"
+            echo "--- Config preview ---"
+            head -10 docusaurus/scripts/style-validation/style-rules.yml
+          else
+            echo "❌ YAML config NOT found"
+          fi
+
+      - name: Try running validation with different paths
+        run: |
+          cd docusaurus
+          echo "=== Current directory after cd ==="
+          pwd
+          echo "=== Looking for docs from here ==="
+          ls -la docs/ | head -10 || echo "No docs/ directory here"
+          
+          echo "=== Testing glob patterns ==="
+          echo "Pattern: docs/**/*.md"
+          node -e "const glob = require('glob'); console.log('Files found:', glob.sync('docs/**/*.{md,mdx}').slice(0, 10));"
+          
+          echo "=== Testing absolute patterns ==="
+          node -e "const glob = require('glob'); const path = require('path'); const pattern = path.join(process.cwd(), 'docs', '**/*.{md,mdx}'); console.log('Pattern:', pattern); console.log('Files found:', glob.sync(pattern).slice(0, 10));"
+          
+          echo "=== Manual test with specific files ==="
+          if [ -f "docs/cms/intro.md" ]; then
+            echo "Testing with specific file..."
+            node scripts/style-validation/validate-content-style.js --verbose docs/cms/intro.md || echo "Failed with specific file"
+          else
+            echo "docs/cms/intro.md not found"
+            find . -name "intro.md" || echo "No intro.md found anywhere"
+          fi
+
+      - name: Check if results file was created
+        run: |
+          echo "=== Checking for results file ==="
+          if [ -f "docusaurus/style-check-results.json" ]; then
+            echo "✅ Results file found!"
+            cat docusaurus/style-check-results.json
+          else
+            echo "❌ Results file NOT created"
+          fi
+
+      - name: Simple comment test (only if PR number provided)
+        if: github.event.inputs.pr_number != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('Testing simple comment...');
+            try {
+              await github.rest.issues.createComment({
+                issue_number: parseInt('${{ github.event.inputs.pr_number }}'),
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '🧪 **Debug Test Comment**\n\nThis is a test to verify commenting works.\n\nWorkflow debug completed successfully!'
+              });
+              console.log('✅ Comment posted successfully!');
+            } catch (error) {
+              console.log('❌ Comment failed:', error.message);
+            }
