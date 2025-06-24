@@ -1,0 +1,112 @@
+name: Debug Strapi Documentation Style Review
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to validate (leave empty for current branch)'
+        required: false
+        type: string
+
+jobs:
+  debug-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd docusaurus
+          yarn add --dev js-yaml glob
+
+      - name: Debug - Check file structure
+        run: |
+          echo "=== Repository structure ==="
+          ls -la
+          echo "=== Docusaurus directory ==="
+          ls -la docusaurus/
+          echo "=== Scripts directory ==="
+          ls -la docusaurus/scripts/ || echo "scripts directory not found"
+          echo "=== Style validation directory ==="
+          ls -la docusaurus/scripts/style-validation/ || echo "style-validation directory not found"
+          echo "=== Docs directory ==="
+          ls -la docusaurus/docs/ | head -10
+
+      - name: Test validation script existence
+        run: |
+          echo "=== Checking validation script ==="
+          if [ -f "docusaurus/scripts/style-validation/validate-content-style.js" ]; then
+            echo "✅ Validation script found"
+            echo "--- Script content preview ---"
+            head -20 docusaurus/scripts/style-validation/validate-content-style.js
+          else
+            echo "❌ Validation script NOT found"
+          fi
+
+      - name: Test rule parser existence
+        run: |
+          echo "=== Checking rule parser ==="
+          if [ -f "docusaurus/scripts/style-validation/rule-parser.js" ]; then
+            echo "✅ Rule parser found"
+          else
+            echo "❌ Rule parser NOT found"
+          fi
+
+      - name: Test YAML config existence
+        run: |
+          echo "=== Checking YAML config ==="
+          if [ -f "docusaurus/scripts/style-validation/style-rules.yml" ]; then
+            echo "✅ YAML config found"
+            echo "--- Config preview ---"
+            head -10 docusaurus/scripts/style-validation/style-rules.yml
+          else
+            echo "❌ YAML config NOT found"
+          fi
+
+      - name: Try running validation with debug
+        run: |
+          cd docusaurus
+          echo "=== Attempting to run validation ==="
+          if [ -f "scripts/style-validation/validate-content-style.js" ]; then
+            echo "Running validation script..."
+            node scripts/style-validation/validate-content-style.js --verbose || echo "Validation script failed"
+          else
+            echo "Creating minimal test to see what happens..."
+            mkdir -p scripts/style-validation
+            echo "console.log('Test script running'); process.exit(0);" > scripts/style-validation/test.js
+            node scripts/style-validation/test.js
+          fi
+
+      - name: Check if results file was created
+        run: |
+          echo "=== Checking for results file ==="
+          if [ -f "docusaurus/style-check-results.json" ]; then
+            echo "✅ Results file found!"
+            cat docusaurus/style-check-results.json
+          else
+            echo "❌ Results file NOT created"
+          fi
+
+      - name: Simple comment test (only if PR number provided)
+        if: github.event.inputs.pr_number != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('Testing simple comment...');
+            try {
+              await github.rest.issues.createComment({
+                issue_number: parseInt('${{ github.event.inputs.pr_number }}'),
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '🧪 **Debug Test Comment**\n\nThis is a test to verify commenting works.\n\nWorkflow debug completed successfully!'
+              });
+              console.log('✅ Comment posted successfully!');
+            } catch (error) {
+              console.log('❌ Comment failed:', error.message);
+            }
