@@ -74,3 +74,9 @@ Some parts of the CMS documentation (e.g. APIs, Configuration, Development) are 
 
 If you also make your first steps with JavaScript web development while discovering Strapi, we encourage you to read more about <ExternalLink to="https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/JavaScript_basics" text="JavaScript" /> and <ExternalLink to="https://docs.npmjs.com/about-npm" text="npm" />. If applicable to your project, you can also learn about <ExternalLink text="TypeScript" to="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html" /> before diving deeper into these technical parts of the CMS documentation.
 :::
+
+## New Section
+This is super easy to do! Just follow these simple steps:
+- First step
+- Second step  
+- Third step
