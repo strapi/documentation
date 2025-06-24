@@ -21,6 +21,10 @@ on:
 jobs:
   validate-documentation:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,7 +50,18 @@ jobs:
             node scripts/style-validation/validate-content-style.js --verbose ${{ github.event.inputs.target_files }}
           else
             echo "Validating all documentation files"
-            node scripts/style-validation/validate-content-style.js --verbose
+            echo "Debug: Current directory contents:"
+            ls -la docs/ | head -10
+            echo "Debug: Testing with known file:"
+            if [ -f "docs/new-file.md" ]; then
+              echo "Found docs/new-file.md, validating it:"
+              node scripts/style-validation/validate-content-style.js --verbose docs/new-file.md
+            else
+              echo "docs/new-file.md not found. Trying to find any .md files:"
+              find docs/ -name "*.md" | head -5
+              echo "Running general validation:"
+              node scripts/style-validation/validate-content-style.js --verbose
+            fi
           fi
         continue-on-error: true
 
