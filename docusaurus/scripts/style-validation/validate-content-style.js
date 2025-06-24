@@ -73,18 +73,38 @@ class DocumentationValidator {
   }
 
   getFilesToValidate() {
-    if (this.options.specificFiles) {
-      return this.options.specificFiles.filter(file => {
-        if (!fs.existsSync(file)) {
-          this.log(`⚠️ File not found: ${file}`, 'warn');
-          return false;
+    // If specific files provided via command line
+    if (this.options.specificFiles && this.options.specificFiles.length > 0) {
+      this.log(`🎯 Validating specific files: ${this.options.specificFiles.join(', ')}`, 'debug');
+      
+      const validFiles = [];
+      this.options.specificFiles.forEach(file => {
+        // Handle both absolute and relative paths
+        let filePath = file;
+        
+        // If it's a relative path without docusaurus/, add it
+        if (!file.startsWith('/') && !file.startsWith('docusaurus/')) {
+          filePath = path.join(process.cwd(), file);
         }
-        return file.endsWith('.md') || file.endsWith('.mdx');
+        // If it starts with docusaurus/, make it absolute
+        else if (file.startsWith('docusaurus/')) {
+          filePath = path.resolve(file);
+        }
+        
+        if (fs.existsSync(filePath) && (filePath.endsWith('.md') || filePath.endsWith('.mdx'))) {
+          validFiles.push(filePath);
+          this.log(`✅ Found: ${filePath}`, 'debug');
+        } else {
+          this.log(`⚠️ File not found or not markdown: ${file}`, 'warn');
+        }
       });
+      
+      return validFiles;
     }
 
-    // Get all markdown files in docs directory
-    // The script runs from docusaurus/ directory, so docs/ is relative to that
+    // Fall back to all markdown files in docs directory
+    this.log('📁 No specific files provided, scanning docs directory...', 'debug');
+    
     const docsPath = path.join(process.cwd(), 'docs');
     
     if (!fs.existsSync(docsPath)) {
@@ -280,10 +300,23 @@ class DocumentationValidator {
 // Command line interface
 async function main() {
   const args = process.argv.slice(2);
+  
+  // Parse arguments
   const options = {
     verbose: args.includes('--verbose') || args.includes('-v'),
-    files: args.filter(arg => !arg.startsWith('--') && !arg.startsWith('-'))
+    files: []
   };
+
+  // Get all non-flag arguments as files
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (!arg.startsWith('--') && !arg.startsWith('-')) {
+      options.files.push(arg);
+    }
+  }
+
+  console.log(`🎯 Command line arguments: ${JSON.stringify(args)}`);
+  console.log(`📁 Files to validate: ${JSON.stringify(options.files)}`);
 
   const validator = new DocumentationValidator(options);
   await validator.validate();
