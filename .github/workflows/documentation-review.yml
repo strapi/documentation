@@ -6,6 +6,17 @@ on:
     paths:
       - 'docusaurus/docs/**/*.md'
       - 'docusaurus/docs/**/*.mdx'
+  
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to validate (leave empty for current branch)'
+        required: false
+        type: string
+      target_files:
+        description: 'Specific files to validate (optional)'
+        required: false
+        type: string
 
 jobs:
   validate-documentation:
@@ -30,7 +41,13 @@ jobs:
         id: validation
         run: |
           cd docusaurus
-          node scripts/style-validation/validate-content-style.js --verbose
+          if [ -n "${{ github.event.inputs.target_files }}" ]; then
+            echo "Validating specific files: ${{ github.event.inputs.target_files }}"
+            node scripts/style-validation/validate-content-style.js --verbose ${{ github.event.inputs.target_files }}
+          else
+            echo "Validating all documentation files"
+            node scripts/style-validation/validate-content-style.js --verbose
+          fi
         continue-on-error: true
 
       - name: Comment PR with results
@@ -126,13 +143,33 @@ jobs:
               comment += '---\n';
               comment += '*🤖 Automated review based on [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing)*\n';
               
+              // Add trigger info for manual runs
+              if (context.eventName === 'workflow_dispatch') {
+                comment += `*🔧 Manually triggered${github.event.inputs.pr_number ? ` for PR #${github.event.inputs.pr_number}` : ''}*\n\n`;
+              }
+              
               // Post comment
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: comment
-              });
+              if (context.eventName === 'pull_request') {
+                // Normal PR comment
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: comment
+                });
+              } else if (github.event.inputs.pr_number) {
+                // Manual run with PR number
+                await github.rest.issues.createComment({
+                  issue_number: parseInt(github.event.inputs.pr_number),
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: comment
+                });
+              } else {
+                // Manual run without PR - just log
+                console.log('Manual validation completed');
+                console.log(comment);
+              }
               
               // Set step output for potential failure
               if (results.issues.errors.length > 0) {
