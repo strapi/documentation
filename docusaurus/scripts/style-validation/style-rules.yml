@@ -132,7 +132,7 @@ structure_rules:
   use_bullet_lists:
     rule: "Replace enumerations with bullet lists, complex lists with tables"
     detect_enumerations: true
-    max_inline_list_items: 4
+    max_inline_list_items: 5
     suggest_table_for_complex: 10  # items
     severity: "warning"
     enabled: true
