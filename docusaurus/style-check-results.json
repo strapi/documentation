@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-06-24T14:36:06.327Z",
+  "summary": {
+    "filesProcessed": 1,
+    "totalIssues": 0,
+    "criticalIssues": 0
+  },
+  "issues": {
+    "errors": [],
+    "warnings": [],
+    "suggestions": []
+  }
+}
