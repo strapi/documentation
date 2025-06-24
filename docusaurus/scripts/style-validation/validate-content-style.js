@@ -84,14 +84,37 @@ class DocumentationValidator {
     }
 
     // Get all markdown files in docs directory
-    const docsPath = path.join(process.cwd(), 'docs');
-    if (!fs.existsSync(docsPath)) {
-      this.log('❌ docs/ directory not found', 'error');
+    // Try different possible locations
+    const possibleDocsPaths = [
+      path.join(process.cwd(), 'docs'),
+      path.join(process.cwd(), '..', 'docs'),  // If running from docusaurus/
+      path.join(__dirname, '..', 'docs'),
+      path.join(__dirname, '..', '..', 'docs')
+    ];
+    
+    let docsPath = null;
+    
+    for (const testPath of possibleDocsPaths) {
+      if (fs.existsSync(testPath)) {
+        docsPath = testPath;
+        this.log(`📁 Using docs path: ${docsPath}`, 'debug');
+        break;
+      }
+    }
+    
+    if (!docsPath) {
+      this.log('❌ docs/ directory not found in any expected location', 'error');
+      this.log('💡 Tried paths:', 'debug');
+      possibleDocsPaths.forEach(p => this.log(`   - ${p}`, 'debug'));
       return [];
     }
 
     const pattern = path.join(docsPath, '**/*.{md,mdx}');
-    return glob.sync(pattern);
+    const files = glob.sync(pattern);
+    this.log(`🔍 Pattern used: ${pattern}`, 'debug');
+    this.log(`📄 Found files: ${files.slice(0, 5).join(', ')}${files.length > 5 ? '...' : ''}`, 'debug');
+    
+    return files;
   }
 
   async validateFile(filePath) {
