@@ -33,6 +33,8 @@ Some of the additional resources listed in this section have been created for St
 
 Additional tutorials and guides can be found in the following blog posts:
 
+<CustomDocCard emoji="➕" title="What is a REST API? Beginner’s Guide + Examples Using Strapi" description="Learn the founding principles of REST APIs and how you can use the Strapi REST API." link="https://strapi.io/blog/what-is-a-rest-api-beginners-guide-examples-using-strapi" />
+
 <CustomDocCard emoji="➕" title="Authenticating requests with the REST API" description="Learn how to authenticate your REST API queries with JSON Web Tokens and API tokens." link="https://strapi.io/blog/guide-on-authenticating-requests-with-the-rest-api" />
 
 <CustomDocCard emoji="➕" title="Using Fetch with Strapi's Content API" description="Explore how to use the fetch() method of the Fetch API to interact with Strapi's Content API." link="https://strapi.io/blog/mastering-api-requests-using-fetch-with-strapi-content-api" />
