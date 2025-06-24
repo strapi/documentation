@@ -64,14 +64,28 @@ jobs:
               if (!fs.existsSync(resultsPath)) {
                 console.log('No results file found, validation may have failed');
                 
-                await github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: '## ❌ Documentation Style Review\n\n' +
-                        'Validation script failed to run. Please check the GitHub Action logs.\n\n' +
-                        'This might be due to missing files or configuration issues.'
-                });
+                // Only try to comment if we're in a PR context or manual run with PR number
+                if (context.eventName === 'pull_request') {
+                  await github.rest.issues.createComment({
+                    issue_number: context.issue.number,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: '## ❌ Documentation Style Review\n\n' +
+                          'Validation script failed to run. Please check the GitHub Action logs.\n\n' +
+                          'This might be due to missing files or configuration issues.'
+                  });
+                } else if (github.event.inputs?.pr_number) {
+                  await github.rest.issues.createComment({
+                    issue_number: parseInt(github.event.inputs.pr_number),
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: '## ❌ Documentation Style Review\n\n' +
+                          'Validation script failed to run. Please check the GitHub Action logs.\n\n' +
+                          'This might be due to missing files or configuration issues.'
+                  });
+                } else {
+                  console.log('No results file found and no PR to comment on. Manual run completed.');
+                }
                 return;
               }
 
@@ -179,12 +193,26 @@ jobs:
             } catch (error) {
               console.error('Error processing results:', error);
               
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '## ❌ Documentation Style Review Failed\n\n' +
-                      'There was an error running the style validation. Please check the GitHub Action logs.\n\n' +
-                      `Error: ${error.message}`
-              });
+              // Only try to comment if we're in a PR context or manual run with PR number
+              if (context.eventName === 'pull_request') {
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: '## ❌ Documentation Style Review Failed\n\n' +
+                        'There was an error running the style validation. Please check the GitHub Action logs.\n\n' +
+                        `Error: ${error.message}`
+                });
+              } else if (github.event.inputs?.pr_number) {
+                await github.rest.issues.createComment({
+                  issue_number: parseInt(github.event.inputs.pr_number),
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: '## ❌ Documentation Style Review Failed\n\n' +
+                        'There was an error running the style validation. Please check the GitHub Action logs.\n\n' +
+                        `Error: ${error.message}`
+                });
+              } else {
+                console.log(`Manual validation failed: ${error.message}`);
+              }
             }
