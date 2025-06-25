@@ -557,13 +557,34 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     
     .tooltip-arrow {
       position: absolute;
-      top: -12px; 
+      top: -12px;
       left: 30px;
       width: 0;
       height: 0;
-      border-width: 6px;
-      border-style: solid;
-      border-color: transparent transparent var(--strapi-neutral-200) transparent; /* Flèche qui pointe vers le haut */
+      
+      &::before {
+        content: "";
+        position: absolute;
+        top: -2px; /* Légèrement plus haut pour la bordure */
+        left: -7px;
+        width: 0;
+        height: 0;
+        border-width: 7px;
+        border-style: solid;
+        border-color: transparent transparent var(--strapi-neutral-200) transparent; /* Bordure plus grande */
+      }
+      
+      &::after {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: -6px;
+        width: 0;
+        height: 0;
+        border-width: 6px;
+        border-style: solid;
+        border-color: transparent transparent var(--strapi-neutral-100) transparent; /* Remplissage par-dessus */
+      }
     }
   }
 }
@@ -663,8 +684,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         color: var(--strapi-neutral-500);
       }
       
-      .tooltip-arrow {
-        border-color: transparent transparent var(--strapi-neutral-0) transparent; /* Flèche vers le haut en mode sombre */
+      .tooltip-arrow::after {
+        border-color: transparent transparent var(--strapi-neutral-0) transparent;
       }
     }
   }
