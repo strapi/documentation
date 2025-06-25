@@ -310,7 +310,7 @@ const sidebars = {
             <ul>
               <li>This item is purely informative</li>
               <li>Please avoid using links here as those tooltips are not hoverable</li>
-            </ul>`
+            </ul><br/>`
           },
         },
         {
@@ -327,7 +327,7 @@ const sidebars = {
               value: 'placeholder',
               customProps: {
                 text: "This section has changed",
-                tooltip: `<strong>New configuration section!</strong><br/><br/>This section now regroups all the database-related configurations and guides, including migrations and transactions.</div>`
+                tooltip: `<strong>New configuration section!</strong><br/><br/>This section now regroups all the database-related configurations and guides, including migrations and transactions.</div><br/><br/>`
               }
             },
             {

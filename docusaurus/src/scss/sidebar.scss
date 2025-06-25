@@ -477,6 +477,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 .menu__link__content .strapi-icons {
   margin-left: 8px;
+  cursor: help;
 }
 
 .info-icon {
@@ -626,8 +627,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
   .strapi-icons {
     color: var(--strapi-neutral-600);
-    font-size: 11px;
+    font-size: 13px;
     flex-shrink: 0;
+    top: -1px;
+    position: relative;
   }
 
   &__content {
@@ -660,7 +663,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
     
     .strapi-icons {
-      font-size: 10px;
+      font-size: 12px;
     }
   }
   
