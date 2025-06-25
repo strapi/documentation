@@ -284,6 +284,20 @@ const sidebars = {
           ]
         },
         'cms/configurations/api',
+        {
+          type: 'doc',
+          id: 'cms/configurations/cron',
+          customProps: {
+            updated: false,
+            infoTooltip: `<strong>API Version 2.0</strong><br>
+            <a href="/changelog">Voir les nouveautés</a><br><br>
+            <strong>Changements :</strong>
+            <ul>
+              <li>Nouvelle authentification</li>
+              <li>Endpoints mis à jour</li>
+            </ul>`
+          },
+        },
         'cms/configurations/cron',
         {
           type: 'category',
@@ -292,12 +306,28 @@ const sidebars = {
           label: "Database",
           customProps: {
             updated: false,
+            infoTooltip: `<strong>API Version 2.0</strong><br>
+            <a href="/changelog">Voir les nouveautés</a><br><br>
+            <strong>Changements :</strong>
+            <ul>
+              <li>Nouvelle authentification</li>
+              <li>Endpoints mis à jour</li>
+            </ul>`
           },
           items: [
             {
               type: 'doc',
               id: 'cms/configurations/database',
               label: 'Database configuration',
+              customProps: {  
+                infoTooltip: `<strong>API Version 2.0</strong><br>
+                  <a href="/changelog">Voir les nouveautés</a><br><br>
+                  <strong>Changements :</strong>
+                  <ul>
+                    <li>Nouvelle authentification</li>
+                    <li>Endpoints mis à jour</li>
+                  </ul>`
+              },
             },
             'cms/database-migrations',
             'cms/database-transactions',

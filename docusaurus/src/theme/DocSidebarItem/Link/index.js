@@ -1,3 +1,4 @@
+// DocSidebarItemLink.js
 import React from 'react';
 import clsx from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
@@ -6,7 +7,10 @@ import Link from '@docusaurus/Link';
 import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
 import { NewBadge, UpdatedBadge } from '../../../components/Badge';
+import InfoIcon from '../../../components/InfoIcon';
 import styles from './styles.module.css';
+import Icon from '@site/src/components/Icon'
+
 export default function DocSidebarItemLink({
   item,
   onItemClick,
@@ -18,6 +22,7 @@ export default function DocSidebarItemLink({
   const {href, label, className, autoAddBaseUrl, customProps} = item;
   const isActive = isActiveSidebarItem(item, activePath);
   const isInternalLink = isInternalUrl(href);
+  
   return (
     <li
       className={clsx(
@@ -42,11 +47,33 @@ export default function DocSidebarItemLink({
           onClick: onItemClick ? () => onItemClick(item) : undefined,
         })}
         {...props}>
-        {label}
+        <span className="menu__link__content">
+          {label}
+          {customProps?.infoTooltip && (
+            <Icon name="info" />
+          )}
+          {customProps?.infoTooltip && (
+            <div 
+              className="info-icon__tooltip"
+              dangerouslySetInnerHTML={{ __html: customProps.infoTooltip }}
+            /> 
+          )} 
+        </span>
         {!isInternalLink && <IconExternalLink />}
         {customProps?.new && <NewBadge />}
         {customProps?.updated && <UpdatedBadge />}
       </Link>
+      
+      {/* Notice sobre sous le lien si définie */}
+      {customProps?.noticeText && (
+        <div className="sidebar-notice">
+          <i className="ph-fill ph-info sidebar-notice__icon"></i>
+          <div 
+            className="sidebar-notice__content"
+            dangerouslySetInnerHTML={{ __html: customProps.noticeText }}
+          />
+        </div>
+      )}
     </li>
   );
 }
