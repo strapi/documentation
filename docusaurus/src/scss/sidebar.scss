@@ -468,14 +468,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-/* Icône info inline dans les liens de sidebar */
-.sidebar-info-icon {
-  margin-left: 6px;
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-}
-
 .menu__link__content:hover .info-icon__tooltip {
   visibility: visible;
   opacity: 1; 
@@ -494,7 +486,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --custom-tooltip-width: 220px;
     font-weight: 400;
     visibility: hidden;
-    // opacity: 0;
     width: var(--custom-tooltip-width);
     background-color: var(--strapi-neutral-100);
     color: var(--strapi-neutral-600);
@@ -598,24 +589,20 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 
 /* Notice sobre sous les liens */
 .sidebar-notice {
-  display: flex;
-  align-items: flex-start;
   padding: 6px 8px;
-  margin: 4px 0 4px 12px;
   background-color: var(--strapi-neutral-100);
-  border-radius: 4px;
-  border-left: 2px solid var(--strapi-neutral-400);
+  border-radius: 6px;
+  border: 1px solid var(--strapi-neutral-200);
   font-size: 12px;
   line-height: 1.4;
+  position: relative;
   
-  &__icon {
+  .strapi-icons {
     color: var(--strapi-neutral-600);
     margin-right: 6px;
     font-size: 11px;
-    flex-shrink: 0;
-    margin-top: 1px;
   }
-  
+
   &__content {
     color: var(--strapi-neutral-700);
     
@@ -692,8 +679,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
   
   .sidebar-notice {
-    background-color: var(--strapi-neutral-0);
-    border-left-color: var(--strapi-neutral-400);
+    background-color: var(--strapi-neutral-100);
+    border-left-color: var(--strapi-neutral-200);
     
     &__icon {
       color: var(--strapi-neutral-500);

@@ -214,6 +214,20 @@ const sidebars = {
       className: 'category-cms-configurations',
       items: [
         {
+          type: 'html',
+          value: 'placeholder',
+          customProps: {
+            text: "Section's content has changed.",
+            tooltip: `<strong>API Version 2.0</strong><br>
+            <a href="/changelog">Voir les nouveautés</a><br><br>
+            <strong>Changements :</strong>
+            <ul>
+              <li>Nouvelle authentification</li>
+              <li>Endpoints mis à jour</li>
+            </ul>`
+          }
+        },
+        {
           type: 'doc',
           label: 'Configurations introduction',
           id: 'cms/configurations',
@@ -289,7 +303,7 @@ const sidebars = {
           id: 'cms/configurations/cron',
           customProps: {
             updated: false,
-            infoTooltip: `<strong>API Version 2.0</strong><br>
+            tooltip: `<strong>API Version 2.0</strong><br>
             <a href="/changelog">Voir les nouveautés</a><br><br>
             <strong>Changements :</strong>
             <ul>
@@ -298,6 +312,17 @@ const sidebars = {
             </ul>`
           },
         },
+        // {
+        //   type: 'html',
+        //   value:  `<strong>API Version 2.0</strong><br>
+        //     <a href="/changelog">Voir les nouveautés</a><br><br>
+        //     <strong>Changements :</strong>
+        //     <ul>
+        //       <li>Nouvelle authentification</li>
+        //       <li>Endpoints mis à jour</li>
+        //     </ul>`,
+        //   defaultStyle: true,
+        // },
         'cms/configurations/cron',
         {
           type: 'category',

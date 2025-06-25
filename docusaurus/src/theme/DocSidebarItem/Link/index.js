@@ -7,7 +7,6 @@ import Link from '@docusaurus/Link';
 import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
 import { NewBadge, UpdatedBadge } from '../../../components/Badge';
-import InfoIcon from '../../../components/InfoIcon';
 import styles from './styles.module.css';
 import Icon from '@site/src/components/Icon'
 
@@ -49,13 +48,13 @@ export default function DocSidebarItemLink({
         {...props}>
         <span className="menu__link__content">
           {label}
-          {customProps?.infoTooltip && (
+          {customProps?.tooltip && (
             <Icon name="info" />
           )}
-          {customProps?.infoTooltip && (
+          {customProps?.tooltip && (
             <div 
               className="info-icon__tooltip"
-              dangerouslySetInnerHTML={{ __html: customProps.infoTooltip }}
+              dangerouslySetInnerHTML={{ __html: customProps.tooltip }}
             /> 
           )} 
         </span>
@@ -63,17 +62,6 @@ export default function DocSidebarItemLink({
         {customProps?.new && <NewBadge />}
         {customProps?.updated && <UpdatedBadge />}
       </Link>
-      
-      {/* Notice sobre sous le lien si définie */}
-      {customProps?.noticeText && (
-        <div className="sidebar-notice">
-          <i className="ph-fill ph-info sidebar-notice__icon"></i>
-          <div 
-            className="sidebar-notice__content"
-            dangerouslySetInnerHTML={{ __html: customProps.noticeText }}
-          />
-        </div>
-      )}
     </li>
   );
 }
