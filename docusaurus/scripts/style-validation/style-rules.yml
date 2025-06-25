@@ -135,7 +135,7 @@ structure_rules:
     max_inline_list_items: 3
     suggest_table_for_complex: 10  # items
     severity: "warning"
-    enabled: true
+    enabled: false
 
 # ================================
 # 🎨 FORMATTING RULES - Visual Presentation
