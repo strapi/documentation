@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
 import { NewBadge, UpdatedBadge } from '../../../components/Badge';
-import InfoIcon from '../../../components/InfoIcon';
 import styles from './styles.module.css';
 
 export default function DocSidebarItemHtml({item, level, index}) {

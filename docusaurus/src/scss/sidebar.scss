@@ -72,16 +72,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     &:before {
       background-size: var(--custom-sidebar-caret-size);
     }
-    
-    .tooltip-arrow {
-      position: absolute;
-      bottom: -6px;
-      width: 0;
-      height: 0;
-      border-width: 6px;
-      border-style: solid;
-      border-color: var(--strapi-neutral-100) transparent transparent transparent;
-    }
   }
 
   &__caret,
@@ -505,21 +495,25 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     --custom-tooltip-width: 220px;
     font-weight: 400;
     visibility: hidden;
+    opacity: 0;
     width: var(--custom-tooltip-width);
     background-color: var(--strapi-neutral-100);
     color: var(--strapi-neutral-600);
     text-align: left;
     border-radius: 6px;
     padding: 8px;
-    position: fixed;
+    position: absolute;
     z-index: 99999;
+    top: -80px;
+    left: -200px;
     font-size: var(--strapi-font-size-ssm);
     line-height: var(--strapi-line-height-sm);
     border: 1px solid var(--strapi-neutral-200);
     box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
-    pointer-events: none;
+    pointer-events: none; /* Pas d'interaction avec le tooltip */
+    transition: opacity 0.2s ease, visibility 0.2s ease;
     
-    /* Contenu HTML dans tooltip */
+    /* Contenu HTML dans tooltip - pour affichage uniquement */
     ul, ol {
       margin: 4px 0;
       padding-left: 14px;
@@ -532,10 +526,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     a {
       color: var(--strapi-primary-600);
       text-decoration: underline;
-      
-      &:hover {
-        color: var(--strapi-primary-700);
-      }
+      /* Pas de cursor: pointer puisqu'on ne peut pas cliquer */
     }
     
     p {
@@ -562,11 +553,24 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       border-radius: 3px;
       font-size: 11px;
     }
+    
+    .tooltip-arrow {
+      position: absolute;
+      top: 100%;
+      left: 200px;
+      width: 0;
+      height: 0;
+      border-width: 6px;
+      border-style: solid;
+      border-color: var(--strapi-neutral-100) transparent transparent transparent;
+    }
   }
-  
-  &:hover &__tooltip {
-    visibility: visible;
-  }
+}
+
+/* Afficher le tooltip au hover du li entier */
+.theme-doc-sidebar-item-link:hover .info-icon__tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Notice sobre sous les liens */
@@ -645,20 +649,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       color: var(--strapi-neutral-400);
       border-color: var(--strapi-neutral-200);
       
-      &::after {
-        border-color: var(--strapi-neutral-0) transparent transparent transparent;
-      }
-      
-      .tooltip-arrow {
-        border-color: var(--strapi-neutral-0) transparent transparent transparent;
-      }
-      
       a {
         color: var(--strapi-primary-500);
-        
-        &:hover {
-          color: var(--strapi-primary-400);
-        }
       }
       
       strong {
@@ -668,6 +660,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       code {
         background-color: var(--strapi-neutral-100);
         color: var(--strapi-neutral-500);
+      }
+      
+      .tooltip-arrow {
+        border-color: var(--strapi-neutral-0) transparent transparent transparent;
       }
     }
   }
