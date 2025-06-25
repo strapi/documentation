@@ -383,7 +383,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         .theme-doc-sidebar-item-category-level-1.category-cloud-cli > .menu__list-item-collapsible a {
           pointer-events: none;
           &::before {
-            content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><path d='M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM77.66,173.66a8,8,0,0,1-11.32-11.32L100.69,128,66.34,93.66A8,8,0,0,1,77.66,82.34l40,40a8,8,0,0,1,0,11.32ZM192,176H128a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z'/></svg>");            position: relative;
+            content: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='rgb(142,142,169)' viewBox='0 0 256 256'><path d='M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM77.66,173.66a8,8,0,0,1-11.32-11.32L100.69,128,66.34,93.66A8,8,0,0,1,77.66,82.34l40,40a8,8,0,0,1,0,11.32ZM192,176H128a8,8,0,0,1,0-16h64a8,8,0,0,1,0,16Z'/></svg>");
+            position: relative;
             top: 1px;
           }
         }
@@ -468,6 +469,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
+// Tooltips classiques pour les liens de la sidebar
 .menu__link__content:hover .info-icon__tooltip {
   visibility: visible;
   opacity: 1; 
@@ -503,10 +505,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     line-height: var(--strapi-line-height-sm);
     border: 1px solid var(--strapi-neutral-200);
     box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
-    pointer-events: none; /* Pas d'interaction avec le tooltip */
+    pointer-events: none;
     transition: opacity 0.2s ease, visibility 0.2s ease;
     
-    /* Contenu HTML dans tooltip - pour affichage uniquement */
     ul, ol {
       margin: 4px 0;
       padding-left: 14px;
@@ -519,7 +520,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     a {
       color: var(--strapi-primary-600);
       text-decoration: underline;
-      /* Pas de cursor: pointer puisqu'on ne peut pas cliquer */
     }
     
     p {
@@ -557,13 +557,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       &::before {
         content: "";
         position: absolute;
-        top: -2px; /* Légèrement plus haut pour la bordure */
+        top: -2px;
         left: -7px;
         width: 0;
         height: 0;
         border-width: 7px;
         border-style: solid;
-        border-color: transparent transparent var(--strapi-neutral-200) transparent; /* Bordure plus grande */
+        border-color: transparent transparent var(--strapi-neutral-200) transparent;
       }
       
       &::after {
@@ -575,38 +575,105 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         height: 0;
         border-width: 6px;
         border-style: solid;
-        border-color: transparent transparent var(--strapi-neutral-100) transparent; /* Remplissage par-dessus */
+        border-color: transparent transparent var(--strapi-neutral-100) transparent;
       }
     }
   }
 }
 
-/* Afficher le tooltip au hover du li entier */
+// Afficher le tooltip au hover du li entier pour les liens
 .theme-doc-sidebar-item-link:hover .info-icon__tooltip {
   visibility: visible;
   opacity: 1;
 }
 
-/* Notice sobre sous les liens */
+// Notice extensible pour remplacer le système de tooltip
 .sidebar-notice {
-  padding: 6px 8px;
   background-color: var(--strapi-neutral-100);
   border-radius: 6px;
   border: 1px solid var(--strapi-neutral-200);
   font-size: 12px;
   line-height: 1.4;
   position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
   
+  &__header {
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 6px;
+    
+    &:hover {
+      background-color: var(--strapi-neutral-150);
+    }
+  }
+
   .strapi-icons {
     color: var(--strapi-neutral-600);
-    margin-right: 6px;
     font-size: 11px;
+    flex-shrink: 0;
   }
 
   &__content {
     color: var(--strapi-neutral-700);
+    flex: 1;
     
-    /* Support HTML dans le contenu */
+    a {
+      color: var(--strapi-primary-600);
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  &__toggle {
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    color: var(--strapi-neutral-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    
+    &:hover {
+      color: var(--strapi-primary-600);
+    }
+    
+    .strapi-icons {
+      font-size: 10px;
+    }
+  }
+  
+  &__expandable {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    padding: 0 8px;
+    
+    &--visible {
+      max-height: 300px;
+      opacity: 1;
+      padding: 0 8px 8px 8px;
+    }
+    
+    // Support HTML content
+    ul, ol {
+      margin: 4px 0;
+      padding-left: 14px;
+    }
+    
+    li {
+      margin: 2px 0;
+    }
+    
     a {
       color: var(--strapi-primary-600);
       text-decoration: none;
@@ -616,17 +683,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
     }
     
-    ul, ol {
-      margin: 2px 0;
-      padding-left: 12px;
-    }
-    
-    li {
-      margin: 1px 0;
-    }
-    
     p {
-      margin: 2px 0;
+      margin: 4px 0;
       
       &:first-child {
         margin-top: 0;
@@ -636,6 +694,32 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         margin-bottom: 0;
       }
     }
+    
+    strong {
+      font-weight: 600;
+      color: var(--strapi-neutral-800);
+    }
+    
+    code {
+      background-color: var(--strapi-neutral-150);
+      color: var(--strapi-neutral-700);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+  }
+  
+  &__badges {
+    display: flex;
+    gap: 4px;
+    padding: 0 8px 6px 8px;
+  }
+  
+  // Expanded state
+  &--expanded {
+    .sidebar-notice__toggle {
+      transform: rotate(90deg);
+    }
   }
 }
 
@@ -643,7 +727,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   margin: 6px 0;
 }
 
-/* Mode sombre */
+// Dark mode pour les tooltips classiques et les notices
 @include dark {
   .info-icon {
     &__icon {
@@ -680,9 +764,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   
   .sidebar-notice {
     background-color: var(--strapi-neutral-100);
-    border-left-color: var(--strapi-neutral-200);
+    border-color: var(--strapi-neutral-200);
     
-    &__icon {
+    &__header:hover {
+      background-color: var(--strapi-neutral-150);
+    }
+    
+    .strapi-icons {
       color: var(--strapi-neutral-500);
     }
     
@@ -691,6 +779,29 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       
       a {
         color: var(--strapi-primary-500);
+      }
+    }
+    
+    &__toggle {
+      color: var(--strapi-neutral-500);
+      
+      &:hover {
+        color: var(--strapi-primary-500);
+      }
+    }
+    
+    &__expandable {
+      a {
+        color: var(--strapi-primary-500);
+      }
+      
+      strong {
+        color: var(--strapi-neutral-300);
+      }
+      
+      code {
+        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-500);
       }
     }
   }
