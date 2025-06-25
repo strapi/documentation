@@ -596,16 +596,31 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   line-height: 1.4;
   position: relative;
   transition: all 0.3s ease;
+  cursor: help;
   
+  &:hover {
+    .sidebar-notice__header {
+      background-color: var(--strapi-neutral-200);
+    }
+  }
+
   &__header {
-    padding: 6px 8px;
+    padding: 6px 8px 0;
     display: flex;
     align-items: center;
-    cursor: pointer;
+    // cursor: pointer;
     gap: 6px;
-    
-    &:hover {
-      background-color: var(--strapi-neutral-150);
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background-color: var(--strapi-neutral-200);
+      visibility: hidden;
+      z-index: 9999;
     }
   }
 
@@ -633,7 +648,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     background: none;
     border: none;
     padding: 2px;
-    cursor: pointer;
     color: var(--strapi-neutral-600);
     display: flex;
     align-items: center;
@@ -652,9 +666,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   
   &__expandable {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    top: calc(100% - 3px);
+    left: -1px;
+    right: -1px;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
@@ -662,15 +676,25 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     border: 1px solid var(--strapi-neutral-200);
     border-top: none;
     border-radius: 0 0 6px 6px;
-    z-index: 9999;
+    z-index: 9998;
     transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-    padding: 0 8px;
+    padding: 14px 10px 10px !important;
     
     &--visible {
       max-height: 300px;
       opacity: 1;
       padding: 8px;
       box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-color: var(--strapi-neutral-100);
+      width: 100%;
+      height: 4px;
+      top: 0;
+      left: 0;
     }
     
     // Support HTML content
@@ -681,6 +705,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     
     li {
       margin: 2px 0;
+      color: var(--strapi-neutral-700);
+      list-style-type: disc;
     }
     
     a {
@@ -724,8 +750,16 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     padding: 0 8px 6px 8px;
   }
   
-  // Hover state pour déclencher l'expansion
+  // Hover state to trigger expandable content
   &:hover {
+    .sidebar-notice__header {
+      border-radius: 6px 6px 0 0;
+      
+      &::after {
+        visibility: visible;
+      }
+    }
+    
     .sidebar-notice__expandable {
       max-height: 300px;
       opacity: 1;
@@ -743,7 +777,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   margin: 6px 0;
 }
 
-// Dark mode pour les tooltips classiques et les notices
+// Dark mode for regular tooltips and notices
 @include dark {
   .info-icon {
     &__icon {
@@ -782,10 +816,16 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     background-color: var(--strapi-neutral-100);
     border-color: var(--strapi-neutral-200);
     
-    &__header:hover {
-      background-color: var(--strapi-neutral-150);
+    &:hover {
+      .sidebar-notice__header {
+        background-color: var(--strapi-neutral-150);
+
+        &::after {
+          background-color: var(--strapi-neutral-150);
+        }
+      }
     }
-    
+
     .strapi-icons {
       color: var(--strapi-neutral-500);
     }
@@ -809,6 +849,10 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     &__expandable {
       a {
         color: var(--strapi-primary-500);
+      }
+      
+      li {
+        color: var(--strapi-neutral-400);
       }
       
       strong {

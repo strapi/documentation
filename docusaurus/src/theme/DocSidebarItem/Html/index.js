@@ -22,7 +22,7 @@ export default function DocSidebarItemHtml({item, level, index}) {
         key={index}>
         <div className="sidebar-notice">
           <div className="sidebar-notice__header">
-            <Icon name="info" />
+            <Icon name="info"/>
             <span className="sidebar-notice__content">
               {customProps.text}
             </span>
