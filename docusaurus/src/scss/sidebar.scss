@@ -595,7 +595,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   font-size: 12px;
   line-height: 1.4;
   position: relative;
-  overflow: hidden;
   transition: all 0.3s ease;
   
   &__header {
@@ -652,16 +651,26 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
   
   &__expandable {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
+    background-color: var(--strapi-neutral-100);
+    border: 1px solid var(--strapi-neutral-200);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
     transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
     padding: 0 8px;
     
     &--visible {
       max-height: 300px;
       opacity: 1;
-      padding: 0 8px 8px 8px;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
     }
     
     // Support HTML content
@@ -715,8 +724,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     padding: 0 8px 6px 8px;
   }
   
-  // Expanded state
-  &--expanded {
+  // Hover state pour déclencher l'expansion
+  &:hover {
+    .sidebar-notice__expandable {
+      max-height: 300px;
+      opacity: 1;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
+    }
+    
     .sidebar-notice__toggle {
       transform: rotate(90deg);
     }

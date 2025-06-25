@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
 import { NewBadge, UpdatedBadge } from '../../../components/Badge';
@@ -7,11 +7,6 @@ import Icon from '@site/src/components/Icon';
 
 export default function DocSidebarItemHtml({item, level, index}) {
   const {value, defaultStyle, className, customProps} = item;
-  const [isExpanded, setIsExpanded] = useState(false);
-  
-  const handleToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
   
   // Notice (replaces HTML content)
   if (customProps?.text) {
@@ -25,28 +20,22 @@ export default function DocSidebarItemHtml({item, level, index}) {
           className,
         )}
         key={index}>
-        <div className={clsx("sidebar-notice", { 'sidebar-notice--expanded': isExpanded })}>
-          <div className="sidebar-notice__header" onClick={handleToggle}>
+        <div className="sidebar-notice">
+          <div className="sidebar-notice__header">
             <Icon name="info" />
             <span className="sidebar-notice__content">
               {customProps.text}
             </span>
             {customProps?.tooltip && (
-              <button 
-                className="sidebar-notice__toggle"
-                aria-expanded={isExpanded}
-                aria-label={isExpanded ? "Collapse info" : "Expand info"}
-              >
-                <Icon name={isExpanded ? "caret-down" : "caret-right"} />
-              </button>
+              <div className="sidebar-notice__toggle">
+                <Icon name="caret-right" />
+              </div>
             )}
           </div>
           
           {customProps?.tooltip && (
             <div 
-              className={clsx("sidebar-notice__expandable", {
-                'sidebar-notice__expandable--visible': isExpanded
-              })}
+              className="sidebar-notice__expandable"
               dangerouslySetInnerHTML={{ __html: customProps.tooltip }}
             /> 
           )}
