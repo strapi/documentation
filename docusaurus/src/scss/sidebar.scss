@@ -504,8 +504,9 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     padding: 8px;
     position: absolute;
     z-index: 99999;
-    top: -80px;
-    left: -200px;
+    bottom: 0;
+    transform: translateY(105%);
+    left: -64px;
     font-size: var(--strapi-font-size-ssm);
     line-height: var(--strapi-line-height-sm);
     border: 1px solid var(--strapi-neutral-200);
@@ -556,13 +557,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     
     .tooltip-arrow {
       position: absolute;
-      top: 100%;
-      left: 200px;
+      top: -12px; 
+      left: 30px;
       width: 0;
       height: 0;
       border-width: 6px;
       border-style: solid;
-      border-color: var(--strapi-neutral-100) transparent transparent transparent;
+      border-color: transparent transparent var(--strapi-neutral-200) transparent; /* Flèche qui pointe vers le haut */
     }
   }
 }
@@ -663,7 +664,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
       
       .tooltip-arrow {
-        border-color: var(--strapi-neutral-0) transparent transparent transparent;
+        border-color: transparent transparent var(--strapi-neutral-0) transparent; /* Flèche vers le haut en mode sombre */
       }
     }
   }
