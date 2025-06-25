@@ -792,7 +792,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     
     &__tooltip {
       background-color: var(--strapi-neutral-0);
-      color: var(--strapi-neutral-400);
+      color: var(--strapi-neutral-700);
       border-color: var(--strapi-neutral-200);
       
       a {
@@ -800,7 +800,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
       
       strong {
-        color: var(--strapi-neutral-300);
+        color: var(--strapi-neutral-700);
       }
       
       code {
