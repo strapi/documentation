@@ -469,7 +469,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-// Tooltips classiques pour les liens de la sidebar
+// Regular tooltips for sidebar links
 .menu__link__content:hover .info-icon__tooltip {
   visibility: visible;
   opacity: 1; 
@@ -486,14 +486,14 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   
   &__tooltip {
     --custom-tooltip-width: 220px;
-    font-weight: 400;
+    font-size: 12px;
     visibility: hidden;
     width: var(--custom-tooltip-width);
     background-color: var(--strapi-neutral-100);
-    color: var(--strapi-neutral-600);
+    color: var(--strapi-neutral-700);
     text-align: left;
     border-radius: 6px;
-    padding: 8px;
+    padding: 14px 14px 0;
     position: absolute;
     z-index: 99999;
     top: 24px;
@@ -501,8 +501,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     min-height: 100px;
     transform: (100%);
     left: 0;
-    font-size: var(--strapi-font-size-ssm);
-    line-height: var(--strapi-line-height-sm);
+    font-size: var(--strapi-font-size-xs);
+    line-height: var(--strapi-line-height-xxs);
     border: 1px solid var(--strapi-neutral-200);
     box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
     pointer-events: none;
@@ -597,6 +597,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   position: relative;
   transition: all 0.3s ease;
   cursor: help;
+  color: var(--strapi-neutral-700);
   
   &:hover {
     .sidebar-notice__header {
@@ -608,7 +609,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     padding: 6px 8px 0;
     display: flex;
     align-items: center;
-    // cursor: pointer;
     gap: 6px;
 
     &::after {
@@ -678,7 +678,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     border-radius: 0 0 6px 6px;
     z-index: 9998;
     transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-    padding: 14px 10px 10px !important;
+    padding: 14px 10px 0 !important;
     
     &--visible {
       max-height: 300px;
@@ -705,7 +705,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     
     li {
       margin: 2px 0;
-      color: var(--strapi-neutral-700);
       list-style-type: disc;
     }
     
@@ -761,7 +760,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     }
     
     .sidebar-notice__expandable {
-      max-height: 300px;
+      max-height: 400px;
       opacity: 1;
       padding: 8px;
       box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
@@ -852,11 +851,11 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       }
       
       li {
-        color: var(--strapi-neutral-400);
+        color: var(--strapi-neutral-700);
       }
       
       strong {
-        color: var(--strapi-neutral-300);
+        color: var(--strapi-neutral-800);
       }
       
       code {
