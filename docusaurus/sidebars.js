@@ -312,17 +312,6 @@ const sidebars = {
             </ul>`
           },
         },
-        // {
-        //   type: 'html',
-        //   value:  `<strong>API Version 2.0</strong><br>
-        //     <a href="/changelog">Voir les nouveautés</a><br><br>
-        //     <strong>Changements :</strong>
-        //     <ul>
-        //       <li>Nouvelle authentification</li>
-        //       <li>Endpoints mis à jour</li>
-        //     </ul>`,
-        //   defaultStyle: true,
-        // },
         'cms/configurations/cron',
         {
           type: 'category',
@@ -331,7 +320,7 @@ const sidebars = {
           label: "Database",
           customProps: {
             updated: false,
-            infoTooltip: `<strong>API Version 2.0</strong><br>
+            tooltip: `<strong>API Version 2.0</strong><br>
             <a href="/changelog">Voir les nouveautés</a><br><br>
             <strong>Changements :</strong>
             <ul>
