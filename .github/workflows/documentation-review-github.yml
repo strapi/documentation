@@ -279,8 +279,8 @@ jobs:
               }
               
               comment += '**📚 Resources:**\n';
-              comment += '- [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing)\n';
-              comment += '- [Documentation Style Guide](https://strapi.notion.site/style-guide)\n\n';
+              comment += '- [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04)\n';
+              comment += '- [Documentation Style Guide](https://github.com/strapi/documentation/blob/main/STYLE_GUIDE.pdf)\n\n';
               
               if (results.mode === 'PR diff') {
                 comment += '*🎯 Only issues on lines modified in this PR are shown.*\n';
