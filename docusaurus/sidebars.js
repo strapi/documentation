@@ -215,7 +215,7 @@ const sidebars = {
       items: [
         {
           type: 'html',
-          value: 'placeholder',
+          value: 'placeholder', // a value is required for the HTML type, but it is not rendered
           customProps: {
             text: "This section has changed",
             tooltip: `We simplified the configuration section to make it easier to navigate and find what you need. The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.<br/><br/><strong>Important changes</strong><br>
@@ -238,7 +238,7 @@ const sidebars = {
           label: 'Admin panel',
           collapsed: true,
           customProps: {
-            updated: true,
+            updated: false,
           },
           items: [
             {
