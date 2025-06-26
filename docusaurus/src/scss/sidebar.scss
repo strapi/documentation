@@ -582,13 +582,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-// Afficher le tooltip au hover du li entier pour les liens
+// Display tooltip while hovering the whole li element for menu links
 .theme-doc-sidebar-item-link:hover .info-icon__tooltip {
   visibility: visible;
   opacity: 1;
 }
 
-// Notice extensible pour remplacer le système de tooltip
+// Expendable notice that can be used instead of tooltips
 .sidebar-notice {
   background-color: var(--strapi-neutral-100);
   border-radius: 6px;
