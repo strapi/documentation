@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-06-26T11:36:17.198Z",
+  "prNumber": 2565,
+  "mode": "PR diff",
+  "repoOwner": "strapi",
+  "repoName": "documentation",
+  "summary": {
+    "filesProcessed": 2,
+    "totalIssues": 0,
+    "criticalIssues": 0,
+    "prNumber": 2565,
+    "mode": "PR diff"
+  },
+  "issues": {
+    "errors": [],
+    "warnings": [],
+    "suggestions": []
+  }
+}
