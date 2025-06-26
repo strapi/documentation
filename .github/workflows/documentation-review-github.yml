@@ -1,0 +1,334 @@
+name: Strapi Documentation Style Review (GitHub Enhanced)
+
+on:
+  # Enable for real PRs when ready
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   paths:
+  #     - 'docusaurus/docs/**/*.md'
+  #     - 'docusaurus/docs/**/*.mdx'
+  
+  # Manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to validate'
+        required: true
+        type: string
+      target_files:
+        description: 'Specific files to validate (optional - leave empty to analyze entire PR)'
+        required: false
+        type: string
+      enable_strict_mode:
+        description: 'Enable strict mode (only validate changed lines)'
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  validate-documentation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: 'docusaurus/yarn.lock'
+
+      - name: Install dependencies
+        run: |
+          cd docusaurus
+          yarn install
+
+      - name: Run GitHub-Enhanced Strapi 12 Rules validation
+        id: validation
+        run: |
+          cd docusaurus
+          
+          echo "🎯 Starting GitHub-enhanced validation..."
+          
+          # Determine validation strategy
+          if [ -n "${{ github.event.inputs.target_files }}" ]; then
+            echo "📄 Validating specific files: ${{ github.event.inputs.target_files }}"
+            
+            # Manual file validation (standard mode)
+            node scripts/style-validation/validate-content-style-github.js \
+              --verbose \
+              ${{ github.event.inputs.target_files }}
+              
+          elif [ -n "${{ github.event.inputs.pr_number }}" ]; then
+            echo "🔍 Validating PR #${{ github.event.inputs.pr_number }} with GitHub API"
+            
+            # Use the new GitHub URL-based validation
+            node scripts/style-validation/validate-content-style-github.js \
+              --pr ${{ github.event.inputs.pr_number }} \
+              --repo strapi/documentation \
+              --verbose
+              
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "🔍 Auto-validating PR #${{ github.event.number }}"
+            
+            # Auto-validation for real PRs
+            node scripts/style-validation/validate-content-style-github.js \
+              --pr ${{ github.event.number }} \
+              --repo strapi/documentation \
+              --verbose
+              
+          else
+            echo "❌ No validation target specified"
+            echo '{"summary":{"filesProcessed":0,"totalIssues":0,"criticalIssues":0},"issues":{"errors":[],"warnings":[],"suggestions":[]}}' > style-check-results.json
+          fi
+        continue-on-error: true
+
+      - name: Enhanced PR comment with GitHub API results
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Get context information
+            const prNumber = '${{ github.event.inputs.pr_number }}' || '${{ github.event.number }}' || '';
+            const eventName = '${{ github.event_name }}';
+            const strictMode = '${{ github.event.inputs.enable_strict_mode }}' === 'true';
+            
+            try {
+              // Read validation results
+              const resultsPath = 'docusaurus/style-check-results.json';
+              
+              if (!fs.existsSync(resultsPath)) {
+                console.log('❌ No results file found, validation may have failed');
+                
+                const errorComment = '## ❌ Documentation Style Review Failed\n\n' +
+                                   'GitHub-enhanced validation failed to run. Please check the Action logs.\n\n' +
+                                   '**This might indicate:**\n' +
+                                   '- Missing validation scripts\n' +
+                                   '- Network issues fetching PR diff\n' +
+                                   '- Configuration problems';
+                
+                if (prNumber) {
+                  await github.rest.issues.createComment({
+                    issue_number: parseInt(prNumber),
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: errorComment
+                  });
+                }
+                return;
+              }
+
+              const results = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+              
+              // Check if this is a follow-up comment by looking for previous bot comments
+              let isFollowUp = false;
+              let previousResults = null;
+              
+              try {
+                if (prNumber) {
+                  const commentsResponse = await github.rest.issues.listComments({
+                    issue_number: parseInt(prNumber),
+                    owner: context.repo.owner,
+                    repo: context.repo.repo
+                  });
+                  
+                  const botComments = commentsResponse.data.filter(comment => 
+                    comment.user.type === 'Bot' && 
+                    comment.body.includes('Strapi Documentation Style Review')
+                  );
+                  
+                  isFollowUp = botComments.length > 0;
+                  
+                  // Try to extract previous results for comparison
+                  if (isFollowUp) {
+                    const lastComment = botComments[botComments.length - 1].body;
+                    const prevIssuesMatch = lastComment.match(/Total issues:\*\* (\d+)/);
+                    if (prevIssuesMatch) {
+                      previousResults = { totalIssues: parseInt(prevIssuesMatch[1]) };
+                    }
+                  }
+                }
+              } catch (e) {
+                console.log('Could not check for previous comments:', e.message);
+              }
+              
+              // Generate enhanced comment
+              let comment = '';
+              
+              if (isFollowUp) {
+                comment += '## 🔄 Documentation Style Review - Updated Analysis\n\n';
+                comment += `*GitHub-enhanced validation results*\n\n`;
+              } else {
+                comment += '## 🎯 Strapi Documentation Style Review\n\n';
+                comment += `*Automated analysis using Strapi's 12 Rules of Technical Writing*\n\n`;
+              }
+              
+              // Add enhanced mode info
+              comment += `**🚀 Enhanced Mode:** GitHub API diff analysis\n`;
+              if (results.mode === 'PR diff') {
+                comment += `**🔍 Scope:** Only lines modified in this PR\n`;
+              }
+              comment += `**📊 Repository:** ${results.repoOwner}/${results.repoName}\n`;
+              if (results.prNumber) {
+                comment += `**🎯 PR:** #${results.prNumber}\n`;
+              }
+              comment += '\n';
+              
+              // Summary with progress indication
+              comment += '### 📊 Analysis Results\n';
+              comment += `- **Files analyzed:** ${results.summary.filesProcessed}\n`;
+              comment += `- **Total issues:** ${results.summary.totalIssues}`;
+              
+              // Show progress if this is a follow-up
+              if (isFollowUp && previousResults) {
+                const change = results.summary.totalIssues - previousResults.totalIssues;
+                if (change < 0) {
+                  comment += ` 🎉 (${Math.abs(change)} fewer than before!)`;
+                } else if (change > 0) {
+                  comment += ` ⚠️ (${change} more than before)`;
+                } else {
+                  comment += ` ↔️ (no change)`;
+                }
+              }
+              comment += '\n';
+              
+              comment += `- **Critical errors:** ${results.issues.errors.length} 🚨\n`;
+              comment += `- **Warnings:** ${results.issues.warnings.length} ⚠️\n`;
+              comment += `- **Suggestions:** ${results.issues.suggestions.length} 💡\n\n`;
+              
+              if (results.summary.totalIssues === 0) {
+                if (isFollowUp) {
+                  comment += '🎉 **Outstanding!** All issues have been resolved! Your documentation now perfectly follows all 12 rules.\n\n';
+                } else {
+                  comment += '🎉 **Perfect!** Your documentation changes follow all 12 technical writing rules.\n\n';
+                }
+                
+                comment += '**✨ What this means:**\n';
+                comment += '- No "easy/difficult" language that might discourage readers\n';
+                comment += '- Professional, neutral tone maintained\n';
+                comment += '- Clear, structured content that follows best practices\n';
+                comment += '- Ready to merge! 🚀\n\n';
+              } else {
+                // Show critical errors with enhanced context
+                if (results.issues.errors.length > 0) {
+                  comment += '### 🚨 Critical Issues (must fix before merge)\n\n';
+                  comment += '*These issues violate core technical writing principles and must be addressed:*\n\n';
+                  
+                  results.issues.errors.slice(0, 5).forEach(error => {
+                    const fileName = error.file.replace(/^.*\/docs\//, 'docs/');
+                    comment += `**📍 ${fileName}:${error.line}**\n`;
+                    comment += `🎯 **Rule:** ${error.ruleId?.replace(/_/g, ' ')}\n`;
+                    comment += `❌ **Issue:** ${error.message}\n`;
+                    if (error.suggestion) {
+                      comment += `💡 **Fix:** ${error.suggestion}\n`;
+                    }
+                    comment += '\n';
+                  });
+                  
+                  if (results.issues.errors.length > 5) {
+                    comment += `*... and ${results.issues.errors.length - 5} more critical issues*\n\n`;
+                  }
+                }
+                
+                // Show warnings with better grouping
+                if (results.issues.warnings.length > 0) {
+                  comment += '### ⚠️ Warnings (recommended improvements)\n\n';
+                  comment += '*These suggestions will improve documentation quality:*\n\n';
+                  
+                  results.issues.warnings.slice(0, 3).forEach(warning => {
+                    const fileName = warning.file.replace(/^.*\/docs\//, 'docs/');
+                    comment += `**📍 ${fileName}:${warning.line}** - ${warning.message}\n`;
+                  });
+                  
+                  if (results.issues.warnings.length > 3) {
+                    comment += `\n*... and ${results.issues.warnings.length - 3} more warnings*\n`;
+                  }
+                  comment += '\n';
+                }
+                
+                // Show suggestions
+                if (results.issues.suggestions.length > 0) {
+                  comment += '### 💡 Suggestions (nice to have)\n\n';
+                  results.issues.suggestions.slice(0, 2).forEach(suggestion => {
+                    const fileName = suggestion.file.replace(/^.*\/docs\//, 'docs/');
+                    comment += `**📍 ${fileName}:${suggestion.line}** - ${suggestion.message}\n`;
+                  });
+                  
+                  if (results.issues.suggestions.length > 2) {
+                    comment += `\n*... and ${results.issues.suggestions.length - 2} more suggestions*\n`;
+                  }
+                  comment += '\n';
+                }
+              }
+              
+              // Add helpful footer
+              comment += '---\n';
+              if (isFollowUp) {
+                comment += '*🔄 This is an updated analysis reflecting your latest changes.*\n\n';
+              } else {
+                comment += '*🤖 This is an automated review using GitHub API for maximum precision.*\n\n';
+              }
+              
+              comment += '**📚 Resources:**\n';
+              comment += '- [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing)\n';
+              comment += '- [Documentation Style Guide](https://strapi.notion.site/style-guide)\n\n';
+              
+              if (results.mode === 'PR diff') {
+                comment += '*🎯 Only issues on lines modified in this PR are shown.*\n';
+              }
+              
+              // Add manual trigger info
+              if (eventName === 'workflow_dispatch') {
+                comment += `*🔧 Manually triggered for PR #${prNumber}*\n\n`;
+              }
+              
+              // Post comment
+              if (prNumber) {
+                await github.rest.issues.createComment({
+                  issue_number: parseInt(prNumber),
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: comment
+                });
+                
+                console.log(`✅ Comment posted to PR #${prNumber}`);
+              } else {
+                console.log('Manual validation completed (no PR to comment on)');
+                console.log(comment);
+              }
+              
+              // Set appropriate exit code
+              if (results.issues.errors.length > 0) {
+                core.setFailed(`Found ${results.issues.errors.length} critical errors that must be fixed.`);
+              } else {
+                console.log(`✅ Validation passed with ${results.summary.totalIssues} total issues`);
+              }
+              
+            } catch (error) {
+              console.error('❌ Error processing validation results:', error);
+              
+              const errorMessage = '## ❌ Documentation Style Review Failed\n\n' +
+                                 'There was an error processing the validation results.\n\n' +
+                                 `**Error:** ${error.message}\n\n` +
+                                 'Please check the GitHub Action logs for more details.';
+              
+              if (prNumber) {
+                await github.rest.issues.createComment({
+                  issue_number: parseInt(prNumber),
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: errorMessage
+                });
+              }
+              
+              core.setFailed(`Validation processing failed: ${error.message}`);
+            }
