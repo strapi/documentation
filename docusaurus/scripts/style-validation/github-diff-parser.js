@@ -270,17 +270,17 @@ class GitHubURLDiffParser {
       const line = lines[i];
       
       if (line.startsWith('+')) {
-        // Added line
+        // Added line - ONLY track this
         result.addedLines.add(currentNewLine);
-        this.addContextAroundLine(currentNewLine, result.contextLines);
+        // REMOVED: this.addContextAroundLine(currentNewLine, result.contextLines);
         currentNewLine++;
       } else if (line.startsWith('-')) {
         // Deleted line
         result.deletedLines.add(currentOldLine);
         currentOldLine++;
       } else if (line.startsWith(' ') || line === '') {
-        // Context line (unchanged)
-        result.contextLines.add(currentNewLine);
+        // Context line (unchanged) - DON'T track these anymore
+        // REMOVED: result.contextLines.add(currentNewLine);
         currentNewLine++;
         currentOldLine++;
       }
@@ -302,7 +302,7 @@ class GitHubURLDiffParser {
   }
 
   /**
-   * Generate filtered content for validation
+   * Generate filtered content for validation - STRICT MODE: Only changed lines
    */
   generateFilteredContent(originalContent, diffInfo) {
     if (diffInfo.analyzeEntireFile || diffInfo.isNewFile) {
@@ -319,26 +319,31 @@ class GitHubURLDiffParser {
         changedLines: {
           added: diffInfo.addedLines,
           modified: diffInfo.modifiedLines,
-          context: diffInfo.contextLines
+          context: new Set() // No context for new files
         }
       };
     }
 
     const lines = originalContent.split('\n');
+    
+    // STRICT: Only include actually added/modified lines
     const linesToInclude = new Set([
       ...diffInfo.addedLines,
-      ...diffInfo.modifiedLines,
-      ...diffInfo.contextLines
+      ...diffInfo.modifiedLines
+      // REMOVED: ...diffInfo.contextLines
     ]);
 
-    // Expand for contextual rules
-    const expandedLines = this.expandForContextualRules(lines, linesToInclude);
+    // REMOVED: Expansion for contextual rules
+    // const expandedLines = this.expandForContextualRules(lines, linesToInclude);
     
     const filteredLines = [];
     const lineMapping = {};
     let filteredLineNumber = 1;
 
-    expandedLines.forEach(originalLineNumber => {
+    // Convert Set to sorted array
+    const sortedLines = Array.from(linesToInclude).sort((a, b) => a - b);
+
+    sortedLines.forEach(originalLineNumber => {
       if (originalLineNumber > 0 && originalLineNumber <= lines.length) {
         filteredLines.push(lines[originalLineNumber - 1]);
         lineMapping[filteredLineNumber] = originalLineNumber;
@@ -352,7 +357,7 @@ class GitHubURLDiffParser {
       changedLines: {
         added: diffInfo.addedLines,
         modified: diffInfo.modifiedLines,
-        context: diffInfo.contextLines
+        context: new Set() // No context in strict mode
       }
     };
   }
