@@ -3,8 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const Strapi12RulesParser = require('./rule-parser');
-const GitHubURLDiffParser = require('./github-diff-parser');
+const Strapi12RulesParser = require('./rule-parser.js');
+const GitHubURLDiffParser = require('./github-diff-parser.js');
 
 class GitHubDocumentationValidator {
   constructor(options = {}) {
