@@ -218,7 +218,7 @@ The Text field displays a textbox that can contain small text. This field can be
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -250,7 +250,7 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -291,7 +291,7 @@ The Number field displays a field for any kind of number: integer, decimal and f
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -326,7 +326,7 @@ The Date field can display a date (year, month, day), time (hour, minute, second
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -361,7 +361,7 @@ The Password field displays a password field that is encrypted.
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -397,7 +397,7 @@ The Media field allows to choose one or more media files (e.g. image, video) fro
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -439,7 +439,7 @@ Configuring the basic settings of the Relation field consists in choosing with w
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -473,7 +473,7 @@ The Boolean field displays a toggle button to manage boolean values (e.g. Yes or
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -505,7 +505,7 @@ The JSON field allows to configure data in a JSON format, to store JSON objects 
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -541,7 +541,7 @@ The Email field displays an email address field with format validation to ensure
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -576,7 +576,7 @@ The Password field displays a password field that is encrypted.
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -611,7 +611,7 @@ The Enumeration field allows to configure a list of values displayed in a drop-d
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -650,7 +650,7 @@ The UID field displays a field that sets a unique identifier, optionally based o
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -689,7 +689,7 @@ The Rich Text (Markdown) field displays an editor with basic formatting options 
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -730,7 +730,7 @@ When configuring a component through the Content-type Builder, it is possible to
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
@@ -763,7 +763,7 @@ Dynamic zones are a combination of components that can be added to content-types
 
 </TabItem>
 
-<TabItem value="condition" label={ <> Condition <BetaBadge inline /> </> } >
+<TabItem value="condition" label="Condition">
 
 <ConditionalFields components={props.components} />
 
