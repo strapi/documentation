@@ -646,8 +646,9 @@ h2 .badge {
     &--alpha,
     &--beta,
     &--featureflag,
-    &--version {
-      --custom-badge-background-color: var(--strapi-neutral-100);
+    &--version,
+    &--inline {
+      --custom-badge-background-color: var(--strapi-neutral-100) !important;
       --custom-badge-border-color: var(--strapi-neutral-200);
     }
     &--beta {
