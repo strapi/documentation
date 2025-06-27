@@ -1,0 +1,310 @@
+name: Enhanced Strapi Documentation Style Review
+
+on:
+  # Enable for real PRs when ready
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+  #   paths:
+  #     - 'docusaurus/docs/**/*.md'
+  #     - 'docusaurus/docs/**/*.mdx'
+  
+  # Manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to validate'
+        required: true
+        type: string
+      target_files:
+        description: 'Specific files to validate (optional - leave empty to analyze entire PR)'
+        required: false
+        type: string
+      enable_inline_comments:
+        description: 'Enable inline comments (recommended)'
+        required: false
+        type: boolean
+        default: true
+      max_inline_comments:
+        description: 'Maximum number of inline comments (default: 10)'
+        required: false
+        type: string
+        default: '10'
+
+jobs:
+  validate-documentation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+          cache-dependency-path: 'docusaurus/yarn.lock'
+
+      - name: Install dependencies
+        run: |
+          cd docusaurus
+          yarn install
+
+      - name: Run Enhanced Documentation Validation
+        id: validation
+        run: |
+          cd docusaurus
+          
+          echo "🎯 Starting enhanced documentation validation..."
+          
+          # Determine validation strategy
+          if [ -n "${{ github.event.inputs.target_files }}" ]; then
+            echo "📄 Validating specific files: ${{ github.event.inputs.target_files }}"
+            
+            # Manual file validation (standard mode)
+            node scripts/style-validation/validate-content-style.js \
+              --verbose \
+              ${{ github.event.inputs.target_files }}
+              
+          elif [ -n "${{ github.event.inputs.pr_number }}" ]; then
+            echo "🔍 Validating PR #${{ github.event.inputs.pr_number }} with enhanced diff analysis"
+            
+            # Use the new enhanced GitHub validation with inline comments
+            node scripts/style-validation/validate-content-style-github.js \
+              --pr ${{ github.event.inputs.pr_number }} \
+              --repo strapi/documentation \
+              --verbose
+              
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "🔍 Auto-validating PR #${{ github.event.number }}"
+            
+            # Auto-validation for real PRs
+            node scripts/style-validation/validate-content-style-github.js \
+              --pr ${{ github.event.number }} \
+              --repo strapi/documentation \
+              --verbose
+              
+          else
+            echo "❌ No validation target specified"
+            echo '{"summary":{"filesProcessed":0,"totalIssues":0,"criticalIssues":0},"issues":{"errors":[],"warnings":[],"suggestions":[]}}' > style-check-results.json
+          fi
+        continue-on-error: true
+
+      - name: Post Enhanced PR Review with Inline Comments
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Get context information
+            const prNumber = '${{ github.event.inputs.pr_number }}' || '${{ github.event.number }}' || '';
+            const eventName = '${{ github.event_name }}';
+            const enableInlineComments = '${{ github.event.inputs.enable_inline_comments }}' !== 'false';
+            const maxInlineComments = parseInt('${{ github.event.inputs.max_inline_comments }}') || 10;
+            
+            try {
+              // Read validation results
+              const resultsPath = 'docusaurus/style-check-results.json';
+              
+              if (!fs.existsSync(resultsPath)) {
+                console.log('❌ No results file found, validation may have failed');
+                
+                const errorComment = '## ❌ Enhanced Documentation Review Failed\n\n' +
+                                   'The enhanced validation system failed to run. Please check the Action logs.\n\n' +
+                                   '**This might indicate:**\n' +
+                                   '- Missing validation scripts\n' +
+                                   '- Network issues fetching PR diff\n' +
+                                   '- Configuration problems\n\n' +
+                                   '*Please contact the documentation team for assistance.*';
+                
+                if (prNumber) {
+                  await github.rest.issues.createComment({
+                    issue_number: parseInt(prNumber),
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: errorComment
+                  });
+                }
+                return;
+              }
+
+              const results = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+              
+              // Check for previous bot comments to determine if this is an update
+              let isFollowUp = false;
+              let previousResults = null;
+              
+              try {
+                if (prNumber) {
+                  const commentsResponse = await github.rest.issues.listComments({
+                    issue_number: parseInt(prNumber),
+                    owner: context.repo.owner,
+                    repo: context.repo.repo
+                  });
+                  
+                  const botComments = commentsResponse.data.filter(comment => 
+                    comment.user.type === 'Bot' && 
+                    comment.body.includes('Thanks for contributing to Strapi\'s documentation')
+                  );
+                  
+                  isFollowUp = botComments.length > 0;
+                  
+                  // Try to extract previous results for comparison
+                  if (isFollowUp) {
+                    const lastComment = botComments[botComments.length - 1].body;
+                    const prevIssuesMatch = lastComment.match(/spotted (\d+) (?:small )?improvement/);
+                    if (prevIssuesMatch) {
+                      previousResults = { totalIssues: parseInt(prevIssuesMatch[1]) };
+                    }
+                  }
+                }
+              } catch (e) {
+                console.log('Could not check for previous comments:', e.message);
+              }
+              
+              // Use the friendly comment from our enhanced validator
+              let comment = results.githubComment || '## 👋 Thanks for contributing to Strapi\'s documentation!\n\nSomething went wrong generating the review comment.';
+              
+              // Add progress indication if this is a follow-up
+              if (isFollowUp && previousResults) {
+                const change = results.summary.totalIssues - previousResults.totalIssues;
+                let progressNote = '';
+                
+                if (change < 0) {
+                  progressNote = `\n\n🎉 **Great progress!** You've resolved ${Math.abs(change)} issue${Math.abs(change) > 1 ? 's' : ''} since the last review!\n`;
+                } else if (change > 0) {
+                  progressNote = `\n\n📝 **Update:** Found ${change} additional item${change > 1 ? 's' : ''} to review.\n`;
+                } else if (results.summary.totalIssues === 0) {
+                  progressNote = `\n\n🎊 **Perfect!** All issues have been resolved!\n`;
+                } else {
+                  progressNote = `\n\n🔄 **Updated review** with your latest changes.\n`;
+                }
+                
+                // Insert progress note before the resources section
+                comment = comment.replace(/\*\*📚 Helpful Resources:\*\*/, progressNote + '**📚 Helpful Resources:**');
+              }
+              
+              // Add workflow context
+              if (eventName === 'workflow_dispatch') {
+                comment += `\n\n*🔧 Manually triggered validation for PR #${prNumber}*`;
+              }
+              
+              // Post the main comment
+              if (prNumber) {
+                await github.rest.issues.createComment({
+                  issue_number: parseInt(prNumber),
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: comment
+                });
+                
+                console.log(`✅ Main comment posted to PR #${prNumber}`);
+              }
+              
+              // Post inline comments if enabled and available
+              if (enableInlineComments && results.inlineComments && results.inlineComments.length > 0 && prNumber) {
+                console.log(`💬 Posting ${results.inlineComments.length} inline comments...`);
+                
+                try {
+                  // Get the latest commit SHA for the PR
+                  const prData = await github.rest.pulls.get({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: parseInt(prNumber)
+                  });
+                  
+                  const commitSha = prData.data.head.sha;
+                  
+                  // Create a review with inline comments
+                  const review = await github.rest.pulls.createReview({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: parseInt(prNumber),
+                    commit_id: commitSha,
+                    body: `## 📝 Detailed Style Review\n\nI've added specific suggestions directly on the lines that need attention. Each comment includes:\n- 🎯 The specific rule being applied\n- 💡 A suggested improvement\n- ✨ An example of the recommended approach\n\nThese suggestions will help make your documentation even more welcoming and clear for our global developer community!`,
+                    event: results.summary.criticalIssues > 0 ? 'REQUEST_CHANGES' : 'COMMENT',
+                    comments: results.inlineComments.map(comment => ({
+                      path: comment.path,
+                      line: comment.line,
+                      body: comment.body
+                    }))
+                  });
+                  
+                  console.log(`✅ Posted review with ${results.inlineComments.length} inline comments`);
+                  
+                  // If we had to truncate comments, add a note
+                  if (results.hasMoreIssues) {
+                    const truncationComment = `## 💙 More suggestions available!\n\n` +
+                      `I found ${results.remainingIssues} additional item${results.remainingIssues > 1 ? 's' : ''} to review. ` +
+                      `Once you address the current suggestions, I'll be happy to review again and share the remaining feedback!\n\n` +
+                      `This approach helps keep the review manageable and focused. Thanks for your patience! 😊`;
+                    
+                    await github.rest.issues.createComment({
+                      issue_number: parseInt(prNumber),
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      body: truncationComment
+                    });
+                  }
+                  
+                } catch (error) {
+                  console.error('Failed to post inline comments:', error);
+                  
+                  // Fallback: post inline comments as a single comment
+                  let fallbackComment = '## 📝 Detailed Suggestions\n\n*Unable to post inline comments, here are the specific suggestions:*\n\n';
+                  
+                  results.inlineComments.forEach((comment, index) => {
+                    fallbackComment += `### ${comment.path}:${comment.line}\n\n${comment.body}\n\n---\n\n`;
+                  });
+                  
+                  await github.rest.issues.createComment({
+                    issue_number: parseInt(prNumber),
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: fallbackComment
+                  });
+                  
+                  console.log('✅ Posted fallback comment with suggestions');
+                }
+              }
+              
+              // Set appropriate exit code
+              if (results.issues.errors.length > 0) {
+                core.setFailed(`Found ${results.issues.errors.length} critical errors that must be fixed before merging.`);
+              } else {
+                console.log(`✅ Enhanced validation completed successfully`);
+                console.log(`📊 Results: ${results.summary.totalIssues} total issues, ${results.inlineComments?.length || 0} inline comments`);
+              }
+              
+            } catch (error) {
+              console.error('❌ Error processing validation results:', error);
+              
+              const errorMessage = '## ❌ Enhanced Documentation Review Error\n\n' +
+                                 'There was an error processing the validation results.\n\n' +
+                                 `**Error:** ${error.message}\n\n` +
+                                 'Please check the GitHub Action logs for more details or contact the documentation team.';
+              
+              if (prNumber) {
+                await github.rest.issues.createComment({
+                  issue_number: parseInt(prNumber),
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: errorMessage
+                });
+              }
+              
+              core.setFailed(`Enhanced validation processing failed: ${error.message}`);
+            }
+
+      - name: Upload Validation Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: style-validation-results
+          path: docusaurus/style-check-results.json
+          retention-days: 30
