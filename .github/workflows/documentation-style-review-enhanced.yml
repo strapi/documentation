@@ -211,6 +211,13 @@ jobs:
                 console.log(`💬 Posting ${results.inlineComments.length} inline comments...`);
                 
                 try {
+                  // Get the PR files and their diff hunks for proper positioning
+                  const prFiles = await github.rest.pulls.listFiles({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: parseInt(prNumber)
+                  });
+                  
                   // Get the latest commit SHA for the PR
                   const prData = await github.rest.pulls.get({
                     owner: context.repo.owner,
@@ -220,22 +227,48 @@ jobs:
                   
                   const commitSha = prData.data.head.sha;
                   
-                  // Create a review with inline comments
-                  const review = await github.rest.pulls.createReview({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    pull_number: parseInt(prNumber),
-                    commit_id: commitSha,
-                    body: `## 📝 Detailed Style Review\n\nI've added specific suggestions directly on the lines that need attention. Each comment includes:\n- 🎯 The specific rule being applied\n- 💡 A suggested improvement\n- ✨ An example of the recommended approach\n\nThese suggestions will help make your documentation even more welcoming and clear for our global developer community!`,
-                    event: results.summary.criticalIssues > 0 ? 'REQUEST_CHANGES' : 'COMMENT',
-                    comments: results.inlineComments.map(comment => ({
-                      path: comment.path,
-                      line: comment.line,
-                      body: comment.body
-                    }))
-                  });
+                  // Process inline comments to ensure they have valid positions
+                  const validInlineComments = [];
                   
-                  console.log(`✅ Posted review with ${results.inlineComments.length} inline comments`);
+                  for (const comment of results.inlineComments) {
+                    // Find the corresponding file in the PR
+                    const prFile = prFiles.data.find(file => file.filename === comment.path);
+                    
+                    if (prFile && prFile.patch) {
+                      // Calculate the position in the diff for this line
+                      const position = this.calculateDiffPosition(prFile.patch, comment.line);
+                      
+                      if (position > 0) {
+                        validInlineComments.push({
+                          path: comment.path,
+                          position: position, // Use position instead of line for diff-based comments
+                          body: comment.body
+                        });
+                      } else {
+                        console.log(`⚠️ Could not find valid diff position for ${comment.path}:${comment.line}`);
+                      }
+                    } else {
+                      console.log(`⚠️ File ${comment.path} not found in PR files or has no patch`);
+                    }
+                  }
+                  
+                  if (validInlineComments.length > 0) {
+                    // Create a review with inline comments
+                    const review = await github.rest.pulls.createReview({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      pull_number: parseInt(prNumber),
+                      commit_id: commitSha,
+                      body: `## 📝 Detailed Style Review\n\nI've added specific suggestions directly on the lines that need attention. Each comment includes:\n- 🎯 The specific rule being applied\n- 💡 A suggested improvement\n- ✨ An example of the recommended approach\n\nThese suggestions will help make your documentation even more welcoming and clear for our global developer community!`,
+                      event: results.summary.criticalIssues > 0 ? 'REQUEST_CHANGES' : 'COMMENT',
+                      comments: validInlineComments
+                    });
+                    
+                    console.log(`✅ Posted review with ${validInlineComments.length} inline comments`);
+                  } else {
+                    console.log('⚠️ No valid inline comment positions found, falling back to summary comment');
+                    throw new Error('No valid diff positions found for inline comments');
+                  }
                   
                   // If we had to truncate comments, add a note
                   if (results.hasMoreIssues) {
@@ -253,13 +286,13 @@ jobs:
                   }
                   
                 } catch (error) {
-                  console.error('Failed to post inline comments:', error);
+                  console.error('Failed to post inline comments:', error.message);
                   
                   // Fallback: post inline comments as a single comment
                   let fallbackComment = '## 📝 Detailed Suggestions\n\n*Unable to post inline comments, here are the specific suggestions:*\n\n';
                   
                   results.inlineComments.forEach((comment, index) => {
-                    fallbackComment += `### ${comment.path}:${comment.line}\n\n${comment.body}\n\n---\n\n`;
+                    fallbackComment += `### 📍 ${comment.path}:${comment.line}\n\n${comment.body}\n\n---\n\n`;
                   });
                   
                   await github.rest.issues.createComment({
@@ -272,6 +305,38 @@ jobs:
                   console.log('✅ Posted fallback comment with suggestions');
                 }
               }
+              
+              // Helper function to calculate diff position
+              this.calculateDiffPosition = function(patch, targetLine) {
+                const lines = patch.split('\n');
+                let position = 0;
+                let currentLine = 0;
+                
+                for (const line of lines) {
+                  position++;
+                  
+                  if (line.startsWith('@@')) {
+                    // Parse hunk header: @@ -oldStart,oldCount +newStart,newCount @@
+                    const match = line.match(/@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/);
+                    if (match) {
+                      currentLine = parseInt(match[1]) - 1; // Start one before the first line
+                    }
+                    continue;
+                  }
+                  
+                  if (line.startsWith('+')) {
+                    currentLine++;
+                    if (currentLine === targetLine) {
+                      return position;
+                    }
+                  } else if (line.startsWith(' ')) {
+                    currentLine++;
+                  }
+                  // Lines starting with '-' don't increment currentLine (they're deleted)
+                }
+                
+                return -1; // Line not found in diff
+              };
               
               // Set appropriate exit code
               if (results.issues.errors.length > 0) {
