@@ -31,3 +31,7 @@ docs/node_modules/**
 # LLMs.txt files and related
 # llms*.txt
 # **/llms*.txt
+
+# Internal tmp tests
+pr-*.diff
+*-results.json
