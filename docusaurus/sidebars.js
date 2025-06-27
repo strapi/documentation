@@ -214,6 +214,21 @@ const sidebars = {
       className: 'category-cms-configurations',
       items: [
         {
+          type: 'html',
+          value: 'placeholder', // a value is required for the HTML type, but it is not rendered
+          customProps: {
+            text: "This section has changed",
+            tooltip: `We simplified the configuration section to make it easier to navigate and find what you need. The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.<br/><br/><strong>Important changes</strong><br>
+            <span>This tooltip is here to show that you can use any HTML in the tooltip.</span><br><br>
+            You can even have <a href="/release-notes">links to any page</a><br><br>
+            We may use bullets in the tooltip as well:<br>
+            <ul>
+              <li>This item is purely informative</li>
+              <li>And this other item includes a link to the <a href="/">homepage</li>
+            </ul>`
+          }
+        },
+        {
           type: 'doc',
           label: 'Configurations introduction',
           id: 'cms/configurations',
@@ -223,7 +238,7 @@ const sidebars = {
           label: 'Admin panel',
           collapsed: true,
           customProps: {
-            updated: true,
+            updated: false,
           },
           items: [
             {
@@ -284,16 +299,37 @@ const sidebars = {
           ]
         },
         'cms/configurations/api',
-        'cms/configurations/cron',
+        {
+          type: 'doc',
+          id: 'cms/configurations/cron',
+          customProps: {
+            updated: false,
+            tooltip: `<strong>Important changes</strong><br/><br/>
+            <span>This tooltip can be used to display short pieces of information.</span><br><br>
+            We may use bullets in the tooltip as well:<br>
+            <ul>
+              <li>This item is purely informative</li>
+              <li>Please avoid using links here as those tooltips are not hoverable</li>
+            </ul><br/>`
+          },
+        },
         {
           type: 'category',
           collapsed: true,
           collapsible: true,
           label: "Database",
           customProps: {
-            updated: false,
+            new: true,
           },
           items: [
+            {
+              type: 'html',
+              value: 'placeholder',
+              customProps: {
+                text: "This section has changed",
+                tooltip: `<strong>New configuration section!</strong><br/><br/>This section now regroups all the database-related configurations and guides, including migrations and transactions.</div><br/><br/>`
+              }
+            },
             {
               type: 'doc',
               id: 'cms/configurations/database',
