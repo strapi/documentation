@@ -12,6 +12,7 @@ const styleRulesPath = path.join(scriptDir, 'style-rules.yml');
 /**
  * Enhanced GitHub Documentation Validator with inline comments and friendly reporting
  * Implements Strapi's 12 Rules of Technical Writing with human-like feedback
+ * Uses diff content directly - no file fetching needed!
  */
 class EnhancedGitHubDocumentationValidator {
   constructor(options = {}) {
@@ -88,9 +89,9 @@ class EnhancedGitHubDocumentationValidator {
         return;
       }
 
-      // Process each file
+      // Process each file using diff content directly
       for (const [filePath, diffInfo] of Object.entries(parsedDiff.files)) {
-        await this.validateFileWithDiff(filePath, diffInfo);
+        await this.validateFileWithDiffContent(filePath, diffInfo, diffContent);
       }
 
       // Generate results
@@ -105,9 +106,9 @@ class EnhancedGitHubDocumentationValidator {
   }
 
   /**
-   * Validate a single file against the diff info
+   * Validate a single file using content extracted directly from diff
    */
-  async validateFileWithDiff(filePath, diffInfo) {
+  async validateFileWithDiffContent(filePath, diffInfo, fullDiffContent) {
     try {
       this.log(`🔍 Analyzing: ${filePath}`, 'debug');
       
@@ -116,29 +117,27 @@ class EnhancedGitHubDocumentationValidator {
         return;
       }
 
-      // Fetch file content from GitHub
-      const fileContent = await this.fetchFileContent(filePath);
+      // Extract added/modified lines content from the diff
+      const addedContent = this.extractAddedLinesFromDiff(filePath, fullDiffContent, diffInfo);
       
-      // Generate filtered content for analysis
-      const { content: filteredContent, lineMapping, changedLines } = 
-        this.diffParser.generateFilteredContent(fileContent, diffInfo);
-
-      if (!filteredContent.trim()) {
-        this.log(`📄 No changed content to analyze in: ${filePath}`, 'debug');
+      if (!addedContent.trim()) {
+        this.log(`📄 No added content to analyze in: ${filePath}`, 'debug');
         return;
       }
 
-      // Apply all rules
-      const allIssues = this.applyAllRules(filteredContent, filePath, { lineMapping, changedLines, diffInfo });
+      this.log(`📝 Extracted ${addedContent.split('\n').length} lines of added content`, 'debug');
+
+      // Apply all rules to the added content
+      const allIssues = this.applyAllRules(addedContent, filePath, { diffInfo });
       
-      // Filter for changed lines only
-      const relevantIssues = this.filterIssuesForChangedLines(allIssues, changedLines, lineMapping, diffInfo);
+      // Map line numbers back to original file line numbers
+      const mappedIssues = this.mapLinesToOriginal(allIssues, diffInfo, addedContent);
       
       // Categorize and store issues
-      this.categorizeIssues(relevantIssues);
+      this.categorizeIssues(mappedIssues);
       this.results.summary.filesProcessed++;
       
-      this.log(`📊 ${filePath}: ${relevantIssues.length} issues found`, 'debug');
+      this.log(`📊 ${filePath}: ${mappedIssues.length} issues found`, 'debug');
       
     } catch (error) {
       this.log(`⚠️ Error analyzing ${filePath}: ${error.message}`, 'warn');
@@ -146,25 +145,60 @@ class EnhancedGitHubDocumentationValidator {
   }
 
   /**
-   * Fetch file content from GitHub
+   * Extract added lines content from the diff for a specific file
    */
-  async fetchFileContent(filePath) {
-    const url = `https://raw.githubusercontent.com/${this.options.repoOwner}/${this.options.repoName}/main/${filePath}`;
+  extractAddedLinesFromDiff(filePath, fullDiffContent, diffInfo) {
+    const lines = fullDiffContent.split('\n');
+    const addedLines = [];
+    let inFileSection = false;
+    let inChunk = false;
+
+    for (const line of lines) {
+      // Check if we're entering the section for our file
+      if (line.startsWith('diff --git') && line.includes(filePath)) {
+        inFileSection = true;
+        continue;
+      }
+      
+      // Check if we're entering another file's section
+      if (line.startsWith('diff --git') && !line.includes(filePath)) {
+        inFileSection = false;
+        continue;
+      }
+      
+      if (!inFileSection) continue;
+      
+      // Check if we're in a diff chunk
+      if (line.startsWith('@@')) {
+        inChunk = true;
+        continue;
+      }
+      
+      if (inChunk && line.startsWith('+') && !line.startsWith('+++')) {
+        // This is an added line - remove the '+' prefix
+        addedLines.push(line.substring(1));
+      }
+    }
     
-    return new Promise((resolve, reject) => {
-      https.get(url, (response) => {
-        let data = '';
-        response.on('data', (chunk) => { data += chunk; });
-        response.on('end', () => {
-          if (response.statusCode === 200) {
-            resolve(data);
-          } else {
-            reject(new Error(`Failed to fetch ${filePath}: HTTP ${response.statusCode}`));
-          }
-        });
-      }).on('error', (error) => {
-        reject(error);
-      });
+    return addedLines.join('\n');
+  }
+
+  /**
+   * Map line numbers from the extracted content back to original file line numbers
+   */
+  mapLinesToOriginal(issues, diffInfo, addedContent) {
+    const addedContentLines = addedContent.split('\n');
+    const addedLineNumbers = Array.from(diffInfo.addedLines).sort((a, b) => a - b);
+    
+    return issues.map(issue => {
+      // Map the line number from the extracted content to the original file
+      const extractedLineIndex = issue.line - 1; // Convert to 0-based index
+      
+      if (extractedLineIndex >= 0 && extractedLineIndex < addedLineNumbers.length) {
+        issue.line = addedLineNumbers[extractedLineIndex];
+      }
+      
+      return issue;
     });
   }
 
@@ -182,14 +216,6 @@ class EnhancedGitHubDocumentationValidator {
           issue.ruleId = rule.id;
           issue.category = rule.category;
           issue.ruleDescription = rule.description;
-          
-          // Map line numbers if we have diff context
-          if (diffContext && diffContext.lineMapping) {
-            const originalLine = diffContext.lineMapping[issue.line];
-            if (originalLine) {
-              issue.line = originalLine;
-            }
-          }
         });
         allIssues.push(...issues);
       } catch (error) {
@@ -198,36 +224,6 @@ class EnhancedGitHubDocumentationValidator {
     });
 
     return allIssues;
-  }
-
-  /**
-   * Filter issues to only those on changed lines
-   */
-  filterIssuesForChangedLines(issues, changedLines, lineMapping, diffInfo) {
-    if (!changedLines || diffInfo.isNewFile || diffInfo.analyzeEntireFile) {
-      return issues;
-    }
-
-    const actuallyChangedLines = new Set([
-      ...changedLines.added,
-      ...changedLines.modified
-    ]);
-
-    return issues.filter(issue => {
-      // Direct hit on changed line
-      if (actuallyChangedLines.has(issue.line)) {
-        return true;
-      }
-      
-      // Proximity check for contextual rules (within 2 lines)
-      for (const changedLine of actuallyChangedLines) {
-        if (Math.abs(issue.line - changedLine) <= 2) {
-          return true;
-        }
-      }
-      
-      return false;
-    });
   }
 
   /**
