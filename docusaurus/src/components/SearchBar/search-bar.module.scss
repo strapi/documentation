@@ -1,6 +1,824 @@
-/** Component: Search Bar */
+/** Enhanced Search Bar with Filters */
+@use '../../scss/mixins' as *;
 
+.enhanced-search-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--strapi-spacing-2);
+}
+
+/* Filter Section */
+.filter-section {
+  position: relative;
+  z-index: 10;
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-2);
+  padding: var(--strapi-spacing-2) var(--strapi-spacing-3);
+  background: var(--strapi-neutral-0);
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 6px;
+  font-size: var(--strapi-font-size-sm);
+  color: var(--strapi-neutral-600);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: fit-content;
+  min-width: 140px;
+  font-weight: 500;
+
+  &:hover {
+    border-color: var(--strapi-primary-600);
+    background: var(--strapi-neutral-50);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--strapi-primary-600);
+    box-shadow: 0 0 0 3px var(--strapi-primary-100);
+  }
+}
+
+.filter-icon {
+  font-size: 16px;
+}
+
+.filter-label {
+  font-weight: 500;
+  flex: 1;
+}
+
+.chevron {
+  font-size: 10px;
+  color: var(--strapi-neutral-400);
+  transition: transform 0.2s ease;
+  
+  .filter-toggle:hover & {
+    color: var(--strapi-primary-600);
+  }
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--strapi-neutral-0);
+  border: 1px solid var(--strapi-neutral-200);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  z-index: 100;
+  min-width: 200px;
+  animation: fadeInDown 0.15s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-2);
+  width: 100%;
+  padding: var(--strapi-spacing-3);
+  background: none;
+  border: none;
+  color: var(--strapi-neutral-700);
+  font-size: var(--strapi-font-size-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+  position: relative;
+
+  &:hover {
+    background: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-800);
+  }
+
+  &.active {
+    background: var(--strapi-primary-100);
+    color: var(--strapi-primary-700);
+    font-weight: 600;
+  }
+
+  // Color variants for different content types
+  &.primary.active { 
+    background: var(--strapi-primary-100); 
+    color: var(--strapi-primary-700); 
+  }
+  &.secondary.active { 
+    background: var(--strapi-secondary-100); 
+    color: var(--strapi-secondary-700); 
+  }
+  &.success.active { 
+    background: var(--strapi-success-100); 
+    color: var(--strapi-success-700); 
+  }
+  &.warning.active { 
+    background: var(--strapi-warning-100); 
+    color: var(--strapi-warning-700); 
+  }
+  &.info.active { 
+    background: var(--strapi-alternative-100); 
+    color: var(--strapi-alternative-700); 
+  }
+  &.neutral.active { 
+    background: var(--strapi-neutral-100); 
+    color: var(--strapi-neutral-700); 
+  }
+}
+
+.filter-option-icon {
+  font-size: 16px;
+}
+
+.checkmark {
+  margin-left: auto;
+  font-weight: bold;
+  color: currentColor;
+}
+
+/* Enhanced DocSearch Styles */
 .search-bar {
-  // TO DO: Customize the styles for Algolia's Search Bar.
-  display: block;
+  .DocSearch {
+    --docsearch-primary-color: var(--strapi-primary-600);
+    --docsearch-text-color: var(--strapi-neutral-800);
+    --docsearch-muted-color: var(--strapi-neutral-400);
+    --docsearch-container-background: rgba(101, 108, 133, 0.8);
+    --docsearch-modal-background: var(--strapi-neutral-0);
+    --docsearch-searchbox-background: var(--strapi-neutral-100);
+    --docsearch-searchbox-focus-background: var(--strapi-neutral-0);
+    --docsearch-searchbox-shadow: 0 0 0 2px var(--strapi-primary-600);
+    --docsearch-hit-color: var(--strapi-neutral-800);
+    --docsearch-hit-active-color: var(--strapi-neutral-0);
+    --docsearch-hit-background: var(--strapi-neutral-0);
+    --docsearch-hit-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --docsearch-key-gradient: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
+    --docsearch-key-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    --docsearch-footer-background: var(--strapi-neutral-50);
+    --docsearch-footer-shadow: 0 -1px 0 var(--strapi-neutral-200);
+    --docsearch-logo-color: var(--strapi-neutral-600);
+    --docsearch-highlight-color: var(--strapi-primary-600);
+  }
+
+  .DocSearch-Button {
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid var(--strapi-neutral-200);
+    background: var(--strapi-neutral-0);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      border-color: var(--strapi-primary-600);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:focus {
+      border-color: var(--strapi-primary-600);
+      box-shadow: 0 0 0 2px var(--strapi-primary-100);
+    }
+  }
+
+  .DocSearch-Search-Icon {
+    color: var(--strapi-primary-600);
+    width: 18px;
+    height: 18px;
+  }
+
+  .DocSearch-Button-Placeholder {
+    font-size: var(--strapi-font-size-sm);
+    color: var(--strapi-neutral-500);
+  }
+
+  .DocSearch-Button-Keys {
+    .DocSearch-Button-Key {
+      background: var(--docsearch-key-gradient);
+      box-shadow: var(--docsearch-key-shadow);
+      color: var(--strapi-neutral-600);
+      height: 20px;
+      width: auto;
+      min-width: 20px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  }
+}
+
+/* Modal Customization with Preview Panel */
+:global(.DocSearch-Modal) {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  max-width: 90vw !important;
+  width: 1200px !important;
+  max-height: 80vh !important;
+}
+
+/* Two-column layout for results and preview */
+:global(.DocSearch-Hits) {
+  display: flex !important;
+  height: 60vh !important;
+  max-height: 500px !important;
+}
+
+/* Left column - Search results */
+:global(.search-results-column) {
+  flex: 0 0 50% !important;
+  overflow-y: auto !important;
+  border-right: 1px solid var(--docsearch-muted-color) !important;
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--docsearch-muted-color);
+    border-radius: 3px;
+  }
+}
+
+/* Two-column layout for results and preview */
+:global(.DocSearch-Hits) {
+  display: flex !important;
+  height: 60vh !important;
+  max-height: 500px !important;
+  overflow: hidden !important; /* Prevent parent scrolling */
+}
+
+/* Left column - Search results */
+:global(.search-results-column) {
+  flex: 0 0 50% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  border-right: 1px solid var(--docsearch-muted-color) !important;
+  height: 100% !important; /* Ensure full height for independent scrolling */
+  
+  /* Custom scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--docsearch-muted-color);
+    border-radius: 3px;
+  }
+}
+
+/* Right column - Preview panel */
+:global(.preview-panel) {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: var(--docsearch-modal-background) !important;
+  height: 100% !important; /* Ensure full height */
+  overflow: hidden !important; /* Prevent panel from scrolling as a whole */
+  
+  :global(.preview-header) {
+    flex-shrink: 0 !important; /* Don't shrink the header */
+    padding: 16px 20px 12px !important;
+    border-bottom: 1px solid var(--docsearch-muted-color) !important;
+    background: var(--docsearch-searchbox-background) !important;
+    
+    :global(.preview-title) {
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      color: var(--docsearch-text-color) !important;
+      margin: 0 !important;
+      line-height: 1.4 !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    :global(.preview-breadcrumb) {
+      font-size: 12px !important;
+      color: var(--docsearch-muted-color) !important;
+      margin-top: 4px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    :global(.preview-link) {
+      margin-top: 8px !important;
+      
+      a {
+        font-size: 12px !important;
+        color: var(--docsearch-primary-color) !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+  
+  :global(.preview-content) {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important; /* Prevent horizontal overflow */
+    padding: 20px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: var(--docsearch-text-color) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    
+    /* Ensure all content respects container width */
+    * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Style the preview content */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--docsearch-text-color) !important;
+      margin-top: 24px !important;
+      margin-bottom: 12px !important;
+      line-height: 1.3 !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    h1 { font-size: 20px !important; }
+    h2 { font-size: 18px !important; }
+    h3 { font-size: 16px !important; }
+    h4 { font-size: 14px !important; }
+    
+    p {
+      margin-bottom: 12px !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    /* Handle images */
+    img {
+      max-width: 100% !important;
+      height: auto !important;
+      display: block !important;
+      margin: 12px 0 !important;
+    }
+    
+    /* Handle tables */
+    table {
+      width: 100% !important;
+      max-width: 100% !important;
+      table-layout: fixed !important;
+      border-collapse: collapse !important;
+      margin: 12px 0 !important;
+      font-size: 12px !important;
+    }
+    
+    th, td {
+      padding: 8px !important;
+      border: 1px solid var(--docsearch-muted-color) !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    code {
+      background: var(--docsearch-searchbox-background) !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      font-size: 12px !important;
+      color: var(--docsearch-primary-color) !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    pre {
+      background: var(--docsearch-searchbox-background) !important;
+      padding: 12px !important;
+      border-radius: 6px !important;
+      overflow-x: auto !important;
+      margin: 12px 0 !important;
+      max-width: 100% !important;
+      
+      code {
+        background: none !important;
+        padding: 0 !important;
+        white-space: pre !important;
+        word-wrap: normal !important;
+        overflow-wrap: normal !important;
+      }
+    }
+    
+    ul, ol {
+      margin: 12px 0 !important;
+      padding-left: 20px !important;
+    }
+    
+    li {
+      margin-bottom: 6px !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    blockquote {
+      border-left: 3px solid var(--docsearch-primary-color) !important;
+      margin: 16px 0 !important;
+      padding: 12px 16px !important;
+      background: var(--docsearch-searchbox-background) !important;
+      border-radius: 0 6px 6px 0 !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word !important;
+    }
+    
+    /* Handle wide content like diagrams */
+    .mermaid, .plantuml, [class*="diagram"] {
+      max-width: 100% !important;
+      overflow-x: auto !important;
+      margin: 12px 0 !important;
+    }
+    
+    /* Custom scrollbar for content */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: var(--docsearch-muted-color);
+      border-radius: 3px;
+    }
+  }
+  
+  :global(.preview-content-area) {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important; /* Ensure content area doesn't overflow */
+  }
+  
+  :global(.preview-loading) {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--docsearch-muted-color) !important;
+    font-size: 14px !important;
+  }
+  
+  :global(.preview-placeholder) {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--docsearch-muted-color) !important;
+    text-align: center !important;
+    padding: 40px 20px !important;
+    
+    :global(.preview-placeholder-icon) {
+      font-size: 48px !important;
+      margin-bottom: 16px !important;
+      opacity: 0.5 !important;
+    }
+    
+    :global(.preview-placeholder-text) {
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+    }
+  }
+}
+
+/* Enhanced hit styling for hover and selection */
+:global(.DocSearch-Hit[data-hovered="true"]) {
+  background: var(--docsearch-searchbox-background) !important;
+  border-left: 3px solid var(--docsearch-primary-color) !important;
+  
+  .DocSearch-Hit-title {
+    color: var(--docsearch-primary-color) !important;
+  }
+}
+
+:global(.DocSearch-Hit[data-selected="true"]) {
+  background: var(--docsearch-primary-color) !important;
+  
+  * {
+    color: white !important;
+  }
+}
+
+/* Responsive adjustments */
+@include medium-down {
+  :global(.DocSearch-Modal) {
+    width: 95vw !important;
+    max-height: 90vh !important;
+  }
+  
+  :global(.DocSearch-Hits) {
+    flex-direction: column !important;
+    height: auto !important;
+    max-height: 70vh !important;
+  }
+  
+  :global(.search-results-column) {
+    flex: 0 0 40% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--docsearch-muted-color) !important;
+    max-height: 30vh !important;
+  }
+  
+  :global(.preview-panel) {
+    flex: 1 !important;
+    min-height: 300px !important;
+  }
+}
+
+.DocSearch-SearchBar {
+  padding: var(--strapi-spacing-4);
+  border-bottom: 1px solid var(--strapi-neutral-200);
+}
+
+.DocSearch-Form {
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.DocSearch-Input {
+  font-size: var(--strapi-font-size-md);
+  padding-left: var(--strapi-spacing-6);
+}
+
+/* Active Filter Indicator */
+.active-filter-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-2);
+  padding: var(--strapi-spacing-1) var(--strapi-spacing-2);
+  background: var(--strapi-primary-100);
+  border: 1px solid var(--strapi-primary-200);
+  border-radius: 4px;
+  font-size: var(--strapi-font-size-xs);
+  color: var(--strapi-primary-700);
+  width: fit-content;
+}
+
+.indicator-text {
+  display: flex;
+  align-items: center;
+  gap: var(--strapi-spacing-1);
+}
+
+.clear-filter {
+  background: none;
+  border: none;
+  color: var(--strapi-primary-600);
+  cursor: pointer;
+  padding: 0;
+  font-size: 12px;
+  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: var(--strapi-primary-200);
+    color: var(--strapi-primary-800);
+  }
+}
+
+/* Global styles for injected filters (not module-scoped) */
+:global(.injected-filters) {
+  padding: 12px 16px !important;
+  border-bottom: 1px solid var(--docsearch-muted-color) !important;
+  background: var(--docsearch-modal-background) !important;
+
+  :global(.filter-title) {
+    font-size: 12px !important;
+    color: var(--docsearch-muted-color) !important;
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  :global(.filter-buttons) {
+    display: flex !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+
+  :global(.filter-pill) {
+    padding: 6px 12px !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    outline: none !important;
+    font-family: inherit !important;
+    white-space: nowrap !important;
+    
+    /* Light mode - good visibility */
+    background: #f8f9fa !important;
+    color: #495057 !important;
+    border: 1px solid #dee2e6 !important;
+    font-weight: 500 !important;
+
+    &:hover {
+      background: #e9ecef !important;
+      color: #343a40 !important;
+      border-color: #adb5bd !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Active state */
+    &.active,
+    &[data-active="true"] {
+      background: var(--docsearch-primary-color) !important;
+      color: white !important;
+      border-color: var(--docsearch-primary-color) !important;
+      font-weight: 600 !important;
+      box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3) !important;
+
+      &:hover {
+        background: var(--docsearch-primary-color) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4) !important;
+      }
+    }
+  }
+}
+
+/* Dark mode support */
+@include dark {
+  .enhanced-search-container {
+    .filter-toggle {
+      background: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-600);
+
+      &:hover {
+        background: var(--strapi-neutral-100);
+        border-color: var(--strapi-primary-600);
+      }
+    }
+
+    .filter-dropdown {
+      background: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .filter-option {
+      color: var(--strapi-neutral-700);
+
+      &:hover {
+        background: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-800);
+      }
+    }
+  }
+
+  .search-bar .DocSearch {
+    --docsearch-modal-background: var(--strapi-neutral-0);
+    --docsearch-searchbox-background: var(--strapi-neutral-100);
+    --docsearch-hit-background: var(--strapi-neutral-0);
+    --docsearch-footer-background: var(--strapi-neutral-50);
+  }
+
+  .active-filter-indicator {
+    background: var(--strapi-primary-100);
+    border-color: var(--strapi-primary-200);
+    color: var(--strapi-primary-700);
+  }
+
+  /* Dark mode for globally injected filters */
+  :global(.injected-filters) {
+    :global(.filter-pill) {
+      /* Default state (inactive) in dark mode - transparent and elegant */
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+      }
+
+      /* Active state in dark mode */
+      &.active,
+      &[data-active="true"] {
+        background: var(--docsearch-primary-color) !important;
+        color: white !important;
+        border-color: var(--docsearch-primary-color) !important;
+        font-weight: 600 !important;
+        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3) !important;
+
+        &:hover {
+          background: var(--docsearch-primary-color) !important;
+          transform: translateY(-1px) !important;
+          box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4) !important;
+        }
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@include medium-down {
+  .filter-dropdown {
+    position: fixed;
+    top: auto;
+    left: var(--strapi-spacing-4);
+    right: var(--strapi-spacing-4);
+    bottom: var(--strapi-spacing-4);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .enhanced-search-container {
+    gap: var(--strapi-spacing-1);
+  }
+
+  .filter-toggle {
+    min-width: 120px;
+    font-size: var(--strapi-font-size-xs);
+  }
+
+  .injected-filters {
+    .filter-buttons {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+
+    .filter-pill {
+      text-align: center !important;
+    }
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .filter-toggle,
+  .filter-option,
+  .clear-filter,
+  .filter-pill {
+    transition: none !important;
+  }
+
+  .filter-dropdown {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .filter-option {
+    &.active {
+      border: 2px solid currentColor;
+    }
+  }
+
+  .active-filter-indicator {
+    border-width: 2px;
+  }
+
+  .injected-filters .filter-pill {
+    border-width: 2px !important;
+    
+    &.active,
+    &[data-active="true"] {
+      border-width: 3px !important;
+    }
+  }
 }
