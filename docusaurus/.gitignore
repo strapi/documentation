@@ -29,5 +29,7 @@ docs/node_modules/**
 *.py
 
 # LLMs.txt files and related
-# llms*.txt
-# **/llm*.txt
+llms*.txt
+**/llm*.txt
+pr-*.diff
+*-results.json

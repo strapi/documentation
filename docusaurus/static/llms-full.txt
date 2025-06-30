@@ -10761,7 +10761,7 @@ The [destroy](/cms/configurations/functions#destroy) lifecycle function is calle
 Once defined, the configuration can be accessed:
 
 - with `strapi.plugin('plugin-name').config('some-key')` for a specific configuration property,
-- or with `strapi.config.get('plugin.plugin-name')` for the whole configuration object.
+- or with `strapi.config.get('plugin::plugin-name')` for the whole configuration object.
 
 :::tip
 Run `yarn strapi console` or `npm run strapi console` to access the strapi object in a live console.

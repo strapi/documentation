@@ -234,7 +234,7 @@ jobs:
               
               // Add footer
               comment += '---\n';
-              comment += '*🤖 Automated review based on [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing)*\n';
+              comment += '*🤖 Automated review based on [Strapi\'s 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04)*\n';
               
               // Add trigger info for manual runs
               if (eventName === 'workflow_dispatch') {

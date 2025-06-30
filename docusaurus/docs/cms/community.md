@@ -12,7 +12,7 @@ tags:
 
 # Community & Support 
 
-Strapi is an open-source project (see <ExternalLink to="https://github.com/strapi/strapi/blob/master/LICENSE" text="LICENSE"/> file for more information). The core project, as well as the documentation and any related tool can be found in the <ExternalLink to="https://github.com/strapi" text="Strapi"/> GitHub organization.
+Strapi is an open-source project (see <ExternalLink to="https://github.com/strapi/strapi/blob/main/LICENSE" text="LICENSE"/> file for more information). The core project, as well as the documentation and any related tool can be found in the <ExternalLink to="https://github.com/strapi" text="Strapi"/> GitHub organization.
 
 ## Open-source & Contribution
 
