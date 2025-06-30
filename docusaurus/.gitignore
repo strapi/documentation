@@ -30,4 +30,4 @@ docs/node_modules/**
 
 # LLMs.txt files and related
 # llms*.txt
-# **/llms*.txt
+# **/llm*.txt
