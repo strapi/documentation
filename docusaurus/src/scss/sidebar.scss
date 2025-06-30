@@ -470,11 +470,13 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
 }
 
 // Regular tooltips for sidebar links
-.menu__link__content:hover .info-icon__tooltip {
+.menu__link__content:hover .info-icon__tooltip,
+.menu__link--sublist:hover .info-icon__tooltip {
   visibility: visible;
   opacity: 1; 
 }
 
+.menu__link--sublist .strapi-icons,
 .menu__link__content .strapi-icons {
   margin-left: 8px;
   cursor: help;
@@ -499,7 +501,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     z-index: 99999;
     top: 24px;
     width: 100%;
-    min-height: 100px;
+    min-height: 60px;
     transform: (100%);
     left: 0;
     font-size: var(--strapi-font-size-xs);
@@ -508,14 +510,20 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
     pointer-events: none;
     transition: opacity 0.2s ease, visibility 0.2s ease;
+    padding-bottom: 1rem;
+
+    div {
+      margin-top: 1rem;
+    }
     
     ul, ol {
       margin: 4px 0;
       padding-left: 14px;
+      margin-left: 6px;
     }
     
     li {
-      margin: 2px 0;
+      margin: 2px 0 8px;
     }
     
     a {
@@ -682,12 +690,17 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     z-index: 9998;
     transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
     padding: 14px 10px 0 !important;
+    padding-bottom: 1rem !important;
     
     &--visible {
       max-height: 300px;
       opacity: 1;
       padding: 8px;
       box-shadow: 0 4px 12px rgba(33, 33, 52, 0.15);
+    }
+
+    a {
+      padding-left: 0 !important;
     }
 
     &::before {
