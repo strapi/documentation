@@ -4,6 +4,10 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
+// Dynamic path resolution
+const scriptDir = __dirname;
+const styleRulesPath = path.join(scriptDir, 'style-rules.yml');
+
 /**
  * Enhanced GitHub Documentation Validator with inline comments and friendly reporting
  * Implements Strapi's 12 Rules of Technical Writing with human-like feedback
@@ -24,7 +28,7 @@ class EnhancedGitHubDocumentationValidator {
     const Strapi12RulesParser = require('./rule-parser');
     
     this.diffParser = new GitHubURLDiffParser({ verbose: this.options.verbose });
-    this.ruleParser = new Strapi12RulesParser(path.join(__dirname, 'style-rules.yml'));
+    this.ruleParser = new Strapi12RulesParser(styleRulesPath);
     
     // Results tracking
     this.results = {
