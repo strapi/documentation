@@ -352,7 +352,7 @@ class EnhancedGitHubDocumentationValidator {
 
     // Extract the actual line content from the first issue
     const lineContent = sortedIssues[0].lineContent || '[content on this line]';
-    const displayContent = lineContent.length > 80 ? 
+    const displayContent = lineContent.length > 240 ? 
       `"${lineContent.substring(0, 77)}..."` : 
       `"${lineContent}"`;
     
