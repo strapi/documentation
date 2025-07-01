@@ -13,6 +13,8 @@ tags:
 
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
 
+To configure the project, first do this, then do that, then do this, and finally do something else. See? It's super easy 😂
+
 <ThemedImage
 alt="Homepage of the Admin Panel"
 sources={{
