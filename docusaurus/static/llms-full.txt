@@ -8199,25 +8199,6 @@ Once the preview system is set up, you need to adapt your data fetching logic to
 1. Create or adapt your data fetching utility to check if draft mode is enabled
 2. Update your API calls to include the draft status parameter when appropriate
 
-The following, taken from the 
-
-</Tabs>
-
-<details>
-<summary>Caching in Next.js:</summary>
-
-In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-application/caching) may require additional steps. You might need to invalidate the cache by making an API call from the client side to the server, where the revalidation logic will be handled. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
-<br/>
-
-</details>
-
-#### [Front end] Next steps
-
-Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
-
-1. Create or adapt your data fetching utility to check if draft mode is enabled
-2. Update your API calls to include the draft status parameter when appropriate
-
 The following, taken from the  Strapi demo application, is an example of how to implement draft-aware data fetching in your Next.js front-end application:
 
 ```typescript {8-18}
