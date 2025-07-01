@@ -24,7 +24,7 @@ class EnhancedGitHubDocumentationValidator {
     const Strapi12RulesParser = require('./rule-parser');
     
     this.diffParser = new GitHubURLDiffParser({ verbose: this.options.verbose });
-    this.ruleParser = new Strapi12RulesParser('./style-rules.yml');
+    this.ruleParser = new Strapi12RulesParser(path.join(__dirname, 'style-rules.yml'));
     
     // Results tracking
     this.results = {
