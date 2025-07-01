@@ -4,11 +4,6 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-// Dynamic path resolution
-const scriptDir = __dirname;
-const ruleParserPath = path.join(scriptDir, 'rule-parser');
-const styleRulesPath = path.join(scriptDir, 'style-rules.yml');
-
 /**
  * Enhanced GitHub Documentation Validator with inline comments and friendly reporting
  * Implements Strapi's 12 Rules of Technical Writing with human-like feedback
@@ -25,11 +20,11 @@ class EnhancedGitHubDocumentationValidator {
     };
 
     // Import components
-    const GitHubURLDiffParser = require(path.join(scriptDir, 'github-diff-parser'));
-    const Strapi12RulesParser = require(ruleParserPath);
+    const GitHubURLDiffParser = require('./github-diff-parser');
+    const Strapi12RulesParser = require('./rule-parser');
     
     this.diffParser = new GitHubURLDiffParser({ verbose: this.options.verbose });
-    this.ruleParser = new Strapi12RulesParser(styleRulesPath);
+    this.ruleParser = new Strapi12RulesParser('./style-rules.yml');
     
     // Results tracking
     this.results = {
@@ -310,39 +305,43 @@ class EnhancedGitHubDocumentationValidator {
       suggestion: '💡'
     }[severity] || '💡';
 
+    // Sort issues by severity (errors first, then warnings, then suggestions)
+    const sortedIssues = issues.sort((a, b) => {
+      const severityOrder = { error: 0, warning: 1, suggestion: 2 };
+      return (severityOrder[a.severity] || 2) - (severityOrder[b.severity] || 2);
+    });
+
+    // Extract the problematic content from the line (if available)
+    // For now, we'll use a placeholder since we don't have the exact content
+    const problematicContent = '[content on this line]'; // TODO: Extract actual content
+    
     let comment = `${emoji} **Strapi Documentation Review**\n\n`;
-
-    // Group by rule for cleaner presentation
-    const ruleGroups = {};
-    issues.forEach(issue => {
-      if (!ruleGroups[issue.ruleId]) {
-        ruleGroups[issue.ruleId] = [];
-      }
-      ruleGroups[issue.ruleId].push(issue);
-    });
-
-    Object.entries(ruleGroups).forEach(([ruleId, ruleIssues], index) => {
-      if (index > 0) comment += '\n---\n\n';
+    
+    // Start with the natural, conversational format
+    if (sortedIssues.length === 1) {
+      const issue = sortedIssues[0];
+      const ruleNumber = this.getRuleNumber(issue.ruleId);
+      const ruleName = this.getRuleShortDescription(issue.ruleId);
       
-      const issue = ruleIssues[0]; // Use first issue for rule info
-      const ruleNumber = this.getRuleNumber(ruleId);
+      comment += `On file \`${filePath}\`, line ${lineNumber}, you wrote ${problematicContent}. `;
+      comment += `This content doesn't follow Rule ${ruleNumber} (${ruleName}). `;
       
-      comment += `**🎯 Rule ${ruleNumber}** - ${this.getRuleName(ruleId)}\n\n`;
-      
-      // Add main message
-      comment += `${issue.message}\n\n`;
-      
-      // Add suggestion if available
       if (issue.suggestion) {
-        comment += `**💡 Suggestion:** ${issue.suggestion}\n\n`;
+        comment += `It would be better to write "${this.generateSpecificSuggestion(issue.ruleId)}" instead.\n\n`;
       }
+    } else {
+      // Multiple rules violated
+      comment += `On file \`${filePath}\`, line ${lineNumber}, you wrote ${problematicContent}. `;
+      comment += `This content doesn't follow ${sortedIssues.length} rules:\n\n`;
       
-      // Add example if we can generate one
-      const example = this.generateExample(ruleId, issue);
-      if (example) {
-        comment += `**✨ Example:**\n${example}\n\n`;
-      }
-    });
+      sortedIssues.forEach(issue => {
+        const ruleNumber = this.getRuleNumber(issue.ruleId);
+        const ruleName = this.getRuleShortDescription(issue.ruleId);
+        comment += `• **Rule ${ruleNumber}**: ${ruleName}\n`;
+      });
+      
+      comment += `\nIt would be better to write "${this.generateCombinedSuggestion(sortedIssues)}" instead.\n\n`;
+    }
 
     // Add footer
     comment += `📚 [Learn more about our writing guidelines](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04)`;
@@ -352,6 +351,56 @@ class EnhancedGitHubDocumentationValidator {
       line: lineNumber,
       body: comment
     };
+  }
+
+  /**
+   * Get short, clear rule descriptions
+   */
+  getRuleShortDescription(ruleId) {
+    const descriptions = {
+      'easy_difficult_words': 'Never say something is "easy" or "difficult" - this can discourage readers',
+      'jokes_and_casual_tone': 'Maintain professional tone - avoid emojis and casual language',
+      'procedures_must_be_numbered': 'Use numbered lists for step-by-step procedures',
+      'minimize_pronouns': 'Minimize pronouns like "you" and "we"',
+      'simple_english_vocabulary': 'Use simple, clear vocabulary',
+      'use_bullet_lists': 'Use bullet lists instead of long enumerations'
+    };
+    return descriptions[ruleId] || 'Follow technical writing best practices';
+  }
+
+  /**
+   * Generate specific suggestion for a single rule violation
+   */
+  generateSpecificSuggestion(ruleId) {
+    const suggestions = {
+      'easy_difficult_words': 'To configure this setting:',
+      'jokes_and_casual_tone': 'Follow these steps:',
+      'procedures_must_be_numbered': '1. First step\n2. Second step',
+      'minimize_pronouns': 'Configure the setting by...',
+      'simple_english_vocabulary': 'Use this feature',
+      'use_bullet_lists': 'Features include:\n- Feature A\n- Feature B'
+    };
+    return suggestions[ruleId] || 'Rewrite using clear, professional language';
+  }
+
+  /**
+   * Generate combined suggestion that addresses multiple rule violations
+   */
+  generateCombinedSuggestion(sortedIssues) {
+    // Look for the most appropriate combined suggestion based on rule combinations
+    const ruleIds = sortedIssues.map(issue => issue.ruleId);
+    
+    // Common combinations
+    if (ruleIds.includes('easy_difficult_words') && ruleIds.includes('jokes_and_casual_tone')) {
+      return 'Follow these steps:';
+    }
+    
+    if (ruleIds.includes('procedures_must_be_numbered')) {
+      return '1. First step\n2. Second step\n3. Third step';
+    }
+    
+    // Default to neutral, professional language
+    return 'Follow the steps below:';
   }
 
   /**
