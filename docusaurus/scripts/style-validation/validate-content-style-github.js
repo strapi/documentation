@@ -370,7 +370,7 @@ class EnhancedGitHubDocumentationValidator {
       comment += `This content doesn't follow Rule ${ruleNumber} (${ruleName}). `;
       
       if (issue.suggestion) {
-        comment += `It would be better to write "${this.generateSpecificSuggestion(issue.ruleId)}" instead.\n\n`;
+        comment += `It would be better to write "${this.generateSpecificSuggestion(issue.ruleId)}" for isntance, instead.\n\n`;
       }
     } else {
       // Multiple rules violated
@@ -434,12 +434,12 @@ class EnhancedGitHubDocumentationValidator {
     const ruleIds = sortedIssues.map(issue => issue.ruleId);
     
     // Common combinations
-    if (ruleIds.includes('easy_difficult_words') && ruleIds.includes('jokes_and_casual_tone')) {
-      return 'Follow these steps:';
-    }
-    
     if (ruleIds.includes('procedures_must_be_numbered')) {
       return '1. First step\n2. Second step\n3. Third step';
+    }
+    
+    if (ruleIds.includes('easy_difficult_words') && ruleIds.includes('jokes_and_casual_tone')) {
+      return 'the same content in a professional tone without casual language and emojis, or simply remove this sentence.';
     }
     
     // Default to neutral, professional language
