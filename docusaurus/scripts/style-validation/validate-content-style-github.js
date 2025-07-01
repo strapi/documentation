@@ -132,6 +132,18 @@ class EnhancedGitHubDocumentationValidator {
       // Map line numbers back to original file line numbers
       const mappedIssues = this.mapLinesToOriginal(allIssues, diffInfo, addedContent);
       
+      // Add line content to issues for better messaging
+      const addedLines = addedContent.split('\n');
+      const addedLineNumbers = Array.from(diffInfo.addedLines).sort((a, b) => a - b);
+      
+      mappedIssues.forEach(issue => {
+        // Find the content for this line
+        const lineIndex = addedLineNumbers.indexOf(issue.line);
+        if (lineIndex >= 0 && lineIndex < addedLines.length) {
+          issue.lineContent = addedLines[lineIndex].trim();
+        }
+      });
+      
       // Categorize and store issues
       this.categorizeIssues(mappedIssues);
       this.results.summary.filesProcessed++;
@@ -315,9 +327,11 @@ class EnhancedGitHubDocumentationValidator {
       return (severityOrder[a.severity] || 2) - (severityOrder[b.severity] || 2);
     });
 
-    // Extract the problematic content from the line (if available)
-    // For now, we'll use a placeholder since we don't have the exact content
-    const problematicContent = '[content on this line]'; // TODO: Extract actual content
+    // Extract the actual line content from the first issue
+    const lineContent = sortedIssues[0].lineContent || '[content on this line]';
+    const displayContent = lineContent.length > 80 ? 
+      `"${lineContent.substring(0, 77)}..."` : 
+      `"${lineContent}"`;
     
     let comment = `${emoji} **Strapi Documentation Review**\n\n`;
     
