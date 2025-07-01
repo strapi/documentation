@@ -126,21 +126,38 @@ class EnhancedGitHubDocumentationValidator {
 
       this.log(`📝 Extracted ${addedContent.split('\n').length} lines of added content`, 'debug');
 
+      // Debug: Log the extracted content and line numbers
+      const addedLines = addedContent.split('\n');
+      const addedLineNumbers = Array.from(diffInfo.addedLines).sort((a, b) => a - b);
+      
+      this.log(`🔍 Debug - Added line numbers: [${addedLineNumbers.join(', ')}]`, 'debug');
+      addedLines.forEach((line, index) => {
+        const originalLineNumber = addedLineNumbers[index];
+        this.log(`🔍 Debug - Line ${originalLineNumber}: "${line}"`, 'debug');
+      });
+
       // Apply all rules to the added content
       const allIssues = this.applyAllRules(addedContent, filePath, { diffInfo });
       
       // Map line numbers back to original file line numbers
       const mappedIssues = this.mapLinesToOriginal(allIssues, diffInfo, addedContent);
       
-      // Add line content to issues for better messaging
-      const addedLines = addedContent.split('\n');
-      const addedLineNumbers = Array.from(diffInfo.addedLines).sort((a, b) => a - b);
+      // Debug: Log mapped issues before adding content
+      mappedIssues.forEach(issue => {
+        this.log(`🔍 Debug - Issue at line ${issue.line}: ${issue.message}`, 'debug');
+      });
       
+      // Add line content to issues for better messaging
       mappedIssues.forEach(issue => {
         // Find the content for this line
         const lineIndex = addedLineNumbers.indexOf(issue.line);
+        this.log(`🔍 Debug - Looking for line ${issue.line}, found at index ${lineIndex}`, 'debug');
+        
         if (lineIndex >= 0 && lineIndex < addedLines.length) {
           issue.lineContent = addedLines[lineIndex].trim();
+          this.log(`🔍 Debug - Added lineContent: "${issue.lineContent}"`, 'debug');
+        } else {
+          this.log(`🔍 Debug - Could not find content for line ${issue.line}`, 'debug');
         }
       });
       
@@ -327,11 +344,19 @@ class EnhancedGitHubDocumentationValidator {
       return (severityOrder[a.severity] || 2) - (severityOrder[b.severity] || 2);
     });
 
+    // Debug: Log what content we have
+    this.log(`🔍 Debug - generateInlineComment for line ${lineNumber}`, 'debug');
+    sortedIssues.forEach((issue, index) => {
+      this.log(`🔍 Debug - Issue ${index}: lineContent = "${issue.lineContent || 'undefined'}"`, 'debug');
+    });
+
     // Extract the actual line content from the first issue
     const lineContent = sortedIssues[0].lineContent || '[content on this line]';
     const displayContent = lineContent.length > 80 ? 
       `"${lineContent.substring(0, 77)}..."` : 
       `"${lineContent}"`;
+    
+    this.log(`🔍 Debug - Final displayContent: ${displayContent}`, 'debug');
     
     let comment = `${emoji} **Strapi Documentation Review**\n\n`;
     
@@ -341,7 +366,7 @@ class EnhancedGitHubDocumentationValidator {
       const ruleNumber = this.getRuleNumber(issue.ruleId);
       const ruleName = this.getRuleShortDescription(issue.ruleId);
       
-      comment += `On file \`${filePath}\`, line ${lineNumber}, you wrote ${problematicContent}. `;
+      comment += `On file \`${filePath}\`, line ${lineNumber}, you wrote ${displayContent}. `;
       comment += `This content doesn't follow Rule ${ruleNumber} (${ruleName}). `;
       
       if (issue.suggestion) {
@@ -349,7 +374,7 @@ class EnhancedGitHubDocumentationValidator {
       }
     } else {
       // Multiple rules violated
-      comment += `On file \`${filePath}\`, line ${lineNumber}, you wrote ${problematicContent}. `;
+      comment += `On file \`${filePath}\`, line ${lineNumber}, you wrote ${displayContent}. `;
       comment += `This content doesn't follow ${sortedIssues.length} rules:\n\n`;
       
       sortedIssues.forEach(issue => {
