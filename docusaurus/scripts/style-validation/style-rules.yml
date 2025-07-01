@@ -121,7 +121,7 @@ structure_rules:
   # Rule 7: Numbered lists for procedures
   procedures_in_numbered_lists:
     rule: "Directions must be displayed in numbered lists with one action per step"
-    detect_procedure_language: ["follow these steps", "to do this", "procedure", "instructions"]
+    detect_procedure_language: ["follow these steps", "to do this", "procedure", "instructions", "first", "next", "then", "finally"]
     require_numbered_lists: true
     one_action_per_step: true
     start_with_action_verb: true
