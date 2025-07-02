@@ -281,7 +281,7 @@ Each object in the `items` array can contain the following parameters:
 | `description`   | Description of the input to use in the Content-type Builder        | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `intlLabel`     | Translation for the label of the input                             | [`IntlObject`](https://formatjs.io/docs/react-intl/) |
 | `type`          | Type of the input (e.g., `select`, `checkbox`)                     | `String`                                             |
-| `defaultValue`  | Set the defaultValue for the item                                  | `String` | `boolean`                                 |
+| `defaultValue`  | Set the default value for the item                                  | `String` | `boolean`                                 |
 
 <details>
 <summary>Example: Declaring options for an example "color" custom field:</summary>
