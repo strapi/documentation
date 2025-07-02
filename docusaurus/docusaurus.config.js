@@ -86,25 +86,26 @@ const config = {
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
       'data-button-hide': 'true',
-      'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
+      'data-modal-disclaimer':
+        'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
       // 'data-modal-override-open-class-search': 'DocSearch-Button',
       // 'data-modal-title-search': 'Search Strapi Docs',
       // 'data-modal-open-on-command-k': 'true',
       // 'data-search-mode-enabled': true,
-      'data-modal-override-open-class': "kapa-widget-button",
+      'data-modal-override-open-class': 'kapa-widget-button',
       'data-modal-title-ask-ai': 'Ask your question',
       'data-modal-border-radius': '4px',
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
-      'data-modal-y-offset': "25vh",
+      'data-modal-y-offset': '25vh',
       'data-modal-size': '720px',
       'data-user-analytics-cookie-enabled': true,
       async: true,
     },
     {
-      src: `https://cdn.amplitude.com/script/b2903bdddb544d4b712bee3739f3cafd.experiment.js`,
+      src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
       async: true,
     },
   ],
@@ -133,7 +134,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/strapi/documentation/edit/main/docusaurus',
+          editUrl:
+            'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
             keywords: [
               // Admonitions defaults
@@ -179,7 +181,7 @@ const config = {
       announcementBar: {
         id: 'support_us',
         content:
-        "🧑🏽‍🔬 We're testing new AI and search tools on <a target='_blank' rel='noopener noreferrer' href='https://docs-next.strapi.io'>docs-next.strapi.io</a>! Feel free to have a look and <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/ei7p4koru8RaUCDB6'>share your feedback</a>",
+          "🧑🏽‍🔬 We're testing new AI and search tools on <a target='_blank' rel='noopener noreferrer' href='https://docs-next.strapi.io'>docs-next.strapi.io</a>! Feel free to have a look and <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/ei7p4koru8RaUCDB6'>share your feedback</a>",
         backgroundColor: '#F3E5FA',
         textColor: '#091E42',
         isCloseable: true,
@@ -195,7 +197,7 @@ const config = {
         indexName: 'strapi_newCmsCrawler_march2025',
         contextualSearch: false,
         searchParameters: {
-          facetFilters: [] 
+          facetFilters: [],
         },
       },
       navbar: {
@@ -211,7 +213,7 @@ const config = {
             docId: 'cms/intro',
             position: 'left',
             // label: 'CMS',
-            html: '<i class="ph-fill ph-feather"></i> CMS'
+            html: '<i class="ph-fill ph-feather"></i> CMS',
           },
           {
             type: 'doc',
@@ -234,25 +236,25 @@ const config = {
             items: [
               {
                 label: "What's new?",
-                href: '/whats-new'
+                href: '/whats-new',
               },
               {
-                label: "Release notes",
-                href: '/release-notes'
+                label: 'Release notes',
+                href: '/release-notes',
               },
               {
-                label: "FAQ",
-                href: '/cms/faq'
+                label: 'FAQ',
+                href: '/cms/faq',
               },
               {
-                label: "Community & Support",
-                href: '/cms/community'
+                label: 'Community & Support',
+                href: '/cms/community',
               },
               {
-                label: "Usage information",
-                href: '/cms/usage-information'
+                label: 'Usage information',
+                href: '/cms/usage-information',
               },
-            ]
+            ],
           },
           {
             title: 'Additional resources',
@@ -267,19 +269,19 @@ const config = {
               },
               {
                 label: 'v4 Docs',
-                href: 'https://docs-v4.strapi.io'
+                href: 'https://docs-v4.strapi.io',
               },
               {
                 label: 'Contributor Docs',
-                href: 'https://contributor.strapi.io'
+                href: 'https://contributor.strapi.io',
               },
               {
                 label: 'Strapi Design System',
-                href: 'https://design-system.strapi.io/'
+                href: 'https://design-system.strapi.io/',
               },
               {
                 label: 'v3 Docs (unsupported)',
-                href: 'https://docs-v3.strapi.io'
+                href: 'https://docs-v3.strapi.io',
               },
             ],
           },
@@ -338,14 +340,15 @@ const config = {
     ],
     'docusaurus-plugin-sass',
     'docusaurus-plugin-image-zoom',
-    [ // Custom plugin to generate LLMs files
-      './plugins/llms-generator-plugin.js',  // ⬅️ Chemin depuis la racine
+    [
+      // Custom plugin to generate LLMs files
+      './plugins/llms-generator-plugin.js', // ⬅️ Chemin depuis la racine
       {
         docsDir: 'docs',
         sitebarPath: 'sidebars.js',
-        siteName: 'Strapi Documentation'
-      }
-    ]
+        siteName: 'Strapi Documentation',
+      },
+    ],
     // [ // Disabled
     //   '@docusaurus/plugin-client-redirects',
     //   {
