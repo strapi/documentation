@@ -415,8 +415,8 @@ const sidebars = {
               type: 'html',
               value: 'placeholder', // a value is required for the HTML type, but it is not rendered
               customProps: {
-                text: `The section has been reorganized`,
-                tooltip: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
+                tooltipTitle: `The section has been reorganized`,
+                tooltipContent: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
                   <br/><br/>
                   <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
                   <br/>
@@ -482,8 +482,8 @@ const sidebars = {
           type: 'html',
           value: 'placeholder', // a value is required for the HTML type, but it is not rendered
           customProps: {
-            text: "This section is new",
-            tooltip: "We grouped all the TypeScript-related content into a new section, including configurations, development tips, and guides."
+            tooltipTitle: "This section is new",
+            tooltipContent: "We grouped all the TypeScript-related content into a new section, including configurations, development tips, and guides."
           }
         },
         {

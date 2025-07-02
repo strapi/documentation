@@ -9,7 +9,7 @@ export default function DocSidebarItemHtml({item, level, index}) {
   const {value, defaultStyle, className, customProps} = item;
   
   // Notice (replaces HTML content)
-  if (customProps?.text) {
+  if (customProps?.tooltipTitle) {
     return (
       <li
         className={clsx(
@@ -24,19 +24,19 @@ export default function DocSidebarItemHtml({item, level, index}) {
           <div className="sidebar-notice__header">
             <Icon name="info"/>
             <span className="sidebar-notice__content">
-              {customProps.text}
+              {customProps.tooltipTitle} 
             </span>
-            {customProps?.tooltip && (
+            {customProps?.tooltipContent && ( 
               <div className="sidebar-notice__toggle">
                 <Icon name="caret-right" />
               </div>
             )}
           </div>
           
-          {customProps?.tooltip && (
+          {customProps?.tooltipContent && (
             <div 
               className="sidebar-notice__expandable"
-              dangerouslySetInnerHTML={{ __html: customProps.tooltip }}
+              dangerouslySetInnerHTML={{ __html: customProps.tooltipContent }}
             /> 
           )}
           
@@ -58,11 +58,12 @@ export default function DocSidebarItemHtml({item, level, index}) {
         defaultStyle && [styles.menuHtmlItem, 'menu__list-item'],
         className,
       )}
-      key={index}
-      dangerouslySetInnerHTML={{__html: value}}
-    >
-      {customProps?.new && <NewBadge />}
-      {customProps?.updated && <UpdatedBadge />}
+      key={index}>
+      <div dangerouslySetInnerHTML={{__html: value}} />
+      <div className="sidebar-badges">
+        {customProps?.new && <NewBadge />}
+        {customProps?.updated && <UpdatedBadge />}
+      </div>
     </li>
   );
 }
