@@ -420,11 +420,9 @@ const sidebars = {
                   <br/><br/>
                   <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
                   <br/>
-                  <div><em>Notes: </em>
-                  <ul>
-                    <li>Deployment-related configuration has been moved to the Configurations > Admin panel > <a href="/cms/configurations/admin-panel#admin-panel-server">Admin panel server</a> page.</li>
-                    <li>Host, port, and path configuration documentation has been moved to the Configurations > <a href="/cms/configurations/server">Server page</a></li>
-                  </ul>`
+                  <div><em>Note: </em>
+                    Deployment-related configuration, including host, port, and path configuration, has been moved to the Configurations > Admin panel > <a href="/cms/configurations/admin-panel#admin-panel-server">Admin panel server</a> page.
+                  </div>`
               }, 
             },
             {
