@@ -349,6 +349,8 @@ const config = {
         siteName: 'Strapi Documentation',
       },
     ],
+    './plugins/amplitude-plugin.js',
+
     // [ // Disabled
     //   '@docusaurus/plugin-client-redirects',
     //   {
