@@ -213,6 +213,7 @@ const sidebars = {
       collapsible: false,
       className: 'category-cms-configurations',
       items: [
+
         {
           type: 'doc',
           label: 'Configurations introduction',
@@ -223,9 +224,25 @@ const sidebars = {
           label: 'Admin panel',
           collapsed: true,
           customProps: {
-            updated: true,
+            updated: false,
+            text: "The section has been simplified",
+            tooltip: `We simplified the admin panel configuration section to make it easier to navigate and find what you need.</div>
+              <div>The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.</div>
+              <div><em>Notes: </em>
+              <ul>
+                <li>Lifecycle functions documentation has been moved to the Development section.</li>
+                <li>Email and Upload Providers documentation have been included in the corresponding Features pages.</li>
+              </div>`
           },
           items: [
+            // {
+            //   type: 'html',
+            //   value: 'placeholder', // a value is required for the HTML type, but it is not rendered
+            //   customProps: {
+            //     text: "The section has been simplified",
+            //     tooltip: `We simplified the admin panel configuration section to make it easier to navigate and find what you need.</div><div>The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.</div>`
+            //   }
+            // },
             {
               type: 'link',
               label: 'Introduction',
@@ -284,14 +301,27 @@ const sidebars = {
           ]
         },
         'cms/configurations/api',
-        'cms/configurations/cron',
+        {
+          type: 'doc',
+          id: 'cms/configurations/cron',
+          customProps: {
+            updated: false,
+            // tooltip: `<strong>Important changes</strong><br/><br/>
+            // <span>This tooltip can be used to display short pieces of information.</span><br><br>
+            // We may use bullets in the tooltip as well:<br>
+            // <ul>
+            //   <li>This item is purely informative</li>
+            //   <li>Please avoid using links here as those tooltips are not hoverable</li>
+            // </ul><br/>`
+          },
+        },
         {
           type: 'category',
           collapsed: true,
           collapsible: true,
           label: "Database",
           customProps: {
-            updated: false,
+            tooltip: 'This section now regroups all the database-related configurations and guides, including migrations and transactions.' 
           },
           items: [
             {
@@ -369,9 +399,32 @@ const sidebars = {
           label: 'Admin panel customization',
           collapsed: true,
           customProps: {
-            updated: true,
+            updated: false,
+            // text: `The section has been reorganized`,
+            // tooltip: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
+            //   <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
+            //   <div><em>Notes: </em>
+            //   <ul>
+            //     <li>Deployment-related configuration has been moved to the Configurations > Admin panel > Admin panel server page.</li>
+            //     <li>Host, port, and path configuration documentation has been moved to the Configurations > Server page.</li>
+            //   </ul>`
+            tooltip: "This section has been reorganized, see details below.",
           },
           items: [
+            {
+              type: 'html',
+              value: 'placeholder', // a value is required for the HTML type, but it is not rendered
+              customProps: {
+                tooltipTitle: `The section has been reorganized`,
+                tooltipContent: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
+                  <br/><br/>
+                  <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
+                  <br/>
+                  <div><em>Note: </em>
+                    Deployment-related configuration, including host, port, and path configuration, has been moved to the Configurations > Admin panel > <a href="/cms/configurations/admin-panel#admin-panel-server">Admin panel server</a> page.
+                  </div>`
+              }, 
+            },
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
@@ -423,6 +476,14 @@ const sidebars = {
       collapsible: false,
       className: 'category-cms-typescript', // TODO: add CSS for icon
       items: [
+        {
+          type: 'html',
+          value: 'placeholder', // a value is required for the HTML type, but it is not rendered
+          customProps: {
+            tooltipTitle: "This section is new",
+            tooltipContent: "We grouped all the TypeScript-related content into a new section, including configurations, development tips, and guides."
+          }
+        },
         {
           type: 'doc',
           id: 'cms/typescript',
