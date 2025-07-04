@@ -37,6 +37,11 @@ Each project card also displays a <Icon name="dots-three-outline" /> menu icon t
 * **Go to Deployments**: to be redirected to the [*Deployment*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
 
+:::tip
+Click on the *<Icon name="sparkle"/> Product updates* button in the navigation bar to check out the latest features and fixes released.
+:::
+
+
 ## Accessing a project's dashboard
 
 From the *Projects* page, click on any project card to access its dashboard. It displays the project and environment details and gives access to the deployment history and all available settings.
