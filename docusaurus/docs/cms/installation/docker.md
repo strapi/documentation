@@ -187,7 +187,7 @@ volumes:
 
 networks:
   strapi:
-    name: Strapi
+    name: strapi
     driver: bridge
 ```
 
@@ -253,7 +253,7 @@ volumes:
 
 networks:
   strapi:
-    name: Strapi
+    name: strapi
     driver: bridge
 ```
 
@@ -319,7 +319,7 @@ volumes:
 
 networks:
   strapi:
-    name: Strapi
+    name: strapi
     driver: bridge
 ```
 
