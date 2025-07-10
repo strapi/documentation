@@ -25,13 +25,10 @@ Your Strapi v4 application is already running on the latest v4 minor and patch v
 
 Before getting into the upgrade process itself, take the following precautions:
 
-1. **Backup your database**.
-
-  If you are using SQLite with the default configuration (the default database provided with Strapi), your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
-  
-  If you are using another type of database, please refer to their official documentation (see <ExternalLink to="https://www.postgresql.org/docs/" text="PostgreSQL docs"/> and <ExternalLink to="https://dev.mysql.com/doc/" text="MySQL docs"/>).
-
-  If your project is hosted on Strapi Cloud, you can manually [create a backup](/cloud/projects/settings#creating-a-manual-backup).
+1. **Backup your database**:
+    * If you are using SQLite with the default configuration (the default database provided with Strapi), your database file is named `data.db` and is located in the `.tmp/` folder at the root of your Strapi application.
+    * If you are using another type of database, please refer to their official documentation (see <ExternalLink to="https://www.postgresql.org/docs/" text="PostgreSQL docs"/> and <ExternalLink to="https://dev.mysql.com/doc/" text="MySQL docs"/>).
+    * If your project is hosted on Strapi Cloud, you can manually [create a backup](/cloud/projects/settings#creating-a-manual-backup).
 2. **Backup your code**:
     * If your code is versioned with git, create a new dedicated branch to run the migration.
     * If your code is _not_ versioned with git, create a backup of your working Strapi v4 code and store it in a safe place.
