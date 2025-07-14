@@ -23,7 +23,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
-* Project(s) source code hosted on <ExternalLink to="https://github.com" text="GitHub"/> or <ExternalLink to="https://about.gitlab.com/" text="GitLab"/>. The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
+* Project source code hosted on <ExternalLink to="https://github.com" text="GitHub"/> or <ExternalLink to="https://about.gitlab.com/" text="GitLab"/>. The connected repository can contain multiple Strapi applications. Each Strapi app must be in a separate directory.
 * Specifically for GitLab: at least have "<ExternalLink to="https://docs.gitlab.com/ee/user/permissions.html" text="Maintainer"/>" permissions for the project to import on Strapi Cloud.
 :::
 
@@ -41,7 +41,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-## Deploying a project
+## Creating a project
 
 1. From the *Projects* page, click the **Create project** button.
 
@@ -53,7 +53,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-2. You will be redirected to the first project deployment interface. This interface contains 3 steps: choosing a plan, connecting a remote git repository, and setting up the project.
+2. You will be redirected to the project creation interface. This interface contains 3 steps: choosing a plan, connecting a remote git repository, and setting up the project.
 
     <ThemedImage
     alt="Strapi Cloud project creation, step 1"
@@ -115,7 +115,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     4.a. (optional) If you are deploying a project for the first time, you may first have to select a git provider: either GitHub or GitLab. If you already deployed a project with one git provider, you can afterward deploy another project using another provider by clicking on the **Switch git provider** button and selecting either GitHub or GitLab.
 
     :::tip
-    Connect the GitHub or GitLab account and/or organizations that own the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    Connect the GitHub or GitLab account and/or organizations that owns the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
     :::
     :::note
 
@@ -145,12 +145,12 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Setting name | Instructions                                                                                            |
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Display name | Write the name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`). |
-    | Git branch   | Choose from the drop-down the default branch to use for this deployment. This uses the default branch of the repository. |
-    | Deploy on push | Check the box to automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes. |
+    | Git branch   | Choose from the drop-down the branch you want to deploy. |
+    | Deploy on push | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
     | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West), Asia (Southeast) or Oceania. |
 
     :::note
-    The Git branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project's settings, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
@@ -167,7 +167,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Base directory | Write the name of the directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo. |
     | Environment variables | Click on **Add variable** to add environment variables used to configure your Strapi app (see [Environment variables](/cms/configurations/environment/) for more information). You can also add environment variables to your Strapi application by adding a `.env` file to the root of your Strapi app directory. The environment variables defined in the `.env` file will be used by Strapi Cloud. |
-    | Node version | Choose a Node version from the drop-down. Default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
+    | Node version | Choose a Node version from the drop-down. The default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
 
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default one used by Strapi Cloud (see [database configuration](/cms/configurations/database#environment-variables-in-database-configurations) for more details). If you would like to revert and use Strapi's default database again, you have to remove your `DATABASE_` environment variables (no automatic migration implied).
@@ -182,7 +182,7 @@ If you chose the free plan, this billing step will be skipped as you will not be
 
 To upgrade your project to a paid plan, you will need to fill in your billing information in the **Billing** section of your Profile.
 
-<Icon name="fast-forward" /> Skip to step 5 of the section below to finalise the creation of your project.
+<Icon name="fast-forward" /> Skip to step 5 of the section below to finalize the creation of your project.
 :::
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
@@ -195,17 +195,34 @@ To upgrade your project to a paid plan, you will need to fill in your billing in
     }}
     />
 
-2. Review your project: make sure the plan and setup information are correct. If needed, click the <Icon name="pencil-simple" /> **Edit** button to be redirected to the first interface of the project creation and fix any mistake.
+2. Review your project: make sure the plan and setup information are correct. If needed, click the <Icon name="pencil-simple" /> **Edit** button to navigate back to the first step of the project creation and fix any mistake.
 
 3. In the Payment section, fill in at least all mandatory elements for *Payment method* and *Billing information*.
 
 4. Check your invoice which informs you of what should be paid now and the following month. Optionally, you can enter a *Discount code* if you have one.
 
-5. Click on the **Create project** button to finalize the deployment of your new Strapi Cloud project. An initial deployment will automatically be triggered and you will be redirected to the *Projects* page.
+5. Click on the **Create project** button to finalize the creation of your new Strapi Cloud project.
 
-:::caution
-Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
+## Deploying your project
+
+After confirming the project creation, you will be redirected to your *Project dashboard* where you will be able to follow its creation and first deployment. 
+
+While your project is deploying, you can already start configuring some of your [project settings](/cloud/projects/settings).
+
+<ThemedImage
+    alt="Project creation steps"
+    sources={{
+        light: '/img/assets/cloud/project-creation-3.png',
+        dark: '/img/assets/cloud/project-creation-3_DARK.png',
+    }}
+    />
+
+:::note
+If an error occurs during the project creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
+
+Once you project is successfully deployed, the creation tracker will be replaced by your deployments list and you will be able to visit your Cloud hosted project. Don't forget to create the first Admin user before sharing your Strapi project.
+
 
 ## <Icon name="fast-forward" /> What to do next?
 
