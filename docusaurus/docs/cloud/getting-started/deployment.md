@@ -41,7 +41,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-## Creating a project
+## Creating a project {#deploying-a-project}
 
 1. From the *Projects* page, click the **Create project** button.
 
@@ -115,7 +115,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     4.a. (optional) If you are deploying a project for the first time, you may first have to select a git provider: either GitHub or GitLab. If you already deployed a project with one git provider, you can afterward deploy another project using another provider by clicking on the **Switch git provider** button and selecting either GitHub or GitLab.
 
     :::tip
-    Connect the GitHub or GitLab account and/or organizations that owns the repository or repositories you want to deploy. This can be different from the account that owns the Strapi Cloud account.
+    Connect the GitHub or GitLab account and/or organizations that owns the repository or repositories you want to deploy. This can be different from the account that own the Strapi Cloud account.
     :::
     :::note
 

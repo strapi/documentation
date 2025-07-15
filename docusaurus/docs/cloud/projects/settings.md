@@ -142,7 +142,7 @@ To create a new environment:
     | Environment name | (mandatory) Write a name for your project's new environment.             |
     | Git branch       | (mandatory) Select the right branch for your new environment.            |
     | Base directory   | Write the name of the base directory of your new environment.            |
-    | Import variables | Tick this box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
+    | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
     | Deploy on push      | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
 
 4. Click on the **Add environment** button to create your project's new environment. You will then be redirected to your *Project dashboard* where you will be able to follow your new environment's creation and first deployment.
