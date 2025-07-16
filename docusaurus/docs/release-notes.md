@@ -27,6 +27,55 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.6.3
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### Cloud
+- [Canny widget](https://github.com/strapi/documentation/pull/2575)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix incorrect wording in the description of the `findOne()` method](https://github.com/strapi/documentation/pull/2586)
+- [Fix broken line breaks in step-by-step file](https://github.com/strapi/documentation/pull/2580)
+- [Fix strapi network mismatch issues in Docker instructions](https://github.com/strapi/documentation/pull/2578)
+
+#### Repository
+- [Fix duplicate footer](https://github.com/strapi/documentation/pull/2589)
+- [Fix Amplitude tracking experiment CDN](https://github.com/strapi/documentation/pull/2574)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Mcastres" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/17828745?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Mcastres"/>
+</a>
+<a href="https://github.com/Tasleem222" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/200180442?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Tasleem222"/>
+</a>
+<a href="https://github.com/fxm90" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/17249312?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="fxm90"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/ndaemy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/18691542?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ndaemy"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.6.2
 
 <br />
