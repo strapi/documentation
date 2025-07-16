@@ -176,6 +176,6 @@
 }
 
 // Unable to understand why second footer is displayed on Docusaurus, so I'm hiding it
-body #__docusaurus .footer{
+#__docusaurus + footer.footer {
   display: none !important;
 }
