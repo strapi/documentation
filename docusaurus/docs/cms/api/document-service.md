@@ -35,7 +35,7 @@ Syntax: `findOne(parameters: Params) => Document`
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
 | `documentId` | Document id | | `ID` |
-| [`locale`](/cms/api/document-service/locale#find-one)|  Locale of the documents to create. | Default locale | String or `undefined` |
+| [`locale`](/cms/api/document-service/locale#find-one)|  Locale of the document to find. | Default locale | String or `undefined` |
 | [`status`](/cms/api/document-service/status#find-one) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
 | [`fields`](/cms/api/document-service/fields#findone)   | [Select fields](/cms/api/document-service/fields#findone) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
