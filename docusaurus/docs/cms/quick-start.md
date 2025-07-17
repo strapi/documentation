@@ -116,6 +116,8 @@ First we will build a content structure for your content. This can only be done 
 
 :::tip
 If the server is not already running, in your terminal, `cd` into the `my-strapi-project` folder and run `npm run develop` (or `yarn develop`) to launch it.
+
+You might also need to run `npm run build` or `yarn build` prior to the `develop` command, especially in cases where building the website is important, such as for TypeScript projects for instance.
 :::
 
 The Content-Type Builder helps you create your content structure. When creating an empty project with Strapi, this is where to get the party started!
