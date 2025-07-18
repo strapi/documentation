@@ -1,0 +1,131 @@
+/** Component: ExpandableContent */
+@use './mixins' as *;
+
+.expandable-content {
+  margin-bottom: var(--strapi-spacing-6);
+
+  &__wrapper {
+    position: relative;
+    transition: max-height 0.3s ease;
+    
+    &--collapsed {
+      position: relative;
+    }
+  }
+
+  &__gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.7) 60%,
+      rgba(255, 255, 255, 0.95) 85%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    pointer-events: none;
+  }
+
+  &__toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--strapi-spacing-4);
+  }
+
+  &__button {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--strapi-neutral-200);
+    color: var(--strapi-neutral-800);
+    cursor: pointer;
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 500;
+    padding: var(--strapi-spacing-2) var(--strapi-spacing-4);
+    border-radius: var(--strapi-spacing-2);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.08),
+      0 1px 4px rgba(0, 0, 0, 0.06);
+    
+    &:hover {
+      background: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-300);
+      color: var(--strapi-neutral-900);
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.12),
+        0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 
+        0 0 0 2px var(--strapi-primary-200),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 
+        0 0 0 2px var(--strapi-primary-500),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@include dark {
+  .expandable-content {
+    &__gradient {
+      background: linear-gradient(
+        to bottom,
+        rgba(33, 33, 52, 0) 0%,
+        rgba(33, 33, 52, 0.2) 20%,
+        rgba(33, 33, 52, 0.5) 40%,
+        rgba(33, 33, 52, 0.8) 65%,
+        rgba(33, 33, 52, 0.95) 85%,
+        rgba(33, 33, 52, 1) 100%
+      );
+    }
+
+    &__button {
+      background: rgba(33, 33, 52, 0.95);
+      border-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-800);
+      backdrop-filter: blur(8px);
+      box-shadow: 
+        0 2px 12px rgba(0, 0, 0, 0.3),
+        0 1px 6px rgba(0, 0, 0, 0.2);
+
+      &:hover {
+        background: var(--strapi-neutral-0);
+        border-color: var(--strapi-neutral-300);
+        color: var(--strapi-neutral-900);
+        box-shadow: 
+          0 4px 20px rgba(0, 0, 0, 0.4),
+          0 2px 10px rgba(0, 0, 0, 0.25);
+      }
+
+      &:focus {
+        box-shadow: 
+          0 0 0 2px var(--strapi-primary-600),
+          0 2px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      &:focus-visible {
+        box-shadow: 
+          0 0 0 2px var(--strapi-primary-600),
+          0 2px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+}
