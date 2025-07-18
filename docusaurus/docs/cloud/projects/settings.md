@@ -143,12 +143,12 @@ To create a new environment:
     | Git branch       | (mandatory) Select the right branch for your new environment.            |
     | Base directory   | Write the name of the base directory of your new environment.            |
     | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
-    | Auto-deploy      | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
+    | Deploy on push      | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
 
-4. Click on the **Add environment** button to create your project's new environment. A new deployment will automatically be triggered.
+4. Click on the **Add environment** button to create your project's new environment. You will then be redirected to your *Project dashboard* where you will be able to follow your new environment's creation and first deployment.
 
-:::caution
-If the creation of a new environment fails but you are still charged, try creating the environment again. This time, the environment creation should be successful and you will not be charged a second time. This behaviour is an known issue that should be fixed in the upcoming weeks.
+:::note
+If an error occurs during the environment creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
 
 ### Billing & Usage
