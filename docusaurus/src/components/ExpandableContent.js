@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function ExpandableContent({ 
   children, 
@@ -7,9 +7,20 @@ export default function ExpandableContent({
   maxHeight = "200px"
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const buttonRef = useRef(null);
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
+    
+    // Si on ferme le contenu, scroll vers le bouton après un petit délai
+    if (isExpanded) {
+      setTimeout(() => {
+        buttonRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100);
+    }
   };
 
   return (
@@ -30,6 +41,7 @@ export default function ExpandableContent({
       
       <div className="expandable-content__toggle">
         <button 
+          ref={buttonRef}
           className="expandable-content__button"
           onClick={toggleExpanded}
           type="button"
