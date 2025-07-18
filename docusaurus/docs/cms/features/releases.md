@@ -174,17 +174,28 @@ A release page can display entries either grouped by locale, content-type, or ac
 
 **Path:** <Icon name="paper-plane-tilt" /> Releases
 
-Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously. To publish a release, click the **Publish** button in the top right corner of the admin panel.
+Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously.
 
-The _Status_ column displays the status of each entry:
+To publish a release, click the **Publish** button in the top right corner of the admin panel. Before, make sure to check the status of both the release and its entries.
 
-   - <Icon name="check-circle" color="rgb(58,115,66)"/> Already published: the entry is already published and publishing the release will not affect this entry 
-   - <Icon name="check-circle" color="rgb(58,115,66)"/> Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
-   - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to publish: the entry is ready to  be published with the release
-   - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to unpublish: the entry is ready to  be unpublished with the release
-   - <Icon name="x-circle" color="rgb(190,51,33)" /> Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+  - A badge at the top of the interface indicates the status of your release:
+    - `Empty`: no entry has been added to the release yet
+    - `Blocked`: content has been added to the release but at least one issue in an entry prevents the release from being published
+    - `Ready`: content has been added to the release, all checks have been passed and the release can be published
+    - `Done`: the release has been released and is now done
 
-If some of your entries have a <Icon name="x-circle" color="rgb(190,51,33)" /> status, click the <Icon name="dots-three-outline" /> and the **Edit the entry** button to fix the issues until all entries have the <Icon name="check-circle" color="rgb(58,115,66)"/> status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+  - The _Status_ column displays the status of each entry:
+    - <Icon name="check-circle" color="rgb(58,115,66)"/> Already published: the entry is already published and publishing the release will not affect this entry 
+    - <Icon name="check-circle" color="rgb(58,115,66)"/> Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
+    - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to publish: the entry is ready to  be published with the release
+    - <Icon name="check-circle" color="rgb(58,115,66)"/> Ready to unpublish: the entry is ready to  be unpublished with the release
+    - <Icon name="x-circle" color="rgb(190,51,33)" /> Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+
+If your release is `Blocked` because some of your entries have a <Icon name="x-circle" color="rgb(190,51,33)" /> status, click the <Icon name="dots-three-outline" /> button, then **Edit the entry** to fix the issues until all entries have the <Icon name="check-circle" color="rgb(58,115,66)"/> status.
+
+:::note
+You will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+:::
 
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
