@@ -3,6 +3,7 @@ title: Command Line Interface
 displayed_sidebar: cmsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 sidebar_label: Strapi CLI
+toc_max_heading_level: 2
 tags:
   - Command Line Interface (CLI)
   - strapi develop
@@ -350,24 +351,19 @@ The command displays an interactive menu with the following options:
 The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
 Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
 
+<ExpandableContent maxHeight="120px" showMoreText="Show more…" showLessText="Show less">
+
 ### API generator
-
-<ExpandableContent maxHeight="150px" showMoreText="Show more…" showLessText="Show less">
-
-Type `yarn strapi generate` or `npm run strapi generate` then select `api`.
 
 Creates an API with controller and service files.
 
-**Generated files:**
-- `controllers/[name].js|ts`
-- `services/[name].js|ts` 
-- `routes/[name].js|ts` (standard APIs only)
+**Generated file:** `controllers/[name].js|ts`, `services/[name].js|ts`, and `routes/[name].js|ts` (standard APIs only)
 
 ### Content-type generator
 
 Creates a content type schema with optional API files.
 
-**Available attribute types:**
+#### Available attribute types
 
 | Type | Description |
 |------|-------------|
@@ -389,63 +385,70 @@ Creates a content type schema with optional API files.
 | `enumeration` | Predefined values |
 | `media` | File upload |
 
-**Generated files:**
-- `content-types/[name]/schema.json`
-- `controllers/[name].js|ts` (if API bootstrap selected)
-- `services/[name].js|ts` (if API bootstrap selected)
-- `routes/[name].js|ts` (if API bootstrap selected)
+#### Generated files
+
+| Condition | Generated files |
+|-----------|----------------|
+| Content type only | `content-types/[name]/schema.json` |
+| With API bootstrap | <ul><li>`content-types/[name]/schema.json`</li><li>`controllers/[name].js\|ts`</li><li>`services/[name].js\|ts`</li><li>`routes/[name].js\|ts`</li></ul> |
 
 ### Controller generator
 
 Creates a controller file with basic action structure.
 
-**Generated files:**
-- `controllers/[name].js|ts`
+**Generated file:** `controllers/[name].js|ts`
 
 ### Service generator
 
 Creates a service file with basic structure.
 
-**Generated files:**
-- `services/[name].js|ts`
+**Generated file:** `services/[name].js|ts`
 
 ### Policy generator
 
 Creates a policy file for access control.
 
-**Generated files:**
-- `policies/[name].js|ts`
+**Generated file:** `policies/[name].js|ts`
 
 ### Middleware generator
 
 Creates a middleware file for request processing.
 
-**Generated files:**
-- `middlewares/[name].js|ts`
+**Generated file:** `middlewares/[name].js|ts`
 
 ### Migration generator
 
 Creates a timestamped migration file.
 
-**Generated files:**
-- `database/migrations/[timestamp].[name].js|ts`
+**Generated file:** `database/migrations/[timestamp].[name].js|ts`
 
 ### Configuration options
 
-**Destination choices:**
-- **New API** - Creates a new API folder
-- **Existing API** - Adds to existing API folder  
-- **Existing plugin** - Adds to existing plugin folder
-- **Root** - Adds to project root (policies and middlewares only)
+<br/>
 
-**Content type options:**
-- **Collection Type** - Multiple entries (articles, users)
-- **Single Type** - Single entry (homepage, settings)
+#### Destination choices
 
-**Content type naming:**
-- **Display name** - Human-readable name
-- **Singular name** - Kebab-case singular (blog-post)
-- **Plural name** - Kebab-case plural (blog-posts)
+| Option | Description |
+|--------|-------------|
+| **New API** | Creates a new API folder |
+| **Existing API** | Adds to existing API folder |
+| **Existing plugin** | Adds to existing plugin folder |
+| **Root** | Adds to project root (policies and middlewares only) |
+
+#### Content type options
+
+| Type | Description | Example |
+|------|-------------|---------|
+| **Collection Type** | Multiple entries | Articles, users |
+| **Single Type** | Single entry | Homepage, settings |
+
+#### Content type naming
+
+| Field | Format | Description | Example |
+|-------|--------|-------------|---------|
+| **Display name** | Human-readable | Name shown in admin panel | Blog Post |
+| **Singular name** | Kebab-case | Used for API endpoints | blog-post |
+| **Plural name** | Kebab-case | Used for collections | blog-posts |
 
 </ExpandableContent>
 
