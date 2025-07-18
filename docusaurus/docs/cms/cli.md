@@ -3,6 +3,7 @@ title: Command Line Interface
 displayed_sidebar: cmsSidebar
 description: Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 sidebar_label: Strapi CLI
+toc_max_heading_level: 2
 tags:
   - Command Line Interface (CLI)
   - strapi develop
@@ -331,11 +332,127 @@ strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
 
 ## strapi generate
 
-Run a fully interactive CLI to generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [plugins](/cms/plugins-development/create-a-plugin), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares) and [services](/cms/backend-customization/services), and [migrations](/cms/database-migrations).
+Generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), [services](/cms/backend-customization/services), and [migrations](/cms/database-migrations).
 
 ```bash
 strapi generate
 ```
+
+The command displays an interactive menu with the following options:
+
+- **api** - Generate a new API with controller and service
+- **controller** - Generate a new controller
+- **content-type** - Generate a new content type with schema
+- **policy** - Generate a new policy
+- **middleware** - Generate a new middleware
+- **migration** - Generate a new database migration
+- **service** - Generate a new service
+
+![strapi generate GIF](/img/assets/cli/strapi-generate.gif)
+
+The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
+Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
+
+<ExpandableContent maxHeight="120px" showMoreText="Show more…" showLessText="Show less">
+
+### API generator
+
+Creates an API with controller and service files.
+
+**Generated file:** `controllers/[name].js|ts`, `services/[name].js|ts`, and `routes/[name].js|ts` (standard APIs only)
+
+### Content-type generator
+
+Creates a content type schema with optional API files.
+
+#### Available attribute types
+
+| Type | Description |
+|------|-------------|
+| `string` | Short text |
+| `text` | Long text |
+| `richtext` | Rich text editor |
+| `email` | Email field |
+| `password` | Password field |
+| `integer` | Whole number |
+| `biginteger` | Large whole number |
+| `float` | Decimal number |
+| `decimal` | Precise decimal |
+| `date` | Date only |
+| `time` | Time only |
+| `datetime` | Date and time |
+| `timestamp` | Unix timestamp |
+| `boolean` | True/false |
+| `json` | JSON data |
+| `enumeration` | Predefined values |
+| `media` | File upload |
+
+#### Generated files
+
+| Condition | Generated files |
+|-----------|----------------|
+| Content type only | `content-types/[name]/schema.json` |
+| With API bootstrap | <ul><li>`content-types/[name]/schema.json`</li><li>`controllers/[name].js\|ts`</li><li>`services/[name].js\|ts`</li><li>`routes/[name].js\|ts`</li></ul> |
+
+### Controller generator
+
+Creates a controller file with basic action structure.
+
+**Generated file:** `controllers/[name].js|ts`
+
+### Service generator
+
+Creates a service file with basic structure.
+
+**Generated file:** `services/[name].js|ts`
+
+### Policy generator
+
+Creates a policy file for access control.
+
+**Generated file:** `policies/[name].js|ts`
+
+### Middleware generator
+
+Creates a middleware file for request processing.
+
+**Generated file:** `middlewares/[name].js|ts`
+
+### Migration generator
+
+Creates a timestamped migration file.
+
+**Generated file:** `database/migrations/[timestamp].[name].js|ts`
+
+### Configuration options
+
+<br/>
+
+#### Destination choices
+
+| Option | Description |
+|--------|-------------|
+| **New API** | Creates a new API folder |
+| **Existing API** | Adds to existing API folder |
+| **Existing plugin** | Adds to existing plugin folder |
+| **Root** | Adds to project root (policies and middlewares only) |
+
+#### Content type options
+
+| Type | Description | Example |
+|------|-------------|---------|
+| **Collection Type** | Multiple entries | Articles, users |
+| **Single Type** | Single entry | Homepage, settings |
+
+#### Content type naming
+
+| Field | Format | Description | Example |
+|-------|--------|-------------|---------|
+| **Display name** | Human-readable | Name shown in admin panel | Blog Post |
+| **Singular name** | Kebab-case | Used for API endpoints | blog-post |
+| **Plural name** | Kebab-case | Used for collections | blog-posts |
+
+</ExpandableContent>
 
 ## strapi templates:generate
 
