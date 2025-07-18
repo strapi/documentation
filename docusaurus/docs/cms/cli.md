@@ -441,8 +441,8 @@ Creates a timestamped migration file.
 
 | Type | Description | Example |
 |------|-------------|---------|
-| **Collection Type** | Multiple entries | Articles, users |
-| **Single Type** | Single entry | Homepage, settings |
+| **Collection Type** | For multiple entries | Articles, users |
+| **Single Type** | For a single entry | Homepage, settings |
 
 #### Content type naming
 
