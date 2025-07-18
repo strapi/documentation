@@ -357,7 +357,7 @@ Generated files include commented examples. Singular and plural names must be di
 
 ### API generator
 
-Creates an API with controller and service files.
+Creates an API with [controller](/cms/backend-customization/controllers) and [service](/cms/backend-customization/services) files.
 
 **Generated file:** `controllers/[name].js|ts`, `services/[name].js|ts`, and `routes/[name].js|ts` (standard APIs only)
 
@@ -396,39 +396,41 @@ Creates a content type schema with optional API files.
 
 ### Controller generator
 
-Creates a controller file with basic action structure.
+Creates a [controller](/cms/backend-customization/controllers) file with basic action structure.
 
 **Generated file:** `controllers/[name].js|ts`
 
 ### Service generator
 
-Creates a service file with basic structure.
+Creates a [service](/cms/backend-customization/services) file with basic structure.
 
 **Generated file:** `services/[name].js|ts`
 
 ### Policy generator
 
-Creates a policy file for access control.
+Creates a [policy](/cms/backend-customization/policies) file for access control.
 
 **Generated file:** `policies/[name].js|ts`
 
 ### Middleware generator
 
-Creates a middleware file for request processing.
+Creates a [middleware](/cms/backend-customization/middlewares) file for request processing.
 
 **Generated file:** `middlewares/[name].js|ts`
 
 ### Migration generator
 
-Creates a timestamped migration file.
+Creates a timestamped [migration](/cms/database-migrations) file.
 
 **Generated file:** `database/migrations/[timestamp].[name].js|ts`
 
 ### Configuration options
 
-<br/>
+The `strapi generate` interactive CLI may offer various configuration options depending on the chosen Strapi element to generate:
 
 #### Destination choices
+
+When creating a content-type, controller, policy, middleware, or service, you can choose its destination:
 
 | Option | Description |
 |--------|-------------|
@@ -437,14 +439,16 @@ Creates a timestamped migration file.
 | **Existing plugin** | Adds to existing plugin folder |
 | **Root** | Adds to project root (policies and middlewares only) |
 
-#### Content type options
+#### Content-type specific options
+
+When creating a content-type, you can choose to create a collection type or a single type (see [Content-Type Builder](/cms/features/content-type-builder) documentation for differences):
 
 | Type | Description | Example |
 |------|-------------|---------|
 | **Collection Type** | Multiple entries | Articles, users |
 | **Single Type** | Single entry | Homepage, settings |
 
-#### Content type naming
+You will also have to define various types of names. The following table explains their differences. Only the display name needs to be manually defined, and you can press Enter to accept the default suggested name for the singular and plural names. Singular and plural names matter for API endpoints (see [REST API](/cms/api/rest#endpoints) documentation for details):
 
 | Field | Format | Description | Example |
 |-------|--------|-------------|---------|
