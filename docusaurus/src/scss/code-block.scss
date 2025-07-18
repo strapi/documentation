@@ -62,8 +62,9 @@ pre,
 .theme-code-block {
   border: solid 1px var(--custom-code-block-border-color);
 
+  &-highlighted-line,
   &-highlighted-line [class*="codeLineNumber"] {
-    background-color: #E5E5E5;
+    background-color: #E8E8E8;
   }
 }
 
@@ -344,8 +345,9 @@ pre.prism-code {
         }
       }
     }
-    &-highlighted-line [class*="codeLineNumber"] {
-      background-color: #11111B;
+    &-highlighted-line [class*="codeLineNumber"],
+    &-highlighted-line {
+      background-color: #11111B !important;
     }
   }
 
