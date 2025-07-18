@@ -348,6 +348,8 @@ The command displays an interactive menu with the following options:
 - **migration** - Generate a new database migration
 - **service** - Generate a new service
 
+![strapi generate GIF](/img/assets/cli/strapi-generate.gif)
+
 The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
 Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
 
