@@ -18,6 +18,7 @@ import FeedbackPlaceholder from '../components/FeedbackPlaceholder';
 import CustomDocCard from '../components/CustomDocCard';
 import CustomDocCardsWrapper from '../components/CustomDocCardsWrapper';
 import ExpandableDocCardsWrapper from '../components/ExpandableDocCardsWrapper';
+import ExpandableContent from '../components/ExpandableContent.js';
 import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/InteractiveQueryBuilder';
 import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, SsoBadge, CloudEssentialBadge, CloudProBadge, CloudScaleBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
@@ -72,6 +73,7 @@ export default {
   CustomDocCard,
   CustomDocCardsWrapper,
   ExpandableDocCardsWrapper,
+  ExpandableContent,
   InteractiveQueryBuilder,
   SubtleCallout,
   ThemedImage,

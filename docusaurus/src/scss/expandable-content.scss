@@ -1,0 +1,107 @@
+/** Component: ExpandableContent */
+@use './mixins' as *;
+
+.expandable-content {
+  margin-bottom: 24px;
+
+  &__wrapper {
+    position: relative;
+    transition: max-height 0.3s ease;
+    
+    &--collapsed {
+      position: relative;
+    }
+  }
+
+  &__gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    pointer-events: none;
+  }
+
+  &__toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  &__button {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--strapi-neutral-200);
+    color: var(--strapi-neutral-700);
+    cursor: pointer;
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: var(--strapi-spacing-2);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: var(--strapi-neutral-300);
+      color: var(--strapi-neutral-800);
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--strapi-primary-200);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--strapi-primary-400);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@include dark {
+  .expandable-content {
+    &__gradient {
+      background: linear-gradient(
+        to bottom,
+        rgba(24, 24, 27, 0) 0%,
+        rgba(24, 24, 27, 0.8) 50%,
+        rgba(24, 24, 27, 1) 100%
+      );
+    }
+
+    &__button {
+      background: rgba(24, 24, 27, 0.9);
+      border-color: var(--strapi-neutral-700);
+      color: var(--strapi-neutral-300);
+
+      &:hover {
+        background: rgba(24, 24, 27, 0.95);
+        border-color: var(--strapi-neutral-600);
+        color: var(--strapi-neutral-200);
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px var(--strapi-primary-800);
+      }
+
+      &:focus-visible {
+        box-shadow: 0 0 0 2px var(--strapi-primary-400);
+      }
+    }
+  }
+}
