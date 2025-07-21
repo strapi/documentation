@@ -596,11 +596,13 @@ The `options` key is used to define specific behaviors and accepts the following
 
 ### Plugin options
 
-`pluginOptions` is an object allowing plugins to store configuration for a model or a specific attribute.
+`pluginOptions` is an optional object allowing plugins to store configuration for a model or a specific attribute.
 
-| Key                       | Value                                                                     |
-|---------------------------|---------------------------------------------------------------------------|
-| Plugin name (e.g. `i18n`) | Plugin-defined object (e.g. `{ localized: true }` to enable localization) |
+| Key                       | Value                         | Description                                            |
+|---------------------------|-------------------------------|--------------------------------------------------------|
+| `i18n`                    | `localized: true`             | Enables localization.                                  |
+| `content-manager`         | `visible: false`              | Hides Content Manager in the admin panel.              |
+| `content-type-builder`    | `visible: false`              | Hides Content-type Builder in the admin panel.         |
 
 ```json title="./src/api/[api-name]/content-types/[content-type-name]/schema.json"
 
