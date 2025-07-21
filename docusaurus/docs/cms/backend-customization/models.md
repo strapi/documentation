@@ -601,8 +601,8 @@ The `options` key is used to define specific behaviors and accepts the following
 | Key                       | Value                         | Description                                            |
 |---------------------------|-------------------------------|--------------------------------------------------------|
 | `i18n`                    | `localized: true`             | Enables localization.                                  |
-| `content-manager`         | `visible: false`              | Hides Content Manager in the admin panel.              |
-| `content-type-builder`    | `visible: false`              | Hides Content-type Builder in the admin panel.         |
+| `content-manager`         | `visible: false`              | Hides from Content Manager in the admin panel.         |
+| `content-type-builder`    | `visible: false`              | Hides from Content-type Builder in the admin panel.    |
 
 ```json title="./src/api/[api-name]/content-types/[content-type-name]/schema.json"
 
