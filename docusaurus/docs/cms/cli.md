@@ -564,12 +564,37 @@ strapi telemetry:enable
 
 ## strapi console
 
-Start the server and eval commands in your application in real time.
+Start the server and evaluate commands in your application in real time.
 
 ```bash
 strapi console
 ```
 
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js <ExternalLink to="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop" text="REPL"/>. The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice gracefully stops the server.
+
+### Available helpers
+
+The `strapi` object exposes the following getters and methods to interact with your application:
+
+- `strapi.services` and `strapi.service(uid)` to use [services](/cms/backend-customization/services)
+- `strapi.controllers` and `strapi.controller(uid)` to call [controllers](/cms/backend-customization/controllers)
+- `strapi.contentTypes` and `strapi.contentType(uid)` to inspect [content-types](/cms/backend-customization/models)
+- `strapi.components` to list components
+- `strapi.policies` and `strapi.policy(name)` for [policies](/cms/backend-customization/policies)
+- `strapi.middlewares` and `strapi.middleware(name)` for [middlewares](/cms/backend-customization/middlewares)
+- `strapi.plugins` and `strapi.plugin(name)` for plugins
+- `strapi.hooks` and `strapi.hook(name)` for hooks
+- `strapi.apis` and `strapi.api(name)` for APIs
+- `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
+    ```js
+    await strapi.db.query('api::article.article').findMany();
+    ```
+
+Use this environment to test code and inspect your project with direct access to all Strapi APIs.
+
+:::note
+Strapi uses a Node.js feature called <ExternalLink to="https://nodejs.org/api/async_context.html" text="AsyncLocalStorage"/> to make the context available anywhere.
+:::
 ## strapi version
 
 Print the currently installed Strapi version.
