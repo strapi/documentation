@@ -28,7 +28,7 @@ To address this limitation, Strapi 5 introduced `documentId`, a 24-character alp
 
 This new identifier is used internally in Strapi 5 to manage relationships, publishing, localization, and version history, as all possible variations of a content entry are now grouped under a single [document](/cms/api/document) concept.
 
-As a result, starting with Strapi 5, many APIs and services rely on `documentId` instead of `id` to ensure consistency across operations. Some APIs may still return both `documentId` and `id` to ease the transition, but using `documentId` for content queries is strongly recommended.
+As a result, starting with Strapi 5, many APIs and services rely on `documentId` instead of `id` to ensure consistency across operations. Some APIs may still return both `documentId` and `id` to ease the transition, but using `documentId` for content queries is strongly recommended, as `documentId` might be the only identifier used in future Strapi versions.
 
 For more details on the transition from `id` to `documentId`, refer to the [breaking change page](/cms/migration/v4-to-v5/breaking-changes/use-document-id) and the [migration guide from Entity Service to Document Service API](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
 
