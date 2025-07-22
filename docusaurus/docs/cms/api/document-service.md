@@ -14,7 +14,7 @@ tags:
 
 The Document Service API is built on top of the **Query Engine API** <Annotation>2 different back-end APIs allow you to interact with your content: <ul><li>The [Query Engine API](/cms/api/query-engine) is the lower-level layer that offers unrestricted access to the database, but is not aware of complex Strapi content structures such as components and dynamic zones.</li><li>The Document Service API is built on top of the Query Engine and is the recommended way to interact with your content while you are customizing the back end server or developing plugins.</li></ul>More details can be found in the [Content API](/cms/api/content-api) and [backend customization](/cms/backend-customization) introductions.</Annotation> and is used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** <DocumentDefinition />.
 
-The Document Service API also supports [counting](#count) documents and, if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type, performing Strapi-specific features such as [publishing](#publish)/[unpublishing](#unpublish) documents and [discarding drafts](#discarddraft).
+The Document Service API also supports [counting](#count) documents and, if [Draft & Publish](/cms/features/draft-and-publish) is enabled on the content-type, performing Strapi-specific operations such as [publishing](#publish), [unpublishing](#unpublish), and [discarding drafts](#discarddraft).
 
 In Strapi 5, documents are uniquely identified by their `documentId` at the API level.
 
@@ -30,18 +30,18 @@ This new identifier is used internally in Strapi 5 to manage relationships, publ
 
 As a result, starting with Strapi 5, many APIs and services rely on `documentId` instead of `id` to ensure consistency across operations. Some APIs may still return both `documentId` and `id` to ease the transition, but using `documentId` for content queries is strongly recommended.
 
-For more details on the transition from `id` to `documentId`, refer to the [breaking change page](/cms/migration/v4-to-v5/breaking-changes/use-document-id) and in the [migration guide from Entity Service to Document Service API](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
+For more details on the transition from `id` to `documentId`, refer to the [breaking change page](/cms/migration/v4-to-v5/breaking-changes/use-document-id) and the [migration guide from Entity Service to Document Service API](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
 
 </ExpandableContent>
 
 :::strapi Entity Service API is deprecated in Strapi 5
 The Document Service API replaces the Entity Service API used in Strapi v4 (<ExternalLink to="https://docs-v4.strapi.io/dev-docs/api/entity-service" text="see Strapi v4 documentation"/>).
 
-Additional information on how to transition away from the Entity Service API to the Document Service API can be found in the [migration reference](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
+Additional information on how to migrate from the Entity Service API to the Document Service API can be found in the [migration reference](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service).
 :::
 
 :::note
-Relations can also be connected, disconnected, and set through the Document Service API just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
+Relations can also be connected, disconnected, and set through the Document Service API, just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
 :::
 
 ## `findOne()`
