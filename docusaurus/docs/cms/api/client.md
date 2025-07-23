@@ -15,6 +15,7 @@ tags:
 The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. This guide walks you through setting up the Strapi Client, configuring authentication, and using its key features effectively.
 
 ## Getting Started
+
 :::prerequisites
 - A Strapi project has been created and is running. If you haven't set one up yet, follow the [Quick Start Guide](/cms/quick-start) to create one.
 - You know the URL of the Content API of your Strapi instance (e.g., `http://localhost:1337/api`).
@@ -92,7 +93,6 @@ If you're using the Strapi Client in a browser environment, you can include it u
 
 The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
-
 ### Authentication
 
 The Strapi Client currently only supports API tokens as an authentication method, to access protected resources in your Strapi back end.
@@ -105,7 +105,6 @@ const client = strapi({
   auth: 'your-api-token-here',
 });
 ```
-
 
 This allows your requests to include the necessary authentication credentials automatically.
 If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError`.
@@ -178,7 +177,7 @@ Single types in Strapi represent unique content entries that exist only once (e.
 | ----------| -------------------------------------------------------------------------------------------- |
 | `find(queryParams?)`  | Fetch the document.        |
 | `update(documentID, data, queryParams?)`  | Update the document. |
-| `delete(queryParams?) `  | Remove the document. |
+| `delete(queryParams?)`  | Remove the document. |
 
 **Usage examples:**
 ```js
@@ -209,7 +208,7 @@ The following methods are available for working with files. Click on the method 
 | Method | Description |
 |--------|-------------|
 | [`find(params?)`](#find) | Retrieves a list of file metadata based on optional query parameters |
-| [`findOne(fileId)`](#findOne) | Retrieves the metadata for a single file by its ID |
+| [`findOne(fileId)`](#findone) | Retrieves the metadata for a single file by its ID |
 | [`update(fileId, fileInfo)`](#update) | Updates metadata for an existing file |
 | [`upload(type, options)`](#upload) | Uploads a file, specifying:<ul><li>`type` which can be `file`, `fileContentBuffer`, or `fileBlob`</li><li>and an additional `options` object</li></ul> |
 | [`delete(fileId)`](#delete) | Deletes a file by its ID |
@@ -241,7 +240,7 @@ const imageFiles = await client.files.find({
 });
 ```
 
-#### `findOne`
+#### `findOne` {#findone}
 
 The `strapi.client.files.findOne()` method retrieves the metadata for a single file by its id.
 
@@ -282,8 +281,7 @@ const updatedFile = await client.files.update(1, {
 });
 ```
 
-
-#### `upload` <NewBadge />
+#### `upload` <NewBadge /> {#upload}
 
 The Strapi Client provides media file upload functionality through the `FilesManager`, accessible through the  `strapi.client.files.upload()` method. The method allows you to upload media files (such as images, videos, or documents) to your Strapi backend.
 
