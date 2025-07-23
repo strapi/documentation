@@ -83,7 +83,7 @@ If you're using the Strapi Client in a browser environment, you can include it u
 </script>
 ```
 
-The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError` [[source]](https://github.com/strapi/client/blob/f4a5d0dad9de23513f572700bc48ba9f1bafb3a9/README.md).
+The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
 ### Authentication
 
@@ -99,7 +99,7 @@ const client = strapi({
 ```
 
 This allows your requests to include the necessary authentication credentials automatically.
-If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError` [[source]](https://github.com/strapi/client/blob/f4a5d0dad9de23513f572700bc48ba9f1bafb3a9/src/index.ts).
+If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError`.
 
 ## API Reference
 
