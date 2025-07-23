@@ -16,7 +16,6 @@ The *Payment method* section of the  *Billing* tab allows you to manage the cred
 1. In the *Payment method* section of the  *Billing* tab, click on the **Add card** button.
 2. Fill in the following fields:
 
-
 | Field name | Description |
 | --- | --- |
 | Card Number | Write the number of the credit card to add as payment method. |
