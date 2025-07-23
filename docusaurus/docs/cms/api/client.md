@@ -51,31 +51,35 @@ To use the Strapi Client in your project, install it as a dependency using your 
 
 To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
-With Javascript, require the `strapi` function and create a client instance:
 <Tabs groupId="js-ts"> 
 <TabItem value="js" label="JavaScript">
+
+With Javascript, require the `strapi` function and create a client instance:
 
 ```js
 import { strapi } from '@strapi/client';
 
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
+
 </TabItem>
 
+<TabItem value="ts" label="TypeScript">
 
 With Typescript, import the `strapi` function and create a client instance with your Strapi API base URL:
-<TabItem value="ts" label="TypeScript">
 
 ```typescript
 import { strapi } from '@strapi/client';
 
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
+
 </TabItem>
 
+<TabItem value="browser" label="Browser (UMD)">
 
 If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag. 
-<TabItem value="browser" label="Browser (UMD)">
+
 ```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
 <script src="https://cdn.jsdelivr.net/npm/@strapi/client"></script>
 
@@ -83,9 +87,12 @@ If you're using the Strapi Client in a browser environment, you can include it u
   const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
 </script>
 ```
-</TabItem>
-The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
+</TabItem>
+
+</Tabs>
+
+The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
 ### Authentication
 
