@@ -111,6 +111,7 @@ The Strapi Client provides the following key properties and methods for interact
 | `fetch()`    | A utility method for making generic API requests similar to the native fetch API. |
 | `collection()`  | Manages collection-type resources (e.g., blog posts, products). |
 | `single()`  | Manages single-type resources (e.g., homepage settings, global configurations). |
+| `files()`  | Enables upload, retrieve and management of files directly to/from the Strapi Media Library. |
 
 ### General purpose fetch
 
@@ -184,10 +185,123 @@ const updatedHomepage = await homepage.update(
 await homepage.delete();
 ```
 
+## FilesManager use in the Client
+
+### Media File Upload <NewBadge />
+
+The Strapi Client provides media file upload functionality through the `FilesManager`, accessible as `client.files`.
+
+The `client.files.upload()` method allows you to upload media files (such as images, videos, or documents) to your Strapi backend. It supports uploading files as `Blob` (in browsers or Node.js) or as `Buffer` (in Node.js). The method also supports attaching metadata to the uploaded file, such as `alternativeText` and `caption`.
 
 
+### Method Signature
 
-### Working with files <NewBadge />
+```js
+async upload(file: Blob, options?: BlobUploadOptions): Promise<MediaUploadResponse>
+async upload(file: Buffer, options: BufferUploadOptions): Promise<MediaUploadResponse>
+```
+
+- For `Blob` uploads, `options` is optional and may include `fileInfo` for metadata.
+- For `Buffer` uploads, `options` must include `filename` and `mimetype`, and may include `fileInfo`.
+
+The response is an array of file objects, each containing details such as `id`, `name`, `url`, `size`, and `mime` [source](https://github.com/strapi/client/blob/60a0117e361346073bed1959d354c7facfb963b3/src/files/types.ts).
+
+**Usage examples:**
+
+#### Uploading a File in the Browser
+
+```js
+const client = strapi({ baseURL: 'http://localhost:1337/api' });
+
+const fileInput = document.querySelector('input[type="file"]');
+const file = fileInput.files[0];
+
+try {
+  const result = await client.files.upload(file, {
+    fileInfo: {
+      alternativeText: 'A user uploaded image',
+      caption: 'Uploaded via browser',
+    },
+  });
+  console.log('Upload successful:', result);
+} catch (error) {
+  console.error('Upload failed:', error);
+}
+```
+
+#### Uploading a Blob in Node.js
+
+```js
+import { readFile } from 'fs/promises';
+
+const client = strapi({ baseURL: 'http://localhost:1337/api' });
+
+const filePath = './image.png';
+const mimeType = 'image/png';
+const fileContentBuffer = await readFile(filePath);
+const fileBlob = new Blob([fileContentBuffer], { type: mimeType });
+
+try {
+  const result = await client.files.upload(fileBlob, {
+    fileInfo: {
+      name: 'Image uploaded as Blob',
+      alternativeText: 'Uploaded from Node.js Blob',
+      caption: 'Example upload',
+    },
+  });
+  console.log('Blob upload successful:', result);
+} catch (error) {
+  console.error('Blob upload failed:', error);
+}
+```
+
+#### Uploading a Buffer in Node.js
+
+```js
+import { readFile } from 'fs/promises';
+
+const client = strapi({ baseURL: 'http://localhost:1337/api' });
+
+const filePath = './image.png';
+const fileContentBuffer = await readFile(filePath);
+
+try {
+  const result = await client.files.upload(fileContentBuffer, {
+    filename: 'image.png',
+    mimetype: 'image/png',
+    fileInfo: {
+      name: 'Image uploaded as Buffer',
+      alternativeText: 'Uploaded from Node.js Buffer',
+      caption: 'Example upload',
+    },
+  });
+  console.log('Buffer upload successful:', result);
+} catch (error) {
+  console.error('Buffer upload failed:', error);
+}
+```
+
+
+### Response Structure
+
+The upload method returns an array of file objects, each with fields such as:
+
+```json
+{
+  "id": 1,
+  "name": "image.png",
+  "alternativeText": "Uploaded from Node.js Buffer",
+  "caption": "Example upload",
+  "mime": "image/png",
+  "url": "/uploads/image.png",
+  "size": 12345,
+  "createdAt": "2025-07-23T12:34:56.789Z",
+  "updatedAt": "2025-07-23T12:34:56.789Z"
+}
+```
+
+
+### Managing files
 
 The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
 
@@ -242,6 +356,13 @@ console.log('Deleted file ID:', deletedFile.id);
 console.log('Deleted file name:', deletedFile.name);
 ```
 
+## Handling Common Errors
+
+- **Permission Errors:** If the authenticated user does not have permission to upload or manage files, a `FileForbiddenError` is thrown.
+- **HTTP Errors:** If the server is unreachable, authentication fails, or there are network issues, an `HTTPError` is thrown.
+- **Missing Parameters:** When uploading a `Buffer`, both `filename` and `mimetype` must be provided in the options object. If either is missing, an error is thrown.
+
+
 :::strapi Additional information
-More details about the Strapi Strapi Client might be found in the <ExternalLink to="https://github.com/strapi/client/blob/main/README.md" text="package's README"/>.
+More details about the Strapi Client may be found in the <ExternalLink to="https://github.com/strapi/client/blob/main/README.md" text="package's README"/>.
 :::
