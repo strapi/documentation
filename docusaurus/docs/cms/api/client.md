@@ -87,7 +87,7 @@ The `baseURL` must include the protocol (`http` or `https`). An invalid URL will
 
 ### Authentication
 
-The Strapi Client supports different authentication strategies to access protected resources in your Strapi back end.
+The Strapi Client currently only supports API tokens as an authentication method, to access protected resources in your Strapi back end.
 
 If your Strapi instance uses API tokens, configure the Strapi Client as follows:
 
@@ -99,6 +99,7 @@ const client = strapi({
 ```
 
 This allows your requests to include the necessary authentication credentials automatically.
+If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError` [[source]](https://github.com/strapi/client/blob/f4a5d0dad9de23513f572700bc48ba9f1bafb3a9/src/index.ts).
 
 ## API Reference
 
