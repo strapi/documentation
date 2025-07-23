@@ -51,30 +51,31 @@ To use the Strapi Client in your project, install it as a dependency using your 
 
 To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
-#### Javascript
-
-Require the `strapi` function and create a client instance:
+With Javascript, require the `strapi` function and create a client instance:
+<Tabs groupId="js-ts"> 
+<TabItem value="js" label="JavaScript">
 
 ```js
 import { strapi } from '@strapi/client';
 
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
+</TabItem>
 
-#### TypeScript / ESM
 
-Import the `strapi` function and create a client instance with your Strapi API base URL:
+With Typescript, import the `strapi` function and create a client instance with your Strapi API base URL:
+<TabItem value="ts" label="TypeScript">
 
 ```typescript
 import { strapi } from '@strapi/client';
 
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
+</TabItem>
 
-#### Browser (UMD)
 
-If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag:
-
+If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag. 
+<TabItem value="browser" label="Browser (UMD)">
 ```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
 <script src="https://cdn.jsdelivr.net/npm/@strapi/client"></script>
 
@@ -82,8 +83,9 @@ If you're using the Strapi Client in a browser environment, you can include it u
   const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
 </script>
 ```
-
+</TabItem>
 The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
+
 
 ### Authentication
 
@@ -97,6 +99,7 @@ const client = strapi({
   auth: 'your-api-token-here',
 });
 ```
+
 
 This allows your requests to include the necessary authentication credentials automatically.
 If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError`.
@@ -134,6 +137,8 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 | `delete(documentID, queryParams?)`  | Update an existing document. |
 
 **Usage examples:**
+<Tabs groupId="js-ts"> 
+<TabItem value="js" label="JavaScript">
 ```js
 const articles = client.collection('articles');
 
@@ -155,6 +160,8 @@ const updatedArticle = await articles.update('article-document-id', { title: 'Up
 // Delete an article
 await articles.delete('article-id');
 ```
+</TabItem>
+</Tabs>
 
 ### Working with single types
 
