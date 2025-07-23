@@ -3,7 +3,6 @@
 
 // Variables
 :root body {
-  // Using variables to make future changes easier
   --custom-tabs-px: var(--strapi-spacing-5);
   --custom-tabs-py: var(--strapi-spacing-2);
   --ifm-tabs-padding-horizontal: var(--custom-tabs-px);
@@ -109,6 +108,39 @@
       [class*="codeBlockContainer"]:has([class*="codeBlockTitle"]) {
         margin: 22px 20px;
       }
+    }
+  }
+  
+  // Usage: add "tabs--allow-multiline" class to <Tabs> container
+  &.tabs--allow-multiline &__item {
+    height: auto;
+    min-height: var(--tabs-item-height);
+    max-width: 200px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    button {
+      white-space: normal !important;
+      line-height: 1.3;
+      height: auto !important;
+      min-height: 32px;
+      
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      
+      // Limit to 2 lines maximum
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      
+      padding: 4px 8px;
     }
   }
 }
