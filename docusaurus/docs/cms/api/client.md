@@ -51,11 +51,27 @@ To use the Strapi Client in your project, install it as a dependency using your 
 
 To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
+#### Javascript
+
+Require the `strapi` function and create a client instance:
+
 ```js
 import { strapi } from '@strapi/client';
 
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
+
+#### TypeScript / ESM
+
+Import the `strapi` function and create a client instance with your Strapi API base URL:
+
+```typescript
+import { strapi } from '@strapi/client';
+
+const client = strapi({ baseURL: 'http://localhost:1337/api' });
+```
+
+#### Browser (UMD)
 
 If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag:
 
@@ -66,6 +82,8 @@ If you're using the Strapi Client in a browser environment, you can include it u
   const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
 </script>
 ```
+
+The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError` [[source]](https://github.com/strapi/client/blob/f4a5d0dad9de23513f572700bc48ba9f1bafb3a9/README.md).
 
 ### Authentication
 
@@ -164,6 +182,9 @@ const updatedHomepage = await homepage.update(
 // Delete the homepage content
 await homepage.delete();
 ```
+
+
+
 
 ### Working with files <NewBadge />
 
