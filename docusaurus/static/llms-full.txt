@@ -10545,6 +10545,28 @@ module.exports = (plugin) => {
 ```
 </details>
 
+:::note
+The `strapi-server.js|ts` file is also where you can override the image function, by replacing the Upload plugin's `generateFileName()` function so that it generates custom image names.
+
+<details>
+<summary>Example of custom file-naming logic</summary>
+
+```js title="./src/extensions/upload/strapi-server.js|ts"
+
+module.exports = (plugin) => {
+  plugin.services.upload.image.generateFileName = (file) => {
+    // Example: prefix a timestamp before the original name
+    return `${Date.now()}_${file.hash}${file.ext}`;
+  };
+
+  return plugin;
+};
+
+```
+</details>
+
+:::
+
 ### Within the register and bootstrap functions
 
 To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-api#usage).
