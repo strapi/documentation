@@ -25,6 +25,11 @@ This guide assumes you want to develop a plugin external to your Strapi project.
 
 :::prerequisites
 <ExternalLink to="https://www.npmjs.com/package/yalc" text="yalc"/> must be installed globally (with `npm install -g yalc` or `yarn global add yalc`).
+
+**Why yalc?** `yalc` is a local package manager that enables efficient plugin development by allowing you to test your plugin in a real Strapi project without publishing it to npm first. It provides reliable linking between your plugin and Strapi project for immediate testing during development.
+
+:::note
+If you're working in a monorepo environment, you don't need `yalc` because the monorepo workspace setup handles the symlinking automatically.
 :::
 
 ## Getting started with the Plugin SDK
@@ -58,6 +63,10 @@ npx @strapi/sdk-plugin init my-strapi-plugin
 </Tabs>
 
 The path `my-strapi-plugin` can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
+
+:::note
+If you run the Plugin SDK command from within an existing Strapi project, the plugin will be created in a `plugins` folder within that project. If a `plugins` folder already exists, the new plugin code will be placed there. This allows you to develop plugins locally within your project structure.
+:::
 
 You will be ran through a series of prompts to help you setup your plugin. If you selected yes to all options the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
 
