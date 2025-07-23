@@ -1,6 +1,7 @@
 ---
 title: Strapi Client
 description: The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.  
+toc_max_heading_level: 4
 displayed_sidebar: cmsSidebar
 tags:
 - API
@@ -51,20 +52,22 @@ To use the Strapi Client in your project, install it as a dependency using your 
 
 To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
-With Javascript, require the `strapi` function and create a client instance:
 <Tabs groupId="js-ts"> 
 <TabItem value="js" label="JavaScript">
+
+With Javascript, require the `strapi` function and create a client instance:
 
 ```js
 import { strapi } from '@strapi/client';
 
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
+
 </TabItem>
 
+<TabItem value="ts" label="TypeScript">
 
 With Typescript, import the `strapi` function and create a client instance with your Strapi API base URL:
-<TabItem value="ts" label="TypeScript">
 
 ```typescript
 import { strapi } from '@strapi/client';
@@ -73,9 +76,9 @@ const client = strapi({ baseURL: 'http://localhost:1337/api' });
 ```
 </TabItem>
 
-
-If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag. 
 <TabItem value="browser" label="Browser (UMD)">
+If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag. 
+
 ```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
 <script src="https://cdn.jsdelivr.net/npm/@strapi/client"></script>
 
@@ -83,7 +86,10 @@ If you're using the Strapi Client in a browser environment, you can include it u
   const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
 </script>
 ```
+
 </TabItem>
+</Tabs>
+
 The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
 
@@ -139,6 +145,7 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 **Usage examples:**
 <Tabs groupId="js-ts"> 
 <TabItem value="js" label="JavaScript">
+
 ```js
 const articles = client.collection('articles');
 
@@ -160,6 +167,7 @@ const updatedArticle = await articles.update('article-document-id', { title: 'Up
 // Delete an article
 await articles.delete('article-id');
 ```
+
 </TabItem>
 </Tabs>
 
@@ -192,16 +200,96 @@ const updatedHomepage = await homepage.update(
 await homepage.delete();
 ```
 
-## FilesManager use in the Client
+### Working with files
 
-### Media File Upload <NewBadge />
+The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
 
-The Strapi Client provides media file upload functionality through the `FilesManager`, accessible as `client.files`.
+The following methods are available for working with files. Click on the method name in the  table to jump to the corresponding section with more details and examples:
 
-The `client.files.upload()` method allows you to upload media files (such as images, videos, or documents) to your Strapi backend. It supports uploading files as `Blob` (in browsers or Node.js) or as `Buffer` (in Node.js). The method also supports attaching metadata to the uploaded file, such as `alternativeText` and `caption`.
+| Method | Description |
+|--------|-------------|
+| [`find(params?)`](#find) | Retrieves a list of file metadata based on optional query parameters |
+| [`findOne(fileId)`](#findOne) | Retrieves the metadata for a single file by its ID |
+| [`update(fileId, fileInfo)`](#update) | Updates metadata for an existing file |
+| [`upload(type, options)`](#upload) | Uploads a file, specifying:<ul><li>`type` which can be `file`, `fileContentBuffer`, or `fileBlob`</li><li>and an additional `options` object</li></ul> |
+| [`delete(fileId)`](#delete) | Deletes a file by its ID |
+
+#### `find`
+
+The `strapi.client.files.find()` method retrieves a list of file metadata based on optional query parameters.
+
+The method can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
+
+// Find all file metadata
+const allFiles = await client.files.find();
+console.log(allFiles);
+
+// Find file metadata with filtering and sorting
+const imageFiles = await client.files.find({
+  filters: {
+    mime: { $contains: 'image' }, // Only get image files
+    name: { $contains: 'avatar' }, // Only get files with 'avatar' in the name
+  },
+  sort: ['name:asc'], // Sort by name in ascending order
+});
+```
+
+#### `findOne`
+
+The `strapi.client.files.findOne()` method retrieves the metadata for a single file by its id.
+
+The method can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
+
+// Find file metadata by ID
+const file = await client.files.findOne(1);
+console.log(file.name);
+console.log(file.url); 
+console.log(file.mime); // The file MIME type
+```
+
+#### `update`
+
+The `strapi.client.files.findOne()` method updates metadata for an existing filei, accepting 2 parameters, the `fileId`, and an object containing options such as the name, alternative text, and caption for the media.
+
+The methods can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
+
+// Update file metadata
+const updatedFile = await client.files.update(1, {
+  name: 'New file name',
+  alternativeText: 'Descriptive alt text for accessibility',
+  caption: 'A caption for the file',
+});
+```
 
 
-### Method Signature
+#### `upload` <NewBadge />
+
+The Strapi Client provides media file upload functionality through the `FilesManager`, accessible through the  `strapi.client.files.upload()` method. The method allows you to upload media files (such as images, videos, or documents) to your Strapi backend.
+
+The method supports uploading files as `Blob` (in browsers or Node.js) or as `Buffer` (in Node.js only). The method also supports attaching metadata to the uploaded file, such as `alternativeText` and `caption`.
+
+##### Method Signature
 
 ```js
 async upload(file: Blob, options?: BlobUploadOptions): Promise<MediaUploadResponse>
@@ -213,9 +301,10 @@ async upload(file: Buffer, options: BufferUploadOptions): Promise<MediaUploadRes
 
 The response is an array of file objects, each containing details such as `id`, `name`, `url`, `size`, and `mime` [source](https://github.com/strapi/client/blob/60a0117e361346073bed1959d354c7facfb963b3/src/files/types.ts).
 
-**Usage examples:**
+<Tabs>
+<TabItem value="browser" label="Upload a file with the browser">
 
-#### Uploading a File in the Browser
+You can upload a file use through the browser as follows:
 
 ```js
 const client = strapi({ baseURL: 'http://localhost:1337/api' });
@@ -236,7 +325,14 @@ try {
 }
 ```
 
-#### Uploading a Blob in Node.js
+</TabItem>
+
+<TabItem value="node" label="Upload a file with Node.js">
+
+With Node.js, you can either upload a blob or a buffer, as in the following examples:
+
+<Tabs>
+<TabItem value="node-blob" label="Uploading a Blob">
 
 ```js
 import { readFile } from 'fs/promises';
@@ -262,7 +358,9 @@ try {
 }
 ```
 
-#### Uploading a Buffer in Node.js
+</TabItem>
+
+<TabItem value="node-buffer" label="Uploading a Buffer">
 
 ```js
 import { readFile } from 'fs/promises';
@@ -288,10 +386,15 @@ try {
 }
 ```
 
+</TabItem>
+</Tabs>
 
-### Response Structure
+</TabItem>
+</Tabs>
 
-The upload method returns an array of file objects, each with fields such as:
+##### Response Structure
+
+The `strapi.client.files.upload()` method returns an array of file objects, each with fields such as:
 
 ```json
 {
@@ -307,53 +410,17 @@ The upload method returns an array of file objects, each with fields such as:
 }
 ```
 
+#### `delete`
 
-### Managing files
+The `strapi.client.files.delete()` method deletes a file by its ID.
 
-The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
-
-The following methods are available for working with files:
-
-| Method | Description |
-|--------|-------------|
-| `find(params?)` | Retrieves a list of file metadata based on optional query parameters |
-| `findOne(fileId)` | Retrieves the metadata for a single file by its ID |
-| `update(fileId, fileInfo)` | Updates metadata for an existing file |
-| `delete(fileId)` | Deletes a file by its ID |
-
-**Usage examples:**
+The method can be used as follows:
 
 ```js
 // Initialize the client
 const client = strapi({
   baseURL: 'http://localhost:1337/api',
   auth: 'your-api-token',
-});
-
-// Find all file metadata
-const allFiles = await client.files.find();
-console.log(allFiles);
-
-// Find file metadata with filtering and sorting
-const imageFiles = await client.files.find({
-  filters: {
-    mime: { $contains: 'image' }, // Only get image files
-    name: { $contains: 'avatar' }, // Only get files with 'avatar' in the name
-  },
-  sort: ['name:asc'], // Sort by name in ascending order
-});
-
-// Find file metadata by ID
-const file = await client.files.findOne(1);
-console.log(file.name); // The file name
-console.log(file.url); // The file URL
-console.log(file.mime); // The file MIME type
-
-// Update file metadata
-const updatedFile = await client.files.update(1, {
-  name: 'New file name',
-  alternativeText: 'Descriptive alt text for accessibility',
-  caption: 'A caption for the file',
 });
 
 // Delete a file by ID
@@ -363,11 +430,17 @@ console.log('Deleted file ID:', deletedFile.id);
 console.log('Deleted file name:', deletedFile.name);
 ```
 
+<br/>
+
 ## Handling Common Errors
 
-- **Permission Errors:** If the authenticated user does not have permission to upload or manage files, a `FileForbiddenError` is thrown.
-- **HTTP Errors:** If the server is unreachable, authentication fails, or there are network issues, an `HTTPError` is thrown.
-- **Missing Parameters:** When uploading a `Buffer`, both `filename` and `mimetype` must be provided in the options object. If either is missing, an error is thrown.
+The following errors might occur when sending queries through the Strapi Client:
+
+| Error | Description |
+|-------|-------------|
+| Permission Errors | If the authenticated user does not have permission to upload or manage files, a `FileForbiddenError` is thrown. |
+| HTTP Errors|If the server is unreachable, authentication fails, or there are network issues, an `HTTPError` is thrown. |
+| Missing Parameters|When uploading a `Buffer`, both `filename` and `mimetype` must be provided in the options object. If either is missing, an error is thrown. |
 
 
 :::strapi Additional information
