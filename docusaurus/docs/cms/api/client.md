@@ -56,7 +56,7 @@ To start interacting with your Strapi back end, initialize the Strapi Client and
 <Tabs groupId="js-ts"> 
 <TabItem value="js" label="JavaScript">
 
-With Javascript, require the `strapi` function and create a client instance:
+With Javascript, import the `strapi` function and create a client instance:
 
 ```js
 import { strapi } from '@strapi/client';
@@ -97,7 +97,7 @@ The `baseURL` must include the protocol (`http` or `https`). An invalid URL will
 
 The Strapi Client supports different authentication strategies to access protected resources in your Strapi back end.
 
-If your Strapi instance uses API tokens, configure the Strapi Client as follows:
+If your Strapi instance uses [API tokens](/cms/features/api-tokens), configure the Strapi Client as follows:
 
 ```js
 const client = strapi({
@@ -407,6 +407,10 @@ The `strapi.client.files.upload()` method returns an array of file objects, each
   "updatedAt": "2025-07-23T12:34:56.789Z"
 }
 ```
+
+:::note Additional Response Fields
+The upload response includes additional fields beyond those shown above. See the complete FileResponse interface in the [client source code](https://github.com/strapi/client/blob/main/src/files/types.ts) for all available fields.
+:::
 
 #### `delete`
 
