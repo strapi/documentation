@@ -1,0 +1,9 @@
+{
+  "gitHubApp": {
+    "approvalWorkflow": true,
+    "userDocsWorkflows": [
+      "generateUserDocs"
+    ],
+    "issues": true
+  }
+}
