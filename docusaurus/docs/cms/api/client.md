@@ -210,7 +210,7 @@ The following methods are available for working with files. Click on the method 
 | [`find(params?)`](#find) | Retrieves a list of file metadata based on optional query parameters |
 | [`findOne(fileId)`](#findone) | Retrieves the metadata for a single file by its ID |
 | [`update(fileId, fileInfo)`](#update) | Updates metadata for an existing file |
-| [`upload(type, options)`](#upload) | Uploads a file, specifying:<ul><li>`type` which can be `file`, `fileContentBuffer`, or `fileBlob`</li><li>and an additional `options` object</li></ul> |
+| [`upload(file, options)`](#upload) | Uploads a file (Blob or Buffer) with an optional `options` object for metadata |
 | [`delete(fileId)`](#delete) | Deletes a file by its ID |
 
 #### `find`
