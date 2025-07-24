@@ -408,7 +408,7 @@ The `strapi.client.files.upload()` method returns an array of file objects, each
 }
 ```
 
-:::note Additional Response Fields
+:::note Additional response fields
 The upload response includes additional fields beyond those shown above. See the complete FileResponse interface in the [client source code](https://github.com/strapi/client/blob/main/src/files/types.ts) for all available fields.
 :::
 
