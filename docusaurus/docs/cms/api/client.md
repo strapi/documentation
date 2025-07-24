@@ -262,7 +262,7 @@ console.log(file.mime); // The file MIME type
 
 #### `update`
 
-The `strapi.client.files.findOne()` method updates metadata for an existing filei, accepting 2 parameters, the `fileId`, and an object containing options such as the name, alternative text, and caption for the media.
+The `strapi.client.files.update()` method updates metadata for an existing file, accepting 2 parameters, the `fileId`, and an object containing options such as the name, alternative text, and caption for the media.
 
 The methods can be used as follows:
 
