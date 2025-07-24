@@ -29,7 +29,7 @@ In addition to the plugin location, your Strapi project and plugin can be organi
 
 The development workflow and commands you use will vary based on both the plugin type (local vs external) and the repository setup (separate vs monorepo), as detailed in the sections below.
 
-### Creating the plugin
+## Creating the plugin
 
 To create your plugin, ensure you are in the parent directory of where you want it to be created and run the following command:
 
@@ -57,7 +57,7 @@ The path `my-strapi-plugin` can be replaced with whatever you want to call your 
 
 You will be guided through a series of prompts to help you set up your plugin. If you select "yes" to all options, the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
 
-### Developing local plugins
+## Developing local plugins
 
 If you run the Plugin SDK command from within an existing Strapi project, the plugin will be created in a `plugins` folder within that project. If a `plugins` folder already exists, the new plugin code will be placed there. This allows you to develop plugins locally within your project structure.
 
@@ -110,7 +110,7 @@ npm run watch
 
 Then run `yarn develop` or `npm run develop` in your Strapi project to start the application with your local plugin.
 
-### External plugins development
+## Developing external plugins
 
 :::prerequisites
 <ExternalLink to="https://www.npmjs.com/package/yalc" text="yalc"/> must be installed globally (with `npm install -g yalc` or `yarn global add yalc`).
@@ -180,7 +180,7 @@ Now that your plugin is linked to a project, run `yarn develop` or `npm run deve
 
 You are now ready to develop your plugin as needed! If you are making server changes, you will need to restart your server for them to take effect.
 
-### Building the plugin for publishing
+## Building the plugin for publishing
 
 When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
 
