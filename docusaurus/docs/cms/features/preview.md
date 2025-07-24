@@ -24,8 +24,8 @@ With the Preview feature, you can preview your front end application directly fr
 <ThemedImage
   alt="Previewing content"
   sources={{
-    light: '/img/assets/content-manager/previewing-content.png',
-    dark: '/img/assets/content-manager/previewing-content.png',
+    light: '/img/assets/content-manager/previewing-content-desktop-mobile.gif',
+    dark: '/img/assets/content-manager/previewing-content-desktop-mobile.gif',
   }}
 />
 
@@ -461,4 +461,8 @@ Additionally, with Live Preview, you can:
 
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
+:::
+
+:::tip
+Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
 :::
