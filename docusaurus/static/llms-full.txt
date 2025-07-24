@@ -8358,6 +8358,10 @@ Additionally, with Live Preview, you can:
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
 
+:::tip
+Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
+:::
+
 
 
 # Role-Based Access Control (RBAC)
