@@ -109,6 +109,10 @@ By default, the chosen interface mode is based on your browser's mode. You can h
 Keep in mind that choosing an interface mode only applies to your account on the admin panel.
 :::
 
+### Resetting guided tour
+
+In the *Guided tour* section of your profile, you can click the **Reset guided tour** button to reset the guided tour which is available in the homepage of the admin panel. It allows you to see again the guided tour of the admin panel if you closed it beforehand, and to follow again its various steps.
+
 ### Customizing the logo
 
 **Path to configure the admin panel:** <Icon name="gear-six" /> *Settings > Global settings > Overview*
