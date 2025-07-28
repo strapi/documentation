@@ -1982,7 +1982,10 @@ Source: https://docs.strapi.io/cms/api/document-service
 
 # Document Service API
 
-The Document Service API is built on top of the **Query Engine API**  and used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** 
+The Document Service API is built on top of the **Query Engine API**  and is used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** 
+
+:::strapi Entity Service API is deprecated in Strapi 5
+The Document Service API replaces the Entity Service API used in Strapi v4 (
 
 </ApiCall>
 
