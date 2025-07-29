@@ -72,6 +72,11 @@ The GraphQL plugin exposes only one endpoint that handles all queries and mutati
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
 
+:::caution `documentId` only
+The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
+:::
+
+
 ## Queries
 
 Queries in GraphQL are used to fetch data without modifying it.
@@ -113,6 +118,9 @@ Documents <DocumentDefinition/> can be fetched by their `documentId`.
 ### Fetch multiple documents
 
 To fetch multiple documents <DocumentDefinition/> you can use simple, flat queries or <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries:
+
+Flat queries return only the requested fields for each document. Relay-style queries end with `_connection` and return a `nodes` array together with a `pageInfo` object. Use Relay-style queries when you need pagination metadata.
+
 
 <Tabs groupId="flat-relay">
 
