@@ -55,6 +55,19 @@ Once installed, the GraphQL playground is accessible at the `/graphql` URL and c
 
 <br/>
 
+The GraphQL plugin exposes just one endpoint that handles all queries and mutations. This default endpoint is `/graphql` and is defined in the [plugins configuration file](/cms/plugins/graphql#code-based-configuration):
+
+```js title="/config/plugins.js|ts"
+  export default {
+    shadowCRUD: true,
+    endpoint: '/graphql', // <— single GraphQL endpoint
+    subscriptions: false,
+    maxLimit: -1,
+    apolloServer: {},
+    v4CompatibilityMode: process.env.STRAPI_GRAPHQL_V4_COMPATIBILITY_MODE ?? false,
+  };
+```
+
 :::note No GraphQL API to upload media files
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
