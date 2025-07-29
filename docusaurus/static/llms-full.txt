@@ -3452,6 +3452,28 @@ The following example fetches the `label`, `start_date`, and `end_date` attribut
 
 Dynamic zones are union types in GraphQL so you need to use 
 
+```graphql title="Example with nested logical operators: use and, or, and not to find pizzerias under 20 euros"
+{
+  restaurants(
+    filters: {
+      and: [
+        { not: { averagePrice: { gte: 20 } } }
+        {
+          or: [
+            { name: { eq: "Pizzeria" } }
+            { name: { startsWith: "Pizzeria" } }
+          ]
+        }
+      ]
+    }
+  ) {
+    documentId
+    name
+    averagePrice
+  }
+}
+```
+
 </ApiCall>
 
 ### Fetch a document in a specific locale {#locale-fetch}

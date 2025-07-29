@@ -601,7 +601,6 @@ If upload mutations return a forbidden access error, ensure proper permissions a
 
 ## Filters
 
-<!-- TODO: create examples for every filter and expand this into a section -->
 Queries can accept a `filters` parameter with the following syntax:
 
 `filters: { field: { operator: value } }`
