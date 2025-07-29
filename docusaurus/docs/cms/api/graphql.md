@@ -616,7 +616,9 @@ The following operators are available:
 | Operator       | Description                        |
 | -------------- | ---------------------------------- |
 | `eq`           | Equal                              |
+| `eqi`          | Equal, case insensitive            |
 | `ne`           | Not equal                          |
+| `nei`          | Not equal, case insensitive        |
 | `lt`           | Less than                          |
 | `lte`          | Less than or equal to              |
 | `gt`           | Greater than                       |
@@ -646,9 +648,25 @@ The following operators are available:
   }
 }
 
+# eqi - returns restaurants whose name equals "Biscotte",
+#       comparison is case-insensitive
+{
+  restaurants(filters: { name: { eqi: "Biscotte" } }) {
+    name
+  }
+}
+
 # ne - returns restaurants whose name is not "Biscotte"
 {
   restaurants(filters: { name: { ne: "Biscotte" } }) {
+    name
+  }
+}
+
+# nei - returns restaurants whose name is not "Biscotte",
+#       comparison is case-insensitive
+{
+  restaurants(filters: { name: { nei: "Biscotte" } }) {
     name
   }
 }
