@@ -92,6 +92,8 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 </ApiCall>
 
+The `findOne()` method returns the matching document if found, otherwise returns `null`.
+
 ## `findFirst()`
 
 Find the first document matching the parameters.
