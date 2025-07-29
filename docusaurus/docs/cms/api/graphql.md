@@ -55,7 +55,7 @@ Once installed, the GraphQL playground is accessible at the `/graphql` URL and c
 
 <br/>
 
-The GraphQL plugin exposes just one endpoint that handles all queries and mutations. This default endpoint is `/graphql` and is defined in the [plugins configuration file](/cms/plugins/graphql#code-based-configuration):
+The GraphQL plugin exposes only one endpoint that handles all queries and mutations. The default endpoint is `/graphql` and is defined in the [plugins configuration file](/cms/plugins/graphql#code-based-configuration):
 
 ```js title="/config/plugins.js|ts"
   export default {
