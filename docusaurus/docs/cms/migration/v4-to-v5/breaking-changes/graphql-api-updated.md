@@ -90,7 +90,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
 
 2. Use `documentId` instead of `id` for contentType queries & mutations:
 
-    Strapi 5 introduces `documentId` as the main identifier for documents, ensuring uniqueness across databases. The numeric `id` is still returned by the REST API for backward compatibility but is not available in GraphQL.
+    Strapi 5 introduces [`documentId` as the main identifier](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for documents, ensuring uniqueness across databases. The numeric `id` is still returned by the REST API for backward compatibility but is not available in GraphQL.
 
     ```graphql
     {
