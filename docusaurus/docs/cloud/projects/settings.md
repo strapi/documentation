@@ -104,23 +104,25 @@ Updating the git repository could result in the loss of the project and its data
 
 #### Transferring project ownership
 
-As the project owner, you can decide to transfer the ownership of the Strapi Cloud project to another user, who needs to be a maintainer of the project. However, once the ownership is transferred, it is permanent until the new owner decides to transfer the ownership again to another maintainer.
+The ownership of the Strapi Cloud project can be transferred to another user, as long as they're a maintainer of the project. It can either be at the initiative of the current project owner, or can be requested by a project maintainer. Once the ownership is transferred, it is permanent until the new owner decides to transfer the ownership again to another maintainer.
 
 :::prerequisites
-To be able to transfer ownership to a maintainer, the following requirements must be met:
+For the ownership of a project to be transferred, the following requirements must be met:
 - The project must be on a paid plan.
 - The maintainer must have filled their billing information.
 - No already existing ownership transfer must be pending for the project.
 :::
 
 1. In the *Danger zone* section of the <Icon name="faders" /> *General* tab, click on the **Transfer ownership** button.
-2. In the dialog, choose the maintainer who should be transferred the ownership by clicking on **...** > **Transfer ownership** associated with their name.
-3. Confirm the transfer in the new dialog by clicking on the **Transfer ownership** button.
+2. In the dialog:
+   - If you are the project owner: choose the maintainer who should be transferred the ownership by clicking on **...** > **Transfer ownership** associated with their name.
+   - If you are a maintainer: find yourself in the list and click on **...** > **Request ownership** associated with your name.
+3. Confirm the transfer/request in the new dialog by clicking on the **Transfer/Request ownership** button.
 
-The chosen maintainer will receive an email where they will have to click on the **Confirm transfer** button. Once done, the previous owner will receive a confirmation email that the transfer has successfully been done.
+An email will be sent to both users. The person who needs to transfer the ownership or inherit it will have to click on the **Confirm transfer** button in the email. Once done, the previous owner will receive a confirmation email that the transfer has successfully been done.
 
 :::tip
-As long as the maintainer hasn't confirmed the transfer, the current owner still has the option to cancel the ownership transfer in the same dialog that the maintainer was chosen.
+As long as the ownership transfer or request hasn't been confirmed, there is the option to cancel in the same dialog that the maintainer was chosen.
 :::
 
 :::note
