@@ -105,6 +105,7 @@ Documents <DocumentDefinition/> can be fetched by their `documentId`.
 ### Fetch multiple documents
 
 To fetch multiple documents <DocumentDefinition/> you can use simple, flat queries or <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries:
+
 Flat queries return only the requested fields for each document. Relay-style queries end with `_connection` and return a `nodes` array together with a `pageInfo` object. Use Relay-style queries when you need pagination metadata.
 
 
