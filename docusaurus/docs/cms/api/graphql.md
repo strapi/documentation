@@ -771,6 +771,7 @@ The following operators are available:
 }
 ```
 
+<!--
 ```graphql title="Simple examples for logical operators (and, or, not)"
 # and - both category must be "pizza" AND averagePrice must be < 20
 {
@@ -796,6 +797,46 @@ The following operators are available:
   }
 }
 
+# not - category must NOT be "pizza"
+{
+  restaurants(filters: {
+    not: { category: { eq: "pizza" } }
+  }) {
+    name
+  }
+}
+```
+-->
+
+```graphql title="Simple example for and operator"
+# and - both category must be "pizza" AND averagePrice must be < 20
+{
+  restaurants(filters: {
+    and: [
+      { category: { eq: "pizza" } },
+      { averagePrice: { lt: 20 } }
+    ]
+  }) {
+    name
+  }
+}
+```
+
+```graphql title="Simple example for or operator"
+# or - category is "pizza" OR category is "burger"
+{
+  restaurants(filters: {
+    or: [
+      { category: { eq: "pizza" } },
+      { category: { eq: "burger" } }
+    ]
+  }) {
+    name
+  }
+}
+```
+
+```graphql title="Simple examples for not operator"
 # not - category must NOT be "pizza"
 {
   restaurants(filters: {
