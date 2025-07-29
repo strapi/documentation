@@ -212,7 +212,7 @@ Complex filtering is combining multiple filters using advanced methods such as c
 <ApiCall>
 <Request title="Find books with 2 possible dates and a specific author">
 
-`GET /api/books?filters[$or][0][date][$eq]=2020-01-01&filters[$or][1][date][$eq]=2020-01-02&filters[author][name][$eq]=Kai%20doe`
+`GET /api/books?filters[$and][0][$or][0][date][$eq]=2020-01-01&filters[$and][0][$or][1][date][$eq]=2020-01-02&filters[$and][1][author][name][$eq]=Kai%20doe`
 
 </Request>
 
@@ -225,23 +225,29 @@ Complex filtering is combining multiple filters using advanced methods such as c
 const qs = require('qs');
 const query = qs.stringify({
   filters: {
-    $or: [
+    $and: [
       {
-        date: {
-          $eq: '2020-01-01',
-        },
+        $or: [
+          {
+            date: {
+              $eq: '2020-01-01',
+            },
+          },
+          {
+            date: {
+              $eq: '2020-01-02',
+            },
+          },
+        ],
       },
       {
-        date: {
-          $eq: '2020-01-02',
+        author: {
+          name: {
+            $eq: 'Kai doe',
+          },
         },
       },
     ],
-    author: {
-      name: {
-        $eq: 'Kai doe',
-      },
-    },
   },
 }, {
   encodeValuesOnly: true, // prettify URL
