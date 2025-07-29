@@ -92,63 +92,9 @@ To gradually convert to the new GraphQL API format, follow these steps:
 
     Strapi 5 introduces `documentId` as the main identifier for documents, ensuring uniqueness across databases. The numeric `id` is still returned by the REST API for backward compatibility but is not available in GraphQL.
 
-  ```graphql
-  {
-    restaurants {
-      data {
-        documentId
-        attributes {
-          title
-          image {
-            data {
-              documentId
-              attributes {
-                url
-              }
-            }
-          }
-          images {
-            data {
-              documentId
-              attributes {
-                url
-              }
-            }
-          }
-          xToOneRelation {
-            data {
-              documentId
-              attributes {
-              
-              }
-          }
-          xToManyRelation {
-            data {
-              documentId
-              attributes {
-                field
-              }
-            }
-          }
-        }
-      }
-      meta {
-        pagination {
-          page
-          pageSize
-        }
-      }
-    }
-  }
-  ```
-
-  ```graphql
-  {
-    mutation {
-      updateRestaurant(
-        documentId: "some-doc-id",
-        data: { title: "My great restaurant" }
-      ) {
+    ```graphql
+    {
+      restaurants {
         data {
           documentId
           attributes {
@@ -161,181 +107,235 @@ To gradually convert to the new GraphQL API format, follow these steps:
                 }
               }
             }
+            images {
+              data {
+                documentId
+                attributes {
+                  url
+                }
+              }
+            }
+            xToOneRelation {
+              data {
+                documentId
+                attributes {
+                
+                }
+            }
+            xToManyRelation {
+              data {
+                documentId
+                attributes {
+                  field
+                }
+              }
+            }
+          }
+        }
+        meta {
+          pagination {
+            page
+            pageSize
           }
         }
       }
     }
-  }
-  ```
+    ```
+
+    ```graphql
+    {
+      mutation {
+        updateRestaurant(
+          documentId: "some-doc-id",
+          data: { title: "My great restaurant" }
+        ) {
+          data {
+            documentId
+            attributes {
+              title
+              image {
+                data {
+                  documentId
+                  attributes {
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
 
 3. Move to `_connection` without changing response format (only applies to queries):
 
-  ```graphql
-  {
-    # collection fields can be renamed to _connection to get a v4 compat response
-    restaurants_connection {
-      data {
-        id
-        attributes {
+    ```graphql
+    {
+      # collection fields can be renamed to _connection to get a v4 compat response
+      restaurants_connection {
+        data {
+          id
+          attributes {
+            title
+            image {
+              data {
+                id
+                attributes {
+                  url
+                }
+              }
+            }
+            # collection fields can be renamed to _connection to get a v4 compat response
+            images_connection {
+              data {
+                id
+                attributes {
+                  url
+                }
+              }
+            }
+            xToOneRelation {
+              data {
+                id
+                attributes {
+                  field
+                }
+              }
+            }
+            # collection fields can be renamed to _connection to get a v4 compat response
+            xToManyRelation_connection {
+              data {
+                id
+                attributes {
+                  field
+                }
+              }
+            }
+          }
+        }
+        meta {
+          pagination {
+            page
+            pageSize
+          }
+        }
+      }
+    }
+    ```
+
+4. Remove attributes (applies to queries & mutation responses):
+
+    ```graphql
+    {
+      # collection fields can be renamed to _connection to get a v4 compat response
+      restaurants_connection {
+        data {
+          id
           title
           image {
             data {
               id
-              attributes {
-                url
-              }
+              url
             }
           }
           # collection fields can be renamed to _connection to get a v4 compat response
           images_connection {
             data {
               id
-              attributes {
-                url
-              }
+              url
             }
           }
           xToOneRelation {
             data {
               id
-              attributes {
-                field
-              }
+              field
             }
           }
           # collection fields can be renamed to _connection to get a v4 compat response
           xToManyRelation_connection {
             data {
               id
-              attributes {
-                field
-              }
+              field
             }
           }
         }
-      }
-      meta {
-        pagination {
-          page
-          pageSize
+        meta {
+          pagination {
+            page
+            pageSize
+          }
         }
       }
     }
-  }
-  ```
-
-4. Remove attributes (applies to queries & mutation responses):
-
-  ```graphql
-  {
-    # collection fields can be renamed to _connection to get a v4 compat response
-    restaurants_connection {
-      data {
-        id
-        title
-        image {
-          data {
-            id
-            url
-          }
-        }
-        # collection fields can be renamed to _connection to get a v4 compat response
-        images_connection {
-          data {
-            id
-            url
-          }
-        }
-        xToOneRelation {
-          data {
-            id
-            field
-          }
-        }
-        # collection fields can be renamed to _connection to get a v4 compat response
-        xToManyRelation_connection {
-          data {
-            id
-            field
-          }
-        }
-      }
-      meta {
-        pagination {
-          page
-          pageSize
-        }
-      }
-    }
-  }
-  ```
+    ```
 
 5. Use new naming or the simpler queries:
 
-  ```graphql
-  {
-    # Rename data to nodes & meta.pagination to pageInfo
-    restaurants_connection {
-      nodes {
+    ```graphql
+    {
+      # Rename data to nodes & meta.pagination to pageInfo
+      restaurants_connection {
+        nodes {
+          id
+          title
+          # can remove data in single Images 
+          image {
+            id
+            url
+          }
+          # collection fields can be renamed to _connection to get a v4 compat response
+          images_connection {
+            nodes {
+              id
+              url
+            }
+          }
+          # can remove data in xToOne 
+          xToOneRelation {
+            id
+            field
+          }
+          # collection fields can be renamed to _connection to get a v4 compat response
+          xToManyRelation_connection {
+            nodes {
+              id
+              field
+            }
+          }
+        }
+        pageInfo {
+          page
+          pageSize
+        }
+      }
+    }
+    ```
+
+    ```graphql
+    {
+      # remove _connection & data if you don't need pagination att all
+      restaurants {
         id
         title
-        # can remove data in single Images 
         image {
           id
           url
         }
-        # collection fields can be renamed to _connection to get a v4 compat response
-        images_connection {
-          nodes {
-            id
-            url
-          }
+        # remove _connection & data
+        images {
+          id
+          url	
         }
-        # can remove data in xToOne 
         xToOneRelation {
           id
           field
         }
-        # collection fields can be renamed to _connection to get a v4 compat response
-        xToManyRelation_connection {
-          nodes {
-            id
-            field
-          }
+        # remove _connection & data
+        xToManyRelation {
+          id
+          field
         }
       }
-      pageInfo {
-        page
-        pageSize
-      }
     }
-  }
-  ```
-
-  ```graphql
-  {
-    # remove _connection & data if you don't need pagination att all
-    restaurants {
-      id
-      title
-      image {
-        id
-        url
-      }
-      # remove _connection & data
-      images {
-        id
-        url	
-      }
-      xToOneRelation {
-        id
-        field
-      }
-      # remove _connection & data
-      xToManyRelation {
-        id
-        field
-      }
-    }
-  }
-  ```
+    ```
