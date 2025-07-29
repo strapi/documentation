@@ -689,6 +689,8 @@ The following operators are available:
 }
 ```
 
+</ExpandableContent>
+
 ```graphql title="Simple examples for membership operators (in, notIn)"
 # in - returns restaurants with category either "pizza" or "burger"
 {
@@ -704,6 +706,8 @@ The following operators are available:
   }
 }
 ```
+
+<ExpandableContent>
 
 ```graphql title="Simple examples for string matching operators (contains, notContains, containsi, notContains, startsWith, endsWith)"
 # contains - returns restaurants whose name contains "Pizzeria"
@@ -748,6 +752,8 @@ The following operators are available:
   }
 }
 ```
+
+</ExpandableContent>
 
 ```graphql title="Simple examples for null checks operators (null, notNull)"
 # null - returns restaurants where description is null
@@ -799,8 +805,6 @@ The following operators are available:
   }
 }
 ```
-
-</ExpandableContent>
 
 ```graphql title="Example with nested logical operators: use and, or, and not to find pizzerias under 20 euros"
 {
