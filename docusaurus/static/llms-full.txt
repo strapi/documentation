@@ -2058,6 +2058,8 @@ The Document Service API replaces the Entity Service API used in Strapi v4 (
 
 </ApiCall>
 
+The `findOne()` method returns the matching document if found, otherwise returns `null`.
+
 ## `findFirst()`
 
 Find the first document matching the parameters.
