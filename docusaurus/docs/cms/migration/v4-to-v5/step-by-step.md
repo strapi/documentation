@@ -9,7 +9,6 @@ tags:
 - guides
 ---
 
-import DoNotMigrateYet from '/docs/snippets/_do-not-migrate-to-v5-yet.md'
 
 # Step-by-step guide to upgrade to Strapi 5
 
