@@ -23,7 +23,7 @@ Strapi comes with a full featured Command Line Interface (CLI) which lets you sc
 Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. A fix for the `npm` package manager is anticipated by March 2023. In the meantime, consider using the `yarn` package manager.
 :::
 
-Yo bro, check this out, this is super easy to use! 🤘
+Yo bro, check this out🤘
 
 :::note
 It is recommended to install Strapi locally only, which requires prefixing all of the following `strapi` commands with the package manager used for the project setup (e.g `npm run strapi help` or `yarn strapi help`) or a dedicated node package executor (e.g. `npx strapi help`).
