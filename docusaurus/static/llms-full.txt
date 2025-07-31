@@ -1171,13 +1171,12 @@ The  *Backups* tab informs you of the status and date of the latest backup of yo
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects using the Free or Essential plans. You will need to upgrade to either the Pro or Scale plan to have your project automatically backed up and to have access to manual backups.
+- The backup feature is not available for Strapi Cloud projects on the Free or Essential plans. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
 
-<!-- - Only project owners can restore a backup. Maintainers have access to the  *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
+- Backups include only the database of your default Production environment. Assets uploaded to your project and databases from any secondary environments are not included.
 
-- The manual backup option should become available shortly after project's first succesful deployment.
+- The manual backup option becomes available shortly after the project’s first successful deployment.
 
-- The backup feature is only available for the default, production environment. Other additional environment's settings will not show the  *Backups* tab.
 :::
 
 :::tip
@@ -1188,7 +1187,7 @@ For projects created before the release of the Backup feature in October 2023, t
 
 To create a manual backup, in the  *Backups* section, click on the **Create backup** button.
 
-The manual backup should start immediately, and restoration or creation of other backups will be disabled until backup is complete.
+The manual backup should start immediately, and restoration or creation of other backups will be disabled until the backup is complete.
 
 :::caution
 When creating a new manual backup, any existing manual backup will be deleted. You can only have one manual backup at a time.
@@ -1202,6 +1201,18 @@ If you need to restore a backup of your project:
 2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
 3. Click on the **Restore** button of the dialog. Once the restoration is finished, your project will be back to the state it was at the time of the chosen backup. You will be able to see the restoration timestamp and the backup restored in the  *Backups* tab.
 4. The timestamp of the last completed restoration will be displayed to help you track when the project was last restored.
+
+#### Downloading a backup
+
+If you need to download a backup of your project:
+
+1. In the  *Backups* section, click on the **Download backup** button.
+2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
+3. Click on the **Download** button of the dialog to download the chosen backup's archive file in `.sql` format.
+
+:::note
+The backup file will include only the database of your default Production environment. It will not include assets or any other environment databases.
+:::
 
 ### Domains
 
