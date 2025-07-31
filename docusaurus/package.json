@@ -1,6 +1,6 @@
 {
   "name": "strapi-docs",
-  "version": "6.6.4",
+  "version": "6.6.5",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
