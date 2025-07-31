@@ -967,7 +967,7 @@ Updating the git repository could result in the loss of the project and its data
 5. Click on the **Update repository** button at the bottom of the *Update repository* interface.
 6. In the *Update repository* dialog, confirm your changes by clicking on the **Confirm** button.
 
-#### Transferring project ownership
+#### Transferring project ownership 
 
 The ownership of the Strapi Cloud project can be transferred to another user, as long as they're a maintainer of the project. It can either be at the initiative of the current project owner, or can be requested by a project maintainer. Once the ownership is transferred, it is permanent until the new owner decides to transfer the ownership again to another maintainer.
 
@@ -977,7 +977,7 @@ For the ownership of a project to be transferred, the following requirements mus
 - The maintainer must have filled their billing information.
 - No already existing ownership transfer must be pending for the project.
 
-Note that ownership transfers might fail when done the same day of subscription renewal (i.e. 1st of every month). If the transfer fails, but all prerequisites are met, wait a few hours and try again.
+Note that ownership transfers might fail when done the same day of subscription renewal (i.e. 1st of every month). If the transfer fails that day, but all prerequisites are met, you should wait a few hours and try again.
 :::
 
 1. In the *Danger zone* section of the  *General* tab, click on the **Transfer ownership** button.
