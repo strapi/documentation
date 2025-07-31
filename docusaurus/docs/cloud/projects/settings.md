@@ -108,9 +108,11 @@ The ownership of the Strapi Cloud project can be transferred to another user, as
 
 :::prerequisites
 For the ownership of a project to be transferred, the following requirements must be met:
-- The project must be on a paid plan.
+- The project must be on a paid plan, with no currently expired card and/or unpaid bills.
 - The maintainer must have filled their billing information.
 - No already existing ownership transfer must be pending for the project.
+
+Note that ownership transfers might fail when done the same day of subscription renewal (i.e. 1st of every month). If the transfer fails that day, but all prerequisites are met, you should wait a few hours and try again.
 :::
 
 1. In the *Danger zone* section of the <Icon name="faders" /> *General* tab, click on the **Transfer ownership** button.
