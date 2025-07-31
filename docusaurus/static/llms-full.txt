@@ -928,7 +928,9 @@ The  *General* tab for the project-level settings enables you to check and updat
 - *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
 
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
-- *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
+- *Danger zone*, with:
+  - *Transfer ownership*: for the project owner to transfer the ownership of the Cloud project to an already existing maintainer (see [Transferring project ownership](#transferring-project-ownership)).
+  - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
 #### Renaming project
 
@@ -980,11 +982,40 @@ Updating the git repository could result in the loss of the project and its data
 5. Click on the **Update repository** button at the bottom of the *Update repository* interface.
 6. In the *Update repository* dialog, confirm your changes by clicking on the **Confirm** button.
 
+#### Transferring project ownership 
+
+The ownership of the Strapi Cloud project can be transferred to another user, as long as they're a maintainer of the project. It can either be at the initiative of the current project owner, or can be requested by a project maintainer. Once the ownership is transferred, it is permanent until the new owner decides to transfer the ownership again to another maintainer.
+
+:::prerequisites
+For the ownership of a project to be transferred, the following requirements must be met:
+- The project must be on a paid plan, with no currently expired card and/or unpaid bills.
+- The maintainer must have filled their billing information.
+- No already existing ownership transfer must be pending for the project.
+
+Note that ownership transfers might fail when done the same day of subscription renewal (i.e. 1st of every month). If the transfer fails that day, but all prerequisites are met, you should wait a few hours and try again.
+:::
+
+1. In the *Danger zone* section of the  *General* tab, click on the **Transfer ownership** button.
+2. In the dialog:
+   - If you are the project owner: choose the maintainer who should be transferred the ownership by clicking on **...** > **Transfer ownership** associated with their name.
+   - If you are a maintainer: find yourself in the list and click on **...** > **Transfer ownership** associated with your name.
+3. Confirm the transfer/request in the new dialog by clicking on the **Transfer ownership** button.
+
+An email will be sent to both users. The person who needs to transfer the ownership or inherit it will have to click on the **Confirm transfer** button in the email. Once done, the previous owner will receive a confirmation email that the transfer has successfully been done.
+
+:::tip
+As long as the ownership transfer or request hasn't been confirmed, there is the option to cancel in the same dialog that the maintainer was chosen.
+:::
+
+:::note
+Once the ownership transfer is done, the project will be disconnected from Strapi Cloud. As new owner, make sure to go to the  *General* tab of project settings to reconnect the project.
+:::
+
 #### Deleting Strapi Cloud project
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be canceled.
 
-1. In the *Delete project* section of the  *General* tab, click on the **Delete project** button.
+1. In the *Danger zone* section of the  *General* tab, click on the **Delete project** button.
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 

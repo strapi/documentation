@@ -625,7 +625,7 @@ const sidebars = {
           type: "doc",
           id: "cloud/getting-started/usage-billing",
           customProps: {
-            updated: true,
+            updated: false,
           },
         },
         "cloud/getting-started/caching",
@@ -649,7 +649,7 @@ const sidebars = {
           label: "Project settings",
           id: "cloud/projects/settings",
           customProps: {
-            updated: false,
+            updated: true,
           },
         },
         "cloud/projects/collaboration",
