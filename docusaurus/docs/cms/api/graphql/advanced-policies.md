@@ -1,5 +1,5 @@
 ---
-title: Advanced policies
+title: Advanced policies for GraphQL
 displayed_sidebar: cmsSidebar
 tags:
   - GraphQL API

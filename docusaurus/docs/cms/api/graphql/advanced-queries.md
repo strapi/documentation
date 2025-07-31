@@ -1,5 +1,5 @@
 ---
-title: Advanced queries
+title: Advanced queries for GraphQL
 displayed_sidebar: cmsSidebar
 tags:
   - GraphQL API
