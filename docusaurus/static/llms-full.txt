@@ -403,7 +403,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
-* Project(s) source code hosted on 
+* Project source code hosted on 
 
     </Tabs>
 
@@ -414,12 +414,12 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Setting name | Instructions                                                                                            |
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Display name | Write the name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`). |
-    | Git branch   | Choose from the drop-down the default branch to use for this deployment. This uses the default branch of the repository. |
-    | Deploy on push | Check the box to automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes. |
+    | Git branch   | Choose from the drop-down the branch you want to deploy. |
+    | Deploy on push | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
     | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West), Asia (Southeast) or Oceania. |
 
     :::note
-    The Git branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project's settings, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
@@ -428,7 +428,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Base directory | Write the name of the directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo. |
     | Environment variables | Click on **Add variable** to add environment variables used to configure your Strapi app (see [Environment variables](/cms/configurations/environment/) for more information). You can also add environment variables to your Strapi application by adding a `.env` file to the root of your Strapi app directory. The environment variables defined in the `.env` file will be used by Strapi Cloud. |
-    | Node version | Choose a Node version from the drop-down. Default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
+    | Node version | Choose a Node version from the drop-down. The default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
 
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default one used by Strapi Cloud (see [database configuration](/cms/configurations/database#environment-variables-in-database-configurations) for more details). If you would like to revert and use Strapi's default database again, you have to remove your `DATABASE_` environment variables (no automatic migration implied).
@@ -443,22 +443,30 @@ If you chose the free plan, this billing step will be skipped as you will not be
 
 To upgrade your project to a paid plan, you will need to fill in your billing information in the **Billing** section of your Profile.
 
- Skip to step 5 of the section below to finalise the creation of your project.
+ Skip to step 5 of the section below to finalize the creation of your project.
 :::
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
 
-2. Review your project: make sure the plan and setup information are correct. If needed, click the  **Edit** button to be redirected to the first interface of the project creation and fix any mistake.
+2. Review your project: make sure the plan and setup information are correct. If needed, click the  **Edit** button to navigate back to the first step of the project creation and fix any mistake.
 
 3. In the Payment section, fill in at least all mandatory elements for *Payment method* and *Billing information*.
 
 4. Check your invoice which informs you of what should be paid now and the following month. Optionally, you can enter a *Discount code* if you have one.
 
-5. Click on the **Create project** button to finalize the deployment of your new Strapi Cloud project. An initial deployment will automatically be triggered and you will be redirected to the *Projects* page.
+5. Click on the **Create project** button to finalize the creation of your new Strapi Cloud project.
 
-:::caution
-Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
+## Deploying your project
+
+After confirming the project creation, you will be redirected to your *Project dashboard* where you will be able to follow its creation and first deployment. 
+
+While your project is deploying, you can already start configuring some of your [project settings](/cloud/projects/settings).
+
+:::note
+If an error occurs during the project creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
+
+Once you project is successfully deployed, the creation tracker will be replaced by your deployments list and you will be able to visit your Cloud hosted project. Don't forget to create the first Admin user before sharing your Strapi project.
 
 ##  What to do next?
 
@@ -678,6 +686,13 @@ If you don't pay the invoice, the subscription of your project will automaticall
 #### Project suspension for other reasons
 
 If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact [Strapi Support](mailto:support@strapi.io).
+
+### Subscription cancellation
+
+If you want to cancel your Strapi Cloud subscription, you have 2 options:
+
+- either change your project's subscription to the free plan (see [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) documentation),
+- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-strapi-cloud-project) documentation).
 
 
 
@@ -1028,12 +1043,12 @@ To create a new environment:
     | Git branch       | (mandatory) Select the right branch for your new environment.            |
     | Base directory   | Write the name of the base directory of your new environment.            |
     | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
-    | Auto-deploy      | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
+    | Deploy on push      | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
 
-4. Click on the **Add environment** button to create your project's new environment. A new deployment will automatically be triggered.
+4. Click on the **Add environment** button to create your project's new environment. You will then be redirected to your *Project dashboard* where you will be able to follow your new environment's creation and first deployment.
 
-:::caution
-If the creation of a new environment fails but you are still charged, try creating the environment again. This time, the environment creation should be successful and you will not be charged a second time. This behaviour is an known issue that should be fixed in the upcoming weeks.
+:::note
+If an error occurs during the environment creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
 
 ### Billing & Usage
@@ -1747,6 +1762,7 @@ Source: https://docs.strapi.io/cms/api/client
 The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. This guide walks you through setting up the Strapi Client, configuring authentication, and using its key features effectively.
 
 ## Getting Started
+
 :::prerequisites
 - A Strapi project has been created and is running. If you haven't set one up yet, follow the [Quick Start Guide](/cms/quick-start) to create one.
 - You know the URL of the Content API of your Strapi instance (e.g., `http://localhost:1337/api`).
@@ -1762,26 +1778,15 @@ To use the Strapi Client in your project, install it as a dependency using your 
 
 To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
-```js
+</Tabs>
 
-const client = strapi({ baseURL: 'http://localhost:1337/api' });
-```
-
-If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag:
-
-```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
-<script src="https://cdn.jsdelivr.net/npm/@strapi/client"></script>
-
-<script>
-  const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
-</script>
-```
+The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
 ### Authentication
 
 The Strapi Client supports different authentication strategies to access protected resources in your Strapi back end.
 
-If your Strapi instance uses API tokens, configure the Strapi Client as follows:
+If your Strapi instance uses [API tokens](/cms/features/api-tokens), configure the Strapi Client as follows:
 
 ```js
 const client = strapi({
@@ -1791,6 +1796,7 @@ const client = strapi({
 ```
 
 This allows your requests to include the necessary authentication credentials automatically.
+If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError`.
 
 ## API Reference
 
@@ -1802,6 +1808,7 @@ The Strapi Client provides the following key properties and methods for interact
 | `fetch()`    | A utility method for making generic API requests similar to the native fetch API. |
 | `collection()`  | Manages collection-type resources (e.g., blog posts, products). |
 | `single()`  | Manages single-type resources (e.g., homepage settings, global configurations). |
+| `files()`  | Enables upload, retrieve and management of files directly to/from the Strapi Media Library. |
 
 ### General purpose fetch
 
@@ -1824,27 +1831,8 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 | `delete(documentID, queryParams?)`  | Update an existing document. |
 
 **Usage examples:**
-```js
-const articles = client.collection('articles');
 
-// Fetch all english articles sorted by title
-const allArticles = await articles.find({
-  locale: 'en',
-  sort: 'title',
-});
-
-// Fetch a single article
-const singleArticle = await articles.findOne('article-document-id');
-
-// Create a new article
-const newArticle = await articles.create({ title: 'New Article', content: '...' });
-
-// Update an existing article
-const updatedArticle = await articles.update('article-document-id', { title: 'Updated Title' });
-
-// Delete an article
-await articles.delete('article-id');
-```
+</Tabs>
 
 ### Working with single types
 
@@ -1853,7 +1841,7 @@ Single types in Strapi represent unique content entries that exist only once (e.
 | ----------| -------------------------------------------------------------------------------------------- |
 | `find(queryParams?)`  | Fetch the document.        |
 | `update(documentID, data, queryParams?)`  | Update the document. |
-| `delete(queryParams?) `  | Remove the document. |
+| `delete(queryParams?)`  | Remove the document. |
 
 **Usage examples:**
 ```js
@@ -1875,20 +1863,25 @@ const updatedHomepage = await homepage.update(
 await homepage.delete();
 ```
 
-### Working with files 
+### Working with files
 
 The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
 
-The following methods are available for working with files:
+The following methods are available for working with files. Click on the method name in the  table to jump to the corresponding section with more details and examples:
 
 | Method | Description |
 |--------|-------------|
-| `find(params?)` | Retrieves a list of file metadata based on optional query parameters |
-| `findOne(fileId)` | Retrieves the metadata for a single file by its ID |
-| `update(fileId, fileInfo)` | Updates metadata for an existing file |
-| `delete(fileId)` | Deletes a file by its ID |
+| [`find(params?)`](#find) | Retrieves a list of file metadata based on optional query parameters |
+| [`findOne(fileId)`](#findone) | Retrieves the metadata for a single file by its ID |
+| [`update(fileId, fileInfo)`](#update) | Updates metadata for an existing file |
+| [`upload(file, options)`](#upload) | Uploads a file (Blob or Buffer) with an optional `options` object for metadata |
+| [`delete(fileId)`](#delete) | Deletes a file by its ID |
 
-**Usage examples:**
+#### `find`
+
+The `strapi.client.files.find()` method retrieves a list of file metadata based on optional query parameters.
+
+The method can be used as follows:
 
 ```js
 // Initialize the client
@@ -1909,18 +1902,89 @@ const imageFiles = await client.files.find({
   },
   sort: ['name:asc'], // Sort by name in ascending order
 });
+```
+
+#### `findOne` {#findone}
+
+The `strapi.client.files.findOne()` method retrieves the metadata for a single file by its id.
+
+The method can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
 
 // Find file metadata by ID
 const file = await client.files.findOne(1);
-console.log(file.name); // The file name
-console.log(file.url); // The file URL
+console.log(file.name);
+console.log(file.url); 
 console.log(file.mime); // The file MIME type
+```
+
+#### `update`
+
+The `strapi.client.files.update()` method updates metadata for an existing file, accepting 2 parameters, the `fileId`, and an object containing options such as the name, alternative text, and caption for the media.
+
+The methods can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
 
 // Update file metadata
 const updatedFile = await client.files.update(1, {
   name: 'New file name',
   alternativeText: 'Descriptive alt text for accessibility',
   caption: 'A caption for the file',
+});
+```
+
+#### `upload` 
+
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+##### Response Structure
+
+The `strapi.client.files.upload()` method returns an array of file objects, each with fields such as:
+
+```json
+{
+  "id": 1,
+  "name": "image.png",
+  "alternativeText": "Uploaded from Node.js Buffer",
+  "caption": "Example upload",
+  "mime": "image/png",
+  "url": "/uploads/image.png",
+  "size": 12345,
+  "createdAt": "2025-07-23T12:34:56.789Z",
+  "updatedAt": "2025-07-23T12:34:56.789Z"
+}
+```
+
+:::note Additional response fields
+The upload response includes additional fields beyond those shown above. See the complete FileResponse interface in the  for all available fields.
+:::
+
+#### `delete`
+
+The `strapi.client.files.delete()` method deletes a file by its ID.
+
+The method can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
 });
 
 // Delete a file by ID
@@ -1930,8 +1994,20 @@ console.log('Deleted file ID:', deletedFile.id);
 console.log('Deleted file name:', deletedFile.name);
 ```
 
+<br/>
+
+## Handling Common Errors
+
+The following errors might occur when sending queries through the Strapi Client:
+
+| Error | Description |
+|-------|-------------|
+| Permission Errors | If the authenticated user does not have permission to upload or manage files, a `FileForbiddenError` is thrown. |
+| HTTP Errors|If the server is unreachable, authentication fails, or there are network issues, an `HTTPError` is thrown. |
+| Missing Parameters|When uploading a `Buffer`, both `filename` and `mimetype` must be provided in the options object. If either is missing, an error is thrown. |
+
 :::strapi Additional information
-More details about the Strapi Strapi Client might be found in the .
+More details about the Strapi Client may be found in the .
 :::
 
 
@@ -2006,9 +2082,14 @@ Source: https://docs.strapi.io/cms/api/document-service
 
 # Document Service API
 
-The Document Service API is built on top of the **Query Engine API**  and used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** 
+The Document Service API is built on top of the **Query Engine API**  and is used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** 
+
+:::strapi Entity Service API is deprecated in Strapi 5
+The Document Service API replaces the Entity Service API used in Strapi v4 (
 
 </ApiCall>
+
+The `findOne()` method returns the matching document if found, otherwise returns `null`.
 
 ## `findFirst()`
 
@@ -3411,6 +3492,95 @@ The following example fetches the `label`, `start_date`, and `end_date` attribut
 ### Fetch dynamic zone data
 
 Dynamic zones are union types in GraphQL so you need to use 
+
+```graphql title="Simple examples for membership operators (in, notIn)"
+# in - returns restaurants with category either "pizza" or "burger"
+{
+  restaurants(filters: { category: { in: ["pizza", "burger"] } }) {
+    name
+  }
+}
+
+# notIn - returns restaurants whose category is neither "pizza" nor "burger"
+{
+  restaurants(filters: { category: { notIn: ["pizza", "burger"] } }) {
+    name
+  }
+}
+```
+
+```graphql title="Simple examples for null checks operators (null, notNull)"
+# null - returns restaurants where description is null
+{
+  restaurants(filters: { description: { null: true } }) {
+    name
+  }
+}
+
+# notNull - returns restaurants where description is not null
+{
+  restaurants(filters: { description: { notNull: true } }) {
+    name
+  }
+}
+```
+
+```graphql title="Simple examples for logical operators (and, or, not)"
+# and - both category must be "pizza" AND averagePrice must be < 20
+{
+  restaurants(filters: {
+    and: [
+      { category: { eq: "pizza" } },
+      { averagePrice: { lt: 20 } }
+    ]
+  }) {
+    name
+  }
+}
+
+# or - category is "pizza" OR category is "burger"
+{
+  restaurants(filters: {
+    or: [
+      { category: { eq: "pizza" } },
+      { category: { eq: "burger" } }
+    ]
+  }) {
+    name
+  }
+}
+
+# not - category must NOT be "pizza"
+{
+  restaurants(filters: {
+    not: { category: { eq: "pizza" } }
+  }) {
+    name
+  }
+}
+```
+
+```graphql title="Example with nested logical operators: use and, or, and not to find pizzerias under 20 euros"
+{
+  restaurants(
+    filters: {
+      and: [
+        { not: { averagePrice: { gte: 20 } } }
+        {
+          or: [
+            { name: { eq: "Pizzeria" } }
+            { name: { startsWith: "Pizzeria" } }
+          ]
+        }
+      ]
+    }
+  ) {
+    documentId
+    name
+    averagePrice
+  }
+}
+```
 
 </ApiCall>
 
@@ -5015,6 +5185,45 @@ The `options` key is used to define specific behaviors and accepts the following
 }
 ```
 
+### Plugin options
+
+`pluginOptions` is an optional object allowing plugins to store configuration for a model or a specific attribute.
+
+| Key                       | Value                         | Description                                            |
+|---------------------------|-------------------------------|--------------------------------------------------------|
+| `i18n`                    | `localized: true`             | Enables localization.                                  |
+| `content-manager`         | `visible: false`              | Hides from Content Manager in the admin panel.         |
+| `content-type-builder`    | `visible: false`              | Hides from Content-type Builder in the admin panel.    |
+
+```json title="./src/api/[api-name]/content-types/[content-type-name]/schema.json"
+
+{
+  "attributes": {
+    "name": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    }
+    // …additional attributes
+  }
+}
+
+```
+
 ## Lifecycle hooks
 
 Lifecycle hooks are functions that get triggered when Strapi queries are called. They are triggered automatically when managing content through the administration panel or when developing custom code using `queries`·
@@ -6417,12 +6626,37 @@ strapi telemetry:enable
 
 ## strapi console
 
-Start the server and eval commands in your application in real time.
+Start the server and evaluate commands in your application in real time.
 
 ```bash
 strapi console
 ```
 
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js . The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice gracefully stops the server.
+
+### Available helpers
+
+The `strapi` object exposes the following getters and methods to interact with your application:
+
+- `strapi.services` and `strapi.service(uid)` to use [services](/cms/backend-customization/services)
+- `strapi.controllers` and `strapi.controller(uid)` to call [controllers](/cms/backend-customization/controllers)
+- `strapi.contentTypes` and `strapi.contentType(uid)` to inspect [content-types](/cms/backend-customization/models)
+- `strapi.components` to list components
+- `strapi.policies` and `strapi.policy(name)` for [policies](/cms/backend-customization/policies)
+- `strapi.middlewares` and `strapi.middleware(name)` for [middlewares](/cms/backend-customization/middlewares)
+- `strapi.plugins` and `strapi.plugin(name)` for plugins
+- `strapi.hooks` and `strapi.hook(name)` for hooks
+- `strapi.apis` and `strapi.api(name)` for APIs
+- `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
+    ```js
+    await strapi.db.query('api::article.article').findMany();
+    ```
+
+Use this environment to test code and inspect your project with direct access to all Strapi APIs.
+
+:::note
+Strapi uses a Node.js feature called  to make the context available anywhere.
+:::
 ## strapi version
 
 Print the currently installed Strapi version.
@@ -8318,6 +8552,10 @@ Additionally, with Live Preview, you can:
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
 
+:::tip
+Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
+:::
+
 
 
 # Role-Based Access Control (RBAC)
@@ -8535,17 +8773,28 @@ A release page can display entries either grouped by locale, content-type, or ac
 
 **Path:**  Releases
 
-Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously. To publish a release, click the **Publish** button in the top right corner of the admin panel.
+Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously.
 
-The _Status_ column displays the status of each entry:
+To publish a release, click the **Publish** button in the top right corner of the admin panel. Before, make sure to check the status of both the release and its entries.
 
-   -  Already published: the entry is already published and publishing the release will not affect this entry 
-   -  Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
-   -  Ready to publish: the entry is ready to  be published with the release
-   -  Ready to unpublish: the entry is ready to  be unpublished with the release
-   -  Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+  - A badge at the top of the interface indicates the status of your release:
+    - `Empty`: no entry has been added to the release yet
+    - `Blocked`: content has been added to the release but at least one issue in an entry prevents the release from being published
+    - `Ready`: content has been added to the release, all checks have been passed and the release can be published
+    - `Done`: the release has been released and is now done
 
-If some of your entries have a  status, click the  and the **Edit the entry** button to fix the issues until all entries have the  status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+  - The _Status_ column displays the status of each entry:
+    -  Already published: the entry is already published and publishing the release will not affect this entry 
+    -  Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
+    -  Ready to publish: the entry is ready to  be published with the release
+    -  Ready to unpublish: the entry is ready to  be unpublished with the release
+    -  Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+
+If your release is `Blocked` because some of your entries have a  status, click the  button, then **Edit the entry** to fix the issues until all entries have the  status.
+
+:::note
+You will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+:::
 
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
@@ -10575,6 +10824,28 @@ module.exports = (plugin) => {
 };
 ```
 </details>
+
+:::note
+The `strapi-server.js|ts` file is also where you can override the image function, by replacing the Upload plugin's `generateFileName()` function so that it generates custom image names.
+
+<details>
+<summary>Example of custom file-naming logic</summary>
+
+```js title="./src/extensions/upload/strapi-server.js|ts"
+
+module.exports = (plugin) => {
+  plugin.services.upload.image.generateFileName = (file) => {
+    // Example: prefix a timestamp before the original name
+    return `${Date.now()}_${file.hash}${file.ext}`;
+  };
+
+  return plugin;
+};
+
+```
+</details>
+
+:::
 
 ### Within the register and bootstrap functions
 

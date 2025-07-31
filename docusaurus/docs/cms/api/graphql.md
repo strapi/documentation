@@ -55,9 +55,27 @@ Once installed, the GraphQL playground is accessible at the `/graphql` URL and c
 
 <br/>
 
+The GraphQL plugin exposes only one endpoint that handles all queries and mutations. The default endpoint is `/graphql` and is defined in the [plugins configuration file](/cms/plugins/graphql#code-based-configuration):
+
+```js title="/config/plugins.js|ts"
+  export default {
+    shadowCRUD: true,
+    endpoint: '/graphql', // <— single GraphQL endpoint
+    subscriptions: false,
+    maxLimit: -1,
+    apolloServer: {},
+    v4CompatibilityMode: process.env.STRAPI_GRAPHQL_V4_COMPATIBILITY_MODE ?? false,
+  };
+```
+
 :::note No GraphQL API to upload media files
 The GraphQL API does not support media upload. Use the [REST API `POST /upload` endpoint](/cms/api/rest/upload) for all file uploads and use the returned info to link to it in content types. You can still update or delete uploaded files with the `updateUploadFile` and `deleteUploadFile` mutations using media files `id` (see [mutations on media files](#mutations-on-media-files)).
 :::
+
+:::caution `documentId` only
+The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
+:::
+
 
 ## Queries
 
@@ -100,6 +118,9 @@ Documents <DocumentDefinition/> can be fetched by their `documentId`.
 ### Fetch multiple documents
 
 To fetch multiple documents <DocumentDefinition/> you can use simple, flat queries or <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> queries:
+
+Flat queries return only the requested fields for each document. Relay-style queries end with `_connection` and return a `nodes` array together with a `pageInfo` object. Use Relay-style queries when you need pagination metadata.
+
 
 <Tabs groupId="flat-relay">
 
@@ -601,19 +622,24 @@ If upload mutations return a forbidden access error, ensure proper permissions a
 
 ## Filters
 
-<!-- TODO: create examples for every filter and expand this into a section -->
 Queries can accept a `filters` parameter with the following syntax:
 
 `filters: { field: { operator: value } }`
 
-Multiple filters can be combined together, and logical operators (`and`, `or`, `not`) can also be used and accept arrays of objects.
+Multiple filters can be combined together, and logical operators (`and`, `or`, `not`) can also be used and accept arrays of objects. When multiple field conditions are combined, they are implicitly joined with `and`.
+
+:::tip
+`and`, `or` and `not` operators can be nested inside one another.
+:::
 
 The following operators are available:
 
 | Operator       | Description                        |
 | -------------- | ---------------------------------- |
 | `eq`           | Equal                              |
+| `eqi`          | Equal, case insensitive            |
 | `ne`           | Not equal                          |
+| `nei`          | Not equal, case insensitive        |
 | `lt`           | Less than                          |
 | `lte`          | Less than or equal to              |
 | `gt`           | Greater than                       |
@@ -633,16 +659,207 @@ The following operators are available:
 | `or`           | Logical `or`                       |
 | `not`          | Logical `not`                      |
 
-```graphql title="Example with advanced filters: Fetch pizzerias with an averagePrice lower than 20"
+<ExpandableContent>
+
+```graphql title="Simple examples for comparison operators (eq, ne, lt, lte, gt, gte, between)"
+# eq - returns restaurants with the exact name "Biscotte"
+{
+  restaurants(filters: { name: { eq: "Biscotte" } }) {
+    name
+  }
+}
+
+# eqi - returns restaurants whose name equals "Biscotte",
+#       comparison is case-insensitive
+{
+  restaurants(filters: { name: { eqi: "Biscotte" } }) {
+    name
+  }
+}
+
+# ne - returns restaurants whose name is not "Biscotte"
+{
+  restaurants(filters: { name: { ne: "Biscotte" } }) {
+    name
+  }
+}
+
+# nei - returns restaurants whose name is not "Biscotte",
+#       comparison is case-insensitive
+{
+  restaurants(filters: { name: { nei: "Biscotte" } }) {
+    name
+  }
+}
+
+# lt - returns restaurants with averagePrice less than 20
+{
+  restaurants(filters: { averagePrice: { lt: 20 } }) {
+    name
+  }
+}
+
+# lte - returns restaurants with averagePrice less than or equal to 20
+{
+  restaurants(filters: { averagePrice: { lte: 20 } }) {
+    name
+  }
+}
+
+# gt - returns restaurants with averagePrice greater than 20
+{
+  restaurants(filters: { averagePrice: { gt: 20 } }) {
+    name
+  }
+}
+
+# gte - returns restaurants with averagePrice greater than or equal to 20
+{
+  restaurants(filters: { averagePrice: { gte: 20 } }) {
+    name
+  }
+}
+
+# between - returns restaurants with averagePrice between 10 and 30
+{
+  restaurants(filters: { averagePrice: { between: [10, 30] } }) {
+    name
+  }
+}
+```
+
+</ExpandableContent>
+
+```graphql title="Simple examples for membership operators (in, notIn)"
+# in - returns restaurants with category either "pizza" or "burger"
+{
+  restaurants(filters: { category: { in: ["pizza", "burger"] } }) {
+    name
+  }
+}
+
+# notIn - returns restaurants whose category is neither "pizza" nor "burger"
+{
+  restaurants(filters: { category: { notIn: ["pizza", "burger"] } }) {
+    name
+  }
+}
+```
+
+<ExpandableContent>
+
+```graphql title="Simple examples for string matching operators (contains, notContains, containsi, notContains, startsWith, endsWith)"
+# contains - returns restaurants whose name contains "Pizzeria"
+{
+  restaurants(filters: { name: { contains: "Pizzeria" } }) {
+    name
+  }
+}
+
+# notContains - returns restaurants whose name does NOT contain "Pizzeria"
+{
+  restaurants(filters: { name: { notContains: "Pizzeria" } }) {
+    name
+  }
+}
+
+# containsi - returns restaurants whose name contains "pizzeria" (case‑insensitive)
+{
+  restaurants(filters: { name: { containsi: "pizzeria" } }) {
+    name
+  }
+}
+
+# notContainsi - returns restaurants whose name does NOT contain "pizzeria" (case‑insensitive)
+{
+  restaurants(filters: { name: { notContainsi: "pizzeria" } }) {
+    name
+  }
+}
+
+# startsWith - returns restaurants whose name starts with "Pizza"
+{
+  restaurants(filters: { name: { startsWith: "Pizza" } }) {
+    name
+  }
+}
+
+# endsWith - returns restaurants whose name ends with "Inc"
+{
+  restaurants(filters: { name: { endsWith: "Inc" } }) {
+    name
+  }
+}
+```
+
+</ExpandableContent>
+
+```graphql title="Simple examples for null checks operators (null, notNull)"
+# null - returns restaurants where description is null
+{
+  restaurants(filters: { description: { null: true } }) {
+    name
+  }
+}
+
+# notNull - returns restaurants where description is not null
+{
+  restaurants(filters: { description: { notNull: true } }) {
+    name
+  }
+}
+```
+
+```graphql title="Simple examples for logical operators (and, or, not)"
+# and - both category must be "pizza" AND averagePrice must be < 20
+{
+  restaurants(filters: {
+    and: [
+      { category: { eq: "pizza" } },
+      { averagePrice: { lt: 20 } }
+    ]
+  }) {
+    name
+  }
+}
+
+# or - category is "pizza" OR category is "burger"
+{
+  restaurants(filters: {
+    or: [
+      { category: { eq: "pizza" } },
+      { category: { eq: "burger" } }
+    ]
+  }) {
+    name
+  }
+}
+
+# not - category must NOT be "pizza"
+{
+  restaurants(filters: {
+    not: { category: { eq: "pizza" } }
+  }) {
+    name
+  }
+}
+```
+
+```graphql title="Example with nested logical operators: use and, or, and not to find pizzerias under 20 euros"
 {
   restaurants(
-    filters: { 
-      averagePrice: { lt: 20 },
-      or: [
-        { name: { eq: "Pizzeria" }}
-        { name: { startsWith: "Pizzeria" }}
-      ]}
-    ) {
+    filters: {
+      and: [
+        { not: { averagePrice: { gte: 20 } } }
+        {
+          or: [
+            { name: { eq: "Pizzeria" } }
+            { name: { startsWith: "Pizzeria" } }
+          ]
+        }
+      ]
+    }
+  ) {
     documentId
     name
     averagePrice

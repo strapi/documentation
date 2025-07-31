@@ -27,6 +27,50 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.6.4
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add callout about overriding image function in Plugins extension docs](https://github.com/strapi/documentation/pull/2601)
+- [Extend strapi.console documentation](https://github.com/strapi/documentation/pull/2600)
+- [Document pluginOptions in Models](https://github.com/strapi/documentation/pull/2598)
+- [Improve strapi-generate docs further](https://github.com/strapi/documentation/pull/2595)
+- [Expand strapi generate documentation](https://github.com/strapi/documentation/pull/2593)
+- [Document release statuses in Releases feature page](https://github.com/strapi/documentation/pull/2592)
+
+#### Cloud
+- [Add cancellation section in Cloud docs](https://github.com/strapi/documentation/pull/2599)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add mention about building the website in Quick Start Guide](https://github.com/strapi/documentation/pull/2590)
+
+#### Cloud
+- [Update Strapi Cloud settings screenshots](https://github.com/strapi/documentation/pull/2585)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.6.3
 
 <br />

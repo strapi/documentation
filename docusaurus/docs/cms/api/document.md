@@ -33,7 +33,7 @@ Manipulating documents with the [Document Service API](/cms/api/document-service
 
 The following diagrams represent all the possible variations of content depending on which features, such as [Internationalization (i18n)](/cms/features/internationalization) and [Draft & Publish](/cms/features/draft-and-publish), are enabled for a content-type:
 
-<Tabs>
+<Tabs className="tabs--allow-multiline">
 <TabItem value="document-only" label="Neither i18n nor Draft & Publish enabled">
 
 <MermaidWithFallback

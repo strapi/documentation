@@ -104,4 +104,8 @@ Documents are identified by their `documentId`:
 
 A codemod will partly handle the change, but might probably add `__TODO__` items to your code since it's impossible for the codemod to automatically guess the new `documentId` of your content.
 
-For additional information, please refer to the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated), the [step-by-step guide](/cms/migration/v4-to-v5/step-by-step) to upgrade to Strapi 5, and the dedicated migration guide for the [Entity Service API to Document Service API transition](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) if this applies to your custom code.
+For additional information, please refer to the following resources:
+
+- related [breaking change entry for Entity Service API deprecation](/cms/migration/v4-to-v5/breaking-changes/entity-service-deprecated),
+- [step-by-step guide](/cms/migration/v4-to-v5/step-by-step) to upgrade to Strapi 5,
+- and dedicated migration guide for the [Entity Service API to Document Service API transition](/cms/migration/v4-to-v5/additional-resources/from-entity-service-to-document-service) if your custom code is affected by these changes.

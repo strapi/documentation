@@ -135,7 +135,7 @@ jobs:
                   'Content-Type': 'application/json',
                   'User-Agent': 'Strapi-Docs-GitHub-Bot/1.0'
                 },
-                timeout: 45000 // 45 second timeout
+                timeout: 120000 // 2-minute timeout
               });
               
               console.log('Kapa API response received');
