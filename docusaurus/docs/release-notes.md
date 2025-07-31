@@ -27,6 +27,57 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.6.5
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Cloud
+- [Async project creation on Strapi Cloud](https://github.com/strapi/documentation/pull/2581)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Improve GraphQL queries explanations (Flat vs. Relay-style)](https://github.com/strapi/documentation/pull/2621)
+- [Explain there's only one GraphQL endpoint and how to customize its URL](https://github.com/strapi/documentation/pull/2617)
+- [GraphQL & REST API: more information on operators & more examples](https://github.com/strapi/documentation/pull/2615)
+- [Update Preview feature docs to mention Desktop/Mobile switch](https://github.com/strapi/documentation/pull/2607)
+- [Better explain the move to `documentId`](https://github.com/strapi/documentation/pull/2604)
+- [Expand and improve Client docs](https://github.com/strapi/documentation/pull/2602)
+- [Mention that the Document Service API `findOne` returns `null` if no document found](https://github.com/strapi/documentation/pull/2614)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Fix MermaidWithFallback diagram display](https://github.com/strapi/documentation/pull/2609)
+- [Fix tabs display with long labels](https://github.com/strapi/documentation/pull/2605)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/hanpaine" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/151527179?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="hanpaine"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.6.4
 
 <br />
