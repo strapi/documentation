@@ -76,7 +76,6 @@ The GraphQL API does not support media upload. Use the [REST API `POST /upload` 
 The GraphQL API exposes documents using only the `documentId` field. The previous numeric `id` is no longer available here, although it is still returned by the REST API for backward compatibility (see [breaking change](/cms/migration/v4-to-v5/breaking-changes/use-document-id) for details).
 :::
 
-
 ## Queries
 
 Queries in GraphQL are used to fetch data without modifying it.
@@ -1111,3 +1110,12 @@ mutation DeleteRestaurant($documentId: ID!, $locale: I18NLocaleCode) {
   }
 }
 ```
+
+## Advanced use cases
+
+Click on the following cards for short guides on more advanced use cases leveraging the GraphQL API and Strapi features: 
+
+<CustomDocCardsWrapper>
+  <CustomDocCard emoji="🖼️" title="Advanced queries" description="View examples of multi-level queries and custom resolver chains for the GraphQL API." link="/cms/api/graphql/advanced-queries" />
+  <CustomDocCard emoji="🖼️" title="Advanced policies" description="View examples of advanced policies such as conditional visibility and group membership for the GraphQL API." link="/cms/api/graphql/advanced-policies" />
+</CustomDocCardsWrapper>

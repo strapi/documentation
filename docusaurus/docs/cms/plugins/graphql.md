@@ -673,6 +673,10 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 * [policies with the `policies`](#policies) key
 * and [middlewares with the `middlewares`](#middlewares) key
 
+:::tip
+The [advanced queries](/cms/api/graphql/advanced-queries) guide might contain additional information suitable for your use case, including multi-level queries and custom resolvers examples.
+:::
+
 ###### Authorization configuration
 
 By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/cms/features/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
@@ -876,6 +880,10 @@ export default {
 </Tabs>
 
 </details>
+
+:::tip
+The [advanced policies](/cms/api/graphql/advanced-policies) guide might contain additional information suitable for your use case.
+:::
 
 ###### Middlewares
 
