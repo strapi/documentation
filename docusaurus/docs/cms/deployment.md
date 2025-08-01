@@ -71,7 +71,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
+Then you can create a `.env` file or directly set environment variables in your chosen deployment platform. See the [environment configuration documentation](/cms/configurations/environment#sample-env-file) for a sample `.env` file:
 
 ```
 HOST=10.0.0.1
