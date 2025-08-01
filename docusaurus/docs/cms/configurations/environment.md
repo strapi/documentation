@@ -48,7 +48,7 @@ Strapi provides the following environment variables:
 Prefixing an environment variable name with `STRAPI_ADMIN_` exposes the variable to the admin front end (e.g., `STRAPI_ADMIN_MY_PLUGIN_VARIABLE` is accessible through `process.env.STRAPI_ADMIN_MY_PLUGIN_VARIABLE`).
 :::
 
-### Sample `.env` file
+### Example `.env` file
 
 <SampleEnv />
 
