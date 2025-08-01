@@ -101,8 +101,17 @@ When a document has both a draft and a published version available, the publishe
   }}
 />
 
+
 :::tip
 To schedule publication (i.e. convert a draft to a published entry at a given date and time) you can include it in a release and schedule the publication of that release. Please refer to the [Releases feature](/cms/features/releases) documentation for more information.
+:::
+
+### Recording the first publication date <FeatureFlagBadge feature="experimental_firstPublishedAt" /> {#recording-the-first-publication-date}
+
+When this future flag is enabled, Strapi automatically adds a `firstPublishedAt` attribute to all content-types that use Draft & Publish. The attribute saves the date and time when an entry is first published and never changes even if the entry is unpublished and published again.
+
+:::caution
+If the feature flag is disabled later, the `firstPublishedAt` attribute and its stored values are removed.
 :::
 
 ### Unpublishing content
