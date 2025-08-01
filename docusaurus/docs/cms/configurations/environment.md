@@ -14,8 +14,6 @@ import SampleEnv from '/docs/snippets/sample-env.md'
 
 Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values available in your code.
 
-<SampleEnv />
-
 :::tip
 An `env()` utility can be used to [retrieve the value of environment variables](/cms/configurations/guides/access-cast-environment-variables#accessing-environment-variables) and [cast variables to different types](/cms/configurations/guides/access-cast-environment-variables).
 :::
@@ -49,11 +47,6 @@ Strapi provides the following environment variables:
 :::tip
 Prefixing an environment variable name with `STRAPI_ADMIN_` exposes the variable to the admin front end (e.g., `STRAPI_ADMIN_MY_PLUGIN_VARIABLE` is accessible through `process.env.STRAPI_ADMIN_MY_PLUGIN_VARIABLE`).
 :::
-
-
-### Sample `.env` file
-
-The Strapi CLI generates a `.env` file when creating a new project. It contains automatically-generated security keys and database settings:
 
 <SampleEnv />
 

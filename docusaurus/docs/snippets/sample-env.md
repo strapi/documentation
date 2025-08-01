@@ -1,7 +1,9 @@
-A `.env.example` file is generated when creating a new Strapi project.
-It typically includes variables similar to the following:
+The Strapi CLI generates an `.env` and an `.env.example` file when creating a new project. The files contain automatically-generated security keys and database settings similar to the following:
 
-```env title=".env.sample"
+<Tabs>
+<TabItem value="env-example" label=".env.example">
+
+```env title=".env.example"
 HOST=0.0.0.0
 PORT=1337
 APP_KEYS="toBeModified1,toBeModified2"
@@ -12,7 +14,10 @@ JWT_SECRET=tobemodified
 ENCRYPTION_KEY=tobemodified
 ```
 
-Depending on the options you chose when creating Strapi, the `.env` file might contain more values, such as in the following:
+</TabItem>
+<TabItem value="env" label=".env">
+
+The variables might differ depending on options selected on project creation.
 
 ```env title=".env"
 # Server
@@ -35,3 +40,7 @@ DATABASE_USERNAME=
 DATABASE_PASSWORD=
 DATABASE_SSL=false
 DATABASE_FILENAME=.tmp/data.db
+```
+
+</TabItem>
+</Tabs>
