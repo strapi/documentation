@@ -71,7 +71,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-Then you can create a `.env` file or directly set environment variables in your chosen deployment platform:
+Strapi generates a `.env` file with default values when you create a new project. You can edit this file or set variables in your chosen deployment platform (see [example `.env` file](/cms/configurations/environment#example-env-file)):
 
 ```
 HOST=10.0.0.1
