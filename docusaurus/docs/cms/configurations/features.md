@@ -38,7 +38,7 @@ To enable a future flag:
   <TabItem value="js" label="JavaScript">
 
   ```ts title="/config/features.ts"
-  module.export = ({ env }) => ({
+  module.exports = ({ env }) => ({
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
     },
