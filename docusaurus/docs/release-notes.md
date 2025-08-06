@@ -19,7 +19,7 @@ Since Strapi Docs version 5.0.0, the **docs' version number is independent from 
 Strapi Docs now follow the **<ExternalLink to="https://semver.org/" text="semantic versioning"/>** philosophy, but adapted to docs:
 
 - **Major version** (6.0.0, 7.0.0…): A **significant rewrite** of the docs (content or framework). This may impact the user experience, redesign the site, or break old links (redirections are handled, but broken links can be <ExternalLink to="https://github.com/strapi/documentation/issues/new/choose" text="reported"/>).
-- **Minor version** (5.1.0, 5.2.0…): **New Strapi features** or improvements to the docs (e.g., new components or tools).
+- **Minor version** (5.1.0, 5.2.0…): **New Strapi features** or improvements to the docs framework (e.g., new components or tools).
 - **Patch version** (5.1.1, 5.1.2…): **Content updates**, including improvement or extension of existing pages, code examples fixes, and typos.
 
 New versions (minor or patch) are generally released weekly, on Wednesdays.
