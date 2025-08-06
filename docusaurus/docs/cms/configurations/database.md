@@ -212,6 +212,10 @@ module.exports = ({ env }) => ({
 });
 ```
 
+:::tip
+Strapi’s default SQLite database lives at `.tmp/data.db` at the root of the project. If you want to customise the path to store the database elsewhere, set the `DATABASE_FILENAME` environment variable.
+:::
+
 </TabItem>
 
 <TabItem value="typescript" label="TypeScript">
