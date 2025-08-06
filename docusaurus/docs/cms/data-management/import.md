@@ -3,6 +3,8 @@ title: Data import
 description: Import data using the Strapi CLI
 displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/cms/data-management/import.html
+pagination_prev: cms/features/data-management
+pagination_next: cms/data-management/export
 tags:
 - data management system
 - data import
@@ -40,7 +42,7 @@ The following documentation details the available options to customize your data
 
 ## Understand the import archive
 
-`strapi import` expects an archive with the same flat structure produced by [`strapi export`](/cms/data-management/export):
+`strapi import` expects an archive with the same flat structure produced by [the `strapi export` command](/cms/data-management/export#understand-the-exported-archive):
 
 - `configuration/`: project configuration files
 - `entities/`: entity records
@@ -54,7 +56,7 @@ To prepare an archive for manual review or modification:
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn strapi export --no-encrypt --no-compress -f my-export
@@ -63,7 +65,7 @@ tar -xf my-export.tar
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
 
 ```bash
 npm run strapi export -- --no-encrypt --no-compress -f my-export

@@ -3,6 +3,8 @@ title: Data export
 description: Export data using the Strapi CLI
 displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/cms/data-management/export.html
+pagination_prev: cms/data-management/import
+pagination_next: cms/data-management/transfer
 tags:
 - configure data encryption
 - data management system
@@ -41,14 +43,14 @@ The exported `.tar` archive contains a flat structure of numbered <ExternalLink 
 
 ```text
 export_202401011230.tar
-├── metadata.json # metadata about the export
-├── configuration/ # project configuration files
+├── metadata.json
+├── configuration/
 │   └── configuration_00001.jsonl
-├── entities/ # entity records
+├── entities/
 │   └── entities_00001.jsonl
-├── links/ # relations between entities
+├── links/
 │   └── links_00001.jsonl
-└── schemas/ # schema definitions
+└── schemas/
     └── schemas_00001.jsonl
 ```
 
@@ -56,7 +58,7 @@ Each folder (except for `metadata.json`) contains one or more `.jsonl` files nam
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn strapi export --no-encrypt --no-compress -f my-export
@@ -64,7 +66,7 @@ yarn strapi export --no-encrypt --no-compress -f my-export
 
 </TabItem>
 
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
 
 ```bash
 npm run strapi export -- --no-encrypt --no-compress -f my-export
