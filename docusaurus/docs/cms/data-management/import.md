@@ -32,9 +32,47 @@ The following documentation details the available options to customize your data
 
 - `strapi import` deletes all existing data, including the database and uploads directory, before importing the backup file.
 - The source and target schemas must match to successfully use `strapi import`, meaning all content types must be identical.
-- Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.  
+- Restored data does not include the `Admin users` table, which means that `createdBy` and `updatedBy` are empty in a restored instance.
 
 :::
+
+## Understand the import archive
+
+`strapi import` expects an archive with the same flat structure produced by [`strapi export`](/cms/data-management/export):
+
+- `configuration/`: project configuration files
+- `entities/`: entity records
+- `links/`: relations between entities
+- `schemas/`: schema definitions
+- `metadata.json`: metadata about the export
+
+Each folder contains one or more `.jsonl` files where each line represents a single record. The format allows you to edit or transform data before re‑importing it.
+
+To prepare an archive for manual review or modification:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi export --no-encrypt --no-compress -f my-export
+tar -xf my-export.tar
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi export -- --no-encrypt --no-compress -f my-export
+tar -xf my-export.tar
+```
+
+</TabItem>
+
+</Tabs>
+
+After adjusting the `.jsonl` files, re‑create the archive (`tar -cf my-export.tar configuration entities links schemas metadata.json`) and import it with `strapi import -f my-export.tar`. Encryption and compression are detected automatically based on the file extension.
 
 ## Specify the import file
 
