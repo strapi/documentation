@@ -52,6 +52,21 @@ The `./config/server.js` file can include the following parameters:
 | `logger.startup.enabled`            | Toggle the the startup message in the terminal                                                                                                                                                                                                                                                                                                                              | boolean                                                                                           | `true`              |
 | `logger.updates.enabled`            | Toggle the notification message about updating strapi in the terminal                                                                                                                                                                                                                                                                                                       | boolean                                                                                           | `true`              |
 
+:::note
+There is no Strapi-specific keep alive configuration option, because Strapi uses Node's default one for incoming HTTP requests, keeping connections alive by default. 
+
+For outgoing HTTP calls, you can pass a keep-alive agent to your HTTP client.
+Example with [`agentkeepalive`](https://github.com/node-modules/agentkeepalive) and Axios:
+
+```js
+const { HttpsAgent } = require('agentkeepalive');
+const axios = require('axios');
+
+const agent = new HttpsAgent();
+axios.get('https://example.com', { httpsAgent: agent });
+```
+:::
+
 ## Configurations
 
 The `./config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
