@@ -26,6 +26,8 @@ The `strapi import` command is part of the [Data Management feature](/cms/featur
 - schemas,
 - the `metadata.json` file.
 
+The archive follows the same structure as the one produced by [`strapi export`](/cms/data-management/export): a `.tar` containing `configuration`, `entities`, `links`, and `schemas` folders filled with numbered <ExternalLink to="https://jsonlines.org/" text="JSON lines" /> files. Compression (`.gz`) and encryption (`.enc`) are detected from the file extension, so a plain `.tar` can be imported as well.
+
 The following documentation details the available options to customize your data import. The import command and all of the available options are run using the [Strapi CLI](/cms/cli#strapi-import).
 
 :::warning
@@ -94,6 +96,28 @@ yarn strapi import -f /path/to/my/file/export_20221213105643.tar.gz.enc
 
 ```bash
 npm run strapi import -- -f /path/to/my/file/export_20221213105643.tar.gz.enc
+```
+
+</TabItem>
+
+</Tabs>
+
+### Example: Import a plain `.tar` archive
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="yarn">
+
+```bash
+yarn strapi import -f /path/to/my/file/backup.tar
+```
+
+</TabItem>
+
+<TabItem value="npm" label="npm">
+
+```bash
+npm run strapi import -- -f /path/to/my/file/backup.tar
 ```
 
 </TabItem>
