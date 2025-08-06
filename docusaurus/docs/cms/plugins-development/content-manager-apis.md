@@ -26,20 +26,28 @@ All the Content Manager APIs share the same API shape and must use components.
 
 ### API shape
 
-All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways:
+All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways.
+
+When using TypeScript, the `apis` property returned by `app.getPlugin()` is typed as `unknown`. Cast it to `ContentManagerPlugin['config']['apis']` before calling the APIs:
 
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
-  
-  ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])
+
+  ```tsx
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  const apis =
+    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+  apis.addEditViewSidePanel([ReleasesPanel]);
   ```
 
 - Passing a function that receives the current elements and return the new ones. This is useful if, for example, you want to add something in a specific position in the list, like in the following code:
 
-  ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel(
-    (panels) => [SuperImportantPanel, ...panels]
-  )
+  ```tsx
+  const apis =
+    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+  apis.addEditViewSidePanel((panels) => [SuperImportantPanel, ...panels]);
   ```
 
 ### Components
@@ -137,16 +145,18 @@ Use this to add new panels to the Edit view sidebar, just like in the following 
 addEditViewSidePanel(panels: DescriptionReducer<PanelComponent> | PanelComponent[])
 ```
 
-#### PanelDescription
+#### PanelComponent
 
-The interface of the API only receives the following 2 properties:
+A `PanelComponent` receives the properties listed in [EditViewContext](#editviewcontext) and returns an object with the following shape:
 
-```jsx
-{
+```tsx
+type PanelComponent = (props: PanelComponentProps) => {
   title: string;
-  content: React.ReactNode;	
-}
+  content: React.ReactNode;
+};
 ```
+
+`PanelComponentProps` extends the [EditViewContext](#editviewcontext).
 
 ### `addDocumentAction`
 
