@@ -26,6 +26,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 <br/>
 
 </details>
+
 ## 6.6.6
 
 <br />
@@ -46,6 +47,8 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 <br />
 
 #### CMS
+- [Clarify `database` vs. `filename` usage in database configuration](https://github.com/strapi/documentation/pull/2657)
+- [Database configuration: callout with information on data.db path](https://github.com/strapi/documentation/pull/2655)
 - [Expand service docs to mention methods wrap core methods from Document Service API](https://github.com/strapi/documentation/pull/2648)
 - [Clarify Content Manager API typing](https://github.com/strapi/documentation/pull/2646)
 - [Note in Server about keep alive configuration](https://github.com/strapi/documentation/pull/2645)
