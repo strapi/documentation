@@ -264,6 +264,42 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 When a new [content-type](/cms/backend-customization/models.md#content-types) is created, Strapi builds a generic service with placeholder code, ready to be customized.
 :::
 
+### Core service methods
+
+Services generated with `createCoreService` inherit methods that wrap the [Document Service API](/cms/api/document-service). The available methods depend on the content-type:
+
+#### Collection types
+
+| Method | Description |
+| --- | --- |
+| `find(params)` | Wrapper for [`findMany`](/cms/api/document-service#findmany); returns a paginated list of documents. |
+| `findOne(documentId, params)` | Wrapper for [`findOne`](/cms/api/document-service#findone); returns a single document by its `documentId`. |
+| `create(params)` | Wrapper for [`create`](/cms/api/document-service#create); creates a new document. |
+| `update(documentId, params)` | Wrapper for [`update`](/cms/api/document-service#update); updates an existing document. |
+| `delete(documentId, params)` | Wrapper for [`delete`](/cms/api/document-service#delete); removes a document. |
+| `count(params)` | Wrapper for [`count`](/cms/api/document-service#count); returns the number of matching documents. |
+| `publish(documentId, params)` | Wrapper for [`publish`](/cms/api/document-service#publish); publishes a draft document. |
+| `unpublish(documentId, params)` | Wrapper for [`unpublish`](/cms/api/document-service#unpublish); unpublishes a document. |
+| `discardDraft(documentId, params)` | Wrapper for [`discardDraft`](/cms/api/document-service#discarddraft); deletes the draft copy. |
+
+#### Single types
+
+| Method | Description |
+| --- | --- |
+| `find(params)` | Returns the single document (uses [`findFirst`](/cms/api/document-service#findfirst) internally). |
+| `createOrUpdate({ data, ...params })` | Creates the document if it doesn't exist or updates it (uses [`update`](/cms/api/document-service#update)). |
+| `delete(params)` | Deletes the document (uses [`delete`](/cms/api/document-service#delete)). |
+| `count(params)` | Counts documents matching the filters (uses [`count`](/cms/api/document-service#count)). |
+| `publish(params)` | Publishes a draft document (uses [`publish`](/cms/api/document-service#publish)). |
+| `unpublish(params)` | Unpublishes the document (uses [`unpublish`](/cms/api/document-service#unpublish)). |
+| `discardDraft(params)` | Deletes the draft copy (uses [`discardDraft`](/cms/api/document-service#discarddraft)). |
+
+#### Parameters and default behavior
+
+Core service methods accept the same parameters as their underlying [Document Service API](/cms/api/document-service) calls, such as `fields`, `filters`, `sort`, `pagination`, `populate`, `locale`, and `status`. When no `status` is provided, Strapi automatically sets `status: 'published'` so only published content is returned. To query draft documents, explicitly pass `status: 'draft'` or another value supported by the Document Service.
+
+The `createCoreService` factory also exposes a `getFetchParams(params)` helper that converts a controller's query object into the parameter format expected by these methods. This helper can be reused when overriding core methods to forward sanitized parameters to `strapi.documents()`.
+
 ### Extending core services
 
 Core services are created for each content-type and could be used by [controllers](/cms/backend-customization/controllers.md) to execute reusable logic through a Strapi project. Core services can be customized to implement your own logic. The following code examples should help you get started.
