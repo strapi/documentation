@@ -66,7 +66,7 @@
 - [API calls configuration](https://docs.strapi.io/cms/configurations/api): Strapi's default API parameters can be configured.
 - [CRON jobs](https://docs.strapi.io/cms/configurations/cron): Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
 - [Database configuration](https://docs.strapi.io/cms/configurations/database): Strapi offers a single entry point file to configure its databases.
-- [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values av...
+- [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): import SampleEnv from '/docs/snippets/sample-env.md'
 - [Features configuration](https://docs.strapi.io/cms/configurations/features): Enable experimental Strapi features
 - [Lifecycle functions](https://docs.strapi.io/cms/configurations/functions): Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
 - [Middlewares configuration](https://docs.strapi.io/cms/configurations/middlewares): Strapi offers a single entry point file for its middlewares configurations.

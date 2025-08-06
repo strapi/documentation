@@ -3603,55 +3603,7 @@ To fetch a documents
 
 ### Create a new localized document {#locale-create}
 
-The `locale` field can be passed to create a localized document  for a specific locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/cms/api/graphql#create-a-new-document)).
-
-```graphql title="Example: Create a new restaurant for the French locale"
-mutation CreateRestaurant($data: RestaurantInput!, $locale: I18NLocaleCode) {
-  createRestaurant(
-    data: {
-      name: "Brasserie Bonjour",
-      description: "Description in French goes here"
-    },
-    locale: "fr"
-  ) {
-  documentId
-  name
-  description
-  locale
-}
-```
-
-### Update a document for a specific locale {#locale-update}
-
-A `locale` argument can be passed in the mutation to update a document  for a given locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/cms/api/graphql#update-an-existing-document)).
-
-```graphql title="Example: Update the description field of restaurant for the French locale"
-mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!, $locale: I18NLocaleCode) {
-  updateRestaurant(
-    documentId: "a1b2c3d4e5d6f7g8h9i0jkl"
-    data: {
-      description: "New description in French"
-    },
-    locale: "fr"
-  ) {
-  documentId
-  name
-  description
-  locale
-}
-```
-
-### Delete a locale for a document {#locale-delete}
-
-Pass the `locale` argument in the mutation to delete a specific localization for a document :
-
-```graphql
-mutation DeleteRestaurant($documentId: ID!, $locale: I18NLocaleCode) {
-  deleteRestaurant(documentId: "xzmzdo4k0z73t9i68a7yx2kk", locale: "fr") {
-    documentId
-  }
-}
-```
+The `locale` field can be passed to create a localized document
 
 
 
@@ -5737,42 +5689,6 @@ The service is now available through the `strapi.service('api::restaurant.restau
 When a new [content-type](/cms/backend-customization/models.md#content-types) is created, Strapi builds a generic service with placeholder code, ready to be customized.
 :::
 
-### Core service methods
-
-Services generated with `createCoreService` inherit methods that wrap the [Document Service API](/cms/api/document-service). The available methods depend on the content-type:
-
-#### Collection types
-
-| Method | Description |
-| --- | --- |
-| `find(params)` | Wrapper for [`findMany`](/cms/api/document-service#findmany); returns a paginated list of documents. |
-| `findOne(documentId, params)` | Wrapper for [`findOne`](/cms/api/document-service#findone); returns a single document by its `documentId`. |
-| `create(params)` | Wrapper for [`create`](/cms/api/document-service#create); creates a new document. |
-| `update(documentId, params)` | Wrapper for [`update`](/cms/api/document-service#update); updates an existing document. |
-| `delete(documentId, params)` | Wrapper for [`delete`](/cms/api/document-service#delete); removes a document. |
-| `count(params)` | Wrapper for [`count`](/cms/api/document-service#count); returns the number of matching documents. |
-| `publish(documentId, params)` | Wrapper for [`publish`](/cms/api/document-service#publish); publishes a draft document. |
-| `unpublish(documentId, params)` | Wrapper for [`unpublish`](/cms/api/document-service#unpublish); unpublishes a document. |
-| `discardDraft(documentId, params)` | Wrapper for [`discardDraft`](/cms/api/document-service#discarddraft); deletes the draft copy. |
-
-#### Single types
-
-| Method | Description |
-| --- | --- |
-| `find(params)` | Returns the single document (uses [`findFirst`](/cms/api/document-service#findfirst) internally). |
-| `createOrUpdate({ data, ...params })` | Creates the document if it doesn't exist or updates it (uses [`update`](/cms/api/document-service#update)). |
-| `delete(params)` | Deletes the document (uses [`delete`](/cms/api/document-service#delete)). |
-| `count(params)` | Counts documents matching the filters (uses [`count`](/cms/api/document-service#count)). |
-| `publish(params)` | Publishes a draft document (uses [`publish`](/cms/api/document-service#publish)). |
-| `unpublish(params)` | Unpublishes the document (uses [`unpublish`](/cms/api/document-service#unpublish)). |
-| `discardDraft(params)` | Deletes the draft copy (uses [`discardDraft`](/cms/api/document-service#discarddraft)). |
-
-#### Parameters and default behavior
-
-Core service methods accept the same parameters as their underlying [Document Service API](/cms/api/document-service) calls, such as `fields`, `filters`, `sort`, `pagination`, `populate`, `locale`, and `status`. When no `status` is provided, Strapi automatically sets `status: 'published'` so only published content is returned. To query draft documents, explicitly pass `status: 'draft'` or another value supported by the Document Service.
-
-The `createCoreService` factory also exposes a `getFetchParams(params)` helper that converts a controller's query object into the parameter format expected by these methods. This helper can be reused when overriding core methods to forward sanitized parameters to `strapi.documents()`.
-
 ### Extending core services
 
 Core services are created for each content-type and could be used by [controllers](/cms/backend-customization/controllers.md) to execute reusable logic through a Strapi project. Core services can be customized to implement your own logic. The following code examples should help you get started.
@@ -5812,6 +5728,42 @@ In the syntax examples above, `serviceName` is the name of the service file for 
 :::tip
 To list all the available services, run `yarn strapi services:list`.
 :::
+
+### Core service methods
+
+Services generated with `createCoreService` inherit methods that wrap the [Document Service API](/cms/api/document-service). The available methods depend on the content-type:
+
+#### Collection types
+
+| Method | Description |
+| --- | --- |
+| `find(params)` | Wrapper for [`findMany`](/cms/api/document-service#findmany); returns a paginated list of documents. |
+| `findOne(documentId, params)` | Wrapper for [`findOne`](/cms/api/document-service#findone); returns a single document by its `documentId`. |
+| `create(params)` | Wrapper for [`create`](/cms/api/document-service#create); creates a new document. |
+| `update(documentId, params)` | Wrapper for [`update`](/cms/api/document-service#update); updates an existing document. |
+| `delete(documentId, params)` | Wrapper for [`delete`](/cms/api/document-service#delete); removes a document. |
+| `count(params)` | Wrapper for [`count`](/cms/api/document-service#count); returns the number of matching documents. |
+| `publish(documentId, params)` | Wrapper for [`publish`](/cms/api/document-service#publish); publishes a draft document. |
+| `unpublish(documentId, params)` | Wrapper for [`unpublish`](/cms/api/document-service#unpublish); unpublishes a document. |
+| `discardDraft(documentId, params)` | Wrapper for [`discardDraft`](/cms/api/document-service#discarddraft); deletes the draft copy. |
+
+#### Single types
+
+| Method | Description |
+| --- | --- |
+| `find(params)` | Returns the single document (uses [`findFirst`](/cms/api/document-service#findfirst) internally). |
+| `createOrUpdate({ data, ...params })` | Creates the document if it doesn't exist or updates it (uses [`update`](/cms/api/document-service#update)). |
+| `delete(params)` | Deletes the document (uses [`delete`](/cms/api/document-service#delete)). |
+| `count(params)` | Counts documents matching the filters (uses [`count`](/cms/api/document-service#count)). |
+| `publish(params)` | Publishes a draft document (uses [`publish`](/cms/api/document-service#publish)). |
+| `unpublish(params)` | Unpublishes the document (uses [`unpublish`](/cms/api/document-service#unpublish)). |
+| `discardDraft(params)` | Deletes the draft copy (uses [`discardDraft`](/cms/api/document-service#discarddraft)). |
+
+#### Parameters and default behavior
+
+Core service methods accept the same parameters as their underlying [Document Service API](/cms/api/document-service) calls, such as `fields`, `filters`, `sort`, `pagination`, `populate`, `locale`, and `status`. When no `status` is provided, Strapi automatically sets `status: 'published'` so only published content is returned. To query draft documents, explicitly pass `status: 'draft'` or another value supported by the Document Service.
+
+The `createCoreService` factory also exposes a `getFetchParams(params)` helper that converts a controller's query object into the parameter format expected by these methods. This helper can be reused when overriding core methods to forward sanitized parameters to `strapi.documents()`.
 
 
 
@@ -9881,20 +9833,28 @@ All the Content Manager APIs share the same API shape and must use components.
 
 ### API shape
 
-All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways:
+All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways.
+
+When using TypeScript, the `apis` property returned by `app.getPlugin()` is typed as `unknown`. Cast it to `ContentManagerPlugin['config']['apis']` before calling the APIs:
 
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
-  
-  ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])
+
+  ```tsx
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  const apis =
+    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+  apis.addEditViewSidePanel([ReleasesPanel]);
   ```
 
 - Passing a function that receives the current elements and return the new ones. This is useful if, for example, you want to add something in a specific position in the list, like in the following code:
 
-  ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel(
-    (panels) => [SuperImportantPanel, ...panels]
-  )
+  ```tsx
+  const apis =
+    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+  apis.addEditViewSidePanel((panels) => [SuperImportantPanel, ...panels]);
   ```
 
 ### Components
@@ -9991,16 +9951,18 @@ Use this to add new panels to the Edit view sidebar, just like in the following 
 addEditViewSidePanel(panels: DescriptionReducer<PanelComponent> | PanelComponent[])
 ```
 
-#### PanelDescription
+#### PanelComponent
 
-The interface of the API only receives the following 2 properties:
+A `PanelComponent` receives the properties listed in [EditViewContext](#editviewcontext) and returns an object with the following shape:
 
-```jsx
-{
+```tsx
+type PanelComponent = (props: PanelComponentProps) => {
   title: string;
-  content: React.ReactNode;	
-}
+  content: React.ReactNode;
+};
 ```
+
+`PanelComponentProps` extends the [EditViewContext](#editviewcontext).
 
 ### `addDocumentAction`
 
@@ -11680,6 +11642,10 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 * [policies with the `policies`](#policies) key
 * and [middlewares with the `middlewares`](#middlewares) key
 
+:::tip
+The [advanced queries](/cms/api/graphql/advanced-queries) guide might contain additional information suitable for your use case, including multi-level queries and custom resolvers examples.
+:::
+
 ###### Authorization configuration
 
 By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/cms/features/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
@@ -11722,6 +11688,10 @@ The `context` object gives access to:
 </Tabs>
 
 </details>
+
+:::tip
+The [advanced policies](/cms/api/graphql/advanced-policies) guide might contain additional information suitable for your use case.
+:::
 
 ###### Middlewares
 
