@@ -26,6 +26,59 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 <br/>
 
 </details>
+## 6.6.6
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add experimental firstPublishedAt configuration](https://github.com/strapi/documentation/pull/2636)
+- [Update admin panel doc to add new 'Reset guided tour' setting](https://github.com/strapi/documentation/pull/2612)
+
+#### Cloud
+- [Transfer ownership feature in Strapi Cloud docs](https://github.com/strapi/documentation/pull/2611)
+- [Download backup on Strapi Cloud](https://github.com/strapi/documentation/pull/2582)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Expand service docs to mention methods wrap core methods from Document Service API](https://github.com/strapi/documentation/pull/2648)
+- [Clarify Content Manager API typing](https://github.com/strapi/documentation/pull/2646)
+- [Note in Server about keep alive configuration](https://github.com/strapi/documentation/pull/2645)
+- [Improve PostgreSQL database config. example](https://github.com/strapi/documentation/pull/2643)
+- [Improve environment variables page](https://github.com/strapi/documentation/pull/2639)
+- [Add advanced queries and policies guides to GraphQL docs](https://github.com/strapi/documentation/pull/2634)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix 'v4CompatibilityMode' typo for Strapi 5 migration in step by step guide](https://github.com/strapi/documentation/pull/2640)
+- [Fix 'v4CompatibilityMode' typo for Strapi 5 migration](https://github.com/strapi/documentation/pull/2635)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/michael-sadcenko" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/198786895?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="michael-sadcenko"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
 
 ## 6.6.5
 
