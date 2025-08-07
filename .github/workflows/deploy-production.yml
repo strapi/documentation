@@ -63,8 +63,6 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         with:
           vercel_team_id: "strapijs"
-          vercel_target: "production"
-          vercel_app: "documentation"
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
       
       # Waits for Vercel to finish building the docs
