@@ -180,7 +180,7 @@ It can be used to:
 - fill the database with some necessary data
 - declare custom conditions for the [Role-Based Access Control (RBAC)](/cms/configurations/guides/rbac) feature
 
-The `bootstrapi()` function is run _before_ the back-end server starts but _after_ the Strapi application has setup, so you have access to anything from the `strapi` object.
+The `bootstrap()` function is run _before_ the back-end server starts but _after_ the Strapi application has setup, so you have access to anything from the `strapi` object.
 
 :::tip
 You can run `yarn strapi console` (or `npm run strapi console`) in the terminal and interact with the `strapi` object.
