@@ -1,12 +1,59 @@
-name: Deploy Production version
+name: Deploy Production v4 version
 on:
   push:
     branches:
-      - main
-
+      - v4
 jobs:
-  deploy-prod:
+  generate-llms-v4:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      files-changed: ${{ steps.check-changes.outputs.changed }}
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_AUTO_MERGE_LLMS_TXT_TOKEN }}
+          fetch-depth: 0
+      
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: 📦 Install dependencies
+        working-directory: ./docusaurus
+        run: npm install
+      
+      - name: 🤖 Generate LLMs v4 files
+        working-directory: ./docusaurus
+        run: node scripts/generate-llms-v4.js
+      
+      - name: 🔍 Check for changes
+        id: check-changes
+        run: |
+          if git diff --quiet HEAD -- docusaurus/static/llms-v4*.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "🔄 No changes in LLMs v4 files"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "📝 LLMs v4 files have changes"
+          fi
+      
+      - name: 📤 Commit and push changes
+        if: steps.check-changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "noreply@github.com"
+          git config --local user.name "GitHub Actions"
+          git add docusaurus/static/llms-v4*.txt
+          git commit -m "🤖 Update LLMs v4 files [skip ci]"
+          git push
+  
+  deploy-prod-v4:
+    runs-on: ubuntu-latest
+    needs: generate-llms-v4
     steps:
       # Need to get actual deployment URL and not previous one
       - name: Get Vercel deployment URL
@@ -19,7 +66,7 @@ jobs:
           vercel_target: "production"
           vercel_app: "documentation"
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
-
+      
       # Waits for Vercel to finish building the docs
       - name: Wait for Vercel deploy to complete
         uses: UnlyEd/github-action-await-vercel@v1.2.14
@@ -29,12 +76,12 @@ jobs:
         with:
           deployment-url: ${{ steps.get-url-prod.outputs.preview_url }}
           timeout: 300 # wait 5 minutes before failing
-
+      
       # Outputs the current URL and confirms ready status (for debugging purposes)
       - name: Output debug status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
+      
       # Clears Cloudfront cache
-
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
         id: invalid-cloudfront-prod
@@ -44,7 +91,7 @@ jobs:
           AWS_REGION: ${{ secrets.LEGACY_V4_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+      
       # Updates the Algolia Search indexes
       - name: Algolia crawler creation and crawl
         uses: algolia/algoliasearch-crawler-github-actions@v1.1.9
