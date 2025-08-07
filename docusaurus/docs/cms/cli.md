@@ -38,8 +38,8 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 | Strapi v4 command         | Strapi 5 equivalent                                                                                                                                                                                |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [Marketplace](/cms/plugins/installing-plugins-via-marketplace))                                                |
-| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/cms/installation/cli))                                                                   |
+| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [Marketplace](/cms/plugins/installing-plugins-via-marketplace))                                                     |
+| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/cms/installation/cli))                                                                        |
 | `strapi watch-admin`      | `yarn develop` or `npm run develop` always starts the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
 
 </details>
@@ -122,8 +122,8 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 | Option              |  Type  | Description                                                                                                                |
 | ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
-| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.   |
-| `--no-compress`     |   -    | Disables file compression.      |
+| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
+| `--no-compress`     |   -    | Disables file compression.                                                                                                 |
 | `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
 | `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
 | `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
@@ -367,31 +367,31 @@ Creates a content type schema with optional API files.
 
 #### Available attribute types
 
-| Type | Description |
-|------|-------------|
-| `string` | Short text |
-| `text` | Long text |
-| `richtext` | Rich text editor |
-| `email` | Email field |
-| `password` | Password field |
-| `integer` | Whole number |
-| `biginteger` | Large whole number |
-| `float` | Decimal number |
-| `decimal` | Precise decimal |
-| `date` | Date only |
-| `time` | Time only |
-| `datetime` | Date and time |
-| `timestamp` | Unix timestamp |
-| `boolean` | True/false |
-| `json` | JSON data |
-| `enumeration` | Predefined values |
-| `media` | File upload |
+| Type          | Description        |
+| ------------- | ------------------ |
+| `string`      | Short text         |
+| `text`        | Long text          |
+| `richtext`    | Rich text editor   |
+| `email`       | Email field        |
+| `password`    | Password field     |
+| `integer`     | Whole number       |
+| `biginteger`  | Large whole number |
+| `float`       | Decimal number     |
+| `decimal`     | Precise decimal    |
+| `date`        | Date only          |
+| `time`        | Time only          |
+| `datetime`    | Date and time      |
+| `timestamp`   | Unix timestamp     |
+| `boolean`     | True/false         |
+| `json`        | JSON data          |
+| `enumeration` | Predefined values  |
+| `media`       | File upload        |
 
 #### Generated files
 
-| Condition | Generated files |
-|-----------|----------------|
-| Content type only | `content-types/[name]/schema.json` |
+| Condition          | Generated files                                                                                                                                          |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Content type only  | `content-types/[name]/schema.json`                                                                                                                       |
 | With API bootstrap | <ul><li>`content-types/[name]/schema.json`</li><li>`controllers/[name].js\|ts`</li><li>`services/[name].js\|ts`</li><li>`routes/[name].js\|ts`</li></ul> |
 
 ### Controller generator
@@ -432,29 +432,29 @@ The `strapi generate` interactive CLI may offer various configuration options de
 
 When creating a content-type, controller, policy, middleware, or service, you can choose its destination:
 
-| Option | Description |
-|--------|-------------|
-| **New API** | Creates a new API folder |
-| **Existing API** | Adds to existing API folder |
-| **Existing plugin** | Adds to existing plugin folder |
-| **Root** | Adds to project root (policies and middlewares only) |
+| Option              | Description                                          |
+| ------------------- | ---------------------------------------------------- |
+| **New API**         | Creates a new API folder                             |
+| **Existing API**    | Adds to existing API folder                          |
+| **Existing plugin** | Adds to existing plugin folder                       |
+| **Root**            | Adds to project root (policies and middlewares only) |
 
 #### Content-type specific options
 
 When creating a content-type, you can choose to create a collection type or a single type (see [Content-Type Builder](/cms/features/content-type-builder) documentation for differences):
 
-| Type | Description | Example |
-|------|-------------|---------|
-| **Collection Type** | For multiple entries | Articles, users |
-| **Single Type** | For a single entry | Homepage, settings |
+| Type                | Description          | Example            |
+| ------------------- | -------------------- | ------------------ |
+| **Collection Type** | For multiple entries | Articles, users    |
+| **Single Type**     | For a single entry   | Homepage, settings |
 
 You will also have to define various types of names. The following table explains their differences. Only the display name needs to be manually defined, and you can press Enter to accept the default suggested name for the singular and plural names. Singular and plural names matter for API endpoints (see [REST API](/cms/api/rest#endpoints) documentation for details):
 
-| Field | Format | Description | Example |
-|-------|--------|-------------|---------|
-| **Display name** | Human-readable | Name shown in admin panel | Blog Post |
-| **Singular name** | Kebab-case | Used for API endpoints | blog-post |
-| **Plural name** | Kebab-case | Used for collections | blog-posts |
+| Field             | Format         | Description               | Example    |
+| ----------------- | -------------- | ------------------------- | ---------- |
+| **Display name**  | Human-readable | Name shown in admin panel | Blog Post  |
+| **Singular name** | Kebab-case     | Used for API endpoints    | blog-post  |
+| **Plural name**   | Kebab-case     | Used for collections      | blog-posts |
 
 </ExpandableContent>
 
@@ -586,15 +586,16 @@ The `strapi` object exposes the following getters and methods to interact with y
 - `strapi.hooks` and `strapi.hook(name)` for hooks
 - `strapi.apis` and `strapi.api(name)` for APIs
 - `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
-    ```js
-    await strapi.db.query('api::article.article').findMany();
-    ```
+  ```js
+  await strapi.db.query('api::article.article').findMany();
+  ```
 
 Use this environment to test code and inspect your project with direct access to all Strapi APIs.
 
 :::note
 Strapi uses a Node.js feature called <ExternalLink to="https://nodejs.org/api/async_context.html" text="AsyncLocalStorage"/> to make the context available anywhere.
 :::
+
 ## strapi version
 
 Print the currently installed Strapi version.
@@ -603,6 +604,45 @@ It will output the current globally installed version if this command is strapi 
 ```bash
 strapi version
 ```
+
+## strapi openapi generate
+
+Generate OpenAPI specifications for your Strapi application.
+
+```bash
+strapi openapi generate
+```
+
+| Option     | Type     | Default               | Description                                      |
+| ---------- | -------- | --------------------- | ------------------------------------------------ |
+| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+
+### Examples
+
+<Tabs groupId="package-manager">
+<TabItem value="npm" label="npm">
+
+```bash
+# Generate OpenAPI specification (default)
+npm run strapi openapi generate
+
+# Generate with custom output path
+npm run strapi openapi generate -- --output ./docs/api-spec.json
+```
+
+</TabItem>
+<TabItem value="yarn" label="yarn">
+
+```bash
+# Generate OpenAPI specification (default)
+yarn strapi openapi generate
+
+# Generate with custom output path
+yarn strapi openapi generate --output ./docs/api-spec.json
+```
+
+</TabItem>
+</Tabs>
 
 ## strapi help
 

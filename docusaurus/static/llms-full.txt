@@ -2031,6 +2031,7 @@ Source: https://docs.strapi.io/cms/api/content-api
 Once you've created and configured a Strapi project, created a content structure with the [Content-Type Builder](/cms/features/content-type-builder) and started adding data through the [Content Manager](/cms/features/content-manager), you likely would like to access your content.
 
 From a front-end application, your content can be accessed through Strapi's Content API, which is exposed:
+
 - by default through the [REST API](/cms/api/rest)
 - and also through the [GraphQL API](/cms/api/graphql) if you installed the Strapi built-in [GraphQL plugin](/cms/plugins/graphql).
 
@@ -3604,6 +3605,189 @@ To fetch a documents
 ### Create a new localized document {#locale-create}
 
 The `locale` field can be passed to create a localized document
+
+
+
+# OpenAPI Specification Generation
+Source: https://docs.strapi.io/cms/api/openapi
+
+# OpenAPI Specification Generation
+
+Strapi provides a command-line tool to generate OpenAPI specifications for your applications. This tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application.
+
+## Overview
+
+The OpenAPI generation tool offers:
+
+- **Automatic discovery** of all API endpoints in your Strapi application
+- **Comprehensive documentation** including parameters, request bodies, and responses
+- **Multiple output formats** (JSON and YAML) for different use cases
+- **Easy integration** with documentation tools like Swagger UI and Redoc
+
+:::info
+This tool is **experimental** and designed to replace the older documentation plugin with a more modern, maintainable solution.
+:::
+
+## Installation and basic usage
+
+The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
+
+### Generate OpenAPI Specification
+
+</Tabs>
+
+### Command options
+
+The `strapi openapi generate` command accepts the following options:
+
+| Option     | Type     | Default               | Description                                      |
+| ---------- | -------- | --------------------- | ------------------------------------------------ |
+| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+
+### Generated output
+
+The command generates an OpenAPI specification file containing:
+
+- **Document metadata**: API title, description, version, and server information
+- **Paths**: all available API endpoints with HTTP methods, parameters, and responses
+- **Components**: reusable schemas, parameters, and response objects
+- **Security**: authentication and authorization requirements
+
+## Generated specification structure
+
+The generated OpenAPI specification follows the OpenAPI 3.1.0 standard and includes:
+
+### Document metadata
+
+- **openapi**: Version (3.1.0)
+- **info**: API title, description, and version
+- **servers**: API server configurations
+- **paths**: All available API endpoints
+
+### Route information
+
+Each route includes:
+
+- **HTTP methods** (GET, POST, PUT, DELETE, etc.)
+- **Parameters**: Query parameters, path parameters, headers
+- **Request bodies**: For POST/PUT operations
+- **Responses**: Success and error response schemas
+- **Security**: Authentication requirements
+
+### Example generated specification
+
+```json
+{
+  "openapi": "3.1.0",
+  "x-powered-by": "strapi",
+  "x-strapi-version": "5.21.0",
+  "info": {
+    "title": "My Strapi API",
+    "description": "API documentation for My Strapi API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/articles": {
+      "get": {
+        "operationId": "article/get/articles",
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Article" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "title": { "type": "string" },
+          "content": { "type": "string" }
+        }
+      }
+    }
+  }
+}
+```
+
+## Generated specification content
+
+The generated OpenAPI specification includes all available API endpoints in your Strapi application:
+
+### API Endpoints
+
+The specification includes:
+
+- **CRUD operations** for all content types
+- **Custom API routes** defined in your application
+- **Authentication endpoints** for user management
+- **File upload endpoints** for media handling
+- **Plugin endpoints** from installed plugins
+- **Admin panel endpoints** for administrative functions
+
+## Integration examples
+
+### Swagger UI integration
+
+Generate a specification and serve it with Swagger UI:
+
+</Tabs>
+
+Then create an HTML file to display the Swagger UI:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Documentation</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css"
+    />
+  </head>
+  <body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
+    <script>
+      window.onload = function () {
+        SwaggerUIBundle({
+          url: './swagger-spec.json',
+          dom_id: '#swagger-ui',
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: 'StandaloneLayout',
+        });
+      };
+    </script>
+  </body>
+</html>
+```
 
 
 
@@ -6204,8 +6388,8 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 | Strapi v4 command         | Strapi 5 equivalent                                                                                                                                                                                |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [Marketplace](/cms/plugins/installing-plugins-via-marketplace))                                                |
-| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/cms/installation/cli))                                                                   |
+| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [Marketplace](/cms/plugins/installing-plugins-via-marketplace))                                                     |
+| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/cms/installation/cli))                                                                        |
 | `strapi watch-admin`      | `yarn develop` or `npm run develop` always starts the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
 
 </details>
@@ -6288,8 +6472,8 @@ The exported file is automatically named using the format `export_YYYYMMDDHHMMSS
 
 | Option              |  Type  | Description                                                                                                                |
 | ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
-| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.   |
-| `--no-compress`     |   -    | Disables file compression.      |
+| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
+| `--no-compress`     |   -    | Disables file compression.                                                                                                 |
 | `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
 | `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
 | `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
@@ -6647,15 +6831,16 @@ The `strapi` object exposes the following getters and methods to interact with y
 - `strapi.hooks` and `strapi.hook(name)` for hooks
 - `strapi.apis` and `strapi.api(name)` for APIs
 - `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
-    ```js
-    await strapi.db.query('api::article.article').findMany();
-    ```
+  ```js
+  await strapi.db.query('api::article.article').findMany();
+  ```
 
 Use this environment to test code and inspect your project with direct access to all Strapi APIs.
 
 :::note
 Strapi uses a Node.js feature called  to make the context available anywhere.
 :::
+
 ## strapi version
 
 Print the currently installed Strapi version.

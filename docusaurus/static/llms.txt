@@ -41,6 +41,7 @@
 - [Using Sort & Pagination with the Document Service API](https://docs.strapi.io/cms/api/document-service/sort-pagination): Use Strapi's Document Service API to sort and paginate query results
 - [Using Draft & Publish with the Document Service API](https://docs.strapi.io/cms/api/document-service/status): Use Strapi's Document Service API to return either the draft or the published version of a document
 - [GraphQL API](https://docs.strapi.io/cms/api/graphql): import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
+- [OpenAPI Specification Generation](https://docs.strapi.io/cms/api/openapi): Learn how to generate OpenAPI specifications for your Strapi applications using the @strapi/openapi package
 - [REST API reference](https://docs.strapi.io/cms/api/rest): Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 - [Filters](https://docs.strapi.io/cms/api/rest/filters): Use Strapi's REST API to filter the results of your requests.
 - [REST API Guides](https://docs.strapi.io/cms/api/rest/guides/intro): Deep dive into some specific REST API topics using guides that extensively explain some use cases or give step-by-step instructions.
