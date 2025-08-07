@@ -176,7 +176,6 @@ The specification includes:
 - **Authentication endpoints** for user management
 - **File upload endpoints** for media handling
 - **Plugin endpoints** from installed plugins
-- **Admin panel endpoints** for administrative functions
 
 ## Integration examples
 
