@@ -25770,7 +25770,9 @@ Source: https://docs-v4.strapi.io/user-docs/intro
 
 # Welcome to the Strapi User Guide!
 
-This 
+This User Guide documentation contains the functional documentation related to all features available in the main navigation of your Strapi application.
+
+Once you have logged in, you can access your Strapi admin panel:
 
 :::strapi Welcome to the Strapi community!
 
