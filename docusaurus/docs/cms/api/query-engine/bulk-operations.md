@@ -14,10 +14,12 @@ tags:
 ---
 
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
+import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Bulk Operations with the Query Engine API
 
 <ConsiderDocumentService />
+<QueryEnginePrereqs />
 
 :::caution
 To avoid performance issues, bulk operations are not allowed on relations.
