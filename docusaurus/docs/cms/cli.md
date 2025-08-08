@@ -458,6 +458,46 @@ You will also have to define various types of names. The following table explain
 
 </ExpandableContent>
 
+## strapi openapi generate
+
+[Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
+
+```bash
+strapi openapi generate
+```
+
+| Option     | Type     | Default               | Description                                      |
+| ---------- | -------- | --------------------- | ------------------------------------------------ |
+| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+
+### Examples
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+# Generate OpenAPI specification (default)
+yarn strapi openapi generate
+
+# Generate with custom output path
+yarn strapi openapi generate --output ./docs/api-spec.json
+```
+
+</TabItem>
+<TabItem value="npm" label="NPM">
+
+```bash
+# Generate OpenAPI specification (default)
+npm run strapi openapi generate
+
+# Generate with custom output path
+npm run strapi openapi generate -- --output ./docs/api-spec.json
+```
+
+</TabItem>
+</Tabs>
+
 ## strapi templates:generate
 
 Create a template from the current Strapi project.
@@ -604,46 +644,6 @@ It will output the current globally installed version if this command is strapi 
 ```bash
 strapi version
 ```
-
-## strapi openapi generate
-
-[Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
-
-```bash
-strapi openapi generate
-```
-
-| Option     | Type     | Default               | Description                                      |
-| ---------- | -------- | --------------------- | ------------------------------------------------ |
-| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
-
-### Examples
-
-<Tabs groupId="yarn-npm">
-
-<TabItem value="yarn" label="Yarn">
-
-```bash
-# Generate OpenAPI specification (default)
-yarn strapi openapi generate
-
-# Generate with custom output path
-yarn strapi openapi generate --output ./docs/api-spec.json
-```
-
-</TabItem>
-<TabItem value="npm" label="NPM">
-
-```bash
-# Generate OpenAPI specification (default)
-npm run strapi openapi generate
-
-# Generate with custom output path
-npm run strapi openapi generate -- --output ./docs/api-spec.json
-```
-
-</TabItem>
-</Tabs>
 
 ## strapi help
 
