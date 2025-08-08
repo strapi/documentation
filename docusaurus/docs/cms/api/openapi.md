@@ -172,7 +172,7 @@ With the following steps you can quickly generate a [Swagger UI](https://swagger
     </TabItem>
     </Tabs>
 
-2. Update the `/config/middlewares.js` configuration file with the following code:
+2. Update [the `/config/middlewares.js` configuration file](/cms/configurations/middlewares) with the following code:
 
     <Tabs groupId="js-ts">
     <TabItem value="js" label="JavaScript">
@@ -244,8 +244,7 @@ With the following steps you can quickly generate a [Swagger UI](https://swagger
     </TabItem>
     </Tabs>
 
-    This will ensure the Swagger UI display from <ExternalLink to="https://unpkg.com/" text="unpkg.com" /> is not blocked by Strapi's CSP policy.
-
+    This will ensure the Swagger UI display from <ExternalLink to="https://unpkg.com/" text="unpkg.com" /> is not blocked by Strapi's CSP policy handled by the [security middleware](/cms/configurations/middlewares#security).
 
 3. Create a `public/openapi.html` file in your Strapi project to display the Swagger UI, with the following code:
 
