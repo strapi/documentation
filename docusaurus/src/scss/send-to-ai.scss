@@ -1,0 +1,268 @@
+/** Component: Send to AI Button */
+@use './mixins' as *;
+
+.send-to-ai-button {
+  position: relative;
+  display: inline-block;
+  // Force higher z-index to override navbar contexts
+  z-index: 10000;
+  
+  &__trigger {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--strapi-primary-600);
+    font-size: var(--strapi-font-size-xs);
+    font-weight: 500;
+    font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color var(--ifm-transition-fast, 0.15s) var(--ifm-transition-timing-default, ease-in-out);
+    
+    &:hover {
+      text-decoration: none;
+      
+      span {
+        text-decoration: underline;
+      }
+    }
+    
+    &:disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+    
+    // First icon (robot)
+    i:first-child, 
+    span:first-child {
+      margin-right: 0.5rem;
+      position: relative;
+      top: -1px;
+      text-decoration: none !important;
+    }
+    
+    // Last icon (caret)
+    i:last-child, 
+    span:last-child {
+      margin-left: 0.25rem;
+      font-size: 10px;
+      position: relative;
+      top: -1px;
+      text-decoration: none !important;
+      transition: transform 0.2s ease;
+    }
+    
+    &[aria-expanded="true"] {
+      i:last-child, 
+      span:last-child {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: auto;
+    background-color: var(--ifm-background-color);
+    border: 1px solid var(--strapi-neutral-200);
+    border-radius: 4px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
+    // Force highest z-index to be above navbar, search, and other components
+    z-index: 99999 !important;
+    min-width: 180px;
+    overflow: visible;
+    // Force positioning context
+    transform: translateZ(0);
+    
+    // Animation
+    animation: dropdownFadeIn 0.15s ease-out;
+    
+    // Ensure visibility
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    pointer-events: auto !important;
+  }
+  
+  &__option {
+    display: flex !important;
+    align-items: center;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background-color: transparent;
+    color: var(--strapi-neutral-800);
+    font-size: var(--strapi-font-size-sm);
+    font-weight: 500;
+    font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.15s ease;
+    // Force visibility
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    // Ensure proper stacking
+    position: relative;
+    z-index: 1;
+    
+    &:hover {
+      background-color: var(--strapi-primary-100) !important;
+      color: var(--strapi-primary-700) !important;
+    }
+    
+    &:active {
+      background-color: var(--strapi-primary-200) !important;
+    }
+    
+    &:disabled {
+      cursor: default;
+      opacity: 0.5 !important;
+    }
+    
+    // Icon in options
+    i, span:first-child {
+      margin-right: 10px;
+      text-decoration: none !important;
+      flex-shrink: 0;
+      display: inline-block !important;
+    }
+    
+    // Text in options
+    span:last-child {
+      text-decoration: none;
+      white-space: nowrap;
+      display: inline-block !important;
+    }
+    
+    // Add border between options
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--strapi-neutral-150);
+    }
+    
+    // Debug: force visible styles
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: transparent;
+      z-index: -1;
+    }
+  }
+  
+  &__loading {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    padding: 8px 12px;
+    background-color: var(--strapi-neutral-100);
+    border: 1px solid var(--strapi-neutral-200);
+    border-radius: 4px;
+    font-size: var(--strapi-font-size-xs);
+    color: var(--strapi-neutral-600);
+    white-space: nowrap;
+    z-index: 99999 !important;
+    
+    // Loading animation
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-left: 8px;
+      border: 2px solid var(--strapi-neutral-300);
+      border-top-color: var(--strapi-primary-600);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+// Portal styles for dropdowns that might be rendered outside normal flow
+.send-to-ai-dropdown-portal {
+  position: fixed !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+  
+  .send-to-ai-button__dropdown {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 1 !important;
+  }
+}
+
+// Animations
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/** Dark mode */
+@include dark {
+  .send-to-ai-button {
+    &__trigger {
+      color: var(--strapi-primary-500);
+    }
+    
+    &__dropdown {
+      background-color: var(--strapi-neutral-100) !important;
+      border-color: var(--strapi-neutral-200);
+      box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    &__option {
+      color: var(--strapi-neutral-800) !important;
+      
+      &:hover {
+        background-color: var(--strapi-primary-100) !important;
+        color: var(--strapi-primary-700) !important;
+      }
+      
+      &:active {
+        background-color: var(--strapi-primary-200) !important;
+      }
+      
+      &:not(:last-child) {
+        border-bottom-color: var(--strapi-neutral-200);
+      }
+    }
+    
+    &__loading {
+      background-color: var(--strapi-neutral-100);
+      border-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-600);
+    }
+  }
+  
+  // Force dark mode dropdown visibility
+  .send-to-ai-dropdown-portal {
+    .send-to-ai-button__dropdown {
+      background-color: var(--strapi-neutral-100) !important;
+    }
+    
+    .send-to-ai-button__option {
+      color: var(--strapi-neutral-800) !important;
+    }
+  }
+}
