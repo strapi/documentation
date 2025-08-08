@@ -17,10 +17,12 @@ tags:
 
 import ManagingRelations from '/docs/snippets/managing-relations.md'
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
+import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Single Operations with the Query Engine API
 
 <ConsiderDocumentService />
+<QueryEnginePrereqs />
 
 ## findOne()
 

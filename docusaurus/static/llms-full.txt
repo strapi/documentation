@@ -1917,7 +1917,7 @@ You can also use the [Strapi Client](/cms/api/client) library to interact with t
 
 REST and GraphQL APIs represent the top-level layers of the Content API exposed to external applications. Strapi also provides 2 lower-level APIs:
 
-- The [Document Service API](/cms/api/document-service) is the recommended API to interact with your application's database within the [backend server](/cms/customization) or through [plugins](/cms/plugins-development/developing-plugins). The Document Service is the layer that handles **documents**
+- The [Document Service API](/cms/api/document-service), accessible through `strapi.documents`, is the recommended API to interact with your application's database within the [backend server](/cms/customization) or through [plugins](/cms/plugins-development/developing-plugins). The Document Service is the layer that handles **documents**
 
 
 
