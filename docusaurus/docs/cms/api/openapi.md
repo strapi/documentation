@@ -5,10 +5,8 @@ displayed_sidebar: cmsSidebar
 pagination_prev: cms/api/document
 pagination_next: cms/api/rest
 tags:
-  - openapi
-  - api
-  - documentation
-  - specification
+  - OpenAPI
+  - API
 ---
 
 # OpenAPI specification generation
