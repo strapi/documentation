@@ -156,7 +156,6 @@ const sidebars = {
       items: [
         'cms/api/content-api',
         'cms/api/document',
-        'cms/api/openapi',
         {
           type: 'category',
           label: 'REST API',
@@ -187,6 +186,7 @@ const sidebars = {
             new: false,
           },
         },
+        'cms/api/openapi',
         'cms/api/graphql',
         {
           type: 'category',
