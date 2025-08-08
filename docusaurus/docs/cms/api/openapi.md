@@ -135,6 +135,15 @@ The generated OpenAPI specification follows the <ExternalLink to="https://spec.o
 }
 ```
 
+<div class="mermaid-download-link">
+  <small>
+    <i class="strapi-icons ph-fill ph-download" style={{color: "inherit;"}}></i>
+    <a href="/example-openapi-spec.json"download="" target="_blank" title="Click to download a complete OpenAPI 3.1.0 specification file generated with example data extracted from a freshly installed Strapi project">Download an example of a complete specification file</a>
+  </small>
+</div>
+
+<br/>
+
 The generated OpenAPI specification includes all available API endpoints in your Strapi application, and information about these endpoints, such as the following:
 
 - CRUD operations for all content types
