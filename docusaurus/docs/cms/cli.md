@@ -621,7 +621,7 @@ strapi openapi generate
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="yarn">
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 # Generate OpenAPI specification (default)
@@ -632,7 +632,7 @@ yarn strapi openapi generate --output ./docs/api-spec.json
 ```
 
 </TabItem>
-<TabItem value="npm" label="npm">
+<TabItem value="npm" label="NPM">
 
 ```bash
 # Generate OpenAPI specification (default)
