@@ -23,7 +23,7 @@ The OpenAPI generation tool offers:
 - Easy integration with documentation tools like Swagger UI and Redoc
 
 :::callout 🚧  Experimental feature
-The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning.
+The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning. For additional information and context, please refer to the <ExternalLink text="Strapi Contributor Docs" to="https://contributor.strapi.io/openapi" />.
 :::
 
 ## Generating an OpenAPI specification
