@@ -1,5 +1,5 @@
 ---
-title: OpenAPI Specification Generation
+title: OpenAPI specification 
 description: Learn how to generate OpenAPI specifications for your Strapi applications using the @strapi/openapi package
 displayed_sidebar: cmsSidebar
 pagination_prev: cms/api/document
@@ -15,93 +15,65 @@ tags:
 
 Strapi provides a command-line tool to generate OpenAPI specifications for your applications. This tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's content API.
 
-## Overview
-
 The OpenAPI generation tool offers:
 
-- **Automatic discovery** of all API endpoints in your Strapi application
-- **Comprehensive documentation** including parameters, request bodies, and responses
-- **Multiple output formats** (JSON and YAML) for different use cases
-- **Easy integration** with documentation tools like Swagger UI and Redoc
+- Automatic discovery of all API endpoints in your Strapi application
+- Comprehensive documentation including parameters, request bodies, and responses
+- Multiple output formats (JSON and YAML) for different use cases
+- Easy integration with documentation tools like Swagger UI and Redoc
 
-:::info
-This tool is **experimental** and designed to replace the older documentation plugin with a more modern, maintainable solution.
+:::callout 🚧  Experimental feature
+The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning.
 :::
 
-## Installation and basic usage
+## Generating an OpenAPI specification
 
 The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
 
-### Generate OpenAPI Specification
+### CLI usage
 
-<Tabs groupId="package-manager">
-<TabItem value="npm" label="npm">
+Executing the command without any arguments will generate a `specification.json` file at the root of your Strapi folder project:
 
-```bash
-# Generate OpenAPI specification
-npm run strapi openapi generate
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-# Generate with custom output path
-npm run strapi openapi generate -- --output ./docs/api-spec.json
-
-
+```shell
+yarn strapi openapi generate
 ```
 
 </TabItem>
-<TabItem value="yarn" label="yarn">
 
-```bash
-# Generate OpenAPI specification
-yarn strapi openapi generate
+<TabItem value="npm" label="NPM">
 
-# Generate with custom output path
-yarn strapi openapi generate --output ./docs/api-spec.json
-
-
+```shell
+npm run strapi openapi generate
 ```
 
 </TabItem>
 </Tabs>
 
-### Command options
+You can also path an optional `--output` argument to specify the path and filename, as in the following example:
 
-The `strapi openapi generate` command accepts the following options:
+<Tabs groupId="yarn-npm">
+<TabItem value="yarn" label="Yarn">
 
-| Option     | Type     | Default               | Description                                      |
-| ---------- | -------- | --------------------- | ------------------------------------------------ |
-| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+```bash
+yarn strapi openapi generate --output ./docs/api-spec.json
+```
+</TabItem>
 
-### Generated output
+<TabItem value="npm" label="NPM">
 
-The command generates an OpenAPI specification file containing:
+```bash
+npm run strapi openapi generate -- --output ./docs/api-spec.json
+```
 
-- **Document metadata**: API title, description, version, and server information
-- **Paths**: all available API endpoints with HTTP methods, parameters, and responses
-- **Components**: reusable schemas, parameters, and response objects
-- **Security**: authentication and authorization requirements
+</TabItem>
+</Tabs>
 
-## Generated specification structure
+### Generated specification structure
 
-The generated OpenAPI specification follows the OpenAPI 3.1.0 standard and includes:
-
-### Document metadata
-
-- **openapi**: Version (3.1.0)
-- **info**: API title, description, and version
-- **servers**: API server configurations
-- **paths**: All available API endpoints
-
-### Route information
-
-Each route includes:
-
-- **HTTP methods** (GET, POST, PUT, DELETE, etc.)
-- **Parameters**: Query parameters, path parameters, headers
-- **Request bodies**: For POST/PUT operations
-- **Responses**: Success and error response schemas
-- **Security**: Authentication requirements
-
-### Example generated specification
+The generated OpenAPI specification follows the <ExternalLink to="https://spec.openapis.org/oas/v3.1.0.html" text="OpenAPI 3.1.0 standard" /> and could look like in the following example:
 
 ```json
 {
@@ -163,71 +135,147 @@ Each route includes:
 }
 ```
 
-## Generated specification content
+The generated OpenAPI specification includes all available API endpoints in your Strapi application, and information about these endpoints, such as the following:
 
-The generated OpenAPI specification includes all available API endpoints in your Strapi application:
+- CRUD operations for all content types
+- Custom API routes defined in your application
+- Authentication endpoints for user management
+- File upload endpoints for media handling
+- Plugin endpoints from installed plugins
 
-### API Endpoints
+## Integrating with Swagger UI
 
-The specification includes:
+With the following steps you can quickly generate a [Swagger UI](https://swagger.io/)-compatible page:
 
-- **CRUD operations** for all content types
-- **Custom API routes** defined in your application
-- **Authentication endpoints** for user management
-- **File upload endpoints** for media handling
-- **Plugin endpoints** from installed plugins
+1. Generate a specification:
 
-## Integration examples
+    <Tabs groupId="yarn-npm">
+    <TabItem value="yarn" label="yarn">
 
-### Swagger UI integration
+    ```bash
+    yarn strapi openapi generate --output ./public/swagger-spec.json
+    ```
 
-Generate a specification and serve it with Swagger UI:
+    </TabItem>
 
-<Tabs groupId="package-manager">
-<TabItem value="npm" label="npm">
+    <TabItem value="npm" label="npm">
 
-```bash
-# Generate specification for Swagger UI
-npm run strapi openapi generate -- --output ./public/swagger-spec.json
-```
+    ```bash
+    npm run strapi openapi generate -- --output ./public/swagger-spec.json
+    ```
 
-</TabItem>
-<TabItem value="yarn" label="yarn">
+    </TabItem>
+    </Tabs>
 
-```bash
-# Generate specification for Swagger UI
-yarn strapi openapi generate --output ./public/swagger-spec.json
-```
+2. Update the `/config/middlewares.js` configuration file with the following code:
 
-</TabItem>
-</Tabs>
+    <Tabs groupId="js-ts">
+    <TabItem value="js" label="JavaScript">
 
-Then create an HTML file to display the Swagger UI:
+    ```js title="/config/middlewares.js"
+    module.exports = [
+      'strapi::logger',
+      'strapi::errors',
+      {
+        name: 'strapi::security',
+        config: {
+          contentSecurityPolicy: {
+            useDefaults: true,
+            directives: {
+              'script-src': ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
+              'style-src': ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
+              'connect-src': ["'self'", 'https:'],
+              'img-src': ["'self'", 'data:', 'blob:', 'https:'],
+              'media-src': ["'self'", 'data:', 'blob:'],
+              upgradeInsecureRequests: null,
+            },
+          },
+        },
+      },
+      'strapi::cors',
+      'strapi::poweredBy',
+      'strapi::query',
+      'strapi::body',
+      'strapi::session',
+      'strapi::favicon',
+      'strapi::public',
+    ];
+    ```
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>API Documentation</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css"
-    />
-  </head>
-  <body>
-    <div id="swagger-ui"></div>
-    <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
-    <script>
-      window.onload = function () {
-        SwaggerUIBundle({
-          url: './swagger-spec.json',
-          dom_id: '#swagger-ui',
-          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-          layout: 'StandaloneLayout',
-        });
-      };
-    </script>
-  </body>
-</html>
-```
+    </TabItem>
+
+    <TabItem value="ts" label="TypeScript">
+
+    ```js title="/config/middlewares.ts"
+    export default [
+      'strapi::logger',
+      'strapi::errors',
+      {
+        name: 'strapi::security',
+        config: {
+          contentSecurityPolicy: {
+            useDefaults: true,
+            directives: {
+              'script-src': ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
+              'style-src': ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
+              'connect-src': ["'self'", 'https:'],
+              'img-src': ["'self'", 'data:', 'blob:', 'https:'],
+              'media-src': ["'self'", 'data:', 'blob:'],
+              upgradeInsecureRequests: null,
+            },
+          },
+        },
+      },
+      'strapi::cors',
+      'strapi::poweredBy',
+      'strapi::query',
+      'strapi::body',
+      'strapi::session',
+      'strapi::favicon',
+      'strapi::public',
+    ];
+    ```
+
+    </TabItem>
+    </Tabs>
+
+    This will ensure the Swagger UI display from <ExternalLink to="https://unpkg.com/" text="unpkg.com" /> is not blocked by Strapi's CSP policy.
+
+
+3. Create a `public/openapi.html` file in your Strapi project to display the Swagger UI, with the following code:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>API Documentation</title>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css"
+        />
+      </head>
+      <body>
+        <div id="swagger-ui"></div>
+        <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-standalone-preset.js"></script>
+        <script>
+          window.onload = function () {
+            SwaggerUIBundle({
+              url: './swagger-spec.json',
+              dom_id: '#swagger-ui',
+              presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+              ],
+              layout: 'StandaloneLayout',
+            });
+          };
+        </script>
+      </body>
+    </html>
+    ```
+
+4. Restart the Strapi server with `yarn develop` or `npm run develop` and visit the `/openapi.html` page. The Swagger UI should be displayed:
+
+    ![Swagger UI example with Strapi OpenAPI specification](/img/assets/apis/swagger-open-api.png)
