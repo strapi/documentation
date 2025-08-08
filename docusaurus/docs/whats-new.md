@@ -20,6 +20,8 @@ Strapi 5 brings many new features and improvements, and this page quickly highli
 
 <Icon name="plugs" /> The **[Strapi Client](/cms/api/client)** library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 
+<Icon name="map-trifold" /> The **[OpenAPI package](/cms/api/openapi)** lets you programmatically generate a specification describing your Strapi APIs.
+
 <Icon name="puzzle-piece" /> The **[Plugin SDK](/cms/plugins-development/plugin-sdk)** is a new CLI tool that helps you develop and publish Strapi plugins.
 
 <Icon name="escalator-up" /> Another whole new CLI **[upgrade tool](/cms/upgrade-tool)** will help you migrate to any patch, minor, and major version of Strapi, automating most of the common tasks through codemods.
