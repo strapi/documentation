@@ -73,6 +73,8 @@ npm run strapi openapi generate -- --output ./docs/api-spec.json
 
 The generated OpenAPI specification follows the <ExternalLink to="https://spec.openapis.org/oas/v3.1.0.html" text="OpenAPI 3.1.0 standard" /> and could look like in the following shortened example:
 
+<ExpandableContent>
+
 ```json
 {
   "openapi": "3.1.0",
@@ -132,6 +134,7 @@ The generated OpenAPI specification follows the <ExternalLink to="https://spec.o
   }
 }
 ```
+</ExpandableContent>
 
 <div class="mermaid-download-link">
   <small>
