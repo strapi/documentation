@@ -3,6 +3,8 @@ title: Data export
 description: Export data using the Strapi CLI
 displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/cms/data-management/export.html
+pagination_prev: cms/data-management/import
+pagination_next: cms/data-management/transfer
 tags:
 - configure data encryption
 - data management system
@@ -33,6 +35,51 @@ The following documentation details the available options to customize your data
 :::caution
 * Admin users and API tokens are not exported.
 * Media from a 3rd party provider (e.g., Cloudinary or AWS S3) are not included in the export as those files do not exist in the upload folders.
+:::
+
+## Understand the exported archive
+
+The exported `.tar` archive contains a flat structure of numbered <ExternalLink to="https://jsonlines.org/" text="JSON lines" /> files arranged in folders for each exported resource:
+
+```text
+export_202401011230.tar
+├── metadata.json
+├── configuration/
+│   └── configuration_00001.jsonl
+├── entities/
+│   └── entities_00001.jsonl
+├── links/
+│   └── links_00001.jsonl
+└── schemas/
+    └── schemas_00001.jsonl
+```
+
+Each folder (except for `metadata.json`) contains one or more `.jsonl` files named sequentially (e.g., `entities_00001.jsonl`). Each line in these `.jsonl` files represents a single record, making the archive convenient for line‑by‑line processing or conversion to formats such as CSV. To inspect these files directly, export without compression or encryption:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn strapi export --no-encrypt --no-compress -f my-export
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run strapi export -- --no-encrypt --no-compress -f my-export
+```
+
+</TabItem>
+
+</Tabs>
+
+The command above creates `my-export.tar` in the project root. After extracting the archive (`tar -xf my-export.tar`), open any `.jsonl` file to view individual records.
+
+:::note
+Large datasets are automatically split across multiple `.jsonl` files. The `maxSizeJsonl` provider option controls the maximum size of each file.
 :::
 
 ## Name the export file
