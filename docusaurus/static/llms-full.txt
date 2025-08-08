@@ -3611,151 +3611,62 @@ The `locale` field can be passed to create a localized document
 # OpenAPI Specification Generation
 Source: https://docs.strapi.io/cms/api/openapi
 
+<!-- # `generate`
+
+Generate an OpenAPI JSON document based on the given Strapi application.
+
+By default, it collects content API routes registered in the application, transforms them into OpenAPI path objects, and fills in other OpenAPI components.
+
+## Signature
+
+```typescript
+function generate(strapi: Core.Strapi, options?: GeneratorOptions): GeneratorOutput;
+```
+
+## Parameters
+
+- `strapi`, the Strapi application to generate an OpenAPI specification for
+- `options`, optional configuration for the generation process
+
+## Return Value
+
+A generation output object, containing:
+
+- `document`, the generated OpenAPI specification, as JSON.
+- `stats`, statistics about the generation process -->
+
 # OpenAPI Specification Generation
 
-Strapi provides a command-line tool to generate OpenAPI specifications for your applications. This tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application.
-
-## Overview
+Strapi provides a command-line tool to generate OpenAPI specifications for your applications. This tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's content API.
 
 The OpenAPI generation tool offers:
 
-- **Automatic discovery** of all API endpoints in your Strapi application
-- **Comprehensive documentation** including parameters, request bodies, and responses
-- **Multiple output formats** (JSON and YAML) for different use cases
-- **Easy integration** with documentation tools like Swagger UI and Redoc
+- Automatic discovery of all API endpoints in your Strapi application
+- Comprehensive documentation including parameters, request bodies, and responses
+- Multiple output formats (JSON and YAML) for different use cases
+- Easy integration with documentation tools like Swagger UI and Redoc
 
-:::info
-This tool is **experimental** and designed to replace the older documentation plugin with a more modern, maintainable solution.
+:::callout 🚧  Experimental feature
+The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning.
 :::
 
-## Installation and basic usage
+## Generating an OpenAPI specification
 
 The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
 
-### Generate OpenAPI Specification
+### CLI usage
+
+Executing the command without any arguments will generate a `specification.json` file at the root of your Strapi folder project:
 
 </Tabs>
 
-### Command options
+You can also path an optional `--output` argument to specify the path and filename, as in the following example:
 
-The `strapi openapi generate` command accepts the following options:
+</Tabs>
 
-| Option     | Type     | Default               | Description                                      |
-| ---------- | -------- | --------------------- | ------------------------------------------------ |
-| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
+### Generated specification structure
 
-### Generated output
-
-The command generates an OpenAPI specification file containing:
-
-- **Document metadata**: API title, description, version, and server information
-- **Paths**: all available API endpoints with HTTP methods, parameters, and responses
-- **Components**: reusable schemas, parameters, and response objects
-- **Security**: authentication and authorization requirements
-
-## Generated specification structure
-
-The generated OpenAPI specification follows the OpenAPI 3.1.0 standard and includes:
-
-### Document metadata
-
-- **openapi**: Version (3.1.0)
-- **info**: API title, description, and version
-- **servers**: API server configurations
-- **paths**: All available API endpoints
-
-### Route information
-
-Each route includes:
-
-- **HTTP methods** (GET, POST, PUT, DELETE, etc.)
-- **Parameters**: Query parameters, path parameters, headers
-- **Request bodies**: For POST/PUT operations
-- **Responses**: Success and error response schemas
-- **Security**: Authentication requirements
-
-### Example generated specification
-
-```json
-{
-  "openapi": "3.1.0",
-  "x-powered-by": "strapi",
-  "x-strapi-version": "5.21.0",
-  "info": {
-    "title": "My Strapi API",
-    "description": "API documentation for My Strapi API",
-    "version": "1.0.0"
-  },
-  "paths": {
-    "/api/articles": {
-      "get": {
-        "operationId": "article/get/articles",
-        "parameters": [
-          {
-            "name": "fields",
-            "in": "query",
-            "schema": {
-              "type": "array",
-              "items": { "type": "string" }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": { "$ref": "#/components/schemas/Article" }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Article": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "integer" },
-          "title": { "type": "string" },
-          "content": { "type": "string" }
-        }
-      }
-    }
-  }
-}
-```
-
-## Generated specification content
-
-The generated OpenAPI specification includes all available API endpoints in your Strapi application:
-
-### API Endpoints
-
-The specification includes:
-
-- **CRUD operations** for all content types
-- **Custom API routes** defined in your application
-- **Authentication endpoints** for user management
-- **File upload endpoints** for media handling
-- **Plugin endpoints** from installed plugins
-- **Admin panel endpoints** for administrative functions
-
-## Integration examples
-
-### Swagger UI integration
-
-Generate a specification and serve it with Swagger UI:
+The generated OpenAPI specification follows the 
 
 </Tabs>
 
@@ -6815,40 +6726,9 @@ Start the server and evaluate commands in your application in real time.
 strapi console
 ```
 
-The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js . The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice gracefully stops the server.
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js 
 
-### Available helpers
-
-The `strapi` object exposes the following getters and methods to interact with your application:
-
-- `strapi.services` and `strapi.service(uid)` to use [services](/cms/backend-customization/services)
-- `strapi.controllers` and `strapi.controller(uid)` to call [controllers](/cms/backend-customization/controllers)
-- `strapi.contentTypes` and `strapi.contentType(uid)` to inspect [content-types](/cms/backend-customization/models)
-- `strapi.components` to list components
-- `strapi.policies` and `strapi.policy(name)` for [policies](/cms/backend-customization/policies)
-- `strapi.middlewares` and `strapi.middleware(name)` for [middlewares](/cms/backend-customization/middlewares)
-- `strapi.plugins` and `strapi.plugin(name)` for plugins
-- `strapi.hooks` and `strapi.hook(name)` for hooks
-- `strapi.apis` and `strapi.api(name)` for APIs
-- `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
-  ```js
-  await strapi.db.query('api::article.article').findMany();
-  ```
-
-Use this environment to test code and inspect your project with direct access to all Strapi APIs.
-
-:::note
-Strapi uses a Node.js feature called  to make the context available anywhere.
-:::
-
-## strapi version
-
-Print the currently installed Strapi version.
-It will output the current globally installed version if this command is strapi is installed globally, or the current version of Strapi within a Strapi project if the command is run from a given folder containing a Strapi project.
-
-```bash
-strapi version
-```
+</Tabs>
 
 ## strapi help
 
