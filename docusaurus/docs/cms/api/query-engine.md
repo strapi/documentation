@@ -13,19 +13,15 @@ tags:
 import EntityQueryKnex from '/docs/snippets/entity-query-knex.md'
 import BackendIntroCrosslink from '/docs/snippets/backend-custom-intro-crosslink.md'
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
+import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Query Engine API
 
-The Strapi backend provides a Query Engine API to interact with the database layer at a lower level. 
+The Strapi backend provides a Query Engine API to interact with the database layer at a lower level.
 
 <ConsiderDocumentService />
 
-:::prerequisites
-Before diving deeper into the Query Engine API documentation, it is recommended that you read the following introductions:
-- the [backend customization introduction](/cms/backend-customization),
-- and the [Content APIs introduction](/cms/api/content-api).
-:::
-
+<QueryEnginePrereqs />
 
 ## Basic usage
 

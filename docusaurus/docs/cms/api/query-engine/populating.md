@@ -12,10 +12,12 @@ tags:
 ---
 
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
+import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Populating with the Query Engine API
 
 <ConsiderDocumentService />
+<QueryEnginePrereqs />
 
 Relations and components have a unified API for populating them.
 
