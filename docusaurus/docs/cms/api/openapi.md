@@ -11,17 +11,12 @@ tags:
 
 # OpenAPI specification generation
 
-Strapi provides a command-line tool to generate OpenAPI specifications for your applications. This tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's content API.
+Strapi provides a command-line tool to generate <ExternalLink to="https://www.openapis.org/" text="OpenAPI"/> specifications for your applications. 
 
-The OpenAPI generation tool offers:
-
-- Automatic discovery of all API endpoints in your Strapi application
-- Comprehensive documentation including parameters, request bodies, and responses
-- Multiple output formats (JSON and YAML) for different use cases
-- Easy integration with documentation tools like Swagger UI and Redoc
+The CLI tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's Content API. The generated specification can then be easily integrated into documentation tools like <ExternalLink to="https://swagger.io/tools/swagger-ui/" text="Swagger UI "/>.
 
 :::callout 🚧  Experimental feature
-The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning. For additional information and context, please refer to the <ExternalLink text="Strapi Contributor Docs" to="https://contributor.strapi.io/openapi" />.
+The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning. For additional information and context, please refer to the <ExternalLink text="Strapi Contributor Docs " to="https://contributor.strapi.io/openapi" />.
 :::
 
 ## Generating an OpenAPI specification
