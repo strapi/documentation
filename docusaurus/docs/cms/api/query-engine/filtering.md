@@ -13,10 +13,12 @@ tags:
 
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
+import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Filtering with the Query Engine API
 
 <ConsiderDocumentService />
+<QueryEnginePrereqs />
 
 The [Query Engine API](/cms/api/query-engine/) offers the ability to filter results found with its [findMany()](/cms/api/query-engine/single-operations#findmany) method.
 
