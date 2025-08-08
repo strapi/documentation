@@ -5,6 +5,8 @@ slug: /cloud/intro
 sidebar_position: 1
 ---
 
+import LLMsTip from '/docs/snippets/llms-tip.md'
+
 # Welcome to the Strapi Cloud Docs!
 
 <SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
@@ -24,6 +26,8 @@ This documentation contains all technical documentation related to the setup, de
 [Strapi Cloud](https://cloud.strapi.io) is a hosting platform that allows you to deploy your Strapi applications in a matter of minutes. It is a fully managed content platform built on top of Strapi, the leading open-source headless CMS.
 
 Strapi Cloud enables you to increase your content velocity without having to compromise on customization needs and requirements. Development teams can rely on Strapi Cloud to abstract away the complexity of infrastructure management while keeping your development workflow and extending the core capabilities of Strapi. Content managers can use Strapi Cloud to autonomously manage all types of content and benefit from a complete set of content collaboration, security, and compliance features.
+
+<LLMsTip/>
 
 ## What you will find here
 

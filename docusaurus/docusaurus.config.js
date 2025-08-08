@@ -185,6 +185,19 @@ const config = {
             ],
           },
           {
+            title: 'AI tools',
+            items: [
+              {
+                label: 'LLMs.txt',
+                href: 'https://docs-v4.strapi.io/llms-v4.txt',
+              },
+              {
+                label: 'LLMs-full.txt',
+                href: 'https://docs-v4.strapi.io/llms-v4-full.txt',
+              },
+            ],  
+          },
+          {
             title: 'Community',
             items: [
               {

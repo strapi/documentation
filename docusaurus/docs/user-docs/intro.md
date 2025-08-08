@@ -3,6 +3,8 @@ displayed_sidebar: userDocsSidebar
 sidebar_label: Welcome!
 ---
 
+import LLMsTip from '/docs/snippets/llms-tip.md'
+
 # Welcome to the Strapi User Guide!
 
 <SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
@@ -32,6 +34,8 @@ If you are not sure where to begin on this User Guide, we suggest you to:
 1. Go through the [User Guide fundamentals](/user-docs/getting-started/user-guide-fundamentals).
 2. Follow the [Setting up the admin panel](/user-docs/getting-started/setting-up-admin-panel) guide.
 3. Continue your journey through the various User Guide sections. The ["What you will find here"](#what-you-will-find-here) section gives you an overview of the available topics.
+
+<LLMsTip />
 
 ## What you will find here
 

@@ -5,6 +5,8 @@ slug: /dev-docs/intro
 sidebar_position: 1
 ---
 
+import LLMsTip from '/docs/snippets/llms-tip.md'
+
 # Welcome to the Strapi Developer Docs!
 
 <SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
@@ -24,6 +26,8 @@ You can directly head to the [Quick Start](./quick-start.md)! <br/> If demos are
 :::
 
 The original purpose of the project was to help Boot**strap** your **API**: that's how Strapi was created. Now, Strapi is an open-source headless CMS that gives developers the freedom to choose their favorite tools and frameworks and allows editors to manage and distribute their content using their application's admin panel. Based on a plugin system, Strapi is a flexible CMS whose admin panel and API are extensible - and which every part is customizable to match any use case. Strapi also has a built-in user system to manage in detail what the administrators and end users have access to.
+
+<LLMsTip />
 
 ## Open-source & Contribution
 
