@@ -71,7 +71,7 @@ npm run strapi openapi generate -- --output ./docs/api-spec.json
 </TabItem>
 </Tabs>
 
-### Generated specification structure
+### Specification structure and content
 
 The generated OpenAPI specification follows the <ExternalLink to="https://spec.openapis.org/oas/v3.1.0.html" text="OpenAPI 3.1.0 standard" /> and could look like in the following shortened example:
 
