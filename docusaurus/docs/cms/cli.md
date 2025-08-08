@@ -607,7 +607,7 @@ strapi version
 
 ## strapi openapi generate
 
-Generate OpenAPI specifications for your Strapi application.
+[Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
 
 ```bash
 strapi openapi generate
@@ -619,18 +619,8 @@ strapi openapi generate
 
 ### Examples
 
-<Tabs groupId="package-manager">
-<TabItem value="npm" label="npm">
+<Tabs groupId="yarn-npm">
 
-```bash
-# Generate OpenAPI specification (default)
-npm run strapi openapi generate
-
-# Generate with custom output path
-npm run strapi openapi generate -- --output ./docs/api-spec.json
-```
-
-</TabItem>
 <TabItem value="yarn" label="yarn">
 
 ```bash
@@ -639,6 +629,17 @@ yarn strapi openapi generate
 
 # Generate with custom output path
 yarn strapi openapi generate --output ./docs/api-spec.json
+```
+
+</TabItem>
+<TabItem value="npm" label="npm">
+
+```bash
+# Generate OpenAPI specification (default)
+npm run strapi openapi generate
+
+# Generate with custom output path
+npm run strapi openapi generate -- --output ./docs/api-spec.json
 ```
 
 </TabItem>
