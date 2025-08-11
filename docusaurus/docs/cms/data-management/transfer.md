@@ -3,6 +3,7 @@ title: Data transfer
 description: Transfer data using the Strapi CLI
 displayed_sidebar: cmsSidebar
 canonicalUrl: https://docs.strapi.io/cms/data-management/transfer.html
+pagination_prev: cms/data-management/export
 tags:
 - data management system
 - data transfer

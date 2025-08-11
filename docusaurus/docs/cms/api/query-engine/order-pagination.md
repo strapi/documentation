@@ -12,10 +12,12 @@ tags:
 ---
 
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
+import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
 # Ordering and Paginating with the Query Engine API
 
 <ConsiderDocumentService />
+<QueryEnginePrereqs />
 
 The [Query Engine API](/cms/api/query-engine) offers the ability to [order](#ordering) and [paginate](#pagination) results.
 
