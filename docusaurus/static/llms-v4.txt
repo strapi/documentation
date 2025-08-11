@@ -11,7 +11,7 @@
 - [with Cloud dashboard](https://docs-v4.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
 - [with Cloud dashboard](https://docs-v4.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
 - [with Cloud CLI](https://docs-v4.strapi.io/cloud/getting-started/deployment-cli): Learn how to deploy your Strapi application via the CLI.
-- [Welcome to the Strapi Cloud Docs!](https://docs-v4.strapi.io/cloud/getting-started/intro): <SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
+- [Welcome to the Strapi Cloud Docs!](https://docs-v4.strapi.io/cloud/getting-started/intro): import LLMsTip from '/docs/snippets/llms-tip.md'
 - [Information on billing & usage](https://docs-v4.strapi.io/cloud/getting-started/usage-billing): This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 - [Collaboration](https://docs-v4.strapi.io/cloud/projects/collaboration): Share your projects on Strapi Cloud to collaborate with others.
 - [Deployments management](https://docs-v4.strapi.io/cloud/projects/deploys): Manage your projects's deploys.
@@ -142,7 +142,7 @@
 - [Sapper](https://docs-v4.strapi.io/dev-docs/integrations/sapper): Integrate Strapi with Sapper.
 - [Svelte](https://docs-v4.strapi.io/dev-docs/integrations/svelte): Integrate Strapi with Svelte.
 - [Vue.js](https://docs-v4.strapi.io/dev-docs/integrations/vue-js): Integrate Strapi with Vue.js.
-- [Welcome to the Strapi Developer Docs!](https://docs-v4.strapi.io/dev-docs/intro): <SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
+- [Welcome to the Strapi Developer Docs!](https://docs-v4.strapi.io/dev-docs/intro): import LLMsTip from '/docs/snippets/llms-tip.md'
 - [Migration Guides](https://docs-v4.strapi.io/dev-docs/migration-guides): Migration guides for a Strapi v4 application.
 - [Configuration](https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/configuration): Migrate your configuration from Strapi v3.6.x to v4.0.x with step-by-step instructions
 - [Content-Type schema](https://docs-v4.strapi.io/dev-docs/migration/v3-to-v4/code/content-type-schema): Migrate your content-types from Strapi v3.6.x to v4.0.x with step-by-step instructions
@@ -205,7 +205,7 @@
 - [Managing content-types](https://docs-v4.strapi.io/user-docs/content-type-builder/managing-content-types): import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 - [Setting up the admin panel](https://docs-v4.strapi.io/user-docs/getting-started/setting-up-admin-panel): How to setup your Strapi Admin Panel
 - [User Guide fundamentals](https://docs-v4.strapi.io/user-docs/getting-started/user-guide-fundamentals): Here are some concepts to keep in mind
-- [Welcome to the Strapi User Guide!](https://docs-v4.strapi.io/user-docs/intro): <SubtleCallout title="Developer Docs, User Guide, and Strapi Cloud documentation" emoji="📍">
+- [Welcome to the Strapi User Guide!](https://docs-v4.strapi.io/user-docs/intro): import LLMsTip from '/docs/snippets/llms-tip.md'
 - [Creating a release](https://docs-v4.strapi.io/user-docs/releases/creating-a-release): Instructions to create a release from the admin panel
 - [Introduction to Releases](https://docs-v4.strapi.io/user-docs/releases/introduction): Introduction to the Releases feature that enables content managers to organize entries to publish/unpublish simultaneously
 - [Managing a release](https://docs-v4.strapi.io/user-docs/releases/managing-a-release): Instructions on how to manage a Release from the admin panel
