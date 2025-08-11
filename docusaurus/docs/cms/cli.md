@@ -20,7 +20,7 @@ tags:
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
 
 :::caution
-Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. A fix for the `npm` package manager is anticipated by March 2023. In the meantime, consider using the `yarn` package manager.
+Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. Please consider using the `yarn` package manager.
 :::
 
 :::note
