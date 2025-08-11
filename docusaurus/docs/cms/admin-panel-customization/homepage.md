@@ -12,10 +12,14 @@ tags:
 # Homepage customization
 <VersionBadge version="5.13.0"/>
 
-The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel. By default, it provides an overview of your content with 2 default widgets:
+The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel. By default, it provides an overview of your content with 5 default widgets:
 
 - _Last edited entries_: Displays recently modified content entries, including their content type, status, and when they were updated.
 - _Last published entries_: Shows recently published content entries, allowing you to quickly access and manage your published content.
+- _Profile_: Displays a short summary of your profile, including your name, email address, and role.
+- _Entries_: Displays the total number of Draft & Published entries.
+- _Project statistics_: Displays statistics about your entries, content-types, locales, assets, and more.
+
 
 <ThemedImage
   alt="Homepage with default widgets"
@@ -28,7 +32,7 @@ The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel
 These default widgets cannot currently be removed, but you can customize the Homepage by creating your own widgets.
 
 :::note
-If you recently created a Strapi project, the Homepage may also display a quick tour above widgets if you haven't skipped it yet.
+If you recently created a Strapi project, the Homepage may also display a guided tour above widgets if you haven't skipped it yet (see [Admin Panel](/cms/features/admin-panel) documentation for details).
 :::
 
 ## Adding custom widgets
