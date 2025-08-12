@@ -155,7 +155,7 @@ With the following steps you can quickly generate a [Swagger UI](https://swagger
 1. Generate a specification:
 
     <Tabs groupId="yarn-npm">
-    <TabItem value="yarn" label="yarn">
+    <TabItem value="yarn" label="Yarn">
 
     ```bash
     yarn strapi openapi generate --output ./public/swagger-spec.json
@@ -163,7 +163,7 @@ With the following steps you can quickly generate a [Swagger UI](https://swagger
 
     </TabItem>
 
-    <TabItem value="npm" label="npm">
+    <TabItem value="npm" label="NPM">
 
     ```bash
     npm run strapi openapi generate -- --output ./public/swagger-spec.json
