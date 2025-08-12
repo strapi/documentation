@@ -44,7 +44,7 @@ export function useBadgeReorder() {
         if (badgesAfterHeader.length > 0) {
           const badgeContainer = document.createElement('div');
           badgeContainer.className = 'h1-badges-container';
-          badgeContainer.style.margin = '1rem 0';
+          badgeContainer.style.margin = '-1rem 0 2rem 0';
           badgeContainer.style.display = 'flex';
           badgeContainer.style.gap = '0.5rem';
           badgeContainer.style.flexWrap = 'wrap';

@@ -245,17 +245,21 @@
   }
 }
 
+h1 + .h1-badges-container {
+  margin: 0;
+}
 
 .h1-badges-placeholder {
-  // Styles déjà définis dans le JS
+  // styles already defined in the JS hook: src/hooks/useBadgeReorder
 }
 
 .h1-badges-container {
   .badge {
-    // Les transitions sont déjà définies dans le JS
+    // transitions already defined in the JS hook: src/hooks/useBadgeReorder
   }
 }
 
+h1 
 /**
  * New/updated badges in main content gutter
  */
