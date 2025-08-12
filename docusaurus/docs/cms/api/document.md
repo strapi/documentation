@@ -16,6 +16,8 @@ tags:
 
 <div className="document-concept-page custom-mermaid-layout">
 
+# Documents
+
 A **document** in Strapi 5 is an API-only concept. A document represents all the different variations of content for a given entry of a content-type.
 
 A single type contains a unique document, and a collection type can contain several documents.

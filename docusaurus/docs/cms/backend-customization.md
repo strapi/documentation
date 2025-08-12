@@ -19,6 +19,8 @@ tags:
 
 <div className="custom-mermaid-layout">
 
+# Backend customization
+
 :::strapi Disambiguation: Strapi back end
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
