@@ -55,14 +55,17 @@ const AiToolbar = () => {
         <Icon 
           name={displayConfig.icon} 
           classes={displayConfig.iconClasses}
+          color={currentState === 'success' ? 'var(--strapi-success-700)' : 'inherit'}
         />
+
         <span className="ai-toolbar__button-text">
           {displayConfig.label}
         </span>
-        {/* Dropdown arrow - will be implemented in step 5 */}
+
         <Icon 
           name="caret-down" 
-          classes="ph-bold ai-toolbar__dropdown-arrow" 
+          classes="ph-bold ai-toolbar__dropdown-arrow"
+          color={currentState === 'success' ? 'var(--strapi-success-700)' : 'inherit'}
         />
       </button>
     </div>

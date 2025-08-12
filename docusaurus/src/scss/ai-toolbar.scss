@@ -1,3 +1,5 @@
+// src/scss/ai-toolbar.scss
+
 @use './mixins' as *;
 
 .ai-toolbar {
@@ -5,7 +7,6 @@
   justify-content: flex-end;
   padding: 1rem 0;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--strapi-neutral-200);
 
   &__button {
     display: flex;
@@ -15,7 +16,7 @@
     border: 1px solid var(--strapi-neutral-300);
     border-radius: 0.25rem;
     background-color: var(--strapi-neutral-0);
-    color: var(--strapi-primary-600);
+    color: var(--strapi-neutral-600);
     font-size: var(--strapi-font-size-sm);
     font-weight: 500;
     font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -23,9 +24,16 @@
     text-decoration: none;
     transition: all 0.2s ease;
 
+    // Icon alignment fix
+    .strapi-icons {
+      position: relative;
+      top: 1px;
+    }
+
     &:hover {
       background-color: var(--strapi-neutral-100);
-      border-color: var(--strapi-primary-500);
+      border-color: var(--strapi-neutral-400);
+      color: var(--strapi-neutral-800);
     }
 
     &:disabled {
@@ -43,7 +51,12 @@
 
     &--success {
       color: var(--strapi-success-700);
-      border-color: var(--strapi-success-600);
+      
+      // Keep border neutral but make text and icon green
+      .strapi-icons {
+        color: var(--strapi-success-700);
+        top: -1px;
+      }
     }
 
     &--error {
@@ -52,7 +65,7 @@
     }
 
     &--idle {
-      color: var(--strapi-primary-600);
+      color: var(--strapi-neutral-600);
     }
   }
 
@@ -80,16 +93,16 @@
 // Dark mode styles
 @include dark {
   .ai-toolbar {
-    border-bottom-color: var(--strapi-neutral-700);
 
     &__button {
       background-color: var(--strapi-neutral-900);
       border-color: var(--strapi-neutral-600);
-      color: var(--strapi-primary-500);
+      color: var(--strapi-neutral-400);
 
       &:hover {
         background-color: var(--strapi-neutral-800);
-        border-color: var(--strapi-primary-400);
+        border-color: var(--strapi-neutral-500);
+        color: var(--strapi-neutral-200);
       }
 
       &--loading {
@@ -98,7 +111,10 @@
 
       &--success {
         color: var(--strapi-success-500);
-        border-color: var(--strapi-success-400);
+        
+        .strapi-icons {
+          color: var(--strapi-success-500);
+        }
       }
 
       &--error {
@@ -107,7 +123,7 @@
       }
 
       &--idle {
-        color: var(--strapi-primary-500);
+        color: var(--strapi-neutral-400);
       }
     }
   }
