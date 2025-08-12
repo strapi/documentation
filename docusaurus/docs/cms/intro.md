@@ -12,16 +12,7 @@ tags:
 
 # Welcome to the Strapi CMS Documentation!
 
-<!--
-<SubtleCallout title="Strapi CMS & Strapi Cloud docs" emoji="📍">
-
-There are 2 Strapi documentations, one for each Strapi product:
-
-- <Icon name="feather" /> The **CMS documentation**, that you're currently reading, which contains all the information related to a Strapi 5 project (installation, setup, deployment, content management in admin panel, etc).
-- <Icon name="cloud" /> The **[Cloud documentation](/cloud/intro)**, which is about deploying your Strapi application to Strapi Cloud and managing your Strapi Cloud projects and settings.
-
-</SubtleCallout>
--->
+<DebugComponent test="ai-toolbar" />
 
 The Strapi CMS documentation focuses on Strapi 5 and will take you through the complete journey of your Strapi 5 project. From the technical information related to the setup, advanced usage, customization and update of your project, to the management of the admin panel and its content and users.
 
