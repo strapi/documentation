@@ -1,12 +1,14 @@
-// src/scss/ai-toolbar.scss
-
 @use './mixins' as *;
-
 .ai-toolbar {
   display: flex;
   justify-content: flex-end;
   padding: 1rem 0;
   margin-bottom: 1rem;
+
+  &__container {
+    position: relative;
+    display: flex;
+  }
 
   &__button {
     display: flex;
@@ -14,7 +16,8 @@
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border: 1px solid var(--strapi-neutral-300);
-    border-radius: 0.25rem;
+    border-right: none;
+    border-radius: 0.25rem 0 0 0.25rem;
     background-color: var(--strapi-neutral-0);
     color: var(--strapi-neutral-600);
     font-size: var(--strapi-font-size-sm);
@@ -23,32 +26,27 @@
     cursor: pointer;
     text-decoration: none;
     transition: all 0.2s ease;
-
     // Icon alignment fix
     .strapi-icons {
       position: relative;
       top: 1px;
     }
-
     &:hover {
       background-color: var(--strapi-neutral-100);
       border-color: var(--strapi-neutral-400);
       color: var(--strapi-neutral-800);
     }
-
     &:disabled {
       cursor: default;
       opacity: 0.7;
       pointer-events: none;
     }
-
     // State-specific styles
     &--loading {
       opacity: 0.7;
       pointer-events: none;
       color: var(--strapi-neutral-600);
     }
-
     &--success {
       color: var(--strapi-success-700);
       
@@ -58,43 +56,158 @@
         top: -1px;
       }
     }
-
     &--error {
       color: var(--strapi-danger-600);
       border-color: var(--strapi-danger-500);
     }
-
     &--idle {
       color: var(--strapi-neutral-600);
     }
   }
 
+  &__dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    padding: 0.5rem 0;
+    border: 1px solid var(--strapi-neutral-300);
+    border-left: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+    background-color: var(--strapi-neutral-0);
+    color: var(--strapi-neutral-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--strapi-neutral-100);
+      border-color: var(--strapi-neutral-400);
+      color: var(--strapi-neutral-800);
+    }
+
+    &--open {
+      background-color: var(--strapi-neutral-100);
+      border-color: var(--strapi-neutral-400);
+      
+      .strapi-icons {
+        transform: rotate(180deg);
+      }
+    }
+
+    .strapi-icons {
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    min-width: 250px;
+    margin-top: 0.25rem;
+    background-color: var(--strapi-neutral-0);
+    border: 1px solid var(--strapi-neutral-300);
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  &__dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    background-color: transparent;
+    color: var(--strapi-neutral-800);
+    font-size: var(--strapi-font-size-sm);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--strapi-neutral-100);
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--strapi-neutral-200);
+    }
+
+    .strapi-icons {
+      flex-shrink: 0;
+      color: var(--strapi-neutral-600);
+    }
+  }
+
+  &__dropdown-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__dropdown-item-label {
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  &__dropdown-item-description {
+    font-size: var(--strapi-font-size-xs);
+    color: var(--strapi-neutral-600);
+    line-height: 1.3;
+  }
+
   &__button-text {
     // Text styling if needed
   }
-
   &__dropdown-arrow {
     margin-left: 0.25rem;
     opacity: 0.6;
     transition: opacity 0.2s ease;
   }
 }
-
 // Spinner animation for loading state
 .spinning {
   animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
 // Dark mode styles
 @include dark {
   .ai-toolbar {
-
     &__button {
+      background-color: var(--strapi-neutral-900);
+      border-color: var(--strapi-neutral-600);
+      color: var(--strapi-neutral-400);
+      &:hover {
+        background-color: var(--strapi-neutral-800);
+        border-color: var(--strapi-neutral-500);
+        color: var(--strapi-neutral-200);
+      }
+      &--loading {
+        color: var(--strapi-neutral-400);
+      }
+      &--success {
+        color: var(--strapi-success-500);
+        
+        .strapi-icons {
+          color: var(--strapi-success-500);
+        }
+      }
+      &--error {
+        color: var(--strapi-danger-500);
+        border-color: var(--strapi-danger-400);
+      }
+      &--idle {
+        color: var(--strapi-neutral-400);
+      }
+    }
+
+    &__dropdown-trigger {
       background-color: var(--strapi-neutral-900);
       border-color: var(--strapi-neutral-600);
       color: var(--strapi-neutral-400);
@@ -105,26 +218,36 @@
         color: var(--strapi-neutral-200);
       }
 
-      &--loading {
+      &--open {
+        background-color: var(--strapi-neutral-800);
+        border-color: var(--strapi-neutral-500);
+      }
+    }
+
+    &__dropdown {
+      background-color: var(--strapi-neutral-900);
+      border-color: var(--strapi-neutral-600);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    &__dropdown-item {
+      color: var(--strapi-neutral-200);
+
+      &:hover {
+        background-color: var(--strapi-neutral-800);
+      }
+
+      &:not(:last-child) {
+        border-bottom-color: var(--strapi-neutral-700);
+      }
+
+      .strapi-icons {
         color: var(--strapi-neutral-400);
       }
+    }
 
-      &--success {
-        color: var(--strapi-success-500);
-        
-        .strapi-icons {
-          color: var(--strapi-success-500);
-        }
-      }
-
-      &--error {
-        color: var(--strapi-danger-500);
-        border-color: var(--strapi-danger-400);
-      }
-
-      &--idle {
-        color: var(--strapi-neutral-400);
-      }
+    &__dropdown-item-description {
+      color: var(--strapi-neutral-400);
     }
   }
 }
