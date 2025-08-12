@@ -1,8 +1,8 @@
 @use './mixins' as *;
 .ai-toolbar {
   display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0;
+  justify-content: flex-start;
+  padding: 0 0 1rem 0;
   margin-bottom: 1rem;
 
   &__container {
@@ -98,7 +98,7 @@
   &__dropdown {
     position: absolute;
     top: 100%;
-    right: 0;
+    left: 0;
     z-index: 1000;
     min-width: 250px;
     margin-top: 0.25rem;
