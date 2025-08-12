@@ -8,7 +8,7 @@ tags:
 - concepts
 ---
 
-# Strapi Cloud fundamentals <UpdatedBadge />
+# Strapi Cloud fundamentals
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
