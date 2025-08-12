@@ -1,3 +1,19 @@
+/**
+ * Hook to reorder badges that appear after h1 elements with AiToolbar.
+ * 
+ * Problem: In Docusaurus MDX rendering, badges (GrowthBadge, EnterpriseBadge, etc.) 
+ * are positioned absolutely in the gutter and appear after the AiToolbar in the DOM,
+ * creating a visual hierarchy issue where badges come after the toolbar instead of
+ * between the h1 title and the toolbar.
+ * 
+ * Solution: This hook detects badges that follow a header containing an h1 + AiToolbar,
+ * hides the original badges to prevent visual flash, clones them with proper relative
+ * positioning, and inserts them between the h1 and AiToolbar for correct visual order.
+ * 
+ * The reordered badges maintain their original styling and functionality while being
+ * positioned in the expected location in the visual hierarchy.
+ */
+
 import { useEffect } from 'react';
 
 export function useBadgeReorder() {
