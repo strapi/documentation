@@ -8,6 +8,8 @@
   &__container {
     position: relative;
     display: flex;
+    border: 1px solid var(--strapi-neutral-300);
+    border-radius: 0.25rem;
   }
 
   &__button {
@@ -15,8 +17,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid var(--strapi-neutral-300);
-    border-right: none;
+    border: none;
+    border-right: 1px solid var(--strapi-neutral-300);
     border-radius: 0.25rem 0 0 0.25rem;
     background-color: var(--strapi-neutral-0);
     color: var(--strapi-neutral-600);
@@ -33,7 +35,6 @@
     }
     &:hover {
       background-color: var(--strapi-neutral-100);
-      border-color: var(--strapi-neutral-400);
       color: var(--strapi-neutral-800);
     }
     &:disabled {
@@ -50,7 +51,6 @@
     &--success {
       color: var(--strapi-success-700);
       
-      // Keep border neutral but make text and icon green
       .strapi-icons {
         color: var(--strapi-success-700);
         top: -1px;
@@ -58,7 +58,6 @@
     }
     &--error {
       color: var(--strapi-danger-600);
-      border-color: var(--strapi-danger-500);
     }
     &--idle {
       color: var(--strapi-neutral-600);
@@ -71,8 +70,7 @@
     justify-content: center;
     width: 2rem;
     padding: 0.5rem 0;
-    border: 1px solid var(--strapi-neutral-300);
-    border-left: none;
+    border: none;
     border-radius: 0 0.25rem 0.25rem 0;
     background-color: var(--strapi-neutral-0);
     color: var(--strapi-neutral-600);
@@ -81,13 +79,11 @@
 
     &:hover {
       background-color: var(--strapi-neutral-100);
-      border-color: var(--strapi-neutral-400);
       color: var(--strapi-neutral-800);
     }
 
     &--open {
       background-color: var(--strapi-neutral-100);
-      border-color: var(--strapi-neutral-400);
       
       .strapi-icons {
         transform: rotate(180deg);
@@ -168,29 +164,38 @@
     transition: opacity 0.2s ease;
   }
 }
+
 // Spinner animation for loading state
 .spinning {
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
 // Dark mode styles
 @include dark {
   .ai-toolbar {
+    &__container {
+      border-color: var(--strapi-neutral-200);
+    }
+
     &__button {
-      background-color: var(--strapi-neutral-900);
-      border-color: var(--strapi-neutral-600);
-      color: var(--strapi-neutral-400);
+      background-color: var(--strapi-neutral-0);
+      border-right-color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-800);
+      
       &:hover {
-        background-color: var(--strapi-neutral-800);
-        border-color: var(--strapi-neutral-500);
-        color: var(--strapi-neutral-200);
+        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-900);
       }
+      
       &--loading {
-        color: var(--strapi-neutral-400);
+        color: var(--strapi-neutral-600);
       }
+      
       &--success {
         color: var(--strapi-success-500);
         
@@ -198,56 +203,54 @@
           color: var(--strapi-success-500);
         }
       }
+      
       &--error {
         color: var(--strapi-danger-500);
-        border-color: var(--strapi-danger-400);
       }
+      
       &--idle {
-        color: var(--strapi-neutral-400);
+        color: var(--strapi-neutral-800);
       }
     }
 
     &__dropdown-trigger {
-      background-color: var(--strapi-neutral-900);
-      border-color: var(--strapi-neutral-600);
-      color: var(--strapi-neutral-400);
+      background-color: var(--strapi-neutral-0);
+      color: var(--strapi-neutral-800);
 
       &:hover {
-        background-color: var(--strapi-neutral-800);
-        border-color: var(--strapi-neutral-500);
-        color: var(--strapi-neutral-200);
+        background-color: var(--strapi-neutral-100);
+        color: var(--strapi-neutral-900);
       }
 
       &--open {
-        background-color: var(--strapi-neutral-800);
-        border-color: var(--strapi-neutral-500);
+        background-color: var(--strapi-neutral-100);
       }
     }
 
     &__dropdown {
-      background-color: var(--strapi-neutral-900);
-      border-color: var(--strapi-neutral-600);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      background-color: var(--strapi-neutral-0);
+      border-color: var(--strapi-neutral-200);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     }
 
     &__dropdown-item {
-      color: var(--strapi-neutral-200);
+      color: var(--strapi-neutral-900);
 
       &:hover {
-        background-color: var(--strapi-neutral-800);
+        background-color: var(--strapi-neutral-100);
       }
 
       &:not(:last-child) {
-        border-bottom-color: var(--strapi-neutral-700);
+        border-bottom-color: var(--strapi-neutral-200);
       }
 
       .strapi-icons {
-        color: var(--strapi-neutral-400);
+        color: var(--strapi-neutral-600);
       }
     }
 
     &__dropdown-item-description {
-      color: var(--strapi-neutral-400);
+      color: var(--strapi-neutral-500);
     }
   }
 }

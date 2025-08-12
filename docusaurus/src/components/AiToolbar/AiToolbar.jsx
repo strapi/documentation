@@ -106,6 +106,9 @@ const AiToolbar = () => {
           onClick={toggleDropdown}
           className={`ai-toolbar__dropdown-trigger ${isDropdownOpen ? 'ai-toolbar__dropdown-trigger--open' : ''}`}
           title="More AI options"
+          style={{
+            borderColor: currentState === 'success' ? 'var(--strapi-neutral-200)' : undefined
+          }}
         >
           <Icon 
             name="caret-down" 
