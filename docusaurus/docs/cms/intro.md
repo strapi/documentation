@@ -12,7 +12,7 @@ tags:
 
 # Welcome to the Strapi CMS Documentation!
 
-<DebugComponent test="ai-toolbar" />
+<DebugComponent test="ai-toolbar-component" />
 
 The Strapi CMS documentation focuses on Strapi 5 and will take you through the complete journey of your Strapi 5 project. From the technical information related to the setup, advanced usage, customization and update of your project, to the management of the admin panel and its content and users.
 

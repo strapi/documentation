@@ -2,6 +2,7 @@
 // Just import and use: <DebugComponent test="ai-toolbar" />
 
 import React, { useEffect } from 'react';
+import { AiToolbar } from './AiToolbar'; // Adjust path as needed
 
 const DebugComponent = ({ test }) => {
   useEffect(() => {
@@ -21,11 +22,31 @@ const DebugComponent = ({ test }) => {
       }
     }
     
+    if (test === 'ai-actions') {
+      console.log('🧪 Testing modular actions');
+      
+      try {
+        import('./AiToolbar/actions/actionRegistry').then(({ executeAction, getActionDisplay, actionHandlers }) => {
+          console.log('Available action handlers:', Object.keys(actionHandlers));
+          console.log('Copy markdown display (idle):', getActionDisplay('copy-markdown', 'idle'));
+          console.log('Copy markdown display (loading):', getActionDisplay('copy-markdown', 'loading'));
+          console.log('✅ Modular actions test completed');
+        });
+      } catch (error) {
+        console.error('❌ Actions test failed:', error);
+      }
+    }
+
     // Add other tests here as needed
     // if (test === 'other-feature') { ... }
     
   }, [test]);
 
+  // Afficher le composant directement selon le test
+  if (test === 'ai-toolbar-component') {
+    return <AiToolbar />;
+  }
+  
   // Return null to not affect the UI
   return null;
 };
