@@ -1,0 +1,60 @@
+@use '../../scss/mixins' as *;
+
+.contextualizedAiButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--strapi-primary-600);
+  border-radius: 6px;
+  background: var(--strapi-primary-600);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  
+  &:hover {
+    background: var(--strapi-primary-700);
+    border-color: var(--strapi-primary-700);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(99, 6, 182, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus {
+    outline: 2px solid var(--strapi-primary-600);
+    outline-offset: 2px;
+  }
+
+  span {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  // Dark mode adjustments
+  @include dark {
+    background: var(--strapi-primary-500);
+    border-color: var(--strapi-primary-500);
+    
+    &:hover {
+      background: var(--strapi-primary-400);
+      border-color: var(--strapi-primary-400);
+      box-shadow: 0 2px 8px rgba(99, 6, 182, 0.3);
+    }
+  }
+
+  // Responsive adjustments
+  @include medium-down {
+    font-size: 13px;
+    padding: 6px 10px;
+    
+    span {
+      font-size: 13px;
+    }
+  }
+}
