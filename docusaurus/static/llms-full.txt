@@ -3608,55 +3608,12 @@ The `locale` field can be passed to create a localized document
 
 
 
-# OpenAPI Specification Generation
+# OpenAPI specification
 Source: https://docs.strapi.io/cms/api/openapi
 
-<!-- # `generate`
+# OpenAPI specification generation
 
-Generate an OpenAPI JSON document based on the given Strapi application.
-
-By default, it collects content API routes registered in the application, transforms them into OpenAPI path objects, and fills in other OpenAPI components.
-
-## Signature
-
-```typescript
-function generate(strapi: Core.Strapi, options?: GeneratorOptions): GeneratorOutput;
-```
-
-## Parameters
-
-- `strapi`, the Strapi application to generate an OpenAPI specification for
-- `options`, optional configuration for the generation process
-
-## Return Value
-
-A generation output object, containing:
-
-- `document`, the generated OpenAPI specification, as JSON.
-- `stats`, statistics about the generation process -->
-
-# OpenAPI Specification Generation
-
-Strapi provides a command-line tool to generate OpenAPI specifications for your applications. This tool automatically creates comprehensive API documentation that describes all available endpoints, parameters, and response formats in your Strapi application's content API.
-
-The OpenAPI generation tool offers:
-
-- Automatic discovery of all API endpoints in your Strapi application
-- Comprehensive documentation including parameters, request bodies, and responses
-- Multiple output formats (JSON and YAML) for different use cases
-- Easy integration with documentation tools like Swagger UI and Redoc
-
-:::callout 🚧  Experimental feature
-The OpenAPI generation feature is currently experimental. Its behavior and output might change in future releases without following semantic versioning.
-:::
-
-## Generating an OpenAPI specification
-
-The OpenAPI generation tool is included with Strapi core and doesn't require additional installation. You can use it directly from the command line in any Strapi project to generate comprehensive API documentation.
-
-### CLI usage
-
-Executing the command without any arguments will generate a `specification.json` file at the root of your Strapi folder project:
+Strapi provides a command-line tool to generate 
 
 </Tabs>
 
@@ -3664,41 +3621,78 @@ You can also path an optional `--output` argument to specify the path and filena
 
 </Tabs>
 
-### Generated specification structure
+### Specification structure and content
 
 The generated OpenAPI specification follows the 
 
-</Tabs>
+<div class="mermaid-download-link">
+  <small>
+    <i class="strapi-icons ph-fill ph-download" style={{color: "inherit;"}}></i>
+    <a href="/example-openapi-spec.json"download="" target="_blank" title="Click to download a complete OpenAPI 3.1.0 specification file generated with example data extracted from a freshly installed Strapi project">Download an example of a complete specification file</a>
+  </small>
+</div>
 
-Then create an HTML file to display the Swagger UI:
+<br/>
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>API Documentation</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css"
-    />
-  </head>
-  <body>
-    <div id="swagger-ui"></div>
-    <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
-    <script>
-      window.onload = function () {
-        SwaggerUIBundle({
-          url: './swagger-spec.json',
-          dom_id: '#swagger-ui',
-          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
-          layout: 'StandaloneLayout',
-        });
-      };
-    </script>
-  </body>
-</html>
-```
+The generated OpenAPI specification includes all available API endpoints in your Strapi application, and information about these endpoints, such as the following:
+
+- CRUD operations for all content types
+- Custom API routes defined in your application
+- Authentication endpoints for user management
+- File upload endpoints for media handling
+- Plugin endpoints from installed plugins
+
+## Integrating with Swagger UI
+
+With the following steps you can quickly generate a [Swagger UI](https://swagger.io/)-compatible page:
+
+1. Generate a specification:
+
+    </Tabs>
+
+2. Update [the `/config/middlewares.js` configuration file](/cms/configurations/middlewares) with the following code:
+
+    </Tabs>
+
+    This will ensure the Swagger UI display from  is not blocked by Strapi's CSP policy handled by the [security middleware](/cms/configurations/middlewares#security).
+
+3. Create a `public/openapi.html` file in your Strapi project to display the Swagger UI, with the following code:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>API Documentation</title>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css"
+        />
+      </head>
+      <body>
+        <div id="swagger-ui"></div>
+        <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-standalone-preset.js"></script>
+        <script>
+          window.onload = function () {
+            SwaggerUIBundle({
+              url: './swagger-spec.json',
+              dom_id: '#swagger-ui',
+              presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+              ],
+              layout: 'StandaloneLayout',
+            });
+          };
+        </script>
+      </body>
+    </html>
+    ```
+
+4. Restart the Strapi server with `yarn develop` or `npm run develop` and visit the `/openapi.html` page. The Swagger UI should be displayed:
+
+    ![Swagger UI example with Strapi OpenAPI specification](/img/assets/apis/swagger-open-api.png)
 
 
 
@@ -6379,240 +6373,23 @@ Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) doc
 strapi export
 ```
 
-The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
+The archive contains folders such as `configuration`, `entities`, `links`, and `schemas` with data stored in 
 
-| Option              |  Type  | Description                                                                                                                |
-| ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
-| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.                                                                    |
-| `--no-compress`     |   -    | Disables file compression.                                                                                                 |
-| `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
-| `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
-| `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
-| `--only`            | string | Include only these data. The available types are: `content`, `files`, and `config`.                                        |
-| `-h`, <br/>`--help` |   -    | Displays help for the `strapi export` command.                                                                             |
+## strapi openapi generate
 
-**Examples**
-
-```bash title="Examples of strapi export:"
-# export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
-strapi export -f myData
-
-# export your data without encryption.
-strapi export --no-encrypt
-```
-
-## strapi import
-
-[Imports data](/cms/features/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+[Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
 
 ```bash
-strapi import
+strapi openapi generate
 ```
 
-| Option         | Type   | Description                                                               |
-| -------------- | ------ | ------------------------------------------------------------------------- |
-| `-k,` `--key`  | string | Provide the encryption key in the command instead of a subsequent prompt. |
-| `-f`, `--file` | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help` | -      | Display the `strapi import` help commands.                                |
+| Option     | Type     | Default               | Description                                      |
+| ---------- | -------- | --------------------- | ------------------------------------------------ |
+| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
 
-**Examples**
+### Examples
 
-```bash title="Example of strapi import:"
-
-# import your data with the default parameters and pass an encryption key:
-strapi import -f your-filepath-and-filename --key my-key
-```
-
-## strapi transfer
-
-[Transfers data](/cms/data-management/transfer) between 2 Strapi instances. This command is primarily intended for use between a local instance and a remote instance or 2 remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/cms/features/data-management#admin-panel-settings) for detailed documentation on creating Transfer tokens.
-
-:::caution
-The destination Strapi instance should be running with the `start` command and not the `develop` command.
-:::
-
-| Option                       | Description                                                                                                                                       |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--to [destinationURL]`      | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)                 |
-| `--to-token [transferToken]` | Transfer token for the remote Strapi destination                                                                                                  |
-| `--from [sourceURL]`         | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from<br />(e.g., `--from https://my-beautiful-strapi-website/admin`) |
-| `‑‑from‑token`               | Transfer token from the Strapi source instance.                                                                                                   |
-| `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                 |
-| `--exclude`                  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                         |
-| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                               |
-| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                                      |
-
-:::caution
-Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
-:::
-
-**Example**
-
-```bash
-strapi transfer --to http://example.com/admin --to-token my-transfer-token
-```
-
-## strapi report
-
-Prints out debug information useful for debugging and required when reporting an issue.
-
-| Option                 | Description                   |
-| ---------------------- | ----------------------------- |
-| `-u`, `--uuid`         | Includes the project UUID     |
-| `-d`, `--dependencies` | Includes project dependencies |
-| `--all`                | Logs all the data             |
-
-**Examples**
-
-To include the project UUID and dependencies in the output:
-
-```bash
-strapi report --uuid --dependencies
-```
-
-To log everything, use the `--all` option:
-
-```bash
-strapi report --all
-```
-
-## strapi configuration:dump
-
-**Alias**: `config:dump`
-
-Dumps configurations to a file or stdout to help you migrate to production.
-
-The dump format will be a JSON array.
-
-```bash title="strapi configuration:dump"
-
-Options:
-  -f, --file <file>  Output file, default output is stdout
-  -p, --pretty       Format the output JSON with indentation and line breaks (default: false)
-```
-
-**Examples**
-
-- `strapi configuration:dump -f dump.json`
-- `strapi config:dump --file dump.json`
-- `strapi config:dump > dump.json`
-
-All these examples are equivalent.
-
-:::caution
-When configuring your application you often enter credentials for third party services (e.g authentication providers). Be aware that those credentials will also be dumped into the output of this command.
-In case of doubt, you should avoid committing the dump file into a versioning system. Here are some methods you can explore:
-
-- Copy the file directly to the environment you want and run the restore command there.
-- Put the file in a secure location and download it at deploy time with the right credentials.
-- Encrypt the file before committing and decrypt it when running the restore command.
-
-:::
-
-## strapi configuration:restore
-
-**Alias**: `config:restore`
-
-Restores a configuration dump into your application.
-
-The input format must be a JSON array.
-
-```bash
-strapi configuration:restore
-
-Options:
-  -f, --file <file>          Input file, default input is stdin
-  -s, --strategy <strategy>  Strategy name, one of: "replace", "merge", "keep". Defaults to: "replace"
-```
-
-**Examples**
-
-- `strapi configuration:restore -f dump.json`
-- `strapi config:restore --file dump.json -s replace`
-- `cat dump.json | strapi config:restore`
-- `strapi config:restore < dump.json`
-
-All these examples are equivalent.
-
-**Strategies**
-
-When running the restore command, you can choose from three different strategies:
-
-- **replace**: Will create missing keys and replace existing ones.
-- **merge**: Will create missing keys and merge existing keys with their new value.
-- **keep**: Will create missing keys and keep existing keys as is.
-
-## strapi admin:create-user
-
-**Alias** `admin:create`
-
-Creates an administrator.
-Administrator's first name, last name, email, and password can be:
-
-- passed as options
-- or set interactively if you call the command without passing any option.
-
-**Example**
-
-```bash
-
-strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
-```
-
-**Options**
-
-| Option          | Type   | Description                        | Required |
-| --------------- | ------ | ---------------------------------- | -------- |
-| -f, --firstname | string | The administrator's first name     | Yes      |
-| -l, --lastname  | string | The administrator's last name      | No       |
-| -e, --email     | string | The administrator's email          | Yes      |
-| -p, --password  | string | New password for the administrator | No       |
-| -h, --help      |        | display help for command           |          |
-
-## strapi admin:reset-user-password
-
-**Alias** `admin:reset-password`
-
-Reset an admin user's password.
-You can pass the email and new password as options or set them interactively if you call the command without passing the options.
-
-**Example**
-
-```bash
-
-strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
-```
-
-**Options**
-
-| Option         | Type   | Description               |
-| -------------- | ------ | ------------------------- |
-| -e, --email    | string | The user email            |
-| -p, --password | string | New password for the user |
-| -h, --help     |        | display help for command  |
-
-## strapi generate
-
-Generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares), [services](/cms/backend-customization/services), and [migrations](/cms/database-migrations).
-
-```bash
-strapi generate
-```
-
-The command displays an interactive menu with the following options:
-
-- **api** - Generate a new API with controller and service
-- **controller** - Generate a new controller
-- **content-type** - Generate a new content type with schema
-- **policy** - Generate a new policy
-- **middleware** - Generate a new middleware
-- **migration** - Generate a new database migration
-- **service** - Generate a new service
-
-![strapi generate GIF](/img/assets/cli/strapi-generate.gif)
-
-The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
-Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
+</Tabs>
 
 ## strapi templates:generate
 
@@ -6726,9 +6503,40 @@ Start the server and evaluate commands in your application in real time.
 strapi console
 ```
 
-The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js 
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js . The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice gracefully stops the server.
 
-</Tabs>
+### Available helpers
+
+The `strapi` object exposes the following getters and methods to interact with your application:
+
+- `strapi.services` and `strapi.service(uid)` to use [services](/cms/backend-customization/services)
+- `strapi.controllers` and `strapi.controller(uid)` to call [controllers](/cms/backend-customization/controllers)
+- `strapi.contentTypes` and `strapi.contentType(uid)` to inspect [content-types](/cms/backend-customization/models)
+- `strapi.components` to list components
+- `strapi.policies` and `strapi.policy(name)` for [policies](/cms/backend-customization/policies)
+- `strapi.middlewares` and `strapi.middleware(name)` for [middlewares](/cms/backend-customization/middlewares)
+- `strapi.plugins` and `strapi.plugin(name)` for plugins
+- `strapi.hooks` and `strapi.hook(name)` for hooks
+- `strapi.apis` and `strapi.api(name)` for APIs
+- `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
+  ```js
+  await strapi.db.query('api::article.article').findMany();
+  ```
+
+Use this environment to test code and inspect your project with direct access to all Strapi APIs.
+
+:::note
+Strapi uses a Node.js feature called  to make the context available anywhere.
+:::
+
+## strapi version
+
+Print the currently installed Strapi version.
+It will output the current globally installed version if this command is strapi is installed globally, or the current version of Strapi within a Strapi project if the command is run from a given folder containing a Strapi project.
+
+```bash
+strapi version
+```
 
 ## strapi help
 
