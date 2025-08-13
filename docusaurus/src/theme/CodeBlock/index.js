@@ -10,7 +10,7 @@ function shouldShowAIButton(codeContent) {
   const content = codeContent.trim();
   
   // Must be substantial content
-  if (content.length <= 30) {
+  if (content.length <= 30) { // currently limited to 30 characters
     return false;
   }
 
