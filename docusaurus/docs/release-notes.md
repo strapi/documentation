@@ -27,6 +27,49 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.7.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Open API spec generation](https://github.com/strapi/documentation/pull/2665)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Update Admin Panel and Homepage customization pages with new widgets and new guided tour UI](https://github.com/strapi/documentation/pull/2671)
+- [Update controller sanitization](https://github.com/strapi/documentation/pull/2661)
+- [Document flat archive structure for import and export](https://github.com/strapi/documentation/pull/2658)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix no search results for `db.query`](https://github.com/strapi/documentation/pull/2667)
+- [Fix typo in lifecycle functions documentation](https://github.com/strapi/documentation/pull/2660)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/devios327" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/67002707?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="devios327"/>
+</a>
+<a href="https://github.com/maccomaccomaccomacco" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2686869?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="maccomaccomaccomacco"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.6.6
 
 <br />
