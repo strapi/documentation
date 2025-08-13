@@ -174,3 +174,8 @@
     color: var(--strapi-primary-500);
   }
 }
+
+// Unable to understand why second footer is displayed on Docusaurus, so I'm hiding it
+#__docusaurus + footer.footer {
+  display: none !important;
+}

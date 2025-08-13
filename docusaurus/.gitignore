@@ -16,6 +16,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+docusaurus/.env
 
 npm-debug.log*
 yarn-debug.log*
@@ -26,3 +27,9 @@ docs/.vuepress/config.js
 docs/node_modules/**
 
 *.py
+
+# LLMs.txt files and related
+llms*.txt
+**/llm*.txt
+pr-*.diff
+*-results.json

@@ -1,3 +1,4 @@
+// DocSidebarItemLink.js
 import React from 'react';
 import clsx from 'clsx';
 import {ThemeClassNames} from '@docusaurus/theme-common';
@@ -7,6 +8,8 @@ import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
 import { NewBadge, UpdatedBadge } from '../../../components/Badge';
 import styles from './styles.module.css';
+import Icon from '@site/src/components/Icon'
+
 export default function DocSidebarItemLink({
   item,
   onItemClick,
@@ -18,6 +21,7 @@ export default function DocSidebarItemLink({
   const {href, label, className, autoAddBaseUrl, customProps} = item;
   const isActive = isActiveSidebarItem(item, activePath);
   const isInternalLink = isInternalUrl(href);
+  
   return (
     <li
       className={clsx(
@@ -42,7 +46,18 @@ export default function DocSidebarItemLink({
           onClick: onItemClick ? () => onItemClick(item) : undefined,
         })}
         {...props}>
-        {label}
+        <span className="menu__link__content">
+          {label}
+          {customProps?.tooltip && (
+            <Icon name="info" />
+          )}
+          {customProps?.tooltip && (
+            <div 
+              className="info-icon__tooltip"
+              dangerouslySetInnerHTML={{ __html: customProps.tooltip }}
+            /> 
+          )} 
+        </span>
         {!isInternalLink && <IconExternalLink />}
         {customProps?.new && <NewBadge />}
         {customProps?.updated && <UpdatedBadge />}

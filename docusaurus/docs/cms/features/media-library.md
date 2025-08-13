@@ -108,6 +108,10 @@ When using the default upload provider, the following specific configuration opt
 The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
 :::
 
+:::note
+If you wish to override the image function to generate custom file names, please refer to the [Plugins extension](/cms/plugins-development/plugins-extension#within-the-extensions-folder) documentation.
+:::
+
 #### Example custom configuration
 
 The following is an example of a custom configuration for the Upload plugin when using the default upload provider:

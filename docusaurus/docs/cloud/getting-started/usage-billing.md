@@ -109,3 +109,10 @@ If you don't pay the invoice, the subscription of your project will automaticall
 #### Project suspension for other reasons
 
 If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact [Strapi Support](mailto:support@strapi.io).
+
+### Subscription cancellation
+
+If you want to cancel your Strapi Cloud subscription, you have 2 options:
+
+- either change your project's subscription to the free plan (see [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) documentation),
+- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-strapi-cloud-project) documentation).
