@@ -99,9 +99,13 @@ const config = {
       'data-modal-border-radius': '4px',
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
-      'data-modal-y-offset': '25vh',
-      'data-modal-size': '720px',
       'data-user-analytics-cookie-enabled': true,
+      'data-modal-size': '900px',              // Default is 640px
+      'data-modal-full-screen': 'false',
+      'data-modal-full-screen-on-mobile': 'true',
+      'data-modal-x-offset': '0',              // Defaults is undefined
+      'data-modal-y-offset': '3vh',            // Default is 10vh
+      'data-modal-inner-max-width': '100%',
       async: true,
     },
     {
