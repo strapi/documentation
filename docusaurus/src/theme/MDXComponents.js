@@ -28,7 +28,6 @@ import {
   MultiLanguageSwitcherRequest,
   MultiLanguageSwitcherResponse,
 } from '../components/MultiLanguageSwitcher';
-import AIEnhancedCode from '../components/AIEnhancedCode.js';
 import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
 import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
@@ -91,7 +90,6 @@ export default {
   BreakingChangeIdCard,
   IdentityCard,
   IdentityCardItem,
-  AIEnhancedCode,
   /**
    * Reusable annotation components go below👇
    */

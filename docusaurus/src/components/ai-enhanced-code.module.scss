@@ -1,4 +1,4 @@
-@use '../scss/mixins' as *;
+// @use '../scss/mixins' as *;
 
 .aiEnhancedCode {
   position: relative;
@@ -15,7 +15,7 @@
       top: 50px;
     }
     
-    @include medium-down {
+    @media (max-width: 996px) {
       top: 8px;
       right: 8px;
       
@@ -30,7 +30,7 @@
     :global([class*="codeBlockContent"]) {
       padding-right: 100px;
       
-      @include medium-down {
+      @media (max-width: 996px) {
         padding-right: 80px;
       }
     }
@@ -39,7 +39,7 @@
     :global([class*="buttonGroup"]) {
       right: 100px;
       
-      @include medium-down {
+      @media (max-width: 996px) {
         right: 80px;
       }
     }

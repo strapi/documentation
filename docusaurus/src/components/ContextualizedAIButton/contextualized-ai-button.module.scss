@@ -1,25 +1,26 @@
-@use '../../scss/mixins' as *;
+// @use '../scss/mixins' as *;
 
 .contextualizedAiButton {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border: 1px solid var(--strapi-primary-600);
-  border-radius: 6px;
-  background: var(--strapi-primary-600);
-  color: white;
-  font-size: 14px;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--ifm-color-emphasis-300);
+  color: var(--ifm-color-content);
+  font-size: 11px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  box-sizing: border-box;
+  min-width: 0;
   
+  // Match Docusaurus code block button styles exactly
   &:hover {
-    background: var(--strapi-primary-700);
-    border-color: var(--strapi-primary-700);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(99, 6, 182, 0.2);
+    background: var(--ifm-color-emphasis-400);
+    color: var(--ifm-color-content-inverse);
   }
 
   &:active {
@@ -27,34 +28,47 @@
   }
 
   &:focus {
-    outline: 2px solid var(--strapi-primary-600);
+    outline: 2px solid var(--ifm-color-primary);
     outline-offset: 2px;
   }
 
   span {
-    font-size: 14px;
+    font-size: 11px;
     line-height: 1;
   }
 
-  // Dark mode adjustments
-  @include dark {
-    background: var(--strapi-primary-500);
-    border-color: var(--strapi-primary-500);
-    
-    &:hover {
-      background: var(--strapi-primary-400);
-      border-color: var(--strapi-primary-400);
-      box-shadow: 0 2px 8px rgba(99, 6, 182, 0.3);
-    }
+  // Icon size adjustment - smaller to match other buttons
+  :global([class*="icon"]) {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
   }
 
-  // Responsive adjustments
-  @include medium-down {
-    font-size: 13px;
-    padding: 6px 10px;
+  // Mobile adjustments - using standard media queries instead of mixins
+  @media (max-width: 996px) {
+    font-size: 10px;
+    padding: 3px 6px;
+    gap: 3px;
     
     span {
-      font-size: 13px;
+      font-size: 10px;
     }
+    
+    :global([class*="icon"]) {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  
+  // Very small screens - show only icon
+  @media (max-width: 480px) {
+    span {
+      display: none;
+    }
+    
+    gap: 0;
+    padding: 4px;
+    min-width: 24px;
+    justify-content: center;
   }
 }
