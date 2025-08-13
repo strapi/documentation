@@ -1,4 +1,4 @@
-User-agent: *
+User-agent: Algolia Crawler
 Allow: /
 
-Sitemap: https://docs.strapi.io/sitemap.xml
+User-agent: *

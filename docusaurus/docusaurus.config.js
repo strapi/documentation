@@ -10,7 +10,7 @@ const darkCodeTheme = themes.dracula;
 const config = {
   title: 'Strapi 5 Documentation',
   tagline: 'Design APIs fast, manage content easily.',
-  url: 'https://docs.strapi.io',
+  url: 'https://docs-next.strapi.io',
   baseUrl: '/',
   onBrokenLinks: 'throw', // replace with 'throw' to stop building if broken links
   onBrokenMarkdownLinks: 'throw',
@@ -76,7 +76,7 @@ const config = {
       src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1', // fallback
       async: true,
     },
-    {
+{
       /**
        * Kapa AI widget script and parameters
        * See https://docs.kapa.ai/installation-widget#optional-configuration-parameters-
@@ -86,19 +86,26 @@ const config = {
       'data-project-name': 'Strapi',
       'data-project-logo': 'https://strapi.io/assets/favicon-32x32.png',
       'data-button-hide': 'true',
-      'data-modal-disclaimer': 'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
+      'data-modal-disclaimer':
+        'Disclaimer: Answers are AI-generated and might be inaccurate. Please ensure you double-check the information provided by visiting source pages.',
       'data-project-color': '#4945FF',
       'data-button-bg-color': '#32324D',
       // 'data-modal-override-open-class-search': 'DocSearch-Button',
       // 'data-modal-title-search': 'Search Strapi Docs',
       // 'data-modal-open-on-command-k': 'true',
       // 'data-search-mode-enabled': true,
-      'data-modal-override-open-class': "kapa-widget-button",
+      'data-modal-override-open-class': 'kapa-widget-button',
       'data-modal-title-ask-ai': 'Ask your question',
       'data-modal-border-radius': '4px',
       'data-submit-query-button-bg-color': '#4945FF',
       'data-modal-body-padding-top': '20px',
-      'data-modal-y-offset': "25vh",
+      'data-user-analytics-cookie-enabled': true,
+      'data-modal-size': '900px',              // Default is 640px
+      'data-modal-full-screen': 'false',
+      'data-modal-full-screen-on-mobile': 'true',
+      'data-modal-x-offset': '0',              // Defaults is undefined
+      'data-modal-y-offset': '3vh',            // Default is 10vh
+      'data-modal-inner-max-width': '100%',
       async: true,
     },
     {
@@ -200,8 +207,8 @@ const config = {
         hideOnScroll: false,
         logo: {
           alt: 'Strapi Documentation Logo',
-          src: 'img/logo-v5.png',
-          srcDark: 'img/logo-v5-dark.png',
+          src: 'img/logo-beta.png',
+          srcDark: 'img/logo-beta-dark.png',
         },
         items: [
           {
@@ -256,12 +263,8 @@ const config = {
             title: 'Additional resources',
             items: [
               {
-                label: 'LLMs.txt',
-                href: 'https://docs.strapi.io/llms.txt',
-              },
-              {
-                label: 'LLMs-full.txt',
-                href: 'https://docs.strapi.io/llms-full.txt',
+                label: 'v5 stable Docs',
+                href: 'https://docs.strapi.io',
               },
               {
                 label: 'v4 Docs',
