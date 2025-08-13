@@ -228,9 +228,27 @@ pre.prism-code {
     position: relative;
     top: -12px;
 
-    svg {
+    svg,
+    i::before {
       color: black;
     }
+
+    span {
+      color: black;
+    }
+  }
+
+  .ai-button {
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 24px;
   }
 
   &:has([class*="codeBlockTitle"]) {
@@ -295,6 +313,7 @@ pre.prism-code {
   }
 }
 
+
 @include medium-down {
   [class*="buttonGroup"],
   [class*="buttonGroup"] .clean-btn {
@@ -330,7 +349,9 @@ pre.prism-code {
   .clean-btn {
     background-color: transparent;
 
-    svg {
+    svg,
+    i::before,
+    span {
       color: var(--strapi-neutral-900);
     }
   }

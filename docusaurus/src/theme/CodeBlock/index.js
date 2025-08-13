@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import CodeBlock from '@theme-original/CodeBlock';
-import Icon from '../../components/Icon';
 
 // Helper function to check if we should show the AI button
 function shouldShowAIButton(codeContent) {
@@ -64,17 +63,6 @@ function injectAIButton(codeBlockElement, codeContent, language) {
 
     buttonGroup = document.createElement('div');
     buttonGroup.className = 'ai-button-group';
-    buttonGroup.style.cssText = `
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    `;
     
     codeBlockContainer.style.position = 'relative';
     codeBlockContainer.appendChild(buttonGroup);
@@ -97,53 +85,16 @@ function injectAIButton(codeBlockElement, codeContent, language) {
   aiButton.className = 'clean-btn ai-button';
   aiButton.title = 'Ask AI to explain this code';
   aiButton.setAttribute('aria-label', 'Ask AI to explain this code example');
-  
-  aiButton.style.cssText = `
-    padding: 6px 8px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    border: none;
-    background: var(--ifm-color-emphasis-200);
-    color: var(--ifm-color-emphasis-800);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    min-height: 24px;
-  `;
 
   // Create Phosphor sparkle icon
   const icon = document.createElement('i');
   icon.className = 'ph ph-sparkle';
-  icon.style.cssText = `
-    font-size: 14px; 
-    line-height: 1;
-    font-weight: 400;
-  `;
   
   const text = document.createElement('span');
   text.textContent = 'Ask AI';
-  text.style.cssText = `
-    font-size: 12px; 
-    line-height: 1;
-    font-weight: 500;
-  `;
 
   aiButton.appendChild(icon);
   aiButton.appendChild(text);
-
-  // Add hover effect to match Docusaurus clean-btn style
-  aiButton.addEventListener('mouseenter', () => {
-    aiButton.style.background = 'var(--ifm-color-emphasis-400)';
-    aiButton.style.color = 'var(--ifm-color-emphasis-900)';
-  });
-  
-  aiButton.addEventListener('mouseleave', () => {
-    aiButton.style.background = 'var(--ifm-color-emphasis-200)';
-    aiButton.style.color = 'var(--ifm-color-emphasis-800)';
-  });
 
   // Add click handler
   aiButton.addEventListener('click', () => {
