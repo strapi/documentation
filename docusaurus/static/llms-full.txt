@@ -374,10 +374,10 @@ For Strapi Cloud applications with large amounts of cacheable content, such as i
 
 
 
-# Strapi Cloud fundamentals <UpdatedBadge />
+# Strapi Cloud fundamentals
 Source: https://docs.strapi.io/cloud/getting-started/cloud-fundamentals
 
-# Strapi Cloud fundamentals 
+# Strapi Cloud fundamentals
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
@@ -403,7 +403,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
 
 * Strapi version `4.8.2` or higher
 * Project database must be compatible with PostgreSQL. Strapi does not support and does not recommend using any external databases, though it's possible to configure one (see [advanced database configuration](/cloud/advanced/database)).
-* Project(s) source code hosted on 
+* Project source code hosted on 
 
     </Tabs>
 
@@ -414,12 +414,12 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Setting name | Instructions                                                                                            |
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Display name | Write the name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`). |
-    | Git branch   | Choose from the drop-down the default branch to use for this deployment. This uses the default branch of the repository. |
-    | Deploy on push | Check the box to automatically deploy the latest changes from the selected branch. When disabled, you will need to manually deploy the latest changes. |
+    | Git branch   | Choose from the drop-down the branch you want to deploy. |
+    | Deploy on push | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
     | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West), Asia (Southeast) or Oceania. |
 
     :::note
-    The Git branch and "Deploy on push" settings can be modified afterwards through the project's setting, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project's settings, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
@@ -428,7 +428,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     |--------------|---------------------------------------------------------------------------------------------------------|
     | Base directory | Write the name of the directory where your Strapi app is located in the repository. This is useful if you have multiple Strapi apps in the same repository or if you have a monorepo. |
     | Environment variables | Click on **Add variable** to add environment variables used to configure your Strapi app (see [Environment variables](/cms/configurations/environment/) for more information). You can also add environment variables to your Strapi application by adding a `.env` file to the root of your Strapi app directory. The environment variables defined in the `.env` file will be used by Strapi Cloud. |
-    | Node version | Choose a Node version from the drop-down. Default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
+    | Node version | Choose a Node version from the drop-down. The default Node version will automatically be chosen to best match the version of your Strapi project. If you manually choose a version that doesn't match with your Strapi project, the build will fail but the explanation will be displayed in the build logs. |
 
     :::strapi Using Environment Variables
     You can use environment variable to connect your project to an external database rather than the default one used by Strapi Cloud (see [database configuration](/cms/configurations/database#environment-variables-in-database-configurations) for more details). If you would like to revert and use Strapi's default database again, you have to remove your `DATABASE_` environment variables (no automatic migration implied).
@@ -443,22 +443,30 @@ If you chose the free plan, this billing step will be skipped as you will not be
 
 To upgrade your project to a paid plan, you will need to fill in your billing information in the **Billing** section of your Profile.
 
- Skip to step 5 of the section below to finalise the creation of your project.
+ Skip to step 5 of the section below to finalize the creation of your project.
 :::
 
 1. Click on the **Continue to billing** button. You will directly be redirected to the second and final project deployment interface. There you can review all your new project setup information, enter payment & billing details and receive your invoice.
 
-2. Review your project: make sure the plan and setup information are correct. If needed, click the  **Edit** button to be redirected to the first interface of the project creation and fix any mistake.
+2. Review your project: make sure the plan and setup information are correct. If needed, click the  **Edit** button to navigate back to the first step of the project creation and fix any mistake.
 
 3. In the Payment section, fill in at least all mandatory elements for *Payment method* and *Billing information*.
 
 4. Check your invoice which informs you of what should be paid now and the following month. Optionally, you can enter a *Discount code* if you have one.
 
-5. Click on the **Create project** button to finalize the deployment of your new Strapi Cloud project. An initial deployment will automatically be triggered and you will be redirected to the *Projects* page.
+5. Click on the **Create project** button to finalize the creation of your new Strapi Cloud project.
 
-:::caution
-Create your Admin user after the initial deployment is complete. Do not share your application URL with anyone until you have created your Admin user.
+## Deploying your project
+
+After confirming the project creation, you will be redirected to your *Project dashboard* where you will be able to follow its creation and first deployment. 
+
+While your project is deploying, you can already start configuring some of your [project settings](/cloud/projects/settings).
+
+:::note
+If an error occurs during the project creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
+
+Once you project is successfully deployed, the creation tracker will be replaced by your deployments list and you will be able to visit your Cloud hosted project. Don't forget to create the first Admin user before sharing your Strapi project.
 
 ##  What to do next?
 
@@ -679,6 +687,13 @@ If you don't pay the invoice, the subscription of your project will automaticall
 
 If your project was suspended for reasons other than unpaid invoice leading to subscription cancellation, you may not have the possibility to reactivate your project yourself. You should receive an email with instructions on how to resolve the issue. If you do not receive the email notification, please contact [Strapi Support](mailto:support@strapi.io).
 
+### Subscription cancellation
+
+If you want to cancel your Strapi Cloud subscription, you have 2 options:
+
+- either change your project's subscription to the free plan (see [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) documentation),
+- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-strapi-cloud-project) documentation).
+
 
 
 # Collaboration
@@ -843,6 +858,10 @@ Each project card also displays a  menu icon to access the following options:
 * **Go to Deployments**: to be redirected to the [*Deployment*](/cloud/projects/deploys) page
 * **Go to Settings**: to be redirected to the [*Settings*](/cloud/projects/settings) page
 
+:::tip
+Click on the * Product updates* button in the navigation bar to check out the latest features and fixes released.
+:::
+
 ## Accessing a project's dashboard
 
 From the *Projects* page, click on any project card to access its dashboard. It displays the project and environment details and gives access to the deployment history and all available settings.
@@ -909,7 +928,9 @@ The  *General* tab for the project-level settings enables you to check and updat
 - *Strapi CMS license key*: to enable and use some CMS features directly on your Cloud project (see [Pricing page](https://strapi.io/pricing-self-hosted) to purchase a license).
 
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
-- *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
+- *Danger zone*, with:
+  - *Transfer ownership*: for the project owner to transfer the ownership of the Cloud project to an already existing maintainer (see [Transferring project ownership](#transferring-project-ownership)).
+  - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
 
 #### Renaming project
 
@@ -961,11 +982,40 @@ Updating the git repository could result in the loss of the project and its data
 5. Click on the **Update repository** button at the bottom of the *Update repository* interface.
 6. In the *Update repository* dialog, confirm your changes by clicking on the **Confirm** button.
 
+#### Transferring project ownership  {#transferring-project-ownership}
+
+The ownership of the Strapi Cloud project can be transferred to another user, as long as they're a maintainer of the project. It can either be at the initiative of the current project owner, or can be requested by a project maintainer. Once the ownership is transferred, it is permanent until the new owner decides to transfer the ownership again to another maintainer.
+
+:::prerequisites
+For the ownership of a project to be transferred, the following requirements must be met:
+- The project must be on a paid plan, with no currently expired card and/or unpaid bills.
+- The maintainer must have filled their billing information.
+- No already existing ownership transfer must be pending for the project.
+
+Note that ownership transfers might fail when done the same day of subscription renewal (i.e. 1st of every month). If the transfer fails that day, but all prerequisites are met, you should wait a few hours and try again.
+:::
+
+1. In the *Danger zone* section of the  *General* tab, click on the **Transfer ownership** button.
+2. In the dialog:
+   - If you are the project owner: choose the maintainer who should be transferred the ownership by clicking on **...** > **Transfer ownership** associated with their name.
+   - If you are a maintainer: find yourself in the list and click on **...** > **Transfer ownership** associated with your name.
+3. Confirm the transfer/request in the new dialog by clicking on the **Transfer ownership** button.
+
+An email will be sent to both users. The person who needs to transfer the ownership or inherit it will have to click on the **Confirm transfer** button in the email. Once done, the previous owner will receive a confirmation email that the transfer has successfully been done.
+
+:::tip
+As long as the ownership transfer or request hasn't been confirmed, there is the option to cancel in the same dialog that the maintainer was chosen.
+:::
+
+:::note
+Once the ownership transfer is done, the project will be disconnected from Strapi Cloud. As new owner, make sure to go to the  *General* tab of project settings to reconnect the project.
+:::
+
 #### Deleting Strapi Cloud project
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be canceled.
 
-1. In the *Delete project* section of the  *General* tab, click on the **Delete project** button.
+1. In the *Danger zone* section of the  *General* tab, click on the **Delete project** button.
 2. In the dialog, select the reason why you are deleting your project. If selecting "Other" or "Missing feature", a textbox will appear to let you write additional information.
 3. Confirm the deletion of your project by clicking on the **Delete project** button at the bottom of the dialog.
 
@@ -993,12 +1043,12 @@ To create a new environment:
     | Git branch       | (mandatory) Select the right branch for your new environment.            |
     | Base directory   | Write the name of the base directory of your new environment.            |
     | Import variables | Tick the box to import variable names from an existing environment. Values will not be imported, and all variables will remain blank. |
-    | Auto-deploy      | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
+    | Deploy on push      | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
 
-4. Click on the **Add environment** button to create your project's new environment. A new deployment will automatically be triggered.
+4. Click on the **Add environment** button to create your project's new environment. You will then be redirected to your *Project dashboard* where you will be able to follow your new environment's creation and first deployment.
 
-:::caution
-If the creation of a new environment fails but you are still charged, try creating the environment again. This time, the environment creation should be successful and you will not be charged a second time. This behaviour is an known issue that should be fixed in the upcoming weeks.
+:::note
+If an error occurs during the environment creation, the progress indicator will stop and display an error message. You will see a **Retry** button next to the failed step, allowing you to restart the creation process.
 :::
 
 ### Billing & Usage
@@ -1152,13 +1202,12 @@ The  *Backups* tab informs you of the status and date of the latest backup of yo
 
 :::note Notes
 
-- The backup feature is not available for Strapi Cloud projects using the Free or Essential plans. You will need to upgrade to either the Pro or Scale plan to have your project automatically backed up and to have access to manual backups.
+- The backup feature is not available for Strapi Cloud projects on the Free or Essential plans. You will need to upgrade to the Pro or Scale plan to enable automatic backups and access the manual backup option.
 
-<!-- - Only project owners can restore a backup. Maintainers have access to the  *Backups* tab but the **Restore backup** button won't be displayed for them. Refer to [Collaboration](/cloud/projects/collaboration) for more information. -->
+- Backups include only the database of your default Production environment. Assets uploaded to your project and databases from any secondary environments are not included.
 
-- The manual backup option should become available shortly after project's first succesful deployment.
+- The manual backup option becomes available shortly after the project’s first successful deployment.
 
-- The backup feature is only available for the default, production environment. Other additional environment's settings will not show the  *Backups* tab.
 :::
 
 :::tip
@@ -1169,7 +1218,7 @@ For projects created before the release of the Backup feature in October 2023, t
 
 To create a manual backup, in the  *Backups* section, click on the **Create backup** button.
 
-The manual backup should start immediately, and restoration or creation of other backups will be disabled until backup is complete.
+The manual backup should start immediately, and restoration or creation of other backups will be disabled until the backup is complete.
 
 :::caution
 When creating a new manual backup, any existing manual backup will be deleted. You can only have one manual backup at a time.
@@ -1183,6 +1232,18 @@ If you need to restore a backup of your project:
 2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
 3. Click on the **Restore** button of the dialog. Once the restoration is finished, your project will be back to the state it was at the time of the chosen backup. You will be able to see the restoration timestamp and the backup restored in the  *Backups* tab.
 4. The timestamp of the last completed restoration will be displayed to help you track when the project was last restored.
+
+#### Downloading a backup
+
+If you need to download a backup of your project:
+
+1. In the  *Backups* section, click on the **Download backup** button.
+2. In the dialog, choose one of the available backups (automatic or manual) of your project in the *Choose backup* drop-down.
+3. Click on the **Download** button of the dialog to download the chosen backup's archive file in `.sql` format.
+
+:::note
+The backup file will include only the database of your default Production environment. It will not include assets or any other environment databases.
+:::
 
 ### Domains
 
@@ -1310,6 +1371,8 @@ The following is an example of a basic customization of the admin panel:
 
 # Admin panel bundlers
 Source: https://docs.strapi.io/cms/admin-panel-customization/bundlers
+
+# Admin panel bundlers
 
 Strapi's [admin panel](/cms/admin-panel-customization) is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application. 2 different bundlers can be used with your Strapi 5 application, [Vite](#vite) (the default one) and [webpack](#webpack). Both bundlers can be configured to suit your needs.
 
@@ -1699,9 +1762,8 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor
 
 Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in rich text editor. To change the default editor, several options are at your disposal:
 
-- You can install a third-party plugin, such as one for CKEditor, by visiting 
-
-</Tabs>
+- You can install a third-party plugin, such as one for CKEditor, by visiting .
+- You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/features/custom-fields)).
 
 
 
@@ -1713,6 +1775,7 @@ Source: https://docs.strapi.io/cms/api/client
 The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content. This guide walks you through setting up the Strapi Client, configuring authentication, and using its key features effectively.
 
 ## Getting Started
+
 :::prerequisites
 - A Strapi project has been created and is running. If you haven't set one up yet, follow the [Quick Start Guide](/cms/quick-start) to create one.
 - You know the URL of the Content API of your Strapi instance (e.g., `http://localhost:1337/api`).
@@ -1728,26 +1791,15 @@ To use the Strapi Client in your project, install it as a dependency using your 
 
 To start interacting with your Strapi back end, initialize the Strapi Client and set the base API URL:
 
-```js
+</Tabs>
 
-const client = strapi({ baseURL: 'http://localhost:1337/api' });
-```
-
-If you're using the Strapi Client in a browser environment, you can include it using a `<script>` tag:
-
-```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
-<script src="https://cdn.jsdelivr.net/npm/@strapi/client"></script>
-
-<script>
-  const client = strapi.strapi({ baseURL: 'http://localhost:1337/api' });
-</script>
-```
+The `baseURL` must include the protocol (`http` or `https`). An invalid URL will throw an error `StrapiInitializationError`.
 
 ### Authentication
 
 The Strapi Client supports different authentication strategies to access protected resources in your Strapi back end.
 
-If your Strapi instance uses API tokens, configure the Strapi Client as follows:
+If your Strapi instance uses [API tokens](/cms/features/api-tokens), configure the Strapi Client as follows:
 
 ```js
 const client = strapi({
@@ -1757,6 +1809,7 @@ const client = strapi({
 ```
 
 This allows your requests to include the necessary authentication credentials automatically.
+If the token is invalid or missing, the client will throw an error during initialization `StrapiValidationError`.
 
 ## API Reference
 
@@ -1768,6 +1821,7 @@ The Strapi Client provides the following key properties and methods for interact
 | `fetch()`    | A utility method for making generic API requests similar to the native fetch API. |
 | `collection()`  | Manages collection-type resources (e.g., blog posts, products). |
 | `single()`  | Manages single-type resources (e.g., homepage settings, global configurations). |
+| `files()`  | Enables upload, retrieve and management of files directly to/from the Strapi Media Library. |
 
 ### General purpose fetch
 
@@ -1790,27 +1844,8 @@ Collection types in Strapi are entities with multiple entries (e.g., a blog with
 | `delete(documentID, queryParams?)`  | Update an existing document. |
 
 **Usage examples:**
-```js
-const articles = client.collection('articles');
 
-// Fetch all english articles sorted by title
-const allArticles = await articles.find({
-  locale: 'en',
-  sort: 'title',
-});
-
-// Fetch a single article
-const singleArticle = await articles.findOne('article-document-id');
-
-// Create a new article
-const newArticle = await articles.create({ title: 'New Article', content: '...' });
-
-// Update an existing article
-const updatedArticle = await articles.update('article-document-id', { title: 'Updated Title' });
-
-// Delete an article
-await articles.delete('article-id');
-```
+</Tabs>
 
 ### Working with single types
 
@@ -1819,7 +1854,7 @@ Single types in Strapi represent unique content entries that exist only once (e.
 | ----------| -------------------------------------------------------------------------------------------- |
 | `find(queryParams?)`  | Fetch the document.        |
 | `update(documentID, data, queryParams?)`  | Update the document. |
-| `delete(queryParams?) `  | Remove the document. |
+| `delete(queryParams?)`  | Remove the document. |
 
 **Usage examples:**
 ```js
@@ -1841,20 +1876,25 @@ const updatedHomepage = await homepage.update(
 await homepage.delete();
 ```
 
-### Working with files 
+### Working with files
 
 The Strapi Client provides access to the [Media Library](/cms/features/media-library) via the `files` property. This allows you to retrieve and manage file metadata without directly interacting with the REST API.
 
-The following methods are available for working with files:
+The following methods are available for working with files. Click on the method name in the  table to jump to the corresponding section with more details and examples:
 
 | Method | Description |
 |--------|-------------|
-| `find(params?)` | Retrieves a list of file metadata based on optional query parameters |
-| `findOne(fileId)` | Retrieves the metadata for a single file by its ID |
-| `update(fileId, fileInfo)` | Updates metadata for an existing file |
-| `delete(fileId)` | Deletes a file by its ID |
+| [`find(params?)`](#find) | Retrieves a list of file metadata based on optional query parameters |
+| [`findOne(fileId)`](#findone) | Retrieves the metadata for a single file by its ID |
+| [`update(fileId, fileInfo)`](#update) | Updates metadata for an existing file |
+| [`upload(file, options)`](#upload) | Uploads a file (Blob or Buffer) with an optional `options` object for metadata |
+| [`delete(fileId)`](#delete) | Deletes a file by its ID |
 
-**Usage examples:**
+#### `find`
+
+The `strapi.client.files.find()` method retrieves a list of file metadata based on optional query parameters.
+
+The method can be used as follows:
 
 ```js
 // Initialize the client
@@ -1875,18 +1915,89 @@ const imageFiles = await client.files.find({
   },
   sort: ['name:asc'], // Sort by name in ascending order
 });
+```
+
+#### `findOne` {#findone}
+
+The `strapi.client.files.findOne()` method retrieves the metadata for a single file by its id.
+
+The method can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
 
 // Find file metadata by ID
 const file = await client.files.findOne(1);
-console.log(file.name); // The file name
-console.log(file.url); // The file URL
+console.log(file.name);
+console.log(file.url); 
 console.log(file.mime); // The file MIME type
+```
+
+#### `update`
+
+The `strapi.client.files.update()` method updates metadata for an existing file, accepting 2 parameters, the `fileId`, and an object containing options such as the name, alternative text, and caption for the media.
+
+The methods can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
+});
 
 // Update file metadata
 const updatedFile = await client.files.update(1, {
   name: 'New file name',
   alternativeText: 'Descriptive alt text for accessibility',
   caption: 'A caption for the file',
+});
+```
+
+#### `upload` 
+
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+##### Response Structure
+
+The `strapi.client.files.upload()` method returns an array of file objects, each with fields such as:
+
+```json
+{
+  "id": 1,
+  "name": "image.png",
+  "alternativeText": "Uploaded from Node.js Buffer",
+  "caption": "Example upload",
+  "mime": "image/png",
+  "url": "/uploads/image.png",
+  "size": 12345,
+  "createdAt": "2025-07-23T12:34:56.789Z",
+  "updatedAt": "2025-07-23T12:34:56.789Z"
+}
+```
+
+:::note Additional response fields
+The upload response includes additional fields beyond those shown above. See the complete FileResponse interface in the  for all available fields.
+:::
+
+#### `delete`
+
+The `strapi.client.files.delete()` method deletes a file by its ID.
+
+The method can be used as follows:
+
+```js
+// Initialize the client
+const client = strapi({
+  baseURL: 'http://localhost:1337/api',
+  auth: 'your-api-token',
 });
 
 // Delete a file by ID
@@ -1896,8 +2007,20 @@ console.log('Deleted file ID:', deletedFile.id);
 console.log('Deleted file name:', deletedFile.name);
 ```
 
+<br/>
+
+## Handling Common Errors
+
+The following errors might occur when sending queries through the Strapi Client:
+
+| Error | Description |
+|-------|-------------|
+| Permission Errors | If the authenticated user does not have permission to upload or manage files, a `FileForbiddenError` is thrown. |
+| HTTP Errors|If the server is unreachable, authentication fails, or there are network issues, an `HTTPError` is thrown. |
+| Missing Parameters|When uploading a `Buffer`, both `filename` and `mimetype` must be provided in the options object. If either is missing, an error is thrown. |
+
 :::strapi Additional information
-More details about the Strapi Strapi Client might be found in the .
+More details about the Strapi Client may be found in the .
 :::
 
 
@@ -1910,6 +2033,7 @@ Source: https://docs.strapi.io/cms/api/content-api
 Once you've created and configured a Strapi project, created a content structure with the [Content-Type Builder](/cms/features/content-type-builder) and started adding data through the [Content Manager](/cms/features/content-manager), you likely would like to access your content.
 
 From a front-end application, your content can be accessed through Strapi's Content API, which is exposed:
+
 - by default through the [REST API](/cms/api/rest)
 - and also through the [GraphQL API](/cms/api/graphql) if you installed the Strapi built-in [GraphQL plugin](/cms/plugins/graphql).
 
@@ -1925,6 +2049,8 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
 Source: https://docs.strapi.io/cms/api/document
 
 <div className="document-concept-page custom-mermaid-layout">
+
+# Documents
 
 A **document** in Strapi 5 is an API-only concept. A document represents all the different variations of content for a given entry of a content-type.
 
@@ -1972,9 +2098,14 @@ Source: https://docs.strapi.io/cms/api/document-service
 
 # Document Service API
 
-The Document Service API is built on top of the **Query Engine API**  and used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** 
+The Document Service API is built on top of the **Query Engine API**  and is used to perform CRUD ([create](#create), [retrieve](#findone), [update](#update), and [delete](#delete)) operations on **documents** 
+
+:::strapi Entity Service API is deprecated in Strapi 5
+The Document Service API replaces the Entity Service API used in Strapi v4 (
 
 </ApiCall>
+
+The `findOne()` method returns the matching document if found, otherwise returns `null`.
 
 ## `findFirst()`
 
@@ -2117,10 +2248,6 @@ Updates document versions and returns them.
 Syntax: `update(parameters: Params) => Promise
 
 </ApiCall>
-
-:::note
-It's not recommended to update repeatable components with the Document Service API (see the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api.md) for more details).
-:::
 
 <!-- ! not working -->
 <!-- #### Update many document locales
@@ -3481,55 +3608,95 @@ To fetch a documents
 
 ### Create a new localized document {#locale-create}
 
-The `locale` field can be passed to create a localized document  for a specific locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/cms/api/graphql#create-a-new-document)).
+The `locale` field can be passed to create a localized document
 
-```graphql title="Example: Create a new restaurant for the French locale"
-mutation CreateRestaurant($data: RestaurantInput!, $locale: I18NLocaleCode) {
-  createRestaurant(
-    data: {
-      name: "Brasserie Bonjour",
-      description: "Description in French goes here"
-    },
-    locale: "fr"
-  ) {
-  documentId
-  name
-  description
-  locale
-}
-```
 
-### Update a document for a specific locale {#locale-update}
 
-A `locale` argument can be passed in the mutation to update a document  for a given locale (for more information about mutations with GraphQL, see [the GraphQL API documentation](/cms/api/graphql#update-an-existing-document)).
+# OpenAPI specification
+Source: https://docs.strapi.io/cms/api/openapi
 
-```graphql title="Example: Update the description field of restaurant for the French locale"
-mutation UpdateRestaurant($documentId: ID!, $data: RestaurantInput!, $locale: I18NLocaleCode) {
-  updateRestaurant(
-    documentId: "a1b2c3d4e5d6f7g8h9i0jkl"
-    data: {
-      description: "New description in French"
-    },
-    locale: "fr"
-  ) {
-  documentId
-  name
-  description
-  locale
-}
-```
+# OpenAPI specification generation
 
-### Delete a locale for a document {#locale-delete}
+Strapi provides a command-line tool to generate 
 
-Pass the `locale` argument in the mutation to delete a specific localization for a document :
+</Tabs>
 
-```graphql
-mutation DeleteRestaurant($documentId: ID!, $locale: I18NLocaleCode) {
-  deleteRestaurant(documentId: "xzmzdo4k0z73t9i68a7yx2kk", locale: "fr") {
-    documentId
-  }
-}
-```
+You can also path an optional `--output` argument to specify the path and filename, as in the following example:
+
+</Tabs>
+
+### Specification structure and content
+
+The generated OpenAPI specification follows the 
+
+<div class="mermaid-download-link">
+  <small>
+    <i class="strapi-icons ph-fill ph-download" style={{color: "inherit;"}}></i>
+    <a href="/example-openapi-spec.json"download="" target="_blank" title="Click to download a complete OpenAPI 3.1.0 specification file generated with example data extracted from a freshly installed Strapi project">Download an example of a complete specification file</a>
+  </small>
+</div>
+
+<br/>
+
+The generated OpenAPI specification includes all available API endpoints in your Strapi application, and information about these endpoints, such as the following:
+
+- CRUD operations for all content types
+- Custom API routes defined in your application
+- Authentication endpoints for user management
+- File upload endpoints for media handling
+- Plugin endpoints from installed plugins
+
+## Integrating with Swagger UI
+
+With the following steps you can quickly generate a [Swagger UI](https://swagger.io/)-compatible page:
+
+1. Generate a specification:
+
+    </Tabs>
+
+2. Update [the `/config/middlewares.js` configuration file](/cms/configurations/middlewares) with the following code:
+
+    </Tabs>
+
+    This will ensure the Swagger UI display from  is not blocked by Strapi's CSP policy handled by the [security middleware](/cms/configurations/middlewares#security).
+
+3. Create a `public/openapi.html` file in your Strapi project to display the Swagger UI, with the following code:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>API Documentation</title>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css"
+        />
+      </head>
+      <body>
+        <div id="swagger-ui"></div>
+        <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-standalone-preset.js"></script>
+        <script>
+          window.onload = function () {
+            SwaggerUIBundle({
+              url: './swagger-spec.json',
+              dom_id: '#swagger-ui',
+              presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+              ],
+              layout: 'StandaloneLayout',
+            });
+          };
+        </script>
+      </body>
+    </html>
+    ```
+
+4. Restart the Strapi server with `yarn develop` or `npm run develop` and visit the `/openapi.html` page. The Swagger UI should be displayed:
+
+    ![Swagger UI example with Strapi OpenAPI specification](/img/assets/apis/swagger-open-api.png)
 
 
 
@@ -4439,6 +4606,8 @@ Source: https://docs.strapi.io/cms/backend-customization
 
 <div className="custom-mermaid-layout">
 
+# Backend customization
+
 :::strapi Disambiguation: Strapi back end
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
@@ -4502,7 +4671,7 @@ In most cases, the controllers will contain the bulk of a project's business log
   <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/cms/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
-## Implementation 
+## Implementation
 
 Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
 
@@ -4566,22 +4735,22 @@ Within the Strapi factories the following functions are exposed that can be used
 These functions automatically inherit the sanitization settings from the model and sanitize the data accordingly based on the content-type schema and any of the content API authentication strategies, such as the Users & Permissions plugin or API tokens.
 
 :::warning
-Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use the `@strapi/utils` tools, such as `sanitize.contentAPI.query` described in [Sanitizing Custom Controllers](#sanitize-validate-custom-controllers), or else the result of your query will be sanitized against the wrong model.
+Because these methods use the model associated with the current controller, if you query data that is from another model (i.e., doing a find for "menus" within a "restaurant" controller method), you must instead use the `strapi.contentAPI` methods, such as `strapi.contentAPI.sanitize.query` described in [Sanitizing Custom Controllers](#sanitize-validate-custom-controllers), or else the result of your query will be sanitized against the wrong model.
 :::
 
 </Tabs>
 
 #### Sanitization and validation when building custom controllers  {#sanitize-validate-custom-controllers}
 
-Within custom controllers, there are 5 primary functions exposed via the `@strapi/utils` package that can be used for sanitization and validation:
+Within custom controllers, Strapi exposes the following functions via `strapi.contentAPI` for sanitization and validation:
 
 | Function Name                | Parameters         | Description                                             |
 |------------------------------|--------------------|---------------------------------------------------------|
-| `sanitize.contentAPI.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
-| `sanitize.contentAPI.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
-| `sanitize.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
-| `validate.contentAPI.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
-| `validate.contentAPI.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `strapi.contentAPI.sanitize.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
+| `strapi.contentAPI.sanitize.output` | `data`, `schema`, `auth`      | Sanitizes the response output including restricted relations, private fields, passwords, and other nested "visitors" added by plugins  |
+| `strapi.contentAPI.sanitize.query`  | `ctx.query`, `schema`, `auth` | Sanitizes the request query including filters, sort, fields, and populate  |
+| `strapi.contentAPI.validate.query`  | `ctx.query`, `schema`, `auth` | Validates the request query including filters, sort, fields (currently not populate) |
+| `strapi.contentAPI.validate.input`  | `data`, `schema`, `auth` | (EXPERIMENTAL) Validates the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |
 
 :::note 
 Depending on the complexity of your custom controllers, you may need additional sanitization that Strapi cannot currently account for, especially when combining the data from multiple sources.
@@ -5072,6 +5241,45 @@ The `options` key is used to define specific behaviors and accepts the following
     "draftAndPublish": true
   }
 }
+```
+
+### Plugin options
+
+`pluginOptions` is an optional object allowing plugins to store configuration for a model or a specific attribute.
+
+| Key                       | Value                         | Description                                            |
+|---------------------------|-------------------------------|--------------------------------------------------------|
+| `i18n`                    | `localized: true`             | Enables localization.                                  |
+| `content-manager`         | `visible: false`              | Hides from Content Manager in the admin panel.         |
+| `content-type-builder`    | `visible: false`              | Hides from Content-type Builder in the admin panel.    |
+
+```json title="./src/api/[api-name]/content-types/[content-type-name]/schema.json"
+
+{
+  "attributes": {
+    "name": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    }
+    // …additional attributes
+  }
+}
+
 ```
 
 ## Lifecycle hooks
@@ -5576,42 +5784,6 @@ The service is now available through the `strapi.service('api::restaurant.restau
 When a new [content-type](/cms/backend-customization/models.md#content-types) is created, Strapi builds a generic service with placeholder code, ready to be customized.
 :::
 
-### Core service methods
-
-Services generated with `createCoreService` inherit methods that wrap the [Document Service API](/cms/api/document-service). The available methods depend on the content-type:
-
-#### Collection types
-
-| Method | Description |
-| --- | --- |
-| `find(params)` | Wrapper for [`findMany`](/cms/api/document-service#findmany); returns a paginated list of documents. |
-| `findOne(documentId, params)` | Wrapper for [`findOne`](/cms/api/document-service#findone); returns a single document by its `documentId`. |
-| `create(params)` | Wrapper for [`create`](/cms/api/document-service#create); creates a new document. |
-| `update(documentId, params)` | Wrapper for [`update`](/cms/api/document-service#update); updates an existing document. |
-| `delete(documentId, params)` | Wrapper for [`delete`](/cms/api/document-service#delete); removes a document. |
-| `count(params)` | Wrapper for [`count`](/cms/api/document-service#count); returns the number of matching documents. |
-| `publish(documentId, params)` | Wrapper for [`publish`](/cms/api/document-service#publish); publishes a draft document. |
-| `unpublish(documentId, params)` | Wrapper for [`unpublish`](/cms/api/document-service#unpublish); unpublishes a document. |
-| `discardDraft(documentId, params)` | Wrapper for [`discardDraft`](/cms/api/document-service#discarddraft); deletes the draft copy. |
-
-#### Single types
-
-| Method | Description |
-| --- | --- |
-| `find(params)` | Returns the single document (uses [`findFirst`](/cms/api/document-service#findfirst) internally). |
-| `createOrUpdate({ data, ...params })` | Creates the document if it doesn't exist or updates it (uses [`update`](/cms/api/document-service#update)). |
-| `delete(params)` | Deletes the document (uses [`delete`](/cms/api/document-service#delete)). |
-| `count(params)` | Counts documents matching the filters (uses [`count`](/cms/api/document-service#count)). |
-| `publish(params)` | Publishes a draft document (uses [`publish`](/cms/api/document-service#publish)). |
-| `unpublish(params)` | Unpublishes the document (uses [`unpublish`](/cms/api/document-service#unpublish)). |
-| `discardDraft(params)` | Deletes the draft copy (uses [`discardDraft`](/cms/api/document-service#discarddraft)). |
-
-#### Parameters and default behavior
-
-Core service methods accept the same parameters as their underlying [Document Service API](/cms/api/document-service) calls, such as `fields`, `filters`, `sort`, `pagination`, `populate`, `locale`, and `status`. When no `status` is provided, Strapi automatically sets `status: 'published'` so only published content is returned. To query draft documents, explicitly pass `status: 'draft'` or another value supported by the Document Service.
-
-The `createCoreService` factory also exposes a `getFetchParams(params)` helper that converts a controller's query object into the parameter format expected by these methods. This helper can be reused when overriding core methods to forward sanitized parameters to `strapi.documents()`.
-
 ### Extending core services
 
 Core services are created for each content-type and could be used by [controllers](/cms/backend-customization/controllers.md) to execute reusable logic through a Strapi project. Core services can be customized to implement your own logic. The following code examples should help you get started.
@@ -5651,6 +5823,42 @@ In the syntax examples above, `serviceName` is the name of the service file for 
 :::tip
 To list all the available services, run `yarn strapi services:list`.
 :::
+
+### Core service methods
+
+Services generated with `createCoreService` inherit methods that wrap the [Document Service API](/cms/api/document-service). The available methods depend on the content-type:
+
+#### Collection types
+
+| Method | Description |
+| --- | --- |
+| `find(params)` | Wrapper for [`findMany`](/cms/api/document-service#findmany); returns a paginated list of documents. |
+| `findOne(documentId, params)` | Wrapper for [`findOne`](/cms/api/document-service#findone); returns a single document by its `documentId`. |
+| `create(params)` | Wrapper for [`create`](/cms/api/document-service#create); creates a new document. |
+| `update(documentId, params)` | Wrapper for [`update`](/cms/api/document-service#update); updates an existing document. |
+| `delete(documentId, params)` | Wrapper for [`delete`](/cms/api/document-service#delete); removes a document. |
+| `count(params)` | Wrapper for [`count`](/cms/api/document-service#count); returns the number of matching documents. |
+| `publish(documentId, params)` | Wrapper for [`publish`](/cms/api/document-service#publish); publishes a draft document. |
+| `unpublish(documentId, params)` | Wrapper for [`unpublish`](/cms/api/document-service#unpublish); unpublishes a document. |
+| `discardDraft(documentId, params)` | Wrapper for [`discardDraft`](/cms/api/document-service#discarddraft); deletes the draft copy. |
+
+#### Single types
+
+| Method | Description |
+| --- | --- |
+| `find(params)` | Returns the single document (uses [`findFirst`](/cms/api/document-service#findfirst) internally). |
+| `createOrUpdate({ data, ...params })` | Creates the document if it doesn't exist or updates it (uses [`update`](/cms/api/document-service#update)). |
+| `delete(params)` | Deletes the document (uses [`delete`](/cms/api/document-service#delete)). |
+| `count(params)` | Counts documents matching the filters (uses [`count`](/cms/api/document-service#count)). |
+| `publish(params)` | Publishes a draft document (uses [`publish`](/cms/api/document-service#publish)). |
+| `unpublish(params)` | Unpublishes the document (uses [`unpublish`](/cms/api/document-service#unpublish)). |
+| `discardDraft(params)` | Deletes the draft copy (uses [`discardDraft`](/cms/api/document-service#discarddraft)). |
+
+#### Parameters and default behavior
+
+Core service methods accept the same parameters as their underlying [Document Service API](/cms/api/document-service) calls, such as `fields`, `filters`, `sort`, `pagination`, `populate`, `locale`, and `status`. When no `status` is provided, Strapi automatically sets `status: 'published'` so only published content is returned. To query draft documents, explicitly pass `status: 'draft'` or another value supported by the Document Service.
+
+The `createCoreService` factory also exposes a `getFetchParams(params)` helper that converts a controller's query object into the parameter format expected by these methods. This helper can be reused when overriding core methods to forward sanitized parameters to `strapi.documents()`.
 
 
 
@@ -6059,6 +6267,10 @@ The event is triggered when a [release](/cms/features/releases) is published.
 - Use secure, HTTPS endpoints for receiving webhooks.
 - Set up rate limiting to avoid being overwhelmed by multiple webhook requests.
 
+:::tip
+If you want to learn more about how to use webhooks with Next.js, please have a look at the [dedicated blog article](https://strapi.io/blog/how-to-create-an-ssg-static-site-generation-application-with-strapi-webhooks-and-nextjs).
+:::
+
 
 
 # Command Line Interface
@@ -6069,7 +6281,7 @@ Source: https://docs.strapi.io/cms/cli
 Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds. The CLI works with both the `yarn` and `npm` package managers.
 
 :::caution
-Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. A fix for the `npm` package manager is anticipated by March 2023. In the meantime, consider using the `yarn` package manager.
+Interactive commands such as `strapi admin:create-user` don't display prompts with `npm`. Please consider using the `yarn` package manager.
 :::
 
 :::note
@@ -6087,8 +6299,8 @@ The `strapi install`, `strapi uninstall`, `strapi new`, and `strapi watch-admin`
 
 | Strapi v4 command         | Strapi 5 equivalent                                                                                                                                                                                |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [Marketplace](/cms/plugins/installing-plugins-via-marketplace))                                                |
-| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/cms/installation/cli))                                                                   |
+| `strapi install [plugin]` | Use the npx command corresponding to the plugin (found on the Marketplace, see [Marketplace](/cms/plugins/installing-plugins-via-marketplace))                                                     |
+| `strapi new`              | Use the equivalent yarn or npx command to create a new Strapi project (see [CLI installation guide](/cms/installation/cli))                                                                        |
 | `strapi watch-admin`      | `yarn develop` or `npm run develop` always starts the Strapi server in "watch-admin" mode. To disable this in Strapi 5, run `yarn develop --no-watch-admin` or `npm run develop --no-watch-admin`. |
 
 </details>
@@ -6167,225 +6379,23 @@ Deploys to Strapi Cloud (see [Cloud CLI](/cloud/cli/cloud-cli#strapi-deploy) doc
 strapi export
 ```
 
-The exported file is automatically named using the format `export_YYYYMMDDHHMMSS` with the current date and timestamp. Alternately, you can specify the filename using the `-f` or `--file` flag. The following table provides all of the available options as command line flags:
+The archive contains folders such as `configuration`, `entities`, `links`, and `schemas` with data stored in 
 
-| Option              |  Type  | Description                                                                                                                |
-| ------------------- | :----: | -------------------------------------------------------------------------------------------------------------------------- |
-| `--no-encrypt`      |   -    | Disables file encryption and disables the `key` option.   |
-| `--no-compress`     |   -    | Disables file compression.      |
-| `-k`, <br/>`--key`  | string | Passes the encryption key as part of the `export` command. <br/> The `--key` option can't be combined with `--no-encrypt`. |
-| `-f`, <br/>`--file` | string | Specifies the export filename. Do not include a file extension.                                                            |
-| `--exclude`         | string | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                  |
-| `--only`            | string | Include only these data. The available types are: `content`, `files`, and `config`.                                        |
-| `-h`, <br/>`--help` |   -    | Displays help for the `strapi export` command.                                                                             |
+## strapi openapi generate
 
-**Examples**
-
-```bash title="Examples of strapi export:"
-# export your data with the default options and the filename myData, which results in a file named myData.tar.gz.enc.
-strapi export -f myData
-
-# export your data without encryption.
-strapi export --no-encrypt
-```
-
-## strapi import
-
-[Imports data](/cms/features/data-management) into your project. The imported data must originate from another Strapi application. You must pass the `--file` option to specify the filename and location for the import action.
+[Generate OpenAPI specifications](/cms/api/openapi) for your Strapi application.
 
 ```bash
-strapi import
+strapi openapi generate
 ```
 
-| Option         | Type   | Description                                                               |
-| -------------- | ------ | ------------------------------------------------------------------------- |
-| `-k,` `--key`  | string | Provide the encryption key in the command instead of a subsequent prompt. |
-| `-f`, `--file` | string | Path and filename with extension for the data to be imported.             |
-| `-h`, `--help` | -      | Display the `strapi import` help commands.                                |
+| Option     | Type     | Default               | Description                                      |
+| ---------- | -------- | --------------------- | ------------------------------------------------ |
+| `--output` | `string` | `./openapi-spec.json` | Output file path for the generated specification |
 
-**Examples**
+### Examples
 
-```bash title="Example of strapi import:"
-
-# import your data with the default parameters and pass an encryption key:
-strapi import -f your-filepath-and-filename --key my-key
-```
-
-## strapi transfer
-
-[Transfers data](/cms/data-management/transfer) between 2 Strapi instances. This command is primarily intended for use between a local instance and a remote instance or 2 remote instances. The `transfer` command requires a Transfer token, which is generated in the destination instance Admin panel. See the [User Guide](/cms/features/data-management#admin-panel-settings) for detailed documentation on creating Transfer tokens.
-
-:::caution
-The destination Strapi instance should be running with the `start` command and not the `develop` command.
-:::
-
-| Option                       | Description                                                                                                                                       |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--to [destinationURL]`      | Full URL of the `/admin` endpoint on the destination Strapi instance<br />(e.g. `--to https://my-beautiful-strapi-website/admin`)                 |
-| `--to-token [transferToken]` | Transfer token for the remote Strapi destination                                                                                                  |
-| `--from [sourceURL]`         | Full URL of the `/admin` endpoint of the remote Strapi instance to pull data from<br />(e.g., `--from https://my-beautiful-strapi-website/admin`) |
-| `‑‑from‑token`               | Transfer token from the Strapi source instance.                                                                                                   |
-| `--force`                    | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively.                                 |
-| `--exclude`                  | Exclude data using comma-separated data types. The available types are: `content`, `files`, and `config`.                                         |
-| `--only`                     | Include only these data. The available types are: `content`, `files`, and `config`.                                                               |
-| `-h`, `--help`               | Displays the commands for `strapi transfer`.                                                                                                      |
-
-:::caution
-Either `--to` or `--from` is required, but it's not currently allowed to enter both or neither.
-:::
-
-**Example**
-
-```bash
-strapi transfer --to http://example.com/admin --to-token my-transfer-token
-```
-
-## strapi report
-
-Prints out debug information useful for debugging and required when reporting an issue.
-
-| Option                 | Description                   |
-| ---------------------- | ----------------------------- |
-| `-u`, `--uuid`         | Includes the project UUID     |
-| `-d`, `--dependencies` | Includes project dependencies |
-| `--all`                | Logs all the data             |
-
-**Examples**
-
-To include the project UUID and dependencies in the output:
-
-```bash
-strapi report --uuid --dependencies
-```
-
-To log everything, use the `--all` option:
-
-```bash
-strapi report --all
-```
-
-## strapi configuration:dump
-
-**Alias**: `config:dump`
-
-Dumps configurations to a file or stdout to help you migrate to production.
-
-The dump format will be a JSON array.
-
-```bash title="strapi configuration:dump"
-
-Options:
-  -f, --file <file>  Output file, default output is stdout
-  -p, --pretty       Format the output JSON with indentation and line breaks (default: false)
-```
-
-**Examples**
-
-- `strapi configuration:dump -f dump.json`
-- `strapi config:dump --file dump.json`
-- `strapi config:dump > dump.json`
-
-All these examples are equivalent.
-
-:::caution
-When configuring your application you often enter credentials for third party services (e.g authentication providers). Be aware that those credentials will also be dumped into the output of this command.
-In case of doubt, you should avoid committing the dump file into a versioning system. Here are some methods you can explore:
-
-- Copy the file directly to the environment you want and run the restore command there.
-- Put the file in a secure location and download it at deploy time with the right credentials.
-- Encrypt the file before committing and decrypt it when running the restore command.
-
-:::
-
-## strapi configuration:restore
-
-**Alias**: `config:restore`
-
-Restores a configuration dump into your application.
-
-The input format must be a JSON array.
-
-```bash
-strapi configuration:restore
-
-Options:
-  -f, --file <file>          Input file, default input is stdin
-  -s, --strategy <strategy>  Strategy name, one of: "replace", "merge", "keep". Defaults to: "replace"
-```
-
-**Examples**
-
-- `strapi configuration:restore -f dump.json`
-- `strapi config:restore --file dump.json -s replace`
-- `cat dump.json | strapi config:restore`
-- `strapi config:restore < dump.json`
-
-All these examples are equivalent.
-
-**Strategies**
-
-When running the restore command, you can choose from three different strategies:
-
-- **replace**: Will create missing keys and replace existing ones.
-- **merge**: Will create missing keys and merge existing keys with their new value.
-- **keep**: Will create missing keys and keep existing keys as is.
-
-## strapi admin:create-user
-
-**Alias** `admin:create`
-
-Creates an administrator.
-Administrator's first name, last name, email, and password can be:
-
-- passed as options
-- or set interactively if you call the command without passing any option.
-
-**Example**
-
-```bash
-
-strapi admin:create-user --firstname=Kai --lastname=Doe --email=chef@strapi.io --password=Gourmet1234
-```
-
-**Options**
-
-| Option          | Type   | Description                        | Required |
-| --------------- | ------ | ---------------------------------- | -------- |
-| -f, --firstname | string | The administrator's first name     | Yes      |
-| -l, --lastname  | string | The administrator's last name      | No       |
-| -e, --email     | string | The administrator's email          | Yes      |
-| -p, --password  | string | New password for the administrator | No       |
-| -h, --help      |        | display help for command           |          |
-
-## strapi admin:reset-user-password
-
-**Alias** `admin:reset-password`
-
-Reset an admin user's password.
-You can pass the email and new password as options or set them interactively if you call the command without passing the options.
-
-**Example**
-
-```bash
-
-strapi admin:reset-user-password --email=chef@strapi.io --password=Gourmet1234
-```
-
-**Options**
-
-| Option         | Type   | Description               |
-| -------------- | ------ | ------------------------- |
-| -e, --email    | string | The user email            |
-| -p, --password | string | New password for the user |
-| -h, --help     |        | display help for command  |
-
-## strapi generate
-
-Run a fully interactive CLI to generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [plugins](/cms/plugins-development/create-a-plugin), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares) and [services](/cms/backend-customization/services), and [migrations](/cms/database-migrations).
-
-```bash
-strapi generate
-```
+</Tabs>
 
 ## strapi templates:generate
 
@@ -6493,11 +6503,37 @@ strapi telemetry:enable
 
 ## strapi console
 
-Start the server and eval commands in your application in real time.
+Start the server and evaluate commands in your application in real time.
 
 ```bash
 strapi console
 ```
+
+The `console` command compiles and loads your application, starts the server in the background, then opens a Node.js . The REPL provides a prompt based on your application's name and gives access to all Strapi APIs through the global `strapi` object. Closing the REPL by pressing `Ctrl-C` twice gracefully stops the server.
+
+### Available helpers
+
+The `strapi` object exposes the following getters and methods to interact with your application:
+
+- `strapi.services` and `strapi.service(uid)` to use [services](/cms/backend-customization/services)
+- `strapi.controllers` and `strapi.controller(uid)` to call [controllers](/cms/backend-customization/controllers)
+- `strapi.contentTypes` and `strapi.contentType(uid)` to inspect [content-types](/cms/backend-customization/models)
+- `strapi.components` to list components
+- `strapi.policies` and `strapi.policy(name)` for [policies](/cms/backend-customization/policies)
+- `strapi.middlewares` and `strapi.middleware(name)` for [middlewares](/cms/backend-customization/middlewares)
+- `strapi.plugins` and `strapi.plugin(name)` for plugins
+- `strapi.hooks` and `strapi.hook(name)` for hooks
+- `strapi.apis` and `strapi.api(name)` for APIs
+- `strapi.db` to directly query the database through the [Query Engine API](/cms/api/query-engine), for example as follows:<br/><br/>
+  ```js
+  await strapi.db.query('api::article.article').findMany();
+  ```
+
+Use this environment to test code and inspect your project with direct access to all Strapi APIs.
+
+:::note
+Strapi uses a Node.js feature called  to make the context available anywhere.
+:::
 
 ## strapi version
 
@@ -6946,7 +6982,7 @@ It can be used to:
 - fill the database with some necessary data
 - declare custom conditions for the [Role-Based Access Control (RBAC)](/cms/configurations/guides/rbac) feature
 
-The `bootstrapi()` function is run _before_ the back-end server starts but _after_ the Strapi application has setup, so you have access to anything from the `strapi` object.
+The `bootstrap()` function is run _before_ the back-end server starts but _after_ the Strapi application has setup, so you have access to anything from the `strapi` object.
 
 :::tip
 You can run `yarn strapi console` (or `npm run strapi console`) in the terminal and interact with the `strapi` object.
@@ -7600,6 +7636,10 @@ By default, the chosen interface mode is based on your browser's mode. You can h
 :::note
 Keep in mind that choosing an interface mode only applies to your account on the admin panel.
 :::
+
+### Resetting guided tour
+
+In the *Guided tour* section of your profile, you can click the **Reset guided tour** button to reset the guided tour which is available in the homepage of the admin panel. It allows you to see again the guided tour of the admin panel if you closed it beforehand, and to follow again its various steps.
 
 ### Customizing the logo
 
@@ -8321,25 +8361,6 @@ Once the preview system is set up, you need to adapt your data fetching logic to
 1. Create or adapt your data fetching utility to check if draft mode is enabled
 2. Update your API calls to include the draft status parameter when appropriate
 
-The following, taken from the 
-
-</Tabs>
-
-<details>
-<summary>Caching in Next.js:</summary>
-
-In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-application/caching) may require additional steps. You might need to invalidate the cache by making an API call from the client side to the server, where the revalidation logic will be handled. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
-<br/>
-
-</details>
-
-#### [Front end] Next steps
-
-Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
-
-1. Create or adapt your data fetching utility to check if draft mode is enabled
-2. Update your API calls to include the draft status parameter when appropriate
-
 The following, taken from the  Strapi demo application, is an example of how to implement draft-aware data fetching in your Next.js front-end application:
 
 ```typescript {8-18}
@@ -8407,6 +8428,10 @@ Additionally, with Live Preview, you can:
 
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
+:::
+
+:::tip
+Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
 :::
 
 
@@ -8626,17 +8651,28 @@ A release page can display entries either grouped by locale, content-type, or ac
 
 **Path:**  Releases
 
-Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously. To publish a release, click the **Publish** button in the top right corner of the admin panel.
+Publishing a release means that all the actions (publish or unpublish) defined for each entry included in the release will be performed simultaneously.
 
-The _Status_ column displays the status of each entry:
+To publish a release, click the **Publish** button in the top right corner of the admin panel. Before, make sure to check the status of both the release and its entries.
 
-   -  Already published: the entry is already published and publishing the release will not affect this entry 
-   -  Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
-   -  Ready to publish: the entry is ready to  be published with the release
-   -  Ready to unpublish: the entry is ready to  be unpublished with the release
-   -  Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+  - A badge at the top of the interface indicates the status of your release:
+    - `Empty`: no entry has been added to the release yet
+    - `Blocked`: content has been added to the release but at least one issue in an entry prevents the release from being published
+    - `Ready`: content has been added to the release, all checks have been passed and the release can be published
+    - `Done`: the release has been released and is now done
 
-If some of your entries have a  status, click the  and the **Edit the entry** button to fix the issues until all entries have the  status. Note that you will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+  - The _Status_ column displays the status of each entry:
+    -  Already published: the entry is already published and publishing the release will not affect this entry 
+    -  Already unpublished: the entry is already unpublished, and publishing the release will not affect this entry.
+    -  Ready to publish: the entry is ready to  be published with the release
+    -  Ready to unpublish: the entry is ready to  be unpublished with the release
+    -  Not ready to publish: the entry cannot be published because some fields are incorrectly filled, or it hasn't reached the required stage for publishing. In this case, the release will be indicated as *Blocked* until all issues have been fixed.
+
+If your release is `Blocked` because some of your entries have a  status, click the  button, then **Edit the entry** to fix the issues until all entries have the  status.
+
+:::note
+You will have to click on the **Refresh** button to update the release page as you fix the various entries issues.
+:::
 
 :::caution
 Once a release is published, the release itself cannot be updated. You can not re-release that specific release with the same group of entries with some modifications; you must create another release.
@@ -9006,7 +9042,7 @@ You can click on the description of any breaking change in the following tables 
 | [Some attributes and content-types names are reserved by Strapi](/cms/migration/v4-to-v5/breaking-changes/attributes-and-content-types-names-reserved) | Yes | No |
 | [Upload a file at entry creation is no longer possible](/cms/migration/v4-to-v5/breaking-changes/no-upload-at-entry-creation) | Yes | No |
 | [Components and dynamic zones should be populated using the detailed population strategy](/cms/migration/v4-to-v5/breaking-changes/no-shared-population-strategy-components-dynamic-zones) | Yes | No |
-| [Repeatable components can't be updated with the Document Service API](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
+| [Updating repeatable components with the Document Service API is not recommended](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api) | Yes | No |
 
 
 
@@ -9015,7 +9051,7 @@ Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
-The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until March 2026.
+The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until April 2026.
 
 Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
 
@@ -9035,6 +9071,7 @@ Strapi provides an [upgrade tool](/cms/upgrade-tool) to ease the process. The up
 Follow the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a> to learn how to use this tool in the context of upgrading to Strapi 5.
 
 Strapi 5 docs also provide a [complete breaking changes database](/cms/migration/v4-to-v5/breaking-changes) and [dedicated resources](/cms/migration/v4-to-v5/additional-resources/introduction) to cover specific use cases.
+<br/>
 
 </details>
 
@@ -9042,6 +9079,7 @@ Strapi 5 docs also provide a [complete breaking changes database](/cms/migration
 <summary style={{fontSize: '18px'}}>How can I handle the data migration, ensuring that in Strapi 5 the application will still be working?</summary>
 <p>Strapi 5 integrates a series of data migration scripts that are run once the application starts for the first time in Strapi 5.</p>
 <p>However, please <strong>always backup your database</strong> (found at <code style={{color: 'rgb(73, 69, 255)', backgroundColor: 'rgb(240, 240, 255)'}}>.tmp/data.db</code> by default if using a SQL database) before performing any upgrade, as instructed in the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a>.</p>
+<br/>
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
@@ -9160,10 +9198,10 @@ Follow the steps below and leverage retro-compatibility flags and guided migrati
 
 ### Migrate GraphQL API calls
 
-1. Enable the retro-compatibility flag by setting `v4ComptabilityMode` to `true` in the `graphql.config` object of [the `/config/plugins.js|ts` file](/cms/plugins/graphql#code-based-configuration).
+1. Enable the retro-compatibility flag by setting `v4CompatibilityMode` to `true` in the `graphql.config` object of [the `/config/plugins.js|ts` file](/cms/plugins/graphql#code-based-configuration).
 2. Update your queries and mutations only, guided by the dedicated [breaking change entry for GraphQL](/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated).
 3. Validate that your client is running correctly.
-4. Disable the retro-compatibily flag by setting `v4ComptabilityMode` to `false` and start using the new response format.
+4. Disable the retro-compatibily flag by setting `v4CompatibilityMode` to `false` and start using the new response format.
 
 
 
@@ -9366,7 +9404,7 @@ Both the `injectComponent()` and `getPlugin('content-manager').injectComponent()
 ```jsx title="my-plugin/admin/src/index.js"
 
   bootstrap(app) {
-    app.getPlugin('content-manager').injectComponent()('editView', 'informations', {
+    app.getPlugin('content-manager').injectComponent('editView', 'informations', {
       name: 'my-plugin-my-compo',
       Component: () => 'my-compo',
     });
@@ -9676,20 +9714,28 @@ All the Content Manager APIs share the same API shape and must use components.
 
 ### API shape
 
-All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways:
+All Content Manager APIs works in the same way: to use them, call them on your plugin’s [bootstrap](/cms/plugins-development/admin-panel-api#bootstrap) function, in 2 possible ways.
+
+When using TypeScript, the `apis` property returned by `app.getPlugin()` is typed as `unknown`. Cast it to `ContentManagerPlugin['config']['apis']` before calling the APIs:
 
 - Passing an array with what you want to add. For example, the following code would add the ReleasesPanel at the end of the current EditViewSidePanels:
-  
-  ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel([ReleasesPanel])`
+
+  ```tsx
+  import type { ContentManagerPlugin } from '@strapi/content-manager/strapi-admin';
+
+  const apis =
+    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+  apis.addEditViewSidePanel([ReleasesPanel]);
   ```
 
 - Passing a function that receives the current elements and return the new ones. This is useful if, for example, you want to add something in a specific position in the list, like in the following code:
 
-  ```jsx
-  app.getPlugin('content-manager').apis.addEditViewSidePanel(
-    (panels) => [SuperImportantPanel, ...panels]
-  )
+  ```tsx
+  const apis =
+    app.getPlugin('content-manager').apis as ContentManagerPlugin['config']['apis'];
+
+  apis.addEditViewSidePanel((panels) => [SuperImportantPanel, ...panels]);
   ```
 
 ### Components
@@ -9786,16 +9832,18 @@ Use this to add new panels to the Edit view sidebar, just like in the following 
 addEditViewSidePanel(panels: DescriptionReducer<PanelComponent> | PanelComponent[])
 ```
 
-#### PanelDescription
+#### PanelComponent
 
-The interface of the API only receives the following 2 properties:
+A `PanelComponent` receives the properties listed in [EditViewContext](#editviewcontext) and returns an object with the following shape:
 
-```jsx
-{
+```tsx
+type PanelComponent = (props: PanelComponentProps) => {
   title: string;
-  content: React.ReactNode;	
-}
+  content: React.ReactNode;
+};
 ```
+
+`PanelComponentProps` extends the [EditViewContext](#editviewcontext).
 
 ### `addDocumentAction`
 
@@ -10667,6 +10715,28 @@ module.exports = (plugin) => {
 ```
 </details>
 
+:::note
+The `strapi-server.js|ts` file is also where you can override the image function, by replacing the Upload plugin's `generateFileName()` function so that it generates custom image names.
+
+<details>
+<summary>Example of custom file-naming logic</summary>
+
+```js title="./src/extensions/upload/strapi-server.js|ts"
+
+module.exports = (plugin) => {
+  plugin.services.upload.image.generateFileName = (file) => {
+    // Example: prefix a timestamp before the original name
+    return `${Date.now()}_${file.hash}${file.ext}`;
+  };
+
+  return plugin;
+};
+
+```
+</details>
+
+:::
+
 ### Within the register and bootstrap functions
 
 To extend a plugin's interface within `./src/index.js|ts`, use the `bootstrap()` and `register()` [functions](/cms/configurations/functions) of the whole project, and access the interface programmatically with [getters](/cms/plugins-development/server-api#usage).
@@ -11453,6 +11523,10 @@ When [extending the GraphQL schema](#extending-the-schema), the `resolversConfig
 * [policies with the `policies`](#policies) key
 * and [middlewares with the `middlewares`](#middlewares) key
 
+:::tip
+The [advanced queries](/cms/api/graphql/advanced-queries) guide might contain additional information suitable for your use case, including multi-level queries and custom resolvers examples.
+:::
+
 ###### Authorization configuration
 
 By default, the authorization of a GraphQL request is handled by the registered authorization strategy that can be either [API token](/cms/features/api-tokens) or through the [Users & Permissions plugin](#usage-with-the-users--permissions-plugin). The Users & Permissions plugin offers a more granular control.
@@ -11495,6 +11569,10 @@ The `context` object gives access to:
 </Tabs>
 
 </details>
+
+:::tip
+The [advanced policies](/cms/api/graphql/advanced-policies) guide might contain additional information suitable for your use case.
+:::
 
 ###### Middlewares
 
@@ -11709,13 +11787,7 @@ Strapi offers a lot of flexibility. Whether you want to go fast and quickly see 
 
 :::prerequisites
 
-2. The terminal will invite you to create a Strapi Cloud account. Ensure `Login/Sign up` is selected in the terminal, or use arrow keys to select it, and press Enter.
-
-3. In the new browser tab that opens, ensure the confirmation code is the same as in the terminal and click **Confirm**.
-
-4. Still in the browser tab, click **Continue with GitHub**. If you are not already logged in into GitHub with your current browser session, you might be redirected to a GitHub login page.
-
-5. Once logged in, the browser will display a "Congratulations, you're all set!" message and you can safely close the browser tab and get back to the terminal.
+2. The terminal will prompt you to log in or sign up. Once you do, a 30-day trial of the 
 
     </Tabs>
 

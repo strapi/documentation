@@ -207,6 +207,13 @@ document.addEventListener('DOMContentLoaded', () => {
   //   }
   // }
 
+  const providersRedirects = {
+    '/cms/providers': {
+      '_default': '/cms/features/media-library#providers',
+      'configuring-providers': '/cms/configurations/media-library-providers#configuring-providers',
+    }
+  };
+
   // Combine all redirects
   const allRedirects = {
     ...ssoRedirects,
@@ -217,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ...pluginRedirects,
     ...adminPanelRedirects,
     ...contentManagerRedirects,
+    ...providersRedirects
     // ...typeScriptRedirects
   };
 

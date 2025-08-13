@@ -19,13 +19,404 @@ Since Strapi Docs version 5.0.0, the **docs' version number is independent from 
 Strapi Docs now follow the **<ExternalLink to="https://semver.org/" text="semantic versioning"/>** philosophy, but adapted to docs:
 
 - **Major version** (6.0.0, 7.0.0…): A **significant rewrite** of the docs (content or framework). This may impact the user experience, redesign the site, or break old links (redirections are handled, but broken links can be <ExternalLink to="https://github.com/strapi/documentation/issues/new/choose" text="reported"/>).
-- **Minor version** (5.1.0, 5.2.0…): **New Strapi features** or improvements to the docs (e.g., new components or tools).
+- **Minor version** (5.1.0, 5.2.0…): **New Strapi features** or improvements to the docs framework (e.g., new components or tools).
 - **Patch version** (5.1.1, 5.1.2…): **Content updates**, including improvement or extension of existing pages, code examples fixes, and typos.
 
 New versions (minor or patch) are generally released weekly, on Wednesdays.
 <br/>
 
 </details>
+
+## 6.7.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Open API spec generation](https://github.com/strapi/documentation/pull/2665)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Update Admin Panel and Homepage customization pages with new widgets and new guided tour UI](https://github.com/strapi/documentation/pull/2671)
+- [Update controller sanitization](https://github.com/strapi/documentation/pull/2661)
+- [Document flat archive structure for import and export](https://github.com/strapi/documentation/pull/2658)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix no search results for `db.query`](https://github.com/strapi/documentation/pull/2667)
+- [Fix typo in lifecycle functions documentation](https://github.com/strapi/documentation/pull/2660)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/devios327" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/67002707?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="devios327"/>
+</a>
+<a href="https://github.com/maccomaccomaccomacco" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2686869?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="maccomaccomaccomacco"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.6.6
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add experimental firstPublishedAt configuration](https://github.com/strapi/documentation/pull/2636)
+- [Update admin panel doc to add new 'Reset guided tour' setting](https://github.com/strapi/documentation/pull/2612)
+
+#### Cloud
+- [Transfer ownership feature in Strapi Cloud docs](https://github.com/strapi/documentation/pull/2611)
+- [Download backup on Strapi Cloud](https://github.com/strapi/documentation/pull/2582)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Clarify `database` vs. `filename` usage in database configuration](https://github.com/strapi/documentation/pull/2657)
+- [Database configuration: callout with information on data.db path](https://github.com/strapi/documentation/pull/2655)
+- [Expand service docs to mention methods wrap core methods from Document Service API](https://github.com/strapi/documentation/pull/2648)
+- [Clarify Content Manager API typing](https://github.com/strapi/documentation/pull/2646)
+- [Note in Server about keep alive configuration](https://github.com/strapi/documentation/pull/2645)
+- [Improve PostgreSQL database config. example](https://github.com/strapi/documentation/pull/2643)
+- [Improve environment variables page](https://github.com/strapi/documentation/pull/2639)
+- [Add advanced queries and policies guides to GraphQL docs](https://github.com/strapi/documentation/pull/2634)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix 'v4CompatibilityMode' typo for Strapi 5 migration in step by step guide](https://github.com/strapi/documentation/pull/2640)
+- [Fix 'v4CompatibilityMode' typo for Strapi 5 migration](https://github.com/strapi/documentation/pull/2635)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/michael-sadcenko" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/198786895?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="michael-sadcenko"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.6.5
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Cloud
+- [Async project creation on Strapi Cloud](https://github.com/strapi/documentation/pull/2581)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Improve GraphQL queries explanations (Flat vs. Relay-style)](https://github.com/strapi/documentation/pull/2621)
+- [Explain there's only one GraphQL endpoint and how to customize its URL](https://github.com/strapi/documentation/pull/2617)
+- [GraphQL & REST API: more information on operators & more examples](https://github.com/strapi/documentation/pull/2615)
+- [Update Preview feature docs to mention Desktop/Mobile switch](https://github.com/strapi/documentation/pull/2607)
+- [Better explain the move to `documentId`](https://github.com/strapi/documentation/pull/2604)
+- [Expand and improve Client docs](https://github.com/strapi/documentation/pull/2602)
+- [Mention that the Document Service API `findOne` returns `null` if no document found](https://github.com/strapi/documentation/pull/2614)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Fix MermaidWithFallback diagram display](https://github.com/strapi/documentation/pull/2609)
+- [Fix tabs display with long labels](https://github.com/strapi/documentation/pull/2605)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/hanpaine" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/151527179?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="hanpaine"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.6.4
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add callout about overriding image function in Plugins extension docs](https://github.com/strapi/documentation/pull/2601)
+- [Extend strapi.console documentation](https://github.com/strapi/documentation/pull/2600)
+- [Document pluginOptions in Models](https://github.com/strapi/documentation/pull/2598)
+- [Improve strapi-generate docs further](https://github.com/strapi/documentation/pull/2595)
+- [Expand strapi generate documentation](https://github.com/strapi/documentation/pull/2593)
+- [Document release statuses in Releases feature page](https://github.com/strapi/documentation/pull/2592)
+
+#### Cloud
+- [Add cancellation section in Cloud docs](https://github.com/strapi/documentation/pull/2599)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add mention about building the website in Quick Start Guide](https://github.com/strapi/documentation/pull/2590)
+
+#### Cloud
+- [Update Strapi Cloud settings screenshots](https://github.com/strapi/documentation/pull/2585)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.6.3
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### Cloud
+- [Canny widget](https://github.com/strapi/documentation/pull/2575)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix incorrect wording in the description of the `findOne()` method](https://github.com/strapi/documentation/pull/2586)
+- [Fix broken line breaks in step-by-step file](https://github.com/strapi/documentation/pull/2580)
+- [Fix strapi network mismatch issues in Docker instructions](https://github.com/strapi/documentation/pull/2578)
+
+#### Repository
+- [Fix duplicate footer](https://github.com/strapi/documentation/pull/2589)
+- [Fix Amplitude tracking experiment CDN](https://github.com/strapi/documentation/pull/2574)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Mcastres" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/17828745?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Mcastres"/>
+</a>
+<a href="https://github.com/Tasleem222" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/200180442?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Tasleem222"/>
+</a>
+<a href="https://github.com/fxm90" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/17249312?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="fxm90"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/ndaemy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/18691542?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="ndaemy"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.6.2
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Conditional Fields (stable release)](https://github.com/strapi/documentation/pull/2554)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Remove duplicated sections in Preview docs](https://github.com/strapi/documentation/pull/2568)
+- [Use new notation for accessing plugin config](https://github.com/strapi/documentation/pull/2562)
+
+#### Repository
+- [New tooltips in table of content](https://github.com/strapi/documentation/pull/2561)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/tung-eh" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/39895547?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="tung-eh"/>
+</a>
+<a href="https://github.com/unrevised6419" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1881266?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="unrevised6419"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.6.1
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add repeatable components/Document Service API breaking change](https://github.com/strapi/documentation/pull/2551)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add link to blog article about webhooks and Next.js](https://github.com/strapi/documentation/pull/2549)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.6.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Conditional Fields (beta)](https://github.com/strapi/documentation/pull/2539)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Add tip about using copy markdown button and LLMs.txt files](https://github.com/strapi/documentation/pull/2543)
+- [Expandable card docs wrapper](https://github.com/strapi/documentation/pull/2541)
+- [Add configuration parameter to allow Kapa analytics](https://github.com/strapi/documentation/pull/2540)
+- [Add inline property to custom Badge component](https://github.com/strapi/documentation/pull/2538)
+- [Increase "Ask AI" modal width to 720px](https://github.com/strapi/documentation/pull/2536)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.5.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add LLMs.txt and LLMs-full.txt generation](https://github.com/strapi/documentation/pull/2507)
+
+We've started adding <ExternalLink to="https://llmstxt.org/" text="llms.txt" /> support to the Strapi Docs. You can find the files in the footer or access them directly via the following links:
+- [`llms.txt`](https://docs.strapi.io/llms.txt)
+- [`llms-full.txt`](https://docs.strapi.io/llms-full.txt)
+
+![LLM files in the footer](/img/assets/llms/llms-footer.png)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Update app creation flow to include Growth free trial](https://github.com/strapi/documentation/pull/2496)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Admin Panel API typo in example](https://github.com/strapi/documentation/pull/2508)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/abdallahmz" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/55534657?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="abdallahmz"/>
+</a>
+<a href="https://github.com/martinschilliger" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/11884891?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="martinschilliger"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 6.4.0
 

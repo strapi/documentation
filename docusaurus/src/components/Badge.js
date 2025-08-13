@@ -13,6 +13,7 @@ export default function Badge({
   feature,
   version,
   tooltip,
+  inline = false,
   ...rest
 }) {
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
@@ -25,7 +26,9 @@ export default function Badge({
         ((!feature && !version) && variantNormalized && `badge--${variantNormalized.toLowerCase()}`),
         (version && `badge--version`),
         (feature && `badge--featureflag`),
-        ((variant === "Updated" || variant === "New") && `badge--content`)
+        ((variant === "Updated" || variant === "New") && `badge--content`),
+        (inline && 'badge--inline'), 
+        className
       )}
       {...rest}
     >
@@ -180,7 +183,6 @@ export function NewBadge(props) {
     />
   );
 }
-
 
 export function UpdatedBadge(props) {
   return (

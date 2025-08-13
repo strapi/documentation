@@ -7,7 +7,7 @@
 - [Upload Provider](https://docs.strapi.io/cloud/advanced/upload): Configure Strapi Cloud to use a third-party upload provider.
 - [Command Line Interface (CLI) <NewBadge />](https://docs.strapi.io/cloud/cli/cloud-cli): Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a local project without it having to be hoste...
 - [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): For Strapi Cloud applications with large amounts of cacheable content, such as images, videos, and other static assets, enabling CDN (Content Delivery...
-- [Strapi Cloud fundamentals <UpdatedBadge />](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
+- [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
 - [with Cloud dashboard](https://docs.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
 - [with Cloud CLI](https://docs.strapi.io/cloud/getting-started/deployment-cli): Learn how to deploy your Strapi application via the CLI.
 - [Project deployment](https://docs.strapi.io/cloud/getting-started/deployment-options): Learn how to deploy your Strapi application on Strapi Cloud, via the Cloud dashboard or the CLI.
@@ -41,6 +41,7 @@
 - [Using Sort & Pagination with the Document Service API](https://docs.strapi.io/cms/api/document-service/sort-pagination): Use Strapi's Document Service API to sort and paginate query results
 - [Using Draft & Publish with the Document Service API](https://docs.strapi.io/cms/api/document-service/status): Use Strapi's Document Service API to return either the draft or the published version of a document
 - [GraphQL API](https://docs.strapi.io/cms/api/graphql): import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
+- [OpenAPI specification](https://docs.strapi.io/cms/api/openapi): Learn how to generate OpenAPI specifications for your Strapi applications using the @strapi/openapi package
 - [REST API reference](https://docs.strapi.io/cms/api/rest): Interact with your Content-Types using the REST API endpoints Strapi generates for you.
 - [Filters](https://docs.strapi.io/cms/api/rest/filters): Use Strapi's REST API to filter the results of your requests.
 - [REST API Guides](https://docs.strapi.io/cms/api/rest/guides/intro): Deep dive into some specific REST API topics using guides that extensively explain some use cases or give step-by-step instructions.
@@ -66,7 +67,7 @@
 - [API calls configuration](https://docs.strapi.io/cms/configurations/api): Strapi's default API parameters can be configured.
 - [CRON jobs](https://docs.strapi.io/cms/configurations/cron): Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
 - [Database configuration](https://docs.strapi.io/cms/configurations/database): Strapi offers a single entry point file to configure its databases.
-- [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values av...
+- [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): import SampleEnv from '/docs/snippets/sample-env.md'
 - [Features configuration](https://docs.strapi.io/cms/configurations/features): Enable experimental Strapi features
 - [Lifecycle functions](https://docs.strapi.io/cms/configurations/functions): Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
 - [Middlewares configuration](https://docs.strapi.io/cms/configurations/middlewares): Strapi offers a single entry point file for its middlewares configurations.

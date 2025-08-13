@@ -20,6 +20,8 @@ Strapi 5 brings many new features and improvements, and this page quickly highli
 
 <Icon name="plugs" /> The **[Strapi Client](/cms/api/client)** library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.
 
+<Icon name="map-trifold" /> The **[OpenAPI package](/cms/api/openapi)** lets you programmatically generate a specification describing your Strapi APIs.
+
 <Icon name="puzzle-piece" /> The **[Plugin SDK](/cms/plugins-development/plugin-sdk)** is a new CLI tool that helps you develop and publish Strapi plugins.
 
 <Icon name="escalator-up" /> Another whole new CLI **[upgrade tool](/cms/upgrade-tool)** will help you migrate to any patch, minor, and major version of Strapi, automating most of the common tasks through codemods.
@@ -30,4 +32,8 @@ Strapi 5 brings many new features and improvements, and this page quickly highli
 
 <Icon name="plus" /> You will also soon find more **official guides** and more references to **external resources** (contributor documentation, design system documentation, and blog articles) throughout the docs pages.
 
-<Icon name="call-bell" /> Also, last but not least, you might have noticed that the search bar now sits in the left sidebar and combines 2 buttons: the left button, **<Icon name="magnifying-glass" classes="ph-light" /> Search**, triggers a regular search, while the right part is our new AI-based chatbot! Click **<Icon name="sparkle"/> Ask AI** to ask your questions. The chatbot keeps the context of previous answers, so you can ask follow-up questions as long as you don't close the chatbot window.
+<Icon name="call-bell" /> Also, last but not least, **Strapi Docs now work even better with AI**:
+
+* First, you might have noticed that the search bar now sits in the left sidebar and combines 2 buttons: the left button, **<Icon name="magnifying-glass" classes="ph-light" /> Search**, triggers a regular search, while the right part is our new AI-based chatbot! Click **<Icon name="sparkle"/> Ask AI** to ask your questions. The chatbot keeps the context of previous answers, so you can ask follow-up questions as long as you don't close the chatbot window. 
+* You can also use the **<Icon name="copy" /> Copy Markdown** button to copy raw Markdown content from the page into anything, including your favorite LLM. 
+* And, speaking about LLMs, feel free to use our [`llms.txt`](/llms.txt) and [`llms-full.txt`](/llms-full.txt) files with your favorite AI model.

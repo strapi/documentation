@@ -245,6 +245,21 @@
   }
 }
 
+h1 + .h1-badges-container {
+  margin: 0;
+}
+
+.h1-badges-placeholder {
+  // styles already defined in the JS hook: src/hooks/useBadgeReorder
+}
+
+.h1-badges-container {
+  .badge {
+    // transitions already defined in the JS hook: src/hooks/useBadgeReorder
+  }
+}
+
+h1 
 /**
  * New/updated badges in main content gutter
  */
@@ -520,6 +535,88 @@ h2 .badge {
 //   }
 // }
 
+
+/**
+ * Inline badges for tabs and other inline contexts
+ */
+ .badge--inline {
+  position: relative;
+  top: -1px;
+  margin-left: 0.25rem;
+  margin-bottom: 0;
+  vertical-align: middle;
+  display: inline-block;
+  
+  // Smaller size for inline usage
+  --ifm-badge-padding-horizontal: 4px;
+  --ifm-badge-padding-vertical: 2px;
+  --custom-badge-font-size: 10px;
+  
+  // Remove any absolute positioning
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  
+  // Ensure tooltip works properly in inline context
+  .badge__tooltip {
+    @include badge-tooltip();
+    // Adjust tooltip position for inline badges
+    bottom: 200%;
+    left: 50%;
+    margin-left: calc(-1 * var(--custom-badge-tooltip-width) / 2);
+  }
+  
+  &:hover .badge__tooltip {
+    visibility: visible;
+  }
+}
+
+/**
+ * Specific styles for badges in tabs
+ */
+.tabs {
+  [role="tab"] {
+    .badge--inline {
+      // Ensure proper alignment within tab label
+      vertical-align: baseline;
+      margin-left: 0.5rem;
+      
+      // Slightly larger for better visibility in tabs
+      --ifm-badge-padding-horizontal: 5px;
+      --ifm-badge-padding-vertical: 3px;
+      --custom-badge-font-size: 10px;
+      
+      // Prevent badge from affecting tab height
+      line-height: 1;
+    }
+    
+    // Handle hover states for tabs with badges
+    &:hover .badge--inline {
+      // Maintain badge colors on tab hover
+      --custom-badge-background-color: var(--custom-badge-background-color);
+      --custom-badge-color: var(--custom-badge-color);
+    }
+  }
+}
+
+/**
+ * Responsive adjustments for inline badges
+ */
+@include medium-down {
+  .badge--inline {
+    // Slightly smaller on mobile
+    --ifm-badge-padding-horizontal: 3px;
+    --ifm-badge-padding-vertical: 2px;
+    --custom-badge-font-size: 9px;
+    
+    .badge__tooltip {
+      // Adjust tooltip for mobile
+      --custom-badge-tooltip-width: 150px;
+    }
+  }
+}
+
+
 /** Dark mode */
 @include dark {
   .badge {
@@ -564,8 +661,9 @@ h2 .badge {
     &--alpha,
     &--beta,
     &--featureflag,
-    &--version {
-      --custom-badge-background-color: var(--strapi-neutral-100);
+    &--version,
+    &--inline {
+      --custom-badge-background-color: var(--strapi-neutral-100) !important;
       --custom-badge-border-color: var(--strapi-neutral-200);
     }
     &--beta {
@@ -593,6 +691,84 @@ h2 .badge {
     &--version {
       --custom-badge-color: var(--strapi-neutral-400);
       --custom-badge-tooltip-color: var(--strapi-neutral-700);
+    }
+  }
+
+  .badge--inline {
+    // Ensure proper contrast in dark mode
+    &.badge--beta {
+      --custom-badge-background-color: var(--strapi-secondary-100);
+      --custom-badge-color: var(--strapi-secondary-200);
+    }
+    
+    &.badge--alpha {
+      --custom-badge-background-color: var(--strapi-warning-100);
+      --custom-badge-color: var(--strapi-warning-200);
+    }
+    
+    // Tooltip adjustments for dark mode
+    .badge__tooltip {
+      --custom-badge-tooltip-background-color: var(--strapi-neutral-100);
+      --custom-badge-tooltip-color: var(--strapi-neutral-800);
+    }
+  }
+}
+
+// main [role="tablist"] ~ .margin-top--md {
+//   [role="tabpanel"]:has(.badge) {
+//     // background-color: tomato;
+//     position: relative;
+
+//     .badge {
+//       // background-color: tomato;
+//       position: absolute;
+//       top: -4em;
+//       left: 10%;
+//       // position: absolute;
+//       display: inline-block;
+//       // top: 0;
+//       // left: 20px;
+//     }
+//   }
+
+// }
+// // main [role="tab"],
+// main [role="tab"] + [role="tabpanel"]:has(.badge) {
+//   background-color: yellow;
+// }
+// // [role="tab"] {
+// //   background-color: yellow;
+// // }
+
+// main [role="tablist"] ~ .margin-top--md {
+// }
+
+main [role="tablist"] + .margin-top--md:has([role="tabpanel"] .badge) {
+  position: relative;
+  z-index: -1;
+  // border: solid 1px blue;
+  padding-top: 57px;
+  top: -57px;
+  margin-bottom: -57px;
+}
+main [role="tablist"] + .margin-top--md:has([role="tabpanel"] .badge) [role="tabpanel"] .badge {
+  // background-color: yellow !important;
+  position: absolute;
+  top: 1.5em;
+  right: 43%;
+  // z-index: 100;
+}
+
+.tabs-container:has([role="tablist"] + .margin-top--md [role="tabpanel"] .badge) {
+  [role="tablist"] {
+    position: relative;
+    // display: flex;
+    // flex-direction: row;
+
+    [role="tab"] {
+      // border: solid 1px green;
+      // background-color: green !important;
+      // padding-right: 60px;
     }
   }
 }
