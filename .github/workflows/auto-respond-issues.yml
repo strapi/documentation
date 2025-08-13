@@ -1,0 +1,309 @@
+name: Auto-respond to Issues
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Number of issue to handle'
+        required: true
+        type: string
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  auto-respond:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm install axios @octokit/rest
+
+      - name: Process issue and generate response
+        id: process-issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const axios = require('axios');
+            
+            // Get issue details - handle both automatic and manual triggers
+            let issue, issueTitle, issueBody, issueNumber, issueAuthor;
+            
+            if (context.payload.inputs?.issue_number) {
+              // Manual trigger - fetch issue details
+              const issueResponse = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: parseInt(context.payload.inputs.issue_number)
+              });
+              issue = issueResponse.data;
+              issueTitle = issue.title;
+              issueBody = issue.body || '';
+              issueNumber = issue.number;
+              issueAuthor = issue.user.login;
+            } else {
+              // Automatic trigger - use context
+              issue = context.payload.issue;
+              issueTitle = issue.title;
+              issueBody = issue.body || '';
+              issueNumber = issue.number;
+              issueAuthor = issue.user.login;
+            }
+            
+            console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
+            
+            // Skip if issue is from a maintainer/collaborator
+            const collaborators = ['pwizla']; 
+            const isTesting = issueTitle.includes('[TEST]') || issueBody.includes('testing-auto-response');
+      
+            if (collaborators.includes(issueAuthor) && !isTesting) {
+              console.log('Issue from maintainer, skipping auto-response');
+              return;
+            }
+            
+            // Prepare the enhanced query for Kapa AI
+            const cleanedBody = issueBody
+              .replace(/<!--[\s\S]*?-->/g, '') // Remove HTML comments
+              .replace(/\n_No response_\s*$/gm, '') // Remove "No response" placeholders
+              .replace(/Automatic sync of commit from main/g, '') // Remove auto-sync indicators
+              .replace(/\n{3,}/g, '\n\n') // Clean up multiple newlines
+              .trim();
+            
+            const finalBody = cleanedBody.length < 20 ? 
+              `${cleanedBody}\n\n(Note: This is a brief issue description. The title "${issueTitle}" may contain additional context.)` :
+              cleanedBody;
+            
+            const query = [
+              "I need to provide a helpful, friendly, and comprehensive response to a GitHub issue from the Strapi community.",
+              "",
+              "**Issue Title:** " + issueTitle,
+              "",
+              "**Issue Description:**",
+              finalBody,
+              "",
+              "Please provide a response that:",
+              "",
+              "1. **Tone & Approach:**",
+              "   - Be warm, welcoming, and supportive - this represents the Strapi brand",
+              "   - Show empathy for the user's situation and acknowledge their effort in reporting the issue",
+              "   - Use friendly language that makes the user feel valued in our community",
+              "   - Keep the introduction concise and professional - avoid overly lengthy greetings",
+              "2. **Technical Content:**",
+              "   - Directly address the question or problem described",
+              "   - Provide relevant code examples, configuration snippets, or step-by-step guidance when applicable",
+              "   - Include links to official Strapi documentation that can help",
+              "   - If the issue involves a bug, acknowledge it and provide workarounds if possible",
+              "   - If it's a feature request, explain current alternatives or suggest next steps",
+              "",
+              "3. **Response Guidelines:**",
+              "   - If you cannot find specific information to answer this question, be honest about it",
+              "   - Suggest where the user might find more resources (Discord, documentation sections, etc.)",
+              "   - For complex issues, break down the response into clear, actionable steps",
+              "   - If the issue seems like it requires core team attention, indicate that appropriately",
+              "   - If suggesting feature requests or improvements, direct users to https://feedback.strapi.io",
+              "   - If the issue seems to be a product bug or core functionality issue rather than documentation, clearly mention this and format the username as `@pwizla` (with backticks) for potential transfer to strapi/strapi repository",              "",
+              "Please craft a response that will be posted as an automated GitHub comment, so it should be complete and helpful on its own while being genuinely friendly and supportive."
+            ].join('\n');
+            
+            try {
+              // Call Kapa AI Chat API
+              const kapaApiUrl = `https://api.kapa.ai/query/v1/projects/${process.env.KAPA_PROJECT_ID}/chat/`;
+              
+              console.log(`Calling Kapa Chat API: ${kapaApiUrl}`);
+              
+              const kapaResponse = await axios.post(kapaApiUrl, {
+                query: query,
+                user_data: {
+                  source: 'github-automation',
+                  issue_number: issueNumber,
+                  author: issueAuthor
+                }
+              }, {
+                headers: {
+                  'X-API-Key': process.env.KAPA_API_TOKEN,
+                  'Content-Type': 'application/json',
+                  'User-Agent': 'Strapi-Docs-GitHub-Bot/1.0'
+                },
+                timeout: 120000 // 2-minute timeout
+              });
+              
+              console.log('Kapa API response received');
+              
+              // Extract response data - updated for actual Kapa response structure
+              const aiResponse = kapaResponse.data.answer;
+              const sources = kapaResponse.data.relevant_sources || [];
+              const isUncertain = kapaResponse.data.is_uncertain || false;
+              
+              if (!aiResponse) {
+                throw new Error('No answer received from Kapa AI');
+              }
+              
+              // Format the response
+              let responseBody = `🤖 I've analyzed your question and here's what I found:\n\n`;
+              
+              // Add uncertainty warning if needed
+              if (isUncertain) {
+                responseBody += `⚠️ *Note: This response may not be completely accurate. Please verify the information.*\n\n`;
+              }
+              
+              responseBody += `${aiResponse}\n\n`;
+              
+              if (sources.length > 0) {
+                responseBody += `📚 **Relevant documentation:**\n`;
+                
+                // Process and format sources
+                const formattedSources = sources
+                  .filter(source => source.source_url && source.source_url.startsWith('http') && source.title !== 'Documentation')
+                  .map(source => {
+                    const url = source.source_url;
+                    let title = source.title || 'Documentation';
+              
+                    // Handle pipe-separated title|subtitle format
+                    if (title.includes('|')) {
+                      const parts = title.split('|');
+                      const pageTitle = parts[0].trim();
+                      const sectionTitle = parts[1].trim();
+                      
+                      // If section title is different from page title, format as "Page - Section"
+                      if (sectionTitle && sectionTitle !== pageTitle) {
+                        title = `${pageTitle} - ${sectionTitle}`;
+                      } else {
+                        title = pageTitle;
+                      }
+                    }
+              
+                    return { title, url };
+                  })
+                  .sort((a, b) => a.title.localeCompare(b.title)); // Sort alphabetically by title
+              
+                // Remove duplicates (same title and URL)
+                const uniqueSources = formattedSources.filter((source, index, array) => 
+                  index === array.findIndex(s => s.title === source.title && s.url === source.url)
+                );
+              
+                uniqueSources.forEach(source => {
+                  responseBody += `- [${source.title}](${source.url})\n`;
+                });
+                responseBody += `\n`;
+              }
+              
+              responseBody += `---\n\n`;
+              responseBody += `ℹ️ This response was generated automatically. `;
+              responseBody += `If this doesn't fully answer your question or if you need further assistance, `;
+              responseBody += `please mention \`@pwizla\` in a comment and a human maintainer will help you.\n\n`;
+              responseBody += `You can also try our [interactive AI chat](https://docs.strapi.io) for more detailed assistance.\n\n`;
+              responseBody += `💡 For feature requests or product feedback, visit [feedback.strapi.io](https://feedback.strapi.io).`;
+              
+              // Post the response
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: responseBody
+              });
+              
+              // Add labels based on enhanced content analysis
+              const labels = [];
+              const titleLower = issueTitle.toLowerCase();
+              const bodyLower = issueBody.toLowerCase();
+              const combinedContent = `${titleLower} ${bodyLower}`;
+              
+              // Enhanced label detection
+              if (combinedContent.includes('install') || combinedContent.includes('setup') || combinedContent.includes('getting started')) {
+                labels.push('installation');
+              }
+              if (combinedContent.includes('deploy') || combinedContent.includes('production') || combinedContent.includes('hosting')) {
+                labels.push('deployment');
+              }
+              if (combinedContent.includes('api') || combinedContent.includes('endpoint') || combinedContent.includes('rest') || combinedContent.includes('graphql')) {
+                labels.push('api');
+              }
+              if (combinedContent.includes('plugin') || combinedContent.includes('extension')) {
+                labels.push('plugins');
+              }
+              if (combinedContent.includes('documentation') || combinedContent.includes('docs') || titleLower.includes('[request]')) {
+                labels.push('documentation');
+              }
+              if (combinedContent.includes('migration') || combinedContent.includes('upgrade') || combinedContent.includes('v4') || combinedContent.includes('v5')) {
+                labels.push('migration');
+              }
+              if (combinedContent.includes('database') || combinedContent.includes('db') || combinedContent.includes('migration')) {
+                labels.push('database');
+              }
+              if (combinedContent.includes('admin panel') || combinedContent.includes('admin') || combinedContent.includes('customization')) {
+                labels.push('admin-panel');
+              }
+              if (combinedContent.includes('auth') || combinedContent.includes('permission') || combinedContent.includes('jwt') || combinedContent.includes('login')) {
+                labels.push('authentication');
+              }
+              if (combinedContent.includes('i18n') || combinedContent.includes('locale') || combinedContent.includes('translation')) {
+                labels.push('i18n');
+              }
+              if (combinedContent.includes('typo') || combinedContent.includes('error') || combinedContent.includes('bug') || combinedContent.includes('broken')) {
+                labels.push('bug');
+              }
+              if (titleLower.includes('[request]') || combinedContent.includes('feature') || combinedContent.includes('enhancement')) {
+                labels.push('enhancement');
+              }
+              if (titleLower.includes('[auto-sync]') || combinedContent.includes('automatic sync')) {
+                labels.push('auto-sync');
+              }
+              
+              labels.push('auto-responded');
+              
+              if (labels.length > 0) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issueNumber,
+                  labels: labels
+                });
+              }
+              
+              console.log(`Successfully processed issue #${issueNumber}`);
+              
+            } catch (error) {
+              console.error('Error calling Kapa AI:', error.message);
+              if (error.response) {
+                console.error(`HTTP Status: ${error.response.status}`);
+                console.error('Response data:', error.response.data);
+              }
+              
+              // Fallback response - Fixed string concatenation
+              let fallbackResponse = `👋 Hello @${issueAuthor}! Thanks for opening this issue.\n\n`;
+              fallbackResponse += `🤖 I tried to analyze your question automatically but encountered a technical issue. `;
+              fallbackResponse += `A human maintainer will review this soon.\n\n`;
+              fallbackResponse += `In the meantime, you might find answers in our:\n`;
+              fallbackResponse += `- [Documentation](https://docs.strapi.io)\n`;
+              fallbackResponse += `- [Community Discord](https://discord.strapi.io)\n`;
+              fallbackResponse += `- [Interactive AI chat](https://docs.strapi.io) (click "Ask AI")\n\n`;
+              fallbackResponse += `@pwizla please review this issue.`;
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: fallbackResponse
+              });
+              
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                labels: ['needs-review', 'auto-response-failed']
+              });
+            }
+        env:
+          KAPA_API_TOKEN: ${{ secrets.KAPA_API_TOKEN }}
+          KAPA_PROJECT_ID: ${{ secrets.KAPA_PROJECT_ID }}

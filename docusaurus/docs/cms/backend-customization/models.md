@@ -594,6 +594,45 @@ The `options` key is used to define specific behaviors and accepts the following
 }
 ```
 
+### Plugin options
+
+`pluginOptions` is an optional object allowing plugins to store configuration for a model or a specific attribute.
+
+| Key                       | Value                         | Description                                            |
+|---------------------------|-------------------------------|--------------------------------------------------------|
+| `i18n`                    | `localized: true`             | Enables localization.                                  |
+| `content-manager`         | `visible: false`              | Hides from Content Manager in the admin panel.         |
+| `content-type-builder`    | `visible: false`              | Hides from Content-type Builder in the admin panel.    |
+
+```json title="./src/api/[api-name]/content-types/[content-type-name]/schema.json"
+
+{
+  "attributes": {
+    "name": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    }
+    // …additional attributes
+  }
+}
+
+```
+
 ## Lifecycle hooks
 
 Lifecycle hooks are functions that get triggered when Strapi queries are called. They are triggered automatically when managing content through the administration panel or when developing custom code using `queries`·

@@ -18,6 +18,7 @@ import {translate} from '@docusaurus/Translate';
 import useIsBrowser from '@docusaurus/useIsBrowser';
 import DocSidebarItems from '@theme/DocSidebarItems';
 import { NewBadge, UpdatedBadge } from '../../../components/Badge';
+import Icon from '@site/src/components/Icon'
 // If we navigate to a category and it becomes active, it should automatically
 // expand itself
 function useAutoExpandActiveCategory({isActive, collapsed, updateCollapsed}) {
@@ -168,6 +169,15 @@ export default function DocSidebarItemCategory({
           {label}
           {customProps?.updated && <UpdatedBadge />}
           {customProps?.new && <NewBadge />}
+          {customProps?.tooltip && (
+            <Icon name="info" />
+          )}
+          {customProps?.tooltip && (
+            <div 
+              className="info-icon__tooltip"
+              dangerouslySetInnerHTML={{ __html: customProps.tooltip }}
+            /> 
+          )} 
         </Link>
         {href && collapsible && (
           <CollapseButton

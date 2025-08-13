@@ -10,7 +10,7 @@ tags:
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
-The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until March 2026.
+The latest major version of Strapi is Strapi 5. Strapi v4 is still supported until April 2026.
 
 Whenever you feel ready to upgrade to Strapi 5, the present page will help you. It lists all available resources for upgrading from Strapi 4 to Strapi 5 and answers general questions you might have.
 
@@ -35,6 +35,7 @@ Strapi provides an [upgrade tool](/cms/upgrade-tool) to ease the process. The up
 Follow the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a> to learn how to use this tool in the context of upgrading to Strapi 5.
 
 Strapi 5 docs also provide a [complete breaking changes database](/cms/migration/v4-to-v5/breaking-changes) and [dedicated resources](/cms/migration/v4-to-v5/additional-resources/introduction) to cover specific use cases.
+<br/>
 
 </details>
 
@@ -42,6 +43,7 @@ Strapi 5 docs also provide a [complete breaking changes database](/cms/migration
 <summary style={{fontSize: '18px'}}>How can I handle the data migration, ensuring that in Strapi 5 the application will still be working?</summary>
 <p>Strapi 5 integrates a series of data migration scripts that are run once the application starts for the first time in Strapi 5.</p>
 <p>However, please <strong>always backup your database</strong> (found at <code style={{color: 'rgb(73, 69, 255)', backgroundColor: 'rgb(240, 240, 255)'}}>.tmp/data.db</code> by default if using a SQL database) before performing any upgrade, as instructed in the <a href="/cms/migration/v4-to-v5/step-by-step">step-by-step guide</a>.</p>
+<br/>
 </details>
 
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>

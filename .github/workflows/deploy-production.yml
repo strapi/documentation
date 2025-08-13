@@ -5,46 +5,56 @@ on:
       - main
 
 jobs:
-  pre-build:
+  generate-llms:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      files-changed: ${{ steps.check-changes.outputs.changed }}
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+          token: ${{ secrets.PAT_AUTO_MERGE_LLMS_TXT_TOKEN }}
+          fetch-depth: 0
+      
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
+          node-version: '20'
+      
       - name: 📦 Install dependencies
         working-directory: ./docusaurus
         run: npm install
-
-      - name: 🤖 Generate and commit LLMs files
+      
+      - name: 🤖 Generate LLMs files
         working-directory: ./docusaurus
+        run: node scripts/generate-llms.js
+      
+      - name: 🔍 Check for changes
+        id: check-changes
         run: |
-          # Generate files
-          node scripts/generate-llms.js
-          
-          # Configure git
-          git config --local user.email "action@github.com"
-          git config --local user.name "LLMs Generator"
-          
-          # Commit if changed
-          git add static/llms*.txt
-          if ! git diff --staged --quiet; then
-            git commit -m "🤖 Update LLMs files [skip ci]"
-            git push
-            echo "✅ LLMs files updated - Vercel will auto-redeploy"
-          else
+          if git diff --quiet HEAD -- docusaurus/static/llms*.txt; then
+            echo "changed=false" >> $GITHUB_OUTPUT
             echo "🔄 No changes in LLMs files"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "📝 LLMs files have changes"
           fi
+      
+      - name: 📤 Commit and push changes
+        if: steps.check-changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "noreply@github.com"
+          git config --local user.name "GitHub Actions"
+          git add docusaurus/static/llms*.txt
+          git commit -m "🤖 Update LLMs files [skip ci]"
+          git push
 
   deploy-prod:
     runs-on: ubuntu-latest
-    needs: pre-build
+    needs: generate-llms
     steps:
       - name: Get Vercel deployment URL
         id: get-url-prod
@@ -56,7 +66,7 @@ jobs:
           vercel_target: 'production'
           vercel_app: 'documentation'
           vercel_project_id: ${{ secrets.VERCEL_PROJECT_ID }}
-
+      
       - name: Wait for Vercel deploy to complete
         uses: UnlyEd/github-action-await-vercel@v1.2.14
         id: await-vercel-prod
@@ -65,10 +75,10 @@ jobs:
         with:
           deployment-url: ${{ steps.get-url-prod.outputs.preview_url }}
           timeout: 600
-
+      
       - name: Output debug status
         run: "echo The deployment at ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).url }} is ${{ fromJson(steps.await-vercel-prod.outputs.deploymentDetails).readyState }}"
-
+      
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
         id: invalid-cloudfront-prod
@@ -78,7 +88,7 @@ jobs:
           AWS_REGION: ${{ secrets.PROD_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+      
       - name: Algolia crawler creation and crawl
         uses: algolia/algoliasearch-crawler-github-actions@v1.1.9
         id: update-algolia-index-prod
