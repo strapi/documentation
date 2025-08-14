@@ -55,7 +55,7 @@ The table of content of the Strapi CMS documentation displays 7 main sections in
 - If you prefer learning more about Strapi while looking at the project code structure, you can use the interactive [project structure](/cms/project-structure) page.
 - If demos are more your thing, feel free to watch the <ExternalLink to="https://youtu.be/zd0_S_FPzKg" text="video demo"/>, or you can request a <ExternalLink to="https://strapi.io/demo" text="live demo"/>.
 - Try our AI assistant: Click or tap the **Ask AI** button and ask your questions using natural language. Watch it answer you in real time, then read recommended sources for more details.
-- To help you integrate Strapi Docs with your favorite AI models, you can use the **Copy Markdown** button or visit the [`llms.txt`](/llms.txt) and [`llms-full.txt`](/llms-full.txt) pages.
+- To help you integrate Strapi Docs with your favorite AI models, you can use the dropdown at the top of each page to **Copy Markdown** or visit the [`llms.txt`](/llms.txt) and [`llms-full.txt`](/llms-full.txt) pages.
 :::
 
 :::strapi Information for beginner developers
