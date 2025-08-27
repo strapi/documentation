@@ -8,27 +8,45 @@ jobs:
   call-webhook:
     if: >
       github.event.pull_request.merged == true &&
-      contains(join(github.event.pull_request.labels.*.name, ','), 'contribution')
+      contains(github.event.pull_request.labels.*.name, 'contribution')
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.REWARD_GITHUB_PERSONAL_TOKEN }}
     steps:
-      - name: Get contributor email from head commit
-        id: contributor
+      - name: Debug context
         run: |
-          sha="${{ github.event.pull_request.head.sha }}"
-          repo="${{ github.repository }}"
-          api="https://api.github.com/repos/${repo}/commits/${sha}"
+          echo "merged=${{ github.event.pull_request.merged }}"
+          echo "labels=${{ join(github.event.pull_request.labels.*.name, ',') }}"
+          echo "base=${{ github.event.pull_request.base.ref }}"
+          echo "head=${{ github.event.pull_request.head.ref }}"
+          echo "merge_commit_sha=${{ github.event.pull_request.merge_commit_sha }}"
 
-          resp=$(curl -sSL \
-            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            "${api}")
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-          email=$(printf '%s' "$resp" | jq -r '.commit.author.email // empty')
-          if [ -z "$email" ] || [ "$email" = "null" ]; then
-            email=$(printf '%s' "$resp" | jq -r '.commit.committer.email // empty')
-          fi
+      - name: Determine first commit of PR branch
+        id: first_commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          pr="${{ github.event.pull_request.number }}"
+          base_branch="${{ github.event.pull_request.base.ref }}"
+
+          # Récupère la tête de la PR même après merge/suppression de branche
+          git fetch origin "refs/pull/${pr}/head:pr-${pr}"
+
+          # Base commune entre la PR et la branche de base
+          mb=$(git merge-base "origin/${base_branch}" "pr-${pr}")
+
+          # Liste des commits introduits par la PR (du plus ancien au plus récent)
+          first_sha=$(git rev-list --reverse "${mb}..pr-${pr}" | head -n1)
+
+          # Email de l'auteur du 1er commit (fallback sur committer)
+          author_email=$(git show -s --format='%ae' "${first_sha}")
+          committer_email=$(git show -s --format='%ce' "${first_sha}")
+          email="${author_email:-$committer_email}"
+
+          echo "sha=${first_sha}" >> "$GITHUB_OUTPUT"
           echo "email=${email}" >> "$GITHUB_OUTPUT"
 
       - name: Call webhook
@@ -38,7 +56,7 @@ jobs:
             -d '{
               "pr_number": "${{ github.event.pull_request.number }}",
               "title": "${{ github.event.pull_request.title }}",
-              "base_branch": "${{ github.event.pull_request.base.ref }}"
-              "contributor_login": "'"${{ github.event.pull_request.user.login }}"'",
-              "contributor_email": "'"${{ steps.contributor.outputs.email }}"'"
+              "base_branch": "${{ github.event.pull_request.base.ref }}",
+              "contributor_login": "${{ github.event.pull_request.user.login }}",
+              "contributor_email": "${{ steps.first_commit.outputs.email }}"
             }'
