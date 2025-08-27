@@ -30,20 +30,24 @@ jobs:
         run: |
           set -euo pipefail
           pr="${{ github.event.pull_request.number }}"
-          base_branch="${{ github.event.pull_request.base.ref }}"
+          base_sha="${{ github.event.pull_request.base.sha }}"
 
-          # Récupère la tête de la PR même après merge/suppression de branche
-          git fetch origin "refs/pull/${pr}/head:pr-${pr}"
+          # 1) S'assurer que les deux côtés existent localement
+          git fetch --no-tags origin "refs/pull/${pr}/head:pr-${pr}"
+          git fetch --no-tags origin "${base_sha}"
 
-          # Base commune entre la PR et la branche de base
-          mb=$(git merge-base "origin/${base_branch}" "pr-${pr}")
+          # 2) Commits introduits par la PR par rapport au commit de base
+          first_sha="$(git rev-list --reverse --no-merges "${base_sha}..pr-${pr}" | head -n1 || true)"
 
-          # Liste des commits introduits par la PR (du plus ancien au plus récent)
-          first_sha=$(git rev-list --reverse "${mb}..pr-${pr}" | head -n1)
+          # Fallback si jamais la range est vide (rare)
+          if [ -z "${first_sha}" ]; then
+            mb="$(git merge-base "${base_sha}" "pr-${pr}")"
+            first_sha="$(git rev-list --reverse "${mb}..pr-${pr}" | head -n1)"
+          fi
 
-          # Email de l'auteur du 1er commit (fallback sur committer)
-          author_email=$(git show -s --format='%ae' "${first_sha}")
-          committer_email=$(git show -s --format='%ce' "${first_sha}")
+          # 3) Email de l'auteur du premier commit (fallback sur committer)
+          author_email="$(git show -s --format='%ae' "${first_sha}")"
+          committer_email="$(git show -s --format='%ce' "${first_sha}")"
           email="${author_email:-$committer_email}"
 
           echo "sha=${first_sha}" >> "$GITHUB_OUTPUT"
