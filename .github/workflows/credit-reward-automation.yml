@@ -53,6 +53,33 @@ jobs:
           echo "sha=${first_sha}" >> "$GITHUB_OUTPUT"
           echo "email=${email}" >> "$GITHUB_OUTPUT"
 
+      - name: Compute PR diff stats (files/lines)
+        id: pr_stats
+        shell: bash
+        run: |
+          set -euo pipefail
+          pr="${{ github.event.pull_request.number }}"
+          base_sha="${{ github.event.pull_request.base.sha }}"
+
+          # Make sure refs exist (already done earlier, but harmless if repeated)
+          git fetch --no-tags origin "refs/pull/${pr}/head:pr-${pr}" || true
+          git fetch --no-tags origin "${base_sha}" || true
+
+          # Per-file additions/deletions; binary files show '-' → treat as 0
+          stats="$(git diff --numstat "${base_sha}..pr-${pr}" || true)"
+
+          files_changed=$(printf "%s\n" "$stats" | awk 'NF{c++} END{print c+0}')
+          lines_added=$(printf "%s\n" "$stats" | awk '{a+=($1 ~ /^[0-9]+$/ ? $1 : 0)} END{print a+0}')
+          lines_deleted=$(printf "%s\n" "$stats" | awk '{d+=($2 ~ /^[0-9]+$/ ? $2 : 0)} END{print d+0}')
+          lines_changed=$((lines_added + lines_deleted))
+
+          {
+            echo "files_changed=${files_changed}"
+            echo "lines_added=${lines_added}"
+            echo "lines_deleted=${lines_deleted}"
+            echo "lines_changed=${lines_changed}"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Call webhook
         run: |
           curl -X POST "https://hooks.zapier.com/hooks/catch/1615118/uh44k4y/" \
@@ -62,5 +89,9 @@ jobs:
               "title": "${{ github.event.pull_request.title }}",
               "base_branch": "${{ github.event.pull_request.base.ref }}",
               "contributor_login": "${{ github.event.pull_request.user.login }}",
-              "contributor_email": "${{ steps.first_commit.outputs.email }}"
+              "contributor_email": "${{ steps.first_commit.outputs.email }}",
+              "files_changed": "${{ steps.pr_stats.outputs.files_changed }}",
+              "lines_added": "${{ steps.pr_stats.outputs.lines_added }}",
+              "lines_deleted": "${{ steps.pr_stats.outputs.lines_deleted }}",
+              "lines_changed": "${{ steps.pr_stats.outputs.lines_changed }}"
             }'
