@@ -1,0 +1,44 @@
+name: Credit Reward Automation
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  call-webhook:
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(join(github.event.pull_request.labels.*.name, ','), 'contribution')
+    runs-on: ubuntu-latest
+     env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_REWARD_TOKEN }}
+    steps:
+      - name: Get contributor email from head commit
+        id: contributor
+        run: |
+          sha="${{ github.event.pull_request.head.sha }}"
+          repo="${{ github.repository }}"
+          api="https://api.github.com/repos/${repo}/commits/${sha}"
+
+          resp=$(curl -sSL \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "${api}")
+
+          email=$(printf '%s' "$resp" | jq -r '.commit.author.email // empty')
+          if [ -z "$email" ] || [ "$email" = "null" ]; then
+            email=$(printf '%s' "$resp" | jq -r '.commit.committer.email // empty')
+          fi
+          echo "email=${email}" >> "$GITHUB_OUTPUT"
+
+      - name: Call webhook
+        run: |
+          curl -X POST "https://hooks.zapier.com/hooks/catch/1615118/uh44k4y/" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "pr_number": "${{ github.event.pull_request.number }}",
+              "title": "${{ github.event.pull_request.title }}",
+              "base_branch": "${{ github.event.pull_request.base.ref }}"
+              "contributor_login": "'"${{ github.event.pull_request.user.login }}"'",
+              "contributor_email": "'"${{ steps.contributor.outputs.email }}"'"
+            }'
