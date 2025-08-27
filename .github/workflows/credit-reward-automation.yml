@@ -11,7 +11,7 @@ jobs:
       contains(join(github.event.pull_request.labels.*.name, ','), 'contribution')
     runs-on: ubuntu-latest
      env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_REWARD_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.REWARD_GITHUB_PERSONAL_TOKEN }}
     steps:
       - name: Get contributor email from head commit
         id: contributor
