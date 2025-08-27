@@ -10,7 +10,7 @@ jobs:
       github.event.pull_request.merged == true &&
       contains(join(github.event.pull_request.labels.*.name, ','), 'contribution')
     runs-on: ubuntu-latest
-     env:
+    env:
       GITHUB_TOKEN: ${{ secrets.REWARD_GITHUB_PERSONAL_TOKEN }}
     steps:
       - name: Get contributor email from head commit
