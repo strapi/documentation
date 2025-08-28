@@ -15,6 +15,9 @@ pagination_next: cloud/advanced/email
 
 # Database
 
+> Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.
+<br/>
+
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
 :::prerequisites
