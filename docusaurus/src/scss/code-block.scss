@@ -315,7 +315,7 @@ pre.prism-code {
 
 // Make code block buttons always visible with reduced opacity
 [class*="buttonGroup"] {
-  opacity: 0.6; // Always visible with slight transparency
+  opacity: 0.7; // Always visible with slight transparency
   transition: opacity 0.2s ease;
   
   &:hover {
