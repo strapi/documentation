@@ -265,14 +265,6 @@ const config = {
             title: 'Additional resources',
             items: [
               {
-                label: 'LLMs.txt',
-                href: 'https://docs.strapi.io/llms.txt',
-              },
-              {
-                label: 'LLMs-full.txt',
-                href: 'https://docs.strapi.io/llms-full.txt',
-              },
-              {
                 label: 'v4 Docs',
                 href: 'https://docs-v4.strapi.io',
               },
