@@ -27,6 +27,39 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.8.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Contextual AI for codeblocks](https://github.com/strapi/documentation/pull/2675)
+- [Add AI Toolbar](https://github.com/strapi/documentation/pull/2673)
+- [Add starter questions to Kapa AI modal](https://github.com/strapi/documentation/pull/2672)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Fix the strapi/strapi contributing link](https://github.com/strapi/documentation/pull/2686)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/guptadeepak8" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/91896859?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="guptadeepak8"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.7.0
 
 <br />
