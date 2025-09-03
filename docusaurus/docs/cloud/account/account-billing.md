@@ -20,7 +20,7 @@ Testing...
 
 ## Account billing
 
-The <Icon name="credit-card" /> *Billing* tab displays and enables you to modify the billing details and payment method set for the account.
+The <Icon name="credit-card" /> *Billing* tab displayed and enabled you to modify the billing details and payment method set for the account.
 
 <ThemedImage
   alt="Billing tab of Profile page"
