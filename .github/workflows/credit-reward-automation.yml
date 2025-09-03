@@ -73,11 +73,17 @@ jobs:
           lines_deleted=$(printf "%s\n" "$stats" | awk '{d+=($2 ~ /^[0-9]+$/ ? $2 : 0)} END{print d+0}')
           lines_changed=$((lines_added + lines_deleted))
 
+          # Count files added and files deleted (A/D); renames (R) are excluded
+          files_added=$(git diff --diff-filter=A --name-only "${base_sha}..pr-${pr}" | sed '/^$/d' | wc -l | tr -d ' ')
+          files_deleted=$(git diff --diff-filter=D --name-only "${base_sha}..pr-${pr}" | sed '/^$/d' | wc -l | tr -d ' ')
+
           {
-            echo "files_changed=${files_changed}"
             echo "lines_added=${lines_added}"
             echo "lines_deleted=${lines_deleted}"
             echo "lines_changed=${lines_changed}"
+            echo "files_changed=${files_changed}"
+            echo "files_added=${files_added}"
+            echo "files_deleted=${files_deleted}"
           } >> "$GITHUB_OUTPUT"
 
       - name: Call webhook
@@ -91,6 +97,8 @@ jobs:
               "contributor_login": "${{ github.event.pull_request.user.login }}",
               "contributor_email": "${{ steps.first_commit.outputs.email }}",
               "files_changed": "${{ steps.pr_stats.outputs.files_changed }}",
+              "files_added": "${{ steps.pr_stats.outputs.files_added }}",
+              "files_deleted": "${{ steps.pr_stats.outputs.files_deleted }}",
               "lines_added": "${{ steps.pr_stats.outputs.lines_added }}",
               "lines_deleted": "${{ steps.pr_stats.outputs.lines_deleted }}",
               "lines_changed": "${{ steps.pr_stats.outputs.lines_changed }}"
