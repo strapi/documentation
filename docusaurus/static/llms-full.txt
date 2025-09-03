@@ -374,10 +374,10 @@ For Strapi Cloud applications with large amounts of cacheable content, such as i
 
 
 
-# Strapi Cloud fundamentals <UpdatedBadge />
+# Strapi Cloud fundamentals
 Source: https://docs.strapi.io/cloud/getting-started/cloud-fundamentals
 
-# Strapi Cloud fundamentals 
+# Strapi Cloud fundamentals
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
@@ -1372,6 +1372,8 @@ The following is an example of a basic customization of the admin panel:
 # Admin panel bundlers
 Source: https://docs.strapi.io/cms/admin-panel-customization/bundlers
 
+# Admin panel bundlers
+
 Strapi's [admin panel](/cms/admin-panel-customization) is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application. 2 different bundlers can be used with your Strapi 5 application, [Vite](#vite) (the default one) and [webpack](#webpack). Both bundlers can be configured to suit your needs.
 
 :::info
@@ -2047,6 +2049,8 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
 Source: https://docs.strapi.io/cms/api/document
 
 <div className="document-concept-page custom-mermaid-layout">
+
+# Documents
 
 A **document** in Strapi 5 is an API-only concept. A document represents all the different variations of content for a given entry of a content-type.
 
@@ -4601,6 +4605,8 @@ The following example lets you upload and attach multiple pictures to the `resta
 Source: https://docs.strapi.io/cms/backend-customization
 
 <div className="custom-mermaid-layout">
+
+# Backend customization
 
 :::strapi Disambiguation: Strapi back end
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
