@@ -32,20 +32,20 @@ jobs:
           pr="${{ github.event.pull_request.number }}"
           base_sha="${{ github.event.pull_request.base.sha }}"
 
-          # 1) S'assurer que les deux côtés existent localement
+          # 1) Ensure both sides exist locally
           git fetch --no-tags origin "refs/pull/${pr}/head:pr-${pr}"
           git fetch --no-tags origin "${base_sha}"
 
-          # 2) Commits introduits par la PR par rapport au commit de base
+          # 2) Commits introduced by the PR, taking base commit as a reference
           first_sha="$(git rev-list --reverse --no-merges "${base_sha}..pr-${pr}" | head -n1 || true)"
 
-          # Fallback si jamais la range est vide (rare)
+          # Fallback for whenever the range is empty (rarely happens)
           if [ -z "${first_sha}" ]; then
             mb="$(git merge-base "${base_sha}" "pr-${pr}")"
             first_sha="$(git rev-list --reverse "${mb}..pr-${pr}" | head -n1)"
           fi
 
-          # 3) Email de l'auteur du premier commit (fallback sur committer)
+          # 3) Email address of first commit author (fallback on committer)
           author_email="$(git show -s --format='%ae' "${first_sha}")"
           committer_email="$(git show -s --format='%ce' "${first_sha}")"
           email="${author_email:-$committer_email}"
