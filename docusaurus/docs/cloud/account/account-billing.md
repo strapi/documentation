@@ -16,11 +16,11 @@ import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Account billing & invoices 
 
-Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the [<Icon name="credit-card" /> *Billing*](#account-billing) and [<Icon name="invoice" /> *Invoices*](#account-invoices) tabs.
+Testing...
 
 ## Account billing
 
-The <Icon name="credit-card" /> *Billing* tab displays and enables you to modify the billing details and payment method set for the account.
+The <Icon name="credit-card" /> *Billing* tab displayed and enabled you to modify the billing details and payment method set for the account.
 
 <ThemedImage
   alt="Billing tab of Profile page"
