@@ -301,6 +301,74 @@ To track this, within your front-end application, add an event listener to liste
 
 With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
 
+<!-- TODO: add code for Live Preview. Previous code is for the basic preview. For Live Preview they need to modify the code as follows to inject a script:
+
+JS version:
+
+const router = useRouter();
+
+useEffect(() => {
+  const handleMessage = async (message) => {
+    const { origin, data } = message;
+
+    if (origin !== process.env.NEXT_PUBLIC_API_URL) {
+      return;
+    }
+
+    if (data.type === 'strapiUpdate') {
+      router.refresh();
+    } else if (data.type === 'strapiScript') {
+      const script = window.document.createElement('script');
+      script.textContent = data.payload.script;
+      window.document.head.appendChild(script);
+    }
+  };
+
+  // Add the event listener
+  window.addEventListener('message', handleMessage);
+
+  // Let Strapi know we're ready to receive the script
+  window.parent?.postMessage({ type: 'previewReady' }, '*');
+
+  // Remove the event listener on unmount
+  return () => {
+    window.removeEventListener('message', handleMessage);
+  };
+}, [router]);
+
+TS version:
+
+const router = useRouter();
+
+useEffect(() => {
+  const handleMessage = async (message: MessageEvent<any>) => {
+    const { origin, data } = message;
+
+    if (origin !== process.env.NEXT_PUBLIC_API_URL) {
+      return;
+    }
+
+    if (data.type === 'strapiUpdate') {
+      router.refresh();
+    } else if (data.type === 'strapiScript') {
+      const script = window.document.createElement('script');
+      script.textContent = data.payload.script;
+      window.document.head.appendChild(script);
+    }
+  };
+
+  // Add the event listener
+  window.addEventListener('message', handleMessage);
+
+  // Let Strapi know we're ready to receive the script
+  window.parent?.postMessage({ type: 'previewReady' }, '*');
+
+  // Remove the event listener on unmount
+  return () => {
+    window.removeEventListener('message', handleMessage);
+  };
+}, [router]); -->
+
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" >
 
@@ -435,7 +503,7 @@ const pageData = await fetchContentType('api::page.page', {
 :::strapi Preview vs. Live Preview
 Based on your CMS plan, your experience with Preview will be different:
 - With the Free plan, Preview will be full screen only.
-- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you get access to Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
+- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you get access to an enhanced experience called Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, and you can also edit the content directly within the preview itself by double-clicking on any content.
 :::
 
 Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
@@ -444,25 +512,44 @@ Once the Preview feature is properly set up, an **Open preview** button is visib
 <ThemedImage
   alt="Previewing content"
   sources={{
-    light: '/img/assets/content-manager/previewing-content2.gif',
-    dark: '/img/assets/content-manager/previewing-content2.gif',
+    light: '/img/assets/content-manager/previewing-content3.gif',
+    dark: '/img/assets/content-manager/previewing-content3.gif',
   }}
 />
 
 Once the Preview is open, you can:
 
 - click the close button <Icon name="x" classes="ph-bold" /> in the upper left corner to go back to the Edit View of the Content Manager,
+- switch between the Desktop and Mobile preview using the dropdown above the previewed content,
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
 - and click the link icon <Icon name="link" classes="ph-bold"/> in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
-
-Additionally, with Live Preview, you can:
-- with <GrowthBadge /> and <EnterpriseBadge /> plans, expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview full screen,
-- and, with the <EnterpriseBadge /> plan, use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled.
 
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
 
-:::tip
-Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
+### Live Preview
+<GrowthBadge /> <EnterpriseBadge />
+
+Live Preview is the enhanced Preview experience available with Strapi’s paid CMS plans.
+
+With Live Preview, in addition to what’s included in the Free plan, you can:
+
+* Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the <Icon name="arrow-line-left" classes="ph-bold" /> and <Icon name="arrow-line-right" classes="ph-bold" /> buttons.
+* Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
+
+<ThemedImage
+  alt="Previewing content"
+  sources={{
+    light: '/img/assets/content-manager/previewing-content-live.gif',
+    dark: '/img/assets/content-manager/previewing-content-live.gif',
+  }}
+/>
+
+:::caution Experimental feature
+This feature is currently experimental. Feel free to share <ExternalLink to="https://feedback.strapi.io/" text="feedback"/> or <ExternalLink to="https://github.com/strapi/strapi/issues" text="issues" /> with the Strapi team.
+
+The current version of Live Preview comes with the following limitations:
+* Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
+* Media assets and fields in dynamic zones are not handled.
 :::
