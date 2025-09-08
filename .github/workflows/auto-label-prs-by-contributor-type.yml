@@ -35,10 +35,31 @@ jobs:
         with:
           script: |
             const teamData = JSON.parse(`${{ steps.team-config.outputs.team_data }}`);
-            const prAuthor = context.payload.pull_request.user.login;
             
-            console.log(`PR Author: ${prAuthor}`);
-            console.log('Team Data:', teamData);
+            // Handle both automatic (PR event) and manual (workflow_dispatch) triggers
+            let prToProcess;
+            
+            if (context.eventName === 'pull_request') {
+              // Automatic trigger: process the current PR
+              prToProcess = context.payload.pull_request;
+            } else if (context.eventName === 'workflow_dispatch') {
+              // Manual trigger: process specified PR
+              const prNumber = '${{ inputs.pr_number }}';
+              
+              console.log(`Manual trigger for PR #${prNumber}`);
+              
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: parseInt(prNumber)
+              });
+              prToProcess = pr;
+            }
+            
+            const prAuthor = prToProcess.user.login;
+            const prNumber = prToProcess.number;
+            
+            console.log(`Processing PR #${prNumber} by ${prAuthor}`);
             
             // Check if author is in maintainers or contributors list
             const isMaintainer = teamData.maintainers && teamData.maintainers.includes(prAuthor);
@@ -55,12 +76,12 @@ jobs:
             console.log(`Label to add: ${labelToAdd}`);
             
             // Check if the PR already has one of these labels
-            const existingLabels = context.payload.pull_request.labels.map(label => label.name);
+            const existingLabels = prToProcess.labels.map(label => label.name);
             const hasInternalLabel = existingLabels.includes('internal');
             const hasContributionLabel = existingLabels.includes('contribution');
             
             if (hasInternalLabel || hasContributionLabel) {
-              console.log('PR already has a contributor type label, skipping...');
+              console.log(`PR #${prNumber} already has a contributor type label, skipping...`);
               return;
             }
             
@@ -69,13 +90,13 @@ jobs:
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
+                issue_number: prNumber,
                 labels: [labelToAdd]
               });
               
-              console.log(`Successfully added label: ${labelToAdd}`);
+              console.log(`Successfully added label '${labelToAdd}' to PR #${prNumber}`);
               
             } catch (error) {
-              console.error('Error adding label:', error);
-              core.setFailed(`Failed to add label: ${error.message}`);
+              console.error(`Error adding label to PR #${prNumber}:`, error);
+              core.setFailed(`Failed to add label to PR #${prNumber}: ${error.message}`);
             }
