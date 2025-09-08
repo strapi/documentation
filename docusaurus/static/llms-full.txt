@@ -8409,7 +8409,7 @@ const pageData = await fetchContentType('api::page.page', {
 :::strapi Preview vs. Live Preview
 Based on your CMS plan, your experience with Preview will be different:
 - With the Free plan, Preview will be full screen only.
-- With the  and  plans, you get access to Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
+- With the  and  plans, you get access to an enhanced experience called Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, and you can also edit the content directly within the preview itself by double-clicking on any content.
 :::
 
 Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
@@ -8419,19 +8419,29 @@ Once the Preview feature is properly set up, an **Open preview** button is visib
 Once the Preview is open, you can:
 
 - click the close button  in the upper left corner to go back to the Edit View of the Content Manager,
+- switch between the Desktop and Mobile preview using the dropdown above the previewed content,
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
 - and click the link icon  in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
-
-Additionally, with Live Preview, you can:
-- with  and  plans, expand the side panel by clicking on the  button to make the Preview full screen,
-- and, with the  plan, use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled.
 
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
 
-:::tip
-Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
+### Live Preview
+
+Live Preview is the enhanced Preview experience available with Strapi’s paid CMS plans.
+
+With Live Preview, in addition to what’s included in the Free plan, you can:
+
+* Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the  and  buttons.
+* Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
+
+:::caution Experimental feature
+This feature is currently experimental. Feel free to share  or  with the Strapi team.
+
+The current version of Live Preview comes with the following limitations:
+* Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
+* Media assets and fields in dynamic zones are not handled.
 :::
 
 

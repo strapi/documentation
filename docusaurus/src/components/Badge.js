@@ -14,6 +14,7 @@ export default function Badge({
   version,
   tooltip,
   inline = false,
+  noTooltip = false,
   ...rest
 }) {
   const variantNormalized = variant.toLowerCase().replace(/\W/g, '');
@@ -28,7 +29,8 @@ export default function Badge({
         (feature && `badge--featureflag`),
         ((variant === "Updated" || variant === "New") && `badge--content`),
         (inline && 'badge--inline'), 
-        className
+        className,
+        (noTooltip && 'badge--no-tooltip')
       )}
       {...rest}
     >
@@ -43,15 +45,14 @@ export default function Badge({
                 />
                 <span className="badge__text">{variant}</span>
               </span>
-              <span className="badge__tooltip">{tooltip}</span>
+              {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
             </>
           ) : (
             <>
-            {variant}
-            <span className="badge__tooltip">{tooltip}</span>
+              {variant}
+              {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
             </>
-          )
-        }
+          )}
         </>
       ) : (
         <a className="badge__link" href={link}>
@@ -62,7 +63,7 @@ export default function Badge({
             />
           )}
           {variant}
-          <span className="badge__tooltip">{tooltip}</span>
+          {!noTooltip && tooltip && <span className="badge__tooltip">{tooltip}</span>}
         </a>
       )}
       {children}

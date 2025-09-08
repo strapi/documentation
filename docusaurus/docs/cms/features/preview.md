@@ -301,78 +301,16 @@ To track this, within your front-end application, add an event listener to liste
 
 With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
 
-<!-- TODO: add code for Live Preview. Previous code is for the basic preview. For Live Preview they need to modify the code as follows to inject a script:
+The implementation slighltly differs depending on which feature is implemented, Preview available in the Free plan or Live Preview available in the <GrowthBadge/> and <EnterpriseBadge/> plans:
 
-JS version:
 
-const router = useRouter();
-
-useEffect(() => {
-  const handleMessage = async (message) => {
-    const { origin, data } = message;
-
-    if (origin !== process.env.NEXT_PUBLIC_API_URL) {
-      return;
-    }
-
-    if (data.type === 'strapiUpdate') {
-      router.refresh();
-    } else if (data.type === 'strapiScript') {
-      const script = window.document.createElement('script');
-      script.textContent = data.payload.script;
-      window.document.head.appendChild(script);
-    }
-  };
-
-  // Add the event listener
-  window.addEventListener('message', handleMessage);
-
-  // Let Strapi know we're ready to receive the script
-  window.parent?.postMessage({ type: 'previewReady' }, '*');
-
-  // Remove the event listener on unmount
-  return () => {
-    window.removeEventListener('message', handleMessage);
-  };
-}, [router]);
-
-TS version:
-
-const router = useRouter();
-
-useEffect(() => {
-  const handleMessage = async (message: MessageEvent<any>) => {
-    const { origin, data } = message;
-
-    if (origin !== process.env.NEXT_PUBLIC_API_URL) {
-      return;
-    }
-
-    if (data.type === 'strapiUpdate') {
-      router.refresh();
-    } else if (data.type === 'strapiScript') {
-      const script = window.document.createElement('script');
-      script.textContent = data.payload.script;
-      window.document.head.appendChild(script);
-    }
-  };
-
-  // Add the event listener
-  window.addEventListener('message', handleMessage);
-
-  // Let Strapi know we're ready to receive the script
-  window.parent?.postMessage({ type: 'previewReady' }, '*');
-
-  // Remove the event listener on unmount
-  return () => {
-    window.removeEventListener('message', handleMessage);
-  };
-}, [router]); -->
+<Tabs groupId="preview-live-preview">
+<TabItem label="Preview" value="preview">
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" >
 
-```tsx title="next/app/path/to/your/front/end/logic.jsx" {6-17}
+```jsx title="next/app/path/to/your/front/end/logic.jsx" {6-17}
 export default function MyClientComponent({...props}) {
   // …
   const router = useRouter();
@@ -397,11 +335,12 @@ export default function MyClientComponent({...props}) {
     };
   }, [router]);
 
-  // ...
+  // …
 }
 ```
 
 </TabItem>
+
 <TabItem value="ts" label="TypeScript" >
 
 ```tsx title="next/app/path/to/your/front/end/logic.tsx" {6-17}
@@ -436,6 +375,103 @@ export default function MyClientComponent({
 </TabItem>
 
 </Tabs>
+
+</TabItem>
+
+<TabItem value="live-preview" label={ <> Live Preview <GrowthBadge inline noTooltip /> <EnterpriseBadge noTooltip inline /> </> } >
+
+For Live Preview, you need to modify the code as follows to inject a script:
+
+<Tabs groupId="js-ts">
+<TabItem label="JavaScript" value="js">
+
+```jsx title="next/app/path/to/your/front/end/logic.jsx {7-24}"
+
+export default function MyClientComponent({...props}) {
+  // …
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message) => {
+      const { origin, data } = message;
+
+      if (origin !== process.env.NEXT_PUBLIC_API_URL) {
+        return;
+      }
+
+      if (data.type === 'strapiUpdate') {
+        router.refresh();
+      } else if (data.type === 'strapiScript') {
+        const script = window.document.createElement('script');
+        script.textContent = data.payload.script;
+        window.document.head.appendChild(script);
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener('message', handleMessage);
+
+    // Let Strapi know we're ready to receive the script
+    window.parent?.postMessage({ type: 'previewReady' }, '*');
+
+    // Remove the event listener on unmount
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [router]);
+
+  // …
+}
+```
+</TabItem>
+
+<TabItem label="TypeScript" value="ts">
+
+```tsx title="next/app/path/to/your/front/end/logic.tsx {6-23}"
+export default function MyClientComponent({
+  // …
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message: MessageEvent<any>) => {
+      const { origin, data } = message;
+
+      if (origin !== process.env.NEXT_PUBLIC_API_URL) {
+        return;
+      }
+
+      if (data.type === 'strapiUpdate') {
+        router.refresh();
+      } else if (data.type === 'strapiScript') {
+        const script = window.document.createElement('script');
+        script.textContent = data.payload.script;
+        window.document.head.appendChild(script);
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener('message', handleMessage);
+
+    // Let Strapi know we're ready to receive the script
+    window.parent?.postMessage({ type: 'previewReady' }, '*');
+
+    // Remove the event listener on unmount
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [router]);
+
+  // …
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+
+</Tabs>
+
 
 <details>
 <summary>Caching in Next.js:</summary>
