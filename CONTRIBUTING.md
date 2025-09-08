@@ -112,3 +112,4 @@ The pull request review process and timeline are based on the availability of th
 
 3. Reviewers will either approve, ask for changes, or reject the pull request.
 4. Accepted pull requests will be merged and automatically deployed on [docs.strapi.io](https://docs.strapi.io) a few minutes later. 
+
