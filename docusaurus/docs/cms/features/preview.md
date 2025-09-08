@@ -303,9 +303,7 @@ With Next.js, the recommended way to refresh the iframe content is with <Externa
 
 The implementation slighltly differs depending on which feature is implemented, Preview available in the Free plan or Live Preview available in the <GrowthBadge/> and <EnterpriseBadge/> plans:
 
-
-<Tabs groupId="preview-live-preview">
-<TabItem label="Preview" value="preview">
+The following code would be common to Preview and Live Preview:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript" >
@@ -376,9 +374,7 @@ export default function MyClientComponent({
 
 </Tabs>
 
-</TabItem>
-
-<TabItem value="live-preview" label={ <> Live Preview <GrowthBadge inline noTooltip /> <EnterpriseBadge noTooltip inline /> </> } >
+##### Live Preview specificities <GrowthBadge/> <EnterpriseBadge />
 
 For Live Preview, you need to modify the code as follows to inject a script:
 
@@ -466,10 +462,6 @@ export default function MyClientComponent({
 ```
 
 </TabItem>
-</Tabs>
-
-</TabItem>
-
 </Tabs>
 
 
