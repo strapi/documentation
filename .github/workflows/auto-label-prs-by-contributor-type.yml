@@ -4,6 +4,12 @@ on:
   pull_request:
     types: [opened]
     branches: [main, next, v4]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to label'
+        required: true
+        type: string
 
 jobs:
   auto-label:
