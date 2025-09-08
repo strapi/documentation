@@ -301,7 +301,7 @@ To track this, within your front-end application, add an event listener to liste
 
 With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
 
-The implementation slighltly differs depending on which feature is implemented, Preview available in the Free plan or Live Preview available in the <GrowthBadge/> and <EnterpriseBadge/> plans:
+The implementation slightly differs depending on which feature is implemented, Preview available in the Free plan or Live Preview available in the <GrowthBadge/> and <EnterpriseBadge/> plans:
 
 The following code would be common to Preview and Live Preview:
 
