@@ -3,7 +3,7 @@ name: Auto-label PRs by contributor type
 on:
   pull_request:
     types: [opened]
-    branches: [main]
+    branches: [main, next, v4]
 
 jobs:
   auto-label:
