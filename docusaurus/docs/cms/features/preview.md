@@ -357,7 +357,7 @@ You need to add an event listener in your application. It should be present on a
 There are 2 messages to listen to:
 
 - `strapiUpdate`: sent by Strapi when a content update has been saved to the database. It's an opportunity to fetch the updated version of the content and refresh the preview. With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
-- `previewScript`: sent by Strapi to give you a script that powers the live preview functionality. This script should be injected into the page's `<head>` tag. It handles highlighting editable areas in the preview and sending messages back to Strapi when an area is double-clicked for editing.
+- `previewScript`: sent by Strapi to give you a script that powers the Live Preview functionality. This script should be injected into the page's `<head>` tag. It handles highlighting editable areas in the preview and sending messages back to Strapi when an area is double-clicked for editing.
 
 In order to receive the `previewScript` message, you need to let Strapi know that your frontend is ready to receive it. This is done by posting a `previewReady` message to the parent window.
 
