@@ -549,6 +549,7 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 * Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the <Icon name="arrow-line-left" classes="ph-bold" /> and <Icon name="arrow-line-right" classes="ph-bold" /> buttons.
 * Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
 
+<!-- TODO: add dark mode GIF -->
 <ThemedImage
   alt="Previewing content"
   sources={{
