@@ -29,7 +29,7 @@ const config = {
     mermaid: true,
   },
 
-  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
+  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid', 'docusaurus-theme-search-typesense'],
 
   scripts: [
     {
@@ -196,14 +196,51 @@ const config = {
           hideable: true,
         },
       },
-      algolia: {
-        appId: '392RJ63O14',
-        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
-        indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
-        searchParameters: {
-          facetFilters: [],
+      // algolia: {
+      //   appId: '392RJ63O14',
+      //   apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
+      //   indexName: 'strapi_newCmsCrawler_march2025',
+      //   contextualSearch: false,
+      //   searchParameters: {
+      //     facetFilters: [],
+      //   },
+      // },
+      typesense: {
+        // Replace this with the name of your index/collection.
+        // It should match the "index_name" entry in the scraper's "config.json" file.
+        typesenseCollectionName: 'strapi-docs',
+
+        typesenseServerConfig: {
+          nodes: [
+            {
+              host: 'localhost', // For Docker use 'host.docker.internal
+              port: 8108,
+              protocol: 'http',
+            }
+            // {
+            //   host: 'xxx-1.a1.typesense.net',
+            //   port: 443,
+            //   protocol: 'https',
+            // },
+            // {
+            //   host: 'xxx-2.a1.typesense.net',
+            //   port: 443,
+            //   protocol: 'https',
+            // },
+            // {
+            //   host: 'xxx-3.a1.typesense.net',
+            //   port: 443,
+            //   protocol: 'https',
+            // },
+          ],
+          apiKey: 'xyz',
         },
+
+        // Optional: Typesense search parameters: https://typesense.org/docs/0.24.0/api/search.html#search-parameters
+        typesenseSearchParameters: {},
+
+        // Optional
+        contextualSearch: true,
       },
       navbar: {
         hideOnScroll: false,
