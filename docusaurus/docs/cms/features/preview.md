@@ -11,6 +11,10 @@ tags:
 
 # Preview
 
+<Tldr title="Page summary">
+The Preview feature lets you see how your content changes will look on your front-end directly from Strapi's admin panel. It requires configuration in both Strapi (handler setup) and your front-end app (preview routes). Live Preview is available with Growth and Enterprise plans for real-time editing alongside preview.
+</Tldr>
+
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
 <IdentityCard>
