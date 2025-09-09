@@ -1,0 +1,37 @@
+@use './tokens.scss' as *;
+@use './mixins' as *;
+
+.tldr {
+  border-left: 4px solid var(--strapi-neutral-300);
+  padding-left: var(--strapi-spacing-4);
+  margin-bottom: var(--strapi-spacing-8);
+  font-size: var(--strapi-font-size-md);
+  
+  &__title {
+    font-weight: 600;
+    margin-bottom: var(--strapi-spacing-2);
+    color: var(--strapi-neutral-500);
+  }
+  
+  &__content p {
+    color: var(--strapi-neutral-500);
+    
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@include dark {
+  .tldr {
+    border-left-color: var(--strapi-neutral-400);
+    
+    &__title {
+      color: var(--strapi-neutral-500);
+    }
+    
+    &__content {
+      color: var(--strapi-neutral-500);
+    }
+  }
+}
