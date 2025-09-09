@@ -1,12 +1,14 @@
 import React from 'react';
 import Icon from './Icon';
 
-export function Tldr({ children, title, icon = 'sparkle', className, ...rest }) {
+export function Tldr({ children, title, icon = 'sparkle', design = 'default', className, ...rest }) {
+  const designClass = design !== 'default' ? `tldr--${design}` : '';
+  
   return (
-    <div className={`tldr ${className || ''}`} {...rest}>
+    <div className={`tldr ${designClass} ${className || ''}`} {...rest}>
       {title && (
         <div className="tldr__title">
-          <Icon name={icon} classes="ph-fill" /> {title}
+          <Icon name={icon} /> {title}
         </div>
       )}
       <div className="tldr__content">

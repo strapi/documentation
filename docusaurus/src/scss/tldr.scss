@@ -6,6 +6,7 @@
   padding-left: var(--strapi-spacing-4);
   margin-bottom: var(--strapi-spacing-8);
   font-size: var(--strapi-font-size-md);
+  color: var(--strapi-neutral-500);
   
   &__title {
     font-weight: 600;
@@ -13,11 +14,80 @@
     color: var(--strapi-neutral-500);
   }
   
-  &__content p {
-    color: var(--strapi-neutral-500);
+  &__content {
+    color: inherit;
+    
+    * {
+      color: inherit;
+    }
+    
+    code {
+      background-color: var(--strapi-neutral-100);
+      border: 1px solid var(--strapi-neutral-200);
+    }
+    
+    a {
+      color: var(--strapi-primary-500);
+      
+      &:hover {
+        color: var(--strapi-primary-600);
+      }
+    }
     
     > *:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  // Design: quote-style avec icône newspaper en filigrane  
+  &--quote {
+    position: relative;
+    
+    &::before {
+      content: '\E344'; // ph-newspaper icon (U+E344)
+      font-family: 'Phosphor';
+      font-size: 48px;
+      position: absolute;
+      top: 8px;
+      left: 12px;
+      color: var(--strapi-neutral-150);
+      z-index: -1;
+      opacity: 0.3;
+    }
+    
+    .tldr__title {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .tldr__content {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  // Design: editorial avec première lettre stylisée (drop cap)
+  &--editorial {
+    .tldr__content p:first-child::first-letter {
+      font-size: 2.5em;
+      font-weight: 700;
+      float: left;
+      line-height: 0.8;
+      margin-right: 8px;
+      margin-top: 4px;
+      color: var(--strapi-neutral-600);
+    }
+  }
+
+  // Design: highlighted avec background dégradé + bordure complète
+  &--highlighted {
+    background: linear-gradient(90deg, var(--strapi-neutral-100) 0%, transparent 100%);
+    border-radius: 0 4px 4px 0;
+    padding: var(--strapi-spacing-3) var(--strapi-spacing-4);
+    
+    .tldr__content code {
+      background-color: var(--strapi-neutral-200);
+      border-color: var(--strapi-neutral-300);
     }
   }
 }
@@ -25,13 +95,49 @@
 @include dark {
   .tldr {
     border-left-color: var(--strapi-neutral-400);
+    color: var(--strapi-neutral-500);
     
     &__title {
       color: var(--strapi-neutral-500);
     }
     
     &__content {
-      color: var(--strapi-neutral-500);
+      code {
+        background-color: var(--strapi-neutral-150);
+        border-color: var(--strapi-neutral-200);
+      }
+      
+      a {
+        color: var(--strapi-primary-500);
+        
+        &:hover {
+          color: var(--strapi-primary-400);
+        }
+      }
+    }
+
+    // Design quote dark mode
+    &--quote {
+      &::before {
+        color: var(--strapi-neutral-200);
+      }
+    }
+
+    // Design editorial dark mode
+    &--editorial {
+      .tldr__content p:first-child::first-letter {
+        color: var(--strapi-neutral-700);
+      }
+    }
+
+    // Design highlighted dark mode
+    &--highlighted {
+      background: linear-gradient(90deg, var(--strapi-neutral-150) 0%, transparent 100%);
+      
+      .tldr__content code {
+        background-color: var(--strapi-neutral-200);
+        border-color: var(--strapi-neutral-300);
+      }
     }
   }
 }
