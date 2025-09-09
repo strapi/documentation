@@ -167,7 +167,6 @@ To create a new environment:
 2. In the dialog that opens, you can see the price for the new environment and the date of the next invoice.
 3. Fill in the available settings:
 
-  <UpdatedBadge />
     | Setting name     | Instructions                                                             |
     | ---------------- | ------------------------------------------------------------------------ |
     | Environment name | (mandatory) Write a name for your project's new environment.             |
@@ -346,7 +345,6 @@ Resetting an environment deletes all environments data and resets the variables 
 2. In the dialog that opens, click on the **Continue** button to confirm the environment reset.
 3. Fill in the available fields to reset the environment:
 
-  <UpdatedBadge />
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |
     | Environment name | (mandatory) Write a name for your project's new environment.            |
@@ -364,7 +362,7 @@ Resetting an environment deletes all environments data and resets the variables 
 3. Click on the **Delete environment** button to confirm the deletion.
 
 ### Backups {#backups}
-<CloudProBadge /> <CloudScaleBadge /> <UpdatedBadge />
+<CloudProBadge /> <CloudScaleBadge />
 
 The <Icon name="arrow-clockwise" /> *Backups* tab informs you of the status and date of the latest backup of your Strapi Cloud projects. The databases associated with all existing Strapi Cloud projects are indeed automatically backed up (weekly for Pro plans and daily for Scale plans). Backups are retained for a 28-day period. Additionally, you can create a single manual backup.
 
