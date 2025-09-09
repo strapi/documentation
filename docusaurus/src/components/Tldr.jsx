@@ -8,7 +8,7 @@ export function Tldr({ children, title, icon = 'sparkle', design = 'default', cl
     <div className={`tldr ${designClass} ${className || ''}`} {...rest}>
       {title && (
         <div className="tldr__title">
-          <Icon name={icon} /> {title}
+          <Icon name={icon} classes="ph-fill" /> {title}
         </div>
       )}
       <div className="tldr__content">

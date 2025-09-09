@@ -1,11 +1,18 @@
 @use './tokens.scss' as *;
 @use './mixins' as *;
 
+:root {
+  --border-left-color: var(--strapi-neutral-200);
+  --quote-icon-color: var(--strapi-neutral-200);
+  --editorial-first-letter-color: var(--strapi-neutral-500);
+  --default-tldr-font-size: var(--strapi-font-size-md);
+}
+
 .tldr {
-  border-left: 4px solid var(--strapi-neutral-300);
+  border-left: 4px solid var(--border-left-color); 
   padding-left: var(--strapi-spacing-4);
   margin-bottom: var(--strapi-spacing-8);
-  font-size: var(--strapi-font-size-md);
+  font-size: var(--default-tldr-font-size);
   color: var(--strapi-neutral-500);
   
   &__title {
@@ -44,15 +51,15 @@
     position: relative;
     
     &::before {
-      content: '\E344'; // ph-newspaper icon (U+E344)
+      content: '\E346'; // ph-newspaper icon (U+E344)
       font-family: 'Phosphor';
-      font-size: 48px;
+      font-size: 4em;
+      // font-style: italic;
       position: absolute;
-      top: 8px;
-      left: 12px;
-      color: var(--strapi-neutral-150);
+      top: 9px;
+      left: -72px;
+      color: var(--quote-icon-color);
       z-index: -1;
-      opacity: 0.3;
     }
     
     .tldr__title {
@@ -66,16 +73,16 @@
     }
   }
 
-  // Design: editorial avec première lettre stylisée (drop cap)
+  // Design: editorial avec drop cap classique
   &--editorial {
     .tldr__content p:first-child::first-letter {
-      font-size: 2.5em;
+      font-size: 3.3em;
       font-weight: 700;
       float: left;
       line-height: 0.8;
       margin-right: 8px;
-      margin-top: 4px;
-      color: var(--strapi-neutral-600);
+      margin-top: 2px;
+      color: var(--editorial-first-letter-color);
     }
   }
 
@@ -93,6 +100,10 @@
 }
 
 @include dark {
+  --border-left-color: var(--strapi-neutral-400);
+  --quote-icon-color: var(--strapi-neutral-400);
+  --editorial-first-letter-color: var(--strapi-neutral-400);
+
   .tldr {
     border-left-color: var(--strapi-neutral-400);
     color: var(--strapi-neutral-500);
@@ -119,14 +130,14 @@
     // Design quote dark mode
     &--quote {
       &::before {
-        color: var(--strapi-neutral-200);
+        color: var(--quote-icon-color);
       }
     }
 
     // Design editorial dark mode
     &--editorial {
       .tldr__content p:first-child::first-letter {
-        color: var(--strapi-neutral-700);
+        color: var(--editorial-first-letter-color);
       }
     }
 
