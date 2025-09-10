@@ -10,6 +10,9 @@ tags:
 
 # Caching & Performance
 
+> Edge caching via Cache-Control headers reduces latency and server load for heavy static content.
+<br/>
+
 For Strapi Cloud applications with large amounts of cacheable content, such as images, videos, and other static assets, enabling CDN (Content Delivery Network) caching via the <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control" text="`Cache-control` header"/> can help improve application performance.
 
 CDN caching can help improve application performance in a few ways:
