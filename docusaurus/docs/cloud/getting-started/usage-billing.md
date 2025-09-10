@@ -15,7 +15,7 @@ tags:
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
-<UpdatedBadge /> Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
+Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
 
 | Feature                          | Free  | Essential | Pro | Scale |
 | -------------------------------- | ----- | --------- | --- | ----- |
