@@ -1327,6 +1327,9 @@ Source: https://docs.strapi.io/cms/admin-panel-customization
 
 # Admin panel customization
 
+> The admin panel can be tailored to match your branding, by editing `src/admin/app` and using an `extensions` folder to swap logos, favicon, locales, translations, themes, bundlers, or editors.
+<br/>
+
 The **front-end part of Strapi**  is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content that will be accessible through the Content API. To get an overview of the admin panel, please refer to the [Getting Started > Admin panel](/cms/features/admin-panel) page.
 
 From a developer point of view, Strapi's admin panel is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application.
@@ -1371,6 +1374,11 @@ The following is an example of a basic customization of the admin panel:
 
 # Admin panel bundlers
 Source: https://docs.strapi.io/cms/admin-panel-customization/bundlers
+
+# Admin panel bundlers
+
+> Supported JavaScript bundlers influence builds and development flow.
+<br/>
 
 Strapi's [admin panel](/cms/admin-panel-customization) is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application. 2 different bundlers can be used with your Strapi 5 application, [Vite](#vite) (the default one) and [webpack](#webpack). Both bundlers can be configured to suit your needs.
 
@@ -4602,6 +4610,9 @@ Source: https://docs.strapi.io/cms/backend-customization
 
 <div className="custom-mermaid-layout">
 
+> Strapi’s back end is a Koa-based server where requests pass through global middlewares, routes, controllers, services, and models before the Document Service returns responses.
+<br/>
+
 :::strapi Disambiguation: Strapi back end
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.
 But the Strapi software itself includes 2 different parts:
@@ -6595,6 +6606,9 @@ Source: https://docs.strapi.io/cms/configurations/api
 
 # API configuration
 
+> `/config/api` centralizes response privacy and REST defaults such as prefix, pagination limits, and max request size.
+<br/>
+
 General settings for API calls can be set in the `./config/api.js` file:
 
 | Property                      | Description                                                                                                                                                                                                                                          | Type         | Default |
@@ -6620,6 +6634,9 @@ If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLim
 Source: https://docs.strapi.io/cms/configurations/cron
 
 # Cron jobs
+
+> Cron jobs schedule custom functions at specific times via `node-schedule`, activated through server config and optional task files.
+<br/>
 
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/cms/configurations/server).
@@ -6719,6 +6736,9 @@ strapi.cron.jobs
 Source: https://docs.strapi.io/cms/configurations/database
 
 # Database configuration
+
+> `/config/database` defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
+<br/>
 
 The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
 
@@ -6865,6 +6885,9 @@ Source: https://docs.strapi.io/cms/configurations/environment
 
 # Environment configuration and variables
 
+> Strapi-specific environment variables and `.env usage` enable per-environment configs, with `env()` helpers for casting values.
+<br/>
+
 Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values available in your code.
 
 :::tip
@@ -6904,6 +6927,9 @@ Source: https://docs.strapi.io/cms/configurations/features
 
 # Features configuration
 
+> Future flags in `/config/features` toggle experimental Strapi features, allowing early testing at your own risk.
+<br/>
+
 The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**.
 
 Some incoming Strapi features are not yet ready to be shipped to all users, but Strapi still offers community users the opportunity to provide early feedback on these new features or changes. With these experimental features, developers have the flexibility to choose and integrate new features and changes into their Strapi applications as they become available in the current major version as well as assist us in shaping these new features.
@@ -6936,6 +6962,9 @@ Developers can use the following APIs to interact with future flags:
 Source: https://docs.strapi.io/cms/configurations/functions
 
 # Functions
+
+> `src/index` hosts global register, bootstrap, and destroy functions to run logic during application lifecycle.
+<br/>
 
 <div className="dont_hide_secondary_bar">
 
@@ -7001,6 +7030,9 @@ You might find additional information in  about registering lifecycle functions.
 Source: https://docs.strapi.io/cms/configurations/middlewares
 
 # Middlewares configuration
+
+> `/config/middlewares` orders global middleware, enables custom names or resolves, and exposes built-in configuration options.
+<br/>
 
 </Tabs>
 
@@ -7159,6 +7191,9 @@ Source: https://docs.strapi.io/cms/configurations/plugins
 
 # Plugins configuration
 
+> `/config/plugins` enables or disables plugins and overrides their settings, with examples for local plugin development.
+<br/>
+
 Plugin configurations are stored in `/config/plugins.js|ts` (see [project structure](/cms/project-structure)). Each plugin can be configured with the following available parameters:
 
 | Parameter                  | Description                                                                                                                                                            | Type    |
@@ -7185,6 +7220,9 @@ If no specific configuration is required, a plugin can also be declared with the
 Source: https://docs.strapi.io/cms/configurations/server
 
 # Server configuration
+
+> `/config/server` manages host, port, URL, proxy, cron, and more; changes require rebuilding the admin panel.
+<br/>
 
 The `/config/server.js` file is used to define the server configuration for a Strapi application.
 
@@ -7220,6 +7258,9 @@ The `./config/server.js` file can include the following parameters:
 Source: https://docs.strapi.io/cms/configurations/typescript
 
 # TypeScript configuration
+
+> TypeScript configuration explains the project’s tsconfig files, output directories, and an optional config/typescript.js|ts that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
+<br/>
 
 [TypeScript](/cms/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 
@@ -7481,6 +7522,9 @@ Source: https://docs.strapi.io/cms/error-handling
 
 # Error handling
 
+> Strapi’s APIs return errors in a consistent structure and let backend code throw custom exceptions for controllers, services, policies, or lifecycles. This documentation lists error classes, context helpers, and examples for crafting meaningful responses.
+<br/>
+
 Strapi is natively handling errors with a standard format.
 
 There are 2 use cases for error handling:
@@ -7582,6 +7626,9 @@ Source: https://docs.strapi.io/cms/features/admin-panel
 
 # Administration panel
 
+> The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+<br/>
+
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
 
 ### Modifying profile information (name, email, username)
@@ -7674,6 +7721,9 @@ If you prefer or are required to log in via an SSO provider, please refer to the
 Source: https://docs.strapi.io/cms/features/api-tokens
 
 # API Tokens
+
+> API tokens provide scoped authentication for REST and GraphQL requests without exposing user credentials. This documentation explains token types, creation, expiration, and secure usage within the admin panel.
+<br/>
 
 API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)).
 
@@ -7783,6 +7833,9 @@ If the [Internationalization (i18n)](/cms/features/internationalization) feature
 Source: https://docs.strapi.io/cms/features/content-manager
 
 # Content Manager
+
+> ...
+<br/>
 
 From the 
   
@@ -8005,6 +8058,9 @@ Source: https://docs.strapi.io/cms/features/custom-fields
 
 # Custom Fields
 
+> Custom Fields extend Strapi with new field types that behave like native fields in the Content‑type Builder and Content Manager. Instructions in this documentation cover building or installing fields via plugins and registering them programmatically.
+<br/>
+
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or added to Strapi via plugins, custom fields can be used in the Content-Type Builder and Content Manager just like built-in fields.
 
 </IdentityCard>
@@ -8128,6 +8184,9 @@ Source: https://docs.strapi.io/cms/features/data-management
 
 # Data Management
 
+> Data Management handles CLI-based import, export, and transfer of content between Strapi instances with partial configuration in the admin panel. Step-by-step commands and prerequisite settings explained in this documentation ensure safe migrations.
+<br/>
+
 The Data Management feature can be used to import, export, or transfer data. Data Management is  CLI-based only, but is partly configured in the admin panel.
 
 </IdentityCard>
@@ -8157,6 +8216,9 @@ Source: https://docs.strapi.io/cms/features/draft-and-publish
 
 # Draft & Publish
 
+> Draft & Publish separates drafts from live entries, allowing editors to stage content before release. This documentation shows how to enable it per content type and manage publish or unpublish actions.
+<br/>
+
 The Draft & Publish feature allows to manage drafts for your content.
 
 </IdentityCard>
@@ -8169,6 +8231,9 @@ On the back-end server of Strapi, the Document Service API can also be used to i
 Source: https://docs.strapi.io/cms/features/email
 
 # Email
+
+> The Email feature sends transactional messages through local SMTP or external providers like SendGrid. Setup guidance in this documentation covers provider configuration and extending delivery via controllers or hooks.
+<br/>
 
 The Email feature enables Strapi applications to send emails from a server or an external provider.
 
@@ -8229,6 +8294,9 @@ Source: https://docs.strapi.io/cms/features/internationalization
 
 # Internationalization (i18n)
 
+> Internationalization manages content in multiple locales directly from the admin panel. This documentation explains how to add locales, translate entries, and control locale-specific permissions.
+<br/>
+
 The Internationalization feature allows to manage content in different languages, called "locales".
 
 </IdentityCard>
@@ -8241,6 +8309,9 @@ On the back-end server of Strapi, the Document Service API can also be used to i
 Source: https://docs.strapi.io/cms/features/media-library
 
 # Media Library
+
+> Media Library centralizes all uploaded assets with search, filters, and folder organization. This documentation includes provider options, upload workflows, and explanations on inserting media into content.
+<br/>
 
 The 
 
@@ -8331,6 +8402,9 @@ The dotfiles are not exposed. It means that every file name that starts with `.`
 Source: https://docs.strapi.io/cms/features/preview
 
 # Preview
+
+> Preview connects the Content Manager to your front end so editors can see changes before publishing. Configuration steps set preview URLs and explain Live Preview availability for higher plans.
+<br/>
 
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
@@ -8434,6 +8508,9 @@ Switch between Desktop and Mobile preview mode using the dropdown at the top to 
 Source: https://docs.strapi.io/cms/features/rbac
 
 # Role-Based Access Control (RBAC)
+
+> Role-Based Access Control (RBAC) manages administrator roles and granular permissions in the admin panel. This documentation covers creating roles, assigning rights, and securing administrative workflows.
+<br/>
 
 The Role-Based Access Control (RBAC) feature allows the management of the administrators, who are the users of the admin panel. More specifically, RBAC manages the administrators' accounts and roles.
 
@@ -8784,6 +8861,9 @@ To access the admin panel using a specific provider instead of logging in with a
 Source: https://docs.strapi.io/cms/features/users-permissions
 
 # Users & Permissions
+
+> Users & Permissions manages end-user accounts, JWT-based authentication, and role-based access to APIs. This documentation explains how to create roles, configure permissions, and issue API tokens for secure access control.
+<br/>
 
 The Users & Permissions feature allows the management of the end-users  of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
@@ -10988,6 +11068,9 @@ Source: https://docs.strapi.io/cms/plugins/documentation
 
 # Documentation plugin
 
+> The Documentation plugin auto-generates OpenAPI/Swagger docs for your API by scanning content types and routes. This documentation walks you through installation, customizing settings, and restricting access to the docs.
+<br/>
+
 The Documentation plugin automates your API documentation creation. It basically generates a swagger file. It follows the 
 
 </IdentityCard>
@@ -11252,6 +11335,9 @@ Strapi is secured by default, which means that most of your endpoints require th
 Source: https://docs.strapi.io/cms/plugins/graphql
 
 # GraphQL plugin
+
+> The GraphQL plugin adds a GraphQL endpoint and Apollo-based sandbox for crafting queries and mutations. Options in config/plugins let you tune depth, item limits, and other Apollo Server settings which are explained in this documentation.
+<br/>
 
 By default Strapi create [REST endpoints](/cms/api/rest#endpoints) for each of your content-types. The GraphQL plugin adds a GraphQL endpoint to fetch and mutate your content. With the GraphQL plugin installed, you can use the Apollo Server-based GraphQL Sandbox to interactively build your queries and mutations and read documentation tailored to your content types.
 
@@ -11622,6 +11708,9 @@ Source: https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace
 
 # Using the Marketplace
 
+> The in-app Marketplace lists plugins and providers with badges, search, and “More” links to detailed Strapi Market pages. This documentation outlines browsing cards and following provider-specific instructions to install new integrations.
+<br/>
+
 Strapi comes with built-in plugins such as [Documentation](/cms/plugins/documentation), [GraphQL](/cms/plugins/graphql), and [Sentry](/cms/plugins/sentry). The Marketplace is where users can find additional plugins to customize Strapi applications, and additional providers to extend plugins. The Marketplace is located in the admin panel, indicated by  _Marketplace_. In the Marketplace, users can browse or search for plugins and providers, link to detailed descriptions for each, and submit new plugins and providers.
 
 :::note strapi In-app Marketplace vs. Market website
@@ -11667,6 +11756,9 @@ Can't find a plugin that suits your use case? Feel free to [create your own](/cm
 Source: https://docs.strapi.io/cms/plugins/sentry
 
 # Sentry plugin
+
+> The Sentry plugin connects Strapi to Sentry to report errors and attach debugging metadata. This documentation details installation, environment-based configuration, and ways to disable or skip sending events outside production.
+<br/>
 
 This plugin enables you to track errors in your Strapi application using Sentry.
 
@@ -11987,6 +12079,9 @@ Source: https://docs.strapi.io/cms/templates
 
 # Templates
 
+> Templates are full Strapi apps that bootstrap new projects via CLI flags such as `--template`, `--template-path`, and `--template-branch`. Instructions in this documentation cover referencing templates from GitHub and turning any Strapi project into a reusable template.
+<br/>
+
 Templates in Strapi 5 are standalone, pre-made Strapi applications designed for specific use cases.
 
 Strapi 5 templates are folders that include all files and folders that you would find in a typical Strapi application (see [project structure](/cms/project-structure)).
@@ -12023,6 +12118,9 @@ An example of what a template could look like is the .
 Source: https://docs.strapi.io/cms/testing
 
 # Unit testing
+
+> Testing uses Jest and Supertest with a temporary SQLite database to run unit and API checks. Walkthroughs generate a Strapi instance, verify endpoints like `/hello`, and authenticate users to ensure controllers behave as expected.
+<br/>
 
 :::strapi
 The Strapi blog has a tutorial on how to implement 
@@ -12353,7 +12451,10 @@ Source: https://docs.strapi.io/cms/typescript
 # TypeScript development
 Source: https://docs.strapi.io/cms/typescript/development
 
-# TypeScript development with Strapi 
+# TypeScript development with Strapi
+
+> TypeScript development showcases Strapi typings for autocompletion, schema type generation with `ts:generate-types`, and programmatic server starts via `strapi()` or `strapi.compile()`. This documentation addresses plugin builds and managing generated type definitions.
+<br/>
 
 While developing a [TypeScript](/cms/typescript)-based application with Strapi, you can:
 

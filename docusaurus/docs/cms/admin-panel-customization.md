@@ -11,6 +11,9 @@ import HotReloading from '/docs/snippets/hot-reloading-admin-panel.md'
 
 # Admin panel customization
 
+> The admin panel can be tailored to match your branding, by editing `src/admin/app` and using an `extensions` folder to swap logos, favicon, locales, translations, themes, bundlers, or editors.
+<br/>
+
 The **front-end part of Strapi** <Annotation>For a clarification on the distinction between:<ul><li>the Strapi admin panel (front end of Strapi),</li><li>the Strapi server (back end of Strapi),</li><li>and the end-user-facing front end of a Strapi-powered application,</li></ul> refer to the [development introduction](/cms/customization).</Annotation> is called the admin panel. The admin panel presents a graphical user interface to help you structure and manage the content that will be accessible through the Content API. To get an overview of the admin panel, please refer to the [Getting Started > Admin panel](/cms/features/admin-panel) page.
 
 From a developer point of view, Strapi's admin panel is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application.

@@ -17,6 +17,9 @@ import CustomFieldRequiresPlugin from '/docs/snippets/custom-field-requires-plug
 
 # Custom Fields
 
+> Custom Fields extend Strapi with new field types that behave like native fields in the Content‑type Builder and Content Manager. Instructions in this documentation cover building or installing fields via plugins and registering them programmatically.
+<br/>
+
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or added to Strapi via plugins, custom fields can be used in the Content-Type Builder and Content Manager just like built-in fields.
 
 <IdentityCard>

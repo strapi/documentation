@@ -11,6 +11,9 @@ tags:
 
 # Administration panel
 
+> The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+<br/>
+
 The admin panel is the back office of your Strapi application. From the admin panel, you will be able to manage content-types and write their actual content, but also manage users, both administrators and end users of your Strapi application.
 
 <ThemedImage

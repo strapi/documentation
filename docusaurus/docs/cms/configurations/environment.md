@@ -12,6 +12,9 @@ import SampleEnv from '/docs/snippets/sample-env.md'
 
 # Environment configuration and variables
 
+> Strapi-specific environment variables and `.env usage` enable per-environment configs, with `env()` helpers for casting values.
+<br/>
+
 Strapi provides specific environment variable names. Defining them in an environment file (e.g., `.env`) will make these variables and their values available in your code.
 
 :::tip
