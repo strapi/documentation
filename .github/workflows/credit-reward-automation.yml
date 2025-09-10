@@ -1,0 +1,105 @@
+name: Credit Reward Automation
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  call-webhook:
+    if: >
+      github.event.pull_request.merged == true &&
+      contains(github.event.pull_request.labels.*.name, 'contribution')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug context
+        run: |
+          echo "merged=${{ github.event.pull_request.merged }}"
+          echo "labels=${{ join(github.event.pull_request.labels.*.name, ',') }}"
+          echo "base=${{ github.event.pull_request.base.ref }}"
+          echo "head=${{ github.event.pull_request.head.ref }}"
+          echo "merge_commit_sha=${{ github.event.pull_request.merge_commit_sha }}"
+
+      - name: Checkout repo (full history)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Determine first commit of PR branch
+        id: first_commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          pr="${{ github.event.pull_request.number }}"
+          base_sha="${{ github.event.pull_request.base.sha }}"
+
+          # 1) Ensure both sides exist locally
+          git fetch --no-tags origin "refs/pull/${pr}/head:pr-${pr}"
+          git fetch --no-tags origin "${base_sha}"
+
+          # 2) Commits introduced by the PR, taking base commit as a reference
+          first_sha="$(git rev-list --reverse --no-merges "${base_sha}..pr-${pr}" | head -n1 || true)"
+
+          # Fallback for whenever the range is empty (rarely happens)
+          if [ -z "${first_sha}" ]; then
+            mb="$(git merge-base "${base_sha}" "pr-${pr}")"
+            first_sha="$(git rev-list --reverse "${mb}..pr-${pr}" | head -n1)"
+          fi
+
+          # 3) Email address of first commit author (fallback on committer)
+          author_email="$(git show -s --format='%ae' "${first_sha}")"
+          committer_email="$(git show -s --format='%ce' "${first_sha}")"
+          email="${author_email:-$committer_email}"
+
+          echo "sha=${first_sha}" >> "$GITHUB_OUTPUT"
+          echo "email=${email}" >> "$GITHUB_OUTPUT"
+
+      - name: Compute PR diff stats (files/lines)
+        id: pr_stats
+        shell: bash
+        run: |
+          set -euo pipefail
+          pr="${{ github.event.pull_request.number }}"
+          base_sha="${{ github.event.pull_request.base.sha }}"
+
+          # Make sure refs exist (already done earlier, but harmless if repeated)
+          git fetch --no-tags origin "refs/pull/${pr}/head:pr-${pr}" || true
+          git fetch --no-tags origin "${base_sha}" || true
+
+          # Per-file additions/deletions; binary files show '-' → treat as 0
+          stats="$(git diff --numstat "${base_sha}..pr-${pr}" || true)"
+
+          files_changed=$(printf "%s\n" "$stats" | awk 'NF{c++} END{print c+0}')
+          lines_added=$(printf "%s\n" "$stats" | awk '{a+=($1 ~ /^[0-9]+$/ ? $1 : 0)} END{print a+0}')
+          lines_deleted=$(printf "%s\n" "$stats" | awk '{d+=($2 ~ /^[0-9]+$/ ? $2 : 0)} END{print d+0}')
+          lines_changed=$((lines_added + lines_deleted))
+
+          # Count files added and files deleted (A/D); renames (R) are excluded
+          files_added=$(git diff --diff-filter=A --name-only "${base_sha}..pr-${pr}" | sed '/^$/d' | wc -l | tr -d ' ')
+          files_deleted=$(git diff --diff-filter=D --name-only "${base_sha}..pr-${pr}" | sed '/^$/d' | wc -l | tr -d ' ')
+
+          {
+            echo "lines_added=${lines_added}"
+            echo "lines_deleted=${lines_deleted}"
+            echo "lines_changed=${lines_changed}"
+            echo "files_changed=${files_changed}"
+            echo "files_added=${files_added}"
+            echo "files_deleted=${files_deleted}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Call webhook
+        run: |
+          curl -X POST "https://hooks.zapier.com/hooks/catch/1615118/uh44k4y/" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "pr_number": "${{ github.event.pull_request.number }}",
+              "title": "${{ github.event.pull_request.title }}",
+              "base_branch": "${{ github.event.pull_request.base.ref }}",
+              "contributor_login": "${{ github.event.pull_request.user.login }}",
+              "contributor_email": "${{ steps.first_commit.outputs.email }}",
+              "files_changed": "${{ steps.pr_stats.outputs.files_changed }}",
+              "files_added": "${{ steps.pr_stats.outputs.files_added }}",
+              "files_deleted": "${{ steps.pr_stats.outputs.files_deleted }}",
+              "lines_added": "${{ steps.pr_stats.outputs.lines_added }}",
+              "lines_deleted": "${{ steps.pr_stats.outputs.lines_deleted }}",
+              "lines_changed": "${{ steps.pr_stats.outputs.lines_changed }}"
+            }'
