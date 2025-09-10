@@ -10,6 +10,9 @@ tags:
 
 # Templates
 
+> Templates are full Strapi apps that bootstrap new projects via CLI flags such as `--template`, `--template-path`, and `--template-branch`. Instructions in this documentation cover referencing templates from GitHub and turning any Strapi project into a reusable template.
+<br/>
+
 Templates in Strapi 5 are standalone, pre-made Strapi applications designed for specific use cases.
 
 Strapi 5 templates are folders that include all files and folders that you would find in a typical Strapi application (see [project structure](/cms/project-structure)).

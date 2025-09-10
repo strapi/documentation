@@ -15,6 +15,9 @@ import FeedbackCallout from '/docs/snippets/backend-customization-feedback-cta.m
 
 # Admin panel bundlers
 
+> Supported JavaScript bundlers influence builds and development flow.
+<br/>
+
 Strapi's [admin panel](/cms/admin-panel-customization) is a React-based single-page application that encapsulates all the features and installed plugins of a Strapi application. 2 different bundlers can be used with your Strapi 5 application, [Vite](#vite) (the default one) and [webpack](#webpack). Both bundlers can be configured to suit your needs.
 
 :::info

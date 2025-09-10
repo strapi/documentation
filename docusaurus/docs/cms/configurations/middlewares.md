@@ -19,6 +19,9 @@ import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares configuration
 
+> `/config/middlewares` orders global middleware, enables custom names or resolves, and exposes built-in configuration options.
+<br/>
+
 <MiddlewareTypes />
 
 The `./config/middlewares.js` file is used to define all the global middlewares that should be applied by the Strapi server.

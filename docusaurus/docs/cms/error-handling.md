@@ -16,6 +16,9 @@ tags:
 
 # Error handling
 
+> Strapi’s APIs return errors in a consistent structure and let backend code throw custom exceptions for controllers, services, policies, or lifecycles. This documentation lists error classes, context helpers, and examples for crafting meaningful responses.
+<br/>
+
 Strapi is natively handling errors with a standard format.
 
 There are 2 use cases for error handling:

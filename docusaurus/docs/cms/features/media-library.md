@@ -14,6 +14,9 @@ import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-li
 
 # Media Library
 
+> Media Library centralizes all uploaded assets with search, filters, and folder organization. This documentation includes provider options, upload workflows, and explanations on inserting media into content.
+<br/>
+
 The <Icon name="images" /> Media Library is the Strapi feature that displays all assets uploaded in the Strapi application and allows users to manage them.
 
 <IdentityCard>
