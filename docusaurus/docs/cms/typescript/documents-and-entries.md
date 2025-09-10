@@ -157,7 +157,7 @@ function processUsageMetrics(
 Using the types' second parameter (`TKeys`), it is possible to obtain a subset of an entity.
 
 ```typescript
-type Credentials = Data.ContentType<'api::acount.acount', 'email' | 'password'>;
+type Credentials = Data.ContentType<'api::account.account', 'email' | 'password'>;
 //   ^? { email: string; password: string }
 ```
 
