@@ -14,6 +14,7 @@ import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-li
 
 # Media Library
 
+> <Icon name="newspaper-clipping"/> **In short:** <br/>
 > Media Library centralizes all uploaded assets with search, filters, and folder organization. This documentation includes provider options, upload workflows, and explanations on inserting media into content.
 <br/>
 
