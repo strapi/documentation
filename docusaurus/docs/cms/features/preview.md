@@ -293,91 +293,7 @@ On the Strapi side, [the `allowedOrigins` configuration parameter](#allowed-orig
 
 This requires the front-end application to have its own header directive, the CSP `frame-ancestors` directive. Setting this directive up depends on how your website is built. For instance, setting this up in Next.js requires a middleware configuration (see [Next.js docs](https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy)).
 
-#### 6. [Front end] Detect changes in Strapi and refresh the front-end {#6-refresh-frontend}
-
-Strapi emits a `strapiUpdate` message to inform the front end that data has changed. 
-
-To track this, within your front-end application, add an event listener to listen to events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object. The listener needs to filter through messages and react only to Strapi-initiated messages, then refresh the iframe content.
-
-With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
-
-<Tabs groupId="js-ts">
-<TabItem value="js" label="JavaScript" >
-
-```tsx title="next/app/path/to/your/front/end/logic.jsx" {6-17}
-export default function MyClientComponent({...props}) {
-  // …
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleMessage = async (message) => {
-      if (
-        // Filters events emitted through the postMessage() API
-        message.origin === process.env.NEXT_PUBLIC_API_URL &&
-        message.data.type === "strapiUpdate"
-      ) { // Recommended way to refresh with Next.js
-        router.refresh();
-      }
-    };
-
-    // Add the event listener
-    window.addEventListener("message", handleMessage);
-
-    // Cleanup the event listener on unmount
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, [router]);
-
-  // ...
-}
-```
-
-</TabItem>
-<TabItem value="ts" label="TypeScript" >
-
-```tsx title="next/app/path/to/your/front/end/logic.tsx" {6-17}
-export default function MyClientComponent({
-  //…
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleMessage = async (message: MessageEvent<any>) => {
-      if (
-        // Filters events emitted through the postMessage() API
-        message.origin === process.env.NEXT_PUBLIC_API_URL &&
-        message.data.type === "strapiUpdate"
-      ) { // Recommended way to refresh with Next.js
-        router.refresh();
-      }
-    };
-
-    // Add the event listener
-    window.addEventListener("message", handleMessage);
-
-    // Cleanup the event listener on unmount
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, [router]);
-
-  // …
-})
-```
-
-</TabItem>
-
-</Tabs>
-
-<details>
-<summary>Caching in Next.js:</summary>
-
-In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-application/caching) may require additional steps. You might need to invalidate the cache by making an API call from the client side to the server, where the revalidation logic will be handled. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
-<br/>
-
-</details>
-
-#### [Front end] Next steps
+#### 6. [Front end] Adapt data fetching for draft content {#6-fetch-draft-content}
 
 Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
 
@@ -395,7 +311,7 @@ export default async function fetchContentType(
   params: Record = {}
 ): Promise {
   // Check if Next.js draft mode is enabled
-  const { isEnabled: isDraftMode } = draftMode();
+  const { isEnabled: isDraftMode } = await draftMode();
   
   try {
     const queryParams = { ...params };
@@ -428,6 +344,169 @@ const pageData = await fetchContentType('api::page.page', {
 });
 ```
 
+### Live Preview implementation <GrowthBadge/> <EnterpriseBadge />
+
+After setting up the basic Preview feature, you can enhance the experience by implementing Live Preview.
+
+#### Window messages
+
+Live Preview creates a more interactive experience by communicating between the admin and your frontend. It relies on events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object.
+
+You need to add an event listener in your application. It should be present on all pages, ideally in a layout component that wraps your entire application. The listener needs to filter through messages and react only to Strapi-initiated messages.
+
+There are 2 messages to listen to:
+
+- `strapiUpdate`: sent by Strapi when a content update has been saved to the database. It's an opportunity to fetch the updated version of the content and refresh the preview. With Next.js, the recommended way to refresh the iframe content is with <ExternalLink to="https://nextjs.org/docs/app/building-your-application/caching#routerrefresh" text="the `router.refresh()` method" />.
+- `previewScript`: sent by Strapi to give you a script that powers the Live Preview functionality. This script should be injected into the page's `<head>` tag. It handles highlighting editable areas in the preview and sending messages back to Strapi when an area is double-clicked for editing.
+
+In order to receive the `previewScript` message, you need to let Strapi know that your frontend is ready to receive it. This is done by posting a `previewReady` message to the parent window.
+
+When putting it all together, a component ready to be added to your global layout could look like:
+
+
+<Tabs groupId="js-ts">
+<TabItem label="JavaScript" value="js">
+
+```jsx title="next/app/path/to/your/front/end/logic.jsx"
+'use client';
+
+export default function LivePreview() {
+  // …
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message) => {
+      const { origin, data } = message;
+
+      if (origin !== process.env.NEXT_PUBLIC_API_URL) {
+        return;
+      }
+
+      if (data.type === 'strapiUpdate') {
+        router.refresh();
+      } else if (data.type === 'strapiScript') {
+        const script = window.document.createElement('script');
+        script.textContent = data.payload.script;
+        window.document.head.appendChild(script);
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener('message', handleMessage);
+
+    // Let Strapi know we're ready to receive the script
+    window.parent?.postMessage({ type: 'previewReady' }, '*');
+
+    // Remove the event listener on unmount
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [router]);
+
+  return null;
+}
+```
+</TabItem>
+
+<TabItem label="TypeScript" value="ts">
+
+```tsx title="next/app/path/to/your/front/end/logic.tsx"
+'use client';
+
+export default function LivePreview() {
+  // …
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleMessage = async (message: MessageEvent<any>) => {
+      const { origin, data } = message;
+
+      if (origin !== process.env.NEXT_PUBLIC_API_URL) {
+        return;
+      }
+
+      if (data.type === 'strapiUpdate') {
+        router.refresh();
+      } else if (data.type === 'strapiScript') {
+        const script = window.document.createElement('script');
+        script.textContent = data.payload.script;
+        window.document.head.appendChild(script);
+      }
+    };
+
+    // Add the event listener
+    window.addEventListener('message', handleMessage);
+
+    // Let Strapi know we're ready to receive the script
+    window.parent?.postMessage({ type: 'previewReady' }, '*');
+
+    // Remove the event listener on unmount
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [router]);
+
+  return null;
+}
+```
+
+</TabItem>
+</Tabs>
+
+<details>
+<summary>Caching in Next.js:</summary>
+
+In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-application/caching) may require additional steps. You might need to invalidate the cache by making an API call from the client side to the server, where the revalidation logic will be handled. Please refer to Next.js documentation for details, for instance with the [revalidatePath() method](https://nextjs.org/docs/app/building-your-application/caching#revalidatepath).
+<br/>
+
+</details>
+
+#### Content source maps
+
+Live Preview is able to identify the parts of your frontend that correspond to fields in Strapi. This is done through content source maps, which are metadata encoded as hidden characters in your string-based content (e.g., text fields). It uses the <ExternalLink to="https://www.npmjs.com/package/@vercel/stega" text="@vercel/stega"/> library to encode and decode this metadata.
+
+Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
+
+For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
+
+```typescript {20-23}
+import { draftMode } from "next/headers";
+import qs from "qs";
+
+export default async function fetchContentType(
+  contentType: string,
+  params: Record = {}
+): Promise {
+  // Check if Next.js draft mode is enabled
+  const { isEnabled: isDraftMode } = await draftMode();
+  
+  try {
+    const queryParams = { ...params };
+    // Add status=draft parameter when draft mode is enabled
+    if (isDraftMode) {
+      queryParams.status = "draft";
+    }
+    
+    const url = `${baseURL}/${contentType}?${qs.stringify(queryParams)}`;
+    const response = await fetch(url, {
+      headers: {
+        // Enable content source maps in preview mode
+        "strapi-encode-source-maps": isDraftMode ? "true" : "false",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch data from Strapi (url=${url}, status=${response.status})`
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching content:", error);
+    throw error;
+  }
+}
+```
+
 ## Usage
 
 **Path to use the feature:** <Icon name="feather" /> Content Manager, edit view of your content type
@@ -435,7 +514,7 @@ const pageData = await fetchContentType('api::page.page', {
 :::strapi Preview vs. Live Preview
 Based on your CMS plan, your experience with Preview will be different:
 - With the Free plan, Preview will be full screen only.
-- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you get access to Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
+- With the <GrowthBadge /> and <EnterpriseBadge /> plans, you get access to an enhanced experience called Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, and you can also edit the content directly within the preview itself by double-clicking on any content.
 :::
 
 Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
@@ -444,25 +523,45 @@ Once the Preview feature is properly set up, an **Open preview** button is visib
 <ThemedImage
   alt="Previewing content"
   sources={{
-    light: '/img/assets/content-manager/previewing-content2.gif',
-    dark: '/img/assets/content-manager/previewing-content2.gif',
+    light: '/img/assets/content-manager/previewing-content3.gif',
+    dark: '/img/assets/content-manager/previewing-content3.gif',
   }}
 />
 
 Once the Preview is open, you can:
 
 - click the close button <Icon name="x" classes="ph-bold" /> in the upper left corner to go back to the Edit View of the Content Manager,
+- switch between the Desktop and Mobile preview using the dropdown above the previewed content,
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
 - and click the link icon <Icon name="link" classes="ph-bold"/> in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
-
-Additionally, with Live Preview, you can:
-- with <GrowthBadge /> and <EnterpriseBadge /> plans, expand the side panel by clicking on the <Icon name="arrow-line-left" classes="ph-bold" /> button to make the Preview full screen,
-- and, with the <EnterpriseBadge /> plan, use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled.
 
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
 
-:::tip
-Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
+### Live Preview
+<GrowthBadge /> <EnterpriseBadge />
+
+Live Preview is the enhanced Preview experience available with Strapi’s paid CMS plans.
+
+With Live Preview, in addition to what’s included in the Free plan, you can:
+
+* Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the <Icon name="arrow-line-left" classes="ph-bold" /> and <Icon name="arrow-line-right" classes="ph-bold" /> buttons.
+* Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
+
+<!-- TODO: add dark mode GIF -->
+<ThemedImage
+  alt="Previewing content"
+  sources={{
+    light: '/img/assets/content-manager/previewing-content-live.gif',
+    dark: '/img/assets/content-manager/previewing-content-live.gif',
+  }}
+/>
+
+:::caution Experimental feature
+This feature is currently experimental. Feel free to share <ExternalLink to="https://feedback.strapi.io/" text="feedback"/> or <ExternalLink to="https://github.com/strapi/strapi/issues" text="issues" /> with the Strapi team.
+
+The current version of Live Preview comes with the following limitations:
+* Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
+* Media assets and fields in dynamic zones are not handled.
 :::
