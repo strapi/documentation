@@ -237,7 +237,7 @@ In the send function you will have access to:
 * `settings` that contains configurations written in `plugins.js|ts`
 * `options` that contains options you send when you call the send function from the email plugin service
 
-You can review the <ExternalLink to="https://github.com/strapi/strapi/tree/master/packages/providers" text="Strapi-maintained providers"/> for example implementations.
+You can review the <ExternalLink to="https://github.com/strapi/strapi/tree/main/packages/providers" text="Strapi-maintained providers"/> for example implementations.
 
 After creating your new provider you can <ExternalLink to="https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages" text="publish it to npm"/> to share with the community or [use it locally](#local-providers) for your project only.
 
