@@ -25,7 +25,7 @@
     padding-bottom: 18px !important;
     font-weight: 600;
     
-    &:hover {
+    &:not(.tabs__item--active):hover {
       background-color: transparent;
       color: var(--strapi-primary-600);
     }
