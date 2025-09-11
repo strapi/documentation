@@ -8349,10 +8349,6 @@ With the Preview feature, you can preview your front end application directly fr
 
 </Tabs>
 
-##### Live Preview specificities 
-
-</Tabs>
-
 <details>
 <summary>Caching in Next.js:</summary>
 
@@ -8361,22 +8357,21 @@ In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-applic
 
 </details>
 
-#### [Front end] Next steps
+#### Content source maps
 
-Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
+Live Preview is able to identify the parts of your frontend that correspond to fields in Strapi. This is done through content source maps, which are metadata encoded as hidden characters in your string-based content (e.g., text fields). It uses the  library to encode and decode this metadata.
 
-1. Create or adapt your data fetching utility to check if draft mode is enabled
-2. Update your API calls to include the draft status parameter when appropriate
+Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
 
-The following, taken from the  Strapi demo application, is an example of how to implement draft-aware data fetching in your Next.js front-end application:
+For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
 
-```typescript {8-18}
+```typescript {20-23}
 
   contentType: string,
   params: Record = {}
 ): Promise {
   // Check if Next.js draft mode is enabled
-  const { isEnabled: isDraftMode } = draftMode();
+  const { isEnabled: isDraftMode } = await draftMode();
   
   try {
     const queryParams = { ...params };
@@ -8386,7 +8381,12 @@ The following, taken from the  Strapi demo application, is an example of how to 
     }
     
     const url = `${baseURL}/${contentType}?${qs.stringify(queryParams)}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        // Enable content source maps in preview mode
+        "strapi-encode-source-maps": isDraftMode ? "true" : "false",
+      },
+    });
     if (!response.ok) {
       throw new Error(
         `Failed to fetch data from Strapi (url=${url}, status=${response.status})`
@@ -8397,62 +8397,6 @@ The following, taken from the  Strapi demo application, is an example of how to 
     console.error("Error fetching content:", error);
     throw error;
   }
-}
-```
-
-This utility method can then be used in your page components to fetch either draft or published content based on the preview state:
-
-```typescript
-// In your page component:
-const pageData = await fetchContentType('api::page.page', {
-  // Your other query parameters
-});
-```
-
-### Live Preview implementation  
-
-After setting up the basic Preview feature, you can enhance the experience by implementing Live Preview.
-
-#### Window messages
-
-Live Preview creates a more interactive experience by communicating between the admin and your frontend. It relies on events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object.
-
-You need to add an event listener in your application. It should be present on all pages, ideally in a layout component that wraps your entire application. The listener needs to filter through messages and react only to Strapi-initiated messages.
-
-There are two messages to listen to:
-
-- `strapiUpdate`: sent by Strapi when a content update has been saved to the database. It's an opportunity to fetch the updated version of the content and refresh the preview. With Next.js, the recommended way to refresh the iframe content is with .
-- `previewScript`: sent by Strapi to give you a script that powers the live preview functionality. This script should be injected into the page's `<head>` tag. It handles highlighting editable areas in the preview and sending messages back to Strapi when an area is double-clicked for editing.
-
-In order to receive the `previewScript` message, you need to let Strapi know that your frontend is ready to receive it. This is done by posting a `previewReady` message to the parent window.
-
-// TODO snippet
-
-#### Content source maps
-
-Live Preview is able to identify the parts of your frontend that correspond to fields in Strapi. This is done through content source maps, which are metadata encoded as hidden characters in your string-based content (e.g., text fields). It uses the  library to encode and decode this metadata.
-
-Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
-
-For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
-
-```typescript {5-12}
-
-  const headers = new Headers(options.headers);
-  if (draftMode().isEnabled) {
-    headers.set('strapi-encode-source-maps', 'true');
-  }
-
-  const response = await fetch(`/api/content/${contentType}`, {
-    ...options,
-    headers,
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch content');
-  }
-
-  return response.json();
 }
 ```
 
@@ -8489,6 +8433,8 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 
 * Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the  and  buttons.
 * Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
+
+<!-- TODO: add dark mode GIF -->
 
 :::caution Experimental feature
 This feature is currently experimental. Feel free to share  or  with the Strapi team.
