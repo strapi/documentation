@@ -544,8 +544,9 @@ h2 .badge {
   top: -1px;
   margin-left: 0.25rem;
   margin-bottom: 0;
-  vertical-align: middle;
+  vertical-align: middle !important;
   display: inline-block;
+  height: 26px;
   
   // Smaller size for inline usage
   --ifm-badge-padding-horizontal: 4px;
@@ -564,6 +565,11 @@ h2 .badge {
     bottom: 200%;
     left: 50%;
     margin-left: calc(-1 * var(--custom-badge-tooltip-width) / 2);
+  }
+
+  .badge__link {
+    position: relative;
+    top: 2px;
   }
   
   &:hover .badge__tooltip {

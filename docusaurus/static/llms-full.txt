@@ -8346,6 +8346,10 @@ With the Preview feature, you can preview your front end application directly fr
 
 </Tabs>
 
+##### Live Preview specificities 
+
+</Tabs>
+
 <details>
 <summary>Caching in Next.js:</summary>
 
@@ -8402,6 +8406,53 @@ const pageData = await fetchContentType('api::page.page', {
 });
 ```
 
+### Live Preview implementation  
+
+After setting up the basic Preview feature, you can enhance the experience by implementing Live Preview.
+
+#### Window messages
+
+Live Preview creates a more interactive experience by communicating between the admin and your frontend. It relies on events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object.
+
+You need to add an event listener in your application. It should be present on all pages, ideally in a layout component that wraps your entire application. The listener needs to filter through messages and react only to Strapi-initiated messages.
+
+There are two messages to listen to:
+
+- `strapiUpdate`: sent by Strapi when a content update has been saved to the database. It's an opportunity to fetch the updated version of the content and refresh the preview. With Next.js, the recommended way to refresh the iframe content is with .
+- `previewScript`: sent by Strapi to give you a script that powers the live preview functionality. This script should be injected into the page's `<head>` tag. It handles highlighting editable areas in the preview and sending messages back to Strapi when an area is double-clicked for editing.
+
+In order to receive the `previewScript` message, you need to let Strapi know that your frontend is ready to receive it. This is done by posting a `previewReady` message to the parent window.
+
+// TODO snippet
+
+#### Content source maps
+
+Live Preview is able to identify the parts of your frontend that correspond to fields in Strapi. This is done through content source maps, which are metadata encoded as hidden characters in your string-based content (e.g., text fields). It uses the  library to encode and decode this metadata.
+
+Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
+
+For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
+
+```typescript {5-12}
+
+  const headers = new Headers(options.headers);
+  if (draftMode().isEnabled) {
+    headers.set('strapi-encode-source-maps', 'true');
+  }
+
+  const response = await fetch(`/api/content/${contentType}`, {
+    ...options,
+    headers,
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch content');
+  }
+
+  return response.json();
+}
+```
+
 ## Usage
 
 **Path to use the feature:**  Content Manager, edit view of your content type
@@ -8409,7 +8460,7 @@ const pageData = await fetchContentType('api::page.page', {
 :::strapi Preview vs. Live Preview
 Based on your CMS plan, your experience with Preview will be different:
 - With the Free plan, Preview will be full screen only.
-- With the  and  plans, you get access to Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, allowing you to edit your content and previewing it simultaneously.
+- With the  and  plans, you get access to an enhanced experience called Live Preview. With Live Preview, you can see the Preview alongside the Edit view of the Content Manager, and you can also edit the content directly within the preview itself by double-clicking on any content.
 :::
 
 Once the Preview feature is properly set up, an **Open preview** button is visible on the right side of the [Content Manager's edit view](/cms/features/content-manager#overview). Clicking it will display the preview of your content as it will appear in your front-end application, but directly within Strapi's the admin panel.
@@ -8419,19 +8470,29 @@ Once the Preview feature is properly set up, an **Open preview** button is visib
 Once the Preview is open, you can:
 
 - click the close button  in the upper left corner to go back to the Edit View of the Content Manager,
+- switch between the Desktop and Mobile preview using the dropdown above the previewed content,
 - switch between previewing the draft and the published version (if [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type),
 - and click the link icon  in the upper right corner to copy the preview link. Depending on the preview tab you are currently viewing, this will either copy the link to the preview of the draft or the published version.
-
-Additionally, with Live Preview, you can:
-- with  and  plans, expand the side panel by clicking on the  button to make the Preview full screen,
-- and, with the  plan, use buttons at the top right of the editor to define the assignee and stage for the [Review Workflows feature](/cms/features/review-workflows) if enabled.
 
 :::note
 In the Edit view of the Content Manager, the Open preview button will be disabled if you have unsaved changes. Save your latest changes and you should be able to preview content again.
 :::
 
-:::tip
-Switch between Desktop and Mobile preview mode using the dropdown at the top to check how the page is displayed on different viewports.
+### Live Preview
+
+Live Preview is the enhanced Preview experience available with Strapi’s paid CMS plans.
+
+With Live Preview, in addition to what’s included in the Free plan, you can:
+
+* Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the  and  buttons.
+* Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
+
+:::caution Experimental feature
+This feature is currently experimental. Feel free to share  or  with the Strapi team.
+
+The current version of Live Preview comes with the following limitations:
+* Blocks fields are not detected, and changing them in the Side Editor won’t be reflected in the preview. Clicking on Save after updates should however still work.
+* Media assets and fields in dynamic zones are not handled.
 :::
 
 
