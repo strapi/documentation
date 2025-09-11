@@ -12,6 +12,9 @@ tags:
 # Content History
 <GrowthBadge /> <EnterpriseBadge/> <VersionBadge version="5.0.0" />
 
+> Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes.
+<br/>
+
 The Content History feature, in the <Icon name="feather" /> Content Manager, gives you the ability to browse and restore previous versions of documents created with the [Content Manager](/cms/features/content-manager).
 
 <IdentityCard>

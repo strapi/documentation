@@ -17,6 +17,9 @@ tags:
 
 <VersionBadge version="4.6.0" />
 
+> Audit Logs captures every administrative action in a searchable, filterable history to aid troubleshooting and compliance. In this documentation, examples show viewing payloads and filtering by user or date.
+<br/>
+
 The Audit Logs feature provides a searchable and filterable display of all activities performed by users of the Strapi application.
 
 <IdentityCard>

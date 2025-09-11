@@ -16,6 +16,9 @@ tags:
 
 # Plugins configuration
 
+> `/config/plugins` enables or disables plugins and overrides their settings, with examples for local plugin development.
+<br/>
+
 Plugin configurations are stored in `/config/plugins.js|ts` (see [project structure](/cms/project-structure)). Each plugin can be configured with the following available parameters:
 
 | Parameter                  | Description                                                                                                                                                            | Type    |

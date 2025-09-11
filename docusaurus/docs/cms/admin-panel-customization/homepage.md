@@ -12,6 +12,9 @@ tags:
 # Homepage customization
 <VersionBadge version="5.13.0+" tooltip="Adding custom widgets is available since Strapi 5.13.0. The newest widgets (profile, entries, statistics) are available from Strapi 5.23.0."/>
 
+> The admin panel homepage displays default content and profile widgets and supports custom additions through the `app.widgets.register` API.
+<br/>
+
 The <Icon name="house" /> Homepage is the landing page of the Strapi admin panel. By default, it provides an overview of your content with 5 default widgets:
 
 - _Last edited entries_: Displays recently modified content entries, including their content type, status, and when they were updated.

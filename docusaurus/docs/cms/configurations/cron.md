@@ -10,6 +10,9 @@ tags:
 
 # Cron jobs
 
+> Cron jobs schedule custom functions at specific times via `node-schedule`, activated through server config and optional task files.
+<br/>
+
 :::prerequisites
 The `cron.enabled` configuration option should be set to `true` in the `./config/server.js` (or `./config/server.ts` for TypeScript projects) [file](/cms/configurations/server).
 :::

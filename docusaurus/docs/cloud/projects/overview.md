@@ -13,6 +13,9 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Projects overview
 
+> Projects page lists all apps with status and quick actions; selecting one opens a dashboard with metrics and controls.
+<br/>
+
 The *Projects* page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 
 <ThemedImage

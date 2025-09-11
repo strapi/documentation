@@ -10,6 +10,9 @@ tags:
 
 # API configuration
 
+> `/config/api` centralizes response privacy and REST defaults such as prefix, pagination limits, and max request size.
+<br/>
+
 General settings for API calls can be set in the `./config/api.js` file:
 
 | Property                      | Description                                                                                                                                                                                                                                          | Type         | Default |

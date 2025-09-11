@@ -11,6 +11,9 @@ tags:
 
 # Runtime logs
 
+> Runtime logs tab streams live server output, though Free plan logs reset when apps scale to zero.
+<br/>
+
 From a chosen project's dashboard, the *Runtime logs* tab displays the live logs of the project.
 
 :::note

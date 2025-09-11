@@ -16,6 +16,9 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Content Manager
 
+> ...
+<br/>
+
 From the <Icon name="feather" /> Content Manager, accessible via the main navigation of the admin panel, users can write and manage their content.
 
 <IdentityCard>

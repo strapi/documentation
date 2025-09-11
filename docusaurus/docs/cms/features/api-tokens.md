@@ -13,6 +13,9 @@ tags:
 
 # API Tokens
 
+> API tokens provide scoped authentication for REST and GraphQL requests without exposing user credentials. This documentation explains token types, creation, expiration, and secure usage within the admin panel.
+<br/>
+
 API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)).
 
 <IdentityCard>

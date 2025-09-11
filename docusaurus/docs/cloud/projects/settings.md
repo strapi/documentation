@@ -16,6 +16,9 @@ import InvoiceStatus from '/docs/snippets/invoices-statuses.md'
 
 # Project settings
 
+> Settings area spans project-level controls (general, billing, plans, invoices) and per-environment configuration.
+<br/>
+
 From a chosen project's dashboard, the <Icon name="gear-six" /> **Settings** button, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
 
 The settings' menu on the left side of the interface is separated into 2 categories: the settings for the entire project and the settings specific to any configured environment for the project.

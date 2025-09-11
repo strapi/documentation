@@ -115,7 +115,7 @@
 - [Server API for plugins](https://docs.strapi.io/cms/plugins-development/server-api): Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 - [Documentation plugin](https://docs.strapi.io/cms/plugins/documentation): By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 - [GraphQL plugin](https://docs.strapi.io/cms/plugins/graphql): Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
-- [Installing Plugins via the Marketplace](https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace): Strapi comes with built-in plugins such as [Documentation](/cms/plugins/documentation), [GraphQL](/cms/plugins/graphql), and [Sentry](/cms/plugins/sen...
+- [Installing Plugins via the Marketplace](https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace): > The in-app Marketplace lists plugins and providers with badges, search, and “More” links to detailed Strapi Market pages. This documentation outline...
 - [Sentry plugin](https://docs.strapi.io/cms/plugins/sentry): Track errors in your Strapi application.
 - [Project structure](https://docs.strapi.io/cms/project-structure): Discover the project structure of any default Strapi application.
 - [Quick Start Guide - Strapi Developer Docs](https://docs.strapi.io/cms/quick-start): Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
