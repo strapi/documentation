@@ -16,8 +16,9 @@ tags:
 
 # Functions
 
-> `src/index` hosts global register, bootstrap, and destroy functions to run logic during application lifecycle.
-<br/>
+<Tldr>
+`src/index` hosts global register, bootstrap, and destroy functions to run logic during application lifecycle.
+</Tldr>
 
 <div className="dont_hide_secondary_bar">
 

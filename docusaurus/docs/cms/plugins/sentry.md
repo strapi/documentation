@@ -10,8 +10,9 @@ tags:
 
 # Sentry plugin
 
-> The Sentry plugin connects Strapi to Sentry to report errors and attach debugging metadata. This documentation details installation, environment-based configuration, and ways to disable or skip sending events outside production.
-<br/>
+<Tldr>
+The Sentry plugin connects Strapi to Sentry to report errors and attach debugging metadata. This documentation details installation, environment-based configuration, and ways to disable or skip sending events outside production.
+</Tldr>
 
 This plugin enables you to track errors in your Strapi application using Sentry.
 

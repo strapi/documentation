@@ -12,8 +12,9 @@ tags:
 
 # Features configuration
 
-> Future flags in `/config/features` toggle experimental Strapi features, allowing early testing at your own risk.
-<br/>
+<Tldr>
+Future flags in `/config/features` toggle experimental Strapi features, allowing early testing at your own risk.
+</Tldr>
 
 The `config/features.js|ts` file is used to enable feature flags. Currently this file only includes a `future` object used to enable experimental features through **future flags**.
 

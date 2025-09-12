@@ -11,8 +11,9 @@ tags:
 
 # TypeScript configuration
 
-> TypeScript configuration explains the project’s tsconfig files, output directories, and an optional config/typescript.js|ts that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
-<br/>
+<Tldr>
+TypeScript configuration explains the project’s tsconfig files, output directories, and an optional config/typescript.js|ts that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
+</Tldr>
 
 [TypeScript](/cms/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
 

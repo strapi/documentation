@@ -12,8 +12,9 @@ tags:
 # Single Sign-On (SSO)
 <EnterpriseBadge /> <SsoBadge />
 
-> Single Sign-On (SSO) lets administrators authenticate via identity providers such as Azure AD instead of local passwords. Configuration steps in this documentation cover enabling SSO and mapping roles.
-<br/>
+<Tldr>
+Single Sign-On (SSO) lets administrators authenticate via identity providers such as Azure AD instead of local passwords. Configuration steps in this documentation cover enabling SSO and mapping roles.
+</Tldr>
 
 The Single Sign-On (SSO) feature can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 

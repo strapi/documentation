@@ -16,8 +16,9 @@ tags:
 
 # Admin panel configuration
 
-> Options in `/config/admin` let you tweak admin panel behavior and server settings, including custom URLs, host, and port.
-<br/>
+<Tldr>
+Options in `/config/admin` let you tweak admin panel behavior and server settings, including custom URLs, host, and port.
+</Tldr>
 
 The `/config/admin` file is used to define the [admin panel](/cms/features/admin-panel) configuration for the Strapi application.
 

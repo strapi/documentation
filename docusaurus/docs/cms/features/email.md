@@ -14,8 +14,9 @@ tags:
 
 # Email
 
-> The Email feature sends transactional messages through local SMTP or external providers like SendGrid. Setup guidance in this documentation covers provider configuration and extending delivery via controllers or hooks.
-<br/>
+<Tldr>
+The Email feature sends transactional messages through local SMTP or external providers like SendGrid. Setup guidance in this documentation covers provider configuration and extending delivery via controllers or hooks.
+</Tldr>
 
 The Email feature enables Strapi applications to send emails from a server or an external provider.
 

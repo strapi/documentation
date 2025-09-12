@@ -15,8 +15,9 @@ pagination_next: cloud/account/account-billing
 
 # Profile settings
 
-> Settings of the Profile page include account details, connected accounts, and account deletion options.
-<br/>
+<Tldr>
+Settings of the Profile page include account details, connected accounts, and account deletion options.
+</Tldr>
 
 The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**.
 

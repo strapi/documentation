@@ -14,8 +14,9 @@ tags:
 
 # Email Provider
 
-> Third‑party email services integrate through plugins and environment variables to replace the default sender.
-<br/>
+<Tldr>
+Third‑party email services integrate through plugins and environment variables to replace the default sender.
+</Tldr>
 
 Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize another email provider, if needed.
 

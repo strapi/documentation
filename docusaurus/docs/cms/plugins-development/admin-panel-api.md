@@ -22,8 +22,9 @@ tags:
 
 # Admin Panel API for plugins
 
-> The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks to inject React components and translations into Strapi’s UI. Menu, settings, injection zone, reducer, and hook APIs let plugins add navigation, configuration panels, or custom actions.
-<br/>
+<Tldr>
+The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks to inject React components and translations into Strapi’s UI. Menu, settings, injection zone, reducer, and hook APIs let plugins add navigation, configuration panels, or custom actions.
+</Tldr>
 
 A Strapi plugin can interact with both the [back end](/cms/plugins-development/server-api) and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/cms/intro).
 

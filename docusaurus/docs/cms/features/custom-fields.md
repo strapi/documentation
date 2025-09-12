@@ -17,16 +17,17 @@ import CustomFieldRequiresPlugin from '/docs/snippets/custom-field-requires-plug
 
 # Custom Fields
 
-> Custom Fields extend Strapi with new field types that behave like native fields in the Content‑type Builder and Content Manager. Instructions in this documentation cover building or installing fields via plugins and registering them programmatically.
-<br/>
+<Tldr>
+Custom Fields extend Strapi with new field types that behave like native fields in the Content‑type Builder and Content Manager. Instructions in this documentation cover building or installing fields via plugins and registering them programmatically.
+</Tldr>
 
 Custom fields extend Strapi’s capabilities by adding new types of fields to content-types and components. Once created or added to Strapi via plugins, custom fields can be used in the Content-Type Builder and Content Manager just like built-in fields.
 
 <IdentityCard>
-  <IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
-  <IdentityCardItem icon="user" title="Role & permission">None</IdentityCardItem>
-  <IdentityCardItem icon="toggle-right" title="Activation">Available and activated by default</IdentityCardItem>
-  <IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
+<IdentityCardItem icon="credit-card" title="Plan">Free feature</IdentityCardItem>
+<IdentityCardItem icon="user" title="Role & permission">None</IdentityCardItem>
+<IdentityCardItem icon="toggle-right" title="Activation">Available and activated by default</IdentityCardItem>
+<IdentityCardItem icon="desktop" title="Environment">Available in both Development & Production environment</IdentityCardItem>
 </IdentityCard>
 
 ## Configuration
@@ -88,16 +89,16 @@ In the following example, the `color-picker` plugin was created using the CLI ge
 
 ```js title="/src/plugins/color-picker/server/register.js"
 module.exports = ({ strapi }) => {
-  strapi.customFields.register({
-    name: "color",
-    plugin: "color-picker",
-    type: "string",
-    inputSize: {
-      // optional
-      default: 4,
-      isResizable: true,
-    },
-  });
+strapi.customFields.register({
+  name: "color",
+  plugin: "color-picker",
+  type: "string",
+  inputSize: {
+    // optional
+    default: 4,
+    isResizable: true,
+  },
+});
 };
 ```
 
@@ -107,16 +108,16 @@ module.exports = ({ strapi }) => {
 
 ```ts title="/src/plugins/color-picker/server/register.ts"
 export default ({ strapi }: { strapi: any }) => {
-  strapi.customFields.register({
-    name: "color",
-    plugin: "color-picker",
-    type: "string",
-    inputSize: {
-      // optional
-      default: 4,
-      isResizable: true,
-    },
-  });
+strapi.customFields.register({
+  name: "color",
+  plugin: "color-picker",
+  type: "string",
+  inputSize: {
+    // optional
+    default: 4,
+    isResizable: true,
+  },
+});
 };
 ```
 
@@ -130,18 +131,18 @@ The custom field could also be declared directly within the `strapi-server.js` f
 
 ```js title="/src/plugins/color-picker/strapi-server.js"
 module.exports = {
-  register({ strapi }) {
-    strapi.customFields.register({
-      name: "color",
-      plugin: "color-picker",
-      type: "text",
-      inputSize: {
-        // optional
-        default: 4,
-        isResizable: true,
-      },
-    });
-  },
+register({ strapi }) {
+  strapi.customFields.register({
+    name: "color",
+    plugin: "color-picker",
+    type: "text",
+    inputSize: {
+      // optional
+      default: 4,
+      isResizable: true,
+    },
+  });
+},
 };
 ```
 
@@ -151,18 +152,18 @@ module.exports = {
 
 ```ts title="/src/plugins/color-picker/strapi-server.ts"
 export default {
-  register({ strapi }: { strapi: any }) {
-    strapi.customFields.register({
-      name: "color",
-      plugin: "color-picker",
-      type: "text",
-      inputSize: {
-        // optional
-        default: 4,
-        isResizable: true,
-      },
-    });
-  },
+register({ strapi }: { strapi: any }) {
+  strapi.customFields.register({
+    name: "color",
+    plugin: "color-picker",
+    type: "text",
+    inputSize: {
+      // optional
+      default: 4,
+      isResizable: true,
+    },
+  });
+},
 };
 ```
 
@@ -208,36 +209,36 @@ In the following example, the `color-picker` plugin was created using the CLI ge
 import ColorPickerIcon from "./components/ColorPicker/ColorPickerIcon";
 
 export default {
-  register(app) {
-    // ... app.addMenuLink() goes here
-    // ... app.registerPlugin() goes here
+register(app) {
+  // ... app.addMenuLink() goes here
+  // ... app.registerPlugin() goes here
 
-    app.customFields.register({
-      name: "color",
-      pluginId: "color-picker", // the custom field is created by a color-picker plugin
-      type: "string", // the color will be stored as a string
-      intlLabel: {
-        id: "color-picker.color.label",
-        defaultMessage: "Color",
-      },
-      intlDescription: {
-        id: "color-picker.color.description",
-        defaultMessage: "Select any color",
-      },
-      icon: ColorPickerIcon, // don't forget to create/import your icon component
-      components: {
-        Input: async () =>
-          import('./components/Input').then((module) => ({
-            default: module.Input,
-          })),
-      },
-      options: {
-        // declare options here
-      },
-    });
-  },
+  app.customFields.register({
+    name: "color",
+    pluginId: "color-picker", // the custom field is created by a color-picker plugin
+    type: "string", // the color will be stored as a string
+    intlLabel: {
+      id: "color-picker.color.label",
+      defaultMessage: "Color",
+    },
+    intlDescription: {
+      id: "color-picker.color.description",
+      defaultMessage: "Select any color",
+    },
+    icon: ColorPickerIcon, // don't forget to create/import your icon component
+    components: {
+      Input: async () =>
+        import('./components/Input').then((module) => ({
+          default: module.Input,
+        })),
+    },
+    options: {
+      // declare options here
+    },
+  });
+},
 
-  // ... bootstrap() goes here
+// ... bootstrap() goes here
 };
 ```
 
@@ -249,36 +250,36 @@ export default {
 import ColorPickerIcon from "./components/ColorPicker/ColorPickerIcon";
 
 export default {
-  register(app) {
-    // ... app.addMenuLink() goes here
-    // ... app.registerPlugin() goes here
+register(app) {
+  // ... app.addMenuLink() goes here
+  // ... app.registerPlugin() goes here
 
-    app.customFields.register({
-      name: "color",
-      pluginId: "color-picker", // the custom field is created by a color-picker plugin
-      type: "string", // the color will be stored as a string
-      intlLabel: {
-        id: "color-picker.color.label",
-        defaultMessage: "Color",
-      },
-      intlDescription: {
-        id: "color-picker.color.description",
-        defaultMessage: "Select any color",
-      },
-      icon: ColorPickerIcon, // don't forget to create/import your icon component
-      components: {
-        Input: async () =>
-          import('./components/Input').then((module) => ({
-            default: module.Input,
-          })),
-      },
-      options: {
-        // declare options here
-      },
-    });
-  },
+  app.customFields.register({
+    name: "color",
+    pluginId: "color-picker", // the custom field is created by a color-picker plugin
+    type: "string", // the color will be stored as a string
+    intlLabel: {
+      id: "color-picker.color.label",
+      defaultMessage: "Color",
+    },
+    intlDescription: {
+      id: "color-picker.color.description",
+      defaultMessage: "Select any color",
+    },
+    icon: ColorPickerIcon, // don't forget to create/import your icon component
+    components: {
+      Input: async () =>
+        import('./components/Input').then((module) => ({
+          default: module.Input,
+        })),
+    },
+    options: {
+      // declare options here
+    },
+  });
+},
 
-  // ... bootstrap() goes here
+// ... bootstrap() goes here
 };
 ```
 
@@ -298,18 +299,18 @@ In the following example, the `color-picker` plugin was created using the CLI ge
 
 ```jsx title="/src/plugins/color-picker/admin/src/index.js"
 export default {
-  register(app) {
-    app.customFields.register({
-      // …
-      components: {
-        Input: async () =>
-          import('./components/Input').then((module) => ({
-            default: module.Input,
-          })),
-      },
-      // …
-    });
-  },
+register(app) {
+  app.customFields.register({
+    // …
+    components: {
+      Input: async () =>
+        import('./components/Input').then((module) => ({
+          default: module.Input,
+        })),
+    },
+    // …
+  });
+},
 };
 ```
 
@@ -319,18 +320,18 @@ export default {
 
 ```jsx title="/src/plugins/color-picker/admin/src/index.js"
 export default {
-  register(app) {
-    app.customFields.register({
-      // …
-      components: {
-        Input: async () =>
-          import('./components/Input').then((module) => ({
-            default: module.Input,
-          })),
-      },
-      // …
-    });
-  },
+register(app) {
+  app.customFields.register({
+    // …
+    components: {
+      Input: async () =>
+        import('./components/Input').then((module) => ({
+          default: module.Input,
+        })),
+    },
+    // …
+  });
+},
 };
 ```
 
@@ -374,30 +375,30 @@ import * as React from "react";
 import { useIntl } from "react-intl";
 
 const Input = React.forwardRef((props, ref) => {
-  const { attribute, disabled, intlLabel, name, onChange, required, value } =
-    props; // these are just some of the props passed by the content-manager
+const { attribute, disabled, intlLabel, name, onChange, required, value } =
+  props; // these are just some of the props passed by the content-manager
 
-  const { formatMessage } = useIntl();
+const { formatMessage } = useIntl();
 
-  const handleChange = (e) => {
-    onChange({
-      target: { name, type: attribute.type, value: e.currentTarget.value },
-    });
-  };
+const handleChange = (e) => {
+  onChange({
+    target: { name, type: attribute.type, value: e.currentTarget.value },
+  });
+};
 
-  return (
-    <label>
-      {formatMessage(intlLabel)}
-      <input
-        ref={ref}
-        name={name}
-        disabled={disabled}
-        value={value}
-        required={required}
-        onChange={handleChange}
-      />
-    </label>
-  );
+return (
+  <label>
+    {formatMessage(intlLabel)}
+    <input
+      ref={ref}
+      name={name}
+      disabled={disabled}
+      value={value}
+      required={required}
+      onChange={handleChange}
+    />
+  </label>
+);
 });
 
 export default Input;
@@ -412,30 +413,30 @@ import * as React from "react";
 import { useIntl } from "react-intl";
 
 const Input = React.forwardRef((props, ref) => {
-  const { attribute, disabled, intlLabel, name, onChange, required, value } =
-    props; // these are just some of the props passed by the content-manager
+const { attribute, disabled, intlLabel, name, onChange, required, value } =
+  props; // these are just some of the props passed by the content-manager
 
-  const { formatMessage } = useIntl();
+const { formatMessage } = useIntl();
 
-  const handleChange = (e) => {
-    onChange({
-      target: { name, type: attribute.type, value: e.currentTarget.value },
-    });
-  };
+const handleChange = (e) => {
+  onChange({
+    target: { name, type: attribute.type, value: e.currentTarget.value },
+  });
+};
 
-  return (
-    <label>
-      {formatMessage(intlLabel)}
-      <input
-        ref={ref}
-        name={name}
-        disabled={disabled}
-        value={value}
-        required={required}
-        onChange={handleChange}
-      />
-    </label>
-  );
+return (
+  <label>
+    {formatMessage(intlLabel)}
+    <input
+      ref={ref}
+      name={name}
+      disabled={disabled}
+      value={value}
+      required={required}
+      onChange={handleChange}
+    />
+  </label>
+);
 });
 
 export default Input;
@@ -488,81 +489,81 @@ In the following example, the `color-picker` plugin was created using the CLI ge
 // imports go here (ColorPickerIcon, pluginId, yup package…)
 
 export default {
-  register(app) {
-    // ... app.addMenuLink() goes here
-    // ... app.registerPlugin() goes here
-    app.customFields.register({
-      // …
-      options: {
-        base: [
-          /*
-            Declare settings to be added to the "Base settings" section
-            of the field in the Content-Type Builder
-          */
-          {
-            sectionTitle: {
-              // Add a "Format" settings section
-              id: "color-picker.color.section.format",
-              defaultMessage: "Format",
-            },
-            items: [
-              // Add settings items to the section
-              {
-                /*
-                  Add a "Color format" dropdown
-                  to choose between 2 different format options
-                  for the color value: hexadecimal or RGBA
-                */
-                intlLabel: {
-                  id: "color-picker.color.format.label",
-                  defaultMessage: "Color format",
-                },
-                name: "options.format",
-                type: "select",
-                value: "hex", // option selected by default
-                options: [
-                  // List all available "Color format" options
-                  {
-                    key: "hex",
-                    defaultValue: "hex",
-                    value: "hex",
-                    metadatas: {
-                      intlLabel: {
-                        id: "color-picker.color.format.hex",
-                        defaultMessage: "Hexadecimal",
-                      },
-                    },
-                  },
-                  {
-                    key: "rgba",
-                    value: "rgba",
-                    metadatas: {
-                      intlLabel: {
-                        id: "color-picker.color.format.rgba",
-                        defaultMessage: "RGBA",
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
+register(app) {
+  // ... app.addMenuLink() goes here
+  // ... app.registerPlugin() goes here
+  app.customFields.register({
+    // …
+    options: {
+      base: [
+        /*
+          Declare settings to be added to the "Base settings" section
+          of the field in the Content-Type Builder
+        */
+        {
+          sectionTitle: {
+            // Add a "Format" settings section
+            id: "color-picker.color.section.format",
+            defaultMessage: "Format",
           },
-        ],
-        advanced: [
-          /*
-            Declare settings to be added to the "Advanced settings" section
-            of the field in the Content-Type Builder
-          */
-        ],
-        validator: (args) => ({
-          format: yup.string().required({
-            id: "options.color-picker.format.error",
-            defaultMessage: "The color format is required",
-          }),
+          items: [
+            // Add settings items to the section
+            {
+              /*
+                Add a "Color format" dropdown
+                to choose between 2 different format options
+                for the color value: hexadecimal or RGBA
+              */
+              intlLabel: {
+                id: "color-picker.color.format.label",
+                defaultMessage: "Color format",
+              },
+              name: "options.format",
+              type: "select",
+              value: "hex", // option selected by default
+              options: [
+                // List all available "Color format" options
+                {
+                  key: "hex",
+                  defaultValue: "hex",
+                  value: "hex",
+                  metadatas: {
+                    intlLabel: {
+                      id: "color-picker.color.format.hex",
+                      defaultMessage: "Hexadecimal",
+                    },
+                  },
+                },
+                {
+                  key: "rgba",
+                  value: "rgba",
+                  metadatas: {
+                    intlLabel: {
+                      id: "color-picker.color.format.rgba",
+                      defaultMessage: "RGBA",
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      advanced: [
+        /*
+          Declare settings to be added to the "Advanced settings" section
+          of the field in the Content-Type Builder
+        */
+      ],
+      validator: (args) => ({
+        format: yup.string().required({
+          id: "options.color-picker.format.error",
+          defaultMessage: "The color format is required",
         }),
-      },
-    });
-  },
+      }),
+    },
+  });
+},
 };
 ```
 
@@ -574,81 +575,81 @@ export default {
 // imports go here (ColorPickerIcon, pluginId, yup package…)
 
 export default {
-  register(app) {
-    // ... app.addMenuLink() goes here
-    // ... app.registerPlugin() goes here
-    app.customFields.register({
-      // …
-      options: {
-        base: [
-          /*
-            Declare settings to be added to the "Base settings" section
-            of the field in the Content-Type Builder
-          */
-          {
-            sectionTitle: {
-              // Add a "Format" settings section
-              id: "color-picker.color.section.format",
-              defaultMessage: "Format",
-            },
-            items: [
-              // Add settings items to the section
-              {
-                /*
-                  Add a "Color format" dropdown
-                  to choose between 2 different format options
-                  for the color value: hexadecimal or RGBA
-                */
-                intlLabel: {
-                  id: "color-picker.color.format.label",
-                  defaultMessage: "Color format",
-                },
-                name: "options.format",
-                type: "select",
-                value: "hex", // option selected by default
-                options: [
-                  // List all available "Color format" options
-                  {
-                    key: "hex",
-                    defaultValue: "hex",
-                    value: "hex",
-                    metadatas: {
-                      intlLabel: {
-                        id: "color-picker.color.format.hex",
-                        defaultMessage: "Hexadecimal",
-                      },
-                    },
-                  },
-                  {
-                    key: "rgba",
-                    value: "rgba",
-                    metadatas: {
-                      intlLabel: {
-                        id: "color-picker.color.format.rgba",
-                        defaultMessage: "RGBA",
-                      },
-                    },
-                  },
-                ],
-              },
-            ],
+register(app) {
+  // ... app.addMenuLink() goes here
+  // ... app.registerPlugin() goes here
+  app.customFields.register({
+    // …
+    options: {
+      base: [
+        /*
+          Declare settings to be added to the "Base settings" section
+          of the field in the Content-Type Builder
+        */
+        {
+          sectionTitle: {
+            // Add a "Format" settings section
+            id: "color-picker.color.section.format",
+            defaultMessage: "Format",
           },
-        ],
-        advanced: [
-          /*
-            Declare settings to be added to the "Advanced settings" section
-            of the field in the Content-Type Builder
-          */
-        ],
-        validator: (args) => ({
-          format: yup.string().required({
-            id: "options.color-picker.format.error",
-            defaultMessage: "The color format is required",
-          }),
+          items: [
+            // Add settings items to the section
+            {
+              /*
+                Add a "Color format" dropdown
+                to choose between 2 different format options
+                for the color value: hexadecimal or RGBA
+              */
+              intlLabel: {
+                id: "color-picker.color.format.label",
+                defaultMessage: "Color format",
+              },
+              name: "options.format",
+              type: "select",
+              value: "hex", // option selected by default
+              options: [
+                // List all available "Color format" options
+                {
+                  key: "hex",
+                  defaultValue: "hex",
+                  value: "hex",
+                  metadatas: {
+                    intlLabel: {
+                      id: "color-picker.color.format.hex",
+                      defaultMessage: "Hexadecimal",
+                    },
+                  },
+                },
+                {
+                  key: "rgba",
+                  value: "rgba",
+                  metadatas: {
+                    intlLabel: {
+                      id: "color-picker.color.format.rgba",
+                      defaultMessage: "RGBA",
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      advanced: [
+        /*
+          Declare settings to be added to the "Advanced settings" section
+          of the field in the Content-Type Builder
+        */
+      ],
+      validator: (args) => ({
+        format: yup.string().required({
+          id: "options.color-picker.format.error",
+          defaultMessage: "The color format is required",
         }),
-      },
-    });
-  },
+      }),
+    },
+  });
+},
 };
 ```
 
@@ -685,10 +686,10 @@ As compared to how other types of models are defined, custom fields' attributes 
 
 - Custom field have a `customField` attribute. Its value acts as a unique identifier to indicate which registered custom field should be used, and follows one of these 2 formats:
 
-    | Format               |  Origin |
-    |----------------------|------------------|
-    | `plugin::plugin-name.field-name` | The custom field was created through a plugin |
-    | `global::field-name` | The custom field is specific to the current Strapi application and was created directly within the `register` [function](/cms/configurations/functions) |
+  | Format               |  Origin |
+  |----------------------|------------------|
+  | `plugin::plugin-name.field-name` | The custom field was created through a plugin |
+  | `global::field-name` | The custom field is specific to the current Strapi application and was created directly within the `register` [function](/cms/configurations/functions) |
 
 - Custom fields can have additional parameters depending on what has been defined when registering the custom field (see [server registration](#registering-a-custom-field-on-the-server) and [admin panel registration](#registering-a-custom-field-in-the-admin-panel)).
 
@@ -697,16 +698,16 @@ As compared to how other types of models are defined, custom fields' attributes 
 ```json title="/src/api/[apiName]/[content-type-name]/content-types/schema.json"
 
 {
-  // …
-  "attributes": {
-    "color": { // name of the custom field defined in the Content-Type Builder
-      "type": "customField",
-      "customField": "plugin::color-picker.color",
-      "options": {
-        "format": "hex"
-      }
+// …
+"attributes": {
+  "color": { // name of the custom field defined in the Content-Type Builder
+    "type": "customField",
+    "customField": "plugin::color-picker.color",
+    "options": {
+      "format": "hex"
     }
   }
-  // …
+}
+// …
 }
 ```

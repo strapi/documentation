@@ -15,8 +15,9 @@ pagination_next: cloud/projects/deploys-history
 
 # Deployments management
 
-> Deployment triggers can be manual or automatic on git pushes, with the ability to cancel active builds from dashboard or CLI.
-<br/>
+<Tldr>
+Deployment triggers can be manual or automatic on git pushes, with the ability to cancel active builds from dashboard or CLI.
+</Tldr>
 
 The creation of a new Strapi Cloud project automatically trigger the deployment of that project. After that, deployments can be:
 

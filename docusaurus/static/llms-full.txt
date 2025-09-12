@@ -1,7 +1,10 @@
 # Account billing details
 Source: https://docs.strapi.io/cloud/account/account-billing
 
-# Account billing & invoices 
+# Account billing & invoices
+
+> Billing details and invoices are managed on the Profile page, where payment methods are updated and invoice history is available.
+<br/>
 
 Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the [ *Billing*](#account-billing) and [ *Invoices*](#account-invoices) tabs.
 
@@ -54,6 +57,9 @@ Source: https://docs.strapi.io/cloud/account/account-settings
 
 # Profile settings
 
+> Settings of the Profile page include account details, connected accounts, and account deletion options.
+<br/>
+
 The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**.
 
 There are 3 tabs available in the *Profile* interface:  [*General*](#general),  *Billing* and  Invoices (the last 2 are documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
@@ -88,6 +94,9 @@ You can delete your Strapi Cloud account, but it will be permanent and irreversi
 Source: https://docs.strapi.io/cloud/advanced/database
 
 # Database
+
+> Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.
+<br/>
 
 Strapi Cloud provides a pre-configured PostgreSQL database by default. However, you can also configure it to utilize an external SQL database, if needed.
 
@@ -148,6 +157,9 @@ Source: https://docs.strapi.io/cloud/advanced/email
 
 # Email Provider
 
+> Third‑party email services integrate through plugins and environment variables to replace the default sender.
+<br/>
+
 Strapi Cloud comes with a basic email provider out of the box. However, it can also be configured to utilize another email provider, if needed.
 
 :::caution
@@ -206,6 +218,9 @@ If you want to create a custom email provider, please refer to the [Email provid
 Source: https://docs.strapi.io/cloud/advanced/upload
 
 # Upload Provider
+
+> External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
+<br/>
 
 Strapi Cloud comes with a local upload provider out of the box. However, it can also be configured to utilize a third-party upload provider, if needed.
 
@@ -277,10 +292,13 @@ If you want to create a custom upload provider, please refer to the [Providers](
 
 
 
-# Command Line Interface (CLI) <NewBadge />
+# Command Line Interface (CLI)
 Source: https://docs.strapi.io/cloud/cli/cloud-cli
 
-# Command Line Interface (CLI) 
+# Command Line Interface (CLI)
+
+> CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
+<br/>
 
 Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a local project without it having to be hosted on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
 
@@ -367,6 +385,9 @@ This command logs you out of Strapi Cloud. Once the `logout` command is run, a b
 Source: https://docs.strapi.io/cloud/getting-started/caching
 
 # Caching & Performance
+
+> Edge caching via Cache-Control headers reduces latency and server load for heavy static content.
+<br/>
 
 For Strapi Cloud applications with large amounts of cacheable content, such as images, videos, and other static assets, enabling CDN (Content Delivery Network) caching via the 
 
@@ -701,6 +722,9 @@ Source: https://docs.strapi.io/cloud/projects/collaboration
 
 # Collaboration on projects
 
+> Project owners invite maintainers through the Share button, manage pending invitations, and revoke access.
+<br/>
+
 Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the project dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
 
 Users invited to collaborate on a project, called maintainers, do not have the same permissions as the project owner. Contrary to the project owner, maintainers:
@@ -759,6 +783,9 @@ Source: https://docs.strapi.io/cloud/projects/deploys
 
 # Deployments management
 
+> Deployment triggers can be manual or automatic on git pushes, with the ability to cancel active builds from dashboard or CLI.
+<br/>
+
 The creation of a new Strapi Cloud project automatically trigger the deployment of that project. After that, deployments can be:
 
 - manually triggered whenever needed, [from the Cloud dashboard](#triggering-a-new-deployment) or [from the CLI](/cloud/cli/cloud-cli#strapi-deploy),
@@ -787,6 +814,9 @@ You can also cancel a deployment from the *Deployments* tab which lists the depl
 Source: https://docs.strapi.io/cloud/projects/deploys-history
 
 # Deployment history and logs {#deploy-history-and-logs}
+
+> Deployments tab lists every build with status and allows deep inspection of build and runtime logs.
+<br/>
 
 For each Strapi Cloud project, you can access the history of all deployments that occurred and their details including build and deployment logs. This information is available in the *Deployments* tab.
 
@@ -820,6 +850,9 @@ Source: https://docs.strapi.io/cloud/projects/notifications
 
 # Notifications
 
+> Bell icon opens a feed of recent deployment events, automatically purged after 30 days.
+<br/>
+
 The Notification center can be opened by clicking the bell icon  in the top navigation of the Cloud dashboard.
 
 It displays a list of the latest notifications for all your existing projects. Clicking on a notification card from the list will redirect you to the *Log details* page of the corresponding deployment (more information in [Deploy history & logs](/cloud/projects/deploys-history#accessing-deployment-details--logs)).
@@ -841,6 +874,9 @@ All notifications older than 30 days are automatically removed from the Notifica
 Source: https://docs.strapi.io/cloud/projects/overview
 
 # Projects overview
+
+> Projects page lists all apps with status and quick actions; selecting one opens a dashboard with metrics and controls.
+<br/>
 
 The *Projects* page displays a list of all your Strapi Cloud projects. From here you can manage your projects and access the corresponding applications.
 
@@ -889,6 +925,9 @@ Source: https://docs.strapi.io/cloud/projects/runtime-logs
 
 # Runtime logs
 
+> Runtime logs tab streams live server output, though Free plan logs reset when apps scale to zero.
+<br/>
+
 From a chosen project's dashboard, the *Runtime logs* tab displays the live logs of the project.
 
 :::note
@@ -903,6 +942,9 @@ From a chosen project's dashboard, the *Runtime logs* tab displays the live logs
 Source: https://docs.strapi.io/cloud/projects/settings
 
 # Project settings
+
+> Settings area spans project-level controls (general, billing, plans, invoices) and per-environment configuration.
+<br/>
 
 From a chosen project's dashboard, the  **Settings** button, located in the header, enables you to manage the configurations and settings for your Strapi Cloud project and its environments.
 
@@ -8313,8 +8355,7 @@ Source: https://docs.strapi.io/cms/features/media-library
 
 # Media Library
 
-> Media Library centralizes all uploaded assets with search, filters, and folder organization. This documentation includes provider options, upload workflows, and explanations on inserting media into content.
-<br/>
+> 
 
 The 
 
@@ -9287,6 +9328,9 @@ Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api
 
 # Admin Panel API for plugins
 
+> The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks to inject React components and translations into Strapi’s UI. Menu, settings, injection zone, reducer, and hook APIs let plugins add navigation, configuration panels, or custom actions.
+<br/>
+
 A Strapi plugin can interact with both the [back end](/cms/plugins-development/server-api) and the front end of a Strapi application. The Admin Panel API is about the front end part, i.e. it allows a plugin to customize Strapi's [admin panel](/cms/intro).
 
 The admin panel is a 
@@ -9776,6 +9820,9 @@ Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis
 
 # Content Manager APIs
 
+> Content Manager APIs add panels and actions to list or edit views through `addEditViewSidePanel`, `addDocumentAction`, `addDocumentHeaderAction`, or `addBulkAction`. Each API accepts component functions with typed contexts, enabling precise control over document-aware UI injections.
+<br/>
+
 Content-Manager APIs are part of the [Admin Panel API](/cms/plugins-development/admin-panel-api). They are a way to add content or options from plugins to the [Content-Manager](/cms/features/content-manager), so you can extend the Content-Manager by adding functionality from your own plugin, just like you can do it with [Injection Zones](/cms/plugins-development/admin-panel-api#injection-zones-api).
 
 Strapi 5 provides 4 Content-Manager APIs, all accessible through `app.getPlugin('content-manager').apis`:
@@ -10080,6 +10127,9 @@ interface BulkActionDescription {
 Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin
 
 # Plugin creation
+
+> The Plugin SDK generates plugins without a Strapi project and links them to an existing app with `watch:link` and yalc. In this documentation: build and verify commands to bundle the plugin for npm or marketplace publishing, and information for monorepos and local setups.
+<br/>
 
 There are many ways to create a Strapi 5 plugin, but the fastest and recommended way is to use the Plugin SDK.
 
@@ -10695,6 +10745,8 @@ The next steps of your Strapi plugin development journey will require you to use
 Source: https://docs.strapi.io/cms/plugins-development/plugins-extension
 
 # Plugins extension
+
+> Existing plugins can be overriden by placing code in `/src/extensions` or using global `register/bootstrap` hooks. Instructions in this documentation cover reshaping plugin content-type schemas or server logic — altough upstream updates may break extensions.
 
 Strapi comes with plugins that can be installed from the [Marketplace](/cms/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/cms/plugins-development/developing-plugins)) or extend the existing ones.
 

@@ -12,8 +12,9 @@ tags:
 
 # Notifications
 
-> Bell icon opens a feed of recent deployment events, automatically purged after 30 days.
-<br/>
+<Tldr>
+Bell icon opens a feed of recent deployment events, automatically purged after 30 days.
+</Tldr>
 
 The Notification center can be opened by clicking the bell icon <Icon name="bell" /> in the top navigation of the Cloud dashboard.
 

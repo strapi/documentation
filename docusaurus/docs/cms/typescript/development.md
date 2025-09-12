@@ -11,8 +11,9 @@ tags:
 
 # TypeScript development with Strapi
 
-> TypeScript development showcases Strapi typings for autocompletion, schema type generation with `ts:generate-types`, and programmatic server starts via `strapi()` or `strapi.compile()`. This documentation addresses plugin builds and managing generated type definitions.
-<br/>
+<Tldr>
+TypeScript development showcases Strapi typings for autocompletion, schema type generation with `ts:generate-types`, and programmatic server starts via `strapi()` or `strapi.compile()`. This documentation addresses plugin builds and managing generated type definitions.
+</Tldr>
 
 While developing a [TypeScript](/cms/typescript)-based application with Strapi, you can:
 

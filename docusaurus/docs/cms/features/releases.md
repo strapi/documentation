@@ -13,8 +13,9 @@ tags:
 # Releases
 <GrowthBadge/>
 
-> Releases group entries into publishable batches to trigger simultaneous publish or unpublish actions across content types and locales. Instructions in this documentation detail creating releases, adding entries, and understanding plan limitations.
-<br/>
+<Tldr>
+Releases group entries into publishable batches to trigger simultaneous publish or unpublish actions across content types and locales. Instructions in this documentation detail creating releases, adding entries, and understanding plan limitations.
+</Tldr>
 
 The Releases feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
 

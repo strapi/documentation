@@ -19,8 +19,9 @@ import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares configuration
 
-> `/config/middlewares` orders global middleware, enables custom names or resolves, and exposes built-in configuration options.
-<br/>
+<Tldr>
+`/config/middlewares` orders global middleware, enables custom names or resolves, and exposes built-in configuration options.
+</Tldr>
 
 <MiddlewareTypes />
 

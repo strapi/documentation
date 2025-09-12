@@ -12,8 +12,9 @@ tags:
 
 # Collaboration on projects
 
-> Project owners invite maintainers through the Share button, manage pending invitations, and revoke access.
-<br/>
+<Tldr>
+Project owners invite maintainers through the Share button, manage pending invitations, and revoke access.
+</Tldr>
 
 Projects are created by a user via their Strapi Cloud account. Strapi Cloud users can share their projects to anyone else, so these new users can have access to the project dashboard and collaborate on that project, without the project owner to ever have to share their credentials.
 

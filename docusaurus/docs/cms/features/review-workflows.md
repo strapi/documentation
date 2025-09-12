@@ -12,8 +12,9 @@ tags:
 # Review Workflows
 <EnterpriseBadge />
 
-> Review Workflows define custom multi-stage pipelines for content review, facilitating collaboration from draft to publication. This documentation walks through creating workflows and assigning stages.
-<br/>
+<Tldr>
+Review Workflows define custom multi-stage pipelines for content review, facilitating collaboration from draft to publication. This documentation walks through creating workflows and assigning stages.
+</Tldr>
 
 The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
 
