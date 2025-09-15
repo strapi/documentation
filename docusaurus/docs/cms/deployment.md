@@ -17,6 +17,10 @@ import InstallPrereq from '/docs/snippets/installation-prerequisites.md'
 
 # Deployment
 
+<Tldr>
+Deployment options cover hardware/software prerequisites, environment variable setup, and building the admin panel before launch. In the documentation: links to provider‑specific and advanced guides to help pick the right hosting strategy.
+</Tldr>
+
 Strapi provides many deployment options for your project or application. Your Strapi applications can be deployed on traditional hosting servers or your preferred hosting provider.
 
 The following documentation covers the basics of how to prepare Strapi for deployment on with several common hosting options.

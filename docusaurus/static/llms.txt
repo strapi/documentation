@@ -5,8 +5,8 @@
 - [Database](https://docs.strapi.io/cloud/advanced/database): Configure your own database on Strapi Cloud.
 - [Email Provider](https://docs.strapi.io/cloud/advanced/email): Configure Strapi Cloud to use a third-party email provider.
 - [Upload Provider](https://docs.strapi.io/cloud/advanced/upload): Configure Strapi Cloud to use a third-party upload provider.
-- [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): > CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
-- [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): > Edge caching via Cache-Control headers reduces latency and server load for heavy static content.
+- [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): <Tldr>
+- [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): <Tldr>
 - [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
 - [with Cloud dashboard](https://docs.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
 - [with Cloud CLI](https://docs.strapi.io/cloud/getting-started/deployment-cli): Learn how to deploy your Strapi application via the CLI.
@@ -102,7 +102,7 @@
 - [Breaking changes](https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes): View the list of all breaking changes introduced between Strapi v4 and v5.
 - [Upgrading to Strapi 5 - Introduction and FAQ](https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq): Learn more about how to upgrade to Strapi 5
 - [Step-by-step guide to upgrade to Strapi 5](https://docs.strapi.io/cms/migration/v4-to-v5/step-by-step): Follow this step-by-step guide to upgrade from Strapi v4 to Strapi 5
-- [Admin Panel API](https://docs.strapi.io/cms/plugins-development/admin-panel-api): > The Admin Panel API exposes `register`, `bootstrap`, and `registerTrads` hooks to inject React components and translations into Strapi’s UI. Menu, s...
+- [Admin Panel API](https://docs.strapi.io/cms/plugins-development/admin-panel-api): <Tldr>
 - [Content Manager APIs](https://docs.strapi.io/cms/plugins-development/content-manager-apis): The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
 - [Plugin creation & setup](https://docs.strapi.io/cms/plugins-development/create-a-plugin): Learn how to use the Plugin SDK to build and publish a Strapi plugin
 - [Developing plugins](https://docs.strapi.io/cms/plugins-development/developing-plugins): Generation introduction about Strapi plugins development
@@ -115,7 +115,7 @@
 - [Server API for plugins](https://docs.strapi.io/cms/plugins-development/server-api): Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 - [Documentation plugin](https://docs.strapi.io/cms/plugins/documentation): By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 - [GraphQL plugin](https://docs.strapi.io/cms/plugins/graphql): Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
-- [Installing Plugins via the Marketplace](https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace): > The in-app Marketplace lists plugins and providers with badges, search, and “More” links to detailed Strapi Market pages. This documentation outline...
+- [Installing Plugins via the Marketplace](https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace): <Tldr>
 - [Sentry plugin](https://docs.strapi.io/cms/plugins/sentry): Track errors in your Strapi application.
 - [Project structure](https://docs.strapi.io/cms/project-structure): Discover the project structure of any default Strapi application.
 - [Quick Start Guide - Strapi Developer Docs](https://docs.strapi.io/cms/quick-start): Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
