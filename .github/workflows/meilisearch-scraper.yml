@@ -32,12 +32,13 @@ jobs:
           MEILISEARCH_API_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
           CONFIG_FILE: .github/meilisearch/scraper-config.json
         run: |
-          docker run \
-            -e MEILISEARCH_HOST_URL="$MEILISEARCH_HOST_URL" \
-            -e MEILISEARCH_API_KEY="$MEILISEARCH_API_KEY" \
-            -v ${{ github.workspace }}/.github/meilisearch:/config \
-            getmeili/docs-scraper:v0.12.8 \
-            /config/scraper-config.json
+          run: |
+            docker run \
+              -e MEILISEARCH_HOST_URL="$MEILISEARCH_HOST_URL" \
+              -e MEILISEARCH_API_KEY="$MEILISEARCH_API_KEY" \
+              -v ${{ github.workspace }}/.github:/config \
+              getmeili/docs-scraper:v0.12.8 \
+              pipenv run ./docs_scraper /config/meilisearch-scraper-config.json
 
       - name: Test search index
         env:
