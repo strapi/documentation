@@ -43,6 +43,7 @@
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
+    "meilisearch-docsearch": "^0.8.0",
     "prism-react-renderer": "^2.1.0",
     "qs": "^6.11.1",
     "react": "^18.2.0",
