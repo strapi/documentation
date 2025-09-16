@@ -9,6 +9,10 @@ tags:
 
 # Unit testing
 
+<Tldr>
+Testing uses Jest and Supertest with a temporary SQLite database to run unit and API checks. Walkthroughs generate a Strapi instance, verify endpoints like `/hello`, and authenticate users to ensure controllers behave as expected.
+</Tldr>
+
 :::strapi
 The Strapi blog has a tutorial on how to implement <ExternalLink to="https://strapi.io/blog/automated-testing-for-strapi-api-with-jest-and-supertest" text="API testing with Jest and Supertest"/> and <ExternalLink to="https://strapi.io/blog/how-to-add-unit-tests-to-your-strapi-plugin" text="how to add unit tests to your Strapi plugin"/>.
 :::

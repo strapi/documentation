@@ -20,6 +20,9 @@ tags:
 <div className="custom-mermaid-layout">
 
 # Backend customization
+<Tldr>
+Strapi’s back end is a Koa-based server where requests pass through global middlewares, routes, controllers, services, and models before the Document Service returns responses.
+</Tldr>
 
 :::strapi Disambiguation: Strapi back end
 As a headless CMS, the Strapi software as a whole can be considered as the "back end" of your website or application.

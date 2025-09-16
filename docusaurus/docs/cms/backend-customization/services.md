@@ -13,6 +13,10 @@ tags:
 
 # Services
 
+<Tldr>
+Services store reusable functions to keep controllers concise and follow DRY principles. This documentation explains generating or extending services with `createCoreService` and organizing them for APIs or plugins.
+</Tldr>
+
 Services are a set of reusable functions. They are particularly useful to respect the "don’t repeat yourself" (DRY) programming concept and to simplify [controllers](/cms/backend-customization/controllers.md) logic.
 
 <figure style={{width: '100%', margin: '0'}}>

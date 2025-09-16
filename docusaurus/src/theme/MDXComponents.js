@@ -23,6 +23,7 @@ import { InteractiveQueryBuilder } from '../components/InteractiveQueryBuilder/I
 import { AlphaBadge, BetaBadge, FeatureFlagBadge, EnterpriseBadge, GrowthBadge, SsoBadge, CloudEssentialBadge, CloudProBadge, CloudScaleBadge, NewBadge, UpdatedBadge, VersionBadge } from '../components/Badge';
 import { SideBySideColumn, SideBySideContainer } from '../components';
 import ThemedImage from '@theme/ThemedImage';
+import { Tldr } from '../components/Tldr.jsx';
 import {
   MultiLanguageSwitcher,
   MultiLanguageSwitcherRequest,
@@ -92,6 +93,7 @@ export default {
   BreakingChangeIdCard,
   IdentityCard,
   IdentityCardItem,
+  Tldr,
   DebugComponent,
   /**
    * Reusable annotation components go below👇

@@ -18,6 +18,10 @@ tags:
 
 # Routes
 
+<Tldr>
+Routes map incoming URLs to controllers and ship pre-generated for each content type. This documentation shows how to add or customize core and custom routers and attach policies or middlewares for extra control.
+</Tldr>
+
 Requests sent to Strapi on any URL are handled by routes. By default, Strapi generates routes for all the content-types (see [REST API documentation](/cms/api/rest)). Routes can be [added](#implementation) and configured:
 
 - with [policies](#policies), which are a way to block access to a route,

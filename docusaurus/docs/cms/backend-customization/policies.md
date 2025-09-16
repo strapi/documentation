@@ -16,6 +16,10 @@ tags:
 
 # Policies
 
+<Tldr>
+Policies execute before controllers to enforce authorization or other checks on routes. Instructions in this documentation cover generating global or scoped policies and wiring them into router configs.
+</Tldr>
+
 Policies are functions that execute specific logic on each request before it reaches the [controller](/cms/backend-customization/controllers). They are mostly used for securing business logic.
 
 Each [route](/cms/backend-customization/routes) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.

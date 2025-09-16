@@ -12,6 +12,10 @@ tags:
 
 # Notifications
 
+<Tldr>
+Bell icon opens a feed of recent deployment events, automatically purged after 30 days.
+</Tldr>
+
 The Notification center can be opened by clicking the bell icon <Icon name="bell" /> in the top navigation of the Cloud dashboard.
 
 It displays a list of the latest notifications for all your existing projects. Clicking on a notification card from the list will redirect you to the *Log details* page of the corresponding deployment (more information in [Deploy history & logs](/cloud/projects/deploys-history#accessing-deployment-details--logs)).

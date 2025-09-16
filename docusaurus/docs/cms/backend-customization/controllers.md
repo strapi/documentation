@@ -16,6 +16,10 @@ tags:
 
 # Controllers
 
+<Tldr>
+Controllers bundle actions that handle business logic for each route within Strapi’s MVC pattern. This documentation demonstrates generating controllers, extending core ones with `createCoreController`, and delegating heavy logic to services.
+</Tldr>
+
 Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/cms/backend-customization/routes). Whenever a client requests the route, the action performs the business logic code and sends back the [response](/cms/backend-customization/requests-responses). Controllers represent the C in the model-view-controller (MVC) pattern.
 
 In most cases, the controllers will contain the bulk of a project's business logic. But as a controller's logic becomes more and more complicated, it's a good practice to use [services](/cms/backend-customization/services) to organize the code into re-usable parts.

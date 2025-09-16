@@ -16,6 +16,10 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Content Manager
 
+<Tldr>
+The Content Manager is Strapi’s interface for browsing and editing entries. This documentation gives an overview of the Content Manager and explains the views and how to write content in fields, components, dynamic zones and relational fields.
+</Tldr>
+
 From the <Icon name="feather" /> Content Manager, accessible via the main navigation of the admin panel, users can write and manage their content.
 
 <IdentityCard>

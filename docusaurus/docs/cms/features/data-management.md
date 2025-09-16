@@ -14,6 +14,10 @@ tags:
 
 # Data Management
 
+<Tldr>
+Data Management handles CLI-based import, export, and transfer of content between Strapi instances with partial configuration in the admin panel. Step-by-step commands and prerequisite settings explained in this documentation ensure safe migrations.
+</Tldr>
+
 The Data Management feature can be used to import, export, or transfer data. Data Management is  CLI-based only, but is partly configured in the admin panel.
 
 <IdentityCard>

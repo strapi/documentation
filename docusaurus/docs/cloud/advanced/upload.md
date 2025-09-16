@@ -16,6 +16,10 @@ tags:
 
 # Upload Provider
 
+<Tldr>
+External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
+</Tldr>
+
 Strapi Cloud comes with a local upload provider out of the box. However, it can also be configured to utilize a third-party upload provider, if needed.
 
 :::caution

@@ -17,6 +17,10 @@ import SupportedDatabases from '/docs/snippets/supported-databases.md'
 
 # Database configuration
 
+<Tldr>
+`/config/database` defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
+</Tldr>
+
 The `/config/database.js|ts` file is used to define database connections that will be used to store the application content.
 
 :::strapi Supported databases
