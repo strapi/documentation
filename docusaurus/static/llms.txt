@@ -54,7 +54,7 @@
 - [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents.
 - [Upload files](https://docs.strapi.io/cms/api/rest/upload): Learn how to use the /api/upload endpoints to upload files to Strapi with the REST API.
 - [Back-end customization](https://docs.strapi.io/cms/backend-customization): All elements of Strapi's back end, like routes, policies, middlewares, controllers, services, models, requests, responses, and webhooks, can be customized.
-- [Controllers](https://docs.strapi.io/cms/backend-customization/controllers): Controllers are JavaScript files that contain a set of methods, called actions, reached by the client according to the requested [route](/cms/backend-...
+- [Controllers](https://docs.strapi.io/cms/backend-customization/controllers): <Tldr>
 - [Middlewares](https://docs.strapi.io/cms/backend-customization/middlewares): import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 - [Models](https://docs.strapi.io/cms/backend-customization/models): Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the content structure.
 - [Policies](https://docs.strapi.io/cms/backend-customization/policies): Strapi policies are functions that execute specific logic on each request before it reaches the controller. Policies can be customized according to your needs.
@@ -111,7 +111,7 @@
 - [How to store and access data from a Strapi plugin](https://docs.strapi.io/cms/plugins-development/guides/store-and-access-data): Learn how to store and access data from a Strapi plugin
 - [Plugin SDK](https://docs.strapi.io/cms/plugins-development/plugin-sdk): Reference documentation for Strapi's Plugin SDK commands
 - [Plugin structure](https://docs.strapi.io/cms/plugins-development/plugin-structure): Learn more about the structure of a Strapi plugin
-- [Plugins extension](https://docs.strapi.io/cms/plugins-development/plugins-extension): > Existing plugins can be overriden by placing code in `/src/extensions` or using global `register/bootstrap` hooks. Instructions in this documentatio...
+- [Plugins extension](https://docs.strapi.io/cms/plugins-development/plugins-extension): <Tldr>
 - [Server API for plugins](https://docs.strapi.io/cms/plugins-development/server-api): Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 - [Documentation plugin](https://docs.strapi.io/cms/plugins/documentation): By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
 - [GraphQL plugin](https://docs.strapi.io/cms/plugins/graphql): Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
