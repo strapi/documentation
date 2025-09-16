@@ -131,6 +131,13 @@ const config = {
       rel: 'stylesheet',
     },
   ],
+  customFields: {
+    meilisearch: {
+      host: process.env.MEILISEARCH_HOST || 'https://ms-XXXXXXXXX.meilisearch.io',
+      apiKey: process.env.MEILISEARCH_SEARCH_KEY || 'YOUR_SEARCH_KEY',
+      indexUid: 'strapi-docs',
+    },
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -196,15 +203,15 @@ const config = {
           hideable: true,
         },
       },
-      algolia: {
-        appId: '392RJ63O14',
-        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
-        indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
-        searchParameters: {
-          facetFilters: [],
-        },
-      },
+      // algolia: {
+      //   appId: '392RJ63O14',
+      //   apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
+      //   indexName: 'strapi_newCmsCrawler_march2025',
+      //   contextualSearch: false,
+      //   searchParameters: {
+      //     facetFilters: [],
+      //   },
+      // },
       navbar: {
         hideOnScroll: false,
         logo: {
