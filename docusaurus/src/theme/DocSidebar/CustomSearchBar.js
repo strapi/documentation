@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchBar from '@theme-original/SearchBar';
+import SearchBar from '../SearchBar/index.js';
 import Icon from '../../components/Icon.js'
 
 export default function CustomSearchBarWrapper(props) {
