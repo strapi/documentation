@@ -11,6 +11,10 @@ tags:
 
 # Preview
 
+<Tldr>
+Preview connects the Content Manager to the front end so editors can see changes before publishing. In this documentation: configuration steps to set preview URLs.
+</Tldr>
+
 With the Preview feature, you can preview your front end application directly from Strapi's admin panel. This is helpful to see how updates to your content in the Edit View of the Content Manager will affect the final result.
 
 <IdentityCard>

@@ -16,6 +16,10 @@ import ConditionalFields from '/docs/snippets/conditional-fields.md'
 
 # Content-type Builder
 
+<Tldr>
+The Content-type Builder is a tool for designing content types and components. This documentation gives an overview of the Content-type Builder and covers field options, relations, component usage, and shares data modeling tips.
+</Tldr>
+
 From the <Icon name="layout" /> Content-type Builder, accessible via the main navigation of the admin panel, users can create and edit their content types.
 
 <IdentityCard>

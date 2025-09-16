@@ -16,6 +16,10 @@ tags:
 
 # Models
 
+<Tldr>
+Models define Strapi’s content structure via content-types and reusable components. This documentation walks through creating these models in the Content-type Builder or CLI and managing schema files with optional lifecycle hooks.
+</Tldr>
+
 As Strapi is a headless Content Management System (CMS), creating a content structure for the content is one of the most important aspects of using the software. Models define a representation of the content structure.
 
 There are 2 different types of models in Strapi:

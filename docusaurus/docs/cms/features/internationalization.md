@@ -13,6 +13,10 @@ tags:
 
 # Internationalization (i18n)
 
+<Tldr>
+Internationalization manages content in multiple locales directly from the admin panel. This documentation explains how to add locales, translate entries, and control locale-specific permissions.
+</Tldr>
+
 The Internationalization feature allows to manage content in different languages, called "locales".
 
 <IdentityCard>

@@ -1,0 +1,25 @@
+@use './tokens.scss' as *;
+@use './mixins' as *;
+
+.tldr {
+  margin: 0 0 var(--strapi-spacing-10) 0;
+  background-color: transparent;
+  // opacity: .9;
+  
+  p {
+    color: var(--strapi-neutral-600);
+  
+    strong {
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+  }
+}
+
+@include dark {
+  .tldr {
+    p {
+      color: var(--strapi-neutral-700);
+    }
+  }
+}

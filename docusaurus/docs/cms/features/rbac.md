@@ -13,6 +13,10 @@ import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference
 
 # Role-Based Access Control (RBAC)
 
+<Tldr>
+Role-Based Access Control (RBAC) manages administrator roles and granular permissions in the admin panel. This documentation covers creating roles, assigning rights, and securing administrative workflows.
+</Tldr>
+
 The Role-Based Access Control (RBAC) feature allows the management of the administrators, who are the users of the admin panel. More specifically, RBAC manages the administrators' accounts and roles.
 
 <IdentityCard>

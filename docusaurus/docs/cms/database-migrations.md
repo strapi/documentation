@@ -5,6 +5,10 @@ description: Strapi database migrations are ways to modify the database
 
 # Database migrations
 
+<Tldr>
+Database migrations run one‑time scripts before schema sync to preserve data during upgrades. The experimental API uses alphabetical `up()` files and warns about missing down migrations and potential table deletions.
+</Tldr>
+
 Database migrations exist to run one-time queries against the database, typically to modify the tables structure or the data when upgrading the Strapi application. These migrations are run automatically when the application starts and are executed before the automated schema migrations that Strapi also performs on boot.
 
 :::callout 🚧  Experimental feature

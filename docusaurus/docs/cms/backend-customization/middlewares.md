@@ -18,6 +18,10 @@ import MiddlewareTypes from '/docs/snippets/middleware-types.md'
 
 # Middlewares customization
 
+<Tldr>
+Middlewares alter the request or response flow at application or API levels. This documentation distinguishes global versus route middlewares and illustrates custom implementations with generation patterns.
+</Tldr>
+
 <MiddlewareTypes />
 
 <figure style={{width: '100%', margin: '0'}}>

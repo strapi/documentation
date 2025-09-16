@@ -19,6 +19,10 @@ tags:
 
 # GraphQL plugin
 
+<Tldr>
+The GraphQL plugin adds a GraphQL endpoint and Apollo-based sandbox for crafting queries and mutations. Options in config/plugins let you tune depth, item limits, and other Apollo Server settings which are explained in this documentation.
+</Tldr>
+
 By default Strapi create [REST endpoints](/cms/api/rest#endpoints) for each of your content-types. The GraphQL plugin adds a GraphQL endpoint to fetch and mutate your content. With the GraphQL plugin installed, you can use the Apollo Server-based GraphQL Sandbox to interactively build your queries and mutations and read documentation tailored to your content types.
 
 <IdentityCard isPlugin>

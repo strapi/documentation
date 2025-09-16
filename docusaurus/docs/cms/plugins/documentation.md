@@ -16,6 +16,10 @@ tags:
 
 # Documentation plugin
 
+<Tldr>
+The Documentation plugin auto-generates OpenAPI/Swagger docs for your API by scanning content types and routes. This documentation walks you through installation, customizing settings, and restricting access to the docs.
+</Tldr>
+
 The Documentation plugin automates your API documentation creation. It basically generates a swagger file. It follows the <ExternalLink to="https://swagger.io/specification/" text="Open API specification version"/>.
 
 <IdentityCard isPlugin>

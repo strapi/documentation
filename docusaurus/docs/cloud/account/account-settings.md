@@ -15,6 +15,10 @@ pagination_next: cloud/account/account-billing
 
 # Profile settings
 
+<Tldr>
+Settings of the Profile page include account details, connected accounts, and account deletion options.
+</Tldr>
+
 The *Profile* page enables you to manage your account details and preferences. It is accessible by clicking on your profile picture, on the top right hand corner of the interface, and **Profile**.
 
 There are 3 tabs available in the *Profile* interface: <Icon name="faders" /> [*General*](#general), <Icon name="credit-card" /> *Billing* and <Icon name="invoice" /> Invoices (the last 2 are documented in the [Account billing details](/cloud/account/account-billing) section of this documentation).
