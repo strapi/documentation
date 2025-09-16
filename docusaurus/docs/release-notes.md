@@ -27,6 +27,33 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.8.1
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix typo in Content-type definition for credentials in TypeScript docs code example](https://github.com/strapi/documentation/pull/2697)
+
+#### Repository
+- [Automatically tag PRs: `internal` or `contribution`](https://github.com/strapi/documentation/pull/2691)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/busybox11" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/29630035?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="busybox11"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.8.0
 
 <br />

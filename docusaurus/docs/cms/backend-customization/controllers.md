@@ -148,7 +148,7 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 Each controller action can be an `async` or `sync` function.
 Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/cms/backend-customization/requests-responses#ctxrequest) and the [response context](/cms/backend-customization/requests-responses#ctxresponse).
 
-<details><UpdatedBadge />
+<details>
 <summary>Example: GET /hello route calling a basic controller</summary>
 
 A specific `GET /hello` [route](/cms/backend-customization/routes) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
