@@ -36,7 +36,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 <br />
 
 #### Repository
-- [Add new "TL;DR" component anywhere relevant](https://github.com/strapi/documentation/pull/2702)
+- [Add new "TL;DR" component to all relevant pages](https://github.com/strapi/documentation/pull/2702)
 
 ### <Icon name='pen-nib' /> Updated content
 
