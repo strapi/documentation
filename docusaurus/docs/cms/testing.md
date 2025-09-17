@@ -56,21 +56,27 @@ The present guide will not work if you are on Windows using the SQLite database 
 
     </Tabs>
 
-2. Add the following to the `package.json` file of your Strapi project:
+2. Update the `package.json` file of your Strapi project with the following:
 
-   * add `test` command to `scripts` section:
+   * Add a `test` command to the `scripts` section so it looks as follows:
 
-      ```json
+      ```json {12}
         "scripts": {
-          "develop": "strapi develop",
-          "start": "strapi start",
           "build": "strapi build",
+          "console": "strapi console",
+          "deploy": "strapi deploy",
+          "dev": "strapi develop",
+          "develop": "strapi develop",
+          "seed:example": "node ./scripts/seed.js",
+          "start": "strapi start",
           "strapi": "strapi",
+          "upgrade": "npx @strapi/upgrade latest",
+          "upgrade:dry": "npx @strapi/upgrade latest --dry",
           "test": "jest --forceExit --detectOpenHandles"
         },
       ```
 
-   * and add the following lines at the bottom of the file, to inform `Jest` not to look for tests inside folders where it shouldn't:
+   * Add the following lines at the bottom of the file, to inform `Jest` not to look for tests inside folders where it shouldn't:
 
       ```json
         "jest": {
@@ -92,7 +98,7 @@ Pure unit tests are ideal for Strapi plugins because they let you validate contr
 Create a test file such as `./tests/todo-controller.test.js` that instantiates your controller with a mocked Strapi object and verifies every call the controller performs:
 
 ```js title="./tests/todo-controller.test.js"
-const todoController = require('../server/controllers/todo-controller');
+const todoController = require('./todo-controller');
 
 describe('Todo controller', () => {
   let strapi;
@@ -159,7 +165,7 @@ The `beforeEach` hook rebuilds the mock so every test starts with a clean Strapi
 Services can be tested in the same test suite or in a dedicated file by mocking only the Strapi query layer they call into.
 
 ```js title="./tests/create-service.test.js"
-const createService = require('../server/services/create');
+const createService = require('./create-service');
 
 describe('Create service', () => {
   let strapi;

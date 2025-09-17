@@ -120,7 +120,7 @@
 - [Project structure](https://docs.strapi.io/cms/project-structure): Discover the project structure of any default Strapi application.
 - [Quick Start Guide - Strapi Developer Docs](https://docs.strapi.io/cms/quick-start): Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
 - [Templates](https://docs.strapi.io/cms/templates): Use and create pre-made Strapi applications designed for a specific use case.
-- [Testing](https://docs.strapi.io/cms/testing): Learn how to test your Strapi application.
+- [Testing](https://docs.strapi.io/cms/testing): Learn how to test your Strapi application with Jest and Supertest.
 - [TypeScript](https://docs.strapi.io/cms/typescript): Get started with TypeScript for your Strapi application
 - [TypeScript development](https://docs.strapi.io/cms/typescript/development): Learn more about TypeScript usage with Strapi 5
 - [TypeScript Guides](https://docs.strapi.io/cms/typescript/guides): Learn how you can leverage TypeScript while developing your Strapi project.
