@@ -204,7 +204,9 @@ For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the li
 
 ## Authentication
 
-The authentication system, including [SSO configuration](/cms/configurations/guides/configure-sso), can be configured with the following parameters:
+The authentication system, including [SSO configuration](/cms/configurations/guides/configure-sso) and [session management](/cms/configurations/session-management), can be configured with the following parameters:
+
+### Basic Authentication
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
@@ -217,6 +219,30 @@ The authentication system, including [SSO configuration](/cms/configurations/gui
 | `auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                             | object        | `{}`                                                                                                                                |
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                 | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
+
+### Session Management
+
+Admin authentication uses session management by default for enhanced security. Configure session lifespans and behavior:
+
+| Parameter                                 | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `auth.sessions`                           | Session management configuration                                                                                                                                                                   | object        | `{}`                                                                                                                                |
+| `auth.sessions.accessTokenLifespan`       | Access token lifespan in seconds                                                                                                                                                                   | number        | `1800` (30 minutes)                                                                                                                 |
+| `auth.sessions.maxRefreshTokenLifespan`   | Maximum refresh token lifespan in seconds                                                                                                                                                          | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
+| `auth.sessions.idleRefreshTokenLifespan`  | Idle refresh token timeout in seconds                                                                                                                                                              | number        | `604800` (7 days)                                                                                                                   |
+| `auth.sessions.maxSessionLifespan`        | Maximum session duration in seconds                                                                                                                                                                | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
+| `auth.sessions.idleSessionLifespan`       | Session idle timeout in seconds                                                                                                                                                                    | number        | `3600` (1 hour)                                                                                                                     |
+
+### Cookie Configuration
+
+Configure HTTP cookies for admin authentication:
+
+| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `auth.cookie`                     | Cookie configuration for admin authentication                                                                                                                                                      | object        | `{}`                                                                                                                                |
+| `auth.cookie.domain`              | Cookie domain (inherits from server if not set)                                                                                                                                                   | string        | `undefined`                                                                                                                         |
+| `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
+| `auth.cookie.sameSite`            | SameSite cookie attribute                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
 
 ## Feature flags
 

@@ -200,10 +200,18 @@ You can configure the JWT generation by using the [plugins configuration file](/
 
 Strapi uses <ExternalLink to="https://www.npmjs.com/package/jsonwebtoken" text="jsonwebtoken"/> to generate the JWT.
 
+#### JWT Management Modes
+
+The Users & Permissions plugin supports two JWT management modes:
+
+- **`legacy-support`** (default): Issues long-lived JWTs using traditional configuration
+- **`refresh`**: Uses session management with short-lived access tokens and refresh tokens for enhanced security
+
 Available options:
 
 - `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/cms/configurations/environment#strapi).
-- `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br/>
+- `jwtManagement`: Set to `'refresh'` to enable session management mode, or `'legacy-support'` for traditional JWT handling
+- `jwt.expiresIn`: (legacy mode only) expressed in seconds or a string describing a time span.<br/>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
 
 <Tabs groupId="js-ts">
@@ -216,8 +224,23 @@ module.exports = ({ env }) => ({
   // ...
   'users-permissions': {
     config: {
+      // Legacy mode configuration
       jwt: {
-        expiresIn: '7d',
+        expiresIn: '30d',
+      },
+      // OR Session management mode configuration
+      jwtManagement: 'refresh',
+      sessions: {
+        accessTokenLifespan: 604800, // 1 week (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days
+        idleRefreshTokenLifespan: 604800, // 7 days
+        httpOnly: false, // Set to true for HTTP-only cookies
+        cookie: {
+          name: 'strapi_up_refresh',
+          sameSite: 'lax',
+          path: '/',
+          secure: false, // true in production
+        },
       },
     },
   },
@@ -235,8 +258,23 @@ export default ({ env }) => ({
   // ...
   'users-permissions': {
     config: {
+      // Legacy mode configuration
       jwt: {
-        expiresIn: '7d',
+        expiresIn: '30d',
+      },
+      // OR Session management mode configuration
+      jwtManagement: 'refresh',
+      sessions: {
+        accessTokenLifespan: 604800, // 1 week (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days
+        idleRefreshTokenLifespan: 604800, // 7 days
+        httpOnly: false, // Set to true for HTTP-only cookies
+        cookie: {
+          name: 'strapi_up_refresh',
+          sameSite: 'lax',
+          path: '/',
+          secure: false, // true in production
+        },
       },
     },
   },
@@ -454,6 +492,13 @@ Each time an API request is sent the server checks if an `Authorization` header 
 When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 :::
 
+#### Authentication Endpoints
+
+When using session management mode (`jwtManagement: 'refresh'`), additional endpoints are available:
+
+- `POST /api/auth/refresh` - Refresh an access token using a refresh token
+- `POST /api/auth/logout` - Revoke user sessions
+
 #### Identifier
 
 The `identifier` param can be an email or username, as in the following examples:
@@ -496,11 +541,25 @@ If you use **Postman**, set the **body** to **raw** and select **JSON** as your 
 }
 ```
 
-If the request is successful you will receive the **user's JWT** in the `jwt` key:  
+If the request is successful you will receive the **user's JWT** in the `jwt` key:
 
+**Legacy mode response:**
 ```json
 {
     "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU",
+    "user": {
+        "id": 1,
+        "username": "user",
+        ...
+    }
+}
+```
+
+**Session management mode response:**
+```json
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Short-lived access token
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Long-lived refresh token
     "user": {
         "id": 1,
         "username": "user",

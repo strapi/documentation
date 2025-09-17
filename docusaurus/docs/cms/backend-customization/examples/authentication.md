@@ -145,6 +145,120 @@ const Login = () => {
 export default Login;
 ```
 
+## Enhanced Authentication with Session Management
+
+The above example uses the traditional JWT approach. For enhanced security, you can enable session management mode in your Users & Permissions configuration, which provides shorter-lived access tokens and refresh token functionality.
+
+### Configuration
+
+First, enable session management in your `/config/plugins.js`:
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  'users-permissions': {
+    config: {
+      jwtManagement: 'refresh',
+      sessions: {
+        accessTokenLifespan: 604800, // 1 week (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days
+        idleRefreshTokenLifespan: 604800, // 7 days
+      },
+    },
+  },
+});
+```
+
+### Enhanced Login Component
+
+Here's an updated login component that handles both JWT and refresh tokens:
+
+```jsx title="/client/pages/auth/enhanced-login.js"
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import { Button, Input } from '@nextui-org/react';
+import Layout from '@/components/layout';
+import { getStrapiURL } from '@/utils';
+
+const EnhancedLogin = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { handleSubmit, handleChange } = useFormik({
+    initialValues: {
+      identifier: '',
+      password: '',
+    },
+    onSubmit: async (values) => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(getStrapiURL('/auth/local'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          // Store both tokens (session management mode)
+          if (data.refreshToken) {
+            localStorage.setItem('accessToken', data.jwt);
+            localStorage.setItem('refreshToken', data.refreshToken);
+          } else {
+            // Legacy mode - single JWT
+            localStorage.setItem('token', data.jwt);
+          }
+
+          // Redirect to protected area
+          window.location.href = '/dashboard';
+        } else {
+          console.error('Login failed:', data.error);
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+  });
+
+  return (
+    <Layout>
+      <div className="h-full w-full flex justify-center items-center my-24">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-y-6 w-4/12">
+          <h1 className="font-bold text-3xl mb-6">Enhanced Login</h1>
+          <Input
+            onChange={handleChange}
+            type="email"
+            name="identifier"
+            label="Email"
+            placeholder="Enter your email"
+          />
+          <Input
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Enter your password"
+            onChange={handleChange}
+          />
+          <Button
+            type="submit"
+            className="bg-primary rounded-md text-muted"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Logging in...' : 'Login'}
+          </Button>
+        </form>
+      </div>
+    </Layout>
+  );
+};
+
+export default EnhancedLogin;
+```
+```
+
 <br />
 
 :::strapi What's next?
