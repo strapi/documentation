@@ -136,11 +136,9 @@ check_pending_prs() {
     echo -e "${BLUE}🔍 Checking for pending PRs in milestone...${NC}"
     
     local prs=$(gh_api_get "issues?milestone=$MILESTONE_NUMBER&state=open")
+    local pending_prs=$(echo "$prs" | jq -r '.[] | select(.pull_request != null)')
     
-    # Filter only pull requests (items with pull_request field)
-    local pending_prs=$(echo "$prs" | jq '[.[] | select(.pull_request != null)]')
-    
-    if [ "$(echo "$pending_prs" | jq 'length')" -eq 0 ]; then
+    if [ -z "$pending_prs" ] || [ "$pending_prs" = "" ]; then
         echo -e "${GREEN}✅ No pending PRs found${NC}"
         return 0
     fi
@@ -149,9 +147,9 @@ check_pending_prs() {
     echo "$pending_prs" | jq -r '.[] | "- #\(.number): \(.title)"'
     
     # Check for problematic flags
-    local problematic_prs=$(echo "$pending_prs" | jq '[.[] | select(.labels[] | .name | test("flag: merge pending release|flag: don'\''t merge"))]')
+    local problematic_prs=$(echo "$pending_prs" | jq -r '.[] | select(.labels[] | .name | test("flag: merge pending release|flag: don'\''t merge"))')
     
-    if [ "$(echo "$problematic_prs" | jq 'length')" -gt 0 ]; then
+    if [ ! -z "$problematic_prs" ] && [ "$problematic_prs" != "" ]; then
         echo -e "${RED}❌ Found PRs with blocking flags:${NC}"
         echo "$problematic_prs" | jq -r '.[] | "- #\(.number): \(.title) [" + ([.labels[] | .name | select(test("flag:"))] | join(", ")) + "]"'
         
@@ -216,27 +214,46 @@ update_package_version() {
 generate_release_notes() {
     echo -e "${BLUE}📋 Generating release notes...${NC}"
     
-    # Set environment variables for the release notes script
-    export MILESTONE_NUMBER
-    export MILESTONE_TITLE
-    
     echo "Calling release notes script for milestone $MILESTONE_NUMBER ($MILESTONE_TITLE)..."
     
-    # Use expect or printf to simulate user input
-    # We'll send "N" for "Do you want to include closed milestones?" 
-    # Then find the correct milestone number and send Enter
+    # The release notes script has an interactive milestone selection with arrow keys
+    # We need to simulate the exact keypresses to select our milestone
+    # Since the script sorts milestones by creation date (desc), we need to find the position
     
-    # First, let's see what milestones are available to find the right one
-    local milestones=$(gh_api_get "milestones?state=open")
-    local milestone_line=$(echo "$milestones" | jq -r --arg num "$MILESTONE_NUMBER" '.[] | select(.number == ($num | tonumber)) | "\(.number)) \(.title)"')
+    local milestones=$(gh_api_get "milestones?state=open&sort=created&direction=desc")
+    local milestone_position=0
+    local found=false
     
-    echo "Target milestone line: $milestone_line"
+    # Find the position of our target milestone in the list
+    while read -r line; do
+        milestone_position=$((milestone_position + 1))
+        milestone_num=$(echo "$line" | cut -d')' -f1)
+        if [ "$milestone_num" = "$MILESTONE_NUMBER" ]; then
+            found=true
+            break
+        fi
+    done <<< "$(echo "$milestones" | jq -r '.[] | "\(.number)) \(.title)"')"
     
-    # Create a response file for the interactive script
+    if [ "$found" = false ]; then
+        echo -e "${RED}❌ Could not find milestone $MILESTONE_NUMBER in the list${NC}"
+        exit 1
+    fi
+    
+    echo "Found milestone at position $milestone_position"
+    
+    # Generate the arrow key presses needed to reach our milestone
+    # Position 1 = already selected (no arrows needed)
+    # Position 2 = 1 down arrow, etc.
+    local arrows=""
+    for ((i=1; i<milestone_position; i++)); do
+        arrows="${arrows}$(printf '\033[B')"  # Down arrow
+    done
+    
+    # Create response file with the right arrow key sequence
     cat > "$TEMP_DIR/responses.txt" << EOF
 N
+${arrows}
 
-$MILESTONE_NUMBER
 EOF
     
     # Run the script with predefined responses
@@ -282,13 +299,17 @@ integrate_release_notes() {
 commit_and_push() {
     echo -e "${BLUE}💾 Committing and pushing changes...${NC}"
     
-    # Check current branch
+    # We should already be on main branch (checked at script start)
+    echo -e "${BLUE}Confirming we're on main branch...${NC}"
     current_branch=$(git branch --show-current)
     if [ "$current_branch" != "main" ]; then
-        echo -e "${YELLOW}⚠️  Currently on branch '$current_branch', switching to 'main'...${NC}"
-        git checkout main
-        git pull origin main
+        echo -e "${RED}❌ Unexpected branch change. Currently on: $current_branch${NC}"
+        exit 1
     fi
+    
+    # Pull latest changes to avoid conflicts
+    echo -e "${BLUE}Pulling latest changes...${NC}"
+    git pull origin main
     
     # Check if there are changes
     if ! git diff --quiet; then
@@ -426,6 +447,21 @@ main() {
     create_github_release
     show_summary
 }
+
+# Check if we're on the main branch
+current_branch=$(git branch --show-current)
+if [ "$current_branch" != "main" ]; then
+    echo -e "${RED}❌ You must run this script from the 'main' branch${NC}"
+    echo -e "${BLUE}Current branch: $current_branch${NC}"
+    echo ""
+    echo -e "${YELLOW}Please:${NC}"
+    echo -e "1. Save/commit your current work: ${BLUE}git add . && git commit -m 'WIP: save work'${NC}"
+    echo -e "2. Switch to main branch: ${BLUE}git checkout main${NC}"
+    echo -e "3. Pull latest changes: ${BLUE}git pull origin main${NC}"
+    echo -e "4. Run this script again"
+    echo ""
+    exit 1
+fi
 
 # Check if we're in the right directory (should be in docusaurus/ folder)
 if [ ! -f "$PACKAGE_JSON_FILE" ]; then
