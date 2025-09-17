@@ -1,5 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
+require('dotenv').config({ path: '.env' });
 
 // const redirects = require('./redirects');
 const {themes} = require('prism-react-renderer');
