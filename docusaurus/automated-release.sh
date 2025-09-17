@@ -8,7 +8,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 REPO="strapi/documentation"
-TEMP_DIR="/tmp/release-automation-$"
+TEMP_DIR="/tmp/release-automation-$$"
 RELEASE_NOTES_FILE="docs/release-notes.md"
 PACKAGE_JSON_FILE="package.json"
 TEMP_RELEASE_NOTES="docs/temp-new-release-notes.md"
@@ -76,6 +76,101 @@ gh_api_patch() {
         "https://api.github.com/repos/$REPO/$endpoint"
 }
 
+# Function to make GitHub API DELETE requests
+gh_api_delete() {
+    local endpoint="$1"
+    curl -s -X DELETE \
+        -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3+json" \
+        "https://api.github.com/repos/$REPO/$endpoint"
+}
+
+# Function to check if release already exists
+check_existing_release() {
+    echo -e "${BLUE}🔍 Checking if release already exists...${NC}"
+    
+    local existing_release=$(gh_api_get "releases/tags/v$MILESTONE_TITLE")
+    
+    if echo "$existing_release" | jq -e '.id' > /dev/null 2>&1; then
+        local release_url=$(echo "$existing_release" | jq -r '.html_url')
+        echo -e "${YELLOW}⚠️  Release v$MILESTONE_TITLE already exists!${NC}"
+        echo -e "${BLUE}Existing release: $release_url${NC}"
+        echo ""
+        
+        echo -n "What would you like to do? "
+        echo -e "${BLUE}(o)verwrite existing release, (n)ext milestone, (c)ancel${NC}: "
+        read -r choice
+        
+        case "$choice" in
+            [Oo]*)
+                echo -e "${YELLOW}Will overwrite existing release${NC}"
+                OVERWRITE_RELEASE=true
+                ;;
+            [Nn]*)
+                echo -e "${BLUE}Moving to next milestone...${NC}"
+                find_next_milestone
+                ;;
+            [Cc]*|*)
+                echo -e "${RED}❌ Release cancelled${NC}"
+                exit 0
+                ;;
+        esac
+    else
+        echo -e "${GREEN}✅ No existing release found${NC}"
+        OVERWRITE_RELEASE=false
+    fi
+}
+
+# Function to find next milestone
+find_next_milestone() {
+    local next_version=$(echo "$MILESTONE_TITLE" | awk -F. '{$NF = $NF + 1; print}' OFS='.')
+    echo -e "${BLUE}Looking for next milestone: $next_version${NC}"
+    
+    local milestones=$(gh_api_get "milestones?state=open")
+    local next_milestone=$(echo "$milestones" | jq -r --arg version "$next_version" '.[] | select(.title == $version)')
+    
+    if [ -z "$next_milestone" ] || [ "$next_milestone" = "null" ]; then
+        echo -e "${YELLOW}⚠️  Calculated next milestone ($next_version) not found${NC}"
+        echo -e "${BLUE}This might be a version jump (e.g., 6.9.x → 6.10.0 or 7.0.0)${NC}"
+        echo ""
+        echo -e "${BLUE}Available open milestones:${NC}"
+        
+        # Display milestones in a more readable format with numbers for selection
+        local milestone_list=""
+        local counter=1
+        while IFS= read -r milestone; do
+            local title=$(echo "$milestone" | jq -r '.title')
+            local due_date=$(echo "$milestone" | jq -r '.due_on // "no due date"')
+            echo -e "${BLUE}$counter) $title${NC} (due: $due_date)"
+            milestone_list="$milestone_list$counter:$(echo "$milestone" | jq -r '.number'):$title\n"
+            counter=$((counter + 1))
+        done <<< "$(echo "$milestones" | jq -c '.[]')"
+        
+        echo ""
+        echo -n "Select milestone number (1-$((counter-1))): "
+        read -r selection
+        
+        # Validate selection
+        if ! [[ "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt $((counter-1)) ]; then
+            echo -e "${RED}❌ Invalid selection${NC}"
+            exit 1
+        fi
+        
+        # Extract milestone info from our list
+        local selected_info=$(echo -e "$milestone_list" | sed -n "${selection}p")
+        local selected_number=$(echo "$selected_info" | cut -d':' -f2)
+        local selected_title=$(echo "$selected_info" | cut -d':' -f3)
+        
+        MILESTONE_NUMBER="$selected_number"
+        MILESTONE_TITLE="$selected_title"
+        echo -e "${GREEN}✅ Selected milestone: $MILESTONE_TITLE (ID: $MILESTONE_NUMBER)${NC}"
+    else
+        MILESTONE_NUMBER=$(echo "$next_milestone" | jq -r '.number')
+        MILESTONE_TITLE=$(echo "$next_milestone" | jq -r '.title')
+        echo -e "${GREEN}✅ Found next milestone: $MILESTONE_TITLE (ID: $MILESTONE_NUMBER)${NC}"
+    fi
+}
+
 # Function to find today's milestone
 find_today_milestone() {
     local today=$(date -u +%Y-%m-%d)
@@ -136,9 +231,11 @@ check_pending_prs() {
     echo -e "${BLUE}🔍 Checking for pending PRs in milestone...${NC}"
     
     local prs=$(gh_api_get "issues?milestone=$MILESTONE_NUMBER&state=open")
-    local pending_prs=$(echo "$prs" | jq -r '.[] | select(.pull_request != null)')
     
-    if [ -z "$pending_prs" ] || [ "$pending_prs" = "" ]; then
+    # Filter only pull requests (items with pull_request field)
+    local pending_prs=$(echo "$prs" | jq '[.[] | select(.pull_request != null)]')
+    
+    if [ "$(echo "$pending_prs" | jq 'length')" -eq 0 ]; then
         echo -e "${GREEN}✅ No pending PRs found${NC}"
         return 0
     fi
@@ -147,9 +244,9 @@ check_pending_prs() {
     echo "$pending_prs" | jq -r '.[] | "- #\(.number): \(.title)"'
     
     # Check for problematic flags
-    local problematic_prs=$(echo "$pending_prs" | jq -r '.[] | select(.labels[] | .name | test("flag: merge pending release|flag: don'\''t merge"))')
+    local problematic_prs=$(echo "$pending_prs" | jq '[.[] | select(.labels[] | .name | test("flag: merge pending release|flag: don'\''t merge"))]')
     
-    if [ ! -z "$problematic_prs" ] && [ "$problematic_prs" != "" ]; then
+    if [ "$(echo "$problematic_prs" | jq 'length')" -gt 0 ]; then
         echo -e "${RED}❌ Found PRs with blocking flags:${NC}"
         echo "$problematic_prs" | jq -r '.[] | "- #\(.number): \(.title) [" + ([.labels[] | .name | select(test("flag:"))] | join(", ")) + "]"'
         
@@ -377,6 +474,16 @@ create_github_release() {
 
 Thank you to all contributors! 🫶 (you're listed on docs.strapi.io 👀)"
     
+    if [ "$OVERWRITE_RELEASE" = true ]; then
+        # Delete existing release first
+        echo -e "${BLUE}Deleting existing release...${NC}"
+        gh_api_delete "releases/tags/v$MILESTONE_TITLE"
+        
+        # Also delete the tag to avoid conflicts
+        git tag -d "v$MILESTONE_TITLE" 2>/dev/null || true
+        git push origin --delete "v$MILESTONE_TITLE" 2>/dev/null || true
+    fi
+    
     local release_data=$(jq -n \
         --arg tag "v$MILESTONE_TITLE" \
         --arg name "v$MILESTONE_TITLE" \
@@ -418,17 +525,33 @@ show_summary() {
     echo -e "- Check the live documentation: https://docs.strapi.io/release-notes"
     echo -e "- Verify the GitHub release: https://github.com/strapi/documentation/releases/tag/v$MILESTONE_TITLE"
     echo ""
+    
+    # Clean up backup files since everything succeeded
+    echo -e "${BLUE}🧹 Cleaning up backup files...${NC}"
+    if [ -f "$PACKAGE_JSON_FILE.bak" ]; then
+        rm -f "$PACKAGE_JSON_FILE.bak"
+        echo -e "${GREEN}✅ Removed $PACKAGE_JSON_FILE.bak${NC}"
+    fi
+    if [ -f "$RELEASE_NOTES_FILE.bak" ]; then
+        rm -f "$RELEASE_NOTES_FILE.bak"
+        echo -e "${GREEN}✅ Removed $RELEASE_NOTES_FILE.bak${NC}"
+    fi
+    echo ""
 }
 
 # Main function
 main() {
     setup_github_auth
     find_today_milestone
+    check_existing_release
     
     echo ""
     echo -e "${BLUE}📋 Release Summary:${NC}"
     echo -e "- Milestone: $MILESTONE_TITLE"
     echo -e "- Repository: $REPO"
+    if [ "$OVERWRITE_RELEASE" = true ]; then
+        echo -e "- Mode: Overwriting existing release"
+    fi
     echo ""
     
     echo -n "Do you want to proceed with the automated release? (y/N) "
@@ -462,6 +585,9 @@ if [ "$current_branch" != "main" ]; then
     echo ""
     exit 1
 fi
+
+# Configure git to avoid pull strategy warnings
+git config pull.rebase false 2>/dev/null || true
 
 # Check if we're in the right directory (should be in docusaurus/ folder)
 if [ ! -f "$PACKAGE_JSON_FILE" ]; then
