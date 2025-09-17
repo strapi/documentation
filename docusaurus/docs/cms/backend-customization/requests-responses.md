@@ -10,6 +10,10 @@ tags:
 
 # Requests and Responses
 
+<Tldr>
+Koa’s context (`ctx`) carries request info, state, and response data through every Strapi endpoint. This documentation details `ctx.request`, `ctx.state`, and `ctx.response`, plus a helper for accessing context anywhere.
+</Tldr>
+
 The Strapi back end server is based on <ExternalLink to="https://koajs.com/" text="Koa"/>. When you send requests through the [REST API](/cms/api/rest), a context object (`ctx`) is passed to every element of the Strapi back end (e.g., [policies](/cms/backend-customization/policies), [controllers](/cms/backend-customization/controllers), [services](/cms/backend-customization/services)).
 
 `ctx` includes 3 main objects:

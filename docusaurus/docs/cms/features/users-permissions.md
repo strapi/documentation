@@ -11,6 +11,10 @@ tags:
 
 # Users & Permissions
 
+<Tldr>
+Users & Permissions manages end-user accounts, JWT-based authentication, and role-based access to APIs. This documentation explains how to create roles, configure permissions, and issue API tokens for secure access control.
+</Tldr>
+
 The Users & Permissions feature allows the management of the end-users <Annotation>💡 **What are end users?** <br/> End-users are the users who consume the content that is created and managed with a Strapi application and displayed on front-end applications (e.g. websites, mobile applications, connected devices etc.). Unlike the administrators, they do not have access to the admin panel.</Annotation> of a Strapi project. It provides a full authentication process based on JSON Web Tokens (JWT) to protect your API, and an access-control list (ACL) strategy that enables you to manage permissions between groups of users.
 
 <IdentityCard>

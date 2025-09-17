@@ -1,7 +1,7 @@
 # Account billing details
 Source: https://docs.strapi.io/cloud/account/account-billing
 
-# Account billing & invoices 
+# Account billing & invoices
 
 Through the *Profile* page, accessible by clicking on your profile picture on the top right hand corner of the interface then clicking on **Profile**, you can access the [ *Billing*](#account-billing) and [ *Invoices*](#account-invoices) tabs.
 
@@ -277,10 +277,10 @@ If you want to create a custom upload provider, please refer to the [Providers](
 
 
 
-# Command Line Interface (CLI) <NewBadge />
+# Command Line Interface (CLI)
 Source: https://docs.strapi.io/cloud/cli/cloud-cli
 
-# Command Line Interface (CLI) 
+# Command Line Interface (CLI)
 
 Strapi Cloud comes with a Command Line Interface (CLI) which allows you to log in and out, and to deploy a local project without it having to be hosted on a remote git repository. The CLI works with both the `yarn` and `npm` package managers.
 
@@ -1463,6 +1463,8 @@ Make sure that the cached favicon is cleared. It can be cached in your web brows
 Source: https://docs.strapi.io/cms/admin-panel-customization/homepage
 
 # Homepage customization
+
+The 
 
 </Tabs>
 
@@ -7708,6 +7710,8 @@ Source: https://docs.strapi.io/cms/features/audit-logs
 
 # Audit Logs
 
+The Audit Logs feature provides a searchable and filterable display of all activities performed by users of the Strapi application.
+
 </IdentityCard>
 
 ## Usage
@@ -7751,6 +7755,8 @@ Source: https://docs.strapi.io/cms/features/content-history
 
 # Content History
 
+The Content History feature, in the 
+
 </IdentityCard>
 
 ## Usage
@@ -7789,6 +7795,8 @@ If the [Internationalization (i18n)](/cms/features/internationalization) feature
 Source: https://docs.strapi.io/cms/features/content-manager
 
 # Content Manager
+
+<!--  -->
 
 From the 
   
@@ -8101,10 +8109,10 @@ As compared to how other types of models are defined, custom fields' attributes 
 
 - Custom field have a `customField` attribute. Its value acts as a unique identifier to indicate which registered custom field should be used, and follows one of these 2 formats:
 
-    | Format               |  Origin |
-    |----------------------|------------------|
-    | `plugin::plugin-name.field-name` | The custom field was created through a plugin |
-    | `global::field-name` | The custom field is specific to the current Strapi application and was created directly within the `register` [function](/cms/configurations/functions) |
+  | Format               |  Origin |
+  |----------------------|------------------|
+  | `plugin::plugin-name.field-name` | The custom field was created through a plugin |
+  | `global::field-name` | The custom field is specific to the current Strapi application and was created directly within the `register` [function](/cms/configurations/functions) |
 
 - Custom fields can have additional parameters depending on what has been defined when registering the custom field (see [server registration](#registering-a-custom-field-on-the-server) and [admin panel registration](#registering-a-custom-field-in-the-admin-panel)).
 
@@ -8113,17 +8121,17 @@ As compared to how other types of models are defined, custom fields' attributes 
 ```json title="/src/api/[apiName]/[content-type-name]/content-types/schema.json"
 
 {
-  // …
-  "attributes": {
-    "color": { // name of the custom field defined in the Content-Type Builder
-      "type": "customField",
-      "customField": "plugin::color-picker.color",
-      "options": {
-        "format": "hex"
-      }
+// …
+"attributes": {
+  "color": { // name of the custom field defined in the Content-Type Builder
+    "type": "customField",
+    "customField": "plugin::color-picker.color",
+    "options": {
+      "format": "hex"
     }
   }
-  // …
+}
+// …
 }
 ```
 
@@ -8592,6 +8600,8 @@ Source: https://docs.strapi.io/cms/features/releases
 
 # Releases
 
+The Releases feature enables content managers to organize entries into containers that can perform publish and unpublish actions simultaneously. A release can contain entries from different content types and can mix locales.
+
 </IdentityCard>
 
 ## Configuration
@@ -8746,6 +8756,8 @@ Source: https://docs.strapi.io/cms/features/review-workflows
 
 # Review Workflows
 
+The Review Workflows feature allows you to create and manage workflows for your various content-types. Each workflow can consist of any review stages for your content, enabling your team to collaborate in the content creation flow from draft to publication.
+
 </IdentityCard>
 
 ## Configuration
@@ -8834,6 +8846,8 @@ Entries of a review workflow content type can be assigned to any admin user in S
 Source: https://docs.strapi.io/cms/features/sso
 
 # Single Sign-On (SSO)
+
+The Single Sign-On (SSO) feature can be made available on a Strapi application to allow administrators to authenticate through an identity provider (e.g. Microsoft Azure Active Directory).
 
 </IdentityCard>
 
@@ -10680,6 +10694,8 @@ Source: https://docs.strapi.io/cms/plugins-development/plugins-extension
 
 # Plugins extension
 
+> Existing plugins can be overriden by placing code in `/src/extensions` or using global `register/bootstrap` hooks. Instructions in this documentation cover reshaping plugin content-type schemas or server logic — altough upstream updates may break extensions.
+
 Strapi comes with plugins that can be installed from the [Marketplace](/cms/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/cms/plugins-development/developing-plugins)) or extend the existing ones.
 
 :::warning
@@ -12420,7 +12436,7 @@ Source: https://docs.strapi.io/cms/typescript
 # TypeScript development
 Source: https://docs.strapi.io/cms/typescript/development
 
-# TypeScript development with Strapi 
+# TypeScript development with Strapi
 
 While developing a [TypeScript](/cms/typescript)-based application with Strapi, you can:
 

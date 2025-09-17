@@ -14,6 +14,10 @@ tags:
 
 # Server configuration
 
+<Tldr>
+`/config/server` manages host, port, URL, proxy, cron, and more; changes require rebuilding the admin panel.
+</Tldr>
+
 The `/config/server.js` file is used to define the server configuration for a Strapi application.
 
 :::caution

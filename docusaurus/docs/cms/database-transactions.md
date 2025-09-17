@@ -8,6 +8,10 @@ tags:
 
 # Database transactions
 
+<Tldr>
+Database transactions group several operations so they succeed or roll back as a unit. The experimental `strapi.db.transaction` helper exposes `trx`, commit, and rollback utilities for wrapped service calls.
+</Tldr>
+
 :::caution
 This is an experimental feature and is subject to change in future versions.
 :::

@@ -14,6 +14,10 @@ tags:
 
 # Plugins extension
 
+<Tldr>
+Existing plugins can be overriden by placing code in `/src/extensions` or using global `register/bootstrap` hooks. Instructions in this documentation cover reshaping plugin content-type schemas or server logic — altough upstream updates may break extensions.
+</Tldr>
+
 Strapi comes with plugins that can be installed from the [Marketplace](/cms/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/cms/plugins-development/developing-plugins)) or extend the existing ones.
 
 :::warning

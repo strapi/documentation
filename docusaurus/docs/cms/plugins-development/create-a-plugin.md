@@ -11,6 +11,10 @@ tags:
 
 # Plugin creation
 
+<Tldr>
+The Plugin SDK generates plugins without a Strapi project and links them to an existing app with `watch:link` and yalc. In this documentation: build and verify commands to bundle the plugin for npm or marketplace publishing, and information for monorepos and local setups.
+</Tldr>
+
 There are many ways to create a Strapi 5 plugin, but the fastest and recommended way is to use the Plugin SDK.
 
 The Plugin SDK is a set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
