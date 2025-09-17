@@ -28,6 +28,11 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.9.1
+
+<br />
+
+
 ## 6.9.0
 
 <br />

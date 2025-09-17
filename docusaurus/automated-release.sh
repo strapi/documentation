@@ -216,15 +216,37 @@ update_package_version() {
 generate_release_notes() {
     echo -e "${BLUE}📋 Generating release notes...${NC}"
     
-    # Use existing release notes script logic but automatically
+    # Set environment variables for the release notes script
     export MILESTONE_NUMBER
     export MILESTONE_TITLE
     
-    # Run the existing script logic (adapted)
-    $RELEASE_SCRIPT_PATH --auto --milestone "$MILESTONE_NUMBER"
+    echo "Calling release notes script for milestone $MILESTONE_NUMBER ($MILESTONE_TITLE)..."
+    
+    # Use expect or printf to simulate user input
+    # We'll send "N" for "Do you want to include closed milestones?" 
+    # Then find the correct milestone number and send Enter
+    
+    # First, let's see what milestones are available to find the right one
+    local milestones=$(gh_api_get "milestones?state=open")
+    local milestone_line=$(echo "$milestones" | jq -r --arg num "$MILESTONE_NUMBER" '.[] | select(.number == ($num | tonumber)) | "\(.number)) \(.title)"')
+    
+    echo "Target milestone line: $milestone_line"
+    
+    # Create a response file for the interactive script
+    cat > "$TEMP_DIR/responses.txt" << EOF
+N
+
+$MILESTONE_NUMBER
+EOF
+    
+    # Run the script with predefined responses
+    "$RELEASE_SCRIPT_PATH" < "$TEMP_DIR/responses.txt"
     
     if [ ! -f "$TEMP_RELEASE_NOTES" ]; then
         echo -e "${RED}❌ Failed to generate release notes${NC}"
+        echo -e "${BLUE}Expected file: $TEMP_RELEASE_NOTES${NC}"
+        echo -e "${BLUE}Files in docs directory:${NC}"
+        ls -la docs/temp* 2>/dev/null || echo "No temp files found"
         exit 1
     fi
     
@@ -260,6 +282,14 @@ integrate_release_notes() {
 commit_and_push() {
     echo -e "${BLUE}💾 Committing and pushing changes...${NC}"
     
+    # Check current branch
+    current_branch=$(git branch --show-current)
+    if [ "$current_branch" != "main" ]; then
+        echo -e "${YELLOW}⚠️  Currently on branch '$current_branch', switching to 'main'...${NC}"
+        git checkout main
+        git pull origin main
+    fi
+    
     # Check if there are changes
     if ! git diff --quiet; then
         git add "$PACKAGE_JSON_FILE" "$RELEASE_NOTES_FILE"
@@ -268,7 +298,12 @@ commit_and_push() {
         echo -e "${BLUE}Pushing to main branch...${NC}"
         git push origin main
         
-        echo -e "${GREEN}✅ Changes committed and pushed${NC}"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Changes committed and pushed${NC}"
+        else
+            echo -e "${RED}❌ Failed to push changes${NC}"
+            exit 1
+        fi
     else
         echo -e "${YELLOW}⚠️  No changes to commit${NC}"
     fi
@@ -278,7 +313,11 @@ commit_and_push() {
 wait_for_deployment() {
     echo -e "${BLUE}⏳ Waiting for deployment...${NC}"
     
-    local max_attempts=20
+    # Wait a minimum of 2 minutes before checking
+    echo -e "${BLUE}Waiting initial 2 minutes for build to start...${NC}"
+    sleep 120
+    
+    local max_attempts=15
     local attempt=1
     
     while [ $attempt -le $max_attempts ]; do
@@ -288,17 +327,24 @@ wait_for_deployment() {
         local version_anchor=$(echo "$MILESTONE_TITLE" | sed 's/\.//g')
         local check_url="https://docs.strapi.io/release-notes#$version_anchor"
         
-        if curl -s --head "$check_url" | head -n 1 | grep -q "200 OK"; then
-            echo -e "${GREEN}✅ Deployment appears to be live${NC}"
+        # More robust check: look for the actual version number in the page content
+        if curl -s "$check_url" | grep -q "$MILESTONE_TITLE"; then
+            echo -e "${GREEN}✅ Deployment appears to be live - found version $MILESTONE_TITLE on the page${NC}"
             return 0
         fi
         
-        echo -e "${YELLOW}Deployment not ready yet, waiting 30 seconds...${NC}"
-        sleep 30
+        echo -e "${YELLOW}Deployment not ready yet, waiting 45 seconds...${NC}"
+        sleep 45
         ((attempt++))
     done
     
-    echo -e "${YELLOW}⚠️  Deployment check timed out, but continuing with release creation${NC}"
+    echo -e "${YELLOW}⚠️  Deployment check timed out after $((max_attempts * 45 / 60 + 2)) minutes${NC}"
+    echo -n "Do you want to continue with release creation anyway? (y/N) "
+    read -r continue_release
+    if [[ ! "$continue_release" =~ ^[Yy]$ ]]; then
+        echo -e "${RED}❌ Release creation cancelled${NC}"
+        exit 1
+    fi
 }
 
 # Function to create GitHub release
