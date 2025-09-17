@@ -82,10 +82,10 @@ As you will see in the terminal, your project is now building locally.
 
 ### Step 2: Register the first local administrator user
 
-Once the installation is complete, you need to start the server. In the terminal, type `cd my-strapi-project && yarn develop` and your browser automatically opens a new tab.
+Once the installation is complete, you need to start the server. In the terminal, type `cd my-strapi-project && npm run develop` and your browser automatically opens a new tab.
 
 :::tip
-As long as you stay in the `my-strapi-project` folder, you will just need to run `yarn develop` any time you want to start the Strapi server again.
+As long as you stay in the `my-strapi-project` folder, you will just need to run `npm run develop` any time you want to start the Strapi server again.
 :::
 
 By completing the form, you create your own account. Once done, you become the first administrator user of this Strapi application. Welcome aboard, commander!
