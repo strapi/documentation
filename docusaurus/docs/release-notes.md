@@ -27,6 +27,45 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+
+## 6.9.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add new "TL;DR" component anywhere relevant](https://github.com/strapi/documentation/pull/2702)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Live Preview improvements](https://github.com/strapi/documentation/pull/2690)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update docker.md](https://github.com/strapi/documentation/pull/2707)
+- [Fix old Strapi code base links wrongly referencing master branch](https://github.com/strapi/documentation/pull/2704)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/the-clint" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/10893868?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="the-clint"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.8.1
 
 <br />
