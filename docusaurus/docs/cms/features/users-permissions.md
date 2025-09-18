@@ -196,23 +196,47 @@ While most of the Users & Permissions settings are handled via the admin panel, 
 
 ### JWT configuration
 
-You can configure the JWT generation by using the [plugins configuration file](/cms/configurations/plugins).
+You can configure the JSON Web Token (JWT) generation by using the [plugins configuration file](/cms/configurations/plugins).
 
 Strapi uses <ExternalLink to="https://www.npmjs.com/package/jsonwebtoken" text="jsonwebtoken"/> to generate the JWT.
 
-#### JWT Management Modes
+#### JWT management modes
 
-The Users & Permissions plugin supports two JWT management modes:
+The Users & Permissions feature supports 2 JWT management modes.
 
-- **`legacy-support`** (default): Issues long-lived JWTs using traditional configuration
-- **`refresh`**: Uses session management with short-lived access tokens and refresh tokens for enhanced security
+Defining which mode is used is done by setting the `jwtManagement` property of the `users-permissions.config` object in the [`/config/plugins` file](/cms/confiugurations/plugins). The property accepts either `legacy-support` or `refresh`:
 
-Available options:
+| Mode | Description | Use case |
+|------|-------------|----------|
+| `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements |
 
-- `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/cms/configurations/environment#strapi).
-- `jwtManagement`: Set to `'refresh'` to enable session management mode, or `'legacy-support'` for traditional JWT handling
-- `jwt.expiresIn`: (legacy mode only) expressed in seconds or a string describing a time span.<br/>
+For backwards compatibility, the Users & Permission feature defaults to legacy mode:
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  'users-permissions': {
+    config: {
+      jwtManagement: 'legacy-support',
+      jwt: {
+        expiresIn: '7d', // Traditional JWT expiry
+      },
+    },
+  },
+});
+```
+
+:::note Notes
+- `jwtSecret` is a random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/cms/configurations/environment#strapi).
+- `jwt.expiresIn` is (legacy-mode only) is expressed in seconds or a string describing a time span.<br/>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+:::
+
+:::warning
+Setting JWT expiry for more than 30 days is not recommended due to security concerns.
+:::
+
+When the `refresh` mode is used, the configuration file could look like as follows:
 
 <Tabs groupId="js-ts">
 
@@ -285,10 +309,6 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
-
-:::warning
-Setting JWT expiry for more than 30 days is not recommended due to security concerns.
-:::
 
 ### Registration configuration
 
