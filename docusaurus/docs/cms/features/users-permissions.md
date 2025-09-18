@@ -204,7 +204,7 @@ Strapi uses <ExternalLink to="https://www.npmjs.com/package/jsonwebtoken" text="
 
 The Users & Permissions feature supports 2 JWT management modes.
 
-Defining which mode is used is done by setting the `jwtManagement` property of the `users-permissions.config` object in the [`/config/plugins` file](/cms/confiugurations/plugins). The property accepts either `legacy-support` or `refresh`:
+Defining which mode is used is done by setting the `jwtManagement` property of the `users-permissions.config` object in the [`/config/plugins` file](/cms/configurations/plugins). The property accepts either `legacy-support` or `refresh`:
 
 | Mode | Description | Use case |
 |------|-------------|----------|
