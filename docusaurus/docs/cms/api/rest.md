@@ -16,7 +16,7 @@ tags:
 
 The REST API allows accessing the [content-types](/cms/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/cms/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
-This section of the documentation is for the REST API reference. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
+This section of the documentation is for the REST API reference for content-types. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
 All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
@@ -126,58 +126,6 @@ The Upload package (which powers the [Media Library feature](/cms/features/media
 
 :::note
 [Components](/cms/backend-customization/models#components-json) don't have API endpoints.
-:::
-
-## Authentication endpoints
-
-The [Users & Permissions plugin](/cms/features/users-permissions) provides authentication endpoints for user management and content API access.
-
-### Basic authentication endpoints
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `POST` | `/api/auth/local` | User login with email/username and password |
-| `POST` | `/api/auth/local/register` | User registration |
-| `POST` | `/api/auth/forgot-password` | Request password reset |
-| `POST` | `/api/auth/reset-password` | Reset password using token |
-| `GET` | `/api/auth/email-confirmation` | Confirm user email address |
-
-### Session management endpoints
-
-When [session management](/cms/features/users-permissions#jwt-management-modes) is enabled (`jwtManagement: 'refresh'`), additional endpoints are available:
-
-| Method | URL | Description |
-| ------ | --- | ----------- |
-| `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
-| `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
-
-#### Refresh token example
-
-```bash
-curl -X POST http://localhost:1337/api/auth/refresh \
-  -H "Content-Type: application/json" \
-  -d '{
-    "refreshToken": "your-refresh-token"
-  }'
-```
-
-**Response:**
-```json
-{
-  "jwt": "new-access-token"
-}
-```
-
-#### Logout example
-
-```bash
-# Logout all sessions
-curl -X POST http://localhost:1337/api/auth/logout \
-  -H "Authorization: Bearer your-access-token"
-```
-
-:::tip
-For detailed authentication flow examples, see the [Users & Permissions documentation](/cms/features/users-permissions#api-usage) and [authentication examples](/cms/backend-customization/examples/authentication).
 :::
 
 ## Requests

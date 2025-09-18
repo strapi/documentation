@@ -486,22 +486,72 @@ If end users can register themselves on your front-end application (see "Enable 
 
 ### API usage
 
+
 Each time an API request is sent the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 :::note
 When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 :::
 
-#### Authentication Endpoints
+#### Basic authentication endpoints
 
-When using session management mode (`jwtManagement: 'refresh'`), additional endpoints are available:
+The Users & Permissions feature provides the following authentication endpoints for user management and [Content API](/cms/api/rest) access:
 
-- `POST /api/auth/refresh` - Refresh an access token using a refresh token
-- `POST /api/auth/logout` - Revoke user sessions
+| Method | URL | Description |
+| ------ | --- | ----------- |
+| `POST` | `/api/auth/local` | User login with email/username and password<br/>(see [`identifier` parameter](#identifier)) |
+| `POST` | `/api/auth/local/register` | [User registration](#user-registration) |
+| `POST` | `/api/auth/forgot-password` | Request password reset |
+| `POST` | `/api/auth/reset-password` | Reset password using token |
+| `GET` | `/api/auth/email-confirmation` | Confirm user email address |
+
+#### Session management endpoints
+
+When [session management](#jwt-management-modes) is enabled (`jwtManagement: 'refresh'`), additional endpoints are available:
+
+| Method | URL | Description |
+| ------ | --- | ----------- |
+| `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
+| `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
+
+To refresh your authentication token you could for instance send the following request:
+
+<ApiCall>
+<Request title="Request example: Using the refresh endpoint">
+```
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refreshToken": "your-refresh-token"
+  }'
+```
+</Request>
+
+<Response>
+```json
+{
+  "jwt": "your-new-access-token"
+}
+```
+</Response>
+</ApiCall>
+
+To log out of all sessions, send the following request:
+
+<ApiCall>
+<Request title="Request example: Using the logout endpoint">
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+</ApiCall>
 
 #### Identifier
 
-The `identifier` param can be an email or username, as in the following examples:
+The `identifier` parameter sent with requests can be an email or username, as in the following examples:
 
 <Tabs>
 
