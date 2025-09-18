@@ -32,10 +32,10 @@ export default function SearchBar() {
       // Optional: Customize search parameters
       searchParams: {
         attributesToHighlight: ['hierarchy', 'content'],
-        attributesToSnippet: ['content:30'],
+        // attributesToSnippet: ['content:30'],
         highlightPreTag: '<mark>',
         highlightPostTag: '</mark>',
-        snippetEllipsisText: '…',
+        // snippetEllipsisText: '…',
       },
 
       // Handle dark mode

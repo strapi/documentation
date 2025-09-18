@@ -1,6 +1,5 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
-require('dotenv').config({ path: '.env' });
 
 // const redirects = require('./redirects');
 const {themes} = require('prism-react-renderer');
@@ -134,8 +133,8 @@ const config = {
   ],
   customFields: {
     meilisearch: {
-      host: process.env.MEILISEARCH_HOST || 'https://ms-XXXXXXXXX.meilisearch.io',
-      apiKey: process.env.MEILISEARCH_SEARCH_KEY || 'YOUR_SEARCH_KEY',
+      host: 'https://ms-47f23e4f6fb9-30446.fra.meilisearch.io',
+      apiKey: '45326fd7e6278ec3fc83af7a5c20a2ab4261f8591bd186adf8bf8f962581622b',
       indexUid: 'strapi-docs',
     },
   },
