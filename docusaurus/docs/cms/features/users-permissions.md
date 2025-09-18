@@ -245,14 +245,9 @@ When the `refresh` mode is used, the configuration file could look like as follo
 ```js title="/config/plugins.js"
 
 module.exports = ({ env }) => ({
-  // ...
+  // …
   'users-permissions': {
     config: {
-      // Legacy mode configuration
-      jwt: {
-        expiresIn: '30d',
-      },
-      // OR Session management mode configuration
       jwtManagement: 'refresh',
       sessions: {
         accessTokenLifespan: 604800, // 1 week (default)
@@ -279,14 +274,9 @@ module.exports = ({ env }) => ({
 ```ts title="/config/plugins.ts"
 
 export default ({ env }) => ({
-  // ...
+  // …
   'users-permissions': {
     config: {
-      // Legacy mode configuration
-      jwt: {
-        expiresIn: '30d',
-      },
-      // OR Session management mode configuration
       jwtManagement: 'refresh',
       sessions: {
         accessTokenLifespan: 604800, // 1 week (default)
