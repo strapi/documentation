@@ -222,7 +222,7 @@ To configure basic authentication, use the following parameters:
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                 | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
 
-Additional configuration parameters are available for [session management](#session-management) when enabled.
+Additional configuration parameters are available for [session management](#session-management).
 
 ### Session management
 
