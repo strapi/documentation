@@ -183,6 +183,12 @@ await request(`/api/restaurants?${query}`);
 {
   "data": [
     {
+      "id": 3,
+      "documentId": "ethwxjxtvuxl89jq720e38uk",
+      "name": "test3",
+      // ...
+    },
+    {
       "id": 6,
       "documentId": "ethwxjxtvuxl89jq720e38uk",
       "name": "test6",
