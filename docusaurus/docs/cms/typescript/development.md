@@ -33,17 +33,19 @@ Strapi provides typings on the `Strapi` class to enhance the TypeScript developm
 To experience TypeScript-based autocomplete while developing Strapi applications, you could try the following:
 
 1. Open the `./src/index.ts` file from your code editor.
-2. Declare the `strapi` argument as type `Strapi` within the global `register` method:
+2. Declare the `strapi` argument with the `Core.Strapi` type exported from `@strapi/strapi` within the global `register` method:
 
     ```typescript title="./src/index.ts"
-    import { Strapi } from '@strapi/strapi';
+    import type { Core } from '@strapi/strapi';
 
     export default {
-      register({ strapi }: { strapi: Strapi }) {
+      register({ strapi }: { strapi: Core.Strapi }) {
         // ...
       },
     };
     ```
+
+    The `Core` namespace re-exported by `@strapi/strapi` exposes the `Strapi` type that powers TypeScript autocompletion while keeping the runtime import free of unused bindings.
 
 3. Within the body of the `register` method, start typing `strapi.` and use keyboard arrows to browse the available properties.
 
