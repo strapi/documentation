@@ -197,7 +197,7 @@ To avoid unexpected publication failures:
 
 - disable Draft & Publish on content-types that must stay globally unique,
 - or add custom validation (e.g. lifecycle hooks or middleware) that checks for draft duplicates before saving, or
-- rely on automatically generated unique identifiers such as a `uid` field and document editorial conventions.
+- or rely on automatically generated unique identifiers such as a `uid` field and document editorial conventions.
 :::
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
