@@ -47,15 +47,6 @@ Strapi provides the following environment variables:
 | `TRANSFER_TOKEN_SALT` | Salt used for transfer tokens by the [Data Management](/cms/features/data-management) feature | `String` | `auto-generated` |
 | `DATABASE_CLIENT` | Database client to use (e.g., `sqlite`) | `String` | `sqlite` |
 | `DATABASE_FILENAME` | Location of the SQLite database file | `String` | `.tmp/data.db` |
-| `UP_JWT_MANAGEMENT` | [JWT management mode](/cms/features/users-permissions#jwt-management-modes) | `String` | 'legacy-support' |
-| `UP_SESSIONS_ACCESS_TTL` | JWT sessions management access token lifespan in seconds |  | `Number` | `604800` (1 week in seconds) |
-| `UP_SESSIONS_MAX_REFRESH_TTL` | JWT sessions management maximum refresh token lifespan in seconds| `Number` | `2592000`  (30 days in seconds) |
-| `UP_SESSIONS_IDLE_REFRESH_TTL` | JWT sessions management idle refresh token timeout in seconds | `Number` | `604800` (7 days in seconds) |
-| `UP_SESSIONS_HTTPONLY` | | `Boolean` |  `true` for HTTP-only cookies
-| `UP_SESSIONS_COOKIE_NAME` | | `String` | `strapi_up_refresh` |
-| `UP_SESSIONS_COOKIE_SAMESITE` | <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value" text="SameSite cookie attribute"/><br/>(see [cookie configuration](/cms/configurations/admin-panel#cookie-configuration)) | | `Lax` |
-| `UP_SESSIONS_COOKIE_PATH` | Cookie path<br/>(see [cookie configuration](/cms/configurations/admin-panel#cookie-configuration)) | `String` | / |
-| `UP_SESSIONS_COOKIE_SECURE` | | `Boolean` | `true` in production |
 
 :::tip
 Prefixing an environment variable name with `STRAPI_ADMIN_` exposes the variable to the admin front end (e.g., `STRAPI_ADMIN_MY_PLUGIN_VARIABLE` is accessible through `process.env.STRAPI_ADMIN_MY_PLUGIN_VARIABLE`).
