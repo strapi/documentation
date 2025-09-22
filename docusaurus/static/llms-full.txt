@@ -7179,7 +7179,7 @@ Plugin configurations are stored in `/config/plugins.js|ts` (see [project struct
 | `resolve`<br/> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
 :::note
-Some features of Strapi are provided by plugins and the following plugins can also have specific configuration options: the [GraphQL](/cms/plugins/graphql#code-based-configuration) plugin and the [Upload](/cms/features/media-library#available-options) package which powers the Media Library.
+Some features of Strapi are provided by plugins and the following plugins can also have specific configuration options: the [GraphQL](/cms/plugins/graphql#code-based-configuration) plugin, the [Upload](/cms/features/media-library#available-options) package which powers the Media Library, and [Users & Permissions](/cms/features/users-permissions#code-based-configuration).
 :::
 
 **Basic example custom configuration for plugins:**
