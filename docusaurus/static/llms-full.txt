@@ -1673,12 +1673,13 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/locales-translation
 
 # Locales & translations
 
-Strapi's [admin panel](/cms/admin-panel-customization) always ships with English translations, but can display additional languages. You can also override any text that appears in the interface.
-The present page shows how to define your own locales and extend Strapi or plugin translations from the project codebase.
+The Strapi [admin panel](/cms/admin-panel-customization) ships with English strings and supports adding other locales so your editorial team can work in their preferred language. Locales determine which languages appear in the interface, while translations provide the text displayed for each key in a locale.
+
+This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app`file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
 
 ## Defining locales
 
-To update the list of available locales in the admin panel, use the `config.locales` array:
+To update the list of available locales in the admin panel, set the `config.locales` array in `src/admin/app` file:
 
 </Tabs>
 
@@ -1693,7 +1694,7 @@ A plugin's key/value pairs are declared independently in the plugin's files at `
 
 </Tabs>
 
-If more translations files should be added, place them in the `/src/admin/extensions/translations` folder.
+If you need to ship additional translation JSON files—for example to organize large overrides or to support a locale not bundled with Strapi—place them in the `/src/admin/extensions/translations` folder and ensure the locale code is listed in `config.locales`.
 
 
 
@@ -5108,9 +5109,19 @@ Database validations and settings are custom options passed directly onto the `t
 | `defaultTo`   | string  | Sets the database `defaultTo`, typically used with `notNullable`                              | -       |
 | `notNullable` | boolean | Sets the database `notNullable`, ensures that columns cannot be null                          | `false` |
 | `unsigned`    | boolean | Only applies to number columns, removes the ability to go negative but doubles maximum length | `false` |
-| `unique`      | boolean | Enforces database level unique, caution when using with draft & publish feature               | `false` |
+| `unique`      | boolean | Enforces database-level uniqueness on published entries. Draft saves skip the check when Draft & Publish is enabled, so duplicates fail only at publish time. | `false` |
 | `type`        | string  | Changes the database type, if `type` has arguments, you should pass them in `args`            | -       |
 | `args`        | array   | Arguments passed into the Knex.js function that changes things like `type`                    | `[]`    |
+
+:::caution Draft & Publish and `unique`
+When [Draft & Publish](/cms/features/draft-and-publish) is enabled, Strapi intentionally skips `unique` validations while an entry is saved as a draft. Duplicates therefore remain undetected until publication, at which point the database constraint triggers an error even though the UI previously displayed “Saved document” for the drafts.
+
+To avoid unexpected publication failures:
+
+- disable Draft & Publish on content-types that must stay globally unique,
+- or add custom validation (e.g. lifecycle hooks or middleware) that checks for draft duplicates before saving,
+- or rely on automatically generated unique identifiers such as a `uid` field and document editorial conventions.
+:::
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
