@@ -21,7 +21,7 @@ This guide targets project maintainers customizing the admin experience from the
 
 ## Defining locales
 
-To update the list of available locales in the admin panel, set the `config.locales` array in `src/admin/app.[jt]s`:
+To update the list of available locales in the admin panel, set the `config.locales` array in `src/admin/app` file:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
