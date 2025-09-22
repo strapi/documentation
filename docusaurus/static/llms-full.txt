@@ -381,7 +381,7 @@ Source: https://docs.strapi.io/cloud/getting-started/cloud-fundamentals
 
 Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understand how Strapi Cloud works, and ensure a smooth Strapi Cloud experience.
 
-- **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS (Software as a Service) version of Strapi CMS. Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
+- **Hosting Platform** <br/> Strapi Cloud is a hosting platform that allows to deploy already existing Strapi projects created with Strapi CMS (Content Management System). Strapi Cloud is *not* the SaaS () version of Strapi CMS. Feel free to refer to the [CMS documentation](https://docs.strapi.io/cms/intro) to learn more about Strapi CMS.
 
 - **Strapi Cloud Pricing Plans** <br/> As a Strapi Cloud user you have the choice between 4 plans: Free, Essential, Pro and Scale. Depending on the plan, you have access to different functionalities, support and customization options (see [Pricing page](https://strapi.io/pricing-cloud) for more details). In this Strapi Cloud documentation, the , , and  badges can be displayed below a section's title to indicate that the feature is only available starting from the corresponding paid plan. If no badge is shown, the feature is available on the Free plan.
 
