@@ -62,7 +62,7 @@ export default {
 
 Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files.
 
-These keys can be extended through the `config.translations` key in `src/admin/app.[jt]s`:
+These keys can be extended through the `config.translations` key in `src/admin/app` file:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
