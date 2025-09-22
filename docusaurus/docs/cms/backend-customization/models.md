@@ -191,7 +191,7 @@ Database validations and settings are custom options passed directly onto the `t
 | `args`        | array   | Arguments passed into the Knex.js function that changes things like `type`                    | `[]`    |
 
 :::caution Draft & Publish and `unique`
-When [Draft & Publish](/cms/features/content-type-builder#draft-and-publish) is enabled, Strapi intentionally skips `unique` validations while an entry is saved as a draft. Duplicates therefore remain undetected until publication, at which point the database constraint triggers an error even though the UI previously displayed “Saved document” for the drafts.
+When [Draft & Publish](/cms/features/draft-and-publish) is enabled, Strapi intentionally skips `unique` validations while an entry is saved as a draft. Duplicates therefore remain undetected until publication, at which point the database constraint triggers an error even though the UI previously displayed “Saved document” for the drafts.
 
 To avoid unexpected publication failures:
 
