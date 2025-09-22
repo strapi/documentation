@@ -151,7 +151,7 @@ You can use the `$in` filter operator with an array of values to find multiple e
 <ApiCall>
 <Request title="Find multiple restaurants with ids 3, 6, 8">
 
-`GET /api/restaurants?filters[id][$in][0]=6&filters[id][$in][1]=8`
+`GET /api/restaurants?filters[id][$in][0]=3&filters[id][$in][1]=6&filters[id][$in][2]=8`
 
 </Request>
 
@@ -182,6 +182,12 @@ await request(`/api/restaurants?${query}`);
 ```json
 {
   "data": [
+    {
+      "id": 3,
+      "documentId": "ethwxjxtvuxl89jq720e38uk",
+      "name": "test3",
+      // ...
+    },
     {
       "id": 6,
       "documentId": "ethwxjxtvuxl89jq720e38uk",
