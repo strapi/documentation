@@ -9,11 +9,21 @@ export default function SearchBar() {
   const { colorMode } = useColorMode();
   const searchButtonRef = useRef(null);
   const dropdownRef = useRef(null);
+  const searchInstanceRef = useRef(null);
 
   useEffect(() => {
     if (!searchButtonRef.current) {
       return;
     }
+
+    // Clean up previous instance and clear container
+    if (searchInstanceRef.current) {
+      searchInstanceRef.current.destroy?.();
+      searchInstanceRef.current = null;
+    }
+    
+    // Clear the container content
+    searchButtonRef.current.innerHTML = '';
 
     const search = docsearch({
       container: searchButtonRef.current,
@@ -21,7 +31,6 @@ export default function SearchBar() {
       apiKey: siteConfig.customFields.meilisearch.apiKey,
       indexUid: siteConfig.customFields.meilisearch.indexUid,
       
-      // Optional: Transform search results
       transformItems: (items) => {
         return items.map((item) => ({
           ...item,
@@ -29,16 +38,12 @@ export default function SearchBar() {
         }));
       },
 
-      // Optional: Customize search parameters
       searchParams: {
         attributesToHighlight: ['hierarchy', 'content'],
-        // attributesToSnippet: ['content:30'],
         highlightPreTag: '<mark>',
         highlightPostTag: '</mark>',
-        // snippetEllipsisText: '…',
       },
 
-      // Handle dark mode
       placeholder: 'Search documentation...',
       translations: {
         button: {
@@ -83,19 +88,26 @@ export default function SearchBar() {
         },
       },
 
-      // Apply dark mode class
       getMissingResultsUrl: ({ query }) => {
         return `https://github.com/strapi/documentation/issues/new?title=Missing+search+results+for+${query}`;
       },
     });
 
+    // Store the search instance
+    searchInstanceRef.current = search;
+
     // Add dark mode class when needed
     if (colorMode === 'dark') {
       dropdownRef.current?.classList.add('dark');
+    } else {
+      dropdownRef.current?.classList.remove('dark');
     }
 
     return () => {
-      search.destroy?.();
+      if (searchInstanceRef.current) {
+        searchInstanceRef.current.destroy?.();
+        searchInstanceRef.current = null;
+      }
     };
   }, [colorMode, siteConfig]);
 
