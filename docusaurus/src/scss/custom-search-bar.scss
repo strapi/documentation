@@ -237,11 +237,11 @@
     position: static;
     top: auto;
     left: 8px !important;
-    margin: 16px 16px 0 16px;
+    margin: 16px 16px 8px 16px;
     max-width: none;
     width: auto;
-    border-bottom: solid 1px var(--strapi-neutral-200);
-    padding-bottom: 16px;
+    border-bottom: solid 1px var(--strapi-neutral-200) !important;
+    padding-bottom: 8px !important;
     
     // Two-button layout: search + Ask AI
     display: flex;
