@@ -233,50 +233,90 @@
 // Responsive behavior - mobile view
 @media (max-width: 768px) {
   .my-custom-search-bar {
-    .kapa-widget-button-text {
-      display: none;
-    }
-    .kapa-widget-button {
-      border-radius: 50%;
-      padding: 0;
-      padding-right: 4px;
-    }
+    // Reset positioning for mobile sidebar context
+    position: static;
+    top: auto;
+    left: 8px !important;
+    margin: 16px 16px 0 16px;
+    max-width: none;
+    width: auto;
+    border-bottom: solid 1px var(--strapi-neutral-200);
+    padding-bottom: 16px;
     
-    // MeiliSearch mobile styles
+    // Two-button layout: search + Ask AI
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    
     .navbar__search {
-      border-right: none;
-      border-radius: 50%;
+      border-right: solid 1px var(--strapi-neutral-200);
+      width: 50%;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
       
       .docsearch-btn {
-        border-radius: 50%;
-        width: 40px;
+        border-radius: 4px 0 0 4px;
+        width: 100%;
         height: 40px;
-        justify-content: center;
-        padding: 0;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0 12px;
         
         .docsearch-btn-placeholder {
-          display: none;
+          display: block;
+          
+          &::before {
+            content: '\E30C';
+            font-family: "Phosphor";
+            color: var(--strapi-neutral-500);
+            margin-right: 6px;
+            font-size: 16px;
+            position: relative;
+            top: 2px;
+          }
         }
         
         .docsearch-btn-keys {
           display: none;
         }
         
-        // Show default icon on mobile instead of custom Phosphor icon
+        // Hide default MeiliSearch icon on mobile
         .docsearch-btn-icon-container {
-          display: block;
-          
-          svg {
-            width: 18px;
-            height: 18px;
-            color: var(--strapi-neutral-500);
-          }
-        }
-        
-        // Hide custom Phosphor icon on mobile
-        .docsearch-btn-placeholder::before {
           display: none;
         }
+      }
+    }
+    
+    .kapa-widget-button {
+      border-radius: 0 4px 4px 0;
+      width: 50%;
+      height: 40px;
+      padding: 0 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      
+      .kapa-widget-button-text {
+        display: flex;
+        align-items: center;
+        font-size: var(--strapi-font-size-sm);
+        
+        i {
+          margin-right: 6px;
+        }
+      }
+      
+      svg {
+        position: static;
+        width: 16px;
+        height: 16px;
+        fill: var(--strapi-neutral-500);
+        margin-right: 6px;
       }
     }
   }
