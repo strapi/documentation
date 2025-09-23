@@ -85,15 +85,14 @@
 
   // MeiliSearch specific styles - match existing DocSearch design
   .navbar__search {
-    width: 65%;
+    width: 50%;
     border-right: solid 1px var(--strapi-neutral-200);
-    border-radius: 4px 0 0 4px;
     
     .docsearch-btn {
       all: unset;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       background-color: transparent;
       height: 34px !important;
@@ -150,7 +149,7 @@
   button.kapa-widget-button {
     border: none;
     padding: 0 0 0 12px;
-    width: 100%;
+    width: 50%;
     height: 36px;
     overflow: visible;
     cursor: pointer;
