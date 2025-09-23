@@ -629,6 +629,10 @@ module.exports = {
         ],
       },
       {
+        text: 'LLMs.txt',
+        link: '/llms.txt',
+      },
+      {
         text: 'v4 Documentation',
         link: 'https://docs.strapi.io'
       },
@@ -683,10 +687,6 @@ module.exports = {
             ],
           },
         ],
-      },
-      {
-        text: "We're hiring!",
-        link: 'https://strapi.io/careers#open-positions',
       },
     ],
     repo: 'strapi/documentation',
