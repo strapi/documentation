@@ -86,6 +86,8 @@
   // MeiliSearch specific styles - match existing DocSearch design
   .navbar__search {
     width: 65%;
+    border-right: solid 1px var(--strapi-neutral-200);
+    border-radius: 4px 0 0 4px;
     
     .docsearch-btn {
       all: unset;
@@ -97,14 +99,11 @@
       height: 34px !important;
       width: 100%;
       cursor: pointer;
-      border-radius: 4px 0 0 4px;
       padding-left: 12px;
       padding-right: 8px;
-      border-right: solid 1px var(--strapi-neutral-200);
       
       &:hover {
         color: var(--strapi-primary-600);
-        border-radius: 4px 0 0 4px;
         
         .docsearch-btn-placeholder {
           color: var(--strapi-primary-600);
@@ -142,32 +141,9 @@
       }
     }
     
-    // Style keyboard shortcuts
+    // Hide keyboard shortcuts completely
     .docsearch-btn-keys {
-      display: flex;
-      gap: 2px;
-      align-items: center;
-    }
-    
-    .docsearch-btn-key {
-      margin: 0;
-      padding: 0;
-      width: 14px;
-      height: 14px;
-      background: none;
-      border: none;
-      box-shadow: none;
-      font-weight: 600;
-      line-height: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: var(--strapi-font-size-sm);
-      color: var(--strapi-neutral-500);
-      
-      &:first-of-type {
-        font-size: 150%;
-      }
+      display: none;
     }
   }
 
@@ -269,13 +245,15 @@
     
     // MeiliSearch mobile styles
     .navbar__search {
+      border-right: none;
+      border-radius: 50%;
+      
       .docsearch-btn {
         border-radius: 50%;
         width: 40px;
         height: 40px;
         justify-content: center;
         padding: 0;
-        border-right: none;
         
         .docsearch-btn-placeholder {
           display: none;
