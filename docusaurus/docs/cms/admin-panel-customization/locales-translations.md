@@ -11,12 +11,17 @@ tags:
 
 # Locales & translations
 
-Strapi's [admin panel](/cms/admin-panel-customization) always ships with English translations, but can display additional languages. You can also override any text that appears in the interface.
-The present page shows how to define your own locales and extend Strapi or plugin translations from the project codebase.
+<Tldr>
+Configure the admin panel languages by updating the `config.locales` array and override default or plugin strings with `config.translations` or custom translation files.
+</Tldr>
+
+The Strapi [admin panel](/cms/admin-panel-customization) ships with English strings and supports adding other locales so your editorial team can work in their preferred language. Locales determine which languages appear in the interface, while translations provide the text displayed for each key in a locale.
+
+This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app`file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
 
 ## Defining locales
 
-To update the list of available locales in the admin panel, use the `config.locales` array:
+To update the list of available locales in the admin panel, set the `config.locales` array in `src/admin/app` file:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -57,7 +62,7 @@ export default {
 
 Translation key/value pairs are declared in `@strapi/admin/admin/src/translations/[language-name].json` files.
 
-These keys can be extended through the `config.translations` key:
+These keys can be extended through the `config.translations` key in `src/admin/app` file:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -151,4 +156,4 @@ export default {
 </TabItem>
 </Tabs>
 
-If more translations files should be added, place them in the `/src/admin/extensions/translations` folder.
+If you need to ship additional translation JSON files—for example to organize large overrides or to support a locale not bundled with Strapi—place them in the `/src/admin/extensions/translations` folder and ensure the locale code is listed in `config.locales`.
