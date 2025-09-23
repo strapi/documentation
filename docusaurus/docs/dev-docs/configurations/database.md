@@ -88,10 +88,11 @@ When using Docker, change the pool `min` value to `0` as Docker will kill any id
 
 The `settings` object found in `./config/database.js` (or `./config/database.ts` for TypeScript) is used to configure Strapi-specific database settings and accepts the following parameters:
 
-| Parameter        | Description                                                     | Type      | Default |
-| ---------------- | --------------------------------------------------------------- | --------- | ------- |
-| `forceMigration` | Enable or disable the forced database migration.                | `Boolean` | `true`  |
-| `runMigrations`  | Enable or disable database migrations from running on start up. | `Boolean` | `true`  |
+| Parameter          | Description                                                                | Type      | Default |
+| ------------------ | -------------------------------------------------------------------------- | --------- | ------- |
+| `forceMigration`   | Enable or disable the forced database migration.                           | `Boolean` | `true`  |
+| `runMigrations`    | Enable or disable database migrations from running on startup.             | `Boolean` | `true`  |
+| `strictSyncSchema` | Enable or disable removing unmanaged Strapi database resources on startup. | `Boolean` | `true`  |
 
 <!-- TODO: Open and track a feature request for autoMigration as it doesn't exist in v4 -->
 
