@@ -1,80 +1,47 @@
 {
   "index_uid": "strapi-docs",
   "start_urls": [
-    "https://docs.strapi.io/cms/",
-    "https://docs.strapi.io/cloud/"
-  ],
-  "sitemap_urls": [
-    "https://docs.strapi.io/sitemap.xml"
-  ],
-  "stop_urls": [
-    "/404.html",
-    "/search"
+    "https://docs.strapi.io/cms/backend-customization/",
+    "https://docs.strapi.io/cms/features/",
+    "https://docs.strapi.io/cms/api/"
   ],
   "selectors": {
     "lvl0": {
-      "selector": "nav .navbar__link--active, .menu__link--active",
+      "selector": ".breadcrumbs__item:nth-child(3) .breadcrumbs__link",
       "global": true,
       "default_value": "Documentation"
     },
-    "lvl1": "article h1, header h1",
-    "lvl2": "article h2",
-    "lvl3": "article h3",
-    "lvl4": "article h4",
-    "lvl5": "article h5",
-    "text": "article p, article li, article td:last-child"
+    "lvl1": "h1",
+    "lvl2": "h2", 
+    "lvl3": "h3",
+    "text": "article p, article li, main p, main li"
   },
   "selectors_exclude": [
-    ".hash-link",
-    ".table-of-contents",
-    "footer",
     ".navbar",
-    ".pagination-nav"
+    ".sidebar", 
+    ".menu",
+    ".breadcrumbs",
+    ".pagination-nav",
+    ".table-of-contents",
+    ".hash-link",
+    "nav",
+    "aside"
   ],
   "custom_settings": {
     "rankingRules": [
       "words",
       "typo",
-      "proximity",
+      "proximity", 
       "attribute",
       "sort",
       "exactness"
     ],
     "searchableAttributes": [
-      "hierarchy.lvl0",
-      "hierarchy.lvl1",
-      "hierarchy.lvl2",
-      "hierarchy.lvl3",
-      "hierarchy.lvl4",
-      "hierarchy.lvl5",
+      "hierarchy_lvl0",
+      "hierarchy_lvl1", 
+      "hierarchy_lvl2",
+      "hierarchy_lvl3",
       "content"
-    ],
-    "displayedAttributes": [
-      "hierarchy",
-      "content",
-      "anchor",
-      "url",
-      "url_without_anchor"
-    ],
-    "stopWords": ["the", "a", "an"],
-    "synonyms": {
-      "javascript": ["js"],
-      "typescript": ["ts"],
-      "cms": ["content management system"],
-      "api": ["application programming interface"]
-    },
-    "filterableAttributes": [
-      "hierarchy.lvl0",
-      "hierarchy.lvl1",
-      "type"
-    ],
-    "faceting": {
-      "maxValuesPerFacet": 100
-    }
-  },
-  "only_content_level": true,
-  "js_render": false,
-  "allowed_domains": [
-    "docs.strapi.io"
-  ]
+    ]
+  }
 }
