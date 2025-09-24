@@ -136,6 +136,9 @@ const config = {
       host: 'https://ms-47f23e4f6fb9-30446.fra.meilisearch.io',
       apiKey: '45326fd7e6278ec3fc83af7a5c20a2ab4261f8591bd186adf8bf8f962581622b',
       indexUid: 'strapi-docs',
+      searchParams: {
+        attributesToHighlight: null
+      }
     },
   },
   presets: [
