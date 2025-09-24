@@ -196,15 +196,47 @@ While most of the Users & Permissions settings are handled via the admin panel, 
 
 ### JWT configuration
 
-You can configure the JWT generation by using the [plugins configuration file](/cms/configurations/plugins).
+You can configure the JSON Web Token (JWT) generation by using the [plugins configuration file](/cms/configurations/plugins).
 
 Strapi uses <ExternalLink to="https://www.npmjs.com/package/jsonwebtoken" text="jsonwebtoken"/> to generate the JWT.
 
-Available options:
+#### JWT management modes
 
-- `jwtSecret`: random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/cms/configurations/environment#strapi).
-- `jwt.expiresIn`: expressed in seconds or a string describing a time span.<br/>
+The Users & Permissions feature supports 2 JWT management modes.
+
+Defining which mode is used is done by setting the `jwtManagement` property of the `users-permissions.config` object in the [`/config/plugins` file](/cms/configurations/plugins). The property accepts either `legacy-support` or `refresh`:
+
+| Mode | Description | Use case |
+|------|-------------|----------|
+| `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(additional information can be found in [admin panel configuration](/cms/configurations/admin-panel#session-management) documentation) |
+
+For backwards compatibility, the Users & Permission feature defaults to legacy mode:
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  'users-permissions': {
+    config: {
+      jwtManagement: 'legacy-support',
+      jwt: {
+        expiresIn: '7d', // Traditional JWT expiry
+      },
+    },
+  },
+});
+```
+
+:::note Notes
+- `jwtSecret` is a random string used to create new JWTs, typically set using the `JWT_SECRET` [environment variable](/cms/configurations/environment#strapi).
+- `jwt.expiresIn` is (legacy-mode only) is expressed in seconds or a string describing a time span.<br/>
   Eg: 60, "45m", "10h", "2 days", "7d", "2y". A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (minutes, hours, days, years, etc), otherwise milliseconds unit is used by default ("120" is equal to "120ms").
+:::
+
+:::warning
+Setting JWT expiry for more than 30 days is not recommended due to security concerns.
+:::
+
+When the `refresh` mode is used, the configuration file could look like as follows:
 
 <Tabs groupId="js-ts">
 
@@ -213,11 +245,21 @@ Available options:
 ```js title="/config/plugins.js"
 
 module.exports = ({ env }) => ({
-  // ...
+  // …
   'users-permissions': {
     config: {
-      jwt: {
-        expiresIn: '7d',
+      jwtManagement: 'refresh',
+      sessions: {
+        accessTokenLifespan: 604800, // 1 week (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days
+        idleRefreshTokenLifespan: 604800, // 7 days
+        httpOnly: false, // Set to true for HTTP-only cookies
+        cookie: {
+          name: 'strapi_up_refresh',
+          sameSite: 'lax',
+          path: '/',
+          secure: false, // true in production
+        },
       },
     },
   },
@@ -232,11 +274,21 @@ module.exports = ({ env }) => ({
 ```ts title="/config/plugins.ts"
 
 export default ({ env }) => ({
-  // ...
+  // …
   'users-permissions': {
     config: {
-      jwt: {
-        expiresIn: '7d',
+      jwtManagement: 'refresh',
+      sessions: {
+        accessTokenLifespan: 604800, // 1 week (default)
+        maxRefreshTokenLifespan: 2592000, // 30 days
+        idleRefreshTokenLifespan: 604800, // 7 days
+        httpOnly: false, // Set to true for HTTP-only cookies
+        cookie: {
+          name: 'strapi_up_refresh',
+          sameSite: 'lax',
+          path: '/',
+          secure: false, // true in production
+        },
       },
     },
   },
@@ -247,10 +299,6 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
-
-:::warning
-Setting JWT expiry for more than 30 days is not recommended due to security concerns.
-:::
 
 ### Registration configuration
 
@@ -448,15 +496,72 @@ If end users can register themselves on your front-end application (see "Enable 
 
 ### API usage
 
+
 Each time an API request is sent the server checks if an `Authorization` header is present and verifies if the user making the request has access to the resource.
 
 :::note
 When you create a user without a role, or if you use the `/api/auth/local/register` route, the `authenticated` role is given to the user.
 :::
 
+#### Basic authentication endpoints
+
+The Users & Permissions feature provides the following authentication endpoints for user management and [Content API](/cms/api/rest) access:
+
+| Method | URL | Description |
+| ------ | --- | ----------- |
+| `POST` | `/api/auth/local` | User login with email/username and password<br/>(see [`identifier` parameter](#identifier)) |
+| `POST` | `/api/auth/local/register` | [User registration](#user-registration) |
+| `POST` | `/api/auth/forgot-password` | Request password reset |
+| `POST` | `/api/auth/reset-password` | Reset password using token |
+| `GET` | `/api/auth/email-confirmation` | Confirm user email address |
+
+#### Session management endpoints
+
+When [session management](#jwt-management-modes) is enabled (`jwtManagement: 'refresh'`), additional endpoints are available:
+
+| Method | URL | Description |
+| ------ | --- | ----------- |
+| `POST` | `/api/auth/refresh` | Refresh access token using refresh token |
+| `POST` | `/api/auth/logout` | Revoke user sessions (supports device-specific logout) |
+
+To refresh your authentication token you could for instance send the following request:
+
+<ApiCall>
+<Request title="Request example: Using the refresh endpoint">
+```
+curl -X POST http://localhost:1337/api/auth/refresh \
+  -H "Content-Type: application/json" \
+  -d '{
+    "refreshToken": "your-refresh-token"
+  }'
+```
+</Request>
+
+<Response>
+```json
+{
+  "jwt": "your-new-access-token"
+}
+```
+</Response>
+</ApiCall>
+
+To log out of all sessions, send the following request:
+
+<ApiCall>
+<Request title="Request example: Using the logout endpoint">
+
+```bash
+curl -X POST http://localhost:1337/api/auth/logout \
+  -H "Authorization: Bearer your-access-token"
+```
+
+</Request>
+</ApiCall>
+
 #### Identifier
 
-The `identifier` param can be an email or username, as in the following examples:
+The `identifier` parameter sent with requests can be an email or username, as in the following examples:
 
 <Tabs>
 
@@ -496,11 +601,25 @@ If you use **Postman**, set the **body** to **raw** and select **JSON** as your 
 }
 ```
 
-If the request is successful you will receive the **user's JWT** in the `jwt` key:  
+If the request is successful you will receive the **user's JWT** in the `jwt` key:
 
+**Legacy mode response:**
 ```json
 {
     "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTc2OTM4MTUwLCJleHAiOjE1Nzk1MzAxNTB9.UgsjjXkAZ-anD257BF7y1hbjuY3ogNceKfTAQtzDEsU",
+    "user": {
+        "id": 1,
+        "username": "user",
+        ...
+    }
+}
+```
+
+**Session management mode response:**
+```json
+{
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Short-lived access token
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // Long-lived refresh token
     "user": {
         "id": 1,
         "username": "user",
