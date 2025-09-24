@@ -209,7 +209,7 @@ Defining which mode is used is done by setting the `jwtManagement` property of t
 | Mode | Description | Use case |
 |------|-------------|----------|
 | `legacy-support` | (default) Issues long-lived JWTs using traditional configuration | Existing applications, simple authentication |
-| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements |
+| `refresh` | Uses session management with short-lived access tokens and refresh tokens for enhanced security | New applications, enhanced security requirements<br />(additional information can be found in [admin panel configuration](/cms/configurations/admin-panel#session-management) documentation) |
 
 For backwards compatibility, the Users & Permission feature defaults to legacy mode:
 
