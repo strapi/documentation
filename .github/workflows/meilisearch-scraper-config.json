@@ -1,9 +1,11 @@
 {
   "index_uid": "strapi-docs",
   "start_urls": [
-    "https://docs.strapi.io/cms/backend-customization/",
-    "https://docs.strapi.io/cms/features/",
-    "https://docs.strapi.io/cms/api/"
+    "https://docs.strapi.io/cms/",
+    "https://docs.strapi.io/cloud/"
+  ],
+  "sitemap_urls": [
+    "https://docs.strapi.io/sitemap.xml"
   ],
   "selectors": {
     "lvl0": {
