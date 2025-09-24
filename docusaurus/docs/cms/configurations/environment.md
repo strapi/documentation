@@ -56,6 +56,30 @@ Prefixing an environment variable name with `STRAPI_ADMIN_` exposes the variable
 
 <SampleEnv />
 
+Set these environment variables for secure authentication with [sessions management](/cms/features/users-permissions#jwt-management-modes) configuration:
+
+```bash title=".env"
+# Admin authentication
+ADMIN_JWT_SECRET=your-admin-secret-key
+
+# Cookie domain (optional)
+ADMIN_COOKIE_DOMAIN=yourdomain.com
+
+# Users & Permissions JWT secret
+JWT_SECRET=your-content-api-secret-key
+
+# Users & Permissions session management
+UP_JWT_MANAGEMENT=refresh  # or 'legacy-support'
+UP_SESSIONS_ACCESS_TTL=604800  # 1 week in seconds
+UP_SESSIONS_MAX_REFRESH_TTL=2592000  # 30 days in seconds
+UP_SESSIONS_IDLE_REFRESH_TTL=604800  # 7 days in seconds
+UP_SESSIONS_HTTPONLY=false  # true for HTTP-only cookies
+UP_SESSIONS_COOKIE_NAME=strapi_up_refresh
+UP_SESSIONS_COOKIE_SAMESITE=lax
+UP_SESSIONS_COOKIE_PATH=/
+UP_SESSIONS_COOKIE_SECURE=false  # true in production
+```
+
 ## Environment configurations
 
 Configurations can be created with the following naming and structure conventions: `./config/env/{environment}/{filename}`. This is useful when you need specific static configurations for specific environments and using environment variables is not the best solution.

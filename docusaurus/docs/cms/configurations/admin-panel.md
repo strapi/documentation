@@ -2,7 +2,7 @@
 title: Admin panel configuration
 sidebar_label: Admin panel
 displayed_sidebar: cmsSidebar
-toc_max_heading_level: 2
+toc_max_heading_level: 3
 description: Strapi's admin panel offers a single entry point file for its configuration.
 tags:
 - admin panel
@@ -57,7 +57,7 @@ export default {
 
 :::
 
-## Admin panel server 
+## Admin panel server
 
 By default, Strapi's admin panel is exposed via `http://localhost:1337/admin`. For security reasons, the host, port, and path can be updated.
 
@@ -204,7 +204,11 @@ For Strapi Cloud customers, the `auditLogs.retentionDays` value stored in the li
 
 ## Authentication
 
-The authentication system, including [SSO configuration](/cms/configurations/guides/configure-sso), can be configured with the following parameters:
+The authentication system, including [SSO configuration](/cms/configurations/guides/configure-sso) and [session management](#session-management), can be configured with the following parameters:
+
+### Basic authentication
+
+To configure basic authentication, use the following parameters:
 
 | Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
 |-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
@@ -217,6 +221,43 @@ The authentication system, including [SSO configuration](/cms/configurations/gui
 | `auth.events`                     | Record of all the events subscribers registered for the authentication                                                                                                                             | object        | `{}`                                                                                                                                |
 | `auth.events.onConnectionSuccess` | Function called when an admin user log in successfully to the administration panel                                                                                                                 | function      | `undefined`                                                                                                                         |
 | `auth.events.onConnectionError`   | Function called when an admin user fails to log in to the administration panel                                                                                                                     | function      | `undefined`                                                                                                                         |
+
+Additional configuration parameters are available for [session management](#session-management).
+
+### Session management
+
+Admin authentication uses session management by default for enhanced security.
+
+Session management provides enhanced security for authentication in Strapi applications by using short-lived access tokens paired with longer-lived refresh tokens. This approach reduces the risk of token theft and allows for more granular control over user sessions.
+
+Strapi's session management system supports both admin panel authentication and Content API authentication through the [Users & Permissions feature](/cms/features/users-permissions). The system provides:
+
+- Short-lived access tokens (typically 30 minutes) for API requests
+- Refresh tokens for obtaining new access tokens
+- Device-specific sessions for targeted logout
+- Configurable token lifespans for different security requirements
+
+To configure session lifespans and behavior, use the following parameters:
+
+| Parameter                                 | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `auth.sessions`                           | Session management configuration                                                                                                                                                                   | object        | `{}`                                                                                                                                |
+| `auth.sessions.accessTokenLifespan`       | Access token lifespan in seconds                                                                                                                                                                   | number        | `1800` (30 minutes)                                                                                                                 |
+| `auth.sessions.maxRefreshTokenLifespan`   | Maximum refresh token lifespan in seconds                                                                                                                                                          | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
+| `auth.sessions.idleRefreshTokenLifespan`  | Idle refresh token timeout in seconds                                                                                                                                                              | number        | `604800` (7 days)                                                                                                                   |
+| `auth.sessions.maxSessionLifespan`        | Maximum session duration in seconds                                                                                                                                                                | number        | `2592000` (30 days, or legacy `expiresIn` value)                                                                                   |
+| `auth.sessions.idleSessionLifespan`       | Session idle timeout in seconds                                                                                                                                                                    | number        | `3600` (1 hour)                                                                                                                     |
+
+### Cookie configuration
+
+To configure HTTP cookies for admin authentication, use the following parameters:
+
+| Parameter                         | Description                                                                                                                                                                                        | Type          | Default                                                                                                                             |
+|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| `auth.cookie`                     | Cookie configuration for admin authentication                                                                                                                                                      | object        | `{}`                                                                                                                                |
+| `auth.cookie.domain`              | Cookie domain (inherits from server if not set)                                                                                                                                                   | string        | `undefined`                                                                                                                         |
+| `auth.cookie.path`                | Cookie path                                                                                                                                                                                        | string        | `'/admin'`                                                                                                                          |
+| `auth.cookie.sameSite`            | <ExternalLink to="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value" text="SameSite cookie attribute"/>                                                                                                                                                                          | string        | `'lax'`                                                                                                                             |
 
 ## Feature flags
 
@@ -365,6 +406,18 @@ module.exports = ({ env }) => ({
       expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+    sessions: {
+      accessTokenLifespan: 1800, // 30 minutes
+      maxRefreshTokenLifespan: 2592000, // 30 days
+      idleRefreshTokenLifespan: 604800, // 7 days
+      maxSessionLifespan: 604800, // 7 days
+      idleSessionLifespan: 3600, // 1 hour
+    },
+    cookie: {
+      domain: env('ADMIN_COOKIE_DOMAIN'),
+      path: '/admin',
+      sameSite: 'lax',
+    },
   },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
@@ -423,6 +476,18 @@ export default ({ env }) => ({
       expiresIn: '7d',
     },
     secret: env('ADMIN_JWT_SECRET', 'someSecretKey'),
+    sessions: {
+      accessTokenLifespan: 1800, // 30 minutes
+      maxRefreshTokenLifespan: 2592000, // 30 days
+      idleRefreshTokenLifespan: 604800, // 7 days
+      maxSessionLifespan: 604800, // 7 days
+      idleSessionLifespan: 3600, // 1 hour
+    },
+    cookie: {
+      domain: env('ADMIN_COOKIE_DOMAIN'),
+      path: '/admin',
+      sameSite: 'lax',
+    },
   },
   url: env('PUBLIC_ADMIN_URL', '/dashboard'),
   autoOpen: false,
