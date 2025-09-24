@@ -497,9 +497,9 @@ Hovering on an environment variable, either default or custom, displays the foll
 - <Icon name="eye" /> **Show value** to replace the `*` characters with the actual value of a variable.
 - <Icon name="copy" /> **Copy to clipboard** to copy the value of a variable.
 - <Icon name="dots-three" /> **Actions** to access the <Icon name="pencil-simple" /> Edit and <Icon name="trash-simple" /> Delete buttons.
-  - When editing a default variable, the *Name* cannot be modified and the *Value* can only be automatically generated using the <Icon name="magic-wand" /> Generate value button. Don't forget to **Save** at the end.
-  - When editing a custom variable, both the *Name* and *Value* can be modified by writing something new or by using the <Icon name="magic-wand" /> Generate value button. Don't forget to **Save** at the end.
-  - When deleting a variable, you will be asked to click on a **Confirm** button to confirm the deletion.
+  - When editing a default variable, the *Name* cannot be modified and the *Value* can only be automatically generated using the <Icon name="magic-wand" /> Generate value button. Don't forget to **Save**, or **Save & deploy** if you want the changes to take effect immediately.
+  - When editing a custom variable, both the *Name* and *Value* can be modified by writing something new or by using the <Icon name="magic-wand" /> Generate value button. Don't forget to **Save**, or **Save & deploy** if you want the changes to take effect immediately.
+  - When deleting a variable, you will be asked to confirm by selecting **Save**, or **Save & deploy** if you want the changes to take effect immediately.
 
 :::tip
 Use the search bar to find more quickly an environment variable in the list!
@@ -518,4 +518,4 @@ Instead of creating a new custom environment variable from scratch, you can also
 1. In the *Custom environment variables* section, click on the **Add variable** button.
 2. Write the *Name* and *Value* of the new environment variable in the same-named fields. Alternatively, you can click on the <Icon name="magic-wand" /> icon to generate automatically the name and value.
 3. (optional) Click on **Add another** to directly create one or more other custom environment variables.
-4. Click on the **Save** button to confirm the creation of the custom environment variables.
+4. Click on the **Save** button to confirm the creation of the custom environment variables. To apply your changes immediately, click on **Save & deploy**.
