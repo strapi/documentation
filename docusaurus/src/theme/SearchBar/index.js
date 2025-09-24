@@ -39,9 +39,10 @@ export default function SearchBar() {
       },
 
       searchParams: {
-        attributesToHighlight: ['hierarchy', 'content'],
-        highlightPreTag: '<mark>',
-        highlightPostTag: '</mark>',
+        // attributesToHighlight: ['hierarchy', 'content'],
+        // highlightPreTag: '<mark>',
+        // highlightPostTag: '</mark>',
+        matchingStrategy: 'all',
       },
 
       placeholder: 'Search documentation...',
