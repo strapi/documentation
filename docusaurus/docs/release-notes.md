@@ -28,6 +28,46 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.9.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Fix Strapi TypeScript import example](https://github.com/strapi/documentation/pull/2721)
+- [Explain `unique` parameter behavior with Draft & Publish](https://github.com/strapi/documentation/pull/2716)
+- [Add session management documentation](https://github.com/strapi/documentation/pull/2709)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add additional context to the admin locales and translations page](https://github.com/strapi/documentation/pull/2717)
+- [Fix CMS Quick Start for NPM compatibility](https://github.com/strapi/documentation/pull/2710)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/dumb-programmer" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/55425610?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="dumb-programmer"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/nclsndr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5462986?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="nclsndr"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.9.0
 
 <br />
