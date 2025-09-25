@@ -3709,7 +3709,7 @@ Source: https://docs.strapi.io/cms/api/rest
 
 The REST API allows accessing the [content-types](/cms/backend-customization/models) through API endpoints. Strapi automatically creates [API endpoints](#endpoints) when a content-type is created. [API parameters](/cms/api/rest/parameters) can be used when querying API endpoints to refine the results.
 
-This section of the documentation is for the REST API reference. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
+This section of the documentation is for the REST API reference for content-types. We also have [guides](/cms/api/rest/guides/intro) available for specific use cases.
 
 :::prerequisites
 All content types are private by default and need to be either made public or queries need to be authenticated with the proper permissions. See the [Quick Start Guide](/cms/quick-start#step-4-set-roles--permissions), the user guide for the [Users & Permissions feature](/cms/features/users-permissions#roles), and [API tokens configuration documentation](/cms/features/api-tokens) for more details.
@@ -8888,10 +8888,6 @@ Click the search button
 
 </Tabs>
 
-:::warning
-Setting JWT expiry for more than 30 days is not recommended due to security concerns.
-:::
-
 ### Registration configuration
 
 If you have added any additional fields in your User **model**  that need to be accepted on registration, you need to added them to the list of allowed fields in the `config.register` object of [the `/config/plugins` file](/cms/configurations/plugins), otherwise they will not be accepted.
@@ -8919,6 +8915,16 @@ By default you can set a `JWT_SECRET` environment variable and it will be used a
 #### Creating a custom callback validator {#creating-a-custom-password-validation}
 
 By default, Strapi SSO only redirects to the redirect URL that is exactly equal to the url in the configuration:
+
+</ApiCall>
+
+To log out of all sessions, send the following request:
+
+</ApiCall>
+
+#### Identifier
+
+The `identifier` parameter sent with requests can be an email or username, as in the following examples:
 
 </Tabs>
 
