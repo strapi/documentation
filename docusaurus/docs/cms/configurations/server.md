@@ -132,7 +132,7 @@ module.exports = ({ env }) => ({
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: env.bool('IS_PROXIED', true),
+  proxy: { koa: env.bool('IS_PROXIED', true) },
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },
@@ -166,7 +166,7 @@ export default ({ env }) => ({
   socket: '/tmp/nginx.socket', // only use if absolutely required
   emitErrors: false,
   url: env('PUBLIC_URL', 'https://api.example.com'),
-  proxy: env.bool('IS_PROXIED', true),
+  proxy: { koa: env.bool('IS_PROXIED', true) },
   cron: {
     enabled: env.bool('CRON_ENABLED', false),
   },
