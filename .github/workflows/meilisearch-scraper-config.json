@@ -32,18 +32,27 @@
   "custom_settings": {
     "rankingRules": [
       "words",
-      "typo",
-      "proximity", 
       "attribute",
-      "sort",
-      "exactness"
+      "proximity", 
+      "exactness",
+      "typo",
+      "sort"
     ],
     "searchableAttributes": [
+      "hierarchy_lvl1",
+      "hierarchy_lvl0",
+      "hierarchy_lvl2",
+      "hierarchy_lvl3",
+      "content"
+    ],
+    "displayedAttributes": [
       "hierarchy_lvl0",
       "hierarchy_lvl1", 
       "hierarchy_lvl2",
       "hierarchy_lvl3",
-      "content"
+      "content",
+      "url",
+      "anchor"
     ]
   }
 }

@@ -31,18 +31,37 @@ export default function SearchBar() {
       apiKey: siteConfig.customFields.meilisearch.apiKey,
       indexUid: siteConfig.customFields.meilisearch.indexUid,
       
+      // Transform search results
       transformItems: (items) => {
-        return items.map((item) => ({
-          ...item,
-          url: item.url.replace('https://docs.strapi.io', ''),
-        }));
+        return items.map((item) => {
+          let section = item.hierarchy_lvl0 || 'Documentation';
+          
+          if (item.url && item.url.includes('/cms/')) {
+            section = 'CMS';
+          } else if (item.url && item.url.includes('/cloud/')) {
+            section = 'Cloud';
+          }
+          
+          return {
+            ...item,
+            url: item.url.replace('https://docs.strapi.io', ''),
+            hierarchy: {
+              lvl0: section,
+              lvl1: item.hierarchy_lvl0, // La section (Backend customization, etc.)
+              lvl2: item.hierarchy_lvl1, // Le titre de la page
+              lvl3: item.hierarchy_lvl2
+            }
+          };
+        });
       },
 
+      // Customize search parameters
       searchParams: {
-        // attributesToHighlight: ['hierarchy', 'content'],
-        // highlightPreTag: '<mark>',
-        // highlightPostTag: '</mark>',
+        attributesToHighlight: ['hierarchy', 'content'],
+        highlightPreTag: '<mark>',
+        highlightPostTag: '</mark>',
         matchingStrategy: 'all',
+        attributesToSearchOn: ['hierarchy_lvl1', 'hierarchy_lvl2', 'content']
       },
 
       placeholder: 'Search documentation...',
