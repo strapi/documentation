@@ -677,11 +677,12 @@ To reactivate the project immediately, users can upgrade to a paid plan.
 
 #### Project suspension after subscription cancellation
 
-If you don't pay the invoice, the subscription of your project will automatically be canceled and the project will be suspended. You can reactivate the subscription through the billing modal (see [Edit subscription](/cloud/account/account-billing#account-billing)).
+If you don't pay the invoice, then after few payment attempts the subscription of your project will automatically be canceled and the project will be suspended. There are two ways to put back your project online:
 
-1. Log into the billing modal and go to the *Subscription details* of the subscription associated with the suspended project. You should see a warning message confirming that the subscription was canceled for the following reason: "Not Paid".
-2. Go back to the homepage of the billing modal, listing subscriptions and billing options.
-3. Go to *Payment methods* and add a new, working card to pay the invoice. As soon as the invoice is paid, your project will automatically be reactivated.
+1. In the *Profile > Billing* tab, once you added a valid credit card, Strapi will try to process the due payment and reactivate the impacted subscription.
+2. By clicking on a *Reactivate subscription* button visible:
+  - in the *Profile > Billing* tab (to reactivate several subscriptions in one click)
+  - in the *Settings > Billing & Usage* tab of your suspended project (to reactivate the subscription you are on)
 
 #### Project suspension for other reasons
 
