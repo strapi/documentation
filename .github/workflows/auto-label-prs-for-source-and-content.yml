@@ -1,0 +1,139 @@
+name: Auto-label PRs by source and type
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to label'
+        required: true
+        type: string
+
+jobs:
+  auto-label-source-type:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Analyze PR and add labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            let prToProcess;
+            
+            if (context.eventName === 'pull_request') {
+              prToProcess = context.payload.pull_request;
+            } else if (context.eventName === 'workflow_dispatch') {
+              const prNumber = '${{ inputs.pr_number }}';
+              console.log(`Manual trigger for PR #${prNumber}`);
+              
+              const { data: pr } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: parseInt(prNumber)
+              });
+              prToProcess = pr;
+            }
+            
+            const prNumber = prToProcess.number;
+            console.log(`Processing PR #${prNumber}`);
+            
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+            
+            console.log(`Found ${files.length} files changed`);
+            
+            let touchesCMS = false;
+            let touchesCloud = false;
+            let touchesOther = false;
+            let hasNewFile = false;
+            let totalChanges = 0;
+            
+            for (const file of files) {
+              console.log(`File: ${file.filename}, status: ${file.status}, +${file.additions} -${file.deletions}`);
+              
+              if (file.filename.startsWith('cms/')) {
+                touchesCMS = true;
+              } else if (file.filename.startsWith('cloud/')) {
+                touchesCloud = true;
+              } else {
+                touchesOther = true;
+              }
+              
+              if (file.status === 'added') {
+                hasNewFile = true;
+              }
+              
+              totalChanges += file.additions + file.deletions;
+            }
+            
+            console.log(`Summary: CMS=${touchesCMS}, Cloud=${touchesCloud}, Other=${touchesOther}`);
+            console.log(`Has new file: ${hasNewFile}, Total changes: ${totalChanges}`);
+            
+            let sourceLabel;
+            if ((touchesCMS && !touchesCloud && !touchesOther)) {
+              sourceLabel = 'source: CMS';
+            } else if ((touchesCloud && !touchesCMS && !touchesOther)) {
+              sourceLabel = 'source: Strapi Cloud';
+            } else {
+              sourceLabel = 'source: repo';
+            }
+            
+            let prTypeLabel;
+            if (hasNewFile) {
+              prTypeLabel = 'pr: new content';
+            } else if (totalChanges > 10) {
+              prTypeLabel = 'pr: updated content';
+            } else {
+              prTypeLabel = 'pr: chore';
+            }
+            
+            console.log(`Determined labels: ${sourceLabel}, ${prTypeLabel}`);
+            
+            const existingLabels = prToProcess.labels.map(label => label.name);
+            const hasSourceLabel = existingLabels.some(label => label.startsWith('source:'));
+            const hasPrTypeLabel = existingLabels.some(label => label.startsWith('pr:'));
+            
+            const labelsToAdd = [];
+            
+            if (!hasSourceLabel) {
+              labelsToAdd.push(sourceLabel);
+            } else {
+              console.log(`PR #${prNumber} already has a source label, skipping source label`);
+            }
+            
+            if (!hasPrTypeLabel) {
+              labelsToAdd.push(prTypeLabel);
+            } else {
+              console.log(`PR #${prNumber} already has a pr type label, skipping pr type label`);
+            }
+            
+            if (labelsToAdd.length === 0) {
+              console.log(`No labels to add to PR #${prNumber}`);
+              return;
+            }
+            
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: labelsToAdd
+              });
+              
+              console.log(`Successfully added labels to PR #${prNumber}: ${labelsToAdd.join(', ')}`);
+              
+            } catch (error) {
+              console.error(`Error adding labels to PR #${prNumber}:`, error);
+              core.setFailed(`Failed to add labels to PR #${prNumber}: ${error.message}`);
+            }
