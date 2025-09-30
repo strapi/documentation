@@ -61,7 +61,7 @@ Clicking on the **...** button next to **Save** gives access to other options, s
 
 The Content-type Builder allows to create new content-types: single and collection types, but also components.
 
-#### Creating content-types with Strapi AI {#strapi-ai}
+#### Creating content-types with Strapi AI <NewBadge /> {#strapi-ai}  
 <GrowthBadge />
 
 Strapi comes with Strapi AI (included in the <GrowthBadge noTooltip /> plan and its free trial), an assistant that lets you interact with the admin panel through natural language to create or edit the content structure.
