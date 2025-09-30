@@ -259,7 +259,6 @@ h1 + .h1-badges-container {
   }
 }
 
-h1 
 /**
  * New/updated badges in main content gutter
  */
@@ -294,9 +293,19 @@ main .badge--content {
       --custom-badge-tooltip-color: var(--strapi-alternative-600);
     }
   }
+  
   &:hover .badge__tooltip {
     visibility: visible;
   }
+}
+
+main h2 + .badge--content:hover .badge__tooltip,
+main h3 + .badge--content:hover .badge__tooltip,
+main h4 + .badge--content:hover .badge__tooltip,
+main h5 + .badge--content:hover .badge__tooltip,
+main h6 + .badge--content:hover .badge__tooltip {
+  visibility: hidden !important;
+  display: none !important;
 }
 
 main .badge--featureflag,
