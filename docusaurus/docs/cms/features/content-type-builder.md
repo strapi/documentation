@@ -64,7 +64,7 @@ The Content-type Builder allows to create new content-types: single and collecti
 #### Creating content-types with Strapi AI <NewBadge /> {#strapi-ai}  
 <GrowthBadge />
 
-Strapi comes with Strapi AI (included in the <GrowthBadge noTooltip /> plan and its free trial), an assistant that lets you interact with the admin panel through natural language to create or edit the content structure.
+Strapi comes with Strapi AI, an assistant that lets you interact with the admin panel through natural language to create or edit the content structure.
 
 To use Strapi AI with the Content-Type Builder, click on the <Icon name="sparkle" color="#7B79FF"/> button in the bottom right corner of the admin panel, and describe what you need:
 
@@ -80,7 +80,7 @@ To use Strapi AI with the Content-Type Builder, click on the <Icon name="sparkle
 You can also use the <Icon name="paperclip" classes="ph" /> button at the bottom of the chat window to import code from an existing Strapi or front-end application, import a Figma project, or attach an image to extract the content structure from a design.
 :::
 
-Strapi AI comes with 1000 credits per month on the Growth plan, and 10 free credits during the free trial.
+Strapi AI comes with 1000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial.
 
 #### Creating content-types manually {#new-content-type}
 
