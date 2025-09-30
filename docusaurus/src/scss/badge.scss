@@ -778,3 +778,25 @@ main [role="tablist"] + .margin-top--md:has([role="tabpanel"] .badge) [role="tab
     }
   }
 }
+
+/**
+ * Force headings followed by badges to be block-level
+ * so badges wrap to next line naturally
+ */
+h2:has(+ .badge:not(.badge--inline)),
+h3:has(+ .badge:not(.badge--inline)),
+h4:has(+ .badge:not(.badge--inline)),
+h5:has(+ .badge:not(.badge--inline)),
+h6:has(+ .badge:not(.badge--inline)) {
+  display: block !important;
+  margin-bottom: 0;
+}
+
+/* Style the badges that follow headings */
+h2 + .badge:not(.badge--inline),
+h3 + .badge:not(.badge--inline),
+h4 + .badge:not(.badge--inline),
+h5 + .badge:not(.badge--inline),
+h6 + .badge:not(.badge--inline) {
+  margin-top: 0.5rem;
+}
