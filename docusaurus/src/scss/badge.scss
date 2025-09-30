@@ -458,6 +458,15 @@ h2 .badge {
   }
 }
 
+/* Reduce spacing after badges that follow headings */
+h2 + .badge:not(.badge--inline) ~ p,
+h3 + .badge:not(.badge--inline) ~ p,
+h4 + .badge:not(.badge--inline) ~ p,
+h5 + .badge:not(.badge--inline) ~ p,
+h6 + .badge:not(.badge--inline) ~ p {
+  margin-top: 1rem;
+}
+
 /**
  * On mobile, badges can not necessarily
  * be shown in the gutter, because there is not enough
