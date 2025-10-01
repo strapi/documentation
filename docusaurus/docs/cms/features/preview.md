@@ -348,7 +348,8 @@ const pageData = await fetchContentType('api::page.page', {
 });
 ```
 
-### Live Preview implementation <GrowthBadge/> <EnterpriseBadge />
+### Live Preview implementation
+<GrowthBadge/> <EnterpriseBadge />
 
 After setting up the basic Preview feature, you can enhance the experience by implementing Live Preview.
 
