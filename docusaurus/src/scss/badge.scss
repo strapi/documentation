@@ -259,7 +259,6 @@ h1 + .h1-badges-container {
   }
 }
 
-h1 
 /**
  * New/updated badges in main content gutter
  */
@@ -294,9 +293,19 @@ main .badge--content {
       --custom-badge-tooltip-color: var(--strapi-alternative-600);
     }
   }
+  
   &:hover .badge__tooltip {
     visibility: visible;
   }
+}
+
+main h2 + .badge--content:hover .badge__tooltip,
+main h3 + .badge--content:hover .badge__tooltip,
+main h4 + .badge--content:hover .badge__tooltip,
+main h5 + .badge--content:hover .badge__tooltip,
+main h6 + .badge--content:hover .badge__tooltip {
+  visibility: hidden !important;
+  display: none !important;
 }
 
 main .badge--featureflag,
@@ -447,6 +456,15 @@ h2 .badge {
   .badge + p {
     margin-top: 0;
   }
+}
+
+/* Reduce spacing after badges that follow headings */
+h2 + .badge:not(.badge--inline) ~ p,
+h3 + .badge:not(.badge--inline) ~ p,
+h4 + .badge:not(.badge--inline) ~ p,
+h5 + .badge:not(.badge--inline) ~ p,
+h6 + .badge:not(.badge--inline) ~ p {
+  margin-top: 1rem;
 }
 
 /**
@@ -777,4 +795,26 @@ main [role="tablist"] + .margin-top--md:has([role="tabpanel"] .badge) [role="tab
       // padding-right: 60px;
     }
   }
+}
+
+/**
+ * Force headings followed by badges to be block-level
+ * so badges wrap to next line naturally
+ */
+h2:has(+ .badge:not(.badge--inline)),
+h3:has(+ .badge:not(.badge--inline)),
+h4:has(+ .badge:not(.badge--inline)),
+h5:has(+ .badge:not(.badge--inline)),
+h6:has(+ .badge:not(.badge--inline)) {
+  display: block !important;
+  margin-bottom: 0;
+}
+
+/* Style the badges that follow headings */
+h2 + .badge:not(.badge--inline),
+h3 + .badge:not(.badge--inline),
+h4 + .badge:not(.badge--inline),
+h5 + .badge:not(.badge--inline),
+h6 + .badge:not(.badge--inline) {
+  margin-top: 0.5rem;
 }
