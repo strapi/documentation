@@ -335,7 +335,7 @@ The environment's Node version is based on the one chosen at the creation of the
     | Base directory  | Write the path of the base directory in the textbox.                     |
     | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
-3. Click on the **Save** button.
+3. Click on the **Save & deploy** button for the changes to take effect.
 
 #### Resetting & Deleting environment
 
