@@ -28,6 +28,52 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.9.2
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [fix: proxy breaking change in server example](https://github.com/strapi/documentation/pull/2731)
+
+#### Cloud
+- [Fix reactivate subscription errors](https://github.com/strapi/documentation/pull/2734)
+- [Save & deploy on branch change](https://github.com/strapi/documentation/pull/2730)
+- [Save & deploy Cloud environment variables](https://github.com/strapi/documentation/pull/2729)
+- [Add note about cloud project reactivation](https://github.com/strapi/documentation/pull/2701)
+
+#### Repository
+- [Fix badges display & positioning](https://github.com/strapi/documentation/pull/2740)
+- [Automatically add proper `source:` and `pr:` labels to PRs](https://github.com/strapi/documentation/pull/2735)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Aurelsicoko" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4144726?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Aurelsicoko"/>
+</a>
+<a href="https://github.com/adabaed" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/40322710?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="adabaed"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.9.1
 
 <br />
