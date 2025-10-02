@@ -1,26 +1,100 @@
 {
   "index_uid": "strapi-docs",
   "start_urls": [
-    "https://docs.strapi.io/cms/",
-    "https://docs.strapi.io/cloud/"
+    {
+      "url": "https://docs.strapi.io/cms/features/",
+      "page_rank": 1,
+      "selectors_key": "features"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/backend-customization/",
+      "page_rank": 1,
+      "selectors_key": "backend"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/configurations/",
+      "page_rank": 1,
+      "selectors_key": "configurations"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/data-management/",
+      "page_rank": 1,
+      "selectors_key": "data-management"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/",
+      "page_rank": 0,
+      "selectors_key": "default"
+    },
+    {
+      "url": "https://docs.strapi.io/cloud/",
+      "page_rank": 0,
+      "selectors_key": "default"
+    }
   ],
   "sitemap_urls": [
     "https://docs.strapi.io/sitemap.xml"
   ],
   "selectors": {
-    "lvl0": {
-      "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
-      "global": true,
-      "default_value": "Documentation"
+    "default": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Documentation"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
     },
-    "lvl1": "h1",
-    "lvl2": "h2", 
-    "lvl3": "h3",
-    "text": "article p, article li, main p, main li"
+    "features": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Features"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "backend": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Backend Customization"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "configurations": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Configurations"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "data-management": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Data Management"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    }
   },
   "selectors_exclude": [
     ".navbar",
-    ".sidebar", 
+    ".sidebar",
     ".menu",
     ".pagination-nav",
     ".table-of-contents",
@@ -31,7 +105,7 @@
     "rankingRules": [
       "words",
       "attribute",
-      "proximity", 
+      "proximity",
       "exactness",
       "typo",
       "sort"
@@ -45,7 +119,7 @@
     ],
     "displayedAttributes": [
       "hierarchy_lvl0",
-      "hierarchy_lvl1", 
+      "hierarchy_lvl1",
       "hierarchy_lvl2",
       "hierarchy_lvl3",
       "content",
