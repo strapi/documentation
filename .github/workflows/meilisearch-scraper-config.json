@@ -9,7 +9,7 @@
   ],
   "selectors": {
     "lvl0": {
-      "selector": ".breadcrumbs__item:nth-child(3) .breadcrumbs__link",
+      "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
       "global": true,
       "default_value": "Documentation"
     },
@@ -22,11 +22,9 @@
     ".navbar",
     ".sidebar", 
     ".menu",
-    ".breadcrumbs",
     ".pagination-nav",
     ".table-of-contents",
     ".hash-link",
-    "nav",
     "aside"
   ],
   "custom_settings": {
