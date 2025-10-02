@@ -27,6 +27,12 @@ sources={{
 
 :::tip
 You can [create your own widgets](/cms/admin-panel-customization/homepage) to customize the admin panel's homepage.
+
+You can also customize the layout (widget controls appear when you hover over a widget or between widgets):
+- **Resize**: Drag the divider in a two-widget row left or right.
+- **Reorder**: Drag the <Icon name="dots-six-vertical" classes="ph-bold" /> button to move a widget.
+- **Delete**: Click the <Icon name="trash"/> button.
+- **Restore**: Use the "Add widget" button at the top of the page to bring back a deleted widget.
 :::
 
 ## Overview
