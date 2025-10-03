@@ -10,7 +10,7 @@ tags:
   - API testing
 ---
 
-# Unit testing guide
+# Unit and integration testing guide
 
 <Tldr>
 Testing relies on Jest and Supertest with an in-memory SQLite database, a patched Strapi test harness that also supports TypeScript configuration files, and helpers that automatically register the `/hello` route and authenticated role during setup.
