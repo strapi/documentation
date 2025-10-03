@@ -293,9 +293,9 @@
   "custom_settings": {
     "rankingRules": [
       "words",
+      "exactness",
       "attribute",
       "proximity",
-      "exactness",
       "typo",
       "sort"
     ],
