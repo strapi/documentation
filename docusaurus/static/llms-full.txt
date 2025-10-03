@@ -12059,14 +12059,29 @@ The present guide provides a hands-on approach to configuring
     * `Jest` provides the test runner and assertion utilities.
     * `Supertest` allows you to test all the `api` routes as they were instances of 
 
-Once these files are handed, the harness handles several Strapi v5 requirements:
+    **What the test harness does:**
 
-* It registers a fallback TypeScript loader so TypeScript configuration files (`server.ts`, `database.ts`, etc.) can be consumed by Jest.
-* It patches Strapi's configuration loader to recognise `.ts`, `.cts`, and `.mts` files while preserving warnings for unsupported filenames.
-* It normalises database client selection for sqlite, MySQL, and PostgreSQL in tests.
-* It automatically exposes a `/hello` content API route backed by the `hello` service and ensures the authenticated role is applied to newly created users.
+    1. **TypeScript Support**: Patches Strapi's configuration loader to understand TypeScript files (`.ts`, `.cts`, `.mts`) in your config directory
+    
+    2. **Configuration Validation**: Ensures only valid config files are loaded and warns about common mistakes (like naming a file `middleware.js` instead of `middlewares.js`)
+    
+    3. **Database Normalization**: Maps database client names to their actual driver names (e.g., `sqlite` → `sqlite3`) and handles connection pooling
+    
+    4. **Environment Setup**: Sets all required environment variables for testing, including JWT secrets and database configuration
+    
+    5. **Automatic Route Registration**: Automatically registers a `/api/hello` test endpoint that you can use in your tests
+    
+    6. **User Permission Helper**: Patches the user service to automatically assign the "authenticated" role to newly created users, simplifying authentication tests
+    
+    7. **Cleanup**: Properly closes connections and removes temporary database files after tests complete
+
+Once these files are in place, the harness handles several Strapi v5 requirements automatically, letting you focus on writing actual test logic rather than configuration boilerplate.
 
 ## Create smoke tests
+
+:::note What are "smoke tests"?
+**Smoke tests** are basic tests that verify the most critical functionality works. The term comes from hardware testing: if you turn on a device and it doesn't catch fire (produce smoke), it passes the first test. In software, smoke tests check if the application starts correctly and basic features work before running more detailed tests.
+:::
 
 With the harness in place you can confirm Strapi boots correctly by adding a minimal Jest suite in a `tests/app.test.js` as follows:
 
