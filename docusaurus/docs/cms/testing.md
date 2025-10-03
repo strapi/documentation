@@ -16,7 +16,9 @@ tags:
 Testing relies on Jest and Supertest with an in-memory SQLite database, a patched Strapi test harness that also supports TypeScript configuration files, and helpers that automatically register the `/hello` route and authenticated role during setup.
 </Tldr>
 
-The present guide provides a hands-on approach to configuring <ExternalLink to="https://jestjs.io/" text="Jest"/> in a Strapi 5 application, mocking the Strapi object for unit testing plugin code, and using  <ExternalLink to="https://github.com/visionmedia/supertest" text="Supertest"/> to test REST endpoints end to end. It aims to recreate the minimal test suite available in the following <ExternalLink to="https://codesandbox.io/p/github/pwizla/strapi-unit-testing-examples/main?import=true" text="CodeSandbox link" />
+The present guide provides a hands-on approach to configuring <ExternalLink to="https://jestjs.io/" text="Jest"/> in a Strapi 5 application, mocking the Strapi object for unit testing plugin code, and using  <ExternalLink to="https://github.com/visionmedia/supertest" text="Supertest"/> to test REST endpoints end to end.
+
+The guide aims to recreate the minimal test suite available in the <ExternalLink to="https://codesandbox.io/p/github/pwizla/strapi-unit-testing-examples/main?import=true" text="strapi-unit-testing-examples" /> CodeSandbox link.
 
 :::caution
 The present guide will not work if you are on Windows using the SQLite database due to how Windows locks the SQLite file.
