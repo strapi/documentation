@@ -119,7 +119,7 @@
       "lvl0": {
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
-        "default_value": "Backend Customization"
+        "default_value": "Development"
       },
       "lvl1": "h1",
       "lvl2": "h2",
@@ -141,7 +141,7 @@
       "lvl0": {
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
-        "default_value": "Admin Panel Customization"
+        "default_value": "Development"
       },
       "lvl1": "h1",
       "lvl2": "h2",

@@ -6586,6 +6586,11 @@ meilisearch@0.50.0:
   resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.50.0.tgz#b2eb92984100f33fe2c5dc19600bdc643776170e"
   integrity sha512-9IzIkobvnuS18Eg4dq/eJB9W+eXqeLZjNRgq/kKMswSmVYYSQsXqGgSuCA0JkF+o5RwJlwIsieQee6rh313VhA==
 
+meilisearch@^0.53.0:
+  version "0.53.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.53.0.tgz#77d0d1e8b499e141a582fdebee39d3a57b0ec3a9"
+  integrity sha512-nG4VXbEOSzUmtbfsgOo+t6yX1ECEgXaT4hC0ap9MBpQGK5xwT+NWYDENYsKWR75cVaWaAqva+ok4zHlgtdXlLw==
+
 memfs@^3.1.2, memfs@^3.4.3:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/memfs/-/memfs-3.6.0.tgz#d7a2110f86f79dd950a8b6df6d57bc984aa185f6"

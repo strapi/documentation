@@ -16,7 +16,8 @@
     "redirections-analysis": "node ./scripts/redirection-analysis/redirect-analyzer.js",
     "generate-llms": "node scripts/generate-llms.js",
     "dev:with-llms": "yarn generate-llms && docusaurus start --port 8080 --no-open",
-    "build:with-llms": "yarn generate-llms && docusaurus build"
+    "build:with-llms": "yarn generate-llms && docusaurus build",
+     "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.12.2",
@@ -52,7 +53,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.5.2",
-    "@docusaurus/types": "3.5.2"
+    "@docusaurus/types": "3.5.2",
+    "meilisearch": "^0.53.0"
   },
   "browserslist": {
     "production": [
