@@ -158,19 +158,19 @@ export default {
 
   announcements: [ // Used by the NewsTicker component
     {
-      icon: '✨',
+      icon: 'sparkle',
       text: 'New search experience available! Try it on docs-next.strapi.io',
       link: 'https://docs-next.strapi.io',
     },
     {
-      icon: '📖',
-      text: 'Tutorial: Build a blog in 30 minutes with Strapi',
-      link: '/cms/quick-start',
+      icon: 'hand-heart',
+      text: 'Feedback wanted! Take our documentation survey',
+      link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
     },
     {
-      icon: '☁️',
-      text: 'Deploy to Strapi Cloud with the new CLI tool',
-      link: '/cloud/getting-started/deployment-cli',
+      icon: 'newspaper-clipping',
+      text: 'New documentation updates, see what\'s new this week 👀',
+      link: '/release-notes#692',
     },
   ],
 };
