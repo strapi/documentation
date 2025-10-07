@@ -1,0 +1,160 @@
+@use '../../scss/_mixins.scss' as *;
+
+.newsTicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  margin: 16px auto 32px;
+  max-width: 100%;
+  background-color: transparent;
+  border-top: 1px solid rgba(73, 69, 255, 0.15);
+  border-bottom: 1px solid rgba(73, 69, 255, 0.15);
+  transition: all 0.2s ease;
+  position: relative;
+
+  &Clickable {
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba(73, 69, 255, 0.3);
+      
+      .newsTickerText {
+        color: #4945FF;
+      }
+    }
+  }
+
+  &Label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #4945FF;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+
+  &Content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &Icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #4945FF;
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &Text {
+    color: #666687;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  &Dots {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  &Dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: rgba(165, 165, 186, 0.3);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #4945FF;
+      transform: scale(1.3);
+    }
+
+    &Active {
+      background-color: #4945FF;
+      width: 16px;
+      border-radius: 2.5px;
+    }
+  }
+}
+
+@include medium-up {
+  .newsTicker {
+    padding: 14px 20px;
+    margin: 20px auto 40px;
+    max-width: 900px;
+
+    &Label {
+      font-size: 13px;
+    }
+
+    &Text {
+      font-size: 15px;
+    }
+  }
+}
+
+@include dark {
+  .newsTicker {
+    border-color: rgba(165, 180, 252, 0.2);
+
+    &Clickable:hover {
+      border-color: rgba(165, 180, 252, 0.35);
+      
+      .newsTickerText {
+        color: #A5B4FC;
+      }
+    }
+  }
+
+  .newsTickerLabel {
+    color: #A5B4FC;
+  }
+
+  .newsTickerIcon {
+    color: #A5B4FC;
+  }
+
+  .newsTickerText {
+    color: #A5A5BA;
+  }
+
+  .newsTickerDot {
+    background-color: rgba(165, 165, 186, 0.25);
+
+    &:hover {
+      background-color: #A5B4FC;
+    }
+
+    &Active {
+      background-color: #A5B4FC;
+    }
+  }
+}

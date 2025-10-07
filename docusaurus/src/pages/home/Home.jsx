@@ -17,6 +17,7 @@ import {
   HeroDescription,
   HeroTitle,
   HomepageAIButton,
+  NewsTicker,
 } from '../../components';
 import Icon from '../../components/Icon';
 import content from './_home.content';
@@ -34,10 +35,8 @@ export default function PageHome() {
 
   useEffect(() => {
     if (isBrowser) {
-      // Détecte le thème initial
       setIsDarkTheme(document.documentElement.getAttribute('data-theme') === 'dark');
       
-      // Configure un observateur pour détecter les changements de thème
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           if (mutation.attributeName === 'data-theme') {
@@ -146,7 +145,16 @@ export default function PageHome() {
             </HeroDescription>
           </Container>
         </Hero>
+        
+        <Container>
+          <NewsTicker 
+            announcements={content.announcements} 
+            isDarkTheme={isDarkTheme} 
+          />
+        </Container>
+        
         <HomepageAIButton className={isDarkTheme ? styles.aiButtonDark : ''} />
+        
         <section
           id="homeCategories"
           className={styles.home__categories}

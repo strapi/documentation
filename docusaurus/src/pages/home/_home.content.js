@@ -154,5 +154,23 @@ export default {
       textSecondary: '#666666',
       borderColor: '#EEEEEE',
     }
-  }
+  },
+
+  announcements: [ // Used by the NewsTicker component
+    {
+      icon: '✨',
+      text: 'New search experience available! Try it on docs-next.strapi.io',
+      link: 'https://docs-next.strapi.io',
+    },
+    {
+      icon: '📖',
+      text: 'Tutorial: Build a blog in 30 minutes with Strapi',
+      link: '/cms/quick-start',
+    },
+    {
+      icon: '☁️',
+      text: 'Deploy to Strapi Cloud with the new CLI tool',
+      link: '/cloud/getting-started/deployment-cli',
+    },
+  ],
 };
