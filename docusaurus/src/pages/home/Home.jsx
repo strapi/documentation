@@ -150,6 +150,7 @@ export default function PageHome() {
           <NewsTicker 
             announcements={content.announcements} 
             isDarkTheme={isDarkTheme} 
+            rotationInterval={10000}
           />
         </Container>
         

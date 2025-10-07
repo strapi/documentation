@@ -3,7 +3,11 @@ import clsx from 'clsx';
 import Icon from '../Icon';
 import styles from './news-ticker.module.scss';
 
-export function NewsTicker({ announcements = [], isDarkTheme = false }) {
+export function NewsTicker({ 
+  announcements = [], 
+  isDarkTheme = false,
+  rotationInterval = 8000 // milliseconds
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -19,10 +23,10 @@ export function NewsTicker({ announcements = [], isDarkTheme = false }) {
           setIsAnimating(false);
         }, 50);
       }, 300);
-    }, 5000);
+    }, rotationInterval);
 
     return () => clearInterval(interval);
-  }, [announcements.length, isPaused]);
+  }, [announcements.length, isPaused, rotationInterval]);
 
   if (!announcements || announcements.length === 0) {
     return null;
