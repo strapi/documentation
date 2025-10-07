@@ -17,7 +17,7 @@
     "generate-llms": "node scripts/generate-llms.js",
     "dev:with-llms": "yarn generate-llms && docusaurus start --port 8080 --no-open",
     "build:with-llms": "yarn generate-llms && docusaurus build",
-     "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
+    "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.12.2",
@@ -49,7 +49,8 @@
     "qs": "^6.11.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": ">=1.58.3 <2.0.0"
+    "sass": ">=1.58.3 <2.0.0",
+    "solid-js": "^1.9.9"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.5.2",
