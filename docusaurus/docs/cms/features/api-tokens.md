@@ -113,7 +113,7 @@ Changing the salt invalidates all the existing API tokens.
 
 #### Ensuring API tokens are visible in the admin panel
 
-To allow persistent visibility of API tokens in the admin panel, an encryption key must be provided in [your `/config/admin` file](/cms/configurations/admin-panel) under `apiToken.secrets.encryptionKey`:
+To allow persistent visibility of API tokens in the admin panel, an encryption key must be provided in [your `/config/admin` file](/cms/configurations/admin-panel) under `secrets.encryptionKey`:
 
 <Tabs groupId="js-ts">
 <TabItem label="JavaScript" value="js">
@@ -121,10 +121,8 @@ To allow persistent visibility of API tokens in the admin panel, an encryption k
 ```js title="/config/admin.js"
 module.exports = ({ env }) => ({
   // other config parameters
-  apiToken: {
-    secrets: {
-      encryptionKey: env('ENCRYPTION_KEY'),
-    },
+  secrets: {
+    encryptionKey: env('ENCRYPTION_KEY'),
   }
 });
 ```
@@ -136,10 +134,8 @@ module.exports = ({ env }) => ({
 ```js title="/config/admin.ts"
 export default ({ env }) => ({
   // other config parameters
-  apiToken: {
-    secrets: {
-      encryptionKey: env('ENCRYPTION_KEY'),
-    },
+  secrets: {
+    encryptionKey: env('ENCRYPTION_KEY'),
   }
 });
 ```
