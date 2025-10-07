@@ -101,11 +101,16 @@
   }
 }
 
+
 /** Responsive */
 @include medium-up {
   :root {
     --strapi-home-gap: var(--strapi-spacing-8);
     --strapi-home-huitd-margin: 20px 0 20px;
+  }
+
+  .newsTicker_src-components-NewsTicker-news-ticker-module {
+    margin-bottom: 200px !important; // spacing before footer
   }
 }
 

@@ -3,11 +3,12 @@
 .newsTicker {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 16px;
   padding: 12px 0;
-  margin: 16px auto 32px;
-  max-width: 100%;
+  margin: 16px auto 40px;
+  max-width: 680px;
+  width: 100%;
   background-color: transparent;
   border-top: 1px solid rgba(73, 69, 255, 0.15);
   border-bottom: 1px solid rgba(73, 69, 255, 0.15);
@@ -18,7 +19,8 @@
     cursor: pointer;
 
     &:hover {
-      border-color: rgba(73, 69, 255, 0.3);
+      border-top-color: rgba(73, 69, 255, 0.3);
+      border-bottom-color: rgba(73, 69, 255, 0.3);
       
       .newsTickerText {
         color: #4945FF;
@@ -37,11 +39,13 @@
     letter-spacing: 0.5px;
     flex-shrink: 0;
     opacity: 0.9;
+    min-width: 120px;
   }
 
   &Content {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     flex: 1;
     min-width: 0;
@@ -53,10 +57,15 @@
     justify-content: center;
     flex-shrink: 0;
     color: #4945FF;
+    transition: all 0.3s ease;
     
     svg {
       width: 16px;
       height: 16px;
+    }
+
+    &Slide {
+      animation: slideOut 0.3s ease;
     }
   }
 
@@ -65,10 +74,12 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-align: center;
     transition: color 0.2s ease;
+
+    &Slide {
+      animation: slideOut 0.3s ease;
+    }
 
     strong {
       font-weight: 600;
@@ -80,6 +91,8 @@
     gap: 5px;
     align-items: center;
     flex-shrink: 0;
+    min-width: 60px;
+    justify-content: flex-end;
   }
 
   &Dot {
@@ -105,11 +118,21 @@
   }
 }
 
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+}
+
 @include medium-up {
   .newsTicker {
-    padding: 14px 20px;
-    margin: 20px auto 40px;
-    max-width: 900px;
+    padding: 14px 0;
+    margin: 20px auto 82px;
+    max-width: 680px;
 
     &Label {
       font-size: 13px;
@@ -123,10 +146,12 @@
 
 @include dark {
   .newsTicker {
-    border-color: rgba(165, 180, 252, 0.2);
+    border-top-color: rgba(165, 180, 252, 0.2);
+    border-bottom-color: rgba(165, 180, 252, 0.2);
 
     &Clickable:hover {
-      border-color: rgba(165, 180, 252, 0.35);
+      border-top-color: rgba(165, 180, 252, 0.35);
+      border-bottom-color: rgba(165, 180, 252, 0.35);
       
       .newsTickerText {
         color: #A5B4FC;
