@@ -517,10 +517,10 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
   }}
 />
 
-### AI-powered metadata generation <NewBadge />
+#### AI-powered metadata generation <NewBadge /> {#ai-powered-metadata-generation}
 <GrowthBadge />
 
-When enabled, Strapi AI automatically generates alternative text and captions for images uploaded to the Media Library, helping you improve content accessibility and SEO. A modal window displays the AI-generated alternative text and caption, allowing you to review the metadata and modify it if needed.
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates alternative text and captions for images uploaded to the Media Library, helping you improve content accessibility and SEO. A modal window displays the AI-generated alternative text and caption, allowing you to review the metadata and modify it if needed:
 
 <ThemedImage
   alt="AI metadata review modal"

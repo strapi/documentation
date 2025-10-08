@@ -298,7 +298,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 
 ## Strapi AI
 
-Strapi AI, available in the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) with <GrowthBadge /> plans, can be enabled or disabled:
+Strapi AI, adding features to the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) and [Media Library](/cms/features/media-library#ai-powered-metadata-generation) with <GrowthBadge /> plans, can be enabled or disabled:
 
 | Parameter    | Description                              | Type     | Default         |
 | ------------ | ---------------------------------------- | -------- | --------------- |

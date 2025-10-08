@@ -88,7 +88,6 @@ Strapi AI comes with 1000 credits per month on the <GrowthBadge noTooltip /> pla
 * Strapi AI can be disabled by setting `ai.enabled` to `false` in [the `config/admin` file](/cms/configurations/admin-panel#strapi-ai).
 :::
 
-
 #### Creating content-types manually {#new-content-type}
 
 <ThemedImage
