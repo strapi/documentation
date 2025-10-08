@@ -1,46 +1,72 @@
 const MEILISEARCH_HOST = process.env.MEILISEARCH_HOST;
-const MEILISEARCH_KEY = process.env.MEILISEARCH_KEY;
+const MEILISEARCH_MASTER_KEY = process.env.MEILISEARCH_MASTER_KEY;
 const INDEX_UID = process.env.MEILISEARCH_INDEX || 'strapi-docs';
 
+require('dotenv').config();
+
 async function analyzeCategories() {
-  if (!MEILISEARCH_HOST || !MEILISEARCH_KEY) {
+  if (!MEILISEARCH_HOST || !MEILISEARCH_MASTER_KEY) {
     console.error('❌ Error: Missing environment variables!');
-    console.log('Please set MEILISEARCH_HOST and MEILISEARCH_KEY');
-    console.log('\nExample:');
-    console.log('  MEILISEARCH_HOST=https://your-instance.meilisearch.io \\');
-    console.log('  MEILISEARCH_KEY=your-api-key \\');
-    console.log('  node analyze-categories.js');
+    console.log('Please set MEILISEARCH_HOST and MEILISEARCH_MASTER_KEY');
     process.exit(1);
   }
 
-  const response = await fetch(`${MEILISEARCH_HOST}/indexes/${INDEX_UID}/search`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${MEILISEARCH_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      q: '',
-      limit: 20000,
-      attributesToRetrieve: ['url', 'hierarchy_lvl0']
-    })
-  });
-
-  const data = await response.json();
+  console.log('Fetching all documents...');
   
-  console.log(`\n📊 Total documents found: ${data.hits.length} / ${data.estimatedTotalHits || 'unknown'}\n`);
+  let allDocuments = [];
+  let offset = 0;
+  const limit = 1000;
+  let hasMore = true;
+
+  while (hasMore) {
+    const response = await fetch(
+      `${MEILISEARCH_HOST}/indexes/${INDEX_UID}/documents?offset=${offset}&limit=${limit}&fields=url,hierarchy_lvl0`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${MEILISEARCH_MASTER_KEY}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    
+    if (data.message || data.code) {
+      console.error('❌ API Error:', data.message);
+      console.error('Code:', data.code);
+      process.exit(1);
+    }
+    
+    const documents = data.results || [];
+    
+    if (Array.isArray(documents) && documents.length > 0) {
+      allDocuments = allDocuments.concat(documents);
+      offset += limit;
+      console.log(`Fetched ${allDocuments.length} documents so far...`);
+      
+      if (documents.length < limit) {
+        hasMore = false;
+      }
+    } else {
+      hasMore = false;
+    }
+  }
+
+  console.log(`\n📊 Total documents found: ${allDocuments.length}\n`);
   
   const categoryCounts = {};
   const urlsByCategory = {};
   
-  data.hits.forEach(hit => {
+  allDocuments.forEach(hit => {
     const category = hit.hierarchy_lvl0 || 'Unknown';
     categoryCounts[category] = (categoryCounts[category] || 0) + 1;
     
     if (!urlsByCategory[category]) {
       urlsByCategory[category] = new Set();
     }
-    urlsByCategory[category].add(hit.url);
+    if (hit.url) {
+      urlsByCategory[category].add(hit.url);
+    }
   });
   
   console.log('Category Statistics:\n');
@@ -60,5 +86,6 @@ async function analyzeCategories() {
 
 analyzeCategories().catch(error => {
   console.error('❌ Error:', error.message);
+  console.error(error);
   process.exit(1);
 });
