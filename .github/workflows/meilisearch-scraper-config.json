@@ -99,7 +99,7 @@
     },
     {
       "url": "https://docs.strapi.io/cms/community",
-      "selectors_key": "community"
+      "selectors_key": "getting-started"
     },
     {
       "url": "https://docs.strapi.io/cms/",
@@ -262,17 +262,6 @@
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
         "default_value": "FAQ"
-      },
-      "lvl1": "h1",
-      "lvl2": "h2",
-      "lvl3": "h3",
-      "text": "article p, article li, main p, main li"
-    },
-    "community": {
-      "lvl0": {
-        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
-        "global": true,
-        "default_value": "Community"
       },
       "lvl1": "h1",
       "lvl2": "h2",
