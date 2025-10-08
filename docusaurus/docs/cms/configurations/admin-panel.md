@@ -296,7 +296,7 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                              | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                 | Rate limiting storage location (Memory, Sequelize, or Redis). For more information see the koa2-ratelimit documentation               | object        | `MemoryStore`                                                                                                                       |
 
-## Strapi AI
+## Strapi AI <NewBadge /> {#strapi-ai}
 
 Strapi AI, available in the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) with <GrowthBadge /> plans, can be enabled or disabled:
 
