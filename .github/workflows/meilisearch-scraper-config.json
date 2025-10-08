@@ -331,8 +331,7 @@
     ".pagination-nav",
     ".table-of-contents",
     ".hash-link",
-    "aside",
-    "#__docusaurus_skipToContent_fallback"
+    "aside"
   ],
   "custom_settings": {
     "rankingRules": [
