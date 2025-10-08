@@ -120,3 +120,8 @@ By default, most package managers enable hoisting, however, if it's not function
 ## Is X feature available yet?
 
 You can see the <ExternalLink to="https://feedback.strapi.io/" text="public roadmap"/> to see which feature requests are currently being worked on and which have not been started yet, and to add new feature requests.
+
+## Is there an MCP server for Strapi?
+
+There’s currently no MCP server available, but it’s in the works!
+First, an MCP server for Docs is already in development and should be available soon, and other AI-related tools, including additional MCP servers for various Strapi actions, are currently under discussion.
