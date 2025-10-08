@@ -299,6 +299,14 @@ const sidebars = {
             },
             {
               type: 'link',
+              label: 'Strapi AI',
+              href: '/cms/configurations/admin-panel#strapi-ai',
+              customProps: {
+                new: true,
+              },
+            },
+            {
+              type: 'link',
               label: 'Transfer tokens',
               href: '/cms/configurations/admin-panel#transfer-tokens',
             },
