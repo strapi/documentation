@@ -78,6 +78,30 @@
       "selectors_key": "cloud-getting-started"
     },
     {
+      "url": "https://docs.strapi.io/cms/usage-information",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/faq",
+      "selectors_key": "faq"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/upgrades",
+      "selectors_key": "migration"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/setup-deployment",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/installation/",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs.strapi.io/cms/community",
+      "selectors_key": "community"
+    },
+    {
       "url": "https://docs.strapi.io/cms/",
       "selectors_key": "default"
     },
@@ -227,6 +251,28 @@
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
         "default_value": "Migration"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "faq": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "FAQ"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "community": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Community"
       },
       "lvl1": "h1",
       "lvl2": "h2",
