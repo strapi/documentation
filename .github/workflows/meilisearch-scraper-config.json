@@ -102,11 +102,15 @@
       "selectors_key": "getting-started"
     },
     {
-      "url": "https://docs.strapi.io/cms/",
+      "url": "https://docs.strapi.io/release-notes",
+      "selectors_key": "release-notes"
+    },
+    {
+      "url": "https://docs.strapi.io/cms",
       "selectors_key": "default"
     },
     {
-      "url": "https://docs.strapi.io/cloud/",
+      "url": "https://docs.strapi.io/cloud",
       "selectors_key": "default"
     }
   ],
@@ -262,6 +266,17 @@
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
         "default_value": "FAQ"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "release-notes": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Release Notes"
       },
       "lvl1": "h1",
       "lvl2": "h2",
