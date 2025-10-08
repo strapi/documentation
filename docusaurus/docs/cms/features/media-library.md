@@ -42,18 +42,21 @@ In the admin panel, some Media Library settings are available via the Global Set
 **Path to configure the feature:** <Icon name="gear-six" /> Settings > Global Settings > Media Library.
 
 1. Define your chosen new Media Library settings:
+
     | Setting name   | Instructions   | Default value |
     | -------------------------- | ----------------------- |---------------|
-    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
+    | Generate AI captions and alt texts automatically on upload! | Enabling this option will turn on [AI&#8209;powered metadata generation](#ai-powered-metadata-generation) <GrowthBadge /> | True |
+    Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
     | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
     | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
+
 2. Click on the **Save** button.
 
 <ThemedImage
   alt="Media Library settings"
   sources={{
-    light: '/img/assets/settings/settings_media-library.png',
-    dark: '/img/assets/settings/settings_media-library_DARK.png',
+    light: '/img/assets/settings/settings_media-library-2.png',
+    dark: '/img/assets/settings/settings_media-library-2_DARK.png',
   }}
 />
 
@@ -531,8 +534,9 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
 />
 
 AI metadata generation:
+
 - only works with images, not files or videos,
-- consumes Strapi AI credits; you can check your Strapi AI credits usage in the <ExternalLink to="http://localhost:1337/admin/settings/application-infos" text="Settings Overview" />,
+- consumes Strapi AI credits (you can check your Strapi AI credits usage in the <ExternalLink to="http://localhost:1337/admin/settings/application-infos" text="Settings Overview" />),
 - is enabled by default, but can be disabled in the Media Library settings if needed.
 
 ### Managing individual assets {#managing-assets}
