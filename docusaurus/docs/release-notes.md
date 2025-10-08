@@ -27,7 +27,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-
 ## 6.9.3
 
 <br />
@@ -37,22 +36,14 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 #### CMS
 - [Strapi AI for Content-Type Builder](https://github.com/strapi/documentation/pull/2737)
-
-#### Repository
 - [Strapi AI for Media Library](https://github.com/strapi/documentation/pull/2751)
-
-### <Icon name='pen-nib' /> Updated content
-
-<br />
-
-#### CMS
-- [Add information about disabling Strapi AI](https://github.com/strapi/documentation/pull/2749)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
 <br />
 
 #### CMS
+- [Add information about disabling Strapi AI](https://github.com/strapi/documentation/pull/2749)
 - [Fix `secrets.encryptionKey` in API tokens docs](https://github.com/strapi/documentation/pull/2743)
 
 #### Cloud
