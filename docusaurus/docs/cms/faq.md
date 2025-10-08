@@ -123,5 +123,5 @@ You can see the <ExternalLink to="https://feedback.strapi.io/" text="public road
 
 ## Is there an MCP server for Strapi?
 
-There’s currently no MCP server available, but it’s in the works!
+There’s currently no MCP (<ExternalLink to="https://www.anthropic.com/news/model-context-protocol" text="Model Context Protocol" />) server available, but it’s in the works!
 First, an MCP server for Docs is already in development and should be available soon, and other AI-related tools, including additional MCP servers for various Strapi actions, are currently under discussion.
