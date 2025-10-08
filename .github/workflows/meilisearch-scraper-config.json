@@ -204,7 +204,7 @@
       "lvl0": {
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
-        "default_value": "API"
+        "default_value": "APIs"
       },
       "lvl1": "h1",
       "lvl2": "h2",
