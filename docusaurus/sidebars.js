@@ -244,14 +244,6 @@ const sidebars = {
               </div>`,
           },
           items: [
-            // {
-            //   type: 'html',
-            //   value: 'placeholder', // a value is required for the HTML type, but it is not rendered
-            //   customProps: {
-            //     text: "The section has been simplified",
-            //     tooltip: `We simplified the admin panel configuration section to make it easier to navigate and find what you need.</div><div>The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.</div>`
-            //   }
-            // },
             {
               type: 'link',
               label: 'Introduction',
@@ -323,13 +315,6 @@ const sidebars = {
           id: 'cms/configurations/cron',
           customProps: {
             updated: false,
-            // tooltip: `<strong>Important changes</strong><br/><br/>
-            // <span>This tooltip can be used to display short pieces of information.</span><br><br>
-            // We may use bullets in the tooltip as well:<br>
-            // <ul>
-            //   <li>This item is purely informative</li>
-            //   <li>Please avoid using links here as those tooltips are not hoverable</li>
-            // </ul><br/>`
           },
         },
         {
@@ -353,29 +338,9 @@ const sidebars = {
         },
         'cms/configurations/environment',
         'cms/configurations/features',
-        // 'cms/configurations/functions', // TODO: moved to Development — add the TOC component here to highlight the move
         'cms/configurations/middlewares',
         'cms/configurations/plugins',
-        // { // TODO: moved to Features - add the TOC component here to highlight the move
-        // type: 'doc',
-        // id: 'cms/providers',
-        // label: 'Email & Upload Providers'
-        // },
-        // 'cms/configurations/users-and-permissions-providers', // TODO: removed from TOC - add the TOC component here to highlight where to find them now
         'cms/configurations/server',
-        // {
-        //   type: 'category',
-        //   label: 'Guides',
-        //   collapsed: true,
-        //   items: [
-        //     // 'cms/configurations/guides/access-cast-environment-variables',  // TODO: removed from TOC and linked from configuration page - add TOC component?
-        //     // 'cms/configurations/guides/access-configuration-values', // TODO: removed from TOC and included into config. intro. page - add TOC component to highlight it?
-        //     // 'cms/configurations/guides/public-assets', // TODO: removed from TOC and included in Media Lib. feature page - add TOC component?
-        //     // 'cms/configurations/guides/rbac', // TODO: removed from TOC and linked from feature page - add TOC component?
-        //     // 'cms/configurations/guides/use-cron-jobs', // TODO: removed from TOC and linked from configuration page - add TOC component?
-        //     // 'cms/configurations/guides/configure-sso', // TODO: removed from TOC and linked from feature page - add TOC component?
-        //   ]
-        // }
       ],
     },
     {
@@ -421,14 +386,6 @@ const sidebars = {
           collapsed: true,
           customProps: {
             updated: false,
-            // text: `The section has been reorganized`,
-            // tooltip: `We have reorganized the admin panel customization section to make it easier to navigate and find what you need.</div>
-            //   <div>The new structure groups customizations by their purpose, making it more intuitive to locate specific settings.</div>
-            //   <div><em>Notes: </em>
-            //   <ul>
-            //     <li>Deployment-related configuration has been moved to the Configurations > Admin panel > Admin panel server page.</li>
-            //     <li>Host, port, and path configuration documentation has been moved to the Configurations > Server page.</li>
-            //   </ul>`
             tooltip: 'This section has been reorganized, see details below.',
           },
           items: [
@@ -449,7 +406,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
-              label: 'Overview', // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
+              label: 'Overview',
             },
             'cms/admin-panel-customization/logos',
             'cms/admin-panel-customization/favicon',
@@ -460,15 +417,12 @@ const sidebars = {
               label: 'Rich text editor',
             },
             'cms/admin-panel-customization/bundlers',
-            // 'cms/admin-panel-customization/deployment', // TODO move where appropriate
             'cms/admin-panel-customization/theme-extension',
             {
               type: 'doc',
               id: 'cms/admin-panel-customization/extension',
               label: 'Admin panel extension',
             },
-            // 'cms/admin-panel-customization/host-port-path', // TODO move where appropriate
-            // 'cms/admin-panel-customization/options', // TODO move where appropriate or remove
           ],
         },
         {
@@ -479,12 +433,6 @@ const sidebars = {
             new: false,
           },
         },
-        // 'cms/cli', // TODO moved to its own category, add TOC component here to highlight it
-        // { // TODO moved to introduction, add TOC component here to highlight it
-        //   type: 'doc',
-        //   id: 'cms/typescript',
-        //   label: 'TypeScript'
-        // },
         'cms/error-handling',
         'cms/templates',
         'cms/testing',
@@ -495,17 +443,8 @@ const sidebars = {
       label: 'TypeScript',
       collapsed: false,
       collapsible: false,
-      className: 'category-cms-typescript', // TODO: add CSS for icon
+      className: 'category-cms-typescript',
       items: [
-        {
-          type: 'html',
-          value: 'placeholder', // a value is required for the HTML type, but it is not rendered
-          customProps: {
-            tooltipTitle: 'This section is new',
-            tooltipContent:
-              'We grouped all the TypeScript-related content into a new section, including configurations, development tips, and guides.',
-          },
-        },
         {
           type: 'doc',
           id: 'cms/typescript',
@@ -524,16 +463,15 @@ const sidebars = {
         {
           type: 'doc',
           id: 'cms/typescript/guides',
-          label: 'Guides', // TODO ensure label is overriden
+          label: 'Guides',
         },
-        // 'cms/typescript/adding-support-to-existing-project' // ? will be linked from the Guides page
       ],
     },
     {
       // Command Line Interface
       type: 'category',
       label: 'Command Line Interface',
-      className: 'category-cms-cli', // TODO add CSS for icon
+      className: 'category-cms-cli',
       collapsed: false,
       collapsible: false,
       items: ['cms/cli'],
