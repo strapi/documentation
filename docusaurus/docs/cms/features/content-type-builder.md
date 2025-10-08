@@ -79,13 +79,13 @@ To use Strapi AI with the Content-Type Builder, click on the <Icon name="sparkle
 
 You can also use the <Icon name="paperclip" classes="ph" /> button at the bottom of the chat window to import code from an existing Strapi or front-end application, import a Figma project, or attach an image to extract the content structure from a design.
 
-<StrapiAiCredits />
-
 :::tip
 The more precise your prompts, the more accurate your created schemas are likely to be.
 
   For example, the following prompt example works well when creating relations: `Could you please generate a collection of dogs then also generate an owner collection and add relationship to dogs? An owner can have multiple dogs, but a dog can only have one owner.`
 :::
+
+<StrapiAiCredits />
 
 #### Creating content-types manually {#new-content-type}
 
