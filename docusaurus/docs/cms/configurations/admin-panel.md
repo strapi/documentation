@@ -296,6 +296,14 @@ The rate limiting for the admin panel's authentication endpoints can be configur
 | `rateLimit.whitelist`             | Array of IP addresses to whitelist from rate limiting                                                                                                                                              | array(string) | `[]`                                                                                                                                |
 | `rateLimit.store`                 | Rate limiting storage location (Memory, Sequelize, or Redis). For more information see the koa2-ratelimit documentation               | object        | `MemoryStore`                                                                                                                       |
 
+## Strapi AI
+
+Strapi AI, available in the [Content-Type Builder](/cms/features/content-type-builder#strapi-ai) with <GrowthBadge /> plans, can be enabled or disabled:
+
+| Parameter    | Description                              | Type     | Default         |
+| ------------ | ---------------------------------------- | -------- | --------------- |
+| `ai.enabled` | Whether Strapi AI is enabled or not      |  boolean | `true`          |
+
 ## Transfer tokens
 
 Transfer tokens for the [Data transfer](/cms/data-management/transfer) feature can be configured with the following parameters:
@@ -389,6 +397,9 @@ module.exports = ({ env }) => ({
       encryptionKey: env('ENCRYPTION_KEY'),
     },
   },
+  ai: {
+    enabled: false, // use this to disable Strapi AI
+  },
   auditLogs: { // only accessible with an Enterprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),
     retentionDays: 120,
@@ -458,6 +469,9 @@ export default ({ env }) => ({
     secrets: {
       encryptionKey: env('ENCRYPTION_KEY'),
     },
+  },
+  ai: {
+    enabled: false, // use this to disable Strapi AI
   },
   auditLogs: { // only accessible with an Enterprise plan
     enabled: env.bool('AUDIT_LOGS_ENABLED', true),
