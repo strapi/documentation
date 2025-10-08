@@ -70,6 +70,14 @@
       "selectors_key": "cloud-advanced"
     },
     {
+      "url": "https://docs.strapi.io/cms/intro",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs.strapi.io/cloud/intro",
+      "selectors_key": "cloud-getting-started"
+    },
+    {
       "url": "https://docs.strapi.io/cms/",
       "selectors_key": "default"
     },
