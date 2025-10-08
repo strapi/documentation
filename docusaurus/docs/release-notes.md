@@ -28,6 +28,56 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.9.3
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Strapi AI for Content-Type Builder](https://github.com/strapi/documentation/pull/2737)
+
+#### Repository
+- [Strapi AI for Media Library](https://github.com/strapi/documentation/pull/2751)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add information about disabling Strapi AI](https://github.com/strapi/documentation/pull/2749)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix `secrets.encryptionKey` in API tokens docs](https://github.com/strapi/documentation/pull/2743)
+
+#### Cloud
+- [Save & deploy for domains](https://github.com/strapi/documentation/pull/2746)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/laurenskling" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6753724?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="laurenskling"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/remidej" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8087692?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="remidej"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.9.2
 
 <br />
