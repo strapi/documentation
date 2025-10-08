@@ -11,6 +11,7 @@ tags:
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-list.md';
+import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 # Media Library
 
@@ -535,9 +536,7 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
 
 AI metadata generation:
 
-- only works with images, not files or videos,
-- consumes Strapi AI credits (you can check your Strapi AI credits usage in the <ExternalLink to="http://localhost:1337/admin/settings/application-infos" text="Settings Overview" />),
-- is enabled by default, but can be disabled in the Media Library settings if needed.
+<StrapiAiCredits />
 
 ### Managing individual assets {#managing-assets}
 

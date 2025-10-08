@@ -1,0 +1,1 @@
+Strapi AI comes with 1000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial. You can check your Strapi AI credits usage in the <ExternalLink to="http://localhost:1337/admin/settings/application-infos" text="Settings Overview" /> of the admin panel.

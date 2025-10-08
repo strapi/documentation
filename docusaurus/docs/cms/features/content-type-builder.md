@@ -13,6 +13,7 @@ tags:
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 import ConditionalFields from '/docs/snippets/conditional-fields.md'
+import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 # Content-type Builder
 
@@ -78,14 +79,12 @@ To use Strapi AI with the Content-Type Builder, click on the <Icon name="sparkle
 
 You can also use the <Icon name="paperclip" classes="ph" /> button at the bottom of the chat window to import code from an existing Strapi or front-end application, import a Figma project, or attach an image to extract the content structure from a design.
 
-Strapi AI comes with 1000 credits per month on the <GrowthBadge noTooltip /> plan, and 10 free credits during the free trial.
+<StrapiAiCredits />
 
-:::tip Tips
-* The more precise your prompts, the more accurate your created schemas are likely to be.
+:::tip
+The more precise your prompts, the more accurate your created schemas are likely to be.
 
   For example, the following prompt example works well when creating relations: `Could you please generate a collection of dogs then also generate an owner collection and add relationship to dogs? An owner can have multiple dogs, but a dog can only have one owner.`
-
-* Strapi AI can be disabled by setting `ai.enabled` to `false` in [the `config/admin` file](/cms/configurations/admin-panel#strapi-ai).
 :::
 
 #### Creating content-types manually {#new-content-type}
