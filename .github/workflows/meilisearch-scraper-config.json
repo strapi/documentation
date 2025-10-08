@@ -2,71 +2,71 @@
   "index_uid": "strapi-docs",
   "start_urls": [
     {
-      "url": "https://docs.strapi.io/cms/getting-started/",
+      "url": "https://docs.strapi.io/cms/getting-started",
       "selectors_key": "getting-started"
     },
     {
-      "url": "https://docs.strapi.io/cms/features/",
+      "url": "https://docs.strapi.io/cms/features",
       "selectors_key": "features"
     },
     {
-      "url": "https://docs.strapi.io/cms/backend-customization/",
+      "url": "https://docs.strapi.io/cms/backend-customization",
       "selectors_key": "backend"
     },
     {
-      "url": "https://docs.strapi.io/cms/configurations/",
+      "url": "https://docs.strapi.io/cms/configurations",
       "selectors_key": "configurations"
     },
     {
-      "url": "https://docs.strapi.io/cms/admin-panel-customization/",
+      "url": "https://docs.strapi.io/cms/admin-panel-customization",
       "selectors_key": "admin-panel"
     },
     {
-      "url": "https://docs.strapi.io/cms/typescript/",
+      "url": "https://docs.strapi.io/cms/typescript",
       "selectors_key": "typescript"
     },
     {
-      "url": "https://docs.strapi.io/cms/plugins/",
+      "url": "https://docs.strapi.io/cms/plugins",
       "selectors_key": "plugins"
     },
     {
-      "url": "https://docs.strapi.io/cms/plugins-development/",
+      "url": "https://docs.strapi.io/cms/plugins-development",
       "selectors_key": "plugins-development"
     },
     {
-      "url": "https://docs.strapi.io/cms/cli/",
+      "url": "https://docs.strapi.io/cms/cli",
       "selectors_key": "cli"
     },
     {
-      "url": "https://docs.strapi.io/cms/api/",
+      "url": "https://docs.strapi.io/cms/api",
       "selectors_key": "api"
     },
     {
-      "url": "https://docs.strapi.io/cms/data-management/",
+      "url": "https://docs.strapi.io/cms/data-management",
       "selectors_key": "data-management"
     },
     {
-      "url": "https://docs.strapi.io/cms/migration/",
+      "url": "https://docs.strapi.io/cms/migration",
       "selectors_key": "migration"
     },
     {
-      "url": "https://docs.strapi.io/cloud/getting-started/",
+      "url": "https://docs.strapi.io/cloud/getting-started",
       "selectors_key": "cloud-getting-started"
     },
     {
-      "url": "https://docs.strapi.io/cloud/projects/",
+      "url": "https://docs.strapi.io/cloud/projects",
       "selectors_key": "cloud-projects"
     },
     {
-      "url": "https://docs.strapi.io/cloud/account/",
+      "url": "https://docs.strapi.io/cloud/account",
       "selectors_key": "cloud-account"
     },
     {
-      "url": "https://docs.strapi.io/cloud/cli/",
+      "url": "https://docs.strapi.io/cloud/cli",
       "selectors_key": "cloud-cli"
     },
     {
-      "url": "https://docs.strapi.io/cloud/advanced/",
+      "url": "https://docs.strapi.io/cloud/advanced",
       "selectors_key": "cloud-advanced"
     },
     {
@@ -94,7 +94,7 @@
       "selectors_key": "getting-started"
     },
     {
-      "url": "https://docs.strapi.io/cms/installation/",
+      "url": "https://docs.strapi.io/cms/installation",
       "selectors_key": "getting-started"
     },
     {
