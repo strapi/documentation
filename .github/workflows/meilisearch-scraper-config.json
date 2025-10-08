@@ -342,7 +342,8 @@
     ".pagination-nav",
     ".table-of-contents",
     ".hash-link",
-    "aside"
+    "aside",
+    "#__docusaurus_skipToContent_fallback"
   ],
   "custom_settings": {
     "rankingRules": [
