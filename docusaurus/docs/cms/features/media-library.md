@@ -530,15 +530,10 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
   }}
 />
 
-:::note
 AI metadata generation:
-
-- Only works with images (not files or videos)
-- Consumes Strapi AI credits
-- Can be disabled in the Media Library settings if needed, though it is enabled by default
-:::
-
-You can check your Strapi AI credits usage in the <ExternalLink to="http://localhost:1337/admin/settings/application-infos" text="Settings Overview" />.
+- only works with images, not files or videos,
+- consumes Strapi AI credits; you can check your Strapi AI credits usage in the <ExternalLink to="http://localhost:1337/admin/settings/application-infos" text="Settings Overview" />,
+- is enabled by default, but can be disabled in the Media Library settings if needed.
 
 ### Managing individual assets {#managing-assets}
 
