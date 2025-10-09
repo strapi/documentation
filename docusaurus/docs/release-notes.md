@@ -28,8 +28,11 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 ## 6.10.0-beta.0
+<br/>
 
-<Icon name="sparkle" />v6.10.0 (currently in beta) introduces a new search experience powered by [MeiliSearch](https://www.meilisearch.com).
+### <Icon name='sparkle' /> New content
+
+v6.10.0-beta introduces a new search engine.
 
 We hope you'll like it! Feel free to [share feedback](https://forms.gle/ei7p4koru8RaUCDB6).
 
