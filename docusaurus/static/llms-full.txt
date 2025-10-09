@@ -1,5 +1,5 @@
 # Account billing details
-Source: https://docs.strapi.io/cloud/account/account-billing
+Source: https://docs-next.strapi.io/cloud/account/account-billing
 
 # Account billing & invoices
 
@@ -50,7 +50,7 @@ In the *Settings > Invoices* tab of any project, you will find the invoices for 
 
 
 # Profile settings
-Source: https://docs.strapi.io/cloud/account/account-settings
+Source: https://docs-next.strapi.io/cloud/account/account-settings
 
 # Profile settings
 
@@ -85,7 +85,7 @@ You can delete your Strapi Cloud account, but it will be permanent and irreversi
 
 
 # Database
-Source: https://docs.strapi.io/cloud/advanced/database
+Source: https://docs-next.strapi.io/cloud/advanced/database
 
 # Database
 
@@ -144,7 +144,7 @@ To revert back to the default database, remove the previously added environment 
 
 
 # Email Provider
-Source: https://docs.strapi.io/cloud/advanced/email
+Source: https://docs-next.strapi.io/cloud/advanced/email
 
 # Email Provider
 
@@ -203,7 +203,7 @@ If you want to create a custom email provider, please refer to the [Email provid
 
 
 # Upload Provider
-Source: https://docs.strapi.io/cloud/advanced/upload
+Source: https://docs-next.strapi.io/cloud/advanced/upload
 
 # Upload Provider
 
@@ -278,7 +278,7 @@ If you want to create a custom upload provider, please refer to the [Providers](
 
 
 # Command Line Interface (CLI)
-Source: https://docs.strapi.io/cloud/cli/cloud-cli
+Source: https://docs-next.strapi.io/cloud/cli/cloud-cli
 
 # Command Line Interface (CLI)
 
@@ -364,7 +364,7 @@ This command logs you out of Strapi Cloud. Once the `logout` command is run, a b
 
 
 # Caching & Performance
-Source: https://docs.strapi.io/cloud/getting-started/caching
+Source: https://docs-next.strapi.io/cloud/getting-started/caching
 
 # Caching & Performance
 
@@ -375,7 +375,7 @@ For Strapi Cloud applications with large amounts of cacheable content, such as i
 
 
 # Strapi Cloud fundamentals
-Source: https://docs.strapi.io/cloud/getting-started/cloud-fundamentals
+Source: https://docs-next.strapi.io/cloud/getting-started/cloud-fundamentals
 
 # Strapi Cloud fundamentals
 
@@ -392,7 +392,7 @@ Before going any further into this Strapi Cloud documentation, we recommend you 
 
 
 # with Cloud dashboard
-Source: https://docs.strapi.io/cloud/getting-started/deployment
+Source: https://docs-next.strapi.io/cloud/getting-started/deployment
 
 # Project deployment with the Cloud dashboard
 
@@ -478,7 +478,7 @@ Now that you have deployed your project via the Cloud dashboard, we encourage yo
 
 
 # with Cloud CLI
-Source: https://docs.strapi.io/cloud/getting-started/deployment-cli
+Source: https://docs-next.strapi.io/cloud/getting-started/deployment-cli
 
 # Project deployment with the Command Line Interface (CLI)
 
@@ -539,7 +539,7 @@ Now that you have deployed your project via the Command Line Interface, we encou
 
 
 # Project deployment
-Source: https://docs.strapi.io/cloud/getting-started/deployment-options
+Source: https://docs-next.strapi.io/cloud/getting-started/deployment-options
 
 # Project deployment with Strapi Cloud
 
@@ -553,7 +553,7 @@ The guides below will guide you through all the steps for each of the deployment
 
 
 # Welcome to the Strapi Cloud Documentation!
-Source: https://docs.strapi.io/cloud/getting-started/intro
+Source: https://docs-next.strapi.io/cloud/getting-started/intro
 
 # Welcome to the Strapi Cloud Documentation!
 
@@ -586,13 +586,13 @@ You can also join , the , and the  and benefit from the years of experience, kno
 
 
 # Information on billing & usage
-Source: https://docs.strapi.io/cloud/getting-started/usage-billing
+Source: https://docs-next.strapi.io/cloud/getting-started/usage-billing
 
 # Information on billing & usage
 
 This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
 
- Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
+Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see [Pricing page](https://strapi.io/pricing-cloud)). The table below summarizes Strapi Cloud usage-based pricing plans, for general features and usage:
 
 | Feature                          | Free  | Essential | Pro | Scale |
 | -------------------------------- | ----- | --------- | --- | ----- |
@@ -677,12 +677,12 @@ To reactivate the project immediately, users can upgrade to a paid plan.
 
 #### Project suspension after subscription cancellation
 
-If you don't pay the invoice, then after few payment attempts the subscription of your project will automatically be canceled and the project will be suspended. There are two ways to put back your project online:
+If you don't pay the invoice, then after few payment attempts the subscription of your project will automatically be canceled and the project will be suspended. There are 2 ways to put back your project online:
 
-1. In the *Profile > Billing* tab, once you added a valid credit card, Strapi will try to process the due payment and reactivate the impacted subscription.
-2. By clicking on a *Reactivate subscription* button visible:
-  - in the *Profile > Billing* tab (to reactivate several subscriptions in one click)
-  - in the *Settings > Billing & Usage* tab of your suspended project (to reactivate the subscription you are on)
+* In the *Profile > Billing* tab, once you added a valid credit card, Strapi will try to process the due payment and reactivate the impacted subscription.
+* By clicking on a *Reactivate subscription* button visible:
+    - in the *Profile > Billing* tab (to reactivate several subscriptions in one click)
+    - in the *Settings > Billing & Usage* tab of your suspended project (to reactivate the subscription you are on)
 
 #### Project suspension for other reasons
 
@@ -698,7 +698,7 @@ If you want to cancel your Strapi Cloud subscription, you have 2 options:
 
 
 # Collaboration
-Source: https://docs.strapi.io/cloud/projects/collaboration
+Source: https://docs-next.strapi.io/cloud/projects/collaboration
 
 # Collaboration on projects
 
@@ -756,7 +756,7 @@ Maintainers whose access to the project has been revoked do not receive any emai
 
 
 # Deployments management
-Source: https://docs.strapi.io/cloud/projects/deploys
+Source: https://docs-next.strapi.io/cloud/projects/deploys
 
 # Deployments management
 
@@ -785,7 +785,7 @@ You can also cancel a deployment from the *Deployments* tab which lists the depl
 
 
 # Deployment history & logs
-Source: https://docs.strapi.io/cloud/projects/deploys-history
+Source: https://docs-next.strapi.io/cloud/projects/deploys-history
 
 # Deployment history and logs {#deploy-history-and-logs}
 
@@ -817,7 +817,7 @@ From the *Deployments* tab, you can hover a deployment card to make the ![See lo
 
 
 # Notifications
-Source: https://docs.strapi.io/cloud/projects/notifications
+Source: https://docs-next.strapi.io/cloud/projects/notifications
 
 # Notifications
 
@@ -839,7 +839,7 @@ All notifications older than 30 days are automatically removed from the Notifica
 
 
 # Projects overview
-Source: https://docs.strapi.io/cloud/projects/overview
+Source: https://docs-next.strapi.io/cloud/projects/overview
 
 # Projects overview
 
@@ -886,7 +886,7 @@ Your project's dashboard also displays:
 
 
 # Runtime logs
-Source: https://docs.strapi.io/cloud/projects/runtime-logs
+Source: https://docs-next.strapi.io/cloud/projects/runtime-logs
 
 # Runtime logs
 
@@ -901,7 +901,7 @@ From a chosen project's dashboard, the *Runtime logs* tab displays the live logs
 
 
 # Project settings
-Source: https://docs.strapi.io/cloud/projects/settings
+Source: https://docs-next.strapi.io/cloud/projects/settings
 
 # Project settings
 
@@ -1167,7 +1167,7 @@ The environment's Node version is based on the one chosen at the creation of the
     | Base directory  | Write the path of the base directory in the textbox.                     |
     | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
-3. Click on the **Save** button.
+3. Click on the **Save & deploy** button for the changes to take effect.
 
 #### Resetting & Deleting environment
 
@@ -1273,7 +1273,11 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 | Target                    | Type the target (i.e. actual address where users are redirected when entering hostname). |
 | Set as default domain     | Tick the box to make the new domain the default one.                      |
 
-3. Click on the **Save** button.
+3. Click on **Save**, or **Save & deploy** if you want the changes to take effect immediately.
+
+:::tip
+To finish setting up your custom domain, in the settings of your domain registar or hosting platform, please add the Target value (e.g., `proud-unicorn-123456af.strapiapp.com`) as a CNAME alias to the DNS records of your domain.
+:::
 
 :::caution Custom domains and assets
 When using custom domains, these domains do not apply to the URLs of uploaded assets. Uploaded assets keep the Strapi Cloud project-based URL.
@@ -1298,9 +1302,9 @@ Hovering on an environment variable, either default or custom, displays the foll
 -  **Show value** to replace the `*` characters with the actual value of a variable.
 -  **Copy to clipboard** to copy the value of a variable.
 -  **Actions** to access the  Edit and  Delete buttons.
-  - When editing a default variable, the *Name* cannot be modified and the *Value* can only be automatically generated using the  Generate value button. Don't forget to **Save** at the end.
-  - When editing a custom variable, both the *Name* and *Value* can be modified by writing something new or by using the  Generate value button. Don't forget to **Save** at the end.
-  - When deleting a variable, you will be asked to click on a **Confirm** button to confirm the deletion.
+  - When editing a default variable, the *Name* cannot be modified and the *Value* can only be automatically generated using the  Generate value button. Don't forget to **Save**, or **Save & deploy** if you want the changes to take effect immediately.
+  - When editing a custom variable, both the *Name* and *Value* can be modified by writing something new or by using the  Generate value button. Don't forget to **Save**, or **Save & deploy** if you want the changes to take effect immediately.
+  - When deleting a variable, you will be asked to confirm by selecting **Save**, or **Save & deploy** if you want the changes to take effect immediately.
 
 :::tip
 Use the search bar to find more quickly an environment variable in the list!
@@ -1319,12 +1323,12 @@ Instead of creating a new custom environment variable from scratch, you can also
 1. In the *Custom environment variables* section, click on the **Add variable** button.
 2. Write the *Name* and *Value* of the new environment variable in the same-named fields. Alternatively, you can click on the  icon to generate automatically the name and value.
 3. (optional) Click on **Add another** to directly create one or more other custom environment variables.
-4. Click on the **Save** button to confirm the creation of the custom environment variables.
+4. Click on the **Save** button to confirm the creation of the custom environment variables. To apply your changes immediately, click on **Save & deploy**.
 
 
 
 # Admin panel customization
-Source: https://docs.strapi.io/cms/admin-panel-customization
+Source: https://docs-next.strapi.io/cms/admin-panel-customization
 
 # Admin panel customization
 
@@ -1371,7 +1375,7 @@ The following is an example of a basic customization of the admin panel:
 
 
 # Admin panel bundlers
-Source: https://docs.strapi.io/cms/admin-panel-customization/bundlers
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/bundlers
 
 # Admin panel bundlers
 
@@ -1396,7 +1400,7 @@ In Strapi 5, the default bundler is Vite. To use
 
 
 # Admin panel extension
-Source: https://docs.strapi.io/cms/admin-panel-customization/extension
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/extension
 
 # Admin panel extension
 
@@ -1422,7 +1426,7 @@ There are 2 use cases where you might want to extend the admin panel:
 
 
 # Favicon
-Source: https://docs.strapi.io/cms/admin-panel-customization/favicon
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/favicon
 
 # Favicon
 
@@ -1461,7 +1465,7 @@ Make sure that the cached favicon is cleared. It can be cached in your web brows
 
 
 # Homepage customization
-Source: https://docs.strapi.io/cms/admin-panel-customization/homepage
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/homepage
 
 # Homepage customization
 
@@ -1670,16 +1674,17 @@ The following file ensures that the metrics controller is reachable at a custom 
 
 
 # Locales & translations
-Source: https://docs.strapi.io/cms/admin-panel-customization/locales-translations
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/locales-translations
 
 # Locales & translations
 
-Strapi's [admin panel](/cms/admin-panel-customization) always ships with English translations, but can display additional languages. You can also override any text that appears in the interface.
-The present page shows how to define your own locales and extend Strapi or plugin translations from the project codebase.
+The Strapi [admin panel](/cms/admin-panel-customization) ships with English strings and supports adding other locales so your editorial team can work in their preferred language. Locales determine which languages appear in the interface, while translations provide the text displayed for each key in a locale.
+
+This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app`file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
 
 ## Defining locales
 
-To update the list of available locales in the admin panel, use the `config.locales` array:
+To update the list of available locales in the admin panel, set the `config.locales` array in `src/admin/app` file:
 
 </Tabs>
 
@@ -1694,12 +1699,12 @@ A plugin's key/value pairs are declared independently in the plugin's files at `
 
 </Tabs>
 
-If more translations files should be added, place them in the `/src/admin/extensions/translations` folder.
+If you need to ship additional translation JSON files—for example to organize large overrides or to support a locale not bundled with Strapi—place them in the `/src/admin/extensions/translations` folder and ensure the locale code is listed in `config.locales`.
 
 
 
 # Logos
-Source: https://docs.strapi.io/cms/admin-panel-customization/logos
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/logos
 
 # Logos
 
@@ -1741,7 +1746,7 @@ There is no size limit for image files set through the configuration files.
 
 
 # Theme extension
-Source: https://docs.strapi.io/cms/admin-panel-customization/theme-extension
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/theme-extension
 
 # Theme extension
 
@@ -1759,7 +1764,7 @@ The default  defines various theme-related keys (shadows, colors…) that can be
 
 
 # Customizing the rich text editor
-Source: https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor
+Source: https://docs-next.strapi.io/cms/admin-panel-customization/wysiwyg-editor
 
 # Change the default rich text editor
 
@@ -1771,7 +1776,7 @@ Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in ric
 
 
 # Strapi Client
-Source: https://docs.strapi.io/cms/api/client
+Source: https://docs-next.strapi.io/cms/api/client
 
 # Strapi Client
 
@@ -2029,7 +2034,7 @@ More details about the Strapi Client may be found in the .
 
 
 # Content API
-Source: https://docs.strapi.io/cms/api/content-api
+Source: https://docs-next.strapi.io/cms/api/content-api
 
 # Strapi APIs to access your content
 
@@ -2049,7 +2054,7 @@ REST and GraphQL APIs represent the top-level layers of the Content API exposed 
 
 
 # Documents
-Source: https://docs.strapi.io/cms/api/document
+Source: https://docs-next.strapi.io/cms/api/document
 
 <div className="document-concept-page custom-mermaid-layout">
 
@@ -2097,7 +2102,7 @@ An important difference between the back-end and front-end APIs is about the def
 
 
 # Document Service API
-Source: https://docs.strapi.io/cms/api/document-service
+Source: https://docs-next.strapi.io/cms/api/document-service
 
 # Document Service API
 
@@ -2425,7 +2430,7 @@ strapi.documents('api::restaurant.restaurant').count({ filters: { name: { $star
 
 
 # Using fields with the Document Service API
-Source: https://docs.strapi.io/cms/api/document-service/fields
+Source: https://docs-next.strapi.io/cms/api/document-service/fields
 
 # Document Service API: Selecting fields
 
@@ -2488,7 +2493,7 @@ To select fields to return while [discarding draft versions of documents](/cms/a
 
 
 # Using filters with the Document Service API
-Source: https://docs.strapi.io/cms/api/document-service/filters
+Source: https://docs-next.strapi.io/cms/api/document-service/filters
 
 # Document Service API: Filters
 
@@ -2987,7 +2992,7 @@ const entries = await strapi.documents('api::article.article').findMany({
 
 
 # Using the locale parameter with the Document Service API
-Source: https://docs.strapi.io/cms/api/document-service/locale
+Source: https://docs-next.strapi.io/cms/api/document-service/locale
 
 # Document Service API: Using the `locale` parameter
 
@@ -3129,7 +3134,7 @@ strapi.documents('api::restaurant.restaurant').count({ locale: 'fr' });
 
 
 # Extending the Document Service behavior
-Source: https://docs.strapi.io/cms/api/document-service/middlewares
+Source: https://docs-next.strapi.io/cms/api/document-service/middlewares
 
 # Document Service API: Middlewares
 
@@ -3263,7 +3268,7 @@ The Document Service API triggers various database lifecycle hooks based on whic
 
 
 # Using Populate with the Document Service API
-Source: https://docs.strapi.io/cms/api/document-service/populate
+Source: https://docs-next.strapi.io/cms/api/document-service/populate
 
 # Document Service API: Populating fields
 
@@ -3332,7 +3337,7 @@ To populate while publishing documents (same behavior with `unpublish()` and `di
 
 
 # Using Sort & Pagination with the Document Service API
-Source: https://docs.strapi.io/cms/api/document-service/sort-pagination
+Source: https://docs-next.strapi.io/cms/api/document-service/sort-pagination
 
 # Document Service API: Sorting and paginating results
 
@@ -3363,7 +3368,7 @@ To paginate results, pass the `limit` and `start` parameters:
 
 
 # Using Draft & Publish with the Document Service API
-Source: https://docs.strapi.io/cms/api/document-service/status
+Source: https://docs-next.strapi.io/cms/api/document-service/status
 
 # Document Service API: Usage with Draft & Publish
 
@@ -3440,7 +3445,7 @@ To automatically publish a document while updating it, add `status: 'published'`
 
 
 # GraphQL API
-Source: https://docs.strapi.io/cms/api/graphql
+Source: https://docs-next.strapi.io/cms/api/graphql
 
 # GraphQL API
 
@@ -3616,7 +3621,7 @@ The `locale` field can be passed to create a localized document
 
 
 # OpenAPI specification
-Source: https://docs.strapi.io/cms/api/openapi
+Source: https://docs-next.strapi.io/cms/api/openapi
 
 # OpenAPI specification generation
 
@@ -3704,7 +3709,7 @@ With the following steps you can quickly generate a [Swagger UI](https://swagger
 
 
 # REST API reference
-Source: https://docs.strapi.io/cms/api/rest
+Source: https://docs-next.strapi.io/cms/api/rest
 
 # REST API reference
 
@@ -3817,7 +3822,7 @@ Deletes a document.
 
 
 # Filters
-Source: https://docs.strapi.io/cms/api/rest/filters
+Source: https://docs-next.strapi.io/cms/api/rest/filters
 
 # REST API: Filters
 
@@ -3877,7 +3882,7 @@ Querying your API with deep filters may cause performance issues.  If one of you
 
 
 # REST API Guides
-Source: https://docs.strapi.io/cms/api/rest/guides/intro
+Source: https://docs-next.strapi.io/cms/api/rest/guides/intro
 
 # REST API Guides
 
@@ -3898,7 +3903,7 @@ Additional tutorials and guides can be found in the following blog posts:
 
 
 # Interactive Query Builder
-Source: https://docs.strapi.io/cms/api/rest/interactive-query-builder
+Source: https://docs-next.strapi.io/cms/api/rest/interactive-query-builder
 
 # Build your query URL with Strapi's interactive tool
 
@@ -3937,7 +3942,7 @@ Currently, these tools are only provided to transform the JavaScript object in a
 
 
 # Locale
-Source: https://docs.strapi.io/cms/api/rest/locale
+Source: https://docs-next.strapi.io/cms/api/rest/locale
 
 # REST API: `locale`
 
@@ -4054,7 +4059,7 @@ To delete only a specific locale version of a single type document, add the `loc
 
 
 # Parameters
-Source: https://docs.strapi.io/cms/api/rest/parameters
+Source: https://docs-next.strapi.io/cms/api/rest/parameters
 
 # REST API parameters
 
@@ -4081,7 +4086,7 @@ A wide range of REST API parameters can be used and combined to query your conte
 
 
 # Populate and Select
-Source: https://docs.strapi.io/cms/api/rest/populate-select
+Source: https://docs-next.strapi.io/cms/api/rest/populate-select
 
 # REST API: Population & Field Selection
 
@@ -4158,7 +4163,7 @@ The population and pagination operators cannot be combined.
 
 
 # Relations
-Source: https://docs.strapi.io/cms/api/rest/relations
+Source: https://docs-next.strapi.io/cms/api/rest/relations
 
 # Managing relations with API requests
 
@@ -4326,7 +4331,7 @@ Omitting any parameter is equivalent to using `set`.<br/>For instance, the follo
 
 
 # Sort and Pagination
-Source: https://docs.strapi.io/cms/api/rest/sort-pagination
+Source: https://docs-next.strapi.io/cms/api/rest/sort-pagination
 
 # REST API: Sort & Pagination
 
@@ -4398,7 +4403,7 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 
 
 # Status
-Source: https://docs.strapi.io/cms/api/rest/status
+Source: https://docs-next.strapi.io/cms/api/rest/status
 
 # REST API: `status`
 
@@ -4431,7 +4436,7 @@ Since published versions are returned by default, passing no status parameter is
 
 
 # Upload files
-Source: https://docs.strapi.io/cms/api/rest/upload
+Source: https://docs-next.strapi.io/cms/api/rest/upload
 
 # REST API: Upload files
 
@@ -4605,7 +4610,7 @@ The following example lets you upload and attach multiple pictures to the `resta
 
 
 # Back-end customization
-Source: https://docs.strapi.io/cms/backend-customization
+Source: https://docs-next.strapi.io/cms/backend-customization
 
 <div className="custom-mermaid-layout">
 
@@ -4661,7 +4666,7 @@ The following diagram represents how requests travel through the Strapi back end
 
 
 # Controllers
-Source: https://docs.strapi.io/cms/backend-customization/controllers
+Source: https://docs-next.strapi.io/cms/backend-customization/controllers
 
 # Controllers
 
@@ -4693,6 +4698,9 @@ Each controller action can be an `async` or `sync` function.
 Every action receives a context object (`ctx`) as a parameter. `ctx` contains the [request context](/cms/backend-customization/requests-responses#ctxrequest) and the [response context](/cms/backend-customization/requests-responses#ctxresponse).
 
 <details>
+<summary>Example: GET /hello route calling a basic controller</summary>
+
+A specific `GET /hello` [route](/cms/backend-customization/routes) is defined, the name of the router file (i.e. `index`) is used to call the controller handler (i.e. `index`). Every time a `GET /hello` request is sent to the server, Strapi calls the `index` action in the `hello.js` controller, which returns `Hello World!`:
 
 </Tabs>
 
@@ -4807,7 +4815,7 @@ To list all the available controllers, run `yarn strapi controllers:list`.
 
 
 # Middlewares
-Source: https://docs.strapi.io/cms/backend-customization/middlewares
+Source: https://docs-next.strapi.io/cms/backend-customization/middlewares
 
 # Middlewares customization
 
@@ -4936,7 +4944,7 @@ You can find more information about route middlewares in the [routes documentati
 
 
 # Models
-Source: https://docs.strapi.io/cms/backend-customization/models
+Source: https://docs-next.strapi.io/cms/backend-customization/models
 
 # Models
 
@@ -5106,9 +5114,19 @@ Database validations and settings are custom options passed directly onto the `t
 | `defaultTo`   | string  | Sets the database `defaultTo`, typically used with `notNullable`                              | -       |
 | `notNullable` | boolean | Sets the database `notNullable`, ensures that columns cannot be null                          | `false` |
 | `unsigned`    | boolean | Only applies to number columns, removes the ability to go negative but doubles maximum length | `false` |
-| `unique`      | boolean | Enforces database level unique, caution when using with draft & publish feature               | `false` |
+| `unique`      | boolean | Enforces database-level uniqueness on published entries. Draft saves skip the check when Draft & Publish is enabled, so duplicates fail only at publish time. | `false` |
 | `type`        | string  | Changes the database type, if `type` has arguments, you should pass them in `args`            | -       |
 | `args`        | array   | Arguments passed into the Knex.js function that changes things like `type`                    | `[]`    |
+
+:::caution Draft & Publish and `unique`
+When [Draft & Publish](/cms/features/draft-and-publish) is enabled, Strapi intentionally skips `unique` validations while an entry is saved as a draft. Duplicates therefore remain undetected until publication, at which point the database constraint triggers an error even though the UI previously displayed “Saved document” for the drafts.
+
+To avoid unexpected publication failures:
+
+- disable Draft & Publish on content-types that must stay globally unique,
+- or add custom validation (e.g. lifecycle hooks or middleware) that checks for draft duplicates before saving,
+- or rely on automatically generated unique identifiers such as a `uid` field and document editorial conventions.
+:::
 
 ```json title="./src/api/[api-name]/content-types/restaurant/schema.json"
 
@@ -5334,7 +5352,7 @@ module.exports = {
 
 
 # Policies
-Source: https://docs.strapi.io/cms/backend-customization/policies
+Source: https://docs-next.strapi.io/cms/backend-customization/policies
 
 # Policies
 
@@ -5412,7 +5430,7 @@ To use a policy in another API, reference it with the following syntax: `api::[a
 
 
 # Requests and Responses
-Source: https://docs.strapi.io/cms/backend-customization/requests-responses
+Source: https://docs-next.strapi.io/cms/backend-customization/requests-responses
 
 # Requests and Responses
 
@@ -5606,7 +5624,7 @@ Strapi uses a Node.js feature called  to make the context available anywhere.
 
 
 # Routes
-Source: https://docs.strapi.io/cms/backend-customization/routes
+Source: https://docs-next.strapi.io/cms/backend-customization/routes
 
 # Routes
 
@@ -5737,7 +5755,7 @@ In some scenarios, it can be useful to have a route publicly available and contr
 
 
 # Services
-Source: https://docs.strapi.io/cms/backend-customization/services
+Source: https://docs-next.strapi.io/cms/backend-customization/services
 
 # Services
 
@@ -5866,7 +5884,7 @@ The `createCoreService` factory also exposes a `getFetchParams(params)` helper t
 
 
 # Webhooks
-Source: https://docs.strapi.io/cms/backend-customization/webhooks
+Source: https://docs-next.strapi.io/cms/backend-customization/webhooks
 
 # Webhooks
 
@@ -6277,7 +6295,7 @@ If you want to learn more about how to use webhooks with Next.js, please have a 
 
 
 # Command Line Interface
-Source: https://docs.strapi.io/cms/cli
+Source: https://docs-next.strapi.io/cms/cli
 
 # Command Line Interface (CLI)
 
@@ -6558,7 +6576,7 @@ strapi help
 
 
 # Configurations
-Source: https://docs.strapi.io/cms/configurations
+Source: https://docs-next.strapi.io/cms/configurations
 
 # Configuration
 
@@ -6600,7 +6618,7 @@ The following guides will help you address specific use cases related to the Str
 
 
 # API calls configuration
-Source: https://docs.strapi.io/cms/configurations/api
+Source: https://docs-next.strapi.io/cms/configurations/api
 
 # API configuration
 
@@ -6626,7 +6644,7 @@ If the `rest.maxLimit` value is less than the `rest.defaultLimit` value, `maxLim
 
 
 # CRON jobs
-Source: https://docs.strapi.io/cms/configurations/cron
+Source: https://docs-next.strapi.io/cms/configurations/cron
 
 # Cron jobs
 
@@ -6725,7 +6743,7 @@ strapi.cron.jobs
 
 
 # Database configuration
-Source: https://docs.strapi.io/cms/configurations/database
+Source: https://docs-next.strapi.io/cms/configurations/database
 
 # Database configuration
 
@@ -6870,7 +6888,7 @@ $ GRANT ALL ON SCHEMA public TO my_strapi_db_user;
 
 
 # Environment variables configuration
-Source: https://docs.strapi.io/cms/configurations/environment
+Source: https://docs-next.strapi.io/cms/configurations/environment
 
 # Environment configuration and variables
 
@@ -6909,7 +6927,7 @@ To learn deeper about how to use environment variables in your code, please refe
 
 
 # Features configuration
-Source: https://docs.strapi.io/cms/configurations/features
+Source: https://docs-next.strapi.io/cms/configurations/features
 
 # Features configuration
 
@@ -6942,7 +6960,7 @@ Developers can use the following APIs to interact with future flags:
 
 
 # Lifecycle functions
-Source: https://docs.strapi.io/cms/configurations/functions
+Source: https://docs-next.strapi.io/cms/configurations/functions
 
 # Functions
 
@@ -7007,7 +7025,7 @@ You might find additional information in  about registering lifecycle functions.
 
 
 # Middlewares configuration
-Source: https://docs.strapi.io/cms/configurations/middlewares
+Source: https://docs-next.strapi.io/cms/configurations/middlewares
 
 # Middlewares configuration
 
@@ -7164,7 +7182,7 @@ The `session` middleware allows the use of cookie-based sessions, based on
 
 
 # Plugins configuration
-Source: https://docs.strapi.io/cms/configurations/plugins
+Source: https://docs-next.strapi.io/cms/configurations/plugins
 
 # Plugins configuration
 
@@ -7177,7 +7195,7 @@ Plugin configurations are stored in `/config/plugins.js|ts` (see [project struct
 | `resolve`<br/> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
 :::note
-Some features of Strapi are provided by plugins and the following plugins can also have specific configuration options: the [GraphQL](/cms/plugins/graphql#code-based-configuration) plugin and the [Upload](/cms/features/media-library#available-options) package which powers the Media Library.
+Some features of Strapi are provided by plugins and the following plugins can also have specific configuration options: the [GraphQL](/cms/plugins/graphql#code-based-configuration) plugin, the [Upload](/cms/features/media-library#available-options) package which powers the Media Library, and [Users & Permissions](/cms/features/users-permissions#code-based-configuration).
 :::
 
 **Basic example custom configuration for plugins:**
@@ -7191,7 +7209,7 @@ If no specific configuration is required, a plugin can also be declared with the
 
 
 # Server configuration
-Source: https://docs.strapi.io/cms/configurations/server
+Source: https://docs-next.strapi.io/cms/configurations/server
 
 # Server configuration
 
@@ -7226,7 +7244,7 @@ The `./config/server.js` file can include the following parameters:
 
 
 # TypeScript configuration
-Source: https://docs.strapi.io/cms/configurations/typescript
+Source: https://docs-next.strapi.io/cms/configurations/typescript
 
 # TypeScript configuration
 
@@ -7266,7 +7284,7 @@ To avoid having to [manually generate types](/cms/typescript/development#generat
 
 
 # Customization
-Source: https://docs.strapi.io/cms/customization
+Source: https://docs-next.strapi.io/cms/customization
 
 # Customization
 
@@ -7287,7 +7305,7 @@ Customizing the database or the external, front-end application are outside of t
 
 
 # Database migrations
-Source: https://docs.strapi.io/cms/database-migrations
+Source: https://docs-next.strapi.io/cms/database-migrations
 
 # Database migrations
 
@@ -7303,7 +7321,7 @@ Additionally, if you want to continue using existing JavaScript migrations along
 
 
 # Database transactions
-Source: https://docs.strapi.io/cms/database-transactions
+Source: https://docs-next.strapi.io/cms/database-transactions
 
 # Database transactions
 
@@ -7410,7 +7428,7 @@ For example, if a transaction is opened but there is a path in your code that do
 
 
 # Deployment
-Source: https://docs.strapi.io/cms/deployment
+Source: https://docs-next.strapi.io/cms/deployment
 
 # Deployment
 
@@ -7486,7 +7504,7 @@ If you're looking for multi-tenancy options, the Strapi Blog has a .
 
 
 # Error handling
-Source: https://docs.strapi.io/cms/error-handling
+Source: https://docs-next.strapi.io/cms/error-handling
 
 # Error handling
 
@@ -7587,7 +7605,7 @@ The `ValidationError` and `YupValidationError` classes are specific error classe
 
 
 # Admin panel
-Source: https://docs.strapi.io/cms/features/admin-panel
+Source: https://docs-next.strapi.io/cms/features/admin-panel
 
 # Administration panel
 
@@ -7680,7 +7698,7 @@ If you prefer or are required to log in via an SSO provider, please refer to the
 
 
 # API Tokens
-Source: https://docs.strapi.io/cms/features/api-tokens
+Source: https://docs-next.strapi.io/cms/features/api-tokens
 
 # API Tokens
 
@@ -7707,7 +7725,7 @@ Read-only API tokens can only access the `find` and `findOne` functions.
 
 
 # Audit Logs
-Source: https://docs.strapi.io/cms/features/audit-logs
+Source: https://docs-next.strapi.io/cms/features/audit-logs
 
 # Audit Logs
 
@@ -7752,7 +7770,7 @@ For any log item, click the  icon to access a modal with more details about that
 
 
 # Content History
-Source: https://docs.strapi.io/cms/features/content-history
+Source: https://docs-next.strapi.io/cms/features/content-history
 
 # Content History
 
@@ -7793,11 +7811,9 @@ If the [Internationalization (i18n)](/cms/features/internationalization) feature
 
 
 # Content Manager
-Source: https://docs.strapi.io/cms/features/content-manager
+Source: https://docs-next.strapi.io/cms/features/content-manager
 
 # Content Manager
-
-<!--  -->
 
 From the 
   
@@ -7855,7 +7871,7 @@ You can delete entries from the list view of a collection type, by clicking on  
 
 
 # Content-type Builder
-Source: https://docs.strapi.io/cms/features/content-type-builder
+Source: https://docs-next.strapi.io/cms/features/content-type-builder
 
 # Content-type Builder
 
@@ -8016,7 +8032,7 @@ Deleting a content-type only deletes what was created and available from the Con
 
 
 # Custom Fields
-Source: https://docs.strapi.io/cms/features/custom-fields
+Source: https://docs-next.strapi.io/cms/features/custom-fields
 
 # Custom Fields
 
@@ -8139,7 +8155,7 @@ As compared to how other types of models are defined, custom fields' attributes 
 
 
 # Data Management
-Source: https://docs.strapi.io/cms/features/data-management
+Source: https://docs-next.strapi.io/cms/features/data-management
 
 # Data Management
 
@@ -8168,7 +8184,7 @@ The Data Management system is CLI-based only, meaning any import, export, or tra
 
 
 # Draft & Publish
-Source: https://docs.strapi.io/cms/features/draft-and-publish
+Source: https://docs-next.strapi.io/cms/features/draft-and-publish
 
 # Draft & Publish
 
@@ -8181,7 +8197,7 @@ On the back-end server of Strapi, the Document Service API can also be used to i
 
 
 # Email
-Source: https://docs.strapi.io/cms/features/email
+Source: https://docs-next.strapi.io/cms/features/email
 
 # Email
 
@@ -8240,7 +8256,7 @@ You can review the
 
 
 # Internationalization
-Source: https://docs.strapi.io/cms/features/internationalization
+Source: https://docs-next.strapi.io/cms/features/internationalization
 
 # Internationalization (i18n)
 
@@ -8253,7 +8269,7 @@ On the back-end server of Strapi, the Document Service API can also be used to i
 
 
 # Media Library
-Source: https://docs.strapi.io/cms/features/media-library
+Source: https://docs-next.strapi.io/cms/features/media-library
 
 # Media Library
 
@@ -8343,7 +8359,7 @@ The dotfiles are not exposed. It means that every file name that starts with `.`
 
 
 # Preview
-Source: https://docs.strapi.io/cms/features/preview
+Source: https://docs-next.strapi.io/cms/features/preview
 
 # Preview
 
@@ -8355,10 +8371,6 @@ With the Preview feature, you can preview your front end application directly fr
 
 </Tabs>
 
-##### Live Preview specificities 
-
-</Tabs>
-
 <details>
 <summary>Caching in Next.js:</summary>
 
@@ -8367,22 +8379,21 @@ In Next.js, [cache persistence](https://nextjs.org/docs/app/building-your-applic
 
 </details>
 
-#### [Front end] Next steps
+#### Content source maps
 
-Once the preview system is set up, you need to adapt your data fetching logic to handle draft content appropriately. This involves the following steps:
+Live Preview is able to identify the parts of your frontend that correspond to fields in Strapi. This is done through content source maps, which are metadata encoded as hidden characters in your string-based content (e.g., text fields). It uses the  library to encode and decode this metadata.
 
-1. Create or adapt your data fetching utility to check if draft mode is enabled
-2. Update your API calls to include the draft status parameter when appropriate
+Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
 
-The following, taken from the  Strapi demo application, is an example of how to implement draft-aware data fetching in your Next.js front-end application:
+For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
 
-```typescript {8-18}
+```typescript {20-23}
 
   contentType: string,
   params: Record = {}
 ): Promise {
   // Check if Next.js draft mode is enabled
-  const { isEnabled: isDraftMode } = draftMode();
+  const { isEnabled: isDraftMode } = await draftMode();
   
   try {
     const queryParams = { ...params };
@@ -8392,7 +8403,12 @@ The following, taken from the  Strapi demo application, is an example of how to 
     }
     
     const url = `${baseURL}/${contentType}?${qs.stringify(queryParams)}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        // Enable content source maps in preview mode
+        "strapi-encode-source-maps": isDraftMode ? "true" : "false",
+      },
+    });
     if (!response.ok) {
       throw new Error(
         `Failed to fetch data from Strapi (url=${url}, status=${response.status})`
@@ -8403,62 +8419,6 @@ The following, taken from the  Strapi demo application, is an example of how to 
     console.error("Error fetching content:", error);
     throw error;
   }
-}
-```
-
-This utility method can then be used in your page components to fetch either draft or published content based on the preview state:
-
-```typescript
-// In your page component:
-const pageData = await fetchContentType('api::page.page', {
-  // Your other query parameters
-});
-```
-
-### Live Preview implementation  
-
-After setting up the basic Preview feature, you can enhance the experience by implementing Live Preview.
-
-#### Window messages
-
-Live Preview creates a more interactive experience by communicating between the admin and your frontend. It relies on events posted through [the `postMessage()` API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) on the `window` object.
-
-You need to add an event listener in your application. It should be present on all pages, ideally in a layout component that wraps your entire application. The listener needs to filter through messages and react only to Strapi-initiated messages.
-
-There are two messages to listen to:
-
-- `strapiUpdate`: sent by Strapi when a content update has been saved to the database. It's an opportunity to fetch the updated version of the content and refresh the preview. With Next.js, the recommended way to refresh the iframe content is with .
-- `previewScript`: sent by Strapi to give you a script that powers the live preview functionality. This script should be injected into the page's `<head>` tag. It handles highlighting editable areas in the preview and sending messages back to Strapi when an area is double-clicked for editing.
-
-In order to receive the `previewScript` message, you need to let Strapi know that your frontend is ready to receive it. This is done by posting a `previewReady` message to the parent window.
-
-// TODO snippet
-
-#### Content source maps
-
-Live Preview is able to identify the parts of your frontend that correspond to fields in Strapi. This is done through content source maps, which are metadata encoded as hidden characters in your string-based content (e.g., text fields). It uses the  library to encode and decode this metadata.
-
-Metadatas will only be added in your Content API responses when the `strapi-encode-source-maps` header is set to `true`. You can set this header in your data fetching utility. Make sure to only pass the header when you detect that your site is rendered in a preview context.
-
-For a Next.js application, you may use the `draftMode()` method from `next/headers` to detect if draft mode is enabled, and set the header accordingly in all your API calls:
-
-```typescript {5-12}
-
-  const headers = new Headers(options.headers);
-  if (draftMode().isEnabled) {
-    headers.set('strapi-encode-source-maps', 'true');
-  }
-
-  const response = await fetch(`/api/content/${contentType}`, {
-    ...options,
-    headers,
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch content');
-  }
-
-  return response.json();
 }
 ```
 
@@ -8496,6 +8456,8 @@ With Live Preview, in addition to what’s included in the Free plan, you can:
 * Use the Side Editor to view both the entry’s Edit view in the Content Manager and the front-end preview side by side. You can also switch between full-screen and side-by-side preview using the  and  buttons.
 * Double-click any content in the preview pane to edit it in place. This opens a popover that syncs the front-end content with the corresponding field in Strapi.
 
+<!-- TODO: add dark mode GIF -->
+
 :::caution Experimental feature
 This feature is currently experimental. Feel free to share  or  with the Strapi team.
 
@@ -8507,7 +8469,7 @@ The current version of Live Preview comes with the following limitations:
 
 
 # Role-Based Access Control (RBAC)
-Source: https://docs.strapi.io/cms/features/rbac
+Source: https://docs-next.strapi.io/cms/features/rbac
 
 # Role-Based Access Control (RBAC)
 
@@ -8597,7 +8559,7 @@ It is possible to delete one or several administrator accounts at the same time.
 
 
 # Releases
-Source: https://docs.strapi.io/cms/features/releases
+Source: https://docs-next.strapi.io/cms/features/releases
 
 # Releases
 
@@ -8753,7 +8715,7 @@ Once a release is published, the release itself cannot be updated. You can not r
 
 
 # Review Workflows
-Source: https://docs.strapi.io/cms/features/review-workflows
+Source: https://docs-next.strapi.io/cms/features/review-workflows
 
 # Review Workflows
 
@@ -8844,7 +8806,7 @@ Entries of a review workflow content type can be assigned to any admin user in S
 
 
 # Single Sign-On (SSO)
-Source: https://docs.strapi.io/cms/features/sso
+Source: https://docs-next.strapi.io/cms/features/sso
 
 # Single Sign-On (SSO)
 
@@ -8863,7 +8825,7 @@ To access the admin panel using a specific provider instead of logging in with a
 
 
 # Users & Permissions
-Source: https://docs.strapi.io/cms/features/users-permissions
+Source: https://docs-next.strapi.io/cms/features/users-permissions
 
 # Users & Permissions
 
@@ -9011,7 +8973,7 @@ create: async ctx => {
 
 
 # Installation
-Source: https://docs.strapi.io/cms/installation
+Source: https://docs-next.strapi.io/cms/installation
 
 # Installation
 
@@ -9022,7 +8984,7 @@ If you already have an existing Strapi project on your local machine, the follow
 
 
 # Additional resources for migrating to Strapi 5
-Source: https://docs.strapi.io/cms/migration/v4-to-v5/additional-resources/introduction
+Source: https://docs-next.strapi.io/cms/migration/v4-to-v5/additional-resources/introduction
 
 # Additional resources for upgrading to Strapi 5
 
@@ -9031,7 +8993,7 @@ The following pages cover some dedicated topics for specific use cases when upgr
 
 
 # Breaking changes
-Source: https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes
+Source: https://docs-next.strapi.io/cms/migration/v4-to-v5/breaking-changes
 
 # Strapi v4 to Strapi 5 breaking changes
 
@@ -9129,7 +9091,7 @@ You can click on the description of any breaking change in the following tables 
 
 
 # Upgrading to Strapi 5 - Introduction and FAQ
-Source: https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
+Source: https://docs-next.strapi.io/cms/migration/v4-to-v5/introduction-and-faq
 
 # Upgrading to Strapi 5: Introduction and FAQ
 
@@ -9178,7 +9140,7 @@ Strapi Cloud will deploy the updated code in Strapi 5 and will automatically run
 
 
 # Step-by-step guide to upgrade to Strapi 5
-Source: https://docs.strapi.io/cms/migration/v4-to-v5/step-by-step
+Source: https://docs-next.strapi.io/cms/migration/v4-to-v5/step-by-step
 
 # Step-by-step guide to upgrade to Strapi 5
 
@@ -9288,7 +9250,7 @@ Follow the steps below and leverage retro-compatibility flags and guided migrati
 
 
 # Admin Panel API
-Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api
+Source: https://docs-next.strapi.io/cms/plugins-development/admin-panel-api
 
 # Admin Panel API for plugins
 
@@ -9777,7 +9739,7 @@ interface LayoutSettings extends Contracts.ContentTypes.Settings {
 
 
 # Content Manager APIs
-Source: https://docs.strapi.io/cms/plugins-development/content-manager-apis
+Source: https://docs-next.strapi.io/cms/plugins-development/content-manager-apis
 
 # Content Manager APIs
 
@@ -10082,7 +10044,7 @@ interface BulkActionDescription {
 
 
 # Plugin creation & setup
-Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin
+Source: https://docs-next.strapi.io/cms/plugins-development/create-a-plugin
 
 # Plugin creation
 
@@ -10232,7 +10194,7 @@ For a complete example of how to structure your local plugin in a monorepo envir
 
 
 # Developing plugins
-Source: https://docs.strapi.io/cms/plugins-development/developing-plugins
+Source: https://docs-next.strapi.io/cms/plugins-development/developing-plugins
 
 # Developing Strapi plugins
 
@@ -10253,7 +10215,7 @@ The  can also include additional information useful while developing a Strapi pl
 
 
 # How to create components for Strapi plugins
-Source: https://docs.strapi.io/cms/plugins-development/guides/create-components-for-plugins
+Source: https://docs-next.strapi.io/cms/plugins-development/guides/create-components-for-plugins
 
 # How to create components for Strapi plugins
 
@@ -10331,7 +10293,7 @@ This configuration ensures your components will be visible and editable in both 
 
 
 # How to pass data from server to admin panel with a Strapi plugin
-Source: https://docs.strapi.io/cms/plugins-development/guides/pass-data-from-server-to-admin
+Source: https://docs-next.strapi.io/cms/plugins-development/guides/pass-data-from-server-to-admin
 
 # How to pass data from server to admin panel with a Strapi plugin
 
@@ -10424,7 +10386,7 @@ This would set the `You are in the my-plugin-content-type controller!` text with
 
 
 # How to store and access data from a Strapi plugin
-Source: https://docs.strapi.io/cms/plugins-development/guides/store-and-access-data
+Source: https://docs-next.strapi.io/cms/plugins-development/guides/store-and-access-data
 
 # How to store and access data from a Strapi plugin
 
@@ -10577,7 +10539,7 @@ You can access the database via the `strapi` object which can be found in `middl
 
 
 # Plugin SDK
-Source: https://docs.strapi.io/cms/plugins-development/plugin-sdk
+Source: https://docs-next.strapi.io/cms/plugins-development/plugin-sdk
 
 # Plugin SDK reference
 
@@ -10662,7 +10624,7 @@ strapi-plugin verify
 
 
 # Plugin structure
-Source: https://docs.strapi.io/cms/plugins-development/plugin-structure
+Source: https://docs-next.strapi.io/cms/plugins-development/plugin-structure
 
 # Plugin structure
 
@@ -10697,11 +10659,9 @@ The next steps of your Strapi plugin development journey will require you to use
 
 
 # Plugins extension
-Source: https://docs.strapi.io/cms/plugins-development/plugins-extension
+Source: https://docs-next.strapi.io/cms/plugins-development/plugins-extension
 
 # Plugins extension
-
-> Existing plugins can be overriden by placing code in `/src/extensions` or using global `register/bootstrap` hooks. Instructions in this documentation cover reshaping plugin content-type schemas or server logic — altough upstream updates may break extensions.
 
 Strapi comes with plugins that can be installed from the [Marketplace](/cms/plugins/installing-plugins-via-marketplace#installing-marketplace-plugins-and-providers) or as npm packages. You can also create your own plugins (see [plugins development](/cms/plugins-development/developing-plugins)) or extend the existing ones.
 
@@ -10850,7 +10810,7 @@ module.exports = {
 
 
 # Server API for plugins
-Source: https://docs.strapi.io/cms/plugins-development/server-api
+Source: https://docs-next.strapi.io/cms/plugins-development/server-api
 
 # Server API for plugins
 
@@ -11074,7 +11034,7 @@ To interact with the content-types, use the [Document Service API](/cms/api/docu
 
 
 # Documentation plugin
-Source: https://docs.strapi.io/cms/plugins/documentation
+Source: https://docs-next.strapi.io/cms/plugins/documentation
 
 # Documentation plugin
 
@@ -11339,7 +11299,7 @@ Strapi is secured by default, which means that most of your endpoints require th
 
 
 # GraphQL plugin
-Source: https://docs.strapi.io/cms/plugins/graphql
+Source: https://docs-next.strapi.io/cms/plugins/graphql
 
 # GraphQL plugin
 
@@ -11708,7 +11668,7 @@ Using API tokens in the the GraphQL Sandbox requires adding the authorization he
 
 
 # Installing Plugins via the Marketplace
-Source: https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace
+Source: https://docs-next.strapi.io/cms/plugins/installing-plugins-via-marketplace
 
 # Using the Marketplace
 
@@ -11754,7 +11714,7 @@ Can't find a plugin that suits your use case? Feel free to [create your own](/cm
 
 
 # Sentry plugin
-Source: https://docs.strapi.io/cms/plugins/sentry
+Source: https://docs-next.strapi.io/cms/plugins/sentry
 
 # Sentry plugin
 
@@ -11852,7 +11812,7 @@ const sentryInstance = strapi
 
 
 # Project structure
-Source: https://docs.strapi.io/cms/project-structure
+Source: https://docs-next.strapi.io/cms/project-structure
 
 # Project structure
 
@@ -11861,7 +11821,7 @@ The structure of a Strapi project depends on whether the project was created wit
 
 
 # Quick Start Guide - Strapi Developer Docs
-Source: https://docs.strapi.io/cms/quick-start
+Source: https://docs-next.strapi.io/cms/quick-start
 
 # Quick Start Guide
 
@@ -12073,7 +12033,7 @@ Now that you know the basics of creating and publishing content with Strapi, we 
 
 
 # Templates
-Source: https://docs.strapi.io/cms/templates
+Source: https://docs-next.strapi.io/cms/templates
 
 # Templates
 
@@ -12110,7 +12070,7 @@ An example of what a template could look like is the .
 
 
 # Testing
-Source: https://docs.strapi.io/cms/testing
+Source: https://docs-next.strapi.io/cms/testing
 
 # Unit testing
 
@@ -12421,7 +12381,7 @@ Ran all test suites.
 
 
 # TypeScript
-Source: https://docs.strapi.io/cms/typescript
+Source: https://docs-next.strapi.io/cms/typescript
 
 # TypeScript 
 
@@ -12441,7 +12401,7 @@ Source: https://docs.strapi.io/cms/typescript
 
 
 # TypeScript development
-Source: https://docs.strapi.io/cms/typescript/development
+Source: https://docs-next.strapi.io/cms/typescript/development
 
 # TypeScript development with Strapi
 
@@ -12463,13 +12423,13 @@ Strapi provides typings on the `Strapi` class to enhance the TypeScript developm
 To experience TypeScript-based autocomplete while developing Strapi applications, you could try the following:
 
 1. Open the `./src/index.ts` file from your code editor.
-2. Declare the `strapi` argument as type `Strapi` within the global `register` method:
+2. Import the `Core` types from `@strapi/strapi` and declare the `strapi` argument as type `Core.Strapi` within the global `register` method:
 
     ```typescript title="./src/index.ts"
-    import { Strapi } from '@strapi/strapi';
+    import type { Core } from '@strapi/strapi';
 
     export default {
-      register({ strapi }: { strapi: Strapi }) {
+      register({ strapi }: { strapi: Core.Strapi }) {
         // ...
       },
     };
@@ -12566,7 +12526,7 @@ It is not necessary to repeat the `yarn` or `npm install` command after the init
 
 
 # TypeScript Guides
-Source: https://docs.strapi.io/cms/typescript/guides
+Source: https://docs-next.strapi.io/cms/typescript/guides
 
 # TypeScript guides
 
@@ -12575,7 +12535,7 @@ The following guides will help you on specific aspects of a [Typescript-based](/
 
 
 # Upgrade tool
-Source: https://docs.strapi.io/cms/upgrade-tool
+Source: https://docs-next.strapi.io/cms/upgrade-tool
 
 # Upgrade tool
 

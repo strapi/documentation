@@ -17,86 +17,203 @@
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.04);
   font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important; 
 
-  // Base style for both buttons
-  > div,
-  > button {
+  .DocSearch.DocSearch-Button:hover {
+    box-shadow: none;
+  }
+
+  .DocSearch.DocSearch-Button,
+  .kapa-widget-button {
     font-size: var(--strapi-font-size-sm);
-    line-height: var(--strapi-line-height-sm);
+    line-height: var(--strapi-font-size-sm);
     flex: 1 1 50%;
     height: 34px !important;
+  }
+
+  .DocSearch.DocSearch-Button {
     background-color: transparent;
+    width: 65%;
     border: none;
-    cursor: pointer;
-    padding: 0 12px;
+    justify-content: flex-start;
     margin: 0;
+    border-radius: 4px 0 0 4px;
+    position: relative;
+    padding-left: 12px;
+    padding-right: 0;
+    border-right: solid 1px var(--strapi-neutral-200);
+
+    &:hover {
+      color: var(--strapi-primary-600);
+      border-radius: 4px 0 0 4px;
+
+      .DocSearch-Button-Placeholder::before {
+        content:'\E30C';
+        color: var(--strapi-neutral-500) !important;
+      }
+    }
+  }
+
+  .DocSearch-Button-Placeholder {
+    font-size: var(--strapi-font-size-sm);
+    line-height: var(--strapi-line-height-sm);
+    padding-left: 0;
     color: var(--strapi-neutral-400);
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    
+    position: relative;
+
+    &::before {
+      content: '\E30C';
+      font-family: "Phosphor";
+      color: var(--strapi-neutral-500);
+      margin-right: 6px;
+      font-size: 16px;
+      position: relative;
+      top: 2px;
+    }
+
     &:hover {
       color: var(--strapi-primary-600);
     }
   }
 
-  // Specific search button (div with DocSearch classes)
-  .DocSearch.DocSearch-Button {
+  .DocSearch-Search-Icon {
+    display: none;
+  }
+
+  .DocSearch-Button-Keys {
+    display: none;
+  }
+
+  // MeiliSearch specific styles - match existing DocSearch design
+  .navbar__search {
+    width: 50%;
     border-right: solid 1px var(--strapi-neutral-200);
-    border-radius: 4px 0 0 4px;
-    justify-content: flex-start;
-
-    .DocSearch-Button-Container {
+    
+    .docsearch-btn {
+      all: unset;
       display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
       align-items: center;
+      background-color: transparent;
+      height: 34px !important;
       width: 100%;
-
-      .DocSearch-Button-Placeholder {
-        font-size: var(--strapi-font-size-sm);
-        line-height: var(--strapi-line-height-sm);
-        color: inherit;
-        position: relative;
-
-        &::before {
-          content: '\E30C';
-          font-family: "Phosphor";
-          color: var(--strapi-neutral-500);
-          margin-right: 6px;
-          font-size: 16px;
-          position: relative;
-          top: 2px;
+      cursor: pointer;
+      padding-left: 12px;
+      padding-right: 8px;
+      
+      &:hover {
+        color: var(--strapi-primary-600);
+        
+        .docsearch-btn-placeholder {
+          color: var(--strapi-primary-600);
+        }
+        
+        .docsearch-btn-placeholder::before {
+          color: var(--strapi-neutral-500) !important;
         }
       }
     }
-
-    &:hover {
-      .DocSearch-Button-Placeholder::before {
-        color: var(--strapi-primary-600);
+    
+    // Hide default MeiliSearch search icon
+    .docsearch-btn-icon-container {
+      display: none;
+    }
+    
+    // Style placeholder with custom Phosphor icon
+    .docsearch-btn-placeholder {
+      font-size: var(--strapi-font-size-sm);
+      line-height: var(--strapi-line-height-sm);
+      color: var(--strapi-neutral-400);
+      font-weight: 500;
+      flex: 1;
+      text-align: left;
+      
+      // Add custom Phosphor search icon
+      &::before {
+        content: '\E30C';
+        font-family: "Phosphor";
+        color: var(--strapi-neutral-500);
+        margin-right: 6px;
+        font-size: 16px;
+        position: relative;
+        top: 2px;
       }
+    }
+    
+    // Hide keyboard shortcuts completely
+    .docsearch-btn-keys {
+      display: none;
     }
   }
 
   button.kapa-widget-button {
-    border-radius: 0 4px 4px 0;
+    border: none;
+    padding: 0 0 0 12px;
+    width: 50%;
+    height: 36px;
+    overflow: visible;
+    cursor: pointer;
+    position: relative;
+    border-radius: 0 6px 6px 0;
+    background: transparent;
+    text-align: left;
+
+    // Inherit font & color from ancestor
+    color: var(--strapi-neutral-400);
+    font: inherit;
+    font-size: .95rem;
+    font-weight: 500;
+
+    // Normalize line-height. Cannot be changed from normal in Firefox 4+
+    line-height: normal;
+
+    // Correct font smoothing for webkit
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    // Correct inability to style clickable input types in iOS
+    -webkit-appearance: none;
     
+    // Remove excess padding and border in Firefox 4+
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+
+    svg {
+      position: relative;
+      left: 6px;
+      top: 3px;
+      width: 18px;
+      height: 18px;
+      fill: var(--strapi-neutral-500);
+    }
+
     .kapa-widget-button-text {
-      display: flex;
-      align-items: center;
+      position: relative;
       font-size: var(--strapi-font-size-sm);
       line-height: var(--strapi-line-height-sm);
-      color: inherit;
+      top: 1px;
 
       i {
         margin-right: 6px;
         color: var(--strapi-neutral-500) !important;
-        font-size: 16px;
-        position: relative;
-        top: 1px;
+      }
+
+      @media screen and (max-width: 996px){
+        left: 12px;
       }
     }
 
-    &:hover {
-      .kapa-widget-button-text i {
-        color: var(--strapi-primary-600) !important;
+    &:hover,
+    &:active {
+      .kapa-widget-button-text {
+        color: var(--strapi-primary-600);
+      }
+      button {
+        svg {
+          fill: var(--strapi-primary-600);
+        }
       }
     }
   }
@@ -113,23 +230,120 @@
   }
 }
 
+// Responsive behavior - mobile view
 @media (max-width: 768px) {
   .my-custom-search-bar {
-    .kapa-widget-button-text {
-      display: none;
+    // Reset positioning for mobile sidebar context
+    position: static;
+    top: auto;
+    left: 8px !important;
+    margin: 16px 16px 8px 16px;
+    max-width: none;
+    width: auto;
+    border-bottom: solid 1px var(--strapi-neutral-200) !important;
+    padding-bottom: 8px !important;
+    
+    // Two-button layout: search + Ask AI
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    
+    .navbar__search {
+      border-right: solid 1px var(--strapi-neutral-200);
+      width: 50%;
+      height: 40px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      
+      .docsearch-btn {
+        border-radius: 4px 0 0 4px;
+        width: 100%;
+        height: 40px;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0 12px;
+        
+        .docsearch-btn-placeholder {
+          display: block;
+          
+          &::before {
+            content: '\E30C';
+            font-family: "Phosphor";
+            color: var(--strapi-neutral-500);
+            margin-right: 6px;
+            font-size: 16px;
+            position: relative;
+            top: 2px;
+          }
+        }
+        
+        .docsearch-btn-keys {
+          display: none;
+        }
+        
+        // Hide default MeiliSearch icon on mobile
+        .docsearch-btn-icon-container {
+          display: none;
+        }
+      }
     }
-    button.kapa-widget-button {
-      border-radius: 50%;
-      padding: 0;
-      padding-right: 4px;
+    
+    .kapa-widget-button {
+      border-radius: 0 4px 4px 0;
+      width: 50%;
+      height: 40px;
+      padding: 0 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      
+      .kapa-widget-button-text {
+        display: flex;
+        align-items: center;
+        font-size: var(--strapi-font-size-sm);
+        
+        i {
+          margin-right: 6px;
+        }
+      }
+      
+      svg {
+        position: static;
+        width: 16px;
+        height: 16px;
+        fill: var(--strapi-neutral-500);
+        margin-right: 6px;
+      }
     }
   }
 }
 
+// Dark mode support
 @include dark {
   .my-custom-search-bar {
     background: var(--strapi-neutral-0);
     border: var(--strapi-input-border);
     color: var(--strapi-dark-100);
+    
+    .navbar__search {
+      .docsearch-btn {
+        background: transparent;
+        color: var(--strapi-dark-100);
+        
+        .docsearch-btn-placeholder {
+          color: var(--strapi-dark-100);
+        }
+        
+        &:hover {
+          .docsearch-btn-placeholder {
+            color: var(--strapi-primary-600);
+          }
+        }
+      }
+    }
   }
 }
