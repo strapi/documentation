@@ -40,6 +40,7 @@ function SearchBarContent() {
           return items.map((item) => {
             let section = item.hierarchy_lvl0 || 'Documentation';
             
+            // Override section based on URL path
             if (item.url && item.url.includes('/cms/')) {
               section = 'CMS';
             } else if (item.url && item.url.includes('/cloud/')) {
@@ -48,6 +49,7 @@ function SearchBarContent() {
             
             return {
               ...item,
+              // Remove domain from URLs to make them relative
               url: item.url.replace('https://docs-next.strapi.io', ''),
               hierarchy: {
                 lvl0: section,
@@ -68,6 +70,9 @@ function SearchBarContent() {
         },
 
         placeholder: 'Search documentation...',
+        // Disable all hotkeys to prevent conflicts with Kapa.ai widget
+        searchHotkeys: [],
+
         translations: {
           button: {
             buttonText: 'Search',
@@ -135,6 +140,85 @@ function SearchBarContent() {
       }
     };
   }, [colorMode, siteConfig]);
+
+  /**
+   * Block 'S' key globally to prevent conflicts between MeiliSearch and Kapa.ai widget.
+   * 
+   * Problem: Users reported that pressing 'S' while in the Kapa modal
+   * triggers the opening of the MeiliSearch modal.
+   * 
+   * Solution: Intercept all 'S' key presses in the capture phase (before any widget sees them),
+   * then manually insert the character only in text inputs where it's expected.
+   * 
+   * Note: Kapa.ai uses a Shadow DOM, so we need special handling to detect and insert
+   * characters into its input field (shadowRoot.activeElement).
+   */
+  useEffect(() => {
+    const blockSKey = (e) => {
+      if (e.key === 's' || e.key === 'S') {
+        // Always block the original event first to prevent both MeiliSearch and Kapa.ai from seeing it
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        // Case 1: Allow 'S' in regular input fields (outside Shadow DOM)
+        if (e.target.tagName === 'INPUT' || 
+            e.target.tagName === 'TEXTAREA' ||
+            e.target.isContentEditable) {
+          
+          // Manually insert the character at cursor position
+          const char = e.shiftKey ? 'S' : 's';
+          if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+            const value = e.target.value;
+            e.target.value = value.substring(0, start) + char + value.substring(end);
+            e.target.selectionStart = e.target.selectionEnd = start + 1;
+            // Trigger input event so frameworks can detect the change
+            e.target.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+          return false;
+        }
+
+        // Case 2: Allow 'S' in Kapa.ai widget input (inside Shadow DOM)
+        const kapaContainer = document.getElementById('kapa-widget-container');
+        if (kapaContainer && kapaContainer.shadowRoot) {
+          // Check which element has focus inside the Shadow DOM
+          const shadowActiveElement = kapaContainer.shadowRoot.activeElement;
+          if (shadowActiveElement && 
+              (shadowActiveElement.tagName === 'INPUT' || 
+               shadowActiveElement.tagName === 'TEXTAREA' ||
+               shadowActiveElement.isContentEditable)) {
+            
+            // Manually insert the character at cursor position in Shadow DOM input
+            const char = e.shiftKey ? 'S' : 's';
+            if (shadowActiveElement.tagName === 'INPUT' || shadowActiveElement.tagName === 'TEXTAREA') {
+              const start = shadowActiveElement.selectionStart;
+              const end = shadowActiveElement.selectionEnd;
+              const value = shadowActiveElement.value;
+              shadowActiveElement.value = value.substring(0, start) + char + value.substring(end);
+              shadowActiveElement.selectionStart = shadowActiveElement.selectionEnd = start + 1;
+              
+              // Trigger events so Kapa.ai can detect the change
+              shadowActiveElement.dispatchEvent(new Event('input', { bubbles: true }));
+              shadowActiveElement.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            return false;
+          }
+        }
+        
+        // Case 3: Block 'S' everywhere else (prevent any modal from opening)
+        return false;
+      }
+    };
+
+    // Use capture phase to intercept the event before it reaches any widget
+    document.addEventListener('keydown', blockSKey, { capture: true, passive: false });
+
+    return () => {
+      document.removeEventListener('keydown', blockSKey, { capture: true });
+    };
+  }, []);
 
   return (
     <div className="navbar__search" ref={dropdownRef}>
