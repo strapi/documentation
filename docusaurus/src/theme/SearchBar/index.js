@@ -48,7 +48,7 @@ function SearchBarContent() {
             
             return {
               ...item,
-              url: item.url.replace('https://docs.strapi.io', ''),
+              url: item.url.replace('https://docs-next.strapi.io', ''),
               hierarchy: {
                 lvl0: section,
                 lvl1: item.hierarchy_lvl0,
