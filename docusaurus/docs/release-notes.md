@@ -27,6 +27,278 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.10.0-beta.0
+
+<Icon name="sparkle" />v6.10.0 (currently in beta) introduces a new search experience powered by [MeiliSearch](https://www.meilisearch.com).
+
+We hope you'll like it! Feel free to [share feedback](https://forms.gle/ei7p4koru8RaUCDB6).
+
+## 6.9.3
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Strapi AI for Content-Type Builder](https://github.com/strapi/documentation/pull/2737)
+- [Strapi AI for Media Library](https://github.com/strapi/documentation/pull/2751)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add information about disabling Strapi AI](https://github.com/strapi/documentation/pull/2749)
+- [Fix `secrets.encryptionKey` in API tokens docs](https://github.com/strapi/documentation/pull/2743)
+
+#### Cloud
+- [Save & deploy for domains](https://github.com/strapi/documentation/pull/2746)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/laurenskling" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/6753724?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="laurenskling"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/remidej" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8087692?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="remidej"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.9.2
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [fix: proxy breaking change in server example](https://github.com/strapi/documentation/pull/2731)
+
+#### Cloud
+- [Fix reactivate subscription errors](https://github.com/strapi/documentation/pull/2734)
+- [Save & deploy on branch change](https://github.com/strapi/documentation/pull/2730)
+- [Save & deploy Cloud environment variables](https://github.com/strapi/documentation/pull/2729)
+- [Add note about cloud project reactivation](https://github.com/strapi/documentation/pull/2701)
+
+#### Repository
+- [Fix badges display & positioning](https://github.com/strapi/documentation/pull/2740)
+- [Automatically add proper `source:` and `pr:` labels to PRs](https://github.com/strapi/documentation/pull/2735)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Aurelsicoko" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4144726?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Aurelsicoko"/>
+</a>
+<a href="https://github.com/adabaed" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/40322710?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="adabaed"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/kibwashere" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/3426213?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="kibwashere"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.9.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Fix Strapi TypeScript import example](https://github.com/strapi/documentation/pull/2721)
+- [Explain `unique` parameter behavior with Draft & Publish](https://github.com/strapi/documentation/pull/2716)
+- [Add session management documentation](https://github.com/strapi/documentation/pull/2709)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add additional context to the admin locales and translations page](https://github.com/strapi/documentation/pull/2717)
+- [Fix CMS Quick Start for NPM compatibility](https://github.com/strapi/documentation/pull/2710)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/dumb-programmer" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/55425610?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="dumb-programmer"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/nclsndr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5462986?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="nclsndr"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.9.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Fix Strapi TypeScript import example](https://github.com/strapi/documentation/pull/2721)
+- [Explain `unique` parameter behavior with Draft & Publish](https://github.com/strapi/documentation/pull/2716)
+- [Add session management documentation](https://github.com/strapi/documentation/pull/2709)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add additional context to the admin locales and translations page](https://github.com/strapi/documentation/pull/2717)
+- [Fix CMS Quick Start for NPM compatibility](https://github.com/strapi/documentation/pull/2710)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/dumb-programmer" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/55425610?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="dumb-programmer"/>
+</a>
+<a href="https://github.com/jhoward1994" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/48524071?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="jhoward1994"/>
+</a>
+<a href="https://github.com/nclsndr" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/5462986?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="nclsndr"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.9.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add new "TL;DR" component to all relevant pages](https://github.com/strapi/documentation/pull/2702)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Live Preview improvements](https://github.com/strapi/documentation/pull/2690)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update docker.md](https://github.com/strapi/documentation/pull/2707)
+- [Fix old Strapi code base links wrongly referencing master branch](https://github.com/strapi/documentation/pull/2704)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+<a href="https://github.com/the-clint" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/10893868?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="the-clint"/>
+</a>
+</div>
+<br/>
+<br/>
+
+## 6.8.1
+
+<br />
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix typo in Content-type definition for credentials in TypeScript docs code example](https://github.com/strapi/documentation/pull/2697)
+
+#### Repository
+- [Automatically tag PRs: `internal` or `contribution`](https://github.com/strapi/documentation/pull/2691)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/busybox11" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/29630035?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="busybox11"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.8.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Contextual AI for codeblocks](https://github.com/strapi/documentation/pull/2675)
+- [Add AI Toolbar](https://github.com/strapi/documentation/pull/2673)
+- [Add starter questions to Kapa AI modal](https://github.com/strapi/documentation/pull/2672)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Fix the strapi/strapi contributing link](https://github.com/strapi/documentation/pull/2686)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/guptadeepak8" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/91896859?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="guptadeepak8"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.7.0
 
 <br />
