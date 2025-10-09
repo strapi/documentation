@@ -1,17 +1,19 @@
 {
   "cms": {
     "Getting Started": 1,
-    "Features": 2,
-    "API": 3,
-    "APIs": 3,
-    "Configurations": 4,
-    "Development": 5,
-    "TypeScript": 6,
-    "CLI": 7,
-    "Plugins": 8,
-    "Plugins Development": 8,
-    "Migration": 9,
-    "Data Management": 10
+    "FAQ": 2,
+    "Features": 3,
+    "Release Notes": 4,
+    "APIs": 5,
+    "Configurations": 6,
+    "Development": 7,
+    "TypeScript": 8,
+    "CLI": 9,
+    "Plugins": 10,
+    "Plugins Development": 10,
+    "Migration": 11,
+    "Data Management": 12,
+    "Advanced Reference": 99
   },
   "cloud": {
     "Getting Started": 20,
@@ -20,5 +22,5 @@
     "CLI": 23,
     "Advanced": 24
   },
-  "default": 99
+  "default": 100
 }

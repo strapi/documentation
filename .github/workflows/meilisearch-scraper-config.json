@@ -2,6 +2,14 @@
   "index_uid": "strapi-docs",
   "start_urls": [
     {
+      "url": "https://docs-next.strapi.io/cms/backend-customization/examples",
+      "selectors_key": "advanced-reference"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/api/query-engine",
+      "selectors_key": "advanced-reference"
+    },
+    {
       "url": "https://docs-next.strapi.io/cms/getting-started",
       "selectors_key": "getting-started"
     },
@@ -277,6 +285,17 @@
         "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
         "global": true,
         "default_value": "Release Notes"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "advanced-reference": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Advanced Reference"
       },
       "lvl1": "h1",
       "lvl2": "h2",
