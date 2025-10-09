@@ -11,6 +11,7 @@ tags:
 
 import ScreenshotNumberReference from '/src/components/ScreenshotNumberReference.jsx';
 import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-list.md';
+import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
 
 # Media Library
 
@@ -42,18 +43,21 @@ In the admin panel, some Media Library settings are available via the Global Set
 **Path to configure the feature:** <Icon name="gear-six" /> Settings > Global Settings > Media Library.
 
 1. Define your chosen new Media Library settings:
+
     | Setting name   | Instructions   | Default value |
     | -------------------------- | ----------------------- |---------------|
-    | Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
+    | Generate AI captions and alt texts automatically on upload! | Enabling this option will turn on [AI&#8209;powered metadata generation](#ai-powered-metadata-generation) <GrowthBadge /> | True |
+    Responsive friendly upload | Enabling this option will generate multiple formats (small, medium and large) of the uploaded asset.<br/>Default sizes for each format can be [configured through the code](#responsive-images). | True          |
     | Size optimization          | Enabling this option will reduce the image size and slightly reduce its quality.                     | True          |
     | Auto orientation           | Enabling this option will automatically rotate the image according to EXIF orientation tag.          | False         |
+
 2. Click on the **Save** button.
 
 <ThemedImage
   alt="Media Library settings"
   sources={{
-    light: '/img/assets/settings/settings_media-library.png',
-    dark: '/img/assets/settings/settings_media-library_DARK.png',
+    light: '/img/assets/settings/settings_media-library-2.png',
+    dark: '/img/assets/settings/settings_media-library-2_DARK.png',
   }}
 />
 
@@ -516,6 +520,23 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
     dark: '/img/assets/media-library/media-library_add-new-assets_DARK.png',
   }}
 />
+
+#### Automatically generating metadata with Strapi AI <NewBadge /> {#ai-powered-metadata-generation}
+<GrowthBadge />
+
+[When enabled](/cms/configurations/admin-panel#strapi-ai), Strapi AI automatically generates alternative text and captions for images uploaded to the Media Library, helping you improve content accessibility and SEO. A modal window displays the AI-generated alternative text and caption, allowing you to review the metadata and modify it if needed:
+
+<ThemedImage
+  alt="AI metadata review modal"
+  sources={{
+    light: '/img/assets/media-library/media-library_ai-metadata.png',
+    dark: '/img/assets/media-library/media-library_ai-metadata_DARK.png',
+  }}
+/>
+
+AI metadata generation only works with images, not files or videos. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
+
+<StrapiAiCredits />
 
 ### Managing individual assets {#managing-assets}
 
