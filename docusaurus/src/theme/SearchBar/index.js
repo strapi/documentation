@@ -119,6 +119,27 @@ function SearchBarContent() {
         getMissingResultsUrl: ({ query }) => {
           return `https://github.com/strapi/documentation/issues/new?title=Missing+search+results+for+${query}`;
         },
+
+        // Track clicks for Meilisearch Cloud analytics
+        onItemClick: ({ item, event }) => {
+          // Send click event to Meilisearch Cloud analytics
+          fetch(`${siteConfig.customFields.meilisearch.host}/events`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${siteConfig.customFields.meilisearch.apiKey}`
+            },
+            body: JSON.stringify({
+              eventType: 'click',
+              eventName: 'Documentation Search Result Clicked',
+              indexUid: siteConfig.customFields.meilisearch.indexUid,
+              objectId: item.objectID,
+              position: item.__position
+            })
+          }).catch((error) => {
+            console.error('Failed to send analytics event:', error);
+          });
+        },
       });
 
       searchInstanceRef.current = search;
