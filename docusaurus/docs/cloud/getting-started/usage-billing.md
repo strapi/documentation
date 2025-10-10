@@ -47,7 +47,7 @@ Commercial use means any project made for financial gain, including:
 - Accepting or receiving payment to create, update, or host the site
 - Advertising, promoting, or selling products or services
 - Hosting or serving advertisements for any 3rd party
-For more information, visit [strapi.io/cloud-legal](strapi.io/cloud-legal)
+For more information, visit [Strapi cloud-legal](https://strapi.io/cloud-legal)
 :::
 
 :::info Scale-to-zero and cold start on the Free plan
