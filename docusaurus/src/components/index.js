@@ -8,4 +8,5 @@ export * from './LinkWithArrow/LinkWithArrow';
 export * from './SearchBar/SearchBar';
 export * from './SideBySide';
 export * from './IdentityCard';
+export * from './NewsTicker/NewsTicker';
 export { default as HomepageAIButton } from './HomepageAIButton/HomepageAIButton';
