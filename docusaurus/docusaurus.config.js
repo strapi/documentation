@@ -109,10 +109,10 @@ const config = {
       'data-modal-inner-max-width': '100%',
       async: true,
     },
-    {
-      src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
-      async: true,
-    },
+    // {
+    //   src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,
+    //   async: true,
+    // },
   ],
   stylesheets: [
     {
