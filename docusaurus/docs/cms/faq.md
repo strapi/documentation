@@ -46,6 +46,15 @@ With the release of the Strapi 3.0 beta version a fundamental change occurred in
 
 Strapi has released the Admin & Permissions (RBAC - Role-Based Access Control) that does allow for some degree of control over what users can access within the admin panel and includes some field level permissions. You can also give roles specific permissions for things like content-types, single types, plugins, and settings.
 
+## Why does the admin login fail when I use HTTP instead of HTTPS?
+
+Starting from v5.24.0, the Strapi admin panel relies on secure, HTTP-only cookies to store session data. Browsers refuse to store or send these cookies over insecure HTTP connections, which means the admin login cannot complete if the panel is served without HTTPS. To restore access:
+
+- Terminate TLS in front of Strapi (for example with Nginx, Caddy, Traefik, a load balancer, or your cloud provider) and expose the admin panel through HTTPS.
+- Ensure the proxy forwards the appropriate headers (such as `X-Forwarded-Proto`) so Strapi can detect the secure connection.
+
+Local development using the built-in Strapi server continues to work because the development configuration does not set the cookies as secure.
+
 ## Why are my application's database and uploads resetting on PaaS-type services?
 
 If you used `--quickstart` to create your Strapi project, by default this uses the SQLite database. PaaS systems (Heroku, DigitalOcean Apps, Google App Engine, etc.) file systems are typically <ExternalLink to="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem" text="ephemeral"/> or read-only meaning that each time a dyno (container) is reset all filesystem changes are lost. And since both SQLite and local uploads are stored on the filesystem, any changes made to these since the last dyno reset will be deleted. Typically dynos are reset at least once a day, and in most cases multiple times per day or when new code is pushed to these services.
