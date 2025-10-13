@@ -615,7 +615,16 @@ Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see 
 - Cloud specific feature:
   - Backups refers to the automatic backups of Strapi Cloud projects (see [Backups documentation](/cloud/projects/settings#backups) for more information on the feature).
   - Custom domains refer to the ability to define a custom domain for your Strapi Cloud (see [Custom domains](/cloud/projects/settings#connecting-a-custom-domain)).
-  - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments) documentation for more information on the feature).
+  - Environments refers to the number of environments included in the plan on top of the default production environment (see [Environments](/cloud/projects/settings#environments) documentation for more information on the feature). 
+:::
+
+:::caution The Free Plan is for personal, non-commercial use only
+Commercial use means any project made for financial gain, including:
+- Accepting or processing payments on your site
+- Accepting or receiving payment to create, update, or host the site
+- Advertising, promoting, or selling products or services
+- Hosting or serving advertisements for any 3rd party
+For more information, visit [Strapi Cloud-Legal](https://strapi.io/cloud-legal)
 :::
 
 :::info Scale-to-zero and cold start on the Free plan
