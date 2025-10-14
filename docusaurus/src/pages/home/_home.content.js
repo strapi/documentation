@@ -18,7 +18,7 @@ export default {
     },
     {
       icon: 'newspaper-clipping',
-      text: 'New docs updates - See what\'s new this week',
+      text: 'v6.9.3 is out - See what\'s new this week',
       link: '/release-notes#693',
     },
   ],
