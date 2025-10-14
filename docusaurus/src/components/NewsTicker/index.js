@@ -6,6 +6,7 @@ import Icon from '@site/src/components/Icon';
 const NewsTicker = ({ newsItems, interval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const handleNavigation = (newIndex) => {
     const isWrapping = 
@@ -25,29 +26,36 @@ const NewsTicker = ({ newsItems, interval = 5000 }) => {
 
   // Auto-rotation effect
   useEffect(() => {
-    if (newsItems.length <= 1) return;
+    if (isPaused || newsItems.length <= 1) {
+      return; // Do nothing if paused or not enough items
+    }
 
     const timer = setInterval(() => {
       handleNavigation((currentIndex + 1) % newsItems.length);
     }, interval);
 
     return () => clearInterval(timer);
-  }, [currentIndex, newsItems, interval]);
+  }, [isPaused, currentIndex, newsItems, interval]);
 
   if (!newsItems || newsItems.length === 0) {
     return null;
   }
 
   return (
-    <div className={clsx(styles.newsTicker, 'news-ticker-container', isFading && styles.isFading)}>
+    <div 
+      className={clsx(styles.newsTicker, 'news-ticker-container', isFading && styles.isFading)}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className={styles.contentViewport}>
         <div className={styles.filmStrip} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {newsItems.map((item, index) => (
             <div key={index} className={styles.newsItem}>
-                          <a href={item.link} target="_blank" rel="noopener noreferrer">
-                            {item.icon && <Icon name={item.icon} classes="ph-fill" />}
-                            <span>{item.text}</span>
-                          </a>            </div>
+              <a href={item.link} target="_blank" rel="noopener noreferrer">
+                {item.icon && <Icon name={item.icon} classes="ph-fill" />}
+                <span>{item.text}</span>
+              </a>
+            </div>
           ))}
         </div>
       </div>
