@@ -28,23 +28,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.75rem;
-
-  i { // Style for the icon
-    font-size: 1.25rem;
-    color: var(--ifm-color-primary);
-    flex-shrink: 0;
-  }
 
   a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     font-weight: 500;
     color: var(--ifm-font-color-base);
     text-decoration: none;
     white-space: normal;
     text-align: left;
+    transition: color 0.3s ease;
 
-    &:hover {
-      text-decoration: underline;
+    i {
+      font-size: 1.25rem;
+      color: var(--ifm-font-color-base);
+      flex-shrink: 0;
+      transition: color 0.3s ease;
+    }
+
+    &:hover,
+    &:hover i {
+      color: var(--ifm-color-primary);
     }
   }
 }
