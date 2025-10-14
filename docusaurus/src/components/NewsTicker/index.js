@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.scss';
 import clsx from 'clsx';
 import Icon from '@site/src/components/Icon';
@@ -6,60 +6,58 @@ import Icon from '@site/src/components/Icon';
 const NewsTicker = ({ newsItems, interval = 5000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
-  const intervalRef = useRef(null);
 
-  const startRotation = useCallback(() => {
-    if (newsItems.length <= 1) return;
-    intervalRef.current = setInterval(() => {
+  const handleNavigation = (newIndex) => {
+    const isWrapping = 
+      (currentIndex === newsItems.length - 1 && newIndex === 0) ||
+      (currentIndex === 0 && newIndex === newsItems.length - 1);
+
+    if (isWrapping) {
       setIsFading(true);
       setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % newsItems.length);
+        setCurrentIndex(newIndex);
         setIsFading(false);
-      }, 500); // Corresponds to the fade animation duration
-    }, interval);
-  }, [newsItems, interval]);
+      }, 250); // Half of the fade animation duration
+    } else {
+      setCurrentIndex(newIndex);
+    }
+  };
 
-  const resetRotation = useCallback(() => {
-    clearInterval(intervalRef.current);
-    startRotation();
-  }, [startRotation]);
-
+  // Auto-rotation effect
   useEffect(() => {
-    startRotation();
-    return () => clearInterval(intervalRef.current);
-  }, [startRotation]);
+    if (newsItems.length <= 1) return;
+
+    const timer = setInterval(() => {
+      handleNavigation((currentIndex + 1) % newsItems.length);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [currentIndex, newsItems, interval]);
 
   if (!newsItems || newsItems.length === 0) {
     return null;
   }
 
-  const handleDotClick = (index) => {
-    if (index === currentIndex) return;
-    setIsFading(true);
-    setTimeout(() => {
-      setCurrentIndex(index);
-      setIsFading(false);
-      resetRotation();
-    }, 500);
-  };
-
-  const currentItem = newsItems[currentIndex];
-
   return (
-    <div className={styles.newsTicker}>
-      <div className={clsx(styles.newsItem, isFading && styles.fading)}>
-        {currentItem.icon && <Icon name={currentItem.icon} classes="ph-fill" />}
-        <a href={currentItem.link} target="_blank" rel="noopener noreferrer">
-          {currentItem.text}
-        </a>
+    <div className={clsx(styles.newsTicker, isFading && styles.isFading)}>
+      <div className={styles.filmStrip} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+        {newsItems.map((item, index) => (
+          <div key={index} className={styles.newsItem}>
+            {item.icon && <Icon name={item.icon} classes="ph-fill" />}
+            <a href={item.link} target="_blank" rel="noopener noreferrer">
+              {item.text}
+            </a>
+          </div>
+        ))}
       </div>
+
       {newsItems.length > 1 && (
         <div className={styles.dotsContainer}>
           {newsItems.map((_, index) => (
             <button
               key={index}
               className={clsx(styles.dot, { [styles.active]: currentIndex === index })}
-              onClick={() => handleDotClick(index)}
+              onClick={() => handleNavigation(index)}
               aria-label={`Go to news item ${index + 1}`}
             />
           ))}
