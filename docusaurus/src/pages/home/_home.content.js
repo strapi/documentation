@@ -5,6 +5,23 @@ export default {
     title: 'Strapi 5 Docs',
     description: 'Get set up in minutes to build any project in hours instead of weeks.',
   },
+  newsTicker: [
+    {
+      icon: 'star',
+      text: 'Our v5.0 is now in beta! Check out the new features.',
+      link: '/docs/whats-new',
+    },
+    {
+      icon: 'newspaper',
+      text: 'We just released a new guide on Cloud deployment.',
+      link: '/docs/cloud/getting-started',
+    },
+    {
+      icon: 'chats-circle',
+      text: 'Join our community on Discord!',
+      link: 'https://discord.gg/strapi',
+    },
+  ],
   carousel: [
     {
       title: "Can't wait to use Strapi?",

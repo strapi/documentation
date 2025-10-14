@@ -1,0 +1,60 @@
+.newsTicker {
+  background-color: var(--ifm-background-color);
+  padding: 0.75rem 2rem; // Increased horizontal padding
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between; // Pushes content and dots apart
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.newsItem {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  // Allow the news item to take up available space
+  flex-grow: 1;
+  justify-content: center; // Center the item content (icon + text)
+
+  &.fading {
+    opacity: 0;
+  }
+
+  i { // Style for the icon
+    font-size: 1.25rem;
+    color: var(--ifm-color-primary);
+  }
+
+  a {
+    font-weight: 500;
+    color: var(--ifm-font-color-base);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.dotsContainer {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--ifm-color-emphasis-300);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.active {
+    background-color: var(--ifm-color-primary);
+  }
+}
