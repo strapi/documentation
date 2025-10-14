@@ -2,12 +2,9 @@
   background-color: var(--ifm-background-color);
   padding: 0.75rem 2rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 1rem;
-  overflow: hidden; // This is the viewport for the film strip
-  position: relative;
+  gap: 1.5rem;
   transition: opacity 0.25s ease-in-out;
 
   &.isFading {
@@ -15,14 +12,19 @@
   }
 }
 
+.contentViewport {
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
 .filmStrip {
   display: flex;
-  width: 100%;
   transition: transform 0.5s ease-in-out;
 }
 
 .newsItem {
-  flex: 0 0 100%; // Each item takes the full width of the container
+  flex: 0 0 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,12 +33,15 @@
   i { // Style for the icon
     font-size: 1.25rem;
     color: var(--ifm-color-primary);
+    flex-shrink: 0;
   }
 
   a {
     font-weight: 500;
     color: var(--ifm-font-color-base);
     text-decoration: none;
+    white-space: normal;
+    text-align: left;
 
     &:hover {
       text-decoration: underline;
@@ -47,9 +52,7 @@
 .dotsContainer {
   display: flex;
   gap: 0.5rem;
-  // Position dots absolutely to not interfere with the film strip
-  position: absolute;
-  right: 2rem;
+  flex-shrink: 0;
 }
 
 .dot {
@@ -64,5 +67,18 @@
 
   &.active {
     background-color: var(--ifm-color-primary);
+  }
+}
+
+// Mobile-specific adjustments
+@media (max-width: 996px) {
+  .newsTicker {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 1rem;
+  }
+
+  .newsItem {
+    justify-content: flex-start;
   }
 }
