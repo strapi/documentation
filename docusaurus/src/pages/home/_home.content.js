@@ -13,12 +13,12 @@ export default {
     },
     {
       icon: 'hand-heart',
-      text: 'Feedback wanted! Take our documentation survey',
+      text: 'Feedback wanted: Take our documentation survey',
       link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
     },
     {
       icon: 'newspaper-clipping',
-      text: 'New docs updates, see what\'s new this week',
+      text: 'New docs updates - See what\'s new this week',
       link: '/release-notes#693',
     },
   ],
