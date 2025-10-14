@@ -44,11 +44,10 @@ const NewsTicker = ({ newsItems, interval = 5000 }) => {
         <div className={styles.filmStrip} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {newsItems.map((item, index) => (
             <div key={index} className={styles.newsItem}>
-              {item.icon && <Icon name={item.icon} classes="ph-fill" />}
-              <a href={item.link} target="_blank" rel="noopener noreferrer">
-                {item.text}
-              </a>
-            </div>
+                          <a href={item.link} target="_blank" rel="noopener noreferrer">
+                            {item.icon && <Icon name={item.icon} classes="ph-fill" />}
+                            <span>{item.text}</span>
+                          </a>            </div>
           ))}
         </div>
       </div>

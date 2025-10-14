@@ -7,19 +7,19 @@ export default {
   },
   newsTicker: [
     {
-      icon: 'star',
-      text: 'Our v5.0 is now in beta! Check out the new features.',
-      link: '/docs/whats-new',
+      icon: 'sparkle',
+      text: 'New search experience! Try it on docs-next.strapi.io',
+      link: 'https://docs-next.strapi.io',
     },
     {
-      icon: 'newspaper',
-      text: 'We just released a new guide on Cloud deployment.',
-      link: '/docs/cloud/getting-started',
+      icon: 'hand-heart',
+      text: 'Feedback wanted! Take our documentation survey',
+      link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
     },
     {
-      icon: 'chats-circle',
-      text: 'Join our community on Discord!',
-      link: 'https://discord.gg/strapi',
+      icon: 'newspaper-clipping',
+      text: 'New docs updates, see what\'s new this week',
+      link: '/release-notes#693',
     },
   ],
   carousel: [
