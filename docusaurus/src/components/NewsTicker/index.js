@@ -39,7 +39,7 @@ const NewsTicker = ({ newsItems, interval = 5000 }) => {
   }
 
   return (
-    <div className={clsx(styles.newsTicker, isFading && styles.isFading)}>
+    <div className={clsx(styles.newsTicker, 'news-ticker-container', isFading && styles.isFading)}>
       <div className={styles.contentViewport}>
         <div className={styles.filmStrip} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {newsItems.map((item, index) => (

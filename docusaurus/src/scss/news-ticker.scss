@@ -1,0 +1,9 @@
+.news-ticker-container {
+  --news-ticker-hover-color: var(--strapi-primary-600);
+  --news-ticker-active-dot-color: var(--strapi-primary-600);
+}
+
+[data-theme='dark'] .news-ticker-container {
+  --news-ticker-hover-color: var(--strapi-secondary-500);
+  --news-ticker-active-dot-color: var(--strapi-secondary-500);
+}
