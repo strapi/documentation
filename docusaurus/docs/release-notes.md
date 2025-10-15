@@ -27,6 +27,53 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+
+## 6.9.4
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### Cloud
+- [Update content for passwordless authentication](https://github.com/strapi/documentation/pull/2765)
+
+#### Repository
+- [Update usage-billing.md with Free Plan details](https://github.com/strapi/documentation/pull/2762)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Cloud
+- [Display Subscription ID in the project settings](https://github.com/strapi/documentation/pull/2761)
+
+#### Repository
+- [Add FAQ entry for MCP](https://github.com/strapi/documentation/pull/2754)
+- [Update Homepage customization page to add layout customization tips](https://github.com/strapi/documentation/pull/2741)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/mathildeleg" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/82765709?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mathildeleg"/>
+</a>
+<a href="https://github.com/mazzucchelli" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/12052670?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mazzucchelli"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.9.3
 
 <br />
