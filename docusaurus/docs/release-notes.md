@@ -27,30 +27,22 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
-
 ## 6.9.4
 
 <br />
-### <Icon name='pen-nib' /> Updated content
-
-<br />
-
-#### Cloud
-- [Update content for passwordless authentication](https://github.com/strapi/documentation/pull/2765)
-
-#### Repository
-- [Update usage-billing.md with Free Plan details](https://github.com/strapi/documentation/pull/2762)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
 <br />
 
 #### Cloud
+- [Update Cloud docs for passwordless authentication](https://github.com/strapi/documentation/pull/2765)
 - [Display Subscription ID in the project settings](https://github.com/strapi/documentation/pull/2761)
+- [Update Usage & Billing with Free Plan details](https://github.com/strapi/documentation/pull/2762)
 
-#### Repository
-- [Add FAQ entry for MCP](https://github.com/strapi/documentation/pull/2754)
+#### CMS
 - [Update Homepage customization page to add layout customization tips](https://github.com/strapi/documentation/pull/2741)
+- [Add FAQ entry for MCP](https://github.com/strapi/documentation/pull/2754)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
