@@ -754,24 +754,24 @@ Some API tests benefit from having a known set of documents preloaded. You can e
 
 3. Run your tests with seeding enabled:
 
-  <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
+    <Tabs groupId="yarn-npm">
+    <TabItem value="yarn" label="Yarn">
 
-    ```bash
-    TEST_SEED=true yarn test
-    ```
+      ```bash
+      TEST_SEED=true yarn test
+      ```
 
-  </TabItem>
+    </TabItem>
 
-  <TabItem value="npm" label="NPM">
+    <TabItem value="npm" label="NPM">
 
-    ```bash
-    TEST_SEED=true npm run test
-    ```
+      ```bash
+      TEST_SEED=true npm run test
+      ```
 
-  </TabItem>
+    </TabItem>
 
-  </Tabs>
+    </Tabs>
 
 Seeding runs after Strapi starts, so services, permissions, and uploads are available.
 
