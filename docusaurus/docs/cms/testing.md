@@ -736,13 +736,29 @@ Some API tests benefit from having a known set of documents preloaded. You can e
 
     ```js title="./scripts/seed.js"
     async function seedExampleApp() {
-      // Create content, upload files, set permissions, etc.
+      // In test environment, skip complex seeding and just log
+      if (process.env.NODE_ENV === 'test') {
+        console.log('Test seeding: Skipping complex data import (not needed for basic tests)');
+        return;
+      }
+
+      const shouldImportSeedData = await isFirstRun();
+      if (shouldImportSeedData) {
+        try {
+          console.log('Setting up the template...');
+          await importSeedData();
+          console.log('Ready to go');
+        } catch (error) {
+          console.log('Could not import seed data');
+          console.error(error);
+        }
+      }
     }
 
+    // Allow usage both as a CLI and as a library from tests
     if (require.main === module) {
-      // still works as a CLI: `node ./scripts/seed.js`
-      seedExampleApp().catch((err) => {
-        console.error(err);
+      main().catch((error) => {
+        console.error(error);
         process.exit(1);
       });
     }
