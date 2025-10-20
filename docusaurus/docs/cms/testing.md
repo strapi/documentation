@@ -220,6 +220,21 @@ module.exports = ({ env }) => {
 
 This configuration mirrors the defaults used in production but converts `better-sqlite3` to the `sqlite` client Strapi expects.
 
+<details>
+<summary>Dist directory and multiple database configurations:</summary>
+
+When developing locally you might have both a project-level `config/database.(ts|js)` and an environment-specific `config/env/test/database.js`.
+
+If you run the app in development (e.g., `yarn dev`) Strapi compiles configurations into `dist/config`. If your tests then force Strapi to read from `dist` (e.g., by passing `createStrapi({ appDir: './', distDir: './dist' })`), only one database config may end up in `dist/config/database.js`. This can cause Jest to pick up the wrong DB settings after a dev build.
+
+Recommendations:
+
+- Do not pass a custom `distDir` in the test harness; let Strapi load directly from source. The harness in this guide calls `createStrapi().load()` without overrides, which prevents the conflict.
+- Always rely on `config/env/test/database.js` for Jest. Avoid running `yarn dev` immediately before `yarn test`. If you did, consider removing `dist/` or simply run tests without forcing `distDir`.
+- If you must use `dist/`, ensure its `config/database.js` matches your test environment, or clean/rebuild specifically for tests.
+
+</details>
+
 ## Create the Strapi test harness
 
 We will create a `tests` folder in your project root and add the example files below. These 3 files work together to create a complete testing infrastructure:
@@ -635,6 +650,16 @@ async function setupStrapi() {
     await instance.start();
     global.strapi = instance;
 
+  // Optionally seed example data for tests if requested
+  if (process.env.TEST_SEED === 'true') {
+    try {
+      const { seedExampleApp } = require(path.join(__dirname, '..', 'scripts', 'seed'));
+      await seedExampleApp();
+    } catch (e) {
+      console.warn('Seeding failed:', e);
+    }
+  }
+
     // Patch the user service to automatically assign the authenticated role
     const userService = strapi.plugins['users-permissions']?.services?.user;
     if (userService) {
@@ -698,6 +723,55 @@ What the test harness does:
 7. **Cleanup**: Properly closes connections and removes temporary database files after tests complete
 
 Once these files are in place, the harness handles several Strapi 5 requirements automatically, letting you focus on writing actual test logic rather than configuration boilerplate.
+
+## (optional) Seed predictable test data
+
+Some API tests benefit from having a known set of documents preloaded. You can expose your project seeding as a reusable function and call it from the harness behind an environment flag:
+
+1. Export a seeding function from your project script (e.g. `./scripts/seed.js`):
+
+    ```js title="./scripts/seed.js"
+    async function seedExampleApp() {
+      // Create content, upload files, set permissions, etc.
+    }
+
+    if (require.main === module) {
+      // still works as a CLI: `node ./scripts/seed.js`
+      seedExampleApp().catch((err) => {
+        console.error(err);
+        process.exit(1);
+      });
+    }
+
+    module.exports = { seedExampleApp };
+    ```
+
+2. In the test harness, call the function when `TEST_SEED=true`.
+
+3. Run your tests with seeding enabled:
+
+  <Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
+
+    ```bash
+    TEST_SEED=true yarn test
+    ```
+
+  </TabItem>
+
+  <TabItem value="npm" label="NPM">
+
+    ```bash
+    TEST_SEED=true npm run test
+    ```
+
+  </TabItem>
+
+  </Tabs>
+
+Seeding runs after Strapi starts, so services, permissions, and uploads are available.
+
+It's recommended to keep seeds deterministic to ensure stable assertions. If you publish entries, prefer fixed timestamps or assert on structural properties rather than transient dates.
 
 ## Create smoke tests
 

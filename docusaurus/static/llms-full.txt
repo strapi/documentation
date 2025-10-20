@@ -12268,6 +12268,38 @@ What the test harness does:
 
 Once these files are in place, the harness handles several Strapi 5 requirements automatically, letting you focus on writing actual test logic rather than configuration boilerplate.
 
+## (optional) Seed predictable test data
+
+Some API tests benefit from having a known set of documents preloaded. You can expose your project seeding as a reusable function and call it from the harness behind an environment flag:
+
+1. Export a seeding function from your project script (e.g. `./scripts/seed.js`):
+
+    ```js title="./scripts/seed.js"
+    async function seedExampleApp() {
+      // Create content, upload files, set permissions, etc.
+    }
+
+    if (require.main === module) {
+      // still works as a CLI: `node ./scripts/seed.js`
+      seedExampleApp().catch((err) => {
+        console.error(err);
+        process.exit(1);
+      });
+    }
+
+    module.exports = { seedExampleApp };
+    ```
+
+2. In the test harness, call the function when `TEST_SEED=true`.
+
+3. Run your tests with seeding enabled:
+
+  </Tabs>
+
+Seeding runs after Strapi starts, so services, permissions, and uploads are available.
+
+It's recommended to keep seeds deterministic to ensure stable assertions. If you publish entries, prefer fixed timestamps or assert on structural properties rather than transient dates.
+
 ## Create smoke tests
 
 With the harness in place you can confirm Strapi boots correctly by adding a minimal Jest suite with the following **smoke tests**  in a `tests/app.test.js` as follows:
