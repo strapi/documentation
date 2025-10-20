@@ -337,7 +337,7 @@ Create `tests/strapi.js` with the following content:
 
 <ExpandableContent title="View the complete test harness code">
 
-```js title="./tests/strapi.js"
+```js title="./tests/strapi.js" showLineNumbers {313-321}
 try {
   require('ts-node/register/transpile-only');
 } catch (err) {
@@ -722,6 +722,10 @@ What the test harness does:
 6. **User Permission Helper**: Patches the user service to automatically assign the "authenticated" role to newly created users, simplifying authentication tests
 7. **Cleanup**: Properly closes connections and removes temporary database files after tests complete
 
+:::note
+The code example for the `tests/strapi.js` harness highlights lines 313-321 because these are optional, to be used if you [seed predictable test data](#optional-seed-predictable-test-data).
+:::
+
 Once these files are in place, the harness handles several Strapi 5 requirements automatically, letting you focus on writing actual test logic rather than configuration boilerplate.
 
 ## (optional) Seed predictable test data
@@ -746,7 +750,7 @@ Some API tests benefit from having a known set of documents preloaded. You can e
     module.exports = { seedExampleApp };
     ```
 
-2. In the test harness, call the function when `TEST_SEED=true`.
+2. In the test harness, call the function when `TEST_SEED=true` (see lines 313-321 highlighted in the code example from the [main test harness](#main-test-harness)).
 
 3. Run your tests with seeding enabled:
 
