@@ -15,7 +15,6 @@ tags:
 - update()
 ---
 
-import ManagingRelations from '/docs/snippets/managing-relations.md'
 import ConsiderDocumentService from '/docs/snippets/consider-document-service.md'
 import QueryEnginePrereqs from '/docs/snippets/query-engine-prereqs.md'
 
@@ -141,8 +140,6 @@ const entry = await strapi.db.query('api::blog.article').create({
 });
 ```
 
-<ManagingRelations components={props.components} />
-
 ## update()
 
 :::note
@@ -172,8 +169,6 @@ const entry = await strapi.db.query('api::blog.article').update({
   },
 });
 ```
-
-<ManagingRelations components={props.components} />
 
 ## delete()
 
