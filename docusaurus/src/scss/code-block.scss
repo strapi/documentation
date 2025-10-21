@@ -349,6 +349,18 @@ pre.prism-code {
   [class*="codeBlockTitle"] {
     padding-right: 84px;
   }
+
+  // Add padding-top on mobile for code blocks without title
+  .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      &:not(:has([class*="codeBlockTitle"])) {
+        [class*="codeBlockContent"] {
+          padding-top: 36px;
+        }
+      }
+    }
+  }
 }
 
 /** Dark theme */
