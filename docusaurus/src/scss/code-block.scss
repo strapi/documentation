@@ -346,6 +346,13 @@ pre.prism-code {
     opacity: 1 !important;
   }
 
+  // Align buttons to the left on mobile
+  [class*="buttonGroup"],
+  .ai-button-group {
+    right: auto;
+    left: 0;
+  }
+
   [class*="codeBlockTitle"] {
     padding-right: 84px;
   }
@@ -356,7 +363,7 @@ pre.prism-code {
     [class*="codeBlockContainer"] {
       &:not(:has([class*="codeBlockTitle"])) {
         [class*="codeBlockContent"] {
-          padding-top: 36px;
+          padding-top: 48px;
         }
       }
     }
