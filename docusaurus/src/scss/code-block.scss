@@ -149,6 +149,7 @@ pre.prism-code {
   &[class*="codeBlockContainer"],
   [class*="codeBlockContainer"] {
     background: var(--custom-code-block-background-color);
+    position: relative;
 
     &:not(:has([class*="codeBlockTitle"])) {
       padding: 24px !important;
@@ -208,11 +209,11 @@ pre.prism-code {
     position: relative;
   }
 
-
   [class*="codeBlockContent"] {
     border-radius: 0;
     border-color: transparent;
     border: none;
+    padding-top: 36px;
 
     pre.prism-code {
       background-color: var(--strapi-neutral-0) !important;
@@ -307,7 +308,7 @@ pre.prism-code {
         background-color: var(--strapi-neutral-200);
         position: absolute;
         top: -4px;
-        left: 62px
+        left: 62px;
       }
     }
   }
@@ -326,7 +327,6 @@ pre.prism-code {
 [class*="buttonGroup"] .clean-btn {
   opacity: inherit; // Inherit from parent buttonGroup
 }
-
 
 @include medium-down {
   [class*="buttonGroup"],
