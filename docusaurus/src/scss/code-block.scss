@@ -149,6 +149,7 @@ pre.prism-code {
   &[class*="codeBlockContainer"],
   [class*="codeBlockContainer"] {
     background: var(--custom-code-block-background-color);
+    position: relative;
 
     &:not(:has([class*="codeBlockTitle"])) {
       padding: 24px !important;
@@ -207,7 +208,6 @@ pre.prism-code {
     border: none;
     position: relative;
   }
-
 
   [class*="codeBlockContent"] {
     border-radius: 0;
@@ -307,35 +307,91 @@ pre.prism-code {
         background-color: var(--strapi-neutral-200);
         position: absolute;
         top: -4px;
-        left: 62px
+        left: 62px;
       }
     }
   }
 }
 
-// Make code block buttons always visible with reduced opacity
-[class*="buttonGroup"] {
-  opacity: 0.7; // Always visible with slight transparency
+// Desktop: Button opacity behavior
+[class*="buttonGroup"],
+.ai-button-group {
+  opacity: 0;
   transition: opacity 0.2s ease;
-  
-  &:hover {
-    opacity: 1; // Full opacity on hover
+}
+
+[class*="codeBlock"]:hover {
+  [class*="buttonGroup"],
+  .ai-button-group {
+    opacity: 1;
+    
+    .clean-btn {
+      opacity: 1 !important;
+      
+      svg,
+      i::before,
+      span {
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+      }
+    }
   }
 }
 
-[class*="buttonGroup"] .clean-btn {
-  opacity: inherit; // Inherit from parent buttonGroup
+.clean-btn:hover {
+  svg,
+  i::before,
+  span {
+    opacity: 1 !important;
+  }
 }
 
-
+// Mobile: Always visible
 @include medium-down {
   [class*="buttonGroup"],
-  [class*="buttonGroup"] .clean-btn {
-    opacity: 1;
+  [class*="buttonGroup"] .clean-btn,
+  .ai-button-group,
+  .ai-button-group .clean-btn {
+    opacity: 1 !important;
+  }
+
+  [class*="buttonGroup"],
+  .ai-button-group {
+    .clean-btn {
+      svg,
+      i::before,
+      span {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  // Align buttons to the left on mobile
+  [class*="buttonGroup"],
+  .ai-button-group {
+    right: auto;
+    left: 16px;
   }
 
   [class*="codeBlockTitle"] {
     padding-right: 84px;
+  }
+
+  // On mobile: always add padding-top (with or without title)
+  .theme-code-block {
+    &[class*="codeBlockContainer"],
+    [class*="codeBlockContainer"] {
+      [class*="codeBlockContent"] {
+        padding-top: 48px;
+      }
+    }
+
+    // Reset button position on mobile (don't put them in title bar)
+    &:has([class*="codeBlockTitle"]) {
+      .clean-btn {
+        top: 8px;
+      }
+    }
   }
 }
 
@@ -361,7 +417,7 @@ pre.prism-code {
   }
 
   .clean-btn {
-    background-color: transparent;
+    background-color: var(--strapi-neutral-0);
 
     svg,
     i::before,
