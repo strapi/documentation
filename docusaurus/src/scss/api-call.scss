@@ -129,6 +129,7 @@
     }
   }
 
+
   [class*="buttonGroup"],
   .ai-button-group {
     opacity: 0;
@@ -158,6 +159,22 @@
     i::before,
     span {
       opacity: 1 !important;
+    }
+  }
+}
+
+@include medium-up {
+  .api-call__request {
+    [class*="buttonGroup"] {
+      right: -24px;
+      top: -66px;
+    }
+  }
+
+  .api-call__response {
+    [class*="buttonGroup"] {
+      right: 0;
+      top: -51px;
     }
   }
 }
