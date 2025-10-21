@@ -98,7 +98,6 @@
 
       --custom-code-block-background-color: var(--custom-api-call-response-content-background-color);
     }
-
   }
 
   .theme-code-block {
@@ -106,6 +105,106 @@
 
     &-highlighted-line {
       background-color: var(--strapi-neutral-150) !important;
+    }
+
+    .clean-btn {
+      background-color: white;
+      position: relative;
+      top: -12px;
+
+      svg,
+      i::before {
+        color: black;
+      }
+
+      span {
+        color: black;
+      }
+    }
+
+    &:has([class*="codeBlockTitle"]) {
+      .clean-btn {
+        top: -50px;
+      }
+    }
+  }
+
+  [class*="buttonGroup"],
+  .ai-button-group {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .theme-code-block:hover {
+    [class*="buttonGroup"],
+    .ai-button-group {
+      opacity: 1;
+      
+      .clean-btn {
+        opacity: 1 !important;
+        
+        svg,
+        i::before,
+        span {
+          opacity: 0.6;
+          transition: opacity 0.2s ease;
+        }
+      }
+    }
+  }
+
+  .clean-btn:hover {
+    svg,
+    i::before,
+    span {
+      opacity: 1 !important;
+    }
+  }
+}
+
+@include medium-down {
+  .api-call {
+    .theme-code-block {
+      [class*="buttonGroup"],
+      [class*="buttonGroup"] .clean-btn,
+      .ai-button-group,
+      .ai-button-group .clean-btn {
+        opacity: 1 !important;
+      }
+
+      [class*="buttonGroup"],
+      .ai-button-group {
+        .clean-btn {
+          svg,
+          i::before,
+          span {
+            opacity: 1 !important;
+          }
+        }
+      }
+
+      [class*="buttonGroup"],
+      .ai-button-group {
+        right: auto;
+        left: 0;
+      }
+
+      [class*="codeBlockTitle"] {
+        padding-right: 84px;
+      }
+
+      &[class*="codeBlockContainer"],
+      [class*="codeBlockContainer"] {
+        [class*="codeBlockContent"] {
+          padding-top: 48px;
+        }
+      }
+
+      &:has([class*="codeBlockTitle"]) {
+        .clean-btn {
+          top: 8px;
+        }
+      }
     }
   }
 }
@@ -125,6 +224,18 @@
     &__request__content {
       pre {
         border: solid 1px transparent !important;
+      }
+    }
+
+    .theme-code-block {
+      .clean-btn {
+        background-color: var(--strapi-neutral-0);
+
+        svg,
+        i::before,
+        span {
+          color: var(--strapi-neutral-900);
+        }
       }
     }
   }
