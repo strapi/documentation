@@ -213,7 +213,6 @@ pre.prism-code {
     border-radius: 0;
     border-color: transparent;
     border: none;
-    padding-top: 36px;
 
     pre.prism-code {
       background-color: var(--strapi-neutral-0) !important;
@@ -314,24 +313,37 @@ pre.prism-code {
   }
 }
 
-// Make code block buttons always visible with reduced opacity
-[class*="buttonGroup"] {
-  opacity: 0.7; // Always visible with slight transparency
+// Desktop: Button opacity behavior
+[class*="buttonGroup"],
+.ai-button-group {
+  opacity: 0;
   transition: opacity 0.2s ease;
-  
-  &:hover {
-    opacity: 1; // Full opacity on hover
+}
+
+[class*="codeBlock"]:hover {
+  [class*="buttonGroup"],
+  .ai-button-group {
+    opacity: 0.6;
   }
 }
 
-[class*="buttonGroup"] .clean-btn {
-  opacity: inherit; // Inherit from parent buttonGroup
+[class*="buttonGroup"]:hover,
+.ai-button-group:hover {
+  opacity: 1 !important;
 }
 
+[class*="buttonGroup"] .clean-btn,
+.ai-button-group .clean-btn {
+  opacity: inherit;
+}
+
+// Mobile: Always visible
 @include medium-down {
   [class*="buttonGroup"],
-  [class*="buttonGroup"] .clean-btn {
-    opacity: 1;
+  [class*="buttonGroup"] .clean-btn,
+  .ai-button-group,
+  .ai-button-group .clean-btn {
+    opacity: 1 !important;
   }
 
   [class*="codeBlockTitle"] {
