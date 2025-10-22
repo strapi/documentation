@@ -45,7 +45,6 @@ To enable a future flag:
   module.exports = ({ env }) => ({
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
-      unstableAILocalizations: env.bool('STRAPI_UNSTABLE_AI_LOCALIZATIONS', false),
     },
   })
 
@@ -55,10 +54,9 @@ To enable a future flag:
 
   ```json title=".env"
   STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
-  STRAPI_UNSTABLE_AI_LOCALIZATIONS=true
   ```
 
-  If your environment file does not include this value, the `unstableAILocalizations` future flag property value will default to `false` and the experimental feature will not be enabled.
+  If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
 
   </TabItem>
 
@@ -68,7 +66,6 @@ To enable a future flag:
   export default {
     future: {
       experimental_firstPublishedAt: env.bool('STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT', false),
-      unstableAILocalizations: env.bool('STRAPI_UNSTABLE_AI_LOCALIZATIONS', false),
     },
   };
   ```
@@ -77,7 +74,6 @@ To enable a future flag:
 
   ```json title=".env"
   STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
-  STRAPI_UNSTABLE_AI_LOCALIZATIONS=true
   ```
 
   If your environment file does not include this value, the `unstableAILocalizations` future flag property value will default to `false` and the experimental feature will not be enabled.
@@ -116,4 +112,3 @@ Developers can use the following APIs to interact with future flags:
 | Property name | Related feature | Suggested environment variable name |
 | ------------- | --------------- | ---------------------------------- |
 | `experimental_firstPublishedAt` | [Draft & Publish](/cms/features/draft-and-publish#recording-the-first-publication-date) | `STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT` |
-| `unstableAILocalizations` | [AI-powered Internationalization](/cms/features/internationalization#ai-powered-internationalization) |

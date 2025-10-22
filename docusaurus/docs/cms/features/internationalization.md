@@ -90,10 +90,7 @@ It is not possible to create custom locales. Locales can only be created based o
 
 AI-Powered Internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
-AI-powered Internationalization is disabled by default. To enable it:
-
-1. Ensure the `unstableAILocalizations` [feature flag](/cms/configurations/features) is set to `true`. If you've just changed this configuration property, you might need to restart the Strapi server for the changes to apply.
-2. Go to <Icon name="gear-six" /> *Settings > Global Settings > Internationalization* and set _AI translations_ to on.
+AI-powered Internationalization is disabled by default. To enable it, go to <Icon name="gear-six" /> *Settings > Global Settings > Internationalization* and set _AI translations_ to on.
 
 <!-- TODO: add light/dark mode screenshots -->
 
