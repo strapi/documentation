@@ -76,7 +76,7 @@ To enable a future flag:
   STRAPI_FUTURE_EXPERIMENTAL_FIRST_PUBLISHED_AT=true
   ```
 
-  If your environment file does not include this value, the `unstableAILocalizations` future flag property value will default to `false` and the experimental feature will not be enabled.
+  If your environment file does not include this value, the `experimental_firstPublishedAt` future flag property value will default to `false` and the experimental feature will not be enabled.
 
   </TabItem>
   </Tabs>
