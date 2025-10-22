@@ -131,7 +131,7 @@ Click on the <Icon name="download-simple" /> *Fill in from another locale* butto
   }}
 />
 
-### AI-powered internationalization <NewBadge />
+### AI-powered internationalization <NewBadge /> {#ai-powered-internationalization}
 <GrowthBadge /> <FeatureFlagBadge feature="unstableAILocalizations" />
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
