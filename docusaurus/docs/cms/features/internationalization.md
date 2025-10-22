@@ -11,6 +11,8 @@ tags:
 - features
 ---
 
+import StrapiAiCredits from '/docs/snippets/strapi-ai-credits.md'
+
 # Internationalization (i18n)
 
 <Tldr>
@@ -83,6 +85,18 @@ It is not possible to create custom locales. Locales can only be created based o
   }}
 />
 
+#### Enabling AI-powered internationalization
+<GrowthBadge /> <FeatureFlagBadge feature="unstableAILocalizations" />
+
+AI-Powered Internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
+
+AI-powered Internationalization is disabled by default. To enable it:
+
+1. Ensure the `unstableAILocalizations` [feature flag](/cms/configurations/features) is set to `true`. If you've just changed this configuration property, you might need to restart the Strapi server for the changes to apply.
+2. Go to <Icon name="gear-six" /> *Settings > Global Settings > Internationalization* and set _AI translations_ to on.
+
+<!-- TODO: add light/dark mode screenshots -->
+
 ### Code-based configuration
 
 A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configurations/environment#strapi) can be configured to set the default locale for your environment. The value used for this variable should be an ISO country code from <ExternalLink to="https://github.com/strapi/strapi/blob/main/packages/plugins/i18n/server/src/constants/iso-locales.json" text="the 500+ pre-created list of locales"/>.
@@ -116,6 +130,17 @@ Click on the <Icon name="download-simple" /> *Fill in from another locale* butto
     dark: '/img/assets/content-manager/locale-i18n_DARK.png',
   }}
 />
+
+### AI-powered internationalization <NewBadge />
+<GrowthBadge /> <FeatureFlagBadge feature="unstableAILocalizations" />
+
+[When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
+
+Once enabled, whenever you edit a content-type in a given locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. Using this feature consumes Strapi AI credits.
+
+<!-- TODO: add screenshot -->
+
+<StrapiAiCredits />
 
 ### Usage with APIs
 
