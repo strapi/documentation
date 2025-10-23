@@ -59,15 +59,21 @@ jobs:
             let hasNewFile = false;
             let totalChanges = 0;
             
+            const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.bmp'];
+            
             for (const file of files) {
               console.log(`File: ${file.filename}, status: ${file.status}, +${file.additions} -${file.deletions}`);
               
-              if (file.filename.startsWith('cms/')) {
-                touchesCMS = true;
-              } else if (file.filename.startsWith('cloud/')) {
-                touchesCloud = true;
-              } else {
-                touchesOther = true;
+              const isImage = imageExtensions.some(ext => file.filename.toLowerCase().endsWith(ext));
+              
+              if (!isImage) {
+                if (file.filename.startsWith('cms/')) {
+                  touchesCMS = true;
+                } else if (file.filename.startsWith('cloud/')) {
+                  touchesCloud = true;
+                } else {
+                  touchesOther = true;
+                }
               }
               
               if (file.status === 'added') {
