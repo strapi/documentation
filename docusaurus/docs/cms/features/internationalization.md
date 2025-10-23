@@ -90,9 +90,15 @@ It is not possible to create custom locales. Locales can only be created based o
 
 AI-Powered Internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
-AI-powered Internationalization is disabled by default. To enable it, go to <Icon name="gear-six" /> *Settings > Global Settings > Internationalization* and set _AI translations_ to on.
+AI-powered Internationalization is disabled by default. To enable it, go to <Icon name="gear-six" /> *Settings > Global Settings > Internationalization* and set <Icon name="sparkle" /> _AI Translations_ to _Enabled_.
 
-<!-- TODO: add light/dark mode screenshots -->
+<ThemedImage
+  alt="Internationalization settings"
+  sources={{
+    light: '/img/assets/settings/i18n-with-ai.png',
+    dark: '/img/assets/settings/i18n-with-ai_DARK.png',
+  }}
+/>
 
 ### Code-based configuration
 
@@ -135,7 +141,13 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 
 Once enabled, whenever you edit a content-type in a given locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. Using this feature consumes Strapi AI credits.
 
-<!-- TODO: add screenshot -->
+<ThemedImage
+  alt="Managing locales with AI-powered i18n"
+  sources={{
+    light: '/img/assets/content-manager/locale-i18n-with-ai.png',
+    dark: '/img/assets/content-manager/locale-i18n-with-ai_DARK.png',
+  }}
+/>
 
 <StrapiAiCredits />
 
