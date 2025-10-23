@@ -183,14 +183,14 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      announcementBar: {
-        id: 'support_us',
-        content:
-          "🧑🏽‍🔬 We're testing new AI and search tools on <a target='_blank' rel='noopener noreferrer' href='https://docs-next.strapi.io'>docs-next.strapi.io</a>! Feel free to have a look and <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/ei7p4koru8RaUCDB6'>share your feedback</a>",
-        backgroundColor: '#F3E5FA',
-        textColor: '#091E42',
-        isCloseable: true,
-      },
+      // announcementBar: {
+      //   id: 'support_us',
+      //   content:
+      //     "🧑🏽‍🔬 We're testing new AI and search tools on <a target='_blank' rel='noopener noreferrer' href='https://docs-next.strapi.io'>docs-next.strapi.io</a>! Feel free to have a look and <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/ei7p4koru8RaUCDB6'>share your feedback</a>",
+      //   backgroundColor: '#F3E5FA',
+      //   textColor: '#091E42',
+      //   isCloseable: true,
+      // },
       docs: {
         sidebar: {
           hideable: true,

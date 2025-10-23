@@ -5,6 +5,23 @@ export default {
     title: 'Strapi 5 Docs',
     description: 'Get set up in minutes to build any project in hours instead of weeks.',
   },
+  newsTicker: [
+    {
+      icon: 'sparkle',
+      text: 'New search experience! Try it on docs-next.strapi.io',
+      link: 'https://docs-next.strapi.io',
+    },
+    {
+      icon: 'hand-heart',
+      text: 'Feedback wanted: Take our documentation survey',
+      link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
+    },
+    {
+      icon: 'newspaper-clipping',
+      text: 'v6.9.3 is out - See what\'s new this week',
+      link: '/release-notes#693',
+    },
+  ],
   carousel: [
     {
       title: "Can't wait to use Strapi?",
