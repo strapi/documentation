@@ -1,9 +1,10 @@
 ---
-title: with Cloud CLI
+title: Strapi Cloud - CLI deployment
 displayed_sidebar: cloudSidebar
 description: Learn how to deploy your Strapi application via the CLI.
 canonicalUrl: https://docs.strapi.io/cloud/getting-started/deployment-cli.html
 sidebar_position: 2
+sidebar_label: with Cloud CLI
 tags:
 - Strapi Cloud
 - deployment
