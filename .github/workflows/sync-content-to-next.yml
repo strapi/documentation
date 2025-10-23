@@ -49,6 +49,35 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
 
+      - name: Load configuration
+        id: load-config
+        run: |
+          CONFIG_FILE=".github/workflows/config.json"
+          WORKFLOW_KEY="sync-content-to-next"
+          
+          if [ -f "$CONFIG_FILE" ]; then
+            echo "Loading configuration from $CONFIG_FILE for workflow: $WORKFLOW_KEY"
+            
+            if jq -e ".[\"$WORKFLOW_KEY\"]" $CONFIG_FILE > /dev/null 2>&1; then
+              ASSIGNEE=$(jq -r ".[\"$WORKFLOW_KEY\"].assignee // \"pwizla\"" $CONFIG_FILE)
+              LABELS=$(jq -r ".[\"$WORKFLOW_KEY\"].labels // [] | join(\",\")" $CONFIG_FILE)
+              TITLE_PREFIX=$(jq -r ".[\"$WORKFLOW_KEY\"].title_prefix // \"[Auto-sync]\"" $CONFIG_FILE)
+            else
+              ASSIGNEE="pwizla"
+              LABELS=""
+              TITLE_PREFIX="[Auto-sync]"
+            fi
+            
+            echo "assignee=$ASSIGNEE" >> $GITHUB_OUTPUT
+            echo "labels=$LABELS" >> $GITHUB_OUTPUT
+            echo "title_prefix=$TITLE_PREFIX" >> $GITHUB_OUTPUT
+          else
+            echo "Configuration file not found, using defaults"
+            echo "assignee=pwizla" >> $GITHUB_OUTPUT
+            echo "labels=" >> $GITHUB_OUTPUT
+            echo "title_prefix=[Auto-sync]" >> $GITHUB_OUTPUT
+          fi
+
       - name: Debug - PR info
         run: |
           echo "PR Number: ${{ github.event.pull_request.number }}"
@@ -139,9 +168,17 @@ jobs:
           git push origin next-port-pr${{ github.event.pull_request.number }}
           
           # Create PR with a special tag in the body to identify it later
-          gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
-            --title "[Port to next] ${{ github.event.pull_request.title }}" \
-            --body "Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->"
+          PR_CMD="gh pr create --base next --head next-port-pr${{ github.event.pull_request.number }} \
+            --title \"${{ steps.load-config.outputs.title_prefix }} ${{ github.event.pull_request.title }}\" \
+            --body \"Automatic port of PR #${{ github.event.pull_request.number }} to next branch.\n\nOriginal PR: #${{ github.event.pull_request.number }}\nCreated automatically after adding the 'temp - port to docs-next' label.\n\n<!-- SYNC_PR_MARKER -->\" \
+            --assignee ${{ steps.load-config.outputs.assignee }}"
+          
+          # Add labels if configured
+          if [ -n "${{ steps.load-config.outputs.labels }}" ]; then
+            PR_CMD="$PR_CMD --label ${{ steps.load-config.outputs.labels }}"
+          fi
+          
+          eval $PR_CMD
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
@@ -165,6 +202,35 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
+
+      - name: Load configuration
+        id: load-config
+        run: |
+          CONFIG_FILE=".github/workflows/config.json"
+          WORKFLOW_KEY="sync-content-to-next"
+          
+          if [ -f "$CONFIG_FILE" ]; then
+            echo "Loading configuration from $CONFIG_FILE for workflow: $WORKFLOW_KEY"
+            
+            if jq -e ".[\"$WORKFLOW_KEY\"]" $CONFIG_FILE > /dev/null 2>&1; then
+              ASSIGNEE=$(jq -r ".[\"$WORKFLOW_KEY\"].assignee // \"pwizla\"" $CONFIG_FILE)
+              LABELS=$(jq -r ".[\"$WORKFLOW_KEY\"].labels // [] | join(\",\")" $CONFIG_FILE)
+              TITLE_PREFIX=$(jq -r ".[\"$WORKFLOW_KEY\"].title_prefix // \"[Auto-sync]\"" $CONFIG_FILE)
+            else
+              ASSIGNEE="pwizla"
+              LABELS=""
+              TITLE_PREFIX="[Auto-sync]"
+            fi
+            
+            echo "assignee=$ASSIGNEE" >> $GITHUB_OUTPUT
+            echo "labels=$LABELS" >> $GITHUB_OUTPUT
+            echo "title_prefix=$TITLE_PREFIX" >> $GITHUB_OUTPUT
+          else
+            echo "Configuration file not found, using defaults"
+            echo "assignee=pwizla" >> $GITHUB_OUTPUT
+            echo "labels=" >> $GITHUB_OUTPUT
+            echo "title_prefix=[Auto-sync]" >> $GITHUB_OUTPUT
+          fi
 
       - name: Check for existing PR and decide strategy
         id: check-existing
@@ -263,10 +329,17 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           
           # Create the new PR first
-          NEW_PR=$(gh pr create --base next --head $BRANCH_NAME \
-            --title "[Merged-sync] $PR_TITLE" \
-            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main." \
-            --json number --jq '.number')
+          PR_CMD="gh pr create --base next --head $BRANCH_NAME \
+            --title \"${{ steps.load-config.outputs.title_prefix }} $PR_TITLE\" \
+            --body \"Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main.\" \
+            --assignee ${{ steps.load-config.outputs.assignee }}"
+          
+          # Add labels if configured
+          if [ -n "${{ steps.load-config.outputs.labels }}" ]; then
+            PR_CMD="$PR_CMD --label ${{ steps.load-config.outputs.labels }}"
+          fi
+          
+          NEW_PR=$(eval "$PR_CMD --json number --jq '.number'")
             
           # Now close the existing PR with a reference to the new one
           gh pr close $EXISTING_PR --comment "This PR is replaced by the direct synchronization of the merge commit in #$NEW_PR"
@@ -280,9 +353,17 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           
           # Create new PR 
-          gh pr create --base next --head $BRANCH_NAME \
-            --title "[Merged-sync] $PR_TITLE" \
-            --body "Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main."
+          PR_CMD="gh pr create --base next --head $BRANCH_NAME \
+            --title \"${{ steps.load-config.outputs.title_prefix }} $PR_TITLE\" \
+            --body \"Synchronization of merged PR #${{ github.event.pull_request.number }} to next branch. This PR contains the final state of the changes as they were merged to main.\" \
+            --assignee ${{ steps.load-config.outputs.assignee }}"
+          
+          # Add labels if configured
+          if [ -n "${{ steps.load-config.outputs.labels }}" ]; then
+            PR_CMD="$PR_CMD --label ${{ steps.load-config.outputs.labels }}"
+          fi
+          
+          eval $PR_CMD
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_MAIN_TO_NEXT }}
 
@@ -302,6 +383,35 @@ jobs:
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
+
+      - name: Load configuration
+        id: load-config
+        run: |
+          CONFIG_FILE=".github/workflows/config.json"
+          WORKFLOW_KEY="sync-content-to-next"
+          
+          if [ -f "$CONFIG_FILE" ]; then
+            echo "Loading configuration from $CONFIG_FILE for workflow: $WORKFLOW_KEY"
+            
+            if jq -e ".[\"$WORKFLOW_KEY\"]" $CONFIG_FILE > /dev/null 2>&1; then
+              ASSIGNEE=$(jq -r ".[\"$WORKFLOW_KEY\"].assignee // \"pwizla\"" $CONFIG_FILE)
+              LABELS=$(jq -r ".[\"$WORKFLOW_KEY\"].labels // [] | join(\",\")" $CONFIG_FILE)
+              TITLE_PREFIX=$(jq -r ".[\"$WORKFLOW_KEY\"].title_prefix // \"[Auto-sync]\"" $CONFIG_FILE)
+            else
+              ASSIGNEE="pwizla"
+              LABELS=""
+              TITLE_PREFIX="[Auto-sync]"
+            fi
+            
+            echo "assignee=$ASSIGNEE" >> $GITHUB_OUTPUT
+            echo "labels=$LABELS" >> $GITHUB_OUTPUT
+            echo "title_prefix=$TITLE_PREFIX" >> $GITHUB_OUTPUT
+          else
+            echo "Configuration file not found, using defaults"
+            echo "assignee=pwizla" >> $GITHUB_OUTPUT
+            echo "labels=" >> $GITHUB_OUTPUT
+            echo "title_prefix=[Auto-sync]" >> $GITHUB_OUTPUT
+          fi
 
       - name: Process push
         run: |
@@ -331,9 +441,17 @@ jobs:
             git push origin $BRANCH_NAME
             
             # Create PR
-            gh pr create --base next --head $BRANCH_NAME \
-              --title "[Auto-sync] $COMMIT_MSG" \
-              --body "Automatic sync of commit from main"
+            PR_CMD="gh pr create --base next --head $BRANCH_NAME \
+              --title \"${{ steps.load-config.outputs.title_prefix }} $COMMIT_MSG\" \
+              --body \"Automatic sync of commit from main\" \
+              --assignee ${{ steps.load-config.outputs.assignee }}"
+            
+            # Add labels if configured
+            if [ -n "${{ steps.load-config.outputs.labels }}" ]; then
+              PR_CMD="$PR_CMD --label ${{ steps.load-config.outputs.labels }}"
+            fi
+            
+            eval $PR_CMD
           else
             echo "Cherry-pick failed, manual intervention needed"
             git cherry-pick --abort
