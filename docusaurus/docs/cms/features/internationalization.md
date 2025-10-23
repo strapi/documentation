@@ -86,7 +86,7 @@ It is not possible to create custom locales. Locales can only be created based o
 />
 
 #### Enabling AI-powered internationalization
-<GrowthBadge /> <FeatureFlagBadge feature="unstableAILocalizations" />
+<GrowthBadge /> 
 
 AI-Powered Internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
@@ -129,7 +129,7 @@ Click on the <Icon name="download-simple" /> *Fill in from another locale* butto
 />
 
 ### AI-powered internationalization <NewBadge /> {#ai-powered-internationalization}
-<GrowthBadge /> <FeatureFlagBadge feature="unstableAILocalizations" />
+<GrowthBadge /> 
 
 [When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
