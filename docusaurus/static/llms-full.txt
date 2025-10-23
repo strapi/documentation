@@ -391,7 +391,7 @@ Before going any further into this Strapi Cloud documentation, we recommend you 
 
 
 
-# with Cloud dashboard
+# Strapi Cloud - Dashboard deployment
 Source: https://docs.strapi.io/cloud/getting-started/deployment
 
 # Project deployment with the Cloud dashboard
@@ -477,7 +477,7 @@ Now that you have deployed your project via the Cloud dashboard, we encourage yo
 
 
 
-# with Cloud CLI
+# Strapi Cloud - CLI deployment
 Source: https://docs.strapi.io/cloud/getting-started/deployment-cli
 
 # Project deployment with the Command Line Interface (CLI)

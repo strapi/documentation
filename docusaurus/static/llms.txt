@@ -8,8 +8,8 @@
 - [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): <Tldr>
 - [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): <Tldr>
 - [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
-- [with Cloud dashboard](https://docs.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
-- [with Cloud CLI](https://docs.strapi.io/cloud/getting-started/deployment-cli): Learn how to deploy your Strapi application via the CLI.
+- [Strapi Cloud - Dashboard deployment](https://docs.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
+- [Strapi Cloud - CLI deployment](https://docs.strapi.io/cloud/getting-started/deployment-cli): Learn how to deploy your Strapi application via the CLI.
 - [Project deployment](https://docs.strapi.io/cloud/getting-started/deployment-options): Learn how to deploy your Strapi application on Strapi Cloud, via the Cloud dashboard or the CLI.
 - [Welcome to the Strapi Cloud Documentation!](https://docs.strapi.io/cloud/getting-started/intro): The Strapi Cloud documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi Cloud account and applications.
 - [Information on billing & usage](https://docs.strapi.io/cloud/getting-started/usage-billing): This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
