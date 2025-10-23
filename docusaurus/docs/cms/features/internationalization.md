@@ -116,10 +116,6 @@ To translate content in another locale:
 2. Choose the locale in which you want to translate your content.
 3. Translate your content by filling up your content-type's fields. 
 
-:::tip
-Click on the <Icon name="download-simple" /> *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale.
-:::
-
 <ThemedImage
   alt="Managing locales with i18n"
   sources={{
@@ -127,6 +123,10 @@ Click on the <Icon name="download-simple" /> *Fill in from another locale* butto
     dark: '/img/assets/content-manager/locale-i18n_DARK.png',
   }}
 />
+
+:::tip
+Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale* button, in the top right corner, for all non relational fields to be filled up with the values of another chosen locale. It can be useful if you do not remember what was the exact content in another locale. This button is not visible if you've enabled [AI-powered internationalization](#ai-powered-internationalization) since translations are automatically handled by Strapi AI.
+:::
 
 ### AI-powered internationalization <NewBadge /> {#ai-powered-internationalization}
 <GrowthBadge /> 
