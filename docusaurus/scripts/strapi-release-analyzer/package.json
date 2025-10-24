@@ -1,0 +1,23 @@
+{
+  "name": "strapi-release-analyzer",
+  "version": "1.0.0",
+  "description": "Analyze Strapi releases and suggest documentation changes using Claude AI",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1"
+  },
+  "keywords": [
+    "strapi",
+    "documentation",
+    "release",
+    "analyzer",
+    "claude",
+    "ai"
+  ],
+  "author": "Strapi Documentation Team",
+  "license": "MIT"
+}
