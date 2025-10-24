@@ -452,7 +452,20 @@ function generateMarkdownReport(releaseInfo, analyses) {
             if (change.suggestedContent) {
               markdown += `- [ ] Add/update content (see below)\n\n`;
               markdown += `<details>\n<summary>💡 Suggested content</summary>\n\n`;
-              markdown += `\`\`\`markdown\n${change.suggestedContent}\n\`\`\`\n\n`;
+              
+              const hasCodeBlock = change.suggestedContent.includes('```');
+              
+              if (hasCodeBlock) {
+                markdown += `${change.suggestedContent}\n\n`;
+              } else {
+                const lines = change.suggestedContent.split('\n');
+                markdown += `> **Content to add/update:**\n>\n`;
+                lines.forEach(line => {
+                  markdown += `> ${line}\n`;
+                });
+                markdown += `\n`;
+              }
+              
               markdown += `</details>\n\n`;
             } else {
               markdown += `\n`;
