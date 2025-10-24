@@ -10,6 +10,9 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1"
   },
+  "optionalDependencies": {
+    "md-to-pdf": "^6.0.0"
+  },
   "keywords": [
     "strapi",
     "documentation",

@@ -285,6 +285,66 @@ Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
   }
 }
 
+const DOCUMENTATION_SECTIONS = {
+  cms: {
+    label: '🏗️ CMS Documentation',
+    sections: {
+      'Getting Started': ['quick-start', 'installation', 'admin-panel', 'deployment'],
+      'Features': ['api-tokens', 'audit-logs', 'content-history', 'custom-fields', 'data-management', 
+                   'draft-and-publish', 'email', 'internationalization', 'i18n', 'media-library', 
+                   'preview', 'rbac', 'releases', 'review-workflows', 'sso', 'users-permissions',
+                   'content-manager', 'content-type-builder'],
+      'APIs': ['rest', 'graphql', 'document', 'content-api', 'query-engine'],
+      'Configurations': ['database', 'server', 'admin-panel-config', 'middlewares', 'api-config', 
+                         'environment', 'typescript', 'features-config'],
+      'Development': ['backend', 'customization', 'lifecycle', 'services', 'controllers', 'routes',
+                     'policies', 'middlewares-dev', 'webhooks'],
+      'TypeScript': ['typescript'],
+      'CLI': ['cli', 'command'],
+      'Plugins': ['plugins', 'plugin-development', 'marketplace'],
+      'Upgrades': ['migration', 'upgrade', 'v4-to-v5'],
+    }
+  },
+  cloud: {
+    label: '☁️ Cloud Documentation',
+    sections: {
+      'Getting Started': ['deployment', 'cloud-fundamentals', 'usage-billing', 'caching'],
+      'Projects Management': ['projects', 'settings', 'collaboration', 'runtime-logs', 'notifications'],
+      'Deployments': ['deploys', 'deployment-history'],
+      'Account Management': ['account', 'profile', 'billing'],
+    }
+  }
+};
+
+function categorizePRByDocumentation(analysis) {
+  const { claudeSuggestions, files } = analysis;
+  
+  if (!claudeSuggestions || !claudeSuggestions.affectedAreas) {
+    return { mainCategory: 'cms', section: 'Other' };
+  }
+
+  const affectedAreas = claudeSuggestions.affectedAreas.join(' ').toLowerCase();
+  const filePaths = files.map(f => f.filename.toLowerCase()).join(' ');
+  const allText = `${affectedAreas} ${filePaths}`.toLowerCase();
+
+  let mainCategory = 'cms';
+  if (allText.includes('cloud') || allText.includes('/cloud/')) {
+    mainCategory = 'cloud';
+  }
+
+  const sections = DOCUMENTATION_SECTIONS[mainCategory].sections;
+  
+  for (const [sectionName, keywords] of Object.entries(sections)) {
+    for (const keyword of keywords) {
+      if (allText.includes(keyword)) {
+        return { mainCategory, section: sectionName };
+      }
+    }
+  }
+
+  return { mainCategory, section: 'Other' };
+}
+
 function generateMarkdownReport(releaseInfo, analyses) {
   const timestamp = new Date().toISOString().split('T')[0];
   
@@ -298,15 +358,22 @@ function generateMarkdownReport(releaseInfo, analyses) {
   
   const categoryCounts = {};
   const priorityCounts = { high: 0, medium: 0, low: 0 };
+  const docSectionCounts = { cms: {}, cloud: {} };
   
   analyses.forEach(a => {
     categoryCounts[a.category] = (categoryCounts[a.category] || 0) + 1;
     if (a.claudeSuggestions) {
       priorityCounts[a.claudeSuggestions.priority]++;
+      
+      const { mainCategory, section } = categorizePRByDocumentation(a);
+      if (!docSectionCounts[mainCategory][section]) {
+        docSectionCounts[mainCategory][section] = 0;
+      }
+      docSectionCounts[mainCategory][section]++;
     }
   });
   
-  markdown += `### By Category\n\n`;
+  markdown += `### By PR Type\n\n`;
   Object.entries(categoryCounts).forEach(([cat, count]) => {
     markdown += `- **${PR_CATEGORIES[cat] || cat}**: ${count}\n`;
   });
@@ -315,87 +382,143 @@ function generateMarkdownReport(releaseInfo, analyses) {
   markdown += `- 🔴 **High priority**: ${priorityCounts.high}\n`;
   markdown += `- 🟡 **Medium priority**: ${priorityCounts.medium}\n`;
   markdown += `- 🟢 **Low priority**: ${priorityCounts.low}\n\n`;
+
+  markdown += `### By Documentation Section\n\n`;
+  markdown += `**CMS Documentation:**\n`;
+  Object.entries(docSectionCounts.cms).forEach(([section, count]) => {
+    markdown += `- ${section}: ${count}\n`;
+  });
+  if (Object.keys(docSectionCounts.cloud).length > 0) {
+    markdown += `\n**Cloud Documentation:**\n`;
+    Object.entries(docSectionCounts.cloud).forEach(([section, count]) => {
+      markdown += `- ${section}: ${count}\n`;
+    });
+  }
   
-  markdown += `---\n\n`;
+  markdown += `\n---\n\n`;
   
-  Object.entries(PR_CATEGORIES).forEach(([catKey, catLabel]) => {
-    const categoryPRs = analyses.filter(a => a.category === catKey);
+  ['cms', 'cloud'].forEach(mainCat => {
+    const categorizedPRs = analyses
+      .filter(a => a.claudeSuggestions)
+      .map(a => ({ ...a, ...categorizePRByDocumentation(a) }))
+      .filter(a => a.mainCategory === mainCat);
     
-    if (categoryPRs.length === 0) return;
+    if (categorizedPRs.length === 0) return;
     
-    markdown += `## ${catLabel}\n\n`;
+    markdown += `## ${DOCUMENTATION_SECTIONS[mainCat].label}\n\n`;
     
-    categoryPRs.forEach(analysis => {
-      const { number, title, url, claudeSuggestions, body } = analysis;
-      
-      if (!claudeSuggestions) {
-        return;
+    const sections = {};
+    categorizedPRs.forEach(pr => {
+      if (!sections[pr.section]) {
+        sections[pr.section] = [];
       }
+      sections[pr.section].push(pr);
+    });
+    
+    Object.entries(sections).forEach(([sectionName, prs]) => {
+      markdown += `### ${sectionName}\n\n`;
       
-      const priorityEmoji = claudeSuggestions.priority === 'high' ? '🔴' : 
-                           claudeSuggestions.priority === 'medium' ? '🟡' : '🟢';
-      
-      markdown += `### ${priorityEmoji} PR #${number}: ${title}\n\n`;
-      markdown += `**Link:** ${url}\n\n`;
-      markdown += `**Priority:** ${claudeSuggestions.priority.toUpperCase()}\n\n`;
-      
-      if (claudeSuggestions.affectedAreas && claudeSuggestions.affectedAreas.length > 0) {
-        markdown += `**Affected Documentation Areas:**\n`;
-        claudeSuggestions.affectedAreas.forEach(area => {
-          markdown += `- ${area}\n`;
-        });
-        markdown += `\n`;
-      }
-      
-      if (body && body.trim()) {
-        const summary = body.split('\n').slice(0, 3).join('\n').trim();
-        if (summary) {
-          markdown += `**PR Description:**\n`;
-          markdown += `> ${summary.substring(0, 300)}${summary.length > 300 ? '...' : ''}\n\n`;
+      prs.forEach(analysis => {
+        const { number, title, url, claudeSuggestions, body, category } = analysis;
+        
+        const priorityEmoji = claudeSuggestions.priority === 'high' ? '🔴' : 
+                             claudeSuggestions.priority === 'medium' ? '🟡' : '🟢';
+        
+        markdown += `#### ${priorityEmoji} PR #${number}: ${title}\n\n`;
+        markdown += `**Type:** ${PR_CATEGORIES[category] || category} | **Priority:** ${claudeSuggestions.priority.toUpperCase()} | **Link:** ${url}\n\n`;
+        
+        if (claudeSuggestions.affectedAreas && claudeSuggestions.affectedAreas.length > 0) {
+          markdown += `**Affected Areas:** ${claudeSuggestions.affectedAreas.join(', ')}\n\n`;
         }
-      }
-      
-      if (claudeSuggestions.reasoning) {
-        markdown += `**Analysis:**\n`;
-        markdown += `${claudeSuggestions.reasoning}\n\n`;
-      }
-      
-      if (claudeSuggestions.suggestedChanges && claudeSuggestions.suggestedChanges.length > 0) {
-        markdown += `**Suggested Documentation Changes:**\n\n`;
-        claudeSuggestions.suggestedChanges.forEach((change, idx) => {
-          markdown += `#### ${idx + 1}. ${change.changeType.toUpperCase()}: ${change.section || change.file}\n\n`;
-          markdown += `**File:** \`${change.file}\`\n\n`;
-          markdown += `**What to do:** ${change.description}\n\n`;
-          if (change.suggestedContent) {
-            markdown += `**Suggested content:**\n\n`;
-            markdown += `\`\`\`markdown\n${change.suggestedContent}\n\`\`\`\n\n`;
+        
+        if (body && body.trim()) {
+          const summary = body.split('\n').slice(0, 2).join('\n').trim();
+          if (summary && summary.length > 10) {
+            markdown += `**Description:**\n> ${summary.substring(0, 200)}${summary.length > 200 ? '...' : ''}\n\n`;
           }
-        });
-      } else {
-        markdown += `**Documentation Impact:**\n`;
-        markdown += `No documentation changes required for this PR.\n\n`;
-      }
-      
-      markdown += `---\n\n`;
+        }
+        
+        if (claudeSuggestions.reasoning) {
+          markdown += `**Analysis:** ${claudeSuggestions.reasoning}\n\n`;
+        }
+        
+        if (claudeSuggestions.suggestedChanges && claudeSuggestions.suggestedChanges.length > 0) {
+          markdown += `**📝 TODO - Documentation Updates:**\n\n`;
+          claudeSuggestions.suggestedChanges.forEach((change, idx) => {
+            markdown += `**${idx + 1}. ${change.changeType.toUpperCase()}: ${change.section || path.basename(change.file, '.md')}**\n\n`;
+            markdown += `- [ ] Review PR and understand changes\n`;
+            markdown += `- [ ] Update file: \`${change.file}\`\n`;
+            markdown += `- [ ] ${change.description}\n`;
+            if (change.suggestedContent) {
+              markdown += `- [ ] Add/update content (see below)\n\n`;
+              markdown += `<details>\n<summary>💡 Suggested content</summary>\n\n`;
+              markdown += `\`\`\`markdown\n${change.suggestedContent}\n\`\`\`\n\n`;
+              markdown += `</details>\n\n`;
+            } else {
+              markdown += `\n`;
+            }
+          });
+        } else {
+          markdown += `**Documentation Impact:** No changes required.\n\n`;
+        }
+        
+        markdown += `---\n\n`;
+      });
     });
   });
   
   markdown += `## 📝 Notes\n\n`;
   markdown += `- This analysis is generated using Claude AI (${CLAUDE_MODEL})\n`;
   markdown += `- All suggestions should be reviewed and validated by the documentation team\n`;
+  markdown += `- Check the boxes as you complete each documentation task\n`;
   markdown += `- Priority levels are determined by analyzing the actual code changes\n`;
   markdown += `- PRs categorized as chores, tests, or CI/CD changes are automatically excluded\n`;
-  markdown += `- Some suggestions may need refinement based on your documentation style guide\n`;
   
   return markdown;
 }
 
+async function generatePDF(markdownFile) {
+  console.log('📄 Generating PDF...');
+  
+  try {
+    const { mdToPdf } = await import('md-to-pdf');
+    const pdfPath = markdownFile.replace('.md', '.pdf');
+    
+    await mdToPdf(
+      { path: markdownFile },
+      {
+        dest: pdfPath,
+        pdf_options: {
+          format: 'A4',
+          margin: {
+            top: '20mm',
+            right: '20mm',
+            bottom: '20mm',
+            left: '20mm'
+          }
+        }
+      }
+    );
+    
+    console.log(`✅ PDF generated: ${pdfPath}\n`);
+    return pdfPath;
+  } catch (error) {
+    console.error(`⚠️  Could not generate PDF: ${error.message}`);
+    console.error('   Install md-to-pdf with: cd scripts/strapi-release-analyzer && yarn add md-to-pdf\n');
+    return null;
+  }
+}
+
 async function main() {
-  const releaseUrl = process.argv[2];
+  const args = process.argv.slice(2);
+  const releaseUrl = args.find(arg => !arg.startsWith('--'));
+  const generatePdf = args.includes('--pdf');
   
   if (!releaseUrl) {
-    console.error('❌ Usage: node index.js <github-release-url>');
+    console.error('❌ Usage: node index.js <github-release-url> [--pdf]');
     console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0');
+    console.error('Options:');
+    console.error('  --pdf    Generate PDF output in addition to markdown');
     process.exit(1);
   }
 
@@ -453,6 +576,11 @@ async function main() {
     await fs.writeFile(outputFile, report);
     
     console.log(`📄 Report generated: ${outputFile}\n`);
+    
+    if (generatePdf) {
+      await generatePDF(outputFile);
+    }
+    
     console.log('🎉 Done!');
     
   } catch (error) {
