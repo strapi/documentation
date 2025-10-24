@@ -205,6 +205,7 @@ Respond with a JSON object following this exact structure:
 {
   "priority": "high" | "medium" | "low",
   "affectedAreas": ["area1", "area2"],
+  "documentationSection": "Specific section name (e.g., 'Features - Media Library', 'APIs - REST API', 'Configurations - Database')",
   "suggestedChanges": [
     {
       "file": "path/to/doc/file.md",
@@ -316,33 +317,77 @@ const DOCUMENTATION_SECTIONS = {
   }
 };
 
+const SPECIFIC_AREA_PATTERNS = {
+  // Features
+  'media|upload|asset': { section: 'Features', area: 'Media Library' },
+  'i18n|internationalization|locale|translation': { section: 'Features', area: 'Internationalization' },
+  'content-manager|content manager': { section: 'Features', area: 'Content Manager' },
+  'content-type-builder|content type builder': { section: 'Features', area: 'Content-Type Builder' },
+  'rbac|role|permission': { section: 'Features', area: 'RBAC' },
+  'review|workflow': { section: 'Features', area: 'Review Workflows' },
+  'draft|publish': { section: 'Features', area: 'Draft & Publish' },
+  'sso|single sign': { section: 'Features', area: 'SSO' },
+  'audit log': { section: 'Features', area: 'Audit Logs' },
+  'api token': { section: 'Features', area: 'API Tokens' },
+  
+  // APIs
+  'rest|/api/rest': { section: 'APIs', area: 'REST API' },
+  'graphql': { section: 'APIs', area: 'GraphQL' },
+  'document service': { section: 'APIs', area: 'Document Service' },
+  
+  // Configurations
+  'database|\\bdb\\b': { section: 'Configurations', area: 'Database' },
+  'server|middleware': { section: 'Configurations', area: 'Server' },
+  
+  // Other sections
+  'typescript|\\.ts': { section: 'TypeScript', area: '' },
+  'cli|command': { section: 'CLI', area: '' },
+  'plugin': { section: 'Plugins', area: 'Plugin Development' },
+  'migration|upgrade': { section: 'Upgrades', area: 'Migration' },
+};
+
 function categorizePRByDocumentation(analysis) {
-  const { claudeSuggestions, files } = analysis;
+  const { claudeSuggestions, files, title } = analysis;
   
   if (!claudeSuggestions || !claudeSuggestions.affectedAreas) {
-    return { mainCategory: 'cms', section: 'Other' };
+    return { mainCategory: 'cms', section: 'Other', specificArea: '' };
+  }
+
+  if (claudeSuggestions.documentationSection) {
+    const mainCategory = claudeSuggestions.documentationSection.toLowerCase().includes('cloud') ? 'cloud' : 'cms';
+    return { 
+      mainCategory, 
+      section: claudeSuggestions.documentationSection,
+      specificArea: claudeSuggestions.documentationSection.split(' - ')[1] || ''
+    };
   }
 
   const affectedAreas = claudeSuggestions.affectedAreas.join(' ').toLowerCase();
   const filePaths = files.map(f => f.filename.toLowerCase()).join(' ');
-  const allText = `${affectedAreas} ${filePaths}`.toLowerCase();
+  const titleLower = title.toLowerCase();
+  const allText = `${affectedAreas} ${filePaths} ${titleLower}`.toLowerCase();
 
   let mainCategory = 'cms';
   if (allText.includes('cloud') || allText.includes('/cloud/')) {
     mainCategory = 'cloud';
-  }
-
-  const sections = DOCUMENTATION_SECTIONS[mainCategory].sections;
-  
-  for (const [sectionName, keywords] of Object.entries(sections)) {
-    for (const keyword of keywords) {
-      if (allText.includes(keyword)) {
-        return { mainCategory, section: sectionName };
-      }
+    
+    if (allText.includes('deployment')) {
+      return { mainCategory, section: 'Deployments', specificArea: '' };
+    }
+    if (allText.includes('project')) {
+      return { mainCategory, section: 'Projects Management', specificArea: '' };
     }
   }
 
-  return { mainCategory, section: 'Other' };
+  for (const [pattern, { section, area }] of Object.entries(SPECIFIC_AREA_PATTERNS)) {
+    if (new RegExp(pattern, 'i').test(allText)) {
+      const sectionLabel = area ? `${section} - ${area}` : section;
+      return { mainCategory, section: sectionLabel, specificArea: area };
+    }
+  }
+
+  const firstAffectedArea = claudeSuggestions.affectedAreas[0] || 'Other';
+  return { mainCategory, section: firstAffectedArea, specificArea: '' };
 }
 
 function generateMarkdownReport(releaseInfo, analyses) {
@@ -354,7 +399,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
   markdown += `**Total PRs analyzed:** ${analyses.length}\n\n`;
   markdown += `---\n\n`;
   
-  markdown += `## 📊 Summary\n\n`;
+  markdown += `# 📊 Summary\n\n`;
   
   const categoryCounts = {};
   const priorityCounts = { high: 0, medium: 0, low: 0 };
@@ -405,7 +450,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
     
     if (categorizedPRs.length === 0) return;
     
-    markdown += `## ${DOCUMENTATION_SECTIONS[mainCat].label}\n\n`;
+    markdown += `# ${DOCUMENTATION_SECTIONS[mainCat].label}\n\n`;
     
     const sections = {};
     categorizedPRs.forEach(pr => {
@@ -416,7 +461,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
     });
     
     Object.entries(sections).forEach(([sectionName, prs]) => {
-      markdown += `### ${sectionName}\n\n`;
+      markdown += `## ${sectionName}\n\n`;
       
       prs.forEach(analysis => {
         const { number, title, url, claudeSuggestions, body, category } = analysis;
@@ -424,17 +469,21 @@ function generateMarkdownReport(releaseInfo, analyses) {
         const priorityEmoji = claudeSuggestions.priority === 'high' ? '🔴' : 
                              claudeSuggestions.priority === 'medium' ? '🟡' : '🟢';
         
-        markdown += `#### ${priorityEmoji} PR #${number}: ${title}\n\n`;
+        markdown += `### ${priorityEmoji} PR #${number}: ${title}\n\n`;
         markdown += `**Type:** ${PR_CATEGORIES[category] || category} | **Priority:** ${claudeSuggestions.priority.toUpperCase()} | **Link:** ${url}\n\n`;
         
         if (claudeSuggestions.affectedAreas && claudeSuggestions.affectedAreas.length > 0) {
-          markdown += `**Affected Areas:** ${claudeSuggestions.affectedAreas.join(', ')}\n\n`;
+          markdown += `**Affected Areas:**\n`;
+          claudeSuggestions.affectedAreas.forEach(area => {
+            markdown += `- ${area}\n`;
+          });
+          markdown += `\n`;
         }
         
         if (body && body.trim()) {
           const summary = body.split('\n').slice(0, 2).join('\n').trim();
           if (summary && summary.length > 10) {
-            markdown += `**Description:**\n> ${summary.substring(0, 200)}${summary.length > 200 ? '...' : ''}\n\n`;
+            markdown += `**Description:**\n${summary.substring(0, 200)}${summary.length > 200 ? '...' : ''}\n\n`;
           }
         }
         
@@ -445,28 +494,28 @@ function generateMarkdownReport(releaseInfo, analyses) {
         if (claudeSuggestions.suggestedChanges && claudeSuggestions.suggestedChanges.length > 0) {
           markdown += `**📝 TODO - Documentation Updates:**\n\n`;
           claudeSuggestions.suggestedChanges.forEach((change, idx) => {
-            markdown += `**${idx + 1}. ${change.changeType.toUpperCase()}: ${change.section || path.basename(change.file, '.md')}**\n\n`;
-            markdown += `- [ ] Review PR and understand changes\n`;
-            markdown += `- [ ] Update file: \`${change.file}\`\n`;
-            markdown += `- [ ] ${change.description}\n`;
+            const changeTitle = change.section || path.basename(change.file, '.md');
+            markdown += `- [ ] **${idx + 1}. ${change.changeType.toUpperCase()}: ${changeTitle}**\n`;
+            markdown += `  - [ ] Update file: \`${change.file}\`\n`;
+            markdown += `  - [ ] ${change.description}\n`;
             if (change.suggestedContent) {
-              markdown += `- [ ] Add/update content (see below)\n\n`;
-              markdown += `<details>\n<summary>💡 Suggested content</summary>\n\n`;
+              markdown += `  - [ ] Add/update content (see below)\n\n`;
+              markdown += `  <details>\n  <summary>💡 Suggested content</summary>\n\n`;
               
               const hasCodeBlock = change.suggestedContent.includes('```');
               
               if (hasCodeBlock) {
-                markdown += `${change.suggestedContent}\n\n`;
+                markdown += `  ${change.suggestedContent.split('\n').join('\n  ')}\n\n`;
               } else {
                 const lines = change.suggestedContent.split('\n');
-                markdown += `> **Content to add/update:**\n>\n`;
+                markdown += `  > **Content to add/update:**\n  >\n`;
                 lines.forEach(line => {
-                  markdown += `> ${line}\n`;
+                  markdown += `  > ${line}\n`;
                 });
                 markdown += `\n`;
               }
               
-              markdown += `</details>\n\n`;
+              markdown += `  </details>\n\n`;
             } else {
               markdown += `\n`;
             }
@@ -475,16 +524,13 @@ function generateMarkdownReport(releaseInfo, analyses) {
           markdown += `**Documentation Impact:** No changes required.\n\n`;
         }
         
-        markdown += `---\n\n`;
+        markdown += `\n\n---\n\n`;
       });
     });
   });
   
   markdown += `## 📝 Notes\n\n`;
-  markdown += `- This analysis is generated using Claude AI (${CLAUDE_MODEL})\n`;
-  markdown += `- All suggestions should be reviewed and validated by the documentation team\n`;
-  markdown += `- Check the boxes as you complete each documentation task\n`;
-  markdown += `- Priority levels are determined by analyzing the actual code changes\n`;
+  markdown += `- This analysis is AI-generated using Claude (${CLAUDE_MODEL})\n`;
   markdown += `- PRs categorized as chores, tests, or CI/CD changes are automatically excluded\n`;
   
   return markdown;
