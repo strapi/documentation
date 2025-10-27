@@ -53,6 +53,11 @@ jobs:
           echo "sha=${first_sha}" >> "$GITHUB_OUTPUT"
           echo "email=${email}" >> "$GITHUB_OUTPUT"
 
+      - name: Debug email extraction
+        run: |
+          echo "First commit SHA: ${{ steps.first_commit.outputs.sha }}"
+          echo "Extracted email: ${{ steps.first_commit.outputs.email }}"
+
       - name: Compute PR diff stats (files/lines)
         id: pr_stats
         shell: bash
