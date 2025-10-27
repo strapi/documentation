@@ -10,6 +10,11 @@
     &:hover {
       color: var(--news-ticker-hover-color) !important;
     }
+  
+    i.strapi-icons {
+      position: relative;
+      top: -2px;
+    }
   }
 }
 
