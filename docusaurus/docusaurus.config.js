@@ -231,6 +231,11 @@ const config = {
             position: 'right',
             html: '<i class="ph-fill ph-github-logo"></i> GitHub',
           },
+          {
+            href: 'https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74',
+            position: 'right',
+            html: '<i class="ph-fill ph-heart"></i> Contribution Program',
+          },
         ],
       },
       footer: {
@@ -297,6 +302,10 @@ const config = {
                 label: 'Stack Overflow',
                 href: 'https://stackoverflow.com/questions/tagged/strapi',
               },
+              {
+                label: 'Docs contribution program',
+                href: 'https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74',
+              }
             ],
           },
           {
