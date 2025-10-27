@@ -7,15 +7,15 @@ export default {
   },
   newsTicker: [
     {
-      icon: 'sparkle',
-      text: 'New search experience! Try it on docs-next.strapi.io',
-      link: 'https://docs-next.strapi.io',
+      icon: 'heart',
+      text: 'Docs Contribution Program: Improve the docs and get rewarded!',
+      link: 'https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74'
     },
-    {
-      icon: 'hand-heart',
-      text: 'Feedback wanted: Take our documentation survey',
-      link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
-    },
+    // {
+    //   icon: 'hand-heart',
+    //   text: 'Feedback wanted: Take our documentation survey',
+    //   link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
+    // },
     {
       icon: 'newspaper-clipping',
       text: 'New docs updates - See what\'s new this week',
