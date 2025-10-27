@@ -85,4 +85,4 @@ This project and everyone participating in it are governed by the [Strapi Code o
 
 ## Package version
 
-Please note that, starting with Strapi 5, strapi/documentation and strapi/strapi package version numbers are not synchronized any more. Strapi Docs are treated as their own product and will follow their own numbering system.
+Please note that, starting with Strapi 5, strapi/documentation, and strapi/strapi package version numbers are not synchronized any more. Strapi Docs are treated as their own product and will follow their own numbering system.
