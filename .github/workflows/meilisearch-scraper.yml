@@ -1,0 +1,58 @@
+name: Meilisearch Documentation Scraper
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+  workflow_dispatch: # Manual trigger option
+  schedule:
+    - cron: '0 2 * * *' # Daily at 2 AM UTC
+
+jobs:
+  scrape-docs:
+    runs-on: ubuntu-latest
+    # Only run on main branch or merged PRs
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Wait for deployment (if push event)
+        if: github.event_name == 'push'
+        run: sleep 60 # Wait for Vercel/Netlify deployment
+
+      - name: Run Meilisearch Scraper
+        env:
+          MEILISEARCH_HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          MEILISEARCH_API_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
+          CONFIG_FILE: .github/meilisearch/scraper-config.json
+        run: |
+          run: |
+            docker run \
+              -e MEILISEARCH_HOST_URL="$MEILISEARCH_HOST_URL" \
+              -e MEILISEARCH_API_KEY="$MEILISEARCH_API_KEY" \
+              -v ${{ github.workspace }}/.github:/config \
+              getmeili/docs-scraper:v0.12.8 \
+              pipenv run ./docs_scraper /config/meilisearch-scraper-config.json
+
+      - name: Test search index
+        env:
+          MEILISEARCH_HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          MEILISEARCH_SEARCH_KEY: ${{ secrets.MEILISEARCH_SEARCH_KEY }}
+        run: |
+          echo "Testing search functionality..."
+          curl -s "$MEILISEARCH_HOST_URL/indexes/strapi-docs/search" \
+            -H "Authorization: Bearer $MEILISEARCH_SEARCH_KEY" \
+            -H 'Content-Type: application/json' \
+            --data '{"q":"strapi","limit":5}' | \
+            python3 -m json.tool
+          
+          echo "Checking index stats..."
+          curl -s "$MEILISEARCH_HOST_URL/indexes/strapi-docs/stats" \
+            -H "Authorization: Bearer $MEILISEARCH_SEARCH_KEY" | \
+            python3 -m json.tool

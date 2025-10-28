@@ -45,7 +45,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
      * Optical adjustments to have CMS and Cloud items centered
      * Docusaurus DOM is weird so we can't rely on classical centering techniques
      */
-    margin-left: calc(194px + 20px); // 194px = logo size
+    margin-left: calc(194px + 226px); // 194px = logo size
     margin-right: 64px;
     /**
      * Use these if we remove the GitHub logo from navbar

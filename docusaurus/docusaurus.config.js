@@ -131,6 +131,16 @@ const config = {
       rel: 'stylesheet',
     },
   ],
+  customFields: {
+    meilisearch: {
+      host: 'https://ms-47f23e4f6fb9-30446.fra.meilisearch.io',
+      apiKey: '45326fd7e6278ec3fc83af7a5c20a2ab4261f8591bd186adf8bf8f962581622b',
+      indexUid: 'strapi-docs',
+      searchParams: {
+        attributesToHighlight: null
+      }
+    },
+  },
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -183,28 +193,28 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      announcementBar: {
-        id: 'support_us',
-        content:
-          "🧑🏽‍🔬 We're testing new AI and search tools on <a target='_blank' rel='noopener noreferrer' href='https://docs-next.strapi.io'>docs-next.strapi.io</a>! Feel free to have a look and <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/ei7p4koru8RaUCDB6'>share your feedback</a>",
-        backgroundColor: '#F3E5FA',
-        textColor: '#091E42',
-        isCloseable: true,
-      },
+      // announcementBar: {
+      //   id: 'support_us',
+      //   content:
+      //     "🧑🏽‍🔬 We're testing new AI and search tools on <a target='_blank' rel='noopener noreferrer' href='https://docs-next.strapi.io'>docs-next.strapi.io</a>! Feel free to have a look and <a target='_blank' rel='noopener noreferrer' href='https://forms.gle/ei7p4koru8RaUCDB6'>share your feedback</a>",
+      //   backgroundColor: '#F3E5FA',
+      //   textColor: '#091E42',
+      //   isCloseable: true,
+      // },
       docs: {
         sidebar: {
           hideable: true,
         },
       },
-      algolia: {
-        appId: '392RJ63O14',
-        apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
-        indexName: 'strapi_newCmsCrawler_march2025',
-        contextualSearch: false,
-        searchParameters: {
-          facetFilters: [],
-        },
-      },
+      // algolia: {
+      //   appId: '392RJ63O14',
+      //   apiKey: '3f4b8953a20a4c5af4614a607ecf9a93',
+      //   indexName: 'strapi_newCmsCrawler_march2025',
+      //   contextualSearch: false,
+      //   searchParameters: {
+      //     facetFilters: [],
+      //   },
+      // },
       navbar: {
         hideOnScroll: false,
         logo: {
