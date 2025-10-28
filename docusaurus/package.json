@@ -16,7 +16,8 @@
     "redirections-analysis": "node ./scripts/redirection-analysis/redirect-analyzer.js",
     "generate-llms": "node scripts/generate-llms.js",
     "dev:with-llms": "yarn generate-llms && docusaurus start --port 8080 --no-open",
-    "build:with-llms": "yarn generate-llms && docusaurus build"
+    "build:with-llms": "yarn generate-llms && docusaurus build",
+    "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.12.2",
@@ -35,7 +36,7 @@
     "docusaurus-plugin-image-zoom": "^0.1.1",
     "docusaurus-plugin-sass": "^0.2.6",
     "docusaurus2-dotenv": "^1.4.0",
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.2.3",
     "embla-carousel-autoplay": "^7.1.0",
     "embla-carousel-react": "^7.1.0",
     "embla-carousel-wheel-gestures": "^3.0.0",
@@ -43,6 +44,7 @@
     "glob": "^11.0.3",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
+    "meilisearch-docsearch": "^0.8.0",
     "prism-react-renderer": "^2.1.0",
     "qs": "^6.11.1",
     "react": "^18.2.0",
