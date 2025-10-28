@@ -1,0 +1,377 @@
+{
+  "index_uid": "strapi-docs",
+  "start_urls": [
+    {
+      "url": "https://docs-next.strapi.io/cms/getting-started",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/features",
+      "selectors_key": "features"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/backend-customization",
+      "selectors_key": "backend"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/configurations",
+      "selectors_key": "configurations"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/admin-panel-customization",
+      "selectors_key": "admin-panel"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/typescript",
+      "selectors_key": "typescript"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/plugins",
+      "selectors_key": "plugins"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/plugins-development",
+      "selectors_key": "plugins-development"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/cli",
+      "selectors_key": "cli"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/api",
+      "selectors_key": "api"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/data-management",
+      "selectors_key": "data-management"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/migration",
+      "selectors_key": "migration"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud/getting-started",
+      "selectors_key": "cloud-getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud/projects",
+      "selectors_key": "cloud-projects"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud/account",
+      "selectors_key": "cloud-account"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud/cli",
+      "selectors_key": "cloud-cli"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud/advanced",
+      "selectors_key": "cloud-advanced"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/intro",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud/intro",
+      "selectors_key": "cloud-getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/usage-information",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/faq",
+      "selectors_key": "faq"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/upgrades",
+      "selectors_key": "migration"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/setup-deployment",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/installation",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms/community",
+      "selectors_key": "getting-started"
+    },
+    {
+      "url": "https://docs-next.strapi.io/release-notes",
+      "selectors_key": "release-notes"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cms",
+      "selectors_key": "default"
+    },
+    {
+      "url": "https://docs-next.strapi.io/cloud",
+      "selectors_key": "default"
+    }
+  ],
+  "sitemap_urls": [
+    "https://docs-next.strapi.io/sitemap.xml"
+  ],
+  "selectors": {
+    "default": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Documentation"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "getting-started": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Getting Started"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "features": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Features"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "backend": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Development"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "configurations": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Configurations"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "admin-panel": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Development"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "typescript": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "TypeScript"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "plugins": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Plugins"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "plugins-development": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Plugins Development"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "cli": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "CLI"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "api": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "APIs"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "data-management": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Data Management"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "migration": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Migration"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "faq": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "FAQ"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "release-notes": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Release Notes"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "cloud-getting-started": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Getting Started"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "cloud-projects": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Projects"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "cloud-account": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Account"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "cloud-cli": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "CLI"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    },
+    "cloud-advanced": {
+      "lvl0": {
+        "selector": ".breadcrumbs .breadcrumbs__item:nth-child(2) span",
+        "global": true,
+        "default_value": "Advanced"
+      },
+      "lvl1": "h1",
+      "lvl2": "h2",
+      "lvl3": "h3",
+      "text": "article p, article li, main p, main li"
+    }
+  },
+  "selectors_exclude": [
+    ".navbar",
+    ".sidebar",
+    ".menu",
+    ".pagination-nav",
+    ".table-of-contents",
+    ".hash-link",
+    "aside"
+  ],
+  "custom_settings": {
+    "rankingRules": [
+      "words",
+      "exactness",
+      "attribute",
+      "proximity",
+      "typo",
+      "sort"
+    ],
+    "searchableAttributes": [
+      "hierarchy_lvl1",
+      "hierarchy_lvl0",
+      "hierarchy_lvl2",
+      "hierarchy_lvl3",
+      "content"
+    ],
+    "displayedAttributes": [
+      "hierarchy_lvl0",
+      "hierarchy_lvl1",
+      "hierarchy_lvl2",
+      "hierarchy_lvl3",
+      "content",
+      "url",
+      "anchor"
+    ]
+  }
+}
