@@ -30,7 +30,11 @@ function SearchBarContent() {
            shadowActiveElement.tagName === 'TEXTAREA' || 
            shadowActiveElement.isContentEditable)) {
         
-        e.stopImmediatePropagation();
+        const allowedKeys = ['Enter', 'Tab', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+        
+        if (!allowedKeys.includes(e.key)) {
+          e.stopImmediatePropagation();
+        }
       }
     };
 
@@ -122,6 +126,7 @@ function SearchBarContent() {
             noResultsScreen: {
               noResultsText: 'No results for',
               suggestedQueryText: 'Try searching for',
+              reportMissingResultsText: 'Believe this query should return results?',
               reportMissingResultsLinkText: 'Let us know.',
             },
           },
