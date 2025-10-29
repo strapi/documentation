@@ -16,16 +16,33 @@ function SearchBarContent() {
       return;
     }
 
-    // Clean up previous instance and clear container
+    const handleKeyDown = (e) => {
+      const kapaContainer = document.getElementById('kapa-widget-container');
+      
+      if (!kapaContainer || !kapaContainer.shadowRoot) {
+        return;
+      }
+
+      const shadowActiveElement = kapaContainer.shadowRoot.activeElement;
+      
+      if (shadowActiveElement && 
+          (shadowActiveElement.tagName === 'INPUT' || 
+           shadowActiveElement.tagName === 'TEXTAREA' || 
+           shadowActiveElement.isContentEditable)) {
+        
+        e.stopImmediatePropagation();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown, true);
+
     if (searchInstanceRef.current) {
       searchInstanceRef.current.destroy?.();
       searchInstanceRef.current = null;
     }
     
-    // Clear the container content
     searchButtonRef.current.innerHTML = '';
 
-    // Dynamic import to avoid SSR issues with solid-js
     Promise.all([
       import('meilisearch-docsearch'),
       import('meilisearch-docsearch/css')
@@ -105,7 +122,6 @@ function SearchBarContent() {
             noResultsScreen: {
               noResultsText: 'No results for',
               suggestedQueryText: 'Try searching for',
-              reportMissingResultsText: 'Believe this query should return results?',
               reportMissingResultsLinkText: 'Let us know.',
             },
           },
@@ -129,6 +145,7 @@ function SearchBarContent() {
     });
 
     return () => {
+      document.removeEventListener('keydown', handleKeyDown, true);
       if (searchInstanceRef.current) {
         searchInstanceRef.current.destroy?.();
         searchInstanceRef.current = null;
