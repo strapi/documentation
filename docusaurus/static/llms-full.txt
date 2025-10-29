@@ -8864,6 +8864,12 @@ The following example shows how to ensure a field called "nickname" is accepted 
 
 </Tabs>
 
+### Rate limiting configuration
+
+Rate limiting is applied to authentication and registration endpoints to prevent abuse.  The following parameters can be configured to change its behavior. Additional configuration options are provided by the 
+
+</Tabs>
+
 ### Templating emails
 
 By default this plugin comes with two templates: reset password and email address confirmation. The templates use 
