@@ -18,6 +18,7 @@ import {
   HeroTitle,
   HomepageAIButton,
 } from '../../components';
+import NewsTicker from '@site/src/components/NewsTicker';
 import Icon from '../../components/Icon';
 import content from './_home.content';
 
@@ -136,6 +137,7 @@ export default function PageHome() {
         }}
       />
       <main className={clsx(styles.home, isDarkTheme ? styles.homeDark : '')}>
+        <NewsTicker newsItems={content.newsTicker} />
         <Hero id="homeHero" className={isDarkTheme ? styles.heroDark : ''}>
           <Container>
             <HeroTitle className="heroTitle">

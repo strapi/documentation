@@ -5,6 +5,23 @@ export default {
     title: 'Strapi 5 Docs',
     description: 'Get set up in minutes to build any project in hours instead of weeks.',
   },
+  newsTicker: [
+    {
+      icon: 'heart',
+      text: 'Docs Contribution Program: Improve the docs and get rewarded!',
+      link: 'https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74'
+    },
+    // {
+    //   icon: 'hand-heart',
+    //   text: 'Feedback wanted: Take our documentation survey',
+    //   link: 'https://docs.google.com/forms/d/e/1FAIpQLSceA85j2C5iGcAhDUPkezy408JI4jjUQgS5SfEm8obnqTY2Hw/viewform',
+    // },
+    {
+      icon: 'newspaper-clipping',
+      text: 'New Docs release - See what\'s new this week',
+      link: '/release-notes#6100',
+    },
+  ],
   carousel: [
     {
       title: "Can't wait to use Strapi?",
