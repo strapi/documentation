@@ -5,7 +5,7 @@ To help us merge your PR, make sure to follow the instructions detailed in the C
 https://github.com/strapi/documentation/blob/main/CONTRIBUTING.md
 
 Note that all documentation updates should be made against the `main` branch.
-Keep your PR in WIP (Work In Progress) until it's ready to be reviewed and merged.
+Keep your PR in Draft mode until it's ready to be reviewed and merged.
 
 
 As part of the Docs Contribution Program, all external contribution PRs are labeled `contribution`.
