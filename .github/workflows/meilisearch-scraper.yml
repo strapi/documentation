@@ -32,7 +32,6 @@ jobs:
           MEILISEARCH_API_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
           CONFIG_FILE: .github/meilisearch/scraper-config.json
         run: |
-          run: |
             docker run \
               -e MEILISEARCH_HOST_URL="$MEILISEARCH_HOST_URL" \
               -e MEILISEARCH_API_KEY="$MEILISEARCH_API_KEY" \
