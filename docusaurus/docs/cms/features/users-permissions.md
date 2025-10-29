@@ -346,6 +346,68 @@ export default ({ env }) => ({
 
 </Tabs>
 
+### Rate limiting configuration
+
+Rate limiting is applied to authentication and registration endpoints to prevent abuse.  The following parameters can be configured to change its behavior. Additional configuration options are provided by the <ExternalLink text="koa2-ratelimit" to="https://github.com/ysocorp/koa2-ratelimit?tab=readme-ov-file#configuration"/> package:
+
+
+The following options are available in [the `/config/plugins` file](/cms/configurations/plugins):
+
+| Parameter | Description | Type | Default |
+| --------- | ----------- | ---- | ------- |
+| `ratelimit` | Settings to customize the rate limiting of the authentications and registration endpoints | object | `{}` |
+| `ratelimit.enabled` | Enable or disable the rate limiter | boolean | `true` |
+| `ratelimit.interval` | Time window for requests to be considered as part of the same rate limiting bucket | object | `{ min: 5 }` |
+| `ratelimit.max` | Maximum number of requests allowed in the time window | integer | `5` |
+| `ratelimit.prefixKey` | Prefix for the rate limiting key | string | `${userIdentifier}:${requestPath}:${ctx.request.ip}` |
+
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  // ... other plugins configuration ...
+  // Users & Permissions configuration
+  'users-permissions': {
+    config: {
+      ratelimit: {
+        enabled: true,
+        interval: { min: 5 },
+        max: 5,
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  // ... other plugins configuration ...
+  // Users & Permissions configuration
+  'users-permissions': {
+    config: {
+      ratelimit: {
+        enabled: true,
+        interval: { min: 5 },
+        max: 5,
+      },
+    },
+  },
+  // ...
+});
+```
+
+</TabItem>
+
+</Tabs>
+
 ### Templating emails
 
 By default this plugin comes with two templates: reset password and email address confirmation. The templates use <ExternalLink to="https://lodash.com/docs/4.17.15#template" text="Lodash's `template()` method"/> to populate the variables.
