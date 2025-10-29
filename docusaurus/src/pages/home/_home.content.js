@@ -18,8 +18,8 @@ export default {
     // },
     {
       icon: 'newspaper-clipping',
-      text: 'v6.9.3 is out - See what\'s new this week',
-      link: '/release-notes#693',
+      text: 'New Docs release - See what\'s new this week',
+      link: '/release-notes#6100',
     },
   ],
   carousel: [
