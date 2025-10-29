@@ -106,6 +106,7 @@
 - [Content Manager APIs](https://docs.strapi.io/cms/plugins-development/content-manager-apis): The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
 - [Plugin creation & setup](https://docs.strapi.io/cms/plugins-development/create-a-plugin): Learn how to use the Plugin SDK to build and publish a Strapi plugin
 - [Developing plugins](https://docs.strapi.io/cms/plugins-development/developing-plugins): Generation introduction about Strapi plugins development
+- [How to create admin permissions from plugins](https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-for-plugins): Learn how to create and configure admin permissions for your plugin
 - [How to create components for Strapi plugins](https://docs.strapi.io/cms/plugins-development/guides/create-components-for-plugins): Learn how to create and configure components for your Strapi plugins
 - [How to pass data from server to admin panel with a Strapi plugin](https://docs.strapi.io/cms/plugins-development/guides/pass-data-from-server-to-admin): Learn how to pass data from server to admin panel with a Strapi plugin
 - [How to store and access data from a Strapi plugin](https://docs.strapi.io/cms/plugins-development/guides/store-and-access-data): Learn how to store and access data from a Strapi plugin
