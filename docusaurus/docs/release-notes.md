@@ -28,6 +28,52 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.10.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Replace Algolia search with MeiliSearch](https://github.com/strapi/documentation/pull/2783)
+- [Add a "News Ticker" to homepage](https://github.com/strapi/documentation/pull/2766)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add rate limiting documentation for users-permissions plugin](https://github.com/strapi/documentation/pull/2782)
+
+#### Repository
+- [Add contribution program links to footer and top nav](https://github.com/strapi/documentation/pull/2781)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Fix S key in Ask AI modal triggering the MeiliSearch modal](https://github.com/strapi/documentation/pull/2786)
+- [Docs Contribution Program: updates in PR template & contribution guide](https://github.com/strapi/documentation/pull/2784)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/crasite" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/9783406?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="crasite"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.9.5
 
 <br />
