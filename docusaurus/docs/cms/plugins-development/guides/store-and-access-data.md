@@ -27,7 +27,7 @@ To create a content-type with the CLI generator, run the following command in a 
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn strapi generate
+yarn strapi generate content-type
 ```
 
 </TabItem>
@@ -35,7 +35,7 @@ yarn strapi generate
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm run strapi generate
+npm run strapi generate content-type
 ```
 
 </TabItem>
@@ -100,7 +100,7 @@ The following highlighted lines in an example `schema.json` file show how to mak
 
 ### Ensure plugin content-types are imported
 
-The CLI generator might not have imported all the related content-type files for your plugin, so you might have to make the following adjustments after the `strapi generate` CLI command has finished running:
+The CLI generator might not have imported all the related content-type files for your plugin, so you might have to make the following adjustments after the `strapi generate content-type` CLI command has finished running:
 
 1. In the `/server/index.js` file, import the content-types:
 
