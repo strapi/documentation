@@ -88,7 +88,7 @@ It is not possible to create custom locales. Locales can only be created based o
 #### Enabling AI-powered internationalization
 <GrowthBadge /> 
 
-AI-Powered Internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
+AI-Powered Internationalization enables automatic translations for all the locales in a project when the content in the default locale is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
 
 AI-powered Internationalization is disabled by default. To enable it, go to <Icon name="gear-six" /> *Settings > Global Settings > Internationalization* and set <Icon name="sparkle" /> _AI Translations_ to _Enabled_.
 
@@ -137,9 +137,9 @@ Click on the <Icon name="globe-hemisphere-west" /> *Fill in from another locale*
 ### AI-powered internationalization <NewBadge /> {#ai-powered-internationalization}
 <GrowthBadge /> 
 
-[When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds.
+[When enabled](#enabling-ai-powered-internationalization), AI-powered internationalization enables automatic translations for all the locales in a project when the source content is updated. This enables content editors to have their content translated into multiple languages within a few seconds. The idea behind the feature is to ensure users only manually fill in content in the default locale, and Strapi AI translates it for all other existing locales.
 
-Once enabled, whenever you edit a content-type in a given locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. Using this feature consumes Strapi AI credits.
+Once enabled, whenever you edit a content-type in the default locale and click **Save**, all other locales for the content-type should be translated automatically, which will be confirmed by an _All locales have been translated_ notification. Using this feature consumes Strapi AI credits.
 
 <ThemedImage
   alt="Managing locales with AI-powered i18n"
@@ -148,6 +148,12 @@ Once enabled, whenever you edit a content-type in a given locale and click **Sav
     dark: '/img/assets/content-manager/locale-i18n-with-ai_DARK.png',
   }}
 />
+
+:::caution
+AI-powered internationalization only works one way, keeping the default locale content as the unique source of truth. Consequently, once the feature is enabled:
+- Editing and saving content for any locale othen than the default one will not trigger automatic translations.
+- When editing the content for the default locale, the manual modifications made to other locales will be overwritten.
+:::
 
 <StrapiAiCredits />
 
