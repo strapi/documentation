@@ -8,14 +8,13 @@ on:
     types: [closed]
     branches:
       - main
-  workflow_dispatch: # Manual trigger option
+  workflow_dispatch:
   schedule:
-    - cron: '0 2 * * *' # Daily at 2 AM UTC
+    - cron: '0 2 * * *'
 
 jobs:
   scrape-docs:
     runs-on: ubuntu-latest
-    # Only run on main branch or merged PRs
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     
     steps:
@@ -24,21 +23,25 @@ jobs:
 
       - name: Wait for deployment (if push event)
         if: github.event_name == 'push'
-        run: sleep 60 # Wait for Vercel/Netlify deployment
+        run: sleep 60
+
+      - name: Validate JSON config
+        run: |
+          echo "Validating JSON configuration..."
+          python3 -c "import json; json.load(open('.github/workflows/meilisearch-scraper-config.json'))"
+          echo "JSON is valid!"
 
       - name: Run Meilisearch Scraper
         env:
           MEILISEARCH_HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
           MEILISEARCH_API_KEY: ${{ secrets.MEILISEARCH_MASTER_KEY }}
-          CONFIG_FILE: .github/meilisearch/scraper-config.json
         run: |
-          run: |
-            docker run \
-              -e MEILISEARCH_HOST_URL="$MEILISEARCH_HOST_URL" \
-              -e MEILISEARCH_API_KEY="$MEILISEARCH_API_KEY" \
-              -v ${{ github.workspace }}/.github:/config \
-              getmeili/docs-scraper:v0.12.8 \
-              pipenv run ./docs_scraper /config/meilisearch-scraper-config.json
+          docker run \
+            -e MEILISEARCH_HOST_URL="$MEILISEARCH_HOST_URL" \
+            -e MEILISEARCH_API_KEY="$MEILISEARCH_API_KEY" \
+            -v ${{ github.workspace }}/.github/workflows:/config \
+            getmeili/docs-scraper:v0.12.8 \
+            pipenv run ./docs_scraper /config/meilisearch-scraper-config.json
 
       - name: Test search index
         env:
