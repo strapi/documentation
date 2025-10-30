@@ -90,6 +90,9 @@ const sidebars = {
           type: 'doc',
           label: 'Internationalization (i18n)',
           id: 'cms/features/internationalization',
+          customProps: {
+            updated: true,
+          },
         },
         {
           type: 'doc',
