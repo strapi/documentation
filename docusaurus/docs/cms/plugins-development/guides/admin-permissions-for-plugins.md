@@ -173,7 +173,7 @@ export default {
 
 ```
 
-### Custom permissions with the useRBAC hook
+### Custom permissions with the `useRBAC` hook
 
 If you have to have even more control over the permission of the admin user you can utilize the `useRBAC` hook. With that you can use the permissions validation just like you want. You can do that as follows:
 
