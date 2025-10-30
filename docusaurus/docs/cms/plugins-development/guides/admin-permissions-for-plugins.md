@@ -134,7 +134,7 @@ You can see how we use our permissions configuration file together with the `<Pa
 
 ### Menu link permissions
 
-The above example makes sure that the permissions of a user that visits your page directly will be validated. However, you might want to remove the menu link to that page as well. To do that, you'll have to make a change to the `addMenuLink` implementation. You can do as follows:
+The previous example makes sure that the permissions of a user that visits your page directly will be validated. However, you might want to remove the menu link to that page as well. To do that, you'll have to make a change to the `addMenuLink` implementation. You can do as follows:
 
 ```js title="/src/plugins/my-plugin/admin/src/index.js|ts" {21-23,5}
 import { getTranslation } from './utils/getTranslation';
