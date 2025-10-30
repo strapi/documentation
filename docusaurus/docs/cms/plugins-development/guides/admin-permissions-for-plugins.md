@@ -104,7 +104,7 @@ export default pluginPermissions;
 
 ### Page permissions
 
-Once you've created the configuration file you are ready to implement your permissions! If you've bootstrapped your plugin using the [plugin SDK init command](/cms/plugins-development/plugin-sdk#npx-strapisdk-plugin-init), you will have an example `HomePage.tsx` file. To implement page permissions you can do the following:
+Once you've created the configuration file you are ready to implement your permissions. If you've bootstrapped your plugin using the [plugin SDK init command](/cms/plugins-development/plugin-sdk#npx-strapisdk-plugin-init), you will have an example `HomePage.tsx` file. To implement page permissions you can do the following:
 
 ```js title="/src/plugins/my-plugin/admin/src/pages/HomePage.jsx|tsx" {2,5,12,16}
 import { Main } from '@strapi/design-system';
