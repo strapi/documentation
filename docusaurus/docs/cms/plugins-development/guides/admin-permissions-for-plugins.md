@@ -89,7 +89,7 @@ export default bootstrap;
 </Tabs>
 
 
-## Admin implementation
+## Implement permissions on the admin panel side
 
 Before we can implement our permissions on the admin side we have to define them in a reusable configuration file. This file can be stored anywhere in your plugin admin code. You can do that as follows:
 
