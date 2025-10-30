@@ -175,7 +175,7 @@ export default {
 
 ### Custom permissions with the `useRBAC` hook
 
-If you have to have even more control over the permission of the admin user you can utilize the `useRBAC` hook. With that you can use the permissions validation just like you want. You can do that as follows:
+To get even more control over the permission of the admin user you can use the `useRBAC` hook. With this hook you can use the permissions validation just like you want, as in the following example:
 
 ```js title="/src/plugins/my-plugin/admin/src/components/Sidebar.jsx|tsx" 
 import React from 'react';
