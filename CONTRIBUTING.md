@@ -17,6 +17,8 @@ Contributing to the Strapi documentation implies 2 steps:
 
 2. [Submit a pull request](#-pull-requests) for review.
 
+By default, all external contributions are automatically labeled `contribution` to be apart of the [Docs Contribution Program](https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71), which rewards contributors with points (based on the amount of updates in the pull request) that can then be used in the Strapi Shop to get Strapi goodies. If you do not wish to take part in the program, let the Strapi Documentation team know and the `contribution` label will be removed from your pull request.
+
 ## 🦖 Docusaurus
 
 Strapi’s documentation is built with the React- and Markdown-based [Docusaurus](https://docusaurus.io) framework.
@@ -98,6 +100,7 @@ To submit your contribution for review:
 
 That’s it! 🥳 Once the pull request is [reviewed and approved](#review-and-management-of-pull-requests), the Strapi Documentation team will merge it, and the content will be live on [docs.strapi.io](http://docs.strapi.io) a few minutes later. 🚀
 
+If your contribution takes part in the [Docs Contribution Program](https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71), as soon as your pull request is merged, you should receive an email with a link to the Strapi Shop where points you have earned will have been granted to your account.
 
 ## Review and management of pull requests
 
