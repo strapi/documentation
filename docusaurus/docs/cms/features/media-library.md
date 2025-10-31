@@ -333,7 +333,7 @@ export default {
 The Upload plugin validates files based on their actual MIME type rather than the declared file extension.
 Only files matching the defined security rules are uploaded; others are filtered out.
 
-The `security` configuration provides two options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
+The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
 
 :::note
 It's best to define either `allowedTypes` or `deniedTypes`, not both, to avoid conflicts in file validation logic.
