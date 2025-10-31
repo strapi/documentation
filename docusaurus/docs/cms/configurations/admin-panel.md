@@ -230,6 +230,10 @@ Admin authentication uses session management by default for enhanced security.
 
 Session management provides enhanced security for authentication in Strapi applications by using short-lived access tokens paired with longer-lived refresh tokens. This approach reduces the risk of token theft and allows for more granular control over user sessions.
 
+:::caution Serve the admin panel over HTTPS
+Since v5.24.0, Strapi stores admin authentication data in secure, HTTP-only cookies. Browsers only accept and send these cookies over HTTPS connections, so attempting to access the admin panel via plain HTTP prevents the session cookie from being set and results in failed logins. Always expose the admin panel through HTTPS in production (for example, by placing Strapi behind a TLS-terminating proxy or load balancer). Local development continues to work with the default configuration because cookies are not marked as secure in that environment.
+:::
+
 Strapi's session management system supports both admin panel authentication and Content API authentication through the [Users & Permissions feature](/cms/features/users-permissions). The system provides:
 
 - Short-lived access tokens (typically 30 minutes) for API requests
