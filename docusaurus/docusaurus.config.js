@@ -107,6 +107,7 @@ const config = {
       'data-modal-x-offset': '0',              // Defaults is undefined
       'data-modal-y-offset': '3vh',            // Default is 10vh
       'data-modal-inner-max-width': '100%',
+      'data-user-satisfaction-feedback-enabled': 'false',
       async: true,
     },
     // {
