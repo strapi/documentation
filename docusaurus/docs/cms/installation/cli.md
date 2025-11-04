@@ -45,6 +45,10 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     * `npx` runs a command from a npm package
     * `create-strapi` is the Strapi package
     * `@latest` indicates that the latest version of Strapi is used
+
+    :::tip
+    The older `npx create-strapi-app@latest` command still works and will provide the exact same experience as the newer `npx create-strapi@latest` command.
+    :::
     
     <br/>
 
