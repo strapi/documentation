@@ -52,7 +52,7 @@ export const aiToolsConfig = {
       id: 'open-claude',
       label: 'Open with Claude',
       // description: 'Open Claude with a prompt about this page',
-      icon: 'circles-three-plus',
+      icon: 'chat-teardrop-text',
       actionType: 'open-llm',
       targetUrl: 'https://claude.ai/new',
       promptTemplate: 'Read from {{url}} so I can ask questions about it.',
