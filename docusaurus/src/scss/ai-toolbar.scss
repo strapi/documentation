@@ -136,6 +136,12 @@
       flex-shrink: 0;
       color: var(--strapi-neutral-600);
     }
+
+    &--no-description {
+      .strapi-icons {
+        top: -8px;
+      }
+    }
   }
 
   &__dropdown-item-content {
@@ -246,6 +252,12 @@
 
       .strapi-icons {
         color: var(--strapi-neutral-600);
+      }
+
+      &--no-description {
+        .strapi-icons {
+          top: -8px;
+        }
       }
     }
 

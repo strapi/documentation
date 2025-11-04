@@ -124,7 +124,7 @@ const AiToolbar = () => {
               <button
                 key={action.id}
                 onClick={() => handleDropdownAction(action)}
-                className="ai-toolbar__dropdown-item"
+                className={`ai-toolbar__dropdown-item ${action.description ? '' : 'ai-toolbar__dropdown-item--no-description'}`}
                 title={action.description}
               >
                 <Icon 
