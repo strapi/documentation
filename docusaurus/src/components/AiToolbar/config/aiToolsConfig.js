@@ -28,7 +28,7 @@ export const aiToolsConfig = {
     {
       id: 'open-chatgpt',
       label: 'Open with ChatGPT',
-      description: 'Open ChatGPT with a prompt about this page',
+      // description: 'Open ChatGPT with a prompt about this page',
       icon: 'open-ai-logo',
       actionType: 'open-llm',
       targetUrl: 'https://chat.openai.com/',
@@ -51,7 +51,7 @@ export const aiToolsConfig = {
     {
       id: 'open-claude',
       label: 'Open with Claude',
-      description: 'Open Claude with a prompt about this page',
+      // description: 'Open Claude with a prompt about this page',
       icon: 'circles-three-plus',
       actionType: 'open-llm',
       targetUrl: 'https://claude.ai/new',
