@@ -1,13 +1,13 @@
 export const aiToolsConfig = {
   primaryActionId: 'copy-markdown',
-  
+
   actions: [
     {
       id: 'copy-markdown',
       label: 'Copy Markdown',
       description: 'Copy the raw markdown content of this page',
       icon: 'copy',
-      actionType: 'copy-markdown'
+      actionType: 'copy-markdown',
     },
     {
       id: 'view-llms',
@@ -15,15 +15,37 @@ export const aiToolsConfig = {
       description: 'Lightweight version for AI models',
       icon: 'file-text',
       actionType: 'navigate',
-      url: '/llms.txt'
+      url: '/llms.txt',
     },
     {
       id: 'view-llms-full',
-      label: 'View LLMs-full.txt', 
+      label: 'View LLMs-full.txt',
       description: 'Complete documentation for AI models',
       icon: 'file-text',
       actionType: 'navigate',
-      url: '/llms-full.txt'
-    }
-  ]
+      url: '/llms-full.txt',
+    },
+    {
+      id: 'open-chatgpt',
+      label: 'Open with ChatGPT',
+      description: 'Open ChatGPT with a prompt about this page',
+      icon: 'chat-circle-dots',
+      actionType: 'open-llm',
+      targetUrl: 'https://chat.openai.com/',
+      promptTemplate: 'Read from {{url}} so I can ask questions about it.',
+      promptParam: 'prompt',
+      openIn: '_blank',
+    },
+    {
+      id: 'open-claude',
+      label: 'Open with Claude',
+      description: 'Open Claude with a prompt about this page',
+      icon: 'sparkle',
+      actionType: 'open-llm',
+      targetUrl: 'https://claude.ai/new',
+      promptTemplate: 'Read from {{url}} so I can ask questions about it.',
+      promptParam: 'query',
+      openIn: '_blank',
+    },
+  ],
 };

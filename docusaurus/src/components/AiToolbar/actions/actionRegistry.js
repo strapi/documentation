@@ -1,26 +1,28 @@
 import { copyMarkdownAction } from './copyMarkdown';
 import { navigateAction } from './navigate';
+import { openLLMAction } from './openLLM';
 
 // Central registry of all available actions
 export const actionHandlers = {
   'copy-markdown': copyMarkdownAction,
-  'navigate': navigateAction,
+  navigate: navigateAction,
+  'open-llm': openLLMAction,
 };
 
 // Main function to execute an action
 export const executeAction = async (actionConfig, additionalContext = {}) => {
   const handler = actionHandlers[actionConfig.actionType];
-  
+
   if (!handler) {
     console.warn(`Unknown action type: ${actionConfig.actionType}`);
     return;
   }
-  
+
   const context = {
     ...actionConfig, // url, etc.
     ...additionalContext, // docId, docPath, updateActionState, closeDropdown, etc.
   };
-  
+
   try {
     await handler(context);
   } catch (error) {
@@ -38,28 +40,28 @@ export const getActionDisplay = (actionId, currentState = 'idle') => {
             icon: 'circle-notch',
             iconClasses: 'ph-bold spinning',
             label: 'Copying...',
-            className: 'ai-toolbar-button--loading'
+            className: 'ai-toolbar-button--loading',
           };
         case 'success':
           return {
             icon: 'check-circle',
             iconClasses: 'ph-fill',
             label: 'Copied!',
-            className: 'ai-toolbar-button--success'
+            className: 'ai-toolbar-button--success',
           };
         case 'error':
           return {
             icon: 'warning-circle',
             iconClasses: 'ph-fill',
             label: 'Copy failed',
-            className: 'ai-toolbar-button--error'
+            className: 'ai-toolbar-button--error',
           };
         default: // 'idle'
           return {
             icon: 'copy',
             iconClasses: 'ph-bold',
             label: 'Copy Markdown',
-            className: 'ai-toolbar-button--idle'
+            className: 'ai-toolbar-button--idle',
           };
       }
     default:
@@ -68,7 +70,7 @@ export const getActionDisplay = (actionId, currentState = 'idle') => {
         icon: 'question',
         iconClasses: 'ph-bold',
         label: 'Unknown',
-        className: 'ai-toolbar-button--idle'
+        className: 'ai-toolbar-button--idle',
       };
   }
 };
