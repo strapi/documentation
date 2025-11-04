@@ -49,8 +49,6 @@ Follow the steps below to create a new Strapi project, being sure to use the app
     :::tip
     The older `npx create-strapi-app@latest` command still works and will provide the exact same experience as the newer `npx create-strapi@latest` command.
     :::
-    
-    <br/>
 
     Instead of npx, the traditional npm command can be used too, with `npm create strapi@latest`.
 
