@@ -147,7 +147,7 @@ module.exports = ({ env })=>({
         xsmall: 64
       },
       security: {
-        allowedTypes: ['image/*', 'application/pdf'],
+        allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
     },
@@ -177,7 +177,7 @@ export default () => ({
         xsmall: 64
       },
       security: {
-        allowedTypes: ['image/*', 'application/pdf'],
+        allowedTypes: ['image/*', 'application/*'],
         deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
     },
@@ -331,15 +331,15 @@ export default {
 #### Security
 
 The Upload plugin validates files based on their actual MIME type rather than the declared file extension.
-Only files matching the defined security rules are uploaded; others are filtered out.
+Only files matching the defined security rules are uploaded.
 
 The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
 
 :::note
-It's best to define either `allowedTypes` or `deniedTypes`, not both, to avoid conflicts in file validation logic.
+You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
 :::
 
-You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following example sets the `allowedTypes` filter:
+You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
 
 <Tabs groupId="js-ts">
 
@@ -351,7 +351,8 @@ module.exports = {
   upload: {
     config: {
       security: {
-        allowedTypes: ['image/*', 'application/pdf']
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
     }
   }
@@ -368,7 +369,8 @@ export default {
   upload: {
     config: {
       security: {
-        allowedTypes: ['image/*', 'application/pdf']
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
     }
   }
