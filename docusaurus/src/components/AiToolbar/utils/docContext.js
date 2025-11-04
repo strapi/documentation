@@ -58,19 +58,40 @@ export const buildPromptFromTemplate = (template, extraValues = {}) => {
   return applyTemplate(template, values);
 };
 
+const normalizeParams = (promptParam) => {
+  if (!promptParam) {
+    return [];
+  }
+
+  if (Array.isArray(promptParam)) {
+    return promptParam.filter(Boolean);
+  }
+
+  return [promptParam];
+};
+
 export const buildUrlWithPrompt = ({ targetUrl, prompt, promptParam = 'prompt' }) => {
   if (!targetUrl) return null;
-  if (!promptParam || !prompt) return targetUrl;
+  const params = normalizeParams(promptParam);
+
+  if (!prompt || params.length === 0) {
+    return targetUrl;
+  }
 
   try {
     const url = new URL(targetUrl, isBrowser() ? window.location.origin : undefined);
-    url.searchParams.set(promptParam, prompt);
+    params.forEach((param) => {
+      url.searchParams.set(param, prompt);
+    });
     return url.toString();
   } catch (error) {
     const encodedPrompt = encodeURIComponent(prompt);
-    const encodedParam = encodeURIComponent(promptParam);
+    const encodedParams = params.map((param) => encodeURIComponent(param));
     const separator = targetUrl.includes('?') ? '&' : '?';
-    return `${targetUrl}${separator}${encodedParam}=${encodedPrompt}`;
+    const query = encodedParams
+      .map((param) => `${param}=${encodedPrompt}`)
+      .join('&');
+    return `${targetUrl}${separator}${query}`;
   }
 };
 
@@ -90,8 +111,6 @@ export const getUserLanguagePreferences = () => {
 
 export const selectLocalizedTemplate = (defaultTemplate, localizedTemplates = {}) => {
   const userLanguages = getUserLanguagePreferences();
-  const availableLanguages = Object.keys(localizedTemplates);
-
   const tryMatch = (languageTag) => {
     if (!languageTag) {
       return null;
