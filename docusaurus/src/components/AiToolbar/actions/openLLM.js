@@ -6,12 +6,19 @@ import {
 
 const DEFAULT_PROMPT_TEMPLATE = 'Read from {{url}} so I can ask questions about it.';
 
-const buildLocalizedPromptTemplate = (defaultTemplate, selectedTemplate) => {
-  if (!selectedTemplate || selectedTemplate === defaultTemplate) {
-    return defaultTemplate;
+const resolveTemplate = (defaultTemplate, selectedTemplate, includeDefaultPrompt) => {
+  const safeDefault = defaultTemplate || DEFAULT_PROMPT_TEMPLATE;
+  const safeSelected = selectedTemplate || safeDefault;
+
+  if (!includeDefaultPrompt) {
+    return safeSelected;
   }
 
-  return `${selectedTemplate}\n\n---\n${defaultTemplate}`;
+  if (safeSelected === safeDefault) {
+    return safeDefault;
+  }
+
+  return `${safeSelected}\n\n---\n${safeDefault}`;
 };
 
 export const openLLMAction = (context) => {
@@ -19,6 +26,7 @@ export const openLLMAction = (context) => {
     targetUrl,
     promptTemplate = DEFAULT_PROMPT_TEMPLATE,
     localizedPromptTemplates = {},
+    includeDefaultPrompt = false,
     promptParam = 'prompt',
     openIn = '_blank',
     closeDropdown,
@@ -30,7 +38,7 @@ export const openLLMAction = (context) => {
   }
 
   const selectedTemplate = selectLocalizedTemplate(promptTemplate, localizedPromptTemplates);
-  const template = buildLocalizedPromptTemplate(DEFAULT_PROMPT_TEMPLATE, selectedTemplate);
+  const template = resolveTemplate(promptTemplate, selectedTemplate, includeDefaultPrompt);
   const prompt = buildPromptFromTemplate(template);
   const fullUrl = buildUrlWithPrompt({
     targetUrl,
