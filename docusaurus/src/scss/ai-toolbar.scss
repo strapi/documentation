@@ -110,7 +110,6 @@
   }
 
   &__dropdown-item {
-    position: relative;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -134,15 +133,13 @@
     }
 
     .strapi-icons {
-      position: relative;
-      top: 1px;
       flex-shrink: 0;
       color: var(--strapi-neutral-600);
     }
 
     &--no-description {
       .strapi-icons {
-        top: -7px;
+        top: -8px;
       }
     }
   }
@@ -259,7 +256,7 @@
 
       &--no-description {
         .strapi-icons {
-          top: -7px;
+          top: -8px;
         }
       }
     }
