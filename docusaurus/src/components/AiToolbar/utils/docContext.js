@@ -73,3 +73,52 @@ export const buildUrlWithPrompt = ({ targetUrl, prompt, promptParam = 'prompt' }
     return `${targetUrl}${separator}${encodedParam}=${encodedPrompt}`;
   }
 };
+
+export const getUserLanguagePreferences = () => {
+  if (!isBrowser()) {
+    return [];
+  }
+
+  const languages = Array.isArray(navigator.languages) ? navigator.languages : [];
+  const fallback = navigator.language ? [navigator.language] : [];
+  const merged = [...languages, ...fallback];
+
+  return merged
+    .map((lang) => (typeof lang === 'string' ? lang.toLowerCase() : null))
+    .filter(Boolean);
+};
+
+export const selectLocalizedTemplate = (defaultTemplate, localizedTemplates = {}) => {
+  const userLanguages = getUserLanguagePreferences();
+  const availableLanguages = Object.keys(localizedTemplates);
+
+  const tryMatch = (languageTag) => {
+    if (!languageTag) {
+      return null;
+    }
+
+    if (localizedTemplates[languageTag]) {
+      return localizedTemplates[languageTag];
+    }
+
+    const base = languageTag.split('-')[0];
+    if (localizedTemplates[base]) {
+      return localizedTemplates[base];
+    }
+
+    return null;
+  };
+
+  for (const lang of userLanguages) {
+    const match = tryMatch(lang);
+    if (match) {
+      return match;
+    }
+  }
+
+  if (localizedTemplates.en) {
+    return localizedTemplates.en;
+  }
+
+  return defaultTemplate;
+};

@@ -1,4 +1,8 @@
-import { buildPromptFromTemplate, buildUrlWithPrompt } from '../utils/docContext';
+import {
+  buildPromptFromTemplate,
+  buildUrlWithPrompt,
+  selectLocalizedTemplate,
+} from '../utils/docContext';
 
 const DEFAULT_PROMPT_TEMPLATE = 'Read from {{url}} so I can ask questions about it.';
 
@@ -6,6 +10,7 @@ export const openLLMAction = (context) => {
   const {
     targetUrl,
     promptTemplate = DEFAULT_PROMPT_TEMPLATE,
+    localizedPromptTemplates = {},
     promptParam = 'prompt',
     openIn = '_blank',
     closeDropdown,
@@ -16,7 +21,8 @@ export const openLLMAction = (context) => {
     return;
   }
 
-  const prompt = buildPromptFromTemplate(promptTemplate);
+  const template = selectLocalizedTemplate(promptTemplate, localizedPromptTemplates);
+  const prompt = buildPromptFromTemplate(template);
   const fullUrl = buildUrlWithPrompt({
     targetUrl,
     prompt,
