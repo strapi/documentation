@@ -29,7 +29,7 @@ export const aiToolsConfig = {
       id: 'open-chatgpt',
       label: 'Open with ChatGPT',
       description: 'Open ChatGPT with a prompt about this page',
-      icon: 'chat-circle-dots',
+      icon: 'open-ai-logo',
       actionType: 'open-llm',
       targetUrl: 'https://chat.openai.com/',
       promptTemplate: 'Read from {{url}} so I can ask questions about it.',
