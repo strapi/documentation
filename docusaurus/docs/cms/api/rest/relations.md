@@ -26,7 +26,7 @@ Relations can be connected, disconnected or set through the Content API by passi
 | [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
 
 :::note
-Multi relations can be managed from the REST API, the [GraphQL API](/cms/api/graphql#fetch-relations) and the [Document Service API](/cms/api/document-service). The  `connect`, `disconnect`, and `set` operations are available across all APIs.
+Multi relations can be managed from the REST API and the [GraphQL API](/cms/api/graphql#fetch-relations): the  `connect`, `disconnect`, and `set` operations are available across both APIs. However, the [Document Service API](/cms/api/document-service) does not handle relations.
 :::
 
 :::note
