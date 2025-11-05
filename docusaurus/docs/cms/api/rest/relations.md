@@ -17,13 +17,17 @@ Defining relations between content-types (that are designated as entities in the
 
 Relations between content-types can be managed through the [admin panel](/cms/features/content-manager#relational-fields) or through [REST API](/cms/api/rest) or [Document Service API](/cms/api/document-service) requests.
 
-Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
+Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request. These payloads work for both single-entry relations and multi relations (one-to-many, many-to-one, many-to-many, and many-way). When a relational field allows multiple links, the API expects arrays of relation IDs and returns arrays in responses.
 
 |  Parameter name         | Description | Type of update |
 |-------------------------|-------------|----------------|
 | [`connect`](#connect)   | Connects new entities.<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial |
 | [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial |
 | [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
+
+:::note
+Multi relations can be managed from the REST API and the [GraphQL API](/cms/api/graphql#fetch-relations): the  `connect`, `disconnect`, and `set` operations are available across both APIs. However, the [Document Service API](/cms/api/document-service) does not handle relations.
+:::
 
 :::note
 When [Internationalization (i18n)](/cms/features/internationalization) is enabled on the content-type, you can also pass a locale to set relations for a specific locale, as in this Document Service API example:
