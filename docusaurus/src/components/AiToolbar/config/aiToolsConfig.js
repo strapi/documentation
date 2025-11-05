@@ -69,7 +69,7 @@ export const aiToolsConfig = {
         ja: '{{url}} を読んで、質問できるようにしてください。',
       },
       includeDefaultPrompt: true,
-      promptParam: ['query', 'initial_message'],
+      promptParam: 'q',
       openIn: '_blank',
     },
   ],
