@@ -68,7 +68,6 @@ export const aiToolsConfig = {
         ru: 'Прочитай {{url}}, чтобы я мог задавать вопросы по нему.',
         ja: '{{url}} を読んで、質問できるようにしてください。',
       },
-      includeDefaultPrompt: true,
       promptParam: 'q',
       openIn: '_blank',
     },
