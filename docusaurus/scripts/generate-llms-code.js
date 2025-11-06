@@ -184,14 +184,16 @@ class DocusaurusLlmsCodeGenerator {
         const parsed = await this.parseDocument(filePath);
         const fm = parsed.data || parsed.frontmatter || {};
         const title = fm.title || this.deriveTitleFromId(docId);
-        const snippets = this.extractCodeSnippets(docId, title, parsed.content);
+        const extracted = this.extractCodeSnippets(docId, title, parsed.content);
+        const snippets = extracted.snippets || [];
+        const sectionAnchors = extracted.sectionAnchors || {};
 
         if (snippets.length === 0) {
           console.warn(`ℹ️  Skipping ${docId}: no code snippets found.`);
           continue;
         }
 
-        pages.push({ docId, title, snippets });
+        pages.push({ docId, title, snippets, sectionAnchors });
       }
 
       if (pages.length === 0) {
@@ -290,8 +292,14 @@ class DocusaurusLlmsCodeGenerator {
     if (/^FROM\s+\S+/i.test(first) || head.some((l) => /^(RUN|CMD|ENTRYPOINT|COPY|ADD|WORKDIR|ENV|EXPOSE|USER)\b/i.test(l))) return 'dockerfile';
     if (head.some((l) => /^(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|WITH)\b/i.test(l))) return 'sql';
     if (/^(query|mutation|subscription|fragment|schema)\b/.test(first)) return 'graphql';
-    if (first === '---' || head.some((l) => /^\w[\w-]*\s*:\s*[^\s]/.test(l))) return 'yaml';
-    if (/^[\[{]/.test(first) && head.some((l) => /"?\w+"?\s*:\s*/.test(l))) return 'json';
+    // JS/TS module cues before YAML/JSON
+    if (/(?:^|\b)(module\.exports|require\(["']|exports?\.|console\.log\()/.test(code)) return extLower.startsWith('ts') ? 'ts' : 'js';
+    if (/(?:^|\b)(import\s+[^;]+from\s+["'][^"']+["']|export\s+(default|const|function|class)\b)/.test(code)) return extLower.startsWith('ts') ? 'ts' : 'js';
+    // YAML detection: frontmatter or multiple key: value lines without JS syntax
+    const yamlKeyLines = head.filter((l) => /^\w[\w-]*\s*:\s*\S/.test(l)).length;
+    if (first === '---' || (yamlKeyLines >= 2 && !/[{}();]/.test(head.join(' ')))) return 'yaml';
+    // JSON detection: leading brace/bracket and key: value patterns, but avoid JS/TS
+    if (/^[\[{]/.test(first) && head.some((l) => /"?\w+"?\s*:\s*/.test(l)) && !/(module\.exports|import\s|export\s)/.test(code)) return 'json';
     if (head.length > 0 && head.every((l) => /^(?:\$\s+)?(npm|yarn|pnpm|npx|strapi|node|cd|cp|mv|rm|mkdir|curl|wget|git|docker|kubectl|helm|openssl|grep|sed|awk|touch|chmod|chown|tee|cat)\b/.test(l) || l.startsWith('#'))) return 'bash';
     if (head.some((l) => /^(param\s*\(|Write-Host\b|Get-Item\b|Set-Item\b|New-Object\b)/i.test(l))) return 'powershell';
     if (head.some((l) => /^(function\s+\w+|set\s+-l\s+\w+|end\s*$)/.test(l))) return 'fish';
@@ -409,6 +417,7 @@ class DocusaurusLlmsCodeGenerator {
     const sections = [];
     const contextBuffer = [];
     const snippets = [];
+    const sectionAnchors = {};
 
     let inCode = false;
     let codeLanguage = '';
@@ -474,13 +483,20 @@ class DocusaurusLlmsCodeGenerator {
       const headingMatch = trimmed.match(HEADING_REGEX);
       if (headingMatch) {
         const level = headingMatch[1].length;
-        const headingText = cleanInlineText(headingMatch[2]) || `Heading level ${level}`;
+        const rawHeading = headingMatch[2];
+        const customAnchorMatch = rawHeading.match(/\{#([A-Za-z0-9\-_]+)\}/);
+        const customAnchor = customAnchorMatch ? customAnchorMatch[1] : null;
+        const headingBase = rawHeading.replace(/\{#([A-Za-z0-9\-_]+)\}/, '').trim();
+        const headingText = cleanInlineText(headingBase) || `Heading level ${level}`;
 
         while (sections.length >= level) {
           sections.pop();
         }
 
         sections.push(headingText);
+        if (customAnchor) {
+          sectionAnchors[headingText] = customAnchor;
+        }
         contextBuffer.push('\n');
         return;
       }
@@ -496,7 +512,7 @@ class DocusaurusLlmsCodeGenerator {
       }
     });
 
-    return snippets.filter((snippet) => Boolean(snippet.code));
+    return { snippets: snippets.filter((snippet) => Boolean(snippet.code)), sectionAnchors };
   }
 
   deriveSnippetTitle(snippet, index) {
@@ -537,7 +553,8 @@ class DocusaurusLlmsCodeGenerator {
       snippetsBySection.forEach((sectionSnippets, sectionName) => {
         lines.push(`## ${sectionName}`);
         if (this.includeSectionAnchors) {
-          const anchor = this.slugify(sectionName, seenSlugs);
+          const custom = page.sectionAnchors && page.sectionAnchors[sectionName];
+          const anchor = custom || this.slugify(sectionName, seenSlugs);
           lines.push(`Source: ${BASE_URL}/${page.docId}#${anchor}`);
         }
         lines.push('');
