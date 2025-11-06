@@ -96,65 +96,7 @@ class DocusaurusLlmsCodeGenerator {
     this.docsDir = config.docsDir || 'docs';
     this.sidebarPath = config.sidebarPath || 'sidebars.js';
     this.outputPath = config.outputPath || DEFAULT_OUTPUT;
-    this.docIds = config.docIds || [];
-  }
-
-  loadSidebarConfig() {
-    try {
-      // Resolve from CWD to allow running from repo root
-      const sidebarAbs = path.resolve(this.sidebarPath);
-      delete require.cache[require.resolve(sidebarAbs)];
-      return require(sidebarAbs);
-    } catch (error) {
-      return null;
-    }
-  }
-
-  async getAllMdFiles(dir, prefix = '') {
-    const files = [];
-    const fullDir = path.join(dir);
-    if (!fs.pathExistsSync(fullDir)) return files;
-    const entries = await fs.readdir(fullDir);
-    for (const entry of entries) {
-      const fullPath = path.join(fullDir, entry);
-      const stat = await fs.stat(fullPath);
-      if (stat.isDirectory()) {
-        const nested = await this.getAllMdFiles(path.join(dir, entry), path.join(prefix, entry));
-        files.push(...nested);
-      } else if (entry.endsWith('.md') || entry.endsWith('.mdx')) {
-        const rel = path.join(prefix, entry).replace(/\\/g, '/');
-        files.push(rel);
-      }
-    }
-    return files;
-  }
-
-  // Convert a docs file path (e.g., guide/intro.md) to a docId (guide/intro)
-  filePathToDocId(filePath) {
-    return filePath.replace(/\.(md|mdx)$/i, '').replace(/^\/*/, '');
-  }
-
-  collectDocIdsFromSidebar(sidebar) {
-    const ids = new Set();
-    const walk = (items) => {
-      if (!Array.isArray(items)) return;
-      for (const item of items) {
-        if (typeof item === 'string') {
-          ids.add(item);
-        } else if (item && typeof item === 'object') {
-          if (item.type === 'doc' && item.id) {
-            ids.add(item.id);
-          }
-          if (item.items) {
-            walk(item.items);
-          }
-        }
-      }
-    };
-    for (const key of Object.keys(sidebar)) {
-      walk(sidebar[key]);
-    }
-    return Array.from(ids);
+    this.docIds = config.docIds || DEFAULT_DOCS;
   }
 
   parseFenceInfo(info = '') {
@@ -188,20 +130,7 @@ class DocusaurusLlmsCodeGenerator {
 
       const pages = [];
 
-      // Resolve the set of docIds: prefer explicit, else sidebar, else directory scan
-      let docIds = Array.isArray(this.docIds) && this.docIds.length > 0 ? this.docIds : null;
-      if (!docIds) {
-        const sidebar = this.loadSidebarConfig();
-        if (sidebar) {
-          docIds = this.collectDocIdsFromSidebar(sidebar);
-        }
-      }
-      if (!docIds || docIds.length === 0) {
-        const files = await this.getAllMdFiles(this.docsDir);
-        docIds = files.map((f) => this.filePathToDocId(f));
-      }
-
-      for (const docId of docIds) {
+      for (const docId of this.docIds) {
         const filePath = this.findDocFile(docId);
         if (!filePath) {
           console.warn(`⚠️  Unable to locate file for ${docId}`);
@@ -469,15 +398,24 @@ class DocusaurusLlmsCodeGenerator {
 
         const groups = this.groupVariantSnippets(sectionSnippets);
 
-        groups.forEach((group) => {
+        groups.forEach((group, index) => {
           const primary = group.find((snippet) => !snippet.fallbackUsed) || group[0];
           const description = primary.fallbackUsed
             ? this.buildFallbackDescription(primary)
             : primary.description;
 
-          lines.push('Description');
-          lines.push(description);
-          lines.push(`(Source: ${BASE_URL}/${page.docId})`);
+          lines.push(`### Example ${index + 1}`);
+          lines.push(`Description: ${description}`);
+
+          const primaryFile = primary.filePath || this.inferFilePathFromContext(primary.context);
+          if (primaryFile) {
+            lines.push(`File: ${primaryFile}`);
+          }
+
+          if (primary.useCase) {
+            lines.push(`Use Case: ${primary.useCase}`);
+          }
+
           lines.push('');
 
           group.forEach((variant, variantIndex) => {
@@ -485,18 +423,22 @@ class DocusaurusLlmsCodeGenerator {
               lines.push('---');
             }
 
-            const variantFile = this.resolveFilePath(variant);
-            const resolvedLanguage = this.resolveLanguage(variant, variantFile);
-            const languageLabel = resolvedLanguage
-              ? this.formatLanguageName(resolvedLanguage)
-              : '(unspecified)';
-            lines.push(`Language: ${languageLabel}`);
-            lines.push(`File path: ${variantFile || '-'}`);
-            lines.push('');
+            const language = variant.language
+              ? `Language: ${this.formatLanguageName(variant.language)}`
+              : 'Language: (unspecified)';
+            lines.push(language);
 
-            const fence = resolvedLanguage ? `
-```${resolvedLanguage}` : '```';
-            lines.push(fence);
+            const resolvedFile = variant.filePath
+              || this.inferFilePathFromContext(variant.context)
+              || primaryFile;
+            if (resolvedFile && resolvedFile !== primaryFile) {
+              lines.push(`File: ${resolvedFile}`);
+            }
+
+            const fence = variant.language ? `
+```${variant.language}` : '```';
+            lines.push(variant.language ? `
+```${variant.language}` : '```');
             lines.push(variant.code);
             lines.push('```');
             lines.push('');
@@ -524,9 +466,9 @@ class DocusaurusLlmsCodeGenerator {
         return;
       }
 
-      const last = currentGroup[currentGroup.length - 1];
-      const sameDescription = (snippet.description || '') === (last.description || '');
-      const sameFile = (snippet.filePath || '') === (last.filePath || '');
+      const previous = currentGroup[currentGroup.length - 1];
+      const sameDescription = (snippet.description || '') === (previous.description || '');
+      const sameFile = (snippet.filePath || '') === (previous.filePath || '');
 
       if (sameDescription && sameFile) {
         currentGroup.push(snippet);
@@ -543,69 +485,16 @@ class DocusaurusLlmsCodeGenerator {
     return groups;
   }
 
-  resolveFilePath(snippet) {
-    if (snippet.filePath) {
-      return snippet.filePath;
-    }
-
-    const inferred = this.inferFilePathFromContext(snippet.context || []);
-    if (inferred) {
-      return inferred;
-    }
-
-    const match = snippet.code.match(/(?:^|\s)([./\w-]+\.(?:js|ts|tsx|jsx|json|ya?ml))/i);
-    if (match) {
-      return match[1];
-    }
-
-    return null;
-  }
-
   inferFilePathFromContext(buffer = []) {
-    const REGEX = /(?:title\s*=\s*)?["']?([./\w-]+\.(?:js|ts|tsx|jsx|json|ya?ml))["']?/i;
-
     for (let index = buffer.length - 1; index >= 0; index -= 1) {
       const entry = buffer[index];
       if (typeof entry !== 'string') {
         continue;
       }
-      const match = entry.match(REGEX);
+      const match = entry.match(/(?:\.|\/)[^\s]*\.(?:js|ts|jsx|tsx|json|ya?ml)/i);
       if (match) {
-        return match[1];
+        return match[0];
       }
-    }
-
-    return null;
-  }
-
-  inferLanguageFromFile(filePath) {
-    if (!filePath) {
-      return null;
-    }
-    const extension = filePath.split('.').pop().toLowerCase();
-    switch (extension) {
-      case 'ts':
-      case 'tsx':
-        return extension;
-      case 'js':
-      case 'jsx':
-        return extension;
-      case 'json':
-        return 'json';
-      case 'yml':
-      case 'yaml':
-        return 'yaml';
-      default:
-        return null;
-    }
-  }
-
-  inferLanguageFromCode(code = '') {
-    if (!code) {
-      return null;
-    }
-    if (/import\s+\{?.+\}?.+from\s+['"].+['"]/i.test(code) || /export\s+default/i.test(code)) {
-      return 'ts';
     }
     return null;
   }
