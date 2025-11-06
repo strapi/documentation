@@ -601,6 +601,9 @@ class DocusaurusLlmsCodeGenerator {
               lines.push(`File: ${resolvedFile}`);
             }
 
+            // Visual separation before the code fence to avoid accidental inline rendering
+            lines.push('');
+
             // Proper fenced code block without spurious leading newlines
             const fence = chosenLang ? `\`\`\`${chosenLang}` : '```';
             lines.push(fence);
