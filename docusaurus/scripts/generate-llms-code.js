@@ -253,6 +253,11 @@ class DocusaurusLlmsCodeGenerator {
       case 'bash':
       case 'sh':
         return 'Bash';
+      case 'powershell':
+      case 'pwsh':
+        return 'PowerShell';
+      case 'fish':
+        return 'Fish';
       case 'yaml':
       case 'yml':
         return 'YAML';
@@ -281,8 +286,12 @@ class DocusaurusLlmsCodeGenerator {
     if (head.some((l) => /^(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|WITH)\b/i.test(l))) return 'sql';
     if (/^(query|mutation|subscription|fragment|schema)\b/.test(first)) return 'graphql';
     if (first === '---' || head.some((l) => /^\w[\w-]*\s*:\s*[^\s]/.test(l))) return 'yaml';
-    if (/^[\[{]/.test(first) && head.some((l) => /:\s*/.test(l))) return 'json';
+    if (/^[\[{]/.test(first) && head.some((l) => /"?\w+"?\s*:\s*/.test(l))) return 'json';
     if (head.length > 0 && head.every((l) => /^(?:\$\s+)?(npm|yarn|pnpm|npx|strapi|node|cd|cp|mv|rm|mkdir|curl|wget|git|docker|kubectl|helm|openssl|grep|sed|awk|touch|chmod|chown|tee|cat)\b/.test(l) || l.startsWith('#'))) return 'bash';
+    if (head.some((l) => /^(param\s*\(|Write-Host\b|Get-Item\b|Set-Item\b|New-Object\b)/i.test(l))) return 'powershell';
+    if (head.some((l) => /^(function\s+\w+|set\s+-l\s+\w+|end\s*$)/.test(l))) return 'fish';
+    if (/(export\s+(interface|type)\b|:\s*\w+<|\bimplements\b|\bas\s+const\b)/.test(code)) return 'ts';
+    if (/from\s+['"][^'"\n]+\.ts['"]/i.test(code)) return 'ts';
 
     // Extension-derived mapping
     const extToLang = {
@@ -293,12 +302,13 @@ class DocusaurusLlmsCodeGenerator {
       graphql: 'graphql', gql: 'graphql',
       sql: 'sql',
       env: 'dotenv',
-      dockerfile: 'dockerfile',
+      dockerfile: 'dockerfile', ps1: 'powershell', psm1: 'powershell', fish: 'fish',
       html: 'html', css: 'css', scss: 'scss',
       py: 'python', rb: 'ruby', go: 'go', php: 'php', java: 'java',
       c: 'c', h: 'c', cc: 'cpp', cpp: 'cpp', cxx: 'cpp', cs: 'csharp',
       ini: 'ini', toml: 'toml', md: 'md', mdx: 'mdx',
     };
+    
 
     let preferred = '';
     if (/^dockerfile$/i.test(ext)) preferred = 'dockerfile';
@@ -314,6 +324,15 @@ class DocusaurusLlmsCodeGenerator {
 
     // Fall back to fence or preferred
     return fenceLanguage || preferred || '';
+  }
+
+  normalizeOutputPath(p) {
+    if (!p) return p;
+    if (/^https?:\/\//i.test(p)) return p;
+    let out = p;
+    if (out.startsWith('//')) out = out.replace(/^\/+/, '/');
+    out = out.replace(/([^:])\/\/+/, '$1/');
+    return out;
   }
 
   buildFallbackDescription(snippet) {
@@ -505,7 +524,7 @@ class DocusaurusLlmsCodeGenerator {
           lines.push(`### Example ${index + 1}`);
           lines.push(`Description: ${description}`);
 
-          const primaryFile = primary.filePath || this.inferFilePathFromContext(primary.context);
+          const primaryFile = this.normalizeOutputPath(primary.filePath || this.inferFilePathFromContext(primary.context));
           if (primaryFile) {
             lines.push(`File: ${primaryFile}`);
           }
@@ -521,11 +540,11 @@ class DocusaurusLlmsCodeGenerator {
               lines.push('---');
             }
 
-            const resolvedFile = variant.filePath
-              || this.inferFilePathFromContext(variant.context)
-              || primaryFile;
+            const resolvedFile = this.normalizeOutputPath(
+              variant.filePath || this.inferFilePathFromContext(variant.context) || primaryFile
+            );
 
-            const chosenLang = this.resolveLanguage(variant.language, resolvedFile);
+            const chosenLang = this.resolveLanguage(variant.language, resolvedFile, variant.code);
             const language = chosenLang
               ? `Language: ${this.formatLanguageName(chosenLang)}`
               : 'Language: (unspecified)';
