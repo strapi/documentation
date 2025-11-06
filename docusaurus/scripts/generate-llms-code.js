@@ -267,39 +267,53 @@ class DocusaurusLlmsCodeGenerator {
     }
   }
 
-  // Prefer language implied by file extension when it contradicts the code fence
-  resolveLanguage(fenceLanguage = '', filePath = '') {
-    const ext = (filePath || '').split('.').pop()?.toLowerCase() || '';
+  // Resolve language from fence, file path, and code content (content-first heuristics)
+  resolveLanguage(fenceLanguage = '', filePath = '', code = '') {
+    const ext = (filePath || '').split('/').pop() || '';
+    const extLower = (ext.split('.').pop() || '').toLowerCase();
     const fence = (fenceLanguage || '').toLowerCase();
+    const head = (code || '').split('\n').map((l) => l.trim()).filter(Boolean).slice(0, 10);
 
+    // Content-first heuristics
+    const first = head[0] || '';
+    if (/^#!\/.+\b(bash|sh|env\s+bash|env\s+sh)\b/.test(first)) return 'bash';
+    if (/^FROM\s+\S+/i.test(first) || head.some((l) => /^(RUN|CMD|ENTRYPOINT|COPY|ADD|WORKDIR|ENV|EXPOSE|USER)\b/i.test(l))) return 'dockerfile';
+    if (head.some((l) => /^(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|WITH)\b/i.test(l))) return 'sql';
+    if (/^(query|mutation|subscription|fragment|schema)\b/.test(first)) return 'graphql';
+    if (first === '---' || head.some((l) => /^\w[\w-]*\s*:\s*[^\s]/.test(l))) return 'yaml';
+    if (/^[\[{]/.test(first) && head.some((l) => /:\s*/.test(l))) return 'json';
+    if (head.length > 0 && head.every((l) => /^(?:\$\s+)?(npm|yarn|pnpm|npx|strapi|node|cd|cp|mv|rm|mkdir|curl|wget|git|docker|kubectl|helm|openssl|grep|sed|awk|touch|chmod|chown|tee|cat)\b/.test(l) || l.startsWith('#'))) return 'bash';
+
+    // Extension-derived mapping
     const extToLang = {
-      js: 'js',
-      jsx: 'jsx',
-      ts: 'ts',
-      tsx: 'tsx',
-      json: 'json',
-      yml: 'yaml',
-      yaml: 'yaml',
-      sh: 'bash',
-      bash: 'bash',
+      js: 'js', jsx: 'jsx',
+      ts: 'ts', tsx: 'tsx',
+      json: 'json', yml: 'yaml', yaml: 'yaml',
+      sh: 'bash', bash: 'bash', zsh: 'bash',
+      graphql: 'graphql', gql: 'graphql',
+      sql: 'sql',
+      env: 'dotenv',
+      dockerfile: 'dockerfile',
+      html: 'html', css: 'css', scss: 'scss',
+      py: 'python', rb: 'ruby', go: 'go', php: 'php', java: 'java',
+      c: 'c', h: 'c', cc: 'cpp', cpp: 'cpp', cxx: 'cpp', cs: 'csharp',
+      ini: 'ini', toml: 'toml', md: 'md', mdx: 'mdx',
     };
 
-    const preferred = extToLang[ext] || '';
-    if (!preferred) {
-      return fenceLanguage || '';
-    }
+    let preferred = '';
+    if (/^dockerfile$/i.test(ext)) preferred = 'dockerfile';
+    else if (/^\.env(\..+)?$/i.test(ext)) preferred = 'dotenv';
+    else preferred = extToLang[extLower] || '';
 
     // If no fence language, adopt the extension-derived language
-    if (!fence) {
-      return preferred;
-    }
+    if (!fence && preferred) return preferred;
 
-    // If they clearly contradict across JS/TS families, prefer the file extension
+    // JS/TS family resolution: prefer file extension if it contradicts fence
     const family = (lang) => (lang.startsWith('ts') ? 'ts' : (lang.startsWith('js') ? 'js' : lang));
-    if (family(fence) !== family(preferred)) {
-      return preferred;
-    }
-    return fenceLanguage || preferred;
+    if (preferred && family(fence) !== family(preferred)) return preferred;
+
+    // Fall back to fence or preferred
+    return fenceLanguage || preferred || '';
   }
 
   buildFallbackDescription(snippet) {
