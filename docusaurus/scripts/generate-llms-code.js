@@ -195,6 +195,13 @@ class DocusaurusLlmsCodeGenerator {
 
       const output = this.formatOutput(pages);
 
+      // Support stdout preview when --output - is provided
+      if (this.outputPath === '-' || this.outputPath === '/dev/stdout') {
+        process.stdout.write(output);
+        console.log('\n✅ Printed llms-code to stdout');
+        return;
+      }
+
       await fs.ensureDir(path.dirname(this.outputPath));
       await fs.writeFile(this.outputPath, output, 'utf-8');
 
