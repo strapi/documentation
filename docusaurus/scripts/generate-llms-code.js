@@ -96,7 +96,65 @@ class DocusaurusLlmsCodeGenerator {
     this.docsDir = config.docsDir || 'docs';
     this.sidebarPath = config.sidebarPath || 'sidebars.js';
     this.outputPath = config.outputPath || DEFAULT_OUTPUT;
-    this.docIds = config.docIds || DEFAULT_DOCS;
+    this.docIds = config.docIds || [];
+  }
+
+  loadSidebarConfig() {
+    try {
+      // Resolve from CWD to allow running from repo root
+      const sidebarAbs = path.resolve(this.sidebarPath);
+      delete require.cache[require.resolve(sidebarAbs)];
+      return require(sidebarAbs);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async getAllMdFiles(dir, prefix = '') {
+    const files = [];
+    const fullDir = path.join(dir);
+    if (!fs.pathExistsSync(fullDir)) return files;
+    const entries = await fs.readdir(fullDir);
+    for (const entry of entries) {
+      const fullPath = path.join(fullDir, entry);
+      const stat = await fs.stat(fullPath);
+      if (stat.isDirectory()) {
+        const nested = await this.getAllMdFiles(path.join(dir, entry), path.join(prefix, entry));
+        files.push(...nested);
+      } else if (entry.endsWith('.md') || entry.endsWith('.mdx')) {
+        const rel = path.join(prefix, entry).replace(/\\/g, '/');
+        files.push(rel);
+      }
+    }
+    return files;
+  }
+
+  // Convert a docs file path (e.g., guide/intro.md) to a docId (guide/intro)
+  filePathToDocId(filePath) {
+    return filePath.replace(/\.(md|mdx)$/i, '').replace(/^\/*/, '');
+  }
+
+  collectDocIdsFromSidebar(sidebar) {
+    const ids = new Set();
+    const walk = (items) => {
+      if (!Array.isArray(items)) return;
+      for (const item of items) {
+        if (typeof item === 'string') {
+          ids.add(item);
+        } else if (item && typeof item === 'object') {
+          if (item.type === 'doc' && item.id) {
+            ids.add(item.id);
+          }
+          if (item.items) {
+            walk(item.items);
+          }
+        }
+      }
+    };
+    for (const key of Object.keys(sidebar)) {
+      walk(sidebar[key]);
+    }
+    return Array.from(ids);
   }
 
   parseFenceInfo(info = '') {
@@ -130,7 +188,20 @@ class DocusaurusLlmsCodeGenerator {
 
       const pages = [];
 
-      for (const docId of this.docIds) {
+      // Resolve the set of docIds: prefer explicit, else sidebar, else directory scan
+      let docIds = Array.isArray(this.docIds) && this.docIds.length > 0 ? this.docIds : null;
+      if (!docIds) {
+        const sidebar = this.loadSidebarConfig();
+        if (sidebar) {
+          docIds = this.collectDocIdsFromSidebar(sidebar);
+        }
+      }
+      if (!docIds || docIds.length === 0) {
+        const files = await this.getAllMdFiles(this.docsDir);
+        docIds = files.map((f) => this.filePathToDocId(f));
+      }
+
+      for (const docId of docIds) {
         const filePath = this.findDocFile(docId);
         if (!filePath) {
           console.warn(`⚠️  Unable to locate file for ${docId}`);
@@ -398,22 +469,15 @@ class DocusaurusLlmsCodeGenerator {
 
         const groups = this.groupVariantSnippets(sectionSnippets);
 
-        groups.forEach((group, index) => {
+        groups.forEach((group) => {
           const primary = group.find((snippet) => !snippet.fallbackUsed) || group[0];
           const description = primary.fallbackUsed
             ? this.buildFallbackDescription(primary)
             : primary.description;
 
-          const primaryFile = this.resolveFilePath(primary);
-
-          lines.push(`### Example ${index + 1}`);
-          lines.push(`Description: ${description}`);
-          if (primaryFile) {
-            lines.push(`File: ${primaryFile}`);
-          }
-          if (primary.useCase) {
-            lines.push(`Use Case: ${primary.useCase}`);
-          }
+          lines.push('Description');
+          lines.push(description);
+          lines.push(`(Source: ${BASE_URL}/${page.docId})`);
           lines.push('');
 
           group.forEach((variant, variantIndex) => {
@@ -424,17 +488,14 @@ class DocusaurusLlmsCodeGenerator {
             const variantFile = this.resolveFilePath(variant);
             const resolvedLanguage = this.resolveLanguage(variant, variantFile);
             const languageLabel = resolvedLanguage
-              ? `Language: ${this.formatLanguageName(resolvedLanguage)}`
-              : 'Language: (unspecified)';
-            lines.push(languageLabel);
+              ? this.formatLanguageName(resolvedLanguage)
+              : '(unspecified)';
+            lines.push(`Language: ${languageLabel}`);
+            lines.push(`File path: ${variantFile || '-'}`);
+            lines.push('');
 
-            if (variantFile && variantFile !== primaryFile) {
-              lines.push(`File: ${variantFile}`);
-            }
-
-            const fenceLanguage = resolvedLanguage || '';
-            const fence = fenceLanguage ? `
-```${fenceLanguage}` : '```';
+            const fence = resolvedLanguage ? `
+```${resolvedLanguage}` : '```';
             lines.push(fence);
             lines.push(variant.code);
             lines.push('```');
