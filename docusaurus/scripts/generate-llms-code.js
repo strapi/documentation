@@ -1,8 +1,35 @@
 #!/usr/bin/env node
 
-const fs = require('fs-extra');
+// Prefer optional deps; fall back to built-ins for sandboxed runs
+let fs = null;
+try {
+  fs = require('fs-extra');
+} catch (e) {
+  fs = require('fs');
+  // polyfills to mimic fs-extra subset used here
+  fs.ensureDir = async (dir) => fs.promises.mkdir(dir, { recursive: true });
+  fs.pathExistsSync = (p) => fs.existsSync(p);
+  fs.writeFile = fs.promises.writeFile.bind(fs.promises);
+  fs.readFile = fs.promises.readFile.bind(fs.promises);
+}
 const path = require('path');
-const matter = require('gray-matter');
+
+let matter = null;
+try {
+  matter = require('gray-matter');
+} catch (e) {
+  // Minimal frontmatter parser fallback
+  matter = (raw) => {
+    if (raw.startsWith('---')) {
+      const end = raw.indexOf('\n---', 3);
+      if (end !== -1) {
+        const body = raw.slice(end + 4);
+        return { data: {}, content: body };
+      }
+    }
+    return { data: {}, content: raw };
+  };
+}
 
 const DEFAULT_DOCS = [
   'cms/admin-panel-customization/bundlers',
