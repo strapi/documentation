@@ -176,9 +176,10 @@ class DocusaurusLlmsCodeGenerator {
           continue;
         }
 
-        const { frontmatter, content } = await this.parseDocument(filePath);
-        const title = frontmatter.title || this.deriveTitleFromId(docId);
-        const snippets = this.extractCodeSnippets(docId, title, content);
+        const parsed = await this.parseDocument(filePath);
+        const fm = parsed.data || parsed.frontmatter || {};
+        const title = fm.title || this.deriveTitleFromId(docId);
+        const snippets = this.extractCodeSnippets(docId, title, parsed.content);
 
         if (snippets.length === 0) {
           console.warn(`ℹ️  Skipping ${docId}: no code snippets found.`);
