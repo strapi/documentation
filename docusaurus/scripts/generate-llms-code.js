@@ -88,6 +88,7 @@ const parseArgs = () => {
   const args = process.argv.slice(2);
   const docs = [];
   let output = DEFAULT_OUTPUT;
+  let anchors = false;
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -104,6 +105,8 @@ const parseArgs = () => {
       if (value) {
         output = value;
       }
+    } else if (arg === '--anchors' || arg === '--with-anchors') {
+      anchors = true;
     } else if (arg === '--help' || arg === '-h') {
       console.log('Usage: node generate-llms-code.js [--docs docA,docB] [--output path/to/file]');
       process.exit(0);
@@ -115,6 +118,7 @@ const parseArgs = () => {
   return {
     docs: docs.length > 0 ? docs : DEFAULT_DOCS,
     output,
+    anchors,
   };
 };
 
@@ -124,6 +128,7 @@ class DocusaurusLlmsCodeGenerator {
     this.sidebarPath = config.sidebarPath || 'sidebars.js';
     this.outputPath = config.outputPath || DEFAULT_OUTPUT;
     this.docIds = config.docIds || DEFAULT_DOCS;
+    this.includeSectionAnchors = Boolean(config.includeSectionAnchors);
   }
 
   normalizeTitlePath(value) {
@@ -326,6 +331,25 @@ class DocusaurusLlmsCodeGenerator {
     return fenceLanguage || preferred || '';
   }
 
+  // Slugify heading text similarly to GitHub/Docusaurus and dedupe within a page
+  slugify(text, seen) {
+    if (!text) return '';
+    let slug = String(text)
+      .toLowerCase()
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '') // strip diacritics
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/-{2,}/g, '-');
+    if (!seen.has(slug)) {
+      seen.set(slug, 0);
+      return slug;
+    }
+    const n = seen.get(slug) + 1;
+    seen.set(slug, n);
+    return `${slug}-${n}`;
+  }
+
   normalizeOutputPath(p) {
     if (!p) return p;
     if (/^https?:\/\//i.test(p)) return p;
@@ -509,8 +533,13 @@ class DocusaurusLlmsCodeGenerator {
         return acc;
       }, new Map());
 
+      const seenSlugs = new Map();
       snippetsBySection.forEach((sectionSnippets, sectionName) => {
         lines.push(`## ${sectionName}`);
+        if (this.includeSectionAnchors) {
+          const anchor = this.slugify(sectionName, seenSlugs);
+          lines.push(`Source: ${BASE_URL}/${page.docId}#${anchor}`);
+        }
         lines.push('');
 
         const groups = this.groupVariantSnippets(sectionSnippets);
@@ -640,10 +669,11 @@ class DocusaurusLlmsCodeGenerator {
 }
 
 if (require.main === module) {
-  const { docs, output } = parseArgs();
+  const { docs, output, anchors } = parseArgs();
   const generator = new DocusaurusLlmsCodeGenerator({
     docIds: docs,
     outputPath: output,
+    includeSectionAnchors: anchors,
   });
 
   generator.generate().catch((error) => {
