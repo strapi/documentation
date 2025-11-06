@@ -267,6 +267,41 @@ class DocusaurusLlmsCodeGenerator {
     }
   }
 
+  // Prefer language implied by file extension when it contradicts the code fence
+  resolveLanguage(fenceLanguage = '', filePath = '') {
+    const ext = (filePath || '').split('.').pop()?.toLowerCase() || '';
+    const fence = (fenceLanguage || '').toLowerCase();
+
+    const extToLang = {
+      js: 'js',
+      jsx: 'jsx',
+      ts: 'ts',
+      tsx: 'tsx',
+      json: 'json',
+      yml: 'yaml',
+      yaml: 'yaml',
+      sh: 'bash',
+      bash: 'bash',
+    };
+
+    const preferred = extToLang[ext] || '';
+    if (!preferred) {
+      return fenceLanguage || '';
+    }
+
+    // If no fence language, adopt the extension-derived language
+    if (!fence) {
+      return preferred;
+    }
+
+    // If they clearly contradict across JS/TS families, prefer the file extension
+    const family = (lang) => (lang.startsWith('ts') ? 'ts' : (lang.startsWith('js') ? 'js' : lang));
+    if (family(fence) !== family(preferred)) {
+      return preferred;
+    }
+    return fenceLanguage || preferred;
+  }
+
   buildFallbackDescription(snippet) {
     const langLabel = snippet.language ? this.formatLanguageName(snippet.language) : 'code';
     const section = snippet.section || 'this section';
@@ -472,20 +507,22 @@ class DocusaurusLlmsCodeGenerator {
               lines.push('---');
             }
 
-            const language = variant.language
-              ? `Language: ${this.formatLanguageName(variant.language)}`
-              : 'Language: (unspecified)';
-            lines.push(language);
-
             const resolvedFile = variant.filePath
               || this.inferFilePathFromContext(variant.context)
               || primaryFile;
+
+            const chosenLang = this.resolveLanguage(variant.language, resolvedFile);
+            const language = chosenLang
+              ? `Language: ${this.formatLanguageName(chosenLang)}`
+              : 'Language: (unspecified)';
+            lines.push(language);
+
             if (resolvedFile && resolvedFile !== primaryFile) {
               lines.push(`File: ${resolvedFile}`);
             }
 
             // Proper fenced code block without spurious leading newlines
-            const fence = variant.language ? `\`\`\`${variant.language}` : '```';
+            const fence = chosenLang ? `\`\`\`${chosenLang}` : '```';
             lines.push(fence);
             lines.push(variant.code);
             lines.push('```');
