@@ -118,11 +118,13 @@ class DocusaurusLlmsGenerator {
           const { data: frontmatter, content } = matter(fileContent);
           
           const pageUrl = this.generatePageUrl(docId);
-          
+          const tldr = this.extractTldr(content);
+
           pages.push({
             id: docId,
             title: frontmatter.title || this.getTitleFromContent(content) || docId,
-            description: frontmatter.description || this.extractDescription(content),
+            description:
+              tldr || frontmatter.description || this.extractDescription(content),
             url: pageUrl,
             content: this.cleanContent(content),
             frontmatter
@@ -158,6 +160,42 @@ class DocusaurusLlmsGenerator {
       }
     }
     return '';
+  }
+
+  extractTldr(content) {
+    const match = content.match(/<Tldr>([\s\S]*?)<\/Tldr>/i);
+
+    if (!match) {
+      return null;
+    }
+
+    const raw = match[1].trim();
+
+    if (!raw) {
+      return null;
+    }
+
+    return this.sanitizeInlineMarkdown(raw);
+  }
+
+  sanitizeInlineMarkdown(text) {
+    return text
+      // Remove fenced code blocks inside TLDR (rare but safe)
+      .replace(/```[\s\S]*?```/g, '')
+      // Strip inline code
+      .replace(/`([^`]+)`/g, '$1')
+      // Turn markdown links into plain text
+      .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+      // Bold and italic markers
+      .replace(/\*\*([^*]+)\*\*/g, '$1')
+      .replace(/__([^_]+)__/g, '$1')
+      .replace(/\*([^*]+)\*/g, '$1')
+      .replace(/_([^_]+)_/g, '$1')
+      // Strip residual HTML tags (including MDX components)
+      .replace(/<[^>]+>/g, ' ')
+      // Collapse whitespace and trim
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
   cleanContent(content) {
