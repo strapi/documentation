@@ -449,10 +449,9 @@ class DocusaurusLlmsCodeGenerator {
               lines.push(`File: ${resolvedFile}`);
             }
 
-            const fence = variant.language ? `
-```${variant.language}` : '```';
-            lines.push(variant.language ? `
-```${variant.language}` : '```');
+            // Proper fenced code block without spurious leading newlines
+            const fence = variant.language ? `\`\`\`${variant.language}` : '```';
+            lines.push(fence);
             lines.push(variant.code);
             lines.push('```');
             lines.push('');
