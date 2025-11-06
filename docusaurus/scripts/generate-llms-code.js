@@ -99,6 +99,18 @@ class DocusaurusLlmsCodeGenerator {
     this.docIds = config.docIds || DEFAULT_DOCS;
   }
 
+  normalizeTitlePath(value) {
+    if (!value || typeof value !== 'string') return null;
+    let v = value.trim();
+    if (/^path\s*:/i.test(v)) {
+      v = v.replace(/^path\s*:\s*/i, '');
+    }
+    if (v.includes(' or ')) {
+      v = v.split(' or ')[0].trim();
+    }
+    return v || null;
+  }
+
   parseFenceInfo(info = '') {
     const options = {};
     if (!info) {
@@ -302,7 +314,7 @@ class DocusaurusLlmsCodeGenerator {
             useCase,
             fallbackUsed,
             code: null,
-            filePath: options?.title || null,
+            filePath: this.normalizeTitlePath(options?.title) || null,
             context: [...contextBuffer],
           });
         } else {
@@ -311,11 +323,13 @@ class DocusaurusLlmsCodeGenerator {
             const current = snippets[snippets.length - 1];
             current.code = codeLines.join('\n').trimEnd();
             if (!current.filePath) {
-              const titleAttr = current.options?.title;
+              const titleAttr = this.normalizeTitlePath(current.options?.title);
               if (titleAttr) {
                 current.filePath = titleAttr;
               } else {
-                current.filePath = this.inferFilePathFromContext(current.context);
+                // Prefer nearby "path:" hints before generic filename regex
+                const ctxPath = this.inferFilePathFromContext(current.context, { preferHints: true });
+                current.filePath = ctxPath;
               }
             }
           }
@@ -485,7 +499,28 @@ class DocusaurusLlmsCodeGenerator {
     return groups;
   }
 
-  inferFilePathFromContext(buffer = []) {
+  inferFilePathFromContext(buffer = [], opts = { preferHints: false }) {
+    // 1) Prefer explicit "path:" hints nearby (last ~20 lines)
+    if (opts && opts.preferHints) {
+      const start = Math.max(0, buffer.length - 20);
+      for (let index = buffer.length - 1; index >= start; index -= 1) {
+        const entry = buffer[index];
+        if (typeof entry !== 'string') {
+          continue;
+        }
+        const hint = entry.match(/(?:^|\b)path\s*:\s*([^\s,;]+[^\s]*)/i);
+        if (hint && hint[1]) {
+          const normalized = this.normalizeTitlePath(hint[0]);
+          if (normalized) {
+            return normalized;
+          }
+          // Fallback to raw capture
+          return hint[1];
+        }
+      }
+    }
+
+    // 2) Fallback: scan for any obvious file-like tokens with known extensions
     for (let index = buffer.length - 1; index >= 0; index -= 1) {
       const entry = buffer[index];
       if (typeof entry !== 'string') {
