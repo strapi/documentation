@@ -89,6 +89,8 @@ const parseArgs = () => {
   const docs = [];
   let output = DEFAULT_OUTPUT;
   let anchors = false;
+  let checkFiles = false;
+  let projectRoot = process.cwd();
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -110,6 +112,14 @@ const parseArgs = () => {
     } else if (arg === '--help' || arg === '-h') {
       console.log('Usage: node generate-llms-code.js [--docs docA,docB] [--output path/to/file]');
       process.exit(0);
+    } else if (arg === '--check-files') {
+      checkFiles = true;
+    } else if (arg === '--project-root') {
+      const value = args[i + 1];
+      i += 1;
+      if (value) {
+        projectRoot = value;
+      }
     } else {
       docs.push(arg);
     }
@@ -119,6 +129,8 @@ const parseArgs = () => {
     docs: docs.length > 0 ? docs : DEFAULT_DOCS,
     output,
     anchors,
+    checkFiles,
+    projectRoot,
   };
 };
 
@@ -129,6 +141,8 @@ class DocusaurusLlmsCodeGenerator {
     this.outputPath = config.outputPath || DEFAULT_OUTPUT;
     this.docIds = config.docIds || DEFAULT_DOCS;
     this.includeSectionAnchors = Boolean(config.includeSectionAnchors);
+    this.includeFileChecks = Boolean(config.includeFileChecks);
+    this.projectRoot = config.projectRoot || process.cwd();
   }
 
   normalizeTitlePath(value) {
@@ -366,6 +380,23 @@ class DocusaurusLlmsCodeGenerator {
     if (out.startsWith('//')) out = out.replace(/^\/+/, '/');
     out = out.replace(/([^:])\/\/+/, '$1/');
     return out;
+  }
+
+  resolveAbsolutePathForCheck(relPath = '') {
+    if (!relPath) return null;
+    const clean = relPath.replace(/^\/+/, '');
+    const candidate = path.join(this.projectRoot, clean);
+    return candidate;
+  }
+
+  fileExists(relPath = '') {
+    try {
+      const abs = this.resolveAbsolutePathForCheck(relPath);
+      if (!abs) return false;
+      return fs.pathExistsSync ? fs.pathExistsSync(abs) : fs.existsSync(abs);
+    } catch (e) {
+      return false;
+    }
   }
 
   buildFallbackDescription(snippet) {
@@ -631,7 +662,8 @@ class DocusaurusLlmsCodeGenerator {
 
           const primaryFile = this.normalizeOutputPath(primary.filePath || this.inferFilePathFromContext(primary.context));
           if (primaryFile) {
-            lines.push(`File: ${primaryFile}`);
+            const suffix = this.includeFileChecks && !this.fileExists(primaryFile) ? ' (missing)' : '';
+            lines.push(`File: ${primaryFile}${suffix}`);
           }
 
           if (primary.useCase) {
@@ -656,7 +688,8 @@ class DocusaurusLlmsCodeGenerator {
             lines.push(language);
 
             if (resolvedFile && resolvedFile !== primaryFile) {
-              lines.push(`File: ${resolvedFile}`);
+              const suffix = this.includeFileChecks && !this.fileExists(resolvedFile) ? ' (missing)' : '';
+              lines.push(`File: ${resolvedFile}${suffix}`);
             }
 
             // Visual separation before the code fence to avoid accidental inline rendering
@@ -765,11 +798,13 @@ class DocusaurusLlmsCodeGenerator {
 }
 
 if (require.main === module) {
-  const { docs, output, anchors } = parseArgs();
+  const { docs, output, anchors, checkFiles, projectRoot } = parseArgs();
   const generator = new DocusaurusLlmsCodeGenerator({
     docIds: docs,
     outputPath: output,
     includeSectionAnchors: anchors,
+    includeFileChecks: checkFiles,
+    projectRoot,
   });
 
   generator.generate().catch((error) => {
