@@ -404,18 +404,16 @@ class DocusaurusLlmsCodeGenerator {
             ? this.buildFallbackDescription(primary)
             : primary.description;
 
+          const primaryFile = this.resolveFilePath(primary);
+
           lines.push(`### Example ${index + 1}`);
           lines.push(`Description: ${description}`);
-
-          const primaryFile = primary.filePath || this.inferFilePathFromContext(primary.context);
           if (primaryFile) {
             lines.push(`File: ${primaryFile}`);
           }
-
           if (primary.useCase) {
             lines.push(`Use Case: ${primary.useCase}`);
           }
-
           lines.push('');
 
           group.forEach((variant, variantIndex) => {
@@ -423,22 +421,21 @@ class DocusaurusLlmsCodeGenerator {
               lines.push('---');
             }
 
-            const language = variant.language
-              ? `Language: ${this.formatLanguageName(variant.language)}`
+            const variantFile = this.resolveFilePath(variant);
+            const resolvedLanguage = this.resolveLanguage(variant, variantFile);
+            const languageLabel = resolvedLanguage
+              ? `Language: ${this.formatLanguageName(resolvedLanguage)}`
               : 'Language: (unspecified)';
-            lines.push(language);
+            lines.push(languageLabel);
 
-            const resolvedFile = variant.filePath
-              || this.inferFilePathFromContext(variant.context)
-              || primaryFile;
-            if (resolvedFile && resolvedFile !== primaryFile) {
-              lines.push(`File: ${resolvedFile}`);
+            if (variantFile && variantFile !== primaryFile) {
+              lines.push(`File: ${variantFile}`);
             }
 
-            const fence = variant.language ? `
-```${variant.language}` : '```';
-            lines.push(variant.language ? `
-```${variant.language}` : '```');
+            const fenceLanguage = resolvedLanguage || '';
+            const fence = fenceLanguage ? `
+```${fenceLanguage}` : '```';
+            lines.push(fence);
             lines.push(variant.code);
             lines.push('```');
             lines.push('');
@@ -466,9 +463,9 @@ class DocusaurusLlmsCodeGenerator {
         return;
       }
 
-      const previous = currentGroup[currentGroup.length - 1];
-      const sameDescription = (snippet.description || '') === (previous.description || '');
-      const sameFile = (snippet.filePath || '') === (previous.filePath || '');
+      const last = currentGroup[currentGroup.length - 1];
+      const sameDescription = (snippet.description || '') === (last.description || '');
+      const sameFile = (snippet.filePath || '') === (last.filePath || '');
 
       if (sameDescription && sameFile) {
         currentGroup.push(snippet);
@@ -485,16 +482,69 @@ class DocusaurusLlmsCodeGenerator {
     return groups;
   }
 
+  resolveFilePath(snippet) {
+    if (snippet.filePath) {
+      return snippet.filePath;
+    }
+
+    const inferred = this.inferFilePathFromContext(snippet.context || []);
+    if (inferred) {
+      return inferred;
+    }
+
+    const match = snippet.code.match(/(?:^|\s)([./\w-]+\.(?:js|ts|tsx|jsx|json|ya?ml))/i);
+    if (match) {
+      return match[1];
+    }
+
+    return null;
+  }
+
   inferFilePathFromContext(buffer = []) {
+    const REGEX = /(?:title\s*=\s*)?["']?([./\w-]+\.(?:js|ts|tsx|jsx|json|ya?ml))["']?/i;
+
     for (let index = buffer.length - 1; index >= 0; index -= 1) {
       const entry = buffer[index];
       if (typeof entry !== 'string') {
         continue;
       }
-      const match = entry.match(/(?:\.|\/)[^\s]*\.(?:js|ts|jsx|tsx|json|ya?ml)/i);
+      const match = entry.match(REGEX);
       if (match) {
-        return match[0];
+        return match[1];
       }
+    }
+
+    return null;
+  }
+
+  inferLanguageFromFile(filePath) {
+    if (!filePath) {
+      return null;
+    }
+    const extension = filePath.split('.').pop().toLowerCase();
+    switch (extension) {
+      case 'ts':
+      case 'tsx':
+        return extension;
+      case 'js':
+      case 'jsx':
+        return extension;
+      case 'json':
+        return 'json';
+      case 'yml':
+      case 'yaml':
+        return 'yaml';
+      default:
+        return null;
+    }
+  }
+
+  inferLanguageFromCode(code = '') {
+    if (!code) {
+      return null;
+    }
+    if (/import\s+\{?.+\}?.+from\s+['"].+['"]/i.test(code) || /export\s+default/i.test(code)) {
+      return 'ts';
     }
     return null;
   }
