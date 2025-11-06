@@ -419,6 +419,13 @@ class DocusaurusLlmsCodeGenerator {
     const contextBuffer = [];
     const snippets = [];
     const sectionAnchors = {};
+    // Track MDX Tabs/TabItem context to group language variants
+    let inTabs = false;
+    let tabsCounter = 0;
+    let currentTabsGroupId = null; // from <Tabs groupId="...">
+    let currentTabLabel = null; // from <TabItem label="...">
+    let currentTabValue = null; // from <TabItem value="...">
+    let currentVariantGroupId = null; // computed group key for variants
 
     let inCode = false;
     let codeLanguage = '';
@@ -452,6 +459,9 @@ class DocusaurusLlmsCodeGenerator {
             fallbackUsed,
             code: null,
             filePath: this.normalizeTitlePath(options?.title) || null,
+            variantGroupId: currentVariantGroupId,
+            tabLabel: currentTabLabel,
+            tabValue: currentTabValue,
             context: [...contextBuffer],
           });
         } else {
@@ -481,6 +491,48 @@ class DocusaurusLlmsCodeGenerator {
         return;
       }
 
+      // Detect MDX Tabs and TabItem wrappers to group variants
+      // <Tabs groupId="..."> start
+      const tabsOpen = trimmed.match(/^<Tabs\b([^>]*)>/);
+      if (tabsOpen) {
+        inTabs = true;
+        tabsCounter += 1;
+        const attrs = tabsOpen[1] || '';
+        const gidMatch = attrs.match(/groupId\s*=\s*(?:"([^"]+)"|'([^']+)')/);
+        const gid = gidMatch ? (gidMatch[1] || gidMatch[2]) : 'default';
+        currentTabsGroupId = gid;
+        currentVariantGroupId = `${docId}::${this.currentSection(sections, title)}::tabs${tabsCounter}:${gid}`;
+        return;
+      }
+      // </Tabs> end
+      if (/^<\/Tabs>\s*$/.test(trimmed)) {
+        inTabs = false;
+        currentTabsGroupId = null;
+        currentVariantGroupId = null;
+        return;
+      }
+      // <TabItem ...> start
+      const tabItemOpen = trimmed.match(/^<TabItem\b([^>]*)>/);
+      if (tabItemOpen) {
+        const attrs = tabItemOpen[1] || '';
+        const labelMatch = attrs.match(/label\s*=\s*(?:"([^"]+)"|'([^']+)')/);
+        const valueMatch = attrs.match(/value\s*=\s*(?:"([^"]+)"|'([^']+)')/);
+        currentTabLabel = labelMatch ? (labelMatch[1] || labelMatch[2]) : null;
+        currentTabValue = valueMatch ? (valueMatch[1] || valueMatch[2]) : null;
+        // Ensure we have a variant group during TabItem even if <Tabs> attrs missing
+        if (!currentVariantGroupId) {
+          tabsCounter += 1;
+          currentVariantGroupId = `${docId}::${this.currentSection(sections, title)}::tabs${tabsCounter}:${currentTabsGroupId || 'default'}`;
+        }
+        return;
+      }
+      // </TabItem> end
+      if (/^<\/TabItem>\s*$/.test(trimmed)) {
+        currentTabLabel = null;
+        currentTabValue = null;
+        return;
+      }
+
       const headingMatch = trimmed.match(HEADING_REGEX);
       if (headingMatch) {
         const level = headingMatch[1].length;
@@ -498,6 +550,12 @@ class DocusaurusLlmsCodeGenerator {
         if (customAnchor) {
           sectionAnchors[headingText] = customAnchor;
         }
+        // Reset any ongoing Tabs grouping when changing section
+        inTabs = false;
+        currentTabsGroupId = null;
+        currentVariantGroupId = null;
+        currentTabLabel = null;
+        currentTabValue = null;
         contextBuffer.push('\n');
         return;
       }
@@ -625,10 +683,26 @@ class DocusaurusLlmsCodeGenerator {
   }
 
   groupVariantSnippets(snippets) {
-    const groups = [];
+    // First, group by explicit variantGroupId when present (MDX Tabs),
+    // otherwise fall back to old behavior of grouping consecutive snippets
+    const explicitGroups = new Map();
+    const sequentialGroups = [];
     let currentGroup = [];
 
     snippets.forEach((snippet) => {
+      if (snippet.variantGroupId) {
+        if (!explicitGroups.has(snippet.variantGroupId)) {
+          explicitGroups.set(snippet.variantGroupId, []);
+        }
+        explicitGroups.get(snippet.variantGroupId).push(snippet);
+        // Flush any ongoing sequential group before switching context
+        if (currentGroup.length > 0) {
+          sequentialGroups.push(currentGroup);
+          currentGroup = [];
+        }
+        return;
+      }
+
       if (currentGroup.length === 0) {
         currentGroup.push(snippet);
         return;
@@ -641,15 +715,16 @@ class DocusaurusLlmsCodeGenerator {
       if (sameDescription && sameFile) {
         currentGroup.push(snippet);
       } else {
-        groups.push(currentGroup);
+        sequentialGroups.push(currentGroup);
         currentGroup = [snippet];
       }
     });
 
     if (currentGroup.length > 0) {
-      groups.push(currentGroup);
+      sequentialGroups.push(currentGroup);
     }
 
+    const groups = [...explicitGroups.values(), ...sequentialGroups];
     return groups;
   }
 
