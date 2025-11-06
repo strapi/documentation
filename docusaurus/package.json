@@ -15,8 +15,8 @@
     "release-notes": "bash ./scripts/release-notes-script.sh",
     "redirections-analysis": "node ./scripts/redirection-analysis/redirect-analyzer.js",
     "generate-llms": "node scripts/generate-llms.js",
-    "dev:with-llms": "yarn generate-llms && docusaurus start --port 8080 --no-open",
-    "build:with-llms": "yarn generate-llms && docusaurus build",
+    "dev:with-llms": "yarn generate-llms && node scripts/generate-llms-code.js --anchors --output static/llms-code.txt && docusaurus start --port 8080 --no-open",
+    "build:with-llms": "yarn generate-llms && node scripts/generate-llms-code.js --anchors --output static/llms-code.txt && docusaurus build",
     "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
   },
   "dependencies": {
