@@ -290,7 +290,8 @@ class DocusaurusLlmsCodeGenerator {
     const first = head[0] || '';
     if (/^#!\/.+\b(bash|sh|env\s+bash|env\s+sh)\b/.test(first)) return 'bash';
     if (/^FROM\s+\S+/i.test(first) || head.some((l) => /^(RUN|CMD|ENTRYPOINT|COPY|ADD|WORKDIR|ENV|EXPOSE|USER)\b/i.test(l))) return 'dockerfile';
-    if (head.some((l) => /^(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|WITH)\b/i.test(l))) return 'sql';
+    // SQL: require clear SQL shape; avoid JS objects like `delete:` keys
+    if (head.some((l) => /(^select\b.+\bfrom\b)|(^insert\b\s+into\b)|(^update\b\s+\w+\b)|(^delete\b\s+from\b)|(^create\b\s+(table|index|view)\b)|(^alter\b\s+table\b)|(^drop\b\s+(table|index|view)\b)|(^with\b\s+\w+\s+as\b)/i.test(l))) return 'sql';
     if (/^(query|mutation|subscription|fragment|schema)\b/.test(first)) return 'graphql';
     // JS/TS module cues before YAML/JSON
     if (/(?:^|\b)(module\.exports|require\(["']|exports?\.|console\.log\()/.test(code)) return extLower.startsWith('ts') ? 'ts' : 'js';
