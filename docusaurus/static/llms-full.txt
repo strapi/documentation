@@ -949,7 +949,7 @@ The project name is set at project creation (see [Project creation](/cloud/getti
 
 #### Adding a CMS license key {#adding-cms-license-key}
 
-A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the  for more information and/or to purchase a license.
+A CMS license key can be added and connected to a Strapi Cloud project to unlock additional Strapi CMS features across all of the project’s environments. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the  for more information and/or to purchase a license.
 
 :::note
 If you don't see the *Strapi CMS license key* section, it probably means that your subscription is a legacy one and does not support custom CMS licenses. It means that you already have one that is automatically included on your project.
@@ -957,9 +957,13 @@ If you don't see the *Strapi CMS license key* section, it probably means that yo
 
 1. In the *Strapi CMS license key* section, click on the **Add license** button.
 2. In the dialog, paste your license key in the field.
-3. Click on **Save**.
+3. Click on the **Save & deploy** button for the changes to take effect.
 
 To remove the Strapi CMS license from your Strapi Cloud project, you can click on the **Unlink license** button. This will also remove access and usage to the CMS features included in the previously added license.
+
+:::note
+The license key is applied to all the environments in the project.
+:::
 
 #### Modifying git repository & branch
 
@@ -4176,13 +4180,17 @@ Defining relations between content-types (that are designated as entities in the
 
 Relations between content-types can be managed through the [admin panel](/cms/features/content-manager#relational-fields) or through [REST API](/cms/api/rest) or [Document Service API](/cms/api/document-service) requests.
 
-Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
+Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request. These payloads work for both single-entry relations and multi relations (one-to-many, many-to-one, many-to-many, and many-way). When a relational field allows multiple links, the API expects arrays of relation IDs and returns arrays in responses.
 
 |  Parameter name         | Description | Type of update |
 |-------------------------|-------------|----------------|
 | [`connect`](#connect)   | Connects new entities.<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial |
 | [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial |
 | [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
+
+:::note
+Multi relations can be managed from the REST API and the [GraphQL API](/cms/api/graphql#fetch-relations): the  `connect`, `disconnect`, and `set` operations are available across both APIs. However, the [Document Service API](/cms/api/document-service) does not handle relations.
+:::
 
 :::note
 When [Internationalization (i18n)](/cms/features/internationalization) is enabled on the content-type, you can also pass a locale to set relations for a specific locale, as in this Document Service API example:
@@ -7938,6 +7946,10 @@ There are 6 different types of relations:
 - <img width="25" src="/img/assets/icons/v5/ctb_relation_manyto1.svg" /> Many-to-one: Content-type B *has many* Content-type A
 - <img width="25" src="/img/assets/icons/v5/ctb_relation_manytomany.svg" /> Many-to-many: Content-type A *has and belongs to many* Content-type B
 - <img width="25" src="/img/assets/icons/v5/ctb_relation_manyway.svg" /> Many way: Content-type A *has many* Content-type B
+
+:::info Multi relations and single relations
+Relations where at least one side can reference several entries are called multi relations. In the Content-type Builder, this includes one-to-many, many-to-one, many-to-many, and many-way relations. These relations appear as multi-select fields in the Content Manager and return arrays from the REST, GraphQL, and Document Service APIs; while single relations (one-way and one-to-one relations) return a single linked entry (see [Managing relations with API requests](/cms/api/rest/relations) for more information).
+:::
 
 </Tabs>
 

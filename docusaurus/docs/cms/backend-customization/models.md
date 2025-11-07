@@ -248,7 +248,9 @@ The `uid` type is used to automatically prefill the field value in the admin pan
 
 #### Relations
 
-Relations link content-types together. Relations are explicitly defined in the [attributes](#model-attributes)  of a model with `type: 'relation'`  and accept the following additional parameters:
+Relations link content-types together. Strapi supports both single-entry relations (one-way and one-to-one) and multi relations where at least one side can point to several entries (one-to-many, many-to-one, many-to-many, and many-way). Multi relations are persisted as arrays in the database layer and are returned as arrays in the Content API responses.
+
+Relations are explicitly defined in the [attributes](#model-attributes) of a model with `type: 'relation'` and accept the following additional parameters:
 
 | Parameter                         | Description                                                                                                                                     |
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
