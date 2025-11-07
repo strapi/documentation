@@ -1,31 +1,31 @@
 # Strapi Documentation
 
-- [Account billing details](https://docs.strapi.io/cloud/account/account-billing): Manage billing details for Strapi Cloud account.
-- [Profile settings](https://docs.strapi.io/cloud/account/account-settings): Manage Strapi Cloud account settings.
-- [Database](https://docs.strapi.io/cloud/advanced/database): Configure your own database on Strapi Cloud.
-- [Email Provider](https://docs.strapi.io/cloud/advanced/email): Configure Strapi Cloud to use a third-party email provider.
-- [Upload Provider](https://docs.strapi.io/cloud/advanced/upload): Configure Strapi Cloud to use a third-party upload provider.
-- [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): <Tldr>
-- [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): <Tldr>
+- [Account billing details](https://docs.strapi.io/cloud/account/account-billing): Billing details and invoices are managed on the Profile page, where payment methods are updated and invoice history is available.
+- [Profile settings](https://docs.strapi.io/cloud/account/account-settings): Settings of the Profile page include account details, connected accounts, and account deletion options.
+- [Database](https://docs.strapi.io/cloud/advanced/database): Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.
+- [Email Provider](https://docs.strapi.io/cloud/advanced/email): Third‑party email services integrate through plugins and environment variables to replace the default sender.
+- [Upload Provider](https://docs.strapi.io/cloud/advanced/upload): External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
+- [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
+- [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): Edge caching via Cache-Control headers reduces latency and server load for heavy static content.
 - [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...
 - [Strapi Cloud - Dashboard deployment](https://docs.strapi.io/cloud/getting-started/deployment): Learn how to deploy your Strapi application on Strapi Cloud.
 - [Strapi Cloud - CLI deployment](https://docs.strapi.io/cloud/getting-started/deployment-cli): Learn how to deploy your Strapi application via the CLI.
 - [Project deployment](https://docs.strapi.io/cloud/getting-started/deployment-options): Learn how to deploy your Strapi application on Strapi Cloud, via the Cloud dashboard or the CLI.
 - [Welcome to the Strapi Cloud Documentation!](https://docs.strapi.io/cloud/getting-started/intro): The Strapi Cloud documentation contains all technical documentation related to the setup, deployment, update and customization of your Strapi Cloud account and applications.
 - [Information on billing & usage](https://docs.strapi.io/cloud/getting-started/usage-billing): This page contains general information related to the usage and billing of your Strapi Cloud account and projects.
-- [Collaboration](https://docs.strapi.io/cloud/projects/collaboration): Share your projects on Strapi Cloud to collaborate with others.
-- [Deployments management](https://docs.strapi.io/cloud/projects/deploys): Manage your projects's deployments.
-- [Deployment history & logs](https://docs.strapi.io/cloud/projects/deploys-history): View projects' deployment history and logs.
-- [Notifications](https://docs.strapi.io/cloud/projects/notifications): View your notifications on Strapi Cloud.
-- [Projects overview](https://docs.strapi.io/cloud/projects/overview): View and manage your projects on Strapi Cloud.
-- [Runtime logs](https://docs.strapi.io/cloud/projects/runtime-logs): View runtime logs of Strapi Cloud project.
-- [Project settings](https://docs.strapi.io/cloud/projects/settings): View and manage your projects settings on Strapi Cloud.
-- [Admin panel customization](https://docs.strapi.io/cms/admin-panel-customization): The administration panel of Strapi can be customized according to your needs, so you can make it reflect your identity.
-- [Admin panel bundlers](https://docs.strapi.io/cms/admin-panel-customization/bundlers): Learn more about configuring Vite and webpack with Strapi 5.
+- [Collaboration](https://docs.strapi.io/cloud/projects/collaboration): Project owners invite maintainers through the Share button, manage pending invitations, and revoke access.
+- [Deployments management](https://docs.strapi.io/cloud/projects/deploys): Deployment triggers can be manual or automatic on git pushes, with the ability to cancel active builds from dashboard or CLI.
+- [Deployment history & logs](https://docs.strapi.io/cloud/projects/deploys-history): Deployments tab lists every build with status and allows deep inspection of build and runtime logs.
+- [Notifications](https://docs.strapi.io/cloud/projects/notifications): Bell icon opens a feed of recent deployment events, automatically purged after 30 days.
+- [Projects overview](https://docs.strapi.io/cloud/projects/overview): Projects page lists all apps with status and quick actions; selecting one opens a dashboard with metrics and controls.
+- [Runtime logs](https://docs.strapi.io/cloud/projects/runtime-logs): Runtime logs tab streams live server output, though Free plan logs reset when apps scale to zero.
+- [Project settings](https://docs.strapi.io/cloud/projects/settings): Settings area spans project-level controls (general, billing, plans, invoices) and per-environment configuration.
+- [Admin panel customization](https://docs.strapi.io/cms/admin-panel-customization): The admin panel can be tailored to match your branding, by editing src/admin/app and using an extensions folder to swap logos, favicon, locales, translations, themes, bundlers, or editors.
+- [Admin panel bundlers](https://docs.strapi.io/cms/admin-panel-customization/bundlers): Supported JavaScript bundlers influence builds and development flow.
 - [Admin panel extension](https://docs.strapi.io/cms/admin-panel-customization/extension): Learn more about extending Strapi's admin panel.
 - [Favicon](https://docs.strapi.io/cms/admin-panel-customization/favicon): Replace the favicon displayed in Strapi's admin panel.
-- [Homepage customization](https://docs.strapi.io/cms/admin-panel-customization/homepage): Learn about the Strapi admin panel Homepage and how to customize it with widgets.
-- [Locales & translations](https://docs.strapi.io/cms/admin-panel-customization/locales-translations): Learn how to update locales and extend translations in the Strapi admin panel.
+- [Homepage customization](https://docs.strapi.io/cms/admin-panel-customization/homepage): The admin panel homepage displays default content and profile widgets and supports custom additions through the app.widgets.register API.
+- [Locales & translations](https://docs.strapi.io/cms/admin-panel-customization/locales-translations): Configure the admin panel languages by updating the config.locales array and override default or plugin strings with config.translations or custom translation files.
 - [Logos](https://docs.strapi.io/cms/admin-panel-customization/logos): Customize the logos displayed in Strapi's admin panel.
 - [Theme extension](https://docs.strapi.io/cms/admin-panel-customization/theme-extension): Extend Strapi's admin panel theme.
 - [Customizing the rich text editor](https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor): Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
@@ -53,75 +53,75 @@
 - [Sort and Pagination](https://docs.strapi.io/cms/api/rest/sort-pagination): Use Strapi's REST API to sort or paginate your data.
 - [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents.
 - [Upload files](https://docs.strapi.io/cms/api/rest/upload): Learn how to use the /api/upload endpoints to upload files to Strapi with the REST API.
-- [Back-end customization](https://docs.strapi.io/cms/backend-customization): All elements of Strapi's back end, like routes, policies, middlewares, controllers, services, models, requests, responses, and webhooks, can be customized.
-- [Controllers](https://docs.strapi.io/cms/backend-customization/controllers): <Tldr>
-- [Middlewares](https://docs.strapi.io/cms/backend-customization/middlewares): import MiddlewareTypes from '/docs/snippets/middleware-types.md'
-- [Models](https://docs.strapi.io/cms/backend-customization/models): Strapi models (i.e. content-types, components, and dynamic zones) define a representation of the content structure.
-- [Policies](https://docs.strapi.io/cms/backend-customization/policies): Strapi policies are functions that execute specific logic on each request before it reaches the controller. Policies can be customized according to your needs.
-- [Requests and Responses](https://docs.strapi.io/cms/backend-customization/requests-responses): Learn more about requests and responses for Strapi, the most popular headless CMS.
-- [Routes](https://docs.strapi.io/cms/backend-customization/routes): Strapi routes handle requests to your content and are auto-generated for your content-types. Routes can be customized according to your needs.
-- [Services](https://docs.strapi.io/cms/backend-customization/services): Strapi services are a set of reusable functions, useful to simplify controllers logic.
-- [Webhooks](https://docs.strapi.io/cms/backend-customization/webhooks): Strapi webhooks are user-defined HTTP callbacks used by an application to notify other applications that an event occurred.
+- [Back-end customization](https://docs.strapi.io/cms/backend-customization): Strapi’s back end is a Koa-based server where requests pass through global middlewares, routes, controllers, services, and models before the Document Service returns responses.
+- [Controllers](https://docs.strapi.io/cms/backend-customization/controllers): Controllers bundle actions that handle business logic for each route within Strapi’s MVC pattern. This documentation demonstrates generating controllers, extending core ones with createCoreController, and delegating heavy logic to services.
+- [Middlewares](https://docs.strapi.io/cms/backend-customization/middlewares): Middlewares alter the request or response flow at application or API levels. This documentation distinguishes global versus route middlewares and illustrates custom implementations with generation patterns.
+- [Models](https://docs.strapi.io/cms/backend-customization/models): Models define Strapi’s content structure via content-types and reusable components. This documentation walks through creating these models in the Content-type Builder or CLI and managing schema files with optional lifecycle hooks.
+- [Policies](https://docs.strapi.io/cms/backend-customization/policies): Policies execute before controllers to enforce authorization or other checks on routes. Instructions in this documentation cover generating global or scoped policies and wiring them into router configs.
+- [Requests and Responses](https://docs.strapi.io/cms/backend-customization/requests-responses): Koa’s context (ctx) carries request info, state, and response data through every Strapi endpoint. This documentation details ctx.request, ctx.state, and ctx.response, plus a helper for accessing context anywhere.
+- [Routes](https://docs.strapi.io/cms/backend-customization/routes): Routes map incoming URLs to controllers and ship pre-generated for each content type. This documentation shows how to add or customize core and custom routers and attach policies or middlewares for extra control.
+- [Services](https://docs.strapi.io/cms/backend-customization/services): Services store reusable functions to keep controllers concise and follow DRY principles. This documentation explains generating or extending services with createCoreService and organizing them for APIs or plugins.
+- [Webhooks](https://docs.strapi.io/cms/backend-customization/webhooks): Webhooks let Strapi notify external systems when content changes, while omitting the Users type for privacy. Configuration in config/server sets default headers and endpoints to trigger third-party processing.
 - [Command Line Interface](https://docs.strapi.io/cms/cli): Strapi comes with a full featured Command Line Interface (CLI) which lets you scaffold and manage your project in seconds.
 - [Configurations](https://docs.strapi.io/cms/configurations): Learn how you can manage and customize the configuration of your Strapi application.
-- [API calls configuration](https://docs.strapi.io/cms/configurations/api): Strapi's default API parameters can be configured.
-- [CRON jobs](https://docs.strapi.io/cms/configurations/cron): Strapi allows you to configure cron jobs for execution at specific dates and times, with optional reoccurrence rules.
-- [Database configuration](https://docs.strapi.io/cms/configurations/database): Strapi offers a single entry point file to configure its databases.
-- [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): import SampleEnv from '/docs/snippets/sample-env.md'
-- [Features configuration](https://docs.strapi.io/cms/configurations/features): Enable experimental Strapi features
-- [Lifecycle functions](https://docs.strapi.io/cms/configurations/functions): Strapi includes lifecycle functions (e.g. register, bootstrap and destroy) that control the flow of your application.
-- [Middlewares configuration](https://docs.strapi.io/cms/configurations/middlewares): Strapi offers a single entry point file for its middlewares configurations.
-- [Plugins configuration](https://docs.strapi.io/cms/configurations/plugins): Strapi plugins have a single entry point file to define their configurations.
-- [Server configuration](https://docs.strapi.io/cms/configurations/server): Strapi offers a single entry point file for its server configuration.
-- [TypeScript configuration](https://docs.strapi.io/cms/configurations/typescript): How to configure Strapi for TypeScript development.
+- [API calls configuration](https://docs.strapi.io/cms/configurations/api): /config/api centralizes response privacy and REST defaults such as prefix, pagination limits, and max request size.
+- [CRON jobs](https://docs.strapi.io/cms/configurations/cron): Cron jobs schedule custom functions at specific times via node-schedule, activated through server config and optional task files.
+- [Database configuration](https://docs.strapi.io/cms/configurations/database): /config/database defines connections, clients, and pooling for supported databases like SQLite, MySQL, and PostgreSQL.
+- [Environment variables configuration](https://docs.strapi.io/cms/configurations/environment): Strapi-specific environment variables and .env usage enable per-environment configs, with env() helpers for casting values.
+- [Features configuration](https://docs.strapi.io/cms/configurations/features): Future flags in /config/features toggle experimental Strapi features, allowing early testing at your own risk.
+- [Lifecycle functions](https://docs.strapi.io/cms/configurations/functions): src/index hosts global register, bootstrap, and destroy functions to run logic during application lifecycle.
+- [Middlewares configuration](https://docs.strapi.io/cms/configurations/middlewares): /config/middlewares orders global middleware, enables custom names or resolves, and exposes built-in configuration options.
+- [Plugins configuration](https://docs.strapi.io/cms/configurations/plugins): /config/plugins enables or disables plugins and overrides their settings, with examples for local plugin development.
+- [Server configuration](https://docs.strapi.io/cms/configurations/server): /config/server manages host, port, URL, proxy, cron, and more; changes require rebuilding the admin panel.
+- [TypeScript configuration](https://docs.strapi.io/cms/configurations/typescript): TypeScript configuration explains the project’s tsconfig files, output directories, and an optional config/typescript.js|ts that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
 - [Customization](https://docs.strapi.io/cms/customization): Learn more about Strapi 5 customization possibilities
-- [Database migrations](https://docs.strapi.io/cms/database-migrations): Strapi database migrations are ways to modify the database
-- [Database transactions](https://docs.strapi.io/cms/database-transactions): Conceptual guide to transactions in Strapi
-- [Deployment](https://docs.strapi.io/cms/deployment): Learn how to develop locally with Strapi and deploy Strapi with various hosting options.
-- [Error handling](https://docs.strapi.io/cms/error-handling): With Strapi's error handling feature it's easy to send and receive errors in your application.
-- [Admin panel](https://docs.strapi.io/cms/features/admin-panel): Learn to use the admin panel.
-- [API Tokens](https://docs.strapi.io/cms/features/api-tokens): Learn how you can use API tokens to manage end-users authentication.
-- [Audit Logs](https://docs.strapi.io/cms/features/audit-logs): Learn how you can use the Audit Logs feature of Strapi 5.
-- [Content History](https://docs.strapi.io/cms/features/content-history): Learn how you can use the Content History feature of Strapi 5 to browse and restore previous versions of documents from the Content Manager.
-- [Content Manager](https://docs.strapi.io/cms/features/content-manager): Learn to use the Content Manager.
-- [Content-type Builder](https://docs.strapi.io/cms/features/content-type-builder): Learn to use the Content-type Builder.
-- [Custom Fields](https://docs.strapi.io/cms/features/custom-fields): Learn how you can use custom fields to extend Strapi's content-types capabilities.
-- [Data Management](https://docs.strapi.io/cms/features/data-management): Learn to use the Data Management to import, export, or transfer data between different Strapi instances.
-- [Draft & Publish](https://docs.strapi.io/cms/features/draft-and-publish): Learn how you can use the Draft & Publish feature of Strapi 5 to manage drafts for content.
-- [Email](https://docs.strapi.io/cms/features/email): Send email from your server or externals providers.
-- [Internationalization](https://docs.strapi.io/cms/features/internationalization): Learn how to use the Internationalization (i18n) feature that enables content managers to translate the content
-- [Media Library](https://docs.strapi.io/cms/features/media-library): Learn to use the Media Library which allows to display and manage all assets uploaded in the application.
-- [Preview](https://docs.strapi.io/cms/features/preview): With the Preview feature, you can preview your front-end directly from the Content Manager
-- [Role-Based Access Control (RBAC)](https://docs.strapi.io/cms/features/rbac): Learn to use the RBAC feature which allows to manage the users of the admin panel.
-- [Releases](https://docs.strapi.io/cms/features/releases): Learn how to use the Releases feature that enables content managers to organize entries to publish/unpublish simultaneously
-- [Review Workflows](https://docs.strapi.io/cms/features/review-workflows): Learn how to use the Review Workflows feature that enables the creation and management of workflows for your various content-types
-- [Single Sign-On (SSO)](https://docs.strapi.io/cms/features/sso): Learn to use the SSO feature which manages authentication through an identity provider.
-- [Users & Permissions](https://docs.strapi.io/cms/features/users-permissions): Learn to use the Users & Permissions and API tokens features to manage end-users.
+- [Database migrations](https://docs.strapi.io/cms/database-migrations): Database migrations run one‑time scripts before schema sync to preserve data during upgrades. The experimental API uses alphabetical up() files and warns about missing down migrations and potential table deletions.
+- [Database transactions](https://docs.strapi.io/cms/database-transactions): Database transactions group several operations so they succeed or roll back as a unit. The experimental strapi.db.transaction helper exposes trx, commit, and rollback utilities for wrapped service calls.
+- [Deployment](https://docs.strapi.io/cms/deployment): Deployment options cover hardware/software prerequisites, environment variable setup, and building the admin panel before launch. In the documentation: links to provider‑specific and advanced guides to help pick the right hosting strategy.
+- [Error handling](https://docs.strapi.io/cms/error-handling): Strapi’s APIs return errors in a consistent structure and let backend code throw custom exceptions for controllers, services, policies, or lifecycles. This documentation lists error classes, context helpers, and examples for crafting meaningful responses.
+- [Admin panel](https://docs.strapi.io/cms/features/admin-panel): The admin panel acts as Strapi’s back office for managing content types, entries, and both administrator and end‑user accounts. This documentation gives an overview of the admin panel before focusing on profile settings that manage interface language and mode, login and personal information, and logo for branding.
+- [API Tokens](https://docs.strapi.io/cms/features/api-tokens): API tokens provide scoped authentication for REST and GraphQL requests without exposing user credentials. This documentation explains token types, creation, expiration, and secure usage within the admin panel.
+- [Audit Logs](https://docs.strapi.io/cms/features/audit-logs): Audit Logs captures every administrative action in a searchable, filterable history to aid troubleshooting and compliance. In this documentation, examples show viewing payloads and filtering by user or date.
+- [Content History](https://docs.strapi.io/cms/features/content-history): Content History stores previous document versions so editors can compare and restore earlier states from the Content Manager. This documentation explains how to browse and restore workflows for quick rollback of mistakes.
+- [Content Manager](https://docs.strapi.io/cms/features/content-manager): The Content Manager is Strapi’s interface for browsing and editing entries. This documentation gives an overview of the Content Manager and explains the views and how to write content in fields, components, dynamic zones and relational fields.
+- [Content-type Builder](https://docs.strapi.io/cms/features/content-type-builder): The Content-type Builder is a tool for designing content types and components. This documentation gives an overview of the Content-type Builder and covers field options, relations, component usage, and shares data modeling tips.
+- [Custom Fields](https://docs.strapi.io/cms/features/custom-fields): Custom Fields extend Strapi with new field types that behave like native fields in the Content‑type Builder and Content Manager. Instructions in this documentation cover building or installing fields via plugins and registering them programmatically.
+- [Data Management](https://docs.strapi.io/cms/features/data-management): Data Management handles CLI-based import, export, and transfer of content between Strapi instances with partial configuration in the admin panel. Step-by-step commands and prerequisite settings explained in this documentation ensure safe migrations.
+- [Draft & Publish](https://docs.strapi.io/cms/features/draft-and-publish): Draft & Publish separates drafts from live entries, allowing editors to stage content before release. This documentation shows how to enable it per content type and manage publish or unpublish actions.
+- [Email](https://docs.strapi.io/cms/features/email): The Email feature sends transactional messages through local SMTP or external providers like SendGrid. Setup guidance in this documentation covers provider configuration and extending delivery via controllers or hooks.
+- [Internationalization](https://docs.strapi.io/cms/features/internationalization): Internationalization manages content in multiple locales directly from the admin panel. This documentation explains how to add locales, translate entries, and control locale-specific permissions.
+- [Media Library](https://docs.strapi.io/cms/features/media-library): Media Library centralizes all uploaded assets with search, filters, and folder organization. This documentation includes provider options, upload workflows, and explanations on inserting media into content.
+- [Preview](https://docs.strapi.io/cms/features/preview): Preview connects the Content Manager to the front end so editors can see changes before publishing. In this documentation: configuration steps to set preview URLs.
+- [Role-Based Access Control (RBAC)](https://docs.strapi.io/cms/features/rbac): Role-Based Access Control (RBAC) manages administrator roles and granular permissions in the admin panel. This documentation covers creating roles, assigning rights, and securing administrative workflows.
+- [Releases](https://docs.strapi.io/cms/features/releases): Releases group entries into publishable batches to trigger simultaneous publish or unpublish actions across content types and locales. Instructions in this documentation detail creating releases, adding entries, and understanding plan limitations.
+- [Review Workflows](https://docs.strapi.io/cms/features/review-workflows): Review Workflows define custom multi-stage pipelines for content review, facilitating collaboration from draft to publication. This documentation walks through creating workflows and assigning stages.
+- [Single Sign-On (SSO)](https://docs.strapi.io/cms/features/sso): Single Sign-On (SSO) lets administrators authenticate via identity providers such as Azure AD instead of local passwords. Configuration steps in this documentation cover enabling SSO and mapping roles.
+- [Users & Permissions](https://docs.strapi.io/cms/features/users-permissions): Users & Permissions manages end-user accounts, JWT-based authentication, and role-based access to APIs. This documentation explains how to create roles, configure permissions, and issue API tokens for secure access control.
 - [Installation](https://docs.strapi.io/cms/installation): Learn many different options to install Strapi and getting started on using it.
 - [Additional resources for migrating to Strapi 5](https://docs.strapi.io/cms/migration/v4-to-v5/additional-resources/introduction): The following pages cover some dedicated topics for specific use cases when upgrading to Strapi 5. Please ensure you have read the [introduction to up...
 - [Breaking changes](https://docs.strapi.io/cms/migration/v4-to-v5/breaking-changes): View the list of all breaking changes introduced between Strapi v4 and v5.
 - [Upgrading to Strapi 5 - Introduction and FAQ](https://docs.strapi.io/cms/migration/v4-to-v5/introduction-and-faq): Learn more about how to upgrade to Strapi 5
 - [Step-by-step guide to upgrade to Strapi 5](https://docs.strapi.io/cms/migration/v4-to-v5/step-by-step): Follow this step-by-step guide to upgrade from Strapi v4 to Strapi 5
-- [Admin Panel API](https://docs.strapi.io/cms/plugins-development/admin-panel-api): <Tldr>
-- [Content Manager APIs](https://docs.strapi.io/cms/plugins-development/content-manager-apis): The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
-- [Plugin creation & setup](https://docs.strapi.io/cms/plugins-development/create-a-plugin): Learn how to use the Plugin SDK to build and publish a Strapi plugin
+- [Admin Panel API](https://docs.strapi.io/cms/plugins-development/admin-panel-api): The Admin Panel API exposes register, bootstrap, and registerTrads hooks to inject React components and translations into Strapi’s UI. Menu, settings, injection zone, reducer, and hook APIs let plugins add navigation, configuration panels, or custom actions.
+- [Content Manager APIs](https://docs.strapi.io/cms/plugins-development/content-manager-apis): Content Manager APIs add panels and actions to list or edit views through addEditViewSidePanel, addDocumentAction, addDocumentHeaderAction, or addBulkAction. Each API accepts component functions with typed contexts, enabling precise control over document-aware UI injections.
+- [Plugin creation & setup](https://docs.strapi.io/cms/plugins-development/create-a-plugin): The Plugin SDK generates plugins without a Strapi project and links them to an existing app with watch:link and yalc. In this documentation: build and verify commands to bundle the plugin for npm or marketplace publishing, and information for monorepos and local setups.
 - [Developing plugins](https://docs.strapi.io/cms/plugins-development/developing-plugins): Generation introduction about Strapi plugins development
 - [How to create components for Strapi plugins](https://docs.strapi.io/cms/plugins-development/guides/create-components-for-plugins): Learn how to create and configure components for your Strapi plugins
 - [How to pass data from server to admin panel with a Strapi plugin](https://docs.strapi.io/cms/plugins-development/guides/pass-data-from-server-to-admin): Learn how to pass data from server to admin panel with a Strapi plugin
 - [How to store and access data from a Strapi plugin](https://docs.strapi.io/cms/plugins-development/guides/store-and-access-data): Learn how to store and access data from a Strapi plugin
 - [Plugin SDK](https://docs.strapi.io/cms/plugins-development/plugin-sdk): Reference documentation for Strapi's Plugin SDK commands
 - [Plugin structure](https://docs.strapi.io/cms/plugins-development/plugin-structure): Learn more about the structure of a Strapi plugin
-- [Plugins extension](https://docs.strapi.io/cms/plugins-development/plugins-extension): <Tldr>
+- [Plugins extension](https://docs.strapi.io/cms/plugins-development/plugins-extension): Existing plugins can be overriden by placing code in /src/extensions or using global register/bootstrap hooks. Instructions in this documentation cover reshaping plugin content-type schemas or server logic — altough upstream updates may break extensions.
 - [Server API for plugins](https://docs.strapi.io/cms/plugins-development/server-api): Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
-- [Documentation plugin](https://docs.strapi.io/cms/plugins/documentation): By using Swagger UI, the API documentation plugin takes out most of your pain to generate your documentation.
-- [GraphQL plugin](https://docs.strapi.io/cms/plugins/graphql): Use a GraphQL endpoint in your Strapi project to fetch and mutate your content.
-- [Installing Plugins via the Marketplace](https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace): <Tldr>
-- [Sentry plugin](https://docs.strapi.io/cms/plugins/sentry): Track errors in your Strapi application.
+- [Documentation plugin](https://docs.strapi.io/cms/plugins/documentation): The Documentation plugin auto-generates OpenAPI/Swagger docs for your API by scanning content types and routes. This documentation walks you through installation, customizing settings, and restricting access to the docs.
+- [GraphQL plugin](https://docs.strapi.io/cms/plugins/graphql): The GraphQL plugin adds a GraphQL endpoint and Apollo-based sandbox for crafting queries and mutations. Options in config/plugins let you tune depth, item limits, and other Apollo Server settings which are explained in this documentation.
+- [Installing Plugins via the Marketplace](https://docs.strapi.io/cms/plugins/installing-plugins-via-marketplace): The in-app Marketplace lists plugins and providers with badges, search, and “More” links to detailed Strapi Market pages. This documentation outlines browsing cards and following provider-specific instructions to install new integrations.
+- [Sentry plugin](https://docs.strapi.io/cms/plugins/sentry): The Sentry plugin connects Strapi to Sentry to report errors and attach debugging metadata. This documentation details installation, environment-based configuration, and ways to disable or skip sending events outside production.
 - [Project structure](https://docs.strapi.io/cms/project-structure): Discover the project structure of any default Strapi application.
 - [Quick Start Guide - Strapi Developer Docs](https://docs.strapi.io/cms/quick-start): Get ready to get Strapi, your favorite open-source headless cms up and running in less than 3 minutes.
-- [Templates](https://docs.strapi.io/cms/templates): Use and create pre-made Strapi applications designed for a specific use case.
-- [Testing](https://docs.strapi.io/cms/testing): Learn how to test your Strapi application with Jest and Supertest.
+- [Templates](https://docs.strapi.io/cms/templates): Templates are full Strapi apps that bootstrap new projects via CLI flags such as --template, --template-path, and --template-branch. Instructions in this documentation cover referencing templates from GitHub and turning any Strapi project into a reusable template.
+- [Testing](https://docs.strapi.io/cms/testing): Testing relies on Jest and Supertest with an in-memory SQLite database, a patched Strapi test harness that also supports TypeScript configuration files, and helpers that automatically register the /hello route and authenticated role during setup.
 - [TypeScript](https://docs.strapi.io/cms/typescript): Get started with TypeScript for your Strapi application
-- [TypeScript development](https://docs.strapi.io/cms/typescript/development): Learn more about TypeScript usage with Strapi 5
+- [TypeScript development](https://docs.strapi.io/cms/typescript/development): TypeScript development showcases Strapi typings for autocompletion, schema type generation with ts:generate-types, and programmatic server starts via strapi() or strapi.compile(). This documentation addresses plugin builds and managing generated type definitions.
 - [TypeScript Guides](https://docs.strapi.io/cms/typescript/guides): Learn how you can leverage TypeScript while developing your Strapi project.
 - [Upgrade tool](https://docs.strapi.io/cms/upgrade-tool): The Strapi upgrade tool is a CLI command that helps automatically upgrading to a new Strapi version.
