@@ -192,7 +192,7 @@ Either `--to` or `--from` is required, but it's not currently allowed to enter b
 **Example**
 
 ```bash
-strapi transfer --to http://example.com/admin --to-token my-transfer-token
+strapi transfer -- --to http://example.com/admin --to-token my-transfer-token
 ```
 
 ## strapi report
