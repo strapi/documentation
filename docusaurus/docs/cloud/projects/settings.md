@@ -325,8 +325,11 @@ The environment's Node version is based on the one chosen at the creation of the
 
 1. In the *Basic information* section of the <Icon name="faders" /> *Configuration* tab, click on the *Node version*'s edit <Icon name="pencil-simple" /> button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
-3. Click on the **Save** button.
-4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
+3. Click on **Save**, or **Save & deploy** if you want the changes to take effect immediately. 
+
+:::tip
+Ensure the Node version configured in your Strapi project matches the Node version shown in your project’s dashboard before deploying.
+:::
 
 #### Editing Git branch
 
