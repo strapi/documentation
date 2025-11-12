@@ -4727,6 +4727,37 @@ When a new [content-type](/cms/backend-customization/models#content-types) is cr
 To see a possible advanced usage for custom controllers, read the [services and controllers](/cms/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
 :::
 
+### Controllers & Routes: How routes reach controller actions
+
+- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router — the route keeps the same handler string and executes your updated logic.
+- Adding a route should only be done for new actions or paths. If you introduce a brand-new method such as `exampleAction`, create or update a route entry whose `handler` points to the action so HTTP requests can reach it. Use the fully-qualified handler syntax `<scope>::<api-or-plugin-name>.<controllerName>.<actionName>` (e.g. `api::restaurant.restaurant.exampleAction` for an API controller or `plugin::menus.menu.exampleAction` for a plugin controller).
+- Regarding controller and route filenames: the default controller name comes from the filename inside `./src/api/[api-name]/controllers/`. Core routers created with `createCoreRouter` adopt the same name, so the generated handler string matches automatically. Custom routers can follow any file naming scheme, as long as the `handler` string references an exported controller action.
+
+The example below adds a new controller action and exposes it through a custom route without duplicating the existing CRUD route definitions:
+
+```js title="./src/api/restaurant/controllers/restaurant.js"
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) => ({
+  async exampleAction(ctx) {
+    const specials = await strapi.service('api::restaurant.restaurant').find({ filters: { isSpecial: true } });
+    return this.transformResponse(specials.results);
+  },
+}));
+```
+
+```js title="./src/api/restaurant/routes/01-custom-restaurant.js"
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/restaurants/specials',
+      handler: 'api::restaurant.restaurant.exampleAction',
+    },
+  ],
+};
+```
+
 ### Sanitization and Validation in controllers  {#sanitization-and-validation-in-controllers}
 
 :::warning 
@@ -5648,6 +5679,10 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 
 Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/cms/backend-customization/controllers)). To view all existing routes and their hierarchal order, you can run `yarn strapi routes:list` (see [CLI reference](/cms/cli)).
 
+:::tip
+If you only customize the default controller actions (`find`, `findOne`, `create`, `update`, or `delete`) that Strapi generates for a content-type, you can leave the router as-is. Those core routes already target the same handler names and will run your new controller logic. Add or edit a route only when you need a brand-new HTTP path/method or want to expose a custom controller action.
+:::
+
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
   <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/cms/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
@@ -5700,7 +5735,7 @@ Creating custom routers consists in creating a file that exports an array of obj
 | -------------------------- | -------------------------------------------------------------------------------- | -------- |
 | `method`                   | Method associated to the route (i.e. `GET`, `POST`, `PUT`, `DELETE` or `PATCH`)  | `String` |
 | `path`                     | Path to reach, starting with a forward-leading slash (e.g. `/articles`)| `String` |
-| `handler`                  | Function to execute when the route is reached.<br/>Should follow this syntax: `<controllerName>.<actionName>` | `String` |
+| `handler`                  | Function to execute when the route is reached.<br/>Use the fully-qualified syntax `api::api-name.controllerName.actionName` (or `plugin::plugin-name.controllerName.actionName`). The short `<controllerName>.<actionName>` form for legacy projects also works. | `String` |
 | `config`<br /><br />_Optional_ | Configuration to handle [policies](#policies), [middlewares](#middlewares) and [public availability](#public-routes) for the route<br/><br/>           | `Object` |
 
 <br/>
@@ -8226,6 +8261,13 @@ The Email feature enables Strapi applications to send emails from a server or an
 
 Most configuration options for the Email feature are handled via your Strapi project's code. The Email feature is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator.
 
+:::info Provider vs. Host
+- The email provider refers to the package that Strapi calls to send an email (e.g. official providers such as Sendgrid or community packages such as `@strapi/provider-email-nodemailer`). Providers implement the logic for sending mail when Strapi invokes them.
+- The provider host (or server) refers to the connection details (e.g. an SMTP hostname, port, or REST API endpoint) that the provider exposes. Some providers hide these details behind an API key, while others require you to supply host-related options in your configuration.
+
+The Email feature only handles outbound delivery. Receiving or parsing incoming messages is outside the scope of the built-in plugin and must be implemented with your email provider's inbound webhooks or a custom integration.
+:::
+
 ### Admin panel settings
 
 **Path to configure the feature:** 
@@ -8253,6 +8295,33 @@ Each provider will have different configuration settings available. Review the r
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
 
 You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` configuration file and it will be used to overwrite the default configuration.
+
+Some providers expose SMTP-style connection details instead of (or in addition to) an API key. Add those values in `providerOptions` so Strapi can reach the provider host. For instance, the community Nodemailer provider expects the host, port, and authentication credentials:
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: env.int('SMTP_PORT', 587),
+        secure: false, // Use `true` for port 465
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'no-reply@example.com',
+        defaultReplyTo: 'support@example.com',
+      },
+    },
+  },
+});
+```
+
+If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
 ##### Creating providers
 
