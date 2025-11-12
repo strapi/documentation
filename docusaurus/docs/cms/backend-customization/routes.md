@@ -29,6 +29,10 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 
 Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/cms/backend-customization/controllers)). To view all existing routes and their hierarchal order, you can run `yarn strapi routes:list` (see [CLI reference](/cms/cli)).
 
+:::tip
+If you only customize the default controller actions (`find`, `findOne`, `create`, `update`, or `delete`) that Strapi generates for a content-type, you can leave the router as-is. Those core routes already target the same handler names and will run your new controller logic. Add or edit a route only when you need a brand-new HTTP path/method or want to expose a custom controller action.
+:::
+
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
   <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/cms/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
@@ -174,7 +178,7 @@ Creating custom routers consists in creating a file that exports an array of obj
 | -------------------------- | -------------------------------------------------------------------------------- | -------- |
 | `method`                   | Method associated to the route (i.e. `GET`, `POST`, `PUT`, `DELETE` or `PATCH`)  | `String` |
 | `path`                     | Path to reach, starting with a forward-leading slash (e.g. `/articles`)| `String` |
-| `handler`                  | Function to execute when the route is reached.<br/>Should follow this syntax: `<controllerName>.<actionName>` | `String` |
+| `handler`                  | Function to execute when the route is reached.<br/>Use the fully-qualified syntax `api::api-name.controllerName.actionName` (or `plugin::plugin-name.controllerName.actionName`). The short `<controllerName>.<actionName>` form for legacy projects also works. | `String` |
 | `config`<br /><br />_Optional_ | Configuration to handle [policies](#policies), [middlewares](#middlewares) and [public availability](#public-routes) for the route<br/><br/>           | `Object` |
 
 <br/>
@@ -183,6 +187,15 @@ Dynamic routes can be created using parameters and regular expressions. These pa
 
 :::caution
 Routes files are loaded in alphabetical order. To load custom routes before core routes, make sure to name custom routes appropriately (e.g. `01-custom-routes.js` and `02-core-routes.js`).
+:::
+
+:::info Controller handler naming reference
+The `handler` string acts as a pointer to the controller action that should run for the route. Strapi supports the following formats:
+
+- API controllers:  `api::<api-name>.<controllerName>.<actionName>` (e.g. `api::restaurant.restaurant.exampleAction`). The `<controllerName>` comes from the controller filename inside `./src/api/<api-name>/controllers/`.
+- Plugin controllers: `plugin::<plugin-name>.<controllerName>.<actionName>` when the controller lives in a plugin.
+
+For backwards compatibility, Strapi also accepts a short `<controllerName>.<actionName>` string for API controllers, but using the fully-qualified form makes the route more explicit and avoids naming collisions across APIs and plugins.
 :::
 
 <details>
@@ -202,12 +215,12 @@ module.exports = {
     { // Path defined with an URL parameter
       method: 'POST',
       path: '/restaurants/:id/review', 
-      handler: 'restaurant.review',
+      handler: 'api::restaurant.restaurant.review',
     },
     { // Path defined with a regular expression
       method: 'GET',
       path: '/restaurants/:category([a-z]+)', // Only match when the URL parameter is composed of lowercase letters
-      handler: 'restaurant.findByCategory',
+      handler: 'api::restaurant.restaurant.findByCategory',
     }
   ]
 }
@@ -224,12 +237,12 @@ export default {
     { // Path defined with a URL parameter
       method: 'GET',
       path: '/restaurants/:category/:id',
-      handler: 'Restaurant.findOneByCategory',
+      handler: 'api::restaurant.restaurant.findOneByCategory',
     },
     { // Path defined with a regular expression
       method: 'GET',
       path: '/restaurants/:region(\\d{2}|\\d{3})/:id', // Only match when the first parameter contains 2 or 3 digits.
-      handler: 'Restaurant.findOneByRegion',
+      handler: 'api::restaurant.restaurant.findOneByRegion',
     }
   ]
 }
