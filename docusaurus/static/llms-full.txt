@@ -8396,6 +8396,21 @@ In addition to the middleware configuration, you can pass the `sizeLimit`, which
 
 </Tabs>
 
+#### Security
+
+The Upload plugin validates files based on their actual MIME type rather than the declared file extension.
+Only files matching the defined security rules are uploaded.
+
+The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
+
+:::note
+You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
+:::
+
+You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
+
+</Tabs>
+
 #### Upload request timeout
 
 By default, the value of `strapi.server.httpServer.requestTimeout` is set to 330 seconds. This includes uploads.
