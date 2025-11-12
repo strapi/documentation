@@ -164,13 +164,13 @@ module.exports = {
     {
       method: 'GET',
       path: '/hello',
-      handler: 'hello.index',
+      handler: 'api::hello.hello.index',
     }
   ]
 }
 ```
 
-```js "title="./src/api/hello/controllers/hello.js"
+```js title="./src/api/hello/controllers/hello.js"
 
 module.exports = {
   async index(ctx, next) { // called by GET /hello
@@ -183,14 +183,14 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js "title="./src/api/hello/routes/hello.ts"
+```js title="./src/api/hello/routes/hello.ts"
 
 export default {
   routes: [
     {
       method: 'GET',
       path: '/hello',
-      handler: 'hello.index',
+      handler: 'api::hello.hello.index',
     }
   ]
 }
@@ -218,6 +218,37 @@ When a new [content-type](/cms/backend-customization/models#content-types) is cr
 :::tip 
 To see a possible advanced usage for custom controllers, read the [services and controllers](/cms/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
 :::
+
+### Controllers & Routes: How routes reach controller actions
+
+- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router — the route keeps the same handler string and executes your updated logic.
+- Adding a route should only be done for new actions or paths. If you introduce a brand-new method such as `exampleAction`, create or update a route entry whose `handler` points to the action so HTTP requests can reach it. Use the fully-qualified handler syntax `<scope>::<api-or-plugin-name>.<controllerName>.<actionName>` (e.g. `api::restaurant.restaurant.exampleAction` for an API controller or `plugin::menus.menu.exampleAction` for a plugin controller).
+- Regarding controller and route filenames: the default controller name comes from the filename inside `./src/api/[api-name]/controllers/`. Core routers created with `createCoreRouter` adopt the same name, so the generated handler string matches automatically. Custom routers can follow any file naming scheme, as long as the `handler` string references an exported controller action.
+
+The example below adds a new controller action and exposes it through a custom route without duplicating the existing CRUD route definitions:
+
+```js title="./src/api/restaurant/controllers/restaurant.js"
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) => ({
+  async exampleAction(ctx) {
+    const specials = await strapi.service('api::restaurant.restaurant').find({ filters: { isSpecial: true } });
+    return this.transformResponse(specials.results);
+  },
+}));
+```
+
+```js title="./src/api/restaurant/routes/01-custom-restaurant.js"
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/restaurants/specials',
+      handler: 'api::restaurant.restaurant.exampleAction',
+    },
+  ],
+};
+```
 
 ### Sanitization and Validation in controllers  {#sanitization-and-validation-in-controllers}
 
