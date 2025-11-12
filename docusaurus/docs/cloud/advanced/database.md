@@ -34,6 +34,10 @@ While it's possible to use an external database with Strapi Cloud, you should do
 - Strapi can't provide security or support with external databases used with Strapi Cloud.
 :::
 
+:::warning
+Any environment variable added to your project that starts with `DATABASE_` will cause Strapi Cloud to assume that you will be using an external database and all Strapi Cloud specific database variables will not be injected!
+:::
+
 
 ## Configuration
 
