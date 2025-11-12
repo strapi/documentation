@@ -7,4 +7,6 @@ Notifications are sent when your usage reaches 80%, 90%, and 100% of your monthl
 <!-- You’ll also receive an email notification at 85%. -->
 
 When your credits run out on the <GrowthBadge noTooltip/> plan, you can keep using Strapi AI, with overages billed monthly.
+
+For more information about Strapi AI, please refer to the [dedicated support article](https://support.strapi.io/articles/1821143913-understanding-strapi-ai).
 :::
