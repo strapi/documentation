@@ -515,6 +515,7 @@ const sidebars = {
             'cms/plugins-development/server-api',
             'cms/plugins-development/plugins-extension',
             'cms/plugins-development/guides/pass-data-from-server-to-admin',
+            'cms/plugins-development/guides/admin-permissions-for-plugins',
             'cms/plugins-development/guides/store-and-access-data',
             'cms/plugins-development/guides/create-components-for-plugins',
           ],
