@@ -50,3 +50,32 @@ export default {
 ```
 
 In this example the parent resolver fetches restaurants using the [Document Service API](/cms/api/document-service), then delegates to the generated `Restaurant` resolver provided by the plugin so default behavior such as field selection still applies.
+
+## Aggregation drilldowns
+
+<ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> connections expose an `aggregate` field. You can use it to show high-level metrics and still let users drill into a specific group. Combine `groupBy` with pagination variables to keep responses small:
+
+```graphql
+query RestaurantsByCity($first: Int, $after: String) {
+  restaurants_connection(pagination: { limit: $first, start: $after }) {
+    aggregate {
+      groupBy {
+        city {
+          key
+          connection(pagination: { limit: 5 }) {
+            aggregate {
+              count
+            }
+            nodes {
+              documentId
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Use query variables to adjust the nested pagination when a user selects a group. Strapi runs the aggregation on the server, which is why the client only downloads the summary rows it needs: this keeps dashboards responsive even with large data sets.
