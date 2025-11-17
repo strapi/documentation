@@ -425,7 +425,7 @@ query Query($status: PublicationStatus) {
 }
 ```
 
-## Aggregations {#aggregations}
+## Aggregations
 
 Aggregations can be used to compute metrics such as counts, sums, or grouped totals without fetching every document individually. Aggregations are exposed through <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> connection queries: every collection type includes an `aggregate` field under its `<plural>_connection` query.
 
@@ -457,7 +457,7 @@ Strapi ignores `null` values for `avg`, `sum`, `min`, and `max`. When aggregatin
 :::
 
 :::info Performance & limits
-Aggregations operate server-side, so they are generally faster than downloading and processing large result sets on the client. However, complex `groupBy` trees and wide projections can still be expensive. Use filters to restrict the data set and consider enabling [query depth or amount limits](/cms/plugins/graphql#rate-limiting-and-query-depth) to protect your API. Errors such as `You are not allowed to perform this action` usually mean the requester lacks the `Read` permission on the target collection.
+Aggregations operate server-side, so they are generally faster than downloading and processing large result sets on the client. However, complex `groupBy` trees and wide projections can still be expensive. Use filters to restrict the data set and consider setting up `depthLimit` and `amountLimit` values accordingly (see [#available-options](#available-options)) to protect your API. Errors such as `You are not allowed to perform this action` usually mean the requester lacks the `Read` permission on the target collection.
 :::
 
 ### Aggregate multiple metrics in one request
