@@ -130,6 +130,26 @@ During development Strapi builds a base Vite configuration, then tries to load a
 
 Create `./src/admin/vite.config.ts` (or `.js`) if it does not already exist and extend the dev-server configuration. The following example snippet adds 2 custom domains while keeping the rest of Strapi's defaults untouched:
 
+<Tabs groupId="js-ts">
+
+<TabItem label="JavaScript" value="js">
+
+```js title="src/admin/vite.config.js"
+import { mergeConfig } from 'vite';
+
+export default (config) => {
+  return mergeConfig(config, {
+    server: {
+      allowedHosts: ['preview.my-app.test', '.example-proxy.internal'],
+    },
+  });
+};
+```
+
+</TabItem>
+
+<TabItem label="TypeScript" value="ts">
+
 ```ts title="src/admin/vite.config.ts"
 import { mergeConfig, type UserConfig } from 'vite';
 
@@ -141,6 +161,9 @@ export default (config: UserConfig) => {
   });
 };
 ```
+
+</TabItem>
+</Tabs>
 
 A few tips while configuring `allowedHosts`:
 
