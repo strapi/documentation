@@ -13,14 +13,14 @@
   color: var(--custom-selection-color, var(--strapi-neutral-0));
 }
 
-html body main {
+main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
-    max-width: 608px !important;
+    max-width: 608px;
     padding-left: 0 !important;
     padding-right: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -51,10 +51,10 @@ html body main {
 
 /** Responsive */
 @include medium-up {
-  html body main {
+  main {
     article:first-child:not(.col),
     article:first-child:not(.col) + nav {
-      max-width: 672px !important;
+      max-width: 672px;
       padding-left: 32px !important;
       padding-right: 32px !important;
     }

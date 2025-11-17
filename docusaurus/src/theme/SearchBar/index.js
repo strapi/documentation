@@ -22,12 +22,12 @@ function SearchBarContent() {
       if (!kapaContainer || !kapaContainer.shadowRoot) {
         return;
       }
-      
+
       const shadowActiveElement = kapaContainer.shadowRoot.activeElement;
       
-      if (shadowActiveElement &&
-          (shadowActiveElement.tagName === 'INPUT' ||
-           shadowActiveElement.tagName === 'TEXTAREA' ||
+      if (shadowActiveElement && 
+          (shadowActiveElement.tagName === 'INPUT' || 
+           shadowActiveElement.tagName === 'TEXTAREA' || 
            shadowActiveElement.isContentEditable)) {
         
         const allowedKeys = ['Enter', 'Tab', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
@@ -151,7 +151,6 @@ function SearchBarContent() {
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown, true);
-      
       if (searchInstanceRef.current) {
         searchInstanceRef.current.destroy?.();
         searchInstanceRef.current = null;
@@ -166,19 +165,9 @@ function SearchBarContent() {
   );
 }
 
-function SearchBarFallback() {
-  return (
-    <div className="navbar__search">
-      <button type="button" className="docsearch-btn" aria-label="Search" disabled>
-        <span className="docsearch-btn-placeholder">Search</span>
-      </button>
-    </div>
-  );
-}
-
 export default function SearchBar() {
   return (
-    <BrowserOnly fallback={<SearchBarFallback />}>
+    <BrowserOnly fallback={<div className="navbar__search"><div></div></div>}>
       {() => <SearchBarContent />}
     </BrowserOnly>
   );
