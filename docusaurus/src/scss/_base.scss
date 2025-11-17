@@ -16,12 +16,9 @@
 main {
   article:first-child:not(.col):not(.custom-doc-card),
   article:first-child:not(.col) + nav {
-    --custom-main-px: var(--strapi-spacing-0);
-    --custom-main-width: 608px;
-
-    max-width: calc(var(--custom-main-width) + calc(var(--strapi-spacing-4) * 2));
-    padding-left: var(--custom-main-px) !important;
-    padding-right: var(--custom-main-px) !important;
+    max-width: 608px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin-left: auto;
     margin-right: auto;
   }
@@ -57,7 +54,9 @@ main {
   main {
     article:first-child:not(.col),
     article:first-child:not(.col) + nav {
-      --custom-main-px: var(--strapi-spacing-4);
+      max-width: 672px;
+      padding-left: 32px !important;
+      padding-right: 32px !important;
     }
   }
 }
