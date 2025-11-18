@@ -96,6 +96,7 @@ const parseArgs = () => {
   let excludeFilters = [];
   let lineNumbers = false;
   let verbose = false;
+  let logFile = null;
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -139,6 +140,10 @@ const parseArgs = () => {
       lineNumbers = true;
     } else if (arg === '--verbose') {
       verbose = true;
+    } else if (arg === '--log-file') {
+      const value = args[i + 1];
+      i += 1;
+      if (value) logFile = value;
     } else {
       docs.push(arg);
     }
@@ -155,6 +160,7 @@ const parseArgs = () => {
     excludeFilters,
     lineNumbers,
     verbose,
+    logFile,
   };
 };
 
@@ -172,6 +178,7 @@ class DocusaurusLlmsCodeGenerator {
     this.excludeFilters = Array.isArray(config.excludeFilters) ? config.excludeFilters : [];
     this.includeLineNumbers = Boolean(config.lineNumbers);
     this.verbose = Boolean(config.verbose);
+    this.logFile = config.logFile || null;
   }
 
   // Recursively walk docs directory to find all .md/.mdx files and map to docIds
@@ -313,6 +320,24 @@ class DocusaurusLlmsCodeGenerator {
 
       if (skipped.length > 0 && !this.verbose) {
         console.log(`Skipped code generation for ${skipped.length} files. Use --verbose for a more detailed output.`);
+      }
+
+      // Optional: write skip log if requested
+      if (this.logFile) {
+        const content = [
+          `Skipped files: ${skipped.length}`,
+          ...skipped.map((id) => `- ${id}`),
+          '',
+        ].join('\n');
+        try {
+          await fs.ensureDir(path.dirname(this.logFile));
+          await fs.writeFile(this.logFile, content, 'utf-8');
+          if (this.verbose) {
+            console.log(`📝 Wrote skip log to ${this.logFile}`);
+          }
+        } catch (err) {
+          console.warn(`⚠️  Failed to write skip log to ${this.logFile}: ${err.message}`);
+        }
       }
     } catch (error) {
       console.error('❌ Error while generating llms-code:', error);
