@@ -299,9 +299,9 @@ function validateSection(section, opts) {
     // Allow sections without an explicit Source line
     // Skip URL parsing and anchor checks for such sections.
   }
-  if (!isAbsoluteHttpUrl(sourceUrl)) {
-    push('error', 'Source is not an absolute URL', idx);
-  } else {
+  if (sourceUrl && !isAbsoluteHttpUrl(sourceUrl)) {
+    push('warning', 'Source is not an absolute URL', idx);
+  } else if (sourceUrl) {
     try {
       const u = new URL(sourceUrl);
       if (!BASE_HOSTS.has(u.hostname)) {
@@ -332,18 +332,20 @@ function validateSection(section, opts) {
       while (idx < lines.length && lines[idx].trim() === '') idx += 1;
     }
 
+    let displayLangRaw = null;
+    let canonicalLang = null;
     if (!lines[idx] || !/^Language:\s*/i.test(lines[idx])) {
-      if (!sawAnyVariant) push('error', 'Missing "Language:" before code block', idx);
-      break;
+      // Allow fence-first blocks: infer language from the upcoming fence line
+    } else {
+      displayLangRaw = lines[idx].replace(/^Language:\s*/i, '').trim();
+      canonicalLang = normalizeDisplayLang(displayLangRaw);
+      if (!canonicalLang) {
+        push('error', `Unrecognized language: ${displayLangRaw}`, idx);
+      } else if (!RECOGNIZED_LANGS.has(canonicalLang)) {
+        push('warning', `Language recognized but not in allowlist: ${canonicalLang}`, idx);
+      }
+      idx += 1;
     }
-    const displayLangRaw = lines[idx].replace(/^Language:\s*/i, '').trim();
-    const canonicalLang = normalizeDisplayLang(displayLangRaw);
-    if (!canonicalLang) {
-      push('error', `Unrecognized language: ${displayLangRaw}`, idx);
-    } else if (!RECOGNIZED_LANGS.has(canonicalLang)) {
-      push('warning', `Language recognized but not in allowlist: ${canonicalLang}`, idx);
-    }
-    idx += 1;
 
     if (!lines[idx] || !/^File path:\s*/i.test(lines[idx])) {
       push('error', 'Missing "File path:" line', idx);
