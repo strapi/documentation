@@ -347,20 +347,27 @@ function validateSection(section, opts) {
       idx += 1;
     }
 
-    if (!lines[idx] || !/^File path:\s*/i.test(lines[idx])) {
-      push('error', 'Missing "File path:" line', idx);
-      break;
+    // Accept either "File path:" or legacy "File:"; treat missing as N/A without error
+    let filePathValue = null;
+    if (lines[idx] && /^File path:\s*/i.test(lines[idx])) {
+      filePathValue = lines[idx].replace(/^File path:\s*/i, '').trim();
+      idx += 1;
+    } else if (lines[idx] && /^File:\s*/i.test(lines[idx])) {
+      filePathValue = lines[idx].replace(/^File:\s*/i, '').trim();
+      idx += 1;
+    } else {
+      filePathValue = 'N/A';
     }
-    const filePathValue = lines[idx].replace(/^File path:\s*/i, '').trim();
     if (!filePathValue) {
-      push('error', '"File path:" is empty', idx);
-    } else if (checkFiles) {
+      // Treat empty as N/A
+      filePathValue = 'N/A';
+    }
+    if (checkFiles && filePathValue && filePathValue !== 'N/A') {
       const exists = fileExistsMaybe(projectRoot, filePathValue);
       if (!exists) {
         push('error', `Referenced file does not exist: ${filePathValue}`, idx);
       }
     }
-    idx += 1;
 
     while (idx < lines.length && lines[idx].trim() === '') idx += 1;
 
