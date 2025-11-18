@@ -322,7 +322,12 @@ class DocusaurusLlmsCodeGenerator {
         console.log(`Skipped code generation for ${skipped.length} files. Use --verbose for a more detailed output.`);
       }
 
-      // Optional: write skip log if requested
+      // Auto-enable log file when verbose and no logFile provided
+      if (this.verbose && !this.logFile) {
+        this.logFile = path.join('static', 'llms-code-skip.log');
+      }
+
+      // Optional: write skip log if requested (or auto in verbose)
       if (this.logFile) {
         const content = [
           `Skipped files: ${skipped.length}`,
@@ -332,9 +337,7 @@ class DocusaurusLlmsCodeGenerator {
         try {
           await fs.ensureDir(path.dirname(this.logFile));
           await fs.writeFile(this.logFile, content, 'utf-8');
-          if (this.verbose) {
-            console.log(`📝 Wrote skip log to ${this.logFile}`);
-          }
+          console.log(`📝 Wrote skip log to ${this.logFile}`);
         } catch (err) {
           console.warn(`⚠️  Failed to write skip log to ${this.logFile}: ${err.message}`);
         }
