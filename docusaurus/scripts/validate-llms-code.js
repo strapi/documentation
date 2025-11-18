@@ -38,7 +38,7 @@ const BASE_HOSTS = new Set([
 ]);
 
 const RECOGNIZED_LANGS = new Set([
-  'javascript', 'typescript', 'tsx', 'jsx',
+  'javascript', 'typescript', 'js', 'ts', 'tsx', 'jsx',
   'json', 'yaml', 'yml',
   'bash', 'sh', 'zsh', 'fish',
   'powershell', 'ps1',
@@ -47,6 +47,8 @@ const RECOGNIZED_LANGS = new Set([
 ]);
 
 const DISPLAY_LANG_MAP = new Map([
+  ['js', 'javascript'],
+  ['ts', 'typescript'],
   ['javascript', 'javascript'],
   ['typescript', 'typescript'],
   ['tsx', 'tsx'],
@@ -345,7 +347,8 @@ function validateSection(section, opts) {
       break;
     }
     const fenceLang = fenceStartMatch[1].toLowerCase();
-    if (canonicalLang && fenceLang !== canonicalLang) {
+    const fenceCanonical = normalizeDisplayLang(fenceLang) || fenceLang;
+    if (canonicalLang && fenceCanonical !== canonicalLang) {
       push('error', `Fence language "${fenceLang}" does not match declared Language "${displayLangRaw}"`, idx);
     }
     idx += 1;
@@ -433,4 +436,3 @@ function validateSection(section, opts) {
   console.error('Validator crashed:', e);
   process.exit(1);
 });
-
