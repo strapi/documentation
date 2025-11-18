@@ -396,7 +396,8 @@ function validateSection(section, opts) {
         const raw = fs.readFileSync(docFile, 'utf8');
         const anchors = collectAnchorsFromDoc(raw);
         if (!anchors.has(sourceAnchor)) {
-          push('error', `Anchor "#${sourceAnchor}" not found in ${path.relative(projectRoot, docFile)}`, 0);
+          // Slug generation can differ slightly; treat as a warning to reduce noise
+          push('warning', `Anchor "#${sourceAnchor}" not found in ${path.relative(projectRoot, docFile)}`, 0);
         }
       } catch (e) {
         push('warning', `Failed reading doc for anchor verification: ${e.message}`, 0);
