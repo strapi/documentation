@@ -454,6 +454,10 @@ All existing domains for your Strapi Cloud project are listed in the <Icon name=
 
 Default domain names are made of 2 randomly generated words followed by a hash. They can be replaced by any custom domain of your choice.
 
+:::note
+Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
+:::
+
 1. Click the **Connect new domain** button.
 2. In the window that opens, fill in the following fields:
 
@@ -470,14 +474,12 @@ Default domain names are made of 2 randomly generated words followed by a hash. 
 To finish setting up your custom domain, in the settings of your domain registar or hosting platform, please add the Target value (e.g., `proud-unicorn-123456af.strapiapp.com`) as a CNAME alias to the DNS records of your domain.
 :::
 
-:::caution Custom domains and assets
+:::info Custom domains and assets
 When using custom domains, these domains do not apply to the URLs of uploaded assets. Uploaded assets keep the Strapi Cloud project-based URL.
 
 This means that, if your custom domain is hosted at `https://my-custom-domain.com` and your Strapi Cloud project name is `my-strapi-cloud-instance`, API calls will still return URLs such as `https://my-strapi-cloud-instance.media.strapiapp.com/example.png`.
-:::
 
-:::note
-Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
+Media library queries over REST or GraphQL always return the project media domain on Strapi Cloud. If you move from a self-hosted project, where media URLs can match your own domain or CDN, plan to keep using the absolute URLs from the API or adjust your frontend to allow the Strapi Cloud media domain (see [Cloud Fundamentals](/cloud/cloud-fundamentals) for more details).
 :::
 
 ### Variables
