@@ -71,6 +71,10 @@ axios.get('https://example.com', { httpsAgent: agent });
 ```
 :::
 
+:::tip
+Strapi exposes a dedicated health check route to make uptime probes straightforward. Any request to `/_health` returns an empty response with a `204` status and a `strapi: You are so French!` response header, which is suitable for load balancers or monitoring tools that only need a simple liveness indicator.
+:::
+
 ## Configurations
 
 The `./config/server.js` minimal configuration requires the `host` and `port` parameters for development. Additional parameters can be included for a full configuration.
