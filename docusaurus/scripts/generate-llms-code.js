@@ -194,7 +194,12 @@ class DocusaurusLlmsCodeGenerator {
     };
     walk(root);
     const uniq = Array.from(new Set(results)).sort();
-    const filtered = uniq.filter((id) => {
+
+    // Restrict discovery to cms/ and cloud/ trees only
+    const allowedRoots = ['cms/', 'cloud/'];
+    const inAllowedRoots = uniq.filter((id) => allowedRoots.some((r) => id.startsWith(r)));
+
+    const filtered = inAllowedRoots.filter((id) => {
       if (this.includeFilters.length > 0 && !this.includeFilters.some((f) => id.includes(f))) return false;
       if (this.excludeFilters.length > 0 && this.excludeFilters.some((f) => id.includes(f))) return false;
       return true;
