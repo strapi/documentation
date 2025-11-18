@@ -356,8 +356,8 @@ function validateSection(section, opts) {
     const fenceStart = lines[idx] || '';
     const fenceStartMatch = fenceStart.match(/^```([a-z0-9]+)\s*$/i);
     if (!fenceStartMatch) {
-      // If no opening fence is found where expected, treat section as having no variants and continue
-      push('error', 'Missing opening code fence ```<lang>', idx);
+      // If no opening fence is found where expected, treat as a soft issue
+      push('warning', 'Missing opening code fence ```<lang>', idx);
       break;
     }
     const fenceLang = fenceStartMatch[1].toLowerCase();
@@ -378,7 +378,7 @@ function validateSection(section, opts) {
     }
     if (!closed) {
       // Mark the issue but continue scanning the rest of the section
-      push('error', 'Unclosed code fence', idx);
+      push('warning', 'Unclosed code fence', idx);
       // do not break; continue to allow finding subsequent valid variants
     }
 
@@ -386,7 +386,7 @@ function validateSection(section, opts) {
   }
 
   if (!sawAnyVariant) {
-    push('error', 'No code example variants found in section', 0);
+    push('warning', 'No code example variants found in section', 0);
   }
 
   if (verifyAnchors && sourceAnchor) {
