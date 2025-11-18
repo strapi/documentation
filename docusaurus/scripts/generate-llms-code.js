@@ -717,20 +717,32 @@ class DocusaurusLlmsCodeGenerator {
       const seenSlugs = new Map();
       snippetsBySection.forEach((sectionSnippets, sectionName) => {
         lines.push(`## ${sectionName}`);
+
+        // Section-level description: derive from the first meaningful snippet
+        const firstMeaningful = sectionSnippets.find((s) => !s.fallbackUsed && (s.description || '').trim()) || sectionSnippets[0];
+        const sectionDesc = (firstMeaningful && (firstMeaningful.description || '').trim())
+          ? firstMeaningful.description
+          : this.buildFallbackDescription(firstMeaningful || { section: sectionName, language: '' });
+        lines.push(`Description: ${sectionDesc}`);
+
+        // Section-level source line (wrapped in parentheses, with optional anchor)
         if (this.includeSectionAnchors) {
           const custom = page.sectionAnchors && page.sectionAnchors[sectionName];
           const anchor = custom || this.slugify(sectionName, seenSlugs);
-          lines.push(`Source: ${BASE_URL}/${page.docId}#${anchor}`);
+          lines.push(`(Source: ${BASE_URL}/${page.docId}#${anchor})`);
+        } else {
+          lines.push(`(Source: ${BASE_URL}/${page.docId})`);
         }
+
         lines.push('');
 
         const groups = this.groupVariantSnippets(sectionSnippets);
 
         groups.forEach((group, index) => {
           const primary = group.find((snippet) => !snippet.fallbackUsed) || group[0];
-          const description = primary.fallbackUsed
-            ? this.buildFallbackDescription(primary)
-            : primary.description;
+          const description = (primary.description && primary.description.trim())
+            ? primary.description
+            : this.buildFallbackDescription(primary);
 
           lines.push(`### Example ${index + 1}`);
           lines.push(`Description: ${description}`);
