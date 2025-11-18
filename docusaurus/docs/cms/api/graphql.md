@@ -457,7 +457,7 @@ Strapi ignores `null` values for `avg`, `sum`, `min`, and `max`. When aggregatin
 :::
 
 :::info Performance & limits
-Aggregations operate server-side, so they are generally faster than downloading and processing large result sets on the client. However, complex `groupBy` trees and wide projections can still be expensive. Use filters to restrict the data set and consider setting up `depthLimit` and `amountLimit` values accordingly (see [#available-options](#available-options)) to protect your API. Errors such as `You are not allowed to perform this action` usually mean the requester lacks the `Read` permission on the target collection.
+Aggregations operate server-side, so they are generally faster than downloading and processing large result sets on the client. However, complex `groupBy` trees and wide projections can still be expensive. Use filters to restrict the data set and consider setting up `depthLimit` and `amountLimit` values accordingly (see [available options](/cms/plugins/graphql#available-options)) to protect your API. Errors such as `You are not allowed to perform this action` usually mean the requester lacks the `Read` permission on the target collection.
 :::
 
 ### Aggregate multiple metrics in one request
