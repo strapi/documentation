@@ -40,10 +40,10 @@ const BASE_HOSTS = new Set([
 const RECOGNIZED_LANGS = new Set([
   'javascript', 'typescript', 'js', 'ts', 'tsx', 'jsx',
   'json', 'yaml', 'yml',
-  'bash', 'sh', 'zsh', 'fish',
+  'bash', 'zsh', 'fish', 'sh',
   'powershell', 'ps1',
   'sql', 'dockerfile',
-  'toml', 'ini', 'env', 'diff',
+  'toml', 'ini', 'env', 'dotenv', 'diff', 'text', 'html', 'graphql',
 ]);
 
 const DISPLAY_LANG_MAP = new Map([
@@ -58,7 +58,14 @@ const DISPLAY_LANG_MAP = new Map([
   ['yml', 'yml'],
   ['bash', 'bash'],
   ['shell', 'bash'],
-  ['sh', 'sh'],
+  ['sh', 'bash'],
+  ['dotenv', 'env'],
+  ['text', 'text'],
+  ['plain', 'text'],
+  ['txt', 'text'],
+  ['html', 'html'],
+  ['graphql', 'graphql'],
+  ['gql', 'graphql'],
   ['zsh', 'zsh'],
   ['fish', 'fish'],
   ['powershell', 'powershell'],
