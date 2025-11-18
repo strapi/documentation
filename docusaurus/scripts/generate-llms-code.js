@@ -91,6 +91,9 @@ const parseArgs = () => {
   let anchors = false;
   let checkFiles = false;
   let projectRoot = process.cwd();
+  let allDocs = false;
+  let includeFilters = [];
+  let excludeFilters = [];
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -120,6 +123,16 @@ const parseArgs = () => {
       if (value) {
         projectRoot = value;
       }
+    } else if (arg === '--all') {
+      allDocs = true;
+    } else if (arg === '--include') {
+      const value = args[i + 1];
+      i += 1;
+      if (value) includeFilters = value.split(',').map((s) => s.trim()).filter(Boolean);
+    } else if (arg === '--exclude') {
+      const value = args[i + 1];
+      i += 1;
+      if (value) excludeFilters = value.split(',').map((s) => s.trim()).filter(Boolean);
     } else {
       docs.push(arg);
     }
@@ -131,6 +144,9 @@ const parseArgs = () => {
     anchors,
     checkFiles,
     projectRoot,
+    allDocs,
+    includeFilters,
+    excludeFilters,
   };
 };
 
@@ -143,6 +159,42 @@ class DocusaurusLlmsCodeGenerator {
     this.includeSectionAnchors = Boolean(config.includeSectionAnchors);
     this.includeFileChecks = Boolean(config.includeFileChecks);
     this.projectRoot = config.projectRoot || process.cwd();
+    this.allDocs = Boolean(config.allDocs);
+    this.includeFilters = Array.isArray(config.includeFilters) ? config.includeFilters : [];
+    this.excludeFilters = Array.isArray(config.excludeFilters) ? config.excludeFilters : [];
+  }
+
+  // Recursively walk docs directory to find all .md/.mdx files and map to docIds
+  discoverAllDocIds() {
+    const root = this.docsDir;
+    const results = [];
+    const walk = (dir) => {
+      let entries = [];
+      try {
+        entries = fs.readdirSync(dir, { withFileTypes: true });
+      } catch (e) {
+        return;
+      }
+      for (const ent of entries) {
+        const full = path.join(dir, ent.name);
+        if (ent.isDirectory()) {
+          walk(full);
+        } else if (ent.isFile() && /\.mdx?$/i.test(ent.name)) {
+          let rel = path.relative(root, full).replace(/\\/g, '/');
+          rel = rel.replace(/\.(md|mdx)$/i, '');
+          rel = rel.replace(/\/(index)$/i, '');
+          if (rel) results.push(rel);
+        }
+      }
+    };
+    walk(root);
+    const uniq = Array.from(new Set(results)).sort();
+    const filtered = uniq.filter((id) => {
+      if (this.includeFilters.length > 0 && !this.includeFilters.some((f) => id.includes(f))) return false;
+      if (this.excludeFilters.length > 0 && this.excludeFilters.some((f) => id.includes(f))) return false;
+      return true;
+    });
+    return filtered;
   }
 
   normalizeTitlePath(value) {
@@ -188,7 +240,17 @@ class DocusaurusLlmsCodeGenerator {
 
       const pages = [];
 
-      for (const docId of this.docIds) {
+      // Decide which docIds to process
+      let docIds = this.docIds;
+      if (this.allDocs) {
+        const discovered = this.discoverAllDocIds();
+        if (discovered.length === 0) {
+          console.warn('⚠️  --all requested but no docs found under', this.docsDir);
+        }
+        docIds = discovered;
+      }
+
+      for (const docId of docIds) {
         const filePath = this.findDocFile(docId);
         if (!filePath) {
           console.warn(`⚠️  Unable to locate file for ${docId}`);
