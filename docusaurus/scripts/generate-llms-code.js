@@ -716,6 +716,16 @@ class DocusaurusLlmsCodeGenerator {
 
       const seenSlugs = new Map();
       snippetsBySection.forEach((sectionSnippets, sectionName) => {
+        // Build groups first and filter out empty variants
+        const groups = this.groupVariantSnippets(sectionSnippets)
+          .map((g) => g.filter((v) => v && v.code && String(v.code).trim()))
+          .filter((g) => g.length > 0);
+
+        // Skip sections that yield no valid variants
+        if (groups.length === 0) {
+          return;
+        }
+
         lines.push(`## ${sectionName}`);
 
         // Section-level description: derive from the first meaningful snippet
@@ -735,8 +745,6 @@ class DocusaurusLlmsCodeGenerator {
         }
 
         lines.push('');
-
-        const groups = this.groupVariantSnippets(sectionSnippets);
 
         groups.forEach((group) => {
           group.forEach((variant, variantIndex) => {
