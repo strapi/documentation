@@ -289,14 +289,16 @@ function validateSection(section, opts) {
 
   const sourceReParen = /^\(Source:\s*.+\)$/;
   const sourceReBare = /^Source:\s*.+$/;
-  if (!lines[idx] || !(sourceReParen.test(lines[idx]) || sourceReBare.test(lines[idx]))) {
-    push('error', 'Missing or malformed "(Source: ...)" line', idx);
-    return diagnostics;
+  let sourceUrl = null;
+  if (lines[idx] && (sourceReParen.test(lines[idx]) || sourceReBare.test(lines[idx]))) {
+    const sourceLine = lines[idx];
+    sourceUrl = sourceReParen.test(sourceLine)
+      ? sourceLine.replace(/^\(Source:\s*/i, '').replace(/\)\s*$/, '').trim()
+      : sourceLine.replace(/^Source:\s*/i, '').trim();
+  } else {
+    // Allow sections without an explicit Source line
+    // Skip URL parsing and anchor checks for such sections.
   }
-  const sourceLine = lines[idx];
-  const sourceUrl = sourceReParen.test(sourceLine)
-    ? sourceLine.replace(/^\(Source:\s*/i, '').replace(/\)\s*$/, '').trim()
-    : sourceLine.replace(/^Source:\s*/i, '').trim();
   if (!isAbsoluteHttpUrl(sourceUrl)) {
     push('error', 'Source is not an absolute URL', idx);
   } else {
@@ -312,8 +314,10 @@ function validateSection(section, opts) {
 
   let sourceAnchor = null;
   try {
-    const u = new URL(sourceUrl);
-    sourceAnchor = u.hash ? u.hash.replace(/^#/, '') : null;
+    if (sourceUrl) {
+      const u = new URL(sourceUrl);
+      sourceAnchor = u.hash ? u.hash.replace(/^#/, '') : null;
+    }
   } catch {}
   idx += 1;
 
