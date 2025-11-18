@@ -94,6 +94,7 @@ const parseArgs = () => {
   let allDocs = false;
   let includeFilters = [];
   let excludeFilters = [];
+  let lineNumbers = false;
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -133,6 +134,8 @@ const parseArgs = () => {
       const value = args[i + 1];
       i += 1;
       if (value) excludeFilters = value.split(',').map((s) => s.trim()).filter(Boolean);
+    } else if (arg === '--line-numbers') {
+      lineNumbers = true;
     } else {
       docs.push(arg);
     }
@@ -147,6 +150,7 @@ const parseArgs = () => {
     allDocs,
     includeFilters,
     excludeFilters,
+    lineNumbers,
   };
 };
 
@@ -162,6 +166,7 @@ class DocusaurusLlmsCodeGenerator {
     this.allDocs = Boolean(config.allDocs);
     this.includeFilters = Array.isArray(config.includeFilters) ? config.includeFilters : [];
     this.excludeFilters = Array.isArray(config.excludeFilters) ? config.excludeFilters : [];
+    this.includeLineNumbers = Boolean(config.lineNumbers);
   }
 
   // Recursively walk docs directory to find all .md/.mdx files and map to docIds
@@ -525,8 +530,9 @@ class DocusaurusLlmsCodeGenerator {
     let codeLines = [];
 
     const lines = content.split('\n');
+    let openingFenceIndex = null; // 0-based index of opening fence line
 
-    lines.forEach((line) => {
+    lines.forEach((line, i) => {
       const trimmed = line.trim();
 
       if (trimmed.startsWith('```')) {
@@ -536,6 +542,7 @@ class DocusaurusLlmsCodeGenerator {
           inCode = true;
           codeLines = [];
           codeLanguage = language || '';
+          openingFenceIndex = i; // 0-based index of the fence line
 
           const { description, useCase, fallbackUsed } = this.extractContextDescription(
             contextBuffer,
@@ -556,12 +563,17 @@ class DocusaurusLlmsCodeGenerator {
             tabLabel: currentTabLabel,
             tabValue: currentTabValue,
             context: [...contextBuffer],
+            // Record 1-based code line start (first line after opening fence)
+            startLine: (i + 2),
+            endLine: null,
           });
         } else {
           inCode = false;
           if (snippets.length > 0) {
             const current = snippets[snippets.length - 1];
             current.code = codeLines.join('\n').trimEnd();
+            // Record 1-based code line end (line before closing fence)
+            current.endLine = i; // because closing fence is i+1 (1-based), so code end is i
             if (!current.filePath) {
               const titleAttr = this.normalizeTitlePath(current.options?.title);
               if (titleAttr) {
@@ -575,6 +587,7 @@ class DocusaurusLlmsCodeGenerator {
           }
           codeLines = [];
           codeLanguage = '';
+          openingFenceIndex = null;
         }
         return;
       }
@@ -727,6 +740,9 @@ class DocusaurusLlmsCodeGenerator {
             const suffix = this.includeFileChecks && !this.fileExists(primaryFile) ? ' (missing)' : '';
             lines.push(`File: ${primaryFile}${suffix}`);
           }
+          if (this.includeLineNumbers && primary.startLine && primary.endLine) {
+            lines.push(`Lines: ${primary.startLine}-${primary.endLine}`);
+          }
 
           if (primary.useCase) {
             lines.push(`Use Case: ${primary.useCase}`);
@@ -752,6 +768,9 @@ class DocusaurusLlmsCodeGenerator {
             if (resolvedFile && resolvedFile !== primaryFile) {
               const suffix = this.includeFileChecks && !this.fileExists(resolvedFile) ? ' (missing)' : '';
               lines.push(`File: ${resolvedFile}${suffix}`);
+            }
+            if (this.includeLineNumbers && variant.startLine && variant.endLine) {
+              lines.push(`Lines: ${variant.startLine}-${variant.endLine}`);
             }
 
             // Visual separation before the code fence to avoid accidental inline rendering
