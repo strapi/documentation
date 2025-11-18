@@ -273,7 +273,16 @@ function validateSection(section, opts) {
 
   const descIdx = lines[idx] && /^Description:\s*/i.test(lines[idx]) ? idx : -1;
   if (descIdx === -1) {
-    push('error', 'Missing "Description:" line', idx);
+    // Only require Description when the section actually includes code variants.
+    // Look ahead for any "Language:" before the next section.
+    let hasVariantsAhead = false;
+    for (let j = idx; j < lines.length; j += 1) {
+      if (lines[j].startsWith('## ')) break;
+      if (/^Language:\s*/i.test(lines[j])) { hasVariantsAhead = true; break; }
+    }
+    if (hasVariantsAhead) {
+      push('error', 'Missing "Description:" line', idx);
+    }
     return diagnostics;
   }
   const desc = lines[descIdx].replace(/^Description:\s*/i, '').trim();
@@ -356,8 +365,7 @@ function validateSection(section, opts) {
     const fenceStart = lines[idx] || '';
     const fenceStartMatch = fenceStart.match(/^```([a-z0-9]+)\s*$/i);
     if (!fenceStartMatch) {
-      // If no opening fence is found where expected, treat as a soft issue
-      push('warning', 'Missing opening code fence ```<lang>', idx);
+      // Skip emitting a warning for prose-only or malformed blocks; just stop variants parsing.
       break;
     }
     const fenceLang = fenceStartMatch[1].toLowerCase();
@@ -377,17 +385,13 @@ function validateSection(section, opts) {
       idx += 1;
     }
     if (!closed) {
-      // Mark the issue but continue scanning the rest of the section
-      push('warning', 'Unclosed code fence', idx);
-      // do not break; continue to allow finding subsequent valid variants
+      // Do not warn; continue to allow finding subsequent valid variants
     }
 
     sawAnyVariant = true;
   }
 
-  if (!sawAnyVariant) {
-    push('warning', 'No code example variants found in section', 0);
-  }
+  // If no variants were found, treat section as prose-only without emitting a warning.
 
   if (verifyAnchors && sourceAnchor) {
     const docFile = findDocFileForUrl(sourceUrl, projectRoot);
