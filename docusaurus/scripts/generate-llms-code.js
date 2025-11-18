@@ -95,6 +95,7 @@ const parseArgs = () => {
   let includeFilters = [];
   let excludeFilters = [];
   let lineNumbers = false;
+  let verbose = false;
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -136,6 +137,8 @@ const parseArgs = () => {
       if (value) excludeFilters = value.split(',').map((s) => s.trim()).filter(Boolean);
     } else if (arg === '--line-numbers') {
       lineNumbers = true;
+    } else if (arg === '--verbose') {
+      verbose = true;
     } else {
       docs.push(arg);
     }
@@ -151,6 +154,7 @@ const parseArgs = () => {
     includeFilters,
     excludeFilters,
     lineNumbers,
+    verbose,
   };
 };
 
@@ -167,6 +171,7 @@ class DocusaurusLlmsCodeGenerator {
     this.includeFilters = Array.isArray(config.includeFilters) ? config.includeFilters : [];
     this.excludeFilters = Array.isArray(config.excludeFilters) ? config.excludeFilters : [];
     this.includeLineNumbers = Boolean(config.lineNumbers);
+    this.verbose = Boolean(config.verbose);
   }
 
   // Recursively walk docs directory to find all .md/.mdx files and map to docIds
@@ -260,6 +265,8 @@ class DocusaurusLlmsCodeGenerator {
         docIds = discovered;
       }
 
+      const skipped = [];
+
       for (const docId of docIds) {
         const filePath = this.findDocFile(docId);
         if (!filePath) {
@@ -275,7 +282,11 @@ class DocusaurusLlmsCodeGenerator {
         const sectionAnchors = extracted.sectionAnchors || {};
 
         if (snippets.length === 0) {
-          console.warn(`ℹ️  Skipping ${docId}: no code snippets found.`);
+          if (this.verbose) {
+            console.warn(`ℹ️  Skipping ${docId}: no code snippets found.`);
+          } else {
+            skipped.push(docId);
+          }
           continue;
         }
 
@@ -299,6 +310,10 @@ class DocusaurusLlmsCodeGenerator {
       await fs.writeFile(this.outputPath, output, 'utf-8');
 
       console.log(`✅ Wrote ${this.outputPath}`);
+
+      if (skipped.length > 0 && !this.verbose) {
+        console.log(`Skipped code generation for ${skipped.length} files. Use --verbose for a more detailed output.`);
+      }
     } catch (error) {
       console.error('❌ Error while generating llms-code:', error);
       throw error;
