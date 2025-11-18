@@ -356,6 +356,7 @@ function validateSection(section, opts) {
     const fenceStart = lines[idx] || '';
     const fenceStartMatch = fenceStart.match(/^```([a-z0-9]+)\s*$/i);
     if (!fenceStartMatch) {
+      // If no opening fence is found where expected, treat section as having no variants and continue
       push('error', 'Missing opening code fence ```<lang>', idx);
       break;
     }
@@ -376,8 +377,9 @@ function validateSection(section, opts) {
       idx += 1;
     }
     if (!closed) {
+      // Mark the issue but continue scanning the rest of the section
       push('error', 'Unclosed code fence', idx);
-      break;
+      // do not break; continue to allow finding subsequent valid variants
     }
 
     sawAnyVariant = true;

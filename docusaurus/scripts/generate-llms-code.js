@@ -740,6 +740,10 @@ class DocusaurusLlmsCodeGenerator {
 
         groups.forEach((group) => {
           group.forEach((variant, variantIndex) => {
+            // Skip variants with no code to avoid emitting metadata without fences
+            if (!variant.code || !String(variant.code).trim()) {
+              return;
+            }
             if (variantIndex > 0) {
               lines.push('---');
             }
