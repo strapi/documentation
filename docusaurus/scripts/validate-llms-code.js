@@ -276,21 +276,14 @@ function validateSection(section, opts) {
     // Do not enforce Description at the section level; proceed without error/warning.
     // (Section descriptions are encouraged but optional.)
   } else {
-    const desc = lines[descIdx].replace(/^Description:\s*/i, '').trim();
-    if (!desc) {
+    const descText = lines[descIdx].replace(/^Description:\s*/i, '').trim();
+    if (!descText) {
       push('warning', '"Description:" is empty', descIdx);
-    } else if (/^(tbd|todo|n\/a|1|none)$/i.test(desc)) {
+    } else if (/^(tbd|todo|n\/a|1|none)$/i.test(descText)) {
       push('warning', 'Description appears placeholder-like', descIdx);
     }
     idx = descIdx + 1;
   }
-  const desc = lines[descIdx].replace(/^Description:\s*/i, '').trim();
-  if (!desc) {
-    push('error', '"Description:" is empty', descIdx);
-  } else if (/^(tbd|todo|n\/a|1|none)$/i.test(desc)) {
-    push('warning', 'Description appears placeholder-like', descIdx);
-  }
-  idx = descIdx + 1;
 
   while (idx < lines.length && lines[idx].trim() === '') idx += 1;
 
