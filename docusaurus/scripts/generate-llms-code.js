@@ -738,65 +738,36 @@ class DocusaurusLlmsCodeGenerator {
 
         const groups = this.groupVariantSnippets(sectionSnippets);
 
-        groups.forEach((group, index) => {
-          const primary = group.find((snippet) => !snippet.fallbackUsed) || group[0];
-          const description = (primary.description && primary.description.trim())
-            ? primary.description
-            : this.buildFallbackDescription(primary);
-
-          lines.push(`### Example ${index + 1}`);
-          lines.push(`Description: ${description}`);
-
-          const primaryFile = this.normalizeOutputPath(primary.filePath || this.inferFilePathFromContext(primary.context));
-          if (primaryFile) {
-            const suffix = this.includeFileChecks && !this.fileExists(primaryFile) ? ' (missing)' : '';
-            lines.push(`File: ${primaryFile}${suffix}`);
-          }
-          if (this.includeLineNumbers && primary.startLine && primary.endLine) {
-            lines.push(`Lines: ${primary.startLine}-${primary.endLine}`);
-          }
-
-          if (primary.useCase) {
-            lines.push(`Use Case: ${primary.useCase}`);
-          }
-
-          lines.push('');
-
+        groups.forEach((group) => {
           group.forEach((variant, variantIndex) => {
             if (variantIndex > 0) {
               lines.push('---');
             }
 
             const resolvedFile = this.normalizeOutputPath(
-              variant.filePath || this.inferFilePathFromContext(variant.context) || primaryFile
+              variant.filePath || this.inferFilePathFromContext(variant.context)
             );
 
             const chosenLang = this.resolveLanguage(variant.language, resolvedFile, variant.code);
             const language = chosenLang
               ? `Language: ${this.formatLanguageName(chosenLang)}`
-              : 'Language: (unspecified)';
+              : 'Language: JavaScript';
             lines.push(language);
 
-            if (resolvedFile && resolvedFile !== primaryFile) {
-              const suffix = this.includeFileChecks && !this.fileExists(resolvedFile) ? ' (missing)' : '';
-              lines.push(`File: ${resolvedFile}${suffix}`);
-            }
+            const fileSuffix = (this.includeFileChecks && resolvedFile && !this.fileExists(resolvedFile)) ? ' (missing)' : '';
+            lines.push(`File path: ${resolvedFile || 'N/A'}${fileSuffix}`);
             if (this.includeLineNumbers && variant.startLine && variant.endLine) {
               lines.push(`Lines: ${variant.startLine}-${variant.endLine}`);
             }
 
-            // Visual separation before the code fence to avoid accidental inline rendering
             lines.push('');
 
-            // Proper fenced code block without spurious leading newlines
-            const fence = chosenLang ? `\`\`\`${chosenLang}` : '```';
+            const fence = chosenLang ? '```' + chosenLang : '```';
             lines.push(fence);
             lines.push(variant.code);
             lines.push('```');
             lines.push('');
           });
-
-          lines.push('');
         });
 
         lines.push('');
