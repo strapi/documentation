@@ -287,12 +287,16 @@ function validateSection(section, opts) {
 
   while (idx < lines.length && lines[idx].trim() === '') idx += 1;
 
-  if (!lines[idx] || !/^\(Source:\s*.+\)$/.test(lines[idx])) {
+  const sourceReParen = /^\(Source:\s*.+\)$/;
+  const sourceReBare = /^Source:\s*.+$/;
+  if (!lines[idx] || !(sourceReParen.test(lines[idx]) || sourceReBare.test(lines[idx]))) {
     push('error', 'Missing or malformed "(Source: ...)" line', idx);
     return diagnostics;
   }
   const sourceLine = lines[idx];
-  const sourceUrl = sourceLine.replace(/^\(Source:\s*/i, '').replace(/\)\s*$/, '').trim();
+  const sourceUrl = sourceReParen.test(sourceLine)
+    ? sourceLine.replace(/^\(Source:\s*/i, '').replace(/\)\s*$/, '').trim()
+    : sourceLine.replace(/^Source:\s*/i, '').trim();
   if (!isAbsoluteHttpUrl(sourceUrl)) {
     push('error', 'Source is not an absolute URL', idx);
   } else {
