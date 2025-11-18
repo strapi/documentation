@@ -173,7 +173,13 @@ function findDocFileForUrl(sourceUrl, projectRoot) {
   for (const root of candidatesRoots) {
     for (const suf of suffixes) {
       const attempt = path.join(root, pathname + suf);
-      if (fs.existsSync(attempt)) return attempt;
+      try {
+        if (!fs.existsSync(attempt)) continue;
+        const st = fs.statSync(attempt);
+        if (st.isFile()) return attempt; // only accept files, not directories
+      } catch {
+        // ignore stat errors and keep searching
+      }
     }
   }
   return null;
