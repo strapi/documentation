@@ -862,13 +862,28 @@ class DocusaurusLlmsCodeGenerator {
 }
 
 if (require.main === module) {
-  const { docs, output, anchors, checkFiles, projectRoot } = parseArgs();
+  const {
+    docs,
+    output,
+    anchors,
+    checkFiles,
+    projectRoot,
+    allDocs,
+    includeFilters,
+    excludeFilters,
+    lineNumbers,
+  } = parseArgs();
+
   const generator = new DocusaurusLlmsCodeGenerator({
     docIds: docs,
     outputPath: output,
     includeSectionAnchors: anchors,
     includeFileChecks: checkFiles,
     projectRoot,
+    allDocs,
+    includeFilters,
+    excludeFilters,
+    lineNumbers,
   });
 
   generator.generate().catch((error) => {
