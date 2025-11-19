@@ -20,6 +20,14 @@ export const aiToolsConfig = {
       url: '/llms.txt',
     },
     {
+      id: 'view-llms-code',
+      label: 'View LLMs-code.txt',
+      description: 'Code examples extracted for AI models',
+      icon: 'file-code',
+      actionType: 'navigate',
+      url: '/llms-code.txt',
+    },
+    {
       id: 'view-llms-full',
       label: 'View LLMs-full.txt',
       description: 'Complete documentation for AI models',

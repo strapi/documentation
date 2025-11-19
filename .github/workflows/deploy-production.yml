@@ -30,12 +30,18 @@ jobs:
       
       - name: 🤖 Generate LLMs files
         working-directory: ./docusaurus
-        run: node scripts/generate-llms.js
+        run: npm run generate-llms
+
+      - name: 🤖 Generate LLMs code file
+        working-directory: ./docusaurus
+        run: |
+          node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt
+          node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root ..
       
       - name: 🔍 Check for changes
         id: check-changes
         run: |
-          if git diff --quiet HEAD -- docusaurus/static/llms*.txt; then
+          if git diff --quiet HEAD -- docusaurus/static/llms.txt docusaurus/static/llms-full.txt docusaurus/static/llms-code.txt; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "🔄 No changes in LLMs files"
           else
@@ -48,7 +54,7 @@ jobs:
         run: |
           git config --local user.email "noreply@github.com"
           git config --local user.name "GitHub Actions"
-          git add docusaurus/static/llms*.txt
+          git add docusaurus/static/llms.txt docusaurus/static/llms-full.txt docusaurus/static/llms-code.txt
           git commit -m "🤖 Update LLMs files [skip ci]"
           git push
 
