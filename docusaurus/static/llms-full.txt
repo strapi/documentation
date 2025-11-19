@@ -4233,7 +4233,7 @@ You can also use the longhand syntax to [reorder relations](#relations-reorderin
 `connect` can be used in combination with [`disconnect`](#disconnect).
 
 :::caution
-`connect` can not be used for media attributes
+`connect` is not officially supported for media attributes. Advanced users can technically connect media entries by targeting upload file IDs, but this workaround isn't recommended or supported by Strapi and can easily break (e.g. when Draft & Publish uses mismatched IDs). Proceed with caution.
 :::
 
 </MultiLanguageSwitcher>
