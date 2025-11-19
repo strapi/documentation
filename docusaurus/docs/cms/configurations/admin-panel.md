@@ -118,6 +118,61 @@ export default ({ env }) => ({
 </TabItem>
 </Tabs>
 
+### Trust additional hosts during development
+
+When you run `strapi develop`, the admin panel is served through a Vite development server that Strapi boots in [middleware mode](https://vite.dev/config/server-options#server-middlewaremode) and proxies through the Koa app. By default, Vite validates the `Host` header against a small set of safe values. Requests that do not match are rejected with an "Invalid Host" response, which prevents you from previewing the admin panel when it is reached through a tunnel, reverse proxy, or custom domain. Strapi exposes Vite's [`server.allowedHosts`](https://vite.dev/config/server-options.html#server-allowedhosts) option so that you can extend that allowlist when necessary.
+
+#### How Strapi loads custom Vite configuration
+
+During development Strapi builds a base Vite configuration, then tries to load a user-supplied config from `./src/admin/vite.config.{js,ts,mjs}`. If the file exports a function it is invoked with the base configuration and Strapi uses the returned value. The project templates ship with an example file that simply merges a custom alias into the provided configuration, which is a good starting point for your own overrides.
+
+#### Allow additional hosts
+
+Create `./src/admin/vite.config.ts` (or `.js`) if it does not already exist and extend the dev-server configuration. The following example snippet adds 2 custom domains while keeping the rest of Strapi's defaults untouched:
+
+<Tabs groupId="js-ts">
+
+<TabItem label="JavaScript" value="js">
+
+```js title="src/admin/vite.config.js"
+import { mergeConfig } from 'vite';
+
+export default (config) => {
+  return mergeConfig(config, {
+    server: {
+      allowedHosts: ['preview.my-app.test', '.example-proxy.internal'],
+    },
+  });
+};
+```
+
+</TabItem>
+
+<TabItem label="TypeScript" value="ts">
+
+```ts title="src/admin/vite.config.ts"
+import { mergeConfig, type UserConfig } from 'vite';
+
+export default (config: UserConfig) => {
+  return mergeConfig(config, {
+    server: {
+      allowedHosts: ['preview.my-app.test', '.example-proxy.internal'],
+    },
+  });
+};
+```
+
+</TabItem>
+</Tabs>
+
+A few tips while configuring `allowedHosts`:
+
+- Pass a string array or `'all'`, matching Vite's accepted shapes.
+- Leading dots (`.example.com`) allow any subdomain.
+- Combine this option with Strapi's existing `hmr.clientPort` setting when accessing the admin panel through tunnels that rewrite ports.
+
+After saving the file, restart `strapi develop`. Vite will now trust requests whose `Host` header matches the entries you provided, so proxied or tunneled URLs will load without triggering host validation errors.
+
 ### Deploy on different servers {#deploy-on-different-servers}
 
 Unless you chose to deploy Strapi's back-end server and admin panel server on different servers, by default:
