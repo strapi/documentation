@@ -10326,111 +10326,103 @@ Source: https://docs.strapi.io/cms/plugins-development/guides/admin-permissions-
 
 # How to create admin permissions from plugins
 
-When [developing a Strapi plugin](/cms/plugins-development/developing-plugins), you might want to create reusable components for your plugin. Components in Strapi are reusable data structures that can be used across different content-types.
+When [developing a Strapi plugin](/cms/plugins-development/developing-plugins), you might want to create admin permissions for your plugin. By doing that you can hook in to the [RBAC system](/cms/features/rbac) of Strapi to selectively grant permissions to certain pieces of your plugin.
 
-To create components for your Strapi plugin, you'll need to follow a similar approach to creating content-types, but with some specific differences.
+To create admin permissions for your Strapi plugin, you'll need to register them on the server side before implementing them on the admin side.
 
 ## Register the permissions server side
 
-```
-// Register permission actions.
-const actions = [
-  {
-    section: 'plugins',
-    displayName: 'Access the overview page',
-    uid: 'settings.overview',
-    pluginName: 'webtools',
-  },
-  {
-    section: 'plugins',
-    displayName: 'Access the URL alias list',
-    uid: 'settings.list',
-    pluginName: 'webtools',
-  },
-  {
-    section: 'plugins',
-    displayName: 'Access the URL alias patterns',
-    uid: 'settings.patterns',
-    pluginName: 'webtools',
-  },
-  {
-    section: 'plugins',
-    displayName: 'Access the URL alias sidebar',
-    uid: 'edit-view.sidebar',
-    pluginName: 'webtools',
-  },
-];
+Each individual permission has to registered in the bootstrap function of your plugin, as follows:
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-(strapi.admin.services.permission.actionProvider.registerMany as (a: any) => void)(actions);
+</Tabs>
+
+## Implement permissions on the admin panel side
+
+Before we can implement our permissions on the admin panel side we have to define them in a reusable configuration file. This file can be stored anywhere in your plugin admin code. You can do that as follows:
+
+```js title="/src/plugins/my-plugin/admin/src/permissions.js|ts"
+const pluginPermissions = {
+  'accessOverview': [{ action: 'plugin::my-plugin.overview.access', subject: null }],
+  'accessSidebar': [{ action: 'plugin::my-plugin.sidebar.access', subject: null }],
+};
+
 ```
 
-## Creating components
+### Page permissions
 
-You can create components for your plugins in 2 different ways: using the Content-Type Builder (recommended way) or manually.
+Once you've created the configuration file you are ready to implement your permissions. If you've bootstrapped your plugin using the [plugin SDK init command](/cms/plugins-development/plugin-sdk#npx-strapisdk-plugin-init), you will have an example `HomePage.tsx` file. To implement page permissions you can do the following:
 
-### Using the Content-Type Builder 
+```js title="/src/plugins/my-plugin/admin/src/pages/HomePage.jsx|tsx" {2,5,12,16}
 
-The recommended way to create components for your plugin is through the Content-Type Builder in the admin panel. 
-The [Content-Type Builder documentation](/cms/features/content-type-builder#new-component) provides more details on this process.
+const HomePage = () => {
+  const { formatMessage } = useIntl();
 
-### Creating components manually
+  return (
+    
+    </Page.Protect>
+  );
+};
 
-If you prefer to create components manually, you'll need to:
+```
 
-1. Create a component schema in your plugin's structure.
-2. Make sure the component is properly registered.
+You can see how we use our permissions configuration file together with the `<Page.Protect>` component to require specific permissions in order to view this page.
 
-Components for plugins should be placed in the appropriate directory within your plugin structure. You would typically create them within the server part of your plugin (see [plugin structure documentation](/cms/plugins-development/plugin-structure)).
+### Menu link permissions
 
-For more detailed information about components in Strapi, you can refer to the [Model attributes documentation](/cms/backend-customization/models#components-json).
+The previous example makes sure that the permissions of a user that visits your page directly will be validated. However, you might want to remove the menu link to that page as well. To do that, you'll have to make a change to the `addMenuLink` implementation. You can do as follows:
 
-## Reviewing the component structure
+```js title="/src/plugins/my-plugin/admin/src/index.js|ts" {21-23,5}
 
-Components in Strapi follow the following format in their definition:
+  register(app) {
+    app.addMenuLink({
+      to: `plugins/${PluginIcon}`,
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${PLUGIN_ID}.plugin.name`,
+        defaultMessage: PLUGIN_ID,
+      },
+      Component: async () => {
+        const { App } = await import('./pages/App');
 
-```javascript title="/my-plugin/server/components/category/component-name.json"
-{
-  "attributes": {
-    "myComponent": {
-      "type": "component",
-      "repeatable": true,
-      "component": "category.componentName"
-    }
+        return App;
+      },
+      permissions: [
+        pluginPermissions.accessOverview[0],
+      ],
+    });
+
+    app.registerPlugin({
+      id: PLUGIN_ID,
+      initializer: Initializer,
+      isReady: false,
+      name: PLUGIN_ID,
+    });
+  },
+};
+
+```
+
+### Custom permissions with the `useRBAC` hook
+
+To get even more control over the permission of the admin user you can use the `useRBAC` hook. With this hook you can use the permissions validation just like you want, as in the following example:
+
+```js title="/src/plugins/my-plugin/admin/src/components/Sidebar.jsx|tsx" 
+
+const Sidebar = () => {
+  const {
+    allowedActions: { canAccessSidebar },
+  } = useRBAC(pluginPermissions);
+
+  if (!canAccessSidebar) {
+    return null;
   }
-}
+
+  return (
+    <div>Sidebar component</div>
+  );
+};
+
 ```
-
-## Making components visible in the admin panel
-
-To ensure your plugin's components are visible in the admin panel, you need to set the appropriate `pluginOptions` in your component schema:
-
-```javascript {9-16}
-{
-  "kind": "collectionType",
-  "collectionName": "my_plugin_components",
-  "info": {
-    "singularName": "my-plugin-component",
-    "pluralName": "my-plugin-components",
-    "displayName": "My Plugin Component"
-  },
-  "pluginOptions": {
-    "content-manager": {
-      "visible": true
-    },
-    "content-type-builder": {
-      "visible": true
-    }
-  },
-  "attributes": {
-    "name": {
-      "type": "string"
-    }
-  }
-}
-```
-
-This configuration ensures your components will be visible and editable in both the Content-Type Builder and Content Manager.
 
 
 
