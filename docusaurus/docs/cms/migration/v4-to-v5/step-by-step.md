@@ -99,7 +99,7 @@ For each of them, read the indicated breaking change entry and check if some man
 
 Strapi 5 has updated both the REST and GraphQL APIs.
 
-Follow the steps below and leverage retro-compatibility flags and guided migration resources to gradually update your code for Strapi 5.
+Follow the steps below and leverage retro-compatibility headers and guided migration resources to gradually update your code for Strapi 5.
 
 ### Migrate REST API calls
 
@@ -116,4 +116,4 @@ Follow the steps below and leverage retro-compatibility flags and guided migrati
 1. Enable the compatibility header by setting `v4CompatibilityMode` to `true` in the `graphql` plugin configuration, so clients can continue to rely on `data.attributes` while you refactor them.
 2. Follow each step of the [breaking change entry for GraphQL](/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated). This will guide you to swap `id` for `documentId`, adopt `_connection` queries, remove `attributes`, and finally switch to `nodes/pageInfo`.
 3. Test Relay and non-Relay queries by confirming that pagination metadata still matches expectations when you remove `_connection` and `data` for clients that do not need Relay semantics.
-4. Disable the `v4CompatibilityMode` compatibility header: after every query and mutation works with the flattened schema, set the flag to `false` so the server emits the Strapi 5 format by default.
+4. Disable the `v4CompatibilityMode` compatibility header: after every query and mutation works with the flattened schema, set the header to `false` so the server emits the Strapi 5 format by default.
