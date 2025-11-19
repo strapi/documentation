@@ -194,27 +194,27 @@ Proper implementation largely depends on your project's needs and custom code, b
     };
   ```
 
-7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the methods (`create`, `read`, `update`, `delete`) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET (i.e., `read` method) and POST (i.e., `create` method) requests to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` method) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
+7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the action keys (`find`, `findOne`, `create`, `update`, `delete`, etc.) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET requests (mapping to the `find` and `findOne` actions) and POST requests (i.e., the `create` action) to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` action) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
 
-    ```js title="src/api/restaurant/routes/restaurant.js"
+  ```js title="src/api/restaurant/routes/restaurant.js"
 
-    /**
-     * restaurant router
-     */
+  /**
+   * restaurant router
+   */
       
-    const { createCoreRouter } = require("@strapi/strapi").factories;
+  const { createCoreRouter } = require("@strapi/strapi").factories;
 
-    module.exports = createCoreRouter("api::restaurant.restaurant", {
-      config: {
-        update: {
-          middlewares: ["api::restaurant.is-owner"],
-        },
-        delete: {
-          middlewares: ["api::restaurant.is-owner"],
-        },
+  module.exports = createCoreRouter("api::restaurant.restaurant", {
+    config: {
+      update: {
+        middlewares: ["api::restaurant.is-owner"],
       },
-    });
-    ```
+      delete: {
+        middlewares: ["api::restaurant.is-owner"],
+      },
+    },
+  });
+  ```
 
 :::info
 You can find more information about route middlewares in the [routes documentation](/cms/backend-customization/routes).
