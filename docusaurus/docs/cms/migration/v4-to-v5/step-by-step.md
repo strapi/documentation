@@ -103,7 +103,7 @@ Follow the steps below and leverage retro-compatibility headers and guided migra
 
 ### Migrate REST API calls
 
-1. Enable the compatibility header everywhere you still expect `attributes`, by adding `Strapi-Response-Format: v4` to REST calls in HTTP clients, SDKs, and middleware (see the [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/new-response-format#use-the-compatibility-header-while-migrating) for concrete examples).
+1. Enable the compatibility header everywhere you still expect `attributes`, by adding `Strapi-Response-Format: v4` to REST calls in HTTP clients, SDKs, and middleware (see the [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/new-response-format#migration) for concrete examples).
 2. While the header is on, audit existing payloads. Capture representative responses (including populated relations, components, and media) so you can verify that legacy consumers keep working during the transition.
 3. Update and test each client by:
     - removing `data.attributes` access,

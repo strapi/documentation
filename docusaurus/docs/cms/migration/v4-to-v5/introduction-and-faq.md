@@ -60,7 +60,7 @@ Strapi Cloud will deploy the updated code in Strapi 5 and will automatically run
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
 <summary style={{fontSize: '18px'}}>How do I keep the legacy <code>attributes</code> wrapper during the migration?</summary>
 
-- For REST clients, add the `Strapi-Response-Format: v4` header while you refactor your code. The [new response format breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format#use-the-compatibility-header-while-migrating) shows where to add the header in `curl`, `fetch`, and Axios requests.
+- For REST clients, add the `Strapi-Response-Format: v4` header while you refactor your code. The [new response format breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format#migration) shows where to add the header in `curl`, `fetch`, and Axios requests.
 - For GraphQL clients, enable `v4CompatibilityMode` and follow the steps of the [GraphQL API migration documentation](/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated#migration) to gradually remove `attributes`.
 - REST responses continue to expose both `id` (legacy) and [`documentId`](/cms/migration/v4-to-v5/breaking-changes/use-document-id) when the header is enabled. GraphQL never exposes numeric `id`, so update your queries to use `documentId` even before you turn compatibility mode off.
 
