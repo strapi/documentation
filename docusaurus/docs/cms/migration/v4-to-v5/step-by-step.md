@@ -103,14 +103,17 @@ Follow the steps below and leverage retro-compatibility flags and guided migrati
 
 ### Migrate REST API calls
 
-1. Enable the retro-compatibility flag by setting the `Strapi-Response-Format: v4` header.
-2. Update your queries & mutations only, guided by the dedicated [breaking change entry for REST API](/cms/migration/v4-to-v5/breaking-changes/new-response-format).
-3. Validate that your client is running correctly.
-4. Disable the retro-compatibiliy flag by removing the `Strapi-Response-Format: v4` header and start using the new response format.
+1. Enable the compatibility header everywhere you still expect `attributes`, by adding `Strapi-Response-Format: v4` to REST calls in HTTP clients, SDKs, and middleware (see the [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/new-response-format#use-the-compatibility-header-while-migrating) for concrete examples).
+2. While the header is on, audit existing payloads. Capture representative responses (including populated relations, components, and media) so you can verify that legacy consumers keep working during the transition.
+3. Update and test each client by:
+    - removing `data.attributes` access,
+    - switching to the flattened payload,
+    - and adopting [`documentId`](/cms/migration/v4-to-v5/breaking-changes/use-document-id) wherever the REST API was previously returning numeric `id` only.
+4. Disable the compatibility header per endpoint or consumer: once tests pass for a given client, remove `Strapi-Response-Format: v4` from its requests. Repeat until no consumer depends on the legacy wrapper.
 
 ### Migrate GraphQL API calls
 
-1. Enable the retro-compatibility flag by setting `v4CompatibilityMode` to `true` in the `graphql.config` object of [the `/config/plugins.js|ts` file](/cms/plugins/graphql#code-based-configuration).
-2. Update your queries and mutations only, guided by the dedicated [breaking change entry for GraphQL](/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated).
-3. Validate that your client is running correctly.
-4. Disable the retro-compatibily flag by setting `v4CompatibilityMode` to `false` and start using the new response format.
+1. Enable the compatibility header by setting `v4CompatibilityMode` to `true` in the `graphql` plugin configuration, so clients can continue to rely on `data.attributes` while you refactor them.
+2. Follow each step of the [breaking change entry for GraphQL](/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated). This will guide you to swap `id` for `documentId`, adopt `_connection` queries, remove `attributes`, and finally switch to `nodes/pageInfo`.
+3. Test Relay and non-Relay queries by confirming that pagination metadata still matches expectations when you remove `_connection` and `data` for clients that do not need Relay semantics.
+4. Disable the `v4CompatibilityMode` compatibility header: after every query and mutation works with the flattened schema, set the flag to `false` so the server emits the Strapi 5 format by default.
