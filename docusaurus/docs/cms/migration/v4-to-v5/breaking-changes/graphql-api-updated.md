@@ -175,6 +175,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
 
    ```graphql
    {
+     # collection fields can be renamed to _connection to get a v4 compat response
      restaurants_connection {
        data {
          id
@@ -188,6 +189,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
                }
              }
            }
+           # collection fields can be renamed to _connection to get a v4 compat response
            images_connection {
              data {
                id
@@ -204,6 +206,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
                }
              }
            }
+           # collection fields can be renamed to _connection to get a v4 compat response
            xToManyRelation_connection {
              data {
                id
@@ -228,6 +231,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
 
    ```graphql
    {
+     # collection fields can be renamed to _connection to get a v4 compat response
      restaurants_connection {
        data {
          id
@@ -238,6 +242,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
              url
            }
          }
+         # collection fields can be renamed to _connection to get a v4 compat response
          images_connection {
            data {
              id
@@ -250,6 +255,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
              field
            }
          }
+         # collection fields can be renamed to _connection to get a v4 compat response
          xToManyRelation_connection {
            data {
              id
@@ -271,6 +277,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
 
    ```graphql
    {
+     # Rename data to nodes & meta.pagination to pageInfo
      restaurants_connection {
        nodes {
          id
@@ -306,6 +313,7 @@ To gradually convert to the new GraphQL API format, follow these steps:
 
    ```graphql
    {
+     # remove _connection & data if you don't need pagination att all
      restaurants {
        id
        title
