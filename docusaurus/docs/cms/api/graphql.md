@@ -425,6 +425,119 @@ query Query($status: PublicationStatus) {
 }
 ```
 
+## Aggregations
+
+Aggregations can be used to compute metrics such as counts, sums, or grouped totals without fetching every document individually. Aggregations are exposed through <ExternalLink to="https://www.apollographql.com/docs/technotes/TN0029-relay-style-connections/" text="Relay-style"/> connection queries: every collection type includes an `aggregate` field under its `<plural>_connection` query.
+
+```graphql title="Example: Total restaurants matching a filter"
+{
+  restaurants_connection(filters: { categories: { documentId: { eq: "food-trucks" } } }) {
+    aggregate {
+      count
+    }
+  }
+}
+```
+
+Aggregations follow the same filters, locale, publication status, and permissions as the parent query. For example, setting `locale: "fr"` or `status: DRAFT` on the connection limits the aggregation to those documents, and users can only aggregate content they are allowed to read.
+
+The table below lists all supported aggregation operators:
+
+| Operator | Description | Supported field types |
+| --- | --- | --- |
+| `count` | Returns the number of documents that match the query. | All content-types |
+| `avg` | Computes the arithmetic mean per numeric field. | Number, integer, decimal |
+| `sum` | Computes the total per numeric field. | Number, integer, decimal |
+| `min` | Returns the smallest value per field. | Number, integer, decimal, date, datetime |
+| `max` | Returns the largest value per field. | Number, integer, decimal, date, datetime |
+| `groupBy` | Buckets results by unique values and exposes nested aggregations for each bucket. | Scalar fields (string, number, boolean, date, datetime), relations |
+
+:::note
+Strapi ignores `null` values for `avg`, `sum`, `min`, and `max`. When aggregating relations, the operators run on the target documents and still respect their locales and permissions.
+:::
+
+:::info Performance & limits
+Aggregations operate server-side, so they are generally faster than downloading and processing large result sets on the client. However, complex `groupBy` trees and wide projections can still be expensive. Use filters to restrict the data set and consider setting up `depthLimit` and `amountLimit` values accordingly (see [available options](/cms/plugins/graphql#available-options)) to protect your API. Errors such as `You are not allowed to perform this action` usually mean the requester lacks the `Read` permission on the target collection.
+:::
+
+### Aggregate multiple metrics in one request
+
+Aggregations can be combined so that one network round trip returns several metrics:
+
+```graphql title="Example: Average delivery time and minimum price"
+{
+  restaurants_connection(filters: { takeAway: { eq: true } }) {
+    aggregate {
+      avg {
+        delivery_time
+      }
+      min {
+        price_range
+      }
+      max {
+        price_range
+      }
+    }
+  }
+}
+```
+
+### Group results
+
+Use `groupBy` to derive grouped metrics while optionally chaining further aggregations inside each group. Each group exposes the unique `key` and a nested connection that can be used for drilling down or counting the grouped items:
+
+```graphql title="Example: Count restaurants per category"
+{
+  restaurants_connection {
+    aggregate {
+      groupBy {
+        categories {
+          key
+          connection {
+            aggregate {
+              count
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Groups inherit the top-level filters. To further refine a specific group, apply filters on the nested `connection`.
+
+### Combine with pagination and sorting
+
+Aggregations run on the entire result set that matches the query filters, not only on the current page. When a request includes pagination arguments and aggregations, the documents in `nodes` follow the pagination limits, but the values inside `aggregate` ignore `pageSize` or `limit` so they describe the whole set. You can still add sorting to order the documents returned with the aggregation results.
+
+```graphql title="Example: Paginate takeaway restaurants and count all matches"
+{
+  restaurants_connection(
+    filters: { takeAway: { eq: true } }
+    pagination: { page: 2, pageSize: 5 }
+    sort: "name:asc"
+  ) {
+    nodes {
+      documentId
+      name
+      rating
+    }
+    pageInfo {
+      page
+      pageSize
+      total
+    }
+    aggregate {
+      count
+      avg {
+        rating
+      }
+    }
+  }
+}
+```
+
 ## Mutations
 
 Mutations in GraphQL are used to modify data (e.g. create, update, and delete data).
