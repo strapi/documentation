@@ -8582,6 +8582,10 @@ The Role-Based Access Control (RBAC) feature allows the management of the admini
 
 4. Click on the **Save** button on the top right corner.
 
+:::tip
+To create admin permissions for your custom plugin, please refer to our [dedicated guide](/cms/plugins-development/guides/admin-permissions-for-plugins).
+:::
+
 #### Setting custom conditions for permissions
 
 For each permission of each category, a 
