@@ -27,6 +27,84 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+## 6.11.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add "Open with… [LLM]" buttons](https://github.com/strapi/documentation/pull/2794)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Add security configuration documentation for Media Library](https://github.com/strapi/documentation/pull/2790)
+- [Add information &  configuration example in Email feature page](https://github.com/strapi/documentation/pull/2801)
+- [Add information on controllers & routes](https://github.com/strapi/documentation/pull/2797)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### Repository
+- [Include `<Tldr>` components content in `llms.txt`](https://github.com/strapi/documentation/pull/2803)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/araksyagevorgyan" target="_blank">
+   <img className="no-zoom" src="https://avatars.githubusercontent.com/u/31159659?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="araksyagevorgyan"/>
+</a>  
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
+## 6.10.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [More clarity and precisions on multi relations support](https://github.com/strapi/documentation/pull/2796)
+- [AI-powered i18n](https://github.com/strapi/documentation/pull/2773)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix outdated example in Understanding populate guide](https://github.com/strapi/documentation/pull/2798)
+- [Add tip about older `npx create-strapi-app@latest` installation command](https://github.com/strapi/documentation/pull/2795)
+
+#### Repository
+- [Disable Kapa widget feedback](https://github.com/strapi/documentation/pull/2793)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 
 ## 6.10.0
 

@@ -772,56 +772,54 @@ Notice that we now have the `restaurants` relation field included with the respo
     {
       "id": 1,
       "documentId": "iy5ifm3xj8q0t8vlq6l23h",
-      "attributes": {
-        "title": "Here's why you have to try basque cuisine, according to a basque chef",
-        "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
-        "createdAt": "2021-11-09T13:33:19.948Z",
-        "updatedAt": "2023-06-02T10:57:19.584Z",
-        "publishedAt": "2022-09-22T09:30:00.208Z",
-        "locale": "en",
-        "ckeditor_content": "…", // truncated content
-        "category": {
-          "data": {
-            "id": 4,
-            "name": "European",
-            "slug": "european",
-            "createdAt": "2021-11-09T13:33:20.123Z",
-            "updatedAt": "2021-11-09T13:33:20.123Z",
-            "restaurants": {
-              "data": [
-                {
-                  "id": 1,
-                  "documentId": "ozlqrdxpnjb7wtvf6lp74v",
-                  "name": "Mint Lounge",
-                  "slug": "mint-lounge",
-                  "price": "p3",
-                  "createdAt": "2021-11-09T14:07:47.125Z",
-                  "updatedAt": "2021-11-23T16:41:30.504Z",
-                  "publishedAt": "2021-11-23T16:41:30.501Z",
-                  "locale": "en"
-                },
-                {
-                  "id": 9,
-                  // truncated content
-                },
-                {
-                  "id": 10,
-                  // truncated content
-                },
-                {
-                  "id": 12,
-                  // truncated content
-                },
-                {
-                  "id": 21,
-                  // truncated content
-                },
-                {
-                  "id": 26,
-                  // truncated content
-                }
-              ]
-            }
+      "title": "Here's why you have to try basque cuisine, according to a basque chef",
+      "slug": "here-s-why-you-have-to-try-basque-cuisine-according-to-a-basque-chef",
+      "createdAt": "2021-11-09T13:33:19.948Z",
+      "updatedAt": "2023-06-02T10:57:19.584Z",
+      "publishedAt": "2022-09-22T09:30:00.208Z",
+      "locale": "en",
+      "ckeditor_content": "…", // truncated content
+      "category": {
+        "data": {
+          "id": 4,
+          "name": "European",
+          "slug": "european",
+          "createdAt": "2021-11-09T13:33:20.123Z",
+          "updatedAt": "2021-11-09T13:33:20.123Z",
+          "restaurants": {
+            "data": [
+              {
+                "id": 1,
+                "documentId": "ozlqrdxpnjb7wtvf6lp74v",
+                "name": "Mint Lounge",
+                "slug": "mint-lounge",
+                "price": "p3",
+                "createdAt": "2021-11-09T14:07:47.125Z",
+                "updatedAt": "2021-11-23T16:41:30.504Z",
+                "publishedAt": "2021-11-23T16:41:30.501Z",
+                "locale": "en"
+              },
+              {
+                "id": 9,
+                // truncated content
+              },
+              {
+                "id": 10,
+                // truncated content
+              },
+              {
+                "id": 12,
+                // truncated content
+              },
+              {
+                "id": 21,
+                // truncated content
+              },
+              {
+                "id": 26,
+                // truncated content
+              }
+            ]
           }
         }
       }

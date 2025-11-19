@@ -104,6 +104,10 @@ While it's possible to use an external database with Strapi Cloud, you should do
 - Strapi can't provide security or support with external databases used with Strapi Cloud.
 :::
 
+:::warning
+Any environment variable added to your project that starts with `DATABASE_` will cause Strapi Cloud to assume that you will be using an external database and all Strapi Cloud specific database variables will not be injected!
+:::
+
 ## Configuration
 
 The project `./config/database.js` or `./config/database.ts` file must match the configuration found in the [environment variables in database configurations](https://docs.strapi.io/cms/configurations/database#environment-variables-in-database-configurations) section.
@@ -949,7 +953,7 @@ The project name is set at project creation (see [Project creation](/cloud/getti
 
 #### Adding a CMS license key {#adding-cms-license-key}
 
-A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the  for more information and/or to purchase a license.
+A CMS license key can be added and connected to a Strapi Cloud project to unlock additional Strapi CMS features across all of the project’s environments. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the  for more information and/or to purchase a license.
 
 :::note
 If you don't see the *Strapi CMS license key* section, it probably means that your subscription is a legacy one and does not support custom CMS licenses. It means that you already have one that is automatically included on your project.
@@ -957,9 +961,13 @@ If you don't see the *Strapi CMS license key* section, it probably means that yo
 
 1. In the *Strapi CMS license key* section, click on the **Add license** button.
 2. In the dialog, paste your license key in the field.
-3. Click on **Save**.
+3. Click on the **Save & deploy** button for the changes to take effect.
 
 To remove the Strapi CMS license from your Strapi Cloud project, you can click on the **Unlink license** button. This will also remove access and usage to the CMS features included in the previously added license.
+
+:::note
+The license key is applied to all the environments in the project.
+:::
 
 #### Modifying git repository & branch
 
@@ -1159,8 +1167,11 @@ The environment's Node version is based on the one chosen at the creation of the
 
 1. In the *Basic information* section of the  *Configuration* tab, click on the *Node version*'s edit  button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
-3. Click on the **Save** button.
-4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
+3. Click on **Save**, or **Save & deploy** if you want the changes to take effect immediately. 
+
+:::tip
+Ensure the Node version configured in your Strapi project matches the Node version shown in your project’s dashboard before deploying.
+:::
 
 #### Editing Git branch
 
@@ -4176,13 +4187,17 @@ Defining relations between content-types (that are designated as entities in the
 
 Relations between content-types can be managed through the [admin panel](/cms/features/content-manager#relational-fields) or through [REST API](/cms/api/rest) or [Document Service API](/cms/api/document-service) requests.
 
-Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request:
+Relations can be connected, disconnected or set through the Content API by passing parameters in the body of the request. These payloads work for both single-entry relations and multi relations (one-to-many, many-to-one, many-to-many, and many-way). When a relational field allows multiple links, the API expects arrays of relation IDs and returns arrays in responses.
 
 |  Parameter name         | Description | Type of update |
 |-------------------------|-------------|----------------|
 | [`connect`](#connect)   | Connects new entities.<br /><br />Can be used in combination with `disconnect`.<br /><br />Can be used with [positional arguments](#relations-reordering) to define an order for relations.    | Partial |
 | [`disconnect`](#disconnect)    | Disconnects entities.<br /><br />Can be used in combination with `connect`. | Partial |
 | [`set`](#set)           | Set entities to a specific set. Using `set` will overwrite all existing connections to other entities.<br /><br />Cannot be used in combination with `connect` or `disconnect`.  | Full |
+
+:::note
+Multi relations can be managed from the REST API and the [GraphQL API](/cms/api/graphql#fetch-relations): the  `connect`, `disconnect`, and `set` operations are available across both APIs. However, the [Document Service API](/cms/api/document-service) does not handle relations.
+:::
 
 :::note
 When [Internationalization (i18n)](/cms/features/internationalization) is enabled on the content-type, you can also pass a locale to set relations for a specific locale, as in this Document Service API example:
@@ -4718,6 +4733,37 @@ When a new [content-type](/cms/backend-customization/models#content-types) is cr
 :::tip 
 To see a possible advanced usage for custom controllers, read the [services and controllers](/cms/backend-customization/examples/services-and-controllers) page of the backend customization examples cookbook.
 :::
+
+### Controllers & Routes: How routes reach controller actions
+
+- Core mapping is automatic: when you generate a content-type, Strapi creates the matching controller and a router file that already targets the standard actions (`find`, `findOne`, `create`, `update`, and `delete`). Overriding any of these actions inside the generated controller does not require touching the router — the route keeps the same handler string and executes your updated logic.
+- Adding a route should only be done for new actions or paths. If you introduce a brand-new method such as `exampleAction`, create or update a route entry whose `handler` points to the action so HTTP requests can reach it. Use the fully-qualified handler syntax `<scope>::<api-or-plugin-name>.<controllerName>.<actionName>` (e.g. `api::restaurant.restaurant.exampleAction` for an API controller or `plugin::menus.menu.exampleAction` for a plugin controller).
+- Regarding controller and route filenames: the default controller name comes from the filename inside `./src/api/[api-name]/controllers/`. Core routers created with `createCoreRouter` adopt the same name, so the generated handler string matches automatically. Custom routers can follow any file naming scheme, as long as the `handler` string references an exported controller action.
+
+The example below adds a new controller action and exposes it through a custom route without duplicating the existing CRUD route definitions:
+
+```js title="./src/api/restaurant/controllers/restaurant.js"
+const { createCoreController } = require('@strapi/strapi').factories;
+
+module.exports = createCoreController('api::restaurant.restaurant', ({ strapi }) => ({
+  async exampleAction(ctx) {
+    const specials = await strapi.service('api::restaurant.restaurant').find({ filters: { isSpecial: true } });
+    return this.transformResponse(specials.results);
+  },
+}));
+```
+
+```js title="./src/api/restaurant/routes/01-custom-restaurant.js"
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/restaurants/specials',
+      handler: 'api::restaurant.restaurant.exampleAction',
+    },
+  ],
+};
+```
 
 ### Sanitization and Validation in controllers  {#sanitization-and-validation-in-controllers}
 
@@ -5640,6 +5686,10 @@ Requests sent to Strapi on any URL are handled by routes. By default, Strapi gen
 
 Once a route exists, reaching it executes some code handled by a controller (see [controllers documentation](/cms/backend-customization/controllers)). To view all existing routes and their hierarchal order, you can run `yarn strapi routes:list` (see [CLI reference](/cms/cli)).
 
+:::tip
+If you only customize the default controller actions (`find`, `findOne`, `create`, `update`, or `delete`) that Strapi generates for a content-type, you can leave the router as-is. Those core routes already target the same handler names and will run your new controller logic. Add or edit a route only when you need a brand-new HTTP path/method or want to expose a custom controller action.
+:::
+
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes highlighted" />
   <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with routes highlighted. The backend customization introduction page includes a complete, <a href="/cms/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
@@ -5692,7 +5742,7 @@ Creating custom routers consists in creating a file that exports an array of obj
 | -------------------------- | -------------------------------------------------------------------------------- | -------- |
 | `method`                   | Method associated to the route (i.e. `GET`, `POST`, `PUT`, `DELETE` or `PATCH`)  | `String` |
 | `path`                     | Path to reach, starting with a forward-leading slash (e.g. `/articles`)| `String` |
-| `handler`                  | Function to execute when the route is reached.<br/>Should follow this syntax: `<controllerName>.<actionName>` | `String` |
+| `handler`                  | Function to execute when the route is reached.<br/>Use the fully-qualified syntax `api::api-name.controllerName.actionName` (or `plugin::plugin-name.controllerName.actionName`). The short `<controllerName>.<actionName>` form for legacy projects also works. | `String` |
 | `config`<br /><br />_Optional_ | Configuration to handle [policies](#policies), [middlewares](#middlewares) and [public availability](#public-routes) for the route<br/><br/>           | `Object` |
 
 <br/>
@@ -7481,6 +7531,10 @@ If you are developing a `TypeScript`-based project you must provide the `distDir
 For more information, consult the [TypeScript documentation](/cms/typescript/development#use-the-createstrapi-factory).
 :::
 
+:::tip Health check endpoint
+Strapi exposes a lightweight health check route at `/_health` for uptime monitors and load balancers. When the server is ready, it responds with an HTTP `204 No Content` status and a `strapi: You are so French!` header value, which you can use to confirm the application is reachable.
+:::
+
 ### Advanced configurations
 
 If you want to host the administration on another server than the API, [please take a look at this dedicated section](/cms/configurations/admin-panel#deploy-on-different-servers).
@@ -7939,6 +7993,10 @@ There are 6 different types of relations:
 - <img width="25" src="/img/assets/icons/v5/ctb_relation_manytomany.svg" /> Many-to-many: Content-type A *has and belongs to many* Content-type B
 - <img width="25" src="/img/assets/icons/v5/ctb_relation_manyway.svg" /> Many way: Content-type A *has many* Content-type B
 
+:::info Multi relations and single relations
+Relations where at least one side can reference several entries are called multi relations. In the Content-type Builder, this includes one-to-many, many-to-one, many-to-many, and many-way relations. These relations appear as multi-select fields in the Content Manager and return arrays from the REST, GraphQL, and Document Service APIs; while single relations (one-way and one-to-one relations) return a single linked entry (see [Managing relations with API requests](/cms/api/rest/relations) for more information).
+:::
+
 </Tabs>
 
 #### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean {#boolean}
@@ -8214,6 +8272,13 @@ The Email feature enables Strapi applications to send emails from a server or an
 
 Most configuration options for the Email feature are handled via your Strapi project's code. The Email feature is not configurable in the admin panel, however users can test email delivery if it has been setup by an administrator.
 
+:::info Provider vs. Host
+- The email provider refers to the package that Strapi calls to send an email (e.g. official providers such as Sendgrid or community packages such as `@strapi/provider-email-nodemailer`). Providers implement the logic for sending mail when Strapi invokes them.
+- The provider host (or server) refers to the connection details (e.g. an SMTP hostname, port, or REST API endpoint) that the provider exposes. Some providers hide these details behind an API key, while others require you to supply host-related options in your configuration.
+
+The Email feature only handles outbound delivery. Receiving or parsing incoming messages is outside the scope of the built-in plugin and must be implemented with your email provider's inbound webhooks or a custom integration.
+:::
+
 ### Admin panel settings
 
 **Path to configure the feature:** 
@@ -8241,6 +8306,33 @@ Each provider will have different configuration settings available. Review the r
 When configuring your provider you might want to change the configuration based on the `NODE_ENV` environment variable or use environment specific credentials.
 
 You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` configuration file and it will be used to overwrite the default configuration.
+
+Some providers expose SMTP-style connection details instead of (or in addition to) an API key. Add those values in `providerOptions` so Strapi can reach the provider host. For instance, the community Nodemailer provider expects the host, port, and authentication credentials:
+
+```js title="/config/plugins.js"
+module.exports = ({ env }) => ({
+  email: {
+    config: {
+      provider: 'nodemailer',
+      providerOptions: {
+        host: env('SMTP_HOST'),
+        port: env.int('SMTP_PORT', 587),
+        secure: false, // Use `true` for port 465
+        auth: {
+          user: env('SMTP_USERNAME'),
+          pass: env('SMTP_PASSWORD'),
+        },
+      },
+      settings: {
+        defaultFrom: 'no-reply@example.com',
+        defaultReplyTo: 'support@example.com',
+      },
+    },
+  },
+});
+```
+
+If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
 ##### Creating providers
 
@@ -8312,6 +8404,10 @@ You may also need to adjust any upstream proxies, load balancers, or firewalls t
 </Tabs>
 
 In addition to the middleware configuration, you can pass the `sizeLimit`, which is an integer in bytes, in the [/config/plugins file](/cms/configurations/plugins):
+
+</Tabs>
+
+#### Security 
 
 </Tabs>
 

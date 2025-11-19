@@ -66,7 +66,7 @@ The project name is set at project creation (see [Project creation](/cloud/getti
 
 #### Adding a CMS license key {#adding-cms-license-key}
 
-A CMS license key can be added and connected to a Strapi Cloud project to be able to use some features of Strapi CMS. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the <ExternalLink text="Strapi Pricing page" to="https://strapi.io/pricing-self-hosted"/> for more information and/or to purchase a license.
+A CMS license key can be added and connected to a Strapi Cloud project to unlock additional Strapi CMS features across all of the project’s environments. The CMS features that will be accessible via the license key depend on the type of license that was purchased: please refer to the <ExternalLink text="Strapi Pricing page" to="https://strapi.io/pricing-self-hosted"/> for more information and/or to purchase a license.
 
 :::note
 If you don't see the *Strapi CMS license key* section, it probably means that your subscription is a legacy one and does not support custom CMS licenses. It means that you already have one that is automatically included on your project.
@@ -74,9 +74,13 @@ If you don't see the *Strapi CMS license key* section, it probably means that yo
 
 1. In the *Strapi CMS license key* section, click on the **Add license** button.
 2. In the dialog, paste your license key in the field.
-3. Click on **Save**.
+3. Click on the **Save & deploy** button for the changes to take effect.
 
 To remove the Strapi CMS license from your Strapi Cloud project, you can click on the **Unlink license** button. This will also remove access and usage to the CMS features included in the previously added license.
+
+:::note
+The license key is applied to all the environments in the project.
+:::
 
 #### Modifying git repository & branch
 
@@ -321,8 +325,11 @@ The environment's Node version is based on the one chosen at the creation of the
 
 1. In the *Basic information* section of the <Icon name="faders" /> *Configuration* tab, click on the *Node version*'s edit <Icon name="pencil-simple" /> button.
 2. Using the *Node version* drop-down in the dialog, click on the version of your choice.
-3. Click on the **Save** button.
-4. Trigger a new deployment in the environment for which you changed the Node version. If the deployment fails, it is because the Node version doesn't match the version of your Strapi project. You will have to switch to the other Node version and re-deploy your project again.
+3. Click on **Save**, or **Save & deploy** if you want the changes to take effect immediately. 
+
+:::tip
+Ensure the Node version configured in your Strapi project matches the Node version shown in your project’s dashboard before deploying.
+:::
 
 #### Editing Git branch
 

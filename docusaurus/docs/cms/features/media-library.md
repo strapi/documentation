@@ -111,6 +111,7 @@ When using the default upload provider, the following specific configuration opt
 | `providerOptions.localServer`        | Options that will be passed to <ExternalLink to="https://github.com/koajs/static" text="koa-static"/> upon which the Upload server is build (see [local server configuration](#local-server)) | Object  | -       |
 | `sizeLimit`                                  | Maximum file size in bytes (see [max file size](#max-file-size)) | Integer | `209715200`<br/><br/>(200 MB in bytes, i.e., 200 x 1024 x 1024 bytes) |
 | `breakpoints`             | Allows to override the breakpoints sizes at which responsive images are generated when the "Responsive friendly upload" option is set to `true` (see [responsive images](#responsive-images)) | Object | `{ large: 1000, medium: 750, small: 500 }` |
+| `security`             | Configures validation rules for uploaded files to enhance media security | Object | - |
 
 :::note
 The Upload request timeout is defined in the server options, not in the Upload plugin options, as it's not specific to the Upload plugin but is applied to the whole Strapi server instance (see [upload request timeout](#upload-request-timeout)).
@@ -145,6 +146,10 @@ module.exports = ({ env })=>({
         small: 500,
         xsmall: 64
       },
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
     },
   },
 });
@@ -170,6 +175,10 @@ export default () => ({
         medium: 750,
         small: 500,
         xsmall: 64
+      },
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
       },
     },
   },
@@ -310,6 +319,59 @@ export default {
   upload: {
     config: {
       sizeLimit: 250 * 1024 * 1024 // 256mb in bytes
+    }
+  }
+};
+```
+
+</TabItem>
+
+</Tabs>
+
+#### Security <NewBadge/>
+
+The Upload plugin validates files based on their actual MIME type rather than the declared file extension.
+Only files matching the defined security rules are uploaded.
+
+The `security` configuration provides 2 options: `allowedTypes` or `deniedTypes`, which let you control which file types can or cannot be uploaded.
+
+:::note
+You can use `allowedTypes` and `deniedTypes` separately or together to fine-tune which files are accepted. Files must match an allowed type and must not match any denied type. If you use a wildcard like `*` in `allowedTypes`, you can narrow down the validation by specifying exceptions in `deniedTypes`.
+:::
+
+You can provide them by creating or editing [the `/config/plugins` file](/cms/configurations/plugins). The following is an example of how to combine `allowedTypes` and `deniedTypes`:
+
+<Tabs groupId="js-ts">
+
+<TabItem value="javascript" label="JavaScript">
+
+```js title="/config/plugins.js"
+module.exports = {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
+    }
+  }
+};
+```
+
+</TabItem>
+
+<TabItem value="typescript" label="TypeScript">
+
+```js title="/config/plugins.ts"
+export default {
+  // ...
+  upload: {
+    config: {
+      security: {
+        allowedTypes: ['image/*', 'application/*'],
+        deniedTypes: ['application/x-sh', 'application/x-dosexec']
+      },
     }
   }
 };
