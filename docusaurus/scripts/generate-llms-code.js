@@ -88,6 +88,7 @@ const parseArgs = () => {
   const args = process.argv.slice(2);
   const docs = [];
   let output = DEFAULT_OUTPUT;
+  let docsDir = 'docs';
   let anchors = false;
   let checkFiles = false;
   let projectRoot = process.cwd();
@@ -115,6 +116,12 @@ const parseArgs = () => {
       }
     } else if (arg === '--anchors' || arg === '--with-anchors') {
       anchors = true;
+    } else if (arg === '--docs-dir') {
+      const value = args[i + 1];
+      i += 1;
+      if (value) {
+        docsDir = value;
+      }
     } else if (arg === '--help' || arg === '-h') {
       console.log('Usage: node generate-llms-code.js [--docs docA,docB] [--output path/to/file]');
       process.exit(0);
@@ -152,6 +159,7 @@ const parseArgs = () => {
   return {
     docs: docs.length > 0 ? docs : DEFAULT_DOCS,
     output,
+    docsDir,
     anchors,
     checkFiles,
     projectRoot,
@@ -166,7 +174,21 @@ const parseArgs = () => {
 
 class DocusaurusLlmsCodeGenerator {
   constructor(config = {}) {
+    // Start with provided or default docs dir
     this.docsDir = config.docsDir || 'docs';
+    // If the provided docsDir does not exist, attempt a smart fallback
+    try {
+      const exists = fs.pathExistsSync ? fs.pathExistsSync(this.docsDir) : fs.existsSync(this.docsDir);
+      if (!exists) {
+        const alt = path.join('docusaurus', 'docs');
+        const altExists = fs.pathExistsSync ? fs.pathExistsSync(alt) : fs.existsSync(alt);
+        if (altExists) {
+          this.docsDir = alt;
+        }
+      }
+    } catch (e) {
+      // ignore and keep default
+    }
     this.sidebarPath = config.sidebarPath || 'sidebars.js';
     this.outputPath = config.outputPath || DEFAULT_OUTPUT;
     this.docIds = config.docIds || DEFAULT_DOCS;
@@ -265,9 +287,23 @@ class DocusaurusLlmsCodeGenerator {
       // Decide which docIds to process
       let docIds = this.docIds;
       if (this.allDocs) {
-        const discovered = this.discoverAllDocIds();
+        let discovered = this.discoverAllDocIds();
         if (discovered.length === 0) {
           console.warn('⚠️  --all requested but no docs found under', this.docsDir);
+          // Try one more time with fallback if not already using it
+          const fallbackDir = this.docsDir === 'docs' ? path.join('docusaurus', 'docs') : 'docs';
+          try {
+            const exists = fs.pathExistsSync ? fs.pathExistsSync(fallbackDir) : fs.existsSync(fallbackDir);
+            if (exists) {
+              this.docsDir = fallbackDir;
+              discovered = this.discoverAllDocIds();
+            }
+          } catch (e) {
+            // ignore
+          }
+        }
+        if (discovered.length === 0) {
+          console.warn('⚠️  No docs discovered. Skipping code snippet extraction.');
         }
         docIds = discovered;
       }

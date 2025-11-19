@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "dev": "docusaurus start --port 8080 --no-open",
-    "build": "docusaurus build",
+    "dev": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root .. && docusaurus start --port 8080 --no-open",
+    "build": "yarn generate-llms && node scripts/llms/generate-llms-code.js --anchors --all --output static/llms-code.txt && node scripts/llms/validate-llms-code.js --path static/llms-code.txt --strict --verify-anchors --project-root .. && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
