@@ -393,6 +393,10 @@ Before going any further into this Strapi Cloud documentation, we recommend you 
 
 - **Support** <br/> The level of support provided by the Strapi Support team depends on the Strapi Cloud plan you subscribed for. The Free plan does not include access to support. The Essential and Pro plans include Basic support while the Scale plan includes Standard support. Please refer to the [dedicated support article](https://support.strapi.io/support/solutions/articles/67000680833-what-is-supported-by-the-strapi-team#Not-Supported) for all details regarding support levels.
 
+- **API access in Strapi Cloud vs self-hosted** <br/> The REST and GraphQL APIs behave the same on Strapi Cloud and on self-hosted servers. The only differences are the URLs:
+    - Base API domain: On Strapi Cloud, your API uses the domain of the environment (e.g. `https://<project>.strapiapp.com/api/...`), or your custom domain if you set one (see [Domains documentation](/cloud/projects/settings#domains)). A self-hosted project would use whatever domain you expose.
+    - Media Library URLs: Media fields in REST and GraphQL responses from Strapi Cloud always use the project media domain (e.g. `<project>.media.strapiapp.com`), even when you access the API through a custom domain. Self-hosted projects return URLs from the configured upload provider, so the domain can match your own site or CDN. When you move a project from self-hosted to Strapi Cloud, make sure your frontend reads the absolute URLs returned by the API or accepts the Strapi Cloud media domain.
+
 
 
 # Strapi Cloud - Dashboard deployment
@@ -1279,6 +1283,10 @@ All existing domains for your Strapi Cloud project are listed in the  *Domains* 
 
 Default domain names are made of 2 randomly generated words followed by a hash. They can be replaced by any custom domain of your choice.
 
+:::note
+Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
+:::
+
 1. Click the **Connect new domain** button.
 2. In the window that opens, fill in the following fields:
 
@@ -1300,11 +1308,7 @@ When using custom domains, these domains do not apply to the URLs of uploaded as
 
 This means that, if your custom domain is hosted at `https://my-custom-domain.com` and your Strapi Cloud project name is `my-strapi-cloud-instance`, API calls will still return URLs such as `https://my-strapi-cloud-instance.media.strapiapp.com/example.png`.
 
-Media library queries over REST or GraphQL always return the project media domain on Strapi Cloud. If you move from a self-hosted project, where media URLs can match your own domain or CDN, plan to keep using the absolute URLs from the API or adjust your frontend to allow the Strapi Cloud media domain (see [API access in Strapi Cloud](/cloud/cloud-fundamentals#api-access-in-strapi-cloud-vs-self-hosted) for more details).
-:::
-
-:::note
-Custom domains are not available on the Free plan. Downgrading to the Free plan will result in the application domain's being restored to the default one.
+Media library queries over REST or GraphQL always return the project media domain on Strapi Cloud. If you move from a self-hosted project, where media URLs can match your own domain or CDN, plan to keep using the absolute URLs from the API or adjust your frontend to allow the Strapi Cloud media domain (see [Cloud Fundamentals](/cloud/cloud-fundamentals) for more details).
 :::
 
 ### Variables
@@ -4968,27 +4972,27 @@ Proper implementation largely depends on your project's needs and custom code, b
     };
   ```
 
-7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the methods (`create`, `read`, `update`, `delete`) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET (i.e., `read` method) and POST (i.e., `create` method) requests to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` method) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
+7. Ensure the middleware is configured to apply on some routes. In the `config` object found in the `src/api/[your-api–name]/routes/[your-content-type-name].js` file, define the action keys (`find`, `findOne`, `create`, `update`, `delete`, etc.) for which you would like the middleware to apply, and declare the `isOwner` middleware for these routes.<br /><br />For instance, if you wish to allow GET requests (mapping to the `find` and `findOne` actions) and POST requests (i.e., the `create` action) to any user for the `restaurant` content-type in the `restaurant` API, but would like to restrict PUT (i.e., `update` action) and DELETE requests only to the user who created the entry, you could use the following code in the `src/api/restaurant/routes/restaurant.js` file:
 
-    ```js title="src/api/restaurant/routes/restaurant.js"
+  ```js title="src/api/restaurant/routes/restaurant.js"
 
-    /**
-     * restaurant router
-     */
+  /**
+   * restaurant router
+   */
       
-    const { createCoreRouter } = require("@strapi/strapi").factories;
+  const { createCoreRouter } = require("@strapi/strapi").factories;
 
-    module.exports = createCoreRouter("api::restaurant.restaurant", {
-      config: {
-        update: {
-          middlewares: ["api::restaurant.is-owner"],
-        },
-        delete: {
-          middlewares: ["api::restaurant.is-owner"],
-        },
+  module.exports = createCoreRouter("api::restaurant.restaurant", {
+    config: {
+      update: {
+        middlewares: ["api::restaurant.is-owner"],
       },
-    });
-    ```
+      delete: {
+        middlewares: ["api::restaurant.is-owner"],
+      },
+    },
+  });
+  ```
 
 :::info
 You can find more information about route middlewares in the [routes documentation](/cms/backend-customization/routes).
