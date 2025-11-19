@@ -32,5 +32,10 @@ docs/node_modules/**
 # LLMs.txt files and related
 llms*.txt
 **/llm*.txt
+
+# Allow the generated public files under static/ to be committed by CI
+!static/llms.txt
+!static/llms-full.txt
+!static/llms-code.txt
 pr-*.diff
 *-results.json
