@@ -27,6 +27,72 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+
+## 6.12.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add a guide about using RBAC from plugins](https://github.com/strapi/documentation/pull/2788)
+
+#### Repository
+- [LLMs-code.txt](https://github.com/strapi/documentation/pull/2819)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Update and add details & examples in GraphQL API migration guides](https://github.com/strapi/documentation/pull/2828)
+- [Expand caution callout for media asset relations](https://github.com/strapi/documentation/pull/2822)
+- [Aggregations section in GraphQL API documentation](https://github.com/strapi/documentation/pull/2810)
+
+#### Cloud
+- [Clarify differences between accessing API on self-hosted VS Cloud hosted app](https://github.com/strapi/documentation/pull/2818)
+
+#### Repository
+- [Add more information about `allowedHosts` for servers using Vite](https://github.com/strapi/documentation/pull/2813)
+- [Fix main content alignment "flash"](https://github.com/strapi/documentation/pull/2812)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix mistake in Middleware documentation](https://github.com/strapi/documentation/pull/2820)
+
+#### Cloud
+- [Save & deploy for Node version](https://github.com/strapi/documentation/pull/2808)
+
+#### Repository
+- [Mention `/_health` endpoint in server config. & deployment docs](https://github.com/strapi/documentation/pull/2816)
+- [Add warning for DATABASE_ environment variables](https://github.com/strapi/documentation/pull/2809)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/boazpoolman" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/9551934?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="boazpoolman"/>
+</a>
+<a href="https://github.com/derrickmehaffy" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/8593673?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="derrickmehaffy"/>
+</a>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/meganelacheny" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 ## 6.11.0
 
 <br />
