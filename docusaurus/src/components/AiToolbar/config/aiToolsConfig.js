@@ -12,20 +12,20 @@ export const aiToolsConfig = {
       actionType: 'copy-markdown',
     },
     {
-      id: 'view-llms-code',
-      label: 'View LLMs-code.txt',
-      description: 'Code examples extracted for AI models',
-      icon: 'file-code',
-      actionType: 'navigate',
-      url: '/llms-code.txt',
-    },
-    {
       id: 'view-llms',
       label: 'View LLMs.txt',
       description: 'Lightweight version for AI models',
       icon: 'file-text',
       actionType: 'navigate',
       url: '/llms.txt',
+    },
+    {
+      id: 'view-llms-code',
+      label: 'View LLMs-code.txt',
+      description: 'Code examples extracted for AI models',
+      icon: 'file-code',
+      actionType: 'navigate',
+      url: '/llms-code.txt',
     },
     {
       id: 'view-llms-full',
