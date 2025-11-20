@@ -95,7 +95,7 @@ module.exports = createCoreController('api::restaurant.restaurant', ({ strapi })
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./src/api/restaurant/controllers/restaurant.ts"
+```ts title="./src/api/restaurant/controllers/restaurant.ts"
 
 import { factories } from '@strapi/strapi';
 
