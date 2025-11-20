@@ -8,6 +8,19 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   --doc-sidebar-width: 280px;
 }
 
+/**
+ * Prevent CLS: reserve sidebar width at desktop
+ * In some builds the sidebar container gets a hashed class (e.g. .sidebar_xxx)
+ * so we defensively pin width/flex-basis for both canonical and hashed variants.
+ */
+@include medium-up {
+  .theme-doc-sidebar-container,
+  [class*='sidebar_'] {
+    width: var(--doc-sidebar-width);
+    flex: 0 0 var(--doc-sidebar-width);
+  }
+}
+
 .navbar-sidebar {
   --ifm-navbar-background-color: var(--strapi-neutral-0);
 
