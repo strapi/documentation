@@ -53,6 +53,8 @@ The Strapi docs include an integrated Kapa chatbot to help you explore topics an
 - Code‑block entry point: Hover any substantial code block and click Ask AI to ask for an explanation or adaptation of that snippet.
 - Deep thinking mode: For more thorough answers, enable Kapa’s deep thinking mode (slower, but better for multi‑step reasoning or complex refactors).
 
+For admin‑panel AI features and settings, see the Strapi AI section of the Admin panel configuration page: /cms/configurations/admin-panel#strapi-ai.
+
 :::info Privacy note
 When you copy or share documentation content with third‑party tools, ensure you handle data safely and follow your organization’s policies.
 :::
