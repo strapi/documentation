@@ -6002,11 +6002,13 @@ In addition to auth headers, sign webhook payloads and verify signatures serverâ
 - On receipt, recompute the HMAC and compare using a constantâ€‘time check
 - Reject if the signature is invalid or the timestamp is too old to mitigate replay
 
-Learn more: 
+Learn more:
+- 
 
 </Tabs>
 
-Additional external examples: <ul><li>
+Additional external examples:
+- 
 
 </Tabs>
 

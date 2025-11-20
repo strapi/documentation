@@ -14104,8 +14104,73 @@ export default {
 
 
 ## Securing your webhooks
-Description: You can configure these global headers by updating the file at ./config/server:
+Description: Here is a minimal Node.js middleware example (pseudo‑code) showing HMAC verification:
 (Source: https://docs.strapi.io/cms/backend-customization/webhooks#securing-your-webhooks)
+
+Language: JavaScript
+File path: /src/middlewares/verify-webhook.js
+
+```js
+const crypto = require("crypto");
+
+module.exports = (config, { strapi }) => {
+  const secret = process.env.WEBHOOK_SECRET;
+
+  return async (ctx, next) => {
+    const signature = ctx.get("X-Webhook-Signature");
+    const timestamp = ctx.get("X-Webhook-Timestamp");
+    if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
+
+    // Compute HMAC over raw body + timestamp
+    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(timestamp + "." + raw);
+    const expected = "sha256=" + hmac.digest("hex");
+
+    // Constant-time compare + basic replay protection
+    const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    const skew = Math.abs(Date.now() - Number(timestamp));
+    if (!ok or skew > 5 * 60 * 1000) {
+      return ctx.unauthorized("Invalid or expired signature");
+    }
+
+    await next();
+  };
+};
+```
+
+---
+Language: TypeScript
+File path: /src/middlewares/verify-webhook.ts
+
+```ts
+import crypto from "node:crypto"
+
+export default (config: unknown, { strapi }: any) => {
+  const secret = process.env.WEBHOOK_SECRET as string;
+
+  return async (ctx: any, next: any) => {
+    const signature = ctx.get("X-Webhook-Signature") as string;
+    const timestamp = ctx.get("X-Webhook-Timestamp") as string;
+    if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
+
+    // Compute HMAC over raw body + timestamp
+    const raw: string = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(`${timestamp}.${raw}`);
+    const expected = `sha256=${hmac.digest("hex")}`;
+
+    // Constant-time compare + basic replay protection
+    const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    const skew = Math.abs(Date.now() - Number(timestamp));
+    if (!ok || skew > 5 * 60 * 1000) {
+      return ctx.unauthorized("Invalid or expired signature");
+    }
+
+    await next();
+  };
+};
+```
 
 Language: JavaScript
 File path: ./config/server.js
@@ -14122,7 +14187,7 @@ module.exports = {
 
 ---
 Language: TypeScript
-File path: ./config.server.ts
+File path: ./config/server.ts
 
 ```ts
 export default {
