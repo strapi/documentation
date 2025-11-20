@@ -73,6 +73,101 @@ export default {
 Most of the time, webhooks make requests to public URLs, therefore it is possible that someone may find that URL and send it wrong information.
 
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
+
+:::tip Verify signatures
+In addition to auth headers, sign webhook payloads and verify signatures server‑side to prevent tampering and replay attacks.
+
+- Generate a shared secret and store it in environment variables
+- Have the sender compute an HMAC (e.g., SHA‑256) over the raw request body plus a timestamp
+- Send the signature (and timestamp) in headers (e.g., `X‑Webhook‑Signature`, `X‑Webhook‑Timestamp`)
+- On receipt, recompute the HMAC and compare using a constant‑time check
+- Reject if the signature is invalid or the timestamp is too old to mitigate replay
+
+Learn more:
+- <ExternalLink to="https://owasp.org/www-community/attacks/Replay_Attack" text="OWASP replay attacks" />,
+- <ExternalLink to="https://nodejs.org/api/crypto.html#class-hmac" text="Node.js HMAC" />.
+:::
+
+<details>
+<summary>Example: Verify HMAC signatures (Node.js)</summary>
+
+Here is a minimal Node.js middleware example (pseudo‑code) showing HMAC verification:
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/middlewares/verify-webhook.js"
+const crypto = require("crypto");
+
+module.exports = (config, { strapi }) => {
+  const secret = process.env.WEBHOOK_SECRET;
+
+  return async (ctx, next) => {
+    const signature = ctx.get("X-Webhook-Signature");
+    const timestamp = ctx.get("X-Webhook-Timestamp");
+    if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
+
+    // Compute HMAC over raw body + timestamp
+    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(timestamp + "." + raw);
+    const expected = "sha256=" + hmac.digest("hex");
+
+    // Constant-time compare + basic replay protection
+    const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    const skew = Math.abs(Date.now() - Number(timestamp));
+    if (!ok or skew > 5 * 60 * 1000) {
+      return ctx.unauthorized("Invalid or expired signature");
+    }
+
+    await next();
+  };
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/src/middlewares/verify-webhook.ts"
+import crypto from "node:crypto"
+
+export default (config: unknown, { strapi }: any) => {
+  const secret = process.env.WEBHOOK_SECRET as string;
+
+  return async (ctx: any, next: any) => {
+    const signature = ctx.get("X-Webhook-Signature") as string;
+    const timestamp = ctx.get("X-Webhook-Timestamp") as string;
+    if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
+
+    // Compute HMAC over raw body + timestamp
+    const raw: string = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(`${timestamp}.${raw}`);
+    const expected = `sha256=${hmac.digest("hex")}`;
+
+    // Constant-time compare + basic replay protection
+    const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    const skew = Math.abs(Date.now() - Number(timestamp));
+    if (!ok || skew > 5 * 60 * 1000) {
+      return ctx.unauthorized("Invalid or expired signature");
+    }
+
+    await next();
+  };
+};
+```
+
+</TabItem>
+</Tabs>
+
+Additional external examples:
+- <ExternalLink to="https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries" text="GitHub — Validating webhook deliveries" />
+- <ExternalLink to="https://stripe.com/docs/webhooks/signatures" text="Stripe — Verify webhook signatures" />
+<br />
+</details>
+
+
 Another way is to define `defaultHeaders` to add to every webhook request.
 
 You can configure these global headers by updating the file at `./config/server`:
@@ -98,7 +193,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config.server.ts"
+```js title="./config/server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
