@@ -9,14 +9,14 @@ toc_max_heading_level: 3
 ---
 
 <Tldr>
-Use this page to quickly find and use AI helpers across the Strapi docs: copy a page’s Markdown, open a chat prefilled with context, or download purpose‑built summaries for LLMs.
+Use this page to quickly find and use AI helpers across the Strapi docs: copy a page’s Markdown, open a chat prefilled with context, or retrieve purpose‑built text files for LLMs.
 </Tldr>
 
 # AI tools in Strapi docs
 
 Strapi documentation includes a few AI‑oriented helpers designed to make it easier to ask questions about the docs, learn from code examples, and share focused context with an assistant.
 
-All AI options live in the AI toolbar at the top of each documentation page. From there, you can copy the current page as raw Markdown, open a new chat in your preferred assistant with the page prefilled as context, or open purpose‑built text files tailored for LLMs.
+All AI options live in the AI toolbar at the top of each documentation page. From there, you can copy the current page as raw Markdown, open a new chat in your preferred assistant with the page prefilled as context, or open text files tailored for LLMs.
 
 Use Copy Markdown when you want an assistant to reason over the exact source of the page you are reading. This copies the raw Markdown to your clipboard so you can paste it into a chat or IDE assistant.
 

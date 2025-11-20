@@ -15,11 +15,13 @@
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   cmsSidebar: [
-    // {
-    //   type: 'html',
-    //   value: '<i class="ph-fill ph-github-logo"></i> <a href="https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74">Docs Contribution Program</a>', // The HTML to be rendered
-    //   defaultStyle: true, // Use the default menu item styling
-    // },
+    {
+      // Prominent entry for AI-related helpers
+      type: 'html',
+      value: '<i class="ph-fill ph-sparkle"></i> <a href="/ai-tools">AI tools in docs</a>',
+      defaultStyle: true,
+      className: 'sidebar-ai-tools',
+    },
     {
       // Getting Started
       type: 'category',
@@ -548,6 +550,13 @@ const sidebars = {
   ],
 
   cloudSidebar: [
+    {
+      // Prominent entry for AI-related helpers
+      type: 'html',
+      value: '<i class="ph-fill ph-sparkle"></i> <a href="/ai-tools">AI tools in docs</a>',
+      defaultStyle: true,
+      className: 'sidebar-ai-tools',
+    },
     {
       // Getting Started
       type: 'category',
