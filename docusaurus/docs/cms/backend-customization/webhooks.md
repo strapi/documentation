@@ -83,7 +83,9 @@ In addition to auth headers, sign webhook payloads and verify signatures server�
 - On receipt, recompute the HMAC and compare using a constant‑time check
 - Reject if the signature is invalid or the timestamp is too old to mitigate replay
 
-Learn more: <ExternalLink to="https://owasp.org/www-community/attacks/Replay_Attack" text="OWASP replay attacks" />, <ExternalLink to="https://nodejs.org/api/crypto.html#class-hmac" text="Node.js HMAC" />.
+Learn more:
+- <ExternalLink to="https://owasp.org/www-community/attacks/Replay_Attack" text="OWASP replay attacks" />,
+- <ExternalLink to="https://nodejs.org/api/crypto.html#class-hmac" text="Node.js HMAC" />.
 :::
 
 <details>
@@ -159,7 +161,9 @@ export default (config: unknown, { strapi }: any) => {
 </TabItem>
 </Tabs>
 
-Additional external examples: <ul><li><ExternalLink to="https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries" text="GitHub — Validating webhook deliveries" /></li>,<li><ExternalLink to="https://stripe.com/docs/webhooks/signatures" text="Stripe — Verify webhook signatures" /></li>/<ul>.
+Additional external examples:
+- <ExternalLink to="https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries" text="GitHub — Validating webhook deliveries" />
+- <ExternalLink to="https://stripe.com/docs/webhooks/signatures" text="Stripe — Verify webhook signatures" />
 <br />
 </details>
 
