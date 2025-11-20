@@ -17,6 +17,12 @@ const config = {
   onBrokenAnchors: 'throw',
   favicon: 'https://strapi.io/assets/favicon-32x32.png',
 
+  // Custom fields used across the site (kept minimal and documented)
+  customFields: {
+    // Centralized path for the AI tools page so we can reference it from multiple places
+    aiToolsPath: '/ai-tools',
+  },
+
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
   // to replace "en" with "zh-Hans".

@@ -18,7 +18,7 @@ const sidebars = {
     {
       // Prominent entry for AI-related helpers
       type: 'html',
-      value: '<i class="ph-fill ph-sparkle"></i> <a href="/ai-tools">AI tools in docs</a>',
+      value: `<i class="ph-fill ph-sparkle"></i> <a href="${require('./docusaurus.config').customFields.aiToolsPath}">AI tools in docs</a>`,
       defaultStyle: true,
       className: 'sidebar-ai-tools',
     },
@@ -553,7 +553,7 @@ const sidebars = {
     {
       // Prominent entry for AI-related helpers
       type: 'html',
-      value: '<i class="ph-fill ph-sparkle"></i> <a href="/ai-tools">AI tools in docs</a>',
+      value: `<i class="ph-fill ph-sparkle"></i> <a href="${require('./docusaurus.config').customFields.aiToolsPath}">AI tools in docs</a>`,
       defaultStyle: true,
       className: 'sidebar-ai-tools',
     },
