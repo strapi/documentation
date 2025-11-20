@@ -13,6 +13,17 @@
     width: 100%;
     display: block;
   }
+
+  /* Also cover ThemedImage/picture wrappers often used for hero images */
+  .theme-doc-markdown.markdown > *:first-child [class*="themedImage"] img,
+  .theme-doc-markdown.markdown > *:first-child picture > img,
+  .markdown > *:first-child [class*="themedImage"] img,
+  .markdown > *:first-child picture > img {
+    aspect-ratio: var(--doc-first-image-aspect, 16 / 9);
+    height: auto;
+    width: 100%;
+    display: block;
+  }
 }
 
 /** Dark Mode images border */
