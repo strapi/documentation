@@ -53,8 +53,8 @@ To be able to include your content in releases, and to schedule and publish thos
 
 1. Click the <Icon name="plus" classes="ph-bold" /> **New Release** button in the upper right corner.  
 2. Give the release a name.
-3. (_optional_) If you want to schedule the release publication instead of publishing the release manually, check the **Schedule release** checkbox and define the date, time, and timezone for publication.
-4. Click the **Continue** button.
+3. (_optional_) To schedule the release instead of publishing manually, check **Schedule release** and define the date, time, and timezone.
+4. Click **Continue**.
 
 :::tip
 Your releases can be renamed afterwards, by editing the release using the <Icon name="dots-three-outline" /> then <Icon name="pencil-simple" /> **Edit** buttons.
