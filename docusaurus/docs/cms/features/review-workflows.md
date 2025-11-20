@@ -41,7 +41,7 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 2. In the workflow edit interface, configure the new workflow:
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
-    | Workflow name  | Write a unique name for the workflow.                                    |
+    | Workflow name  | Write a unique name of workflow.                                         |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
