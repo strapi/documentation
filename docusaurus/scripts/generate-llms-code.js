@@ -98,6 +98,7 @@ const parseArgs = () => {
   let lineNumbers = false;
   let verbose = false;
   let logFile = null;
+  let jsonOutput = null;
 
   for (let i = 0; i < args.length; i += 1) {
     const arg = args[i];
@@ -151,6 +152,10 @@ const parseArgs = () => {
       const value = args[i + 1];
       i += 1;
       if (value) logFile = value;
+    } else if (arg === '--json') {
+      const value = args[i + 1];
+      i += 1;
+      if (value) jsonOutput = value;
     } else {
       docs.push(arg);
     }
@@ -169,6 +174,7 @@ const parseArgs = () => {
     lineNumbers,
     verbose,
     logFile,
+    jsonOutput,
   };
 };
 
@@ -201,6 +207,7 @@ class DocusaurusLlmsCodeGenerator {
     this.includeLineNumbers = Boolean(config.lineNumbers);
     this.verbose = Boolean(config.verbose);
     this.logFile = config.logFile || null;
+    this.jsonOutput = config.jsonOutput || null;
   }
 
   // Recursively walk docs directory to find all .md/.mdx files and map to docIds
@@ -872,7 +879,33 @@ class DocusaurusLlmsCodeGenerator {
       lines.push('');
     });
 
-    return lines.join('\n').trim() + '\n';
+    const textOut = lines.join('\n').trim() + '\n';
+    // Optional JSON output
+    if (this.jsonOutput) {
+      const payload = pages.map((p) => ({
+        title: p.title,
+        docId: p.docId,
+        url: p.url,
+        sections: (p.examples || []).map((ex) => ({
+          section: ex.section,
+          anchor: ex.anchor,
+          variants: ex.variants.map((v) => ({
+            language: v.language,
+            filePath: v.filePath || null,
+            code: v.code,
+            startLine: v.startLine || null,
+            endLine: v.endLine || null,
+          })),
+        })),
+      }));
+      try {
+        await fs.ensureDir(path.dirname(this.jsonOutput));
+        await fs.writeFile(this.jsonOutput, JSON.stringify(payload, null, 2), 'utf-8');
+      } catch (e) {
+        console.warn('⚠️  Failed to write JSON output:', e.message);
+      }
+    }
+    return textOut;
   }
 
   groupVariantSnippets(snippets) {
