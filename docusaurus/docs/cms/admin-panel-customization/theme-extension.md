@@ -31,12 +31,12 @@ export default {
     theme: {
       light: {
         colors: {
-          primary600: #4A6EFF,
+          primary600: "#4A6EFF",
         },
       },
       dark: {
         colors: {
-          primary600: #9DB2FF,
+          primary600: "#9DB2FF",
         },
       },
     },
