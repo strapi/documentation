@@ -97,7 +97,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
+```js title="./src/api/[apiName]/routes/[routerName].ts (e.g './src/api/restaurant/routes/restaurant.ts')"
 
 import { factories } from '@strapi/strapi'; 
 
@@ -149,7 +149,7 @@ module.exports = createCoreRouter('api::restaurant.restaurant', {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="./src/api/restaurant/routes/restaurant.ts"
+```js title="./src/api/restaurant/routes/restaurant.ts"
 
 import { factories } from '@strapi/strapi'; 
 
