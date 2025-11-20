@@ -5,6 +5,8 @@ displayed_sidebar: cmsSidebar
 sidebar_label: Theme extension
 toc_max_heading_level: 4
 tags:
+
+The following example shows how to override the primary color in both JavaScript and TypeScript by customizing the light and dark theme keys in the admin config.
 - admin panel
 - admin panel customization
 ---
