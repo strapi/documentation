@@ -112,6 +112,15 @@ const config = {
     // },
   ],
   stylesheets: [
+    // Preconnects to speed up Google Fonts and reduce layout shift
+    { href: 'https://fonts.googleapis.com', rel: 'preconnect' },
+    { href: 'https://fonts.gstatic.com', rel: 'preconnect', crossorigin: 'anonymous' },
+    // Load Poppins early so header/nav metrics are stable at first paint
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap',
+      type: 'text/css',
+      rel: 'stylesheet',
+    },
     {
       href: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css', // fallback
       type: 'text/css',

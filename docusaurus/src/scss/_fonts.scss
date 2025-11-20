@@ -1,6 +1,7 @@
 /** Fonts */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+/* Google Fonts are now loaded early via <link rel="stylesheet"> in docusaurus.config.js
+   to minimize layout shift; avoid late @import here. */
 
 .font-poppins,
 .font-poppins button,
