@@ -39,7 +39,7 @@ const config = {
     {
       src: '/js/hotjar.js',
       type: 'module',
-      async: true,
+      defer: true,
     },
     {
       src: '/js/particle.js',
@@ -71,11 +71,7 @@ const config = {
       type: 'module',
       async: true,
     },
-    {
-      // src: 'https://unpkg.com/@phosphor-icons/web@2.0.3',
-      src: 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1', // fallback
-      async: true,
-    },
+    // Removed async script for Phosphor Icons to avoid reflow; rely on CSS stylesheets below
     {
       /**
        * Kapa AI widget script and parameters
