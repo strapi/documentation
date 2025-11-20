@@ -41,36 +41,12 @@ const config = {
       type: 'module',
       defer: true,
     },
-    {
-      src: '/js/particle.js',
-      type: 'module',
-      async: true,
-    },
-    {
-      src: '/js/firework.js',
-      type: 'module',
-      async: true,
-    },
-    {
-      src: '/js/ball.js',
-      type: 'module',
-      async: true,
-    },
-    {
-      src: '/js/bar.js',
-      type: 'module',
-      async: true,
-    },
-    {
-      src: '/js/game.js',
-      type: 'module',
-      async: true,
-    },
-    {
-      src: '/js/particleProfiles.js',
-      type: 'module',
-      async: true,
-    },
+    { src: '/js/particle.js', type: 'module', defer: true },
+    { src: '/js/firework.js', type: 'module', defer: true },
+    { src: '/js/ball.js', type: 'module', defer: true },
+    { src: '/js/bar.js', type: 'module', defer: true },
+    { src: '/js/game.js', type: 'module', defer: true },
+    { src: '/js/particleProfiles.js', type: 'module', defer: true },
     // Removed async script for Phosphor Icons to avoid reflow; rely on CSS stylesheets below
     {
       /**
@@ -104,7 +80,7 @@ const config = {
       'data-modal-y-offset': '3vh',            // Default is 10vh
       'data-modal-inner-max-width': '100%',
       'data-user-satisfaction-feedback-enabled': 'false',
-      async: true,
+      defer: true,
     },
     // {
     //   src: `https://cdn.amplitude.com/script/181a95e5a6b8053f7ffb7da9f0ef7ef4.experiment.js`,

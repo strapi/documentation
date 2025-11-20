@@ -407,6 +407,8 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     position: sticky;
     top: 12px;
     height: calc(100vh + 180px);
+    width: var(--doc-sidebar-width);
+    flex: 0 0 var(--doc-sidebar-width);
   }
 
   .theme-doc-sidebar-menu.menu__list {

@@ -80,6 +80,15 @@ html {
   scrollbar-gutter: stable both-edges;
 }
 
+/** Reserve desktop TOC width to avoid content width shifts */
+@include medium-up {
+  .theme-doc-toc-desktop {
+    --toc-desktop-width: 300px;
+    width: var(--toc-desktop-width);
+    flex: 0 0 var(--toc-desktop-width);
+  }
+}
+
 /* Fallback for browsers without scrollbar-gutter support */
 @supports not (scrollbar-gutter: stable) {
   html {
