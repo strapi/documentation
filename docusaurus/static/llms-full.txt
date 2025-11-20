@@ -1784,8 +1784,10 @@ To extend the theme, use either:
 - the `config.theme.dark` key for the Dark mode
 
 :::strapi Strapi Design System
-The default  defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The  is fully customizable and has a dedicated  documentation.
-:::
+
+The default 
+
+</Tabs>
 
 
 

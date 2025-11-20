@@ -1821,6 +1821,62 @@ export default {
 
 
 
+# Theme extension
+Source: https://docs.strapi.io/cms/admin-panel-customization/theme-extension
+
+## Theme extension
+Description: The following example shows how to override the primary color by customizing the light and dark theme keys in the admin panel configuration:
+(Source: https://docs.strapi.io/cms/admin-panel-customization/theme-extension#theme-extension)
+
+Language: JavaScript
+File path: /src/admin/app.js
+
+```js
+export default {
+  config: {
+    theme: {
+      light: {
+        colors: {
+          primary600: "#4A6EFF",
+        },
+      },
+      dark: {
+        colors: {
+          primary600: "#9DB2FF",
+        },
+      },
+    },
+  },
+  bootstrap() {},
+}
+```
+
+---
+Language: TypeScript
+File path: /src/admin/app.ts
+
+```ts
+export default {
+  config: {
+    theme: {
+      light: {
+        colors: {
+          primary600: '#4A6EFF',
+        },
+      },
+      dark: {
+        colors: {
+          primary600: '#9DB2FF',
+        },
+      },
+    },
+  },
+  bootstrap() {},
+}
+```
+
+
+
 # Strapi Client
 Source: https://docs.strapi.io/cms/api/client
 
