@@ -1,6 +1,20 @@
 /** General: Images */
 @use './mixins' as *;
 
+/** Reserve space for hero/first images to avoid initial layout shift */
+@include medium-up {
+  .theme-doc-markdown.markdown > p:first-child > img,
+  .theme-doc-markdown.markdown > figure:first-child img,
+  .markdown > p:first-child > img,
+  .markdown > figure:first-child img {
+    /* If no dimensions provided, reserve a conservative aspect ratio */
+    aspect-ratio: var(--doc-first-image-aspect, 16 / 9);
+    height: auto;
+    width: 100%;
+    display: block;
+  }
+}
+
 /** Dark Mode images border */
 .theme-doc-markdown.markdown [class*="themedImage--dark"],
 .theme-doc-markdown.markdown [class*="themedComponent"] {
@@ -28,4 +42,3 @@ li > img {
     background-color: white;
   }
 }
-
