@@ -83,7 +83,7 @@ In addition to auth headers, sign webhook payloads and verify signatures serverâ
 - On receipt, recompute the HMAC and compare using a constantâ€‘time check
 - Reject if the signature is invalid or the timestamp is too old to mitigate replay
 
-Learn more: [OWASP replay attacks](https://owasp.org/www-community/attacks/Replay_Attack), [Node.js HMAC](https://nodejs.org/api/crypto.html#class-hmac).
+Learn more: <ExternalLink to="https://owasp.org/www-community/attacks/Replay_Attack" text="OWASP replay attacks" />, <ExternalLink to="https://nodejs.org/api/crypto.html#class-hmac" text="Node.js HMAC" />.
 :::
 
 <details>
