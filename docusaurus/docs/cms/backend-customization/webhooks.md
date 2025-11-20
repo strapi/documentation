@@ -86,7 +86,40 @@ In addition to auth headers, sign webhook payloads and verify signatures server�
 Learn more: [OWASP replay attacks](https://owasp.org/www-community/attacks/Replay_Attack), [Node.js HMAC](https://nodejs.org/api/crypto.html#class-hmac).
 :::
 
-Consider signing webhook payloads and verifying signatures server‑side to prevent replay attacks.
+Here is a minimal Node.js middleware example (pseudo‑code) showing HMAC verification:
+
+```js title="/src/middlewares/verify-webhook.js"
+const crypto = require("crypto");
+
+module.exports = (config, { strapi }) => {
+  const secret = process.env.WEBHOOK_SECRET;
+
+  return async (ctx, next) => {
+    const signature = ctx.get("X-Webhook-Signature");
+    const timestamp = ctx.get("X-Webhook-Timestamp");
+    if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
+
+    // Compute HMAC over raw body + timestamp
+    const raw = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(timestamp + "." + raw);
+    const expected = "sha256=" + hmac.digest("hex");
+
+    // Constant-time compare + basic replay protection
+    const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    const skew = Math.abs(Date.now() - Number(timestamp));
+    if (!ok || skew > 5 * 60 * 1000) {
+      return ctx.unauthorized("Invalid or expired signature");
+    }
+
+    await next();
+  };
+};
+```
+
+External examples: [GitHub — Validating webhook deliveries](https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries), [Stripe — Verify webhook signatures](https://stripe.com/docs/webhooks/signatures).
+
+
 Another way is to define `defaultHeaders` to add to every webhook request.
 
 You can configure these global headers by updating the file at `./config/server`:
