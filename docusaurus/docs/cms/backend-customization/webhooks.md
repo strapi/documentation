@@ -160,7 +160,7 @@ export default (config: unknown, { strapi }: any) => {
 </Tabs>
 
 External examples: <ExternalLink to="https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries" text="GitHub — Validating webhook deliveries" />, <ExternalLink to="https://stripe.com/docs/webhooks/signatures" text="Stripe — Verify webhook signatures" />.
-
+<br />
 </details>
 
 
