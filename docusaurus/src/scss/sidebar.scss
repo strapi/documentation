@@ -422,12 +422,18 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
         left: 0;
         color: var(--strapi-neutral-600);
         font-weight: 500;
+        /* Stabilize icon box to prevent width/height changes on font swap */
+        display: inline-block;
+        width: 1.25rem;
+        height: 1.25rem;
+        line-height: 1.25rem;
     }
 
     [class*="collapseSidebar"] {
       border-bottom: none;
-      min-height: 38px;
-
+      min-height: 38px; /* keep button size stable */
+      min-width: 38px;
+    
       &::after {
         content:'\E128';
       }
@@ -442,6 +448,18 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
       &::after {
         content:'\E12A';
       }
+    }
+  }
+}
+
+/* Ensure the collapse button does not affect document flow on first paint */
+@include medium-up {
+  .theme-doc-sidebar-container {
+    position: sticky;
+    [class*="collapseSidebar"] {
+      position: absolute;
+      bottom: 12px;
+      left: 8px;
     }
   }
 }
