@@ -95,7 +95,3 @@ export default ({ env }) => ({
 :::strapi Other admin panel configurations
 The `/config/admin.[ts|js]` file can be used to configure many other aspects. Please refer to the [admin panel configuration](/cms/configurations/admin-panel) documentation for details.
 :::
-
-:::tip Behind a reverse proxy
-When serving the admin from a different public origin (domain, host, or port) than the API, set `host`/`port` accordingly and ensure your proxy forwards headers (e.g., `X-Forwarded-*`). If the admin is reachable at a different origin, prefer configuring that origin explicitly.
-:::

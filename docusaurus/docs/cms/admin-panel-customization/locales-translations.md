@@ -17,7 +17,7 @@ Configure the admin panel languages by updating the `config.locales` array and o
 
 The Strapi [admin panel](/cms/admin-panel-customization) ships with English strings and supports adding other locales so your editorial team can work in their preferred language. Locales determine which languages appear in the interface, while translations provide the text displayed for each key in a locale.
 
-This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app` file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
+This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app`file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
 
 ## Defining locales
 
@@ -26,7 +26,7 @@ To update the list of available locales in the admin panel, set the `config.loca
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title="/src/admin/app.js"
+```jsx title="/src/admin/app.js"
 export default {
   config: {
     locales: ["ru", "zh"],
@@ -39,7 +39,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="/src/admin/app.ts"
+```jsx title="/src/admin/app.ts"
 export default {
   config: {
     locales: ["ru", "zh"],
@@ -89,7 +89,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="/src/admin/app.ts"
+```js title="/src/admin/app.ts"
 export default {
   config: {
     locales: ["fr"],
@@ -136,7 +136,7 @@ export default {
 
 <TabItem value="ts" label="TypeScript">
 
-```ts title="/src/admin/app.ts"
+```js title="/src/admin/app.ts"
 export default {
   config: {
     locales: ["fr"],
