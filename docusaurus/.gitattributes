@@ -1,0 +1,3 @@
+docusaurus/static/llms.txt -diff linguist-generated
+docusaurus/static/llms-full.txt -diff linguist-generated
+docusaurus/static/llms-code.txt -diff linguist-generated
