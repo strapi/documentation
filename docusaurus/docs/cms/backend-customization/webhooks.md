@@ -73,6 +73,19 @@ export default {
 Most of the time, webhooks make requests to public URLs, therefore it is possible that someone may find that URL and send it wrong information.
 
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
+
+:::tip Verify signatures
+In addition to auth headers, sign webhook payloads and verify signatures server‑side to prevent tampering and replay attacks.
+
+- Generate a shared secret and store it in environment variables
+- Have the sender compute an HMAC (e.g., SHA‑256) over the raw request body plus a timestamp
+- Send the signature (and timestamp) in headers (e.g., `X‑Webhook‑Signature`, `X‑Webhook‑Timestamp`)
+- On receipt, recompute the HMAC and compare using a constant‑time check
+- Reject if the signature is invalid or the timestamp is too old to mitigate replay
+
+Learn more: [OWASP replay attacks](https://owasp.org/www-community/attacks/Replay_Attack), [Node.js HMAC](https://nodejs.org/api/crypto.html#class-hmac).
+:::
+
 Consider signing webhook payloads and verifying signatures server‑side to prevent replay attacks.
 Another way is to define `defaultHeaders` to add to every webhook request.
 
