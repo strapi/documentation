@@ -157,3 +157,7 @@ export default {
 </Tabs>
 
 If you need to ship additional translation JSON files—for example to organize large overrides or to support a locale not bundled with Strapi—place them in the `/src/admin/extensions/translations` folder and ensure the locale code is listed in `config.locales`.
+
+:::tip Rebuild the admin
+Translation changes apply when the admin rebuilds. If updates don’t show, re-run your dev server or rebuild the admin to refresh bundled translations.
+:::
