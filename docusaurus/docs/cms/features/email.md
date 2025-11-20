@@ -127,6 +127,10 @@ npm install @strapi/provider-email-sendgrid --save
 
 </Tabs>
 
+:::tip Deliverability
+For best deliverability, configure SPF/DKIM with your email provider and ensure the `defaultFrom` domain aligns with the domain you verified with the provider.
+:::
+
 ##### Configuring providers
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
@@ -226,6 +230,30 @@ module.exports = ({ env }) => ({
     },
   },
 });
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/config/plugins.ts"
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: sendmail, // replace with your provider
+      providerOptions: {
+        // ... provider-specific options
+      },
+      settings: {
+        defaultFrom: no-reply@example.com,
+        defaultReplyTo: support@example.com,
+      },
+    },
+  },
+});
+```
+
+</TabItem>
+
 ```
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
