@@ -5,7 +5,6 @@ displayed_sidebar: cmsSidebar
 sidebar_label: Theme extension
 toc_max_heading_level: 4
 tags:
-
 - admin panel
 - admin panel customization
 ---
