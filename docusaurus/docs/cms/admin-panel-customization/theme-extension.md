@@ -22,7 +22,33 @@ To extend the theme, use either:
 The default <ExternalLink to="https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes" text="Strapi theme"/> defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The <ExternalLink to="https://design-system.strapi.io/" text="Strapi Design System"/> is fully customizable and has a dedicated <ExternalLink to="https://design-system-git-main-strapijs.vercel.app" text="StoryBook"/> documentation.
 :::
 
-### Example (TypeScript)
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="/src/admin/app.js"
+export default {
+  config: {
+    theme: {
+      light: {
+        colors: {
+          primary600: #4A6EFF,
+        },
+      },
+      dark: {
+        colors: {
+          primary600: #9DB2FF,
+        },
+      },
+    },
+  },
+  bootstrap() {},
+}
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
 
 ```ts title="/src/admin/app.ts"
 export default {
@@ -43,3 +69,6 @@ export default {
   bootstrap() {},
 }
 ```
+
+</TabItem>
+</Tabs>
