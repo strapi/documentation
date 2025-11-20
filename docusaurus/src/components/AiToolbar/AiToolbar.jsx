@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { getPrimaryAction, getDropdownActions } from './utils/aiToolsHelpers';
+import { getPrimaryAction, getDropdownActions, getAllActions } from './utils/aiToolsHelpers';
 import { executeAction, getActionDisplay } from './actions/actionRegistry';
 import Icon from '../Icon';
 
@@ -10,7 +10,11 @@ const AiToolbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const primaryAction = getPrimaryAction();
+  // Allow users to override the default primary action via localStorage
+  const preferredActionId = (typeof window !== 'undefined' && window.localStorage?.getItem('aiToolbar.preferredActionId')) || null;
+  const primaryAction = preferredActionId
+    ? (getAllActions().find((a) => a.id === preferredActionId) || getPrimaryAction())
+    : getPrimaryAction();
   const dropdownActions = getDropdownActions();
 
   // Close dropdown when clicking outside
@@ -68,6 +72,17 @@ const AiToolbar = () => {
     await executeAction(action, context);
   };
 
+  // Let users pin the current primary action as their default (saved locally)
+  const setPreferredAsDefault = () => {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage && primaryAction?.id) {
+        window.localStorage.setItem('aiToolbar.preferredActionId', primaryAction.id);
+      }
+    } catch (e) {
+      // ignore storage errors
+    }
+  };
+
   // Toggle dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -99,6 +114,15 @@ const AiToolbar = () => {
           <span className="ai-toolbar__button-text">
             {displayConfig.label}
           </span>
+        </button>
+        {/* Pin as default */}
+        <button
+          onClick={setPreferredAsDefault}
+          className={`ai-toolbar__dropdown-trigger`}
+          title="Set as default AI action"
+          aria-label="Set as default AI action"
+        >
+          <Icon name="push-pin" classes="ph-bold" />
         </button>
         
         {/* Dropdown button */}
