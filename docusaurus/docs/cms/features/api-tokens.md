@@ -19,6 +19,10 @@ API tokens provide scoped authentication for REST and GraphQL requests without e
 
 API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)).
 
+:::caution Security
+Prefer read‑only tokens for public access, scope server tokens to only what you need, rotate long‑lived tokens, and store them in a secrets manager. Never expose admin tokens in client‑side code.
+:::
+
 <IdentityCard>
   <IdentityCardItem icon="layout" title="Plan">
     Free feature
