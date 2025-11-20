@@ -108,7 +108,7 @@ module.exports = () => {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="/config/middlewares.ts"
+```ts title="/config/middlewares.ts"
 
 export default () => {
   return async (ctx, next) => {
