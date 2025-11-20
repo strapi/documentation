@@ -432,7 +432,6 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     [class*="collapseSidebar"] {
       border-bottom: none;
       min-height: 38px; /* keep button size stable */
-      min-width: 38px;
     
       &::after {
         content:'\E128';
@@ -452,17 +451,7 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   }
 }
 
-/* Ensure the collapse button does not affect document flow on first paint */
-@include medium-up {
-  .theme-doc-sidebar-container {
-    position: sticky;
-    [class*="collapseSidebar"] {
-      position: absolute;
-      bottom: 12px;
-      left: 8px;
-    }
-  }
-}
+/* Revert collapse button positioning change to avoid rendering glitch */
 
 /** Dark mode */
 @include dark {
