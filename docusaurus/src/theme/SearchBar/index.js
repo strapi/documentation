@@ -166,8 +166,14 @@ function SearchBarContent() {
 }
 
 export default function SearchBar() {
+  // Reserve a stable placeholder to avoid CLS while MeiliSearch mounts
+  const placeholder = (
+    <div className="navbar__search" style={{minWidth: 300, minHeight: 40}}>
+      <div />
+    </div>
+  );
   return (
-    <BrowserOnly fallback={<div className="navbar__search"><div></div></div>}>
+    <BrowserOnly fallback={placeholder}>
       {() => <SearchBarContent />}
     </BrowserOnly>
   );
