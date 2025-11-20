@@ -86,6 +86,9 @@ In addition to auth headers, sign webhook payloads and verify signatures server�
 Learn more: [OWASP replay attacks](https://owasp.org/www-community/attacks/Replay_Attack), [Node.js HMAC](https://nodejs.org/api/crypto.html#class-hmac).
 :::
 
+<details>
+<summary>Example: Verify HMAC signatures (Node.js)</summary>
+
 Here is a minimal Node.js middleware example (pseudo‑code) showing HMAC verification:
 
 ```js title="/src/middlewares/verify-webhook.js"
@@ -118,6 +121,8 @@ module.exports = (config, { strapi }) => {
 ```
 
 External examples: [GitHub — Validating webhook deliveries](https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries), [Stripe — Verify webhook signatures](https://stripe.com/docs/webhooks/signatures).
+
+</details>
 
 
 Another way is to define `defaultHeaders` to add to every webhook request.
