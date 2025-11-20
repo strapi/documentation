@@ -70,3 +70,20 @@ main {
     padding: 1px;
   }
 }
+
+/**
+ * Prevent layout shifts from scrollbar appearance
+ * Reserve vertical scrollbar space so content width stays stable
+ */
+html {
+  /* On modern browsers, keep gutter space so content width stays stable */
+  scrollbar-gutter: stable both-edges;
+}
+
+/* Fallback for browsers without scrollbar-gutter support */
+@supports not (scrollbar-gutter: stable) {
+  html {
+    /* Always show vertical scrollbar to avoid width jumps */
+    overflow-y: scroll;
+  }
+}
