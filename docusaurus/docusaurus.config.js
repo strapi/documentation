@@ -117,7 +117,7 @@ const config = {
     { href: 'https://fonts.gstatic.com', rel: 'preconnect', crossorigin: 'anonymous' },
     // Load Poppins early so header/nav metrics are stable at first paint
     {
-      href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap',
+      href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=optional',
       type: 'text/css',
       rel: 'stylesheet',
     },

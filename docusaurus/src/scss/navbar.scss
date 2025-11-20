@@ -97,9 +97,16 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
     font-size: var(--custom-navbar-items-font-size);
     border-radius: 4px;
     border: solid 1px transparent;
+    display: inline-flex;
+    align-items: center;
     i {
       position: relative;
       top: 1px;
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      flex: 0 0 1em;
     }
 
     &--active {
@@ -125,6 +132,15 @@ $selector-color-mode-toggle-wrapper: 'div[class*="ColorModeToggle"]';
   .navbar-sidebar__close,
   #{$selector-color-mode-toggle-button} {
     color: var(--custom-navbar-icon-color);
+  }
+
+  // Ensure any icon font/pseudo within links has a stable inline box
+  &__link .strapi-icons {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    flex: 0 0 1em;
   }
 
   .navbar-sidebar__close,
