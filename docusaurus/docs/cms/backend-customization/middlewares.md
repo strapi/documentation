@@ -129,6 +129,10 @@ export default () => {
 
 The GraphQL plugin also allows [implementing custom middlewares](/cms/plugins/graphql#middlewares), with a different syntax.
 
+:::tip Discover loaded middlewares
+Run `yarn strapi middlewares:list` to list all registered middlewares and double‑check naming when wiring them in routers.
+:::
+
 ## Usage
 
 Middlewares are called different ways depending on their scope:
