@@ -168,7 +168,7 @@ export default factories.createCoreRouter('api::restaurant.restaurant', {
 </TabItem>
 </Tabs>
 
-This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication.
+This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully‑qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
 
 ### Creating custom routers
 
