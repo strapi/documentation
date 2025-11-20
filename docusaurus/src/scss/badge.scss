@@ -111,6 +111,14 @@
     margin-left: 2px;
   }
 
+  /* Stabilize feature/update/content badges to avoid width tweaks */
+  &--feature,
+  &--updated,
+  &--content {
+    display: inline-block;
+    min-width: 48px;
+  }
+
   &--alpha,
   &--beta,
   &--version {

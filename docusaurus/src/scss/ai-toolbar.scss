@@ -68,7 +68,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
+    width: 2rem; /* keep fixed trigger width */
     padding: 0.5rem 0;
     border: none;
     border-radius: 0 0.25rem 0.25rem 0;
@@ -156,7 +156,9 @@
   }
 
   &__button-text {
-    // Text styling if needed
+    // Stabilize text slot to avoid width growth on first paint
+    display: inline-block;
+    min-width: 8ch;
   }
   &__dropdown-arrow {
     margin-left: 0.25rem;
