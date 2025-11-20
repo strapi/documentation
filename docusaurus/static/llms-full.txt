@@ -1723,6 +1723,10 @@ A plugin's key/value pairs are declared independently in the plugin's files at `
 
 If you need to ship additional translation JSON files—for example to organize large overrides or to support a locale not bundled with Strapi—place them in the `/src/admin/extensions/translations` folder and ensure the locale code is listed in `config.locales`.
 
+:::tip Rebuild the admin
+Translation changes apply when the admin rebuilds. If updates don’t show, re-run your dev server or rebuild the admin to refresh bundled translations.
+:::
+
 
 
 # Logos
@@ -1794,6 +1798,10 @@ Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in ric
 
 - You can install a third-party plugin, such as one for CKEditor, by visiting .
 - You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/features/custom-fields)).
+
+:::tip Next steps
+When evaluating editors, start with a plugin from the Marketplace for a quick trial, then consider a custom field if you need deeper integration (schema, validation, or custom toolbar behavior).
+:::
 
 
 
@@ -4907,6 +4915,10 @@ module.exports = {
 
 The GraphQL plugin also allows [implementing custom middlewares](/cms/plugins/graphql#middlewares), with a different syntax.
 
+:::tip Discover loaded middlewares
+Run `yarn strapi middlewares:list` to list all registered middlewares and double‑check naming when wiring them in routers.
+:::
+
 ## Usage
 
 Middlewares are called different ways depending on their scope:
@@ -5417,7 +5429,7 @@ Policies are functions that execute specific logic on each request before it rea
 
 Each [route](/cms/backend-customization/routes) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.
 
-Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies).
+Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies) and should live under the corresponding `./src/api/<api-name>/policies/` or `./src/plugins/<plugin-name>/policies/` folder.
 
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes and policies highlighted" />
@@ -8848,7 +8860,7 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 2. In the workflow edit interface, configure the new workflow:
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
-    | Workflow name  | Write a unique name of workflow.                                         |
+    | Workflow name  | Write a unique name for the workflow.                                    |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.

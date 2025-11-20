@@ -12890,7 +12890,7 @@ export default (policyContext, config, { strapi }) => {
 ```
 
 Language: JavaScript
-File path: .src/api/[api-name]/policies/my-policy.js
+File path: ./src/api/[api-name]/policies/my-policy.js
 
 ```js
 
