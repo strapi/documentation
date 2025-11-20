@@ -17,6 +17,10 @@ tags:
 # Models
 
 <Tldr>
+Models define your content types’ shape and drive generated controllers and routes. Use the Document Service API to query/create/update data and keep controllers thin.
+</Tldr>
+
+<Tldr>
 Models define Strapi’s content structure via content-types and reusable components. This documentation walks through creating these models in the Content-type Builder or CLI and managing schema files with optional lifecycle hooks.
 </Tldr>
 
