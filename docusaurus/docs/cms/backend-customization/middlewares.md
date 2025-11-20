@@ -108,7 +108,7 @@ module.exports = () => {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="/config/middlewares.ts"
+```ts title="/config/middlewares.ts"
 
 export default () => {
   return async (ctx, next) => {
@@ -128,6 +128,10 @@ export default () => {
 </details>
 
 The GraphQL plugin also allows [implementing custom middlewares](/cms/plugins/graphql#middlewares), with a different syntax.
+
+:::tip Discover loaded middlewares
+Run `yarn strapi middlewares:list` to list all registered middlewares and double‑check naming when wiring them in routers.
+:::
 
 ## Usage
 

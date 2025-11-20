@@ -83,7 +83,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./src/api/restaurant/services/restaurant.ts"
+```ts title="./src/api/restaurant/services/restaurant.ts"
 
 import { factories } from '@strapi/strapi'; 
 
@@ -171,7 +171,7 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./src/api/restaurant/services/restaurant.ts"
+```ts title="./src/api/restaurant/services/restaurant.ts"
 
 
 import { factories } from '@strapi/strapi'; 
