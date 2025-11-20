@@ -15,3 +15,7 @@ Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in ric
 
 - You can install a third-party plugin, such as one for CKEditor, by visiting <ExternalLink to="https://market.strapi.io/" text="Strapi's Marketplace"/>.
 - You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/features/custom-fields)).
+
+:::tip Next steps
+When evaluating editors, start with a plugin from the Marketplace for a quick trial, then consider a custom field if you need deeper integration (schema, validation, or custom toolbar behavior).
+:::
