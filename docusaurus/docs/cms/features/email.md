@@ -239,13 +239,13 @@ module.exports = ({ env }) => ({
 export default ({ env }) => ({
   email: {
     config: {
-      provider: sendmail, // replace with your provider
+      provider: 'sendmail', // replace with your provider
       providerOptions: {
         // ... provider-specific options
       },
       settings: {
-        defaultFrom: no-reply@example.com,
-        defaultReplyTo: support@example.com,
+        defaultFrom: 'no-reply@example.com',
+        defaultReplyTo: 'support@example.com',
       },
     },
   },
@@ -253,8 +253,6 @@ export default ({ env }) => ({
 ```
 
 </TabItem>
-
-```
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
