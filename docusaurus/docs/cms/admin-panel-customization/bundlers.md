@@ -80,15 +80,10 @@ strapi develop --bundler=webpack
 ```
 
 :::prerequisites
-If you plan to customize webpack, start from the example file in your project root. Rename:
-
-- `webpack.config.example.js` → `webpack.config.js` (JavaScript)
-- or `webpack.config.example.ts` → `webpack.config.ts` (TypeScript)
-
-Strapi will pick up `webpack.config.js` or `webpack.config.ts` automatically when you run `strapi develop --bundler=webpack`.
+Make sure to rename the default `webpack.config.example.js` file into `webpack.config.` before customizing webpack.
 :::
 
-To extend webpack v5, define a function that returns a modified config in `/src/admin/webpack.config.js` or `/src/admin/webpack.config.ts`:
+In order to extend the usage of webpack v5, define a function that extends its configuration inside `/src/admin/webpack.config.`:
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
@@ -123,3 +118,4 @@ export default (config, webpack) => {
 
 </TabItem>
 </Tabs>
+
