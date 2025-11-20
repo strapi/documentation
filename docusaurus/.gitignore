@@ -32,5 +32,10 @@ docs/node_modules/**
 # LLMs.txt files and related
 llms*.txt
 **/llm*.txt
+
+# Allow public LLMs files under static/ to be committed (used by deploy workflow)
+!static/llms.txt
+!static/llms-full.txt
+!static/llms-code.txt
 pr-*.diff
 *-results.json
