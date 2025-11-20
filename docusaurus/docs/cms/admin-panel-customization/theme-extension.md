@@ -21,9 +21,11 @@ To extend the theme, use either:
 
 :::strapi Strapi Design System
 
-The following example shows how to override the primary color in both JavaScript and TypeScript by customizing the light and dark theme keys in the admin config.
 The default <ExternalLink to="https://github.com/strapi/design-system/tree/main/packages/design-system/src/themes" text="Strapi theme"/> defines various theme-related keys (shadows, colors…) that can be updated through the `config.theme.light` and `config.theme.dark` keys in `./admin/src/app.js`. The <ExternalLink to="https://design-system.strapi.io/" text="Strapi Design System"/> is fully customizable and has a dedicated <ExternalLink to="https://design-system-git-main-strapijs.vercel.app" text="StoryBook"/> documentation.
 :::
+
+The following example shows how to override the primary color in both JavaScript and TypeScript by customizing the light and dark theme keys in the admin config.
+
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
