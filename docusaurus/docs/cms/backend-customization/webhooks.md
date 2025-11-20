@@ -73,7 +73,6 @@ export default {
 Most of the time, webhooks make requests to public URLs, therefore it is possible that someone may find that URL and send it wrong information.
 
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
-Consider signing webhook payloads and verifying signatures server‑side to prevent replay attacks.
 Another way is to define `defaultHeaders` to add to every webhook request.
 
 You can configure these global headers by updating the file at `./config/server`:
@@ -99,7 +98,7 @@ module.exports = {
 
 <TabItem value="ts" label="TypeScript">
 
-```js title="./config/server.ts"
+```js title="./config.server.ts"
 export default {
   webhooks: {
     defaultHeaders: {
