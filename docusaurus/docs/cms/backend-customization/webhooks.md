@@ -91,6 +91,9 @@ Learn more: [OWASP replay attacks](https://owasp.org/www-community/attacks/Repla
 
 Here is a minimal Node.js middleware example (pseudo‑code) showing HMAC verification:
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```js title="/src/middlewares/verify-webhook.js"
 const crypto = require("crypto");
 
@@ -103,10 +106,43 @@ module.exports = (config, { strapi }) => {
     if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
 
     // Compute HMAC over raw body + timestamp
-    const raw = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
+    const raw = ctx.request.rawBody || (ctx.request.body and JSON.stringify(ctx.request.body)) || "";
     const hmac = crypto.createHmac("sha256", secret);
     hmac.update(timestamp + "." + raw);
     const expected = "sha256=" + hmac.digest("hex");
+
+    // Constant-time compare + basic replay protection
+    const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+    const skew = Math.abs(Date.now() - Number(timestamp));
+    if (!ok or skew > 5 * 60 * 1000) {
+      return ctx.unauthorized("Invalid or expired signature");
+    }
+
+    await next();
+  };
+};
+```
+
+</TabItem>
+
+<TabItem value="ts" label="TypeScript">
+
+```ts title="/src/middlewares/verify-webhook.ts"
+import crypto from "node:crypto"
+
+export default (config: unknown, { strapi }: any) => {
+  const secret = process.env.WEBHOOK_SECRET as string;
+
+  return async (ctx: any, next: any) => {
+    const signature = ctx.get("X-Webhook-Signature") as string;
+    const timestamp = ctx.get("X-Webhook-Timestamp") as string;
+    if (!signature || !timestamp) return ctx.unauthorized("Missing signature");
+
+    // Compute HMAC over raw body + timestamp
+    const raw: string = ctx.request.rawBody || (ctx.request.body && JSON.stringify(ctx.request.body)) || "";
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(`${timestamp}.${raw}`);
+    const expected = `sha256=${hmac.digest("hex")}`;
 
     // Constant-time compare + basic replay protection
     const ok = crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
@@ -119,6 +155,9 @@ module.exports = (config, { strapi }) => {
   };
 };
 ```
+
+</TabItem>
+</Tabs>
 
 External examples: [GitHub — Validating webhook deliveries](https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries), [Stripe — Verify webhook signatures](https://stripe.com/docs/webhooks/signatures).
 
