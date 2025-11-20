@@ -1702,7 +1702,7 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/locales-translation
 
 The Strapi [admin panel](/cms/admin-panel-customization) ships with English strings and supports adding other locales so your editorial team can work in their preferred language. Locales determine which languages appear in the interface, while translations provide the text displayed for each key in a locale.
 
-This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app`file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
+This guide targets project maintainers customizing the admin experience from the application codebase. All examples modify the configuration exported from `/src/admin/app` file, which Strapi loads when the admin panel builds. You'll learn how to declare additional locales and how to extend Strapi or plugin translations when a locale is missing strings.
 
 ## Defining locales
 
@@ -1722,6 +1722,10 @@ A plugin's key/value pairs are declared independently in the plugin's files at `
 </Tabs>
 
 If you need to ship additional translation JSON files—for example to organize large overrides or to support a locale not bundled with Strapi—place them in the `/src/admin/extensions/translations` folder and ensure the locale code is listed in `config.locales`.
+
+:::tip Rebuild the admin
+Translation changes apply when the admin rebuilds. If updates don’t show, re-run your dev server or rebuild the admin to refresh bundled translations.
+:::
 
 
 
@@ -1794,6 +1798,10 @@ Strapi's [admin panel](/cms/admin-panel-customization) comes with a built-in ric
 
 - You can install a third-party plugin, such as one for CKEditor, by visiting .
 - You can create your own plugin to create and register a fully custom WYSIWYG field (see [custom fields documentation](/cms/features/custom-fields)).
+
+:::tip Next steps
+When evaluating editors, start with a plugin from the Marketplace for a quick trial, then consider a custom field if you need deeper integration (schema, validation, or custom toolbar behavior).
+:::
 
 
 
@@ -4705,6 +4713,10 @@ In most cases, the controllers will contain the bulk of a project's business log
   <em><figcaption style={{fontSize: '12px'}}>The diagram represents a simplified version of how a request travels through the Strapi back end, with controllers highlighted. The backend customization introduction page includes a complete, <a href="/cms/backend-customization#interactive-diagram">interactive diagram</a>.</figcaption></em>
 </figure>
 
+:::caution Sanitize inputs and outputs
+When overriding core actions, always validate and sanitize queries and responses to avoid leaking private fields or bypassing access rules. Use `validateQuery` (optional), `sanitizeQuery` (recommended), and `sanitizeOutput` before returning data from custom actions. See the example below for a safe `find` override.
+:::
+
 ## Implementation
 
 Controllers can be [generated or added manually](#adding-a-new-controller). Strapi provides a `createCoreController` factory function that automatically generates core controllers and allows building custom ones or [extend or replace the generated controllers](#extending-core-controllers).
@@ -4906,6 +4918,10 @@ module.exports = {
 </details>
 
 The GraphQL plugin also allows [implementing custom middlewares](/cms/plugins/graphql#middlewares), with a different syntax.
+
+:::tip Discover loaded middlewares
+Run `yarn strapi middlewares:list` to list all registered middlewares and double‑check naming when wiring them in routers.
+:::
 
 ## Usage
 
@@ -5417,7 +5433,7 @@ Policies are functions that execute specific logic on each request before it rea
 
 Each [route](/cms/backend-customization/routes) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.
 
-Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies).
+Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies) and should live under the corresponding `./src/api/<api-name>/policies/` or `./src/plugins/<plugin-name>/policies/` folder.
 
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes and policies highlighted" />
@@ -5738,7 +5754,7 @@ Generic implementation example:
 
 </Tabs>
 
-This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication.
+This only allows a `GET` request on the `/restaurants` path from the core `find` [controller](/cms/backend-customization/controllers) without authentication. When you reference custom controller actions in custom routers, prefer the fully‑qualified `api::<api-name>.<controllerName>.<actionName>` form for clarity (e.g., `api::restaurant.restaurant.review`).
 
 ### Creating custom routers
 
@@ -7769,6 +7785,10 @@ Source: https://docs.strapi.io/cms/features/api-tokens
 
 API tokens allow users to authenticate REST and GraphQL API queries (see [APIs introduction](/cms/api/content-api)).
 
+:::caution Security
+Prefer read‑only tokens for public access, scope server tokens to only what you need, rotate long‑lived tokens, and store them in a secrets manager. Never expose admin tokens in client‑side code.
+:::
+
 </IdentityCard>
 
 </Tabs>
@@ -8848,7 +8868,7 @@ The default workflow is configured to have 4 stages: To do, In progress, Ready t
 2. In the workflow edit interface, configure the new workflow:
     | Setting name   | Instructions                                                             |
     | -------------- | ------------------------------------------------------------------------ |
-    | Workflow name  | Write a unique name of workflow.                                         |
+    | Workflow name  | Write a unique name for the workflow.                                    |
     | Associated to  | (optional) Assign this workflow to one or more existing content-types.   |
     | Stages         | Add review stages (see [Adding a new stage](#adding-a-new-stage)).       |
 3. Click on the **Save** button. The new workflow will be displayed in the list view and for every content-type assigned.
@@ -9257,7 +9277,7 @@ Strapi Cloud will deploy the updated code in Strapi 5 and will automatically run
 <details style={{backgroundColor: 'transparent', border: 'solid 1px #4945ff' }}>
 <summary style={{fontSize: '18px'}}>How do I keep the legacy <code>attributes</code> wrapper during the migration?</summary>
 
-- For REST clients, add the `Strapi-Response-Format: v4` header while you refactor your code. The [new response format breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format#use-the-compatibility-header-while-migrating) shows where to add the header in `curl`, `fetch`, and Axios requests.
+- For REST clients, add the `Strapi-Response-Format: v4` header while you refactor your code. The [new response format breaking change](/cms/migration/v4-to-v5/breaking-changes/new-response-format#migration) shows where to add the header in `curl`, `fetch`, and Axios requests.
 - For GraphQL clients, enable `v4CompatibilityMode` and follow the steps of the [GraphQL API migration documentation](/cms/migration/v4-to-v5/breaking-changes/graphql-api-updated#migration) to gradually remove `attributes`.
 - REST responses continue to expose both `id` (legacy) and [`documentId`](/cms/migration/v4-to-v5/breaking-changes/use-document-id) when the header is enabled. GraphQL never exposes numeric `id`, so update your queries to use `documentId` even before you turn compatibility mode off.
 
@@ -9364,7 +9384,7 @@ Follow the steps below and leverage retro-compatibility headers and guided migra
 
 ### Migrate REST API calls
 
-1. Enable the compatibility header everywhere you still expect `attributes`, by adding `Strapi-Response-Format: v4` to REST calls in HTTP clients, SDKs, and middleware (see the [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/new-response-format#use-the-compatibility-header-while-migrating) for concrete examples).
+1. Enable the compatibility header everywhere you still expect `attributes`, by adding `Strapi-Response-Format: v4` to REST calls in HTTP clients, SDKs, and middleware (see the [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/new-response-format#migration) for concrete examples).
 2. While the header is on, audit existing payloads. Capture representative responses (including populated relations, components, and media) so you can verify that legacy consumers keep working during the transition.
 3. Update and test each client by:
     - removing `data.attributes` access,

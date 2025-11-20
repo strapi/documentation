@@ -26,7 +26,7 @@
 - [Favicon](https://docs.strapi.io/cms/admin-panel-customization/favicon): Replace the favicon displayed in Strapi's admin panel.
 - [Homepage customization](https://docs.strapi.io/cms/admin-panel-customization/homepage): The admin panel homepage displays default content and profile widgets and supports custom additions through the app.widgets.register API.
 - [Locales & translations](https://docs.strapi.io/cms/admin-panel-customization/locales-translations): Configure the admin panel languages by updating the config.locales array and override default or plugin strings with config.translations or custom translation files.
-- [Logos](https://docs.strapi.io/cms/admin-panel-customization/logos): Customize the logos displayed in Strapi's admin panel.
+- [Logos](https://docs.strapi.io/cms/admin-panel-customization/logos): Update login and navigation logos by extending the admin app. Prefer SVG for crisp rendering; provide light/dark variants when possible for contrast.
 - [Theme extension](https://docs.strapi.io/cms/admin-panel-customization/theme-extension): Extend Strapi's admin panel theme.
 - [Customizing the rich text editor](https://docs.strapi.io/cms/admin-panel-customization/wysiwyg-editor): Learn more about the various strategies available to customize the WYSIWYG editor in Strapi's admin panel.
 - [Strapi Client](https://docs.strapi.io/cms/api/client): The Strapi Client library simplifies interactions with your Strapi back end, providing a way to fetch, create, update, and delete content.

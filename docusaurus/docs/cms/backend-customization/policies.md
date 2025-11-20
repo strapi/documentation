@@ -24,7 +24,7 @@ Policies are functions that execute specific logic on each request before it rea
 
 Each [route](/cms/backend-customization/routes) of a Strapi project can be associated to an array of policies. For example, a policy named `is-admin` could check that the request is sent by an admin user, and restrict access to critical routes.
 
-Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies).
+Policies can be global or scoped. [Global policies](#global-policies) can be associated to any route in the project. Scoped policies only apply to a specific [API](#api-policies) or [plugin](#plugin-policies) and should live under the corresponding `./src/api/<api-name>/policies/` or `./src/plugins/<plugin-name>/policies/` folder.
 
 <figure style={{width: '100%', margin: '0'}}>
   <img src="/img/assets/backend-customization/diagram-routes.png" alt="Simplified Strapi backend diagram with routes and policies highlighted" />
@@ -89,7 +89,7 @@ Policies can be configured using a `config` object:
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
 
-```js title=".src/api/[api-name]/policies/my-policy.js"
+```js title="./src/api/[api-name]/policies/my-policy.js"
 
 module.exports = (policyContext, config, { strapi }) => {
     if (policyContext.state.user.role.code === config.role) { // if user's role is the same as the one described in configuration
