@@ -8,7 +8,9 @@ const AiToolbar = () => {
     'copy-markdown': 'idle'
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const dropdownRef = useRef(null);
+  const itemsRef = useRef([]);
 
   const primaryAction = getPrimaryAction();
   const dropdownActions = getDropdownActions();
@@ -18,6 +20,7 @@ const AiToolbar = () => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+        setFocusedIndex(-1);
       }
     };
 
@@ -70,7 +73,54 @@ const AiToolbar = () => {
 
   // Toggle dropdown
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen((open) => {
+      const next = !open;
+      if (!next) setFocusedIndex(-1);
+      return next;
+    });
+  };
+
+  const onDropdownKeyDown = (e) => {
+    if (!isDropdownOpen && (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      setIsDropdownOpen(true);
+      setFocusedIndex(0);
+      return;
+    }
+    if (!isDropdownOpen) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setIsDropdownOpen(false);
+      setFocusedIndex(-1);
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setFocusedIndex((i) => Math.min(i + 1, dropdownActions.length - 1));
+      return;
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setFocusedIndex((i) => Math.max(i - 1, 0));
+      return;
+    }
+    if (e.key === 'Home') {
+      e.preventDefault();
+      setFocusedIndex(0);
+      return;
+    }
+    if (e.key === 'End') {
+      e.preventDefault();
+      setFocusedIndex(dropdownActions.length - 1);
+      return;
+    }
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const idx = focusedIndex >= 0 ? focusedIndex : 0;
+      const action = dropdownActions[idx];
+      if (action) handleDropdownAction(action);
+    }
   };
 
   // Don't render if no primary action
@@ -90,6 +140,7 @@ const AiToolbar = () => {
           disabled={isDisabled}
           className={`ai-toolbar__button ${displayConfig.className}`}
           title={primaryAction.description}
+          aria-label={displayConfig.label}
         >
           <Icon 
             name={displayConfig.icon} 
@@ -106,6 +157,10 @@ const AiToolbar = () => {
           onClick={toggleDropdown}
           className={`ai-toolbar__dropdown-trigger ${isDropdownOpen ? 'ai-toolbar__dropdown-trigger--open' : ''}`}
           title="More AI options"
+          aria-haspopup="menu"
+          aria-expanded={isDropdownOpen}
+          aria-controls="ai-toolbar-menu"
+          onKeyDown={onDropdownKeyDown}
           style={{
             borderColor: currentState === 'success' ? 'var(--strapi-neutral-200)' : undefined
           }}
@@ -119,13 +174,18 @@ const AiToolbar = () => {
 
         {/* Dropdown menu */}
         {isDropdownOpen && (
-          <div className="ai-toolbar__dropdown">
-            {dropdownActions.map((action) => (
+          <div className="ai-toolbar__dropdown" id="ai-toolbar-menu" role="menu" aria-label="AI options">
+            {dropdownActions.map((action, idx) => (
               <button
                 key={action.id}
+                ref={(el) => (itemsRef.current[idx] = el)}
                 onClick={() => handleDropdownAction(action)}
                 className={`ai-toolbar__dropdown-item ${action.description ? '' : 'ai-toolbar__dropdown-item--no-description'}`}
                 title={action.description}
+                role="menuitem"
+                tabIndex={focusedIndex === idx ? 0 : -1}
+                aria-label={action.label}
+                onFocus={() => setFocusedIndex(idx)}
               >
                 <Icon 
                   name={action.icon} 
