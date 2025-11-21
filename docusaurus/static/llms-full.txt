@@ -8311,6 +8311,10 @@ The Email feature only handles outbound delivery. Receiving or parsing incoming 
 
 </Tabs>
 
+:::tip Deliverability
+For best deliverability, configure SPF/DKIM with your email provider and ensure the `defaultFrom` domain aligns with the domain you verified with the provider.
+:::
+
 ##### Configuring providers
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
@@ -8335,28 +8339,7 @@ You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` co
 
 Some providers expose SMTP-style connection details instead of (or in addition to) an API key. Add those values in `providerOptions` so Strapi can reach the provider host. For instance, the community Nodemailer provider expects the host, port, and authentication credentials:
 
-```js title="/config/plugins.js"
-module.exports = ({ env }) => ({
-  email: {
-    config: {
-      provider: 'nodemailer',
-      providerOptions: {
-        host: env('SMTP_HOST'),
-        port: env.int('SMTP_PORT', 587),
-        secure: false, // Use `true` for port 465
-        auth: {
-          user: env('SMTP_USERNAME'),
-          pass: env('SMTP_PASSWORD'),
-        },
-      },
-      settings: {
-        defaultFrom: 'no-reply@example.com',
-        defaultReplyTo: 'support@example.com',
-      },
-    },
-  },
-});
-```
+</Tabs>
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 

@@ -20889,6 +20889,27 @@ module.exports = ({ env }) => ({
 });
 ```
 
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+export default ({ env }) => ({
+  email: {
+    config: {
+      provider: 'sendmail', // replace with your provider
+      providerOptions: {
+        // ... provider-specific options
+      },
+      settings: {
+        defaultFrom: 'no-reply@example.com',
+        defaultReplyTo: 'support@example.com',
+      },
+    },
+  },
+});
+```
+
 
 ## Creating providers
 Description: The interface that must be exported depends on the plugin you are developing the provider for.

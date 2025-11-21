@@ -209,6 +209,9 @@ You can set a specific configuration in the `/config/env/{env}/plugins.js|ts` co
 
 Some providers expose SMTP-style connection details instead of (or in addition to) an API key. Add those values in `providerOptions` so Strapi can reach the provider host. For instance, the community Nodemailer provider expects the host, port, and authentication credentials:
 
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
 ```js title="/config/plugins.js"
 module.exports = ({ env }) => ({
   email: {
@@ -230,6 +233,7 @@ module.exports = ({ env }) => ({
     },
   },
 });
+```
 
 </TabItem>
 
@@ -253,6 +257,7 @@ export default ({ env }) => ({
 ```
 
 </TabItem>
+</Tabs>
 
 If your provider gives you a single URL instead of host and port values, pass that URL (for example `https://api.eu.mailgun.net`) in `providerOptions` using the key the package expects.
 
