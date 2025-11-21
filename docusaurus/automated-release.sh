@@ -14,16 +14,6 @@ PACKAGE_JSON_FILE="package.json"
 TEMP_RELEASE_NOTES="docs/temp-new-release-notes.md"
 HOMEPAGE_FILE="src/pages/home/_home.content.js"
 
-# Dry-run support (no pushes/releases; still updates local files)
-DRY_RUN=false
-for arg in "$@"; do
-  case "$arg" in
-    --dry-run|-n)
-      DRY_RUN=true
-      ;;
-  esac
-done
-
 # Create temporary directory at the start
 mkdir -p "$TEMP_DIR"
 
@@ -433,38 +423,28 @@ commit_and_push() {
     # We should already be on main branch (checked at script start)
     echo -e "${BLUE}Confirming we're on main branch...${NC}"
     current_branch=$(git branch --show-current)
-    if [ "$current_branch" != "main" ] && [ "$DRY_RUN" != true ]; then
+    if [ "$current_branch" != "main" ]; then
         echo -e "${RED}❌ Unexpected branch change. Currently on: $current_branch${NC}"
         exit 1
     fi
-    if [ "$current_branch" != "main" ] && [ "$DRY_RUN" = true ]; then
-        echo -e "${YELLOW}⚠️  DRY-RUN: not on 'main' (current: $current_branch). Proceeding without commit/push.${NC}"
-    fi
     
     # Pull latest changes to avoid conflicts
-    if [ "$DRY_RUN" != true ]; then
-      echo -e "${BLUE}Pulling latest changes...${NC}"
-      git pull origin main
-    fi
+    echo -e "${BLUE}Pulling latest changes...${NC}"
+    git pull origin main
     
     # Check if there are changes
     if ! git diff --quiet; then
-        if [ "$DRY_RUN" = true ]; then
-            echo -e "${YELLOW}DRY-RUN${NC}: would commit and push the following changes:"
-            git status --porcelain
+        git add "$PACKAGE_JSON_FILE" "$RELEASE_NOTES_FILE" "$HOMEPAGE_FILE"
+        git commit -m "v$MILESTONE_TITLE"
+        
+        echo -e "${BLUE}Pushing to main branch...${NC}"
+        git push origin main
+        
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}✅ Changes committed and pushed${NC}"
         else
-            git add "$PACKAGE_JSON_FILE" "$RELEASE_NOTES_FILE" "$HOMEPAGE_FILE"
-            git commit -m "v$MILESTONE_TITLE"
-            
-            echo -e "${BLUE}Pushing to main branch...${NC}"
-            git push origin main
-            
-            if [ $? -eq 0 ]; then
-                echo -e "${GREEN}✅ Changes committed and pushed${NC}"
-            else
-                echo -e "${RED}❌ Failed to push changes${NC}"
-                exit 1
-            fi
+            echo -e "${RED}❌ Failed to push changes${NC}"
+            exit 1
         fi
     else
         echo -e "${YELLOW}⚠️  No changes to commit${NC}"
@@ -474,10 +454,6 @@ commit_and_push() {
 # Function to wait for deployment
 wait_for_deployment() {
     echo -e "${BLUE}⏳ Waiting for deployment...${NC}"
-    if [ "$DRY_RUN" = true ]; then
-        echo -e "${YELLOW}DRY-RUN${NC}: skipping deployment wait."
-        return 0
-    fi
     
     # Wait a minimum of 2 minutes before checking
     echo -e "${BLUE}Waiting initial 2 minutes for build to start...${NC}"
@@ -516,10 +492,6 @@ wait_for_deployment() {
 # Function to create GitHub release
 create_github_release() {
     echo -e "${BLUE}🚀 Creating GitHub release...${NC}"
-    if [ "$DRY_RUN" = true ]; then
-        echo -e "${YELLOW}DRY-RUN${NC}: skipping GitHub release creation."
-        return 0
-    fi
     
     local version_anchor=$(echo "$MILESTONE_TITLE" | sed 's/\.//g')
     local release_body="Full release notes for v$MILESTONE_TITLE are available [directly on the website](https://docs.strapi.io/release-notes#$version_anchor).
@@ -570,12 +542,8 @@ show_summary() {
     echo -e "- ✅ Milestone: $MILESTONE_TITLE"
     echo -e "- ✅ Package.json updated"
     echo -e "- ✅ Release notes generated and integrated"
-    if [ "$DRY_RUN" = true ]; then
-      echo -e "- ⚠️  DRY-RUN: no commit/push and no GitHub release"
-    else
-      echo -e "- ✅ Changes committed and pushed"
-      echo -e "- ✅ GitHub release created"
-    fi
+    echo -e "- ✅ Changes committed and pushed"
+    echo -e "- ✅ GitHub release created"
     echo ""
     echo -e "${BLUE}Next steps:${NC}"
     echo -e "- Check the live documentation: https://docs.strapi.io/release-notes"
@@ -634,7 +602,7 @@ main() {
 
 # Check if we're on the main branch
 current_branch=$(git branch --show-current)
-if [ "$current_branch" != "main" ] && [ "$DRY_RUN" != true ]; then
+if [ "$current_branch" != "main" ]; then
     echo -e "${RED}❌ You must run this script from the 'main' branch${NC}"
     echo -e "${BLUE}Current branch: $current_branch${NC}"
     echo ""
@@ -645,8 +613,6 @@ if [ "$current_branch" != "main" ] && [ "$DRY_RUN" != true ]; then
     echo -e "4. Run this script again"
     echo ""
     exit 1
-elif [ "$current_branch" != "main" ] && [ "$DRY_RUN" = true ]; then
-    echo -e "${YELLOW}⚠️  DRY-RUN: not on 'main' (current: $current_branch). Proceeding without commit/push.${NC}"
 fi
 
 # Configure git to avoid pull strategy warnings
