@@ -25,7 +25,6 @@
     "meilisearch:update-order": "node -r dotenv/config scripts/meilisearch/add-category-order.js"
   },
   "dependencies": {
-    "@amplitude/analytics-browser": "^2.12.2",
     "@docusaurus/core": "3.5.2",
     "@docusaurus/plugin-client-redirects": "3.5.2",
     "@docusaurus/plugin-google-tag-manager": "3.5.2",
