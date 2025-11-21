@@ -24,6 +24,10 @@ main {
   }
 }
 
+  [class*="docRoot"]:not(:has(main)) {
+    width: 0;
+  }
+
 /**
  * Experimental: Different identity based on URL
  */
@@ -59,7 +63,12 @@ main {
       padding-right: 32px !important;
     }
   }
+
+  [class*="docRoot"]:not(:has(main)) {
+    width: 300px;
+  }
 }
+
 
 /** Dark mode */
 @include dark {
