@@ -5993,22 +5993,9 @@ Most of the time, webhooks make requests to public URLs, therefore it is possibl
 
 To prevent this from happening you can send a header with an authentication token. Using the Admin panel you would have to do it for every webhook.
 
-:::tip Verify signatures
-In addition to auth headers, sign webhook payloads and verify signatures server‑side to prevent tampering and replay attacks.
+Another way is to define `defaultHeaders` to add to every webhook request.
 
-- Generate a shared secret and store it in environment variables
-- Have the sender compute an HMAC (e.g., SHA‑256) over the raw request body plus a timestamp
-- Send the signature (and timestamp) in headers (e.g., `X‑Webhook‑Signature`, `X‑Webhook‑Timestamp`)
-- On receipt, recompute the HMAC and compare using a constant‑time check
-- Reject if the signature is invalid or the timestamp is too old to mitigate replay
-
-Learn more:
-- 
-
-</Tabs>
-
-Additional external examples:
-- 
+You can configure these global headers by updating the file at `./config/server`:
 
 </Tabs>
 
@@ -6021,6 +6008,29 @@ Additional external examples:
 </Tabs>
 
 If you are developing the webhook handler yourself you can now verify the token by reading the headers.
+
+### Verifying signatures
+
+In addition to auth headers, it's recommended to sign webhook payloads and verify signatures server‑side to prevent tampering and replay attacks. To do so, you can use the following guidelines:
+
+- Generate a shared secret and store it in environment variables
+- Have the sender compute an HMAC (e.g., SHA‑256) over the raw request body plus a timestamp
+- Send the signature (and timestamp) in headers (e.g., `X‑Webhook‑Signature`, `X‑Webhook‑Timestamp`)
+- On receipt, recompute the HMAC and compare using a constant‑time check
+- Reject if the signature is invalid or the timestamp is too old to mitigate replay
+
+<details>
+<summary>Example: Verify HMAC signatures (Node.js)</summary>
+
+Here is a minimal Node.js middleware example (pseudo‑code) showing 
+
+</Tabs>
+
+Here a few additional external examples:
+- 
+- 
+<br />
+</details>
 
 <!--- ### Usage
 

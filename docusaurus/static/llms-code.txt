@@ -14104,8 +14104,67 @@ export default {
 
 
 ## Securing your webhooks
-Description: Here is a minimal Node.js middleware example (pseudo‑code) showing HMAC verification:
+Description: You can configure these global headers by updating the file at ./config/server:
 (Source: https://docs.strapi.io/cms/backend-customization/webhooks#securing-your-webhooks)
+
+Language: JavaScript
+File path: ./config/server.js
+
+```js
+module.exports = {
+  webhooks: {
+    defaultHeaders: {
+      Authorization: "Bearer my-very-secured-token",
+    },
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: ./config/server.ts
+
+```ts
+export default {
+  webhooks: {
+    defaultHeaders: {
+      Authorization: "Bearer my-very-secured-token",
+    },
+  },
+};
+```
+
+Language: JavaScript
+File path: ./config/server.js
+
+```js
+module.exports = {
+  webhooks: {
+    defaultHeaders: {
+      Authorization: `Bearer ${process.env.WEBHOOK_TOKEN}`,
+    },
+  },
+};
+```
+
+---
+Language: TypeScript
+File path: ./config/server.ts
+
+```ts
+export default {
+  webhooks: {
+    defaultHeaders: {
+      Authorization: `Bearer ${process.env.WEBHOOK_TOKEN}`,
+    },
+  },
+};
+```
+
+
+## Verifying signatures
+Description: Here is a minimal Node.js middleware example (pseudo‑code) showing verification:
+(Source: https://docs.strapi.io/cms/backend-customization/webhooks#verifying-signatures)
 
 Language: JavaScript
 File path: /src/middlewares/verify-webhook.js
@@ -14169,60 +14228,6 @@ export default (config: unknown, { strapi }: any) => {
 
     await next();
   };
-};
-```
-
-Language: JavaScript
-File path: ./config/server.js
-
-```js
-module.exports = {
-  webhooks: {
-    defaultHeaders: {
-      Authorization: "Bearer my-very-secured-token",
-    },
-  },
-};
-```
-
----
-Language: TypeScript
-File path: ./config/server.ts
-
-```ts
-export default {
-  webhooks: {
-    defaultHeaders: {
-      Authorization: "Bearer my-very-secured-token",
-    },
-  },
-};
-```
-
-Language: JavaScript
-File path: ./config/server.js
-
-```js
-module.exports = {
-  webhooks: {
-    defaultHeaders: {
-      Authorization: `Bearer ${process.env.WEBHOOK_TOKEN}`,
-    },
-  },
-};
-```
-
----
-Language: TypeScript
-File path: ./config/server.ts
-
-```ts
-export default {
-  webhooks: {
-    defaultHeaders: {
-      Authorization: `Bearer ${process.env.WEBHOOK_TOKEN}`,
-    },
-  },
 };
 ```
 
