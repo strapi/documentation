@@ -12,16 +12,28 @@
 
 // @ts-check
 
+/**
+ * Custom HTML sidebar entries
+ * Using const for reuse and easier maintenance
+ */
+const AI_OPTIONS_HTML = {
+  type: 'html',
+  // Link into the existing Strapi AI section until a dedicated page exists
+  value:
+    '<i class="ph-fill ph-sparkle"></i> <a href="/cms/configurations/admin-panel#strapi-ai">AI options</a>',
+  defaultStyle: true,
+};
+
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   cmsSidebar: [
-    {
-      // Prominent entry for AI-related helpers
-      type: 'html',
-      value: `<i class="ph-fill ph-sparkle"></i> <a href="${require('./docusaurus.config').customFields.aiToolsPath}">AI tools in docs</a>`,
-      defaultStyle: true,
-      className: 'sidebar-ai-tools',
-    },
+    // Quick entry for AI options
+    AI_OPTIONS_HTML,
+    // {
+    //   type: 'html',
+    //   value: '<i class="ph-fill ph-github-logo"></i> <a href="https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71?pvs=74">Docs Contribution Program</a>', // The HTML to be rendered
+    //   defaultStyle: true, // Use the default menu item styling
+    // },
     {
       // Getting Started
       type: 'category',
@@ -550,13 +562,6 @@ const sidebars = {
   ],
 
   cloudSidebar: [
-    {
-      // Prominent entry for AI-related helpers
-      type: 'html',
-      value: `<i class="ph-fill ph-sparkle"></i> <a href="${require('./docusaurus.config').customFields.aiToolsPath}">AI tools in docs</a>`,
-      defaultStyle: true,
-      className: 'sidebar-ai-tools',
-    },
     {
       // Getting Started
       type: 'category',
