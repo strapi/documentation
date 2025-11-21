@@ -12,6 +12,7 @@ TEMP_DIR="/tmp/release-automation-$$"
 RELEASE_NOTES_FILE="docs/release-notes.md"
 PACKAGE_JSON_FILE="package.json"
 TEMP_RELEASE_NOTES="docs/temp-new-release-notes.md"
+HOMEPAGE_FILE="src/pages/home/_home.content.js"
 
 # Create temporary directory at the start
 mkdir -p "$TEMP_DIR"
@@ -270,6 +271,29 @@ check_pending_prs() {
     fi
 }
 
+# Function to update homepage release notes link to latest anchor
+update_homepage_release_link() {
+    echo -e "${BLUE}📝 Updating homepage release notes link...${NC}"
+
+    if [ ! -f "$HOMEPAGE_FILE" ]; then
+        echo -e "${YELLOW}⚠️  Homepage content file not found: $HOMEPAGE_FILE (skipping)${NC}"
+        return 0
+    fi
+
+    # Build anchor from milestone title (strip optional leading 'v' and remove dots)
+    local version_anchor
+    version_anchor=$(echo "$MILESTONE_TITLE" | sed 's/^v//; s/\.//g')
+
+    # Create backup and replace the anchor in-place
+    cp "$HOMEPAGE_FILE" "$HOMEPAGE_FILE.bak"
+    if grep -q "link: '/release-notes#" "$HOMEPAGE_FILE"; then
+        sed -E -i "s|(link: '/release-notes#)[0-9]+'|\1${version_anchor}'|" "$HOMEPAGE_FILE"
+        echo -e "${GREEN}✅ Updated ${HOMEPAGE_FILE} to '/release-notes#${version_anchor}'${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Could not find release-notes link pattern in ${HOMEPAGE_FILE} (skipping)${NC}"
+    fi
+}
+
 # Function to move problematic PRs to next milestone
 move_problematic_prs() {
     local problematic_prs="$1"
@@ -410,7 +434,7 @@ commit_and_push() {
     
     # Check if there are changes
     if ! git diff --quiet; then
-        git add "$PACKAGE_JSON_FILE" "$RELEASE_NOTES_FILE"
+        git add "$PACKAGE_JSON_FILE" "$RELEASE_NOTES_FILE" "$HOMEPAGE_FILE"
         git commit -m "v$MILESTONE_TITLE"
         
         echo -e "${BLUE}Pushing to main branch...${NC}"
@@ -536,6 +560,10 @@ show_summary() {
         rm -f "$RELEASE_NOTES_FILE.bak"
         echo -e "${GREEN}✅ Removed $RELEASE_NOTES_FILE.bak${NC}"
     fi
+    if [ -f "$HOMEPAGE_FILE.bak" ]; then
+        rm -f "$HOMEPAGE_FILE.bak"
+        echo -e "${GREEN}✅ Removed $HOMEPAGE_FILE.bak${NC}"
+    fi
     echo ""
 }
 
@@ -565,6 +593,7 @@ main() {
     update_package_version
     generate_release_notes
     integrate_release_notes
+    update_homepage_release_link
     commit_and_push
     wait_for_deployment
     create_github_release
