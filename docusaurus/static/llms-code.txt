@@ -14103,9 +14103,9 @@ export default {
 ```
 
 
-## Securing your webhooks
+## Webhooks security
 Description: You can configure these global headers by updating the file at ./config/server:
-(Source: https://docs.strapi.io/cms/backend-customization/webhooks#securing-your-webhooks)
+(Source: https://docs.strapi.io/cms/backend-customization/webhooks#webhooks-security)
 
 Language: JavaScript
 File path: ./config/server.js
