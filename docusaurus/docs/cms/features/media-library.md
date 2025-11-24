@@ -489,6 +489,10 @@ Breakpoint changes will only apply to new images, existing images will not be re
 
 **Path to use the feature:** <Icon name="images" /> Media Library
 
+:::info
+Strapi supports uploading images from the admin panel or programmatically. From the API, you can send a multipart/form-data request to `/api/upload` with the image file and optional `fileInfo` metadata for captions and alt text (see [REST API documentation](/cms/api/rest/upload#upload-files) for more information).
+:::
+
 The Media Library displays all assets uploaded in the application, either via the <Icon name="images" /> Media Library itself or via the <Icon name="feather" /> Content Manager when managing a media field.
 
 Assets uploaded to the Media Library can be inserted into content-types using the [Content Manager](/cms/features/content-manager#creating--writing-content).

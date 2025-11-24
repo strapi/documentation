@@ -30,7 +30,11 @@ The [Media Library feature](/cms/features/media-library) is powered in the back-
 
 Upload one or more files to your application.
 
-`files` is the only accepted parameter, and describes the file(s) to upload. The value(s) can be a Buffer or Stream:
+`files` is the only accepted parameter, and describes the file(s) to upload. The value(s) can be a Buffer or Stream.
+
+:::tip
+When uploading an image, include a `fileInfo` object to set the file name, alt text, and caption.
+:::
 
 <Tabs>
 <TabItem value="browser" label="Browser">
@@ -39,6 +43,12 @@ Upload one or more files to your application.
 <form>
   <!-- Can be multiple files -->
   <input type="file" name="files" />
+  <input
+    type="hidden"
+    name="fileInfo"
+    value='{"name":"homepage-hero","alternativeText":"Person smiling while
+      holding laptop","caption":"Hero image used on the homepage"}'
+  />
   <input type="submit" value="Submit" />
 </form>
 
@@ -68,6 +78,14 @@ const file = await blobFrom('./1.png', 'image/png');
 const form = new FormData();
 
 form.append('files', file, "1.png");
+form.append(
+  'fileInfo',
+  JSON.stringify({
+    name: 'Homepage hero',
+    alternativeText: 'Person smiling while holding laptop',
+    caption: 'Hero image used on the homepage',
+  })
+);
 
 const response = await fetch('http://localhost:1337/api/upload', {
   method: 'post',
