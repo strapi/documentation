@@ -16377,6 +16377,39 @@ export default {
 ```
 
 
+## Destroy
+Description: Example to register a custom field, seed content and clean up
+(Source: https://docs.strapi.io/cms/configurations/functions#destroy)
+
+Language: TypeScript
+File path: src/index.ts
+
+```ts
+export default {
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      type: 'string',
+      plugin: 'color-picker',
+    });
+  },
+
+  async bootstrap({ strapi }) {
+    const entryCount = await strapi.db.query('api::palette.palette').count();
+    if (entryCount === 0) {
+      await strapi.db.query('api::palette.palette').create({
+        data: { name: 'Default palette', primary: '#4945FF' },
+      });
+    }
+  },
+
+  async destroy({ strapi }) {
+    await strapi.db.connection?.destroy?.();
+  },
+};
+```
+
+
 
 # Access and cast env variables
 Source: https://docs.strapi.io/cms/configurations/guides/access-cast-environment-variables

@@ -7121,6 +7121,45 @@ It can be used to gracefully:
 - stop [services](/cms/backend-customization/services) that are running
 - [clean up plugin actions](/cms/plugins-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
 
+:::tip
+All 3 lifecycle functions can be put together to configure custom behavior during application startup and shutdown.
+
+1. Decide when your logic should run.
+   - Add initialization-only tasks (e.g. registering a custom field or provider) in `register()`.
+   - Add startup tasks that need full Strapi access (e.g. seeding or attaching webhooks) in `bootstrap()`.
+   - Add cleanup logic (e.g. closing external connections) in `destroy()`.
+2. Place the code in `src/index.js|ts`. Keep `register()` lean because it runs before Strapi is fully set up.
+3. Restart Strapi to confirm each lifecycle executes in sequence.
+
+<details>
+<summary>Example to register a custom field, seed content and clean up</summary>
+```ts title="src/index.ts"
+
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      type: 'string',
+      plugin: 'color-picker',
+    });
+  },
+
+  async bootstrap({ strapi }) {
+    const entryCount = await strapi.db.query('api::palette.palette').count();
+    if (entryCount === 0) {
+      await strapi.db.query('api::palette.palette').create({
+        data: { name: 'Default palette', primary: '#4945FF' },
+      });
+    }
+  },
+
+  async destroy({ strapi }) {
+    await strapi.db.connection?.destroy?.();
+  },
+};
+```
+</details>
+:::
+
 :::strapi Additional information
 You might find additional information in  about registering lifecycle functions.
 :::

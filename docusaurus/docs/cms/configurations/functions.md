@@ -174,6 +174,8 @@ It can be used to:
 
 `register()` is the very first thing that happens when a Strapi application is starting. This happens _before_ any setup process and you don't have any access to database, routes, policies, or any other backend server elements within the `register()` function.
 
+You can use `register()` to front-load security tasks such as loading secrets, rotating API keys, or registering authentication providers before the app finishes initializing.
+
 ## Bootstrap
 
 The `bootstrap` lifecycle function, found in `./src/index.js` (or in `./src/index.ts`), is called at every server start.
@@ -185,6 +187,8 @@ It can be used to:
 - declare custom conditions for the [Role-Based Access Control (RBAC)](/cms/configurations/guides/rbac) feature
 
 The `bootstrap()` function is run _before_ the back-end server starts but _after_ the Strapi application has setup, so you have access to anything from the `strapi` object.
+
+You can use `bootstrap()` to support editorial workflows, for example by seeding starter content, attaching webhooks, or scheduling cron jobs at startup.
 
 :::tip
 You can run `yarn strapi console` (or `npm run strapi console`) in the terminal and interact with the `strapi` object.
@@ -198,6 +202,47 @@ It can be used to gracefully:
 
 - stop [services](/cms/backend-customization/services) that are running
 - [clean up plugin actions](/cms/plugins-development/server-api#destroy) (e.g. close connections, remove listeners, etc.)
+
+You can use `destroy()` to handle operational clean-up, such as closing database or queue connections and removing listeners so the application can shut down cleanly.
+
+:::tip
+All 3 lifecycle functions can be put together to configure custom behavior during application startup and shutdown.
+
+1. Decide when your logic should run.
+   - Add initialization-only tasks (e.g. registering a custom field or provider) in `register()`.
+   - Add startup tasks that need full Strapi access (e.g. seeding or attaching webhooks) in `bootstrap()`.
+   - Add cleanup logic (e.g. closing external connections) in `destroy()`.
+2. Place the code in `src/index.js|ts`. Keep `register()` lean because it runs before Strapi is fully set up.
+3. Restart Strapi to confirm each lifecycle executes in sequence.
+
+<details>
+<summary>Example to register a custom field, seed content and clean up</summary>
+```ts title="src/index.ts"
+export default {
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      type: 'string',
+      plugin: 'color-picker',
+    });
+  },
+
+  async bootstrap({ strapi }) {
+    const entryCount = await strapi.db.query('api::palette.palette').count();
+    if (entryCount === 0) {
+      await strapi.db.query('api::palette.palette').create({
+        data: { name: 'Default palette', primary: '#4945FF' },
+      });
+    }
+  },
+
+  async destroy({ strapi }) {
+    await strapi.db.connection?.destroy?.();
+  },
+};
+```
+</details>
+:::
 
 :::strapi Additional information
 You might find additional information in <ExternalLink to="https://strapi.io/blog/how-to-use-register-function-to-customize-your-strapi-app" text="this blog article"/> about registering lifecycle functions.
