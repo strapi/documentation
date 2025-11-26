@@ -13372,8 +13372,9 @@ Language: JavaScript
 File path: ./src/api/restaurant/routes/01-custom-restaurant.js
 
 ```js
-
-module.exports = {
+/** @type {import('@strapi/strapi').Core.RouterConfig} */
+const config = {
+  type: 'content-api',
   routes: [
     { // Path defined with an URL parameter
       method: 'POST',
@@ -13387,6 +13388,8 @@ module.exports = {
     }
   ]
 }
+
+module.exports = config
 ```
 
 ---
@@ -13394,8 +13397,10 @@ Language: TypeScript
 File path: ./src/api/restaurant/routes/01-custom-restaurant.ts
 
 ```ts
+import type { Core } from '@strapi/strapi';
 
-export default {
+const config: Core.RouterConfig = {
+  type: 'content-api',
   routes: [
     { // Path defined with a URL parameter
       method: 'GET',
@@ -13409,6 +13414,8 @@ export default {
     }
   ]
 }
+
+export default config
 ```
 
 

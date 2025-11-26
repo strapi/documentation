@@ -209,8 +209,9 @@ In the following example, the custom routes file name is prefixed with `01-` to 
 <TabItem value="js" label="JavaScript">
 
 ```js title="./src/api/restaurant/routes/01-custom-restaurant.js"
-
-module.exports = {
+/** @type {import('@strapi/strapi').Core.RouterConfig} */
+const config = {
+  type: 'content-api',
   routes: [
     { // Path defined with an URL parameter
       method: 'POST',
@@ -224,6 +225,8 @@ module.exports = {
     }
   ]
 }
+
+module.exports = config
 ```
 
 </TabItem>
@@ -231,8 +234,10 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="./src/api/restaurant/routes/01-custom-restaurant.ts"
+import type { Core } from '@strapi/strapi';
 
-export default {
+const config: Core.RouterConfig = {
+  type: 'content-api',
   routes: [
     { // Path defined with a URL parameter
       method: 'GET',
@@ -246,6 +251,8 @@ export default {
     }
   ]
 }
+
+export default config
 ```
 
 </TabItem>
