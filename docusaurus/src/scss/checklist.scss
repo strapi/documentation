@@ -1,0 +1,162 @@
+/** Component: Checklist */
+@use 'mixins' as *;
+
+.checklist {
+  --checklist-header-font-size: 11px;
+  --checklist-header-line-height: 16px;
+  --checklist-header-font-weight: 600;
+  --checklist-content-font-size: 14px;
+  --checklist-content-line-height: 20px;
+
+  border: 1px solid var(--strapi-neutral-150);
+  border-radius: 4px;
+  background-color: var(--strapi-neutral-0);
+  overflow: hidden;
+  margin-bottom: 40px;
+
+  &__header {
+    background-color: var(--strapi-neutral-100);
+    color: var(--strapi-neutral-600);
+    text-transform: uppercase;
+    font-size: var(--checklist-header-font-size) !important;
+    line-height: var(--checklist-header-line-height);
+    font-weight: var(--checklist-header-font-weight);
+    padding: 8px 16px 6px;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid var(--strapi-neutral-150);
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+  }
+
+  &__item {
+    padding: 0;
+    
+    &::before {
+      display: none;
+    }
+  }
+
+  &__label {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 16px;
+    cursor: pointer;
+    gap: 12px;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  &__checkbox {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--strapi-neutral-300);
+    border-radius: 3px;
+    background-color: var(--strapi-neutral-0);
+    position: relative;
+    top: 2px;
+    transition: all 0.15s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 4.5px;
+      top: 1px;
+      width: 4px;
+      height: 8px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__input:checked + &__checkbox {
+    background-color: var(--strapi-primary-600);
+    border-color: var(--strapi-primary-600);
+
+    &::after {
+      display: block;
+    }
+  }
+
+  &__input:focus-visible + &__checkbox {
+    outline: 2px solid var(--strapi-primary-500);
+    outline-offset: 2px;
+  }
+
+  &__text {
+    flex: 1;
+    color: var(--strapi-neutral-800);
+    font-size: var(--checklist-content-font-size);
+    line-height: var(--checklist-content-line-height);
+    word-break: break-word;
+
+
+    code {
+      background-color: var(--strapi-neutral-100);
+      color: var(--strapi-neutral-700);
+      border: 1px solid var(--strapi-neutral-200);
+      border-radius: 3px;
+      padding: 1px 4px;
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    a {
+      color: var(--strapi-primary-600);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@include dark {
+  .checklist {
+    background-color: #212134;
+    border-color: #4a4a6a;
+
+    &__header {
+      background-color: var(--strapi-neutral-150);
+      color: var(--strapi-neutral-400);
+      border-color: #4a4a6a;
+    }
+
+    &__checkbox {
+      background-color: #212134;
+      border-color: #6a6a8a;
+    }
+
+    &__input:checked + .checklist__checkbox {
+      background-color: var(--strapi-primary-500);
+      border-color: var(--strapi-primary-500);
+    }
+
+    &__text {
+      color: #DCDCE4;
+
+      code {
+        background-color: var(--strapi-neutral-150);
+        color: #DCDCE4;
+        border-color: #4a4a6a;
+      }
+
+      a {
+        color: var(--strapi-primary-500);
+      }
+    }
+  }
+}
