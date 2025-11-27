@@ -13,6 +13,11 @@
     flex: 0 0 calc(50% - 10px);
   }
 
+  article.custom-doc-card:first-of-type {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   .cardContainer {
     display: flex;
     flex-direction: column;
