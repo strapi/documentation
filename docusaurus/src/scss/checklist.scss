@@ -58,10 +58,10 @@
 
   &__checkbox {
     flex-shrink: 0;
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border: 1.5px solid var(--strapi-neutral-300);
-    border-radius: 3px;
+    border-radius: 50%;
     background-color: var(--strapi-neutral-0);
     position: relative;
     top: 3px;
@@ -72,9 +72,9 @@
       position: absolute;
       display: none;
       left: 4px;
-      top: 1px;
+      top: 2px;
       width: 3px;
-      height: 6px;
+      height: 5px;
       border: solid white;
       border-width: 0 1.5px 1.5px 0;
       transform: rotate(45deg);
@@ -83,7 +83,7 @@
 
   &__label:hover &__checkbox {
     border-color: var(--strapi-primary-500);
-    background-color: var(--strapi-primary-100);
+    transform: scale(1.1);
   }
 
   &__input:checked + &__checkbox {
@@ -146,7 +146,6 @@
 
     &__label:hover .checklist__checkbox {
       border-color: var(--strapi-primary-400);
-      background-color: rgba(79, 70, 229, 0.15);
     }
 
     &__input:checked + .checklist__checkbox {
