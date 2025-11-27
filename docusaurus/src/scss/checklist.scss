@@ -58,8 +58,8 @@
 
   &__checkbox {
     flex-shrink: 0;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border: 1.5px solid var(--strapi-neutral-300);
     border-radius: 50%;
     background-color: transparent;
@@ -84,9 +84,9 @@
       left: 4px;
       top: 2px;
       width: 3px;
-      height: 5px;
+      height: 6px;
       border: solid white;
-      border-width: 0 1.5px 1.5px 0;
+      border-width: 0 2px 2px 0;
       transform: rotate(45deg);
       opacity: 0;
       transition: opacity 0.1s ease 0.05s;
@@ -104,11 +104,6 @@
     &::after {
       opacity: 1;
     }
-  }
-
-  &__label:hover &__checkbox {
-    border-color: var(--strapi-primary-500);
-    transform: scale(1.1);
   }
 
   &__input:focus-visible + &__checkbox {
