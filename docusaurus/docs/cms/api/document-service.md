@@ -47,7 +47,7 @@ Relations can also be connected, disconnected, and set through the Document Serv
 
 ## Document objects
 
-Document methods return a document object, which represents one locale (i.e. version) of a content entry grouped under a stable `documentId`. Returned objects typically include:
+Document methods return a document object or a list of document objects, which represent a version of a content entry grouped under a stable `documentId`. Returned objects typically include:
 
 - `documentId`: Persistent identifier for the entry across locales and draft/published versions.
 - `id`: Database identifier for the specific locale/version record.
