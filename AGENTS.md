@@ -64,6 +64,7 @@ Links
   - When pushing a new branch, set upstream (no PR auto‑creation).
   - Open PRs only when requested and follow the description rules above.
   - Titles must not start with feat:/chore:/fix:; keep titles short and clear.
+  - For the full, detailed guidance and examples, see: `git-rules.md`.
 
 ## 12 Rules (Overview)
 
