@@ -10,6 +10,11 @@ Execution policy and invariants
 - Claude links must use `q` on `/new`; ChatGPT uses its reviewed param; keep locale logic.
 - Enable anchors and file checks by default for code extraction.
 
+Accepted languages and file types
+- Allowed: `.md`, `.mdx`, `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.yml`.
+- Also present in the repo (do not introduce new use without approval): `.scss`, `.css`, image assets (e.g., `.png`, `.svg`, `.gif`, `.jpg`).
+- Not allowed without explicit approval: Python, Ruby, Go, Rust, etc. (no new stacks).
+
 Key scripts and how to run
 - `docusaurus/scripts/generate-llms.js` → generates `llms.txt` (uses <Tldr> when present).
 - `docusaurus/scripts/generate-llms-code.js --anchors --check-files` → generates `llms-code.txt` with section anchors and file existence status.
