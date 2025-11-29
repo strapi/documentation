@@ -34,5 +34,5 @@ Security and tokens
 Links
 - Contributing guide: CONTRIBUTING.md
 - Style guide (PDF): STYLE_GUIDE.pdf
-- 12 Rules of Technical Writing (Notion): https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
-
+- 12 Rules of Technical Writing: 12-rules-of-technical-writing.md (canonical)
+- External reference: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04

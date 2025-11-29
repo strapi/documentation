@@ -5,7 +5,7 @@ Scope
 
 Technical writing rules
 - Follow CONTRIBUTING.md and STYLE_GUIDE.pdf.
-- 12 Rules of Technical Writing: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+- 12 Rules of Technical Writing: ../../12-rules-of-technical-writing.md
 
 Content specifics
 - Emphasize deployment, security, IAM, and operational runbooks.
