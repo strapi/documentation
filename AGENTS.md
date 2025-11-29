@@ -36,3 +36,42 @@ Links
 - Style guide (PDF): STYLE_GUIDE.pdf
 - 12 Rules of Technical Writing: 12-rules-of-technical-writing.md (canonical)
 - External reference: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+
+## Git Usage Rules
+
+- Commit messages
+  - Start with an action verb in imperative mood (e.g., Add, Update, Fix).
+  - Keep to 80 characters max; be succinct about what/why.
+  - Do not prefix with "feat:", "chore:", or similar keywords.
+  - Do not use PR-style phrasing (never start a commit with "This PR …").
+
+- PR descriptions
+  - Start with "This PR …" followed by a one‑sentence summary.
+  - End the sentence with a period, or a colon if followed by bullets.
+  - Use bullet points for optional extra details.
+  - Do not add sections like Summary/Changes/Motivation/How to validate.
+  - Do not include manual test instructions unless absolutely necessary.
+  - Screenshots or GIFs are welcome when they help.
+
+- Branch and history safety
+  - Never force‑push, rebase shared branches, or push to `main` without explicit maintainer consent.
+  - Never delete local or remote branches unless explicitly instructed by the maintainer.
+  - Get explicit consent before any history rewrite (rebase, squash, filter‑branch).
+  - Prefer creating a new branch over rewriting history; propose the plan first.
+  - When asked to stay low profile, do not open PRs unless explicitly requested; share progress in this chat.
+
+- Pushing and PRs
+  - When pushing a new branch, set upstream (no PR auto‑creation).
+  - Open PRs only when requested and follow the description rules above.
+  - Titles must not start with feat:/chore:/fix:; keep titles short and clear.
+
+## 12 Rules (Overview)
+
+- Canonical in-repo source: `12-rules-of-technical-writing.md`.
+- Full text (external): https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
+- Summary highlights:
+  - Write for the audience; document the obvious.
+  - Use a direct, neutral tone and simple English.
+  - Be concise: short sentences and clear sectioning.
+  - Procedures use numbered steps; unordered info uses bullets; complex lists use tables.
+  - Avoid ambiguity; keep terminology consistent; define acronyms once; add visuals when helpful.
