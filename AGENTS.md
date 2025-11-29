@@ -13,7 +13,7 @@ Execution policy and invariants
 Accepted languages and file types
 - Path‑based policy (applies to folders and all subfolders):
   - `src/` (and `docusaurus/src/` when applicable): allow `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.css`, `.scss`, `.html`.
-  - `docs/cms/`, `docs/cloud/`, `docs/snippet/` (or `docs/snippets/` if used): allow only `.md`, `.mdx`.
+  - `docs/cms/`, `docs/cloud/`, `docs/snippets/`: allow only `.md`, `.mdx`.
   - `static/`: allow image assets (`.png`, `.svg`, `.gif`, `.jpg`), `.html`, `.js`.
   - `.github/workflows/`: allow only `.yml`.
 - Also present elsewhere in the repo: `.scss`, `.css`, image assets (do not expand usage without approval).
