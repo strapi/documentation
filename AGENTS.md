@@ -11,8 +11,12 @@ Execution policy and invariants
 - Enable anchors and file checks by default for code extraction.
 
 Accepted languages and file types
-- Allowed: `.md`, `.mdx`, `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.yml`.
-- Also present in the repo (do not introduce new use without approval): `.scss`, `.css`, image assets (e.g., `.png`, `.svg`, `.gif`, `.jpg`).
+- Path‑based policy (applies to folders and all subfolders):
+  - `src/` (and `docusaurus/src/` when applicable): allow `.js`, `.jsx`, `.ts`, `.tsx`, `.json`, `.css`, `.scss`, `.html`.
+  - `docs/cms/`, `docs/cloud/`, `docs/snippet/` (or `docs/snippets/` if used): allow only `.md`, `.mdx`.
+  - `static/`: allow image assets (`.png`, `.svg`, `.gif`, `.jpg`), `.html`, `.js`.
+  - `.github/workflows/`: allow only `.yml`.
+- Also present elsewhere in the repo: `.scss`, `.css`, image assets (do not expand usage without approval).
 - Not allowed without explicit approval: Python, Ruby, Go, Rust, etc. (no new stacks).
 
 Key scripts and how to run
