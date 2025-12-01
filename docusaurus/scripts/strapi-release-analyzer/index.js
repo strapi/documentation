@@ -30,10 +30,170 @@ const PR_CATEGORIES = {
   bug: '🔥 Bug fix',
   enhancement: '💅 Enhancement',
   chore: '⚙️ Chore',
+  docs: '📚 Docs',
   other: '📝 Other',
 };
 
-const EXCLUDED_CATEGORIES = ['chore', 'test', 'ci'];
+// Skip set: exclude chores, tests, CI, and docs-related PRs
+const EXCLUDED_CATEGORIES = ['chore', 'test', 'ci', 'docs'];
+
+// Runtime options (set in main from CLI flags)
+let CURRENT_RELEASE_TAG = null;
+const OPTIONS = {
+  noCache: false,
+  refresh: false,
+  cacheDir: path.join(process.cwd(), 'docusaurus', 'scripts', 'strapi-release-analyzer', '.cache'),
+  limit: null,
+  strict: 'aggressive', // aggressive | balanced | conservative
+};
+
+// Minimal loader for llms-full.txt (with graceful fallback to llms.txt)
+async function readLlmsFullIndex() {
+  const repoRoot = process.cwd();
+  const llmsFullPath = path.join(repoRoot, 'llms-full.txt');
+  const llmsPath = path.join(repoRoot, 'llms.txt');
+
+  let text = '';
+  let source = '';
+  try {
+    text = await fs.readFile(llmsFullPath, 'utf8');
+    source = 'llms-full.txt';
+  } catch {
+    try {
+      text = await fs.readFile(llmsPath, 'utf8');
+      source = 'llms.txt';
+    } catch {
+      console.warn('  ⚠️  No llms-full.txt or llms.txt found at repo root; proceeding without docs index');
+      return { source: null, pages: [], byTitle: new Map(), byUrl: new Map() };
+    }
+  }
+
+  const pages = [];
+  const byTitle = new Map();
+  const byUrl = new Map();
+
+  // Heuristic parser:
+  // - Treat lines starting with "# " or "## " as page/section titles
+  // - Capture the first URL following a title line (http/https)
+  // - Collect anchors from subsequent headings (###, ####) within the same page
+  const lines = text.split(/\r?\n/);
+  let current = null;
+  const urlRegex = /(https?:\/\/[^\s)]+)/;
+
+  function slugify(s) {
+    return s
+      .toLowerCase()
+      .replace(/\{#([^}]+)\}/g, '$1')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (/^#\s+/.test(line)) {
+      // Page title
+      const title = line.replace(/^#\s+/, '').trim();
+      current = { title, url: null, anchors: new Set() };
+      pages.push(current);
+      byTitle.set(title.toLowerCase(), current);
+      continue;
+    }
+    if (/^##\s+/.test(line)) {
+      // Treat as page title too if no outer # title exists yet
+      const title = line.replace(/^##\s+/, '').trim();
+      if (!current) {
+        current = { title, url: null, anchors: new Set() };
+        pages.push(current);
+        byTitle.set(title.toLowerCase(), current);
+      } else {
+        // Otherwise record as an anchor for the current page
+        current.anchors.add(slugify(title));
+      }
+      continue;
+    }
+    if (/^###\s+/.test(line) && current) {
+      const h = line.replace(/^###\s+/, '').trim();
+      current.anchors.add(slugify(h));
+      continue;
+    }
+    if (!current) continue;
+    const m = line.match(urlRegex);
+    if (m && !current.url) {
+      current.url = m[1];
+      byUrl.set(current.url, current);
+    }
+  }
+
+  // Normalize anchors to arrays
+  const normalized = pages.map(p => ({
+    title: p.title,
+    url: p.url || null,
+    anchors: Array.from(p.anchors),
+  }));
+
+  return { source, pages: normalized, byTitle, byUrl };
+}
+
+function parseArgs(argv) {
+  const args = { releaseUrl: null };
+  for (const arg of argv) {
+    if (!arg.startsWith('--') && !args.releaseUrl) {
+      args.releaseUrl = arg;
+      continue;
+    }
+    if (arg === '--no-cache') OPTIONS.noCache = true;
+    if (arg === '--refresh') OPTIONS.refresh = true;
+    if (arg.startsWith('--cache-dir=')) OPTIONS.cacheDir = arg.split('=')[1] || OPTIONS.cacheDir;
+    if (arg.startsWith('--limit=')) {
+      const n = parseInt(arg.split('=')[1], 10);
+      if (!Number.isNaN(n) && n > 0) OPTIONS.limit = n;
+    }
+    if (arg.startsWith('--strict=')) {
+      const v = arg.split('=')[1];
+      if (['aggressive', 'balanced', 'conservative'].includes(v)) OPTIONS.strict = v;
+    }
+    if (arg.startsWith('--model=')) {
+      // Allow overriding model via CLI as well
+      process.env.CLAUDE_MODEL = arg.split('=')[1];
+    }
+  }
+  return args;
+}
+
+function isDocsLikePR(title, labels = []) {
+  const t = (title || '').toLowerCase();
+  const ls = labels.map(l => l.toLowerCase());
+  if (t.startsWith('docs:') || t.includes('[docs]') || t.includes('documentation')) return true;
+  if (ls.includes('docs') || ls.includes('documentation')) return true;
+  return false;
+}
+
+function cachePathForPR(tag, prNumber) {
+  return path.join(OPTIONS.cacheDir, tag, `pr-${prNumber}.json`);
+}
+
+async function readCachedPR(tag, prNumber) {
+  if (OPTIONS.noCache) return null;
+  try {
+    const p = cachePathForPR(tag, prNumber);
+    const buf = await fs.readFile(p, 'utf8');
+    return JSON.parse(buf);
+  } catch {
+    return null;
+  }
+}
+
+async function writeCachedPR(tag, prNumber, data) {
+  try {
+    const dir = path.join(OPTIONS.cacheDir, tag);
+    await fs.mkdir(dir, { recursive: true });
+    const p = cachePathForPR(tag, prNumber);
+    await fs.writeFile(p, JSON.stringify(data, null, 2));
+  } catch (e) {
+    console.warn(`  ⚠️  Could not write cache for PR #${prNumber}: ${e.message}`);
+  }
+}
 
 async function parseReleaseNotes(releaseUrl) {
   const match = releaseUrl.match(/github\.com\/([^\/]+)\/([^\/]+)\/releases\/tag\/([^\/]+)/);
@@ -75,6 +235,11 @@ function categorizePR(title, body, labels) {
   const lowerBody = (body || '').toLowerCase();
   const labelNames = labels.map(l => l.toLowerCase());
   
+  // Docs-related PRs
+  if (isDocsLikePR(title, labelNames) || lowerBody.includes('### 📚 docs')) {
+    return 'docs';
+  }
+  
   if (lowerTitle.includes('chore') || lowerTitle.startsWith('chore:') || 
       lowerTitle.startsWith('chore(') || labelNames.includes('chore')) {
     return 'chore';
@@ -114,6 +279,18 @@ async function analyzePR(prNumber) {
   console.log(`  🔍 Analyzing PR #${prNumber}...`);
   
   try {
+    // Try cache first
+    const cached = await readCachedPR(CURRENT_RELEASE_TAG || 'unknown', prNumber);
+    if (cached && !OPTIONS.refresh) {
+      console.log(`  💾 Using cached data for PR #${prNumber}`);
+      // Respect skip rules on cached item too
+      if (EXCLUDED_CATEGORIES.includes(cached.category)) {
+        console.log(`  ⏭️  Skipping PR #${prNumber} (${cached.category})`);
+        return null;
+      }
+      return cached;
+    }
+
     const { data: pr } = await octokit.pulls.get({
       owner: STRAPI_REPO_OWNER,
       repo: STRAPI_REPO_NAME,
@@ -149,6 +326,7 @@ async function analyzePR(prNumber) {
       labels: pr.labels.map(l => l.name),
     };
 
+    await writeCachedPR(CURRENT_RELEASE_TAG || 'unknown', prNumber, analysis);
     return analysis;
   } catch (error) {
     console.error(`  ❌ Error analyzing PR #${prNumber}: ${error.message}`);
@@ -537,48 +715,117 @@ function generateMarkdownReport(releaseInfo, analyses) {
   return markdown;
 }
 
-async function generatePDF(markdownFile) {
-  console.log('📄 Generating PDF...');
-  
-  try {
-    const { mdToPdf } = await import('md-to-pdf');
-    const pdfPath = markdownFile.replace('.md', '.pdf');
-    
-    await mdToPdf(
-      { path: markdownFile },
-      {
-        dest: pdfPath,
-        pdf_options: {
-          format: 'A4',
-          margin: {
-            top: '20mm',
-            right: '20mm',
-            bottom: '20mm',
-            left: '20mm'
-          }
-        }
-      }
-    );
-    
-    console.log(`✅ PDF generated: ${pdfPath}\n`);
-    return pdfPath;
-  } catch (error) {
-    console.error(`⚠️  Could not generate PDF: ${error.message}`);
-    console.error('   Install md-to-pdf with: cd scripts/strapi-release-analyzer && yarn add md-to-pdf\n');
-    return null;
+// Removed legacy PDF generation (md-to-pdf) to simplify runtime and deps
+
+function tokenize(text) {
+  return (text || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\/_-]+/g, ' ')
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function suggestCandidateDocs(llmsIndex, prAnalysis, limit = 5) {
+  if (!llmsIndex || !llmsIndex.pages || llmsIndex.pages.length === 0) return [];
+  const hay = [];
+  hay.push(...tokenize(prAnalysis.title));
+  for (const f of prAnalysis.files || []) hay.push(...tokenize(f.filename));
+  const bag = new Map();
+  for (const t of hay) bag.set(t, (bag.get(t) || 0) + 1);
+
+  const scored = llmsIndex.pages.map(p => {
+    const titleTokens = tokenize(p.title);
+    const urlTokens = tokenize(p.url || '');
+    let score = 0;
+    for (const t of titleTokens) score += (bag.get(t) || 0) * 3; // favor title hits
+    for (const t of urlTokens) score += (bag.get(t) || 0);
+    return { page: p, score };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.filter(s => s.score > 0).slice(0, limit).map(s => s.page);
+}
+
+function topDirs(filenames, max = 3) {
+  const counts = new Map();
+  for (const name of filenames) {
+    const parts = name.split('/');
+    const dir = parts.slice(0, 2).join('/');
+    counts.set(dir, (counts.get(dir) || 0) + 1);
   }
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, max)
+    .map(([d]) => d);
+}
+
+function deriveSummary(prAnalysis) {
+  const title = (prAnalysis.title || '').trim();
+  const files = prAnalysis.files || [];
+  const filenames = files.map(f => f.filename);
+  const dirs = topDirs(filenames);
+  const dirList = dirs.length ? ` in ${dirs.join(', ')}` : '';
+  if (title) return `${title}${dirList}`.slice(0, 200);
+  return `Changes${dirList}`.slice(0, 200);
+}
+
+function classifyImpact(prAnalysis) {
+  const files = prAnalysis.files || [];
+  const title = (prAnalysis.title || '').toLowerCase();
+
+  if (files.length === 0) {
+    return { verdict: 'maybe', reason: 'No files listed; uncertain impact.' };
+  }
+
+  const allUnder = (prefix) => files.every(f => f.filename.startsWith(prefix));
+  const onlyExtensions = (exts) => files.every(f => exts.some(ext => f.filename.endsWith(ext)));
+
+  // Clear "No" buckets: tests, CI, metadata only, or dev-only noise
+  const isTestsOnly = allUnder('tests/') || files.every(f => /(^|\/)__(tests|mocks)__(\/|$)|\.test\./.test(f.filename));
+  const isCIOnly = files.every(f => f.filename.startsWith('.github/') || f.filename.includes('/.github/'));
+  const isLocksOnly = onlyExtensions(['yarn.lock', 'pnpm-lock.yaml', 'package-lock.json']);
+  const isMetaOnly = files.every(f => /(^|\/)package\.json$|^tsconfig.*\.json$|^jest\.config|^\.eslintrc/.test(f.filename));
+  if (isTestsOnly || isCIOnly || isLocksOnly || isMetaOnly) {
+    return { verdict: 'no', reason: 'Non-user facing changes (tests/CI/locks/metadata).' };
+  }
+
+  // Strong Yes signals
+  if (/breaking|deprecat|remove|feat|feature|introduc|add\b/.test(title)) {
+    return { verdict: 'yes', reason: 'PR title indicates user-facing changes.' };
+  }
+
+  const yesPathPatterns = [
+    /\b(core|server|strapi)\b/,
+    /\b(plugin|plugins)\b/,
+    /\badmin\b/,
+    /\bcontent(-|_)manager\b/,
+    /\bcontent(-|_)type(-|_)builder\b/,
+    /\bi18n\b/,
+    /\bupload|media\b/,
+    /\bgraphql\b/,
+    /\busers(-|_)permissions\b/,
+    /\bapi\b/,
+    /\broutes?\b/,
+    /\bcontrollers?\b/,
+    /\bservices?\b/,
+    /(^|\/)config(\/|$)/,
+  ];
+  const hitYes = files.some(f => yesPathPatterns.some(re => re.test(f.filename)));
+  if (hitYes) {
+    return { verdict: 'yes', reason: 'Touches user-facing code paths (API/config/features).' };
+  }
+
+  // Maybe by default when code changes but signals are weak
+  return { verdict: 'maybe', reason: 'Code changes detected; possible docs impact.' };
 }
 
 async function main() {
-  const args = process.argv.slice(2);
-  const releaseUrl = args.find(arg => !arg.startsWith('--'));
-  const generatePdf = args.includes('--pdf');
-  
+  const rawArgs = process.argv.slice(2);
+  const { releaseUrl } = parseArgs(rawArgs);
+
   if (!releaseUrl) {
-    console.error('❌ Usage: node index.js <github-release-url> [--pdf]');
-    console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0');
-    console.error('Options:');
-    console.error('  --pdf    Generate PDF output in addition to markdown');
+    console.error('❌ Usage: node index.js <github-release-url> [--no-cache] [--refresh] [--cache-dir=PATH] [--limit=N] [--strict=aggressive|balanced|conservative] [--model=NAME]');
+    console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive --limit=10');
     process.exit(1);
   }
 
@@ -599,13 +846,21 @@ async function main() {
   
   try {
     const releaseInfo = await parseReleaseNotes(releaseUrl);
+    CURRENT_RELEASE_TAG = releaseInfo.tag;
+    
+    const llmsIndex = await readLlmsFullIndex();
+    if (llmsIndex.source) {
+      console.log(`📚 Loaded docs index from ${llmsIndex.source} (${llmsIndex.pages.length} pages)`);
+    }
     
     console.log(`\n📝 Analyzing ${releaseInfo.prNumbers.length} PRs...\n`);
     
     const analyses = [];
     let skipped = 0;
     
-    for (const prNumber of releaseInfo.prNumbers) {
+    const prList = Array.isArray(releaseInfo.prNumbers) ? releaseInfo.prNumbers : [];
+    const limited = (OPTIONS.limit && OPTIONS.limit > 0) ? prList.slice(0, OPTIONS.limit) : prList;
+    for (const prNumber of limited) {
       const prAnalysis = await analyzePR(prNumber);
       
       if (!prAnalysis) {
@@ -613,10 +868,25 @@ async function main() {
         continue;
       }
       
-      const claudeSuggestions = await generateDocSuggestionsWithClaude(prAnalysis);
-      
+      // Heuristic triage and summary
+      const summary = deriveSummary(prAnalysis);
+      const impact = classifyImpact(prAnalysis);
+
+      const candidates = suggestCandidateDocs(llmsIndex, prAnalysis, 5);
+      const runLLM = impact.verdict !== 'no';
+      const claudeSuggestions = runLLM
+        ? await generateDocSuggestionsWithClaude({
+            ...prAnalysis,
+            _summary: summary,
+            _impact: impact,
+            _docsCandidates: candidates,
+          })
+        : null;
+
       analyses.push({
         ...prAnalysis,
+        summary,
+        impact,
         claudeSuggestions,
       });
       
@@ -637,9 +907,7 @@ async function main() {
     
     console.log(`📄 Report generated: ${outputFile}\n`);
     
-    if (generatePdf) {
-      await generatePDF(outputFile);
-    }
+    // PDF generation removed
     
     console.log('🎉 Done!');
     
