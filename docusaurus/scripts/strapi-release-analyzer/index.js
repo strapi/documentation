@@ -14,7 +14,8 @@ const STRAPI_REPO_OWNER = 'strapi';
 const STRAPI_REPO_NAME = 'strapi';
 const DOC_REPO_OWNER = 'strapi';
 const DOC_REPO_NAME = 'documentation';
-const CLAUDE_MODEL = 'claude-sonnet-4-5-20250929';
+// Default Claude model; override with env CLAUDE_MODEL or --model flag
+const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'claude-3-5-sonnet-latest';
 
 const octokit = new Octokit({
   auth: GITHUB_TOKEN,
@@ -163,14 +164,14 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
     .map(f => `### File: ${f.filename}\n\`\`\`diff\n${f.patch}\n\`\`\``)
     .join('\n\n');
   
-  const diffSize = new Blob([diffSummary]).size;
-  if (diffSize > 100000) {
+    const diffSize = Buffer.byteLength(diffSummary, 'utf8');
+    if (diffSize > 100000) {
     console.log(`  ⚠️  Diff too large (${Math.round(diffSize / 1024)}KB), truncating...`);
   }
   
-  const truncatedDiff = diffSize > 100000 
-    ? diffSummary.substring(0, 100000) + '\n\n... (diff truncated due to size)'
-    : diffSummary;
+    const truncatedDiff = diffSize > 100000
+      ? diffSummary.slice(0, 100000) + '\n\n... (diff truncated due to size)'
+      : diffSummary;
 
   const prompt = `You are a technical documentation analyst for Strapi CMS. Your expertise is in identifying documentation gaps and suggesting precise updates.
 
