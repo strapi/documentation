@@ -51,14 +51,14 @@ Synchronous functions run logic that completes immediately without awaiting othe
 
 ```js
 module.exports = {
-  register() {
-    // some sync code
+  register({ strapi }) {
+    strapi.log.info('Registering static configuration');
   },
-  bootstrap() {
-    // some sync code
+  bootstrap({ strapi }) {
+    strapi.log.info('Bootstrap finished without awaiting tasks');
   },
-  destroy() {
-    // some sync code
+  destroy({ strapi }) {
+    strapi.log.info('Server shutdown started');
   }
 };
 ```
@@ -69,14 +69,14 @@ module.exports = {
 
 ```ts
 export default {
-  register() {
-    // some sync code
+  register({ strapi }) {
+    strapi.log.info('Registering static configuration');
   },
-  bootstrap() {
-    // some sync code
+  bootstrap({ strapi }) {
+    strapi.log.info('Bootstrap finished without awaiting tasks');
   },
-  destroy() {
-    // some sync code
+  destroy({ strapi }) {
+    strapi.log.info('Server shutdown started');
   }
 };
 ```
@@ -95,14 +95,19 @@ Asynchronous functions use the `async` keyword to `await` tasks such as API call
 
 ```js
 module.exports = {
-  async register() {
-    // some async code
+  async register({ strapi }) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    strapi.log.info('Async register finished after a short delay');
   },
-  async bootstrap() {
-    // some async code
+  async bootstrap({ strapi }) {
+    const articles = await strapi.entityService.findMany('api::article.article', {
+      filters: { publishedAt: { $notNull: true } },
+      fields: ['id'],
+    });
+    strapi.log.info(`Indexed ${articles.length} published articles`);
   },
-  async destroy() {
-    // some async code
+  async destroy({ strapi }) {
+    await strapi.entityService.deleteMany('api::temporary-cache.temporary-cache');
   }
 };
 ```
@@ -113,14 +118,19 @@ module.exports = {
 
 ```ts
 export default {
-  async register() {
-    // some async code
+  async register({ strapi }) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    strapi.log.info('Async register finished after a short delay');
   },
-  async bootstrap() {
-    // some async code
+  async bootstrap({ strapi }) {
+    const articles = await strapi.entityService.findMany('api::article.article', {
+      filters: { publishedAt: { $notNull: true } },
+      fields: ['id'],
+    });
+    strapi.log.info(`Indexed ${articles.length} published articles`);
   },
-  async destroy() {
-    // some async code
+  async destroy({ strapi }) {
+    await strapi.entityService.deleteMany('api::temporary-cache.temporary-cache');
   }
 };
 ```
@@ -139,14 +149,42 @@ Promise-returning functions hand back a promise so Strapi can wait for its resol
 
 ```js
 module.exports = {
-  register() {
-    return new Promise(/* some code */);
+  register({ strapi }) {
+    return new Promise((resolve) => {
+      strapi.log.info('Registering with a delayed startup task');
+      setTimeout(resolve, 200);
+    });
   },
-  bootstrap() {
-    return new Promise(/* some code */);
+  bootstrap({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi.db.query('api::category.category')
+        .findOne({ where: { slug: 'general' } })
+        .then((entry) => {
+          if (!entry) {
+            return strapi.db.query('api::category.category').create({
+              data: { name: 'General', slug: 'general' },
+            });
+          }
+
+          return entry;
+        })
+        .then(() => {
+          strapi.log.info('Ensured default category exists');
+          resolve();
+        })
+        .catch(reject);
+    });
   },
-  destroy() {
-    return new Promise(/* some code */);
+  destroy({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi.db.query('api::temporary-cache.temporary-cache')
+        .deleteMany()
+        .then(() => {
+          strapi.log.info('Cleared temporary cache before shutdown');
+          resolve();
+        })
+        .catch(reject);
+    });
   }
 };
 ```
@@ -157,14 +195,42 @@ module.exports = {
 
 ```ts
 export default {
-  register() {
-    return new Promise(/* some code */);
+  register({ strapi }) {
+    return new Promise((resolve) => {
+      strapi.log.info('Registering with a delayed startup task');
+      setTimeout(resolve, 200);
+    });
   },
-  bootstrap() {
-    return new Promise(/* some code */);
+  bootstrap({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi.db.query('api::category.category')
+        .findOne({ where: { slug: 'general' } })
+        .then((entry) => {
+          if (!entry) {
+            return strapi.db.query('api::category.category').create({
+              data: { name: 'General', slug: 'general' },
+            });
+          }
+
+          return entry;
+        })
+        .then(() => {
+          strapi.log.info('Ensured default category exists');
+          resolve();
+        })
+        .catch(reject);
+    });
   },
-  destroy() {
-    return new Promise(/* some code */);
+  destroy({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi.db.query('api::temporary-cache.temporary-cache')
+        .deleteMany()
+        .then(() => {
+          strapi.log.info('Cleared temporary cache before shutdown');
+          resolve();
+        })
+        .catch(reject);
+    });
   }
 };
 ```

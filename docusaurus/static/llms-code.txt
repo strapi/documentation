@@ -16257,9 +16257,9 @@ File path: /features.js
 # Lifecycle functions
 Source: https://docs.strapi.io/cms/configurations/functions
 
-## Synchronous function
-Description: Code example from "Synchronous function"
-(Source: https://docs.strapi.io/cms/configurations/functions#synchronous-function)
+## Synchronous
+Description: Synchronous functions run logic that completes immediately without awaiting other asynchronous tasks.
+(Source: https://docs.strapi.io/cms/configurations/functions#synchronous)
 
 Language: JavaScript
 File path: ./src/index.js
@@ -16297,9 +16297,9 @@ export default {
 ```
 
 
-## Asynchronous function
-Description: Code example from "Asynchronous function"
-(Source: https://docs.strapi.io/cms/configurations/functions#asynchronous-function)
+## Asynchronous
+Description: Asynchronous functions use the async keyword to await tasks such as API calls or database queries before Strapi continues.
+(Source: https://docs.strapi.io/cms/configurations/functions#asynchronous)
 
 Language: JavaScript
 File path: ./src/index.js
@@ -16337,9 +16337,9 @@ export default {
 ```
 
 
-## Function returning a promise
-Description: Code example from "Function returning a promise"
-(Source: https://docs.strapi.io/cms/configurations/functions#function-returning-a-promise)
+## Returning a promise
+Description: Promise-returning functions hand back a promise so Strapi can wait for its resolution before continuing.
+(Source: https://docs.strapi.io/cms/configurations/functions#returning-a-promise)
 
 Language: JavaScript
 File path: ./src/index.js
@@ -16360,7 +16360,7 @@ module.exports = {
 
 ---
 Language: JavaScript
-File path: ./src/index.js
+File path: N/A
 
 ```js
 export default {
@@ -16373,13 +16373,139 @@ export default {
   destroy() {
     return new Promise(/* some code */);
   }
+};
+```
+
+
+## Register
+Description: More specifically, typical use-cases for register() include front-load security tasks such as loading secrets, rotating API keys, or registering authentication providers before the app finishes initializing.
+(Source: https://docs.strapi.io/cms/configurations/functions#register)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+module.exports = {
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      plugin: 'my-color-picker',
+      type: 'string',
+    });
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+export default {
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      plugin: 'my-color-picker',
+      type: 'string',
+    });
+  },
+};
+```
+
+
+## Bootstrap
+Description: :::tip You can run yarn strapi console (or npm run strapi console) in the terminal and interact with the strapi object.
+(Source: https://docs.strapi.io/cms/configurations/functions#bootstrap)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+module.exports = {
+  async bootstrap({ strapi }) {
+    const existingCategory = await strapi.db
+      .query('api::category.category')
+      .findOne({ where: { slug: 'general' } });
+
+    if (!existingCategory) {
+      await strapi.db.query('api::category.category').create({
+        data: { name: 'General', slug: 'general' },
+      });
+      strapi.log.info('Created default category');
+    }
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+export default {
+  async bootstrap({ strapi }) {
+    const existingCategory = await strapi.db
+      .query('api::category.category')
+      .findOne({ where: { slug: 'general' } });
+
+    if (!existingCategory) {
+      await strapi.db.query('api::category.category').create({
+        data: { name: 'General', slug: 'general' },
+      });
+      strapi.log.info('Created default category');
+    }
+  },
 };
 ```
 
 
 ## Destroy
-Description: Example to register a custom field, seed content and clean up
+Description: More specifically, a typical use-case for destroy() is to handle operational clean-up, such as closing database or queue connections and removing listeners so the application can shut down cleanly.
 (Source: https://docs.strapi.io/cms/configurations/functions#destroy)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+let heartbeat;
+
+module.exports = {
+  async bootstrap({ strapi }) {
+    heartbeat = setInterval(() => {
+      strapi.log.debug('Heartbeat interval running');
+    }, 60_000);
+  },
+
+  async destroy() {
+    clearInterval(heartbeat);
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+let heartbeat: ReturnType<typeof setInterval>;
+
+export default {
+  async bootstrap({ strapi }) {
+    heartbeat = setInterval(() => {
+      strapi.log.debug('Heartbeat interval running');
+    }, 60_000);
+  },
+
+  async destroy() {
+    clearInterval(heartbeat);
+  },
+};
+```
+
+
+## Combined usage
+Description: Add initialization-only tasks (e.g.
+(Source: https://docs.strapi.io/cms/configurations/functions#combined-usage)
 
 Language: TypeScript
 File path: src/index.ts
