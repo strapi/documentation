@@ -7162,6 +7162,7 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
 3. Restart Strapi to confirm each lifecycle executes in sequence.
 
 ```ts title="src/index.ts"
+let unsubscribeCreate: (() => void) | undefined;
 
   register({ strapi }) {
     strapi.customFields.register({
@@ -7172,16 +7173,13 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
   },
 
   async bootstrap({ strapi }) {
-    const entryCount = await strapi.db.query('api::palette.palette').count();
-    if (entryCount === 0) {
-      await strapi.db.query('api::palette.palette').create({
-        data: { name: 'Default palette', primary: '#4945FF' },
-      });
-    }
+    unsubscribeCreate = strapi.eventHub.subscribe('entry.create', (event) => {
+      strapi.log.info(`New entry created in ${event.model}: ${event.result?.id}`);
+    });
   },
 
-  async destroy({ strapi }) {
-    await strapi.db.connection?.destroy?.();
+  async destroy() {
+    unsubscribeCreate?.();
   },
 };
 ```

@@ -16266,14 +16266,14 @@ File path: ./src/index.js
 
 ```js
 module.exports = {
-  register() {
-    // some sync code
+  register({ strapi }) {
+    strapi.log.info('Registering static configuration');
   },
-  bootstrap() {
-    // some sync code
+  bootstrap({ strapi }) {
+    strapi.log.info('Bootstrap finished without awaiting tasks');
   },
-  destroy() {
-    // some sync code
+  destroy({ strapi }) {
+    strapi.log.info('Server shutdown started');
   }
 };
 ```
@@ -16284,14 +16284,14 @@ File path: ./src/index.js
 
 ```js
 export default {
-  register() {
-    // some sync code
+  register({ strapi }) {
+    strapi.log.info('Registering static configuration');
   },
-  bootstrap() {
-    // some sync code
+  bootstrap({ strapi }) {
+    strapi.log.info('Bootstrap finished without awaiting tasks');
   },
-  destroy() {
-    // some sync code
+  destroy({ strapi }) {
+    strapi.log.info('Server shutdown started');
   }
 };
 ```
@@ -16306,14 +16306,23 @@ File path: ./src/index.js
 
 ```js
 module.exports = {
-  async register() {
-    // some async code
+  async register({ strapi }) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    strapi.log.info('Async register finished after a short delay');
   },
-  async bootstrap() {
-    // some async code
+  async bootstrap({ strapi }) {
+    const { results: articles } = await strapi
+      .documents('api::article.article')
+      .findMany({
+        filters: { publishedAt: { $notNull: true } },
+        fields: ['id'],
+      });
+    strapi.log.info(`Indexed ${articles.length} published articles`);
   },
-  async destroy() {
-    // some async code
+  async destroy({ strapi }) {
+    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
+      filters: {},
+    });
   }
 };
 ```
@@ -16324,14 +16333,23 @@ File path: ./src/index.js
 
 ```js
 export default {
-  async register() {
-    // some async code
+  async register({ strapi }) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    strapi.log.info('Async register finished after a short delay');
   },
-  async bootstrap() {
-    // some async code
+  async bootstrap({ strapi }) {
+    const { results: articles } = await strapi
+      .documents('api::article.article')
+      .findMany({
+        filters: { publishedAt: { $notNull: true } },
+        fields: ['id'],
+      });
+    strapi.log.info(`Indexed ${articles.length} published articles`);
   },
-  async destroy() {
-    // some async code
+  async destroy({ strapi }) {
+    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
+      filters: {},
+    });
   }
 };
 ```
@@ -16346,14 +16364,44 @@ File path: ./src/index.js
 
 ```js
 module.exports = {
-  register() {
-    return new Promise(/* some code */);
+  register({ strapi }) {
+    return new Promise((resolve) => {
+      strapi.log.info('Registering with a delayed startup task');
+      setTimeout(resolve, 200);
+    });
   },
-  bootstrap() {
-    return new Promise(/* some code */);
+  bootstrap({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::category.category')
+        .findMany({ filters: { slug: 'general' }, pageSize: 1 })
+        .then(({ results }) => {
+          if (results.length === 0) {
+            return strapi.documents('api::category.category').create({
+              data: { name: 'General', slug: 'general' },
+            });
+          }
+
+          return results[0];
+        })
+        .then(() => {
+          strapi.log.info('Ensured default category exists');
+          resolve();
+        })
+        .catch(reject);
+    });
   },
-  destroy() {
-    return new Promise(/* some code */);
+  destroy({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .deleteMany({ filters: {} })
+        .then(() => {
+          strapi.log.info('Cleared temporary cache before shutdown');
+          resolve();
+        })
+        .catch(reject);
+    });
   }
 };
 ```
@@ -16364,14 +16412,44 @@ File path: N/A
 
 ```js
 export default {
-  register() {
-    return new Promise(/* some code */);
+  register({ strapi }) {
+    return new Promise((resolve) => {
+      strapi.log.info('Registering with a delayed startup task');
+      setTimeout(resolve, 200);
+    });
   },
-  bootstrap() {
-    return new Promise(/* some code */);
+  bootstrap({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::category.category')
+        .findMany({ filters: { slug: 'general' }, pageSize: 1 })
+        .then(({ results }) => {
+          if (results.length === 0) {
+            return strapi.documents('api::category.category').create({
+              data: { name: 'General', slug: 'general' },
+            });
+          }
+
+          return results[0];
+        })
+        .then(() => {
+          strapi.log.info('Ensured default category exists');
+          resolve();
+        })
+        .catch(reject);
+    });
   },
-  destroy() {
-    return new Promise(/* some code */);
+  destroy({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .deleteMany({ filters: {} })
+        .then(() => {
+          strapi.log.info('Cleared temporary cache before shutdown');
+          resolve();
+        })
+        .catch(reject);
+    });
   }
 };
 ```
@@ -16423,12 +16501,12 @@ File path: ./src/index.js
 ```js
 module.exports = {
   async bootstrap({ strapi }) {
-    const existingCategory = await strapi.db
-      .query('api::category.category')
-      .findOne({ where: { slug: 'general' } });
+    const { results } = await strapi
+      .documents('api::category.category')
+      .findMany({ filters: { slug: 'general' }, pageSize: 1 });
 
-    if (!existingCategory) {
-      await strapi.db.query('api::category.category').create({
+    if (results.length === 0) {
+      await strapi.documents('api::category.category').create({
         data: { name: 'General', slug: 'general' },
       });
       strapi.log.info('Created default category');
@@ -16444,12 +16522,12 @@ File path: ./src/index.js
 ```js
 export default {
   async bootstrap({ strapi }) {
-    const existingCategory = await strapi.db
-      .query('api::category.category')
-      .findOne({ where: { slug: 'general' } });
+    const { results } = await strapi
+      .documents('api::category.category')
+      .findMany({ filters: { slug: 'general' }, pageSize: 1 });
 
-    if (!existingCategory) {
-      await strapi.db.query('api::category.category').create({
+    if (results.length === 0) {
+      await strapi.documents('api::category.category').create({
         data: { name: 'General', slug: 'general' },
       });
       strapi.log.info('Created default category');
@@ -16511,6 +16589,8 @@ Language: TypeScript
 File path: src/index.ts
 
 ```ts
+let unsubscribeCreate: (() => void) | undefined;
+
 export default {
   register({ strapi }) {
     strapi.customFields.register({
@@ -16521,16 +16601,13 @@ export default {
   },
 
   async bootstrap({ strapi }) {
-    const entryCount = await strapi.db.query('api::palette.palette').count();
-    if (entryCount === 0) {
-      await strapi.db.query('api::palette.palette').create({
-        data: { name: 'Default palette', primary: '#4945FF' },
-      });
-    }
+    unsubscribeCreate = strapi.eventHub.subscribe('entry.create', (event) => {
+      strapi.log.info(`New entry created in ${event.model}: ${event.result?.id}`);
+    });
   },
 
-  async destroy({ strapi }) {
-    await strapi.db.connection?.destroy?.();
+  async destroy() {
+    unsubscribeCreate?.();
   },
 };
 ```

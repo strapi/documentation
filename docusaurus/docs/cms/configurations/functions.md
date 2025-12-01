@@ -100,14 +100,18 @@ module.exports = {
     strapi.log.info('Async register finished after a short delay');
   },
   async bootstrap({ strapi }) {
-    const articles = await strapi.entityService.findMany('api::article.article', {
-      filters: { publishedAt: { $notNull: true } },
-      fields: ['id'],
-    });
+    const { results: articles } = await strapi
+      .documents('api::article.article')
+      .findMany({
+        filters: { publishedAt: { $notNull: true } },
+        fields: ['id'],
+      });
     strapi.log.info(`Indexed ${articles.length} published articles`);
   },
   async destroy({ strapi }) {
-    await strapi.entityService.deleteMany('api::temporary-cache.temporary-cache');
+    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
+      filters: {},
+    });
   }
 };
 ```
@@ -123,14 +127,18 @@ export default {
     strapi.log.info('Async register finished after a short delay');
   },
   async bootstrap({ strapi }) {
-    const articles = await strapi.entityService.findMany('api::article.article', {
-      filters: { publishedAt: { $notNull: true } },
-      fields: ['id'],
-    });
+    const { results: articles } = await strapi
+      .documents('api::article.article')
+      .findMany({
+        filters: { publishedAt: { $notNull: true } },
+        fields: ['id'],
+      });
     strapi.log.info(`Indexed ${articles.length} published articles`);
   },
   async destroy({ strapi }) {
-    await strapi.entityService.deleteMany('api::temporary-cache.temporary-cache');
+    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
+      filters: {},
+    });
   }
 };
 ```
@@ -157,16 +165,17 @@ module.exports = {
   },
   bootstrap({ strapi }) {
     return new Promise((resolve, reject) => {
-      strapi.db.query('api::category.category')
-        .findOne({ where: { slug: 'general' } })
-        .then((entry) => {
-          if (!entry) {
-            return strapi.db.query('api::category.category').create({
+      strapi
+        .documents('api::category.category')
+        .findMany({ filters: { slug: 'general' }, pageSize: 1 })
+        .then(({ results }) => {
+          if (results.length === 0) {
+            return strapi.documents('api::category.category').create({
               data: { name: 'General', slug: 'general' },
             });
           }
 
-          return entry;
+          return results[0];
         })
         .then(() => {
           strapi.log.info('Ensured default category exists');
@@ -177,8 +186,9 @@ module.exports = {
   },
   destroy({ strapi }) {
     return new Promise((resolve, reject) => {
-      strapi.db.query('api::temporary-cache.temporary-cache')
-        .deleteMany()
+      strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .deleteMany({ filters: {} })
         .then(() => {
           strapi.log.info('Cleared temporary cache before shutdown');
           resolve();
@@ -203,16 +213,17 @@ export default {
   },
   bootstrap({ strapi }) {
     return new Promise((resolve, reject) => {
-      strapi.db.query('api::category.category')
-        .findOne({ where: { slug: 'general' } })
-        .then((entry) => {
-          if (!entry) {
-            return strapi.db.query('api::category.category').create({
+      strapi
+        .documents('api::category.category')
+        .findMany({ filters: { slug: 'general' }, pageSize: 1 })
+        .then(({ results }) => {
+          if (results.length === 0) {
+            return strapi.documents('api::category.category').create({
               data: { name: 'General', slug: 'general' },
             });
           }
 
-          return entry;
+          return results[0];
         })
         .then(() => {
           strapi.log.info('Ensured default category exists');
@@ -223,8 +234,9 @@ export default {
   },
   destroy({ strapi }) {
     return new Promise((resolve, reject) => {
-      strapi.db.query('api::temporary-cache.temporary-cache')
-        .deleteMany()
+      strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .deleteMany({ filters: {} })
         .then(() => {
           strapi.log.info('Cleared temporary cache before shutdown');
           resolve();
@@ -324,12 +336,12 @@ You can run `yarn strapi console` (or `npm run strapi console`) in the terminal 
 ```js
 module.exports = {
   async bootstrap({ strapi }) {
-    const existingCategory = await strapi.db
-      .query('api::category.category')
-      .findOne({ where: { slug: 'general' } });
+    const { results } = await strapi
+      .documents('api::category.category')
+      .findMany({ filters: { slug: 'general' }, pageSize: 1 });
 
-    if (!existingCategory) {
-      await strapi.db.query('api::category.category').create({
+    if (results.length === 0) {
+      await strapi.documents('api::category.category').create({
         data: { name: 'General', slug: 'general' },
       });
       strapi.log.info('Created default category');
@@ -345,12 +357,12 @@ module.exports = {
 ```ts
 export default {
   async bootstrap({ strapi }) {
-    const existingCategory = await strapi.db
-      .query('api::category.category')
-      .findOne({ where: { slug: 'general' } });
+    const { results } = await strapi
+      .documents('api::category.category')
+      .findMany({ filters: { slug: 'general' }, pageSize: 1 });
 
-    if (!existingCategory) {
-      await strapi.db.query('api::category.category').create({
+    if (results.length === 0) {
+      await strapi.documents('api::category.category').create({
         data: { name: 'General', slug: 'general' },
       });
       strapi.log.info('Created default category');
@@ -434,6 +446,8 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
 3. Restart Strapi to confirm each lifecycle executes in sequence.
 
 ```ts title="src/index.ts"
+let unsubscribeCreate: (() => void) | undefined;
+
 export default {
   register({ strapi }) {
     strapi.customFields.register({
@@ -444,16 +458,13 @@ export default {
   },
 
   async bootstrap({ strapi }) {
-    const entryCount = await strapi.db.query('api::palette.palette').count();
-    if (entryCount === 0) {
-      await strapi.db.query('api::palette.palette').create({
-        data: { name: 'Default palette', primary: '#4945FF' },
-      });
-    }
+    unsubscribeCreate = strapi.eventHub.subscribe('entry.create', (event) => {
+      strapi.log.info(`New entry created in ${event.model}: ${event.result?.id}`);
+    });
   },
 
-  async destroy({ strapi }) {
-    await strapi.db.connection?.destroy?.();
+  async destroy() {
+    unsubscribeCreate?.();
   },
 };
 ```
