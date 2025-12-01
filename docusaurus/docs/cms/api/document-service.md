@@ -54,7 +54,7 @@ Document methods return a document object or a list of document objects, which r
 - model fields: All fields defined in the content-type schema. Relations, components, and dynamic zones are not populated unless you opt in with `populate` (see [Populating fields](/cms/api/document-service/populate)) or limit fields with `fields` (see [Selecting fields](/cms/api/document-service/fields)).
 - metadata: `publishedAt`, `createdAt`, `updatedAt`, and `createdBy`/`updatedBy` when available.
 
-Optionally, document objects can also include a `status` and `locale` property if [Draft & Publish](/cms/features/draft-and-publish) and [Internationalization](/cms/features/Internationalization) are enabled for the content-type.
+Optionally, document objects can also include a `status` and `locale` property if [Draft & Publish](/cms/features/draft-and-publish) and [Internationalization](/cms/features/internationalization) are enabled for the content-type.
 
 ## Method overview
 
