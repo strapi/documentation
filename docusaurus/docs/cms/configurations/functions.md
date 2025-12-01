@@ -446,7 +446,7 @@ All 3 lifecycle functions can be put together to configure custom behavior durin
 3. Restart Strapi to confirm each lifecycle executes in sequence.
 
 ```ts title="src/index.ts"
-let unsubscribeCreate: (() => void) | undefined;
+let cronJobKey: string | undefined;
 
 export default {
   register({ strapi }) {
@@ -458,13 +458,22 @@ export default {
   },
 
   async bootstrap({ strapi }) {
-    unsubscribeCreate = strapi.eventHub.subscribe('entry.create', (event) => {
-      strapi.log.info(`New entry created in ${event.model}: ${event.result?.id}`);
+    cronJobKey = 'log-reminders';
+
+    strapi.cron.add({
+      [cronJobKey]: {
+        rule: '0 */6 * * *', // every 6 hours
+        job: async () => {
+          strapi.log.info('Remember to review new content in the admin panel.');
+        },
+      },
     });
   },
 
-  async destroy() {
-    unsubscribeCreate?.();
+  async destroy({ strapi }) {
+    if (cronJobKey) {
+      strapi.cron.remove(cronJobKey);
+    }
   },
 };
 ```
