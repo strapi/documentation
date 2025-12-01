@@ -15,7 +15,7 @@ const STRAPI_REPO_NAME = 'strapi';
 const DOC_REPO_OWNER = 'strapi';
 const DOC_REPO_NAME = 'documentation';
 // Default Claude model; override with env CLAUDE_MODEL or --model flag
-const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'claude-3-5-sonnet-latest';
+const CLAUDE_MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-4-5-20250929';
 
 const octokit = new Octokit({
   auth: GITHUB_TOKEN,
@@ -50,23 +50,35 @@ const OPTIONS = {
 // Minimal loader for llms-full.txt (with graceful fallback to llms.txt)
 async function readLlmsFullIndex() {
   const repoRoot = process.cwd();
-  const llmsFullPath = path.join(repoRoot, 'llms-full.txt');
-  const llmsPath = path.join(repoRoot, 'llms.txt');
+  const candidatesFull = [
+    path.join(repoRoot, 'static', 'llms-full.txt'),
+    path.join(repoRoot, 'docusaurus', 'static', 'llms-full.txt'),
+    path.join(repoRoot, 'llms-full.txt'),
+  ];
+  const candidatesLite = [
+    path.join(repoRoot, 'static', 'llms.txt'),
+    path.join(repoRoot, 'docusaurus', 'static', 'llms.txt'),
+    path.join(repoRoot, 'llms.txt'),
+  ];
 
-  let text = '';
-  let source = '';
-  try {
-    text = await fs.readFile(llmsFullPath, 'utf8');
-    source = 'llms-full.txt';
-  } catch {
-    try {
-      text = await fs.readFile(llmsPath, 'utf8');
-      source = 'llms.txt';
-    } catch {
-      console.warn('  ⚠️  No llms-full.txt or llms.txt found at repo root; proceeding without docs index');
-      return { source: null, pages: [], byTitle: new Map(), byUrl: new Map() };
+  async function readFirstExisting(paths) {
+    for (const p of paths) {
+      try {
+        const text = await fs.readFile(p, 'utf8');
+        const rel = path.relative(repoRoot, p) || p;
+        return { text, source: rel };
+      } catch {}
     }
+    return null;
   }
+
+  let loaded = await readFirstExisting(candidatesFull);
+  if (!loaded) loaded = await readFirstExisting(candidatesLite);
+  if (!loaded) {
+    console.warn('  ⚠️  No llms-full.txt or llms.txt found (checked static/ and docusaurus/static); proceeding without docs index');
+    return { source: null, pages: [], byTitle: new Map(), byUrl: new Map() };
+  }
+  const { text, source } = loaded;
 
   const pages = [];
   const byTitle = new Map();
@@ -351,6 +363,18 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
       ? diffSummary.slice(0, 100000) + '\n\n... (diff truncated due to size)'
       : diffSummary;
 
+  // Build candidate grounding block from llms-full index
+  const candidates = Array.isArray(prAnalysis._docsCandidates) ? prAnalysis._docsCandidates : [];
+  const candidatesBlock = candidates.length
+    ? `## Candidate Documentation Pages (from llms-full index)\n\n` +
+      candidates.map((p, i) => {
+        const anchors = Array.isArray(p.anchors) && p.anchors.length ? p.anchors.slice(0, 8).join(', ') : '—';
+        return `- [${i + 1}] Title: ${p.title}\n  URL: ${p.url || '(missing)'}\n  Anchors: ${anchors}`;
+      }).join('\n') + '\n\n'
+    : '';
+
+  const signalsBlock = `## Signals\n\n- Heuristic summary: ${prAnalysis._summary || 'N/A'}\n- Heuristic impact: ${(prAnalysis._impact && prAnalysis._impact.verdict) || 'unknown'} — ${(prAnalysis._impact && prAnalysis._impact.reason) || ''}\n\n`;
+
   const prompt = `You are a technical documentation analyst for Strapi CMS. Your expertise is in identifying documentation gaps and suggesting precise updates.
 
 Analyze this pull request and provide specific, actionable documentation update suggestions.
@@ -364,6 +388,9 @@ Analyze this pull request and provide specific, actionable documentation update 
 ## Code Changes (Diff)
 
 ${truncatedDiff}
+
+${signalsBlock}
+${candidatesBlock}
 
 ## Your Task
 
@@ -431,6 +458,11 @@ Respond with a JSON object following this exact structure:
    - CI/CD pipeline changes
    - Minor typo fixes in code comments
    - Changes to development tooling
+
+6. **Grounding and targeting**:
+   - Prefer targets among the "Candidate Documentation Pages" when applicable.
+   - If you suggest specific locations within a page, include an anchor from the page's anchors list when relevant.
+   - Keep the response JSON-only (no markdown formatting, no prose outside the JSON).
 
 If no documentation changes are needed, return empty suggestedChanges array with reasoning explaining why.
 
