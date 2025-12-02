@@ -1277,7 +1277,9 @@ async function main() {
       }
 
       const finalVerdict = (claudeSuggestions && claudeSuggestions.needsDocs) || (impact && impact.verdict) || 'maybe';
-      console.log(`  ✅ Final verdict: ${String(finalVerdict).toUpperCase()}`);
+      const verdictUpper = String(finalVerdict).toUpperCase();
+      const verdictIcon = finalVerdict === 'yes' ? '✅' : finalVerdict === 'no' ? '❌' : '⚠️';
+      console.log(`  ${verdictIcon} Final verdict: ${verdictUpper}`);
 
       analyses.push({
         ...prAnalysis,
@@ -1294,8 +1296,11 @@ async function main() {
     }
     
     console.log(`\n✅ Analysis complete!`);
+    const verdictOf = (a) => (a.claudeSuggestions && a.claudeSuggestions.needsDocs) || (a.impact && a.impact.verdict) || 'maybe';
+    const yesCount = analyses.filter(a => verdictOf(a) === 'yes').length;
     console.log(`   📊 Analyzed: ${analyses.length} PRs`);
-    console.log(`   ⏭️  Skipped: ${skipped} PRs (chores, tests, CI)\n`);
+    console.log(`   ⏭️  Skipped: ${skipped} PRs (chores, tests, CI)`);
+    console.log(`   📌 ${yesCount} PRs might require docs updates\n`);
     
     const report = generateMarkdownReport(releaseInfo, analyses);
     
