@@ -43,8 +43,9 @@ const RULESET_VERSION = 'v2';
 // Runtime options (set in main from CLI flags)
 let CURRENT_RELEASE_TAG = null;
 const OPTIONS = {
-  noCache: false,
-  refresh: false,
+  // Defaults favor fresh runs that recompute and overwrite cache
+  noCache: true,
+  refresh: true,
   cacheDir: path.join(process.cwd(), 'docusaurus', 'scripts', 'strapi-release-analyzer', '.cache'),
   limit: null,
   strict: 'conservative', // aggressive | balanced | conservative (default conservative)
@@ -177,8 +178,9 @@ function parseArgs(argv) {
       args.releaseUrl = arg;
       continue;
     }
-    if (arg === '--no-cache') OPTIONS.noCache = true;
-    if (arg === '--refresh') OPTIONS.refresh = true;
+    if (arg === '--no-cache') OPTIONS.noCache = true; // keeps default
+    if (arg === '--refresh') OPTIONS.refresh = true;   // keeps default
+    if (arg === '--use-cache') { OPTIONS.noCache = false; OPTIONS.refresh = false; }
     if (arg.startsWith('--cache-dir=')) OPTIONS.cacheDir = arg.split('=')[1] || OPTIONS.cacheDir;
     if (arg.startsWith('--limit=')) {
       const n = parseInt(arg.split('=')[1], 10);
@@ -1019,9 +1021,10 @@ async function main() {
   const { releaseUrl } = parseArgs(rawArgs);
 
   if (!releaseUrl) {
-    console.error('❌ Usage: node index.js <github-release-url> [--no-cache] [--refresh] [--cache-dir=PATH] [--limit=N-for-LLM] [--strict=aggressive|balanced|conservative] [--model=NAME]');
+    console.error('❌ Usage: node index.js <github-release-url> [--use-cache] [--cache-dir=PATH] [--limit=N-for-LLM] [--strict=aggressive|balanced|conservative] [--model=NAME]');
+    console.error('Defaults: fresh run (no cache reads) and refresh writes. Use --use-cache to enable reading existing cache and skip refresh.');
     console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive');
-    console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls if provided. Use --limit=0 for heuristics only.');
+    console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls. Use --limit=0 for heuristics only (no ANTHROPIC_API_KEY required).');
     process.exit(1);
   }
 
