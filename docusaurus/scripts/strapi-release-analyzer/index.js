@@ -957,6 +957,18 @@ function classifyImpact(prAnalysis) {
   return { verdict: 'maybe', reason: 'Code changes detected; possible docs impact.' };
 }
 
+// Exclude pure locale additions under conservative policy
+function isLocaleAddition(prAnalysis) {
+  const t = (prAnalysis.title || '').toLowerCase();
+  const b = (prAnalysis.body || '').toLowerCase();
+  const text = `${t} ${b}`;
+  if (!/(add|new)\s+(locale|language)/.test(text)) return false;
+  const files = prAnalysis.files || [];
+  // Heuristic: touches i18n locale lists / JSON locale maps
+  const onlyLocaleLists = files.length > 0 && files.every(f => /i18n|locales|locale/.test(f.filename));
+  return onlyLocaleLists;
+}
+
 // Detect micro UI-only changes likely not worth docs
 function isMicroUiChange(prAnalysis) {
   const title = (prAnalysis.title || '').toLowerCase();
@@ -1145,7 +1157,9 @@ async function main() {
         const strong = hasStrongDocsSignals(prAnalysis) || impact.verdict === 'yes' || isFeatureParityRestoration(prAnalysis);
         // Bug-like defaults to NO unless strong signals indicate config/API/schema/migration
         const isBugLike = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
-        allowByStrict = isFeatureEnhancement || (strong && !isMicroUiChange(prAnalysis));
+        // Exclude locale additions under conservative policy
+        const localeAdd = isLocaleAddition(prAnalysis);
+        allowByStrict = (isFeatureEnhancement || strong) && !isMicroUiChange(prAnalysis) && !localeAdd;
         if (isBugLike && !strong) allowByStrict = false;
         if (!allowByStrict && canUseLLM && !preNoReason) {
           console.log('  ⏭️  Skipping LLM call under conservative routing (no strong docs signals)');
