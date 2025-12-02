@@ -1181,14 +1181,39 @@ async function main() {
           // Drop invalid targets
           claudeSuggestions = { ...claudeSuggestions, targets: validated };
         }
-        if (validated.length === 0 && !claudeSuggestions.newPage) {
-          // No resolvable targets and not a new page request → No
+      if (validated.length === 0 && !claudeSuggestions.newPage) {
+        // No resolvable targets and not a new page request → No
+        claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+        downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
+        noReasonCode = 'llm_downgrade_invalid_targets';
+        console.log('  🔻 Downgrade → NO (targets invalid and not a new page)');
+      }
+
+      // Conservative anchor requirement for section‑heavy pages
+      if (OPTIONS.strict === 'conservative' && claudeSuggestions.needsDocs === 'yes' && validated.length > 0) {
+        const requiresAnchor = validated.some(t => {
+          if (t.anchor) return false; // already has anchor
+          const page = resolvePageForTarget(llmsIndex, candidates, t.path);
+          if (!page || !Array.isArray(page.anchors)) return false;
+          // Consider section-heavy when many anchors exist
+          const isSectionHeavy = page.anchors.length >= 5;
+          if (!isSectionHeavy) return false;
+          // If summary or high-signal tokens correlate with known anchors, anchor is expected
+          const anchorsSet = new Set(page.anchors.map(a => String(a).toLowerCase()));
+          const terms = Array.from(new Set([
+            ...(String(summary || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 3).slice(0, 10)),
+            ...collectHighSignalTokens(prAnalysis, 10)
+          ]));
+          return terms.some(term => anchorsSet.has(term));
+        });
+        if (requiresAnchor) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
-          downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
-          noReasonCode = 'llm_downgrade_invalid_targets';
-          console.log('  🔻 Downgrade → NO (targets invalid and not a new page)');
+          downgradeNote = 'Section-heavy target without anchor in conservative mode.';
+          noReasonCode = 'llm_downgrade_missing_anchor_section_heavy';
+          console.log('  🔻 Downgrade → NO (section-heavy page requires anchor)');
         }
       }
+    }
 
       // Hard conservative guard post‑LLM: bug fixes without strong signals default to No
       if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
