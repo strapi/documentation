@@ -1110,6 +1110,8 @@ async function main() {
       let downgradeNote = null;
       // Track LLM initial verdict before any downgrades
       let llmInitial = null;
+      // Reason code for final NO (used in logs/report)
+      let noReasonCode = null;
       if (runLLM) {
         claudeSuggestions = await generateDocSuggestionsWithClaude({
           ...prAnalysis,
