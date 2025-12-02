@@ -406,22 +406,15 @@ Analyze the changes and determine:
 2. What parts of the Strapi documentation need updates?
 3. What specific content should be added, updated, or clarified?
 
-Respond with a JSON object following this exact structure:
+Respond with a JSON object in this minimal shape (JSON only, no markdown):
 
 {
-  "priority": "high" | "medium" | "low",
-  "affectedAreas": ["area1", "area2"],
-  "documentationSection": "Specific section name (e.g., 'Features - Media Library', 'APIs - REST API', 'Configurations - Database')",
-  "suggestedChanges": [
-    {
-      "file": "path/to/doc/file.md",
-      "section": "Section title or heading",
-      "changeType": "add" | "update" | "clarify" | "add-note",
-      "description": "Clear explanation of what needs to be changed and why",
-      "suggestedContent": "Complete markdown content ready to be added/inserted. Be specific and actionable. Include code examples if relevant."
-    }
-  ],
-  "reasoning": "Brief explanation of why these documentation changes are needed (2-3 sentences)"
+  "summary": "≤200 chars plain text what/why",
+  "needsDocs": "yes" | "no" | "maybe",
+  "rationale": "1–2 sentence justification",
+  "targets": [
+    { "path": "docs/cms/...md", "anchor": "optional-section-anchor" }
+  ]
 }
 
 ## Guidelines
@@ -461,8 +454,8 @@ Respond with a JSON object following this exact structure:
 
 6. **Grounding and targeting**:
    - Prefer targets among the "Candidate Documentation Pages" when applicable.
-   - If you suggest specific locations within a page, include an anchor from the page's anchors list when relevant.
-   - Keep the response JSON-only (no markdown formatting, no prose outside the JSON).
+   - Include an anchor from the page's anchors list when relevant.
+   - Keep the response JSON-only (no markdown outside JSON).
 
 If no documentation changes are needed, return empty suggestedChanges array with reasoning explaining why.
 
@@ -478,19 +471,35 @@ Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
       }]
     });
 
-    const responseText = message.content[0].text;
+    const responseText = message.content?.[0]?.text || '';
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
-    
     if (!jsonMatch) {
       console.log(`  ⚠️  Could not parse Claude response as JSON`);
       return null;
     }
 
-    const suggestions = JSON.parse(jsonMatch[0]);
-    
-    console.log(`  ✅ Generated ${suggestions.suggestedChanges?.length || 0} suggestions (priority: ${suggestions.priority})`);
-    
-    return suggestions;
+    let obj;
+    try {
+      obj = JSON.parse(jsonMatch[0]);
+    } catch (e) {
+      console.log(`  ⚠️  JSON parse error: ${e.message}`);
+      return null;
+    }
+
+    // Lightweight normalization
+    const needs = (obj.needsDocs || '').toLowerCase();
+    const needsDocs = ['yes','no','maybe'].includes(needs) ? needs : 'maybe';
+    const summary = String(obj.summary || prAnalysis._summary || '').trim().slice(0, 200);
+    const rationale = String(obj.rationale || '').trim().slice(0, 300);
+    const targets = Array.isArray(obj.targets) ? obj.targets : [];
+    const normTargets = targets
+      .map(t => ({ path: String(t.path || '').trim(), anchor: t.anchor ? String(t.anchor).trim() : undefined }))
+      .filter(t => t.path);
+    const cappedTargets = normTargets.slice(0, 5);
+
+    const normalized = { summary, needsDocs, rationale, targets: cappedTargets };
+    console.log(`  ✅ LLM verdict: ${needsDocs.toUpperCase()} — ${cappedTargets.length} target(s)`);
+    return normalized;
   } catch (error) {
     console.error(`  ❌ Error calling Claude API: ${error.message}`);
     return null;
@@ -619,8 +628,6 @@ function generateMarkdownReport(releaseInfo, analyses) {
   analyses.forEach(a => {
     categoryCounts[a.category] = (categoryCounts[a.category] || 0) + 1;
     if (a.claudeSuggestions) {
-      priorityCounts[a.claudeSuggestions.priority]++;
-      
       const { mainCategory, section } = categorizePRByDocumentation(a);
       if (!docSectionCounts[mainCategory][section]) {
         docSectionCounts[mainCategory][section] = 0;
@@ -677,11 +684,9 @@ function generateMarkdownReport(releaseInfo, analyses) {
       prs.forEach(analysis => {
         const { number, title, url, claudeSuggestions, body, category } = analysis;
         
-        const priorityEmoji = claudeSuggestions.priority === 'high' ? '🔴' : 
-                             claudeSuggestions.priority === 'medium' ? '🟡' : '🟢';
-        
-        markdown += `### ${priorityEmoji} PR #${number}: ${title}\n\n`;
-        markdown += `**Type:** ${PR_CATEGORIES[category] || category} | **Priority:** ${claudeSuggestions.priority.toUpperCase()} | **Link:** ${url}\n\n`;
+        const verdictEmoji = claudeSuggestions.needsDocs === 'yes' ? '✅' : claudeSuggestions.needsDocs === 'no' ? '🟦' : '⚠️';
+        markdown += `### ${verdictEmoji} PR #${number}: ${title}\n\n`;
+        markdown += `**Type:** ${PR_CATEGORIES[category] || category} | **Docs required:** ${claudeSuggestions.needsDocs.toUpperCase()} | **Link:** ${url}\n\n`;
         
         if (claudeSuggestions.affectedAreas && claudeSuggestions.affectedAreas.length > 0) {
           markdown += `**Affected Areas:**\n`;
@@ -698,40 +703,20 @@ function generateMarkdownReport(releaseInfo, analyses) {
           }
         }
         
-        if (claudeSuggestions.reasoning) {
-          markdown += `**Analysis:** ${claudeSuggestions.reasoning}\n\n`;
+        if (claudeSuggestions.rationale) {
+          markdown += `**Rationale:** ${claudeSuggestions.rationale}\n\n`;
         }
-        
-        if (claudeSuggestions.suggestedChanges && claudeSuggestions.suggestedChanges.length > 0) {
-          markdown += `**📝 TODO - Documentation Updates:**\n\n`;
-          claudeSuggestions.suggestedChanges.forEach((change, idx) => {
-            const changeTitle = change.section || path.basename(change.file, '.md');
-            markdown += `- [ ] **${idx + 1}. ${change.changeType.toUpperCase()}: ${changeTitle}**\n`;
-            markdown += `  - [ ] Update file: \`${change.file}\`\n`;
-            markdown += `  - [ ] ${change.description}\n`;
-            if (change.suggestedContent) {
-              markdown += `  - [ ] Add/update content (see below)\n\n`;
-              markdown += `  <details>\n  <summary>💡 Suggested content</summary>\n\n`;
-              
-              const hasCodeBlock = change.suggestedContent.includes('```');
-              
-              if (hasCodeBlock) {
-                markdown += `  ${change.suggestedContent.split('\n').join('\n  ')}\n\n`;
-              } else {
-                const lines = change.suggestedContent.split('\n');
-                markdown += `  > **Content to add/update:**\n  >\n`;
-                lines.forEach(line => {
-                  markdown += `  > ${line}\n`;
-                });
-                markdown += `\n`;
-              }
-              
-              markdown += `  </details>\n\n`;
-            } else {
-              markdown += `\n`;
-            }
+
+        const targets = Array.isArray(claudeSuggestions.targets) ? claudeSuggestions.targets : [];
+        if (targets.length > 0) {
+          markdown += `**Targets:**\n`;
+          targets.forEach((t) => {
+            const anchor = t.anchor ? `#${t.anchor}` : '';
+            markdown += `- ${t.path}${anchor ? ` (${anchor})` : ''}\n`;
           });
-        } else {
+          markdown += `\n`;
+        }
+        if (claudeSuggestions.needsDocs === 'no') {
           markdown += `**Documentation Impact:** No changes required.\n\n`;
         }
         
