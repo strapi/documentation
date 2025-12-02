@@ -702,14 +702,31 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const s = a.claudeSuggestions || {};
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
+      markdown += `  \n  Decision: ${a.provenance === 'llm' ? 'LLM assisted' : 'Heuristic only'}\n`;
+      markdown += `  \n  Final verdict: No\n`;
+      if (a.llmInitial && a.llmInitial.verdict) {
+        const firstSentence = String(a.llmInitial.rationale || '').split(/\.(\s|$)/)[0];
+        markdown += `  \n  LLM initial: ${a.llmInitial.verdict.toUpperCase()}${firstSentence ? ` — ${firstSentence}.` : ''}\n`;
+      }
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      // Avoid contradictory rationales by standardizing when downgraded
-      if (a.downgradeNote) {
-        markdown += `  \n  Rationale: This appears to be a bug/cosmetic fix restoring expected behavior. Documentation change not required.\n`;
-        markdown += `  \n  Note: ${a.downgradeNote}\n`;
+      // Render reason codes into human-friendly rationale
+      if (a.noReasonCode) {
+        const reasonMap = {
+          heuristic_pre_no_micro_ui: 'cosmetic UI-only change detected by heuristics',
+          heuristic_pre_no_regression_restore: 'regression/restore-to-expected behavior detected by heuristics',
+          heuristic_pre_no_bug_weak_signals: 'bug fix without clear feature/config/API impact (heuristics)',
+          llm_downgrade_micro_ui: 'LLM suggested changes but micro UI-only; conservative downgrade',
+          llm_downgrade_regression_restore: 'LLM suggested changes but restore-to-expected; conservative downgrade',
+          llm_downgrade_coverage_match: 'End behavior appears already documented; conservative downgrade',
+          llm_downgrade_invalid_targets: 'LLM targets invalid or unresolvable; conservative downgrade',
+          conservative_guard_no_strong_signals: 'Bug fix without strong docs signals; conservative guard'
+        };
+        const why = reasonMap[a.noReasonCode] || 'Not docs-worthy under conservative policy';
+        markdown += `  \n  Rationale: ${why}.\n`;
       } else if (s.rationale) {
         markdown += `  \n  Rationale: ${s.rationale}\n`;
       }
+      if (a.downgradeNote) markdown += `  \n  Note: ${a.downgradeNote}\n`;
       markdown += `\n`;
     });
     markdown += `\n`;
@@ -1013,11 +1030,12 @@ async function main() {
       const candidates = suggestCandidateDocs(llmsIndex, prAnalysis, 5);
       // Pre‑LLM gate for obvious "No" cases under conservative policy
       let preNoReason = null;
+      let preNoCode = null;
       if (OPTIONS.strict === 'conservative') {
-        if (isMicroUiChange(prAnalysis)) preNoReason = 'cosmetic UI-only change';
-        else if (isRegressionRestore(prAnalysis)) preNoReason = 'regression/restore to expected behavior';
+        if (isMicroUiChange(prAnalysis)) { preNoReason = 'cosmetic UI-only change'; preNoCode = 'heuristic_pre_no_micro_ui'; }
+        else if (isRegressionRestore(prAnalysis)) { preNoReason = 'regression/restore to expected behavior'; preNoCode = 'heuristic_pre_no_regression_restore'; }
         else if ((prAnalysis.category === 'bug' || /\bfix\b|\bbug\b/i.test(prAnalysis.title || '')) && impact.verdict !== 'yes') {
-          preNoReason = 'bug fix without clear feature/config/API impact';
+          preNoReason = 'bug fix without clear feature/config/API impact'; preNoCode = 'heuristic_pre_no_bug_weak_signals';
         }
       }
 
@@ -1036,6 +1054,8 @@ async function main() {
       const runLLM = !preNoReason && canUseLLM && allowByStrict;
       let claudeSuggestions = null;
       let downgradeNote = null;
+      // Track LLM initial verdict before any downgrades
+      let llmInitial = null;
       if (runLLM) {
         claudeSuggestions = await generateDocSuggestionsWithClaude({
           ...prAnalysis,
@@ -1043,6 +1063,9 @@ async function main() {
           _impact: impact,
           _docsCandidates: candidates,
         });
+        if (claudeSuggestions) {
+          llmInitial = { verdict: claudeSuggestions.needsDocs, rationale: claudeSuggestions.rationale || '' };
+        }
       } else if (preNoReason) {
         // Synthesize a conservative No without spending tokens
         claudeSuggestions = {
@@ -1055,6 +1078,7 @@ async function main() {
         };
         console.log(`  ⛳ Pre-LLM gate → NO (${preNoReason})`);
         downgradeNote = `Downgraded to No under conservative policy: ${preNoReason}.`;
+        noReasonCode = preNoCode || null;
       }
 
       // Apply strictness downgrade in conservative mode for micro UI or regression restores
@@ -1062,10 +1086,12 @@ async function main() {
         if (isMicroUiChange(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative downgrade: micro UI-only change.';
+          noReasonCode = 'llm_downgrade_micro_ui';
           console.log('  🔻 Downgrade → NO (micro UI-only change)');
         } else if (isRegressionRestore(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative downgrade: regression/restore to expected behavior.';
+          noReasonCode = 'llm_downgrade_regression_restore';
           console.log('  🔻 Downgrade → NO (restore to expected behavior)');
         }
       }
@@ -1088,6 +1114,7 @@ async function main() {
           if (coverageHit) {
             claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
             downgradeNote = 'Coverage cross-check: likely already documented end behavior; treating as bug fix.';
+            noReasonCode = 'llm_downgrade_coverage_match';
             console.log('  🔻 Downgrade → NO (docs coverage likely matches end behavior)');
           }
         }
@@ -1105,6 +1132,7 @@ async function main() {
           // No resolvable targets and not a new page request → No
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
+          noReasonCode = 'llm_downgrade_invalid_targets';
           console.log('  🔻 Downgrade → NO (targets invalid and not a new page)');
         }
       }
@@ -1115,11 +1143,14 @@ async function main() {
         if (isBugLike && !hasStrongDocsSignals(prAnalysis) && !claudeSuggestions.newPage) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative guard: bug fix without strong docs signals.';
+          noReasonCode = 'conservative_guard_no_strong_signals';
           console.log('  🔻 Downgrade → NO (conservative guard: bug without strong signals)');
         }
       }
 
       // Final per-PR log line for decision provenance
+      // Final per-PR log line for decision provenance
+      const provenance = runLLM ? 'llm' : 'heuristic';
       if (runLLM) {
         console.log('  🤝 Decision provenance: LLM assisted');
       } else {
@@ -1136,6 +1167,9 @@ async function main() {
         impact,
         claudeSuggestions,
         downgradeNote,
+        provenance,
+        noReasonCode,
+        llmInitial,
       });
       
       await new Promise(resolve => setTimeout(resolve, 1000));
