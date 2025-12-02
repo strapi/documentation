@@ -1017,12 +1017,18 @@ async function main() {
     const prList = Array.isArray(releaseInfo.prNumbers) ? releaseInfo.prNumbers : [];
     for (const prNumber of prList) {
       const prAnalysis = await analyzePR(prNumber);
-      
+
       if (!prAnalysis) {
         skipped++;
         continue;
       }
-      
+
+      // Pretty header per PR for readability
+      try {
+        const headerTitle = (prAnalysis.title || '').trim();
+        console.log(`\n— PR #${prNumber} — ${headerTitle}`);
+      } catch {}
+
       // Heuristic triage and summary
       const summary = deriveSummary(prAnalysis);
       const impact = classifyImpact(prAnalysis);
@@ -1153,6 +1159,9 @@ async function main() {
       const provenance = runLLM ? 'llm' : 'heuristic';
       if (runLLM) {
         console.log('  🤝 Decision provenance: LLM assisted');
+        if (llmInitial && llmInitial.verdict) {
+          console.log(`  🧪 LLM initial: ${String(llmInitial.verdict).toUpperCase()}`);
+        }
       } else {
         console.log('  🧭 Decision provenance: Heuristic only');
       }
@@ -1160,6 +1169,9 @@ async function main() {
       if (downgradeNote) {
         console.log(`  📝 Downgrade note: ${downgradeNote}`);
       }
+
+      const finalVerdict = (claudeSuggestions && claudeSuggestions.needsDocs) || (impact && impact.verdict) || 'maybe';
+      console.log(`  ✅ Final verdict: ${String(finalVerdict).toUpperCase()}`);
 
       analyses.push({
         ...prAnalysis,
