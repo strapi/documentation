@@ -313,8 +313,6 @@ function categorizePR(title, body, labels) {
 }
 
 async function analyzePR(prNumber) {
-  // Blank line before each PR analysis for readability
-  console.log('');
   console.log(`  🔍 Analyzing PR #${prNumber}...`);
   
   try {
@@ -1090,7 +1088,7 @@ async function main() {
         continue;
       }
 
-      // Pretty header per PR for readability
+      // Pretty header per PR for readability (single blank line before header)
       try {
         const headerTitle = (prAnalysis.title || '').trim();
         console.log(`\n— PR #${prNumber} — ${headerTitle}`);
@@ -1208,7 +1206,14 @@ async function main() {
           // Drop invalid targets
           claudeSuggestions = { ...claudeSuggestions, targets: validated };
         }
-      if (validated.length === 0 && !claudeSuggestions.newPage) {
+      // If bug-like, still require strong signals even after LLM says yes
+      const isBugLikePost = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
+      if (isBugLikePost && !hasStrongDocsSignals(prAnalysis)) {
+        claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+        downgradeNote = 'Conservative guard: bug fix lacks strong config/API/schema/migration signals.';
+        noReasonCode = 'llm_downgrade_bug_without_strong_signals';
+        console.log('  🔻 Downgrade → NO (bug fix without strong signals)');
+      } else if (validated.length === 0 && !claudeSuggestions.newPage) {
         // No resolvable targets and not a new page request → No
         claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
         downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
@@ -1271,8 +1276,6 @@ async function main() {
 
       const finalVerdict = (claudeSuggestions && claudeSuggestions.needsDocs) || (impact && impact.verdict) || 'maybe';
       console.log(`  ✅ Final verdict: ${String(finalVerdict).toUpperCase()}`);
-      // Visual spacer between PRs
-      console.log('');
 
       analyses.push({
         ...prAnalysis,
