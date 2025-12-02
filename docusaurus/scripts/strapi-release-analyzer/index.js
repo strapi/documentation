@@ -767,6 +767,51 @@ function tokenize(text) {
     .filter(Boolean);
 }
 
+// Collect high-signal tokens from file paths and diffs to aid coverage checks
+function collectHighSignalTokens(prAnalysis, cap = 20) {
+  const out = new Set();
+  const files = prAnalysis.files || [];
+  const featureHints = [
+    'content-manager', 'content', 'content-type-builder', 'media-library', 'internationalization', 'i18n',
+    'users-permissions', 'review-workflows', 'releases', 'upload', 'email', 'graphql', 'rest', 'admin', 'rbac', 'sso'
+  ];
+  const genericDrop = new Set(['src','lib','dist','build','public','docs','packages','plugin','plugins','api','server','test','tests','ci','config']);
+
+  for (const f of files) {
+    const parts = String(f.filename || '').toLowerCase().split(/[\/]/).filter(Boolean);
+    for (const p of parts) {
+      if (genericDrop.has(p)) continue;
+      // split further on - _ .
+      const sub = p.split(/[._-]/).filter(s => s.length >= 3);
+      for (const s of sub) out.add(s);
+    }
+    const base = path.basename(f.filename || '').toLowerCase().replace(/\.(mdx?|js|ts|tsx|jsx|json|yml|yaml|css|scss|less)$/,'');
+    if (base && base.length >= 3) out.add(base);
+  }
+  for (const hint of featureHints) if ((prAnalysis.title||'').toLowerCase().includes(hint)) out.add(hint);
+
+  // Extract option-like keys and env vars from added lines
+  for (const f of files) {
+    const patch = String(f.patch || '');
+    const lines = patch.split(/\r?\n/);
+    for (const line of lines) {
+      if (!line.startsWith('+')) continue;
+      const l = line.slice(1);
+      const envMatch = l.match(/process\.env\.([A-Z0-9_]+)/);
+      if (envMatch) out.add(envMatch[1].toLowerCase());
+      const keyMatches = l.match(/[A-Za-z][A-Za-z0-9_-]{3,}/g);
+      if (keyMatches) {
+        for (const k of keyMatches) {
+          const kk = k.toLowerCase();
+          if (kk.length >= 4 && !genericDrop.has(kk)) out.add(kk);
+        }
+      }
+    }
+  }
+
+  return Array.from(out).slice(0, cap);
+}
+
 // Resolve the best matching docs page for a target path using the full llms-full index
 function resolvePageForTarget(llmsIndex, candidates, targetPath) {
   if (!llmsIndex || !Array.isArray(llmsIndex.pages) || llmsIndex.pages.length === 0) return null;
@@ -1111,10 +1156,12 @@ async function main() {
             const page = resolvePageForTarget(llmsIndex, candidates, t.path);
             if (!page || !page.text) return false;
             const words = (summary || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 3).slice(0, 8);
+            const highSignals = collectHighSignalTokens(prAnalysis, 12);
+            const terms = Array.from(new Set([...words, ...highSignals])).slice(0, 16);
             const body = page.text.toLowerCase();
-            const hits = words.filter(w => body.includes(w));
-            const baseThresh = Math.max(2, Math.floor(words.length / 2));
-            const threshold = OPTIONS.strict === 'conservative' ? Math.max(3, baseThresh) : baseThresh;
+            const hits = terms.filter(w => w && body.includes(w));
+            const baseThresh = Math.max(3, Math.floor(terms.length / 2));
+            const threshold = OPTIONS.strict === 'conservative' ? Math.max(4, baseThresh) : baseThresh;
             return hits.length >= threshold;
           });
           if (coverageHit) {
