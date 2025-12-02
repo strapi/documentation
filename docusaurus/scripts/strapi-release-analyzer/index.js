@@ -412,6 +412,7 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
   "summary": "≤200 chars plain text what/why",
   "needsDocs": "yes" | "no" | "maybe",
   "docsWorthy": true | false,
+  "newPage": true | false,
   "rationale": "1–2 sentence justification",
   "targets": [
     { "path": "docs/cms/...md", "anchor": "optional-section-anchor" }
@@ -469,6 +470,7 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
    - Prefer targets among the "Candidate Documentation Pages" when applicable.
    - Include an anchor from the page's anchors list when relevant.
    - Keep the response JSON-only (no markdown outside JSON).
+   - Set `newPage: true` only if a new documentation page should be created and no existing target fits.
 
 Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
 
@@ -501,6 +503,7 @@ Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
     const needs = (obj.needsDocs || '').toLowerCase();
     const needsDocs = ['yes','no','maybe'].includes(needs) ? needs : 'maybe';
     const docsWorthy = Boolean(obj.docsWorthy);
+    const newPage = Boolean(obj.newPage);
     const summary = String(obj.summary || prAnalysis._summary || '').trim().slice(0, 200);
     const rationale = String(obj.rationale || '').trim().slice(0, 300);
     const targets = Array.isArray(obj.targets) ? obj.targets : [];
@@ -509,8 +512,16 @@ Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
       .filter(t => t.path);
     const cappedTargets = normTargets.slice(0, 5);
 
-    const normalized = { summary, needsDocs, docsWorthy, rationale, targets: cappedTargets };
-    console.log(`  ✅ LLM verdict: ${needsDocs.toUpperCase()} | worthy=${docsWorthy ? 'Y' : 'N'} — ${cappedTargets.length} target(s)`);
+    // Post-processing gate: enforce docs-worthiness and targets presence
+    let finalNeeds = needsDocs;
+    if (needsDocs === 'yes') {
+      const hasTargets = cappedTargets.length > 0;
+      if (!docsWorthy) finalNeeds = 'no';
+      else if (!hasTargets && !newPage) finalNeeds = 'no';
+    }
+
+    const normalized = { summary, needsDocs: finalNeeds, docsWorthy, newPage, rationale, targets: cappedTargets };
+    console.log(`  ✅ LLM verdict: ${finalNeeds.toUpperCase()} | worthy=${docsWorthy ? 'Y' : 'N'}${newPage ? ' | newPage=Y' : ''} — ${cappedTargets.length} target(s)`);
     return normalized;
   } catch (error) {
     console.error(`  ❌ Error calling Claude API: ${error.message}`);
