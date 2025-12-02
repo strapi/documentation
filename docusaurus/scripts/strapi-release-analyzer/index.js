@@ -856,8 +856,9 @@ async function main() {
   const { releaseUrl } = parseArgs(rawArgs);
 
   if (!releaseUrl) {
-    console.error('❌ Usage: node index.js <github-release-url> [--no-cache] [--refresh] [--cache-dir=PATH] [--limit=N] [--strict=aggressive|balanced|conservative] [--model=NAME]');
-    console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive --limit=10');
+    console.error('❌ Usage: node index.js <github-release-url> [--no-cache] [--refresh] [--cache-dir=PATH] [--limit=N-for-LLM] [--strict=aggressive|balanced|conservative] [--model=NAME]');
+    console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive');
+    console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls if provided.');
     process.exit(1);
   }
 
@@ -891,8 +892,7 @@ async function main() {
     let skipped = 0;
     
     const prList = Array.isArray(releaseInfo.prNumbers) ? releaseInfo.prNumbers : [];
-    const limited = (OPTIONS.limit && OPTIONS.limit > 0) ? prList.slice(0, OPTIONS.limit) : prList;
-    for (const prNumber of limited) {
+    for (const prNumber of prList) {
       const prAnalysis = await analyzePR(prNumber);
       
       if (!prAnalysis) {
@@ -905,7 +905,8 @@ async function main() {
       const impact = classifyImpact(prAnalysis);
 
       const candidates = suggestCandidateDocs(llmsIndex, prAnalysis, 5);
-      const runLLM = impact.verdict !== 'no';
+      // Optional cap: apply limit only to LLM calls
+      const runLLM = impact.verdict !== 'no' && (!OPTIONS.limit || analyses.filter(a => a.claudeSuggestions).length < OPTIONS.limit);
       const claudeSuggestions = runLLM
         ? await generateDocSuggestionsWithClaude({
             ...prAnalysis,
