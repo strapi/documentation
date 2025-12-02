@@ -799,19 +799,19 @@ async function main() {
   if (!releaseUrl) {
     console.error('❌ Usage: node index.js <github-release-url> [--no-cache] [--refresh] [--cache-dir=PATH] [--limit=N-for-LLM] [--strict=aggressive|balanced|conservative] [--model=NAME]');
     console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive');
-    console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls if provided.');
+    console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls if provided. Use --limit=0 for heuristics only.');
     process.exit(1);
   }
 
   if (!GITHUB_TOKEN) {
-    console.error('❌ GITHUB_TOKEN environment variable is not set');
-    console.error('Please create a .env file with: GITHUB_TOKEN=your_token_here');
-    process.exit(1);
+    console.warn('⚠️  GITHUB_TOKEN not set — proceeding unauthenticated (lower rate limits)');
   }
 
-  if (!ANTHROPIC_API_KEY) {
-    console.error('❌ ANTHROPIC_API_KEY environment variable is not set');
-    console.error('Please create a .env file with: ANTHROPIC_API_KEY=your_api_key_here');
+  const llmCapProvided = OPTIONS.limit !== undefined && OPTIONS.limit !== null;
+  const willUseLLM = !(llmCapProvided && Number(OPTIONS.limit) === 0);
+  if (willUseLLM && !ANTHROPIC_API_KEY) {
+    console.error('❌ ANTHROPIC_API_KEY is required when LLM calls are enabled');
+    console.error('Set --limit=0 to run heuristics only without an Anthropic key.');
     process.exit(1);
   }
 
