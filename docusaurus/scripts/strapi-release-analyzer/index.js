@@ -925,16 +925,39 @@ async function main() {
       const impact = classifyImpact(prAnalysis);
 
       const candidates = suggestCandidateDocs(llmsIndex, prAnalysis, 5);
+      // Pre‑LLM gate for obvious "No" cases under conservative policy
+      let preNoReason = null;
+      if (OPTIONS.strict === 'conservative') {
+        if (isMicroUiChange(prAnalysis)) preNoReason = 'cosmetic UI-only change';
+        else if (isRegressionRestore(prAnalysis)) preNoReason = 'regression/restore to expected behavior';
+        else if ((prAnalysis.category === 'bug' || /\bfix\b|\bbug\b/i.test(prAnalysis.title || '')) && impact.verdict !== 'yes') {
+          preNoReason = 'bug fix without clear feature/config/API impact';
+        }
+      }
+
       // Optional cap: apply limit only to LLM calls
-      const runLLM = impact.verdict !== 'no' && (!OPTIONS.limit || analyses.filter(a => a.claudeSuggestions).length < OPTIONS.limit);
-      let claudeSuggestions = runLLM
-        ? await generateDocSuggestionsWithClaude({
-            ...prAnalysis,
-            _summary: summary,
-            _impact: impact,
-            _docsCandidates: candidates,
-          })
-        : null;
+      const canUseLLM = impact.verdict !== 'no' && (!OPTIONS.limit || analyses.filter(a => a.claudeSuggestions).length < OPTIONS.limit);
+      const runLLM = !preNoReason && canUseLLM;
+      let claudeSuggestions = null;
+      if (runLLM) {
+        claudeSuggestions = await generateDocSuggestionsWithClaude({
+          ...prAnalysis,
+          _summary: summary,
+          _impact: impact,
+          _docsCandidates: candidates,
+        });
+      } else if (preNoReason) {
+        // Synthesize a conservative No without spending tokens
+        claudeSuggestions = {
+          summary,
+          needsDocs: 'no',
+          docsWorthy: false,
+          newPage: false,
+          rationale: `Conservative pre-LLM gate: ${preNoReason}`,
+          targets: [],
+        };
+        console.log(`  ⛳ Pre-LLM gate → NO (${preNoReason})`);
+      }
 
       // Apply strictness downgrade in conservative mode for micro UI or regression restores
       if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
