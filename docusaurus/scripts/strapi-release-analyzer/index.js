@@ -674,7 +674,9 @@ function generateMarkdownReport(releaseInfo, analyses) {
 
   markdown += `Total PRs: ${analyses.length} | Yes: ${yesList.length} | No: ${noList.length}`;
   if (maybeList.length > 0) markdown += ` | Maybe: ${maybeList.length}`;
-  markdown += `\n\n---\n\n`;
+  markdown += `\n`;
+  // Quick summary line for docs‑worthy count at top
+  markdown += `PRs that might require docs updates: ${yesList.length}\n\n---\n\n`;
 
   // Yes section
   if (yesList.length > 0) {
