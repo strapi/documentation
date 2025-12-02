@@ -1025,8 +1025,14 @@ function hasStrongDocsSignals(prAnalysis) {
   // Migration / breaking language in title/body
   const hasMigrationSignals = /\b(breaking|deprecat|migration|rename\s+(setting|option|property)|v4\s*->?\s*v5|v4\s*to\s*v5|parity\s+with\s+v4)\b/i.test(title + ' ' + body);
 
+  // Security/auth/proxy strong signals
+  const proxyAuthTokensBody = /ctx\.request\.secure|trust\s+proxy|reverse\s+proxy|x-forwarded-proto|cookie\s+secure|secure\s+cookie|same\s*site|samesite|csrf|cors|jwt|bearer|token|authentication|authorize|session/i;
+  const proxyAuthTokensAdd = /ctx\.request\.secure|trust\s*proxy|x-forwarded-proto|set-cookie|sameSite|samesite|secure\s*[:=]\s*true|jwt|bearer|token|auth|session/i;
+  const hasProxyAuthBody = proxyAuthTokensBody.test(title + ' ' + body);
+  const hasProxyAuthAdd = addedLines.some(l => proxyAuthTokensAdd.test(l));
+
   return (
-    hasEnv || hasExportConfig || hasHttpVerbs || hasRouteDefs || hasGraphQL || hasRestSchema || hasCli || hasSchema || hasMigrationSignals
+    hasEnv || hasExportConfig || hasHttpVerbs || hasRouteDefs || hasGraphQL || hasRestSchema || hasCli || hasSchema || hasMigrationSignals || hasProxyAuthBody || hasProxyAuthAdd
   );
 }
 
