@@ -1076,6 +1076,26 @@ function isFeatureParityRestoration(prAnalysis) {
   return configArea;
 }
 
+// Upload restriction: treat MIME/file-type allow/deny rules as docs‑worthy security/config
+function isUploadRestriction(prAnalysis) {
+  const title = (prAnalysis.title || '').toLowerCase();
+  const body = (prAnalysis.body || '').toLowerCase();
+  const text = `${title} ${body}`;
+  const mentionsUpload = /(upload|media)\b/.test(text);
+  const mentionsTypes = /(allowedtypes|deniedtypes|mime|mimetype|content[- ]?type|file\s*type)/i.test(text);
+  if (mentionsUpload && mentionsTypes) return true;
+  const files = prAnalysis.files || [];
+  const inUploadArea = files.some(f => /upload/i.test(f.filename));
+  if (!inUploadArea) return false;
+  const additions = [];
+  for (const f of files) {
+    const patch = String(f.patch || '');
+    const lines = patch.split(/\r?\n/);
+    for (const line of lines) if (line.startsWith('+')) additions.push(line.slice(1));
+  }
+  return additions.some(l => /(allowedTypes|deniedTypes|mime|mimetype|content[- ]?type)/i.test(l));
+}
+
 // (duplicate hasStrongDocsSignals removed; stricter version defined earlier)
 
 async function main() {
@@ -1161,7 +1181,7 @@ async function main() {
       let allowByStrict = true;
       if (OPTIONS.strict === 'conservative') {
         const isFeatureEnhancement = prAnalysis.category === 'feature' || prAnalysis.category === 'enhancement' || /\bfeat|feature\b/i.test(prAnalysis.title || '');
-        const strong = hasStrongDocsSignals(prAnalysis) || impact.verdict === 'yes' || isFeatureParityRestoration(prAnalysis);
+        const strong = hasStrongDocsSignals(prAnalysis) || impact.verdict === 'yes' || isFeatureParityRestoration(prAnalysis) || isUploadRestriction(prAnalysis);
         // Bug-like defaults to NO unless strong signals indicate config/API/schema/migration
         const isBugLike = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
         // Exclude locale additions under conservative policy
@@ -1255,8 +1275,7 @@ async function main() {
         }
       // If bug-like, still require strong signals even after LLM says yes — but whitelist upload MIME rules
       const isBugLikePost = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
-      const isUploadRestriction = /upload|media/i.test(prAnalysis.title || '') && /(allowedTypes|deniedTypes|mime|mimetype|content[- ]?type)/i.test((prAnalysis.body || ''));
-      if (isBugLikePost && !hasStrongDocsSignals(prAnalysis) && !isUploadRestriction) {
+      if (isBugLikePost && !hasStrongDocsSignals(prAnalysis) && !isUploadRestriction(prAnalysis)) {
         claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
         downgradeNote = 'Conservative guard: bug fix lacks strong config/API/schema/migration signals.';
         noReasonCode = 'llm_downgrade_bug_without_strong_signals';
