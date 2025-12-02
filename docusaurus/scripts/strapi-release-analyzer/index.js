@@ -632,7 +632,6 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      markdown += `  \n  Verdict: YES\n`;
       if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
       const targets = Array.isArray(s.targets) ? s.targets : [];
       if (targets.length > 0) {
@@ -655,7 +654,6 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      markdown += `  \n  Verdict: NO\n`;
       if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
       markdown += `\n`;
     });
@@ -670,7 +668,6 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      markdown += `  \n  Verdict: MAYBE\n`;
       if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
       const targets = Array.isArray(s.targets) ? s.targets : [];
       if (targets.length > 0) {
