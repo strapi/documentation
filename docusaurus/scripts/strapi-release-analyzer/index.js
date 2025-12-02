@@ -83,6 +83,7 @@ async function readLlmsFullIndex() {
   const pages = [];
   const byTitle = new Map();
   const byUrl = new Map();
+  const bySlug = new Map();
 
   // Heuristic parser:
   // - Treat lines starting with "# " or "## " as page/section titles
@@ -106,7 +107,7 @@ async function readLlmsFullIndex() {
     if (/^#\s+/.test(line)) {
       // Page title
       const title = line.replace(/^#\s+/, '').trim();
-      current = { title, url: null, anchors: new Set() };
+      current = { title, url: null, anchors: new Set(), text: '' };
       pages.push(current);
       byTitle.set(title.toLowerCase(), current);
       continue;
@@ -115,7 +116,7 @@ async function readLlmsFullIndex() {
       // Treat as page title too if no outer # title exists yet
       const title = line.replace(/^##\s+/, '').trim();
       if (!current) {
-        current = { title, url: null, anchors: new Set() };
+        current = { title, url: null, anchors: new Set(), text: '' };
         pages.push(current);
         byTitle.set(title.toLowerCase(), current);
       } else {
@@ -134,6 +135,17 @@ async function readLlmsFullIndex() {
     if (m && !current.url) {
       current.url = m[1];
       byUrl.set(current.url, current);
+      try {
+        const u = new URL(current.url);
+        // take last non-empty segment as slug
+        const segs = u.pathname.split('/').filter(Boolean);
+        const last = segs[segs.length - 1] || '';
+        if (last) bySlug.set(last.toLowerCase(), current);
+      } catch {}
+    }
+    // Accumulate raw text for coverage checks
+    if (current) {
+      current.text += line + "\n";
     }
   }
 
@@ -142,9 +154,17 @@ async function readLlmsFullIndex() {
     title: p.title,
     url: p.url || null,
     anchors: Array.from(p.anchors),
+    text: p.text || ''
   }));
 
-  return { source, pages: normalized, byTitle, byUrl };
+  // Re-link bySlug to normalized objects
+  const bySlugNormalized = new Map();
+  for (const [k, v] of bySlug.entries()) {
+    const norm = normalized.find(p => p.title === v.title && p.url === v.url);
+    if (norm) bySlugNormalized.set(k, norm);
+  }
+
+  return { source, pages: normalized, byTitle, byUrl, bySlug: bySlugNormalized };
 }
 
 function parseArgs(argv) {
@@ -920,6 +940,37 @@ async function main() {
       if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
         if (isMicroUiChange(prAnalysis) || isRegressionRestore(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+        }
+      }
+
+      // llms-full cross-check: if targets are present and the page text likely already
+      // describes the expected behavior (and PR looks like a fix), downgrade to NO.
+      if (claudeSuggestions && claudeSuggestions.needsDocs === 'yes' && Array.isArray(claudeSuggestions.targets) && claudeSuggestions.targets.length > 0) {
+        const looksLikeFix = /fix|bug|regression|restore|correct|misleading|missing/i.test(prAnalysis.title || '') || /fix|bug|regression|restore|correct|misleading|missing/i.test(prAnalysis.body || '');
+        if (looksLikeFix) {
+          const coverageHit = claudeSuggestions.targets.some(t => {
+            const wanted = (t.path || '').toLowerCase();
+            let page = null;
+            // prefer exact slug match from llmsIndex
+            const slug = path.basename(wanted).replace(/\.mdx?$/i, '').toLowerCase();
+            if (slug && llmsIndex.bySlug && llmsIndex.bySlug.has(slug)) {
+              page = llmsIndex.bySlug.get(slug);
+            }
+            // fallback: any candidate containing the slug
+            if (!page) {
+              page = candidates.find(p => p.url && p.url.toLowerCase().includes(slug));
+            }
+            // last resort: first candidate
+            if (!page) page = candidates[0];
+            if (!page || !page.text) return false;
+            const words = (summary || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 3).slice(0, 8);
+            const body = page.text.toLowerCase();
+            const hits = words.filter(w => body.includes(w));
+            return hits.length >= Math.max(2, Math.floor(words.length / 2));
+          });
+          if (coverageHit) {
+            claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+          }
         }
       }
 
