@@ -1040,6 +1040,21 @@ async function main() {
         }
       }
 
+      // Target validation tightening: ensure targets map to known docs pages
+      if (claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
+        const originalTargets = Array.isArray(claudeSuggestions.targets) ? claudeSuggestions.targets : [];
+        const validated = originalTargets.filter(t => !!resolvePageForTarget(llmsIndex, candidates, t.path));
+        if (validated.length !== originalTargets.length) {
+          // Drop invalid targets
+          claudeSuggestions = { ...claudeSuggestions, targets: validated };
+        }
+        if (validated.length === 0 && !claudeSuggestions.newPage) {
+          // No resolvable targets and not a new page request → No
+          claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+          downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
+        }
+      }
+
       analyses.push({
         ...prAnalysis,
         summary,
