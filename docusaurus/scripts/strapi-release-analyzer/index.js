@@ -1039,35 +1039,47 @@ function hasStrongDocsSignals(prAnalysis) {
   const body = (prAnalysis.body || '').toLowerCase();
   const files = prAnalysis.files || [];
 
-  // Title/body indicators
-  if (/breaking|deprecat|introduc|add(\s+new)?\b|new\s+(endpoint|api|config|setting|option)|migration/.test(title + ' ' + body)) {
-    return true;
+  // Hard exclusions — do NOT count as strong signals
+  const uiUxTerms = /\b(ui|tooltip|tooltips|spacing|margin|padding|align|alignment|border|borders|icon|icons|label|labels|translation|translations|typo|color|colors|popover|menu|dropdown|scroll|overflow|column|list|table|badge|chip|toast|modal|dialog)\b/;
+  const localeTerms = /\b(locale|locales|language|languages|i18n locale|add\s+locale|add\s+language)\b/;
+  if (uiUxTerms.test(title) || uiUxTerms.test(body) || localeTerms.test(title) || localeTerms.test(body)) {
+    return false;
   }
 
-  // File path indicators
-  const pathHit = files.some(f => /(^|\/)config(\/|$)|routes?\.|controllers?\.|services?\.|\bapi\b|graphql|schema|server|middlewares?/i.test(f.filename));
+  // Config / server settings
+  const configFile = (f) => /(^|\/)config(\/|$)|config\.(js|ts|mjs|cjs)$/i.test(f.filename);
+  const addedLines = [];
+  for (const f of files) {
+    const patch = String(f.patch || '');
+    const lines = patch.split(/\r?\n/);
+    for (const line of lines) if (line.startsWith('+')) addedLines.push(line.slice(1));
+  }
+  const hasEnv = addedLines.some(l => /process\.env\.[A-Z0-9_]+/.test(l));
+  const hasExportConfig = files.some(f => configFile(f) && /module\.exports|export\s+default|defineConfig/.test(String(f.patch || '')));
 
-  // Patch indicators (look at additions only)
-  const additionHit = files.some(f => {
-    if (!f.patch) return false;
-    const lines = String(f.patch).split(/\r?\n/);
-    return lines.some(line => {
-      if (!line.startsWith('+')) return false;
-      const l = line.slice(1).toLowerCase();
-      return (
-        // REST routes or HTTP methods
-        /router\.(get|post|put|patch|delete)/.test(l) || /\b(method|verb)\s*:\s*['\"](get|post|put|patch|delete)['\"]/.test(l) || /\bpath\s*:\s*['\"]\//.test(l) ||
-        // GraphQL schema/resolvers
-        /\b(type|input|interface|union)\s+[A-Z]/.test(line) || /resolver|resolvers|schema/.test(l) ||
-        // New CLI flags
-        /--[a-z0-9-]{2,}/.test(l) ||
-        // Config keys/env
-        /process\.env|env\.|\bconfig\b|\boption\b|\bsetting\b|\bsecure\b|\bcookie\b|\bsession\b|\bauth\b/.test(l)
-      );
-    });
-  });
+  // API / endpoints / routes
+  const routeFile = (f) => /routes?\.(js|ts|json)$/i.test(f.filename);
+  const controllerFile = (f) => /controllers?\.(js|ts)$/i.test(f.filename);
+  const hasHttpVerbs = addedLines.some(l => /\b(GET|POST|PUT|DELETE|PATCH|OPTIONS|HEAD)\b/i.test(l));
+  const hasRouteDefs = files.some(f => (routeFile(f) || controllerFile(f)) && /routes?:|router\.|ctx\./i.test(String(f.patch || '')));
 
-  return pathHit || additionHit;
+  // GraphQL / REST schema
+  const hasGraphQL = files.some(f => /graphql/i.test(f.filename) || /type\s+\w+\s*\{|schema\{|SDL|gql`/i.test(String(f.patch || '')));
+  const hasRestSchema = files.some(f => /openapi|swagger|paths\s*:/i.test(String(f.patch || '')));
+
+  // CLI flags
+  const hasCli = addedLines.some(l => /(^|\s)--[a-z0-9][a-z0-9-]*/.test(l) || /yargs|commander\(|program\.option\(/i.test(l));
+
+  // Schema / content types
+  const schemaFile = (f) => /(^|\/)content-types?(\/|$)|schema\.(json|js|ts)$/i.test(f.filename);
+  const hasSchema = files.some(f => schemaFile(f) && /(attributes|type\s*:|enum\s*:|relation\s*:)/i.test(String(f.patch || '')));
+
+  // Migration / breaking language in title/body
+  const hasMigrationSignals = /\b(breaking|deprecat|migration|rename\s+(setting|option|property)|v4\s*->?\s*v5|v4\s*to\s*v5|parity\s+with\s+v4)\b/i.test(title + ' ' + body);
+
+  return (
+    hasEnv || hasExportConfig || hasHttpVerbs || hasRouteDefs || hasGraphQL || hasRestSchema || hasCli || hasSchema || hasMigrationSignals
+  );
 }
 
 async function main() {
