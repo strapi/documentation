@@ -44,7 +44,7 @@ const OPTIONS = {
   refresh: false,
   cacheDir: path.join(process.cwd(), 'docusaurus', 'scripts', 'strapi-release-analyzer', '.cache'),
   limit: null,
-  strict: 'aggressive', // aggressive | balanced | conservative
+  strict: 'conservative', // aggressive | balanced | conservative (default conservative)
 };
 
 // Minimal loader for llms-full.txt (with graceful fallback to llms.txt)
@@ -411,6 +411,7 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
 {
   "summary": "≤200 chars plain text what/why",
   "needsDocs": "yes" | "no" | "maybe",
+  "docsWorthy": true | false,
   "rationale": "1–2 sentence justification",
   "targets": [
     { "path": "docs/cms/...md", "anchor": "optional-section-anchor" }
@@ -452,7 +453,19 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
    - Minor typo fixes in code comments
    - Changes to development tooling
 
-6. **Grounding and targeting**:
+6. **Docs‑worthiness rubric**:
+   - Mark as YES only if at least one applies:
+     - Breaking change or deprecation
+     - New capability/setting/endpoint or config key
+     - Persistent workflow/UX change (not cosmetic)
+     - New concept that requires explanation
+   - Otherwise, prefer NO for:
+     - Cosmetic UI fixes (spacing, margins, alignment, borders, icons)
+     - Restoring expected behavior/regressions
+     - Minor labels/translations/tooltips only
+     - Internal refactors without external impact
+
+7. **Grounding and targeting**:
    - Prefer targets among the "Candidate Documentation Pages" when applicable.
    - Include an anchor from the page's anchors list when relevant.
    - Keep the response JSON-only (no markdown outside JSON).
@@ -487,6 +500,7 @@ Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
     // Lightweight normalization
     const needs = (obj.needsDocs || '').toLowerCase();
     const needsDocs = ['yes','no','maybe'].includes(needs) ? needs : 'maybe';
+    const docsWorthy = Boolean(obj.docsWorthy);
     const summary = String(obj.summary || prAnalysis._summary || '').trim().slice(0, 200);
     const rationale = String(obj.rationale || '').trim().slice(0, 300);
     const targets = Array.isArray(obj.targets) ? obj.targets : [];
@@ -495,8 +509,8 @@ Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
       .filter(t => t.path);
     const cappedTargets = normTargets.slice(0, 5);
 
-    const normalized = { summary, needsDocs, rationale, targets: cappedTargets };
-    console.log(`  ✅ LLM verdict: ${needsDocs.toUpperCase()} — ${cappedTargets.length} target(s)`);
+    const normalized = { summary, needsDocs, docsWorthy, rationale, targets: cappedTargets };
+    console.log(`  ✅ LLM verdict: ${needsDocs.toUpperCase()} | worthy=${docsWorthy ? 'Y' : 'N'} — ${cappedTargets.length} target(s)`);
     return normalized;
   } catch (error) {
     console.error(`  ❌ Error calling Claude API: ${error.message}`);
