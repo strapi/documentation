@@ -740,6 +740,45 @@ function tokenize(text) {
     .filter(Boolean);
 }
 
+// Resolve the best matching docs page for a target path using the full llms-full index
+function resolvePageForTarget(llmsIndex, candidates, targetPath) {
+  if (!llmsIndex || !Array.isArray(llmsIndex.pages) || llmsIndex.pages.length === 0) return null;
+  const wanted = String(targetPath || '').toLowerCase();
+  const slug = path.basename(wanted).replace(/\.mdx?$/i, '').toLowerCase();
+
+  // 1) Exact slug match via bySlug
+  if (slug && llmsIndex.bySlug && llmsIndex.bySlug.has(slug)) {
+    return llmsIndex.bySlug.get(slug);
+  }
+
+  // 2) Any candidate URL that contains the slug
+  if (Array.isArray(candidates) && candidates.length > 0 && slug) {
+    const hit = candidates.find(p => p.url && p.url.toLowerCase().includes(slug));
+    if (hit) return hit;
+  }
+
+  // 3) Score all pages in the index by slug/title/url similarity
+  const slugTokens = tokenize(slug);
+  let best = null;
+  let bestScore = 0;
+  for (const p of llmsIndex.pages) {
+    const title = (p.title || '').toLowerCase();
+    const url = (p.url || '').toLowerCase();
+    let score = 0;
+    if (slug && title.includes(slug)) score += 5;
+    if (slug && url.includes(slug)) score += 4;
+    // token overlap gives smaller weight
+    const titleTokens = tokenize(title);
+    const urlTokens = tokenize(url);
+    for (const t of slugTokens) {
+      if (titleTokens.includes(t)) score += 2;
+      if (urlTokens.includes(t)) score += 1;
+    }
+    if (score > bestScore) { bestScore = score; best = p; }
+  }
+  return best || (Array.isArray(candidates) && candidates[0]) || null;
+}
+
 function suggestCandidateDocs(llmsIndex, prAnalysis, limit = 5) {
   if (!llmsIndex || !llmsIndex.pages || llmsIndex.pages.length === 0) return [];
   const hay = [];
@@ -972,24 +1011,14 @@ async function main() {
         const looksLikeFix = /fix|bug|regression|restore|correct|misleading|missing/i.test(prAnalysis.title || '') || /fix|bug|regression|restore|correct|misleading|missing/i.test(prAnalysis.body || '');
         if (looksLikeFix) {
           const coverageHit = claudeSuggestions.targets.some(t => {
-            const wanted = (t.path || '').toLowerCase();
-            let page = null;
-            // prefer exact slug match from llmsIndex
-            const slug = path.basename(wanted).replace(/\.mdx?$/i, '').toLowerCase();
-            if (slug && llmsIndex.bySlug && llmsIndex.bySlug.has(slug)) {
-              page = llmsIndex.bySlug.get(slug);
-            }
-            // fallback: any candidate containing the slug
-            if (!page) {
-              page = candidates.find(p => p.url && p.url.toLowerCase().includes(slug));
-            }
-            // last resort: first candidate
-            if (!page) page = candidates[0];
+            const page = resolvePageForTarget(llmsIndex, candidates, t.path);
             if (!page || !page.text) return false;
             const words = (summary || '').toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length > 3).slice(0, 8);
             const body = page.text.toLowerCase();
             const hits = words.filter(w => body.includes(w));
-            return hits.length >= Math.max(2, Math.floor(words.length / 2));
+            const baseThresh = Math.max(2, Math.floor(words.length / 2));
+            const threshold = OPTIONS.strict === 'conservative' ? Math.max(3, baseThresh) : baseThresh;
+            return hits.length >= threshold;
           });
           if (coverageHit) {
             claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
