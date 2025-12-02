@@ -814,6 +814,38 @@ function classifyImpact(prAnalysis) {
   return { verdict: 'maybe', reason: 'Code changes detected; possible docs impact.' };
 }
 
+// Detect micro UI-only changes likely not worth docs
+function isMicroUiChange(prAnalysis) {
+  const title = (prAnalysis.title || '').toLowerCase();
+  const body = (prAnalysis.body || '').toLowerCase();
+  const files = prAnalysis.files || [];
+
+  const cosmeticKeywords = [
+    'tooltip', 'tooltips', 'spacing', 'margin', 'padding', 'align', 'alignment',
+    'border', 'borders', 'icon', 'icons', 'label', 'labels', 'translation', 'translations',
+    'typo', 'color', 'colors', 'popover', 'menu', 'dropdown', 'ui', 'layout', 'scroll', 'overflow'
+  ];
+  const frontendOnly = files.length > 0 && files.every(f => {
+    const name = f.filename.toLowerCase();
+    const isStyle = /\.(css|scss|less|sass)$/i.test(name) || name.includes('/styles') || name.includes('/style');
+    const isAdmin = name.includes('/admin') || name.includes('packages/strapi-admin') || name.includes('packages/core/admin');
+    const isDocsArea = /(api|server|config|routes|controllers|services)/.test(name);
+    return (isStyle || isAdmin) && !isDocsArea;
+  });
+
+  const text = `${title} ${body}`;
+  const hasCosmetic = cosmeticKeywords.some(k => text.includes(k));
+  return hasCosmetic && frontendOnly;
+}
+
+// Detect regression/restore-to-expected behavior changes
+function isRegressionRestore(prAnalysis) {
+  const t = (prAnalysis.title || '').toLowerCase();
+  const b = (prAnalysis.body || '').toLowerCase();
+  const text = `${t} ${b}`;
+  return /regression|restore|restored|revert|reverted|align with|parity with|back to expected/.test(text);
+}
+
 async function main() {
   const rawArgs = process.argv.slice(2);
   const { releaseUrl } = parseArgs(rawArgs);
@@ -875,7 +907,7 @@ async function main() {
       const candidates = suggestCandidateDocs(llmsIndex, prAnalysis, 5);
       // Optional cap: apply limit only to LLM calls
       const runLLM = impact.verdict !== 'no' && (!OPTIONS.limit || analyses.filter(a => a.claudeSuggestions).length < OPTIONS.limit);
-      const claudeSuggestions = runLLM
+      let claudeSuggestions = runLLM
         ? await generateDocSuggestionsWithClaude({
             ...prAnalysis,
             _summary: summary,
@@ -883,6 +915,13 @@ async function main() {
             _docsCandidates: candidates,
           })
         : null;
+
+      // Apply strictness downgrade in conservative mode for micro UI or regression restores
+      if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
+        if (isMicroUiChange(prAnalysis) || isRegressionRestore(prAnalysis)) {
+          claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+        }
+      }
 
       analyses.push({
         ...prAnalysis,
