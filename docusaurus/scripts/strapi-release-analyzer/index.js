@@ -1109,6 +1109,16 @@ async function main() {
         }
       }
 
+      // Hard conservative guard post‑LLM: bug fixes without strong signals default to No
+      if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
+        const isBugLike = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
+        if (isBugLike && !hasStrongDocsSignals(prAnalysis) && !claudeSuggestions.newPage) {
+          claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+          downgradeNote = 'Conservative guard: bug fix without strong docs signals.';
+          console.log('  🔻 Downgrade → NO (conservative guard: bug without strong signals)');
+        }
+      }
+
       // Final per-PR log line for decision provenance
       if (runLLM) {
         console.log('  🤝 Decision provenance: LLM assisted');
