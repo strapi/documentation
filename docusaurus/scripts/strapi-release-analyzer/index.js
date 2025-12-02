@@ -678,6 +678,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
       if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
+      if (a.downgradeNote) markdown += `  \n  Note: ${a.downgradeNote}\n`;
       const targets = Array.isArray(s.targets) ? s.targets : [];
       if (targets.length > 0) {
         markdown += `  \n  Targets:\n`;
@@ -699,7 +700,13 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
+      // Avoid contradictory rationales by standardizing when downgraded
+      if (a.downgradeNote) {
+        markdown += `  \n  Rationale: This appears to be a bug/cosmetic fix restoring expected behavior. Documentation change not required.\n`;
+        markdown += `  \n  Note: ${a.downgradeNote}\n`;
+      } else if (s.rationale) {
+        markdown += `  \n  Rationale: ${s.rationale}\n`;
+      }
       markdown += `\n`;
     });
     markdown += `\n`;
@@ -978,6 +985,7 @@ async function main() {
       const canUseLLM = impact.verdict !== 'no' && (!OPTIONS.limit || analyses.filter(a => a.claudeSuggestions).length < OPTIONS.limit);
       const runLLM = !preNoReason && canUseLLM;
       let claudeSuggestions = null;
+      let downgradeNote = null;
       if (runLLM) {
         claudeSuggestions = await generateDocSuggestionsWithClaude({
           ...prAnalysis,
@@ -996,12 +1004,17 @@ async function main() {
           targets: [],
         };
         console.log(`  ⛳ Pre-LLM gate → NO (${preNoReason})`);
+        downgradeNote = `Downgraded to No under conservative policy: ${preNoReason}.`;
       }
 
       // Apply strictness downgrade in conservative mode for micro UI or regression restores
       if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
-        if (isMicroUiChange(prAnalysis) || isRegressionRestore(prAnalysis)) {
+        if (isMicroUiChange(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+          downgradeNote = 'Conservative downgrade: micro UI-only change.';
+        } else if (isRegressionRestore(prAnalysis)) {
+          claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+          downgradeNote = 'Conservative downgrade: regression/restore to expected behavior.';
         }
       }
 
@@ -1022,6 +1035,7 @@ async function main() {
           });
           if (coverageHit) {
             claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
+            downgradeNote = 'Coverage cross-check: likely already documented end behavior; treating as bug fix.';
           }
         }
       }
@@ -1031,6 +1045,7 @@ async function main() {
         summary,
         impact,
         claudeSuggestions,
+        downgradeNote,
       });
       
       await new Promise(resolve => setTimeout(resolve, 1000));
