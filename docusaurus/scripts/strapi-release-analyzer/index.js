@@ -886,7 +886,12 @@ async function main() {
       console.log(`📚 Loaded docs index from ${llmsIndex.source} (${llmsIndex.pages.length} pages)`);
     }
     
-    console.log(`\n📝 Analyzing ${releaseInfo.prNumbers.length} PRs...\n`);
+    const totalPRs = releaseInfo.prNumbers.length;
+    if (OPTIONS.limit && OPTIONS.limit > 0) {
+      console.log(`\n📝 Analyzing ${totalPRs} PRs (LLM on up to ${OPTIONS.limit} of ${totalPRs})...\n`);
+    } else {
+      console.log(`\n📝 Analyzing ${totalPRs} PRs...\n`);
+    }
     
     const analyses = [];
     let skipped = 0;
