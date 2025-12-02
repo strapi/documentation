@@ -684,7 +684,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
       if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
+      if (s.rationale) markdown += `  \n  Decision rationale: ${s.rationale}\n`;
       if (a.downgradeNote) markdown += `  \n  Note: ${a.downgradeNote}\n`;
       const targets = Array.isArray(s.targets) ? s.targets : [];
       if (targets.length > 0) {
@@ -706,13 +706,14 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const s = a.claudeSuggestions || {};
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
-      markdown += `  \n  Decision: ${a.provenance === 'llm' ? 'LLM assisted' : 'Heuristic only'}\n`;
-      markdown += `  \n  Final verdict: No\n`;
+      if (summary) markdown += `  \n  Summary: ${summary}\n`;
+      const decisionType = a.provenance === 'llm' ? 'LLM assisted' : 'Heuristic (metadata-based, no LLM call)';
+      markdown += `  \n  Decision type: ${decisionType}\n`;
       if (a.llmInitial && a.llmInitial.verdict) {
         const firstSentence = String(a.llmInitial.rationale || '').split(/\.(\s|$)/)[0];
-        markdown += `  \n  LLM initial: ${a.llmInitial.verdict.toUpperCase()}${firstSentence ? ` — ${firstSentence}.` : ''}\n`;
+        markdown += `  \n  Initial LLM verdict: ${a.llmInitial.verdict.toUpperCase()}${firstSentence ? ` — ${firstSentence}.` : ''}\n`;
       }
-      if (summary) markdown += `  \n  Summary: ${summary}\n`;
+      markdown += `  \n  Final verdict: No\n`;
       // Render reason codes into human-friendly rationale
       if (a.noReasonCode) {
         const reasonMap = {
@@ -723,7 +724,8 @@ function generateMarkdownReport(releaseInfo, analyses) {
           llm_downgrade_regression_restore: 'LLM suggested changes but restore-to-expected; conservative downgrade',
           llm_downgrade_coverage_match: 'End behavior appears already documented; conservative downgrade',
           llm_downgrade_invalid_targets: 'LLM targets invalid or unresolvable; conservative downgrade',
-          conservative_guard_no_strong_signals: 'Bug fix without strong docs signals; conservative guard'
+          conservative_guard_no_strong_signals: 'Bug fix without strong docs signals; conservative guard',
+          llm_downgrade_bug_without_strong_signals: 'Bug fix without strong config/API/schema/migration signals; conservative guard'
         };
         const why = reasonMap[a.noReasonCode] || 'Not docs-worthy under conservative policy';
         markdown += `  \n  Rationale: ${why}.\n`;
