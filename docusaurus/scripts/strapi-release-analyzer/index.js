@@ -1043,8 +1043,15 @@ function hasStrongDocsSignals(prAnalysis) {
   const hasProxyAuthBody = proxyAuthTokensBody.test(title + ' ' + body);
   const hasProxyAuthAdd = addedLines.some(l => proxyAuthTokensAdd.test(l));
 
+  // Upload plugin file type restriction signals
+  const uploadTokensBody = /(upload|media)\b.*(mime|content[- ]?type|file\s*type|allowed\s*types|denied\s*types)/i;
+  const uploadTokensAdd = /(allowedTypes|deniedTypes|mime|mimetype|content[- ]?type)/i;
+  const uploadPathHit = files.some(f => /upload/i.test(f.filename));
+  const hasUploadBody = uploadTokensBody.test(title + ' ' + body);
+  const hasUploadAdd = addedLines.some(l => uploadTokensAdd.test(l));
+
   return (
-    hasEnv || hasExportConfig || hasHttpVerbs || hasRouteDefs || hasGraphQL || hasRestSchema || hasCli || hasSchema || hasMigrationSignals || hasProxyAuthBody || hasProxyAuthAdd
+    hasEnv || hasExportConfig || hasHttpVerbs || hasRouteDefs || hasGraphQL || hasRestSchema || hasCli || hasSchema || hasMigrationSignals || hasProxyAuthBody || hasProxyAuthAdd || ((uploadPathHit || hasUploadBody) && hasUploadAdd)
   );
 }
 
@@ -1246,9 +1253,10 @@ async function main() {
           // Drop invalid targets
           claudeSuggestions = { ...claudeSuggestions, targets: validated };
         }
-      // If bug-like, still require strong signals even after LLM says yes
+      // If bug-like, still require strong signals even after LLM says yes — but whitelist upload MIME rules
       const isBugLikePost = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
-      if (isBugLikePost && !hasStrongDocsSignals(prAnalysis)) {
+      const isUploadRestriction = /upload|media/i.test(prAnalysis.title || '') && /(allowedTypes|deniedTypes|mime|mimetype|content[- ]?type)/i.test((prAnalysis.body || ''));
+      if (isBugLikePost && !hasStrongDocsSignals(prAnalysis) && !isUploadRestriction) {
         claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
         downgradeNote = 'Conservative guard: bug fix lacks strong config/API/schema/migration signals.';
         noReasonCode = 'llm_downgrade_bug_without_strong_signals';
