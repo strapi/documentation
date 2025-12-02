@@ -685,8 +685,8 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const s = a.claudeSuggestions || {};
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
-      if (summary) markdown += `  \n  Summary: ${summary}\n`;
-      if (s.rationale) markdown += `  \n  Decision rationale: ${s.rationale}\n`;
+      if (summary) markdown += `  \n  📝 Summary: ${summary}\n`;
+      if (s.rationale) markdown += `  \n  🧠 Decision rationale: ${s.rationale}\n`;
       if (a.downgradeNote) markdown += `  \n  Note: ${a.downgradeNote}\n`;
       const targets = Array.isArray(s.targets) ? s.targets : [];
       if (targets.length > 0) {
@@ -708,33 +708,36 @@ function generateMarkdownReport(releaseInfo, analyses) {
       const s = a.claudeSuggestions || {};
       const summary = (s.summary || a.summary || '').trim();
       markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
-      if (summary) markdown += `  \n  Summary: ${summary}\n`;
+      if (summary) markdown += `  \n  📝 Summary: ${summary}\n`;
       const decisionType = a.provenance === 'llm' ? 'LLM assisted' : 'Heuristic (metadata-based, no LLM call)';
-      markdown += `  \n  Decision type: ${decisionType}\n`;
+      markdown += `  \n  🧭 Decision type: ${decisionType}\n`;
       if (a.llmInitial && a.llmInitial.verdict) {
         const firstSentence = String(a.llmInitial.rationale || '').split(/\.(\s|$)/)[0];
-        markdown += `  \n  Initial LLM verdict: ${a.llmInitial.verdict.toUpperCase()}${firstSentence ? ` — ${firstSentence}.` : ''}\n`;
+        markdown += `  \n  🧪 Initial LLM verdict: ${a.llmInitial.verdict.toUpperCase()}${firstSentence ? ` — ${firstSentence}.` : ''}\n`;
       }
-      markdown += `  \n  Final verdict: No\n`;
-      // Render reason codes into human-friendly rationale
+      markdown += `  \n  ❌ Final verdict: No\n`;
+      // Build a single Reason line (merge rationale + note)
+      let reasonText = '';
       if (a.noReasonCode) {
         const reasonMap = {
           heuristic_pre_no_micro_ui: 'cosmetic UI-only change detected by heuristics',
-          heuristic_pre_no_regression_restore: 'regression/restore-to-expected behavior detected by heuristics',
-          heuristic_pre_no_bug_weak_signals: 'bug fix without clear feature/config/API impact (heuristics)',
-          llm_downgrade_micro_ui: 'LLM suggested changes but micro UI-only; conservative downgrade',
-          llm_downgrade_regression_restore: 'LLM suggested changes but restore-to-expected; conservative downgrade',
-          llm_downgrade_coverage_match: 'End behavior appears already documented; conservative downgrade',
-          llm_downgrade_invalid_targets: 'LLM targets invalid or unresolvable; conservative downgrade',
-          conservative_guard_no_strong_signals: 'Bug fix without strong docs signals; conservative guard',
-          llm_downgrade_bug_without_strong_signals: 'Bug fix without strong config/API/schema/migration signals; conservative guard'
+          heuristic_pre_no_regression_restore: 'regression or restore to expected behavior detected by heuristics',
+          heuristic_pre_no_bug_weak_signals: 'bug fix without clear feature config API impact',
+          llm_downgrade_micro_ui: 'LLM suggested changes but micro UI-only under conservative policy',
+          llm_downgrade_regression_restore: 'LLM suggested changes but restore to expected behavior under conservative policy',
+          llm_downgrade_coverage_match: 'end behavior appears already documented in the docs',
+          llm_downgrade_invalid_targets: 'targets invalid or unresolvable to known docs pages',
+          conservative_guard_no_strong_signals: 'bug fix without strong docs signals under conservative policy',
+          llm_downgrade_bug_without_strong_signals: 'bug fix without strong config API schema migration signals under conservative policy'
         };
-        const why = reasonMap[a.noReasonCode] || 'Not docs-worthy under conservative policy';
-        markdown += `  \n  Rationale: ${why}.\n`;
+        reasonText = reasonMap[a.noReasonCode] || '';
       } else if (s.rationale) {
-        markdown += `  \n  Rationale: ${s.rationale}\n`;
+        reasonText = s.rationale;
       }
-      if (a.downgradeNote) markdown += `  \n  Note: ${a.downgradeNote}\n`;
+      if (a.downgradeNote) {
+        reasonText = reasonText ? `${reasonText} — ${a.downgradeNote}` : a.downgradeNote;
+      }
+      if (reasonText) markdown += `  \n  🧠 Reason: ${reasonText}\n`;
       markdown += `\n`;
     });
     markdown += `\n`;
