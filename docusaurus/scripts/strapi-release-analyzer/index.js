@@ -37,6 +37,9 @@ const PR_CATEGORIES = {
 // Skip set: exclude chores, tests, CI, and docs-related PRs
 const EXCLUDED_CATEGORIES = ['chore', 'test', 'ci', 'docs'];
 
+// Cache ruleset version: bump to invalidate stale cached analyses after rubric changes
+const RULESET_VERSION = 'v2';
+
 // Runtime options (set in main from CLI flags)
 let CURRENT_RELEASE_TAG = null;
 const OPTIONS = {
@@ -202,7 +205,7 @@ function isDocsLikePR(title, labels = []) {
 }
 
 function cachePathForPR(tag, prNumber) {
-  return path.join(OPTIONS.cacheDir, tag, `pr-${prNumber}.json`);
+  return path.join(OPTIONS.cacheDir, RULESET_VERSION, tag, `pr-${prNumber}.json`);
 }
 
 async function readCachedPR(tag, prNumber) {
@@ -218,7 +221,7 @@ async function readCachedPR(tag, prNumber) {
 
 async function writeCachedPR(tag, prNumber, data) {
   try {
-    const dir = path.join(OPTIONS.cacheDir, tag);
+    const dir = path.join(OPTIONS.cacheDir, RULESET_VERSION, tag);
     await fs.mkdir(dir, { recursive: true });
     const p = cachePathForPR(tag, prNumber);
     await fs.writeFile(p, JSON.stringify(data, null, 2));
