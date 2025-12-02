@@ -1274,7 +1274,8 @@ async function main() {
           claudeSuggestions = { ...claudeSuggestions, targets: validated };
         }
       // If bug-like, still require strong signals even after LLM says yes — but whitelist upload MIME rules
-      const isBugLikePost = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
+      // Do not treat as bug-like based on body text alone to avoid false positives on "feat" PRs
+      const isBugLikePost = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '');
       if (isBugLikePost && !hasStrongDocsSignals(prAnalysis) && !isUploadRestriction(prAnalysis)) {
         claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
         downgradeNote = 'Conservative guard: bug fix lacks strong config/API/schema/migration signals.';
@@ -1316,7 +1317,8 @@ async function main() {
 
       // Hard conservative guard post‑LLM: bug fixes without strong signals default to No
       if (OPTIONS.strict === 'conservative' && claudeSuggestions && claudeSuggestions.needsDocs === 'yes') {
-        const isBugLike = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
+        // Do not treat as bug-like based on body text alone to avoid false positives on "feat" PRs
+        const isBugLike = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '');
         if (isBugLike && !hasStrongDocsSignals(prAnalysis) && !claudeSuggestions.newPage) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative guard: bug fix without strong docs signals.';
