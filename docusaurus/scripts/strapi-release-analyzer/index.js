@@ -457,8 +457,6 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
    - Include an anchor from the page's anchors list when relevant.
    - Keep the response JSON-only (no markdown outside JSON).
 
-If no documentation changes are needed, return empty suggestedChanges array with reasoning explaining why.
-
 Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
 
   try {
