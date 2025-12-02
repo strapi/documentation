@@ -1044,6 +1044,19 @@ function isRegressionRestore(prAnalysis) {
   return /regression|restore|restored|revert|reverted|align with|parity with|back to expected/.test(text);
 }
 
+// Exception: feature parity/migration restorations for configurable features can be docs-worthy
+function isFeatureParityRestoration(prAnalysis) {
+  const t = (prAnalysis.title || '').toLowerCase();
+  const b = (prAnalysis.body || '').toLowerCase();
+  const text = `${t} ${b}`;
+  const parityHit = /parity\s+with\s+v4|v4\s*->?\s*v5|v4\s*to\s*v5|restored?\s+(field|option|setting)|missing\s+(field|option|setting)\s+restored/.test(text);
+  if (!parityHit) return false;
+  const files = prAnalysis.files || [];
+  // Look for Content Manager / Content-Type Builder config areas
+  const configArea = files.some(f => /(content[-_]?manager|content[-_]?type[-_]?builder|admin|server|config)/i.test(f.filename));
+  return configArea;
+}
+
 // (duplicate hasStrongDocsSignals removed; stricter version defined earlier)
 
 async function main() {
@@ -1129,7 +1142,7 @@ async function main() {
       let allowByStrict = true;
       if (OPTIONS.strict === 'conservative') {
         const isFeatureEnhancement = prAnalysis.category === 'feature' || prAnalysis.category === 'enhancement' || /\bfeat|feature\b/i.test(prAnalysis.title || '');
-        const strong = hasStrongDocsSignals(prAnalysis) || impact.verdict === 'yes';
+        const strong = hasStrongDocsSignals(prAnalysis) || impact.verdict === 'yes' || isFeatureParityRestoration(prAnalysis);
         // Bug-like defaults to NO unless strong signals indicate config/API/schema/migration
         const isBugLike = prAnalysis.category === 'bug' || /\bfix|bug\b/i.test(prAnalysis.title || '') || /\bfix|bug\b/i.test(prAnalysis.body || '');
         allowByStrict = isFeatureEnhancement || (strong && !isMicroUiChange(prAnalysis));
