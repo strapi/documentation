@@ -475,22 +475,22 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
    - Changes to development tooling
 
 6. **Docs‑worthiness rubric**:
-   - Mark as YES only if at least one applies:
+   - Answer needsDocs: "yes" only if at least one applies:
      - Breaking change or deprecation
-     - New capability/setting/endpoint or config key
-     - Persistent workflow/UX change (not cosmetic)
+     - New capability, setting, endpoint, or configuration key
+     - Persistent workflow or UX change (not cosmetic)
      - New concept that requires explanation
-   - Otherwise, prefer NO for:
-     - Cosmetic UI fixes (spacing, margins, alignment, borders, icons)
-     - Restoring expected behavior/regressions
-     - Minor labels/translations/tooltips only
+   - Otherwise, answer needsDocs: "no" for:
+     - Cosmetic/UI-only fixes (spacing, margins, padding, alignment, borders, icons, tooltips, translations)
+     - Restoring expected behavior or regression fixes
      - Internal refactors without external impact
 
 7. **Grounding and targeting**:
    - Prefer targets among the "Candidate Documentation Pages" when applicable.
    - Include an anchor from the page's anchors list when relevant.
    - Keep the response JSON-only (no markdown outside JSON).
-  - Set \`newPage: true\` only if a new documentation page should be created and no existing target fits.
+   - If you answer "yes", you must include at least one concrete target path under docs/.../*.md. If no existing page fits, set \`newPage: true\`.
+   - If you cannot provide targets and it is not a genuinely new page, answer needsDocs: "no".
 
 Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
 
