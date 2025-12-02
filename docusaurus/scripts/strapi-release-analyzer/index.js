@@ -490,7 +490,7 @@ Respond with a JSON object in this minimal shape (JSON only, no markdown):
    - Prefer targets among the "Candidate Documentation Pages" when applicable.
    - Include an anchor from the page's anchors list when relevant.
    - Keep the response JSON-only (no markdown outside JSON).
-   - Set `newPage: true` only if a new documentation page should be created and no existing target fits.
+  - Set \`newPage: true\` only if a new documentation page should be created and no existing target fits.
 
 Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
 
