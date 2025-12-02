@@ -912,6 +912,43 @@ function isRegressionRestore(prAnalysis) {
   return /regression|restore|restored|revert|reverted|align with|parity with|back to expected/.test(text);
 }
 
+// Detect strong docs‑worthy signals suggesting new capability/config/API/workflow changes
+function hasStrongDocsSignals(prAnalysis) {
+  const title = (prAnalysis.title || '').toLowerCase();
+  const body = (prAnalysis.body || '').toLowerCase();
+  const files = prAnalysis.files || [];
+
+  // Title/body indicators
+  if (/breaking|deprecat|introduc|add(\s+new)?\b|new\s+(endpoint|api|config|setting|option)|migration/.test(title + ' ' + body)) {
+    return true;
+  }
+
+  // File path indicators
+  const pathHit = files.some(f => /(^|\/)config(\/|$)|routes?\.|controllers?\.|services?\.|\bapi\b|graphql|schema|server|middlewares?/i.test(f.filename));
+
+  // Patch indicators (look at additions only)
+  const additionHit = files.some(f => {
+    if (!f.patch) return false;
+    const lines = String(f.patch).split(/\r?\n/);
+    return lines.some(line => {
+      if (!line.startsWith('+')) return false;
+      const l = line.slice(1).toLowerCase();
+      return (
+        // REST routes or HTTP methods
+        /router\.(get|post|put|patch|delete)/.test(l) || /\b(method|verb)\s*:\s*['\"](get|post|put|patch|delete)['\"]/.test(l) || /\bpath\s*:\s*['\"]\//.test(l) ||
+        // GraphQL schema/resolvers
+        /\b(type|input|interface|union)\s+[A-Z]/.test(line) || /resolver|resolvers|schema/.test(l) ||
+        // New CLI flags
+        /--[a-z0-9-]{2,}/.test(l) ||
+        // Config keys/env
+        /process\.env|env\.|\bconfig\b|\boption\b|\bsetting\b|\bsecure\b|\bcookie\b|\bsession\b|\bauth\b/.test(l)
+      );
+    });
+  });
+
+  return pathHit || additionHit;
+}
+
 async function main() {
   const rawArgs = process.argv.slice(2);
   const { releaseUrl } = parseArgs(rawArgs);
@@ -983,7 +1020,17 @@ async function main() {
 
       // Optional cap: apply limit only to LLM calls
       const canUseLLM = impact.verdict !== 'no' && (!OPTIONS.limit || analyses.filter(a => a.claudeSuggestions).length < OPTIONS.limit);
-      const runLLM = !preNoReason && canUseLLM;
+      // Conservative routing: only call LLM for features/enhancements or strong-signal bugs
+      let allowByStrict = true;
+      if (OPTIONS.strict === 'conservative') {
+        const isFeatureEnhancement = prAnalysis.category === 'feature' || prAnalysis.category === 'enhancement' || /\bfeat|feature\b/i.test(prAnalysis.title || '');
+        const strong = hasStrongDocsSignals(prAnalysis) || impact.verdict === 'yes';
+        allowByStrict = isFeatureEnhancement || strong;
+        if (!allowByStrict && canUseLLM && !preNoReason) {
+          console.log('  ⏭️  Skipping LLM call under conservative routing (no strong docs signals)');
+        }
+      }
+      const runLLM = !preNoReason && canUseLLM && allowByStrict;
       let claudeSuggestions = null;
       let downgradeNote = null;
       if (runLLM) {
