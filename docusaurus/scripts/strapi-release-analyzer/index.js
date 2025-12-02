@@ -1059,9 +1059,11 @@ async function main() {
         if (isMicroUiChange(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative downgrade: micro UI-only change.';
+          console.log('  🔻 Downgrade → NO (micro UI-only change)');
         } else if (isRegressionRestore(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative downgrade: regression/restore to expected behavior.';
+          console.log('  🔻 Downgrade → NO (restore to expected behavior)');
         }
       }
 
@@ -1083,6 +1085,7 @@ async function main() {
           if (coverageHit) {
             claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
             downgradeNote = 'Coverage cross-check: likely already documented end behavior; treating as bug fix.';
+            console.log('  🔻 Downgrade → NO (docs coverage likely matches end behavior)');
           }
         }
       }
@@ -1099,7 +1102,19 @@ async function main() {
           // No resolvable targets and not a new page request → No
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
+          console.log('  🔻 Downgrade → NO (targets invalid and not a new page)');
         }
+      }
+
+      // Final per-PR log line for decision provenance
+      if (runLLM) {
+        console.log('  🤝 Decision provenance: LLM assisted');
+      } else {
+        console.log('  🧭 Decision provenance: Heuristic only');
+      }
+
+      if (downgradeNote) {
+        console.log(`  📝 Downgrade note: ${downgradeNote}`);
       }
 
       analyses.push({
