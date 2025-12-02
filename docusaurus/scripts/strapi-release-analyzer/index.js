@@ -610,123 +610,81 @@ function categorizePRByDocumentation(analysis) {
 
 function generateMarkdownReport(releaseInfo, analyses) {
   const timestamp = new Date().toISOString().split('T')[0];
-  
-  let markdown = `# Documentation Analysis for Strapi ${releaseInfo.tag}\n\n`;
-  markdown += `**Generated on:** ${timestamp}\n\n`;
-  markdown += `**Release:** [${releaseInfo.name || releaseInfo.tag}](https://github.com/${STRAPI_REPO_OWNER}/${STRAPI_REPO_NAME}/releases/tag/${releaseInfo.tag})\n\n`;
-  markdown += `**Total PRs analyzed:** ${analyses.length}\n\n`;
-  markdown += `---\n\n`;
-  
-  markdown += `# 📊 Summary\n\n`;
-  
-  const categoryCounts = {};
-  const priorityCounts = { high: 0, medium: 0, low: 0 };
-  const docSectionCounts = { cms: {}, cloud: {} };
-  
-  analyses.forEach(a => {
-    categoryCounts[a.category] = (categoryCounts[a.category] || 0) + 1;
-    if (a.claudeSuggestions) {
-      const { mainCategory, section } = categorizePRByDocumentation(a);
-      if (!docSectionCounts[mainCategory][section]) {
-        docSectionCounts[mainCategory][section] = 0;
-      }
-      docSectionCounts[mainCategory][section]++;
-    }
-  });
-  
-  markdown += `### By PR Type\n\n`;
-  Object.entries(categoryCounts).forEach(([cat, count]) => {
-    markdown += `- **${PR_CATEGORIES[cat] || cat}**: ${count}\n`;
-  });
-  
-  markdown += `\n### By Documentation Priority\n\n`;
-  markdown += `- 🔴 **High priority**: ${priorityCounts.high}\n`;
-  markdown += `- 🟡 **Medium priority**: ${priorityCounts.medium}\n`;
-  markdown += `- 🟢 **Low priority**: ${priorityCounts.low}\n\n`;
 
-  markdown += `### By Documentation Section\n\n`;
-  markdown += `**CMS Documentation:**\n`;
-  Object.entries(docSectionCounts.cms).forEach(([section, count]) => {
-    markdown += `- ${section}: ${count}\n`;
-  });
-  if (Object.keys(docSectionCounts.cloud).length > 0) {
-    markdown += `\n**Cloud Documentation:**\n`;
-    Object.entries(docSectionCounts.cloud).forEach(([section, count]) => {
-      markdown += `- ${section}: ${count}\n`;
+  const verdictOf = (a) => (a.claudeSuggestions && a.claudeSuggestions.needsDocs) || (a.impact && a.impact.verdict) || 'maybe';
+  const yesList = analyses.filter(a => verdictOf(a) === 'yes');
+  const noList = analyses.filter(a => verdictOf(a) === 'no');
+  const maybeList = analyses.filter(a => verdictOf(a) === 'maybe');
+
+  let markdown = `# Documentation Impact Report — ${releaseInfo.tag}\n\n`;
+  markdown += `Generated on: ${timestamp}\n\n`;
+  markdown += `Release: [${releaseInfo.name || releaseInfo.tag}](https://github.com/${STRAPI_REPO_OWNER}/${STRAPI_REPO_NAME}/releases/tag/${releaseInfo.tag})\n\n`;
+
+  markdown += `Total PRs: ${analyses.length} | Yes: ${yesList.length} | No: ${noList.length}`;
+  if (maybeList.length > 0) markdown += ` | Maybe: ${maybeList.length}`;
+  markdown += `\n\n---\n\n`;
+
+  // Yes section
+  if (yesList.length > 0) {
+    markdown += `## Requires Docs Updates (Yes)\n\n`;
+    yesList.forEach(a => {
+      const s = a.claudeSuggestions || {};
+      const summary = (s.summary || a.summary || '').trim();
+      markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
+      if (summary) markdown += `  \n  Summary: ${summary}\n`;
+      markdown += `  \n  Verdict: YES\n`;
+      if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
+      const targets = Array.isArray(s.targets) ? s.targets : [];
+      if (targets.length > 0) {
+        markdown += `  \n  Targets:\n`;
+        targets.forEach(t => {
+          const anchor = t.anchor ? `#${t.anchor}` : '';
+          markdown += `  - ${t.path}${anchor}\n`;
+        });
+      }
+      markdown += `\n`;
     });
+    markdown += `\n`;
   }
-  
-  markdown += `\n---\n\n`;
-  
-  ['cms', 'cloud'].forEach(mainCat => {
-    const categorizedPRs = analyses
-      .filter(a => a.claudeSuggestions)
-      .map(a => ({ ...a, ...categorizePRByDocumentation(a) }))
-      .filter(a => a.mainCategory === mainCat);
-    
-    if (categorizedPRs.length === 0) return;
-    
-    markdown += `# ${DOCUMENTATION_SECTIONS[mainCat].label}\n\n`;
-    
-    const sections = {};
-    categorizedPRs.forEach(pr => {
-      if (!sections[pr.section]) {
-        sections[pr.section] = [];
-      }
-      sections[pr.section].push(pr);
-    });
-    
-    Object.entries(sections).forEach(([sectionName, prs]) => {
-      markdown += `## ${sectionName}\n\n`;
-      
-      prs.forEach(analysis => {
-        const { number, title, url, claudeSuggestions, body, category } = analysis;
-        
-        const verdictEmoji = claudeSuggestions.needsDocs === 'yes' ? '✅' : claudeSuggestions.needsDocs === 'no' ? '🟦' : '⚠️';
-        markdown += `### ${verdictEmoji} PR #${number}: ${title}\n\n`;
-        markdown += `**Type:** ${PR_CATEGORIES[category] || category} | **Docs required:** ${claudeSuggestions.needsDocs.toUpperCase()} | **Link:** ${url}\n\n`;
-        
-        if (claudeSuggestions.affectedAreas && claudeSuggestions.affectedAreas.length > 0) {
-          markdown += `**Affected Areas:**\n`;
-          claudeSuggestions.affectedAreas.forEach(area => {
-            markdown += `- ${area}\n`;
-          });
-          markdown += `\n`;
-        }
-        
-        if (body && body.trim()) {
-          const summary = body.split('\n').slice(0, 2).join('\n').trim();
-          if (summary && summary.length > 10) {
-            markdown += `**Description:**\n${summary.substring(0, 200)}${summary.length > 200 ? '...' : ''}\n\n`;
-          }
-        }
-        
-        if (claudeSuggestions.rationale) {
-          markdown += `**Rationale:** ${claudeSuggestions.rationale}\n\n`;
-        }
 
-        const targets = Array.isArray(claudeSuggestions.targets) ? claudeSuggestions.targets : [];
-        if (targets.length > 0) {
-          markdown += `**Targets:**\n`;
-          targets.forEach((t) => {
-            const anchor = t.anchor ? `#${t.anchor}` : '';
-            markdown += `- ${t.path}${anchor ? ` (${anchor})` : ''}\n`;
-          });
-          markdown += `\n`;
-        }
-        if (claudeSuggestions.needsDocs === 'no') {
-          markdown += `**Documentation Impact:** No changes required.\n\n`;
-        }
-        
-        markdown += `\n\n---\n\n`;
-      });
+  // No section
+  if (noList.length > 0) {
+    markdown += `## No Docs Updates (No)\n\n`;
+    noList.forEach(a => {
+      const s = a.claudeSuggestions || {};
+      const summary = (s.summary || a.summary || '').trim();
+      markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
+      if (summary) markdown += `  \n  Summary: ${summary}\n`;
+      markdown += `  \n  Verdict: NO\n`;
+      if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
+      markdown += `\n`;
     });
-  });
-  
-  markdown += `## 📝 Notes\n\n`;
-  markdown += `- This analysis is AI-generated using Claude (${CLAUDE_MODEL})\n`;
-  markdown += `- PRs categorized as chores, tests, or CI/CD changes are automatically excluded\n`;
-  
+    markdown += `\n`;
+  }
+
+  // Maybe section (only if remains after LLM)
+  if (maybeList.length > 0) {
+    markdown += `## Uncertain (Maybe)\n\n`;
+    maybeList.forEach(a => {
+      const s = a.claudeSuggestions || {};
+      const summary = (s.summary || a.summary || '').trim();
+      markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
+      if (summary) markdown += `  \n  Summary: ${summary}\n`;
+      markdown += `  \n  Verdict: MAYBE\n`;
+      if (s.rationale) markdown += `  \n  Rationale: ${s.rationale}\n`;
+      const targets = Array.isArray(s.targets) ? s.targets : [];
+      if (targets.length > 0) {
+        markdown += `  \n  Targets:\n`;
+        targets.forEach(t => {
+          const anchor = t.anchor ? `#${t.anchor}` : '';
+          markdown += `  - ${t.path}${anchor}\n`;
+        });
+      }
+      markdown += `\n`;
+    });
+    markdown += `\n`;
+  }
+
   return markdown;
 }
 
