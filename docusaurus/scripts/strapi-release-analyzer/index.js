@@ -632,11 +632,11 @@ async function main() {
   let effectiveReleaseUrl = releaseUrl;
   if (!effectiveReleaseUrl) {
     try {
-      console.log('🔎 No release URL provided — fetching latest release from strapi/strapi');
+      if (!OPTIONS.quiet) console.log('🔎 No release URL provided — fetching latest release from strapi/strapi');
       const { data: latest } = await octokit.repos.getLatestRelease({ owner: STRAPI_REPO_OWNER, repo: STRAPI_REPO_NAME });
       const latestTag = latest.tag_name;
       effectiveReleaseUrl = `https://github.com/${STRAPI_REPO_OWNER}/${STRAPI_REPO_NAME}/releases/tag/${latestTag}`;
-      console.log(`📌 Using latest release: ${latestTag}`);
+      if (!OPTIONS.quiet) console.log(`📌 Using latest release: ${latestTag}`);
     } catch (e) {
       console.error(USAGE);
       console.error(USAGE_DEFAULTS);
@@ -680,9 +680,6 @@ async function main() {
       } else {
         console.log(`\n📝 Analyzing ${totalPRs} PRs...\n`);
       }
-    } else {
-      // quiet header
-      process.stdout.write(`Analyzing ${totalPRs} PRs: 0/${totalPRs}`);
     }
     
     const analyses = [];
@@ -705,13 +702,18 @@ async function main() {
           const barWidth = 20;
           const filled = Math.floor((processed / total) * barWidth);
           const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
-          // If we already rendered two lines previously, move cursor up two lines before overwriting
           if (quietRendered) {
-            process.stdout.write('\x1b[2A\r');
+            // Move up two lines and clear them before reprinting
+            process.stdout.write('\x1b[2A');
+            process.stdout.write('\x1b[2K\r');
+            process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
+            process.stdout.write('\x1b[2K\r');
+            process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
+          } else {
+            process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
+            process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
+            quietRendered = true;
           }
-          process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
-          process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
-          quietRendered = true;
         }
         continue;
       }
@@ -942,13 +944,17 @@ async function main() {
         const barWidth = 20;
         const filled = Math.floor((processed / total) * barWidth);
         const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
-        // Overwrite two-line quiet display
         if (quietRendered) {
-          process.stdout.write('\x1b[2A\r');
+          process.stdout.write('\x1b[2A');
+          process.stdout.write('\x1b[2K\r');
+          process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
+          process.stdout.write('\x1b[2K\r');
+          process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
+        } else {
+          process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
+          process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
+          quietRendered = true;
         }
-        process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
-        process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
-        quietRendered = true;
       }
       await new Promise(resolve => setTimeout(resolve, 200));
     }
