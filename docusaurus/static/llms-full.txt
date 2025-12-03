@@ -8114,6 +8114,33 @@ Relations where at least one side can reference several entries are called multi
 
 </Tabs>
 
+:::tip Modeling nested page hierarchies
+To model a navigable tree of pages:
+1. Add a `Page` collection type with a "Slug" (UID) and (optionally) an "Order" (Integer) field to control sibling ordering.
+2. Create a Relation field from `Page` to `Page` and choose *Many-to-one* so each page can set its "Parent page". Strapi automatically provides the inverse "Children pages" relation.
+3. When reading data, populate `children` recursively to load the tree. Keep the recursion depth small to avoid large responses.
+
+<details>
+<summary>Example</summary>
+```json title="Populate nested children for a page tree"
+{
+  populate: {
+    children: {
+      fields: ['title', 'slug'],
+      populate: {
+        children: {
+          fields: ['title', 'slug'],
+        },
+      },
+    },
+  },
+}
+```
+</details>
+
+The same populate pattern works with GraphQL or the Document Service API (see [Understanding populate guide](/cms/api/rest/guides/understanding-populate#populate-several-levels-deep-for-specific-relations)).
+:::
+
 #### <img width="28" src="/img/assets/icons/v5/ctb_boolean.svg" /> Boolean {#boolean}
 
 The Boolean field displays a toggle button to manage boolean values (e.g. Yes or No, 1 or 0, True or False).

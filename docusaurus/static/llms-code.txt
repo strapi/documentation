@@ -20616,6 +20616,33 @@ export default ({ env }) => ({
 
 
 
+# Content-type Builder
+Source: https://docs.strapi.io/cms/features/content-type-builder
+
+## Relation
+Description: Example
+(Source: https://docs.strapi.io/cms/features/content-type-builder#relation)
+
+Language: JSON
+File path: Populate
+
+```json
+{
+  populate: {
+    children: {
+      fields: ['title', 'slug'],
+      populate: {
+        children: {
+          fields: ['title', 'slug'],
+        },
+      },
+    },
+  },
+}
+```
+
+
+
 # Custom Fields
 Source: https://docs.strapi.io/cms/features/custom-fields
 
