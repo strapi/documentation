@@ -821,7 +821,7 @@ async function main() {
             claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
             downgradeNote = 'Coverage cross-check: likely already documented end behavior; treating as bug fix.';
             noReasonCode = 'llm_downgrade_coverage_match';
-            console.log('  🔻 Downgrade → NO (docs coverage likely matches end behavior)');
+            if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (docs coverage likely matches end behavior)');
           }
         }
       }
@@ -841,13 +841,13 @@ async function main() {
         claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
         downgradeNote = 'Conservative guard: bug fix lacks strong config/API/schema/migration signals.';
         noReasonCode = 'llm_downgrade_bug_without_strong_signals';
-        console.log('  🔻 Downgrade → NO (bug fix without strong signals)');
+        if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (bug fix without strong signals)');
       } else if (validated.length === 0 && !claudeSuggestions.newPage) {
         // No resolvable targets and not a new page request → No
         claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
         downgradeNote = 'Targets did not resolve to known docs pages and newPage not requested.';
         noReasonCode = 'llm_downgrade_invalid_targets';
-        console.log('  🔻 Downgrade → NO (targets invalid and not a new page)');
+        if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (targets invalid and not a new page)');
       }
 
       // Conservative anchor requirement for section‑heavy pages
