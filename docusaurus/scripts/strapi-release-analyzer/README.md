@@ -8,7 +8,11 @@ The tool reads the release notes from GitHub, extracts the referenced PRs, inspe
 
 The script is a Node program and does not require additional dependencies beyond access to the GitHub API and an LLM provider. You can run a fresh analysis of a release with:
 
-`node docusaurus/scripts/strapi-release-analyzer/index.js <github-release-url>`
+`./docusaurus/scripts/strapi-release-analyzer/strapi-release-analyzer.sh <github-release-url>`
+
+Notes:
+- You can still run the Node entry directly if you prefer.
+- If you omit the release URL entirely, the tool will auto‑fetch the latest release from `strapi/strapi` and analyze it.
 
 By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag.
 

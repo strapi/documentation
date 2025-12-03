@@ -710,13 +710,22 @@ function hasStrongDocsSignals(prAnalysis) {
 async function main() {
   const rawArgs = process.argv.slice(2);
   const { releaseUrl } = parseArgs(rawArgs);
-
-  if (!releaseUrl) {
-    console.error(USAGE);
-    console.error(USAGE_DEFAULTS);
-    console.error(USAGE_EXAMPLE);
-    console.error(USAGE_HINT);
-    process.exit(1);
+  let effectiveReleaseUrl = releaseUrl;
+  if (!effectiveReleaseUrl) {
+    try {
+      console.log('🔎 No release URL provided — fetching latest release from strapi/strapi');
+      const { data: latest } = await octokit.repos.getLatestRelease({ owner: STRAPI_REPO_OWNER, repo: STRAPI_REPO_NAME });
+      const latestTag = latest.tag_name;
+      effectiveReleaseUrl = `https://github.com/${STRAPI_REPO_OWNER}/${STRAPI_REPO_NAME}/releases/tag/${latestTag}`;
+      console.log(`📌 Using latest release: ${latestTag}`);
+    } catch (e) {
+      console.error(USAGE);
+      console.error(USAGE_DEFAULTS);
+      console.error(USAGE_EXAMPLE);
+      console.error(USAGE_HINT);
+      console.error(`Failed to auto-detect latest release: ${e.message}`);
+      process.exit(1);
+    }
   }
 
   if (!GITHUB_TOKEN) {
@@ -735,7 +744,7 @@ async function main() {
   console.log(`🤖 Using Claude ${CLAUDE_MODEL} for intelligent analysis\n`);
   
   try {
-    const releaseInfo = await parseReleaseNotes(releaseUrl);
+    const releaseInfo = await parseReleaseNotes(effectiveReleaseUrl);
     CURRENT_RELEASE_TAG = releaseInfo.tag;
     
     const llmsIndex = await readLlmsFullIndex();
