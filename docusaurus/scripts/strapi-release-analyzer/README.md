@@ -8,7 +8,7 @@ The tool reads the release notes from GitHub, extracts the referenced PRs, inspe
 
 The script is a Node program and does not require additional dependencies beyond access to the GitHub API and an LLM provider. You can run a fresh analysis of a release with:
 
-`./docusaurus/scripts/strapi-release-analyzer/strapi-release-analyzer.sh <github-release-url>`
+`./analyze-strapi-release-impact.sh <github-release-url>`
 
 Notes:
 - You can still run the Node entry directly if you prefer.
