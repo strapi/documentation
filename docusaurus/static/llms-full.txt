@@ -6030,7 +6030,7 @@ Here is a minimal Node.js middleware example (pseudo‑code) showing
 
 </Tabs>
 
-Here a few additional external examples:
+Here are a few additional external examples:
 - 
 - 
 <br />
@@ -6101,8 +6101,8 @@ By default Strapi webhooks can be triggered by the following events:
 
 ## Payloads
 
-:::tip NOTE
-Private fields and s are not sent in the payload.
+:::info
+Private fields are not sent in the payload.
 :::
 
 ### Headers
