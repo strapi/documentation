@@ -6,6 +6,7 @@ import { buildClaudePrompt } from './prompts/claude.js';
 import fs from 'fs/promises';
 import path from 'path';
 import { config } from 'dotenv';
+import { DOCUMENTATION_SECTIONS, SPECIFIC_AREA_PATTERNS, YES_PATH_PATTERNS, FEATURE_HINTS, GENERIC_DROP_TOKENS } from './config/constants.js';
 
 config();
 
@@ -459,65 +460,6 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
   }
 }
 
-const DOCUMENTATION_SECTIONS = {
-  cms: {
-    label: '🏗️ CMS Documentation',
-    sections: {
-      'Getting Started': ['quick-start', 'installation', 'admin-panel', 'deployment'],
-      'Features': ['api-tokens', 'audit-logs', 'content-history', 'custom-fields', 'data-management', 
-                   'draft-and-publish', 'email', 'internationalization', 'i18n', 'media-library', 
-                   'preview', 'rbac', 'releases', 'review-workflows', 'sso', 'users-permissions',
-                   'content-manager', 'content-type-builder'],
-      'APIs': ['rest', 'graphql', 'document', 'content-api', 'query-engine'],
-      'Configurations': ['database', 'server', 'admin-panel-config', 'middlewares', 'api-config', 
-                         'environment', 'typescript', 'features-config'],
-      'Development': ['backend', 'customization', 'lifecycle', 'services', 'controllers', 'routes',
-                     'policies', 'middlewares-dev', 'webhooks'],
-      'TypeScript': ['typescript'],
-      'CLI': ['cli', 'command'],
-      'Plugins': ['plugins', 'plugin-development', 'marketplace'],
-      'Upgrades': ['migration', 'upgrade', 'v4-to-v5'],
-    }
-  },
-  cloud: {
-    label: '☁️ Cloud Documentation',
-    sections: {
-      'Getting Started': ['deployment', 'cloud-fundamentals', 'usage-billing', 'caching'],
-      'Projects Management': ['projects', 'settings', 'collaboration', 'runtime-logs', 'notifications'],
-      'Deployments': ['deploys', 'deployment-history'],
-      'Account Management': ['account', 'profile', 'billing'],
-    }
-  }
-};
-
-const SPECIFIC_AREA_PATTERNS = {
-  // Features
-  'media|upload|asset': { section: 'Features', area: 'Media Library' },
-  'i18n|internationalization|locale|translation': { section: 'Features', area: 'Internationalization' },
-  'content-manager|content manager': { section: 'Features', area: 'Content Manager' },
-  'content-type-builder|content type builder': { section: 'Features', area: 'Content-Type Builder' },
-  'rbac|role|permission': { section: 'Features', area: 'RBAC' },
-  'review|workflow': { section: 'Features', area: 'Review Workflows' },
-  'draft|publish': { section: 'Features', area: 'Draft & Publish' },
-  'sso|single sign': { section: 'Features', area: 'SSO' },
-  'audit log': { section: 'Features', area: 'Audit Logs' },
-  'api token': { section: 'Features', area: 'API Tokens' },
-  
-  // APIs
-  'rest|/api/rest': { section: 'APIs', area: 'REST API' },
-  'graphql': { section: 'APIs', area: 'GraphQL' },
-  'document service': { section: 'APIs', area: 'Document Service' },
-  
-  // Configurations
-  'database|\\bdb\\b': { section: 'Configurations', area: 'Database' },
-  'server|middleware': { section: 'Configurations', area: 'Server' },
-  
-  // Other sections
-  'typescript|\\.ts': { section: 'TypeScript', area: '' },
-  'cli|command': { section: 'CLI', area: '' },
-  'plugin': { section: 'Plugins', area: 'Plugin Development' },
-  'migration|upgrade': { section: 'Upgrades', area: 'Migration' },
-};
 
 function categorizePRByDocumentation(analysis) {
   const { claudeSuggestions, files, title } = analysis;
@@ -691,12 +633,8 @@ function tokenize(text) {
 function collectHighSignalTokens(prAnalysis, cap = 20) {
   const out = new Set();
   const files = prAnalysis.files || [];
-  const featureHints = [
-    // Keep platform features but avoid generic UI tokens later in hasStrongDocsSignals
-    'content-manager', 'content', 'content-type-builder', 'media-library', 'internationalization', 'i18n',
-    'users-permissions', 'review-workflows', 'releases', 'upload', 'email', 'graphql', 'rest', 'admin', 'rbac', 'sso'
-  ];
-  const genericDrop = new Set(['src','lib','dist','build','public','docs','packages','plugin','plugins','api','server','test','tests','ci','config']);
+  const featureHints = FEATURE_HINTS;
+  const genericDrop = GENERIC_DROP_TOKENS;
 
   for (const f of files) {
     const parts = String(f.filename || '').toLowerCase().split(/[\/]/).filter(Boolean);
@@ -841,23 +779,7 @@ function classifyImpact(prAnalysis) {
     return { verdict: 'yes', reason: 'PR title indicates user-facing changes.' };
   }
 
-  const yesPathPatterns = [
-    /\b(core|server|strapi)\b/,
-    /\b(plugin|plugins)\b/,
-    /\badmin\b/,
-    /\bcontent(-|_)manager\b/,
-    /\bcontent(-|_)type(-|_)builder\b/,
-    /\bi18n\b/,
-    /\bupload|media\b/,
-    /\bgraphql\b/,
-    /\busers(-|_)permissions\b/,
-    /\bapi\b/,
-    /\broutes?\b/,
-    /\bcontrollers?\b/,
-    /\bservices?\b/,
-    /(^|\/)config(\/|$)/,
-  ];
-  const hitYes = files.some(f => yesPathPatterns.some(re => re.test(f.filename)));
+  const hitYes = files.some(f => YES_PATH_PATTERNS.some(re => re.test(f.filename)));
   if (hitYes) {
     return { verdict: 'yes', reason: 'Touches user-facing code paths (API/config/features).' };
   }
