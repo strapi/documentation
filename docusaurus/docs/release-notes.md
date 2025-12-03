@@ -83,61 +83,6 @@ This release was made possible thanks to the following contributors. Thank you! 
 <br/>
 
 
-## 6.12.1
-
-<br />
-### <Icon name='sparkle' /> New content
-
-<br />
-
-#### Repository
-- [Add `<Checklist>` component](https://github.com/strapi/documentation/pull/2883)
-
-### <Icon name='pen-nib' /> Updated content
-
-<br />
-
-#### CMS
-- [Checklist in SSO configuration documentation](https://github.com/strapi/documentation/pull/2882)
-- [Document Service API intro rework: more details, updated structure](https://github.com/strapi/documentation/pull/2880)
-- [Lifecycle functions rework: structure change, more details & examples](https://github.com/strapi/documentation/pull/2878)
-- [Tip about nested page hierarchies in Content-type Builder documentation](https://github.com/strapi/documentation/pull/2876)
-- [More details regarding image uploading](https://github.com/strapi/documentation/pull/2875)
-
-#### Repository
-- [Add example to Theme extension documentation](https://github.com/strapi/documentation/pull/2850)
-- [Add TypeScript example and deliverability tip to Email documentation](https://github.com/strapi/documentation/pull/2839)
-
-### <Icon name='broom' /> Chore, fixes, typos, and other improvements
-
-<br />
-
-#### CMS
-- [Notify users about Apollo In Memory Cache ID](https://github.com/strapi/documentation/pull/2884)
-- [Add types for Backend Customization Custom Routes](https://github.com/strapi/documentation/pull/2879)
-
-#### Repository
-- [Fix unneeded margin on first-in-the-list custom docs card component](https://github.com/strapi/documentation/pull/2881)
-- [Remove Amplitude-related elements](https://github.com/strapi/documentation/pull/2873)
-- [Fix main content layout shift](https://github.com/strapi/documentation/pull/2872)
-
-***
-This release was made possible thanks to the following contributors. Thank you! 🫶
-<div>
-<a href="https://github.com/meganelacheny" target="_blank">
-    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/19183360?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="meganelacheny"/>
-</a>
-<a href="https://github.com/pwizla" target="_blank">
-    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
-</a>
-<a href="https://github.com/unrevised6419" target="_blank">
-    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1881266?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="unrevised6419"/>
-</a>
-</div>
-<br/>
-<br/>
-
-
 ## 6.12.0
 
 <br />
