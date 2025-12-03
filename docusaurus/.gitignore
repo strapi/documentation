@@ -12,6 +12,7 @@
 
 # Misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -33,3 +34,7 @@ llms*.txt
 **/llm*.txt
 pr-*.diff
 *-results.json
+
+# Strapi release analysis reports and cache
+release-analysis/*
+docusaurus/scripts/strapi-release-analyzer/.cache/*
