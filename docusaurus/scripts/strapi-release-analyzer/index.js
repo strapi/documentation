@@ -6,9 +6,10 @@ import { buildClaudePrompt } from './prompts/claude.js';
 import fs from 'fs/promises';
 import path from 'path';
 import { config } from 'dotenv';
-import { DOCUMENTATION_SECTIONS, SPECIFIC_AREA_PATTERNS, YES_PATH_PATTERNS, FEATURE_HINTS, GENERIC_DROP_TOKENS } from './config/constants.js';
+import { DOCUMENTATION_SECTIONS, SPECIFIC_AREA_PATTERNS, YES_PATH_PATTERNS } from './config/constants.js';
 import { REASONS } from './config/reasons.js';
 import { isMicroUiChange, hasStrongDocsSignals, isRegressionRestore, isFeatureParityRestoration, isUploadRestriction } from './utils/detectors.js';
+import { tokenize, collectHighSignalTokens } from './utils/tokens.js';
 
 config();
 
@@ -612,55 +613,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
 
 // Removed legacy PDF generation (md-to-pdf) to simplify runtime and deps
 
-function tokenize(text) {
-  return (text || '')
-    .toLowerCase()
-    .replace(/[^a-z0-9\/_-]+/g, ' ')
-    .split(/\s+/)
-    .filter(Boolean);
-}
-
-// Collect high-signal tokens from file paths and diffs to aid coverage checks
-function collectHighSignalTokens(prAnalysis, cap = 20) {
-  const out = new Set();
-  const files = prAnalysis.files || [];
-  const featureHints = FEATURE_HINTS;
-  const genericDrop = GENERIC_DROP_TOKENS;
-
-  for (const f of files) {
-    const parts = String(f.filename || '').toLowerCase().split(/[\/]/).filter(Boolean);
-    for (const p of parts) {
-      if (genericDrop.has(p)) continue;
-      // split further on - _ .
-      const sub = p.split(/[._-]/).filter(s => s.length >= 3);
-      for (const s of sub) out.add(s);
-    }
-    const base = path.basename(f.filename || '').toLowerCase().replace(/\.(mdx?|js|ts|tsx|jsx|json|yml|yaml|css|scss|less)$/,'');
-    if (base && base.length >= 3) out.add(base);
-  }
-  for (const hint of featureHints) if ((prAnalysis.title||'').toLowerCase().includes(hint)) out.add(hint);
-
-  // Extract option-like keys and env vars from added lines
-  for (const f of files) {
-    const patch = String(f.patch || '');
-    const lines = patch.split(/\r?\n/);
-    for (const line of lines) {
-      if (!line.startsWith('+')) continue;
-      const l = line.slice(1);
-      const envMatch = l.match(/process\.env\.([A-Z0-9_]+)/);
-      if (envMatch) out.add(envMatch[1].toLowerCase());
-      const keyMatches = l.match(/[A-Za-z][A-Za-z0-9_-]{3,}/g);
-      if (keyMatches) {
-        for (const k of keyMatches) {
-          const kk = k.toLowerCase();
-          if (kk.length >= 4 && !genericDrop.has(kk)) out.add(kk);
-        }
-      }
-    }
-  }
-
-  return Array.from(out).slice(0, cap);
-}
+// token helpers moved to ./utils/tokens.js
 
 // Resolve the best matching docs page for a target path using the full llms-full index
 function resolvePageForTarget(llmsIndex, candidates, targetPath) {
