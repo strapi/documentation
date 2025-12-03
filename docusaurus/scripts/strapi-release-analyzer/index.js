@@ -251,7 +251,7 @@ async function parseReleaseNotes(releaseUrl) {
 
   const [, owner, repo, tag] = match;
   
-  console.log(`📦 Fetching release: ${tag}`);
+  if (!OPTIONS.quiet) console.log(`📦 Fetching release: ${tag}`);
   
   const { data: release } = await octokit.repos.getReleaseByTag({
     owner,
@@ -261,7 +261,7 @@ async function parseReleaseNotes(releaseUrl) {
 
   const prNumbers = extractPRNumbers(release.body);
   
-  console.log(`✅ Found ${prNumbers.length} PRs in release notes`);
+  if (!OPTIONS.quiet) console.log(`✅ Found ${prNumbers.length} PRs in release notes`);
   
   return {
     tag,
@@ -324,7 +324,7 @@ function categorizePR(title, body, labels) {
 }
 
 async function analyzePR(prNumber) {
-  console.log(`  🔍 Analyzing PR #${prNumber}...`);
+  if (!OPTIONS.quiet) console.log(`  🔍 Analyzing PR #${prNumber}...`);
   
   try {
     // Try cache first
@@ -333,8 +333,10 @@ async function analyzePR(prNumber) {
       console.log(`  💾 Using cached data for PR #${prNumber}`);
       // Respect skip rules on cached item too
       if (EXCLUDED_CATEGORIES.includes(cached.category)) {
-        console.log(`  ⏭️  Skipping PR #${prNumber} (${cached.category})`);
-        console.log('');
+        if (!OPTIONS.quiet) {
+          console.log(`  ⏭️  Skipping PR #${prNumber} (${cached.category})`);
+          console.log('');
+        }
         return null;
       }
       return cached;
@@ -349,8 +351,10 @@ async function analyzePR(prNumber) {
     const category = categorizePR(pr.title, pr.body, pr.labels.map(l => l.name));
     
     if (EXCLUDED_CATEGORIES.includes(category)) {
-      console.log(`  ⏭️  Skipping PR #${prNumber} (${category})`);
-      console.log('');
+      if (!OPTIONS.quiet) {
+        console.log(`  ⏭️  Skipping PR #${prNumber} (${category})`);
+        console.log('');
+      }
       return null;
     }
 
@@ -385,7 +389,7 @@ async function analyzePR(prNumber) {
 }
 
 async function generateDocSuggestionsWithClaude(prAnalysis) {
-  console.log(`  🤖 Generating documentation suggestions with Claude for PR #${prAnalysis.number}...`);
+  if (!OPTIONS.quiet) console.log(`  🤖 Generating documentation suggestions with Claude for PR #${prAnalysis.number}...`);
   
   const diffSummary = prAnalysis.files
     .filter(f => f.patch)
@@ -394,7 +398,7 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
   
     const diffSize = Buffer.byteLength(diffSummary, 'utf8');
     if (diffSize > 100000) {
-    console.log(`  ⚠️  Diff too large (${Math.round(diffSize / 1024)}KB), truncating...`);
+    if (!OPTIONS.quiet) console.log(`  ⚠️  Diff too large (${Math.round(diffSize / 1024)}KB), truncating...`);
   }
   
     const truncatedDiff = diffSize > 100000
@@ -423,7 +427,7 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
     const responseText = message.content?.[0]?.text || '';
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.log(`  ⚠️  Could not parse Claude response as JSON`);
+      if (!OPTIONS.quiet) console.log(`  ⚠️  Could not parse Claude response as JSON`);
       return null;
     }
 
@@ -431,7 +435,7 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
     try {
       obj = JSON.parse(jsonMatch[0]);
     } catch (e) {
-      console.log(`  ⚠️  JSON parse error: ${e.message}`);
+      if (!OPTIONS.quiet) console.log(`  ⚠️  JSON parse error: ${e.message}`);
       return null;
     }
 
@@ -457,7 +461,7 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
     }
 
     const normalized = { summary, needsDocs: finalNeeds, docsWorthy, newPage, rationale, targets: cappedTargets };
-    console.log(`  ✅ LLM verdict: ${finalNeeds.toUpperCase()} | worthy=${docsWorthy ? 'Y' : 'N'}${newPage ? ' | newPage=Y' : ''} — ${cappedTargets.length} target(s)`);
+    if (!OPTIONS.quiet) console.log(`  ✅ LLM verdict: ${finalNeeds.toUpperCase()} | worthy=${docsWorthy ? 'Y' : 'N'}${newPage ? ' | newPage=Y' : ''} — ${cappedTargets.length} target(s)`);
     return normalized;
   } catch (error) {
     console.error(`  ❌ Error calling Claude API: ${error.message}`);
@@ -691,6 +695,16 @@ async function main() {
 
       if (!prAnalysis) {
         skipped++;
+        // still advance quiet progress for a skipped item
+        if (OPTIONS.quiet) {
+          processed++;
+          const total = totalPRs;
+          const pct = Math.floor((processed / total) * 100);
+          const barWidth = 20;
+          const filled = Math.floor((processed / total) * barWidth);
+          const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
+          process.stdout.write(`\r[${bar}] ${processed}/${total} ${pct}%`);
+        }
         continue;
       }
 
