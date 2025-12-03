@@ -8,6 +8,7 @@ import path from 'path';
 import { config } from 'dotenv';
 import { DOCUMENTATION_SECTIONS } from './config/constants.js';
 import { REASONS } from './config/reasons.js';
+import { USAGE, USAGE_DEFAULTS, USAGE_EXAMPLE, USAGE_HINT, WARN_NO_GITHUB_TOKEN, ERR_NEED_ANTHROPIC, ERR_NEED_LIMIT_ZERO_HINT } from './config/messages.js';
 import { isMicroUiChange, hasStrongDocsSignals, isRegressionRestore, isFeatureParityRestoration, isUploadRestriction } from './utils/detectors.js';
 import { tokenize, collectHighSignalTokens } from './utils/tokens.js';
 import { resolvePageForTarget, suggestCandidateDocs } from './utils/pages.js';
@@ -711,22 +712,22 @@ async function main() {
   const { releaseUrl } = parseArgs(rawArgs);
 
   if (!releaseUrl) {
-    console.error('❌ Usage: node index.js <github-release-url> [--use-cache] [--cache-dir=PATH] [--limit=N-for-LLM] [--no-llm-call] [--strict=aggressive|balanced|conservative] [--model=NAME]');
-    console.error('Defaults: fresh run (no cache reads) and refresh writes. Use --use-cache to enable reading existing cache and skip refresh.');
-    console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive');
-    console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls. Use --limit=0 for heuristics only (no ANTHROPIC_API_KEY required).');
+    console.error(USAGE);
+    console.error(USAGE_DEFAULTS);
+    console.error(USAGE_EXAMPLE);
+    console.error(USAGE_HINT);
     process.exit(1);
   }
 
   if (!GITHUB_TOKEN) {
-    console.warn('⚠️  GITHUB_TOKEN not set — proceeding unauthenticated (lower rate limits)');
+    console.warn(WARN_NO_GITHUB_TOKEN);
   }
 
   const llmCapProvided = OPTIONS.limit !== undefined && OPTIONS.limit !== null;
   const willUseLLM = !(llmCapProvided && Number(OPTIONS.limit) === 0);
   if (willUseLLM && !ANTHROPIC_API_KEY) {
-    console.error('❌ ANTHROPIC_API_KEY is required when LLM calls are enabled');
-    console.error('Set --limit=0 to run heuristics only without an Anthropic key.');
+    console.error(ERR_NEED_ANTHROPIC);
+    console.error(ERR_NEED_LIMIT_ZERO_HINT);
     process.exit(1);
   }
 
