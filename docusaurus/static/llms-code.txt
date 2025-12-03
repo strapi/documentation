@@ -10693,7 +10693,7 @@ File path: N/A
 Source: https://docs.strapi.io/cms/api/rest/upload
 
 ## Upload files
-Description: files is the only accepted parameter, and describes the file(s) to upload.
+Description: :::tip When uploading an image, include a fileInfo object to set the file name, alt text, and caption.
 (Source: https://docs.strapi.io/cms/api/rest/upload#upload-files)
 
 Language: HTML
@@ -10703,6 +10703,12 @@ File path: N/A
 <form>
   <!-- Can be multiple files -->
   <input type="file" name="files" />
+  <input
+    type="hidden"
+    name="fileInfo"
+    value='{"name":"homepage-hero","alternativeText":"Person smiling while
+      holding laptop","caption":"Hero image used on the homepage"}'
+  />
   <input type="submit" value="Submit" />
 </form>
 
@@ -10732,6 +10738,14 @@ const file = await blobFrom('./1.png', 'image/png');
 const form = new FormData();
 
 form.append('files', file, "1.png");
+form.append(
+  'fileInfo',
+  JSON.stringify({
+    name: 'Homepage hero',
+    alternativeText: 'Person smiling while holding laptop',
+    caption: 'Hero image used on the homepage',
+  })
+);
 
 const response = await fetch('http://localhost:1337/api/upload', {
   method: 'post',
