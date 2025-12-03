@@ -236,7 +236,7 @@ export default (config: unknown, { strapi }: any) => {
 </TabItem>
 </Tabs>
 
-Here a few additional external examples:
+Here are a few additional external examples:
 - <ExternalLink to="https://docs.github.com/webhooks/using-webhooks/validating-webhook-deliveries" text="GitHub — Validating webhook deliveries" />
 - <ExternalLink to="https://stripe.com/docs/webhooks/signatures" text="Stripe — Verify webhook signatures" />
 <br />
@@ -307,8 +307,8 @@ By default Strapi webhooks can be triggered by the following events:
 
 ## Payloads
 
-:::tip NOTE
-Private fields and s are not sent in the payload.
+:::info
+Private fields are not sent in the payload.
 :::
 
 ### Headers
