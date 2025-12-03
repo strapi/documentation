@@ -14,7 +14,7 @@ Notes:
 - You can still run the Node entry directly if you prefer.
 - If you omit the release URL entirely, the tool will auto‑fetch the latest release from `strapi/strapi` and analyze it.
 
-By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag.
+By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag. To reduce terminal output to a compact progress bar, use `--quiet`.
 
 The LLM mode requires `ANTHROPIC_API_KEY` in the environment. The GitHub API benefits from `GITHUB_TOKEN` to avoid rate limits but can work unauthenticated at lower throughput.
 

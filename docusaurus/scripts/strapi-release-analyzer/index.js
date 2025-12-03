@@ -57,6 +57,7 @@ const OPTIONS = {
   cacheDir: path.join(process.cwd(), 'docusaurus', 'scripts', 'strapi-release-analyzer', '.cache'),
   limit: null,
   strict: 'conservative', // aggressive | balanced | conservative (default conservative)
+  quiet: false,
 };
 
 // Minimal loader for llms-full.txt (with graceful fallback to llms.txt)
@@ -194,10 +195,8 @@ function parseArgs(argv) {
       const n = parseInt(arg.split('=')[1], 10);
       if (!Number.isNaN(n) && n > 0) OPTIONS.limit = n;
     }
-    if (arg === '--no-llm-call') {
-      // Explicit flag to disable any model calls, equivalent to --limit=0
-      OPTIONS.limit = 0;
-    }
+    if (arg === '--no-llm-call') { OPTIONS.limit = 0; }
+    if (arg === '--quiet') { OPTIONS.quiet = true; }
     if (arg.startsWith('--strict=')) {
       const v = arg.split('=')[1];
       if (['aggressive', 'balanced', 'conservative'].includes(v)) OPTIONS.strict = v;
@@ -656,29 +655,37 @@ async function main() {
     process.exit(1);
   }
 
-  console.log('🚀 Starting Strapi Release Documentation Analysis\n');
-  console.log(`🤖 Using Claude ${CLAUDE_MODEL} for intelligent analysis\n`);
+  if (!OPTIONS.quiet) {
+    console.log('🚀 Starting Strapi Release Documentation Analysis\n');
+    console.log(`🤖 Using Claude ${CLAUDE_MODEL} for intelligent analysis\n`);
+  }
   
   try {
     const releaseInfo = await parseReleaseNotes(effectiveReleaseUrl);
     CURRENT_RELEASE_TAG = releaseInfo.tag;
     
     const llmsIndex = await readLlmsFullIndex();
-    if (llmsIndex.source) {
+    if (llmsIndex.source && !OPTIONS.quiet) {
       console.log(`📚 Loaded docs index from ${llmsIndex.source} (${llmsIndex.pages.length} pages)`);
     }
     
     const totalPRs = releaseInfo.prNumbers.length;
-    if (OPTIONS.limit && OPTIONS.limit > 0) {
-      console.log(`\n📝 Analyzing ${totalPRs} PRs (LLM on up to ${OPTIONS.limit} of ${totalPRs})...\n`);
+    if (!OPTIONS.quiet) {
+      if (OPTIONS.limit && OPTIONS.limit > 0) {
+        console.log(`\n📝 Analyzing ${totalPRs} PRs (LLM on up to ${OPTIONS.limit} of ${totalPRs})...\n`);
+      } else {
+        console.log(`\n📝 Analyzing ${totalPRs} PRs...\n`);
+      }
     } else {
-      console.log(`\n📝 Analyzing ${totalPRs} PRs...\n`);
+      // quiet header
+      process.stdout.write(`Analyzing ${totalPRs} PRs: 0/${totalPRs}`);
     }
     
     const analyses = [];
     let skipped = 0;
     
     const prList = Array.isArray(releaseInfo.prNumbers) ? releaseInfo.prNumbers : [];
+    let processed = 0;
     for (const prNumber of prList) {
       const prAnalysis = await analyzePR(prNumber);
 
@@ -688,10 +695,12 @@ async function main() {
       }
 
       // Pretty header per PR for readability (single blank line before header)
-      try {
-        const headerTitle = (prAnalysis.title || '').trim();
-        console.log(`\n— PR #${prNumber} — ${headerTitle}`);
-      } catch {}
+      if (!OPTIONS.quiet) {
+        try {
+          const headerTitle = (prAnalysis.title || '').trim();
+          console.log(`\n— PR #${prNumber} — ${headerTitle}`);
+        } catch {}
+      }
 
       // Heuristic triage and summary
       const summary = deriveSummary(prAnalysis);
@@ -722,8 +731,10 @@ async function main() {
         const localeAdd = isLocaleAddition(prAnalysis);
         allowByStrict = (isFeatureEnhancement || strong) && !isMicroUiChange(prAnalysis) && !localeAdd;
         if (isBugLike && !strong) allowByStrict = false;
-        if (!allowByStrict && canUseLLM && !preNoReason) {
-          console.log('  ⏭️  Skipping LLM call under conservative routing (no strong docs signals)');
+        if (!OPTIONS.quiet) {
+          if (!allowByStrict && canUseLLM && !preNoReason) {
+            console.log('  ⏭️  Skipping LLM call under conservative routing (no strong docs signals)');
+          }
         }
       }
       const runLLM = !preNoReason && canUseLLM && allowByStrict;
@@ -753,7 +764,9 @@ async function main() {
           rationale: `Conservative pre-LLM gate: ${preNoReason}`,
           targets: [],
         };
-        console.log(`  ⛳ Pre-LLM gate → NO (${preNoReason})`);
+        if (!OPTIONS.quiet) {
+          console.log(`  ⛳ Pre-LLM gate → NO (${preNoReason})`);
+        }
         downgradeNote = `Downgraded to No under conservative policy: ${preNoReason}.`;
         noReasonCode = preNoCode || null;
       }
@@ -764,12 +777,12 @@ async function main() {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative downgrade: micro UI-only change.';
           noReasonCode = 'llm_downgrade_micro_ui';
-          console.log('  🔻 Downgrade → NO (micro UI-only change)');
+          if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (micro UI-only change)');
         } else if (isRegressionRestore(prAnalysis)) {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative downgrade: regression/restore to expected behavior.';
           noReasonCode = 'llm_downgrade_regression_restore';
-          console.log('  🔻 Downgrade → NO (restore to expected behavior)');
+          if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (restore to expected behavior)');
         }
       }
 
@@ -844,7 +857,7 @@ async function main() {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Section-heavy target without anchor in conservative mode.';
           noReasonCode = 'llm_downgrade_missing_anchor_section_heavy';
-          console.log('  🔻 Downgrade → NO (section-heavy page requires anchor)');
+          if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (section-heavy page requires anchor)');
         }
       }
     }
@@ -857,23 +870,25 @@ async function main() {
           claudeSuggestions = { ...claudeSuggestions, needsDocs: 'no' };
           downgradeNote = 'Conservative guard: bug fix without strong docs signals.';
           noReasonCode = 'conservative_guard_no_strong_signals';
-          console.log('  🔻 Downgrade → NO (conservative guard: bug without strong signals)');
+          if (!OPTIONS.quiet) console.log('  🔻 Downgrade → NO (conservative guard: bug without strong signals)');
         }
       }
 
       // Final per-PR log line for decision provenance
       // Final per-PR log line for decision provenance
       const provenance = runLLM ? 'llm' : 'heuristic';
-      if (runLLM) {
-        console.log('  🤝 Decision provenance: LLM assisted');
-        if (llmInitial && llmInitial.verdict) {
-          console.log(`  🧪 LLM initial: ${String(llmInitial.verdict).toUpperCase()}`);
+      if (!OPTIONS.quiet) {
+        if (runLLM) {
+          console.log('  🤝 Decision provenance: LLM assisted');
+          if (llmInitial && llmInitial.verdict) {
+            console.log(`  🧪 LLM initial: ${String(llmInitial.verdict).toUpperCase()}`);
+          }
+        } else {
+          console.log('  🧭 Decision provenance: Heuristic only');
         }
-      } else {
-        console.log('  🧭 Decision provenance: Heuristic only');
       }
 
-      if (downgradeNote) {
+      if (downgradeNote && !OPTIONS.quiet) {
         console.log(`  📝 Downgrade note: ${downgradeNote}`);
       }
 
@@ -881,7 +896,9 @@ async function main() {
       if (OPTIONS.strict === 'conservative' && finalVerdict === 'maybe') finalVerdict = 'no';
       const verdictUpper = String(finalVerdict).toUpperCase();
       const verdictIcon = finalVerdict === 'yes' ? '✅' : finalVerdict === 'no' ? '❌' : '⚠️';
-      console.log(`  ${verdictIcon} Final verdict: ${verdictUpper}`);
+      if (!OPTIONS.quiet) {
+        console.log(`  ${verdictIcon} Final verdict: ${verdictUpper}`);
+      }
 
       analyses.push({
         ...prAnalysis,
@@ -894,9 +911,21 @@ async function main() {
         llmInitial,
       });
       
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Render quiet progress
+      processed++;
+      if (OPTIONS.quiet) {
+        const total = totalPRs;
+        const pct = Math.floor((processed / total) * 100);
+        const barWidth = 20;
+        const filled = Math.floor((processed / total) * barWidth);
+        const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
+        // Carriage return to update in place
+        process.stdout.write(`\r[${bar}] ${processed}/${total} ${pct}%`);
+      }
+      await new Promise(resolve => setTimeout(resolve, 200));
     }
     
+    if (OPTIONS.quiet) process.stdout.write('\n');
     console.log(`\n✅ Analysis complete!`);
     const verdictOf = (a) => (a.claudeSuggestions && a.claudeSuggestions.needsDocs) || (a.impact && a.impact.verdict) || 'maybe';
     const yesCount = analyses.filter(a => verdictOf(a) === 'yes').length;

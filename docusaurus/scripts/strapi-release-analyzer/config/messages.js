@@ -10,10 +10,10 @@
  *   missing, or to show usage and helpful hints.
  */
 
-export const USAGE = '❌ Usage: node index.js <github-release-url> [--use-cache] [--cache-dir=PATH] [--limit=N-for-LLM] [--no-llm-call] [--strict=aggressive|balanced|conservative] [--model=NAME]'
+export const USAGE = '❌ Usage: node index.js <github-release-url> [--use-cache] [--cache-dir=PATH] [--limit=N-for-LLM] [--no-llm-call] [--strict=aggressive|balanced|conservative] [--model=NAME] [--quiet]'
 export const USAGE_DEFAULTS = 'Defaults: fresh run (no cache reads) and refresh writes. Use --use-cache to enable reading existing cache and skip refresh.'
 export const USAGE_EXAMPLE = 'Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive'
-export const USAGE_HINT = 'Note: All PRs are screened heuristically; --limit caps only LLM calls. Use --limit=0 for heuristics only (no ANTHROPIC_API_KEY required).'
+export const USAGE_HINT = 'Note: All PRs are screened heuristically; --limit caps only LLM calls. Use --limit=0 (or --no-llm-call) for heuristics only (no ANTHROPIC_API_KEY required). Use --quiet to show a compact progress indicator only.'
 
 export const WARN_NO_GITHUB_TOKEN = '⚠️  GITHUB_TOKEN not set — proceeding unauthenticated (lower rate limits)'
 
