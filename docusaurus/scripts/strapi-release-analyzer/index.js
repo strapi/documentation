@@ -186,6 +186,10 @@ function parseArgs(argv) {
       const n = parseInt(arg.split('=')[1], 10);
       if (!Number.isNaN(n) && n > 0) OPTIONS.limit = n;
     }
+    if (arg === '--no-llm-call') {
+      // Explicit flag to disable any model calls, equivalent to --limit=0
+      OPTIONS.limit = 0;
+    }
     if (arg.startsWith('--strict=')) {
       const v = arg.split('=')[1];
       if (['aggressive', 'balanced', 'conservative'].includes(v)) OPTIONS.strict = v;
@@ -1103,7 +1107,7 @@ async function main() {
   const { releaseUrl } = parseArgs(rawArgs);
 
   if (!releaseUrl) {
-    console.error('❌ Usage: node index.js <github-release-url> [--use-cache] [--cache-dir=PATH] [--limit=N-for-LLM] [--strict=aggressive|balanced|conservative] [--model=NAME]');
+    console.error('❌ Usage: node index.js <github-release-url> [--use-cache] [--cache-dir=PATH] [--limit=N-for-LLM] [--no-llm-call] [--strict=aggressive|balanced|conservative] [--model=NAME]');
     console.error('Defaults: fresh run (no cache reads) and refresh writes. Use --use-cache to enable reading existing cache and skip refresh.');
     console.error('Example: node index.js https://github.com/strapi/strapi/releases/tag/v5.29.0 --strict=aggressive');
     console.error('Note: All PRs are screened heuristically; --limit caps only LLM calls. Use --limit=0 for heuristics only (no ANTHROPIC_API_KEY required).');
