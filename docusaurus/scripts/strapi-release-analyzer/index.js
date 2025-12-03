@@ -502,7 +502,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
     yesList.forEach(a => {
       const s = a.claudeSuggestions || {};
       const summary = (s.summary || a.summary || '').trim();
-      markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
+      markdown += `### PR #${a.number} — [${a.title}](${a.url})\n\n`;
       if (summary) markdown += `  \n  📝 Summary: ${summary}\n`;
       if (s.rationale) markdown += `  \n  🧠 Decision rationale: ${s.rationale}\n`;
       if (a.downgradeNote) markdown += `  \n  Note: ${a.downgradeNote}\n`;
@@ -525,7 +525,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
     noList.forEach(a => {
       const s = a.claudeSuggestions || {};
       const summary = (s.summary || a.summary || '').trim();
-      markdown += `- PR #${a.number} — [${a.title}](${a.url})\n`;
+      markdown += `### PR #${a.number} — [${a.title}](${a.url})\n\n`;
       if (summary) markdown += `  \n  📝 Summary: ${summary}\n`;
       const decisionType = a.provenance === 'llm' ? 'LLM assisted' : 'Heuristic (metadata-based, no LLM call)';
       markdown += `  \n  🧭 Decision type: ${decisionType}\n`;
@@ -632,11 +632,11 @@ async function main() {
   let effectiveReleaseUrl = releaseUrl;
   if (!effectiveReleaseUrl) {
     try {
-      if (!OPTIONS.quiet) console.log('🔎 No release URL provided — fetching latest release from strapi/strapi');
+      console.log('🔎 No release URL provided — fetching latest release from strapi/strapi');
       const { data: latest } = await octokit.repos.getLatestRelease({ owner: STRAPI_REPO_OWNER, repo: STRAPI_REPO_NAME });
       const latestTag = latest.tag_name;
       effectiveReleaseUrl = `https://github.com/${STRAPI_REPO_OWNER}/${STRAPI_REPO_NAME}/releases/tag/${latestTag}`;
-      if (!OPTIONS.quiet) console.log(`📌 Using latest release: ${latestTag}`);
+      console.log(`📌 Using latest release: ${latestTag}`);
     } catch (e) {
       console.error(USAGE);
       console.error(USAGE_DEFAULTS);
