@@ -10,6 +10,7 @@ import { DOCUMENTATION_SECTIONS } from './config/constants.js';
 import { REASONS } from './config/reasons.js';
 import { isMicroUiChange, hasStrongDocsSignals, isRegressionRestore, isFeatureParityRestoration, isUploadRestriction } from './utils/detectors.js';
 import { tokenize, collectHighSignalTokens } from './utils/tokens.js';
+import { resolvePageForTarget, suggestCandidateDocs } from './utils/pages.js';
 import { classifyImpact, categorizePRByDocumentation } from './utils/classify.js';
 
 config();
@@ -575,64 +576,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
 // token helpers moved to ./utils/tokens.js
 
 // Resolve the best matching docs page for a target path using the full llms-full index
-function resolvePageForTarget(llmsIndex, candidates, targetPath) {
-  if (!llmsIndex || !Array.isArray(llmsIndex.pages) || llmsIndex.pages.length === 0) return null;
-  const wanted = String(targetPath || '').toLowerCase();
-  const slug = path.basename(wanted).replace(/\.mdx?$/i, '').toLowerCase();
-
-  // 1) Exact slug match via bySlug
-  if (slug && llmsIndex.bySlug && llmsIndex.bySlug.has(slug)) {
-    return llmsIndex.bySlug.get(slug);
-  }
-
-  // 2) Any candidate URL that contains the slug
-  if (Array.isArray(candidates) && candidates.length > 0 && slug) {
-    const hit = candidates.find(p => p.url && p.url.toLowerCase().includes(slug));
-    if (hit) return hit;
-  }
-
-  // 3) Score all pages in the index by slug/title/url similarity
-  const slugTokens = tokenize(slug);
-  let best = null;
-  let bestScore = 0;
-  for (const p of llmsIndex.pages) {
-    const title = (p.title || '').toLowerCase();
-    const url = (p.url || '').toLowerCase();
-    let score = 0;
-    if (slug && title.includes(slug)) score += 5;
-    if (slug && url.includes(slug)) score += 4;
-    // token overlap gives smaller weight
-    const titleTokens = tokenize(title);
-    const urlTokens = tokenize(url);
-    for (const t of slugTokens) {
-      if (titleTokens.includes(t)) score += 2;
-      if (urlTokens.includes(t)) score += 1;
-    }
-    if (score > bestScore) { bestScore = score; best = p; }
-  }
-  return best || (Array.isArray(candidates) && candidates[0]) || null;
-}
-
-function suggestCandidateDocs(llmsIndex, prAnalysis, limit = 5) {
-  if (!llmsIndex || !llmsIndex.pages || llmsIndex.pages.length === 0) return [];
-  const hay = [];
-  hay.push(...tokenize(prAnalysis.title));
-  for (const f of prAnalysis.files || []) hay.push(...tokenize(f.filename));
-  const bag = new Map();
-  for (const t of hay) bag.set(t, (bag.get(t) || 0) + 1);
-
-  const scored = llmsIndex.pages.map(p => {
-    const titleTokens = tokenize(p.title);
-    const urlTokens = tokenize(p.url || '');
-    let score = 0;
-    for (const t of titleTokens) score += (bag.get(t) || 0) * 3; // favor title hits
-    for (const t of urlTokens) score += (bag.get(t) || 0);
-    return { page: p, score };
-  });
-
-  scored.sort((a, b) => b.score - a.score);
-  return scored.filter(s => s.score > 0).slice(0, limit).map(s => s.page);
-}
+// page helpers moved to ./utils/pages.js
 
 function topDirs(filenames, max = 3) {
   const counts = new Map();
