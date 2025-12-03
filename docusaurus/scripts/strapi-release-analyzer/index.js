@@ -8,6 +8,7 @@ import path from 'path';
 import { config } from 'dotenv';
 import { DOCUMENTATION_SECTIONS, SPECIFIC_AREA_PATTERNS, YES_PATH_PATTERNS, FEATURE_HINTS, GENERIC_DROP_TOKENS } from './config/constants.js';
 import { REASONS } from './config/reasons.js';
+import { isMicroUiChange, hasStrongDocsSignals, isRegressionRestore, isFeatureParityRestoration, isUploadRestriction } from './utils/detectors.js';
 
 config();
 
@@ -877,45 +878,7 @@ function hasStrongDocsSignals(prAnalysis) {
 }
 
 // Detect regression/restore-to-expected behavior changes
-function isRegressionRestore(prAnalysis) {
-  const t = (prAnalysis.title || '').toLowerCase();
-  const b = (prAnalysis.body || '').toLowerCase();
-  const text = `${t} ${b}`;
-  return /regression|restore|restored|revert|reverted|align with|parity with|back to expected/.test(text);
-}
-
-// Exception: feature parity/migration restorations for configurable features can be docs-worthy
-function isFeatureParityRestoration(prAnalysis) {
-  const t = (prAnalysis.title || '').toLowerCase();
-  const b = (prAnalysis.body || '').toLowerCase();
-  const text = `${t} ${b}`;
-  const parityHit = /parity\s+with\s+v4|v4\s*->?\s*v5|v4\s*to\s*v5|restored?\s+(field|option|setting)|missing\s+(field|option|setting)\s+restored/.test(text);
-  if (!parityHit) return false;
-  const files = prAnalysis.files || [];
-  // Look for Content Manager / Content-Type Builder config areas
-  const configArea = files.some(f => /(content[-_]?manager|content[-_]?type[-_]?builder|admin|server|config)/i.test(f.filename));
-  return configArea;
-}
-
-// Upload restriction: treat MIME/file-type allow/deny rules as docs‑worthy security/config
-function isUploadRestriction(prAnalysis) {
-  const title = (prAnalysis.title || '').toLowerCase();
-  const body = (prAnalysis.body || '').toLowerCase();
-  const text = `${title} ${body}`;
-  const mentionsUpload = /(upload|media)\b/.test(text);
-  const mentionsTypes = /(allowedtypes|deniedtypes|mime|mimetype|content[- ]?type|file\s*type)/i.test(text);
-  if (mentionsUpload && mentionsTypes) return true;
-  const files = prAnalysis.files || [];
-  const inUploadArea = files.some(f => /upload/i.test(f.filename));
-  if (!inUploadArea) return false;
-  const additions = [];
-  for (const f of files) {
-    const patch = String(f.patch || '');
-    const lines = patch.split(/\r?\n/);
-    for (const line of lines) if (line.startsWith('+')) additions.push(line.slice(1));
-  }
-  return additions.some(l => /(allowedTypes|deniedTypes|mime|mimetype|content[- ]?type)/i.test(l));
-}
+// detectors moved to ./utils/detectors.js
 
 // (duplicate hasStrongDocsSignals removed; stricter version defined earlier)
 
