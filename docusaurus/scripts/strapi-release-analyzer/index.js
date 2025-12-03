@@ -2,6 +2,7 @@
 
 import { Octokit } from '@octokit/rest';
 import Anthropic from '@anthropic-ai/sdk';
+import { buildClaudePrompt } from './prompts/claude.js';
 import fs from 'fs/promises';
 import path from 'path';
 import { config } from 'dotenv';
@@ -394,116 +395,14 @@ async function generateDocSuggestionsWithClaude(prAnalysis) {
       ? diffSummary.slice(0, 100000) + '\n\n... (diff truncated due to size)'
       : diffSummary;
 
-  // Build candidate grounding block from llms-full index
   const candidates = Array.isArray(prAnalysis._docsCandidates) ? prAnalysis._docsCandidates : [];
-  const candidatesBlock = candidates.length
-    ? `## Candidate Documentation Pages (from llms-full index)\n\n` +
-      candidates.map((p, i) => {
-        const anchors = Array.isArray(p.anchors) && p.anchors.length ? p.anchors.slice(0, 8).join(', ') : '—';
-        return `- [${i + 1}] Title: ${p.title}\n  URL: ${p.url || '(missing)'}\n  Anchors: ${anchors}`;
-      }).join('\n') + '\n\n'
-    : '';
-
-  const signalsBlock = `## Signals\n\n- Heuristic summary: ${prAnalysis._summary || 'N/A'}\n- Heuristic impact: ${(prAnalysis._impact && prAnalysis._impact.verdict) || 'unknown'} — ${(prAnalysis._impact && prAnalysis._impact.reason) || ''}\n\n`;
-
-  const prompt = `You are a technical documentation analyst for Strapi CMS. Your expertise is in identifying documentation gaps and suggesting precise updates.
-
-Analyze this pull request and provide specific, actionable documentation update suggestions.
-
-## PR Information
-- **Title**: ${prAnalysis.title}
-- **Category**: ${prAnalysis.category}
-- **Description**: ${prAnalysis.body.substring(0, 1000)}
-- **URL**: ${prAnalysis.url}
-
-## Code Changes (Diff)
-
-${truncatedDiff}
-
-${signalsBlock}
-${candidatesBlock}
-
-## Your Task
-
-**Important**: Strapi documentation structure:
-- The old /user-docs and /dev-docs folders have been replaced
-- Current structure: /cms for CMS documentation, /cloud for Cloud documentation
-- Features are now in /cms/features/ (e.g., content-manager, media-library, internationalization)
-- API docs are in /cms/api/
-- Configurations are in /cms/configurations/
-
-Analyze the changes and determine:
-1. Does this PR affect user-facing functionality, APIs, or configuration?
-2. What parts of the Strapi documentation need updates?
-3. What specific content should be added, updated, or clarified?
-
-Respond with a JSON object in this minimal shape (JSON only, no markdown):
-
-{
-  "summary": "≤200 chars plain text what/why",
-  "needsDocs": "yes" | "no" | "maybe",
-  "docsWorthy": true | false,
-  "newPage": true | false,
-  "rationale": "1–2 sentence justification",
-  "targets": [
-    { "path": "docs/cms/...md", "anchor": "optional-section-anchor" }
-  ]
-}
-
-## Guidelines
-
-1. **Priority Determination**: 
-   - **HIGH**: New features, breaking changes, API modifications, new configuration options, significant behavior changes
-   - **MEDIUM**: Important bug fixes affecting user workflows, UI/UX changes, plugin modifications, i18n changes
-   - **LOW**: Minor fixes, cosmetic changes, internal refactoring with minimal user impact
-
-2. **Affected Areas**: Be specific. Examples:
-   - "Admin Panel - Content Manager"
-   - "API Reference - Upload Plugin"
-   - "User Guide - Internationalization"
-   - "Configuration - Media Library Settings"
-   - "Developer Guide - Plugin Development"
-
-3. **File Paths**: Use the current Strapi documentation structure:
-   - CMS docs: "docs/cms/[topic]/[page].md" (e.g., "docs/cms/features/content-manager.md")
-   - Cloud docs: "docs/cloud/[topic]/[page].md" (e.g., "docs/cloud/getting-started/deployment.md")
-   - API reference: "docs/cms/api/[type]/[endpoint].md"
-   - Configuration: "docs/cms/configurations/[topic].md"
-   - Features: "docs/cms/features/[feature].md"
-
-4. **Suggested Content**: 
-   - Write complete, ready-to-use markdown content
-   - Include code examples where appropriate
-   - Use proper markdown formatting (headers, code blocks, lists)
-   - Be concise but comprehensive
-   - Match Strapi's documentation tone (clear, friendly, technical)
-
-5. **When NOT to suggest changes**:
-   - Internal code refactoring with no external impact
-   - Test file changes only
-   - CI/CD pipeline changes
-   - Minor typo fixes in code comments
-   - Changes to development tooling
-
-6. **Docs‑worthiness rubric**:
-   - Answer needsDocs: "yes" only if at least one applies:
-     - Breaking change or deprecation
-     - New capability, setting, endpoint, or configuration key
-     - Persistent workflow or UX change (not cosmetic)
-     - New concept that requires explanation
-   - Otherwise, answer needsDocs: "no" for:
-     - Cosmetic/UI-only fixes (spacing, margins, padding, alignment, borders, icons, tooltips, translations)
-     - Restoring expected behavior or regression fixes
-     - Internal refactors without external impact
-
-7. **Grounding and targeting**:
-   - Prefer targets among the "Candidate Documentation Pages" when applicable.
-   - Include an anchor from the page's anchors list when relevant.
-   - Keep the response JSON-only (no markdown outside JSON).
-   - If you answer "yes", you must include at least one concrete target path under docs/.../*.md. If no existing page fits, set \`newPage: true\`.
-   - If you cannot provide targets and it is not a genuinely new page, answer needsDocs: "no".
-
-Respond ONLY with valid JSON, no markdown formatting, no additional text.`;
+  const prompt = buildClaudePrompt({
+    prAnalysis,
+    truncatedDiff,
+    candidates,
+    summary: prAnalysis._summary,
+    impact: prAnalysis._impact,
+  });
 
   try {
     const message = await anthropic.messages.create({
@@ -668,9 +567,15 @@ function generateMarkdownReport(releaseInfo, analyses) {
   const timestamp = new Date().toISOString().split('T')[0];
 
   const verdictOf = (a) => (a.claudeSuggestions && a.claudeSuggestions.needsDocs) || (a.impact && a.impact.verdict) || 'maybe';
-  const yesList = analyses.filter(a => verdictOf(a) === 'yes');
-  const noList = analyses.filter(a => verdictOf(a) === 'no');
-  const maybeList = analyses.filter(a => verdictOf(a) === 'maybe');
+  // Under conservative mode, collapse any residual "maybe" into "no"
+  const collapseMaybe = OPTIONS.strict === 'conservative';
+  const normalizedVerdict = (a) => {
+    const v = verdictOf(a);
+    return collapseMaybe && v === 'maybe' ? 'no' : v;
+  };
+  const yesList = analyses.filter(a => normalizedVerdict(a) === 'yes');
+  const noList = analyses.filter(a => normalizedVerdict(a) === 'no');
+  const maybeList = collapseMaybe ? [] : analyses.filter(a => normalizedVerdict(a) === 'maybe');
 
   let markdown = `# Documentation Impact Report — ${releaseInfo.tag}\n\n`;
   markdown += `Generated on: ${timestamp}\n\n`;
@@ -747,7 +652,7 @@ function generateMarkdownReport(releaseInfo, analyses) {
     markdown += `\n`;
   }
 
-  // Maybe section (only if remains after LLM)
+  // Maybe section (suppressed in conservative mode)
   if (maybeList.length > 0) {
     markdown += `## Uncertain (Maybe)\n\n`;
     maybeList.forEach(a => {
@@ -1347,7 +1252,8 @@ async function main() {
         console.log(`  📝 Downgrade note: ${downgradeNote}`);
       }
 
-      const finalVerdict = (claudeSuggestions && claudeSuggestions.needsDocs) || (impact && impact.verdict) || 'maybe';
+      let finalVerdict = (claudeSuggestions && claudeSuggestions.needsDocs) || (impact && impact.verdict) || 'maybe';
+      if (OPTIONS.strict === 'conservative' && finalVerdict === 'maybe') finalVerdict = 'no';
       const verdictUpper = String(finalVerdict).toUpperCase();
       const verdictIcon = finalVerdict === 'yes' ? '✅' : finalVerdict === 'no' ? '❌' : '⚠️';
       console.log(`  ${verdictIcon} Final verdict: ${verdictUpper}`);
