@@ -10,7 +10,7 @@ The script is a Node program and does not require additional dependencies beyond
 
 `node docusaurus/scripts/strapi-release-analyzer/index.js <github-release-url>`
 
-By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0`.
+By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag.
 
 The LLM mode requires `ANTHROPIC_API_KEY` in the environment. The GitHub API benefits from `GITHUB_TOKEN` to avoid rate limits but can work unauthenticated at lower throughput.
 
@@ -42,4 +42,3 @@ Decision logic is layered. `classifyImpact()` gives an early coarse signal. `has
 ## Troubleshooting and tuning
 
 If the report contains too many “Yes” entries, consider tightening strong‑signal detection or increasing the threshold of the coverage cross‑check. If it contains too many “No” entries, extend strong signals for the affected domain (for example, add another security token or a new configuration keyword) or add a narrow exception similar to the upload restriction rule. When you only need a feel for the distribution without spending tokens, run with `--limit=0`. When you are iterating on the heuristics, leave the default fresh run in place so you always see current results; re‑enable caching with `--use-cache` when you want stable, repeatable comparisons.
-
