@@ -40,18 +40,17 @@ There are also explicit exceptions. Feature parity restorations for configurable
 
 ## Internals you might care about
 
-The code is organized around a handful of small functions:
-- `parseReleaseNotes()` reads a release and extracts PR numbers.
-- `analyzePR()` fetches each PR and returns a normalized structure with titles, bodies and a file list including patches.
-- `readLlmsFullIndex()` loads `llms-full.txt` and builds a searchable index that powers both the LLM grounding and the coverage cross‑check.
-- `generateDocSuggestionsWithClaude()` builds a compact prompt and parses the minimal JSON contract.
+The code is modular. The entrypoint orchestrates the run, while small modules handle specialized tasks:
 
-Decision logic is layered:
-- `classifyImpact()` gives an early coarse signal.
-- `hasStrongDocsSignals()` focuses on the handful of areas that most often require documentation (config, APIs, schemas, security and upload rules).
-- `isMicroUiChange()` and `isRegressionRestore()` recognize common “No” buckets.
-- `isFeatureParityRestoration()` and `isUploadRestriction()` are targeted exceptions that reopen the door to “Yes”.
-- The main loop in `main()` applies pre‑LLM gates, decides whether to call the LLM, and then applies post‑LLM guards before writing the report.
+- Prompts: `prompts/claude.js` builds the grounded LLM prompt used for suggestions.
+- Config: `config/constants.js` centralizes tunable patterns and keywords; `config/reasons.js` maps internal reason codes to concise text; `config/messages.js` holds CLI usage and error strings.
+- Utils:
+  - `utils/detectors.js` contains the routing/downgrade detectors (`hasStrongDocsSignals`, `isMicroUiChange`, `isRegressionRestore`, `isFeatureParityRestoration`, `isUploadRestriction`).
+  - `utils/tokens.js` provides `tokenize` and `collectHighSignalTokens` used for lightweight similarity and coverage checks.
+  - `utils/classify.js` implements `classifyImpact` and `categorizePRByDocumentation`.
+  - `utils/pages.js` resolves suggested target pages from `llms-full.txt` and proposes candidates.
+
+The main loop in `index.js` applies pre‑LLM gates, decides whether to call the LLM, and then applies post‑LLM guards before writing the report. Strictness is set to conservative by default, which also collapses any residual “Maybe” outcomes into “No” in both the terminal and the Markdown report.
 
 ## Troubleshooting and tuning
 
