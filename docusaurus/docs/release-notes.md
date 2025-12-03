@@ -48,8 +48,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 - [Lifecycle functions rework: structure change, more details & examples](https://github.com/strapi/documentation/pull/2878)
 - [Tip about nested page hierarchies in Content-type Builder documentation](https://github.com/strapi/documentation/pull/2876)
 - [More details regarding image uploading](https://github.com/strapi/documentation/pull/2875)
-
-#### Repository
 - [Add example to Theme extension documentation](https://github.com/strapi/documentation/pull/2850)
 - [Add TypeScript example and deliverability tip to Email documentation](https://github.com/strapi/documentation/pull/2839)
 
