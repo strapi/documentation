@@ -8,6 +8,7 @@ tags:
 - Documents
 - documentId
 - Document Service API
+toc_max_heading_level: 4
 ---
 
 # Document Service API
@@ -44,13 +45,41 @@ Additional information on how to migrate from the Entity Service API to the Docu
 Relations can also be connected, disconnected, and set through the Document Service API, just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
 :::
 
-## `findOne()`
+## Document objects
+
+Document methods return a document object or a list of document objects, which represent a version of a content entry grouped under a stable `documentId`. Returned objects typically include:
+
+- `documentId`: Persistent identifier for the entry across locales and draft/published versions.
+- `id`: Database identifier for the specific locale/version record.
+- model fields: All fields defined in the content-type schema. Relations, components, and dynamic zones are not populated unless you opt in with `populate` (see [Populating fields](/cms/api/document-service/populate)) or limit fields with `fields` (see [Selecting fields](/cms/api/document-service/fields)).
+- metadata: `publishedAt`, `createdAt`, `updatedAt`, and `createdBy`/`updatedBy` when available.
+
+Optionally, document objects can also include a `status` and `locale` property if [Draft & Publish](/cms/features/draft-and-publish) and [Internationalization](/cms/features/internationalization) are enabled for the content-type.
+
+## Method overview
+
+Each section below documents the parameters and examples for a specific method:
+
+| Method | Purpose |
+| --- | --- |
+| [`findOne()`](#findone) | Fetch a document by `documentId`, optionally scoping to a locale or status. |
+| [`findFirst()`](#findfirst) | Return the first document that matches filters. |
+| [`findMany()`](#findmany) | List documents with filters, sorting, and pagination. |
+| [`create()`](#create) | Create a document, optionally targeting a locale. |
+| [`update()`](#update) | Update a document by `documentId`. |
+| [`delete()`](#delete) | Delete a document or a specific locale version. |
+| [`publish()`](#publish) | Publish the draft version of a document. |
+| [`unpublish()`](#unpublish) | Move a published document back to draft. |
+| [`discardDraft()`](#discarddraft) | Drop draft data and keep only the published version. |
+| [`count()`](#count) | Count how many documents match the parameters. |
+
+### `findOne()`
 
 Find a document matching the passed `documentId` and parameters.
 
 Syntax: `findOne(parameters: Params) => Document`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -60,7 +89,7 @@ Syntax: `findOne(parameters: Params) => Document`
 | [`fields`](/cms/api/document-service/fields#findone)   | [Select fields](/cms/api/document-service/fields#findone) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Example
+#### Example
 
 If only a `documentId` is passed without any other parameters, `findOne()` returns the draft version of a document in the default locale:
 
@@ -94,13 +123,13 @@ await strapi.documents('api::restaurant.restaurant').findOne({
 
 The `findOne()` method returns the matching document if found, otherwise returns `null`.
 
-## `findFirst()`
+### `findFirst()`
 
 Find the first document matching the parameters.
 
 Syntax:  `findFirst(parameters: Params) => Document`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -110,11 +139,11 @@ Syntax:  `findFirst(parameters: Params) => Document`
 | [`fields`](/cms/api/document-service/fields#findfirst)   | [Select fields](/cms/api/document-service/fields#findfirst) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Examples
+#### Examples
 
 <br />
 
-#### Generic example
+##### Generic example
 
 By default, `findFirst()` returns the draft version, in the default locale, of the first document for the passed unique identifier (collection type id or single type id):
 
@@ -144,7 +173,7 @@ await strapi.documents('api::restaurant.restaurant').findFirst()
 
 </ApiCall>
 
-#### Find the first document matching parameters
+##### Find the first document matching parameters
 
 Pass some parameters to `findFirst()` to return the first document matching them.
 
@@ -184,13 +213,13 @@ await strapi.documents('api::restaurant.restaurant').findFirst(
 
 </ApiCall>
 
-## `findMany()`
+### `findMany()`
 
 Find documents matching the parameters.
 
 Syntax: `findMany(parameters: Params) => Document[]`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -202,11 +231,11 @@ Syntax: `findMany(parameters: Params) => Document[]`
 | [`pagination`](/cms/api/document-service/sort-pagination#pagination) | [Paginate](/cms/api/document-service/sort-pagination#pagination) results |
 | [`sort`](/cms/api/document-service/sort-pagination#sort) | [Sort](/cms/api/document-service/sort-pagination#sort) results | | | 
 
-### Examples
+#### Examples
 
 <br />
 
-#### Generic example
+##### Generic example
 
 When no parameter is passed, `findMany()` returns the draft version in the default locale for each document:
 
@@ -245,7 +274,7 @@ await strapi.documents('api::restaurant.restaurant').findMany()
 
 </ApiCall>
 
-#### Find documents matching parameters
+##### Find documents matching parameters
 
 Available filters are detailed in the [filters](/cms/api/document-service/filters) page of the Document Service API reference.
 
@@ -326,7 +355,7 @@ await documents('api:restaurant.restaurant').findMany({ locale: ['en', 'it'] } )
 
 </Request> -->
 
-## `create()`
+### `create()`
 
 Creates a drafted document and returns it.
 
@@ -334,7 +363,7 @@ Pass fields for the content to create in a `data` object.
 
 Syntax: `create(parameters: Params) => Document`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -343,7 +372,7 @@ Syntax: `create(parameters: Params) => Document`
 | [`status`](/cms/api/document-service/status#create) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Can be set to `'published'` to automatically publish the draft version of a document while creating it  | -| `'published'` |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Example
+#### Example
 
 If no `locale` parameter is passed, `create()` creates the draft version of the document for the default locale:
 
@@ -379,13 +408,13 @@ await strapi.documents('api::restaurant.restaurant').create({
 If the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled on the content-type, you can automatically publish a document while creating it (see [`status` documentation](/cms/api/document-service/status#create)).
 :::
 
-## `update()`
+### `update()`
 
 Updates document versions and returns them.
 
 Syntax: `update(parameters: Params) => Promise<Document>`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -408,7 +437,7 @@ To update a document and publish the new version right away, you can:
 It's not recommended to update repeatable components with the Document Service API (see the related [breaking change entry](/cms/migration/v4-to-v5/breaking-changes/do-not-update-repeatable-components-with-document-service-api.md) for more details).
 :::
 
-### Example
+#### Example
 
 If no `locale` parameter is passed, `update()` updates the document for the default locale:
 
@@ -449,13 +478,13 @@ await strapi.documents('api::restaurant.restaurant').update({
 await documents('api:restaurant.restaurant').update(documentId, {locale: ['es', 'en'], data: {name: "updatedName" }}
 ``` -->
 
-## `delete()`
+### `delete()`
 
 Deletes one document, or a specific locale of it.
 
 Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -465,7 +494,7 @@ Syntax: `delete(parameters: Params): Promise<{ documentId: ID, entries: Number }
 | [`fields`](/cms/api/document-service/fields#delete)   | [Select fields](/cms/api/document-service/fields#delete) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Example
+#### Example
 
 If no `locale` parameter is passed, `delete()` only deletes the default locale version of a document. This deletes both the draft and published versions:
 
@@ -516,7 +545,7 @@ await strapi.documents('api::restaurant.restaurant').delete(
 
 </Request> -->
 
-## `publish()`
+### `publish()`
 
 Publishes one or multiple locales of a document.
 
@@ -524,7 +553,7 @@ This method is only available if [Draft & Publish](/cms/features/draft-and-publi
 
 Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -534,7 +563,7 @@ Syntax: `publish(parameters: Params): Promise<{ documentId: ID, entries: Number 
 | [`fields`](/cms/api/document-service/fields#publish)   | [Select fields](/cms/api/document-service/fields#publish) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Example
+#### Example
 
 If no `locale` parameter is passed, `publish()` only publishes the default locale version of the document:
 
@@ -581,7 +610,7 @@ await strapi.documents('api::restaurant.restaurant').publish(
 );
 ``` -->
 
-## `unpublish()`
+### `unpublish()`
 
 Unpublishes one or all locale versions of a document, and returns how many locale versions were unpublished.
 
@@ -589,7 +618,7 @@ This method is only available if [Draft & Publish](/cms/features/draft-and-publi
 
 Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -599,7 +628,7 @@ Syntax: `unpublish(parameters: Params): Promise<{ documentId: ID, entries: Numbe
 | [`fields`](/cms/api/document-service/fields#unpublish)   | [Select fields](/cms/api/document-service/fields#unpublish) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Example
+#### Example
 
 If no `locale` parameter is passed, `unpublish()` only unpublishes the default locale version of the document:
 
@@ -636,7 +665,7 @@ await strapi.documents('api::restaurant.restaurant').unpublish({
 
 </ApiCall>
 
-## `discardDraft()`
+### `discardDraft()`
 
 Discards draft data and overrides it with the published version.
 
@@ -644,7 +673,7 @@ This method is only available if [Draft & Publish](/cms/features/draft-and-publi
 
 Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Number }>`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -654,7 +683,7 @@ Syntax: `discardDraft(parameters: Params): Promise<{ documentId: ID, entries: Nu
 | [`fields`](/cms/api/document-service/fields#discarddraft)   | [Select fields](/cms/api/document-service/fields#discarddraft) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
-### Example
+#### Example
 
 If no `locale` parameter is passed, `discardDraft()` discards draft data and overrides it with the published version only for the default locale:
 
@@ -691,13 +720,13 @@ strapi.documents.discardDraft({
 
 </ApiCall>
 
-## `count()`
+### `count()`
 
 Count the number of documents that match the provided parameters.
 
 Syntax: `count(parameters: Params) => number`
 
-### Parameters
+#### Parameters
 
 | Parameter | Description | Default | Type |
 |-----------|-------------|---------|------|
@@ -711,11 +740,11 @@ Since published documents necessarily also have a draft counterpart, a published
 This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
 :::
 
-### Examples
+#### Examples
 
 <br />
 
-#### Generic example
+##### Generic example
 
 If no parameter is passed, the `count()` method the total number of documents for the default locale:
 <ApiCall>
@@ -730,7 +759,7 @@ await strapi.documents('api::restaurant.restaurant').count()
 
 </ApiCall>
 
-#### Count published documents
+##### Count published documents
 
 To count only published documents, pass `status: 'published'` along with other parameters to the `count()` method.
 
@@ -744,7 +773,7 @@ strapi.documents('api::restaurant.restaurant').count({ status: 'published' })
 
 </Request>
 
-#### Count documents with filters
+##### Count documents with filters
 
 Any [filters](/cms/api/document-service/filters) can be passed to the `count()` method.
 
