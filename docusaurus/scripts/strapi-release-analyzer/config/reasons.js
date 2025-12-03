@@ -1,4 +1,17 @@
 // Map of internal noReasonCode → concise human-readable rationale
+//
+// What this file is for
+// - Keep the human‑readable explanations for “No” decisions centralized.
+// - The report generator imports REASONS to render a single “🧠 Reason:” line
+//   for each non‑docs PR, merging any optional downgrade note.
+//
+// Where it’s used
+// - index.js → generateMarkdownReport() picks REASONS[a.noReasonCode]
+//   when a structured noReasonCode was recorded during analysis.
+//
+// How to extend safely
+// - Add narrowly‑scoped codes. If you need a new bucket, add it here and set
+//   a.noReasonCode at the decision point in index.js.
 
 export const REASONS = {
   heuristic_pre_no_micro_ui: 'cosmetic UI-only change detected by heuristics',
@@ -11,4 +24,3 @@ export const REASONS = {
   conservative_guard_no_strong_signals: 'bug fix without strong docs signals under conservative policy',
   llm_downgrade_bug_without_strong_signals: 'bug fix without strong config API schema migration signals under conservative policy',
 };
-

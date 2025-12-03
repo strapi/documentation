@@ -1,4 +1,30 @@
 // Centralized tunable constants and regex/pattern lists
+//
+// What this file is for
+// - Keep all tweakable keywords, regexes and section mappings in one place so
+//   we can tune heuristics without touching logic.
+// - These values are consumed by utils/* helpers and the entrypoint to classify
+//   PRs, pick candidate docs pages, and improve LLM grounding.
+//
+// Where each export is used
+// - DOCUMENTATION_SECTIONS: referenced by categorizePRByDocumentation() to label
+//   the area a PR touches (for report grouping, future routing, or analytics).
+// - SPECIFIC_AREA_PATTERNS: used inside categorizePRByDocumentation() to map
+//   common keywords/paths to a more precise section label.
+// - YES_PATH_PATTERNS: used by classifyImpact() to quickly flag user‑facing
+//   paths as docs‑relevant even when titles are vague.
+// - FEATURE_HINTS: used by collectHighSignalTokens() to boost tokens when the
+//   PR title mentions key Strapi features (helps candidate page selection and
+//   coverage checks).
+// - GENERIC_DROP_TOKENS: used by collectHighSignalTokens() to ignore generic
+//   path fragments that don’t add semantic value (e.g., src, lib, build).
+//
+// How to extend safely
+// - Prefer narrow, specific patterns to avoid false positives.
+// - For SPECIFIC_AREA_PATTERNS keys, we store regex source strings (not RegExp
+//   objects) because classify helpers compile them with the right flags.
+// - When adding a YES_PATH_PATTERNS entry, think “does touching this path almost
+//   always imply docs impact?” Keep it conservative to reduce noise.
 
 export const DOCUMENTATION_SECTIONS = {
   cms: {
@@ -76,4 +102,3 @@ export const FEATURE_HINTS = [
 ];
 
 export const GENERIC_DROP_TOKENS = new Set(['src','lib','dist','build','public','docs','packages','plugin','plugins','api','server','test','tests','ci','config']);
-
