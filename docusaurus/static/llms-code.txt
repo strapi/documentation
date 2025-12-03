@@ -16264,23 +16264,23 @@ File path: /features.js
 # Lifecycle functions
 Source: https://docs.strapi.io/cms/configurations/functions
 
-## Synchronous function
-Description: Code example from "Synchronous function"
-(Source: https://docs.strapi.io/cms/configurations/functions#synchronous-function)
+## Synchronous
+Description: Synchronous functions run logic that completes immediately without awaiting other asynchronous tasks.
+(Source: https://docs.strapi.io/cms/configurations/functions#synchronous)
 
 Language: JavaScript
 File path: ./src/index.js
 
 ```js
 module.exports = {
-  register() {
-    // some sync code
+  register({ strapi }) {
+    strapi.log.info('Registering static configuration');
   },
-  bootstrap() {
-    // some sync code
+  bootstrap({ strapi }) {
+    strapi.log.info('Bootstrap finished without awaiting tasks');
   },
-  destroy() {
-    // some sync code
+  destroy({ strapi }) {
+    strapi.log.info('Server shutdown started');
   }
 };
 ```
@@ -16291,37 +16291,279 @@ File path: ./src/index.js
 
 ```js
 export default {
-  register() {
-    // some sync code
+  register({ strapi }) {
+    strapi.log.info('Registering static configuration');
   },
-  bootstrap() {
-    // some sync code
+  bootstrap({ strapi }) {
+    strapi.log.info('Bootstrap finished without awaiting tasks');
   },
-  destroy() {
-    // some sync code
+  destroy({ strapi }) {
+    strapi.log.info('Server shutdown started');
   }
 };
 ```
 
 
-## Asynchronous function
-Description: Code example from "Asynchronous function"
-(Source: https://docs.strapi.io/cms/configurations/functions#asynchronous-function)
+## Asynchronous
+Description: Asynchronous functions use the async keyword to await tasks such as API calls or database queries before Strapi continues.
+(Source: https://docs.strapi.io/cms/configurations/functions#asynchronous)
 
 Language: JavaScript
 File path: ./src/index.js
 
 ```js
 module.exports = {
-  async register() {
-    // some async code
+  async register({ strapi }) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    strapi.log.info('Async register finished after a short delay');
   },
-  async bootstrap() {
-    // some async code
+  async bootstrap({ strapi }) {
+    const { results: articles } = await strapi
+      .documents('api::article.article')
+      .findMany({
+        filters: { publishedAt: { $notNull: true } },
+        fields: ['id'],
+      });
+    strapi.log.info(`Indexed ${articles.length} published articles`);
   },
+  async destroy({ strapi }) {
+    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
+      filters: {},
+    });
+  }
+};
+```
+
+---
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+export default {
+  async register({ strapi }) {
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    strapi.log.info('Async register finished after a short delay');
+  },
+  async bootstrap({ strapi }) {
+    const { results: articles } = await strapi
+      .documents('api::article.article')
+      .findMany({
+        filters: { publishedAt: { $notNull: true } },
+        fields: ['id'],
+      });
+    strapi.log.info(`Indexed ${articles.length} published articles`);
+  },
+  async destroy({ strapi }) {
+    await strapi.documents('api::temporary-cache.temporary-cache').deleteMany({
+      filters: {},
+    });
+  }
+};
+```
+
+
+## Returning a promise
+Description: Promise-returning functions hand back a promise so Strapi can wait for its resolution before continuing.
+(Source: https://docs.strapi.io/cms/configurations/functions#returning-a-promise)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+module.exports = {
+  register({ strapi }) {
+    return new Promise((resolve) => {
+      strapi.log.info('Registering with a delayed startup task');
+      setTimeout(resolve, 200);
+    });
+  },
+  bootstrap({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::category.category')
+        .findMany({ filters: { slug: 'general' }, pageSize: 1 })
+        .then(({ results }) => {
+          if (results.length === 0) {
+            return strapi.documents('api::category.category').create({
+              data: { name: 'General', slug: 'general' },
+            });
+          }
+
+          return results[0];
+        })
+        .then(() => {
+          strapi.log.info('Ensured default category exists');
+          resolve();
+        })
+        .catch(reject);
+    });
+  },
+  destroy({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .deleteMany({ filters: {} })
+        .then(() => {
+          strapi.log.info('Cleared temporary cache before shutdown');
+          resolve();
+        })
+        .catch(reject);
+    });
+  }
+};
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+export default {
+  register({ strapi }) {
+    return new Promise((resolve) => {
+      strapi.log.info('Registering with a delayed startup task');
+      setTimeout(resolve, 200);
+    });
+  },
+  bootstrap({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::category.category')
+        .findMany({ filters: { slug: 'general' }, pageSize: 1 })
+        .then(({ results }) => {
+          if (results.length === 0) {
+            return strapi.documents('api::category.category').create({
+              data: { name: 'General', slug: 'general' },
+            });
+          }
+
+          return results[0];
+        })
+        .then(() => {
+          strapi.log.info('Ensured default category exists');
+          resolve();
+        })
+        .catch(reject);
+    });
+  },
+  destroy({ strapi }) {
+    return new Promise((resolve, reject) => {
+      strapi
+        .documents('api::temporary-cache.temporary-cache')
+        .deleteMany({ filters: {} })
+        .then(() => {
+          strapi.log.info('Cleared temporary cache before shutdown');
+          resolve();
+        })
+        .catch(reject);
+    });
+  }
+};
+```
+
+
+## Register
+Description: More specifically, typical use-cases for register() include front-load security tasks such as loading secrets, rotating API keys, or registering authentication providers before the app finishes initializing.
+(Source: https://docs.strapi.io/cms/configurations/functions#register)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+module.exports = {
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      plugin: 'my-color-picker',
+      type: 'string',
+    });
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+export default {
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      plugin: 'my-color-picker',
+      type: 'string',
+    });
+  },
+};
+```
+
+
+## Bootstrap
+Description: :::tip You can run yarn strapi console (or npm run strapi console) in the terminal and interact with the strapi object.
+(Source: https://docs.strapi.io/cms/configurations/functions#bootstrap)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+module.exports = {
+  async bootstrap({ strapi }) {
+    const { results } = await strapi
+      .documents('api::category.category')
+      .findMany({ filters: { slug: 'general' }, pageSize: 1 });
+
+    if (results.length === 0) {
+      await strapi.documents('api::category.category').create({
+        data: { name: 'General', slug: 'general' },
+      });
+      strapi.log.info('Created default category');
+    }
+  },
+};
+```
+
+---
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+export default {
+  async bootstrap({ strapi }) {
+    const { results } = await strapi
+      .documents('api::category.category')
+      .findMany({ filters: { slug: 'general' }, pageSize: 1 });
+
+    if (results.length === 0) {
+      await strapi.documents('api::category.category').create({
+        data: { name: 'General', slug: 'general' },
+      });
+      strapi.log.info('Created default category');
+    }
+  },
+};
+```
+
+
+## Destroy
+Description: More specifically, a typical use-case for destroy() is to handle operational clean-up, such as closing database or queue connections and removing listeners so the application can shut down cleanly.
+(Source: https://docs.strapi.io/cms/configurations/functions#destroy)
+
+Language: JavaScript
+File path: ./src/index.js
+
+```js
+let heartbeat;
+
+module.exports = {
+  async bootstrap({ strapi }) {
+    heartbeat = setInterval(() => {
+      strapi.log.debug('Heartbeat interval running');
+    }, 60_000);
+  },
+
   async destroy() {
-    // some async code
-  }
+    clearInterval(heartbeat);
+  },
 };
 ```
 
@@ -16330,56 +16572,50 @@ Language: JavaScript
 File path: ./src/index.js
 
 ```js
+let heartbeat: ReturnType<typeof setInterval>;
+
 export default {
-  async register() {
-    // some async code
+  async bootstrap({ strapi }) {
+    heartbeat = setInterval(() => {
+      strapi.log.debug('Heartbeat interval running');
+    }, 60_000);
   },
-  async bootstrap() {
-    // some async code
-  },
+
   async destroy() {
-    // some async code
-  }
+    clearInterval(heartbeat);
+  },
 };
 ```
 
 
-## Function returning a promise
-Description: Code example from "Function returning a promise"
-(Source: https://docs.strapi.io/cms/configurations/functions#function-returning-a-promise)
+## Combined usage
+Description: Add initialization-only tasks (e.g.
+(Source: https://docs.strapi.io/cms/configurations/functions#combined-usage)
 
-Language: JavaScript
-File path: ./src/index.js
+Language: TypeScript
+File path: src/index.ts
 
-```js
-module.exports = {
-  register() {
-    return new Promise(/* some code */);
-  },
-  bootstrap() {
-    return new Promise(/* some code */);
-  },
-  destroy() {
-    return new Promise(/* some code */);
-  }
-};
-```
+```ts
+let unsubscribeCreate: (() => void) | undefined;
 
----
-Language: JavaScript
-File path: ./src/index.js
-
-```js
 export default {
-  register() {
-    return new Promise(/* some code */);
+  register({ strapi }) {
+    strapi.customFields.register({
+      name: 'color',
+      type: 'string',
+      plugin: 'color-picker',
+    });
   },
-  bootstrap() {
-    return new Promise(/* some code */);
+
+  async bootstrap({ strapi }) {
+    unsubscribeCreate = strapi.eventHub.subscribe('entry.create', (event) => {
+      strapi.log.info(`New entry created in ${event.model}: ${event.result?.id}`);
+    });
   },
-  destroy() {
-    return new Promise(/* some code */);
-  }
+
+  async destroy() {
+    unsubscribeCreate?.();
+  },
 };
 ```
 
