@@ -690,6 +690,8 @@ async function main() {
     
     const prList = Array.isArray(releaseInfo.prNumbers) ? releaseInfo.prNumbers : [];
     let processed = 0;
+    let yesSoFar = 0;
+    let quietRendered = false;
     for (const prNumber of prList) {
       const prAnalysis = await analyzePR(prNumber);
 
@@ -703,7 +705,13 @@ async function main() {
           const barWidth = 20;
           const filled = Math.floor((processed / total) * barWidth);
           const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
-          process.stdout.write(`\r[${bar}] ${processed}/${total} ${pct}%`);
+          // If we already rendered two lines previously, move cursor up two lines before overwriting
+          if (quietRendered) {
+            process.stdout.write('\x1b[2A\r');
+          }
+          process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
+          process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
+          quietRendered = true;
         }
         continue;
       }
@@ -924,6 +932,7 @@ async function main() {
         noReasonCode,
         llmInitial,
       });
+      if (finalVerdict === 'yes') yesSoFar++;
       
       // Render quiet progress
       processed++;
@@ -933,8 +942,13 @@ async function main() {
         const barWidth = 20;
         const filled = Math.floor((processed / total) * barWidth);
         const bar = '█'.repeat(filled) + '░'.repeat(barWidth - filled);
-        // Carriage return to update in place
-        process.stdout.write(`\r[${bar}] ${processed}/${total} ${pct}%`);
+        // Overwrite two-line quiet display
+        if (quietRendered) {
+          process.stdout.write('\x1b[2A\r');
+        }
+        process.stdout.write(`[${bar}] ${processed}/${total} ${pct}%\n`);
+        process.stdout.write(`Found ${yesSoFar} PRs that might require docs updates so far\n`);
+        quietRendered = true;
       }
       await new Promise(resolve => setTimeout(resolve, 200));
     }
