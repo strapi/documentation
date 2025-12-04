@@ -10,6 +10,54 @@ function SearchBarContent() {
   const dropdownRef = useRef(null);
   const searchInstanceRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const originalFetchRef = useRef(null);
+
+  function isDoNotTrackEnabled() {
+    try {
+      const dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || '').toString();
+      return dnt === '1' || dnt.toLowerCase() === 'yes';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function getOrCreateMonthlyUserId() {
+    if (isDoNotTrackEnabled()) return null;
+    try {
+      const key = 'msUserId';
+      const now = new Date();
+      const monthKey = now.toISOString().slice(0, 7); // YYYY-MM (UTC)
+      const raw = window.localStorage.getItem(key);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.id && parsed.month === monthKey) {
+            return parsed.id;
+          }
+        } catch {}
+      }
+      const uuid = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
+      const value = JSON.stringify({ id: uuid, month: monthKey });
+      window.localStorage.setItem(key, value);
+      return uuid;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function shouldAttachUserIdHeader(urlStr) {
+    try {
+      const meiliHost = siteConfig?.customFields?.meilisearch?.host;
+      if (!meiliHost) return false;
+      const u = new URL(urlStr, window.location.origin);
+      const meili = new URL(meiliHost);
+      if (u.origin !== meili.origin) return false;
+      // Only for search requests
+      return /\/indexes\/[^/]+\/search$/.test(u.pathname);
+    } catch {
+      return false;
+    }
+  }
 
   useEffect(() => {
     if (!searchButtonRef.current) {
@@ -39,6 +87,38 @@ function SearchBarContent() {
     };
 
     document.addEventListener('keydown', handleKeyDown, true);
+
+    // Prepare pseudonymous monthly user id (respects DNT)
+    const userId = getOrCreateMonthlyUserId();
+
+    // Scoped fetch interceptor to add X-MS-USER-ID for Meilisearch search requests
+    if (typeof window !== 'undefined' && window.fetch && !originalFetchRef.current) {
+      originalFetchRef.current = window.fetch.bind(window);
+      window.fetch = async (input, init) => {
+        try {
+          const url = typeof input === 'string' ? input : (input && input.url) ? input.url : '';
+          if (!userId || !shouldAttachUserIdHeader(url)) {
+            return originalFetchRef.current(input, init);
+          }
+
+          // Attach header depending on input type
+          if (typeof input === 'string' || input instanceof URL) {
+            const headers = new Headers(init && init.headers ? init.headers : undefined);
+            if (!headers.has('X-MS-USER-ID')) headers.set('X-MS-USER-ID', userId);
+            return originalFetchRef.current(input, { ...(init || {}), headers });
+          }
+
+          // input is Request
+          const req = input;
+          const headers = new Headers(req.headers);
+          if (!headers.has('X-MS-USER-ID')) headers.set('X-MS-USER-ID', userId);
+          const newReq = new Request(req, { headers });
+          return originalFetchRef.current(newReq);
+        } catch (_) {
+          return originalFetchRef.current(input, init);
+        }
+      };
+    }
 
     if (searchInstanceRef.current) {
       searchInstanceRef.current.destroy?.();
@@ -151,6 +231,12 @@ function SearchBarContent() {
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown, true);
+      if (originalFetchRef.current) {
+        try {
+          window.fetch = originalFetchRef.current;
+        } catch {}
+        originalFetchRef.current = null;
+      }
       if (searchInstanceRef.current) {
         searchInstanceRef.current.destroy?.();
         searchInstanceRef.current = null;
