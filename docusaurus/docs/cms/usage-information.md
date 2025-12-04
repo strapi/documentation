@@ -82,3 +82,28 @@ Data collection can later be re-enabled by deleting the flag or setting it to fa
 :::note
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
 :::
+
+## Search analytics for docs.strapi.io
+
+To improve our documentation, the public website at `docs.strapi.io` collects anonymous search usage metrics using Meilisearch Cloud. These metrics help us understand how the search performs and where we can make it better:
+
+- Total searches
+- Total users (estimated)
+- Most searched keywords
+- Searches without results
+
+To make the “Total users” metric more accurate while preserving privacy, the site creates a pseudonymous identifier and stores it in the browser’s localStorage under the `msUserId` key. This identifier:
+
+- Is randomly generated and contains no personal data
+- Rotates monthly on first visit of each new month (calendar month, UTC)
+- Is sent only with documentation search requests as the `X-MS-USER-ID` header to Meilisearch Cloud
+- Is not used for any other purpose and is not shared with third parties beyond Meilisearch processing the search
+
+Respecting privacy choices:
+
+- If the browser’s Do Not Track setting is enabled, the site does not create or send this identifier
+- You can remove the identifier at any time by clearing the `msUserId` entry from your browser’s localStorage for `docs.strapi.io`
+
+Notes:
+
+- We currently do not send click-through or conversion events to Meilisearch. Only the metrics listed above are collected.
