@@ -120,6 +120,32 @@ function SearchBarContent() {
       };
     }
 
+    // Also patch XMLHttpRequest for libraries that use XHR under the hood
+    const originalXHROpen = (typeof XMLHttpRequest !== 'undefined' && XMLHttpRequest.prototype.open) ? XMLHttpRequest.prototype.open : null;
+    const originalXHRSend = (typeof XMLHttpRequest !== 'undefined' && XMLHttpRequest.prototype.send) ? XMLHttpRequest.prototype.send : null;
+    let xhrPatched = false;
+    if (originalXHROpen && originalXHRSend) {
+      try {
+        XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+          try { this.__ms_url = url; } catch {}
+          return originalXHROpen.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.send = function(body) {
+          try {
+            if (userId && this && typeof this.setRequestHeader === 'function') {
+              const url = this.__ms_url || '';
+              if (shouldAttachUserIdHeader(url)) {
+                // Only set if not already set
+                try { this.setRequestHeader('X-MS-USER-ID', userId); } catch {}
+              }
+            }
+          } catch {}
+          return originalXHRSend.apply(this, arguments);
+        };
+        xhrPatched = true;
+      } catch {}
+    }
+
     if (searchInstanceRef.current) {
       searchInstanceRef.current.destroy?.();
       searchInstanceRef.current = null;
@@ -236,6 +262,12 @@ function SearchBarContent() {
           window.fetch = originalFetchRef.current;
         } catch {}
         originalFetchRef.current = null;
+      }
+      if (xhrPatched && originalXHROpen && originalXHRSend) {
+        try {
+          XMLHttpRequest.prototype.open = originalXHROpen;
+          XMLHttpRequest.prototype.send = originalXHRSend;
+        } catch {}
       }
       if (searchInstanceRef.current) {
         searchInstanceRef.current.destroy?.();
