@@ -27,7 +27,7 @@ However, these above actions alone are often insufficient to maintain an overall
 
 Without these metrics, we wouldn't be able to make the right choices as we continue to move forward with the roadmap and provide what you, the community and users, are asking for.
 
-## Collected data
+## Collected Strapi-related data
 
 The following data is collected:
 
@@ -83,7 +83,7 @@ Data collection can later be re-enabled by deleting the flag or setting it to fa
 If you have any questions or concerns regarding data collection, please contact us at the following email address [privacy@strapi.io](mailto:privacy@strapi.io).
 :::
 
-## Search analytics for docs.strapi.io
+## Collected search-related data for docs.strapi.io
 
 To improve our documentation, the public website at `docs.strapi.io` collects anonymous search usage metrics using Meilisearch Cloud. These metrics help us understand how the search performs and where we can make it better:
 
@@ -94,10 +94,10 @@ To improve our documentation, the public website at `docs.strapi.io` collects an
 
 To make the “Total users” metric more accurate while preserving privacy, the site creates a pseudonymous identifier in the browser’s localStorage under the `msUserId` key. It is randomly generated, contains no personal data, rotates on the first visit of each calendar month (UTC), and is sent only with documentation search requests as the `X-MS-USER-ID` header. It is not used for any other purpose.
 
-:::note Note: Privacy choices
+We do not send click-through or conversion events to Meilisearch.
+
+### Opt-out
+
 If your browser’s Do Not Track setting is enabled, the site does not create or send this identifier.
 
 If this identifier is created, you can remove it at any time by clearing the `msUserId` entry from your browser’s localStorage for docs.strapi.io.
-:::
-
-We do not send click-through or conversion events to Meilisearch.
