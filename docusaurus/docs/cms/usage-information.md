@@ -95,7 +95,7 @@ To improve our documentation, the public website at `docs.strapi.io` collects an
 To make the “Total users” metric more accurate while preserving privacy, the site creates a pseudonymous identifier in the browser’s localStorage under the `msUserId` key. It is randomly generated, contains no personal data, rotates on the first visit of each calendar month (UTC), and is sent only with documentation search requests as the `X-MS-USER-ID` header. It is not used for any other purpose.
 
 :::note Note: Privacy choices
-Privacy choices: If your browser’s Do Not Track setting is enabled, the site does not create or send this identifier.
+If your browser’s Do Not Track setting is enabled, the site does not create or send this identifier.
 
 If this identifier is created, you can remove it at any time by clearing the `msUserId` entry from your browser’s localStorage for docs.strapi.io.
 :::
