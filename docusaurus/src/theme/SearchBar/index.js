@@ -162,7 +162,8 @@ function SearchBarContent() {
           container: searchButtonRef.current,
           // Route through same-origin API to add headers server-side without CORS
           host: `${window.location.origin}/api`,
-          apiKey: siteConfig.customFields.meilisearch.apiKey,
+          // dummy key for docsearch client; real key sent via header to API
+          apiKey: 'public',
           indexUid: siteConfig.customFields.meilisearch.indexUid,
         
         transformItems: (items) => {
@@ -246,13 +247,22 @@ function SearchBarContent() {
         };
 
         // Send X-MS-USER-ID to same-origin API; no CORS preflight restrictions
-        if (userId) {
-          baseOptions.requestConfig = {
-            ...(baseOptions.requestConfig || {}),
-            headers: { 'X-MS-USER-ID': userId }
-          };
-          baseOptions.headers = { ...(baseOptions.headers || {}), 'X-MS-USER-ID': userId };
-        }
+        const meiliHost = siteConfig.customFields.meilisearch.host;
+        const meiliKey = siteConfig.customFields.meilisearch.apiKey;
+        baseOptions.requestConfig = {
+          ...(baseOptions.requestConfig || {}),
+          headers: {
+            ...(userId ? { 'X-MS-USER-ID': userId } : {}),
+            ...(meiliHost ? { 'X-Meili-Host': meiliHost } : {}),
+            ...(meiliKey ? { 'X-Meili-Api-Key': meiliKey } : {}),
+          },
+        };
+        baseOptions.headers = {
+          ...(baseOptions.headers || {}),
+          ...(userId ? { 'X-MS-USER-ID': userId } : {}),
+          ...(meiliHost ? { 'X-Meili-Host': meiliHost } : {}),
+          ...(meiliKey ? { 'X-Meili-Api-Key': meiliKey } : {}),
+        };
 
         const search = docsearch(baseOptions);
 
