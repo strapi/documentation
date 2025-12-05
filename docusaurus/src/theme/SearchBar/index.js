@@ -39,6 +39,12 @@ function SearchBarContent() {
       const uuid = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
       const value = JSON.stringify({ id: uuid, month: monthKey });
       window.localStorage.setItem(key, value);
+      try {
+        // Also set a same‑origin cookie so serverless proxy can read it
+        const ttlDays = 45; // longer than a month for safety; we rotate monthly client‑side
+        const maxAge = ttlDays * 24 * 60 * 60;
+        document.cookie = `msUserId=${uuid}; Max-Age=${maxAge}; Path=/; SameSite=Lax` + (window.location.protocol === 'https:' ? '; Secure' : '');
+      } catch {}
       return uuid;
     } catch (_) {
       return null;
@@ -159,8 +165,8 @@ function SearchBarContent() {
         import('meilisearch-docsearch/css')
       ]).then(([{ docsearch }]) => {
         const meiliHost = siteConfig.customFields.meilisearch.host;
-        // Always call Meili directly (no proxy) since env config isn’t accessible
-        const useProxy = false;
+        // Use proxy on non-localhost to avoid CORS limits and inject server-side header
+        const useProxy = typeof window !== 'undefined' && window.location && window.location.hostname !== 'localhost';
         const baseOptions = {
           container: searchButtonRef.current,
           host: useProxy ? `${window.location.origin}/api` : meiliHost,
