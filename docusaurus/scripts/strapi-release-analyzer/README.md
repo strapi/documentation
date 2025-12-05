@@ -6,15 +6,23 @@ The tool reads the release notes from GitHub, extracts the referenced PRs, inspe
 
 ## Running the analyzer
 
-This is a Node.js script. If you don’t pass a release URL, it analyzes the latest release from `strapi/strapi`.
+This is a Node.js script, wrapped in an executable shell script that can be run directly from the terminal with the following command:
 
-Run a fresh analysis:
+```sh
+./analyze-strapi-release-impact.sh
+```
 
-- `./analyze-strapi-release-impact.sh <github-release-url>`
+This grabs the latest Strapi release from the GitHub repository. Optionally, you can pass a specific GitHub release URL with:
 
-Alternatively, run the Node entry directly:
+```sh
+./analyze-strapi-release-impact.sh <github-release-url>
+```
 
-- `node index.js <github-release-url>`
+where `<github-release-url>` is replaced with something like:
+
+```sh
+https://github.com/strapi/strapi/releases/tag/v5.31.3
+```
 
 Notes:
 - By default, runs are fresh (recompute and overwrite cache).
