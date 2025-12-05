@@ -160,7 +160,8 @@ function SearchBarContent() {
       ]).then(([{ docsearch }]) => {
         const baseOptions = {
           container: searchButtonRef.current,
-          host: siteConfig.customFields.meilisearch.host,
+          // Route through same-origin API to add headers server-side without CORS
+          host: `${window.location.origin}/api`,
           apiKey: siteConfig.customFields.meilisearch.apiKey,
           indexUid: siteConfig.customFields.meilisearch.indexUid,
         
@@ -244,9 +245,8 @@ function SearchBarContent() {
         },
         };
 
-        // Prefer official header wiring if library supports it
+        // Send X-MS-USER-ID to same-origin API; no CORS preflight restrictions
         if (userId) {
-          // Some versions accept requestConfig.headers, others accept headers; set both safely
           baseOptions.requestConfig = {
             ...(baseOptions.requestConfig || {}),
             headers: { 'X-MS-USER-ID': userId }
