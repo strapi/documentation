@@ -6,19 +6,31 @@ The tool reads the release notes from GitHub, extracts the referenced PRs, inspe
 
 ## Running the analyzer
 
-The script is a Node program and does not require additional dependencies beyond access to the GitHub API and an LLM provider. You can run a fresh analysis of a release with:
+The script is a Node program and does not require additional dependencies beyond access to the GitHub API and an LLM provider. If you do not pass a release URL, the tool automatically fetches and analyzes the latest release from `strapi/strapi`.
+
+You can run a fresh analysis of a release with:
 
 `./analyze-strapi-release-impact.sh <github-release-url>`
 
 Notes:
 - You can still run the Node entry directly if you prefer.
-- If you omit the release URL entirely, the tool will auto‑fetch the latest release from `strapi/strapi` and analyze it.
+- If you omit the release URL entirely, the tool auto‑fetches the latest release from `strapi/strapi` and analyzes it.
 
 By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag. To reduce terminal output to a compact progress bar, use `--quiet`.
 
 The LLM mode requires `ANTHROPIC_API_KEY` in the environment. The GitHub API benefits from `GITHUB_TOKEN` to avoid rate limits but can work unauthenticated at lower throughput.
 
 Strictness can be tuned with `--strict=conservative|balanced|aggressive`. The repository defaults to conservative, which means “when in doubt, say No”. You can also override the model with `--model=…` if your environment offers multiple choices.
+
+## Available flags
+
+- `--use-cache`: reuse previous results and skip recomputation where possible.
+- `--no-llm-call` or `--limit=0`: run heuristics only (no LLM calls needed).
+- `--limit=N`: cap the number of PRs that trigger an LLM call; all PRs still go through heuristics.
+- `--quiet`: reduce terminal output to a compact progress indicator.
+- `--strict=conservative|balanced|aggressive`: tune routing and downgrade behavior (default: conservative).
+- `--model=NAME`: override the default LLM model (can also be set via `CLAUDE_MODEL`).
+- `--cache-dir=PATH`: customize the cache location for per‑PR analysis artifacts.
 
 ## What the script produces
 
