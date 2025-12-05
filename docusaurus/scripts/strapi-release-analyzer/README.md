@@ -6,35 +6,19 @@ The tool reads the release notes from GitHub, extracts the referenced PRs, inspe
 
 ## Running the analyzer
 
-This tool is a Node.js script. It requires network access to GitHub and (optionally) an LLM provider. From the repository root:
+The script is a Node program and does not require additional dependencies beyond access to the GitHub API and an LLM provider. You can run a fresh analysis of a release with:
 
-1) Install and enter the analyzer directory
-
-`cd docusaurus/scripts/strapi-release-analyzer && npm ci`
-
-2) Run on a specific release URL or let it auto‑detect the latest Strapi release
-
-`node index.js <github-release-url>`
-
-or
-
-`npm start -- <github-release-url>`
+`./analyze-strapi-release-impact.sh <github-release-url>`
 
 Notes:
-- If you omit the release URL entirely, the tool auto‑fetches the latest release from `strapi/strapi`.
-- By default, a run is “fresh”: it recomputes everything and overwrites prior cache entries.
+- You can still run the Node entry directly if you prefer.
+- If you omit the release URL entirely, the tool will auto‑fetch the latest release from `strapi/strapi` and analyze it.
 
-Useful flags:
-- `--use-cache` reuses previous results and skips recomputation where possible (disables the default fresh run).
-- `--limit=N` caps the number of PRs for which an LLM call is made; all PRs still go through heuristics. Use `--limit=0` or `--no-llm-call` for a heuristics‑only pass (no LLM key required).
-- `--quiet` shows a compact progress bar only.
-- `--strict=conservative|balanced|aggressive` tunes routing and downgrades (default: conservative).
-- `--model=NAME` overrides the default Claude model (also configurable via `CLAUDE_MODEL`).
-- `--cache-dir=PATH` specifies where cached PR analyses are stored.
+By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag. To reduce terminal output to a compact progress bar, use `--quiet`.
 
-Environment variables:
-- `ANTHROPIC_API_KEY` is required when LLM calls are enabled (i.e., when `--limit` is not `0`).
-- `GITHUB_TOKEN` is optional but recommended to increase GitHub API rate limits.
+The LLM mode requires `ANTHROPIC_API_KEY` in the environment. The GitHub API benefits from `GITHUB_TOKEN` to avoid rate limits but can work unauthenticated at lower throughput.
+
+Strictness can be tuned with `--strict=conservative|balanced|aggressive`. The repository defaults to conservative, which means “when in doubt, say No”. You can also override the model with `--model=…` if your environment offers multiple choices.
 
 ## What the script produces
 
@@ -58,16 +42,6 @@ The conservative policy includes narrow, positive signals that allow “Yes” t
 
 There are also explicit exceptions. Feature parity restorations for configurable features (for example, a “v4 → v5” restoration of a configuration field in the Content Manager) are treated as docs‑worthy even if the PR is labeled as a fix. Upload file‑type restriction changes are likewise preserved as docs‑worthy. On the other hand, pure locale additions are excluded under conservative policy because they rarely merit a documentation change beyond internal lists.
 
-## Documentation index (llms‑full.txt)
-
-The analyzer cross‑references candidate documentation pages against a prebuilt index from `llms-full.txt`. On startup it looks for this file in common locations and falls back to `llms.txt` if needed:
-
-- `static/llms-full.txt`
-- `docusaurus/static/llms-full.txt`
-- repository root `llms-full.txt`
-
-If none of these are found, the run continues without the index, which weakens page‑target suggestions and anchor checks but still yields useful heuristics.
-
 ## Internals you might care about
 
 The code is modular. The entrypoint orchestrates the run, while small modules handle specialized tasks:
@@ -83,4 +57,5 @@ The code is modular. The entrypoint orchestrates the run, while small modules ha
 The main loop in `index.js` applies pre‑LLM gates, decides whether to call the LLM, and then applies post‑LLM guards before writing the report. Strictness is set to conservative by default, which also collapses any residual “Maybe” outcomes into “No” in both the terminal and the Markdown report.
 
 ## Troubleshooting and tuning
-If the report contains too many “Yes” entries, tighten strong‑signal detection or increase coverage thresholds. If it contains too many “No” entries, extend strong signals for the affected domain (for example, add a security/configuration token) or add a narrow exception similar to the upload‑restriction rule. To gauge distribution without cost, use `--limit=0`. While iterating on heuristics, keep the default fresh run; re‑enable caching with `--use-cache` for stable, repeatable comparisons.
+
+If the report contains too many “Yes” entries, consider tightening strong‑signal detection or increasing the threshold of the coverage cross‑check. If it contains too many “No” entries, extend strong signals for the affected domain (for example, add another security token or a new configuration keyword) or add a narrow exception similar to the upload restriction rule. When you only need a feel for the distribution without spending tokens, run with `--limit=0`. When you are iterating on the heuristics, leave the default fresh run in place so you always see current results; re‑enable caching with `--use-cache` when you want stable, repeatable comparisons.
