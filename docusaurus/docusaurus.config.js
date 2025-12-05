@@ -130,8 +130,8 @@ const config = {
   ],
   customFields: {
     meilisearch: {
-      host: 'https://ms-47f23e4f6fb9-30446.fra.meilisearch.io',
-      apiKey: '45326fd7e6278ec3fc83af7a5c20a2ab4261f8591bd186adf8bf8f962581622b',
+      host: process.env.NEXT_PUBLIC_MEILI_HOST || 'https://ms-47f23e4f6fb9-30446.fra.meilisearch.io',
+      apiKey: process.env.NEXT_PUBLIC_MEILI_API_KEY || '45326fd7e6278ec3fc83af7a5c20a2ab4261f8591bd186adf8bf8f962581622b',
       indexUid: 'strapi-docs',
       searchParams: {
         attributesToHighlight: null
