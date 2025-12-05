@@ -60,9 +60,6 @@ function SearchBarContent() {
   }
 
   useEffect(() => {
-    if (!searchButtonRef.current) {
-      return;
-    }
 
     const handleKeyDown = (e) => {
       const kapaContainer = document.getElementById('kapa-widget-container');
@@ -150,18 +147,22 @@ function SearchBarContent() {
       searchInstanceRef.current.destroy?.();
       searchInstanceRef.current = null;
     }
-    
-    searchButtonRef.current.innerHTML = '';
 
-    Promise.all([
-      import('meilisearch-docsearch'),
-      import('meilisearch-docsearch/css')
-    ]).then(([{ docsearch }]) => {
-      const baseOptions = {
-        container: searchButtonRef.current,
-        host: siteConfig.customFields.meilisearch.host,
-        apiKey: siteConfig.customFields.meilisearch.apiKey,
-        indexUid: siteConfig.customFields.meilisearch.indexUid,
+    if (searchButtonRef.current) {
+      searchButtonRef.current.innerHTML = '';
+    }
+
+    // Initialize docsearch only when container is ready
+    if (searchButtonRef.current) {
+      Promise.all([
+        import('meilisearch-docsearch'),
+        import('meilisearch-docsearch/css')
+      ]).then(([{ docsearch }]) => {
+        const baseOptions = {
+          container: searchButtonRef.current,
+          host: siteConfig.customFields.meilisearch.host,
+          apiKey: siteConfig.customFields.meilisearch.apiKey,
+          indexUid: siteConfig.customFields.meilisearch.indexUid,
         
         transformItems: (items) => {
           return items.map((item) => {
@@ -241,31 +242,32 @@ function SearchBarContent() {
         getMissingResultsUrl: ({ query }) => {
           return `https://github.com/strapi/documentation/issues/new?title=Missing+search+results+for+${query}`;
         },
-      };
-
-      // Prefer official header wiring if library supports it
-      if (userId) {
-        // Some versions accept requestConfig.headers, others accept headers; set both safely
-        baseOptions.requestConfig = {
-          ...(baseOptions.requestConfig || {}),
-          headers: { 'X-MS-USER-ID': userId }
         };
-        baseOptions.headers = { ...(baseOptions.headers || {}), 'X-MS-USER-ID': userId };
-      }
 
-      const search = docsearch(baseOptions);
+        // Prefer official header wiring if library supports it
+        if (userId) {
+          // Some versions accept requestConfig.headers, others accept headers; set both safely
+          baseOptions.requestConfig = {
+            ...(baseOptions.requestConfig || {}),
+            headers: { 'X-MS-USER-ID': userId }
+          };
+          baseOptions.headers = { ...(baseOptions.headers || {}), 'X-MS-USER-ID': userId };
+        }
 
-      searchInstanceRef.current = search;
-      setIsLoaded(true);
+        const search = docsearch(baseOptions);
 
-      if (colorMode === 'dark') {
-        dropdownRef.current?.classList.add('dark');
-      } else {
-        dropdownRef.current?.classList.remove('dark');
-      }
-    }).catch((error) => {
-      console.error('Failed to load MeiliSearch:', error);
-    });
+        searchInstanceRef.current = search;
+        setIsLoaded(true);
+
+        if (colorMode === 'dark') {
+          dropdownRef.current?.classList.add('dark');
+        } else {
+          dropdownRef.current?.classList.remove('dark');
+        }
+      }).catch((error) => {
+        console.error('Failed to load MeiliSearch:', error);
+      });
+    }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown, true);
