@@ -6,21 +6,20 @@ The tool reads the release notes from GitHub, extracts the referenced PRs, inspe
 
 ## Running the analyzer
 
-The script is a Node program and does not require additional dependencies beyond access to the GitHub API and an LLM provider. If you do not pass a release URL, the tool automatically fetches and analyzes the latest release from `strapi/strapi`.
+This is a Node.js script. If you don’t pass a release URL, it analyzes the latest release from `strapi/strapi`.
 
-You can run a fresh analysis of a release with:
+Run a fresh analysis:
 
-`./analyze-strapi-release-impact.sh <github-release-url>`
+- `./analyze-strapi-release-impact.sh <github-release-url>`
+
+Alternatively, run the Node entry directly:
+
+- `node index.js <github-release-url>`
 
 Notes:
-- You can still run the Node entry directly if you prefer.
-- If you omit the release URL entirely, the tool auto‑fetches the latest release from `strapi/strapi` and analyzes it.
-
-By default, a run is “fresh”: it recomputes everything and overwrites any existing cache entries. If you want to reuse previous results and skip recomputation where possible, add `--use-cache`. If you prefer to execute a fast, heuristics‑only pass that never calls the LLM (useful without keys or to triage cost‑free), add `--limit=0` or the explicit `--no-llm-call` flag. To reduce terminal output to a compact progress bar, use `--quiet`.
-
-The LLM mode requires `ANTHROPIC_API_KEY` in the environment. The GitHub API benefits from `GITHUB_TOKEN` to avoid rate limits but can work unauthenticated at lower throughput.
-
-Strictness can be tuned with `--strict=conservative|balanced|aggressive`. The repository defaults to conservative, which means “when in doubt, say No”. You can also override the model with `--model=…` if your environment offers multiple choices.
+- By default, runs are fresh (recompute and overwrite cache).
+- For caching, heuristics‑only, strictness, and other options, see “Available flags” below.
+- LLM mode requires `ANTHROPIC_API_KEY`. Using a `GITHUB_TOKEN` raises GitHub API rate limits.
 
 ## Available flags
 
