@@ -157,7 +157,7 @@ function SearchBarContent() {
       import('meilisearch-docsearch'),
       import('meilisearch-docsearch/css')
     ]).then(([{ docsearch }]) => {
-      const search = docsearch({
+      const baseOptions = {
         container: searchButtonRef.current,
         host: siteConfig.customFields.meilisearch.host,
         apiKey: siteConfig.customFields.meilisearch.apiKey,
@@ -241,7 +241,19 @@ function SearchBarContent() {
         getMissingResultsUrl: ({ query }) => {
           return `https://github.com/strapi/documentation/issues/new?title=Missing+search+results+for+${query}`;
         },
-      });
+      };
+
+      // Prefer official header wiring if library supports it
+      if (userId) {
+        // Some versions accept requestConfig.headers, others accept headers; set both safely
+        baseOptions.requestConfig = {
+          ...(baseOptions.requestConfig || {}),
+          headers: { 'X-MS-USER-ID': userId }
+        };
+        baseOptions.headers = { ...(baseOptions.headers || {}), 'X-MS-USER-ID': userId };
+      }
+
+      const search = docsearch(baseOptions);
 
       searchInstanceRef.current = search;
       setIsLoaded(true);
