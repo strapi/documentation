@@ -108,6 +108,12 @@ const config = {
       'data-modal-y-offset': '3vh',            // Default is 10vh
       'data-modal-inner-max-width': '100%',
       'data-user-satisfaction-feedback-enabled': 'false',
+      /* 
+       * MCP config *
+      */
+      'data-mcp-enabled': 'true',
+      'data-mcp-server-url': 'https://strapi-docs.mcp.kapa.ai',
+      // 'data-mcp-button-text': 'MCP' // default: 'MCP',
       async: true,
     },
   ],
