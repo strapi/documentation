@@ -10,11 +10,56 @@ function SearchBarContent() {
   const dropdownRef = useRef(null);
   const searchInstanceRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const originalFetchRef = useRef(null);
+
+  function isDoNotTrackEnabled() {
+    try {
+      const dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || '').toString();
+      return dnt === '1' || dnt.toLowerCase() === 'yes';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function getOrCreateMonthlyUserId() {
+    if (isDoNotTrackEnabled()) return null;
+    try {
+      const key = 'msUserId';
+      const now = new Date();
+      const monthKey = now.toISOString().slice(0, 7); // YYYY-MM (UTC)
+      const raw = window.localStorage.getItem(key);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.id && parsed.month === monthKey) {
+            return parsed.id;
+          }
+        } catch {}
+      }
+      const uuid = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
+      const value = JSON.stringify({ id: uuid, month: monthKey });
+      window.localStorage.setItem(key, value);
+      return uuid;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function shouldAttachUserIdHeader(urlStr) {
+    try {
+      const meiliHost = siteConfig?.customFields?.meilisearch?.host;
+      if (!meiliHost) return false;
+      const u = new URL(urlStr, window.location.origin);
+      const meili = new URL(meiliHost);
+      if (u.origin !== meili.origin) return false;
+      // Only for search requests
+      return /\/indexes\/[^/]+\/search$/.test(u.pathname);
+    } catch {
+      return false;
+    }
+  }
 
   useEffect(() => {
-    if (!searchButtonRef.current) {
-      return;
-    }
 
     const handleKeyDown = (e) => {
       const kapaContainer = document.getElementById('kapa-widget-container');
@@ -40,22 +85,86 @@ function SearchBarContent() {
 
     document.addEventListener('keydown', handleKeyDown, true);
 
+    // Prepare pseudonymous monthly user id (respects DNT)
+    const userId = getOrCreateMonthlyUserId();
+
+    // Scoped fetch interceptor to add X-MS-USER-ID for Meilisearch search requests
+    if (typeof window !== 'undefined' && window.fetch && !originalFetchRef.current) {
+      originalFetchRef.current = window.fetch.bind(window);
+      window.fetch = async (input, init) => {
+        try {
+          const url = typeof input === 'string' ? input : (input && input.url) ? input.url : '';
+          if (!userId || !shouldAttachUserIdHeader(url)) {
+            return originalFetchRef.current(input, init);
+          }
+
+          // Attach header depending on input type
+          if (typeof input === 'string' || input instanceof URL) {
+            const headers = new Headers(init && init.headers ? init.headers : undefined);
+            if (!headers.has('X-MS-USER-ID')) headers.set('X-MS-USER-ID', userId);
+            return originalFetchRef.current(input, { ...(init || {}), headers });
+          }
+
+          // input is Request
+          const req = input;
+          const headers = new Headers(req.headers);
+          if (!headers.has('X-MS-USER-ID')) headers.set('X-MS-USER-ID', userId);
+          const newReq = new Request(req, { headers });
+          return originalFetchRef.current(newReq);
+        } catch (_) {
+          return originalFetchRef.current(input, init);
+        }
+      };
+    }
+
+    // Also patch XMLHttpRequest for libraries that use XHR under the hood
+    const originalXHROpen = (typeof XMLHttpRequest !== 'undefined' && XMLHttpRequest.prototype.open) ? XMLHttpRequest.prototype.open : null;
+    const originalXHRSend = (typeof XMLHttpRequest !== 'undefined' && XMLHttpRequest.prototype.send) ? XMLHttpRequest.prototype.send : null;
+    let xhrPatched = false;
+    if (originalXHROpen && originalXHRSend) {
+      try {
+        XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+          try { this.__ms_url = url; } catch {}
+          return originalXHROpen.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.send = function(body) {
+          try {
+            if (userId && this && typeof this.setRequestHeader === 'function') {
+              const url = this.__ms_url || '';
+              if (shouldAttachUserIdHeader(url)) {
+                // Only set if not already set
+                try { this.setRequestHeader('X-MS-USER-ID', userId); } catch {}
+              }
+            }
+          } catch {}
+          return originalXHRSend.apply(this, arguments);
+        };
+        xhrPatched = true;
+      } catch {}
+    }
+
     if (searchInstanceRef.current) {
       searchInstanceRef.current.destroy?.();
       searchInstanceRef.current = null;
     }
-    
-    searchButtonRef.current.innerHTML = '';
 
-    Promise.all([
-      import('meilisearch-docsearch'),
-      import('meilisearch-docsearch/css')
-    ]).then(([{ docsearch }]) => {
-      const search = docsearch({
-        container: searchButtonRef.current,
-        host: siteConfig.customFields.meilisearch.host,
-        apiKey: siteConfig.customFields.meilisearch.apiKey,
-        indexUid: siteConfig.customFields.meilisearch.indexUid,
+    if (searchButtonRef.current) {
+      searchButtonRef.current.innerHTML = '';
+    }
+
+    // Initialize docsearch only when container is ready
+    if (searchButtonRef.current) {
+      Promise.all([
+        import('meilisearch-docsearch'),
+        import('meilisearch-docsearch/css')
+      ]).then(([{ docsearch }]) => {
+        const baseOptions = {
+          container: searchButtonRef.current,
+          // Route through same-origin API to add headers server-side without CORS
+          host: `${window.location.origin}/api`,
+          // dummy key for docsearch client; real key sent via header to API
+          apiKey: 'public',
+          indexUid: siteConfig.customFields.meilisearch.indexUid,
         
         transformItems: (items) => {
           return items.map((item) => {
@@ -135,22 +244,55 @@ function SearchBarContent() {
         getMissingResultsUrl: ({ query }) => {
           return `https://github.com/strapi/documentation/issues/new?title=Missing+search+results+for+${query}`;
         },
+        };
+
+        // Send X-MS-USER-ID to same-origin API; no CORS preflight restrictions
+        const meiliHost = siteConfig.customFields.meilisearch.host;
+        const meiliKey = siteConfig.customFields.meilisearch.apiKey;
+        baseOptions.requestConfig = {
+          ...(baseOptions.requestConfig || {}),
+          headers: {
+            ...(userId ? { 'X-MS-USER-ID': userId } : {}),
+            ...(meiliHost ? { 'X-Meili-Host': meiliHost } : {}),
+            ...(meiliKey ? { 'X-Meili-Api-Key': meiliKey } : {}),
+          },
+        };
+        baseOptions.headers = {
+          ...(baseOptions.headers || {}),
+          ...(userId ? { 'X-MS-USER-ID': userId } : {}),
+          ...(meiliHost ? { 'X-Meili-Host': meiliHost } : {}),
+          ...(meiliKey ? { 'X-Meili-Api-Key': meiliKey } : {}),
+        };
+
+        const search = docsearch(baseOptions);
+
+        searchInstanceRef.current = search;
+        setIsLoaded(true);
+
+        if (colorMode === 'dark') {
+          dropdownRef.current?.classList.add('dark');
+        } else {
+          dropdownRef.current?.classList.remove('dark');
+        }
+      }).catch((error) => {
+        console.error('Failed to load MeiliSearch:', error);
       });
-
-      searchInstanceRef.current = search;
-      setIsLoaded(true);
-
-      if (colorMode === 'dark') {
-        dropdownRef.current?.classList.add('dark');
-      } else {
-        dropdownRef.current?.classList.remove('dark');
-      }
-    }).catch((error) => {
-      console.error('Failed to load MeiliSearch:', error);
-    });
+    }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown, true);
+      if (originalFetchRef.current) {
+        try {
+          window.fetch = originalFetchRef.current;
+        } catch {}
+        originalFetchRef.current = null;
+      }
+      if (xhrPatched && originalXHROpen && originalXHRSend) {
+        try {
+          XMLHttpRequest.prototype.open = originalXHROpen;
+          XMLHttpRequest.prototype.send = originalXHRSend;
+        } catch {}
+      }
       if (searchInstanceRef.current) {
         searchInstanceRef.current.destroy?.();
         searchInstanceRef.current = null;
