@@ -363,7 +363,6 @@ const sidebars = {
           type: 'doc',
           id: 'cms/customization', // TODO: rename to Introduction
           label: 'Introduction',
-          // key: 'cms-customization-introduction',
         },
         'cms/configurations/functions',
         {
@@ -377,7 +376,6 @@ const sidebars = {
               type: 'doc',
               id: 'cms/backend-customization',
               label: 'Overview',
-              // key: 'cms-backend-customization-overview',
             },
             'cms/backend-customization/requests-responses',
             'cms/backend-customization/routes',
@@ -417,7 +415,6 @@ const sidebars = {
               type: 'doc',
               id: 'cms/admin-panel-customization',
               label: 'Overview',
-              // key: 'cms-admin-panel-customization-overview',
             },
             'cms/admin-panel-customization/logos',
             'cms/admin-panel-customization/favicon',
@@ -460,7 +457,6 @@ const sidebars = {
           type: 'doc',
           id: 'cms/typescript',
           label: 'Introduction',
-          // key: 'cms-typescript-introduction',
         },
         {
           type: 'doc',
