@@ -148,7 +148,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Display name | Write the name of your Strapi app, this is fetched from the repository name but can be edited. It is automatically converted to slug format (`my-strapi-app`). |
     | Git branch   | Choose from the drop-down the branch you want to deploy. |
     | Deploy on push | Tick this box to automatically trigger a deployment when changes are pushed to your selected branch. When disabled, you will need to manually deploy the latest changes. |
-    | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West), Asia (Southeast) or Oceania. |
+    | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West) or Asia (Southeast). |
 
     :::note
     The Git branch and "Deploy on push" settings can be modified afterwards through the project's settings, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
