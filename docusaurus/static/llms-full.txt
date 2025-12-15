@@ -607,7 +607,7 @@ Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see 
 | **Database Entries**             | 500   | Unlimited* | Unlimited* | Unlimited* |
 | **Asset Storage**               | 10GB  | 50GB      | 250GB | 1,000GB |
 | **Asset Bandwidth (per month)** | 10GB  | 50GB      | 500GB | 1,000GB |
-| **API Requests (per month)**     | 10,000 | 100,000 | 1,000,000 | 10,000,000 |
+| **API Requests (per month)**     | 2,500 | 100,000 | 1,000,000 | 10,000,000 |
 |  |  |  |  |  |
 | **Backups**                      | N/A | N/A | Weekly | Daily |
 | **Custom domains**               | N/A | Included | Included | Included | 
