@@ -1454,31 +1454,20 @@ Source: https://docs.strapi.io/cms/admin-panel-customization/favicon
 
 Strapi's [admin panel](/cms/admin-panel-customization) displays its branding on various places, including the [logo](/cms/admin-panel-customization/logos) and the favicon. Replacing these images allows you to match the interface and application to your identity.
 
-To replace the favicon:
+There are 2 approaches to replacing the favicon:
 
-1. Create a `/src/admin/extensions/` folder if the folder does not already exist.
-2. Upload your favicon into `/src/admin/extensions/`.
-3. Replace the existing **favicon.png|ico** file at the Strapi application root with a custom `favicon.png|ico` file.
-4. Update `/src/admin/app.[tsx|js]` with the following:
+* Replace the `favicon.png` file at the root of a Strapi project
+* Edit the [`strap`::favicon` middleware configuration](/configurations/middlewares#favicon), to replace the existing configuration or create it with the following code:
 
-   ```js title="./src/admin/app.js"
-   import favicon from "./extensions/favicon.png";
+  ```js title="/config/middlewares.js"
+  {
+    name: 'strapi::favicon',
+    config: {
+      path: 'my-custom-favicon.png',
+    },
+  ```
 
-   export default {
-     config: {
-       // replace favicon with a custom icon
-       head: {
-         favicon: favicon,
-       },
-     },
-   };
-   ```
-
-5. Rebuild, launch and revisit your Strapi app by running `yarn build && yarn develop` in the terminal.
-
-:::tip
-This same process may be used to replace the login logo (i.e. `AuthLogo`) and menu logo (i.e. `MenuLogo`) (see [logos customization documentation](/cms/admin-panel-customization/logos)).
-:::
+Once done, rebuild, launch and revisit your Strapi app by running `yarn build && yarn develop` in the terminal.
 
 :::caution
 Make sure that the cached favicon is cleared. It can be cached in your web browser and also with your domain management tool like Cloudflare's CDN.
