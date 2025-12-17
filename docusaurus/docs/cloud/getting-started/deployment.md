@@ -64,7 +64,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     }}
     />
 
-3. Choose a plan for your Strapi Cloud project: either Free, Essential, Pro, or Scale. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
+3. Choose a plan and a billing period for your Strapi Cloud project: either Free, Essential, Pro, or Scale. Feel free to refer to [Pricing](https://strapi.io/pricing-cloud) for more information.
 
 4. Connect a git repository to your new Strapi Cloud project.
 
@@ -151,7 +151,7 @@ Before you can deploy your Strapi application on Strapi Cloud using the Cloud da
     | Region       | Choose the geographic location of the servers where your Strapi application is hosted. Selected region can either be US (East), Europe (West) or Asia (Southeast). |
 
     :::note
-    The Git branch and "Deploy on push" settings can be modified afterwards through the project's settings, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
+    The Git branch and "Deploy on push" settings can be modified afterwards through the project settings, however the hosting region can only be chosen during the creation of the project (see [Project Settings](/cloud/projects/settings)).
     :::
 
     5.b. (optional) Click on **Show advanced settings** to fill in the following options:
