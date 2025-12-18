@@ -345,19 +345,21 @@ The environment's Node version is based on the one chosen at the creation of the
 #### Transferring data between environments {#transferring-data-between-environments}
 <CloudProBadge /> <CloudScaleBadge />
 
-The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same project. This is useful for testing changes in a secondary environment with up-to-date production data, or for preparing and staging content in a secondary environment before taking it to production.
+The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same Strapi Cloud project. This is useful for testing changes in a secondary environment with up-to-date production data, or for preparing and staging content in a secondary environment before taking it to production.
+
+Transferring data between environments currently comes with the following limitations:
+
+- You can only transfer toward a secondary environment (not the production environment).
+- Only project owners can initiate and manage ongoing transfers.
+- Transfers cannot be initiated on projects that are suspended.
 
 :::caution Data transfers are destructive
 Transferring data to an environment will permanently overwrite all existing data and assets in the target environment. The source environment's data remains unaffected, and its CMS can be accessed during the transfer. Environment settings (such as variables and domains) are not affected by the transfer.
 :::
 
-:::prerequisites
-- The feature is only available for transfers toward a secondary environment (not the production environment).
-- The source and target environments must be fully created and deployed.
-- Only project owners can initiate and manage ongoing transfers.
-- Transfers cannot be initiated on projects that are suspended.
-:::
+To transfer data to a secondary environment:
 
+1. Create and deploy both the source and target [environments](#environments).
 1. In the *Environment data* section of the <Icon name="faders" /> *Configuration* tab, click on the **Import data** button.
 2. In the modal that opens, select the source environment from the dropdown list. Only fully created and deployed environments are available as sources.
 3. Click on **Import data** to proceed, and follow the steps to confirm the transfer.
