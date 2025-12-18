@@ -128,4 +128,4 @@ If your project was suspended for reasons other than unpaid invoice leading to s
 If you want to cancel your Strapi Cloud subscription, you have 2 options:
 
 - either change your project's subscription to the free plan (see [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) documentation),
-- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-strapi-cloud-project) documentation).
+- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-a-strapi-cloud-project) documentation).
