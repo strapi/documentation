@@ -26,7 +26,7 @@ The settings' menu on the left side of the interface is separated into 2 categor
 
 ## Project-level settings
 
-There are 5 tabs available for the project's settings:
+There are 5 tabs available for the project settings:
 - <Icon name="faders" /> [*General*](#general),
 - <Icon name="stack" /> [*Environments*](#environments),
 - <Icon name="credit-card" /> [*Billing & Usage*](#billing--usage),
@@ -46,7 +46,7 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
 - *Connected Git repository*: to change the repository and branch used for your project (see [Modifying git repository & branch](#modifying-git-repository--branch)). Also allows to enable/disable the "deploy on push" option.
 - *Danger zone*, with:
   - *Transfer ownership*: for the project owner to transfer the ownership of the Cloud project to an already existing maintainer (see [Transferring project ownership](#transferring-project-ownership)).
-  - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-strapi-cloud-project)).
+  - *Delete project*: to permanently delete your Strapi Cloud project (see [Deleting Strapi Cloud project](#deleting-a-strapi-cloud-project)).
 
 <ThemedImage
   alt="Project settings page"
@@ -58,7 +58,7 @@ The <Icon name="faders" /> *General* tab for the project-level settings enables 
 
 #### Renaming project
 
-The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and can be modified afterwards via the project's settings.
+The project name is set at project creation (see [Project creation](/cloud/getting-started/deployment)) and can be modified afterwards via the project settings.
 
 1. In the *Basic information* section of the <Icon name="faders" /> *General* tab, click on the edit <Icon name="pencil-simple" /> button.
 2. In the dialog, write the new project name of your choice in the *Project name* textbox.
@@ -84,7 +84,7 @@ The license key is applied to all the environments in the project.
 
 #### Modifying git repository & branch
 
-The GitHub or GitLab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project's settings, it is possible to update the project's repository or switch to another git provider.
+The GitHub or GitLab repository, branch and base directory for a Strapi Cloud project are by default chosen at the creation of the project (see [Creating a project](/cloud/getting-started/deployment)). After the project's creation, via the project settings, it is possible to update the project repository or switch to another git provider.
 
 :::caution
 Updating the git repository could result in the loss of the project and its data, for instance if the wrong repository is selected or if the data schema between the old and new repository doesn't match.
@@ -139,7 +139,7 @@ As long as the ownership transfer or request hasn't been confirmed, there is the
 Once the ownership transfer is done, the project will be disconnected from Strapi Cloud. As new owner, make sure to go to the <Icon name="faders" /> *General* tab of project settings to reconnect the project.
 :::
 
-#### Deleting Strapi Cloud project
+#### Deleting a Strapi Cloud project
 
 You can delete any Strapi Cloud project, but it will be permanent and irreversible. Associated domains, deployments and data will be deleted as well and the subscription for the project will automatically be canceled.
 
@@ -152,10 +152,6 @@ You can delete any Strapi Cloud project, but it will be permanent and irreversib
 
 The <Icon name="stack" /> *Environments* tab allows to see all configured environments for the Strapi Cloud project, as well as to create new ones. Production is the default environment, which cannot be deleted. Other environments can be created (depending on the subscription plan for your project) to work more safely on isolated instances of your Strapi Cloud project (e.g. a staging environment where tests can be made before being available on production).
 
-:::tip
-Clicking on the **Manage** button for any environment will redirect you to the environment's own general settings, where it is possible to change the Node version, edit the git branches and delete or reset the environment. Please [refer to the dedicated documentation](#environments) for more information.
-:::
-
 <ThemedImage
   alt="Project overview"
   sources={{
@@ -164,8 +160,8 @@ Clicking on the **Manage** button for any environment will redirect you to the e
   }}
 />
 
-:::tip
-A new environment can also be added from the [project dashboard](/cloud/projects/overview#accessing-a-projects-dashboard).
+:::note
+The billing cycle of additional environments you purchase will match the billing cycle of your plan.
 :::
 
 To create a new environment:
@@ -191,10 +187,10 @@ If an error occurs during the environment creation, the progress indicator will 
 
 ### Billing & Usage
 
-The <Icon name="credit-card" /> *Billing & Usage* displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's and its environments' usage. It also allows you to add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
+The <Icon name="credit-card" /> *Billing & Usage* tab displays your next estimated payment, all information on the current subscription plan and a detailed summary of the project's usage. It also allows you to add new environments (please [refer to the documentation in the Environments section](#environments)) for your project.
 
 Through this tab, you also have the possibility to:
-- click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change you subscription plan ([see related documentation](#plans)),
+- click the **Change** button to be redirected to the <Icon name="map-trifold" /> *Plans* tab, where you can change you subscription plan or billing cycle ([see related documentation](#plans)),
 - click the **Edit** button in order to set a new payment method (see [related documentation](/cloud/account/account-billing)).
 
 :::note
@@ -217,12 +213,10 @@ Note also that if your usage indicates that another subscription plan would fit 
 
 ### Plans
 
-The <Icon name="map-trifold" /> *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to upgrade or downgrade from your current plan to another.
+The <Icon name="map-trifold" /> *Plans* tab displays an overview of the available Strapi Cloud plans and allows you to change your current plan, or your billing cycle.
 
 :::info
-Strapi recently launched [new Cloud plans](https://strapi.io/pricing-cloud). For now, you can [downgrade](#downgrading-to-another-plan) or [upgrade](#upgrading-to-another-plan) to another plan directly from the Cloud dashboard, under the <Icon name="gear-six"/> **Settings** > <Icon name="map-trifold" /> **Plans** section.
-
-If your project was created before the new plans were released, it may be on a *legacy* plan—deprecated but still supported. You can sidegrade to a new plan if desired (see [downgrade section](#downgrading-to-another-plan)).
+If your current plan is labeled as *legacy*, you will be able to sidegrade to a new plan (see [downgrade section](#downgrading-to-another-plan)). Once you sidegrade, you will no longer have access to your previous plan.
 :::
 
 <ThemedImage
@@ -235,45 +229,58 @@ If your project was created before the new plans were released, it may be on a *
 
 #### Upgrading to another plan
 
-Strapi Cloud plan upgrades to another, higher plan are immediate and can be managed for each project via the project settings.
-
-:::note
-When using the Free plan, the buttons to upgrade to another plan are greyed out and unusable until you have filled in your billing information. Please refer to [Account billing details](/cloud/account/account-billing) for more information.
-:::
+Plan upgrades are immediate and can be managed, for each project, via the project settings.
 
 To upgrade your current plan to a higher one:
 
-1. In the <Icon name="map-trifold" /> *Plans* tab of your project's settings, click on the **Upgrade** button of the plan you want to upgrade to.
-2. In the window that opens, check the payment details that indicate how much you will have to pay immediately after confirming the upgrade, and the available options.
+1. In the <Icon name="map-trifold" /> *Plans* tab of your project settings, choose between monthly and yearly billing frequency, and click on the **Upgrade** button of the plan you want to upgrade to.
+2. In the window that opens, review the payment details and terms of the upgrade.
 
    a. (optional) Click the **Edit** button to select another payment method.
+
    b. (optional) Click **I have a discount code**, enter your discount code in the field, and click on the **Apply** button.
 
-3. Click on the **Upgrade to [plan name]** button to confirm the upgrade of your Strapi project to another plan.
+3. Click on the **Upgrade to [plan name]** button to confirm the upgrade. The project will automatically be re-deployed.
 
 #### Downgrading to another plan
 
-Strapi Cloud plan downgrades can be managed for each project via the project settings. Downgrades are however not immediately effective: the higher plan will still remain active until the end of the current month (e.g. if you downgrade from the Scale plan to the Pro plan on June 18th, your project will remain on the Scale plan until the end of the month: on July 1st, the Pro plan will be effective for the project).
+Plan downgrades can be managed, for each project, via the project settings. Downgrades are, however, not immediately effective: the current plan will remain active until the end of the current billing period.
 
 :::caution
-Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for the overages. You may also lose access to some features: for example, downgrading to the Essential plan which doesn't include the Backups feature, would make you lose all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
+Make sure to check the usage of your Strapi Cloud project before downgrading: if your current usage exceeds the limits of the lower plan, you are taking the risk of getting charged for overages. You may also lose access to some features: for example, downgrading to the Essential plan would result in the loss of all your project's backups. Please refer to [Information on billing & usage](/cloud/getting-started/usage-billing) for more information.
 
-Note also that you cannot downgrade if you have additional environments (i.e. extra environments that have been purchased, not the default or included environments). For instance, if you wish to downgrade from the Pro plan to the Essential plan, you first need to delete all additional environments that have been configured (see [Resetting & Deleting environment](#resetting--deleting-environment)), for the **Downgrade** button to be displayed and available again.
+Note also that you cannot downgrade if you have additional paid environments. You will first need to delete all additional environments that were not included in the base price of you plan (see [Resetting & Deleting environment](#resetting--deleting-environment)) before you can schedule a downgrade. When downgrading from Pro to Scale, the additional included environment will automatically be deleted when the downgrade takes effect.
 :::
 
 To downgrade your current plan to a lower one:
 
-1. In the <Icon name="map-trifold" /> *Plans* tab of your project's settings, click on the **Downgrade** button of the plan you want to downgrade to.
-2. In the window that opens, check the information related to downgrading.
-3. Click on the **Downgrade** button to confirm the downgrade of your Strapi project's plan. 
+1. In the <Icon name="map-trifold" /> *Plans* tab of your project settings, choose between monthly and yearly billing frequency and click on the **Downgrade** button of the plan you want to downgrade to.
+2. In the window that opens, review the terms of the downgrade.
+3. Click on the **Downgrade** button to confirm the downgrade. The project will automatically be re-deployed.
 
 :::tip
-Downgrades are effective from the 1st of the following month. Before that date, you can click on the **Cancel downgrade** button to remain on the current plan.
+Downgrades are effective at the end of the current billing period. Whilst the change is pending, you can cancel the scheduled downgrade and stay on your current plan.
+:::
+
+#### Changing billing cycle
+
+You can switch your project's billing cycle between monthly and yearly billing at any time. While project plans and addons can either be billed monthly or yearly depending on your billing cycle, overages are always billed monthly.
+
+To change your billing cycle:
+
+1. In the <Icon name="map-trifold" /> *Plans* tab of your project settings, use the toggle at the top of the plans section to switch between monthly and yearly billing.
+3. Click the **Switch to [monthly/yearly] billing** button of your current plan.
+4. In the window that opens, review the terms of the billing cycle change.
+5. Click **Confirm switch** to confirm the change.
+
+:::note
+When switching from yearly to monthly billing, your plan will remain on its yearly cycle until your next renewal date. Whilst the change is pending, you can cancel the scheduled change and stay on your current billing cycle. When switching from monthly to yearly, however, the change is immediate.
 :::
 
 ### Invoices
 
-The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status.
+The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices for your Strapi Cloud project as well as their status. No invoice is issued for the Free plan.
+
 
 <ThemedImage
   alt="Project invoices"
@@ -288,8 +295,6 @@ The <Icon name="invoice" /> *Invoices* tab displays the full list of invoices fo
 :::strapi Invoices are also available in your profile settings.
 In the *Profile > Invoices* tab, you will find the complete list of invoices for all your projects. Feel free to check the [dedicated documentation](/cloud/account/account-billing#account-invoices).
 :::
-
-No invoice is issued for the Free plan.
 
 ## Environment-level settings
 
@@ -335,7 +340,7 @@ Ensure the Node version configured in your Strapi project matches the Node versi
 #### Editing Git branch
 
 
-2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project's settings, see [General](#general).
+2. In the *Edit branch* dialog, edit the available settings. Note that the branch can be edited for all environments at the same time via the project settings, see [General](#general).
 
     | Setting name    | Instructions                                                             |
     | --------------- | ------------------------------------------------------------------------ |

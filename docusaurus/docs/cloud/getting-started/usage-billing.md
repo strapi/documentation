@@ -22,7 +22,7 @@ Strapi Cloud offers 1 Free plan and 3 paid plans: Essential, Pro and Scale (see 
 | **Database Entries**             | 500   | Unlimited* | Unlimited* | Unlimited* |
 | **Asset Storage**               | 10GB  | 50GB      | 250GB | 1,000GB |
 | **Asset Bandwidth (per month)** | 10GB  | 50GB      | 500GB | 1,000GB |
-| **API Requests (per month)**     | 2,500 | 100,000 | 1,000,000 | 10,000,000 |
+| **API Requests (per month)**     | 2,500 | 50,000 | 1,000,000 | 10,000,000 |
 |  |  |  |  |  |
 | **Backups**                      | N/A | N/A | Weekly | Daily |
 | **Custom domains**               | N/A | Included | Included | Included | 
@@ -57,13 +57,13 @@ Upgrading to a paid plan disables scaling to zero and cold starts, resulting in 
 
 ## Environments management
 
-Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of a project's settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
+Environments are isolated instances of your Strapi Cloud project. All projects have a default production environment, but other additional environments can be configured for projects on a Pro or Scale plan, from the *Environments* tab of the project settings (see [Environments](/cloud/projects/settings#environments)). There is no limit to the number of additional environments that can be configured for a Strapi Cloud project.
 
 The usage limits of additional environments are the same as for the project's production environment (e.g. an additional environment on the Pro plan will be limited at 250GB for asset storage, and overages will be charged the same way as for the production environment). Note however that the asset bandwidth and API calls are project-based, not environment-based, so these usage limits do not change even with additional environments.
  
 ## Billing
 
-Billing is based on the usage of your Strapi Cloud account and projects. You will be billed monthly for the usage of your account and applications. You can view your usage and billing information in the <ExternalLink to="https://cloud.strapi.io/profile/billing" text="Billing"/> section of your Strapi Cloud account.
+Billing is based on the usage of your Strapi Cloud projects. Project plans and addons are either billed monthly or yearly, depending on your billing cycle, while overages are billed monthly. You can view your usage and billing information in the *Billing & Usage* section of your project settings.
 
 ### Overages
 
@@ -75,7 +75,7 @@ If you exceed the limits of your plan for API Requests, Asset Bandwidth, or Asse
 
 For example, if you exceed the 500GB limit in asset bandwidth of the Pro plan, you will be charged for the excess bandwidth at the end of the current billing period or on project deletion. Overages are not prorated and are charged in full.
 
-Overages are charged according to the following rates:
+Overages are charged monthly, according to the following rates:
 
 | Feature | Rate |
 | --- | --- |
@@ -85,15 +85,9 @@ Overages are charged according to the following rates:
 
 ### Project suspension
 
-Projects may end up in a **Suspended** state for various reasons, including: not paying the invoice, exceeding the limits of your free plan, or violating the <ExternalLink to="https://strapi.io/cloud-legal" text="terms of service"/>. 
+Projects may end up in a **Suspended** state for various reasons, including: unpaid invoices, exceeding the limits of your free plan, or violating Strapi Cloud's <ExternalLink to="https://strapi.io/cloud-legal" text="terms of service"/>. 
 
-If your project is suspended, you will no longer be able to access the application or trigger new deployments. You will also be unable to access the Strapi admin panel.
-
-You can view the status of your project in the <ExternalLink to="https://cloud.strapi.io/projects" text="Projects"/> section of your Strapi Cloud account and you will be notified by email.
-
-:::warning
-If you do not resolve the issue within 30 days, your suspended project will be deleted and all data will be permanently lost. To avoid this situation, you will be sent a first email when your project becomes suspended, then another email every 5 days until one week left, to remind you to solve the issue. The last week before the deletion of the project, you will be sent 3 more emails: 6 days, 3 days and 1 day before your project is finally deleted.
-:::
+If your project is suspended, you will no longer be able to access the Strapi admin panel, nor trigger new deployments. A banner will appear in your project's dashboard, indicating the cause of the suspension. You will also be notified by email.
 
 #### Project suspension for exceeding the Free plan limits
 
@@ -107,11 +101,11 @@ While the project is suspended:
 
 To reactivate the project immediately, users can upgrade to a paid plan.
 
-#### Project suspension after subscription cancellation
+#### Project suspension due to billing issues
 
-If you don't pay the invoice, then after few payment attempts the subscription of your project will automatically be canceled and the project will be suspended. 
+If you have unpaid invoices, the subscription of your project will automatically be canceled and the project suspended. 
 
-To reactivate your project, you can click on a *Reactivate subscription* button visible in the *Settings > Billing & Usage* tab of your suspended project (to reactivate the subscription you are on)
+To reactivate your project's subscription, head to *Settings > Billing & Usage* and click on the **Reactivate subscription** button.
 
 <ThemedImage
   alt="Reactivate subscription"
@@ -120,6 +114,10 @@ To reactivate your project, you can click on a *Reactivate subscription* button 
     dark: '/img/assets/cloud/settings-reactivate_DARK.png',
   }}
 />
+
+:::warning
+If you do not resolve the issue within 30 days, your suspended project will be deleted and all its data will be permanently lost.
+:::
 
 #### Project suspension for other reasons
 
@@ -130,4 +128,4 @@ If your project was suspended for reasons other than unpaid invoice leading to s
 If you want to cancel your Strapi Cloud subscription, you have 2 options:
 
 - either change your project's subscription to the free plan (see [Downgrading to another plan](/cloud/projects/settings#downgrading-to-another-plan) documentation),
-- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-strapi-cloud-project) documentation).
+- or completely delete your project (see [Deleting Strapi Cloud project](/cloud/projects/settings#deleting-a-strapi-cloud-project) documentation).
