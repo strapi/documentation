@@ -309,6 +309,7 @@ The <Icon name="faders" /> *Configuration* tab for the environment-level setting
   - the Node version of the environment: to change the Node version of the project (see [Modifying Node version](#modifying-node-version)).
   - the app's internal name for the environment, which can be useful for debug & support purposes.
 - *Connected branch*: to change the branch of the GitHub repository used for your environment (see [Editing Git branch](#editing-git-branch)). Also allows to enable/disable the "deploy on push" option.
+- *Environment data*: to transfer data from another environment within the same project (see [Transferring data between environments](#transferring-data-between-environments)).
 - *Danger zone*: to reset or permanently delete your Strapi Cloud project's environment (see [Resetting & Deleting environment](#resetting--deleting-environment)).
 
 <ThemedImage
@@ -343,6 +344,33 @@ Ensure the Node version configured in your Strapi project matches the Node versi
     | Deploy the project on every commit pushed to this branch | Tick the box to automatically trigger a new deployment whenever a new commit is pushed to the selected branch. Untick it to disable the option. |
 
 3. Click on the **Save & deploy** button for the changes to take effect.
+
+#### Transferring data between environments {#transferring-data-between-environments}
+<CloudProBadge /> <CloudScaleBadge />
+
+The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same Strapi Cloud project. This is useful for testing changes in a secondary environment with up-to-date production data, or for preparing and staging content in a secondary environment before taking it to production.
+
+Transferring data between environments currently comes with the following limitations:
+
+- You can only transfer toward a secondary environment (not the production environment).
+- Only project owners can initiate and manage ongoing transfers.
+- Transfers cannot be initiated on projects that are suspended.
+
+:::caution Data transfers are destructive
+Transferring data to an environment will permanently overwrite all existing data and assets in the target environment. The source environment's data remains unaffected, and its CMS can be accessed during the transfer. Environment settings (such as variables and domains) are not affected by the transfer.
+:::
+
+To transfer data to a secondary environment:
+
+1. Create and deploy both the source and target [environments](#environments).
+1. In the *Environment data* section of the <Icon name="faders" /> *Configuration* tab, click on the **Import data** button.
+2. In the modal that opens, select the source environment from the dropdown list. Only fully created and deployed environments are available as sources.
+3. Click on **Import data** to proceed, and follow the steps to confirm the transfer.
+4. Once initiated, you will be redirected to the environment's dashboard where you can monitor the transfer's progress. Once the transfer is completed, the dashboard will refresh, showing both the ongoing and historic deployments.
+
+:::note
+The CMS of the target environment will be inaccessible whilst the transfer is ongoing. You can cancel an ongoing transfer, but this will leave the target environment empty. If an error occurs during the transfer, you will have the option to retry or cancel.
+:::
 
 #### Resetting & Deleting environment
 
