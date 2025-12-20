@@ -902,23 +902,18 @@ strapi develop --bundler=webpack
 Source: https://docs.strapi.io/cms/admin-panel-customization/favicon
 
 ## Favicon
-Description: Create a /src/admin/extensions/ folder if the folder does not already exist.
+Description: Replace the favicon.png file at the root of a Strapi project Edit the strap::favicon` middleware configuration, to replace the existing configuration or create it with the following code:
 (Source: https://docs.strapi.io/cms/admin-panel-customization/favicon#favicon)
 
-Language: JavaScript
-File path: ./src/admin/app.js
+Language: JSON
+File path: /config/middlewares.js
 
-```js
-   import favicon from "./extensions/favicon.png";
-
-   export default {
-     config: {
-       // replace favicon with a custom icon
-       head: {
-         favicon: favicon,
-       },
-     },
-   };
+```json
+  {
+    name: 'strapi::favicon',
+    config: {
+      path: 'my-custom-favicon.png',
+    },
 ```
 
 
