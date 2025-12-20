@@ -46,6 +46,22 @@ Links
 - 12 Rules of Technical Writing: 12-rules-of-technical-writing.md (canonical)
 - External reference: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
 
+## Directory of AGENTS Guides
+
+- CMS (canonical): `docusaurus/docs/cms/AGENTS.md`
+- CMS – Concepts/Intro/Overview: `docusaurus/docs/cms/AGENTS.concepts.md`
+- CMS – How‑to Guides: `docusaurus/docs/cms/AGENTS.guides.md`
+- CMS – API docs: `docusaurus/docs/cms/api/AGENTS.md`
+- CMS – Configurations: `docusaurus/docs/cms/configurations/AGENTS.md`
+- CMS – Features: `docusaurus/docs/cms/features/AGENTS.md`
+- CMS – Migration/Breaking Changes: `docusaurus/docs/cms/migration/AGENTS.md`
+- CMS – Plugins: `docusaurus/docs/cms/plugins/AGENTS.md`
+- Cloud docs: `docusaurus/docs/cloud/AGENTS.md`
+- Snippets: `docusaurus/docs/snippets/AGENTS.md`
+
+Legacy mirrors (prefer the canonical guides above):
+- `cms/AGENTS.md`, `cloud/AGENTS.md`, `snippets/AGENTS.md`
+
 ## Git Usage Rules
 
 - Commit messages
