@@ -65,7 +65,7 @@ Legacy mirrors (prefer the canonical guides above):
 ## Git Usage Rules
 
 - Commit messages
-  - Start with an action verb in imperative mood (e.g., Add, Update, Fix).
+  - Start with a capitalized action verb in imperative mood (e.g., Add, Update, Fix).
   - Keep to 80 characters max; be succinct about what/why.
   - Do not prefix with "feat:", "chore:", or similar keywords.
   - Do not use PR-style phrasing (never start a commit with "This PR …").
