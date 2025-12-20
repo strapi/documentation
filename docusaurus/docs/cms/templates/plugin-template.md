@@ -4,6 +4,8 @@ description: One-sentence description of what the plugin adds.
 tags: [plugins]
 ---
 
+# TEMPLATE — Plugin Name
+
 <Tldr>
 What the plugin enables and when to use it.
 </Tldr>
@@ -30,4 +32,3 @@ Explain how to use it post-setup; add API sub-sections if relevant.
 
 ## Notes
 Compatibility, maintenance status, or cautions.
-

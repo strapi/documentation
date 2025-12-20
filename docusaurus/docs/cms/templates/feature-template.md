@@ -4,6 +4,8 @@ description: One-sentence summary of what this feature enables.
 tags: [features]
 ---
 
+# TEMPLATE — Feature Title
+
 <Tldr>
 What it is, why it matters, and typical use cases.
 </Tldr>
@@ -23,4 +25,3 @@ Known limits or caveats.
 
 ## Related Pages
 Link to guides, API, configuration, or plugins.
-

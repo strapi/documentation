@@ -4,6 +4,8 @@ description: One-sentence summary of this guide.
 tags: [guides]
 ---
 
+# TEMPLATE — Guide Title
+
 <Tldr>
 State the goal, prerequisites, and expected outcome.
 </Tldr>
@@ -27,4 +29,3 @@ Describe how to confirm it worked (UI, API response, logs).
 
 ## Troubleshooting
 Common issues and quick fixes.
-

@@ -4,6 +4,8 @@ description: One-sentence summary of what this config controls.
 tags: [configuration]
 ---
 
+# TEMPLATE — Configuration Title
+
 <Tldr>
 What this setting does, when to change it, and risks.
 </Tldr>
@@ -25,4 +27,3 @@ Mention dev vs. prod differences, security implications.
 
 ## Examples
 Provide 1–2 common configurations with file paths.
-

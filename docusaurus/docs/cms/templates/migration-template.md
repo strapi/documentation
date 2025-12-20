@@ -4,6 +4,8 @@ description: One-sentence summary of what changed and who is affected.
 tags: [migration]
 ---
 
+# TEMPLATE — Migration or Breaking Change
+
 <Tldr>
 Who is impacted, change summary, and high-level steps.
 </Tldr>
@@ -29,4 +31,3 @@ Who is impacted, change summary, and high-level steps.
 
 ## Deprecations and Removals
 List removed flags/APIs, and timelines.
-

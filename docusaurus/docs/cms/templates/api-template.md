@@ -4,6 +4,8 @@ description: One-sentence summary of the API.
 tags: [api]
 ---
 
+# TEMPLATE — API Title
+
 <Tldr>
 Briefly describe the endpoint(s), authentication, and typical use.
 </Tldr>
@@ -35,4 +37,3 @@ curl -H "Authorization: Bearer …" https://example.com/path
 
 ## Notes and Limits
 Versioning, deprecations, rate limits, or pagination.
-
