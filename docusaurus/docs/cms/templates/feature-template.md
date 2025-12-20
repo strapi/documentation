@@ -3,8 +3,7 @@ title: TEMPLATE — Feature Title
 description: One-sentence summary of what this feature enables.
 tags: [features]
 ---
-
-# TEMPLATE — Feature Title
+# Template — Feature Title
 
 <Tldr>
 What it is, why it matters, and typical use cases.

@@ -3,8 +3,7 @@ title: TEMPLATE — API Title
 description: One-sentence summary of the API.
 tags: [api]
 ---
-
-# TEMPLATE — API Title
+# Template — API Title
 
 <Tldr>
 Briefly describe the endpoint(s), authentication, and typical use.

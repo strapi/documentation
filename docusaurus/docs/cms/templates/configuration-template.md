@@ -6,8 +6,7 @@ description: One-sentence summary of what this configuration controls.
 tags:
   - configuration
 ---
-
-# TEMPLATE — Configuration Title
+# Template — Configuration Title
 
 <Tldr>
 What this setting does, when to change it, and risks.

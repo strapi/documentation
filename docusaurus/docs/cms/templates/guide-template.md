@@ -3,8 +3,7 @@ title: TEMPLATE — Guide Title
 description: One-sentence summary of this guide.
 tags: [guides]
 ---
-
-# TEMPLATE — Guide Title
+# Template — Guide Title
 
 <Tldr>
 State the goal, prerequisites, and expected outcome.

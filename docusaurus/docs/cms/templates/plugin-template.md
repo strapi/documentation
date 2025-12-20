@@ -3,8 +3,7 @@ title: TEMPLATE — Plugin Name
 description: One-sentence description of what the plugin adds.
 tags: [plugins]
 ---
-
-# TEMPLATE — Plugin Name
+# Template — Plugin Name
 
 <Tldr>
 What the plugin enables and when to use it.

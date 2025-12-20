@@ -3,8 +3,7 @@ title: TEMPLATE — Migration or Breaking Change
 description: One-sentence summary of what changed and who is affected.
 tags: [migration]
 ---
-
-# TEMPLATE — Migration or Breaking Change
+# Template — Migration or Breaking Change
 
 <Tldr>
 Who is impacted, change summary, and high-level steps.
