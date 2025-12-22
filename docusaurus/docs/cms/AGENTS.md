@@ -12,6 +12,9 @@ Frontmatter and structure
 - Always provide `title`, optional `description`, and meaningful headings (H2/H3).
 - Include a <Tldr> section at the top summarizing the page.
 
+Templates
+- CMS authoring templates live in `docusaurus/docs/cms/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
+
 MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.
 - Always specify code fence language and prefer `title=` with nearby `path:` lines.

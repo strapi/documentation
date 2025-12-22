@@ -44,3 +44,5 @@ Quality Checklist (before commit)
 - Validation section present; troubleshooting included when helpful.
 - Related links provided to features/APIs/concepts for continuity.
 
+Templates
+- Start from `docusaurus/docs/cms/templates/guide-template.md` to ensure frontmatter, H1/TL;DR placement, and step structure are consistent.

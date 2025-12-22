@@ -11,6 +11,7 @@ Frontmatter (recommended)
 - `title`: Configuration area (Title Case), e.g., “Database configuration”.
 - `description`: One concise sentence summarizing what the configuration controls.
 - Optional: tags specific to the configuration area.
+ - Optional: `displayed_sidebar: cmsSidebar` and `sidebar_label` to fit navigation.
 
 Required Section Order
 1) H1 title — matches `title` frontmatter.
@@ -28,6 +29,9 @@ Required Section Order
 8) Related links (H2)
    - Link to features using this configuration and to guides that modify these settings.
 
+Templates
+- Start from `docusaurus/docs/cms/templates/configuration-template.md` to keep frontmatter, H1/TL;DR placement, tables, env vars, and JS/TS Tabs consistent.
+
 Heading Conventions
 - Use H2 for major blocks (Structure, Tasks, Examples, Environment, Related links); H3 for specific tasks or nested keys.
 - Prefer explicit, descriptive headings (e.g., “`connection` configuration object”, “Admin panel configuration”).
@@ -40,4 +44,3 @@ Quality Checklist (before commit)
 - Examples include paths and runnable config snippets.
 - Environment notes present when settings differ by environment.
 - Related links to features/guides included.
-
