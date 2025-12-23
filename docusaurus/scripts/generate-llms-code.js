@@ -222,7 +222,14 @@ class DocusaurusLlmsCodeGenerator {
           let rel = path.relative(root, full).replace(/\\/g, '/');
           rel = rel.replace(/\.(md|mdx)$/i, '');
           rel = rel.replace(/\/(index)$/i, '');
-          if (rel) results.push(rel);
+          if (rel) {
+            // Skip agent guides and templates
+            if (/\bAGENTS(\.|$)/.test(rel) || /(^|\/)templates\//.test(rel)) {
+              // ignore
+            } else {
+              results.push(rel);
+            }
+          }
         }
       }
     };
