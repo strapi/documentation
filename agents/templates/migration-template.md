@@ -1,7 +1,9 @@
 ---
 title: TEMPLATE — Migration or Breaking Change
+displayed_sidebar: cmsSidebar
 description: One-sentence summary of what changed and who is affected.
-tags: [migration]
+tags:
+  - migration
 ---
 # Template — Migration or Breaking Change
 

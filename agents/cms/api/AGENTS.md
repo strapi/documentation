@@ -13,6 +13,10 @@ Frontmatter (recommended)
 - `tags`: Include relevant API tags (e.g., Content API, Document Service, REST, GraphQL).
 - Optional: `displayed_sidebar`, `sidebar_label` as needed by navigation.
 
+Templates
+- Start from `agents/templates/api-template.md` to align sections and example layout.
+- See `agents/templates/INDEX.md` for a quick catalog of available templates with paths and purposes.
+
 API Overview Pages (e.g., Content API)
 1) H1 title — matches `title` frontmatter.
 2) Optional TL;DR — brief orientation if it helps (1–2 sentences).
@@ -58,4 +62,3 @@ Quality Checklist (before commit)
 - Endpoint groups list path, method, params, body, responses, and examples.
 - Headings and section order match this guide; anchors are stable.
 - Related links to concepts/guides are included where helpful.
-

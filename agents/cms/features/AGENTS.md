@@ -11,7 +11,7 @@ Frontmatter (recommended)
 - `title`: Feature name (singular, title case).
 - `description`: One concise sentence describing what the feature enables.
 - `tags`: Include `features` and relevant keywords (e.g., `admin panel`).
-- `toc_max_heading_level`: 5 (recommended for deeper sections).
+- `displayed_sidebar`: Always use `cmsSidebar`.
 
 Required Section Order
 1) H1 title (Feature name)
@@ -66,3 +66,5 @@ Quality Checklist (before commit)
 - Headings follow H2/H3 pattern; section order matches this guide.
 - Links and references to related features/APIs are included where helpful.
 
+Templates
+- See `agents/templates/feature-template.md` for a ready‑to‑use skeleton aligned with these conventions.

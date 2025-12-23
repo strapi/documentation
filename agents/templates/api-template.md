@@ -1,7 +1,9 @@
 ---
 title: TEMPLATE — API Title
+displayed_sidebar: cmsSidebar
 description: One-sentence summary of the API.
-tags: [api]
+tags:
+  - api
 ---
 # Template — API Title
 

@@ -14,6 +14,7 @@ Frontmatter and structure
 
 Templates
 - CMS authoring templates live in `docusaurus/docs/cms/templates/` (guide, API, configuration, feature, migration, plugin). Start from a template to ensure structure and frontmatter are correct.
+- For a quick overview of available templates (paths and purposes), see the repo index at `agents/templates/INDEX.md`.
 
 MDX and code blocks
 - Use MDX Tabs for language variants (JS/TS) under the same example.

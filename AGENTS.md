@@ -48,16 +48,19 @@ Links
 
 ## Directory of AGENTS Guides
 
-- CMS (canonical): `docusaurus/docs/cms/AGENTS.md`
-- CMS – Concepts/Intro/Overview: `docusaurus/docs/cms/AGENTS.concepts.md`
-- CMS – How‑to Guides: `docusaurus/docs/cms/AGENTS.guides.md`
-- CMS – API docs: `docusaurus/docs/cms/api/AGENTS.md`
-- CMS – Configurations: `docusaurus/docs/cms/configurations/AGENTS.md`
-- CMS – Features: `docusaurus/docs/cms/features/AGENTS.md`
-- CMS – Migration/Breaking Changes: `docusaurus/docs/cms/migration/AGENTS.md`
-- CMS – Plugins: `docusaurus/docs/cms/plugins/AGENTS.md`
-- Cloud docs: `docusaurus/docs/cloud/AGENTS.md`
-- Snippets: `docusaurus/docs/snippets/AGENTS.md`
+- CMS (canonical): `agents/cms/AGENTS.md`
+- CMS – Concepts/Intro/Overview: `agents/cms/AGENTS.concepts.md`
+- CMS – How‑to Guides: `agents/cms/AGENTS.guides.md`
+- CMS – API docs: `agents/cms/api/AGENTS.md`
+- CMS – Configurations: `agents/cms/configurations/AGENTS.md`
+- CMS – Features: `agents/cms/features/AGENTS.md`
+- CMS – Migration/Breaking Changes: `agents/cms/migration/AGENTS.md`
+- CMS – Plugins: `agents/cms/plugins/AGENTS.md`
+- Cloud docs: `agents/cloud/AGENTS.md`
+- Snippets: `agents/snippets/AGENTS.md`
+
+Templates Index (authoring skeletons)
+- `agents/templates/INDEX.md`
 
 Legacy mirrors (prefer the canonical guides above):
 - `cms/AGENTS.md`, `cloud/AGENTS.md`, `snippets/AGENTS.md`

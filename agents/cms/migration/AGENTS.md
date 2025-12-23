@@ -58,3 +58,5 @@ Quality Checklist (before commit)
 - Validation steps present; edge cases documented when applicable.
 - Links to related docs (features/APIs/configuration) are included.
 
+Templates
+- See `agents/templates/migration-template.md` for a ready‑to‑use skeleton aligned with these conventions.

@@ -45,4 +45,4 @@ Quality Checklist (before commit)
 - Related links provided to features/APIs/concepts for continuity.
 
 Templates
-- Start from `docusaurus/docs/cms/templates/guide-template.md` to ensure frontmatter, H1/TL;DR placement, and step structure are consistent.
+- Start from `agents/templates/guide-template.md` to ensure frontmatter, H1/TL;DR placement, and step structure are consistent.

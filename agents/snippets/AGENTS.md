@@ -40,3 +40,10 @@ Quality Checklist (before commit)
 - Links are valid and relative when possible; external links use `<ExternalLink />`.
 - No page‑specific assumptions; snippet can be embedded in multiple contexts safely.
 - Regenerate `llms-code.txt` and verify the snippet metadata (language and file path) is correctly extracted.
+
+Templates
+- When a snippet evolves into a full page, prefer starting from a suitable CMS template:
+  - Guides: `docusaurus/docs/cms/templates/guide-template.md`
+  - API: `docusaurus/docs/cms/templates/api-template.md`
+  - Configuration: `docusaurus/docs/cms/templates/configuration-template.md`
+- For a compact overview of all templates with paths and purposes, see `agents/templates/INDEX.md`.

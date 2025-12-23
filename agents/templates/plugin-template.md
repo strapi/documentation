@@ -1,7 +1,9 @@
 ---
 title: TEMPLATE — Plugin Name
+displayed_sidebar: cmsSidebar
 description: One-sentence description of what the plugin adds.
-tags: [plugins]
+tags:
+  - plugins
 ---
 # Template — Plugin Name
 

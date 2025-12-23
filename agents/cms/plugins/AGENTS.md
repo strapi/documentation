@@ -57,3 +57,5 @@ Quality Checklist (before commit)
 - Usage section tasks are clear with examples/screenshots where helpful.
 - Links to Marketplace and related docs included.
 
+Templates
+- See `agents/templates/plugin-template.md` for a ready‑to‑use skeleton aligned with these conventions.

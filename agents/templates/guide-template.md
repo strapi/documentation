@@ -1,7 +1,9 @@
 ---
 title: TEMPLATE — Guide Title
+displayed_sidebar: cmsSidebar
 description: One-sentence summary of this guide.
-tags: [guides]
+tags:
+  - guides
 ---
 # Template — Guide Title
 

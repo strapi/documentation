@@ -30,7 +30,8 @@ Required Section Order
    - Link to features using this configuration and to guides that modify these settings.
 
 Templates
-- Start from `docusaurus/docs/cms/templates/configuration-template.md` to keep frontmatter, H1/TL;DR placement, tables, env vars, and JS/TS Tabs consistent.
+- Start from `agents/templates/configuration-template.md` to keep frontmatter, H1/TL;DR placement, tables, env vars, and JS/TS Tabs consistent.
+- Quick overview of all templates (paths and purposes): `agents/templates/INDEX.md`.
 
 Heading Conventions
 - Use H2 for major blocks (Structure, Tasks, Examples, Environment, Related links); H3 for specific tasks or nested keys.
