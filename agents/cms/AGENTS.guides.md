@@ -44,5 +44,9 @@ Quality Checklist (before commit)
 - Validation section present; troubleshooting included when helpful.
 - Related links provided to features/APIs/concepts for continuity.
 
+Tabs reminder
+- For multi‑language examples, use Tabs with `groupId="js-ts"` and values `js`/`ts` (labels `JavaScript`/`TypeScript`).
+- For install commands, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).
+
 Templates
 - Start from `agents/templates/guide-template.md` to ensure frontmatter, H1/TL;DR placement, and step structure are consistent.

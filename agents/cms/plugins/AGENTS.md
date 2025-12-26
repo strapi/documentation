@@ -34,6 +34,10 @@ Required Section Order
      - “Code-based configuration” — show `config/plugins.(js|ts)` (and other files) with code fences and file paths.
    - Include environment notes (e.g., disable in non‑production) under dedicated H3s when applicable.
 
+Tabs reminder
+- Installation: if both package managers are shown, use Tabs with `groupId="yarn-npm"` and values `yarn`/`npm` (labels `Yarn`/`NPM`).
+- Code examples: when showing both JS and TS, use Tabs with `groupId="js-ts"` and values `js`/`ts` (labels `JavaScript`/`TypeScript`).
+
 6) Usage (H2)
    - Explain how to use the plugin after configuration; split into H3 tasks (e.g., “Regenerating documentation”, “GraphQL API”).
    - Add API‑specific sub‑sections when relevant (REST/GraphQL endpoints, admin UI tools).
