@@ -62,7 +62,8 @@ Links
 - Snippets: `agents/snippets/AGENTS.md`
 
 Templates Index (authoring skeletons)
-- `agents/templates/INDEX.md`
+- `agents/templates/README.md` — explains the purpose of the templates directory.
+- `agents/templates/INDEX.md` — lists all templates with links.
 
 Legacy mirrors (prefer the canonical guides above):
 - `cms/AGENTS.md`, `cloud/AGENTS.md`, `snippets/AGENTS.md`

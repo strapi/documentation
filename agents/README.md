@@ -4,7 +4,7 @@ This directory stores agent‑only guides and authoring templates used to mainta
 
 What lives here
 - Authoring guidance for writers/humans: `agents/cms/*/AGENTS.md`, `agents/cloud/AGENTS.md`, `agents/snippets/AGENTS.md`.
-- Authoring skeletons for new pages: `agents/templates/*.md` and the index at `agents/templates/INDEX.md`.
+- Authoring skeletons for new pages: `agents/templates/*.md`.
 
 Audience
 - Human authors and reviewers who want consistent page structure and conventions.
@@ -16,7 +16,7 @@ Visibility and indexing
 - Ignored by LLM generators (`llms.txt` and `llms-code.txt`).
 
 Author workflow (human)
-1) Pick the right template from `agents/templates/INDEX.md`.
+1) Pick the right template from the templates index (see root `AGENTS.md` for link).
 2) Copy the file into `docusaurus/docs/...` and tailor the placeholders.
 3) Keep section order and component usage from the template (e.g., `<Tldr>`, `<Guideflow>`, `<IdentityCard>`, Tabs for JS/TS variants).
 4) Prefer paragraphs; only use bullets for discrete options or variants.
@@ -35,10 +35,10 @@ Safety rails
 - Not in sidebars: no agent files are referenced in `docusaurus/sidebars.js`.
 - Excluded from LLMs: generators ignore `AGENTS` and `templates` (and any `agents/**`) paths.
 
-Language groups (Tabs) — high level
-- Use Tabs only for multi‑language variants of the same example.
-- Keep shared context above the Tabs; keep each variant minimal.
-- For full rules and examples, see the component guidance referenced from the root `AGENTS.md`.
+Why these files exist
+- Keep authoring guidance and templates in‑repo and versioned alongside code.
+- Provide a consistent starting point for new pages and reduce review friction.
+- Prevent accidental publication and indexing of agent‑only materials.
 
 Do and Don’t
 - Do keep repo‑relative, clickable paths when linking files.
