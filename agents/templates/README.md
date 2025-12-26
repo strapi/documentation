@@ -8,4 +8,4 @@ What these templates provide
 - Canonical patterns for multi‑language examples using Tabs (see root `AGENTS.md` for component guidance links).
 
 Index
-- See the templates index for a catalog of available templates and direct links.
+- See `agents/templates/INDEX.md` for a catalog of available templates and direct links.
