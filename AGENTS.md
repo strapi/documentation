@@ -27,6 +27,8 @@ Key scripts and how to run
 File map (important paths)
 - AI toolbar: `docusaurus/src/components/AiToolbar/openLLM.js`, `.../config/aiToolsConfig.js`, `.../config/aiPromptTemplates.js`.
 - Generators/validators: `docusaurus/scripts/generate-llms-code.js`, `docusaurus/scripts/generate-llms.js`, `docusaurus/scripts/validate-prompts.js`.
+ - Authoring templates: `agents/templates/*.md` (see `agents/templates/INDEX.md`).
+ - Components guidance: `agents/templates/components/tabs.md` (Tabs/TabItem rules).
 
 Output and communication expectations
 - When asked, paste changed files or first 300 lines of generated artifacts.

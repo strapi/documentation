@@ -3,9 +3,8 @@
 This directory stores agent‑only guides and authoring templates used to maintain the documentation repository.
 
 What lives here
-- Authoring guidance: `agents/cms/*/AGENTS.md`, `agents/cloud/AGENTS.md`, `agents/snippets/AGENTS.md`.
-- Authoring skeletons: `agents/templates/*.md` and the index at `agents/templates/INDEX.md`.
-- Component guidance: `agents/templates/components/tabs.md` for Tabs/TabItem usage.
+- Authoring guidance for writers/humans: `agents/cms/*/AGENTS.md`, `agents/cloud/AGENTS.md`, `agents/snippets/AGENTS.md`.
+- Authoring skeletons for new pages: `agents/templates/*.md` and the index at `agents/templates/INDEX.md`.
 
 Audience
 - Human authors and reviewers who want consistent page structure and conventions.
@@ -36,12 +35,10 @@ Safety rails
 - Not in sidebars: no agent files are referenced in `docusaurus/sidebars.js`.
 - Excluded from LLMs: generators ignore `AGENTS` and `templates` (and any `agents/**`) paths.
 
-Language groups (Tabs) — summary
+Language groups (Tabs) — high level
 - Use Tabs only for multi‑language variants of the same example.
-- Allowed groups: `js-ts` (values `js`, `ts`) and `yarn-npm` (values `yarn`, `npm`).
-- Labels: `JavaScript`, `TypeScript`, `Yarn`, `NPM`. Default: JavaScript or Yarn.
-- File fences use plain file paths in `title` (no `path:`). Omit `title` for CLI.
-- See details and canonical examples in `agents/templates/components/tabs.md`.
+- Keep shared context above the Tabs; keep each variant minimal.
+- For full rules and examples, see the component guidance referenced from the root `AGENTS.md`.
 
 Do and Don’t
 - Do keep repo‑relative, clickable paths when linking files.
