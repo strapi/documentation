@@ -80,6 +80,5 @@ npm install @strapi/plugin-example
   </TabItem>
 </Tabs>
 
-Extraction and anchors
+Extraction
 - llms-code groups variants under a single example; keep descriptions above Tabs.
-- Use a clear H2/H3 heading directly above Tabs to provide a stable section anchor.
