@@ -504,7 +504,7 @@ Custom domains are not available on the Free plan. Downgrading to the Free plan 
 | Target                    | Type the target (i.e. actual address where users are redirected when entering hostname). |
 | Set as default domain     | Tick the box to make the new domain the default one.                      |
 
-3. Click on **Save**, or **Save & deploy** if you want the changes to take effect immediately.
+3. Click on **Save & deploy** for the changes to take effect.
 
 :::tip
 To finish setting up your custom domain, in the settings of your domain registar or hosting platform, please add the Target value (e.g., `proud-unicorn-123456af.strapiapp.com`) as a CNAME alias to the DNS records of your domain.
