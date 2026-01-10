@@ -11,15 +11,13 @@ tags:
 
 # Plugin creation
 
-This present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin.
+This guide walks you through the complete process of creating, developing, and publishing Strapi 5 plugins that can be used locally or distributed via NPM and the Marketplace. The Plugin SDK is the recommended way to build plugins, providing a comprehensive toolkit from initial setup to publishing.
 
-There are many ways to create a Strapi 5 plugin, but the fastest and recommended way is to use the Plugin SDK.
-
-The Plugin SDK is a set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
+The complete list of commands and their parameters are available in the [Plugin SDK reference](/cms/plugins-development/plugin-sdk). This page will guide you through using the main ones.
 
 Before proceeding with plugin development, it's important to understand the difference between local and external plugins:
 
-- **Local plugins**: Plugins that are developed within your Strapi project. By default, if you're within a Strapi project, the plugin will be placed within the `src/plugins` folder with the new folder corresponding to the plugin name.
+- **Local plugins**: Plugins that are developed within your Strapi project. By default, if you're within a Strapi project, the plugin will be placed within the `src/plugins` folder with the new folder corresponding to the plugin name. If a `plugins` folder already exists, the new plugin code will be placed there.
 - **External plugins**: Plugins that are developed outside your Strapi project (in a separate directory).
 
 The Plugin SDK can create both types of plugins. If you run the Plugin SDK command from within an existing Strapi project, it will create a local plugin. If you run it from outside a Strapi project, it will create an external plugin. The development process differs slightly between the two approaches, as outlined in the sections below.
@@ -57,11 +55,11 @@ npx @strapi/sdk-plugin init my-strapi-plugin
 
 The `my-strapi-plugin` part can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
 
-Once you run the command, you will be guided through a series of prompts to help you set up your plugin. If you select "yes" to all options, the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
+You will be guided through a series of prompts to help you set up your plugin. If you select "yes" to all options, the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
 
 ## Developing local plugins
 
-If you run the Plugin SDK command from within an existing Strapi project, the plugin will be created in the `src/plugins` folder within that project, with the new folder equal to the init command name. This allows you to develop plugins locally within your project structure.
+If you run the Plugin SDK command from within an existing Strapi project, the plugin will be created in the `src/plugins` folder within that project, with the new folder equal to the init command name. If a `plugins` folder already exists, the new plugin code will be placed there. This allows you to develop plugins locally within your project structure.
 
 When developing your plugin locally, you also need to add the following configuration to your plugins configuration file:
 
@@ -181,3 +179,50 @@ Because this plugin is installed via `node_modules`, you won't need to explicitl
 Now that your plugin is linked to a project, run `yarn develop` or `npm run develop` to start the Strapi application.
 
 You are now ready to develop your plugin as needed! If you are making server changes, you will need to restart your server for them to take effect.
+
+## Building the plugin for publishing
+
+When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
+
+<Tabs groupId="yarn-npm">
+
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn build && yarn verify
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm run build && npm run verify
+```
+
+</TabItem>
+
+</Tabs>
+
+These commands will not only build the plugin but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
+
+## Admin panel development
+
+If you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
+
+```ts
+import path from 'node:path';
+
+export default (config, webpack) => {
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    'my-strapi-plugin': path.resolve(
+      __dirname,
+      // We've assumed the plugin is local.
+      '../plugins/my-strapi-plugin/admin/src'
+    ),
+  };
+
+  return config;
+};
+```
