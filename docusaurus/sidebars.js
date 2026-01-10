@@ -15,7 +15,8 @@
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
   cmsSidebar: [
-    { // Getting Started
+    {
+      // Getting Started
       type: 'category',
       label: 'Getting Started',
       className: 'category-cms-getting-started',
@@ -40,9 +41,10 @@ const sidebars = {
           label: 'Content Type Builder',
         },
         'cms/deployment',
-      ]
+      ],
     },
-    { // Features
+    {
+      // Features
       type: 'category',
       label: 'Features',
       collapsible: false,
@@ -61,18 +63,18 @@ const sidebars = {
         {
           type: 'doc',
           label: 'Content History',
-          id: 'cms/features/content-history'
+          id: 'cms/features/content-history',
         },
         'cms/features/custom-fields',
         {
           type: 'doc',
           label: 'Data Management',
-          id: 'cms/features/data-management'
+          id: 'cms/features/data-management',
         },
         {
           type: 'doc',
           label: 'Draft & Publish',
-          id: 'cms/features/draft-and-publish'
+          id: 'cms/features/draft-and-publish',
         },
         'cms/features/email',
 
@@ -92,7 +94,7 @@ const sidebars = {
           id: 'cms/features/preview',
           customProps: {
             new: false,
-          }
+          },
         },
         {
           type: 'doc',
@@ -139,16 +141,16 @@ const sidebars = {
               label: 'Sentry',
               id: 'cms/plugins/sentry',
             },
-          ]
+          ],
         },
-
-      ]
+      ],
     },
-    { // APIs
+    {
+      // APIs
       type: 'category',
       label: 'APIs',
       className: 'category-cms-api',
-      link: {type: 'doc', id:'cms/api/content-api'},
+      link: { type: 'doc', id: 'cms/api/content-api' },
       collapsible: false,
       collapsed: false,
       items: [
@@ -162,7 +164,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/api/rest',
-              label: 'Endpoints'
+              label: 'Endpoints',
             },
             'cms/api/rest/parameters',
             'cms/api/rest/filters',
@@ -174,7 +176,7 @@ const sidebars = {
             'cms/api/rest/upload',
             'cms/api/rest/interactive-query-builder',
             'cms/api/rest/guides/intro',
-          ]
+          ],
         },
         {
           type: 'doc',
@@ -182,7 +184,7 @@ const sidebars = {
           id: 'cms/api/client',
           customProps: {
             new: false,
-          }
+          },
         },
         'cms/api/graphql',
         {
@@ -193,7 +195,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/api/document-service',
-              label: 'Available methods'
+              label: 'Available methods',
             },
             'cms/api/document-service/fields',
             'cms/api/document-service/filters',
@@ -202,18 +204,18 @@ const sidebars = {
             'cms/api/document-service/populate',
             'cms/api/document-service/sort-pagination',
             'cms/api/document-service/status',
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
-    { // Configurations
+    {
+      // Configurations
       type: 'category',
       label: 'Configurations',
       collapsed: false,
       collapsible: false,
       className: 'category-cms-configurations',
       items: [
-
         {
           type: 'doc',
           label: 'Configurations introduction',
@@ -225,14 +227,14 @@ const sidebars = {
           collapsed: true,
           customProps: {
             updated: false,
-            text: "The section has been simplified",
+            text: 'The section has been simplified',
             tooltip: `We simplified the admin panel configuration section to make it easier to navigate and find what you need.</div>
               <div>The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.</div>
               <div><em>Notes: </em>
               <ul>
                 <li>Lifecycle functions documentation has been moved to the Development section.</li>
                 <li>Email and Upload Providers documentation have been included in the corresponding Features pages.</li>
-              </div>`
+              </div>`,
           },
           items: [
             // {
@@ -251,54 +253,54 @@ const sidebars = {
             {
               type: 'link',
               label: 'Admin panel behavior',
-              href: '/cms/configurations/admin-panel#admin-panel-behavior'
+              href: '/cms/configurations/admin-panel#admin-panel-behavior',
             },
             {
               type: 'link',
               label: 'Admin panel server',
-              href: '/cms/configurations/admin-panel#admin-panel-server'
+              href: '/cms/configurations/admin-panel#admin-panel-server',
             },
             {
               type: 'link',
               label: 'API tokens',
-              href: '/cms/configurations/admin-panel#api-tokens'
+              href: '/cms/configurations/admin-panel#api-tokens',
             },
             {
               type: 'link',
               label: 'Audit Logs',
-              href: '/cms/configurations/admin-panel#audit-logs'
+              href: '/cms/configurations/admin-panel#audit-logs',
             },
             {
               type: 'link',
               label: 'Authentication',
-              href: '/cms/configurations/admin-panel#authentication'
+              href: '/cms/configurations/admin-panel#authentication',
             },
             {
               type: 'link',
               label: 'Feature flags',
-              href: '/cms/configurations/admin-panel#feature-flags'
+              href: '/cms/configurations/admin-panel#feature-flags',
             },
             {
               type: 'link',
               label: 'Forgot password',
-              href: '/cms/configurations/admin-panel#forgot-password'
+              href: '/cms/configurations/admin-panel#forgot-password',
             },
             {
               type: 'link',
               label: 'Rate limiting',
-              href: '/cms/configurations/admin-panel#rate-limiting'
+              href: '/cms/configurations/admin-panel#rate-limiting',
             },
             {
               type: 'link',
               label: 'Transfer tokens',
-              href: '/cms/configurations/admin-panel#transfer-tokens'
+              href: '/cms/configurations/admin-panel#transfer-tokens',
             },
             {
               type: 'link',
               label: 'Examples',
-              href: '/cms/configurations/admin-panel#configuration-examples'
+              href: '/cms/configurations/admin-panel#configuration-examples',
             },
-          ]
+          ],
         },
         'cms/configurations/api',
         {
@@ -319,9 +321,10 @@ const sidebars = {
           type: 'category',
           collapsed: true,
           collapsible: true,
-          label: "Database",
+          label: 'Database',
           customProps: {
-            tooltip: 'This section now regroups all the database-related configurations and guides, including migrations and transactions.' 
+            tooltip:
+              'This section now regroups all the database-related configurations and guides, including migrations and transactions.',
           },
           items: [
             {
@@ -331,7 +334,7 @@ const sidebars = {
             },
             'cms/database-migrations',
             'cms/database-transactions',
-          ]
+          ],
         },
         'cms/configurations/environment',
         'cms/configurations/features',
@@ -339,9 +342,9 @@ const sidebars = {
         'cms/configurations/middlewares',
         'cms/configurations/plugins',
         // { // TODO: moved to Features - add the TOC component here to highlight the move
-          // type: 'doc',
-          // id: 'cms/providers',
-          // label: 'Email & Upload Providers'
+        // type: 'doc',
+        // id: 'cms/providers',
+        // label: 'Email & Upload Providers'
         // },
         // 'cms/configurations/users-and-permissions-providers', // TODO: removed from TOC - add the TOC component here to highlight where to find them now
         'cms/configurations/server',
@@ -358,9 +361,10 @@ const sidebars = {
         //     // 'cms/configurations/guides/configure-sso', // TODO: removed from TOC and linked from feature page - add TOC component?
         //   ]
         // }
-      ]
+      ],
     },
-    { // Development
+    {
+      // Development
       type: 'category',
       label: 'Development',
       className: 'category-cms-development',
@@ -373,7 +377,8 @@ const sidebars = {
           label: 'Introduction',
         },
         'cms/configurations/functions',
-        { // Backend customization
+        {
+          // Backend customization
           type: 'category',
           label: 'Backend customization',
           collapsible: true,
@@ -382,7 +387,7 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/backend-customization',
-              label: 'Overview'
+              label: 'Overview',
             },
             'cms/backend-customization/requests-responses',
             'cms/backend-customization/routes',
@@ -392,9 +397,10 @@ const sidebars = {
             'cms/backend-customization/services',
             'cms/backend-customization/models',
             'cms/backend-customization/webhooks',
-          ]
+          ],
         },
-        { // Admin panel customization
+        {
+          // Admin panel customization
           type: 'category',
           label: 'Admin panel customization',
           collapsed: true,
@@ -408,7 +414,7 @@ const sidebars = {
             //     <li>Deployment-related configuration has been moved to the Configurations > Admin panel > Admin panel server page.</li>
             //     <li>Host, port, and path configuration documentation has been moved to the Configurations > Server page.</li>
             //   </ul>`
-            tooltip: "This section has been reorganized, see details below.",
+            tooltip: 'This section has been reorganized, see details below.',
           },
           items: [
             {
@@ -422,13 +428,13 @@ const sidebars = {
                   <br/>
                   <div><em>Note: </em>
                     Deployment-related configuration, including host, port, and path configuration, has been moved to the Configurations > Admin panel > <a href="/cms/configurations/admin-panel#admin-panel-server">Admin panel server</a> page.
-                  </div>`
-              }, 
+                  </div>`,
+              },
             },
             {
               type: 'doc',
               id: 'cms/admin-panel-customization',
-              label: 'Overview' // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
+              label: 'Overview', // TODO check if we can keep the page as-is or if we need to create a new "Introdution" page
             },
             'cms/admin-panel-customization/logos',
             'cms/admin-panel-customization/favicon',
@@ -444,19 +450,19 @@ const sidebars = {
             {
               type: 'doc',
               id: 'cms/admin-panel-customization/extension',
-              label: 'Admin panel extension'
+              label: 'Admin panel extension',
             },
             // 'cms/admin-panel-customization/host-port-path', // TODO move where appropriate
             // 'cms/admin-panel-customization/options', // TODO move where appropriate or remove
-          ]
+          ],
         },
-        { 
+        {
           type: 'doc',
           label: 'Homepage customization',
           id: 'cms/admin-panel-customization/homepage',
           customProps: {
             new: false,
-          }
+          },
         },
         // 'cms/cli', // TODO moved to its own category, add TOC component here to highlight it
         // { // TODO moved to introduction, add TOC component here to highlight it
@@ -467,7 +473,7 @@ const sidebars = {
         'cms/error-handling',
         'cms/templates',
         'cms/testing',
-      ]
+      ],
     },
     {
       type: 'category',
@@ -480,44 +486,45 @@ const sidebars = {
           type: 'html',
           value: 'placeholder', // a value is required for the HTML type, but it is not rendered
           customProps: {
-            tooltipTitle: "This section is new",
-            tooltipContent: "We grouped all the TypeScript-related content into a new section, including configurations, development tips, and guides."
-          }
+            tooltipTitle: 'This section is new',
+            tooltipContent:
+              'We grouped all the TypeScript-related content into a new section, including configurations, development tips, and guides.',
+          },
         },
         {
           type: 'doc',
           id: 'cms/typescript',
-          label: 'Introduction'
+          label: 'Introduction',
         },
         {
           type: 'doc',
           id: 'cms/configurations/typescript',
-          label: 'Configuration'
+          label: 'Configuration',
         },
         {
           type: 'doc',
           id: 'cms/typescript/development',
-          label: 'Development'
+          label: 'Development',
         },
         {
           type: 'doc',
           id: 'cms/typescript/guides',
-          label: 'Guides' // TODO ensure label is overriden
-        }
+          label: 'Guides', // TODO ensure label is overriden
+        },
         // 'cms/typescript/adding-support-to-existing-project' // ? will be linked from the Guides page
-      ]
+      ],
     },
-    { // Command Line Interface
+    {
+      // Command Line Interface
       type: 'category',
       label: 'Command Line Interface',
       className: 'category-cms-cli', // TODO add CSS for icon
       collapsed: false,
       collapsible: false,
-      items: [
-        'cms/cli'
-      ]
+      items: ['cms/cli'],
     },
-    { // Plugins
+    {
+      // Plugins
       type: 'category',
       label: 'Plugins',
       className: 'category-cms-plugins',
@@ -527,7 +534,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'cms/plugins/installing-plugins-via-marketplace',
-          label: 'Marketplace'
+          label: 'Marketplace',
         },
         {
           type: 'category',
@@ -537,24 +544,30 @@ const sidebars = {
             {
               type: 'doc',
               label: 'Developing plugins',
-              id: 'cms/plugins-development/developing-plugins'
+              id: 'cms/plugins-development/developing-plugins',
             },
             'cms/plugins-development/create-a-plugin',
             'cms/plugins-development/plugin-structure',
             'cms/plugins-development/plugin-sdk',
             'cms/plugins-development/admin-panel-api',
             'cms/plugins-development/content-manager-apis',
+            'cms/plugins-development/admin-configuration-customization',
+            'cms/plugins-development/plugin-apis',
+            'cms/plugins-development/plugin-initialization',
+            'cms/plugins-development/injection-zones',
+            'cms/plugins-development/plugin-readiness',
             'cms/plugins-development/server-api',
             'cms/plugins-development/plugins-extension',
             'cms/plugins-development/guides/pass-data-from-server-to-admin',
             'cms/plugins-development/guides/store-and-access-data',
             'cms/plugins-development/guides/create-components-for-plugins',
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     },
 
-    { // Upgrades
+    {
+      // Upgrades
       type: 'category',
       label: 'Upgrades',
       className: 'category-cms-upgrade',
@@ -570,158 +583,161 @@ const sidebars = {
             'cms/migration/v4-to-v5/introduction-and-faq',
             'cms/migration/v4-to-v5/step-by-step',
             'cms/migration/v4-to-v5/breaking-changes',
-            'cms/migration/v4-to-v5/additional-resources/introduction'
-          ]
+            'cms/migration/v4-to-v5/additional-resources/introduction',
+          ],
         },
-      ]
-    }
+      ],
+    },
   ],
 
   cloudSidebar: [
-    { // Getting Started
-      type: "category",
+    {
+      // Getting Started
+      type: 'category',
       collapsed: false,
-      label: "Getting Started",
+      label: 'Getting Started',
       collapsible: false,
-      className: "category-cloud-getting-started",
+      className: 'category-cloud-getting-started',
       items: [
-        "cloud/getting-started/intro",
+        'cloud/getting-started/intro',
         {
-          type: "doc",
-          label: "Cloud fundamentals",
-          id: "cloud/getting-started/cloud-fundamentals",
+          type: 'doc',
+          label: 'Cloud fundamentals',
+          id: 'cloud/getting-started/cloud-fundamentals',
           customProps: {
             new: false,
           },
         },
         {
-          type: "category",
-          label: "Project deployment",
+          type: 'category',
+          label: 'Project deployment',
           customProps: {
             updated: false,
           },
           items: [
             {
-              type: "doc",
-              id: "cloud/getting-started/deployment-options",
+              type: 'doc',
+              id: 'cloud/getting-started/deployment-options',
             },
             {
-              type: "doc",
-              id: "cloud/getting-started/deployment",
+              type: 'doc',
+              id: 'cloud/getting-started/deployment',
               customProps: {
                 updated: false,
               },
             },
             {
-              type: "doc",
-              id: "cloud/getting-started/deployment-cli",
+              type: 'doc',
+              id: 'cloud/getting-started/deployment-cli',
               customProps: {
                 new: false,
               },
-             },
+            },
           ],
         },
         {
-          type: "doc",
-          id: "cloud/getting-started/usage-billing",
+          type: 'doc',
+          id: 'cloud/getting-started/usage-billing',
           customProps: {
             updated: false,
           },
         },
-        "cloud/getting-started/caching",
+        'cloud/getting-started/caching',
         {
-          type: "doc",
-          label: "Notifications",
-          id: "cloud/projects/notifications",
+          type: 'doc',
+          label: 'Notifications',
+          id: 'cloud/projects/notifications',
         },
       ],
     },
-    { // Projects Management
-      type: "category",
+    {
+      // Projects Management
+      type: 'category',
       collapsed: false,
       collapsible: false,
-      label: "Projects management",
-      className: "category-cloud-projects",
+      label: 'Projects management',
+      className: 'category-cloud-projects',
       items: [
-        "cloud/projects/overview",
+        'cloud/projects/overview',
         {
-          type: "doc",
-          label: "Project settings",
-          id: "cloud/projects/settings",
+          type: 'doc',
+          label: 'Project settings',
+          id: 'cloud/projects/settings',
           customProps: {
             updated: true,
           },
         },
-        "cloud/projects/collaboration",
-        "cloud/projects/runtime-logs",
+        'cloud/projects/collaboration',
+        'cloud/projects/runtime-logs',
       ],
     },
-    { // Deployments
-      type: "category",
+    {
+      // Deployments
+      type: 'category',
       collapsed: false,
       collapsible: false,
-      label: "Deployments",
-      className: "category-cloud-deployments",
-      items: [
-        "cloud/projects/deploys",
-        "cloud/projects/deploys-history"
-      ],
+      label: 'Deployments',
+      className: 'category-cloud-deployments',
+      items: ['cloud/projects/deploys', 'cloud/projects/deploys-history'],
     },
-    { // Account Management
-      type: "category",
+    {
+      // Account Management
+      type: 'category',
       collapsed: false,
       collapsible: false,
-      className: "category-cloud-account",
-      label: "Account management",
+      className: 'category-cloud-account',
+      label: 'Account management',
       items: [
-        "cloud/account/account-settings",
+        'cloud/account/account-settings',
         {
-          type: "doc",
-          id: "cloud/account/account-billing",
-          label: "Account billing & invoices",
+          type: 'doc',
+          id: 'cloud/account/account-billing',
+          label: 'Account billing & invoices',
           customProps: {
             updated: false,
           },
         },
       ],
     },
-    { // CLI
-      type: "category",
+    {
+      // CLI
+      type: 'category',
       collapsed: false,
       collapsible: false,
-      className: "category-cloud-cli",
-      label: "Command Line Interface",
+      className: 'category-cloud-cli',
+      label: 'Command Line Interface',
       items: [
         {
-          type: "doc",
-          id: "cloud/cli/cloud-cli",
-          label: "Strapi Cloud CLI",
+          type: 'doc',
+          id: 'cloud/cli/cloud-cli',
+          label: 'Strapi Cloud CLI',
           customProps: {
             new: false,
           },
         },
       ],
     },
-    { // Advanced configurations
-      type: "category",
+    {
+      // Advanced configurations
+      type: 'category',
       collapsed: false,
       collapsible: false,
-      className: "category-cloud-configurations",
-      label: "Advanced configuration",
+      className: 'category-cloud-configurations',
+      label: 'Advanced configuration',
       items: [
-        "cloud/advanced/database",
+        'cloud/advanced/database',
         {
-          type: "doc",
-          id: "cloud/advanced/email",
-          label: "Email provider",
+          type: 'doc',
+          id: 'cloud/advanced/email',
+          label: 'Email provider',
           customProps: {
             new: false,
           },
         },
         {
-          type: "doc",
-          id: "cloud/advanced/upload",
-          label: "Upload provider",
+          type: 'doc',
+          id: 'cloud/advanced/upload',
+          label: 'Upload provider',
           customProps: {
             new: false,
           },

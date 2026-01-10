@@ -1,12 +1,14 @@
 ---
 title: Content Manager APIs
 description: The Content Manager APIs reference lists the APIs available to plugins for adding actions and options to the Content Manager List view and Edit view.
+pagination_prev: cms/plugins-development/admin-panel-api
+pagination_next: cms/plugins-development/admin-configuration-customization
 displayed_sidebar: cmsSidebar
 toc_max_heading_level: 4
 tags:
-- admin panel API
-- plugins development
-- plugins
+  - admin panel API
+  - plugins development
+  - plugins
 ---
 
 # Content Manager APIs
@@ -114,21 +116,24 @@ More information about types and APIs can be found in <ExternalLink to="https://
 Adding a panel to the sidebar can be done this way:
 
 ```jsx title="my-plugin/components/my-panel.ts"
-import type { PanelComponent, PanelComponentProps } from '@strapi/content-manager/strapi-admin';
+import type {
+  PanelComponent,
+  PanelComponentProps,
+} from '@strapi/content-manager/strapi-admin';
 
-const Panel: PanelComponent = ({ 
-  activeTab, 
-  collectionType, 
-  document, 
-  documentId, 
-  meta, 
-  model 
+const Panel: PanelComponent = ({
+  activeTab,
+  collectionType,
+  document,
+  documentId,
+  meta,
+  model,
 }: PanelComponentProps) => {
   return {
     title: 'My Panel',
-    content: <p>I'm on {activeTab}</p>
-  }
-}
+    content: <p>I'm on {activeTab}</p>,
+  };
+};
 ```
 
 ## Available APIs
@@ -164,13 +169,15 @@ Use this API to add more actions to the Edit view or the List View of the Conten
 
 - `header` of the Edit view:
 
-    ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
+  ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
+
 - `panel` of the Edit view:
 
-    ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
+  ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
+
 - `table-row` of the List view:
 
-    ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
+  ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
 
 ```jsx
 addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | DocumentActionComponent[])
@@ -178,62 +185,68 @@ addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | Documen
 
 #### DocumentActionDescription
 
-The interface and properties of the API look like the following: 
+The interface and properties of the API look like the following:
 
 ```jsx
 interface DocumentActionDescription {
-    label: string;
-    onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
-    icon?: React.ReactNode;
-    /**
-     * @default false
-     */
-    disabled?: boolean;
-    /**
-     * @default 'panel'
-     * @description Where the action should be rendered.
-     */
-    position?: DocumentActionPosition | DocumentActionPosition[];
-    dialog?: DialogOptions | NotificationOptions | ModalOptions;
-    /**
-     * @default 'secondary'
-     */
-    variant?: ButtonProps['variant'];
+  label: string;
+  onClick?: (
+    event: React.SyntheticEvent
+  ) => Promise<boolean | void> | boolean | void;
+  icon?: React.ReactNode;
+  /**
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * @default 'panel'
+   * @description Where the action should be rendered.
+   */
+  position?: DocumentActionPosition | DocumentActionPosition[];
+  dialog?: DialogOptions | NotificationOptions | ModalOptions;
+  /**
+   * @default 'secondary'
+   */
+  variant?: ButtonProps['variant'];
 }
 
 type DocumentActionPosition = 'panel' | 'header' | 'table-row';
 
 interface DialogOptions {
-    type: 'dialog';
-    title: string;
-    content?: React.ReactNode;
-    variant?: ButtonProps['variant'];
-    onConfirm?: () => void | Promise<void>;
-    onCancel?: () => void | Promise<void>;
+  type: 'dialog';
+  title: string;
+  content?: React.ReactNode;
+  variant?: ButtonProps['variant'];
+  onConfirm?: () => void | Promise<void>;
+  onCancel?: () => void | Promise<void>;
 }
 interface NotificationOptions {
-    type: 'notification';
-    title: string;
-    link?: {
-        label: string;
-        url: string;
-        target?: string;
-    };
-    content?: string;
-    onClose?: () => void;
-    status?: NotificationConfig['type'];
-    timeout?: number;
+  type: 'notification';
+  title: string;
+  link?: {
+    label: string,
+    url: string,
+    target?: string,
+  };
+  content?: string;
+  onClose?: () => void;
+  status?: NotificationConfig['type'];
+  timeout?: number;
 }
 interface ModalOptions {
-    type: 'modal';
-    title: string;
-    content: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    footer?: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    onClose?: () => void;
+  type: 'modal';
+  title: string;
+  content:
+    | React.ComponentType<{
+        onClose: () => void,
+      }>
+    | React.ReactNode;
+  footer?:
+    | React.ComponentType<{
+        onClose: () => void,
+      }>
+    | React.ReactNode;
+  onClose?: () => void;
 }
 ```
 
@@ -257,14 +270,16 @@ interface HeaderActionDescription {
   label: string;
   icon?: React.ReactNode;
   type?: 'icon' | 'default';
-  onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
+  onClick?: (
+    event: React.SyntheticEvent
+  ) => Promise<boolean | void> | boolean | void;
   dialog?: DialogOptions;
   options?: Array<{
-    disabled?: boolean;
-    label: string;
-    startIcon?: React.ReactNode;
-    textValue?: string;
-    value: string;
+    disabled?: boolean,
+    label: string,
+    startIcon?: React.ReactNode,
+    textValue?: string,
+    value: string,
   }>;
   onSelect?: (value: string) => void;
   value?: string;
@@ -290,7 +305,7 @@ addBulkAction(actions: DescriptionReducer<BulkActionComponent> | BulkActionCompo
 
 #### BulkActionDescription
 
-The interface and properties of the API look like the following: 
+The interface and properties of the API look like the following:
 
 ```jsx
 interface BulkActionDescription {

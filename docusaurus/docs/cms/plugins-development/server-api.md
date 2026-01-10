@@ -1,22 +1,23 @@
 ---
 title: Server API for plugins
 sidebar_label: Server API
+pagination_prev: cms/plugins-development/admin-configuration-customization
+pagination_next: cms/plugins-development/plugins-extension
 displayed_sidebar: cmsSidebar
 description: Strapi's Server API for plugins allows a Strapi plugin to customize the back end part (i.e. the server) of your application.
 tags:
-- plugin APIs
-- lifecycle function
-- register function
-- bootstrap function
-- destroy function
-- configuration
-- backend customization
-- routes
-- controllers
-- services
-- policies
-- middlewares
-
+  - plugin APIs
+  - lifecycle function
+  - register function
+  - bootstrap function
+  - destroy function
+  - configuration
+  - backend customization
+  - routes
+  - controllers
+  - services
+  - policies
+  - middlewares
 ---
 
 # Server API for plugins
@@ -47,7 +48,7 @@ The `/src/server/index.js` file at the root of the plugin folder exports the req
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li></ul>                                                                                                                                                                             |
+| Configuration          | <ul><li>[config](#configuration) object </li></ul>                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -67,7 +68,6 @@ This function is called to load the plugin, before the application is [bootstrap
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/src/register.js"
-
 'use strict';
 
 const register = ({ strapi }) => {
@@ -82,7 +82,6 @@ module.exports = register;
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/src/register.ts"
-
 import type { Core } from '@strapi/strapi';
 
 const register = ({ strapi }: { strapi: Core.Strapi }) => {
@@ -130,7 +129,6 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
 };
 
 export default bootstrap;
-
 ```
 
 </TabItem>
@@ -182,10 +180,10 @@ export default destroy;
 
 **Type**: `Object`
 
-| Parameter   | Type                                           | Description                                                                                                                                              |
-| ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
-| `validator` | Function                                       | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
+| Parameter   | Type                                       | Description                                                                                                                                                                                |
+| ----------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                                                           |
+| `validator` | Function                                   | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
 
 **Example:**
 
@@ -193,10 +191,9 @@ export default destroy;
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/src/config/index.js"
-
 module.exports = {
   default: ({ env }) => ({ optionA: true }),
-  validator: (config) => { 
+  validator: (config) => {
     if (typeof config.optionA !== 'boolean') {
       throw new Error('optionA has to be a boolean');
     }
@@ -209,10 +206,9 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/src/config/index.ts"
-
 export default {
   default: ({ env }) => ({ optionA: true }),
-  validator: (config) => { 
+  validator: (config) => {
     if (typeof config.optionA !== 'boolean') {
       throw new Error('optionA has to be a boolean');
     }
@@ -257,7 +253,6 @@ Content-Types keys in the `contentTypes` object should re-use the `singularName`
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/content-types/index.js"
-
 'use strict';
 
 const contentTypeA = require('./content-type-a');
@@ -270,7 +265,6 @@ module.exports = {
 ```
 
 ```js title="/src/plugins/my-plugin/server/content-types/content-type-a.js"
-
 module.exports = {
   kind: 'collectionType',
   collectionName: 'content-type',
@@ -289,7 +283,7 @@ module.exports = {
     },
     'content-type-builder': {
       visible: false,
-    }
+    },
   },
   attributes: {
     name: {
@@ -298,7 +292,7 @@ module.exports = {
       max: 50,
       configurable: false,
     },
-  }
+  },
 };
 ```
 
@@ -306,7 +300,6 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/content-types/index.ts"
-
 const contentTypeA = require('./content-type-a');
 const contentTypeB = require('./content-type-b');
 
@@ -317,7 +310,6 @@ module.exports = {
 ```
 
 ```js title="/src/plugins/my-plugin/server/content-types/content-type-a.ts"
-
 export default {
   kind: 'collectionType',
   collectionName: 'content-type',
@@ -336,7 +328,7 @@ export default {
     },
     'content-type-builder': {
       visible: false,
-    }
+    },
   },
   attributes: {
     name: {
@@ -345,7 +337,7 @@ export default {
       max: 50,
       configurable: false,
     },
-  }
+  },
 };
 ```
 
@@ -369,7 +361,6 @@ An array of [routes](/cms/backend-customization/routes) configuration.
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/index.js"
-
 const routes = require('./routes');
 
 module.exports = () => ({
@@ -379,7 +370,6 @@ module.exports = () => ({
 ```
 
 ```js title="/src/plugins/my-plugin/server/routes/index.js"
-
 module.exports = [
   {
     method: 'GET',
@@ -397,7 +387,6 @@ module.exports = [
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/index.ts"
-
 const routes = require('./routes');
 
 export default {
@@ -407,7 +396,6 @@ export default {
 ```
 
 ```js title="/src/plugins/my-plugin/server/routes/index.ts"
-
 export default [
   {
     method: 'GET',
@@ -428,14 +416,13 @@ export default [
 
 <TabItem value="both" label="Content API and admin routes">
 
-It is also possible to combine both admin and Content API routes if you need different policies on these: 
+It is also possible to combine both admin and Content API routes if you need different policies on these:
 
 <Tabs groupId="js-ts">
 
 <TabItem value="js" label="JavaScript">
 
 ```js title="./src/plugins/my-plugin/server/routes/index.js"
-
 module.exports = {
   admin: require('./admin'),
   'content-api': require('./content-api'),
@@ -443,32 +430,34 @@ module.exports = {
 ```
 
 ```js title="./src/plugins/my-plugin/server/routes/admin/index.js"
-
 module.exports = {
   type: 'admin',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['policyName'],
+  routes: [
+    {
+      method: 'GET',
+      path: '/model',
+      handler: 'controllerName.action',
+      config: {
+        policies: ['policyName'],
+      },
     },
-  }],
+  ],
 };
 ```
 
 ```js title="./src/plugins/my-plugin/server/routes/content-api/index.js"
-
 module.exports = {
   type: 'content-api',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['differentPolicyName'],
+  routes: [
+    {
+      method: 'GET',
+      path: '/model',
+      handler: 'controllerName.action',
+      config: {
+        policies: ['differentPolicyName'],
+      },
     },
-  }],
+  ],
 };
 ```
 
@@ -477,7 +466,6 @@ module.exports = {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/routes/index.ts"
-
 export default {
   admin: require('./admin'),
   'content-api': require('./content-api'),
@@ -485,32 +473,34 @@ export default {
 ```
 
 ```js title="/src/plugins/my-plugin/server/routes/admin/index.ts"
-
 export default {
   type: 'admin',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['policyName'],
+  routes: [
+    {
+      method: 'GET',
+      path: '/model',
+      handler: 'controllerName.action',
+      config: {
+        policies: ['policyName'],
+      },
     },
-  }],
+  ],
 };
 ```
 
 ```js title="./src/plugins/my-plugin/server/routes/content-api/index.ts"
-
 export default {
   type: 'content-api',
-  routes: [{
-    method: 'GET',
-    path: '/model',
-    handler: 'controllerName.action',
-    config: {
-      policies: ['differentPolicyName'],
+  routes: [
+    {
+      method: 'GET',
+      path: '/model',
+      handler: 'controllerName.action',
+      config: {
+        policies: ['differentPolicyName'],
+      },
     },
-  }],
+  ],
 };
 ```
 
@@ -534,7 +524,6 @@ An object with the [controllers](/cms/backend-customization/controllers) the plu
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/src/index.js"
-
 //…
 const controllers = require('./controllers');
 //…
@@ -547,7 +536,6 @@ module.exports = () => ({
 ```
 
 ```js title="/src/plugins/my-plugin/server/controllers/index.js"
-
 const controllerA = require('./controller-a');
 const controllerB = require('./controller-b');
 
@@ -558,7 +546,6 @@ module.exports = {
 ```
 
 ```js title="/src/plugins/my-plugin/server/controllers/controller-a.js"
-
 'use strict';
 
 const controllerA = ({ strapi }) => ({
@@ -572,7 +559,6 @@ const controllerA = ({ strapi }) => ({
 });
 
 module.exports = controllerA;
-
 ```
 
 </TabItem>
@@ -580,7 +566,6 @@ module.exports = controllerA;
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/src/index.ts"
-
 import controllers from './controllers';
 
 module.exports = () => ({
@@ -589,7 +574,6 @@ module.exports = () => ({
 ```
 
 ```js title="/src/plugins/my-plugin/server/controllers/index.ts"
-
 import controllerA from './controller-a';
 import controllerB from './controller-b';
 
@@ -600,7 +584,6 @@ export default {
 ```
 
 ```js title="/src/plugins/my-plugin/server/controllers/controller-a.ts"
-
 import type { Core } from '@strapi/strapi';
 
 const controllerA = ({ strapi }: { strapi: Core.Strapi }) => ({
@@ -614,7 +597,6 @@ const controllerA = ({ strapi }: { strapi: Core.Strapi }) => ({
 });
 
 export default controllerA;
-
 ```
 
 </TabItem>
@@ -636,7 +618,6 @@ Services should be functions taking `strapi` as a parameter.
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/src/index.js"
-
 // …
 const services = require('./services');
 // …
@@ -649,7 +630,6 @@ module.exports = () => ({
 ```
 
 ```js title="/src/plugins/my-plugin/server/services/index.js"
-
 const serviceA = require('./service-a');
 const serviceB = require('./service-b');
 
@@ -660,7 +640,6 @@ module.exports = {
 ```
 
 ```js title="./src/plugins/my-plugin/server/services/service-a.js"
-
 'use strict';
 
 const service = ({ strapi }) => ({
@@ -670,7 +649,6 @@ const service = ({ strapi }) => ({
 });
 
 module.exports = service;
-
 ```
 
 </TabItem>
@@ -678,7 +656,6 @@ module.exports = service;
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/src/index.ts"
-
 // …
 import services from './services';
 // …
@@ -691,7 +668,6 @@ export default {
 ```
 
 ```js title="/src/plugins/my-plugin/server/services/index.ts"
-
 import serviceA from './service-a';
 import serviceB from './service-b';
 
@@ -702,7 +678,6 @@ export default {
 ```
 
 ```js title="/src/plugins/my-plugin/server/services/service-a.ts"
-
 import type { Core } from '@strapi/strapi';
 
 const serviceA = ({ strapi }: { strapi: Core.Strapi }) => ({
@@ -712,7 +687,6 @@ const serviceA = ({ strapi }: { strapi: Core.Strapi }) => ({
 });
 
 export default serviceA;
-
 ```
 
 </TabItem>
@@ -732,8 +706,7 @@ An object with the [policies](/cms/backend-customization/policies) the plugin pr
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/src/index.js"
-
-"use strict";
+'use strict';
 
 //…
 const policies = require('./policies');
@@ -747,7 +720,6 @@ module.exports = {
 ```
 
 ```js title="/src/plugins/my-plugin/server/policies/index.js"
-
 const policyA = require('./policy-a');
 const policyB = require('./policy-b');
 
@@ -758,7 +730,6 @@ module.exports = {
 ```
 
 ```js title="/src/plugins/my-plugin/server/policies/policy-a.js"
-
 module.exports = (policyContext, config, { strapi }) => {
   if (ctx.state.user && ctx.state.user.isActive) {
     return true;
@@ -773,7 +744,6 @@ module.exports = (policyContext, config, { strapi }) => {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/src/index.ts"
-
 //…
 import policies from './policies';
 //…
@@ -786,7 +756,6 @@ module.exports = {
 ```
 
 ```js title="/src/plugins/my-plugin/server/policies/index.ts"
-
 import policyA from './policy-a';
 import policyB from './policy-b';
 
@@ -797,7 +766,6 @@ export default {
 ```
 
 ```js title="/src/plugins/my-plugin/server/policies/policy-a.ts"
-
 export default (policyContext, config, { strapi }) => {
   if (ctx.state.user && ctx.state.user.isActive) {
     return true;
@@ -824,20 +792,18 @@ An object with the [middlewares](/cms/configurations/middlewares) the plugin pro
 <TabItem value="js" label="JavaScript">
 
 ```js title="/src/plugins/my-plugin/server/middlewares/your-middleware.js"
-
-/** 
- * The your-middleware.js file 
+/**
+ * The your-middleware.js file
  * declares a basic middleware function and exports it.
  */
 'use strict';
 module.exports = async (ctx, next) => {
-  console.log("your custom logic")
+  console.log('your custom logic');
   await next();
-}
+};
 ```
 
 ```js title="./src/plugins/my-plugin/server/middlewares/index.js"
-
 /**
  * The middleware function previously created
  * is imported from its file and
@@ -847,14 +813,13 @@ module.exports = async (ctx, next) => {
 const yourMiddleware = require('./your-middleware');
 
 module.exports = {
-  yourMiddleware
+  yourMiddleware,
 };
 ```
 
 ```js title="./src/plugins/my-plugin/server/register.js"
-
 /**
- * The middleware is called from 
+ * The middleware is called from
  * the plugin's register lifecycle function.
  */
 'use strict';
@@ -870,21 +835,19 @@ module.exports = ({ strapi }) => {
 <TabItem value="ts" label="TypeScript">
 
 ```js title="/src/plugins/my-plugin/server/middlewares/your-middleware.ts"
-
-/** 
- * The your-middleware.js file 
+/**
+ * The your-middleware.js file
  * declares a basic middleware function and exports it.
  */
 const middleware = async (ctx, next) => {
-  console.log("your custom logic")
+  console.log('your custom logic');
   await next();
-}
+};
 
 export default middleware;
 ```
 
 ```js title="./src/plugins/my-plugin/server/middlewares/index.ts"
-
 /**
  * The middleware function previously created
  * is imported from its file and
@@ -893,14 +856,13 @@ export default middleware;
 import yourMiddleware from 'your-middleware';
 
 export default {
-  yourMiddleware
+  yourMiddleware,
 };
 ```
 
 ```js title="/src/plugins/my-plugin/server/register.ts"
-
 /**
- * The middleware is called from 
+ * The middleware is called from
  * the plugin's register lifecycle function.
  */
 import type { Core } from '@strapi/strapi';
@@ -909,7 +871,6 @@ import middlewares from './middlewares';
 export default ({ strapi }: { strapi: Core.Strapi }) => {
   strapi.server.use(middlewares.yourMiddleware);
 };
-
 ```
 
 </TabItem>
@@ -924,26 +885,26 @@ Once a plugin is exported and loaded into Strapi, its features are accessible in
 - global getters are syntactic sugar that allows direct access using a feature's uid<br/>(e.g., `strapi.controller('plugin::plugin-name.controller-name')`).
 
 ```js
-// Access an API or a plugin controller using a top-level getter 
-strapi.api['api-name'].controller('controller-name')
-strapi.plugin('plugin-name').controller('controller-name')
+// Access an API or a plugin controller using a top-level getter
+strapi.api['api-name'].controller('controller-name');
+strapi.plugin('plugin-name').controller('controller-name');
 
 // Access an API or a plugin controller using a global getter
-strapi.controller('api::api-name.controller-name')
-strapi.controller('plugin::plugin-name.controller-name')
+strapi.controller('api::api-name.controller-name');
+strapi.controller('plugin::plugin-name.controller-name');
 ```
 
 <details>
 <summary> Top-level getter syntax examples</summary>
 
 ```js
-strapi.plugin('plugin-name').config
-strapi.plugin('plugin-name').routes
-strapi.plugin('plugin-name').controller('controller-name')
-strapi.plugin('plugin-name').service('service-name')
-strapi.plugin('plugin-name').contentType('content-type-name')
-strapi.plugin('plugin-name').policy('policy-name')
-strapi.plugin('plugin-name').middleware('middleware-name')
+strapi.plugin('plugin-name').config;
+strapi.plugin('plugin-name').routes;
+strapi.plugin('plugin-name').controller('controller-name');
+strapi.plugin('plugin-name').service('service-name');
+strapi.plugin('plugin-name').contentType('content-type-name');
+strapi.plugin('plugin-name').policy('policy-name');
+strapi.plugin('plugin-name').middleware('middleware-name');
 ```
 
 </details>

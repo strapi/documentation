@@ -9324,6 +9324,216 @@ Follow the steps below and leverage retro-compatibility flags and guided migrati
 
 
 
+# Admin Configuration & Customization
+Source: https://docs.strapi.io/cms/plugins-development/admin-configuration-customization
+
+# Admin Configuration & Customization
+
+This section covers advanced configuration and customization options for Strapi plugins in the admin panel. Learn how to configure plugins, expose APIs, manage initialization, and customize the admin interface.
+
+:::prerequisites
+You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and understand the [Admin Panel API](/cms/plugins-development/admin-panel-api).
+:::
+
+## Overview
+
+The `registerPlugin` method is the core function for registering a plugin in the admin panel. It allows you to configure how your plugin integrates with Strapi's admin interface through several key parameters:
+
+```typescript
+app.registerPlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+  apis: {
+    // APIs exposed to other plugins
+  },
+  initializer: MyInitializerComponent,
+  injectionZones: {
+    // Areas where other plugins can inject components
+  },
+  isReady: false, // Plugin readiness status
+});
+```
+
+## Configuration Options
+
+| Parameter        | Type                      | Required | Description                               |
+| ---------------- | ------------------------- | -------- | ----------------------------------------- |
+| `id`             | `string`                  | ✅       | Unique plugin identifier                  |
+| `name`           | `string`                  | ✅       | Plugin display name                       |
+| `apis`           | `Record<string, unknown>` | ❌       | APIs exposed to other plugins             |
+| `initializer`    | `React.ComponentType`     | ❌       | Component for plugin initialization       |
+| `injectionZones` | `object`                  | ❌       | Available injection zones                 |
+| `isReady`        | `boolean`                 | ❌       | Plugin readiness status (default: `true`) |
+
+## Available Topics
+
+### [Plugin APIs](/cms/plugins-development/plugin-apis)
+
+Learn how to expose functionality that other plugins can use, creating a plugin ecosystem where plugins can interact and extend each other's capabilities.
+
+**Use Case**: Build a notification plugin that other plugins can use to send notifications throughout the admin panel.
+
+### [Plugin Initialization](/cms/plugins-development/plugin-initialization)
+
+Understand how to perform asynchronous operations before your plugin becomes ready to use, including loading configuration, fetching data, and handling setup tasks.
+
+**Use Case**: Create a configuration plugin that loads settings from an external API before becoming ready.
+
+### [Injection Zones](/cms/plugins-development/injection-zones)
+
+Discover how to define areas where other plugins can inject UI components, creating a flexible system for extending and customizing the admin panel interface.
+
+**Use Case**: Build a dashboard plugin that provides injection zones for other plugins to add widgets.
+
+### [Plugin Readiness](/cms/plugins-development/plugin-readiness)
+
+Master the control of when your plugin becomes available for use in the admin panel, including managing dependencies and loading order.
+
+**Use Case**: Create a multi-step configuration plugin that only becomes ready when all setup steps are complete.
+
+## Quick Start Guide
+
+### 1. Basic Plugin Registration
+
+```typescript
+// Simple plugin registration
+app.registerPlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+});
+```
+
+### 2. Plugin with APIs
+
+```typescript
+// Plugin that exposes APIs
+app.registerPlugin({
+  id: 'notifications',
+  name: 'Notifications',
+  apis: {
+    sendNotification: (message: string, type: string) => {
+      console.log(`[${type}] ${message}`);
+    },
+  },
+});
+```
+
+### 3. Plugin with Initialization
+
+```typescript
+// Plugin that needs initialization
+app.registerPlugin({
+  id: 'config-plugin',
+  name: 'Configuration',
+  initializer: ConfigInitializer,
+  isReady: false,
+});
+```
+
+### 4. Plugin with Injection Zones
+
+```typescript
+// Plugin that provides injection zones
+app.registerPlugin({
+  id: 'dashboard',
+  name: 'Dashboard',
+  injectionZones: {
+    'dashboard.main': {
+      top: [],
+      bottom: [],
+    },
+  },
+});
+```
+
+## Best Practices
+
+### 1. Plugin Design
+
+- **Keep APIs simple**: Use clear, descriptive method names
+- **Provide type safety**: Use TypeScript for better developer experience
+- **Handle errors gracefully**: Always include error handling in your APIs
+- **Document your APIs**: Provide clear documentation for other developers
+
+### 2. Initialization
+
+- **Use initializers sparingly**: Only when you need async operations
+- **Provide loading states**: Show users that the plugin is initializing
+- **Handle failures**: Gracefully handle initialization failures
+- **Set timeouts**: Prevent plugins from hanging indefinitely
+
+### 3. Plugin Communication
+
+- **Check plugin existence**: Always verify a plugin exists before using its APIs
+- **Use defensive programming**: Handle cases where APIs might not be available
+- **Avoid circular dependencies**: Be careful not to create circular plugin dependencies
+
+## Common Patterns
+
+### Plugin-to-Plugin Communication
+
+```typescript
+// Plugin A exposes APIs
+app.registerPlugin({
+  id: 'plugin-a',
+  name: 'Plugin A',
+  apis: {
+    doSomething: (data: any) => {
+      // Implementation
+    }
+  }
+});
+
+// Plugin B uses Plugin A's APIs
+bootstrap(app) {
+  const pluginA = app.getPlugin('plugin-a');
+
+  if (pluginA?.apis) {
+    pluginA.apis.doSomething({ example: 'data' });
+  }
+}
+```
+
+### Conditional Plugin Loading
+
+```typescript
+register(app) {
+  // Only register if certain conditions are met
+  if (shouldRegisterPlugin()) {
+    app.registerPlugin({
+      id: 'conditional-plugin',
+      name: 'Conditional Plugin',
+      // ... configuration
+    });
+  }
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Plugin not found**: Ensure the plugin ID matches exactly
+2. **APIs not available**: Check if the plugin has been properly registered
+3. **Initialization hanging**: Verify the `setPlugin` function is called
+4. **Circular dependencies**: Avoid plugins depending on each other
+
+### Debugging Tips
+
+- Use browser dev tools to inspect the plugin registry
+- Add console logs to track plugin initialization
+- Check the Strapi admin panel for plugin status
+- Verify plugin configuration in the admin interface
+
+## Next Steps
+
+- Start with [Plugin APIs](/cms/plugins-development/plugin-apis) to learn about inter-plugin communication
+- Explore [Plugin Initialization](/cms/plugins-development/plugin-initialization) for async plugin setup
+- Check out [Injection Zones](/cms/plugins-development/injection-zones) for UI component injection
+- Learn about [Plugin Readiness](/cms/plugins-development/plugin-readiness) for managing plugin lifecycle
+
+
+
 # Admin Panel API
 Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api
 
@@ -9922,19 +10132,23 @@ Adding a panel to the sidebar can be done this way:
 
 ```jsx title="my-plugin/components/my-panel.ts"
 
-const Panel: PanelComponent = ({ 
-  activeTab, 
-  collectionType, 
-  document, 
-  documentId, 
-  meta, 
-  model 
+  PanelComponent,
+  PanelComponentProps,
+} from '@strapi/content-manager/strapi-admin';
+
+const Panel: PanelComponent = ({
+  activeTab,
+  collectionType,
+  document,
+  documentId,
+  meta,
+  model,
 }: PanelComponentProps) => {
   return {
     title: 'My Panel',
-    content: <p>I'm on {activeTab}</p>
-  }
-}
+    content: <p>I'm on {activeTab}</p>,
+  };
+};
 ```
 
 ## Available APIs
@@ -9970,13 +10184,15 @@ Use this API to add more actions to the Edit view or the List View of the Conten
 
 - `header` of the Edit view:
 
-    ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
+  ![Header of the Edit view](/img/assets/content-manager-apis/add-document-action-header.png)
+
 - `panel` of the Edit view:
 
-    ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
+  ![Panel of the Edit View](/img/assets/content-manager-apis/add-document-action-panel.png)
+
 - `table-row` of the List view:
 
-    ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
+  ![Table-row in the List View](/img/assets/content-manager-apis/add-document-action-tablerow.png)
 
 ```jsx
 addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | DocumentActionComponent[])
@@ -9984,62 +10200,68 @@ addDocumentAction(actions: DescriptionReducer<DocumentActionComponent> | Documen
 
 #### DocumentActionDescription
 
-The interface and properties of the API look like the following: 
+The interface and properties of the API look like the following:
 
 ```jsx
 interface DocumentActionDescription {
-    label: string;
-    onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
-    icon?: React.ReactNode;
-    /**
-     * @default false
-     */
-    disabled?: boolean;
-    /**
-     * @default 'panel'
-     * @description Where the action should be rendered.
-     */
-    position?: DocumentActionPosition | DocumentActionPosition[];
-    dialog?: DialogOptions | NotificationOptions | ModalOptions;
-    /**
-     * @default 'secondary'
-     */
-    variant?: ButtonProps['variant'];
+  label: string;
+  onClick?: (
+    event: React.SyntheticEvent
+  ) => Promise<boolean | void> | boolean | void;
+  icon?: React.ReactNode;
+  /**
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * @default 'panel'
+   * @description Where the action should be rendered.
+   */
+  position?: DocumentActionPosition | DocumentActionPosition[];
+  dialog?: DialogOptions | NotificationOptions | ModalOptions;
+  /**
+   * @default 'secondary'
+   */
+  variant?: ButtonProps['variant'];
 }
 
 type DocumentActionPosition = 'panel' | 'header' | 'table-row';
 
 interface DialogOptions {
-    type: 'dialog';
-    title: string;
-    content?: React.ReactNode;
-    variant?: ButtonProps['variant'];
-    onConfirm?: () => void | Promise<void>;
-    onCancel?: () => void | Promise<void>;
+  type: 'dialog';
+  title: string;
+  content?: React.ReactNode;
+  variant?: ButtonProps['variant'];
+  onConfirm?: () => void | Promise<void>;
+  onCancel?: () => void | Promise<void>;
 }
 interface NotificationOptions {
-    type: 'notification';
-    title: string;
-    link?: {
-        label: string;
-        url: string;
-        target?: string;
-    };
-    content?: string;
-    onClose?: () => void;
-    status?: NotificationConfig['type'];
-    timeout?: number;
+  type: 'notification';
+  title: string;
+  link?: {
+    label: string,
+    url: string,
+    target?: string,
+  };
+  content?: string;
+  onClose?: () => void;
+  status?: NotificationConfig['type'];
+  timeout?: number;
 }
 interface ModalOptions {
-    type: 'modal';
-    title: string;
-    content: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    footer?: React.ComponentType<{
-        onClose: () => void;
-    }> | React.ReactNode;
-    onClose?: () => void;
+  type: 'modal';
+  title: string;
+  content:
+    | React.ComponentType<{
+        onClose: () => void,
+      }>
+    | React.ReactNode;
+  footer?:
+    | React.ComponentType<{
+        onClose: () => void,
+      }>
+    | React.ReactNode;
+  onClose?: () => void;
 }
 ```
 
@@ -10063,14 +10285,16 @@ interface HeaderActionDescription {
   label: string;
   icon?: React.ReactNode;
   type?: 'icon' | 'default';
-  onClick?: (event: React.SyntheticEvent) => Promise<boolean | void> | boolean | void;
+  onClick?: (
+    event: React.SyntheticEvent
+  ) => Promise<boolean | void> | boolean | void;
   dialog?: DialogOptions;
   options?: Array<{
-    disabled?: boolean;
-    label: string;
-    startIcon?: React.ReactNode;
-    textValue?: string;
-    value: string;
+    disabled?: boolean,
+    label: string,
+    startIcon?: React.ReactNode,
+    textValue?: string,
+    value: string,
   }>;
   onSelect?: (value: string) => void;
   value?: string;
@@ -10096,7 +10320,7 @@ addBulkAction(actions: DescriptionReducer<BulkActionComponent> | BulkActionCompo
 
 #### BulkActionDescription
 
-The interface and properties of the API look like the following: 
+The interface and properties of the API look like the following:
 
 ```jsx
 interface BulkActionDescription {
@@ -10123,84 +10347,41 @@ Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin
 
 # Plugin creation
 
+This present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin.
+
 There are many ways to create a Strapi 5 plugin, but the fastest and recommended way is to use the Plugin SDK.
 
 The Plugin SDK is a set of commands orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
 
-With the Plugin SDK, you do not need to set up a Strapi project before creating a plugin.
+Before proceeding with plugin development, it's important to understand the difference between local and external plugins:
 
-The present guide covers creating a plugin from scratch, linking it to an existing Strapi project, and publishing the plugin. If you already have an existing plugin, you can instead retrofit the plugin setup to utilise the Plugin SDK commands (please refer to the [Plugin SDK reference](/cms/plugins-development/plugin-sdk) for a full list of available commands).
+- **Local plugins**: Plugins that are developed within your Strapi project. By default, if you're within a Strapi project, the plugin will be placed within the `src/plugins` folder with the new folder corresponding to the plugin name.
+- **External plugins**: Plugins that are developed outside your Strapi project (in a separate directory).
 
-:::note
-This guide assumes you want to develop a plugin external to your Strapi project. However, the steps largely remain the same if you want to develop a plugin within your existing project. If you are not [using a monorepo](#monorepo) the steps are exactly the same.
-:::
+The Plugin SDK can create both types of plugins. If you run the Plugin SDK command from within an existing Strapi project, it will create a local plugin. If you run it from outside a Strapi project, it will create an external plugin. The development process differs slightly between the two approaches, as outlined in the sections below.
 
-:::prerequisites
+In addition to the plugin location, your Strapi project and plugin can be organized in different repository setups, which affects the development workflow:
 
-</Tabs>
+- **Separate repositories**: Your Strapi project and plugin are in different repositories. This is common for external plugins that you plan to publish or share across multiple projects.
+- **Monorepo setup**: Your Strapi project and plugin are in the same repository, often using workspace management tools like Yarn workspaces or npm workspaces. This is useful when you want to maintain everything in one place.
 
-The path `my-strapi-plugin` can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
+The development workflow and commands you use will vary based on both the plugin type (local vs external) and the repository setup (separate vs monorepo), as detailed in the sections below.
 
-You will be ran through a series of prompts to help you setup your plugin. If you selected yes to all options the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
+## Creating the plugin
 
-### Linking the plugin to your project
-
-In order to test your plugin during its development, the recommended approach is to link it to a Strapi project.
-
-Linking your plugin to a project is done with the `watch:link` command. The command will output explanations on how to link your plugin to a Strapi project.
-
-In a new terminal window, run the following commands:
+To create your plugin, ensure you are in the parent directory of where you want it to be created and run the following command:
 
 </Tabs>
 
-:::note
-In the above examples we use the name of the plugin (`my-strapi-plugin`) when linking it to the project. This is the name of the package, not the name of the folder.
-:::
+The `my-strapi-plugin` part can be replaced with whatever you want to call your plugin, including the path to where it should be created (e.g., `code/strapi-plugins/my-new-strapi-plugin`).
 
-Because this plugin is installed via `node_modules` you won't need to explicity add it to your `plugins` [configuration file](/cms/configurations/plugins), so running the [`develop command`](/cms/cli#strapi-develop) to start your Strapi project will automatically pick up your plugin.
+Once you run the command, you will be guided through a series of prompts to help you set up your plugin. If you select "yes" to all options, the final structure will be similar to the default [plugin structure](/cms/plugins-development/plugin-structure).
 
-Now that your plugin is linked to a project, run `yarn develop` or `npm run develop` to start the Strapi application.
+## Developing local plugins
 
-You are now ready to develop your plugin how you see fit! If you are making server changes, you will need to restart your server for them to take effect.
+If you run the Plugin SDK command from within an existing Strapi project, the plugin will be created in the `src/plugins` folder within that project, with the new folder equal to the init command name. This allows you to develop plugins locally within your project structure.
 
-### Building the plugin for publishing
-
-When you are ready to publish your plugin, you will need to build it. To do this, run the following command:
-
-</Tabs>
-
-The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
-
-## Working with the Plugin SDK in a monorepo environment {#monorepo}
-
-If you are working with a monorepo environment to develop your plugin, you don't need to use the `watch:link` command because the monorepo workspace setup will handle the symlink. You can use the `watch` command instead.
-
-However, if you are writing admin code, you might add an `alias` that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
-
-```ts
-
-  config.resolve.alias = {
-    ...config.resolve.alias,
-    'my-strapi-plugin': path.resolve(
-      __dirname,
-      // We've assumed the plugin is local.
-      '../plugins/my-strapi-plugin/admin/src'
-    ),
-  };
-
-  return config;
-};
-```
-
-:::caution
-Because the server looks at the `server/src/index.ts|js` file to import your plugin code, you must use the `watch` command otherwise the code will not be transpiled and the server will not be able to find your plugin.
-:::
-
-### Configuration with a local plugin
-
-Since the Plugin SDK is primarily designed for developing plugins, not locally, the configuration needs to be adjusted manually for local plugins.
-
-When developing your plugin locally (using `@strapi/sdk-plugin`), your plugins configuration file looks like in the following example:
+When developing your plugin locally, you also need to add the following configuration to your plugins configuration file:
 
 ```js title="/config/plugins.js|ts"
 myplugin: {
@@ -10209,7 +10390,8 @@ myplugin: {
 },
 ```
 
-However, this setup can sometimes lead to errors such as the following:
+:::note
+This setup can sometimes lead to errors such as:
 
 ```js
 Error: 'X must be used within StrapiApp';
@@ -10221,50 +10403,38 @@ This error often occurs when your plugin attempts to import core Strapi function
 
 ```
 
-To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi’s core modules as the main application, preventing conflicts and the associated errors.
-
-## Setting a local plugin in a monorepo environment without the Plugin SDK
-
-In a monorepo, you can configure your local plugin without using the Plugin SDK by adding 2 entry point files at the root of your plugin:
-
-- server entry point: `strapi-server.js|ts`
-- admin entry point: `strapi-admin.js|ts`
-
-### Server entry point
-
-The server entry point file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
-
-```js
-module.exports = () => {
-  return {
-    register,
-    config,
-    controllers,
-    contentTypes,
-    routes,
-  };
-};
-```
-
-Here, you export a function that returns your plugin's core components such as controllers, routes, and configuration. For more details, please refer to the [Server API reference](/cms/plugins-development/server-api).
-
-### Admin entry point
-
-The admin entry point file sets up your plugin within the Strapi admin panel. The expected structure for `strapi-admin.js` (or its TypeScript variant) is:
-
-```js
-
-  register(app) {},
-  bootstrap() {},
-  registerTrads({ locales }) {},
-};
-```
-
-This object includes methods to register your plugin with the admin application, perform bootstrapping actions, and handle translations. For more details, please refer to the [Admin Panel API reference](/cms/plugins-development/admin-panel-api).
-
-:::tip
-For a complete example of how to structure your local plugin in a monorepo environment, please check out our .
+To resolve this issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi's core modules as the main application, preventing conflicts and the associated errors.
 :::
+
+Use the `watch` command in your plugin folder to start development mode:
+
+</Tabs>
+
+Then run `yarn develop` or `npm run develop` in your Strapi project to start the application with your local plugin.
+
+## Developing external plugins
+
+:::prerequisites
+
+</Tabs>
+
+Then, in a new terminal window, run the following commands in your Strapi project:
+
+</Tabs>
+
+:::note
+In the above examples, we use the name of the plugin (`my-strapi-plugin`) when linking it to the project. This is the name of the package, not the name of the folder.
+:::
+
+:::note
+If you're working in a monorepo environment, you don't need `yalc` because the monorepo workspace setup handles the symlinking automatically.
+:::
+
+Because this plugin is installed via `node_modules`, you won't need to explicitly add it to your `plugins` configuration file as we would do for a local plugin. Running the `develop` command to start your Strapi project will automatically pick up your plugin.
+
+Now that your plugin is linked to a project, run `yarn develop` or `npm run develop` to start the Strapi application.
+
+You are now ready to develop your plugin as needed! If you are making server changes, you will need to restart your server for them to take effect.
 
 
 
@@ -10613,6 +10783,2055 @@ You can access the database via the `strapi` object which can be found in `middl
 
 
 
+# Injection Zones
+Source: https://docs.strapi.io/cms/plugins-development/injection-zones
+
+# Injection Zones
+
+Injection zones allow your plugin to define areas where other plugins can inject UI components. This creates a flexible system for extending and customizing the admin panel interface.
+
+:::prerequisites
+You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and understand the [Admin Panel API](/cms/plugins-development/admin-panel-api).
+:::
+
+## What are Injection Zones?
+
+Injection zones are predefined areas in your plugin's UI where other plugins can inject components. They provide a structured way for plugins to extend each other's interfaces without modifying the original plugin's code.
+
+```typescript
+app.registerPlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+  injectionZones: {
+    'my-plugin.dashboard': {
+      top: [],
+      bottom: [],
+    },
+    'my-plugin.settings': {
+      before: [],
+      after: [],
+    },
+  },
+});
+```
+
+## Use Case: Dashboard Widget Plugin
+
+Let's build a **Dashboard Plugin** that provides injection zones for other plugins to add widgets.
+
+### 1. Creating the Dashboard Plugin with Injection Zones
+
+```typescript
+// src/plugins/dashboard/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'dashboard',
+      name: 'Dashboard',
+      injectionZones: {
+        'dashboard.main': {
+          top: [], // Widgets at the top of dashboard
+          middle: [], // Widgets in the middle
+          bottom: [], // Widgets at the bottom
+        },
+        'dashboard.sidebar': {
+          before: [], // Widgets before sidebar content
+          after: [], // Widgets after sidebar content
+        },
+      },
+    });
+  },
+};
+```
+
+### 2. Creating the Dashboard Component
+
+```typescript
+// src/plugins/dashboard/admin/src/components/Dashboard.tsx
+
+const Dashboard: React.FC = () => {
+  const topWidgets = app.getAdminInjectedComponents('dashboard', 'main', 'top');
+  const middleWidgets = app.getAdminInjectedComponents(
+    'dashboard',
+    'main',
+    'middle'
+  );
+  const bottomWidgets = app.getAdminInjectedComponents(
+    'dashboard',
+    'main',
+    'bottom'
+  );
+  const sidebarBefore = app.getAdminInjectedComponents(
+    'dashboard',
+    'sidebar',
+    'before'
+  );
+  const sidebarAfter = app.getAdminInjectedComponents(
+    'dashboard',
+    'sidebar',
+    'after'
+  );
+
+  return (
+    <div style={{ display: 'flex', gap: '20px' }}>
+      {/* Main Content */}
+      <div style={{ flex: 1 }}>
+        {/* Top Widgets */}
+        <div style={{ marginBottom: '20px' }}>
+          {topWidgets.map((widget, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <widget.Component />
+            </div>
+          ))}
+        </div>
+
+        {/* Middle Widgets */}
+        <div style={{ marginBottom: '20px' }}>
+          {middleWidgets.map((widget, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <widget.Component />
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Widgets */}
+        <div>
+          {bottomWidgets.map((widget, index) => (
+            <div key={index} style={{ marginBottom: '10px' }}>
+              <widget.Component />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Sidebar */}
+      <div style={{ width: '300px' }}>
+        {/* Before Sidebar Content */}
+        {sidebarBefore.map((widget, index) => (
+          <div key={index} style={{ marginBottom: '10px' }}>
+            <widget.Component />
+          </div>
+        ))}
+
+        {/* Default Sidebar Content */}
+        <div
+          style={{
+            padding: '20px',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '8px',
+            marginBottom: '20px',
+          }}
+        >
+          <h3>Dashboard Info</h3>
+          <p>Welcome to your dashboard!</p>
+        </div>
+
+        {/* After Sidebar Content */}
+        {sidebarAfter.map((widget, index) => (
+          <div key={index} style={{ marginBottom: '10px' }}>
+            <widget.Component />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+```
+
+### 3. Other Plugins Injecting Components
+
+```typescript
+// src/plugins/analytics/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'analytics',
+      name: 'Analytics',
+    });
+  },
+
+  bootstrap(app: any) {
+    // Inject analytics widget into dashboard
+    app.injectComponent('dashboard', 'main', 'top', {
+      name: 'analytics-widget',
+      Component: AnalyticsWidget,
+    });
+  },
+};
+```
+
+```typescript
+// src/plugins/notifications/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'notifications',
+      name: 'Notifications',
+    });
+  },
+
+  bootstrap(app: any) {
+    // Inject notification widget into dashboard sidebar
+    app.injectComponent('dashboard', 'sidebar', 'before', {
+      name: 'notification-widget',
+      Component: NotificationWidget,
+    });
+  },
+};
+```
+
+### 4. Widget Components
+
+```typescript
+// src/plugins/analytics/admin/src/components/AnalyticsWidget.tsx
+
+const AnalyticsWidget: React.FC = () => {
+  const [data, setData] = React.useState(null);
+
+  React.useEffect(() => {
+    // Fetch analytics data
+    fetch('/api/analytics/summary')
+      .then((response) => response.json())
+      .then((data) => setData(data));
+  }, []);
+
+  if (!data) {
+    return (
+      <div
+        style={{
+          padding: '20px',
+          backgroundColor: 'white',
+          borderRadius: '8px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+        }}
+      >
+        <h4>Analytics</h4>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        padding: '20px',
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      }}
+    >
+      <h4>Analytics Summary</h4>
+      <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+        <div>
+          <div
+            style={{ fontSize: '24px', fontWeight: 'bold', color: '#007bff' }}
+          >
+            {data.pageViews}
+          </div>
+          <div style={{ fontSize: '12px', color: '#666' }}>Page Views</div>
+        </div>
+        <div>
+          <div
+            style={{ fontSize: '24px', fontWeight: 'bold', color: '#28a745' }}
+          >
+            {data.uniqueVisitors}
+          </div>
+          <div style={{ fontSize: '12px', color: '#666' }}>Unique Visitors</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+```
+
+```typescript
+// src/plugins/notifications/admin/src/components/NotificationWidget.tsx
+
+const NotificationWidget: React.FC = () => {
+  const [notifications, setNotifications] = React.useState([]);
+
+  React.useEffect(() => {
+    // Fetch recent notifications
+    fetch('/api/notifications/recent')
+      .then((response) => response.json())
+      .then((data) => setNotifications(data));
+  }, []);
+
+  return (
+    <div
+      style={{
+        padding: '15px',
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+      }}
+    >
+      <h4>Recent Notifications</h4>
+      {notifications.length === 0 ? (
+        <p style={{ color: '#666', fontSize: '14px' }}>
+          No recent notifications
+        </p>
+      ) : (
+        <div style={{ marginTop: '10px' }}>
+          {notifications.slice(0, 3).map((notification, index) => (
+            <div
+              key={index}
+              style={{
+                padding: '8px',
+                borderLeft: `3px solid ${getColorForType(notification.type)}`,
+                marginBottom: '8px',
+                backgroundColor: '#f8f9fa',
+              }}
+            >
+              <div style={{ fontSize: '12px', fontWeight: 'bold' }}>
+                {notification.title}
+              </div>
+              <div style={{ fontSize: '11px', color: '#666' }}>
+                {new Date(notification.timestamp).toLocaleString()}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const getColorForType = (type: string) => {
+  switch (type) {
+    case 'success':
+      return '#28a745';
+    case 'error':
+      return '#dc3545';
+    case 'warning':
+      return '#ffc107';
+    default:
+      return '#007bff';
+  }
+};
+
+```
+
+## Advanced Injection Zone Patterns
+
+### 1. Conditional Injection
+
+```typescript
+// Only inject component if certain conditions are met
+bootstrap(app) {
+  const user = getCurrentUser();
+
+  if (user.role === 'admin') {
+    app.injectComponent('dashboard', 'main', 'top', {
+      name: 'admin-widget',
+      Component: AdminWidget
+    });
+  }
+}
+```
+
+### 2. Multiple Component Injection
+
+```typescript
+// Inject multiple components at once
+bootstrap(app) {
+  const widgets = [
+    { name: 'widget-1', Component: Widget1 },
+    { name: 'widget-2', Component: Widget2 },
+    { name: 'widget-3', Component: Widget3 }
+  ];
+
+  widgets.forEach(widget => {
+    app.injectComponent('dashboard', 'main', 'middle', widget);
+  });
+}
+```
+
+### 3. Dynamic Component Injection
+
+```typescript
+// Inject components based on configuration
+bootstrap(app) {
+  const config = getPluginConfig();
+
+  config.enabledWidgets.forEach(widgetName => {
+    const WidgetComponent = getWidgetComponent(widgetName);
+    if (WidgetComponent) {
+      app.injectComponent('dashboard', 'main', 'bottom', {
+        name: widgetName,
+        Component: WidgetComponent
+      });
+    }
+  });
+}
+```
+
+### 4. Component with Props
+
+```typescript
+// Inject component with specific props
+bootstrap(app) {
+  app.injectComponent('dashboard', 'main', 'top', {
+    name: 'configurable-widget',
+    Component: (props: any) => 
+      ))}
+    </div>
+  );
+};
+```
+
+### 4. Performance Optimization
+
+```typescript
+// ✅ Good - Lazy load heavy components
+bootstrap(app) {
+  app.injectComponent('dashboard', 'main', 'top', {
+    name: 'heavy-widget',
+    Component: React.lazy(() => import('./components/HeavyWidget'))
+  });
+}
+```
+
+## Common Patterns
+
+### 1. Settings Page Extension
+
+```typescript
+// Plugin provides settings injection zones
+app.registerPlugin({
+  id: 'settings',
+  name: 'Settings',
+  injectionZones: {
+    'settings.general': {
+      'before': [],
+      'after': []
+    },
+    'settings.advanced': {
+      'before': [],
+      'after': []
+    }
+  }
+});
+
+// Other plugins inject settings
+bootstrap(app) {
+  app.injectComponent('settings', 'general', 'after', {
+    name: 'plugin-settings',
+    Component: PluginSettings
+  });
+}
+```
+
+### 2. Content Manager Extension
+
+```typescript
+// Extend Content Manager with custom fields
+bootstrap(app) {
+  app.injectComponent('content-manager', 'edit-view', 'right-side', {
+    name: 'custom-field-panel',
+    Component: CustomFieldPanel
+  });
+}
+```
+
+### 3. User Profile Extension
+
+```typescript
+// Extend user profile with additional sections
+bootstrap(app) {
+  app.injectComponent('user-profile', 'main', 'after', {
+    name: 'plugin-profile-section',
+    Component: PluginProfileSection
+  });
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Components not appearing**
+
+   - Check zone names match exactly
+   - Verify component is properly exported
+   - Ensure bootstrap function is called
+
+2. **Component errors**
+
+   - Wrap components in error boundaries
+   - Check for missing dependencies
+   - Verify component props
+
+3. **Performance issues**
+   - Use lazy loading for heavy components
+   - Implement proper memoization
+   - Check for memory leaks
+
+### Debugging Tips
+
+```typescript
+// Debug injection zones
+const Dashboard: React.FC = () => {
+  const widgets = app.getAdminInjectedComponents('dashboard', 'main', 'top');
+
+  console.log('Injected widgets:', widgets);
+
+  return (
+    <div>
+      {widgets.map((widget, index) => (
+        <div key={index}>
+          <h5>Widget: {widget.name}</h5>
+          <widget.Component />
+        </div>
+      ))}
+    </div>
+  );
+};
+```
+
+## Next Steps
+
+- Learn about [Plugin Readiness](/cms/plugins-development/plugin-readiness) for managing plugin lifecycle
+- Explore [Plugin APIs](/cms/plugins-development/plugin-apis) for inter-plugin communication
+- Check out [Plugin Initialization](/cms/plugins-development/plugin-initialization) for async plugin setup
+
+
+
+# Plugin APIs
+Source: https://docs.strapi.io/cms/plugins-development/plugin-apis
+
+# Plugin APIs
+
+Plugin APIs allow your plugin to expose functionality that other plugins can use, creating a plugin ecosystem where plugins can interact and extend each other's capabilities.
+
+:::prerequisites
+You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and understand the [Admin Panel API](/cms/plugins-development/admin-panel-api).
+:::
+
+## What are Plugin APIs?
+
+Plugin APIs are methods and functionality that your plugin exposes through the `apis` parameter in `registerPlugin`. Other plugins can access these APIs to extend functionality, share data, or integrate features.
+
+```typescript
+app.registerPlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+  apis: {
+    // Expose APIs here
+    myApi: (data) => {
+      /* implementation */
+    },
+    anotherApi: () => {
+      /* implementation */
+    },
+  },
+});
+```
+
+## Use Case: Notification Plugin
+
+Let's build a **Notification Plugin** that other plugins can use to send notifications throughout the admin panel.
+
+### 1. Creating the Notification Plugin
+
+```typescript
+// src/plugins/notifications/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'notifications',
+      name: 'Notifications',
+      apis: {
+        // Send a notification to the admin panel
+        sendNotification: (
+          message: string,
+          type: 'success' | 'error' | 'warning' | 'info'
+        ) => {
+          // Show notification in admin panel
+          console.log(`[${type.toUpperCase()}] ${message}`);
+          // Could integrate with toast notifications, email, etc.
+        },
+
+        // Schedule a notification for later
+        scheduleNotification: (message: string, delay: number) => {
+          setTimeout(() => {
+            console.log(`Scheduled: ${message}`);
+          }, delay);
+        },
+
+        // Get notification history
+        getNotificationHistory: () => {
+          return [
+            { message: 'User created', type: 'success', timestamp: new Date() },
+            { message: 'Failed to save', type: 'error', timestamp: new Date() },
+          ];
+        },
+
+        // Add custom notification types
+        addCustomType: (typeName: string, config: any) => {
+          console.log(`Added custom notification type: ${typeName}`, config);
+        },
+      },
+    });
+  },
+};
+```
+
+### 2. Using the Notification Plugin
+
+Now other plugins can use the notification functionality:
+
+```typescript
+// src/plugins/user-management/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'user-management',
+      name: 'User Management',
+    });
+  },
+
+  bootstrap(app: any) {
+    const notifications = app.getPlugin('notifications');
+
+    if (notifications && notifications.apis) {
+      // Send welcome notification when plugin loads
+      notifications.apis.sendNotification(
+        'User Management plugin loaded successfully',
+        'success'
+      );
+
+      // Schedule a reminder
+      notifications.apis.scheduleNotification(
+        'Remember to review user permissions weekly',
+        5000 // 5 seconds delay
+      );
+    }
+  },
+};
+```
+
+### 3. Real-world Usage in Action
+
+```typescript
+// When a user is created
+const createUser = async (userData: any) => {
+  try {
+    const user = await strapi.entityService.create(
+      'plugin::users-permissions.user',
+      {
+        data: userData,
+      }
+    );
+
+    // Notify success using the notification plugin
+    const notifications = strapi.plugin('notifications');
+    if (notifications && notifications.apis) {
+      notifications.apis.sendNotification(
+        `User "${user.username}" created successfully`,
+        'success'
+      );
+    }
+
+    return user;
+  } catch (error) {
+    // Notify error
+    const notifications = strapi.plugin('notifications');
+    if (notifications && notifications.apis) {
+      notifications.apis.sendNotification(
+        `Failed to create user: ${error.message}`,
+        'error'
+      );
+    }
+    throw error;
+  }
+};
+```
+
+## API Design Best Practices
+
+### 1. Clear Method Names
+
+```typescript
+// ✅ Good - Clear and descriptive
+apis: {
+  sendNotification: (message: string, type: string) => { /* ... */ },
+  getNotificationHistory: () => { /* ... */ },
+  scheduleNotification: (message: string, delay: number) => { /* ... */ }
+}
+
+// ❌ Bad - Unclear purpose
+apis: {
+  do: (a: any, b: any) => { /* ... */ },
+  stuff: () => { /* ... */ },
+  thing: (x: number) => { /* ... */ }
+}
+```
+
+### 2. Type Safety
+
+```typescript
+// ✅ Good - TypeScript interfaces
+interface NotificationConfig {
+  message: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  duration?: number;
+}
+
+apis: {
+  sendNotification: (config: NotificationConfig) => {
+    /* ... */
+  };
+}
+```
+
+### 3. Error Handling
+
+```typescript
+apis: {
+  sendNotification: (message: string, type: string) => {
+    try {
+      // Implementation
+      console.log(`[${type.toUpperCase()}] ${message}`);
+    } catch (error) {
+      console.error('Failed to send notification:', error);
+      // Handle error gracefully
+    }
+  };
+}
+```
+
+### 4. Defensive Programming
+
+```typescript
+// In the plugin using the APIs
+bootstrap(app) {
+  const notifications = app.getPlugin('notifications');
+
+  // Always check if plugin exists and has APIs
+  if (notifications && notifications.apis) {
+    notifications.apis.sendNotification('Plugin loaded', 'success');
+  } else {
+    console.warn('Notifications plugin not available');
+  }
+}
+```
+
+## Advanced Plugin Communication
+
+### Plugin-to-Plugin Data Sharing
+
+```typescript
+// Analytics Plugin - Exposes data collection APIs
+app.registerPlugin({
+  id: 'analytics',
+  name: 'Analytics',
+  apis: {
+    trackEvent: (eventName: string, data: any) => {
+      // Store analytics data
+      console.log(`Analytics: ${eventName}`, data);
+    },
+
+    getAnalytics: (timeRange: string) => {
+      return {
+        pageViews: 1250,
+        uniqueVisitors: 340,
+        timeRange: timeRange
+      };
+    }
+  }
+});
+
+// E-commerce Plugin - Uses analytics
+bootstrap(app) {
+  const analytics = app.getPlugin('analytics');
+
+  if (analytics?.apis) {
+    analytics.apis.trackEvent('ecommerce-plugin-loaded', {
+      plugin: 'ecommerce',
+      timestamp: new Date().toISOString()
+    });
+  }
+}
+```
+
+### Plugin Configuration Sharing
+
+```typescript
+// Settings Plugin - Manages global settings
+app.registerPlugin({
+  id: 'settings',
+  name: 'Settings',
+  apis: {
+    getSetting: (key: string) => {
+      return localStorage.getItem(`setting_${key}`);
+    },
+
+    setSetting: (key: string, value: any) => {
+      localStorage.setItem(`setting_${key}`, JSON.stringify(value));
+    },
+
+    getAllSettings: () => {
+      // Return all settings
+      return { theme: 'dark', language: 'en' };
+    }
+  }
+});
+
+// Theme Plugin - Uses settings
+bootstrap(app) {
+  const settings = app.getPlugin('settings');
+
+  if (settings?.apis) {
+    const theme = settings.apis.getSetting('theme');
+    if (theme === 'dark') {
+      // Apply dark theme
+    }
+  }
+}
+```
+
+## Common Patterns
+
+### 1. Plugin Registry Pattern
+
+```typescript
+// Registry Plugin - Manages other plugins
+app.registerPlugin({
+  id: 'plugin-registry',
+  name: 'Plugin Registry',
+  apis: {
+    registerPlugin: (pluginId: string, config: any) => {
+      console.log(`Registering plugin: ${pluginId}`, config);
+    },
+
+    getRegisteredPlugins: () => {
+      return ['plugin-a', 'plugin-b', 'plugin-c'];
+    },
+
+    isPluginRegistered: (pluginId: string) => {
+      return ['plugin-a', 'plugin-b', 'plugin-c'].includes(pluginId);
+    },
+  },
+});
+```
+
+### 2. Event System Pattern
+
+```typescript
+// Event Plugin - Provides event system
+app.registerPlugin({
+  id: 'events',
+  name: 'Events',
+  apis: {
+    emit: (eventName: string, data: any) => {
+      console.log(`Event emitted: ${eventName}`, data);
+    },
+
+    on: (eventName: string, callback: Function) => {
+      console.log(`Listening for event: ${eventName}`);
+    },
+
+    off: (eventName: string, callback: Function) => {
+      console.log(`Stopped listening for event: ${eventName}`);
+    },
+  },
+});
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Plugin not found**
+
+   ```typescript
+   // ❌ Wrong - Plugin ID mismatch
+   const plugin = app.getPlugin('notification'); // Should be 'notifications'
+
+   // ✅ Correct - Exact plugin ID
+   const plugin = app.getPlugin('notifications');
+   ```
+
+2. **APIs not available**
+
+   ```typescript
+   // ❌ Wrong - No null check
+   const apis = app.getPlugin('notifications').apis;
+   apis.sendNotification('test', 'info'); // Could throw error
+
+   // ✅ Correct - Safe access
+   const plugin = app.getPlugin('notifications');
+   if (plugin?.apis) {
+     plugin.apis.sendNotification('test', 'info');
+   }
+   ```
+
+3. **Circular dependencies**
+
+   ```typescript
+   // ❌ Wrong - Plugin A depends on B, B depends on A
+   // Plugin A
+   bootstrap(app) {
+     const pluginB = app.getPlugin('plugin-b');
+     pluginB.apis.doSomething();
+   }
+
+   // Plugin B
+   bootstrap(app) {
+     const pluginA = app.getPlugin('plugin-a');
+     pluginA.apis.doSomethingElse();
+   }
+   ```
+
+### Debugging Tips
+
+```typescript
+// Debug plugin availability
+bootstrap(app) {
+  console.log('Available plugins:', Object.keys(app.plugins));
+
+  const notifications = app.getPlugin('notifications');
+  console.log('Notifications plugin:', notifications);
+  console.log('Notifications APIs:', notifications?.apis);
+}
+```
+
+## Next Steps
+
+- Learn about [Plugin Initialization](/cms/plugins-development/plugin-initialization) for async plugin setup
+- Explore [Injection Zones](/cms/plugins-development/injection-zones) for UI component injection
+- Check out [Plugin Readiness](/cms/plugins-development/plugin-readiness) for managing plugin lifecycle
+
+
+
+# Plugin Initialization
+Source: https://docs.strapi.io/cms/plugins-development/plugin-initialization
+
+# Plugin Initialization
+
+Plugin initialization allows your plugin to perform asynchronous operations before it becomes ready to use. This is essential for plugins that need to load configuration, fetch data, or perform setup tasks.
+
+:::prerequisites
+You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and understand the [Admin Panel API](/cms/plugins-development/admin-panel-api).
+:::
+
+## What is Plugin Initialization?
+
+Plugin initialization is controlled by two key parameters in `registerPlugin`:
+
+- **`initializer`**: A React component that handles async setup
+- **`isReady`**: A boolean flag indicating plugin readiness (default: `true`)
+
+```typescript
+app.registerPlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+  initializer: MyInitializerComponent,
+  isReady: false, // Plugin starts as not ready
+});
+```
+
+## Use Case: Configuration Loading Plugin
+
+Let's build a **Configuration Plugin** that loads settings from an external API before becoming ready.
+
+### 1. Creating the Initializer Component
+
+```typescript
+// src/plugins/configuration/admin/src/components/Initializer.tsx
+
+interface InitializerProps {
+  setPlugin: (pluginId: string) => void;
+}
+
+const Initializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  const [status, setStatus] = React.useState('Loading configuration...');
+
+  React.useEffect(() => {
+    const initializePlugin = async () => {
+      try {
+        setStatus('Fetching configuration from API...');
+
+        // Simulate API call to load configuration
+        const response = await fetch('/api/plugin-configuration');
+        const config = await response.json();
+
+        setStatus('Validating configuration...');
+
+        // Validate configuration
+        if (!config.apiKey || !config.endpoint) {
+          throw new Error('Invalid configuration: missing required fields');
+        }
+
+        setStatus('Storing configuration...');
+
+        // Store configuration in plugin state
+        localStorage.setItem('plugin-configuration', JSON.stringify(config));
+
+        setStatus('Configuration loaded successfully!');
+
+        // Mark plugin as ready
+        setPlugin('configuration');
+      } catch (error) {
+        console.error('Failed to initialize configuration plugin:', error);
+        setStatus(`Error: ${error.message}`);
+
+        // Still mark as ready to prevent hanging
+        setTimeout(() => {
+          setPlugin('configuration');
+        }, 3000);
+      }
+    };
+
+    initializePlugin();
+  }, [setPlugin]);
+
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h3>Configuration Plugin</h3>
+      <p>{status}</p>
+      <div style={{ marginTop: '10px' }}>
+        <div
+          style={{
+            width: '200px',
+            height: '4px',
+            backgroundColor: '#f0f0f0',
+            borderRadius: '2px',
+            overflow: 'hidden',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#007bff',
+              animation: 'loading 2s ease-in-out infinite',
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+```
+
+### 2. Registering the Plugin with Initializer
+
+```typescript
+// src/plugins/configuration/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'configuration',
+      name: 'Configuration',
+      initializer: Initializer,
+      isReady: false, // Plugin needs initialization
+    });
+  },
+};
+```
+
+### 3. Using the Initialized Plugin
+
+```typescript
+// In another plugin or component
+const useConfiguration = () => {
+  const [config, setConfig] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const checkConfiguration = () => {
+      const storedConfig = localStorage.getItem('plugin-configuration');
+      if (storedConfig) {
+        setConfig(JSON.parse(storedConfig));
+        setIsLoading(false);
+      } else {
+        // Configuration not ready yet
+        setTimeout(checkConfiguration, 1000);
+      }
+    };
+
+    checkConfiguration();
+  }, []);
+
+  return { config, isLoading };
+};
+```
+
+## Advanced Initialization Patterns
+
+### 1. Multi-Step Initialization
+
+```typescript
+// src/plugins/advanced-plugin/admin/src/components/Initializer.tsx
+const AdvancedInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const [error, setError] = React.useState(null);
+
+  const steps = [
+    'Loading user preferences...',
+    'Fetching API credentials...',
+    'Validating permissions...',
+    'Setting up data connections...',
+    'Initializing components...',
+  ];
+
+  React.useEffect(() => {
+    const initializeStepByStep = async () => {
+      try {
+        // Step 1: Load user preferences
+        setCurrentStep(0);
+        await loadUserPreferences();
+
+        // Step 2: Fetch API credentials
+        setCurrentStep(1);
+        await fetchApiCredentials();
+
+        // Step 3: Validate permissions
+        setCurrentStep(2);
+        await validatePermissions();
+
+        // Step 4: Setup data connections
+        setCurrentStep(3);
+        await setupDataConnections();
+
+        // Step 5: Initialize components
+        setCurrentStep(4);
+        await initializeComponents();
+
+        // All steps completed
+        setPlugin('advanced-plugin');
+      } catch (error) {
+        setError(error.message);
+        console.error('Initialization failed at step:', currentStep, error);
+      }
+    };
+
+    initializeStepByStep();
+  }, [setPlugin, currentStep]);
+
+  if (error) {
+    return (
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h3>Initialization Failed</h3>
+        <p style={{ color: 'red' }}>{error}</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h3>Advanced Plugin</h3>
+      <p>{steps[currentStep]}</p>
+      <div style={{ marginTop: '10px' }}>
+        <div
+          style={{
+            width: '200px',
+            height: '4px',
+            backgroundColor: '#f0f0f0',
+            borderRadius: '2px',
+          }}
+        >
+          <div
+            style={{
+              width: `${((currentStep + 1) / steps.length) * 100}%`,
+              height: '100%',
+              backgroundColor: '#007bff',
+              transition: 'width 0.3s ease',
+            }}
+          />
+        </div>
+        <p style={{ fontSize: '12px', marginTop: '5px' }}>
+          Step {currentStep + 1} of {steps.length}
+        </p>
+      </div>
+    </div>
+  );
+};
+```
+
+### 2. Conditional Initialization
+
+```typescript
+// src/plugins/conditional-plugin/admin/src/components/Initializer.tsx
+const ConditionalInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    const initializeConditionally = async () => {
+      // Check if plugin should be initialized
+      const shouldInitialize = await checkInitializationRequirements();
+
+      if (shouldInitialize) {
+        // Perform full initialization
+        await loadFullConfiguration();
+        await setupAdvancedFeatures();
+      } else {
+        // Use minimal configuration
+        await loadMinimalConfiguration();
+      }
+
+      setPlugin('conditional-plugin');
+    };
+
+    initializeConditionally();
+  }, [setPlugin]);
+
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h3>Conditional Plugin</h3>
+      <p>Checking requirements...</p>
+    </div>
+  );
+};
+```
+
+### 3. Timeout and Retry Logic
+
+```typescript
+// src/plugins/resilient-plugin/admin/src/components/Initializer.tsx
+const ResilientInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  const [retryCount, setRetryCount] = React.useState(0);
+  const maxRetries = 3;
+
+  React.useEffect(() => {
+    const initializeWithRetry = async () => {
+      try {
+        // Set timeout for initialization
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Initialization timeout')), 10000);
+        });
+
+        const initPromise = performInitialization();
+
+        await Promise.race([initPromise, timeoutPromise]);
+        setPlugin('resilient-plugin');
+      } catch (error) {
+        console.error(
+          `Initialization attempt ${retryCount + 1} failed:`,
+          error
+        );
+
+        if (retryCount < maxRetries) {
+          setRetryCount((prev) => prev + 1);
+          // Retry after delay
+          setTimeout(initializeWithRetry, 2000 * (retryCount + 1));
+        } else {
+          // Max retries reached, mark as ready anyway
+          console.warn('Max retries reached, marking plugin as ready');
+          setPlugin('resilient-plugin');
+        }
+      }
+    };
+
+    initializeWithRetry();
+  }, [setPlugin, retryCount]);
+
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h3>Resilient Plugin</h3>
+      <p>
+        {retryCount === 0
+          ? 'Initializing...'
+          : `Retrying... (${retryCount}/${maxRetries})`}
+      </p>
+    </div>
+  );
+};
+```
+
+## Best Practices
+
+### 1. Always Call setPlugin
+
+```typescript
+// ✅ Good - Always calls setPlugin
+React.useEffect(() => {
+  const initialize = async () => {
+    try {
+      await loadData();
+      setPlugin('my-plugin'); // Success case
+    } catch (error) {
+      console.error(error);
+      setPlugin('my-plugin'); // Error case - still mark as ready
+    }
+  };
+  initialize();
+}, [setPlugin]);
+
+// ❌ Bad - setPlugin might not be called
+React.useEffect(() => {
+  const initialize = async () => {
+    await loadData(); // If this throws, setPlugin is never called
+    setPlugin('my-plugin');
+  };
+  initialize();
+}, [setPlugin]);
+```
+
+### 2. Provide User Feedback
+
+```typescript
+// ✅ Good - Clear status messages
+const [status, setStatus] = React.useState('Loading...');
+
+const initialize = async () => {
+  setStatus('Connecting to server...');
+  await connectToServer();
+
+  setStatus('Loading configuration...');
+  await loadConfiguration();
+
+  setStatus('Ready!');
+  setPlugin('my-plugin');
+};
+```
+
+### 3. Handle Errors Gracefully
+
+```typescript
+// ✅ Good - Graceful error handling
+const initialize = async () => {
+  try {
+    await loadCriticalData();
+    setPlugin('my-plugin');
+  } catch (error) {
+    console.error('Critical initialization failed:', error);
+    // Still mark as ready to prevent hanging
+    setPlugin('my-plugin');
+  }
+};
+```
+
+### 4. Use Timeouts
+
+```typescript
+// ✅ Good - Prevent infinite loading
+const initialize = async () => {
+  const timeout = setTimeout(() => {
+    console.warn('Initialization timeout, marking as ready');
+    setPlugin('my-plugin');
+  }, 30000); // 30 second timeout
+
+  try {
+    await loadData();
+    clearTimeout(timeout);
+    setPlugin('my-plugin');
+  } catch (error) {
+    clearTimeout(timeout);
+    setPlugin('my-plugin');
+  }
+};
+```
+
+## Common Patterns
+
+### 1. Configuration Loading
+
+```typescript
+const ConfigInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    const loadConfig = async () => {
+      const config = await fetch('/api/plugin-config').then((r) => r.json());
+      window.pluginConfig = config;
+      setPlugin('config-plugin');
+    };
+    loadConfig();
+  }, [setPlugin]);
+
+  return <div>Loading configuration...</div>;
+};
+```
+
+### 2. Data Preloading
+
+```typescript
+const DataInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    const preloadData = async () => {
+      const [users, settings, permissions] = await Promise.all([
+        fetch('/api/users').then((r) => r.json()),
+        fetch('/api/settings').then((r) => r.json()),
+        fetch('/api/permissions').then((r) => r.json()),
+      ]);
+
+      // Store in global state or context
+      window.preloadedData = { users, settings, permissions };
+      setPlugin('data-plugin');
+    };
+    preloadData();
+  }, [setPlugin]);
+
+  return <div>Preloading data...</div>;
+};
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Plugin never becomes ready**
+
+   - Ensure `setPlugin` is always called
+   - Check for unhandled promise rejections
+   - Add timeout protection
+
+2. **Initialization hangs**
+
+   - Add timeout mechanisms
+   - Check for infinite loops
+   - Verify API endpoints are accessible
+
+3. **Error handling**
+   - Always call `setPlugin` even on error
+   - Provide meaningful error messages
+   - Consider retry logic for transient failures
+
+### Debugging Tips
+
+```typescript
+// Add debugging to your initializer
+const DebugInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    console.log('Initializer started');
+
+    const initialize = async () => {
+      try {
+        console.log('Step 1: Loading data...');
+        await loadData();
+
+        console.log('Step 2: Processing...');
+        await processData();
+
+        console.log('Step 3: Ready!');
+        setPlugin('debug-plugin');
+      } catch (error) {
+        console.error('Initialization error:', error);
+        setPlugin('debug-plugin');
+      }
+    };
+
+    initialize();
+  }, [setPlugin]);
+
+  return <div>Debug: Initializing...</div>;
+};
+```
+
+## Next Steps
+
+- Learn about [Injection Zones](/cms/plugins-development/injection-zones) for UI component injection
+- Explore [Plugin Readiness](/cms/plugins-development/plugin-readiness) for managing plugin lifecycle
+- Check out [Plugin APIs](/cms/plugins-development/plugin-apis) for inter-plugin communication
+
+
+
+# Plugin Readiness
+Source: https://docs.strapi.io/cms/plugins-development/plugin-readiness
+
+# Plugin Readiness
+
+Plugin readiness controls when your plugin becomes available for use in the admin panel. Understanding and managing plugin readiness is crucial for creating reliable plugins that load in the correct order.
+
+:::prerequisites
+You have [created a Strapi plugin](/cms/plugins-development/create-a-plugin) and understand the [Admin Panel API](/cms/plugins-development/admin-panel-api).
+:::
+
+## What is Plugin Readiness?
+
+Plugin readiness is controlled by the `isReady` flag in `registerPlugin`. It determines whether your plugin is immediately available or needs initialization:
+
+- **`isReady: true`** (default): Plugin is immediately ready
+- **`isReady: false`**: Plugin needs initialization via the `initializer` component
+
+```typescript
+app.registerPlugin({
+  id: 'my-plugin',
+  name: 'My Plugin',
+  isReady: false, // Plugin needs initialization
+  initializer: MyInitializerComponent,
+});
+```
+
+## Use Case: Multi-Step Configuration Plugin
+
+Let's build a **Configuration Plugin** that manages complex setup steps and only becomes ready when all configuration is complete.
+
+### 1. Creating the Configuration Plugin
+
+```typescript
+// src/plugins/configuration/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'configuration',
+      name: 'Configuration',
+      isReady: false, // Plugin starts as not ready
+      initializer: ConfigurationInitializer,
+    });
+  },
+};
+```
+
+### 2. Creating the Initializer with Readiness Management
+
+```typescript
+// src/plugins/configuration/admin/src/components/ConfigurationInitializer.tsx
+
+interface InitializerProps {
+  setPlugin: (pluginId: string) => void;
+}
+
+const ConfigurationInitializer: React.FC<InitializerProps> = ({
+  setPlugin,
+}) => {
+  const [currentStep, setCurrentStep] = React.useState(0);
+  const [isReady, setIsReady] = React.useState(false);
+  const [errors, setErrors] = React.useState<string[]>([]);
+
+  const steps = [
+    { name: 'Loading configuration', duration: 1000 },
+    { name: 'Validating settings', duration: 1500 },
+    { name: 'Connecting to services', duration: 2000 },
+    { name: 'Finalizing setup', duration: 1000 },
+  ];
+
+  React.useEffect(() => {
+    const initializeConfiguration = async () => {
+      try {
+        for (let i = 0; i < steps.length; i++) {
+          setCurrentStep(i);
+
+          // Simulate step execution
+          await new Promise((resolve) =>
+            setTimeout(resolve, steps[i].duration)
+          );
+
+          // Simulate potential errors
+          if (i === 1 && Math.random() < 0.3) {
+            throw new Error('Configuration validation failed');
+          }
+        }
+
+        // All steps completed successfully
+        setIsReady(true);
+        setPlugin('configuration');
+      } catch (error) {
+        console.error('Configuration initialization failed:', error);
+        setErrors((prev) => [...prev, error.message]);
+
+        // Still mark as ready to prevent hanging
+        setTimeout(() => {
+          setIsReady(true);
+          setPlugin('configuration');
+        }, 3000);
+      }
+    };
+
+    initializeConfiguration();
+  }, [setPlugin]);
+
+  if (errors.length > 0) {
+    return (
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h3>Configuration Errors</h3>
+        <div style={{ color: 'red', marginBottom: '20px' }}>
+          {errors.map((error, index) => (
+            <div key={index}>{error}</div>
+          ))}
+        </div>
+        <button onClick={() => window.location.reload()}>
+          Retry Configuration
+        </button>
+      </div>
+    );
+  }
+
+  if (!isReady) {
+    return (
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h3>Configuration Plugin</h3>
+        <p>{steps[currentStep]?.name || 'Initializing...'}</p>
+
+        <div style={{ marginTop: '20px' }}>
+          <div
+            style={{
+              width: '300px',
+              height: '6px',
+              backgroundColor: '#f0f0f0',
+              borderRadius: '3px',
+              margin: '0 auto',
+            }}
+          >
+            <div
+              style={{
+                width: `${((currentStep + 1) / steps.length) * 100}%`,
+                height: '100%',
+                backgroundColor: '#007bff',
+                transition: 'width 0.3s ease',
+                borderRadius: '3px',
+              }}
+            />
+          </div>
+          <p style={{ fontSize: '14px', marginTop: '10px' }}>
+            Step {currentStep + 1} of {steps.length}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h3>Configuration Complete!</h3>
+      <p style={{ color: 'green' }}>Plugin is now ready to use.</p>
+    </div>
+  );
+};
+
+```
+
+### 3. Using the Configuration Plugin
+
+```typescript
+// src/plugins/dependent-plugin/admin/src/index.ts
+
+  register(app: any) {
+    app.registerPlugin({
+      id: 'dependent-plugin',
+      name: 'Dependent Plugin',
+    });
+  },
+
+  bootstrap(app: any) {
+    // Check if configuration plugin is ready
+    const configPlugin = app.getPlugin('configuration');
+
+    if (configPlugin && configPlugin.isReady) {
+      // Configuration is ready, proceed with setup
+      this.setupWithConfiguration();
+    } else {
+      // Configuration not ready, wait or use defaults
+      console.warn('Configuration plugin not ready, using defaults');
+      this.setupWithDefaults();
+    }
+  },
+
+  setupWithConfiguration() {
+    const config = this.getConfiguration();
+    console.log('Setting up with configuration:', config);
+  },
+
+  setupWithDefaults() {
+    console.log('Setting up with default values');
+  },
+
+  getConfiguration() {
+    // Get configuration from the configuration plugin
+    return JSON.parse(localStorage.getItem('plugin-configuration') || '{}');
+  },
+};
+```
+
+## Advanced Readiness Patterns
+
+### 1. Conditional Readiness
+
+```typescript
+// Plugin becomes ready only under certain conditions
+const ConditionalInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    const checkReadiness = async () => {
+      const user = await getCurrentUser();
+      const permissions = await getUserPermissions(user.id);
+
+      if (permissions.includes('admin')) {
+        // User has admin permissions, plugin is ready
+        setPlugin('admin-plugin');
+      } else {
+        // User doesn't have permissions, plugin not ready
+        console.warn('User lacks required permissions');
+        setPlugin('admin-plugin'); // Still mark as ready to prevent hanging
+      }
+    };
+
+    checkReadiness();
+  }, [setPlugin]);
+
+  return <div>Checking permissions...</div>;
+};
+```
+
+### 2. Dependency-Based Readiness
+
+```typescript
+// Plugin waits for other plugins to be ready
+const DependencyInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    const waitForDependencies = async () => {
+      const requiredPlugins = ['database', 'auth', 'config'];
+
+      for (const pluginId of requiredPlugins) {
+        const plugin = app.getPlugin(pluginId);
+        if (!plugin || !plugin.isReady) {
+          console.warn(`Required plugin ${pluginId} is not ready`);
+          // Wait and retry
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          return waitForDependencies();
+        }
+      }
+
+      // All dependencies are ready
+      setPlugin('dependent-plugin');
+    };
+
+    waitForDependencies();
+  }, [setPlugin]);
+
+  return <div>Waiting for dependencies...</div>;
+};
+```
+
+### 3. Progressive Readiness
+
+```typescript
+// Plugin becomes ready in stages
+const ProgressiveInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  const [readinessLevel, setReadinessLevel] = React.useState(0);
+
+  React.useEffect(() => {
+    const progressiveInitialization = async () => {
+      // Stage 1: Basic functionality
+      await loadBasicConfig();
+      setReadinessLevel(1);
+
+      // Stage 2: Enhanced features
+      await loadAdvancedFeatures();
+      setReadinessLevel(2);
+
+      // Stage 3: Full functionality
+      await loadFullConfiguration();
+      setReadinessLevel(3);
+
+      // Plugin is fully ready
+      setPlugin('progressive-plugin');
+    };
+
+    progressiveInitialization();
+  }, [setPlugin]);
+
+  const getReadinessMessage = () => {
+    switch (readinessLevel) {
+      case 0:
+        return 'Initializing...';
+      case 1:
+        return 'Basic features ready';
+      case 2:
+        return 'Enhanced features ready';
+      case 3:
+        return 'Fully ready';
+      default:
+        return 'Unknown state';
+    }
+  };
+
+  return (
+    <div style={{ padding: '20px', textAlign: 'center' }}>
+      <h3>Progressive Plugin</h3>
+      <p>{getReadinessMessage()}</p>
+      <div
+        style={{
+          width: '200px',
+          height: '4px',
+          backgroundColor: '#f0f0f0',
+          borderRadius: '2px',
+          margin: '10px auto',
+        }}
+      >
+        <div
+          style={{
+            width: `${(readinessLevel / 3) * 100}%`,
+            height: '100%',
+            backgroundColor: '#007bff',
+            transition: 'width 0.3s ease',
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+```
+
+## Readiness State Management
+
+### 1. Global Readiness Tracking
+
+```typescript
+// Track readiness state globally
+const usePluginReadiness = () => {
+  const [readinessState, setReadinessState] = React.useState({});
+
+  const updateReadiness = (pluginId: string, isReady: boolean) => {
+    setReadinessState((prev) => ({
+      ...prev,
+      [pluginId]: isReady,
+    }));
+  };
+
+  const isPluginReady = (pluginId: string) => {
+    return readinessState[pluginId] || false;
+  };
+
+  const areAllPluginsReady = (pluginIds: string[]) => {
+    return pluginIds.every((id) => isPluginReady(id));
+  };
+
+  return {
+    readinessState,
+    updateReadiness,
+    isPluginReady,
+    areAllPluginsReady,
+  };
+};
+```
+
+### 2. Readiness Events
+
+```typescript
+// Emit readiness events
+const ReadinessEventInitializer: React.FC<InitializerProps> = ({
+  setPlugin,
+}) => {
+  React.useEffect(() => {
+    const initializeWithEvents = async () => {
+      try {
+        await loadConfiguration();
+
+        // Emit readiness event
+        window.dispatchEvent(
+          new CustomEvent('plugin-ready', {
+            detail: { pluginId: 'event-plugin' },
+          })
+        );
+
+        setPlugin('event-plugin');
+      } catch (error) {
+        // Emit error event
+        window.dispatchEvent(
+          new CustomEvent('plugin-error', {
+            detail: { pluginId: 'event-plugin', error: error.message },
+          })
+        );
+
+        setPlugin('event-plugin');
+      }
+    };
+
+    initializeWithEvents();
+  }, [setPlugin]);
+
+  return <div>Initializing with events...</div>;
+};
+```
+
+## Best Practices
+
+### 1. Always Mark as Ready
+
+```typescript
+// ✅ Good - Always call setPlugin
+React.useEffect(() => {
+  const initialize = async () => {
+    try {
+      await loadData();
+      setPlugin('my-plugin'); // Success case
+    } catch (error) {
+      console.error(error);
+      setPlugin('my-plugin'); // Error case - still mark as ready
+    }
+  };
+  initialize();
+}, [setPlugin]);
+
+// ❌ Bad - setPlugin might not be called
+React.useEffect(() => {
+  const initialize = async () => {
+    await loadData(); // If this throws, setPlugin is never called
+    setPlugin('my-plugin');
+  };
+  initialize();
+}, [setPlugin]);
+```
+
+### 2. Provide Clear Status
+
+```typescript
+// ✅ Good - Clear readiness status
+const [status, setStatus] = React.useState('Initializing...');
+
+const initialize = async () => {
+  setStatus('Loading configuration...');
+  await loadConfig();
+
+  setStatus('Validating settings...');
+  await validateSettings();
+
+  setStatus('Ready!');
+  setPlugin('my-plugin');
+};
+```
+
+### 3. Handle Dependencies
+
+```typescript
+// ✅ Good - Check plugin dependencies
+bootstrap(app) {
+  const requiredPlugins = ['config', 'auth'];
+
+  for (const pluginId of requiredPlugins) {
+    const plugin = app.getPlugin(pluginId);
+    if (!plugin || !plugin.isReady) {
+      console.warn(`Required plugin ${pluginId} is not ready`);
+      return;
+    }
+  }
+
+  // All dependencies ready, proceed
+  this.initialize();
+}
+```
+
+### 4. Timeout Protection
+
+```typescript
+// ✅ Good - Prevent infinite waiting
+React.useEffect(() => {
+  const timeout = setTimeout(() => {
+    console.warn('Initialization timeout, marking as ready');
+    setPlugin('my-plugin');
+  }, 30000); // 30 second timeout
+
+  const initialize = async () => {
+    try {
+      await loadData();
+      clearTimeout(timeout);
+      setPlugin('my-plugin');
+    } catch (error) {
+      clearTimeout(timeout);
+      setPlugin('my-plugin');
+    }
+  };
+
+  initialize();
+}, [setPlugin]);
+```
+
+## Common Patterns
+
+### 1. Configuration Loading
+
+```typescript
+const ConfigReadinessInitializer: React.FC<InitializerProps> = ({
+  setPlugin,
+}) => {
+  React.useEffect(() => {
+    const loadConfiguration = async () => {
+      const config = await fetch('/api/plugin-config').then((r) => r.json());
+      window.pluginConfig = config;
+      setPlugin('config-plugin');
+    };
+    loadConfiguration();
+  }, [setPlugin]);
+
+  return <div>Loading configuration...</div>;
+};
+```
+
+### 2. Feature Flag Readiness
+
+```typescript
+const FeatureFlagInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    const checkFeatureFlags = async () => {
+      const flags = await fetch('/api/feature-flags').then((r) => r.json());
+
+      if (flags.myPluginEnabled) {
+        setPlugin('feature-plugin');
+      } else {
+        console.log('Plugin disabled by feature flag');
+        setPlugin('feature-plugin'); // Still mark as ready
+      }
+    };
+    checkFeatureFlags();
+  }, [setPlugin]);
+
+  return <div>Checking feature flags...</div>;
+};
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Plugin never becomes ready**
+
+   - Ensure `setPlugin` is always called
+   - Check for unhandled promise rejections
+   - Add timeout protection
+
+2. **Dependencies not ready**
+
+   - Check plugin loading order
+   - Implement proper dependency checking
+   - Use readiness events
+
+3. **Infinite loading**
+   - Add timeout mechanisms
+   - Check for infinite loops
+   - Verify API endpoints
+
+### Debugging Tips
+
+```typescript
+// Debug plugin readiness
+const DebugInitializer: React.FC<InitializerProps> = ({ setPlugin }) => {
+  React.useEffect(() => {
+    console.log('Initializer started');
+
+    const initialize = async () => {
+      try {
+        console.log('Step 1: Loading data...');
+        await loadData();
+
+        console.log('Step 2: Processing...');
+        await processData();
+
+        console.log('Step 3: Ready!');
+        setPlugin('debug-plugin');
+      } catch (error) {
+        console.error('Initialization error:', error);
+        setPlugin('debug-plugin');
+      }
+    };
+
+    initialize();
+  }, [setPlugin]);
+
+  return <div>Debug: Initializing...</div>;
+};
+```
+
+## Next Steps
+
+- Learn about [Plugin APIs](/cms/plugins-development/plugin-apis) for inter-plugin communication
+- Explore [Plugin Initialization](/cms/plugins-development/plugin-initialization) for async plugin setup
+- Check out [Injection Zones](/cms/plugins-development/injection-zones) for UI component injection
+
+
+
 # Plugin SDK
 Source: https://docs.strapi.io/cms/plugins-development/plugin-sdk
 
@@ -10705,20 +12924,21 @@ Source: https://docs.strapi.io/cms/plugins-development/plugin-structure
 
 When [creating a plugin with Plugin SDK](/cms/plugins-development/create-a-plugin), Strapi generates the following boilerplate structure for you in the `/src/plugins/my-plugin` folder:
 
-A Strapi plugin is divided into 2 parts, each living in a different folder and offering a different API:
+A Strapi plugin is divided into 2 parts:
 
-| Plugin part | Description | Folder       | API |
-|-------------|-------------|--------------|-----|
-| Admin panel | Includes what will be visible in the [admin panel](/cms/intro) (components, navigation, settings, etc.) | `admin/` |[Admin Panel API](/cms/plugins-development/admin-panel-api)|
-| Backend server | Includes what relates to the [backend server](/cms/backend-customization) (content-types, controllers, middlewares, etc.) |`server/` |[Server API](/cms/plugins-development/server-api)|
+| Plugin part    | Description                                                                                                               | Folder    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------- | --------- |
+| Admin panel    | Includes what will be visible in the [admin panel](/cms/intro) (components, navigation, settings, etc.)                   | `admin/`  |
+| Backend server | Includes what relates to the [backend server](/cms/backend-customization) (content-types, controllers, middlewares, etc.) | `server/` |
 
 <br />
 
 :::note Notes about the usefulness of the different parts for your specific use case
+
 - **Server-only plugin**: You can create a plugin that will just use the server part to enhance the API of your application. For instance, this plugin could have its own visible or invisible content-types, controller actions, and routes that are useful for a specific use case. In such a scenario, you don't need your plugin to have an interface in the admin panel.
 
 - **Admin panel plugin vs. application-specific customization**: You can create a plugin to inject some components into the admin panel. However, you can also achieve this by creating a `/src/admin/index.js` file and invoking the `bootstrap` lifecycle function to inject your components. In this case, deciding whether to create a plugin depends on whether you plan to reuse and distribute the code or if it's only useful for a unique Strapi application.
-:::
+  :::
 
 <br/>
 
@@ -10729,7 +12949,7 @@ The next steps of your Strapi plugin development journey will require you to use
 
 - The reference documentation for the [Admin Panel API](/cms/plugins-development/admin-panel-api) and [Server API](/cms/plugins-development/server-api) give an overview of what is possible to do with a Strapi plugin.
 - [Guides](/cms/plugins-development/developing-plugins#guides) cover some specific, use-case based examples.
-:::
+  :::
 
 
 
@@ -10915,7 +13135,7 @@ The `/src/server/index.js` file at the root of the plugin folder exports the req
 | Parameter type         | Available parameters                                                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lifecycle functions    | <ul><li> [register](#register)</li><li>[bootstrap](#bootstrap)</li><li>[destroy](#destroy)</li></ul>                                                                                                           |
-| Configuration          | <ul><li>[config](#configuration) object   </li></ul>                                                                                                                                                                             |
+| Configuration          | <ul><li>[config](#configuration) object </li></ul>                                                                                                                                                             |
 | Backend customizations | <ul><li>[contentTypes](#content-types)</li><li>[routes](#routes)</li><li>[controllers](#controllers)</li><li>[services](#services)</li><li>[policies](#policies)</li><li>[middlewares](#middlewares)</li></ul> |
 
 ## Lifecycle functions
@@ -10958,10 +13178,10 @@ The [destroy](/cms/configurations/functions#destroy) lifecycle function is calle
 
 **Type**: `Object`
 
-| Parameter   | Type                                           | Description                                                                                                                                              |
-| ----------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                         |
-| `validator` | Function                                       | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
+| Parameter   | Type                                       | Description                                                                                                                                                                                |
+| ----------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `default`   | Object, or Function that returns an Object | Default plugin configuration, merged with the user configuration                                                                                                                           |
+| `validator` | Function                                   | <ul><li>Checks if the results of merging the default plugin configuration with the user configuration is valid</li><li>Throws errors when the resulting configuration is invalid</li></ul> |
 
 **Example:**
 
@@ -11065,26 +13285,26 @@ Once a plugin is exported and loaded into Strapi, its features are accessible in
 - global getters are syntactic sugar that allows direct access using a feature's uid<br/>(e.g., `strapi.controller('plugin::plugin-name.controller-name')`).
 
 ```js
-// Access an API or a plugin controller using a top-level getter 
-strapi.api['api-name'].controller('controller-name')
-strapi.plugin('plugin-name').controller('controller-name')
+// Access an API or a plugin controller using a top-level getter
+strapi.api['api-name'].controller('controller-name');
+strapi.plugin('plugin-name').controller('controller-name');
 
 // Access an API or a plugin controller using a global getter
-strapi.controller('api::api-name.controller-name')
-strapi.controller('plugin::plugin-name.controller-name')
+strapi.controller('api::api-name.controller-name');
+strapi.controller('plugin::plugin-name.controller-name');
 ```
 
 <details>
 <summary> Top-level getter syntax examples</summary>
 
 ```js
-strapi.plugin('plugin-name').config
-strapi.plugin('plugin-name').routes
-strapi.plugin('plugin-name').controller('controller-name')
-strapi.plugin('plugin-name').service('service-name')
-strapi.plugin('plugin-name').contentType('content-type-name')
-strapi.plugin('plugin-name').policy('policy-name')
-strapi.plugin('plugin-name').middleware('middleware-name')
+strapi.plugin('plugin-name').config;
+strapi.plugin('plugin-name').routes;
+strapi.plugin('plugin-name').controller('controller-name');
+strapi.plugin('plugin-name').service('service-name');
+strapi.plugin('plugin-name').contentType('content-type-name');
+strapi.plugin('plugin-name').policy('policy-name');
+strapi.plugin('plugin-name').middleware('middleware-name');
 ```
 
 </details>
