@@ -556,45 +556,50 @@ Once an injection zone is defined, the component to be injected in the Content M
 <summary>Example of a basic component using the 'useContentManagerContext' hook</summary>
 
 ```js
-import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+import {
+  unstable_useContentManagerContext as useContentManagerContext,
+} from '@strapi/strapi/admin';
 
 const MyCompo = () => {
   const {
-    createActionAllowedFields: [], // Array of fields that the user is allowed to edit
-    formErrors: {}, // Object errors
-    readActionAllowedFields: [], // Array of field that the user is allowed to edit
-    slug: 'api::address.address', // Slug of the content-type
-    updateActionAllowedFields: [],
-    allLayoutData: {
-      components: {}, // components layout
-      contentType: {}, // content-type layout
-    },
-    initialData: {},
-    isCreatingEntry: true,
-    isSingleType: true,
-    status: 'resolved',
-    layout: {}, // Current content-type layout
-    hasDraftAndPublish: true,
-    modifiedData: {},
-    onPublish: () => {},
-    onUnpublish: () => {},
-    addComponentToDynamicZone: () => {},
-    addNonRepeatableComponentToField: () => {},
-    addRelation: () => {},
-    addRepeatableComponentToField: () => {},
-    moveComponentDown: () => {},
-    moveComponentField: () => {},
-    moveComponentUp: () => {},
-    moveRelation: () => {},
-    onChange: () => {},
-    onRemoveRelation: () => {},
-    removeComponentFromDynamicZone: () => {},
-    removeComponentFromField: () => {},
-    removeRepeatableField: () => {},
-  } = useCMEditViewDataManager()
+    slug,
+    isCreatingEntry,
+    isSingleType,
+    hasDraftAndPublish,
+    layout,
+    components,
+    contentType,
+    form,
+    model,
+    collectionType,
+    id,
+  } = useContentManagerContext();
 
-  return null
-}
+  // Form state and handlers
+  const {
+    initialValues,
+    values,
+    onChange,
+  } = form;
+
+  /**
+   * Layout structure:
+   *
+   * `layout` is grouped by Content Manager views.
+   *
+   * - layout.edit.layout     → edit view layout definition
+   * - layout.edit.components → component layouts used in the edit view
+   * - layout.list.layout     → list view layout definition
+   */
+  const {
+    edit: { layout: editLayout, components: editComponents },
+    list: { layout: listLayout },
+  } = layout;
+
+  return null;
+};
+
+export default MyCompo;
 ```
 
 </details>
