@@ -25870,7 +25870,7 @@ export default {
 
 
 ## Accessing data with the useCMEditViewDataManager React hook
-Description: Example of a basic component using the 'useCMEditViewDataManager' hook
+Description: Example of a basic component using the 'useContentManagerContext' hook
 (Source: https://docs.strapi.io/cms/plugins-development/admin-panel-api#accessing-data-with-the-usecmeditviewdatamanager-react-hook)
 
 Language: JavaScript
