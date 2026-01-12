@@ -553,7 +553,7 @@ export default {
 Once an injection zone is defined, the component to be injected in the Content Manager can have access to all the data of the Edit View through the `useCMEditViewDataManager` React hook.
 
 <details>
-<summary>Example of a basic component using the 'useCMEditViewDataManager' hook</summary>
+<summary>Example of a basic component using the 'useContentManagerContext' hook</summary>
 
 ```js
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
