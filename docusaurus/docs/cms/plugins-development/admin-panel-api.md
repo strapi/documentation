@@ -550,7 +550,7 @@ export default {
 
 #### Accessing data with the `useCMEditViewDataManager` React hook
 
-Once an injection zone is defined, the component to be injected in the Content Manager can have access to all the data of the Edit View through the `useCMEditViewDataManager` React hook.
+Once an injection zone is defined, the component to be injected in the Content Manager can have access to all the data of the Edit View through the `useContentManagerContext` React hook.
 
 <details>
 <summary>Example of a basic component using the 'useContentManagerContext' hook</summary>
