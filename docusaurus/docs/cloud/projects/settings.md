@@ -110,7 +110,7 @@ Updating the git repository could result in the loss of the project and its data
 5. Click on the **Save & deploy** button for the changes to take effect.
 
 
-#### Transferring project ownership <BetaBadge /> {#transferring-project-ownership}
+#### Transferring project ownership {#transferring-project-ownership}
 
 The ownership of the Strapi Cloud project can be transferred to another user, as long as they're a maintainer of the project. It can either be at the initiative of the current project owner, or can be requested by a project maintainer. Once the ownership is transferred, it is permanent until the new owner decides to transfer the ownership again to another maintainer.
 
@@ -350,7 +350,7 @@ Ensure the Node version configured in your Strapi project matches the Node versi
 
 3. Click on the **Save & deploy** button for the changes to take effect.
 
-#### Transferring data between environments {#transferring-data-between-environments}
+#### Transferring data between environments <BetaBadge /> {#transferring-data-between-environments}
 <CloudProBadge /> <CloudScaleBadge />
 
 The data transfer feature allows you to transfer the entire CMS content (database and assets) from one environment to another within the same Strapi Cloud project. This is useful for testing changes in a secondary environment with up-to-date production data, or for preparing and staging content in a secondary environment before taking it to production.
