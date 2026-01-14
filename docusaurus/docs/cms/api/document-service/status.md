@@ -199,8 +199,8 @@ To automatically publish a document while updating it, add `status: 'published'`
 
 ```js
 await strapi.documents('api::restaurant.restaurant').update({
+  documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
   data: {
-    documentId: 'a1b2c3d4e5f6g7h8i9j0klm',
     name: "Biscotte Restaurant (closed)",
   },
   status: 'published',
