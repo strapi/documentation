@@ -42,9 +42,6 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 - [Cloud yearly plans](https://github.com/strapi/documentation/pull/2901)
 - [Data transfer between Cloud environments](https://github.com/strapi/documentation/pull/2891)
 
-#### Repository
-- [Close corresponding milestone with automated release script](https://github.com/strapi/documentation/pull/2916)
-
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
 <br />
@@ -55,6 +52,10 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 #### Cloud
 - [Manage beta badge for Cloud features](https://github.com/strapi/documentation/pull/2913)
 - [Update custom domain saving options](https://github.com/strapi/documentation/pull/2906)
+
+
+#### Repository
+- [Close corresponding milestone with automated release script](https://github.com/strapi/documentation/pull/2916)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
