@@ -508,6 +508,20 @@ Thank you to all contributors! 🫶 (you're listed on docs.strapi.io 👀)"
     fi
 }
 
+# Function to close milestone
+close_milestone() {
+    echo -e "${BLUE}🏁 Closing milestone...${NC}"
+    
+    local response=$(gh_api_patch "milestones/$MILESTONE_NUMBER" '{"state": "closed"}')
+    
+    if echo "$response" | jq -e '.id' > /dev/null && [ "$(echo "$response" | jq -r '.state')" = "closed" ]; then
+        echo -e "${GREEN}✅ Milestone $MILESTONE_TITLE closed${NC}"
+    else
+        echo -e "${RED}❌ Failed to close milestone${NC}"
+        echo "Response: $response"
+    fi
+}
+
 # Function to show summary
 show_summary() {
     echo ""
@@ -520,6 +534,7 @@ show_summary() {
     echo -e "- ✅ Release notes generated and integrated"
     echo -e "- ✅ Changes committed and pushed"
     echo -e "- ✅ GitHub release created"
+    echo -e "- ✅ Milestone closed"
     echo ""
     echo -e "${BLUE}Next steps:${NC}"
     echo -e "- Check the live documentation: https://docs.strapi.io/release-notes"
@@ -568,6 +583,7 @@ main() {
     commit_and_push
     wait_for_deployment
     create_github_release
+    close_milestone
     show_summary
 }
 
