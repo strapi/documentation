@@ -19,6 +19,12 @@ Contributing to the Strapi documentation implies 2 steps:
 
 By default, all external contributions are automatically labeled `contribution` to be apart of the [Docs Contribution Program](https://strapi.notion.site/Documentation-Contribution-Program-1d08f359807480d480fdde68bb7a5a71), which rewards contributors with points (based on the amount of updates in the pull request) that can then be used in the Strapi Shop to get Strapi goodies. If you do not wish to take part in the program, let the Strapi Documentation team know and the `contribution` label will be removed from your pull request.
 
+***
+
+⚠️ **Important: Please disable any linter or automatic formatting tool(s)** before saving and submitting your files. Not doing so could, at best, add unnecessary formatting changes to the submitted PR or, at worst, prevent Docusaurus from properly rendering some pages.
+
+***
+
 ## 🦖 Docusaurus
 
 Strapi’s documentation is built with the React- and Markdown-based [Docusaurus](https://docusaurus.io) framework.
@@ -46,7 +52,6 @@ The Strapi Documentation team has created a complete style guide for you to make
 
 💁 While writing, please consider the [12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) that the Strapi Documentation team will use to assess the quality and consistency of the contribution. 😊
 
-⚠️ **Important: Please disable any linter or automatic formatting tool(s)** before saving and submitting your files. Not doing so could, at best, add unnecessary formatting changes to the submitted PR or, at worst, prevent Docusaurus from properly rendering some pages.
 
 ### Working locally: Set up the project
 
