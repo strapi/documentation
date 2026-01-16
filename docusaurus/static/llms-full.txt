@@ -1486,14 +1486,17 @@ Strapi's [admin panel](/cms/admin-panel-customization) displays its branding on 
 There are 2 approaches to replacing the favicon:
 
 * Replace the `favicon.png` file at the root of a Strapi project
-* Edit the [`strap`::favicon` middleware configuration](/configurations/middlewares#favicon), to replace the existing configuration or create it with the following code:
+* Edit the [`strapi::favicon` middleware configuration](/cms/configurations/middlewares#favicon) with the following code:
 
   ```js title="/config/middlewares.js"
+  // …
   {
     name: 'strapi::favicon',
     config: {
       path: 'my-custom-favicon.png',
     },
+  },
+  // …
   ```
 
 Once done, rebuild, launch and revisit your Strapi app by running `yarn build && yarn develop` in the terminal.

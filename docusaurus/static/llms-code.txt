@@ -902,18 +902,21 @@ strapi develop --bundler=webpack
 Source: https://docs.strapi.io/cms/admin-panel-customization/favicon
 
 ## Favicon
-Description: Replace the favicon.png file at the root of a Strapi project Edit the strap::favicon` middleware configuration, to replace the existing configuration or create it with the following code:
+Description: Replace the favicon.png file at the root of a Strapi project Edit the strapi::favicon middleware configuration with the following code:
 (Source: https://docs.strapi.io/cms/admin-panel-customization/favicon#favicon)
 
-Language: JSON
+Language: JavaScript
 File path: /config/middlewares.js
 
-```json
+```js
+  // …
   {
     name: 'strapi::favicon',
     config: {
       path: 'my-custom-favicon.png',
     },
+  },
+  // …
 ```
 
 
