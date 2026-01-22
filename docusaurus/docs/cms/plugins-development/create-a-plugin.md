@@ -135,9 +135,9 @@ The above commands will not only build the plugin, but also verify that the outp
 
 :::tip Upgrading from SDK Plugin v5
 If you're upgrading from `@strapi/sdk-plugin` v5 to v6:
-1. Delete any `packup.config.ts` file from your plugin (it's no longer used)
-2. Build configuration is now derived automatically from `package.json#exports`
-3. If you need sourcemaps, add `--sourcemap` to your build command (they now default to off)
+* You can delete any `packup.config.ts` file from your plugin (it's no longer used).
+* Build configuration is now derived automatically from `package.json#exports`.
+* If you need sourcemaps, add `--sourcemap` to your build command (they now default to off).
 
 No other changes are required.
 :::
