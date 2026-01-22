@@ -9,6 +9,8 @@ tags:
   - plugins development
 ---
 
+import UsingSDKplugin5 from '/docs/snippets/sdk-plugin-v5-v6.md'
+
 # Plugin creation
 
 <Tldr>
@@ -140,19 +142,7 @@ If you're upgrading from `@strapi/sdk-plugin` v5 to v6:
 No other changes are required.
 :::
 
-:::caution Using SDK Plugin v5 (legacy)
-If you need to continue using the previous build system with `@strapi/pack-up`, you can pin to version 5.x:
-
-```bash
-# npm
-npm install @strapi/sdk-plugin@5
-
-# yarn
-yarn add @strapi/sdk-plugin@5
-```
-
-Version 5.x supports `packup.config.ts` for custom build configuration. However, v6 is recommended for security updates and simplified configuration.
-:::
+<UsingSDKplugin5 />
 
 ## Working with the Plugin SDK in a monorepo environment {#monorepo}
 

@@ -9,6 +9,8 @@ tags:
   - plugins development
 ---
 
+import UsingSDKplugin5 from '/docs/snippets/sdk-plugin-v5-v6.md'
+
 # Plugin SDK reference
 
 The Plugin SDK is set of commands provided by the package <ExternalLink to="https://github.com/strapi/sdk-plugin" text="@strapi/sdk-plugin"/> orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
@@ -52,17 +54,7 @@ strapi-plugin build
 As of v6, the build configuration is automatically derived from your `package.json` exports field. No configuration file (such as `vite.config.ts` or `rollup.config.ts`) is needed.
 :::
 
-:::caution Using SDK Plugin v5 (legacy)
-If you need custom build configuration via `packup.config.ts`, you can use the previous version:
-
-```bash
-npm install @strapi/sdk-plugin@5
-# or
-yarn add @strapi/sdk-plugin@5
-```
-
-Version 5.x uses `@strapi/pack-up` and supports `packup.config.ts`. However, v6 is recommended for security updates.
-:::
+<UsingSDKplugin5 />
 
 ## strapi-plugin watch:link
 
