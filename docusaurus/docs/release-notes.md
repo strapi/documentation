@@ -37,6 +37,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 #### CMS
 - [Fix Admin Panel API example that used deprecated helper plugin](https://github.com/strapi/documentation/pull/2910)
+- [SDK Plugin v6: Vite direct integration](https://github.com/strapi/sdk-plugin/releases/tag/v6.0.0) - Updated Plugin SDK docs to reflect v6 changes: build system now uses Vite v6 directly, removing `@strapi/pack-up` dependency. Added migration guidance for users upgrading from v5.
 
 #### Cloud
 - [Cloud yearly plans](https://github.com/strapi/documentation/pull/2901)

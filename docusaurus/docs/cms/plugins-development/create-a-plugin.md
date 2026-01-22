@@ -131,6 +131,29 @@ npm run build && npm run verify
 
 The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
 
+:::tip Upgrading from SDK Plugin v5
+If you're upgrading from `@strapi/sdk-plugin` v5 to v6:
+1. Delete any `packup.config.ts` file from your plugin (it's no longer used)
+2. Build configuration is now derived automatically from `package.json#exports`
+3. If you need sourcemaps, add `--sourcemap` to your build command (they now default to off)
+
+No other changes are required.
+:::
+
+:::caution Using SDK Plugin v5 (legacy)
+If you need to continue using the previous build system with `@strapi/pack-up`, you can pin to version 5.x:
+
+```bash
+# npm
+npm install @strapi/sdk-plugin@5
+
+# yarn
+yarn add @strapi/sdk-plugin@5
+```
+
+Version 5.x supports `packup.config.ts` for custom build configuration. However, v6 is recommended for security updates and simplified configuration.
+:::
+
 ## Working with the Plugin SDK in a monorepo environment {#monorepo}
 
 If you are working with a monorepo environment to develop your plugin, you don't need to use the `watch:link` command because the monorepo workspace setup will handle the symlink. You can use the `watch` command instead.

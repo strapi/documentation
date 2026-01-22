@@ -45,8 +45,24 @@ strapi-plugin build
 | `--force`      | string | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively. | -       |
 | `-d, --debug`  |   -    | Enable debugging mode with verbose logs                                                                           | false   |
 | `--silent`     |   -    | Do not log anything                                                                                               | false   |
-| `--minify`     |   -    | Minify the output                                                                                                 | true    |
-| `--sourcemaps` |   -    | Produce sourcemaps                                                                                                | false   |
+| `--minify`     |   -    | Minify the output                                                                                                 | false   |
+| `--sourcemap`  |   -    | Produce sourcemaps                                                                                                | false   |
+
+:::note
+As of v6, the build configuration is automatically derived from your `package.json` exports field. No configuration file (such as `vite.config.ts` or `rollup.config.ts`) is needed.
+:::
+
+:::caution Using SDK Plugin v5 (legacy)
+If you need custom build configuration via `packup.config.ts`, you can use the previous version:
+
+```bash
+npm install @strapi/sdk-plugin@5
+# or
+yarn add @strapi/sdk-plugin@5
+```
+
+Version 5.x uses `@strapi/pack-up` and supports `packup.config.ts`. However, v6 is recommended for security updates.
+:::
 
 ## strapi-plugin watch:link
 
