@@ -292,6 +292,10 @@ The Rich Text (Blocks) field displays an editor with live rendering and various 
 If using the Blocks editor, we recommend that you also use the <ExternalLink to="https://github.com/strapi/blocks-react-renderer" text="Strapi Blocks React Renderer"/> to easily render the content in a React frontend.
 :::
 
+:::strapi Angular renderer
+If using the Blocks editor, we recommend that you also use the <ExternalLink to="https://github.com/TupiC/blocks-renderer-angular" text="Strapi Blocks Angular Renderer"/> to easily render the content in an Angular frontend.
+:::
+
 #### <img width="28" src="/img/assets/icons/v5/ctb_number.svg" /> Number {#number}
 
 The Number field displays a field for any kind of number: integer, decimal and float.
