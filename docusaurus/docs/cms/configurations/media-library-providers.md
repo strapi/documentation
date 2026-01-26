@@ -7,25 +7,24 @@ tags:
 - customization
 ---
 
-import MediaLibraryProvidersList from '/docs/snippets/media-library-providers-list.md';
+import MediaLibProvidersList from '/docs/snippets/media-library-providers-list.md'
+import MediaLibProvidersNotes from '/docs/snippets/media-library-providers-notes.md'
 
 # Media Library providers
 
 The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
 
-<MediaLibraryProvidersList />
+By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available and add an extension to the core capabilities of the plugin, should you want to upload your files to another location, such as AWS S3 or Cloudinary.
 
-Providers add an extension to the core capabilities of the plugin, for example to upload media files to AWS S3 instead of the local server, or using Amazon SES for emails instead of Sendmail.
-
-There are both official providers maintained by Strapi — discoverable via the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) — and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/" text="npm"/>.
+There are both official providers maintained by Strapi discoverable via the <ExternalLink text="Marketplace" to="https://market.strapi.io/?types=provider"/> and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/search?q=strapi%20provider" text="npm"/>.
 
 A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
 ## Installing providers
 
-New providers can be installed using `npm` or `yarn` using the following format `@strapi/provider-<plugin>-<provider> --save`.
+New providers can be installed using NPM or Yarn using the following format `@strapi/provider-<plugin>-<provider> --save`.
 
-For example, to install the AWS S3 provider for the Upload (Media Library) feature::
+For example, to install the AWS S3 provider for the Media Library feature:
 
 <Tabs groupId="yarn-npm">
 
@@ -51,85 +50,11 @@ npm install @strapi/provider-upload-aws-s3 --save
 
 Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
 
-Each provider will have different configuration settings available. Review the respective entry for that provider in the [Marketplace](/cms/plugins/installing-plugins-via-marketplace) or <ExternalLink to="https://www.npmjs.com/" text="npm"/> to learn more.
+Each provider will have different configuration settings available. Please review the respective entry for that provider on dedicated pages below for the Strapi-maintained providers, or on the provider's <ExternalLink text="Marketplace" to="https://market.strapi.io/?types=provider"/> page.
 
-The following is an example configuration for an AWS S3 Media Library provider:
+<MediaLibProvidersList />
+<MediaLibProvidersNotes />
 
-<Tabs groupId="js-ts">
-
-<TabItem value="javascript" label="JavaScript">
-
-```js title="/config/plugins.js"
-
-module.exports = ({ env }) => ({
-  // ...
-  upload: {
-    config: {
-      provider: 'aws-s3',
-      providerOptions: {
-        baseUrl: env('CDN_URL'),
-        rootPath: env('CDN_ROOT_PATH'),
-        s3Options: {
-          credentials: {
-            accessKeyId: env('AWS_ACCESS_KEY_ID'),
-            secretAccessKey: env('AWS_ACCESS_SECRET'),
-          },
-          region: env('AWS_REGION'),
-          params: {
-            ACL: env('AWS_ACL', 'public-read'),
-            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
-            Bucket: env('AWS_BUCKET'),
-          },
-        },
-      },
-      actionOptions: {
-        upload: {},
-        uploadStream: {},
-        delete: {},
-      },
-    },
-  },
-  // ...
-});
-```
-
-</TabItem>
-
-<TabItem value="typescript" label="TypeScript">
-
-```ts title="/config/plugins.ts"
-
-export default ({ env }) => ({
-  // ...
-  upload: {
-    config: {
-      provider: 'aws-s3', // For community providers pass the full package name (e.g. provider: 'strapi-provider-upload-google-cloud-storage')
-      providerOptions: {
-        accessKeyId: env('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env('AWS_ACCESS_SECRET'),
-        region: env('AWS_REGION'),
-        params: {
-          ACL: env('AWS_ACL', 'public-read'), // 'private' if you want to make the uploaded files private
-          Bucket: env('AWS_BUCKET'),
-        },
-      },
-    },
-  },
-  // ...
-});
-```
-
-</TabItem>
-
-</Tabs>
-
-:::note Notes
-* Strapi has a default [`security` middleware](/cms/configurations/middlewares#security) that has a very strict `contentSecurityPolicy` that limits loading images and media to `"'self'"` only, see the example configuration on the <ExternalLink to="https://www.npmjs.com/package/@strapi/provider-upload-aws-s3" text="provider page"/> or the [middleware documentation](/cms/configurations/middlewares#security) for more information.
-* When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (See [Environments](/cms/configurations/environment)).
-* Only one email provider will be active at a time. If the email provider setting isn't picked up by Strapi, verify the `plugins.js|ts` file is in the correct folder.
-* When testing the new email provider with those two email templates created during strapi setup, the _shipper email_ on the template defaults to `no-reply@strapi.io` and needs to be updated according to your email provider, otherwise it will fail the test (See [Configure templates locally](/cms/features/users-permissions#templating-emails)).
-
-:::
 
 ### Configuration per environment
 
@@ -273,92 +198,6 @@ In the backend, Strapi generates a signed URL for each asset using the `getSigne
 
 Note that for security reasons, the content API will not provide any signed URLs. Instead, developers using the API should sign the urls themselves.
 
-**Example**
-
-To create a private `aws-s3` provider:
-
-1. Create a `/providers/aws-s3` folder in your application. See [Local Providers](#local-providers) for more information.
-2. Implement the `isPrivate()` method in the `aws-s3` provider to return `true`.
-3. Implement the `getSignedUrl(file)` method in the `aws-s3` provider to generate a signed URL for the given file.
-
-<Tabs groupId="js-ts">
-
-<TabItem value="js" label="JavaScript">
-
-```js title="/providers/aws-s3/index.js"
-// aws-s3 provider
-
-module.exports = {
-  init: (config) => {
-    const s3 = new AWS.S3(config);
-
-    return {
-      async upload(file) {
-        // code to upload file to S3
-      },
-
-      async delete(file) {
-        // code to delete file from S3
-      },
-
-      async isPrivate() {
-        return true;
-      },
-
-      async getSignedUrl(file) {
-        const params = {
-          Bucket: config.params.Bucket,
-          Key: file.path,
-          Expires: 60, // URL expiration time in seconds
-        };
-
-        const signedUrl = await s3.getSignedUrlPromise("getObject", params);
-        return { url: signedUrl };
-      },
-    };
-  },
-};
-```
-
-</TabItem>
-
-<TabItem value="ts" label="TypeScript">
-
-```ts title="/providers/aws-s3/index.ts"
-// aws-s3 provider
-
-export = {
-  init: (config) => {
-    const s3 = new AWS.S3(config);
-
-    return {
-      async upload(file) {
-        // code to upload file to S3
-      },
-
-      async delete(file) {
-        // code to delete file from S3
-      },
-
-      async isPrivate() {
-        return true;
-      },
-
-      async getSignedUrl(file) {
-        const params = {
-          Bucket: config.params.Bucket,
-          Key: file.path,
-          Expires: 60, // URL expiration time in seconds
-        };
-
-        const signedUrl = await s3.getSignedUrlPromise("getObject", params);
-        return { url: signedUrl };
-      },
-    };
-  },
-};
-```
-
-</TabItem>
-
-</Tabs>
+:::tip Private AWS S3 provider
+You can find a short guide on how to create a private Amazon AWS S3 provider in the [dedicated documentation](/cms/configurations/media-library-providers/amazon-s3#private-aws-s3-provider).
+:::

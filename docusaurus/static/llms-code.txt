@@ -17207,7 +17207,7 @@ export default async () => {
 Source: https://docs.strapi.io/cms/configurations/media-library-providers
 
 ## Installing providers
-Description: For example, to install the AWS S3 provider for the Upload (Media Library) feature::
+Description: For example, to install the AWS S3 provider for the Upload (Media Library) feature:
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers#installing-providers)
 
 Language: Bash
@@ -17223,74 +17223,6 @@ File path: N/A
 
 ```bash
 npm install @strapi/provider-upload-aws-s3 --save
-```
-
-
-## Configuring providers
-Description: The following is an example configuration for an AWS S3 Media Library provider:
-(Source: https://docs.strapi.io/cms/configurations/media-library-providers#configuring-providers)
-
-Language: JavaScript
-File path: /config/plugins.js
-
-```js
-
-module.exports = ({ env }) => ({
-  // ...
-  upload: {
-    config: {
-      provider: 'aws-s3',
-      providerOptions: {
-        baseUrl: env('CDN_URL'),
-        rootPath: env('CDN_ROOT_PATH'),
-        s3Options: {
-          credentials: {
-            accessKeyId: env('AWS_ACCESS_KEY_ID'),
-            secretAccessKey: env('AWS_ACCESS_SECRET'),
-          },
-          region: env('AWS_REGION'),
-          params: {
-            ACL: env('AWS_ACL', 'public-read'),
-            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
-            Bucket: env('AWS_BUCKET'),
-          },
-        },
-      },
-      actionOptions: {
-        upload: {},
-        uploadStream: {},
-        delete: {},
-      },
-    },
-  },
-  // ...
-});
-```
-
----
-Language: TypeScript
-File path: /config/plugins.ts
-
-```ts
-
-export default ({ env }) => ({
-  // ...
-  upload: {
-    config: {
-      provider: 'aws-s3', // For community providers pass the full package name (e.g. provider: 'strapi-provider-upload-google-cloud-storage')
-      providerOptions: {
-        accessKeyId: env('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env('AWS_ACCESS_SECRET'),
-        region: env('AWS_REGION'),
-        params: {
-          ACL: env('AWS_ACL', 'public-read'), // 'private' if you want to make the uploaded files private
-          Bucket: env('AWS_BUCKET'),
-        },
-      },
-    },
-  },
-  // ...
-});
 ```
 
 
@@ -17401,16 +17333,134 @@ File path: /docs.npmjs.com/files/package.js
 ```
 
 
-## Private providers
-Description: Create a /providers/aws-s3 folder in your application.
-(Source: https://docs.strapi.io/cms/configurations/media-library-providers#private-providers)
+
+# Amazon S3 provider
+Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3
+
+## Installation
+Description: To install the official Strapi-maintained AWS S3 provider, run the following command in a terminal:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#installation)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn add @strapi/provider-upload-aws-s3
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm install @strapi/provider-upload-aws-s3 --save
+```
+
+
+## Configuration
+Description: The following is an example configuration:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'cloudinary',
+      providerOptions: {
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+    },
+  },
+  // ...
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'cloudinary',
+      providerOptions: {
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+    },
+  },
+  // ...
+});
+```
+
+
+## Bucket CORS configuration
+Description: If you are planning on uploading content like GIFs and videos to your S3 bucket, you will want to edit its CORS configuration so that thumbnails are properly shown in Strapi.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)
+
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["GET"],
+    "AllowedOrigins": ["YOUR STRAPI URL"],
+    "ExposeHeaders": [],
+    "MaxAgeSeconds": 3000
+  }
+]
+```
+
+
+## Required AWS policy actions
+Description: The following are the minimum amount of permissions needed for AWS S3 provider to work:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#required-aws-policy-actions)
+
+Language: JSON
+File path: N/A
+
+```json
+"Action": [
+  "s3:PutObject",
+  "s3:GetObject",
+  "s3:ListBucket",
+  "s3:DeleteObject",
+  "s3:PutObjectAcl"
+],
+```
+
+
+## Private AWS S3 provider
+Description: Create a /providers/aws-s3 folder in your application (see local providers for more information).
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#private-aws-s3-provider)
 
 Language: JavaScript
 File path: /providers/aws-s3/index.js
 
 ```js
-// aws-s3 provider
-
 module.exports = {
   init: (config) => {
     const s3 = new AWS.S3(config);
@@ -17448,8 +17498,6 @@ Language: TypeScript
 File path: /providers/aws-s3/index.ts
 
 ```ts
-// aws-s3 provider
-
 export = {
   init: (config) => {
     const s3 = new AWS.S3(config);
@@ -17480,6 +17528,166 @@ export = {
     };
   },
 };
+```
+
+
+
+# Cloudinary provider
+Source: https://docs.strapi.io/cms/configurations/media-library-providers/cloudinary
+
+## Installation
+Description: To install the official Strapi-maintained Cloudinary provider, run the following command in a terminal:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/cloudinary#installation)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn add @strapi/provider-upload-cloudinary
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm install @strapi/provider-upload-cloudinary --save
+```
+
+
+## Configuration
+Description: provider to define the provider name (i.e., cloudinary) providerOptions to define options that are passed down during the construction of the provider (see for the full list of options) * actionOptions to define options that are passed directly to the parameters to each method respectively.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/cloudinary#configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        baseUrl: env('CDN_URL'),
+        rootPath: env('CDN_ROOT_PATH'),
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
+          region: env('AWS_REGION'),
+          params: {
+            ACL: env('AWS_ACL', 'public-read'),
+            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+    },
+  },
+  // ...
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3', // For community providers pass the full package name (e.g. provider: 'strapi-provider-upload-google-cloud-storage')
+      providerOptions: {
+        accessKeyId: env('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: env('AWS_ACCESS_SECRET'),
+        region: env('AWS_REGION'),
+        params: {
+          ACL: env('AWS_ACL', 'public-read'), // 'private' if you want to make the uploaded files private
+          Bucket: env('AWS_BUCKET'),
+        },
+      },
+    },
+  },
+  // ...
+});
+```
+
+
+
+# Local upload provider
+Source: https://docs.strapi.io/cms/configurations/media-library-providers/local-upload
+
+## Installation
+Description: To install the provider, run the following command in a terminal:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/local-upload#installation)
+
+Language: Bash
+File path: N/A
+
+```bash
+yarn add @strapi/provider-upload-local
+```
+
+---
+Language: Bash
+File path: N/A
+
+```bash
+npm install @strapi/provider-upload-local --save
+```
+
+
+## Configuration
+Description: The following is an example configuration:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/local-upload#configuration)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'local',
+      providerOptions: {
+        sizeLimit: 100000,
+      },
+    },
+  },
+  // ...
+});
+```
+
+---
+Language: TypeScript
+File path: /config/plugins.ts
+
+```ts
+
+export default ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'local',
+      providerOptions: {
+        sizeLimit: 100000,
+      },
+    },
+  },
+  // ...
+});
 ```
 
 
