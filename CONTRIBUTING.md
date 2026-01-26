@@ -1,6 +1,6 @@
 # Contribute to the Strapi documentation
 
-Strapi’s documentation is open-source, hosted on GitHub in the present `strapi/documentation` repository. The [Strapi Documentation team](https://strapi.io/company) maintains the repository and the corresponding official website hosted at [docs.strapi.io](https://docs.strapi.io).
+Strapi’s documentation (Strapi Docs) is open-source, hosted on GitHub in the present `strapi/documentation` repository. The [Strapi Documentation team](https://strapi.io/company) maintains the repository and the corresponding official website hosted at [docs.strapi.io](https://docs.strapi.io).
 
 The Strapi Documentation team does not maintain blog articles hosted at [strapi.io/blog](https://strapi.io/blog) or any other educational or informational content not hosted on the [official documentation website](docs.strapi.io); these should not be subject to GitHub pull requests or issues on the present repository.
 
