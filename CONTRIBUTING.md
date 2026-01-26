@@ -6,6 +6,8 @@ The Strapi Documentation team does not maintain blog articles hosted at [strapi.
 
 We appreciate your interest and efforts to contribute to Strapi! Though all contributions are highly appreciated, we recommend you talk to a maintainer (`@pwizla` or `@meganelacheny`) prior to investing a lot of time in a pull request that may not align with the project roadmap or would modify the UI, UX, or any other part of the Strapi Documentation product experience. Please note that contributions, pull requests, and issues should be written in English.
 
+Please note that pull requests aiming to promote or market third-party tools, products, or services will be rejected. The goal of Strapi Docs is to document the core Strapi product and remain as neutral as possible.
+
 The Strapi Documentation team reviews pull requests and either merges, requests changes, or comments and closes the pull request. You can open a documentation pull request by:
 
 - forking the `documentation` repository and working locally,
