@@ -28,6 +28,56 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.15.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### CMS
+- [Add docs for Media Library retroactive AI generation](https://github.com/strapi/documentation/pull/2918)
+
+#### Repository
+- [First documentation automation tools: agents.md, templates, and style checker](https://github.com/strapi/documentation/pull/2923)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Fix favicon docs](https://github.com/strapi/documentation/pull/2899)
+
+#### Repository
+- [Add global Annotation for naming conventions (kebab-case and more)](https://github.com/strapi/documentation/pull/2926)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Update supported Node versions](https://github.com/strapi/documentation/pull/2917)
+
+#### Cloud
+- [Clarify API request counting in usage billing documentation](https://github.com/strapi/documentation/pull/2924)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/mariekirsch" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/63100752?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="mariekirsch"/>
+</a>
+<a href="https://github.com/markkaylor" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26598053?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="markkaylor"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.14.1
 
 <br />
