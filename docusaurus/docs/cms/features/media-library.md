@@ -602,8 +602,7 @@ Just above the list of folders and assets and next to the !<Icon name="funnel-si
 
 AI metadata generation only works with images, not files or videos. The feature is enabled by default, but can be disabled in the [Media Library settings](#configuring-settings) if needed.
 
-
-The [Media Library settings](#configuring-settings) also provides a simple action to generate metadata for any existing images in the Media Library that do not have alternative text or caption. This feature is currently in <BetaBadge />.
+The [Media Library settings](#configuring-settings) also allows generating metadata for existing images that lack alternative text or captions. This feature is currently in <BetaBadge />.
 
 <ThemedImage
   alt="AI metadata retroactive generation"
