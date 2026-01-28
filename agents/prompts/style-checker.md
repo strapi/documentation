@@ -232,6 +232,8 @@ const config = { enabled: true }
 
 Do NOT summarize or discuss the report before outputting it. Output the full report first.
 
+End each report with a "Recommended fixes (sorted by priority)" section listing the most important fixes in order.
+
 ## Behavioral Notes
 
 1. **Be precise about location:** Reference violations by **section heading** (e.g., "Section: Admin Localization > Best Practices") rather than line numbers. Line numbers are unreliable and hard to verify. If a line number is needed, only include it if you have actually counted the lines from the beginning of the file.
