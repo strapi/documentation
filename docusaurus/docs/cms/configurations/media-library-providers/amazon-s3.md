@@ -128,7 +128,7 @@ export default ({ env }) => ({
 
 </Tabs>
 
-If you use the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` gproperties. Use environment configurations to define how your asset URLs will be saved inside Strapi.
+If you use the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` properties. Use environment configurations to define how your asset URLs will be saved inside Strapi.
 
 <MediaLibProviderNotes/>
 
