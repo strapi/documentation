@@ -158,6 +158,11 @@ Beyond the 12 rules, also check for:
 - **Detect:** Inconsistent terminology within the same document (e.g., "admin panel" vs "Admin Panel" vs "administration panel"); inconsistent heading capitalization
 - **Severity:** warning
 - **Note:** Strapi documentation uses **sentence case** for all headings (e.g., "What are injection zones?" not "What Are Injection Zones?"). Only the first word and proper nouns are capitalized.
+- **Strapi-specific (NPM/Yarn casing):**
+  - In prose: "NPM" (all caps) and "Yarn" (capitalized) are the preferred forms. "yarn" lowercase is also acceptable but "Yarn" is preferred.
+  - In terminal commands/code blocks: always lowercase (`npm`, `yarn`)
+  - In TabItems: `value` must be lowercase (`yarn`, `npm`), `label` must be `Yarn` or `NPM`
+  - Do NOT flag these as inconsistencies when used correctly per context.
 
 ## Example
 
