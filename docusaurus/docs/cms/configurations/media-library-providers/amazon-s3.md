@@ -46,7 +46,7 @@ Providers configuration are defined in [the `/config/plugins` file](/cms/configu
 
 * `provider` to define the provider name (i.e., `amazon-s3`)
 * `providerOptions` to define options that are passed down during the construction of the provider (see <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property" text="AWS documentation"/> for the full list of options)
-* `actionOptions` to define options that are passed directly to the parameters to each method respectively. The Official AWS documentation lists available options for <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property" text="upload/uploadStream"/> and <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property" text="delete"/>.
+* `actionOptions` to define options that are passed directly to the parameters to each method respectively. The official AWS documentation lists available options for <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property" text="upload/uploadStream"/> and <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property" text="delete"/>.
 
 The following is an example configuration:
 

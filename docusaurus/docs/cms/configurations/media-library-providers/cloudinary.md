@@ -46,7 +46,7 @@ Providers configuration are defined in [the `/config/plugins` file](/cms/configu
 
 * `provider` to define the provider name (i.e., `cloudinary`)
 * `providerOptions` to define options that are passed down during the construction of the provider (see <ExternalLink to="https://cloudinary.com/documentation/cloudinary_sdks#configuration_parameters" text="Cloudinary documentation"/> for the full list of options)
-* `actionOptions` to define options that are passed directly to the parameters to each method respectively. The Official AWS documentation lists available options for <ExternalLink to="https://cloudinary.com/documentation/image_upload_api_reference#upload_optional_parameters" text="upload/uploadStream"/> and <ExternalLink to="https://cloudinary.com/documentation/image_upload_api_reference#destroy_optional_parameters" text="delete"/>.
+* `actionOptions` to define options that are passed directly to the parameters to each method respectively. The official Cloudinary documentation lists available options for <ExternalLink to="https://cloudinary.com/documentation/image_upload_api_reference#upload_optional_parameters" text="upload/uploadStream"/> and <ExternalLink to="https://cloudinary.com/documentation/image_upload_api_reference#destroy_optional_parameters" text="delete"/>.
 
 <Tabs groupId="js-ts">
 
