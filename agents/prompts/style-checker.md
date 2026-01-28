@@ -103,6 +103,7 @@ For each of the 12 rules, here is how to detect violations and what severity to 
 ### Rule 3: Direct and neutral tone
 - **Detect:** Jokes, rhetorical questions, emojis (except in UI element references), casual language ("gonna", "wanna", "pretty cool", "awesome", "super")
 - **Severity:** error
+- **Strapi-specific exception:** "Please" is acceptable in polite directives (e.g., "please refer to", "please note", "please ensure"). Do NOT flag these as overly casual or formal.
 
 ### Rule 4: Simple English
 - **Detect:** Jargon without explanation, overly complex sentence structures, rare words where simple alternatives exist (e.g., "utilize" instead of "use")
