@@ -47,7 +47,7 @@ Providers configuration is defined in [the `/config/plugins` file](/cms/configur
 * `provider` to define the provider name (i.e., `local`)
 * `providerOptions` to define options that are passed down during the construction of the provider.
 
-For the local Upload provider, `providerOptions` accepts only one parameter: `sizeLimit`, which must be a number. Be aware that the unit is in bytes, and the default is 1000000. When setting this value high, you should make sure to also configure the body parser middleware `maxFileSize` so the file can be sent and processed (see [Media Library documentation](/cms/features/media-library#max-file-size) for details).
+For the local Upload provider, `providerOptions` accepts only one parameter: `sizeLimit`, which must be a number. The unit is bytes, and the default value is 1000000. When increasing this limit, also configure the body parser middleware `maxFileSize` so the file can be sent and processed (see [Media Library documentation](/cms/features/media-library#max-file-size) for details).
 
 The following is an example configuration:
 

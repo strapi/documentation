@@ -128,13 +128,18 @@ export default ({ env }) => ({
 
 </Tabs>
 
-If you use the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` properties. Use environment configurations to define how your asset URLs will be saved inside Strapi.
+If you use the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` gproperties. Use environment configurations to define how your asset URLs will be saved inside Strapi.
 
 <MediaLibProviderNotes/>
 
 ### Bucket CORS configuration
 
-If you are planning on uploading content like GIFs and videos to your S3 bucket, you will want to edit its CORS configuration so that thumbnails are properly shown in Strapi. To do so, open your Bucket on the AWS console and locate the _Cross-origin resource sharing (CORS)_ field under the _Permissions_ tab, then amend the policies by writing your own JSON configuration, or copying and pasting the following one:
+To display thumbnails for GIFs and videos uploaded to S3, edit its CORS configuration so that thumbnails are properly shown in Strapi. To do so:
+
+1. Open your bucket in the AWS console.
+2. Navigate to the _Permissions_ tab.
+3. Locate the _Cross-origin resource sharing (CORS)_ field.
+4. Replace or update the policies by writing your own JSON configuration, or copying and pasting the following one:
 
 ```json
 [
