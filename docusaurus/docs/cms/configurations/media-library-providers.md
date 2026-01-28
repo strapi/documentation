@@ -16,7 +16,7 @@ The [Media Library](/cms/features/media-library) feature is powered by a back-en
 
 By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available and add an extension to the core capabilities of the plugin, should you want to upload your files to another location, such as AWS S3 or Cloudinary.
 
-There are both official providers maintained by Strapi discoverable via the <ExternalLink text="Marketplace" to="https://market.strapi.io/?types=provider"/> and many community maintained providers available via <ExternalLink to="https://www.npmjs.com/search?q=strapi%20provider" text="npm"/>.
+Strapi maintains official providers, discoverable via the <ExternalLink text="Marketplace" to="https://market.strapi.io/?types=provider"/>. Community-maintained providers are also available via <ExternalLink to="https://www.npmjs.com/search?q=strapi%20provider" text="npm"/>.
 
 A provider can be configured to be [private](#private-providers) to ensure asset URLs will be signed for secure access.
 
@@ -48,7 +48,7 @@ npm install @strapi/provider-upload-aws-s3 --save
 
 ## Configuring providers
 
-Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist you must create it.
+Newly installed providers are enabled and configured in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first.
 
 Each provider will have different configuration settings available. Please review the respective entry for that provider on dedicated pages below for the Strapi-maintained providers, or on the provider's <ExternalLink text="Marketplace" to="https://market.strapi.io/?types=provider"/> page.
 

@@ -42,7 +42,7 @@ npm install @strapi/provider-upload-local --save
 
 ## Configuration
 
-Providers configuration are defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, you must create it.  The provider configuration accepts the following entries:
+Providers configuration are defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first. The provider configuration accepts the following entries:
 
 * `provider` to define the provider name (i.e., `local`)
 * `providerOptions` to define options that are passed down during the construction of the provider.
