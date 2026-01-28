@@ -160,6 +160,7 @@ Beyond the 12 rules, also check for:
 ### Code formatting
 - **Detect:** File paths, function names, commands, or parameters not wrapped in backticks
 - **Severity:** warning
+- **Strapi-specific exception:** Programming casing conventions (e.g., kebab-case, camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE) do NOT require backticks. Do NOT flag these terms.
 
 ### Consistency
 - **Detect:** Inconsistent terminology within the same document (e.g., "admin panel" vs "Admin Panel" vs "administration panel"); inconsistent heading capitalization
