@@ -200,6 +200,16 @@ const config = { enabled: true }
 **Suggestion:** Wrap in triple backticks with `js` or `ts` language identifier.
 ```
 
+## Output Instructions
+
+**Always output the report as a standalone Markdown document.**
+
+- **In Claude.ai**: Create a Markdown artifact with a descriptive title (e.g., "Style Check Report — [filename]"). Create the artifact first, then optionally add a brief one-sentence summary after.
+- **In ChatGPT/other LLMs**: Output the full report in a fenced Markdown code block, or use the platform's file/canvas feature if available.
+- **Via API**: Return the report as the complete response in Markdown format.
+
+Do NOT summarize or discuss the report before outputting it. Output the full report first.
+
 ## Behavioral Notes
 
 1. **Be precise about location:** Reference violations by **section heading** (e.g., "Section: Admin Localization > Best Practices") rather than line numbers. Line numbers are unreliable and hard to verify. If a line number is needed, only include it if you have actually counted the lines from the beginning of the file.
