@@ -14,7 +14,7 @@ import MediaLibProviderNotes from '/docs/snippets/media-library-providers-notes.
 
 The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
 
-Strapi maintains 3 providers for the Media Library. The present page is about the Cloudinary provider installation and configuration. For other providers, please refer to the list in the [Media Library page](/cms/features/media-library#providers).
+Strapi maintains 3 providers for the Media Library. The present page is about the Amazon S3 provider installation and configuration. For other providers, please refer to the list in the [Media Library page](/cms/features/media-library#providers).
 
 ## Installation
 
@@ -44,7 +44,7 @@ npm install @strapi/provider-upload-aws-s3 --save
 
 Providers configuration are defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, you must create it. The provider configuration accepts the following entries:
 
-* `provider` to define the provider name (i.e., `cloudinary`)
+* `provider` to define the provider name (i.e., `amazon-s3`)
 * `providerOptions` to define options that are passed down during the construction of the provider (see <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property" text="AWS documentation"/> for the full list of options)
 * `actionOptions` to define options that are passed directly to the parameters to each method respectively. The Official AWS documentation lists available options for <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property" text="upload/uploadStream"/> and <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property" text="delete"/>.
 
