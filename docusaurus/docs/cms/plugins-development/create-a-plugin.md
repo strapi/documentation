@@ -9,6 +9,8 @@ tags:
   - plugins development
 ---
 
+import UsingSDKplugin5 from '/docs/snippets/sdk-plugin-v5-v6.md'
+
 # Plugin creation
 
 <Tldr>
@@ -130,6 +132,17 @@ npm run build && npm run verify
 </Tabs>
 
 The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
+
+:::tip Upgrading from SDK Plugin v5
+If you're upgrading from `@strapi/sdk-plugin` v5 to v6:
+* You can delete any `packup.config.ts` file from your plugin (it's no longer used).
+* Build configuration is now derived automatically from `package.json#exports`.
+* If you need sourcemaps, add `--sourcemap` to your build command (they now default to off).
+
+No other changes are required.
+:::
+
+<UsingSDKplugin5 />
 
 ## Working with the Plugin SDK in a monorepo environment {#monorepo}
 
