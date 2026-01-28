@@ -355,7 +355,7 @@ The command displays an interactive menu with the following options:
 ![strapi generate GIF](/img/assets/cli/strapi-generate.gif)
 
 The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
-Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
+Generated files include commented examples. Singular and plural names must be different and use **kebab-case format** <NamingConventions/>.
 
 <ExpandableContent maxHeight="120px" showMoreText="Show more…" showLessText="Show less">
 

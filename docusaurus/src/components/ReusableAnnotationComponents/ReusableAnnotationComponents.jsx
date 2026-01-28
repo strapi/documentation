@@ -57,3 +57,19 @@ export function Codemods() {
     </Annotation>
   )
 }
+
+export function NamingConventions() {
+  return (
+    <Annotation> 
+      Programming uses several naming conventions to format identifiers:
+      <ul>
+        <li>kebab-case: lowercase words separated by hyphens (e.g., `my-component-name`)</li>
+        <li>camelCase: first word lowercase, subsequent words capitalized (e.g., `myComponentName`)</li>
+        <li>PascalCase: all words capitalized (e.g., `MyComponentName`)</li>
+        <li>snake_case: lowercase words separated by underscores (e.g., `my_component_name`)</li>
+        <li>SCREAMING_SNAKE_CASE: uppercase words separated by underscores (e.g., `MY_COMPONENT_NAME`)</li>
+      </ul>
+    </Annotation>
+  )
+}
+        
