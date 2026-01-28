@@ -14,7 +14,7 @@ import MediaLibProvidersNotes from '/docs/snippets/media-library-providers-notes
 
 The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
 
-By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available and add an extension to the core capabilities of the plugin, should you want to upload your files to another location, such as AWS S3 or Cloudinary.
+By default Strapi provides a provider that uploads files to a local `public/uploads/` directory in your Strapi project. Additional providers are available and add an extension to the core capabilities of the plugin. Use them to upload your files to another location, such as AWS S3 or Cloudinary.
 
 Strapi maintains official providers, discoverable via the <ExternalLink text="Marketplace" to="https://market.strapi.io/?types=provider"/>. Community-maintained providers are also available via <ExternalLink to="https://www.npmjs.com/search?q=strapi%20provider" text="npm"/>.
 
