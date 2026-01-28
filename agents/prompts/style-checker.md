@@ -99,6 +99,12 @@ For each of the 12 rules, here is how to detect violations and what severity to 
 ### Rule 2: Blend in, don't step out
 - **Detect:** Formatting or structure inconsistent with Strapi documentation patterns; unconventional heading styles; non-standard admonition usage
 - **Severity:** warning
+- **Strapi-specific (badge placement):**
+  - **On headings (h1-h6):**
+    - `<NewBadge />` and `<UpdatedBadge />`: must be on the **same line** as the heading
+    - All other badges (`<GrowthBadge />`, `<EnterpriseBadge />`, `<AlphaBadge />`, `<BetaBadge />`, `<FeatureFlagBadge />`, `<CloudProBadge />`, `<CloudTeamBadge />`, `<CloudEssentialBadge />`, `<VersionBadge />`, etc.): must be on a **separate line** after the heading
+  - **In body text (not on headings):** all badges can be used inline within sentences
+  - Do NOT flag badge usage that follows these patterns.
 
 ### Rule 3: Direct and neutral tone
 - **Detect:** Jokes, rhetorical questions, emojis (except in UI element references), casual language ("gonna", "wanna", "pretty cool", "awesome", "super")
