@@ -42,7 +42,7 @@ npm install @strapi/provider-upload-aws-s3 --save
 
 ## Configuration
 
-Providers configuration are defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first. The provider configuration accepts the following entries:
+Providers configuration is defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first. The provider configuration accepts the following entries:
 
 * `provider` to define the provider name (i.e., `amazon-s3`)
 * `providerOptions` to define options that are passed down during the construction of the provider (see <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property" text="AWS documentation"/> for the full list of options)
