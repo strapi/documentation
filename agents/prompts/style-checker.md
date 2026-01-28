@@ -103,7 +103,7 @@ For each of the 12 rules, here is how to detect violations and what severity to 
   - **On headings (h1-h6):**
     - `<NewBadge />` and `<UpdatedBadge />`: must be on the **same line** as the heading
     - All other badges (`<GrowthBadge />`, `<EnterpriseBadge />`, `<AlphaBadge />`, `<BetaBadge />`, `<FeatureFlagBadge />`, `<CloudProBadge />`, `<CloudTeamBadge />`, `<CloudEssentialBadge />`, `<VersionBadge />`, etc.): must be on a **separate line** after the heading
-  - **In body text (not on headings):** all badges can be used inline within sentences
+  - **In body text (not on headings):** all badges can be used inline within sentences, including as word replacements (e.g., "This feature is currently in <BetaBadge />." or "Available on <CloudProBadge /> and <CloudTeamBadge /> plans."). This is valid and should NOT be flagged.
   - Do NOT flag badge usage that follows these patterns.
 
 ### Rule 3: Direct and neutral tone
