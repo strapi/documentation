@@ -95,4 +95,4 @@ export default ({ env }) => ({
 
 </Tabs>
 
-As opposed to the AWS S3 and Cloudinary providers, special configuration of the security middleware is not required on the local Upload provider, since the default configuration allows loading images and media from `self`.
+Unlike the AWS S3 and Cloudinary providers, the local Upload provider does not require special security middleware configuration. The default configuration already allows loading images and media from `self`.
