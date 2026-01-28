@@ -152,6 +152,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
+          // Exclude agent guides and templates from docs ingestion
+          exclude: ['**/AGENTS.md', '**/AGENTS.*.md', '**/templates/**', '../agents/**'],
           editUrl:
             'https://github.com/strapi/documentation/edit/main/docusaurus',
           admonitions: {
