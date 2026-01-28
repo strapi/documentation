@@ -22,7 +22,7 @@ Role-Based Access Control (RBAC) is an approach to restricting access to some us
 Declare a single condition as an object, and multiple conditions as an array of objects. Each condition object can have 5 possible properties:
 
 - `displayName` (string): the condition name as shown in the admin panel,
-- `name` (string): the condition name, kebab-cased,
+- `name` (string): the condition name, **kebab-cased** <NamingConventions/>,
 - `category` (string, _optional_): conditions can be grouped into categories available [in the admin panel](/cms/features/rbac#setting-custom-conditions-for-permissions); if undefined, the condition will appear under the "Default" category,
 - `plugin` (string, _optional_): if the condition is created by a plugin, should be the plugin's name, kebab-cased (e.g `content-manager`),
 - `handler`: a function used to verify the condition (see [using the condition handler](#using-the-condition-handler))

@@ -31,7 +31,7 @@ import {
 } from '../components/MultiLanguageSwitcher';
 import { Annotation } from '../components/Annotation';
 import SubtleCallout from '../components/SubtleCallout';
-import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
+import { PluginsConfigurationFile, HeadlessCms, DocumentDefinition, Codemods, NamingConventions } from '../components/ReusableAnnotationComponents/ReusableAnnotationComponents';
 import Icon from '../components/Icon';
 import Guideflow from '../components/Guideflow';
 import { ExternalLink } from '../components/ExternalLink';
@@ -105,4 +105,5 @@ export default {
   HeadlessCms,
   DocumentDefinition,
   Codemods,
+  NamingConventions,
 };
