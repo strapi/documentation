@@ -92,6 +92,7 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="/config/plugins.ts"
+export default ({ env }) => ({
   // ...
   upload: {
     config: {
@@ -127,7 +128,7 @@ module.exports = ({ env }) => ({
 
 </Tabs>
 
-If you're using the bucket as a CDN and deliver the content on a custom domain, you can get use of the `baseUrl` and `rootPath` properties and use environment configurations to define how your assets URLs will be saved inside Strapi.
+If you're using the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` properties and use environment configurations to define how your assets URLs will be saved inside Strapi.
 
 <MediaLibProviderNotes/>
 
