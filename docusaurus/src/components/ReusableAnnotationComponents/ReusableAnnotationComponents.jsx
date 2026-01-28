@@ -67,7 +67,7 @@ export function NamingConventions() {
         <li>camelCase: first word lowercase, subsequent words capitalized (e.g., <code>>myComponentName</code>)</li>
         <li>PascalCase: all words capitalized (e.g., <code>MyComponentName</code>)</li>
         <li>snake_case: lowercase words separated by underscores (e.g., <code>my_component_name</code>)</li>
-        <li>SCREAMING_SNAKE_CASE: uppercase words separated by underscores (e.g., `<code>MY_COMPONENT_NAME</code>)</li>
+        <li>SCREAMING_SNAKE_CASE: uppercase words separated by underscores (e.g., <code>MY_COMPONENT_NAME</code>)</li>
       </ul>
     </Annotation>
   )
