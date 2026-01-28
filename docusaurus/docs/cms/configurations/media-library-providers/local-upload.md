@@ -14,7 +14,7 @@ import MediaLibProviderNotes from '/docs/snippets/media-library-providers-notes.
 
 The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
 
-Strapi maintains 3 providers for the Media Library. The present page is about the local Upload provider installation and configuration. For other providers, please refer to the list in the [Media Library Providers page](/cms/features/media-library#providers).
+Strapi maintains 3 providers for the Media Library. The present page is about the local Upload provider installation and configuration. For other providers, please refer to the list in the [Media Library page](/cms/features/media-library#providers).
 
 ## Installation
 
