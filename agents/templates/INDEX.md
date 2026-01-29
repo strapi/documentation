@@ -22,6 +22,6 @@ This non-docs index lists the canonical authoring templates for CMS documentatio
 - Purpose: Lightweight API page skeleton covering endpoints, auth, parameters, and example requests/responses.
 - Path: `agents/templates/api-template.md`
 
-## Migration Template
-- Purpose: Migration/breaking‑change format with impact, before/after, and a numbered migration sequence.
-- Path: `agents/templates/migration-template.md`
+## Breaking Change Template
+- Purpose: Individual breaking change page with BreakingChangeIdCard, side-by-side v4/v5 comparison, and migration notes with manual procedure.
+- Path: `agents/templates/breaking-change-template.md`
