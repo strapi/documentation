@@ -1,11 +1,11 @@
-## Agent: Outliner
+## Outliner
 
 ### Overview
 
-The Outliner is a **wrapper agent** that handles all documentation structure tasks. It routes requests to one of two specialized sub-agents based on the user's intent:
+The Outliner is a **wrapper prompt** that handles all documentation structure tasks. It routes requests to one of two specialized sub-prompts based on the user's intent:
 
-| Sub-agent | Purpose | Trigger phrases |
-|-----------|---------|-----------------|
+| Sub-prompt | Purpose | Trigger phrases |
+|------------|---------|-----------------|
 | **Outline Checker** | Verify existing structure against templates | "check outline", "verify structure", "template compliance" |
 | **Outline Generator** | Create new structure from source material | "create outline", "generate structure", "draft outline" |
 
@@ -37,7 +37,7 @@ User request
 
 ---
 
-### Sub-agent: Outline Checker
+### Sub-prompt: Outline Checker
 
 **File:** `outline-checker.md`
 
@@ -59,7 +59,7 @@ User request
 
 ---
 
-### Sub-agent: Outline Generator
+### Sub-prompt: Outline Generator
 
 **File:** `outline-generator.md` *(coming soon)*
 
@@ -128,14 +128,14 @@ Outliner: Asks clarifying question
 
 ---
 
-### Integration with Other Agents
+### Integration with Other Prompts
 
-The Outliner works within the broader documentation agent ecosystem:
+The Outliner works within the broader documentation prompt ecosystem:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        ORCHESTRATOR                             │
-│         (coordinates all agents based on user intent)           │
+│         (coordinates all prompts based on user intent)          │
 └─────────────────────────────┬───────────────────────────────────┘
                               │
         ┌─────────────────────┼─────────────────────┐
@@ -180,11 +180,11 @@ The Outliner works within the broader documentation agent ecosystem:
                      └───────────────┘
 ```
 
-#### Agent Responsibilities
+#### Prompt Responsibilities
 
-| Agent | Responsibility | Does NOT handle |
-|-------|----------------|-----------------|
-| **Orchestrator** | Route user intent to correct flow, coordinate agents, consolidate reports | Any direct analysis |
+| Prompt | Responsibility | Does NOT handle |
+|--------|----------------|-----------------|
+| **Orchestrator** | Route user intent to correct flow, coordinate prompts, consolidate reports | Any direct analysis |
 | **Router** | Identify doc type, locate template, determine target path | Content analysis |
 | **Outliner** | Structure: sections, components, heading hierarchy, Diataxis | Prose quality, links |
 | **Drafter** | Generate content from outline and source material | Structure decisions |
@@ -212,7 +212,7 @@ Router → Outline Checker → Style Checker → Integrity Checker → Consolida
 
 ### Handoff Rules
 
-1. **Orchestrator → Agents**: Orchestrator determines the workflow (review/create/full) and calls agents in sequence.
+1. **Orchestrator → Prompts**: Orchestrator determines the workflow (review/create/full) and calls prompts in sequence.
 
 2. **Router → Outliner**: Router passes document type and template path; Outliner uses these for structure validation or generation.
 
@@ -222,15 +222,15 @@ Router → Outline Checker → Style Checker → Integrity Checker → Consolida
 
 5. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
 
-6. **All Agents → Orchestrator**: Each agent returns a structured report; Orchestrator consolidates into final output.
+6. **All Prompts → Orchestrator**: Each prompt returns a structured report; Orchestrator consolidates into final output.
 
-**Key principle:** Each agent focuses on its domain. No agent should duplicate another's checks.
+**Key principle:** Each prompt focuses on its domain. No prompt should duplicate another's checks.
 
 ---
 
 ### Behavioral Notes
 
-1. **Always route explicitly:** State which sub-agent is being used and why.
+1. **Always route explicitly:** State which sub-prompt is being used and why.
 
 2. **Ask when ambiguous:** If the user's intent is unclear, ask whether they want to check or generate.
 
@@ -238,6 +238,6 @@ Router → Outline Checker → Style Checker → Integrity Checker → Consolida
 
 4. **Stay in scope:** Structure only — no prose quality (Style Checker), no link checking (Integrity Checker), no content writing (Drafter).
 
-5. **Report to Orchestrator:** When called by Orchestrator, return a structured report that can be consolidated with other agents' outputs.
+5. **Report to Orchestrator:** When called by Orchestrator, return a structured report that can be consolidated with other prompts' outputs.
 
 6. **Pass context forward:** When handing off to Drafter, include the complete outline with section purposes and content hints from source material.

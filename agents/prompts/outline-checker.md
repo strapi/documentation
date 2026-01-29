@@ -1,4 +1,4 @@
-## Agent: Outline Checker
+## Outline Checker
 
 ### Role
 
