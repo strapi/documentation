@@ -4,13 +4,45 @@ The present `prompts` folder contains elaborate prompts that can be used for spe
 
 These prompts should be LLM agnostic, though so far the best results are produced with Claude, and this is the LLM Piwi will use regularly with these prompts.
 
-There will be 6 prompts:
+## Agents overview
+
+There are 6 prompts:
 
 - **Router**: Analyzes input content (PR, Notion page, Jira ticket) and identifies which documentation section and template applies.
-- **Outliner**: Evaluates document structure against the appropriate AGENTS.md template and proposes reorganization if needed.
-- **Drafter**: Generates documentation content following the structure from the Outliner and adhering to style guidelines.
-- **Style Checker**: Reviews content for violations of the 12 Rules of Technical Writing and Strapi style conventions.
-- **Integrity checker**: Verifies technical accuracy including broken links, invalid file paths, code block formatting, and anchor consistency.
-- **Orchestrator**: Coordinates the execution of agents in the appropriate sequence based on the task (generation or review mode).
 
-For now, only Style Checker is available.
+- **Outliner**: Wrapper agent that handles all documentation structure tasks. Routes to one of two sub-agents:
+  - **Outline Checker**: Verifies existing structure against templates, checks required sections/components, validates heading hierarchy and parallel structure.
+  - **Outline Generator**: Creates documentation outlines from source material (Notion, Jira, specs) following the appropriate template.
+
+- **Drafter**: Generates documentation content following the structure from the Outliner and adhering to style guidelines.
+
+- **Style Checker**: Reviews content for violations of the 12 Rules of Technical Writing and Strapi style conventions.
+
+- **Integrity Checker**: Verifies technical accuracy including broken links, invalid file paths, code block formatting, and anchor consistency.
+
+- **Orchestrator**: Coordinates the execution of agents in the appropriate sequence based on the task (creation or review mode).
+
+## Availability
+
+| Agent | Status |
+|-------|--------|
+| Router | 🔜 Coming soon |
+| Outliner | ✅ Available |
+| ↳ Outline Checker | ✅ Available |
+| ↳ Outline Generator | 🔜 Coming soon |
+| Drafter | 🔜 Coming soon |
+| Style Checker | ✅ Available |
+| Integrity Checker | 🔜 Coming soon |
+| Orchestrator | 🔜 Coming soon |
+
+## Workflows
+
+**Review workflow** (existing content):
+```
+Router → Outline Checker → Style Checker → Integrity Checker
+```
+
+**Create workflow** (new content):
+```
+Router → Outline Generator → Drafter → Style Checker → Integrity Checker
+```
