@@ -2,12 +2,49 @@
 
 ### Overview
 
-The Outliner is a **wrapper prompt** that handles all documentation structure tasks. It routes requests to one of two specialized sub-prompts based on the user's intent:
+The Outliner is a **wrapper prompt** that handles all documentation structure tasks. It routes requests to specialized sub-prompts based on the user's intent and the review depth required.
 
-| Sub-prompt | Purpose | Trigger phrases |
-|------------|---------|-----------------|
-| **Outline Checker** | Verify existing structure against templates | "check outline", "verify structure", "template compliance" |
-| **Outline Generator** | Create new structure from source material | "create outline", "generate structure", "draft outline" |
+### Sub-prompts
+
+| Sub-prompt | File | Purpose |
+|------------|------|---------|
+| **Outline Checker** | `outline-checker.md` | Verify structure against templates (technical compliance) |
+| **UX Analyzer** | `outline-ux-analyzer.md` | Evaluate structure from reader's perspective |
+| **Outline Generator** | `outline-generator.md` *(coming soon)* | Create new structure from source material |
+
+---
+
+### Review Modes
+
+The Outliner supports two review modes based on the scope of changes:
+
+| Mode | Sub-prompts Used | When to Use | Trigger Phrases |
+|------|------------------|-------------|-----------------|
+| **Quick Check** | Outline Checker only | Minor changes, small PRs, adding sections to existing pages | "quick check", "check outline", "verify structure" |
+| **Full Review** | Outline Checker + UX Analyzer | New pages, major restructuring, pages >300 lines | "full review", "full outline check", "review structure and UX" |
+
+#### Mode Selection Logic
+
+```
+User request
+    │
+    ├─► New page OR major restructuring OR explicit "full review"?
+    │       └─► Run **Full Review** (Checker + UX Analyzer)
+    │
+    ├─► Minor changes OR quick check requested?
+    │       └─► Run **Quick Check** (Checker only)
+    │
+    └─► Ambiguous?
+            └─► Ask user: "Quick check or full review?"
+```
+
+#### Automatic Full Review Triggers
+
+Run Full Review automatically when:
+- File is **new** (not modifying existing page)
+- PR diff shows **>50% of file changed**
+- Document exceeds **300 lines**
+- User explicitly requests "full review" or "UX analysis"
 
 ---
 
@@ -17,227 +54,234 @@ The Outliner is a **wrapper prompt** that handles all documentation structure ta
 User request
     │
     ├─► Contains existing content/PR to review?
-    │       └─► Route to **Outline Checker**
+    │       │
+    │       ├─► Quick Check mode
+    │       │       └─► Route to **Outline Checker**
+    │       │
+    │       └─► Full Review mode
+    │               └─► Route to **Outline Checker** → then **UX Analyzer**
     │
     └─► Contains source material (Notion, Jira, specs) to transform?
-            └─► Route to **Outline Generator**
+            └─► Route to **Outline Generator** (coming soon)
 ```
 
-#### Trigger Patterns
+---
 
-**Route to Outline Checker when:**
-- User provides a Markdown file or PR diff to review
-- User asks: "check the structure", "does this follow the template?", "outline check", "verify sections"
-- User references an existing documentation page
+### Output Structure
+
+#### Quick Check Output
+
+```markdown
+## Outline Check Report — [filename]
+
+### Document Type
+[Detected type]
+
+### Summary
+- Errors: X
+- Warnings: Y
+- Suggestions: Z
+
+### Violations
+[List of issues]
+
+### Recommended Fixes (by priority)
+[Prioritized fixes]
+```
+
+#### Full Review Output
+
+```markdown
+## Outline Check Report — [filename]
+
+### Document Type
+[Detected type]
+
+### Summary
+- Errors: X
+- Warnings: Y
+- Suggestions: Z
+
+### Violations
+[List of issues from Outline Checker]
+
+---
+
+## User Experience Analysis
+
+### Overall UX Score: 🟢/🟠/🔴
+
+### 1. Title vs. Content Alignment
+[Assessment]
+
+### 2. Information Architecture
+[Assessment]
+
+### 3. Navigability & Discoverability
+[Assessment]
+
+### 4. Section Proportions
+[Assessment]
+
+### 5. Onboarding & Context
+[Assessment]
+
+### 6. Cognitive Load
+[Assessment]
+
+---
+
+## Recommended Fixes (by priority)
+
+1. **[error]** [Technical fixes first]
+2. **[warning]** [Warnings second]
+3. **[ux-high]** [High-impact UX fixes]
+4. **[suggestion]** [Style suggestions]
+5. **[ux-medium]** [Medium-impact UX fixes]
+6. **[ux-low]** [Nice-to-have UX improvements]
+```
+
+---
+
+### Trigger Patterns
+
+**Route to Quick Check when:**
+- User says: "check outline", "verify structure", "quick check", "template compliance"
+- PR has minor changes to existing page
+- User provides content without specifying review depth
+
+**Route to Full Review when:**
+- User says: "full review", "full outline check", "check structure and UX", "review from user perspective"
+- New documentation page
+- Major restructuring (>50% changes)
+- Long document (>300 lines)
 
 **Route to Outline Generator when:**
 - User provides source material (Notion doc, Jira ticket, GitHub issue, specs)
-- User asks: "create an outline", "draft the structure", "what sections should this have?"
-- User wants to start a new documentation page
-
----
-
-### Sub-prompt: Outline Checker
-
-**File:** `outline-checker.md`
-
-**Purpose:** Verify that existing documentation follows the correct template structure, has required sections and components, and maintains a logical outline.
-
-**Inputs:**
-- `content`: Markdown/MDX content to analyze
-- `file_path` (optional): For auto-detecting document type
-- `doc_type` (optional): Explicit type override
-
-**Outputs:** Structured report with violations by severity (error/warning/suggestion)
-
-**Key capabilities:**
-- Auto-detect document type from path
-- Apply general rules (frontmatter, heading hierarchy, parallel structure)
-- Check template-specific sections and components
-- Evaluate Diataxis alignment
-- Provide prioritized fix recommendations
-
----
-
-### Sub-prompt: Outline Generator
-
-**File:** `outline-generator.md` *(coming soon)*
-
-**Purpose:** Generate a documentation outline from source material, following the appropriate template structure.
-
-**Inputs:**
-- `source`: Source material (Notion doc, Jira ticket, specs, etc.)
-- `doc_type`: Target document type (feature, plugin, guide, etc.)
-- `target_path` (optional): Intended location in the docs
-
-**Outputs:** 
-- Recommended document type with justification
-- Complete outline with H1, H2, H3 structure
-- Required components placeholder
-- Content hints for each section
-
-**Key capabilities:**
-- Analyze source material to determine best document type
-- Apply Diataxis principles to structure content
-- Generate template-compliant outline
-- Suggest section content based on source material
+- User says: "create outline", "draft structure", "what sections should this have?"
+- User wants to start a new documentation page from scratch
 
 ---
 
 ### Usage Examples
 
-#### Example 1: Check existing page
+#### Example 1: Quick check on a PR
 
 ```
-User: "Check the outline of this page: [pastes Markdown content]"
+User: "Check the outline of PR #2930"
 
-Outliner: Routes to Outline Checker
-          → Returns structure compliance report
+Outliner: 
+  → Detects: PR modifying existing page (minor addition)
+  → Routes to: Outline Checker only
+  → Returns: Technical compliance report
 ```
 
-#### Example 2: Review PR
+#### Example 2: Full review on a new page
 
 ```
-User: "Outline check on PR #1234"
+User: "Outline check on this new page: [pastes content]"
 
-Outliner: Routes to Outline Checker
-          → Fetches PR diff
-          → Returns structure compliance report for changed files
+Outliner: 
+  → Detects: New page (no existing file)
+  → Routes to: Outline Checker → UX Analyzer
+  → Returns: Combined technical + UX report
 ```
 
-#### Example 3: Create new documentation
+#### Example 3: Explicit full review request
 
 ```
-User: "I need to document the new Scheduler feature. Here's the Notion spec: [link]"
+User: "Full review of this page structure please"
 
-Outliner: Routes to Outline Generator
-          → Analyzes Notion content
-          → Returns recommended outline for a Feature page
+Outliner: 
+  → Detects: Explicit "full review" request
+  → Routes to: Outline Checker → UX Analyzer
+  → Returns: Combined report
 ```
 
 #### Example 4: Ambiguous request
 
 ```
-User: "Help me with the structure for the Media Library page"
+User: "Can you check this page?"
 
-Outliner: Asks clarifying question
-          → "Do you want me to:
-             (A) Check the existing Media Library page structure, or
-             (B) Generate a new outline from source material?"
+Outliner: 
+  → Detects: Ambiguous scope
+  → Asks: "Would you like a quick check (template compliance only) 
+           or a full review (including UX analysis)?"
+```
+
+#### Example 5: Create new outline
+
+```
+User: "I need to document the new Scheduler feature. Here's the Notion spec: [link]"
+
+Outliner: 
+  → Detects: Source material provided, no existing content
+  → Routes to: Outline Generator
+  → Returns: Recommended outline with sections and content hints
 ```
 
 ---
 
 ### Integration with Other Prompts
 
-The Outliner works within the broader documentation prompt ecosystem:
+The Outliner works within the broader documentation review system:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        ORCHESTRATOR                             │
-│         (coordinates all prompts based on user intent)          │
-└─────────────────────────────┬───────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                     REVIEW SYSTEM                           │
+└─────────────────────────────┬───────────────────────────────┘
                               │
         ┌─────────────────────┼─────────────────────┐
         │                     │                     │
         ▼                     ▼                     ▼
    ┌─────────┐         ┌───────────┐         ┌───────────┐
-   │ REVIEW  │         │  CREATE   │         │   FULL    │
-   │  FLOW   │         │   FLOW    │         │  REVIEW   │
+   │  QUICK  │         │   FULL    │         │  CREATE   │
+   │ REVIEW  │         │  REVIEW   │         │   FLOW    │
    └────┬────┘         └─────┬─────┘         └─────┬─────┘
         │                    │                     │
         ▼                    ▼                     ▼
 ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│    Router     │    │    Router     │    │    Router     │
-│ (identify     │    │ (identify     │    │ (identify     │
-│  doc type)    │    │  doc type)    │    │  doc type)    │
-└───────┬───────┘    └───────┬───────┘    └───────┬───────┘
-        │                    │                     │
-        ▼                    ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   Outliner    │    │   Outliner    │    │   Outliner    │
-│   (Checker)   │    │  (Generator)  │    │   (Checker)   │
-└───────┬───────┘    └───────┬───────┘    └───────┬───────┘
-        │                    │                     │
-        ▼                    ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│ Style Checker │    │    Drafter    │    │ Style Checker │
-│ (12 Rules)    │    │ (write content│    │ (12 Rules)    │
-└───────┬───────┘    │  from outline)│    └───────┬───────┘
-        │            └───────┬───────┘            │
-        ▼                    │                    ▼
-┌───────────────┐            │            ┌───────────────┐
-│  Integrity    │            │            │  Integrity    │
-│   Checker     │            ▼            │   Checker     │
-│(links, paths) │    ┌───────────────┐    │(links, paths) │
-└───────────────┘    │ Style Checker │    └───────────────┘
-                     └───────┬───────┘
-                             │
-                             ▼
-                     ┌───────────────┐
-                     │  Integrity    │
-                     │   Checker     │
-                     └───────────────┘
+│   Outline     │    │   Outline     │    │   Outline     │
+│   Checker     │    │   Checker     │    │   Generator   │
+└───────┬───────┘    └───────┬───────┘    └───────────────┘
+        │                    │
+        │                    ▼
+        │            ┌───────────────┐
+        │            │ UX Analyzer  │
+        │            └───────┬───────┘
+        │                    │
+        ▼                    ▼
+┌───────────────┐    ┌───────────────┐
+│ Style Checker │    │ Style Checker │
+│  (optional)   │    │  (optional)   │
+└───────────────┘    └───────────────┘
 ```
 
 #### Prompt Responsibilities
 
 | Prompt | Responsibility | Does NOT handle |
 |--------|----------------|-----------------|
-| **Orchestrator** | Route user intent to correct flow, coordinate prompts, consolidate reports | Any direct analysis |
-| **Router** | Identify doc type, locate template, determine target path | Content analysis |
-| **Outliner** | Structure: sections, components, heading hierarchy, Diataxis | Prose quality, links |
-| **Drafter** | Generate content from outline and source material | Structure decisions |
-| **Style Checker** | Prose quality, 12 Rules, formatting, tone | Structure, links |
-| **Integrity Checker** | Links, paths, anchors, code block syntax | Content quality |
-
-#### Workflows
-
-**Review workflow** (existing content):
-```
-Router → Outline Checker → Style Checker → Integrity Checker
-```
-
-**Create workflow** (new content):
-```
-Router → Outline Generator → Drafter → Style Checker → Integrity Checker
-```
-
-**Full review** (comprehensive):
-```
-Router → Outline Checker → Style Checker → Integrity Checker → Consolidated Report
-```
-
----
-
-### Handoff Rules
-
-1. **Orchestrator → Prompts**: Orchestrator determines the workflow (review/create/full) and calls prompts in sequence.
-
-2. **Router → Outliner**: Router passes document type and template path; Outliner uses these for structure validation or generation.
-
-3. **Outliner → Drafter** *(create flow only)*: Outline Generator passes the approved outline structure; Drafter fills in content.
-
-4. **Outliner → Style Checker** *(review flow)*: Outliner completes structure check; Style Checker receives the same content for prose review.
-
-5. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
-
-6. **All Prompts → Orchestrator**: Each prompt returns a structured report; Orchestrator consolidates into final output.
-
-**Key principle:** Each prompt focuses on its domain. No prompt should duplicate another's checks.
+| **Outline Checker** | Template compliance, frontmatter, heading hierarchy, components, Diataxis | Prose quality, UX evaluation |
+| **UX Analyzer** | Reader perspective, section order, navigability, proportions, cognitive load | Technical compliance, prose quality |
+| **Style Checker** | Prose quality, 12 Rules, formatting, tone | Structure, UX |
 
 ---
 
 ### Behavioral Notes
 
-1. **Always route explicitly:** State which sub-prompt is being used and why.
+1. **Determine review mode first**: Before analyzing, decide if this is a Quick Check or Full Review based on the triggers above.
 
-2. **Ask when ambiguous:** If the user's intent is unclear, ask whether they want to check or generate.
+2. **State the mode explicitly**: Always tell the user which mode you're using and why.
+   > "Running a **Full Review** because this is a new page."
 
-3. **Respect the workflow:** In a "full review", Outline Checker runs before Style Checker. In "create" flow, Outline Generator runs before Drafter.
+3. **Ask when ambiguous**: If the user's intent is unclear, ask whether they want a quick check or full review.
 
-4. **Stay in scope:** Structure only — no prose quality (Style Checker), no link checking (Integrity Checker), no content writing (Drafter).
+4. **Respect context limits**: For LLMs with limited context, Quick Check mode allows useful analysis without loading the UX Analyzer prompt.
 
-5. **Report to Orchestrator:** When called by Orchestrator, return a structured report that can be consolidated with other prompts' outputs.
+5. **Combine reports cleanly**: In Full Review mode, merge Outline Checker and UX Analyzer outputs into a single coherent report.
 
-6. **Pass context forward:** When handing off to Drafter, include the complete outline with section purposes and content hints from source material.
+6. **Prioritize fixes logically**: Errors → Warnings → High-impact UX → Suggestions → Medium/Low UX.
+
+7. **Don't duplicate work**: Outline Checker handles technical structure; UX Analyzer handles reader experience. Don't repeat the same issues in both.
+
+8. **Stay in scope**: Structure and UX only — no prose quality (Style Checker), no link checking (Integrity Checker).
