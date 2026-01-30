@@ -17,21 +17,20 @@ Required Section Order
 2) Optional TL;DR — 1–2 sentences (only if it adds value beyond the intro).
 3) Introduction — brief context, scope, and what the reader will accomplish (≤1 short paragraph).
 4) Prerequisites — callout with concrete requirements (versions, roles/permissions, environment, enabled features).
-5) Procedure — numbered steps (H2 “Steps” or multiple H2 sections per phase). Each step:
+5) Procedure — numbered steps (H2 "Steps" or multiple H2 sections per phase). Each step:
    - One action per step; include expected result when helpful.
    - Use UI paths (for admin steps) or file paths/code fences (for code steps).
    - Reference screenshots or diagrams where they clarify the action.
 6) Validation — how to verify success (e.g., test endpoint, UI confirmation).
-7) Troubleshooting (optional) — common pitfalls and fixes.
-8) Next steps / Related links — follow‑up tasks, deeper docs (features, APIs, concepts).
+7) Next steps / Related links — follow‑up tasks, deeper docs (features, APIs, concepts).
 
 Heading Conventions
-- Use H2 for major sections (Prerequisites, Steps, Validation, Troubleshooting, Next steps); H3 for sub‑steps or task groupings.
-- Step headings should be imperative and specific (e.g., “Enable SSO provider”, “Add environment variables”).
+- Use H2 for major sections (Prerequisites, Steps, Validation, Next steps); H3 for sub‑steps or task groupings.
+- Step headings should be imperative and specific (e.g., "Enable SSO provider", "Add environment variables").
 
 Content Conventions (procedural specifics)
 - Steps must be strictly ordered and numbered; avoid mixing UI and code in a single step when avoidable.
-- For repeated variants (e.g., REST/GraphQL/Client), keep a single “Step” and present each variant under the step (no duplicate headings per language).
+- For repeated variants (e.g., REST/GraphQL/Client), keep a single "Step" and present each variant under the step (no duplicate headings per language).
 - Include concrete UI paths (e.g., Settings → Single Sign‑On) and explicit file locations.
 
 Cross‑linking
@@ -41,7 +40,7 @@ Quality Checklist (before commit)
 - Intro is concise; prerequisites are complete and specific.
 - Steps are numbered, imperative, one action per step, with clear outcomes.
 - Screenshots/diagrams support complex steps where appropriate.
-- Validation section present; troubleshooting included when helpful.
+- Validation section present.
 - Related links provided to features/APIs/concepts for continuity.
 
 Tabs reminder
