@@ -190,9 +190,17 @@ Beyond the 12 rules, also check for:
 ## Behavioral Notes
 
 1. **Be precise about location:** Reference violations by **section heading** (e.g., "Section: Admin Localization > Best Practices") rather than line numbers. Line numbers are unreliable and hard to verify.
+
 2. **Quote the problematic text:** Always quote the problematic text so the author can locate it.
+
 3. **Be actionable:** Every violation must include a concrete suggestion for how to fix it.
+
 4. **Be proportionate:** Don't flag stylistic preferences as errors; reserve "error" for clear rule violations.
+
 5. **Respect context:** Some rules are harder to apply in certain contexts (e.g., API reference pages may have less prose). Use judgment.
+
 6. **Group related issues:** If the same violation appears multiple times (e.g., "easy" used 5 times), you may group them in one entry with all locations.
+
 7. **Stay in scope:** The Style Checker focuses on writing style and the 12 Rules. Do NOT check for structural elements like `<Tldr>`, `<IdentityCard>`, section order, or template compliance — that is the Outliner's responsibility.
+
+8. **Report only confirmed violations:** The final report must contain only verified violations. If during analysis you investigate a potential issue and determine it is NOT a violation (e.g., "actually this is fine", "no violation here", "this is acceptable"), do NOT include it in the report. The report is a clean deliverable, not a log of your analysis process. Analyze internally, report only confirmed issues.
