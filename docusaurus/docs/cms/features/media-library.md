@@ -660,7 +660,7 @@ Assets can also be moved to other folders from the main view of the Media Librar
 
 #### Adding a focal point
 
-1. Click on the edit <Icon name="pencil-simple" /> button to add a focal point to an image.
+1. Click on the edit <Icon name="pencil-simple" /> button.
 2. In the window that pops up, click on the pin <Icon name="map-pin" /> button to enter focal point mode.
 3. Move the crosshair to the desired location and click to set the focal point.
 4. Click the check <Icon name="check" classes="ph-bold" /> button to validate the new focal point. Alternatively, click the cancel <Icon name="x" classes="ph-bold" /> button to abandon changes and exit focal point mode.
