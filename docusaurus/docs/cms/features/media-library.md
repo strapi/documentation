@@ -660,6 +660,10 @@ Assets can also be moved to other folders from the main view of the Media Librar
 
 #### Adding a focal point
 
+A focal point ensures the most important part of an image remains visible when the image is cropped or resized in different contexts.
+
+To add a focal point to an image:
+
 1. Click on the edit <Icon name="pencil-simple" /> button.
 2. In the window that pops up, click on the pin <Icon name="map-pin" /> button to enter focal point mode.
 3. Move the crosshair to the desired location and click to set the focal point.
