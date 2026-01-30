@@ -663,8 +663,8 @@ Assets can also be moved to other folders from the main view of the Media Librar
 1. Click on the edit <Icon name="pencil-simple" /> button to add a focal point to an image.
 2. In the window that pops up, click on the pin <Icon name="map-pin" /> button to enter focal point mode.
 3. Move the crosshair to the desired location and click to set the focal point.
-4. Click the check <Icon name="check" classes="ph-bold" /> button to validate the new focal point. Alternatively, click the cancel <Icon name="x" classes="ph-bold" /> button to abandaon changes and exit focal point mode.
-5. Click the reset <Icon name="arrows-counter-clockwise" classes="ph-bold" /> button to reset the focal point to the center of the iamge.
+4. Click the check <Icon name="check" classes="ph-bold" /> button to validate the new focal point. Alternatively, click the cancel <Icon name="x" classes="ph-bold" /> button to abandon changes and exit focal point mode.
+5. Click the reset <Icon name="arrows-counter-clockwise" classes="ph-bold" /> button to reset the focal point to the center of the image.
 6. Click **Finish** to save changes to the file.
 
 #### Deleting assets
