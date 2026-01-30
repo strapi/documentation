@@ -27,8 +27,8 @@ Key scripts and how to run
 File map (important paths)
 - AI toolbar: `docusaurus/src/components/AiToolbar/openLLM.js`, `.../config/aiToolsConfig.js`, `.../config/aiPromptTemplates.js`.
 - Generators/validators: `docusaurus/scripts/generate-llms-code.js`, `docusaurus/scripts/generate-llms.js`, `docusaurus/scripts/validate-prompts.js`.
- - Authoring templates: `agents/templates/*.md` (see `agents/templates/INDEX.md`).
- - Components guidance: `agents/templates/components/tabs.md` (Tabs/TabItem rules).
+- Authoring templates: `agents/templates/*.md` (see `agents/templates/INDEX.md`).
+- Components guidance: `agents/templates/components/tabs.md` (Tabs/TabItem rules).
 
 Output and communication expectations
 - When asked, paste changed files or first 300 lines of generated artifacts.
@@ -65,7 +65,42 @@ Templates Index (authoring skeletons)
 - `agents/templates/README.md` — explains the purpose of the templates directory.
 - `agents/templates/INDEX.md` — lists all templates with links.
 
-Legacy mirrors (prefer the canonical guides above):
+## Documentation Review System
+
+Specialized prompts for reviewing and creating Strapi documentation. Located in `agents/prompts/`.
+
+| Prompt | Path | Purpose |
+|--------|------|---------|
+| **Orchestrator** | `agents/prompts/orchestrator.md` | Coordinates Review and Create workflows |
+| **Outliner** | `agents/prompts/outliner.md` | Routes to Outline Checker or UX Analyzer |
+| **Outline Checker** | `agents/prompts/outline-checker.md` | Template compliance, frontmatter, heading hierarchy |
+| **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | Reader experience, section order, cognitive load |
+| **Style Checker** | `agents/prompts/style-checker.md` | 12 Rules of Technical Writing compliance |
+
+### Workflows
+
+**Review Mode** (existing content):
+```
+Router → Outliner (Checker) → Style Checker → Integrity Checker
+```
+
+**Create Mode** (new content):
+```
+Router → Outliner (Generator) → Drafter → Style Checker → Integrity Checker
+```
+
+### Usage
+
+These prompts are designed for use in:
+- **Claude Projects**: Import prompts as project knowledge
+- **Claude.ai / ChatGPT**: Copy prompt content into the conversation
+- **API integrations**: Use as system prompts
+
+See `agents/prompts/README.md` for detailed usage instructions.
+
+## Legacy mirrors
+
+The following paths mirror the canonical guides above (prefer the canonical paths):
 - `cms/AGENTS.md`, `cloud/AGENTS.md`, `snippets/AGENTS.md`
 
 ## Git Usage Rules
