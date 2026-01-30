@@ -12,81 +12,80 @@ The Orchestrator does not perform any analysis itself — it delegates to specia
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        ORCHESTRATOR                                   │
-│         (coordinates all prompts based on user intent)                │
-└─────────────────────────────────┬───────────────────────────────┘
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        │                     │                     │
-        ▼                     ▼                     ▼
-   ┌─────────┐         ┌───────────┐         ┌───────────┐
-   │ REVIEW  │         │  CREATE   │         │   FULL    │
-   │  FLOW   │         │   FLOW    │         │  REVIEW   │
-   └────┬────┘         └─────┬─────┘         └─────┬─────┘
-        │                    │                     │
-        ▼                    ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│    Router     │    │    Router     │    │    Router     │
-│ (identify     │    │ (identify     │    │ (identify     │
-│  doc type)    │    │  doc type)    │    │  doc type)    │
-└───────┬───────┘    └───────┬───────┘    └───────┬───────┘
-        │                    │                     │
-        ▼                    ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   Outliner    │    │   Outliner    │    │   Outliner    │
-│   (Checker)   │    │  (Generator)  │    │   (Checker)   │
-└───────┬───────┘    └───────┬───────┘    └───────┬───────┘
-        │                    │                     │
-        ▼                    ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│ Style Checker │    │    Drafter    │    │ Style Checker │
-│ (12 Rules)    │    │ (write content│    │ (12 Rules)    │
-└───────┬───────┘    │  from outline)│    └───────┬───────┘
-        │            └───────┬───────┘            │
-        ▼                    │                    ▼
-┌───────────────┐            │            ┌───────────────┐
-│  Integrity    │            │            │  Integrity    │
-│   Checker     │            ▼            │   Checker     │
-│(links, paths) │    ┌───────────────┐    │(links, paths) │
-└───────────────┘    │ Style Checker │    └───────────────┘
-                     └───────┬───────┘
-                             │
-                             ▼
-                     ┌───────────────┐
-                     │  Integrity    │
-                     │   Checker     │
-                     └───────────────┘
+│                        ORCHESTRATOR                             │
+│         (coordinates all prompts based on user intent)          │
+└───────────────────────────┬─────────────────────────────────────┘
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+              ▼                           ▼
+       ┌─────────────┐             ┌─────────────┐
+       │   REVIEW    │             │   CREATE    │
+       │    MODE     │             │    MODE     │
+       └──────┬──────┘             └──────┬──────┘
+              │                           │
+              ▼                           ▼
+       ┌─────────────┐             ┌─────────────┐
+       │   Router    │             │   Router    │
+       └──────┬──────┘             └──────┬──────┘
+              │                           │
+              ▼                           ▼
+       ┌─────────────┐             ┌─────────────┐
+       │  Outliner   │             │  Outliner   │
+       │  (Checker)  │             │ (Generator) │
+       └──────┬──────┘             └──────┬──────┘
+              │                           │
+              ▼                           ▼
+       ┌─────────────┐             ┌─────────────┐
+       │   Style     │             │   Drafter   │
+       │   Checker   │             └──────┬──────┘
+       └──────┬──────┘                    │
+              │                           ▼
+              ▼                    ┌─────────────┐
+       ┌─────────────┐             │   Style     │
+       │  Integrity  │             │   Checker   │
+       │   Checker   │             └──────┬──────┘
+       └─────────────┘                    │
+                                          ▼
+                                   ┌─────────────┐
+                                   │  Integrity  │
+                                   │   Checker   │
+                                   └─────────────┘
 ```
 
 ---
 
 ### Workflows
 
-The Orchestrator supports three main workflows:
+The Orchestrator supports two main workflows:
 
-#### Review Workflow (existing content)
+#### Review Mode (existing content)
 
 **Trigger:** User provides existing documentation to review (PR, page, Markdown content)
 
 **Sequence:**
 ```
-Router → Outline Checker → Style Checker → Integrity Checker
+Router → Outliner (Checker) → Style Checker → Integrity Checker
 ```
 
 **Use cases:**
 - Reviewing a PR before merge
 - Checking an existing page for compliance
 - Validating documentation after edits
+- Final review before a release
+- Auditing a section of the documentation
+
+**Note:** The Outliner internally decides whether to run a quick check (structure only) or a full review (structure + UX analysis) based on document characteristics. See `outliner.md` for details.
 
 ---
 
-#### Create Workflow (new content)
+#### Create Mode (new content)
 
 **Trigger:** User provides source material to transform into documentation
 
 **Sequence:**
 ```
-Router → Outline Generator → Drafter → Style Checker → Integrity Checker
+Router → Outliner (Generator) → Drafter → Style Checker → Integrity Checker
 ```
 
 **Use cases:**
@@ -97,29 +96,13 @@ Router → Outline Generator → Drafter → Style Checker → Integrity Checker
 
 ---
 
-#### Full Review Workflow (comprehensive)
-
-**Trigger:** User requests a comprehensive review with all checks
-
-**Sequence:**
-```
-Router → Outline Checker → Style Checker → Integrity Checker → Consolidated Report
-```
-
-**Use cases:**
-- Final review before a release
-- Auditing a section of the documentation
-- Quality gate for new contributors
-
----
-
 ### Prompt Responsibilities
 
 | Prompt | Responsibility | Does NOT handle |
 |--------|----------------|-----------------|
-| **Orchestrator** | Route user intent to correct flow, coordinate prompts, consolidate reports | Any direct analysis |
+| **Orchestrator** | Route user intent to correct mode, coordinate prompts, consolidate reports | Any direct analysis |
 | **Router** | Identify doc type, locate template, determine target path | Content analysis |
-| **Outliner (Checker)** | Structure: sections, components, heading hierarchy, Diataxis | Prose quality, links |
+| **Outliner (Checker)** | Structure: sections, components, heading hierarchy, Diataxis; optionally UX analysis | Prose quality, links |
 | **Outliner (Generator)** | Create outline from source material | Content writing |
 | **Drafter** | Generate content from outline and source material | Structure decisions |
 | **Style Checker** | Prose quality, 12 Rules, formatting, tone | Structure, links |
@@ -129,13 +112,13 @@ Router → Outline Checker → Style Checker → Integrity Checker → Consolida
 
 ### Handoff Rules
 
-1. **Orchestrator → Prompts**: Orchestrator determines the workflow (review/create/full) and calls prompts in sequence.
+1. **Orchestrator → Prompts**: Orchestrator determines the mode (review/create) and calls prompts in sequence.
 
 2. **Router → Outliner**: Router passes document type and template path; Outliner uses these for structure validation or generation.
 
-3. **Outliner → Drafter** *(create flow only)*: Outline Generator passes the approved outline structure; Drafter fills in content.
+3. **Outliner → Drafter** *(create mode only)*: Outline Generator passes the approved outline structure; Drafter fills in content.
 
-4. **Outliner → Style Checker** *(review flow)*: Outliner completes structure check; Style Checker receives the same content for prose review.
+4. **Outliner → Style Checker** *(review mode)*: Outliner completes structure check; Style Checker receives the same content for prose review.
 
 5. **Style Checker → Integrity Checker**: Style Checker completes; Integrity Checker receives content for technical verification.
 
@@ -147,26 +130,21 @@ Router → Outline Checker → Style Checker → Integrity Checker → Consolida
 
 ### Trigger Patterns
 
-#### Review Flow Triggers
+#### Review Mode Triggers
 - "review this PR"
 - "check this page"
+- "full review"
 - "style check"
 - "outline check"
 - "verify this documentation"
 - User pastes Markdown content or provides a PR link
 
-#### Create Flow Triggers
+#### Create Mode Triggers
 - "create documentation for..."
 - "document this feature"
 - "write a guide based on..."
 - "draft an outline from..."
 - User provides Notion/Jira/GitHub links as source material
-
-#### Full Review Triggers
-- "full review"
-- "comprehensive check"
-- "run all checks"
-- "audit this page"
 
 ---
 
@@ -178,7 +156,7 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 # Documentation Review Report
 
 **File:** [filename or PR reference]
-**Workflow:** [Review / Create / Full Review]
+**Mode:** [Review / Create]
 **Date:** [timestamp]
 
 ---
@@ -217,10 +195,10 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 
 ### Behavioral Notes
 
-1. **Determine workflow first**: Before calling any prompt, identify which workflow applies based on user intent.
+1. **Determine mode first**: Before calling any prompt, identify which mode applies based on user intent.
 
-2. **State the workflow explicitly**: Tell the user which workflow is being executed.
-   > "Running **Review Workflow**: Router → Outline Checker → Style Checker → Integrity Checker"
+2. **State the mode explicitly**: Tell the user which mode is being executed.
+   > "Running **Review Mode**: Router → Outliner → Style Checker → Integrity Checker"
 
 3. **Execute prompts in sequence**: Each prompt must complete before the next one starts.
 
