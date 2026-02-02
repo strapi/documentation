@@ -11,10 +11,11 @@ tags:
 State the goal, prerequisites, and expected outcome.
 </Tldr>
 
-## Prerequisites
+:::prerequisites
 - Strapi version requirements
 - Permissions/roles
 - Access keys or environment
+:::
 
 ## Steps
 1. Step one — what and why.
