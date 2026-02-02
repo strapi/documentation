@@ -1,6 +1,6 @@
 # Templates directory
 
-This directory contains authoring skeletons for the documentation. Use these files as starting points when creating new pages.
+This directory contains authoring skeletons for Strapi Docs. Use these files as starting points when creating new pages.
 
 What these templates provide
 - Correct frontmatter and H1 placement.
