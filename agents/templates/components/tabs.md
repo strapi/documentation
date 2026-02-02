@@ -29,7 +29,7 @@ Canonical examples
 Add a response time header middleware.
 
 <Tabs groupId="js-ts">
-  <TabItem value="js" label="JavaScript" default>
+<TabItem value="js" label="JavaScript" default>
 
 ```js title="src/middlewares/response-time.js"
 module.exports = () => {
@@ -42,8 +42,8 @@ module.exports = () => {
 };
 ```
 
-  </TabItem>
-  <TabItem value="ts" label="TypeScript">
+</TabItem>
+<TabItem value="ts" label="TypeScript">
 
 ```ts title="src/middlewares/response-time.ts"
 export default () => {
@@ -56,7 +56,7 @@ export default () => {
 };
 ```
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ## Install variants (yarn-npm)
@@ -64,20 +64,20 @@ export default () => {
 Install and save the plugin dependency.
 
 <Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn" default>
+<TabItem value="yarn" label="Yarn" default>
 
 ```bash
 yarn add @strapi/plugin-example
 ```
 
-  </TabItem>
-  <TabItem value="npm" label="NPM">
+</TabItem>
+<TabItem value="npm" label="NPM">
 
 ```bash
 npm install @strapi/plugin-example
 ```
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 Extraction
