@@ -53,7 +53,6 @@ Links
 ## Directory of AGENTS Guides
 
 - CMS (canonical): `agents/cms/AGENTS.md`
-- CMS – Concepts/Intro/Overview: `agents/cms/AGENTS.concepts.md`
 - CMS – How‑to Guides: `agents/cms/AGENTS.guides.md`
 - CMS – API docs: `agents/cms/api/AGENTS.md`
 - CMS – Configurations: `agents/cms/configurations/AGENTS.md`
