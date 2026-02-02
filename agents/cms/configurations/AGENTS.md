@@ -7,15 +7,17 @@ Scope
 Purpose
 - Ensure configuration pages present a consistent, predictable flow from overview to concrete setup and examples.
 
-Frontmatter (recommended)
+Frontmatter (mandatory)
 - `title`: Configuration area (Title Case), e.g., “Database configuration”.
 - `description`: One concise sentence summarizing what the configuration controls.
-- Optional: tags specific to the configuration area.
- - Optional: `displayed_sidebar: cmsSidebar` and `sidebar_label` to fit navigation.
+- `displayed_sidebar: cmsSidebar`
+- Optional: `sidebar_label` to fit navigation.
+- Optional: `tags` specific to the configuration area.
+
 
 Required Section Order
-1) H1 title — matches `title` frontmatter.
-2) TL;DR — brief description of what the config file(s) control and where they live.
+1) H1 title — matches `title` frontmatter unless instructed differently.
+2) `<Tldr>` component — brief description of what the config file(s) control and where they live.
 3) Overview — short intro that names the main file(s)/paths (e.g., `/config/admin`, `/config/api.js|ts`).
 4) Configuration structure (H2)
    - Break down objects/keys (use tables or H3 subsections for nested structures).
