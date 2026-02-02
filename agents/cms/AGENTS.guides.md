@@ -30,7 +30,7 @@ Heading Conventions
 
 Content Conventions (procedural specifics)
 - Steps must be strictly ordered and numbered; avoid mixing UI and code in a single step when avoidable.
-- For repeated variants (e.g., REST/GraphQL/Client), keep a single "Step" and present each variant under the step (no duplicate headings per language).
+- For repeated variants (e.g., REST/GraphQL/Client), keep a single "Step" and present each variant under the step (no duplicate headings per language) with <Tabs> and <TabItem> components (see `templates/components/tabs.md` for guidance).
 - Include concrete UI paths (e.g., Settings → Single Sign‑On) and explicit file locations.
 
 Cross‑linking
