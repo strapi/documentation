@@ -1,6 +1,5 @@
 ---
 title: TEMPLATE — Configuration Title
-sidebar_label: Configuration Title
 displayed_sidebar: cmsSidebar
 description: One-sentence summary of what this configuration controls.
 tags:
@@ -17,8 +16,8 @@ If applicable, add a short warning (for example: “Changes require rebuilding t
 :::
 
 ## Location
-- Base file(s): `path: ./config/<area>.(js|ts)`
-- Overrides: `path: ./config/env/{environment}/<area>.(js|ts)`
+- Base file(s): `./config/<area>.(js|ts)`
+- Overrides: `./config/env/{environment}/<area>.(js|ts)`
 - Related env vars: see “Environment variables”.
 
 ## Available options
@@ -28,7 +27,7 @@ Describe each option briefly in a table and add an example.
 | ---           | ---                                  | ---      | ---       |
 | `optionName`  | What it controls and caveats         | `String` | `'value'` |
 
-```js title="path: ./config/<area>.js"
+```js title="/config/<area>.js"
 module.exports = {
   optionName: 'value',
 };
@@ -57,13 +56,13 @@ Show per‑environment overrides in JavaScript and TypeScript.
 
 <TabItem value="javascript" label="JavaScript">
 
-```js title="path: ./config/<area>.js"
+```js title="/config/<area>.js"
 module.exports = ({ env }) => ({
   optionName: env('ENV_VAR', 'default'),
 });
 ```
 
-```js title="path: ./config/env/production/<area>.js"
+```js title="/config/env/production/<area>.js"
 module.exports = ({ env }) => ({
   optionName: env('ENV_VAR', 'prod-default'),
 });
@@ -73,13 +72,13 @@ module.exports = ({ env }) => ({
 
 <TabItem value="typescript" label="TypeScript">
 
-```ts title="path: ./config/<area>.ts"
+```ts title="/config/<area>.ts"
 export default ({ env }) => ({
   optionName: env('ENV_VAR', 'default'),
 });
 ```
 
-```ts title="path: ./config/env/production/<area>.ts"
+```ts title="/config/env/production/<area>.ts"
 export default ({ env }) => ({
   optionName: env('ENV_VAR', 'prod-default'),
 });
