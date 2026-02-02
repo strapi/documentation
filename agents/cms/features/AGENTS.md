@@ -7,15 +7,15 @@ Scope
 Purpose
 - Encode the expected structure and heading conventions for “Features” pages to ensure consistency.
 
-Frontmatter (recommended)
+Frontmatter (mandatory)
 - `title`: Feature name (singular, title case).
 - `description`: One concise sentence describing what the feature enables.
-- `tags`: Include `features` and relevant keywords (e.g., `admin panel`).
 - `displayed_sidebar`: Always use `cmsSidebar`.
+- `tags`: Include `features` and relevant keywords (e.g., `admin panel`).
 
 Required Section Order
 1) H1 title (Feature name)
-   - The H1 must match the `title` frontmatter.
+   - The H1 should preferably match the `title` frontmatter, unless instructed otherwise.
 
 2) TL;DR block
    - Place a `<Tldr>` block immediately after H1.
@@ -38,11 +38,12 @@ Required Section Order
    - Prefer 2 standard subsections (H3):
      - “Admin panel configuration” — numbered steps with clear UI paths; include an optional “Path to configure the feature:” line when helpful.
      - “Code-based configuration” — show file paths and code fences; align with repo‑wide snippet rules.
+    - Admin panel configuration and Code-based configuration might feature specific sections with H4 when appropriate
 
 6) Usage (H2)
    - Show how to perform core tasks with the feature.
    - Use H3 subsections per task (e.g., “Filtering assets”, “Publishing content”).
-   - When relevant, add API usage subsections (e.g., “Usage with the REST API”, “Usage with GraphQL”).
+   - When relevant, add API usage subsections (e.g., “Usage with the REST API”, “Usage with GraphQL”). If these topics point to other pages, use `<CustomDocCardsWrapper/>` and `<CustomDocCard>` components (see `docusaurus/src/components/` folder)
 
 Optional Elements
 - Prerequisites callout if setup is required before configuration.
