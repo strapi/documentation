@@ -10,21 +10,21 @@ Why use a template
 
 How to use
 1) Find the template that matches the page type in the catalog below.
-2) Copy the file into `docusaurus/docs/...` and rename it.
+2) Copy the file into the target path indicated and rename it.
 3) Fill in the placeholders — the template comments explain what goes where.
 4) Read the corresponding authoring guide (if available) for area‑specific conventions beyond what the template covers.
 5) Delete any optional sections that don't apply to the page.
 
 ## Catalog
 
-| Template | Purpose | Authoring guide |
-|----------|---------|-----------------|
-| `feature-template.md` | Feature pages: TL;DR, intro, identity card, configuration, usage | `agents/authoring/AGENTS.cms.features.md` |
-| `plugin-template.md` | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks | `agents/authoring/AGENTS.cms.plugins.md` |
-| `configuration-template.md` | Configuration pages: file location, available options, env variables, per‑environment overrides | `agents/authoring/AGENTS.cms.configurations.md` |
-| `guide-template.md` | How‑to guides: prerequisites, numbered steps, validation, troubleshooting | `agents/authoring/AGENTS.cms.guides.md` |
-| `api-template.md` | API reference pages: endpoints, auth, parameters, example requests/responses | `agents/authoring/AGENTS.cms.api.md` |
-| `migration-template.md` | Migration/breaking‑change pages: impact, before/after, numbered migration sequence | — |
+| Template | Target path | Purpose | Authoring guide |
+|----------|-------------|---------|-----------------|
+| `feature-template.md` | `docusaurus/docs/cms/features/` | Feature pages: TL;DR, intro, identity card, configuration, usage | `agents/authoring/AGENTS.cms.features.md` |
+| `plugin-template.md` | `docusaurus/docs/cms/plugins/` | Plugin pages: identity details, install steps, configuration (admin UI and code), usage tasks | `agents/authoring/AGENTS.cms.plugins.md` |
+| `configuration-template.md` | `docusaurus/docs/cms/configurations/` | Configuration pages: file location, available options, env variables, per‑environment overrides | `agents/authoring/AGENTS.cms.configurations.md` |
+| `guide-template.md` | `docusaurus/docs/cms/` (varies) | How‑to guides: prerequisites, numbered steps, validation, troubleshooting | `agents/authoring/AGENTS.cms.guides.md` |
+| `api-template.md` | `docusaurus/docs/cms/api/` | API reference pages: endpoints, auth, parameters, example requests/responses | `agents/authoring/AGENTS.cms.api.md` |
+| `breaking-change-template.md` | `docusaurus/docs/cms/migration/**/breaking-changes/` | Breaking‑change pages: BreakingChangeIdCard, v4/v5 comparison, migration notes | — |
 
 ## What every template provides
 
