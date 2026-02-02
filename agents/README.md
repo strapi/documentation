@@ -3,7 +3,7 @@
 This directory stores agent‑only guides, authoring templates, and review prompts used to maintain the documentation repository.
 
 What lives here
-- Authoring guidance for writers/humans: `agents/cms/*/AGENTS.md`, `agents/cloud/AGENTS.md`, `agents/snippets/AGENTS.md`.
+- Authoring guidance for writers/humans: `agents/authoring/AGENTS.*.md`.
 - Authoring skeletons for new pages: `agents/templates/README.md`.
 - Review and creation prompts for documentation QA: `agents/prompts/README.md`.
 
@@ -26,7 +26,7 @@ Author workflow (human)
 6) Open a PR with granular commits (one task per commit) and follow commit message rules in `AGENTS.md`.
 
 Agent workflow (tools)
-- Read area guides (e.g., `agents/cms/features/AGENTS.md`) to understand expected structure.
+- Read area guides (e.g., `agents/authoring/AGENTS.cms.features.md`) to understand expected structure.
 - Use `agents/templates/*.md` as the source of truth when scaffolding new pages.
 - Use `agents/prompts/*.md` to run style, structure, and UX checks on documentation content.
 - When transforming content, keep path‑hinted fences and language labels; group language variants under a single example.
@@ -56,6 +56,6 @@ Do and Don't
 
 References
 - Root agent guide: `AGENTS.md`
-- CMS area guides: `agents/cms/*/AGENTS.md`
+- Authoring area guides: `agents/authoring/AGENTS.*.md`
 - Templates catalog: `agents/templates/INDEX.md`
 - Prompts catalog: `agents/prompts/README.md`
