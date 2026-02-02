@@ -7,7 +7,6 @@ Scope and precedence
 Execution policy and invariants
 - Stack: prefer JavaScript/Node; do not introduce new languages without approval.
 - Do not modify `llms-full.txt` generation.
-- Claude links must use `q` on `/new`; ChatGPT uses its reviewed param; keep locale logic.
 - Enable anchors and file checks by default for code extraction.
 
 Accepted languages and file types
@@ -31,13 +30,16 @@ File map (important paths)
 - Components guidance: `agents/templates/components/tabs.md` (Tabs/TabItem rules).
 
 Output and communication expectations
-- When asked, paste changed files or first 300 lines of generated artifacts.
+- When asked, paste changed files or generated artifacts.
 - Use bullet lists for unordered information; numbers for sequences.
 - Reference files with repo‑relative clickable paths.
 
 PR and branch workflow
-- Branch naming: `repo/agents-md-first-version` (this change) and `chore/*` for similar tasks.
-- Always run the generators/validators before requesting review.
+- Branch naming:
+  - Branches touching only files in `/cms` and `/static` must be prefixed with `/cms`
+  - Branches touching only files in `/cloud` and `/static` must be prefixed with `/cloud`
+  - Other branches must be prefixed with `/repo`
+  - If ambiguous, ask the user how to name the branch; user choice always supersedes auto-branch naming
 
 Security and tokens
 - Never commit secrets. Use `GITHUB_TOKEN` env var if needed; least privilege; rotate/revoke after use.
