@@ -7,7 +7,7 @@ Scope
 Purpose
 - Encode structure and heading conventions for API pages, covering both overview pages and detailed references.
 
-Frontmatter (recommended)
+Frontmatter (mandatory)
 - `title`: API name (Title Case).
 - `description`: One concise sentence explaining the API’s purpose.
 - `tags`: Include relevant API tags (e.g., Content API, Document Service, REST, GraphQL).
