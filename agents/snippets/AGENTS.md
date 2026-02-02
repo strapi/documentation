@@ -14,17 +14,15 @@ Content Conventions
 
 Code Fences
 - Always specify a language on fenced code blocks.
-- Prefer adding a `title=` hint when it clarifies context (e.g., the filename or purpose).
-- When relevant, include a nearby `path:` line before/after the fence to help tooling infer source files.
-- Group language variants (JS/TS) as consecutive fences under the same snippet rather than duplicating prose.
+- Prefer adding a `title=` hint when it clarifies context (e.g., the filename or purpose). `title` should always include the file path
 
 Linking and References
-- Prefer relative links within `/cms/` where possible; avoid absolute URLs unless necessary.
+- Prefer relative links within `/cms/` or `/cloud` where possible; avoid absolute URLs unless necessary.
 - Use `<ExternalLink />` for external resources when appropriate.
 - Do not rely on page‑local anchors unless they are guaranteed to exist in all embedding pages.
 
 Images and Media
-- Avoid heavy media in snippets. If an image is essential, reference assets from `/static/` and ensure accessibility (alt text).
+- Avoid heavy media in snippets. If an image is essential, reference assets from `/static/` and ensure accessibility (alt text). `<ThemedImage>` components from Docusaurus must be used to ensure we have both a light mode and dark mode version.
 
 Reusability and Dependencies
 - A snippet must not require prior imports or frontmatter in the embedding page to render correctly (unless clearly documented inline).
@@ -43,7 +41,4 @@ Quality Checklist (before commit)
 
 Templates
 - When a snippet evolves into a full page, prefer starting from a suitable CMS template:
-  - Guides: `agents/templates/guide-template.md`
-  - API: `agents/templates/api-template.md`
-  - Configuration: `agents/templates/configuration-template.md`
 - For a compact overview of all templates with paths and purposes, see `agents/templates/INDEX.md`.
