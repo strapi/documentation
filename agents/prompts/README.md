@@ -1,48 +1,49 @@
 # Prompts collection
 
-The present `prompts` folder contains elaborate prompts that can be used for specific documentation tasks which, used as standalone or in combination, will help create and review documentation PRs.
+This folder contains specialized prompts for reviewing and creating Strapi documentation. Each prompt targets a specific quality dimension (structure, style, UX, links) and can be used standalone or combined into a full workflow.
 
-These prompts should be LLM agnostic, though so far the best results are produced with Claude, and this is the LLM Piwi will use regularly with these prompts.
+These prompts are LLM‑agnostic, though the best results so far have been with Claude.
 
-## Overview
+## Catalog
 
-There are 6 specialized prompts:
-
-- **Router**: Analyzes input content (PR, Notion page, Jira ticket) and identifies which documentation section and template applies.
-
-- **Outliner**: Wrapper prompt that handles all documentation structure tasks. Routes to one of two sub-prompts:
-  - **Outline Checker**: Verifies existing structure against templates, checks required sections/components, validates heading hierarchy and parallel structure.
-  - **Outline Generator**: Creates documentation outlines from source material (Notion, Jira, specs) following the appropriate template.
-
-- **Drafter**: Generates documentation content following the structure from the Outliner and adhering to style guidelines.
-
-- **Style Checker**: Reviews content for violations of the 12 Rules of Technical Writing and Strapi style conventions.
-
-- **Integrity Checker**: Verifies technical accuracy including broken links, invalid file paths, code block formatting, and anchor consistency.
-
-- **Orchestrator**: Coordinates the execution of prompts in the appropriate sequence based on the task (creation or review mode).
-
-## Availability
-
-| Prompt | Status |
-|--------|--------|
-| Router | 🔜 Coming soon |
-| Outliner | ✅ Available |
-| ↳ Outline Checker | ✅ Available |
-| ↳ Outline Generator | 🔜 Coming soon |
-| Drafter | 🔜 Coming soon |
-| Style Checker | ✅ Available |
-| Integrity Checker | 🔜 Coming soon |
-| Orchestrator | 🔜 Coming soon |
+| Prompt | File | Status | Purpose |
+|--------|------|--------|---------|
+| **Orchestrator** | `orchestrator.md` | 🔜 Coming soon | Coordinates prompts in sequence for Review and Create workflows |
+| **Router** | — | 🔜 Coming soon | Identifies doc type, loads the right template and authoring guide |
+| **Outliner** | `outliner.md` | ✅ Available | Wrapper that routes to Outline Checker or UX Analyzer |
+| ↳ Outline Checker | `outline-checker.md` | ✅ Available | Template compliance, frontmatter, heading hierarchy, required components |
+| ↳ Outline UX Analyzer | `outline-ux-analyzer.md` | ✅ Available | Reader experience, section order, navigability, cognitive load |
+| ↳ Outline Generator | — | 🔜 Coming soon | Creates outlines from source material (Notion, Jira, specs) |
+| **Style Checker** | `style-checker.md` | ✅ Available | 12 Rules of Technical Writing, Strapi style conventions |
+| **Drafter** | — | 🔜 Coming soon | Generates content from an outline and source material |
+| **Integrity Checker** | — | 🔜 Coming soon | Broken links, invalid paths, code block formatting, anchor consistency |
 
 ## Workflows
 
-**Review workflow** (existing content):
+**Review mode** (existing content):
 ```
 Router → Outline Checker → Style Checker → Integrity Checker
 ```
 
-**Create workflow** (new content):
+**Create mode** (new content):
 ```
 Router → Outline Generator → Drafter → Style Checker → Integrity Checker
 ```
+
+Prompts marked "Coming soon" can be skipped; run the available ones in order.
+
+## Usage
+
+These prompts can be used in several ways:
+
+- **Claude Projects** — import the `.md` files as project knowledge. The project‑level system prompt (the custom instructions field) can reference them to route user requests to the right prompt.
+- **Claude.ai / ChatGPT** — copy the prompt content into the conversation or attach the file.
+- **API integrations** — use as system prompts or tool definitions.
+
+Each prompt file is self‑contained: it includes its role, inputs, detection rules, output format, and behavioral notes. No external dependencies beyond the authoring guides and templates in sibling folders.
+
+## References
+
+- Root agent guide: `AGENTS.md`
+- Authoring area guides: `agents/authoring/AGENTS.*.md`
+- Templates catalog: `agents/templates/README.md`
