@@ -7,9 +7,10 @@ Scope
 Purpose
 - Standardize how plugin docs present installation, configuration (UI + code), and usage, with clear package and marketplace info.
 
-Frontmatter (recommended)
+Frontmatter (mandatory)
 - `title`: Plugin name (e.g., “GraphQL plugin”).
 - `description`: One concise sentence describing what the plugin enables.
+- `displayed_sidebar: cmsSidebar`
 - Optional: `tags` (include `plugins` + relevant areas).
 
 Required Section Order
