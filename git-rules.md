@@ -13,23 +13,23 @@ Commit Messages
 
 Examples (good)
 - Add initial AGENTS.md for repo and cms/cloud/snippets
-- Centralize guidance in AGENTS.md; add local 12 rules file
-- Adopt concise 12 rules; add canonical link; reference in AGENTS
 - Update llms-code generator to add anchors by default
 - Improve sidebar width stability to reduce layout shift
 - Remove outdated Amplitude integration docs
+- Fix typo in configuration section
 
 Anti‑examples (and why)
 - fix: small changes — banned prefix; vague
 - tweak stuff — vague; not actionable
 - This PR updates docs — PR phrasing; non-specific
+- Centralize guidance in AGENTS.md; add local 12 rules file — should have been 2 commits
 
 Pull Request Titles
 - Start with either an action verb or a specific feature noun phrase.
 - Optional bracket qualifier allowed first (e.g., [experimental]) but must be followed by a compliant title.
 - Do not start with feat:/chore:/fix:, ticket IDs, emojis, or bracket tags as the core content.
 - Keep it concise (aim ≤ 80 chars) and capitalize the first word.
-- Place issue references at the end when needed: “… (#2143) (#2159)”.
+- Place issue references at the end of the description body when needed: “… (#2143) (#2159)”.
 
 Acceptable openings (illustrative, not exhaustive)
 - Action verbs (examples): Add, Update, Improve, Fix, Document, Rework, Clarify, Refactor, Remove, Allow, Introduce
@@ -40,10 +40,10 @@ Examples (good)
 - Checklist in SSO configuration documentation
 - Document Service API intro rework: more details, updated structure
 - Lifecycle functions: more details & examples of usage
-- Tip about nested page hierarchies in Content-type Builder documentation
 - More details regarding image uploading
 - [experimental] Allow setting a preferred AI toolbar default action
 - Add AI tools page
+- Add tip about nested page hierarchies in Content-type Builder documentation
 - Add documentation about the strapi-plugin generate command
 - Document auth fix for 5.24.0+
 - Add openapi.json route documentation (#2143) (#2159)
@@ -54,7 +54,7 @@ Anti‑examples (and why) with suggested fixes
 - feat(upload): add documentation for new setting → banned prefix → Document new upload setting
 
 Branch and History Safety
-- Never force‑push, rebase shared branches, or push to `main` without explicit maintainer consent.
+- Never force‑push, rebase shared branches, or push to `main` without explicit maintainer consent. In case of ambiguity, whether the user or maintainer consent was explicit or implicit, NEVER do it and ask again for user confirmation.
 - Never delete local or remote branches unless explicitly instructed by the maintainer.
 - Get explicit consent before any history rewrite (rebase, squash, filter‑branch); propose the plan first.
 - Prefer creating a new branch over rewriting history unless asked otherwise.
