@@ -2,7 +2,7 @@
 
 Scope and precedence
 - This file applies to the entire repository.
-- Subdirectory AGENTS.md files may add/override rules for their scope.
+- Area‑specific AGENTS files (in `agents/authoring/`) may add or override rules for their scope.
 
 Execution policy and invariants
 - Stack: prefer JavaScript/Node; do not introduce new languages without approval.
@@ -52,15 +52,14 @@ Links
 
 ## Directory of AGENTS guides
 
-- CMS (canonical): `agents/cms/AGENTS.md`
-- CMS – How‑to Guides: `agents/cms/AGENTS.guides.md`
-- CMS – API docs: `agents/cms/api/AGENTS.md`
-- CMS – Configurations: `agents/cms/configurations/AGENTS.md`
-- CMS – Features: `agents/cms/features/AGENTS.md`
-- CMS – Migration/Breaking Changes: `agents/cms/migration/AGENTS.md`
-- CMS – Plugins: `agents/cms/plugins/AGENTS.md`
-- Cloud docs: `agents/cloud/AGENTS.md`
-- Snippets: `agents/snippets/AGENTS.md`
+- CMS (canonical): `agents/authoring/AGENTS.cms.md`
+- CMS – How‑to Guides: `agents/authoring/AGENTS.cms.guides.md`
+- CMS – API docs: `agents/authoring/AGENTS.cms.api.md`
+- CMS – Configurations: `agents/authoring/AGENTS.cms.configurations.md`
+- CMS – Features: `agents/authoring/AGENTS.cms.features.md`
+- CMS – Plugins: `agents/authoring/AGENTS.cms.plugins.md`
+- Cloud docs: `agents/authoring/AGENTS.cloud.md`
+- Snippets: `agents/authoring/AGENTS.snippets.md`
 
 Templates Index (authoring skeletons)
 - `agents/templates/README.md` — explains the purpose of the templates directory.
