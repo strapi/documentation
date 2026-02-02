@@ -1,4 +1,4 @@
-# AGENTS.md (Repository-wide Agent Guide)
+# AGENTS.md (Repository-wide agent guide)
 
 Scope and precedence
 - This file applies to the entire repository.
@@ -50,7 +50,7 @@ Links
 - 12 Rules of Technical Writing: 12-rules-of-technical-writing.md (canonical)
 - External reference: https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04
 
-## Directory of AGENTS Guides
+## Directory of AGENTS guides
 
 - CMS (canonical): `agents/cms/AGENTS.md`
 - CMS – How‑to Guides: `agents/cms/AGENTS.guides.md`
@@ -72,11 +72,13 @@ Specialized prompts for reviewing and creating Strapi documentation. Located in 
 
 | Prompt | Path | Purpose |
 |--------|------|---------|
-| **Orchestrator** | `agents/prompts/orchestrator.md` | Coordinates Review and Create workflows |
-| **Outliner** | `agents/prompts/outliner.md` | Routes to Outline Checker or UX Analyzer |
-| **Outline Checker** | `agents/prompts/outline-checker.md` | Template compliance, frontmatter, heading hierarchy |
-| **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | Reader experience, section order, cognitive load |
-| **Style Checker** | `agents/prompts/style-checker.md` | 12 Rules of Technical Writing compliance |
+| **Orchestrator** | `agents/prompts/orchestrator.md` | _(Coming soon)_ Coordinates Review and Create workflows |
+| **Outliner** | `agents/prompts/outliner.md` | Routes to Outline Checker or Outline UX Analyzer |
+| **Outline Checker** | `agents/prompts/outline-checker.md` | Ensures template compliance, frontmatter, heading hierarchy |
+| **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | Checks reader experience, section order, cognitive load |
+| **Style Checker** | `agents/prompts/style-checker.md` | Ensures compliance to 12 Rules of Technical Writing |
+| **Integrity Checker** | `agents/prompts/integrity-checker.md` | _(Coming soon)_ Ensures production-ready compliance (broken links, formatting, etc.) |
+| **Drafter** | `agents/prompts/drafter.md` | _(Coming soon)_ Drafts small bits of documentation based on inputs received from Router and Outliner |
 
 ### Workflows
 
@@ -99,12 +101,9 @@ These prompts are designed for use in:
 
 See `agents/prompts/README.md` for detailed usage instructions.
 
-## Legacy mirrors
+## General git usage rules
 
-The following paths mirror the canonical guides above (prefer the canonical paths):
-- `cms/AGENTS.md`, `cloud/AGENTS.md`, `snippets/AGENTS.md`
-
-## Git Usage Rules
+(see git-rules.md for details)
 
 - Commit messages
   - Start with a capitalized action verb in imperative mood (e.g., Add, Update, Fix).
