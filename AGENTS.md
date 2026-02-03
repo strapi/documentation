@@ -61,9 +61,7 @@ Links
 - Cloud docs: `agents/authoring/AGENTS.cloud.md`
 - Snippets: `agents/authoring/AGENTS.snippets.md`
 
-Templates Index (authoring skeletons)
-- `agents/templates/README.md` — explains the purpose of the templates directory.
-- `agents/templates/INDEX.md` — lists all templates with links.
+The `agents/templates/README.md` explains the purpose of the templates directory (authoring skeletons) and lists all templates with links.
 
 ## Documentation Review System
 
