@@ -198,13 +198,14 @@ Use `ask_user` instead of guessing when:
 
 ## Placement Decision Process
 
-### Step 1 — Understand the source
+### Step 1 — Understand the source (briefly)
 
-Read the source material and extract:
-- **What it describes** (feature, fix, config change, new API, etc.)
-- **Key topics** (specific terms, feature names, concepts)
-- **User impact** (what can users do differently after this change?)
-- **Scope** (minor tweak, significant addition, entirely new capability)
+Read the source material just enough to answer these placement questions:
+- **What is it?** (feature, fix, config change, new API, etc.)
+- **Key topics** (specific terms, feature names — these are your search keywords for Step 2)
+- **How big is it?** (minor tweak → update; significant addition → new section; entirely new capability → new page)
+
+**Stop here.** Do NOT extract detailed specifications, parameter values, edge cases, or implementation details. That work belongs to downstream prompts (Outline Generator, Drafter). The Router needs a brief overview, not a spec sheet.
 
 ### Step 2 — Search the existing map
 
@@ -279,10 +280,13 @@ Once placement is decided:
 8. **Respect existing architecture.** Prefer fitting content into the existing structure over creating new categories. `create_category` should be rare and always confirmed with the user.
 
 9. **Stay in scope.** The Router decides *where* content goes. It does NOT:
+   - Extract detailed specifications from the source material (→ Outline Generator)
    - Write or restructure content (→ Outline Generator, Drafter)
    - Check writing style (→ Style Checker)
    - Verify template compliance (→ Outline Checker)
    - Evaluate reader experience (→ UX Analyzer)
+   
+   The "Content understanding" section of the report should be a **brief summary** (3–5 sentences max), not a detailed analysis. If you find yourself listing parameter values, edge cases, or implementation details, you've gone too far.
 
 10. **Report only your decision.** The final report must be clean and actionable. Internal deliberation (e.g., "I considered X but rejected it because…") belongs in the "Placement decision" rationale, not scattered throughout the report.
 
