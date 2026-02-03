@@ -34,7 +34,7 @@ A structured Markdown report containing:
 
 1. **Content Understanding**: What the source material describes
 2. **Documentation Map Analysis**: What exists today and where the content fits
-3. **Placement Decision**: The recommended action with rationale
+3. **Placement Decision**: The recommended action(s) with rationale
 4. **Type Resolution**: Document type, template, and authoring guide
 5. **Machine-Readable Summary**: YAML block for downstream prompts
 
@@ -59,11 +59,15 @@ A structured Markdown report containing:
 
 ### Placement decision
 
-**Action:** [action name — see Actions table below]
+**Targets:** [number of pages affected]
 
-[2–5 sentences explaining the rationale. Why this action and not another? What alternatives were considered? If updating an existing page, which section(s) are affected and why.]
+[2–5 sentences explaining the rationale. Why these targets and not others? What alternatives were considered? If updating existing pages, which section(s) are affected and why.]
 
-[If action is `ask_user`, present the options clearly and ask the user to decide.]
+[For each target, briefly explain the action and priority.]
+
+[If any target has `priority: conditional`, state the condition clearly.]
+
+[If the Router is uncertain about placement, present the options and ask the user to decide.]
 
 ### Type resolution
 
@@ -72,7 +76,6 @@ A structured Markdown report containing:
 | Document type | [type — see Document Types table] |
 | Template | [path to template, or "None available"] |
 | Authoring guide | [path to authoring guide, or "None available — apply 12 Rules and Style Checker"] |
-| Target path | [suggested file path for new pages, or existing file path for updates] |
 | Confidence | [high / medium / low] |
 
 [If confidence is not "high", explain what would increase it.]
@@ -88,20 +91,48 @@ A structured Markdown report containing:
 ### Machine-readable summary
 
 ```yaml
-action: [update_section | add_section | create_page | create_category | ask_user]
 doc_type: [feature | plugin | configuration | guide | api | migration | breaking-change | concept | cloud | snippet | unknown]
 template: [path or null]
 guide: [path or null]
-target_path: [file path]
-existing_page: [file path or null]
-existing_section: [heading text or null]
 confidence: [high | medium | low]
 detection_method: [path | content | sidebar | combined]
 key_topics: [topic1, topic2, topic3]
-cross_links: [list of paths to update, or empty]
-notes: "[any additional context for downstream prompts]"
+
+targets:
+  - path: [file path]
+    action: [update_section | add_section | create_page | create_category]
+    priority: [primary | required | optional | conditional]
+    existing_section: [heading text or null]
+    condition: [null or string explaining when this target applies]
+    notes: "[target-specific context for downstream prompts]"
+
+cross_links:
+  - path: [file path]
+    action: [add_link | update_text | add_mention]
+    description: "[what to add or change]"
+
+ask_user: [null or string with question for the user]
+notes: "[general context for downstream prompts]"
 ```
 ```
+
+#### Multi-target routing
+
+When a single source produces changes across multiple files, list each target separately with its own `action` and `priority`. This is common for:
+
+- **API parameters** added to multiple methods (each method's parameter table needs updating)
+- **Features** that touch both a feature page and a configuration page
+- **Breaking changes** that require updates to migration docs and the affected feature page
+
+The `primary` target is where the main content lives. `required` targets are pages that become incorrect or incomplete without updates. `optional` targets are nice-to-have improvements. `conditional` targets depend on a confirmation — always state the condition clearly.
+
+If any target has `priority: conditional`, set the top-level `ask_user` field with the question to resolve.
+
+#### Single-target shorthand
+
+When only one page is affected, the `targets` array contains a single entry. This is the most common case for simple updates or new pages.
+
+#### Uncertain placement
 
 If the Router cannot determine placement with reasonable confidence:
 
@@ -146,21 +177,39 @@ Do NOT summarize or discuss the report before outputting it. Output the full rep
 
 | Action | When to use | Output includes |
 |--------|-------------|-----------------|
-| `update_section` | Content modifies or extends an **existing section** in an existing page | `existing_page`, `existing_section`, `target_path` (same as existing) |
-| `add_section` | Content should be a **new section** added to an existing page | `existing_page`, `target_path` (same as existing), suggested heading |
-| `create_page` | Content needs a **new page** within an existing sidebar category | `target_path` (new path), sidebar neighbors |
-| `create_category` | Content needs a **new category** (rare — requires new sidebar section) | `target_path`, suggested category name, rationale for not fitting existing categories |
-| `ask_user` | Router is uncertain — multiple valid options or unclear fit | Presents options with rationale, asks user to decide |
+| `update_section` | Content modifies or extends an **existing section** in an existing page | `path` (existing file), `existing_section` |
+| `add_section` | Content should be a **new section** added to an existing page | `path` (existing file), suggested heading in `notes` |
+| `create_page` | Content needs a **new page** within an existing sidebar category | `path` (new file), sidebar neighbors in `notes` |
+| `create_category` | Content needs a **new category** (rare — requires new sidebar section) | `path`, suggested category name in `notes` |
+
+:::note Multi-action routing
+A single routing report can combine multiple actions across different targets. For example, a new API parameter might result in:
+- `add_section` on the parameter's dedicated sub-page (`primary`)
+- `update_section` on the main API reference page's parameter tables (`required`)
+- `add_section` on the REST API equivalent page (`conditional`)
+
+When this happens, each target is listed separately in the `targets` array of the machine-readable summary. Actions live per-target, not at the top level.
+:::
+
+### Target Priorities
+
+| Priority | Meaning | Downstream behavior |
+|----------|---------|---------------------|
+| `primary` | The main page where the bulk of new content lives | Process first; this is the core deliverable |
+| `required` | Pages that become incorrect or incomplete without updates | Must be updated in the same PR/batch as `primary` |
+| `optional` | Nice-to-have improvements (cross-links, mentions, related tips) | Can be deferred or skipped if time-constrained |
+| `conditional` | Updates that depend on a confirmation | Hold until the condition in `ask_user` is resolved |
 
 ### When to Use `ask_user`
 
-Use `ask_user` instead of guessing when:
+Set `ask_user` (as a top-level YAML field or as the placement decision) when:
 
 - The content could reasonably go in 2+ different locations
 - The source material is ambiguous about scope (could be a small update or a full new page)
 - The change seems internal/technical and may not need user-facing documentation
 - Confidence is below "medium" for any placement
 - The content suggests a new documentation category (always confirm with user)
+- Any target has `priority: conditional` and requires confirmation before proceeding
 
 **Important:** Do not decide alone that something doesn't need documentation. If you suspect a change is too minor or too internal to document, present that analysis to the user and let them decide. Experienced technical writers will know; other users will appreciate the guidance.
 
@@ -220,9 +269,9 @@ Using `sidebars.js` and `llms.txt`:
    - **Is adjacent to** that page but distinct enough for its own page (→ `create_page`)
    - **Doesn't relate** to any existing page (→ `create_page` or `create_category` or `ask_user`)
 
-### Step 3 — Decide the action
+### Step 3 — Decide the action(s) and identify all targets
 
-Apply this decision tree:
+Apply this decision tree for the **primary target**:
 
 ```
 Source material analyzed
@@ -250,11 +299,18 @@ Source material analyzed
             └─► ask_user (present analysis, let user decide)
 ```
 
+Then **check for ripple effects** — other pages that must also change:
+
+- Does the primary target's content appear in summary tables on other pages? (→ `required` target)
+- Does this change make existing statements on other pages incorrect or incomplete? (→ `required` target)
+- Would other pages benefit from linking to this content? (→ `optional` target or cross-link)
+- Is there a parallel API surface (e.g., REST and Document Service) that might also need updates? (→ `conditional` target if unconfirmed)
+
 ### Step 4 — Resolve type and resources
 
 Once placement is decided:
 
-1. **Determine document type** from the target path (see Document Types table)
+1. **Determine document type** from the primary target's path (see Document Types table)
 2. **Locate the template** (if one exists for this type)
 3. **Locate the authoring guide** (if one exists for this type)
 4. If no template or guide exists, note that the 12 Rules of Technical Writing and the Style Checker rules are the minimum standards.
@@ -275,7 +331,7 @@ Once placement is decided:
 
 6. **Don't over-document.** Not every code change needs documentation. Internal refactors, minor bug fixes, and implementation details often don't warrant user-facing docs. But don't decide this alone — present the analysis and let the user decide (see `ask_user`).
 
-7. **One routing per request.** If the source material covers multiple distinct topics that should go to different places, produce one routing per topic. Flag this to the user: "This source material covers N distinct topics. Here's the routing for each."
+7. **One routing per request, multiple targets per routing.** If the source material covers multiple distinct topics that should go to different places, produce one routing per topic. Flag this to the user: "This source material covers N distinct topics. Here's the routing for each." However, when a single topic affects multiple pages (e.g., a new parameter that must be documented in its dedicated page AND referenced in parameter tables elsewhere), this is a **single routing with multiple targets** — not multiple routings. Use the `targets` array to list all affected pages.
 
 8. **Respect existing architecture.** Prefer fitting content into the existing structure over creating new categories. `create_category` should be rare and always confirmed with the user.
 
@@ -311,7 +367,7 @@ Router → Outline Generator → Drafter → Style Checker → Integrity Checker
 ```
 In Create Mode, the Router receives source material and determines:
 - Where the new content should live
-- What action to take (new page, new section, etc.)
+- What action(s) to take (new page, new section, updates to related pages)
 - Which template and guide the Outline Generator should follow
 
 ### Handoff to Downstream Prompts
@@ -321,83 +377,156 @@ The Router's machine-readable summary is consumed by:
 | Downstream prompt | Uses from Router |
 |-------------------|-----------------|
 | **Outline Checker** | `doc_type`, `template`, `guide` — to know which structural rules to apply |
-| **Outline Generator** | `action`, `target_path`, `doc_type`, `template`, `guide` — to know what to generate and where |
-| **Drafter** | `target_path`, `existing_page`, `existing_section` — to know what to write and where |
-| **Orchestrator** | `action`, `confidence` — to decide workflow and whether to pause for user input |
+| **Outline Generator** | `targets[*].action`, `targets[*].path`, `doc_type`, `template`, `guide` — to know what to generate and where, per target |
+| **Drafter** | `targets[*].path`, `targets[*].existing_section`, `targets[*].priority` — to know what to write, where, and in what order |
+| **Orchestrator** | `targets[*].action`, `confidence`, `ask_user` — to decide workflow, handle conditional targets, and pause for user input when needed |
+
+**Processing order for downstream prompts:**
+
+Downstream prompts should process targets in priority order: `primary` → `required` → `optional`. Targets with `priority: conditional` should be held until the condition is resolved (either by the user or by the Orchestrator). If `ask_user` is set, the Orchestrator should pause and present the question before proceeding with conditional targets.
 
 ---
 
 ## Examples
 
-### Example 1: Clear new feature
+### Example 1: Clear new feature (single target)
 
 **Source:** PR description: "Adds a new Scheduler feature that lets users define cron-based recurring tasks from the admin panel"
 
 **Expected routing:**
 - Search `llms.txt` → no page with "scheduler" or "recurring tasks" in title/TL;DR
 - Search `sidebars.js` → `cms/features/` category exists with content-manager, content-type-builder, etc.
-- Action: `create_page`
-- Target: `cms/features/scheduler.md`
+- Targets: 1
 - Type: Feature
 - Confidence: high
 
-### Example 2: Update to existing feature
+```yaml
+targets:
+  - path: cms/features/scheduler.md
+    action: create_page
+    priority: primary
+    existing_section: null
+    condition: null
+    notes: "New feature page. Sidebar neighbors: custom-fields, data-management."
+```
+
+### Example 2: Update to existing feature (single target)
 
 **Source:** PR diff modifying the Media Library to add focal point support
 
 **Expected routing:**
 - Search `llms.txt` → "Media Library" page exists at `cms/features/media-library.md`
 - Content adds a new capability to an existing feature
-- Action: `add_section` (new "Focal point" section under Usage)
-- Target: `cms/features/media-library.md`
+- Targets: 1
 - Confidence: high
 
-### Example 3: Ambiguous placement
+```yaml
+targets:
+  - path: cms/features/media-library.md
+    action: add_section
+    priority: primary
+    existing_section: null
+    condition: null
+    notes: "New 'Focal point' section under Usage."
+```
+
+### Example 3: New API parameter (multi-target)
+
+**Source:** PR adding a `hasPublishedVersion` parameter to the Document Service API
+
+**Expected routing:**
+- Search `llms.txt` → Document Service API reference exists with dedicated sub-pages per parameter type
+- The parameter must appear in parameter tables for `findOne`, `findMany`, `findFirst`, `count`
+- An outdated note on `count()` becomes factually incorrect
+- The parameter may also be exposed via the REST API (needs confirmation)
+- Targets: 2 confirmed + 2 conditional
+
+```yaml
+targets:
+  - path: cms/api/document-service/status.md
+    action: add_section
+    priority: primary
+    existing_section: null
+    condition: null
+    notes: "New section documenting hasPublishedVersion usage with examples."
+  - path: cms/api/document-service.md
+    action: update_section
+    priority: required
+    existing_section: "findOne() parameters, findMany() parameters, findFirst() parameters, count() parameters, count() note"
+    condition: null
+    notes: "Add hasPublishedVersion to parameter tables. Update outdated count() note."
+  - path: cms/api/rest/status.md
+    action: add_section
+    priority: conditional
+    existing_section: null
+    condition: "Confirm whether hasPublishedVersion is exposed as a REST API query parameter"
+    notes: "Add REST API usage examples if exposed."
+  - path: cms/api/rest/parameters.md
+    action: update_section
+    priority: conditional
+    existing_section: "Parameters table"
+    condition: "Confirm whether hasPublishedVersion is exposed as a REST API query parameter"
+    notes: "Add new row to the parameters table."
+
+ask_user: "The diff modifies convert-query-params.ts, suggesting hasPublishedVersion may be exposed via REST API. Can you confirm whether it is available as a REST query parameter?"
+```
+
+### Example 4: Ambiguous placement
 
 **Source:** Jira ticket: "Add rate limiting documentation"
 
 **Expected routing:**
 - Search `llms.txt` → no dedicated rate limiting page; `cms/configurations/` has related config pages
-- Could be: a configuration page (`cms/configurations/rate-limiting.md`), a section in an existing server config page, or a guide
-- Action: `ask_user`
-- Present options:
-  - A: New configuration page at `cms/configurations/rate-limiting.md`
-  - B: New section in an existing server configuration page
-  - C: A how-to guide if the focus is on setup steps
-- Confidence: low
+- Could be: a configuration page, a section in an existing server config page, or a guide
+- Targets: uncertain
 
-### Example 4: Internal change, unclear doc impact
+```yaml
+targets: []
+ask_user: |
+  I'm not confident about the best placement. Here are the options:
+  - Option A: New configuration page at cms/configurations/rate-limiting.md
+  - Option B: New section in an existing server configuration page
+  - Option C: A how-to guide if the focus is on setup steps
+  Which do you prefer?
+```
+
+### Example 5: Internal change, unclear doc impact
 
 **Source:** PR: "Refactor database query builder internals for better TypeScript support"
 
 **Expected routing:**
 - Search `llms.txt` → query builder may or may not be documented; TypeScript internals are not user-facing
 - This appears to be an internal refactor
-- Action: `ask_user`
-- Present analysis: "This appears to be an internal refactor. Unless the public API surface changed or there are new TypeScript types that users interact with, this may not need user-facing documentation. Could you confirm whether any user-facing behavior or API changed?"
-- Confidence: low
 
-### Example 5: Multi-topic source
+```yaml
+targets: []
+ask_user: "This appears to be an internal refactor. Unless the public API surface changed or there are new TypeScript types that users interact with, this may not need user-facing documentation. Could you confirm whether any user-facing behavior or API changed?"
+```
+
+### Example 6: Multi-topic source
 
 **Source:** Notion spec covering "Authentication overhaul: new JWT refresh tokens + SSO improvements + API key rotation"
 
 **Expected routing:**
 - This covers 3 distinct topics
-- Flag to user: "This source covers 3 distinct documentation topics. Routing each separately:"
-  1. JWT refresh tokens → likely `update_section` on auth configuration page
-  2. SSO improvements → likely `update_section` on SSO page or guide
-  3. API key rotation → possibly `create_page` or `add_section`
-- Confidence: medium (depends on how each topic maps)
+- Flag to user: "This source covers 3 distinct documentation topics. Routing each separately."
+- Produce 3 separate routing reports, each with its own `targets` array.
 
-### Example 6: Review mode — existing page check
+### Example 7: Review mode — existing page check (single target)
 
 **Source:** User asks to review `cms/features/content-manager.md`
 
 **Expected routing:**
 - File path clearly maps to Feature type
-- Action: (not applicable in pure review — Router confirms type)
-- Type: Feature
-- Template: `agents/templates/feature-template.md`
-- Guide: `agents/cms/features/AGENTS.md`
+- Targets: 1 (review, not create)
 - Confidence: high
-- Notes: "Existing page, review mode. Apply Feature template rules."
+
+```yaml
+targets:
+  - path: cms/features/content-manager.md
+    action: update_section
+    priority: primary
+    existing_section: null
+    condition: null
+    notes: "Existing page, review mode. Apply Feature template rules."
+```
