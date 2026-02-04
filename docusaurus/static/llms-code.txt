@@ -17207,7 +17207,7 @@ export default async () => {
 Source: https://docs.strapi.io/cms/configurations/media-library-providers
 
 ## Installing providers
-Description: For example, to install the AWS S3 provider for the Upload (Media Library) feature:
+Description: For example, to install the AWS S3 provider for the Media Library feature:
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers#installing-providers)
 
 Language: Bash
@@ -17365,16 +17365,26 @@ Language: JavaScript
 File path: /config/plugins.js
 
 ```js
-
 module.exports = ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'cloudinary',
+      provider: 'aws-s3',
       providerOptions: {
-        cloud_name: env('CLOUDINARY_NAME'),
-        api_key: env('CLOUDINARY_KEY'),
-        api_secret: env('CLOUDINARY_SECRET'),
+        baseUrl: env('CDN_URL'),
+        rootPath: env('CDN_ROOT_PATH'),
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
+          region: env('AWS_REGION'),
+          params: {
+            ACL: env('AWS_ACL', 'public-read'),
+            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
       },
       actionOptions: {
         upload: {},
@@ -17392,16 +17402,26 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-
 export default ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'cloudinary',
+      provider: 'aws-s3',
       providerOptions: {
-        cloud_name: env('CLOUDINARY_NAME'),
-        api_key: env('CLOUDINARY_KEY'),
-        api_secret: env('CLOUDINARY_SECRET'),
+        baseUrl: env('CDN_URL'),
+        rootPath: env('CDN_ROOT_PATH'),
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
+          region: env('AWS_REGION'),
+          params: {
+            ACL: env('AWS_ACL', 'public-read'),
+            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
       },
       actionOptions: {
         upload: {},
@@ -17416,7 +17436,7 @@ export default ({ env }) => ({
 
 
 ## Bucket CORS configuration
-Description: If you are planning on uploading content like GIFs and videos to your S3 bucket, you will want to edit its CORS configuration so that thumbnails are properly shown in Strapi.
+Description: Open your bucket in the AWS console.
 (Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#bucket-cors-configuration)
 
 Language: JSON
@@ -17563,27 +17583,15 @@ Language: JavaScript
 File path: /config/plugins.js
 
 ```js
-
 module.exports = ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'aws-s3',
+      provider: 'cloudinary',
       providerOptions: {
-        baseUrl: env('CDN_URL'),
-        rootPath: env('CDN_ROOT_PATH'),
-        s3Options: {
-          credentials: {
-            accessKeyId: env('AWS_ACCESS_KEY_ID'),
-            secretAccessKey: env('AWS_ACCESS_SECRET'),
-          },
-          region: env('AWS_REGION'),
-          params: {
-            ACL: env('AWS_ACL', 'public-read'),
-            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
-            Bucket: env('AWS_BUCKET'),
-          },
-        },
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
       },
       actionOptions: {
         upload: {},
@@ -17601,20 +17609,20 @@ Language: TypeScript
 File path: /config/plugins.ts
 
 ```ts
-
 export default ({ env }) => ({
   // ...
   upload: {
     config: {
-      provider: 'aws-s3', // For community providers pass the full package name (e.g. provider: 'strapi-provider-upload-google-cloud-storage')
+      provider: 'cloudinary',
       providerOptions: {
-        accessKeyId: env('AWS_ACCESS_KEY_ID'),
-        secretAccessKey: env('AWS_ACCESS_SECRET'),
-        region: env('AWS_REGION'),
-        params: {
-          ACL: env('AWS_ACL', 'public-read'), // 'private' if you want to make the uploaded files private
-          Bucket: env('AWS_BUCKET'),
-        },
+        cloud_name: env('CLOUDINARY_NAME'),
+        api_key: env('CLOUDINARY_KEY'),
+        api_secret: env('CLOUDINARY_SECRET'),
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
       },
     },
   },
