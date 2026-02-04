@@ -635,6 +635,7 @@ Click on the edit <Icon name="pencil-simple" /> button of an asset to open up th
   - click on the download button <Icon name="download-simple"  /> to download the asset,
   - click on the copy link button <Icon name="link" classes="ph-bold" /> to copy the asset's link to the clipboard,
   - optionally, click on the crop button <Icon name="crop" classes="ph-bold" /> to enter cropping mode for the image (see [Cropping images](#cropping-images)).
+  - optionally, click on the pin button <Icon name="map-pin" classes="ph-bold" /> to enter focal point mode for the image (see [Adding a focal point](#adding-a-focal-point)).
 - On the right, meta data for the asset is displayed at the top of the window <ScreenshotNumberReference number="2" /> and the fields below can be used to update the _File name_, _Alternative text_, _Caption_ and _Location_ (see [Organizing assets with folders](#organizing-assets-with-folders)) for the asset <ScreenshotNumberReference number="3" />.
 - At the bottom, the **Replace Media** button <ScreenshotNumberReference number="4" /> can be used to replace the asset file but keep the existing content of the other editable fields, and the **Finish** button is used to confirm any updates to the fields.
 
@@ -656,6 +657,19 @@ Assets can also be moved to other folders from the main view of the Media Librar
 4. Click the crop <Icon name="check" classes="ph-bold" /> button to validate the new dimensions, and choose either to **crop the original asset** or to **duplicate & crop the asset** (i.e. to create a copy with the new dimensions while keeping the original asset untouched). Alternatively, click the stop cropping <Icon name="x" classes="ph-bold" /> button to cancel and quit cropping mode.
 <!-- TODO: ask devs because there seems to be a bug/unintuitive behavior:  choosing crop the original asset does not quit cropping mode 😅  -->
 5. Click **Finish** to save changes to the file.
+
+#### Adding a focal point
+
+A focal point ensures the most important part of an image remains visible when the image is cropped or resized in different contexts.
+
+To add a focal point to an image:
+
+1. Click on the edit <Icon name="pencil-simple" /> button.
+2. In the window that pops up, click on the pin <Icon name="map-pin" /> button to enter focal point mode.
+3. Move the crosshair to the desired location and click to set the focal point.
+4. Click the check <Icon name="check" classes="ph-bold" /> button to validate the new focal point. Alternatively, click the cancel <Icon name="x" classes="ph-bold" /> button to abandon changes and exit focal point mode.
+5. Click the reset <Icon name="arrows-counter-clockwise" classes="ph-bold" /> button to reset the focal point to the center of the image.
+6. Click **Finish** to save changes to the file.
 
 #### Deleting assets
 
