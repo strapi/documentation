@@ -35,8 +35,9 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 <br />
 
-#### Repository
-- [Reorganize Media Library providers documentation](https://github.com/strapi/documentation/pull/2922)
+#### CMS
+
+- [Add focal point documentation to media library page](https://github.com/strapi/documentation/pull/2930)
 
 ### <Icon name='broom' /> Chore, fixes, typos, and other improvements
 
@@ -44,9 +45,7 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 #### CMS
 - [Fix typo in "Populate and Select" documentation](https://github.com/strapi/documentation/pull/2929)
-
-#### Repository
-- [Add focal point documentation to media library page](https://github.com/strapi/documentation/pull/2930)
+- [Reorganize Media Library providers documentation](https://github.com/strapi/documentation/pull/2922)
 
 ***
 This release was made possible thanks to the following contributors. Thank you! 🫶
