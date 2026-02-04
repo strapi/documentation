@@ -12,13 +12,13 @@ What this setting does, when to change it, and risks.
 </Tldr>
 
 :::caution
-If applicable, add a short warning (for example: “Changes require rebuilding the admin panel. Run `yarn build` or `npm run build`.\”).
+If applicable, add a short warning (for example: "Changes require rebuilding the admin panel. Run `yarn build` or `npm run build`.").
 :::
 
 ## Location
 - Base file(s): `./config/<area>.(js|ts)`
 - Overrides: `./config/env/{environment}/<area>.(js|ts)`
-- Related env vars: see “Environment variables”.
+- Related env vars: see "Environment variables".
 
 ## Available options
 Describe each option briefly in a table and add an example.
@@ -54,7 +54,7 @@ Show per‑environment overrides in JavaScript and TypeScript.
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JavaScript">
+<TabItem value="js" label="JavaScript" default>
 
 ```js title="/config/<area>.js"
 module.exports = ({ env }) => ({
@@ -70,7 +70,7 @@ module.exports = ({ env }) => ({
 
 </TabItem>
 
-<TabItem value="typescript" label="TypeScript">
+<TabItem value="ts" label="TypeScript">
 
 ```ts title="/config/<area>.ts"
 export default ({ env }) => ({

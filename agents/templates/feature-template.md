@@ -51,14 +51,14 @@ module.exports = {
 ```
 
 <Tabs groupId="js-ts">
-  <TabItem value="javascript" label="JavaScript">
+  <TabItem value="js" label="JavaScript" default>
 
 ```js title="path: ./src/<feature>/index.js"
 // JS example
 ```
 
   </TabItem>
-  <TabItem value="typescript" label="TypeScript">
+  <TabItem value="ts" label="TypeScript">
 
 ```ts title="path: ./src/<feature>/index.ts"
 // TS example
