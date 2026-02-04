@@ -28,6 +28,43 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.15.1
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Reorganize Media Library providers documentation](https://github.com/strapi/documentation/pull/2922)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix typo in "Populate and Select" documentation](https://github.com/strapi/documentation/pull/2929)
+
+#### Repository
+- [Add focal point documentation to media library page](https://github.com/strapi/documentation/pull/2930)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/leon-win" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/1682136?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="leon-win"/>
+</a>
+<a href="https://github.com/markkaylor" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/26598053?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="markkaylor"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.15.0
 
 <br />
