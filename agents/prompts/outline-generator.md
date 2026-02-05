@@ -481,7 +481,7 @@ sections:
 8. **Keep the outline focused.** A typical feature page has 2–4 H2 sections with 2–4 H3 subsections each. If your outline is significantly larger, consider whether the scope is too broad (maybe it should be multiple pages).
 
 9. **Don't duplicate other prompts' work.**
-   - Structure decisions (which sections) → Outline Generator ✓
+   - Structure decisions (which sections) → Outline Generator ✔
    - Placement decisions (which page) → Router
    - Prose quality → Style Checker
    - Technical accuracy → Drafter + Integrity Checker

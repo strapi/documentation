@@ -247,7 +247,7 @@ The Outliner works within the broader documentation review system:
         │                    │
         │                    ▼
         │            ┌───────────────┐
-        │            │ UX Analyzer  │
+        │            │ UX Analyzer   │
         │            └───────┬───────┘
         │                    │
         ▼                    ▼
