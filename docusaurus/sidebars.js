@@ -510,6 +510,7 @@ const sidebars = {
             'cms/plugins-development/create-a-plugin',
             'cms/plugins-development/plugin-structure',
             'cms/plugins-development/plugin-sdk',
+            'cms/plugins-development/admin-configuration-customization',
             'cms/plugins-development/admin-panel-api',
             'cms/plugins-development/content-manager-apis',
             'cms/plugins-development/server-api',
