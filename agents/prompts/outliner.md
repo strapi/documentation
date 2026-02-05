@@ -10,7 +10,7 @@ The Outliner is a **wrapper prompt** that handles all documentation structure ta
 |------------|------|---------|
 | **Outline Checker** | `outline-checker.md` | Verify structure against templates (technical compliance) |
 | **UX Analyzer** | `outline-ux-analyzer.md` | Evaluate structure from reader's perspective |
-| **Outline Generator** | `outline-generator.md` *(coming soon)* | Create new structure from source material |
+| **Outline Generator** | `outline-generator.md` | Create new structure from source material |
 
 ---
 
@@ -62,7 +62,7 @@ User request
     │               └─► Route to **Outline Checker** → then **UX Analyzer**
     │
     └─► Contains source material (Notion, Jira, specs) to transform?
-            └─► Route to **Outline Generator** (coming soon)
+            └─► Route to **Outline Generator**
 ```
 
 ---
