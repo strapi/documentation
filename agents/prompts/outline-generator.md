@@ -214,38 +214,14 @@ sections:
 **Template:** `agents/templates/feature-template.md`
 **Guide:** `agents/authoring/AGENTS.cms.features.md`
 
-**Expected structure:**
+Read the template file to get the exact section structure. When generating content hints for each section, apply these guidelines:
 
-1. **Frontmatter** — title, description, displayed_sidebar, tags
-2. **H1** — Feature name
-3. **`<Tldr>`** — 1–3 sentence summary
-4. **Intro paragraph** — Context, problem solved, related features
-5. **`<IdentityCard>`** — Plan, Role & permission, Activation, Environment
-6. **Configuration (H2)**
-   - Admin panel configuration (H3)
-   - Code-based configuration (H3)
-7. **Usage (H2)**
-   - Task-based subsections (H3)
-   - API usage subsections if applicable (H3)
-
-**Content hints to include:**
-
-For `<Tldr>`:
-- "Summarize what the feature does in 1–3 sentences."
-- "Mention the primary use case."
-
-For `<IdentityCard>`:
-- "Specify: Plan (Free/Growth/Enterprise), Role & permission, Activation method, Environment availability."
-
-For Configuration:
-- "Distinguish admin panel settings from code-based configuration."
-- "Use numbered steps for UI procedures (Rule 7)."
-- "Use path-hinted code fences for config files."
-
-For Usage:
-- "One H3 per distinct task."
-- "Include code examples where applicable."
-- "Mention API usage if the feature has REST/GraphQL endpoints."
+| Section | Generation guidelines |
+|---------|----------------------|
+| `<Tldr>` | Summarize what the feature does in 1–3 sentences. Mention the primary use case. |
+| `<IdentityCard>` | Extract: Plan (Free/Growth/Enterprise), Role & permission, Activation method, Environment availability. |
+| Configuration | Distinguish admin panel settings from code-based configuration. Use numbered steps for UI procedures (Rule 7). Use path-hinted code fences for config files. |
+| Usage | One H3 per distinct task. Include code examples where applicable. Mention API usage if the feature has REST/GraphQL endpoints. |
 
 ### Other document types (v1 — fallback mode)
 
