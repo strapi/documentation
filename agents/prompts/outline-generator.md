@@ -109,15 +109,18 @@ Use the template's section structure as your blueprint:
 
 ### Step 3 — Map content to structure
 
+**H2 sections are fixed by the template.** Do not invent new H2 sections. The template defines the page's top-level structure; your job is to populate it, not redesign it.
+
 For each template section, decide:
 
 1. **Does the source material contain information for this section?**
    - Yes → Include the section with content hints
    - No → Omit the section (don't create empty placeholders)
 
-2. **Does the source material contain information that doesn't fit existing sections?**
-   - Yes → Propose a new section with clear intent
-   - No → Stick to template sections
+2. **Does the source material contain information that doesn't fit the template's H2 sections?**
+   - Map it to an **H3 subsection** under the most relevant H2
+   - Suggest using **`<CustomDocCardsWrapper>`** to link to separate pages (see below)
+   - Or note it in "Notes for Drafter" as content requiring a separate page
 
 3. **For `add_section` actions:** Determine where the new content fits in the existing page structure. Set `insert_after` to the heading after which the new section should appear.
 
@@ -222,6 +225,25 @@ Read the template file to get the exact section structure. When generating conte
 | `<IdentityCard>` | Extract: Plan (Free/Growth/Enterprise), Role & permission, Activation method, Environment availability. |
 | Configuration | Distinguish admin panel settings from code-based configuration. Use numbered steps for UI procedures (Rule 7). Use path-hinted code fences for config files. |
 | Usage | One H3 per distinct task. Include code examples where applicable. Mention API usage if the feature has REST/GraphQL endpoints. |
+
+**When content exceeds the Feature page scope:**
+
+Feature pages should remain focused on enabling users to configure and use the feature. When source material includes content that would be better documented separately, use `<CustomDocCardsWrapper>` to link out instead of expanding the page with additional H2 sections.
+
+Common patterns:
+- **API usage details** → H3 "Usage with APIs" containing `<CustomDocCardsWrapper>` linking to REST/GraphQL/Document Service pages
+- **Developer extensibility** → Brief H3 mention + `<CustomDocCard>` linking to developer/plugin documentation
+- **Deep technical reference** → `<CustomDocCard>` linking to dedicated reference pages
+
+Example:
+```jsx
+### Usage with APIs
+
+<CustomDocCardsWrapper>
+  <CustomDocCard emoji="🔌" title="REST API" description="Learn how to use MCP with the REST API." link="/cms/api/rest/..." />
+  <CustomDocCard emoji="🔌" title="Document Service API" description="Learn how to use MCP with the Document Service." link="/cms/api/document-service/..." />
+</CustomDocCardsWrapper>
+```
 
 ### Other document types (v1 — fallback mode)
 
@@ -465,6 +487,8 @@ sections:
    - Technical accuracy → Drafter + Integrity Checker
 
 10. **Output the artifact first.** Create the Markdown artifact with the full outline before any discussion. Keep post-artifact commentary minimal.
+
+11. **Respect template H2 structure strictly.** For document types with templates (Feature, Plugin, Configuration, etc.), the H2 sections are fixed by the template. You may add H3/H4 subsections under existing H2s, but never invent new H2 sections. If content doesn't fit the template structure, use `<CustomDocCardsWrapper>` to link to other pages, or flag it in "Notes for Drafter" as requiring separate documentation.
 
 ---
 
