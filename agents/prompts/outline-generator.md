@@ -187,7 +187,7 @@ sections:
       - "Notion spec: 'Configuration' section"
     components: []
     subsections:
-      - heading: "### Admin panel configuration"
+      - heading: "### Admin panel settings"
         level: 3
         intent: "Show how to configure the feature through the UI."
         content_hints:
@@ -221,45 +221,119 @@ Read the template file to get the exact section structure. When generating conte
 
 | Section | Generation guidelines |
 |---------|----------------------|
-| `<Tldr>` | Summarize what the feature does in 1–3 sentences. Mention the primary use case. |
-| `<IdentityCard>` | Extract: Plan (Free/Growth/Enterprise), Role & permission, Activation method, Environment availability. |
-| Configuration | Distinguish admin panel settings from code-based configuration. Use numbered steps for UI procedures (Rule 7). Use path-hinted code fences for config files. |
-| Usage | One H3 per distinct task. Include code examples where applicable. Mention API usage if the feature has REST/GraphQL endpoints. |
+| H1 + `<Tldr>` | Extract the core value proposition from source material. Keep to 1–3 sentences. |
+| Intro paragraph | Identify the problem/need the feature addresses. |
+| `<IdentityCard>` | Extract: Plan requirement, Role/permission needed, Activation status, Environment availability. |
+| `## Configuration` | See [Configuration section guidelines](#configuration-section-guidelines) below. |
+| `## Usage` | Identify the main tasks users perform with this feature. Create H3 subsections for each distinct task. |
+| Related links | Note any cross-references mentioned in source material. |
 
-**When content exceeds the Feature page scope:**
+#### Configuration section guidelines
 
-Feature pages should remain focused on enabling users to configure and use the feature. When source material includes content that would be better documented separately, use `<CustomDocCardsWrapper>` to link out instead of expanding the page with additional H2 sections.
+The `## Configuration` section follows specific patterns based on what the feature supports. Apply these decision rules:
 
-Common patterns:
-- **API usage details** → H3 "Usage with APIs" containing `<CustomDocCardsWrapper>` linking to REST/GraphQL/Document Service pages
-- **Developer extensibility** → Brief H3 mention + `<CustomDocCard>` linking to developer/plugin documentation
-- **Deep technical reference** → `<CustomDocCard>` linking to dedicated reference pages
+**Decision tree:**
 
-Example:
-```jsx
-### Usage with APIs
+```
+1. Does the feature have admin panel settings?
+   ├─ Yes → Include "### Admin panel settings"
+   └─ No  → Skip this subsection
 
-<CustomDocCardsWrapper>
-  <CustomDocCard emoji="🔌" title="REST API" description="Learn how to use MCP with the REST API." link="/cms/api/rest/..." />
-  <CustomDocCard emoji="🔌" title="Document Service API" description="Learn how to use MCP with the Document Service." link="/cms/api/document-service/..." />
-</CustomDocCardsWrapper>
+2. Does the feature have code-based configuration?
+   ├─ Yes → Include "### Code-based configuration"
+   └─ No  → Skip this subsection
+
+3. If BOTH subsections are absent:
+   └─ Either omit "## Configuration" entirely
+      OR include with: "This feature is available by default and requires no configuration."
+
+4. If only ONE subsection applies:
+   └─ Include only that subsection under ## Configuration
 ```
 
-### Other document types (v1 — fallback mode)
+**Content hints for "### Admin panel settings":**
 
-For `plugin`, `configuration`, `guide`, `api`, `breaking-change`:
+```yaml
+- heading: "### Admin panel settings"
+  level: 3
+  intent: "Show how to configure the feature through the admin panel UI."
+  content_hints:
+    - "Start with Path reminder: **Path to configure the feature:** <Icon name=\"gear-six\" /> *Settings > [Section] > [Subsection]*"
+    - "Add a <ThemedImage> screenshot of the settings interface."
+    - "Use a table for listing settings: | Setting name | Instructions |"
+    - "For complex settings, use numbered steps."
+  components:
+    - "<ThemedImage> (required)"
+    - "<Icon name=\"gear-six\" /> (for path reminder)"
+  source_refs:
+    - "Check source for: settings location, available options, screenshots"
+```
 
-1. **Read the template** if provided in the Router output
-2. **Extract the section structure** from the template
-3. **Apply the same mapping process** as for Feature pages
-4. **If no template:** Use a generic structure:
-   - Overview/Introduction
-   - Prerequisites (if applicable)
-   - Configuration (if applicable)
-   - Usage / Steps
-   - See also / Related
+**Content hints for "### Code-based configuration":**
 
-**Note:** Full support for other document types will be added in future versions.
+```yaml
+- heading: "### Code-based configuration"
+  level: 3
+  intent: "Show how to configure the feature via configuration files or environment variables."
+  content_hints:
+    - "Reference the config file path: /config/[area].js|ts or /config/plugins.js|ts"
+    - "If >2 options exist, include an 'Available options' table with columns: Parameter | Description | Type | Default"
+    - "Provide JS/TS code examples using <Tabs groupId=\"js-ts\">"
+    - "If feature supports providers (e.g., email, upload), create H4 '#### Providers' subsection"
+  components:
+    - "<Tabs groupId=\"js-ts\"> (required for code examples)"
+  source_refs:
+    - "Check source for: config file paths, parameter names, default values, env vars"
+  optional_subsections:
+    - "#### Providers (if feature supports external providers)"
+    - "#### Available options (if many parameters to document)"
+    - "#### Environment variables (if distinct from file config)"
+```
+
+**Standard table formats:**
+
+For admin panel settings:
+```markdown
+| Setting name | Instructions |
+| ------------ | ------------ |
+| Option name  | What it does and how to configure it. |
+```
+
+For code-based options:
+```markdown
+| Parameter | Description | Type | Default | Notes |
+|-----------|-------------|------|---------|-------|
+| `paramName` | What it controls | `string` | `'value'` | Optional |
+```
+
+### Plugin pages
+
+**Template:** `agents/templates/plugin-template.md`
+**Guide:** `agents/authoring/AGENTS.cms.plugins.md`
+
+Similar to Feature pages. Key differences:
+- Include Installation section (H2) before Configuration
+- Configuration often references `/config/plugins.js|ts`
+- May have provider-specific subsections
+
+### Configuration pages
+
+**Template:** `agents/templates/configuration-template.md`
+**Guide:** `agents/authoring/AGENTS.cms.configurations.md`
+
+For dedicated configuration reference pages:
+- Focus on the config file structure and all available options
+- Use comprehensive tables for all parameters
+- Include environment-specific examples
+- Less emphasis on admin panel (that belongs in Feature pages)
+
+### Other document types
+
+For document types without explicit template support, apply general technical writing principles:
+- Logical flow: Overview → Setup/Config → Usage → Troubleshooting
+- One concept per section
+- Tasks in numbered steps
+- Reference material in tables
 
 ---
 
@@ -272,15 +346,13 @@ For `plugin`, `configuration`, `guide`, `api`, `breaking-change`:
 doc_type: feature
 template: agents/templates/feature-template.md
 guide: agents/authoring/AGENTS.cms.features.md
-key_topics: [MCP, server, model context protocol]
+key_topics: [MCP server, AI integration, admin automation]
 targets:
   - path: cms/features/mcp-server.md
     action: create_page
     priority: primary
-    notes: "New feature page for MCP server functionality"
+    notes: "New feature page for MCP server"
 ```
-
-**Source material:** (Notion spec describing MCP server feature)
 
 **Expected output:**
 
@@ -293,7 +365,7 @@ targets:
 
 ### Source analysis
 
-The source material describes Strapi's MCP (Model Context Protocol) server feature, which allows AI assistants to interact with Strapi content. Key information includes: server configuration options (port, authentication), supported MCP tools (content queries, schema introspection), and integration patterns with AI clients like Claude Desktop. The spec covers both admin panel activation and programmatic configuration.
+The source material describes a new MCP (Model Context Protocol) server feature that allows AI tools like Claude Desktop and Cursor to interact with Strapi's admin API. The feature runs locally via a CLI command (`strapi mcp`) and exposes tools for content management, RBAC, media operations, and more. Configuration is available both through the admin panel and via config files.
 
 ### Outline
 
@@ -305,30 +377,29 @@ sections:
     level: 2
     intent: "Explain how to enable and configure the MCP server."
     content_hints:
-      - "Brief intro: MCP server must be enabled before use."
-      - "Cover admin panel toggle and code-based config."
+      - "Write 1-2 sentences: MCP server configuration can be done via the admin panel or config files."
     source_refs:
-      - "Notion: 'Enabling MCP' section"
+      - "Notion: 'Configuration' section"
     components: []
     subsections:
-      - heading: "### Admin panel configuration"
+      - heading: "### Admin panel settings"
         level: 3
         intent: "Show how to enable MCP server from the admin UI."
         content_hints:
-          - "Path: Settings > MCP Server."
-          - "Explain the Enable toggle and port setting."
-          - "Mention authentication options."
+          - "Path reminder: **Path to configure the feature:** <Icon name=\"gear-six\" /> *Settings > Global settings > MCP Server*"
+          - "Add <ThemedImage> screenshot of MCP settings panel."
+          - "Use settings table for: Enable toggle, Port setting, Authentication options."
         source_refs:
           - "Notion: screenshot of MCP settings"
-        components: ["<ThemedImage>"]
+        components: ["<ThemedImage>", "<Icon>"]
         subsections: []
       - heading: "### Code-based configuration"
         level: 3
         intent: "Show how to configure MCP server via config files."
         content_hints:
-          - "File path: config/mcp.js or config/mcp.ts"
-          - "Show minimal config example."
-          - "Document all available options in a table or list."
+          - "Reference file path: /config/mcp.js or /config/mcp.ts"
+          - "Include 'Available options' table with all parameters."
+          - "Provide minimal config example in <Tabs groupId=\"js-ts\">."
         source_refs:
           - "Notion: 'Configuration options' table"
         components: ["<Tabs>"]
@@ -392,7 +463,7 @@ targets:
 ```
 # Media Library
 ## Configuration
-### Admin panel configuration
+### Admin panel settings
 ### Code-based configuration
 ## Usage
 ### Uploading assets
@@ -460,6 +531,52 @@ sections:
 - Consider a brief note about API access to focal point data if documented elsewhere.
 ```
 
+### Example 3: Feature with UI-only configuration
+
+**Router output:**
+```yaml
+doc_type: feature
+template: agents/templates/feature-template.md
+guide: agents/authoring/AGENTS.cms.features.md
+key_topics: [review workflows, content stages, publishing]
+targets:
+  - path: cms/features/review-workflows.md
+    action: create_page
+    priority: primary
+```
+
+**Expected output (Configuration section only):**
+
+```yaml
+sections:
+  - heading: "## Configuration"
+    level: 2
+    intent: "Explain how to create and configure review workflows."
+    content_hints:
+      - "Brief intro: workflows must be configured before use in Content Manager."
+    source_refs:
+      - "Notion: 'Configuration' section"
+    components: []
+    subsections:
+      - heading: "### Creating a new workflow"
+        level: 3
+        intent: "Step-by-step guide to create a workflow."
+        content_hints:
+          - "Path reminder: **Path to configure the feature:** <Icon name=\"gear-six\" /> *Settings > Global settings > Review Workflows*"
+          - "Numbered steps for workflow creation."
+          - "Include settings table: Workflow name, Associated content-types, Stages."
+          - "Add <ThemedImage> of the workflow editor."
+        source_refs:
+          - "Notion: workflow creation steps"
+        components: ["<ThemedImage>", "<Icon>"]
+        subsections: []
+      # Note: No "### Code-based configuration" — this feature is UI-only
+```
+
+**Notes for Drafter:**
+- This feature has no code-based configuration. Do not include a "Code-based configuration" subsection.
+- The configuration IS the workflow creation, so the H3 is task-oriented rather than "Admin panel settings".
+
 ---
 
 ## Behavioral Notes
@@ -481,7 +598,7 @@ sections:
 8. **Keep the outline focused.** A typical feature page has 2–4 H2 sections with 2–4 H3 subsections each. If your outline is significantly larger, consider whether the scope is too broad (maybe it should be multiple pages).
 
 9. **Don't duplicate other prompts' work.**
-   - Structure decisions (which sections) → Outline Generator ✔
+   - Structure decisions (which sections) → Outline Generator ✓
    - Placement decisions (which page) → Router
    - Prose quality → Style Checker
    - Technical accuracy → Drafter + Integrity Checker
@@ -489,6 +606,14 @@ sections:
 10. **Output the artifact first.** Create the Markdown artifact with the full outline before any discussion. Keep post-artifact commentary minimal.
 
 11. **Respect template H2 structure strictly.** For document types with templates (Feature, Plugin, Configuration, etc.), the H2 sections are fixed by the template. You may add H3/H4 subsections under existing H2s, but never invent new H2 sections. If content doesn't fit the template structure, use `<CustomDocCardsWrapper>` to link to other pages, or flag it in "Notes for Drafter" as requiring separate documentation.
+
+12. **Apply Configuration section decision rules.** For feature pages, decide whether to include "Admin panel settings", "Code-based configuration", both, or neither based on what the source material describes. Use the standardized heading names and content patterns.
+
+13. **Use standardized heading names.** For Configuration subsections:
+    - Use "### Admin panel settings" (not "Admin panel configuration")
+    - Use "### Code-based configuration"
+    - Use "#### Available options" for parameter tables
+    - Use "#### Providers" when the feature supports external providers
 
 ---
 
