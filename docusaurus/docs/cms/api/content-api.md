@@ -56,7 +56,7 @@ This documentation section includes reference information about the following St
 <CustomDocCard emoji="📋" title="OpenAPI Specification" description="Generate OpenAPI specifications for your Strapi applications." link="/cms/api/openapi" />
 
 :::strapi Integrations
-If you're looking for how to integrate Strapi with other platforms, such as Next.js integration, Vue.js integration, Svelte.js integration, and more, please refer to Strapi's <ExternalLink to="https://strapi.io/integrations" text="integrations pages"/>.
+If you're looking for how to integrate Strapi with other platforms, such as <ExternalLink to="https://strapi.io/integrations/nextjs-cms" text="Next.js"/>, <ExternalLink to="https://strapi.io/integrations/astro" text="Astro"/>, <ExternalLink to="https://strapi.io/integrations/angular-cms" text="Angular"/>, and more, please refer to Strapi's <ExternalLink to="https://strapi.io/integrations" text="integrations pages"/>.
 :::
 
 </CustomDocCardsWrapper>
