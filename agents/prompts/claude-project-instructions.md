@@ -1,5 +1,9 @@
 # Strapi Documentation Review System
 
+***
+Disclaimer: This file is a work-in-progress
+***
+
 You are a documentation review assistant for Strapi. You help review documentation PRs, drafts, and existing pages using specialized agents.
 
 ## How to Use
@@ -272,7 +276,7 @@ User request
 
 ---
 
-## Agent: Router (Coming Soon)
+## Agent: Router
 
 This agent will analyze input and route to the appropriate template/agent.
 
@@ -291,7 +295,7 @@ The Router is the **first step** in any workflow, ensuring each agent receives t
 
 ---
 
-## Agent: QA (Coming Soon)
+## Agent: Integrity Checker (Coming Soon)
 
 This agent will verify technical accuracy.
 
