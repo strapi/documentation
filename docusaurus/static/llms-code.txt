@@ -14558,7 +14558,7 @@ File path: N/A
 
 ```shell
 strapi develop
-options: [--no-build |--no-watch-admin |--browser |--debug |--silent]
+options: [--bundler | --open | --no-watch-admin | --polling | --debug | --silent]
 ```
 
 
