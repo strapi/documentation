@@ -76,6 +76,31 @@ strapi-plugin watch
 | `-d, --debug` |  -   | Enable debugging mode with verbose logs | false   |
 | `--silent`    |  -   | Do not log anything                     | false   |
 
+## strapi-plugin generate
+
+Generate APIs, [controllers](/cms/backend-customization/controllers), [content-types](/cms/backend-customization/models), [policies](/cms/backend-customization/policies), [middlewares](/cms/backend-customization/middlewares) and [services](/cms/backend-customization/services) for your plugin.
+
+```bash
+strapi-plugin generate
+```
+
+| Option        | Type | Description                             | Default |
+| ------------- | :--: | --------------------------------------- | ------- |
+| `-d, --debug` |  -   | Enable debugging mode with verbose logs | false   |
+| `--silent`    |  -   | Do not log anything                     | false   |
+
+The command displays an interactive menu with the following options:
+
+- **api** - Generate a new API with controller and service
+- **controller** - Generate a new controller
+- **content-type** - Generate a new content type with schema
+- **policy** - Generate a new policy
+- **middleware** - Generate a new middleware
+- **service** - Generate a new service
+
+The generator detects TypeScript or JavaScript automatically and creates files with the correct extension (`.ts` or `.js`).
+Generated files include commented examples. Singular and plural names must be different and use kebab-case format.
+
 ## strapi-plugin verify
 
 Verify the output of the plugin before publishing it.
