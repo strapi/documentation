@@ -224,7 +224,6 @@ Set `ask_user` (as a top-level YAML field or as the placement decision) when:
 | **Configuration** | `cms/configurations/*` | `agents/templates/configuration-template.md` | `agents/cms/configurations/AGENTS.md` |
 | **Guide** | `**/guides/*` or task-oriented "How to…" | `agents/templates/guide-template.md` | `agents/cms/AGENTS.guides.md` |
 | **API** | `cms/api/*` | `agents/templates/api-template.md` | `agents/cms/api/AGENTS.md` |
-| **Migration** | `cms/migration/**` (not breaking changes) | `agents/templates/migration-template.md` | `agents/cms/migration/AGENTS.md` |
 | **Breaking Change** | `cms/migration/**/breaking-changes/*.md` | `agents/templates/breaking-change-template.md` | `agents/cms/migration/AGENTS.md` |
 | **Concept** | Introductions, overviews, conceptual pages | None | `agents/cms/AGENTS.concepts.md` |
 | **Cloud** | `cloud/*` | None | `agents/cloud/AGENTS.md` |
