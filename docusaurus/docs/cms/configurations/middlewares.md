@@ -302,7 +302,6 @@ This security middleware is about cross-origin resource sharing (CORS) and is ba
 | `headers`           | Configure the `Access-Control-Allow-Headers` header       | `Array` or `String`  | Request headers passed in `Access-Control-Request-Headers` |
 | `keepHeaderOnError` | Add set headers to `err.header` if an error is thrown     | `Boolean`            | `false`                                                    |
 
-
 <details>
 <summary> Example: Custom configuration for the cors middleware</summary>
 
@@ -444,7 +443,7 @@ export default [
 
 </details>
 
-#### `ip`
+### `ip`
 
 The `ip` middleware is an IP filter middleware based on <ExternalLink to="https://github.com/nswbmw/koa-ip" text="koa-ip"/>. It accepts the following options:
 

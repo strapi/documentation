@@ -7308,7 +7308,7 @@ The `favicon` middleware serves the favicon and is based on
 
 </details>
 
-#### `ip`
+### `ip`
 
 The `ip` middleware is an IP filter middleware based on 
 
