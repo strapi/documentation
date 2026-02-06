@@ -9,8 +9,8 @@ These prompts are LLM‑agnostic, though the best results so far have been with 
 | Prompt | File | Status | Purpose |
 |--------|------|--------|---------|
 | **Orchestrator** | `orchestrator.md` | 🔜 Coming soon | Coordinates prompts in sequence for Review and Create workflows |
-| **Router** | — | 🔜 Coming soon | Identifies doc type, loads the right template and authoring guide |
-| **Outliner** | `outliner.md` | ✅ Available | Wrapper that routes to Outline Checker or UX Analyzer |
+| **Router** | `router.md` | ✅ Available | Identifies doc type, loads the right template and authoring guide |
+| **Outliner** | `outliner.md` | 🏗 (partly) Available | Wrapper that routes to Outline Generator, Outline Checker, or UX Analyzer |
 | ↳ Outline Checker | `outline-checker.md` | ✅ Available | Template compliance, frontmatter, heading hierarchy, required components |
 | ↳ Outline UX Analyzer | `outline-ux-analyzer.md` | ✅ Available | Reader experience, section order, navigability, cognitive load |
 | ↳ Outline Generator | — | 🔜 Coming soon | Creates outlines from source material (Notion, Jira, specs) |
