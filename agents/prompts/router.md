@@ -138,6 +138,15 @@ A structured Markdown report containing:
 
 [If the Router is uncertain about placement, present the options and ask the user to decide.]
 
+### Routing summary
+
+| Target | Action | Priority | Template |
+|--------|--------|----------|----------|
+| `path/to/page.md` | create_page | primary | [feature-template.md](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) |
+| `path/to/other.md` | update_section | required | — |
+
+[For each target, one row. Template column shows the template link if applicable, or "—" if none.]
+
 ### Type resolution
 
 | Field | Value |
