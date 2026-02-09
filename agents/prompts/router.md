@@ -26,6 +26,54 @@ Your primary job is placement — deciding what documentation action to take and
 
 The Router cannot make reliable placement decisions without these files. If neither `sidebars.js` nor `llms.txt` is accessible, inform the user and ask them to provide at least one.
 
+### How to Fetch GitHub Pull Requests
+
+When the user provides a GitHub PR as source material (URL, PR number, or reference), use the **GitHub MCP tools** to fetch the PR content directly:
+
+1. **If the user provides a PR URL or number**, ask for clarification if needed:
+   - Repository owner (e.g., `strapi`)
+   - Repository name (e.g., `documentation` or `strapi`)
+   - PR number
+
+2. **Use these GitHub MCP tools in sequence:**
+
+   ```
+   # Step 1: Get PR metadata (title, description, state)
+   github:get_pull_request(owner, repo, pull_number)
+   
+   # Step 2: Get the list of changed files
+   github:get_pull_request_files(owner, repo, pull_number)
+   
+   # Step 3 (optional): If you need full file content, fetch specific files
+   github:get_file_contents(owner, repo, path, branch)
+   ```
+
+3. **What to extract from the PR:**
+   - PR title and description → understand the intent
+   - Changed files list → identify which docs are affected
+   - File diffs (from PR files) → understand what content changed
+
+**Example workflow:**
+
+```
+User: "Route PR #1234 from strapi/documentation"
+
+Router:
+1. Call github:get_pull_request("strapi", "documentation", 1234)
+   → Get title: "Add focal point support to Media Library"
+   → Get description: explains the feature
+   
+2. Call github:get_pull_request_files("strapi", "documentation", 1234)
+   → See which .md files changed
+   → Understand scope (new page vs. update)
+
+3. Proceed with routing analysis
+```
+
+**If GitHub MCP is not available:** Ask the user to paste the PR description and list of changed files, or provide a link you can fetch via web.
+
+---
+
 ## Outputs
 
 **Always output the report as a standalone Markdown document.**
@@ -33,21 +81,49 @@ The Router cannot make reliable placement decisions without these files. If neit
 A structured Markdown report containing:
 
 1. **Content Understanding**: What the source material describes
-2. **Documentation Map Analysis**: What exists today and where the content fits
-3. **Placement Decision**: The recommended action(s) with rationale
-4. **Type Resolution**: Document type, template, and authoring guide
-5. **Machine-Readable Summary**: YAML block for downstream prompts
+2. **Routing Summary**: Quick-reference table for targets, actions, templates (the "executive summary")
+3. **Documentation Map Analysis**: What exists today and where the content fits
+4. **Placement Decision**: The recommended action(s) with rationale
+5. **Cross-linking suggestions**: Related pages to update
+6. **Machine-Readable Summary**: YAML block for downstream prompts
 
 ### Output Format
 
 ```markdown
-## Routing Report — [short source description]
+# Routing Report — [short source description]
+
+---
+
+## Summary for everyone
+
+*This summary ("Content understanding" + "tl;dr: How to update docs?") should be enough to help you get started if you plan to manually update the Strapi documentation yourself. Other sections of this report are only useful to documentation specialists and other AI tools.*
 
 ### Content understanding
 
 [1–3 sentences: what the source material is about, what topics it covers, what it enables or changes for users.]
 
 **Key topics:** [topic1], [topic2], [topic3]
+
+### tl;dr: How to update docs?
+
+**Create these pages:**
+- `path/to/new-page.md` — follow [Feature template](https://github.com/strapi/documentation/agents/templates/feature-template.md) + [Features authoring guide](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md)
+- `path/to/another-page.md` — follow [The 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) + use the [Style Checker tool](https://github.com/strapi/documentation/blob/main/agents/prompts/style-checker.md) to identify issues
+
+**Update these pages:**
+- `path/to/existing.md` — add [description of what to add] to "[Section name]" section
+- `path/to/other.md` — add row to "[Table name]" table
+
+**Later (when ready):**
+- `path/to/conditional.md` — [condition, e.g., "when X feature ships"]
+
+[If no pages to create, update, or defer, omit that subsection.]
+
+*This summary should be enough to help you get started if you plan to manually update the Strapi documentation yourself. Other sections of this report are only useful to documentation specialists and other AI tools.*
+
+---
+
+## Details for documentation specialists
 
 ### Documentation map analysis
 
