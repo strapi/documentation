@@ -138,14 +138,14 @@ A structured Markdown report containing:
 
 [If the Router is uncertain about placement, present the options and ask the user to decide.]
 
-### Type resolution
+### Routing summary
 
-| Field | Value |
-|-------|-------|
-| Document type | [type — see Document Types table] |
-| Template | [path to template, or "None available"] |
-| Authoring guide | [path to authoring guide, or "None available — apply 12 Rules and Style Checker"] |
-| Confidence | [high / medium / low] |
+| Target | Action | Priority | Template | Authoring guide |
+|--------|--------|----------|----------|-----------------|
+| `path/to/page.md` | create_page | primary | [feature-template.md](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) | [AGENTS.cms.features.md](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md) |
+| `path/to/other.md` | update_section | required | — | — |
+
+**Confidence:** [high / medium / low]
 
 [If confidence is not "high", explain what would increase it.]
 
@@ -390,14 +390,20 @@ Then **check for ripple effects** — other pages that must also change:
 - Would other pages benefit from linking to this content? (→ `optional` target or cross-link)
 - Is there a parallel API surface (e.g., REST and Document Service) that might also need updates? (→ `conditional` target if unconfirmed)
 
-### Step 4 — Resolve type and resources
+### Step 4 — Resolve type and resources for each target
 
-Once placement is decided:
+For **each target** in the routing:
 
-1. **Determine document type** from the primary target's path (see Document Types table)
+1. **Determine document type** from the target's path (see Document Types table)
 2. **Locate the template** (if one exists for this type)
 3. **Locate the authoring guide** (if one exists for this type)
-4. If no template or guide exists, note that the 12 Rules of Technical Writing and the Style Checker rules are the minimum standards.
+4. If no template or guide exists for a target, note that the [12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) and the [Style Checker](https://github.com/strapi/documentation/blob/main/agents/prompts/style-checker.md) are the minimum standards.
+
+**Important:** Each target may have a different document type. For example, a routing with both `cms/features/mcp-server.md` and `cms/configurations/server.md` requires:
+- Feature template + Features authoring guide for the feature page
+- Configuration template + Configurations authoring guide for the config page
+
+The Routing summary table must show the correct template and authoring guide **per row**, not just for the primary target.
 
 ---
 
