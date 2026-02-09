@@ -140,21 +140,12 @@ A structured Markdown report containing:
 
 ### Routing summary
 
-| Target | Action | Priority | Template |
-|--------|--------|----------|----------|
-| `path/to/page.md` | create_page | primary | [feature-template.md](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) |
-| `path/to/other.md` | update_section | required | — |
+| Target | Action | Priority | Template | Authoring guide |
+|--------|--------|----------|----------|-----------------|
+| `path/to/page.md` | create_page | primary | [feature-template.md](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) | [AGENTS.cms.features.md](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md) |
+| `path/to/other.md` | update_section | required | — | — |
 
-[For each target, one row. Template column shows the template link if applicable, or "—" if none.]
-
-### Type resolution
-
-| Field | Value |
-|-------|-------|
-| Document type | [type — see Document Types table] |
-| Template | [path to template, or "None available"] |
-| Authoring guide | [path to authoring guide, or "None available — apply 12 Rules and Style Checker"] |
-| Confidence | [high / medium / low] |
+**Confidence:** [high / medium / low]
 
 [If confidence is not "high", explain what would increase it.]
 
