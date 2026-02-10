@@ -135,7 +135,7 @@ Generate the structured YAML outline following the output format defined below.
 
 ## Document Type Handling
 
-> **Reminder:** Always read the actual template and authoring guide first. The heuristics below only cover OG-specific decisions — what H3s to choose, how to interpret source material, and what distinguishes one type from another.
+> **Reminder:** Always read the actual template and authoring guide first. The heuristics below only cover Outline Generator-specific decisions — what H3s to choose, how to interpret source material, and what distinguishes one type from another.
 
 ### Feature (`doc_type: feature`)
 
@@ -144,7 +144,7 @@ Generate the structured YAML outline following the output format defined below.
 
 **Skeleton:** H1 → `<Tldr>` → Intro → `<IdentityCard>` → `## Configuration` → `## Usage`
 
-**OG decisions (not in template):**
+**Outline Generator decisions (not in template):**
 - **Configuration H3s:** If both admin UI and code config exist → 2 H3s. If only one → single H3. If a subsection has multiple distinct areas → add H4s.
 - **Usage H3s:** One H3 per distinct user task. Group related tasks; aim for 3–7 H3s. If API usage exists → add H3s or `<CustomDocCardsWrapper>` linking to API pages.
 
@@ -162,7 +162,7 @@ Generate the structured YAML outline following the output format defined below.
 - Installation comes before Configuration
 - No intro paragraph between Tldr and IdentityCard
 
-**OG decisions (not in template):**
+**Outline Generator decisions (not in template):**
 - **Configuration H3s:** Same logic as Feature (admin panel settings + code-based).
 - **Usage H3s:** Same logic as Feature.
 
@@ -177,7 +177,7 @@ Generate the structured YAML outline following the output format defined below.
 
 **H2 sections are thematic, not prescribed.** See template and guide for scaling patterns (small / medium / large).
 
-**OG decisions (not in template):**
+**Outline Generator decisions (not in template):**
 - Count distinct configuration objects/sub-domains in the source. Each major object can become an H2.
 - If all options fit in one table (~30 rows or fewer) → single `## Available options` H2.
 - If options span multiple files or unrelated concerns → split into thematic H2s.
@@ -191,7 +191,7 @@ Generate the structured YAML outline following the output format defined below.
 
 **Skeleton:** H1 → `<Tldr>` → Intro → `:::prerequisites` → Steps → `## Troubleshooting` (optional)
 
-**OG decisions (not in template):**
+**Outline Generator decisions (not in template):**
 - **Simple vs. complex:** < 8 steps → single `## Steps` with numbered list. ≥ 8 steps or distinct phases → multiple H2 sections, each with its own numbered steps.
 - Prerequisites must be concrete: versions, roles, environment, enabled features.
 - Do NOT mix UI and code actions in a single step.
@@ -241,7 +241,7 @@ Each endpoint H2 has H3s: Path/query parameters, Request body, Responses, Exampl
 - **No `<Tldr>`** — uses `<Intro />` snippet instead
 - Fixed H2 names: must be exactly "Breaking change description" and "Migration"
 
-**OG decisions (not in template):**
+**Outline Generator decisions (not in template):**
 - **BreakingChangeIdCard props** to determine from source: `plugins` (boolean), `codemod` / `codemodPartly` (boolean), `codemodName`, `codemodLink`.
 - **SideBySideContainer:** Always compare v4 vs v5. Include code examples in both columns when applicable.
 
