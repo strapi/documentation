@@ -13,7 +13,7 @@ What this setting does, where the file lives, and key options at a glance.
 
 <!-- Optional: add a :::caution callout if changes require a rebuild or restart. -->
 
-The `./config/<area>.(js|ts)` file is used to define [what it configures] for a Strapi application.
+The `/config/<area>.(js|ts)` file is used to define [what it configures] for a Strapi application.
 
 <!-- 
   STRUCTURE GUIDANCE
@@ -48,7 +48,7 @@ The `./config/<area>.(js|ts)` file is used to define [what it configures] for a 
   - Parameter tables: Parameter | Description | Type | Default
   - Environment variable tables: Variable | Purpose | Type | Default
   - JS/TS Tabs for code examples (<Tabs groupId="js-ts">)
-  - Per-environment overrides (./config/env/{environment}/...)
+  - Per-environment overrides (/config/env/{environment}/...)
   - :::caution / :::note / :::tip callouts
   - <details> for advanced or edge-case examples
 
@@ -65,9 +65,9 @@ The `./config/<area>.(js|ts)` file is used to define [what it configures] for a 
 
 <Tabs groupId="js-ts">
 
-<TabItem value="javascript" label="JavaScript">
+<TabItem value="js" label="JavaScript">
 
-```js title="./config/<area>.js"
+```js title="/config/<area>.js"
 module.exports = ({ env }) => ({
   optionName: env('ENV_VAR', 'default'),
 });
@@ -75,9 +75,9 @@ module.exports = ({ env }) => ({
 
 </TabItem>
 
-<TabItem value="typescript" label="TypeScript">
+<TabItem value="ts" label="TypeScript">
 
-```ts title="./config/<area>.ts"
+```ts title="/config/<area>.ts"
 export default ({ env }) => ({
   optionName: env('ENV_VAR', 'default'),
 });
