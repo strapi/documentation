@@ -69,7 +69,7 @@ The outline contains:
 - `sections` — the heading tree with `intent`, `content_hints`, `source_refs`, and `components` per node
 - `drafter_notes` — free-text notes about gaps, ambiguities, and cross-links
 
-See the input contract (`NOTES-drafter-inputs.md`) for the full outline schema.
+See the interface specification (agents/prompts/shared/drafter-interface.md) for the full outline schema.
 
 ### 3. Source material
 
