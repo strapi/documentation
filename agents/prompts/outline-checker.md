@@ -34,6 +34,12 @@ The Outline Checker should be invoked when:
 - **file_path** (optional): Path of the file being analyzed — used to auto-detect document type
 - **doc_type** (optional): Explicit document type override — use when path-based detection is insufficient
 
+#### How to Fetch GitHub Pull Requests
+
+When the user provides a GitHub PR, use the GitHub MCP tools to fetch the content directly.
+
+👉 **See [GitHub MCP Usage Guide](shared/github-mcp-usage.md)** for the full workflow.
+
 ### Document Type Identification
 
 The Outline Checker determines the document type using this priority:
@@ -328,6 +334,8 @@ When no specific template applies, or as additional quality feedback, evaluate t
 9. **Use your judgment for "no template" cases**: When no template matches, evaluate whether the outline makes sense, is readable, and serves its apparent purpose.
 
 10. **Consider the reader's journey**: Ask yourself — can a developer quickly find what they need? Does the structure guide them logically from understanding to action?
+
+11. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).
 
 ---
 

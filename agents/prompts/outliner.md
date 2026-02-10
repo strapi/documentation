@@ -4,6 +4,12 @@
 
 The Outliner is a **wrapper prompt** that handles all documentation structure tasks. It routes requests to specialized sub-prompts based on the user's intent and the review depth required.
 
+### How to Fetch GitHub Pull Requests
+
+When the user provides a GitHub PR, use the GitHub MCP tools to fetch the content directly.
+
+👉 **See [GitHub MCP Usage Guide](shared/github-mcp-usage.md)** for the full workflow.
+
 ### Sub-prompts
 
 | Sub-prompt | File | Purpose |
@@ -285,3 +291,5 @@ The Outliner works within the broader documentation review system:
 7. **Don't duplicate work**: Outline Checker handles technical structure; UX Analyzer handles reader experience. Don't repeat the same issues in both.
 
 8. **Stay in scope**: Structure and UX only — no prose quality (Style Checker), no link checking (Integrity Checker).
+
+9. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).

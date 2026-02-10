@@ -67,15 +67,25 @@ The `agents/templates/README.md` explains the purpose of the templates directory
 
 Specialized prompts for reviewing and creating Strapi documentation. Located in `agents/prompts/`.
 
-| Prompt | Path | Purpose |
-|--------|------|---------|
-| **Orchestrator** | `agents/prompts/orchestrator.md` | _(Coming soon)_ Coordinates Review and Create workflows |
-| **Outliner** | `agents/prompts/outliner.md` | Routes to Outline Checker or Outline UX Analyzer |
-| **Outline Checker** | `agents/prompts/outline-checker.md` | Ensures template compliance, frontmatter, heading hierarchy |
-| **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | Checks reader experience, section order, cognitive load |
-| **Style Checker** | `agents/prompts/style-checker.md` | Ensures compliance to 12 Rules of Technical Writing |
-| **Integrity Checker** | `agents/prompts/integrity-checker.md` | _(Coming soon)_ Ensures production-ready compliance (broken links, formatting, etc.) |
-| **Drafter** | `agents/prompts/drafter.md` | _(Coming soon)_ Drafts small bits of documentation based on inputs received from Router and Outliner |
+| Prompt | Path | Status | Purpose |
+|--------|------|--------|---------|
+| **Orchestrator** | `agents/prompts/orchestrator.md` | ✅ Available | Coordinates Review and Create workflows |
+| **Router** | `agents/prompts/router.md` | ✅ Available | Identifies doc type, determines placement, loads template and authoring guide |
+| **Outliner** | `agents/prompts/outliner.md` | ✅ Available | Routes to Outline Checker, UX Analyzer, or Outline Generator |
+| **Outline Checker** | `agents/prompts/outline-checker.md` | ✅ Available | Ensures template compliance, frontmatter, heading hierarchy |
+| **Outline UX Analyzer** | `agents/prompts/outline-ux-analyzer.md` | ✅ Available | Checks reader experience, section order, cognitive load |
+| **Style Checker** | `agents/prompts/style-checker.md` | ✅ Available | Ensures compliance to 12 Rules of Technical Writing |
+| **Outline Generator** | — | 🔜 Coming soon | Creates outlines from source material (Notion, Jira, specs) |
+| **Drafter** | — | 🔜 Coming soon | Drafts documentation based on inputs from Router and Outliner |
+| **Integrity Checker** | — | 🔜 Coming soon | Ensures production-ready compliance (broken links, formatting, etc.) |
+
+### Shared Resources
+
+The `agents/prompts/shared/` folder contains guides used by multiple prompts:
+
+| Resource | Path | Purpose |
+|----------|------|---------|
+| **GitHub MCP Usage** | `agents/prompts/shared/github-mcp-usage.md` | How to fetch PR content using GitHub MCP tools |
 
 ### Workflows
 

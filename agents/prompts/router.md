@@ -28,49 +28,16 @@ The Router cannot make reliable placement decisions without these files. If neit
 
 ### How to Fetch GitHub Pull Requests
 
-When the user provides a GitHub PR as source material (URL, PR number, or reference), use the **GitHub MCP tools** to fetch the PR content directly:
+When the user provides a GitHub PR as source material, use the GitHub MCP tools to fetch the PR content directly.
 
-1. **If the user provides a PR URL or number**, ask for clarification if needed:
-   - Repository owner (e.g., `strapi`)
-   - Repository name (e.g., `documentation` or `strapi`)
-   - PR number
+👉 **See [GitHub MCP Usage Guide](agents/prompts/shared/github-mcp-usage.md)** for the full workflow.
 
-2. **Use these GitHub MCP tools in sequence:**
+**Quick reference:**
+1. `github:get_pull_request(owner, repo, pull_number)` → PR title, description
+2. `github:get_pull_request_files(owner, repo, pull_number)` → changed files list
+3. `github:get_file_contents(owner, repo, path, branch)` → full file content (optional)
 
-   ```
-   # Step 1: Get PR metadata (title, description, state)
-   github:get_pull_request(owner, repo, pull_number)
-   
-   # Step 2: Get the list of changed files
-   github:get_pull_request_files(owner, repo, pull_number)
-   
-   # Step 3 (optional): If you need full file content, fetch specific files
-   github:get_file_contents(owner, repo, path, branch)
-   ```
-
-3. **What to extract from the PR:**
-   - PR title and description → understand the intent
-   - Changed files list → identify which docs are affected
-   - File diffs (from PR files) → understand what content changed
-
-**Example workflow:**
-
-```
-User: "Route PR #1234 from strapi/documentation"
-
-Router:
-1. Call github:get_pull_request("strapi", "documentation", 1234)
-   → Get title: "Add focal point support to Media Library"
-   → Get description: explains the feature
-   
-2. Call github:get_pull_request_files("strapi", "documentation", 1234)
-   → See which .md files changed
-   → Understand scope (new page vs. update)
-
-3. Proceed with routing analysis
-```
-
-**If GitHub MCP is not available:** Ask the user to paste the PR description and list of changed files, or provide a link you can fetch via web.
+If GitHub MCP is unavailable, ask the user to paste the PR description and list of changed files.
 
 ## Outputs
 
@@ -425,7 +392,7 @@ The Routing summary table must show the correct template and authoring guide **p
 
 8. **Respect existing architecture.** Prefer fitting content into the existing structure over creating new categories. `create_category` should be rare and always confirmed with the user.
 
-9. **Use GitHub MCP when available.** When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly rather than asking the user to paste it. See "How to Fetch GitHub Pull Requests" in the Inputs section.
+9. **Use GitHub MCP when available.** When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly rather than asking the user to paste it. See [GitHub MCP Usage Guide](agents/prompts/shared/github-mcp-usage.md).
 
 10. **Stay in scope.** The Router decides *where* content goes. It does NOT:
     - Extract detailed specifications from the source material (→ Outline Generator)
@@ -627,31 +594,9 @@ targets:
 
 **Source:** User says "Route PR #1542 from strapi/documentation"
 
-**Expected workflow:**
+**Expected workflow:** See [GitHub MCP Usage Guide](agents/prompts/shared/github-mcp-usage.md)
 
-1. **Fetch PR metadata:**
-   ```
-   github:get_pull_request("strapi", "documentation", 1542)
-   → Title: "Add MCP Server documentation"
-   → Description: "Documents the new MCP Server feature..."
-   ```
-
-2. **Fetch changed files:**
-   ```
-   github:get_pull_request_files("strapi", "documentation", 1542)
-   → docs/cms/features/mcp-server.md (added)
-   → docs/cms/configurations/server.md (modified)
-   ```
-
-3. **Analyze and route:**
-   - New file in `cms/features/` → Feature page
-   - Modified config page → Required update
-   - Proceed with standard routing analysis
-
-**If GitHub MCP unavailable:**
-```
-I can't access GitHub directly. Please provide:
-1. The PR title and description
-2. The list of changed files
-3. (Optional) The diff for any new documentation files
-```
+1. Fetch PR metadata → Title: "Add MCP Server documentation"
+2. Fetch changed files → `docs/cms/features/mcp-server.md` (added), `docs/cms/configurations/server.md` (modified)
+3. Analyze: new file in `cms/features/` → Feature page; modified config → required update
+4. Proceed with standard routing analysis

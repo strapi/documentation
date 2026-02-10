@@ -8,6 +8,14 @@ The Orchestrator does not perform any analysis itself — it delegates to specia
 
 ---
 
+### How to Fetch GitHub Pull Requests
+
+When the user provides a GitHub PR as source material, use the GitHub MCP tools to fetch the PR content directly.
+
+👉 **See [GitHub MCP Usage Guide](shared/github-mcp-usage.md)** for the full workflow.
+
+---
+
 ### System Architecture
 
 ```
@@ -211,6 +219,8 @@ When consolidating reports from multiple prompts, the Orchestrator produces:
 7. **Prioritize by severity**: Final recommendations should list errors first, then warnings, then suggestions.
 
 8. **Handle partial failures**: If one prompt fails or returns no issues, continue with the remaining prompts.
+
+9. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).
 
 ---
 

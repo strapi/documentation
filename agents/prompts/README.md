@@ -18,6 +18,14 @@ These prompts are LLM‑agnostic, though the best results so far have been with 
 | **Drafter** | — | 🔜 Coming soon | Generates content from an outline and source material |
 | **Integrity Checker** | — | 🔜 Coming soon | Broken links, invalid paths, code block formatting, anchor consistency |
 
+## Shared Resources
+
+The `shared/` folder contains guides and utilities used by multiple prompts:
+
+| Resource | File | Purpose |
+|----------|------|---------|
+| **GitHub MCP Usage** | `shared/github-mcp-usage.md` | How to fetch PR content using GitHub MCP tools |
+
 ## Workflows
 
 **Review mode** (existing content):
