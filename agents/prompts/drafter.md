@@ -309,7 +309,7 @@ This helps reviewers quickly assess what was generated and what needs attention.
 
 8. **Don't duplicate the Style Checker's job.** The Drafter follows the 12 Rules proactively (writing clean prose from the start), but it does not self-audit or produce a style report. The Style Checker handles post-hoc review.
 
-9. **Import statements are not your concern.** Don't add MDX import statements at the top of the file. The Strapi documentation build system handles component imports automatically.
+9. **Import snippets explicitly, not components.** MDX components (<Tabs>, <ThemedImage>, badges, <IdentityCard>, etc.) are globally registered by the Strapi documentation build system — do NOT add import statements for them. However, snippets from docusaurus/docs/snippets/ must be explicitly imported after the frontmatter and before the H1. Use the pattern: import ComponentName from '/docs/snippets/file-name.md'. Check the template and AGENTS guide for the target doc type to know which snippet imports are required (e.g., breaking change pages require Intro and MigrationIntro snippets).
 
 10. **Respect the IdentityCard contract.** When writing an `<IdentityCard>`, always include exactly 4 items in this order with these exact titles: "Plan", "Role & permission", "Activation", "Environment". Use the Lucide icon names specified in the template.
 
