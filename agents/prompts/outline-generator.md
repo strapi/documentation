@@ -137,6 +137,12 @@ Generate the structured YAML outline following the output format defined below.
 
 > **Reminder:** Always read the actual template and authoring guide first. The heuristics below only cover Outline Generator-specific decisions — what H3s to choose, how to interpret source material, and what distinguishes one type from another.
 
+**Common components to consider across all types:**
+- `<ThemedImage>` for admin panel screenshots (light/dark variants)
+- `<Tabs groupId="js-ts">` for JS/TS code variants
+- `<Tabs groupId="yarn-npm">` for package manager commands
+- `<CustomDocCardsWrapper>` + `<CustomDocCard>` when linking to sub-pages or splitting long content
+
 ### Feature (`doc_type: feature`)
 
 **Template:** `agents/templates/feature-template.md`
