@@ -39,8 +39,8 @@ Use these recurring patterns within H2 sections as applicable:
 
 - **Parameter tables**: Columns `Parameter`, `Description`, `Type`, `Default`. Use a single table for flat option lists; use H3 subsections for nested objects.
 - **Environment variable tables**: Columns `Variable`, `Purpose`, `Type`, `Default`. Include a sample `.env` block when relevant.
-- **Code examples**: Always include a file path in the code fence title (e.g., `title="./config/server.js"`). Use `<Tabs groupId="js-ts">` for JavaScript/TypeScript variants.
-- **Per-environment overrides**: Show `./config/env/{environment}/...` files when the configuration supports environment-specific values.
+- **Code examples**: Always include a file path in the code fence title (e.g., `title="/config/server.js"`). Use `<Tabs groupId="js-ts">` for JavaScript/TypeScript variants.
+- **Per-environment overrides**: Show `/config/env/{environment}/...` files when the configuration supports environment-specific values.
 - **Minimal vs. full configurations**: Use `<Tabs>` with labels "Minimal configuration" and "Full configuration" when both are useful to the reader.
 - **Advanced examples**: Use `<details>` blocks for edge-case or advanced scenarios (e.g., timezones, SSL, one-off cron jobs).
 
