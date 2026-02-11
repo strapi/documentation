@@ -56,6 +56,35 @@ source_material: |
 
 ---
 
+## Output format (all modes)
+
+All 3 modes produce **Markdown content** wrapped in a standardized envelope. The Drafter does not produce YAML output (unlike the Router). The envelope uses HTML comments — invisible at render time — so the output is valid Markdown that can be used as-is.
+
+```markdown
+<!-- drafter:mode=compose target=cms/features/mcp-server.md action=create_page -->
+
+[Markdown content here]
+
+<!-- drafter:notes
+- TODO: Confirm exact plan name for MCP feature availability
+- TODO: Add screenshot of MCP configuration panel
+-->
+```
+
+### Envelope fields
+
+| Field | Description |
+|---|---|
+| `mode` | `compose`, `patch`, or `micro-edit` |
+| `target` | File path from `target.path` |
+| `action` | Action from `target.action` |
+
+The `drafter:notes` block is optional. It captures TODOs, unresolved gaps, and anything that requires human attention before publishing. These notes come from the Outline Generator's `drafter_notes` (in Compose mode) or from the Drafter's own analysis (in Patch/Micro-edit mode).
+
+This format is consistent across all 3 modes — only the content between the header and the notes block changes.
+
+---
+
 ## Mode 1: Compose
 
 **When:** The Drafter writes substantial new content — a full page or a major new section.
@@ -173,6 +202,8 @@ The Drafter produces complete Markdown content ready to be inserted or used as a
 
 **Input: existing_content + patch_instructions**
 
+The Drafter is responsible for fetching `existing_content` when it is not provided directly. In the manual pipeline, the user may paste it; in the orchestrated pipeline, the Drafter fetches it from the repository using GitHub MCP tools.
+
 ```yaml
 existing_content: |
   [The current content of the section being modified.
@@ -214,13 +245,11 @@ patch_instructions:
 | `remove` | Delete a specific text passage | `target` (text to find) |
 | `update_code` | Modify a code block | `target` (code block identifier — language + nearest heading), `replacement` |
 
-### Who produces patch_instructions?
+### Patch instruction derivation
 
-**Currently (manual pipeline):** The user or the Router's `notes` field provides enough context for the Drafter to derive the instructions itself. The Drafter reads the `source_material` + `target.notes` and formulates the edits.
+The Drafter derives `patch_instructions` itself from `source_material` + `target.notes`. No separate "Patch Planner" step is needed — the Router's notes provide sufficient context for the Drafter to formulate discrete edits (e.g., "add `hasPublishedVersion` parameter to the findOne() table" → `add_row` instruction).
 
-**Future (orchestrated pipeline):** A dedicated step could pre-compute patch instructions from the Router output. For now, the Drafter is expected to derive them.
-
-**Key constraint:** The Drafter in Patch mode must fetch or receive `existing_content`. It cannot guess what the current page says.
+**Key constraint:** The Drafter in Patch mode must have access to `existing_content`. It cannot guess what the current page says. When not provided by the user, the Drafter fetches it using GitHub MCP tools or the `fetch` tool.
 
 ### Patch output
 
@@ -282,8 +311,8 @@ A single insertion instruction:
 | `outline` (from Outline Generator) | ✅ **required** | ❌ | ❌ |
 | `outline.frontmatter` | ✅ (for `create_page`) / ❌ (for `add_section`) | ❌ | ❌ |
 | `outline.drafter_notes` | ✅ (if OG produced notes) | ❌ | ❌ |
-| `existing_content` (fetched page) | ❌ (for `create_page`) / ✅ (for `add_section`) | ✅ **required** | ❌ (optional) |
-| `patch_instructions` | ❌ | ✅ (derived or provided) | ❌ |
+| `existing_content` (fetched page) | ❌ (for `create_page`) / ✅ (for `add_section`) | ✅ **fetched by Drafter** | ❌ (optional) |
+| `patch_instructions` | ❌ | ✅ **derived by Drafter** | ❌ |
 | `micro_instruction` | ❌ | ❌ | ✅ **required** |
 
 ---
@@ -294,10 +323,32 @@ The Outline Generator must produce outlines conforming to the `sections` schema 
 
 ---
 
-## Deferred decisions
+## Resolved decisions
 
-1. **Patch derivation:** The Drafter currently derives `patch_instructions` from source material + Router notes. A dedicated "Patch Planner" step may be introduced in the orchestrated pipeline if derivation proves unreliable.
+These questions were resolved during design (2025-02-11) and are documented here for context.
 
-2. **Existing content fetching:** In the manual pipeline, the user provides existing content. In the orchestrated pipeline, the Orchestrator will be responsible for fetching it before calling the Drafter.
+### 1. Patch derivation
 
-3. **Validation loop:** If the Style Checker finds issues in Drafter output, re-runs are currently manual. Automated re-run logic will be defined when building the Orchestrator.
+**Decision:** The Drafter derives `patch_instructions` itself from `source_material` + `target.notes`. No separate "Patch Planner" step.
+
+**Rationale:** The Router's notes provide sufficient context (e.g., "add `hasPublishedVersion` to the parameters table"), and testing confirms the Drafter can reliably interpret source material into discrete edits. Adding a Patch Planner would introduce pipeline complexity without measurable gain.
+
+### 2. Existing content fetching
+
+**Decision:** The Drafter is responsible for fetching `existing_content` when it is not provided. In the manual pipeline, the user may paste it directly. In the orchestrated pipeline, the Drafter fetches it using GitHub MCP tools or the `fetch` tool.
+
+**Rationale:** Having the Drafter fetch content at the moment it needs it avoids staleness issues (content changing between Orchestrator fetch and Drafter execution). It also keeps the Drafter self-sufficient — it can operate in both manual and orchestrated pipelines without interface changes.
+
+### 3. Output format standardization
+
+**Decision:** All 3 modes produce Markdown with a standardized HTML comment envelope (see "Output format" section above). The Drafter does not produce YAML — that is the Router's domain.
+
+**Rationale:** HTML comments are invisible at render time, so the output is valid Markdown that can be used directly. The consistent envelope (mode, target, action + optional notes) lets a future Orchestrator parse outputs uniformly without mode-specific logic.
+
+### 4. Validation loop
+
+**Decision:** v1 uses manual re-runs. If the Style Checker finds issues, the user decides whether to re-run the Drafter with the Style Checker report as additional input.
+
+**Future enhancement:** The Orchestrator may support an `auto_retry: once` option — if the Style Checker reports errors (not warnings or suggestions), the Drafter re-runs once with the Style Checker report injected as context. Maximum 1 retry, never more. This prevents infinite loops while catching clear violations (e.g., "easy" slipping through, missing backticks on file paths).
+
+**Rationale:** Automated re-runs are valuable but risky if unbounded. A single retry with a severity threshold (errors only) balances automation with predictability.
