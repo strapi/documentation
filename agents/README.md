@@ -6,9 +6,9 @@ This directory stores authoring guidance, templates, and review prompts used to 
 
 | Folder | Purpose | Entry point |
 |--------|---------|-------------|
-| `authoring/` | Area‑specific writing rules: expected sections, components, frontmatter, and conventions per doc type | `agents/authoring/AGENTS.cms.md` (CMS root) |
-| `templates/` | Copy‑paste skeletons for new pages, with correct structure and placeholders | `agents/templates/README.md` |
-| `prompts/` | Specialized prompts for reviewing and creating documentation (style, structure, UX) | `agents/prompts/README.md` |
+| `authoring/` | Area‑specific writing rules: expected sections, components, frontmatter, and conventions per doc type | [`/agents/authoring/README.md`](https://github.com/strapi/documentation/blob/main/agents/authoring/README.md) |
+| `templates/` | Copy‑paste skeletons for new pages, with correct structure and placeholders | [`/agents/templates/README.md`](https://github.com/strapi/documentation/blob/main/agents/templates/README.md) |
+| `prompts/` | Specialized prompts for reviewing and creating documentation (style, structure, UX) | [`/agents/prompts/README.md`](https://github.com/strapi/documentation/blob/main/agents/prompts/README.md) |
 
 How these pieces connect: **authoring guides** define the rules, **templates** encode them as ready‑to‑use skeletons, and **prompts** automate checking against them.
 
@@ -48,6 +48,4 @@ For the full step‑by‑step, see `agents/templates/README.md`.
 ## References
 
 - Root agent guide: `AGENTS.md`
-- Authoring area guides: `/agents/authoring/AGENTS.*.md` and [authoring README](https://github.com/strapi/documentation/blob/main/agents/authoring/README.md)
-- Templates catalog: [`/agents/templates/README.md`](https://github.com/strapi/documentation/blob/main/agents/templates/README.md)
-- Prompts catalog: [`/agents/prompts/README.md`](https://github.com/strapi/documentation/blob/main/agents/prompts/README.md)
+- Authoring area guides: `/agents/authoring/AGENTS.*.md`
