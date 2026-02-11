@@ -48,6 +48,6 @@ For the full step‑by‑step, see `agents/templates/README.md`.
 ## References
 
 - Root agent guide: `AGENTS.md`
-- Authoring area guides: `agents/authoring/AGENTS.*.md`
-- Templates catalog: `agents/templates/README.md`
-- Prompts catalog: `agents/prompts/README.md`
+- Authoring area guides: `/agents/authoring/AGENTS.*.md` and [authoring README](https://github.com/strapi/documentation/blob/main/agents/authoring/README.md)
+- Templates catalog: [`/agents/templates/README.md`](https://github.com/strapi/documentation/blob/main/agents/templates/README.md)
+- Prompts catalog: [`/agents/prompts/README.md`](https://github.com/strapi/documentation/blob/main/agents/prompts/README.md)
