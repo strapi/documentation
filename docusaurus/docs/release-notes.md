@@ -51,12 +51,12 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 <br />
 
 #### CMS
+- [Add direct links to most asked integration pages](https://github.com/strapi/documentation/pull/2935)
 - [Fix `ip` middleware not appearing in Configurations > Middlewares secondary sidebar](https://github.com/strapi/documentation/pull/2937)
 
 #### Repository
 - [Re-introduce Routing summary in details for documentation specialists (Router tool)](https://github.com/strapi/documentation/pull/2942)
 - [Improvements to Router tool ](https://github.com/strapi/documentation/pull/2941)
-- [Add direct links to most asked integration pages](https://github.com/strapi/documentation/pull/2935)
 - [Replace `migration-template.md` with `breaking-change-template.md`](https://github.com/strapi/documentation/pull/2931)
 
 ***
