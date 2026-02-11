@@ -42,8 +42,6 @@ For the full step‑by‑step, see `agents/templates/README.md`.
 
 - Do keep repo‑relative, clickable paths when linking files.
 - Do keep templates minimal, with clear placeholders and path hints in code fences (e.g., `title="/config/<area>.js"`).
-- Do group language variants (JS/TS) under a single example; separate with a divider rather than new headings.
-- Don't add frontmatter to agent‑only files.
 - Don't place agent files back under `docusaurus/docs/**`.
 - Don't include agents/templates in search configs or LLM datasets.
 
