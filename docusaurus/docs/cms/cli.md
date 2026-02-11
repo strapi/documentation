@@ -56,7 +56,7 @@ Strapi also adds middlewares to support HMR (Hot Module Replacement) for the adm
 
 ```shell
 strapi develop
-options: [--bundler | --open | --no-watch-admin | --polling | --debug | --silent]
+options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling | --debug | --silent]
 ```
 
 - **strapi develop --bundler [bundler]**<br/>
@@ -65,6 +65,8 @@ options: [--bundler | --open | --no-watch-admin | --polling | --debug | --silent
   Starts your application with auto-reloading enabled & open your default browser with the administration panel running.
 - **strapi develop --no-watch-admin**<br/>
   Prevents the server from auto-reload when changes are made to the admin panel code.
+- **strapi develop --no-build-admin**<br/>
+  Prevents the admin panel from being built when `--no-watch-admin` is enabled.
 - **strapi develop --polling**<br/>
   Watches for file changes in network directories.
 - **strapi develop --debug**<br/>
