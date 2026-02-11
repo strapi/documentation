@@ -28,6 +28,48 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 </details>
 
 
+## 6.16.0
+
+<br />
+### <Icon name='sparkle' /> New content
+
+<br />
+
+#### Repository
+- [Add Router documentation tool](https://github.com/strapi/documentation/pull/2933)
+- [Add Outliner tools for PR reviews](https://github.com/strapi/documentation/pull/2932)
+
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Fix outdated `strapi develop` parameter docs](https://github.com/strapi/documentation/pull/2938)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Fix `ip` middleware not appearing in Configurations > Middlewares secondary sidebar](https://github.com/strapi/documentation/pull/2937)
+
+#### Repository
+- [Re-introduce Routing summary in details for documentation specialists (Router tool)](https://github.com/strapi/documentation/pull/2942)
+- [Improvements to Router tool ](https://github.com/strapi/documentation/pull/2941)
+- [Add direct links to most asked integration pages](https://github.com/strapi/documentation/pull/2935)
+- [Replace `migration-template.md` with `breaking-change-template.md`](https://github.com/strapi/documentation/pull/2931)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
+
 ## 6.15.1
 
 <br />
