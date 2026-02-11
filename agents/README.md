@@ -29,7 +29,7 @@ For the full step‑by‑step, see `agents/templates/README.md`.
 
 - Read area guides (`agents/authoring/AGENTS.*.md`) for expected structure.
 - Use templates (`agents/templates/*.md`) when scaffolding new pages.
-- Use prompts (`agents/prompts/*.md`) to run style, structure, and UX checks.
+- Use prompts (`agents/prompts/*.md`) to decide where and what to write, then run style, structure, and UX checks.
 - Never write to `agents/**` when publishing docs; always target `docusaurus/docs/**`.
 
 ## Safety rails
