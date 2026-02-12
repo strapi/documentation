@@ -183,6 +183,11 @@ Beyond the 12 rules, also check for:
 - **Severity:** warning
 - **Strapi-specific exception:** Programming casing conventions (e.g., kebab-case, camelCase, PascalCase, snake_case, SCREAMING_SNAKE_CASE) do NOT require backticks. Do NOT flag these terms.
 
+### File paths
+- **Detect:** File paths using `./` prefix (e.g., `./config/server`) instead of `/` prefix (e.g., `/config/server`)
+- **Severity:** warning
+- **Note:** Strapi documentation always uses absolute-style paths starting with `/`. The `./` relative prefix should not appear in documentation prose or code examples referencing project file paths.
+
 ### Consistency
 - **Detect:** Inconsistent terminology within the same document (e.g., "admin panel" vs "Admin Panel" vs "administration panel"); inconsistent heading capitalization
 - **Severity:** warning
@@ -207,8 +212,10 @@ Beyond the 12 rules, also check for:
 
 6. **Group related issues:** If the same violation appears multiple times (e.g., "easy" used 5 times), you may group them in one entry with all locations.
 
-7. **Stay in scope:** The Style Checker focuses on writing style and the 12 Rules. Do NOT check for structural elements like `<Tldr>`, `<IdentityCard>`, section order, or template compliance — that is the Outliner's responsibility.
+7. **Stay in scope:** The Style Checker focuses on writing style and the 12 Rules. Do NOT check for structural elements like `<Tldr>`, `<IdentityCard>`, section order, or template compliance â€” that is the Outliner's responsibility.
 
 8. **Report only confirmed violations:** The final report must contain only verified violations. If during analysis you investigate a potential issue and determine it is NOT a violation (e.g., "actually this is fine", "no violation here", "this is acceptable"), do NOT include it in the report. The report is a clean deliverable, not a log of your analysis process. Analyze internally, report only confirmed issues.
 
 9. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).
+
+10. **Never flag or suggest removing TODO comments:** `<!-- TODO: ... -->` comments are intentional markers left by authors and drafters to track open questions, missing content, and items requiring confirmation. They are part of the editorial workflow and must be preserved. Do not report them as style violations, do not suggest removing them, and do not count them in the violation summary.

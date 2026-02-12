@@ -22,7 +22,7 @@ Required Section Order
    - Use UI paths (for admin steps) or file paths/code fences (for code steps).
    - Reference screenshots or diagrams where they clarify the action.
 6) Validation — how to verify success (e.g., test endpoint, UI confirmation).
-7) Next steps / Related links — follow‑up tasks, deeper docs (features, APIs, concepts).
+7) Next steps — follow‑up tasks, deeper docs (features, APIs, concepts).
 
 Heading Conventions
 - Use H2 for major sections (Prerequisites, Steps, Validation, Next steps); H3 for sub‑steps or task groupings.
@@ -41,7 +41,7 @@ Quality Checklist (before commit)
 - Steps are numbered, imperative, one action per step, with clear outcomes.
 - Screenshots/diagrams support complex steps where appropriate.
 - Validation section present.
-- Related links provided to features/APIs/concepts for continuity.
+- Cross‑links to relevant features/APIs/concepts are included inline where helpful.
 
 Tabs reminder
 - For multi‑language examples, use Tabs with `groupId="js-ts"` and values `js`/`ts` (labels `JavaScript`/`TypeScript`).

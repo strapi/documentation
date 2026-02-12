@@ -23,7 +23,6 @@ API Overview Pages (e.g., Content API)
 3) Introduction — context of where/why this API is used; relations to other layers.
 4) Access methods — describe channels (e.g., REST, GraphQL, Client library) with links.
 5) Architecture/diagram — optional ThemedImage/diagram when clarifying layers.
-6) Related links — point to deeper references (service APIs, guides, tutorials).
 
 Service/Library Reference Pages (e.g., Document Service API)
 1) H1 title — API name.
@@ -31,10 +30,8 @@ Service/Library Reference Pages (e.g., Document Service API)
 3) Optional prerequisites or notes (deprecations, version changes).
 4) Method sections (H2) — one per operation (e.g., `create()`, `findOne()`, `update()`, `delete()`, `publish()`, `count()`). For each method:
    - Parameters (H3) — list or table with name, type, required, default, description.
-   - Returns/Response (H3) — structure or shape expected.
    - Examples (H3) — one or more runnable examples; group language variants under the same example.
 5) Error handling / edge cases (H2) — when applicable.
-6) Related references (H2) — cross‑link to concepts, other APIs, or guides.
 
 REST Endpoint Pages (groups)
 1) H1 title — endpoint group or resource.
@@ -46,10 +43,9 @@ REST Endpoint Pages (groups)
    - Responses (H3) — status codes and payload shapes.
    - Examples (H3) — request/response pairs; group language variants.
 4) Pagination, filtering, sorting (H2) — if common across endpoints, centralize here and cross‑reference.
-5) Related links — concepts and higher‑level API pages.
 
 Heading Conventions
-- Use H2 for major sections; H3 for method sub‑sections (Parameters, Returns, Examples).
+- Use H2 for major sections; H3 for method sub‑sections (Parameters, Examples).
 - Method names as H2 should be consistent and anchor‑friendly (e.g., ``## `create()` ``).
 
 Cross‑linking
@@ -61,4 +57,3 @@ Quality Checklist (before commit)
 - Method sections follow the H2/H3 structure; parameters and examples are present.
 - Endpoint groups list path, method, params, body, responses, and examples.
 - Headings and section order match this guide; anchors are stable.
-- Related links to concepts/guides are included where helpful.
