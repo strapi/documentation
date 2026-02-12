@@ -42,7 +42,9 @@ The Documentation plugin is not actively maintained and may not work with Strapi
 
 If installed, the Documentation plugin will inspect content types and routes found on all APIs in your project and any plugin specified in the configuration. The plugin will then programmatically generate documentation to match the <ExternalLink to="https://swagger.io/specification/" text="OpenAPI specification"/>. The Documentation plugin generates the <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#paths-object" text="paths objects"/> and <ExternalLink to="https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#schema-object" text="schema objects"/> and converts all Strapi types to <ExternalLink to="https://swagger.io/docs/specification/data-models/data-types/" text="OpenAPI data types"/>.
 
-The generated documentation JSON file can be found in your application at the following path: `src/extensions/documentation/documentation/<version>/full_documentation.json`
+The generated documentation can be accessed either through your application's source code or through the running application itself:
+- **Source code**: The documentation is located at <br/>`src/extensions/documentation/documentation/<version>/full_documentation.json`
+- **Running application**: Use the URL <br/>`<server-url>:<server-port>/documentation/<version>/openapi.json`
 
 ## Installation
 
