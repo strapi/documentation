@@ -13,9 +13,9 @@ These prompts are LLM‑agnostic, though the best results so far have been with 
 | **Outliner** | `outliner.md` | 🏗 (partly) Available | Wrapper that routes to Outline Generator, Outline Checker, or UX Analyzer |
 | ↳ Outline Checker | `outline-checker.md` | ✅ Available | Template compliance, frontmatter, heading hierarchy, required components |
 | ↳ Outline UX Analyzer | `outline-ux-analyzer.md` | ✅ Available | Reader experience, section order, navigability, cognitive load |
-| ↳ Outline Generator | — | 🔜 Coming soon | Creates outlines from source material (Notion, Jira, specs) |
+| ↳ Outline Generator | — | 🏗 Available but WIP | Creates outlines from source material (Notion, Jira, specs) |
 | **Style Checker** | `style-checker.md` | ✅ Available | 12 Rules of Technical Writing, Strapi style conventions |
-| **Drafter** | — | 🔜 Coming soon | Generates content from an outline and source material |
+| **Drafter** | — | 🏗 Available but WIP | Generates content from an outline and source material |
 | **Integrity Checker** | — | 🔜 Coming soon | Broken links, invalid paths, code block formatting, anchor consistency |
 
 ## Shared Resources
