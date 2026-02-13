@@ -17827,7 +17827,7 @@ module.exports = ({ env }) => ({
 
 ## Custom provider override (private S3 provider)
 Description: Create a /providers/aws-s3 folder in your application (see local providers for more information).
-(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#custom-provider-override-private-s3-provider)
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#private-aws-s3-provider)
 
 Language: JavaScript
 File path: /providers/aws-s3/index.js
