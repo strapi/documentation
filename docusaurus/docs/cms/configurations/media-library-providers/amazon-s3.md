@@ -388,6 +388,14 @@ module.exports = ({ env }) => ({
 
 The `providerConfig` option inside `providerOptions` provides additional features for data integrity, security, and cost optimization.
 
+<Checklist title="Security best practices for production">
+  <ChecklistItem>Enable [server-side encryption](#server-side-encryption) for data at rest</ChecklistItem>
+  <ChecklistItem>Enable [checksum validation](#checksum-validation) for upload integrity</ChecklistItem>
+  <ChecklistItem>Enable [conditional writes](#conditional-writes-prevent-overwrites) to prevent race conditions</ChecklistItem>
+  <ChecklistItem>Use `ACL: 'private'` with [signed URLs](#private-bucket-and-signed-urls) for sensitive content</ChecklistItem>
+  <ChecklistItem>Enable <ExternalLink to="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html" text="S3 bucket versioning"/> for recovery from accidental deletions</ChecklistItem>
+</Checklist>
+
 ### Checksum validation
 
 Enable automatic checksum calculation to ensure data integrity during uploads. The SDK calculates a checksum on the client side, and S3 validates the checksum server-side.
@@ -628,7 +636,3 @@ export = {
 </TabItem>
 
 </Tabs>
-
-:::caution Security best practices
-For production deployments, consider enabling [server-side encryption](#server-side-encryption) for data at rest, [checksum validation](#checksum-validation) for upload integrity, and [conditional writes](#conditional-writes-prevent-overwrites) to prevent race conditions. Use `ACL: 'private'` with [signed URLs](#private-bucket-and-signed-urls) for sensitive content, and enable S3 bucket versioning for recovery from accidental deletions.
-:::
