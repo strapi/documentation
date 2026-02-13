@@ -547,7 +547,7 @@ module.exports = ({ env }) => ({
 });
 ```
 
-## Custom provider override (private S3 provider)
+## Custom provider override (private S3 provider) {#private-aws-s3-provider}
 
 For most private bucket use cases, setting `ACL: 'private'` in the provider configuration (see [Private bucket and signed URLs](#private-bucket-and-signed-urls)) is sufficient. The provider handles URL signing automatically.
 
