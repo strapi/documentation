@@ -137,7 +137,7 @@ export default ({ env }) => ({
 If you use the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` properties. Use environment configurations to define how your asset URLs will be saved inside Strapi.
 
 :::tip AWS SDK V3 URL format
-The provider uses AWS SDK V3, which adopts <ExternalLink to="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#virtual-hosted-style-access" text="virtual-hosted-style URIs"/> for S3 URLs. If you need the previous path-style format, set `baseUrl` explicitly:
+The provider uses AWS SDK V3, which defaults to <ExternalLink to="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#virtual-hosted-style-access" text="virtual-hosted-style URIs"/> for S3 URLs. To use path-style URLs instead, set `baseUrl` explicitly:
 
 ```js
 baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET}`,
@@ -157,7 +157,9 @@ If your bucket is configured to be private, set the `ACL` option to `private` in
 
 You can define the expiration time of the signed URL by setting the `signedUrlExpires` option in the `params` object. The default value is 15 minutes.
 
-**Note:** If you are using a CDN, the URLs will not be signed.
+:::note
+If you are using a CDN, the URLs will not be signed.
+:::
 
 ```js title="/config/plugins.js"
 module.exports = ({ env }) => ({
@@ -213,7 +215,7 @@ To display thumbnails for GIFs and videos uploaded to S3, edit your bucket's COR
 1. Open your bucket in the AWS console.
 2. Navigate to the _Permissions_ tab.
 3. Locate the _Cross-origin resource sharing (CORS)_ field.
-4. Replace or update the policies by writing your own JSON configuration, or copying and pasting the following one:
+4. Add the following CORS policy (or adapt it to your needs):
 
 ```json
 [
@@ -229,7 +231,7 @@ To display thumbnails for GIFs and videos uploaded to S3, edit your bucket's COR
 
 ### Security middleware configuration
 
-Due to the default settings in the Strapi Security Middleware you will need to modify the `contentSecurityPolicy` settings to properly see thumbnail previews in the Media Library. You should replace the `strapi::security` string with the object below instead as explained in the [middleware configuration](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/configurations/required/middlewares.html#loading-order) documentation.
+The default Strapi Security Middleware settings block S3 thumbnail previews in the Media Library. Modify the `contentSecurityPolicy` settings to allow loading media from your S3 bucket. Replace the `strapi::security` string with the following object (see [middleware configuration](/cms/configurations/middlewares) for details):
 
 ```js title="/config/middlewares.js"
 module.exports = [
@@ -264,13 +266,15 @@ module.exports = [
 ];
 ```
 
-If you use dots in your bucket name (with `forcePathStyle` set to `false`), the URL of the resource is in directory style (`s3.yourRegion.amazonaws.com/your.bucket.name/image.jpg`) instead of `yourBucketName.s3.yourRegion.amazonaws.com/image.jpg`, so the `img-src` and `media-src` directives should use `s3.yourRegion.amazonaws.com` without the bucket name in the URL.
+If your bucket name contains dots and `forcePathStyle` is `false`, S3 uses directory-style URLs (e.g., `s3.yourRegion.amazonaws.com/your.bucket.name/image.jpg`). In this case, use `s3.yourRegion.amazonaws.com` (without the bucket name) for the `img-src` and `media-src` directives.
 
 ## S3-compatible services
 
 This plugin works with S3-compatible services by using the `endpoint` option. The provider automatically constructs correct URLs for S3-compatible services that return incorrect `Location` formats for multipart uploads (e.g., IONOS, MinIO).
 
-**Important:** Some providers require `forcePathStyle: true` in the `s3Options`. This is needed when the provider does not support virtual-hosted-style URLs (e.g., `bucket.endpoint.com`), and instead uses path-style URLs (e.g., `endpoint.com/bucket`).
+:::caution
+Some providers require `forcePathStyle: true` in the `s3Options`. This option is needed when the provider does not support virtual-hosted-style URLs (e.g., `bucket.endpoint.com`), and instead uses path-style URLs (e.g., `endpoint.com/bucket`).
+:::
 
 | Provider            | `forcePathStyle` | `ACL`             | Notes                             |
 | ------------------- | ---------------- | ----------------- | --------------------------------- |
@@ -374,7 +378,7 @@ The `providerConfig` option inside `providerOptions` provides additional feature
 
 ### Checksum validation
 
-Enable automatic checksum calculation to ensure data integrity during uploads. The SDK calculates a checksum on the client side, and S3 validates it server-side.
+Enable automatic checksum calculation to ensure data integrity during uploads. The SDK calculates a checksum on the client side, and S3 validates the checksum server-side.
 
 ```js
 providerOptions: {
@@ -401,7 +405,9 @@ providerConfig: {
 
 Optimize storage costs by specifying a storage class for uploaded objects. Use lower-cost classes for infrequently accessed data.
 
-**Note:** Storage classes are AWS S3-specific. Other S3-compatible providers (MinIO, DigitalOcean Spaces, IONOS, Wasabi) will ignore this setting.
+:::note
+Storage classes are AWS S3-specific. Other S3-compatible providers (MinIO, DigitalOcean Spaces, IONOS, Wasabi) will ignore this setting.
+:::
 
 ```js
 providerConfig: {
