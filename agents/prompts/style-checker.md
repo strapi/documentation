@@ -125,6 +125,9 @@ For each of the 12 rules, here is how to detect violations and what severity to 
     - All other badges (`<GrowthBadge />`, `<EnterpriseBadge />`, `<AlphaBadge />`, `<BetaBadge />`, `<FeatureFlagBadge />`, `<CloudProBadge />`, `<CloudTeamBadge />`, `<CloudEssentialBadge />`, `<CloudEssentialBadge />`, `<VersionBadge />`, etc.): must be on a **separate line** after the heading
   - **In body text (not on headings):** all badges can be used inline within sentences, including as word replacements (e.g., "This feature is currently in <BetaBadge />." or "Available on <CloudProBadge /> and <CloudTeamBadge /> plans."). This is valid and should NOT be flagged.
   - Do NOT flag badge usage that follows these patterns.
+- **Strapi-specific (inline callouts):**
+  - Bold prefixes used as callouts (`**Note:**`, `**Important:**`, `**Warning:**`, `**Caution:**`, `**Tip:**`) must be converted to Docusaurus admonitions (`:::note`, `:::caution`, `:::warning`, `:::tip`).
+  - **Severity:** error
 
 ### Rule 3: Direct and neutral tone
 - **Detect:** Jokes, rhetorical questions, emojis (except in UI element references), casual language ("gonna", "wanna", "pretty cool", "awesome", "super")
@@ -198,6 +201,11 @@ Beyond the 12 rules, also check for:
   - In TabItems: `value` must be lowercase (`yarn`, `npm`), `label` must be `Yarn` or `NPM`
   - Do NOT flag these as inconsistencies when used correctly per context.
 
+### Cross-reference formatting
+- **Detect:** Standalone "See [link]." sentences that could be integrated as parentheticals into the preceding sentence (e.g., "Configure X. See [Y]." → "Configure X (see [Y]).")
+- **Severity:** warning
+- **Note:** This applies especially inside admonitions where space is tight, but also in regular prose. A standalone "See" sentence is acceptable when the cross-reference warrants emphasis or when the preceding sentence is already long.
+
 ## Behavioral Notes
 
 1. **Be precise about location:** Reference violations by **section heading** (e.g., "Section: Admin Localization > Best Practices") rather than line numbers. Line numbers are unreliable and hard to verify.
@@ -212,7 +220,7 @@ Beyond the 12 rules, also check for:
 
 6. **Group related issues:** If the same violation appears multiple times (e.g., "easy" used 5 times), you may group them in one entry with all locations.
 
-7. **Stay in scope:** The Style Checker focuses on writing style and the 12 Rules. Do NOT check for structural elements like `<Tldr>`, `<IdentityCard>`, section order, or template compliance â€” that is the Outliner's responsibility.
+7. **Stay in scope:** The Style Checker focuses on writing style and the 12 Rules. Do NOT check for structural elements like `<Tldr>`, `<IdentityCard>`, section order, or template compliance — that is the Outliner's responsibility.
 
 8. **Report only confirmed violations:** The final report must contain only verified violations. If during analysis you investigate a potential issue and determine it is NOT a violation (e.g., "actually this is fine", "no violation here", "this is acceptable"), do NOT include it in the report. The report is a clean deliverable, not a log of your analysis process. Analyze internally, report only confirmed issues.
 

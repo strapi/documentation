@@ -4,7 +4,7 @@
 - [Profile settings](https://docs.strapi.io/cloud/account/account-settings): Settings of the Profile page include account details, connected accounts, and account deletion options.
 - [Database](https://docs.strapi.io/cloud/advanced/database): Default PostgreSQL can be swapped for any supported SQL database by aligning configuration and environment variables.
 - [Email Provider](https://docs.strapi.io/cloud/advanced/email): Third‑party email services integrate through plugins and environment variables to replace the default sender.
-- [Upload Provider](https://docs.strapi.io/cloud/advanced/upload): External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
+- [Upload Provider Configuration for Strapi Cloud](https://docs.strapi.io/cloud/advanced/upload): External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
 - [Command Line Interface (CLI)](https://docs.strapi.io/cloud/cli/cloud-cli): CLI commands handle login, project deploy, linking, listing, and logout without needing a remote repository.
 - [Caching & Performance](https://docs.strapi.io/cloud/getting-started/caching): Edge caching via Cache-Control headers reduces latency and server load for heavy static content.
 - [Strapi Cloud fundamentals](https://docs.strapi.io/cloud/getting-started/cloud-fundamentals): Before going any further into this Strapi Cloud documentation, we recommend you to acknowledge the main concepts below. They will help you to understa...

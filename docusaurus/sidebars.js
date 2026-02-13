@@ -242,14 +242,6 @@ const sidebars = {
           collapsed: true,
           customProps: {
             updated: false,
-            text: 'The section has been simplified',
-            tooltip: `We simplified the admin panel configuration section to make it easier to navigate and find what you need.</div>
-              <div>The new structure groups configurations by their purpose, making it more intuitive to locate specific settings.</div>
-              <div><em>Notes: </em>
-              <ul>
-                <li>Lifecycle functions documentation has been moved to the Development section.</li>
-                <li>Email and Upload Providers documentation have been included in the corresponding Features pages.</li>
-              </div>`,
           },
           items: [
             {
@@ -330,10 +322,6 @@ const sidebars = {
           collapsed: true,
           collapsible: true,
           label: 'Database',
-          customProps: {
-            tooltip:
-              'This section now regroups all the database-related configurations and guides, including migrations and transactions.',
-          },
           items: [
             {
               type: 'doc',
@@ -686,7 +674,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'cloud/advanced/email',
-          label: 'Email provider',
+          label: 'Email provider for Cloud',
           customProps: {
             new: false,
           },
@@ -694,7 +682,7 @@ const sidebars = {
         {
           type: 'doc',
           id: 'cloud/advanced/upload',
-          label: 'Upload provider',
+          label: 'Upload provider for Cloud',
           customProps: {
             new: false,
           },

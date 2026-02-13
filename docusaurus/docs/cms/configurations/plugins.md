@@ -1,6 +1,6 @@
 ---
 title: Plugins configuration
-sidebar_label: Plugins
+sidebar_label: Plugins and providers
 displayed_sidebar: cmsSidebar
 description: Strapi plugins have a single entry point file to define their configurations.
 tags:
@@ -28,8 +28,14 @@ Plugin configurations are stored in `/config/plugins.js|ts` (see [project struct
 | `config`<br/><br/>_Optional_ | Used to override default plugin configuration ([defined in strapi-server.js](/cms/plugins-development/server-api#configuration)) | Object  |
 | `resolve`<br/> _Optional, only required for local plugins_             | Path to the plugin's folder                                                                                                                                            | String  |
 
-:::note
-Some features of Strapi are provided by plugins and the following plugins can also have specific configuration options: the [GraphQL](/cms/plugins/graphql#code-based-configuration) plugin, the [Upload](/cms/features/media-library#available-options) package which powers the Media Library, and [Users & Permissions](/cms/features/users-permissions#code-based-configuration).
+:::note Configurations for core features and providers
+* Some core features of Strapi have historically been implemented as core plugins. This explains that their configuration is still defined in the `/config/plugins` file despite not technically being plugins in Strapi 5 anymore. This includes:
+  - the [Upload configuration](/cms/features/media-library#available-options) for the package which powers the Media Library, 
+  - and the [Users & Permissions configuration](/cms/features/users-permissions#code-based-configuration).
+
+  The detailed [GraphQL plugin configuration](/cms/plugins/graphql#code-based-configuration) is also documented in its dedicated plugin page.
+
+* Additionally, providers configuration for the Media Library and the Email features are also defined in `/config/plugins`. Their configurations are detailed in the [Upload providers configuration](/cms/features/media-library#code-based-configuration) and the [Email providers configuration](/cms/features/email#providers).
 :::
 
 **Basic example custom configuration for plugins:**

@@ -188,7 +188,7 @@ export default ({ env }) => ({
 
 
 
-# Upload Provider
+# Upload Provider Configuration for Strapi Cloud
 Source: https://docs.strapi.io/cloud/advanced/upload
 
 ## Configure the Provider
@@ -17357,9 +17357,9 @@ npm install @strapi/provider-upload-aws-s3 --save
 ```
 
 
-## Configuration
-Description: The following is an example configuration:
-(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#configuration)
+## Basic example
+Description: provider to define the provider name (i.e., amazon-s3) providerOptions to define options that are passed down during the construction of the provider (see for the full list of options; some examples are given in the dedicated extended provider options section) * actionOptions to define options that are passed directly to the parameters to each method respectively.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#basic-example)
 
 Language: JavaScript
 File path: /config/plugins.js
@@ -17434,6 +17434,70 @@ export default ({ env }) => ({
 });
 ```
 
+Language: JavaScript
+File path: /config/env/${yourEnvironment}/plugins.js
+
+```js
+baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_BUCKET}`,
+```
+
+
+## Private bucket and signed URLs
+Description: :::note If you are using a CDN, the URLs will not be signed.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#private-bucket-and-signed-urls)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
+          region: env('AWS_REGION'),
+          params: {
+            ACL: 'private', // <== set ACL to private
+            signedUrlExpires: env('AWS_SIGNED_URL_EXPIRES', 15 * 60),
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
+    },
+  },
+  // ...
+});
+```
+
+
+## IAM policy actions
+Description: The following are the minimum amount of permissions needed for the AWS S3 provider to work:
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#iam-policy-actions)
+
+Language: JSON
+File path: /config/env/${yourEnvironment}/plugins.js
+
+```json
+"Action": [
+  "s3:PutObject",
+  "s3:GetObject",
+  "s3:ListBucket",
+  "s3:DeleteObject",
+  "s3:PutObjectAcl"
+],
+```
+
 
 ## Bucket CORS configuration
 Description: Open your bucket in the AWS console.
@@ -17455,27 +17519,315 @@ File path: N/A
 ```
 
 
-## Required AWS policy actions
-Description: The following are the minimum amount of permissions needed for AWS S3 provider to work:
-(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#required-aws-policy-actions)
+## Security middleware configuration
+Description: The default Strapi security middleware settings block S3 thumbnail previews in the Media Library.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#security-middleware-configuration)
 
-Language: JSON
-File path: N/A
+Language: JavaScript
+File path: /config/middlewares.js
 
-```json
-"Action": [
-  "s3:PutObject",
-  "s3:GetObject",
-  "s3:ListBucket",
-  "s3:DeleteObject",
-  "s3:PutObjectAcl"
-],
+```js
+module.exports = [
+  // ...
+  {
+    name: 'strapi::security',
+    config: {
+      // highlight-start
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            'yourBucketName.s3.yourRegion.amazonaws.com',
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+      // highlight-end
+    },
+  },
+  // ...
+];
 ```
 
 
-## Private AWS S3 provider
+## Scaleway
+Description: | Wasabi | Not needed | Supported | - | | Scaleway | Not needed | Supported | - | | Vultr | Not needed | Supported | - | | Backblaze B2 | Not needed | Supported | - | | Cloudflare R2 | Not needed | Not supported | Omit ACL from parameters |
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#scaleway)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  // ...
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('SCALEWAY_ACCESS_KEY_ID'),
+            secretAccessKey: env('SCALEWAY_ACCESS_SECRET'),
+          },
+          region: env('SCALEWAY_REGION'), // e.g "fr-par"
+          endpoint: env('SCALEWAY_ENDPOINT'), // e.g. "https://s3.fr-par.scw.cloud"
+          params: {
+            Bucket: env('SCALEWAY_BUCKET'),
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+  // ...
+});
+```
+
+
+## IONOS / MinIO / Contabo
+Description: These providers require forcePathStyle: true because they use path-style URLs instead of virtual-hosted-style URLs.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#ionos-minio-contabo)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('S3_ACCESS_KEY_ID'),
+            secretAccessKey: env('S3_ACCESS_SECRET'),
+          },
+          region: env('S3_REGION'),
+          endpoint: env('S3_ENDPOINT'),
+          forcePathStyle: true, // Required for these providers
+          params: {
+            Bucket: env('S3_BUCKET'),
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+});
+```
+
+
+## Cloudflare R2
+Description: Cloudflare R2 does not support ACLs.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#cloudflare-r2)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        // highlight-start
+        s3Options: {
+          credentials: {
+            accessKeyId: env('R2_ACCESS_KEY_ID'),
+            secretAccessKey: env('R2_ACCESS_SECRET'),
+          },
+          region: 'auto',
+          endpoint: env('R2_ENDPOINT'), // e.g. "https://<account-id>.r2.cloudflarestorage.com"
+          params: {
+            Bucket: env('R2_BUCKET'),
+            // Do NOT set ACL - R2 does not support ACLs
+          },
+        },
+        // highlight-end
+      },
+    },
+  },
+});
+```
+
+
+## Checksum validation
+Description: Enable automatic checksum calculation to ensure data integrity during uploads.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#checksum-validation)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerOptions: {
+  s3Options: { /* ... */ },
+  providerConfig: {
+    checksumAlgorithm: 'CRC64NVME', // Options: 'CRC32', 'CRC32C', 'SHA1', 'SHA256', 'CRC64NVME'
+  },
+},
+```
+
+
+## Conditional writes (prevent overwrites)
+Description: Prevent accidental file overwrites due to race conditions by enabling conditional writes.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#conditional-writes-prevent-overwrites)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerConfig: {
+  preventOverwrite: true,
+},
+```
+
+
+## Storage class (AWS S3 only)
+Description: :::note Storage classes are AWS S3-specific.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#storage-class-aws-s3-only)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerConfig: {
+  storageClass: 'INTELLIGENT_TIERING', // Auto-optimizes costs
+},
+```
+
+
+## Server-side encryption
+Description: Configure server-side encryption for compliance requirements (GDPR, HIPAA, etc.).
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#server-side-encryption)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerConfig: {
+  encryption: {
+    type: 'AES256', // S3-managed encryption
+  },
+},
+```
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerConfig: {
+  encryption: {
+    type: 'aws:kms',
+    kmsKeyId: env('AWS_KMS_KEY_ID'),
+  },
+},
+```
+
+
+## Object tagging
+Description: Apply tags to uploaded objects for cost allocation, lifecycle policies, and organization.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#object-tagging)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerConfig: {
+  tags: {
+    project: 'website',
+    environment: 'production',
+    team: 'backend',
+  },
+},
+```
+
+
+## Multipart upload configuration
+Description: Configure multipart upload behavior for large files.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#multipart-upload-configuration)
+
+Language: JavaScript
+File path: N/A
+
+```js
+providerConfig: {
+  multipart: {
+    partSize: 10 * 1024 * 1024, // 10MB per part
+    queueSize: 4,               // Number of parallel uploads
+    leavePartsOnError: false,   // Clean up on failure
+  },
+},
+```
+
+
+## Complete configuration example
+Description: Configure multipart upload behavior for large files.
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#complete-configuration-example)
+
+Language: JavaScript
+File path: /config/plugins.js
+
+```js
+module.exports = ({ env }) => ({
+  upload: {
+    config: {
+      provider: 'aws-s3',
+      providerOptions: {
+        baseUrl: env('CDN_URL'),
+        rootPath: env('CDN_ROOT_PATH'),
+        s3Options: {
+          credentials: {
+            accessKeyId: env('AWS_ACCESS_KEY_ID'),
+            secretAccessKey: env('AWS_ACCESS_SECRET'),
+          },
+          region: env('AWS_REGION'),
+          params: {
+            ACL: 'private',
+            signedUrlExpires: 15 * 60,
+            Bucket: env('AWS_BUCKET'),
+          },
+        },
+        providerConfig: {
+          checksumAlgorithm: 'CRC64NVME',
+          preventOverwrite: true,
+          storageClass: 'INTELLIGENT_TIERING',
+          encryption: {
+            type: 'aws:kms',
+            kmsKeyId: env('AWS_KMS_KEY_ID'),
+          },
+          tags: {
+            application: 'strapi',
+            environment: env('NODE_ENV'),
+          },
+          multipart: {
+            partSize: 10 * 1024 * 1024,
+            queueSize: 4,
+          },
+        },
+      },
+    },
+  },
+});
+```
+
+
+## Custom provider override (private S3 provider)
 Description: Create a /providers/aws-s3 folder in your application (see local providers for more information).
-(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#private-aws-s3-provider)
+(Source: https://docs.strapi.io/cms/configurations/media-library-providers/amazon-s3#custom-provider-override-private-s3-provider)
 
 Language: JavaScript
 File path: /providers/aws-s3/index.js

@@ -1,5 +1,5 @@
 ---
-title: Upload Provider
+title: Upload Provider Configuration for Strapi Cloud
 displayed_sidebar: cloudSidebar
 description: Configure Strapi Cloud to use a third-party upload provider.
 canonicalUrl: https://docs.strapi.io/cloud/advanced/upload.html
@@ -14,7 +14,7 @@ tags:
 - Strapi Cloud project
 ---
 
-# Upload Provider
+# Upload Provider Configuration for Strapi Cloud
 
 <Tldr>
 External storage like S3 or Cloudinary requires plugin setup, security middleware, and Cloud variables.
