@@ -125,6 +125,9 @@ For each of the 12 rules, here is how to detect violations and what severity to 
     - All other badges (`<GrowthBadge />`, `<EnterpriseBadge />`, `<AlphaBadge />`, `<BetaBadge />`, `<FeatureFlagBadge />`, `<CloudProBadge />`, `<CloudTeamBadge />`, `<CloudEssentialBadge />`, `<CloudEssentialBadge />`, `<VersionBadge />`, etc.): must be on a **separate line** after the heading
   - **In body text (not on headings):** all badges can be used inline within sentences, including as word replacements (e.g., "This feature is currently in <BetaBadge />." or "Available on <CloudProBadge /> and <CloudTeamBadge /> plans."). This is valid and should NOT be flagged.
   - Do NOT flag badge usage that follows these patterns.
+- **Strapi-specific (inline callouts):**
+  - Bold prefixes used as callouts (`**Note:**`, `**Important:**`, `**Warning:**`, `**Caution:**`, `**Tip:**`) must be converted to Docusaurus admonitions (`:::note`, `:::caution`, `:::warning`, `:::tip`).
+  - **Severity:** warning
 
 ### Rule 3: Direct and neutral tone
 - **Detect:** Jokes, rhetorical questions, emojis (except in UI element references), casual language ("gonna", "wanna", "pretty cool", "awesome", "super")
