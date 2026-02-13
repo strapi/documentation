@@ -148,7 +148,7 @@ baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_B
 <MediaLibProviderNotes/>
 
 :::caution
-To ensure the provider works correctly, you also need to configure IAM permissions, bucket CORS, and the Strapi security middleware. See [Required setup](#required-setup).
+To ensure the provider works correctly, you also need to configure IAM permissions, bucket CORS, and the Strapi security middleware (see [Required setup](#required-setup)).
 :::
 
 ### Private bucket and signed URLs
