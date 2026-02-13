@@ -8,8 +8,6 @@ tags:
 - providers
 ---
 
-import MediaLibProviderNotes from '/docs/snippets/media-library-providers-notes.md' 
-
 # Amazon S3 provider
 
 <Tldr>
@@ -20,7 +18,7 @@ The `@strapi/provider-upload-aws-s3` package lets you store Media Library assets
 
 The [Media Library](/cms/features/media-library) feature is powered by a back-end server package called Upload which leverages the use of providers.
 
-Strapi maintains 3 providers for the Media Library. The present page is about the Amazon S3 provider installation and configuration. It covers basic and private bucket configuration, required AWS setup (IAM, CORS, middleware), S3-compatible services, and extended options such as encryption and checksums. For other providers, please refer to the list in the [Media Library page](/cms/features/media-library#providers).
+Strapi maintains 3 providers for the Media Library. The present page is about the Amazon S3 provider installation and configuration. For other providers, please refer to the list in the [Media Library page](/cms/features/media-library#providers).
 
 ## Installation
 
@@ -48,10 +46,12 @@ npm install @strapi/provider-upload-aws-s3 --save
 
 ## Configuration
 
-Providers configuration is defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first. The provider configuration accepts the following entries:
+Providers configuration is defined in [the `/config/plugins` file](/cms/configurations/plugins). If this file does not exist, create it first. When using a different provider per environment, specify the correct configuration in `/config/env/${yourEnvironment}/plugins.js|ts` (see [environments](/cms/configurations/environment)).
+
+The provider configuration accepts the following entries:
 
 * `provider` to define the provider name (i.e., `amazon-s3`)
-* `providerOptions` to define options that are passed down during the construction of the provider (see <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property" text="AWS documentation"/> for the full list of options)
+* `providerOptions` to define options that are passed down during the construction of the provider (see <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property" text="AWS documentation"/> for the full list of options; some examples are given in the dedicated [extended provider options section](#extended-provider-options))
 * `actionOptions` to define options that are passed directly to the parameters to each method respectively. The official AWS documentation lists available options for <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#upload-property" text="upload/uploadStream"/> and <ExternalLink to="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property" text="delete"/>.
 
 ### Basic example
@@ -136,7 +136,7 @@ export default ({ env }) => ({
 
 If you use the bucket as a CDN and deliver the content on a custom domain, you can use the `baseUrl` and `rootPath` properties. Use environment configurations to define how your asset URLs will be saved inside Strapi.
 
-:::tip AWS SDK V3 URL format
+:::info AWS SDK V3 URL format
 The provider uses AWS SDK V3, which defaults to <ExternalLink to="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#virtual-hosted-style-access" text="virtual-hosted-style URIs"/> for S3 URLs. To use path-style URLs instead, set `baseUrl` explicitly:
 
 ```js
@@ -144,8 +144,6 @@ baseUrl: `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_B
 ```
 
 :::
-
-<MediaLibProviderNotes/>
 
 :::caution
 To ensure the provider works correctly, you also need to configure IAM permissions, bucket CORS, and the Strapi security middleware (see [Required setup](#required-setup)).
@@ -161,7 +159,7 @@ You can define the expiration time of the signed URL by setting the `signedUrlEx
 If you are using a CDN, the URLs will not be signed.
 :::
 
-```js title="/config/plugins.js"
+```js title="/config/plugins.js" {13-17}
 module.exports = ({ env }) => ({
   // ...
   upload: {
@@ -193,6 +191,8 @@ module.exports = ({ env }) => ({
 ```
 
 ## Required setup
+
+The following are the minimum configuration actions to take into account for your AWS S3 setup to work with the Media Library.
 
 ### IAM policy actions
 
@@ -231,7 +231,7 @@ To display thumbnails for GIFs and videos uploaded to S3, edit your bucket's COR
 
 ### Security middleware configuration
 
-The default Strapi Security Middleware settings block S3 thumbnail previews in the Media Library. Modify the `contentSecurityPolicy` settings to allow loading media from your S3 bucket. Replace the `strapi::security` string with the following object (see [middleware configuration](/cms/configurations/middlewares) for details):
+The default Strapi security middleware settings block S3 thumbnail previews in the Media Library. Modify the `contentSecurityPolicy` settings to allow loading media from your S3 bucket. Replace the `strapi::security` string with the following object (see [middleware configuration](/cms/configurations/middlewares#security) for details):
 
 ```js title="/config/middlewares.js"
 module.exports = [
@@ -239,6 +239,7 @@ module.exports = [
   {
     name: 'strapi::security',
     config: {
+      // highlight-start
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
@@ -260,34 +261,39 @@ module.exports = [
           upgradeInsecureRequests: null,
         },
       },
+      // highlight-end
     },
   },
   // ...
 ];
 ```
 
-If your bucket name contains dots and `forcePathStyle` is `false`, S3 uses directory-style URLs (e.g., `s3.yourRegion.amazonaws.com/your.bucket.name/image.jpg`). In this case, use `s3.yourRegion.amazonaws.com` (without the bucket name) for the `img-src` and `media-src` directives.
+If your bucket name contains dots and `forcePathStyle` is `false`, S3 uses directory-style URLs, such as in:
+
+`s3.yourRegion.amazonaws.com/your.bucket.name/image.jpg`
+
+In this case, use `s3.yourRegion.amazonaws.com` (without the bucket name) for the `img-src` and `media-src` directives.
 
 ## S3-compatible services
 
-This plugin works with S3-compatible services by using the `endpoint` option. The provider automatically constructs correct URLs for S3-compatible services that return incorrect `Location` formats for multipart uploads (e.g., IONOS, MinIO).
+The AWS S3 provider works with S3-compatible services by using the `endpoint` option. The provider automatically constructs correct URLs for S3-compatible services that return incorrect `Location` formats for multipart uploads (e.g., IONOS, MinIO).
 
-:::caution
 Some providers require `forcePathStyle: true` in the `s3Options`. This option is needed when the provider does not support virtual-hosted-style URLs (e.g., `bucket.endpoint.com`), and instead uses path-style URLs (e.g., `endpoint.com/bucket`).
-:::
+
+The following table shows compatibility settings for each provider:
 
 | Provider            | `forcePathStyle` | `ACL`             | Notes                             |
 | ------------------- | ---------------- | ----------------- | --------------------------------- |
-| IONOS               | `true`           | Supported         | Multipart Location bug auto-fixed |
-| MinIO               | `true`           | Supported         |                                   |
-| Contabo             | `true`           | Supported         |                                   |
-| Hetzner             | `true`           | Supported         |                                   |
-| DigitalOcean Spaces | Not needed       | Supported         |                                   |
-| Wasabi              | Not needed       | Supported         |                                   |
-| Scaleway            | Not needed       | Supported         |                                   |
-| Vultr               | Not needed       | Supported         |                                   |
-| Backblaze B2        | Not needed       | Supported         |                                   |
-| Cloudflare R2       | Not needed       | **Not supported** | Omit `ACL` from params            |
+| IONOS               | `true`           | Supported         | Multipart `Location` bug auto-fixed |
+| MinIO               | `true`           | Supported         | -                                 |
+| Contabo             | `true`           | Supported         | -                                 |
+| Hetzner             | `true`           | Supported         | -                                 |
+| DigitalOcean Spaces | Not needed       | Supported         | -                                 |
+| Wasabi              | Not needed       | Supported         | -                                 |
+| Scaleway            | Not needed       | Supported         | -                                 |
+| Vultr               | Not needed       | Supported         | -                                 |
+| Backblaze B2        | Not needed       | Supported         | -                                 |
+| Cloudflare R2       | Not needed       | Not supported     | Omit `ACL` from parameters        |
 
 ### Scaleway
 
@@ -298,6 +304,7 @@ module.exports = ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
+        // highlight-start
         s3Options: {
           credentials: {
             accessKeyId: env('SCALEWAY_ACCESS_KEY_ID'),
@@ -309,6 +316,7 @@ module.exports = ({ env }) => ({
             Bucket: env('SCALEWAY_BUCKET'),
           },
         },
+        // highlight-end
       },
     },
   },
@@ -326,6 +334,7 @@ module.exports = ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
+        // highlight-start
         s3Options: {
           credentials: {
             accessKeyId: env('S3_ACCESS_KEY_ID'),
@@ -338,6 +347,7 @@ module.exports = ({ env }) => ({
             Bucket: env('S3_BUCKET'),
           },
         },
+        // highlight-end
       },
     },
   },
@@ -346,7 +356,7 @@ module.exports = ({ env }) => ({
 
 ### Cloudflare R2
 
-Cloudflare R2 does not support ACLs. Do not include the `ACL` parameter.
+Cloudflare R2 does not support ACLs.
 
 ```js title="/config/plugins.js"
 module.exports = ({ env }) => ({
@@ -354,6 +364,7 @@ module.exports = ({ env }) => ({
     config: {
       provider: 'aws-s3',
       providerOptions: {
+        // highlight-start
         s3Options: {
           credentials: {
             accessKeyId: env('R2_ACCESS_KEY_ID'),
@@ -366,6 +377,7 @@ module.exports = ({ env }) => ({
             // Do NOT set ACL - R2 does not support ACLs
           },
         },
+        // highlight-end
       },
     },
   },
@@ -527,11 +539,11 @@ module.exports = ({ env }) => ({
 });
 ```
 
-## Custom provider override
+## Custom provider override (private S3 provider)
 
-For most private bucket use cases, setting `ACL: 'private'` in the provider configuration (see [Private bucket and signed URLs](#private-bucket-and-signed-urls)) is sufficient — the provider handles URL signing automatically.
+For most private bucket use cases, setting `ACL: 'private'` in the provider configuration (see [Private bucket and signed URLs](#private-bucket-and-signed-urls)) is sufficient. The provider handles URL signing automatically.
 
-However, if you need full control over the signing logic — for instance, custom expiration times per file, conditional access rules, or integration with an external authorization service — you can override the provider locally.
+However, if you need full control over the signing logic, you can override the provider locally. This could be used to set custom expiration times per file, conditional access rules, or integration with an external authorization service.
 
 To create a custom `aws-s3` provider override:
 
@@ -617,6 +629,6 @@ export = {
 
 </Tabs>
 
-:::tip Security best practices
+:::caution Security best practices
 For production deployments, consider enabling [server-side encryption](#server-side-encryption) for data at rest, [checksum validation](#checksum-validation) for upload integrity, and [conditional writes](#conditional-writes-prevent-overwrites) to prevent race conditions. Use `ACL: 'private'` with [signed URLs](#private-bucket-and-signed-urls) for sensitive content, and enable S3 bucket versioning for recovery from accidental deletions.
 :::
