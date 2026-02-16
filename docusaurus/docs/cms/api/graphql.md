@@ -11,8 +11,10 @@ tags:
 - pagination
 - pagination by offset
 - pagination by page
+- hasPublishedVersion
 - plural API ID
 - sort
+- status
 ---
 
 import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
@@ -420,6 +422,46 @@ query Query($status: PublicationStatus) {
   restaurants(status: PUBLISHED) {
     documentId
     name
+    publishedAt
+  }
+}
+```
+
+#### `hasPublishedVersion` argument
+
+When [Draft & Publish](/cms/features/draft-and-publish) is enabled on a content-type, queries also accept a `hasPublishedVersion` boolean argument. This argument filters documents by whether they have a published version.
+
+Combine `hasPublishedVersion: false` with `status: DRAFT` to retrieve documents that have never been published:
+
+```graphql
+query {
+  articles(status: DRAFT, hasPublishedVersion: false) {
+    documentId
+    title
+    publishedAt
+  }
+}
+```
+
+To retrieve draft versions of already-published documents, pass `hasPublishedVersion: true`:
+
+```graphql
+query {
+  articles(status: DRAFT, hasPublishedVersion: true) {
+    documentId
+    title
+    publishedAt
+  }
+}
+```
+
+The `hasPublishedVersion` argument is available on collection type queries (plural and singular) and single type queries. For a singular query you can use the following syntax:
+
+```graphql
+query {
+  article(documentId: "a1b2c3d4e5f6g7h8i9j0klm", status: DRAFT, hasPublishedVersion: true) {
+    documentId
+    title
     publishedAt
   }
 }
