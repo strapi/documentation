@@ -1,5 +1,5 @@
 ---
-title: Release notes
+title: Documentation release notes
 description: Learn what has changed with each version of the Strapi 5 documentation, with links to GitHub pull requests for more information.
 toc_max_heading_level: 2
 custom_edit_url: null
@@ -27,6 +27,9 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+<br/>
+
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [**5.36.0**](https://github.com/strapi/strapi/releases/tag/v5.36.0)._
 
 ## 6.16.0
 

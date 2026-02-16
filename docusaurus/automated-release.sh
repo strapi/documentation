@@ -392,6 +392,52 @@ integrate_release_notes() {
     echo -e "${GREEN}✅ Release notes integrated${NC}"
 }
 
+update_cms_version_link() {
+    echo -e "${BLUE}🔄 Checking latest Strapi CMS version...${NC}"
+    
+    # Fetch latest release from strapi/strapi (not the docs repo)
+    local latest_release=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+        -H "Accept: application/vnd.github.v3+json" \
+        "https://api.github.com/repos/strapi/strapi/releases/latest")
+    
+    local cms_version=$(echo "$latest_release" | jq -r '.tag_name' | sed 's/^v//')
+    
+    if [ -z "$cms_version" ] || [ "$cms_version" = "null" ]; then
+        echo -e "${YELLOW}⚠️  Could not fetch latest Strapi CMS version${NC}"
+        echo -n "Do you want to continue without updating the CMS version? (y/N) "
+        read -r skip_cms
+        if [[ ! "$skip_cms" =~ ^[Yy]$ ]]; then
+            exit 1
+        fi
+        return 1
+    fi
+    
+    echo -e "${BLUE}Latest Strapi CMS version: $cms_version${NC}"
+    
+    # Update the reminder line in release-notes.md
+    if grep -q "The latest Strapi CMS version is" "$RELEASE_NOTES_FILE"; then
+        # Try __bold__ syntax first
+        sed -i "s|\(The latest Strapi CMS version is \)\[__[^]]*__\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[__${cms_version}__](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
+        
+        if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
+            echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version in release notes${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Sed replacement may not have matched. Trying alternate pattern...${NC}"
+            # Fallback: handle **bold** markdown syntax
+            sed -i "s|\(The latest Strapi CMS version is \)\[\*\*[^]]*\*\*\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[**${cms_version}**](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
+            
+            if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
+                echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version (fallback pattern)${NC}"
+            else
+                echo -e "${RED}❌ Failed to update CMS version automatically${NC}"
+                echo -e "${BLUE}Please update the line manually in $RELEASE_NOTES_FILE${NC}"
+            fi
+        fi
+    else
+        echo -e "${YELLOW}⚠️  CMS version reminder line not found in $RELEASE_NOTES_FILE${NC}"
+        echo -e "${BLUE}The line might not have been added yet.${NC}"
+    fi
+}
 # Function to commit and push changes
 commit_and_push() {
     echo -e "${BLUE}💾 Committing and pushing changes...${NC}"
@@ -532,6 +578,7 @@ show_summary() {
     echo -e "- ✅ Milestone: $MILESTONE_TITLE"
     echo -e "- ✅ Package.json updated"
     echo -e "- ✅ Release notes generated and integrated"
+    echo -e "- ✅ Strapi CMS version link updated"
     echo -e "- ✅ Changes committed and pushed"
     echo -e "- ✅ GitHub release created"
     echo -e "- ✅ Milestone closed"
@@ -580,6 +627,7 @@ main() {
     update_package_version
     generate_release_notes
     integrate_release_notes
+    update_cms_version_link
     commit_and_push
     wait_for_deployment
     create_github_release
