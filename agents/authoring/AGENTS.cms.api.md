@@ -48,6 +48,16 @@ Heading Conventions
 - Use H2 for major sections; H3 for method sub‑sections (Parameters, Examples).
 - Method names as H2 should be consistent and anchor‑friendly (e.g., ``## `create()` ``).
 
+Component Patterns by Page Type
+
+API pages use custom MDX components that vary by sub-section. When editing an existing page, always match the page's established patterns:
+
+- **Document Service API pages** use `<ApiCall>` with `<Request>` / `<Response>` for code examples. The `noSideBySide` prop is used for longer examples. Response code blocks use JS object literal notation (not JSON).
+- **REST API pages** use `<ApiCall>` wrapping `<Request>`, a `<details>` block for the `qs.stringify` equivalent, and `<Response>`. Snippet imports (`QsForQueryBody`, `QsForQueryTitle`, `QsIntroFull`) are used inside the `<details>` blocks. Response code blocks use JSON.
+- **GraphQL API pages** use plain code blocks with `graphql` language identifier for query examples.
+
+Do not mix patterns across page types (e.g., do not use `<details>` on a Document Service page, or plain code blocks where `<ApiCall>` is expected).
+
 Cross‑linking
 - Link to neighboring APIs (Content API, Query Engine), relevant features, and migration notes.
 - Keep link text consistent with existing docs; prefer relative links under `/cms/`.
