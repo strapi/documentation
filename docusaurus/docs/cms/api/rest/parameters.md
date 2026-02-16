@@ -29,6 +29,7 @@ The following API parameters are available:
 | `fields`           | Array         | [Select only specific fields to display](/cms/api/rest/populate-select#field-selection) |
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
 | `pagination`       | Object        | [Page through entries](/cms/api/rest/sort-pagination.md#pagination) |
+| `hasPublishedVersion` | Boolean | Filters documents by whether they have a published version.<br/>Use with `status=draft` to find never-published documents<br/>See [`status` page](/cms/api/rest/status#haspublishedversion) for details. |
 
 Query parameters use the <ExternalLink to="https://christiangiacomi.com/posts/rest-design-principles/#lhs-brackets" text="LHS bracket syntax"/> (i.e. they are encoded using square brackets `[]`).
 
