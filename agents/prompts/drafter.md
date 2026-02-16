@@ -245,8 +245,8 @@ Analyze `source_material` + `target.notes` to determine what needs to change. Fo
 
 Choose the output format based on complexity:
 
-- **≤ 3 discrete, non-interacting edits** → Produce a **patch list**: each instruction shown individually with before/after.
-- **> 3 edits, or edits that interact** (e.g., changes to the same paragraph, table restructuring) → Produce the **rewritten section** with all edits applied.
+- **≤ 3 discrete, non-interacting edits** → Produce a **patch list**.
+- **> 3 edits, or edits that interact** → Produce the **rewritten section** (the full section or page with all edits applied). When producing a rewritten section, **default to showing the complete rewritten page** rather than isolated section excerpts, so reviewers can see the edits in full context.
 
 In both cases, write the output content following the Writing Rules below. Patch content must match the existing page's tone, terminology, and formatting.
 
