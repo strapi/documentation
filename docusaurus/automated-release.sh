@@ -346,12 +346,14 @@ generate_release_notes() {
         arrows="${arrows}$(printf '\033[B')"  # Down arrow
     done
     
+    # Create response file with the right arrow key sequence
     cat > "$TEMP_DIR/responses.txt" << EOF
 N
 ${arrows}
 
 EOF
     
+    # Run the script with predefined responses
     "$RELEASE_SCRIPT_PATH" < "$TEMP_DIR/responses.txt"
     
     if [ ! -f "$TEMP_RELEASE_NOTES" ]; then
@@ -374,8 +376,10 @@ integrate_release_notes() {
         exit 1
     fi
     
+    # Create backup
     cp "$RELEASE_NOTES_FILE" "$RELEASE_NOTES_FILE.bak"
     
+    # Insert new release notes after line 29
     head -n 29 "$RELEASE_NOTES_FILE" > "$TEMP_DIR/release_notes_temp.md"
     echo "" >> "$TEMP_DIR/release_notes_temp.md"
     cat "$TEMP_RELEASE_NOTES" >> "$TEMP_DIR/release_notes_temp.md"
