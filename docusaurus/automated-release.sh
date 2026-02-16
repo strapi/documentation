@@ -627,7 +627,7 @@ main() {
     update_package_version
     generate_release_notes
     integrate_release_notes
-    update_cms_version_link      # NEW
+    update_cms_version_link
     commit_and_push
     wait_for_deployment
     create_github_release
