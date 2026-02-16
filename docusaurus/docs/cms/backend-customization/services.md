@@ -74,7 +74,11 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
   // Method 3: Replacing a core service
   async findOne(documentId, params = {}) {
-    return strapi.documents('api::restaurant.restaurant').findOne({documentId, ...super.getFetchParams(params)});
+    return strapi.documents('api::restaurant.restaurant').findOne({
+        documentId, 
+        // Use super to keep core fetch parameter formatting
+        ...super.getFetchParams(params),
+     });
   }
 }));
 ```
