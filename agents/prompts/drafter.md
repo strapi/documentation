@@ -608,6 +608,9 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 15. **Patch: never invent context.** When deriving instructions, only produce edits that are directly supported by the source material. If `target.notes` suggests a change but the source material does not contain the technical details to write it, produce the instruction with a `<!-- TODO -->` placeholder in the content rather than guessing.
 
 16. **Match component patterns exactly.** In Patch mode, study the existing page's MDX component structure before writing. Pay attention to how the page wraps code examples (for instance, `<ApiCall>`, `<Tabs>`, `<details>`), which snippet imports it uses (`<QsForQueryBody />`, etc.), and how Request/Response pairs are structured. Replicate these patterns in new content. Generic Markdown (plain code blocks, standalone `<details>`) should not be used when the page already uses custom components for the same purpose.
+
+17. **Preserve structural coherence.** When adding a new section at a given heading level, check whether parallel content at the same level also has explicit headings. If the new section introduces an H2 but existing content of comparable scope sits directly under the H1 without its own H2, wrap the existing content in a matching H2 to maintain symmetry. Similarly, update the H1 title if the page's scope has expanded (e.g., from covering `status` to covering both `status` and `hasPublishedVersion`).
+
 18. **Read-proof example data.** After writing API examples, re-read each response from the reader's perspective: could any field value seem contradictory to the query's purpose? If so, add a brief explanatory sentence before the response block (preferred) or an inline comment in the code. For instance, a query for "drafts of published documents" returns `publishedAt: null` because the draft version is returned — this is technically correct but needs clarification for readers.
 
 ---
