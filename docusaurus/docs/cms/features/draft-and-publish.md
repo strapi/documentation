@@ -190,9 +190,9 @@ Draft or published content can be requested, created, updated, and deleted using
 <CustomDocCard icon="cube" title="GraphQL API" description="Learn how to use the status parameter with GraphQL API." link="/cms/api/graphql#status"/>
 </CustomDocCardsWrapper>
 
-On the back-end server of Strapi, the Document Service API can also be used to interact with localized content:
+On the back-end server of Strapi, the Document Service API can also be used to interact with draft and published versions of your content:
 
 <CustomDocCardsWrapper>
-<CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the status parameter with the Document Service API." link="/cms/api/document-service/status"/>
+<CustomDocCard icon="cube" title="Document Service API" description="Learn how to use the status and hasPublishedVersion parameters with the Document Service API." link="/cms/api/document-service/status"/>
 </CustomDocCardsWrapper>
 
