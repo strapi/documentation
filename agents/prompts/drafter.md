@@ -202,6 +202,14 @@ If `existing_content` is not already provided:
 
 If `target.existing_section` is set, locate that section in the fetched content and focus on it. Keep the surrounding context available for reference.
 
+After fetching, analyze the page's **component patterns** before deriving edits:
+- What components wrap code examples? (`<ApiCall>`, `<Tabs>`, plain code blocks?)
+- What snippet imports does the page use? (e.g., `<QsForQueryBody />`)
+- How are Request/Response pairs structured? (side-by-side vs. stacked, with or without titles?)
+- Does the page use `<details>` blocks? If so, are they standalone or nested inside `<ApiCall>`?
+
+New content must replicate these patterns exactly. Do not introduce component patterns that the page does not already use, unless explicitly instructed otherwise by the user.
+
 ### Step 3: Read reference materials
 
 If `template` and/or `guide` paths are provided:
@@ -599,6 +607,7 @@ For Patch mode, metadata is embedded in the output header (File, Section, Edits 
 
 15. **Patch: never invent context.** When deriving instructions, only produce edits that are directly supported by the source material. If `target.notes` suggests a change but the source material does not contain the technical details to write it, produce the instruction with a `<!-- TODO -->` placeholder in the content rather than guessing.
 
+16. **Match component patterns exactly.** In Patch mode, study the existing page's MDX component structure before writing. Pay attention to how the page wraps code examples (for instance, `<ApiCall>`, `<Tabs>`, `<details>`), which snippet imports it uses (`<QsForQueryBody />`, etc.), and how Request/Response pairs are structured. Replicate these patterns in new content. Generic Markdown (plain code blocks, standalone `<details>`) should not be used when the page already uses custom components for the same purpose.
 ---
 
 ## Quality Checklist
