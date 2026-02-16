@@ -208,7 +208,7 @@ To get a specific single type document in a given locale, add the `locale` param
 
 ### `POST` Create a new localized document for a collection type {#rest-create}
 
-To create a localized document from scratch, send a POST request to the Content API. Depending on whether you want to create it for the default locale or for another locale, you might need to pass the `locale` parameter in the request's body
+To create a localized document from scratch, send a POST request to the Content API. Depending on whether you want to create it for the default locale or for another locale, you might need to pass the `locale` parameter in the query.
 
 | Use case                      | Syntax format and link for more information                                               |
 | ----------------------------- | --------------------------------------------------------------------------------------- |
@@ -257,7 +257,7 @@ If no locale has been passed in the request body, the document is created using 
 
 #### For a specific locale {#rest-create-specific-locale}
 
-To create a localized entry for a locale different from the default one, add the `locale` attribute to the body of the POST request:
+To create a localized entry for a locale different from the default one, add the `locale` parameter to the query URL of the POST request:
 
 <ApiCall>
 <Request>
