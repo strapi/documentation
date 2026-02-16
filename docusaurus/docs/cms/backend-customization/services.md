@@ -74,7 +74,11 @@ module.exports = createCoreService('api::restaurant.restaurant', ({ strapi }) =>
 
   // Method 3: Replacing a core service
   async findOne(documentId, params = {}) {
-    return strapi.documents('api::restaurant.restaurant').findOne(documentId, this.getFetchParams(params));
+    return strapi.documents('api::restaurant.restaurant').findOne({
+        documentId, 
+        // Use super to keep core fetch parameter formatting
+        ...super.getFetchParams(params),
+     });
   }
 }));
 ```
@@ -114,7 +118,10 @@ export default factories.createCoreService('api::restaurant.restaurant', ({ stra
 
   // Method 3: Replacing a core service
   async findOne(documentId, params = {}) {
-     return strapi.documents('api::restaurant.restaurant').findOne(documentId, this.getFetchParams(params));
+    return strapi.documents('api::restaurant.restaurant').findOne({
+       documentId,
+       // Use super to keep core fetch parameter formatting
+       ...super.getFetchParams(params) }) as any;
   }
 }));
 ```
