@@ -12,7 +12,7 @@ tags:
 - findOne()
 - findMany()
 - findFirst()
-- published version
+- hasPublishedVersion
 - status
 
 ---
@@ -22,8 +22,10 @@ tags:
 By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
 
 - return the published version of a document,
-- count documents depending on their status, 
+- count documents depending on their status,
 - and directly publish a document while creating it or updating it.
+
+This page also describes the [`hasPublishedVersion`](#haspublishedversion) parameter, which filters documents by whether they have a published version.
 
 :::note
 Passing `{ status: 'draft' }` to a Document Service API query returns the same results as not passing any `status` parameter.
@@ -152,7 +154,9 @@ const publishedCount = await strapi.documents("api::restaurant.restaurant").coun
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore.
+
+To exclude already-published documents from the count, use the [`hasPublishedVersion`](#count-never-published-documents) parameter.
 :::
 
 ## Create a draft and publish it {#create}
@@ -224,3 +228,112 @@ await strapi.documents('api::restaurant.restaurant').update({
 </Response>
 </ApiCall>
 
+## Filter by published status with `hasPublishedVersion` {#haspublishedversion}
+
+The `hasPublishedVersion` parameter filters documents based on whether they have a published version. Combine it with `status: 'draft'` to distinguish documents that have never been published from drafts of already-published documents.
+
+`hasPublishedVersion` accepts a boolean value (`true` or `false`) or the string equivalents (`'true'` or `'false'`). Passing any other value returns a validation error.
+
+| Value | Description |
+|-------|-------------|
+| `true` | Returns only documents that have at least 1 published version. |
+| `false` | Returns only documents that have never been published. |
+
+### Find never-published documents
+
+Pass `hasPublishedVersion: false` with `status: 'draft'` to retrieve only documents that have never been published:
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+```js
+const neverPublished = await strapi.documents("api::article.article").findMany({
+  status: 'draft',
+  // highlight-next-line
+  hasPublishedVersion: false,
+});
+```
+
+</Request>
+
+<Response title="Example response">
+```js
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    title: "Untitled draft",
+    publishedAt: null,
+    locale: "en",
+    // …
+  }
+  // …
+]
+```
+
+</Response>
+</ApiCall>
+
+### Find drafts of published documents
+
+Pass `hasPublishedVersion: true` with `status: 'draft'` to retrieve draft versions of already-published documents:
+
+<ApiCall noSideBySide>
+<Request title="Example request">
+```js
+const draftOfPublished = await strapi.documents("api::article.article").findFirst({
+  status: 'draft',
+  // highlight-next-line
+  hasPublishedVersion: true,
+});
+```
+
+</Request>
+
+<Response title="Example response">
+```js
+{
+  documentId: "x9y8z7w6v5u4t3s2r1q0pon",
+  title: "Published article (draft version)",
+  publishedAt: null,
+  locale: "en",
+  // …
+}
+```
+
+</Response>
+</ApiCall>
+
+### Count never-published documents
+
+Combine `hasPublishedVersion` with `count()` to count only documents that have never been published:
+```js
+const neverPublishedCount = await strapi.documents("api::article.article").count({
+  status: 'draft',
+  hasPublishedVersion: false,
+});
+```
+
+### Combine with `locale`
+
+`hasPublishedVersion` works with the `locale` parameter:
+```js
+const neverPublishedInFrench = await strapi.documents("api::article.article").findMany({
+  status: 'draft',
+  hasPublishedVersion: false,
+  locale: 'fr',
+});
+```
+
+:::tip
+`hasPublishedVersion` can also be combined with `filters` for more targeted queries:
+```js
+const results = await strapi.documents("api::article.article").findMany({
+  status: 'draft',
+  hasPublishedVersion: false,
+  filters: { title: { $contains: 'draft' } },
+});
+```
+:::
+
+:::note
+Passing `status: 'published'` with `hasPublishedVersion: false` returns an empty result set, since published documents by definition have a published version.
+:::
