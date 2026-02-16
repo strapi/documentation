@@ -4041,7 +4041,7 @@ To create a localized document from scratch, send a POST request to the Content 
 | Use case                      | Syntax format and link for more information                                               |
 | ----------------------------- | --------------------------------------------------------------------------------------- |
 | Create for the default locale | [`POST /api/content-type-plural-name`](#rest-create-default-locale) |
-| Create for a specific locale  | [`POST /api/content-type-plural-name`](#rest-create-specific-locale)<br/>+ pass locale in request body               |
+| Create for a specific locale  | [`POST /api/content-type-plural-name?locale=fr`](#rest-create-specific-locale)
 
 #### For the default locale {#rest-create-default-locale}
 

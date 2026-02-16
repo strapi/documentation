@@ -9828,7 +9828,7 @@ File path: N/A
 
 
 ## For a specific locale
-Description: POST http://localhost:1337/api/restaurants
+Description: POST http://localhost:1337/api/restaurants?locale=fr
 (Source: https://docs.strapi.io/cms/api/rest/locale#rest-create-specific-locale)
 
 Language: JSON
@@ -9837,8 +9837,7 @@ File path: N/A
 ```json
 {
   "data": {
-    "Name": "She's Cake",
-    "locale": "fr"
+    "Name": "She's Cake"
   }
 }
 ```
@@ -9856,7 +9855,7 @@ File path: N/A
     "createdAt": "2024-03-06T22:21:18.373Z",
     "updatedAt": "2024-03-06T22:21:18.373Z",
     "publishedAt": "2024-03-06T22:21:18.378Z",
-    "locale": "en"
+    "locale": "fr"
   },
   "meta": {}
 }
@@ -9872,8 +9871,8 @@ File path: N/A
 
 ```json
 {
-  data: {
-    "Name": "She's Cake in French",
+  "data": {
+    "Name": "She's Cake in French"
   }
 }
 ```
