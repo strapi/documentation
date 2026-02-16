@@ -58,8 +58,6 @@ A structured Markdown report containing:
 
 ## Summary for everyone
 
-*This summary ("Content understanding" + "tl;dr: How to update docs?") should be enough to help you get started if you plan to manually update the Strapi documentation yourself. Other sections of this report are only useful to documentation specialists and other AI tools.*
-
 ### Content understanding
 
 [1–3 sentences: what the source material is about, what topics it covers, what it enables or changes for users.]
@@ -68,18 +66,16 @@ A structured Markdown report containing:
 
 ### tl;dr: How to update docs?
 
-**Create these pages:**
-- `path/to/new-page.md` — follow [Feature template](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) + [Features authoring guide](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md)
-- `path/to/another-page.md` — follow [The 12 Rules of Technical Writing](https://strapi.notion.site/12-Rules-of-Technical-Writing-c75e080e6b19432287b3dd61c2c9fa04) + use the [Style Checker](https://github.com/strapi/documentation/blob/main/agents/prompts/style-checker.md) to identify issues
+| Page | What to do |
+|------|------------|
+| `path/to/new-page.md` | **Create** new page — follow [Feature template](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) + [Features authoring guide](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md) |
+| `path/to/existing.md` | **Update** — add [description] to "[Section name]" section |
+| `path/to/other.md` | **Update** — add row to "[Table name]" table |
+| `path/to/conditional.md` | **Later** — [condition, e.g., "when X feature ships"] |
 
-**Update these pages:**
-- `path/to/existing.md` — add [description of what to add] to "[Section name]" section
-- `path/to/other.md` — add row to "[Table name]" table
+[Only include rows that apply. Omit "Create", "Update", or "Later" rows if there are none of that type.]
 
-**Later (when ready):**
-- `path/to/conditional.md` — [condition, e.g., "when X feature ships"]
-
-[If no pages to create, update, or defer, omit that subsection.]
+*This summary should be enough to help you get started if you plan to manually update the Strapi documentation yourself. If you want to continue with the AI documentation pipeline, see the [next step](#next-step) at the end of this report. Other sections are only useful to documentation specialists and other AI tools.*
 
 ---
 
@@ -93,6 +89,22 @@ A structured Markdown report containing:
 - **Where would a user look for this?** [Which section/category a developer would navigate to]
 - **What are the nearest neighbors?** [Pages that would sit next to this content in the sidebar]
 
+**Search terms used:** [list of terms searched in `llms.txt` and `sidebars.js`]
+
+**Existing pages found:**
+
+| Page | Path | Relevance | Action | Priority | Template | Authoring guide |
+|------|------|-----------|--------|----------|----------|-----------------|
+| Page name | `path/to/page.md` | **Direct hit** — [why this page is relevant] | create_page | primary | [template.md](...) | [AGENTS.md](...) |
+| Other page | `path/to/other.md` | **Relevant** — [why] | update_section | required | — | — |
+| Unrelated page | `path/to/unrelated.md` | **Not affected** — [why it was considered but excluded] | — | — | — | — |
+
+Pages found during the search but not affected are included with `—` in the Action/Priority columns to show they were considered.
+
+**Confidence:** [high / medium / low]
+
+[If confidence is not "high", explain what would increase it.]
+
 ### Placement decision
 
 **Targets:** [number of pages affected]
@@ -105,17 +117,6 @@ A structured Markdown report containing:
 
 [If the Router is uncertain about placement, present the options and ask the user to decide.]
 
-### Routing summary
-
-| Target | Action | Priority | Template | Authoring guide |
-|--------|--------|----------|----------|-----------------|
-| `path/to/page.md` | create_page | primary | [feature-template.md](https://github.com/strapi/documentation/blob/main/agents/templates/feature-template.md) | [AGENTS.cms.features.md](https://github.com/strapi/documentation/blob/main/agents/authoring/AGENTS.cms.features.md) |
-| `path/to/other.md` | update_section | required | — | — |
-
-**Confidence:** [high / medium / low]
-
-[If confidence is not "high", explain what would increase it.]
-
 ### Cross-linking suggestions
 
 [Optional. If this content should be referenced from other pages, or if other pages should link to it, list them here.]
@@ -125,6 +126,12 @@ A structured Markdown report containing:
 ---
 
 ## Machine-readable summary
+
+### Next step {#next-step}
+
+[Insert the pipeline handoff instruction here — see "Pipeline handoff" in Output Instructions.]
+
+### YAML
 
 ```yaml
 doc_type: [feature | plugin | configuration | guide | api | migration | breaking-change | concept | cloud | snippet | unknown]
@@ -222,6 +229,22 @@ I'm not confident about the best placement. Here are the options:
 - **Via API (machine-only)**: If the consumer is another prompt or an automated pipeline, return only the YAML block from the "Machine-readable summary" section. Skip the prose report.
 
 Do NOT summarize or discuss the report before outputting it. Output the full report first.
+
+### Pipeline handoff
+
+The "Next step" section (under "Machine-readable summary") tells the user what to do next with the YAML. The Router must fill this in dynamically based on the targets. Apply these rules:
+
+**No target has `create_page`:** All targets are updates or additions to existing pages. Copy the machine-readable YAML at the end of this report and pass it to the **Drafter** tool along with the source material.
+
+**All targets have `create_page`:** All targets require new pages. Copy the machine-readable YAML at the end of this report and pass it to the **Outline Generator** tool along with the source material. Then pass the generated outlines to the **Drafter** tool.
+
+**Mixed targets (some `create_page`, some not):** List which targets go where. Example:
+
+> *Copy the machine-readable YAML at the end of this report. Pass it to the **Outline Generator** tool for the targets that need a new page (`cms/features/scheduler.md`). For the other targets (`cms/configurations/server.md`, `cms/api/rest/parameters.md`), pass the YAML directly to the **Drafter** tool along with the source material.*
+
+Always name the specific target paths so the user knows exactly which targets go to which agent.
+
+**Key distinction:** Only `create_page` (and `create_category`) require the Outline Generator. Actions like `add_section`, `update_section`, and `add_link` on existing pages go directly to the Drafter — the existing page provides the structural context.
 
 ---
 
@@ -370,7 +393,7 @@ For **each target** in the routing:
 - Feature template + Features authoring guide for the feature page
 - Configuration template + Configurations authoring guide for the config page
 
-The Routing summary table must show the correct template and authoring guide **per row**, not just for the primary target.
+The "Existing pages found" table must show the correct template and authoring guide **per row**, not just for the primary target.
 
 ---
 
