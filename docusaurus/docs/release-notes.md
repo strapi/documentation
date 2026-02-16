@@ -27,6 +27,9 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+<br/>
+
+_Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi version is [**5.36.0**](https://github.com/strapi/strapi/releases/tag/v5.36.0)._
 
 ## 6.16.0
 
