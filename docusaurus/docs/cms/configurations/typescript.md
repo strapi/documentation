@@ -12,7 +12,7 @@ tags:
 # TypeScript configuration
 
 <Tldr>
-TypeScript configuration explains the project’s tsconfig files, output directories, and an optional `config/typescript.js|ts` that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
+TypeScript configuration explains the project's tsconfig files, output directories, and an optional `config/typescript.js|ts` that auto-generates types on server restart. This documentation explains which folders store compiled code and how to toggle this experimental feature.
 </Tldr>
 
 [TypeScript](/cms/typescript)-enabled Strapi projects have a specific project structure and handle TypeScript project configuration through [`tsconfig.json` files](#project-structure-and-typescript-specific-configuration-files).
@@ -69,3 +69,42 @@ export default ({ env }) => ({
 </TabItem>
 
 </Tabs>
+
+## Configuration types reference
+
+<NewBadge />
+
+Strapi provides TypeScript type definitions for all configuration files through the `Core.Config` namespace. Importing these types enables autocompletion and type checking in your configuration files.
+
+To use a configuration type, import `Core` from `@strapi/strapi` and annotate your configuration:
+
+```ts
+import type { Core } from '@strapi/strapi';
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Server => ({
+  host: env('HOST', '0.0.0.0'),
+  port: env.int('PORT', 1337),
+  app: {
+    keys: env.array('APP_KEYS'),
+  },
+});
+
+export default config;
+```
+
+The following configuration types are available:
+
+| Type | Configuration file | Documentation |
+| ---- | ------------------ | ------------- |
+| `Core.Config.Admin` | `/config/admin` | [Admin panel configuration](/cms/configurations/admin-panel) |
+| `Core.Config.Api` | `/config/api` | [API calls configuration](/cms/configurations/api) |
+| `Core.Config.Database` | `/config/database` | [Database configuration](/cms/configurations/database) |
+| `Core.Config.Middlewares` | `/config/middlewares` | [Middlewares configuration](/cms/configurations/middlewares) |
+| `Core.Config.Plugin` | `/config/plugins` | [Plugins configuration](/cms/configurations/plugins) |
+| `Core.Config.Server` | `/config/server` | [Server configuration](/cms/configurations/server) |
+
+:::note Notes
+
+* `Core.Config.Database` accepts an optional generic parameter for the database client (e.g., `Core.Config.Database<'sqlite'>`, `Core.Config.Database<'postgres'>`).
+* `Core.Config.Shared.ConfigParams` types the `{ env }` parameter that Strapi passes to configuration functions.
+:::
