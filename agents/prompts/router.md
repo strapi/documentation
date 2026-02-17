@@ -348,7 +348,7 @@ Using `sidebars.js` and `llms.txt`:
    - **Redirect awareness:** The file [`docusaurus/vercel.json`](https://github.com/strapi/documentation/blob/main/docusaurus/vercel.json) contains all active redirects. If a candidate path is suspiciously absent from `sidebars.js` and `llms.txt`, check `vercel.json` to see if it redirects elsewhere — the redirect destination is the actual current path.
    - **Web search URLs are not file paths.** URLs returned by web search (e.g., `docs.strapi.io/user-docs/content-manager/translating-content`) may be served by redirects and do not necessarily correspond to actual files in the repository. Always cross-reference with `sidebars.js` or `llms.txt` before using a URL as a target path.
 
-### Step 3 â€” Decide the action(s) and identify all targets
+### Step 3 — Decide the action(s) and identify all targets
 
 Apply this decision tree for the **primary target**:
 
