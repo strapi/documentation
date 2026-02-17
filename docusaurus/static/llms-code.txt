@@ -14564,7 +14564,7 @@ File path: N/A
 
 ```shell
 strapi develop
-options: [--bundler | --open | --no-watch-admin | --polling | --debug | --silent]
+options: [--bundler | --open | --no-watch-admin | --no-build-admin | --polling | --debug | --silent]
 ```
 
 
