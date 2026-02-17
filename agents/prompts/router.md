@@ -343,6 +343,11 @@ Using `sidebars.js` and `llms.txt`:
    - **Is adjacent to** that page but distinct enough for its own page (→ `create_page`)
    - **Doesn't relate** to any existing page (→ `create_page` or `create_category` or `ask_user`)
 
+4. **Validate candidate paths**: Before finalizing any target path, verify that it exists in the current repository structure. Specifically:
+   - **Legacy path detection:** Any path containing `user-docs/` or `dev-docs/` is a **legacy v4 path** and does not exist in the v5 documentation. These prefixes were removed during the v4 → v5 migration. If a search result or URL contains these prefixes, do not use them as target paths.
+   - **Redirect awareness:** The file [`docusaurus/vercel.json`](https://github.com/strapi/documentation/blob/main/docusaurus/vercel.json) contains all active redirects. If a candidate path is suspiciously absent from `sidebars.js` and `llms.txt`, check `vercel.json` to see if it redirects elsewhere — the redirect destination is the actual current path.
+   - **Web search URLs are not file paths.** URLs returned by web search (e.g., `docs.strapi.io/user-docs/content-manager/translating-content`) may be served by redirects and do not necessarily correspond to actual files in the repository. Always cross-reference with `sidebars.js` or `llms.txt` before using a URL as a target path.
+
 ### Step 3 — Decide the action(s) and identify all targets
 
 Apply this decision tree for the **primary target**:
@@ -426,7 +431,9 @@ The "Existing pages found" table must show the correct template and authoring gu
     
     The "Content understanding" section of the report should be a **brief summary** (3–5 sentences max), not a detailed analysis. If you find yourself listing parameter values, edge cases, or implementation details, you've gone too far.
 
-11. **Report only your decision.** The final report must be clean and actionable. Internal deliberation (e.g., "I considered X but rejected it because…") belongs in the "Placement decision" rationale, not scattered throughout the report.
+11. **Report only your decision.** The final report must be clean and actionable. Internal deliberation (e.g., "I considered X but rejected it because…) belongs in the "Placement decision" rationale, not scattered throughout the report.
+
+12. **Never trust legacy URLs.** Paths starting with `user-docs/` or `dev-docs/` are remnants of the Strapi v4 documentation structure and do not exist in the v5 repository. If you encounter such paths (e.g., from web search results or old links), check [`docusaurus/vercel.json`](https://github.com/strapi/documentation/blob/main/docusaurus/vercel.json) to find where they redirect, and use the redirect destination as the actual target path.
 
 ---
 
