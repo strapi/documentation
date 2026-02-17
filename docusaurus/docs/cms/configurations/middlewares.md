@@ -89,8 +89,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // The array is pre-populated with internal, built-in middlewares, prefixed by `strapi::`
   'strapi::logger',
   'strapi::cors',
@@ -113,6 +114,8 @@ export default [
     },
   },
 ];
+
+export default config;
 ```
 
 </TabItem>
@@ -210,8 +213,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::body',
@@ -223,7 +227,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -270,8 +276,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::compression',
@@ -280,7 +287,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -331,8 +340,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::cors',
@@ -344,7 +354,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -361,8 +373,9 @@ export default [
 `origin` can take a Function as parameter following this signature 
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::cors',
@@ -378,7 +391,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </details>
@@ -424,8 +439,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::favicon',
@@ -434,7 +450,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -483,8 +501,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::ip',
@@ -494,7 +513,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -604,8 +625,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::poweredBy',
@@ -614,7 +636,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -660,8 +684,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::query',
@@ -671,7 +696,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -725,8 +752,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::public',
@@ -736,7 +764,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -817,8 +847,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::security',
@@ -847,7 +878,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
@@ -901,8 +934,9 @@ module.exports = [
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/middlewares.ts"
+import type { Core } from '@strapi/strapi';
 
-export default [
+const config: Core.Config.Middlewares = [
   // ...
   {
     name: 'strapi::session',
@@ -912,7 +946,9 @@ export default [
     },
   },
   // ...
-]
+];
+
+export default config;
 ```
 
 </TabItem>
