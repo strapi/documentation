@@ -55,8 +55,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/api.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Api => ({
   responses: {
     privateAttributes: ['_v', 'id', 'created_at'],
   },
@@ -66,6 +67,8 @@ export default ({ env }) => ({
     maxLimit: 250,
   },
 });
+
+export default config;
 ```
 
 </TabItem>
