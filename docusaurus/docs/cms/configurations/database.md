@@ -226,7 +226,9 @@ Strapi’s default SQLite database lives at `.tmp/data.db` at the root of the pr
 
 ```ts title="./config/database.ts"
 import path from 'path';
-export default ({ env }) => ({
+import type { Core } from '@strapi/strapi';
+
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database<'sqlite'> => ({
   connection: {
     client: 'sqlite',
     connection: {
@@ -240,6 +242,8 @@ export default ({ env }) => ({
     useNullAsDefault: true,
   },
 });
+
+export default config;
 ```
 
 </TabItem>
@@ -377,8 +381,9 @@ module.exports = ({ env }) => {
 
 ```ts
 import path from 'path';
+import type { Core } from '@strapi/strapi';
 
-export default = ({ env }) => {
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
   const connections = {
@@ -447,6 +452,8 @@ export default = ({ env }) => {
     },
   };
 };
+
+export default config;
 ```
 
 </TabItem>
@@ -616,8 +623,9 @@ module.exports = ({ env }) => ({
 
 ```ts title="./config/database.ts"
 import path from 'path';
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database<'sqlite'> => ({
   connection: {
     client: 'sqlite',
     connection: {
@@ -626,6 +634,8 @@ export default ({ env }) => ({
     useNullAsDefault: true,
   },
 });
+
+export default config;
 ```
 
 </TabItem>
