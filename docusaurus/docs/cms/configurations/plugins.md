@@ -72,8 +72,9 @@ module.exports = ({ env }) => ({
 <TabItem value="typescript" label="TypeScript">
 
 ```ts title="./config/plugins.ts"
+import type { Core } from '@strapi/strapi';
 
-export default ({ env }) => ({
+const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => ({
   // enable a plugin that doesn't require any configuration
   i18n: true,
 
@@ -92,6 +93,8 @@ export default ({ env }) => ({
     enabled: false, // plugin installed but disabled
   },
 });
+
+export default config;
 ```
 
 </TabItem>
