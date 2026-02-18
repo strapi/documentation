@@ -27,6 +27,8 @@ The [REST API](/cms/api/rest) offers the ability to filter results based on thei
 The [Draft & Publish](/cms/features/draft-and-publish) feature should be enabled.
 :::
 
+## `status`
+
 Queries can accept a `status` parameter to fetch documents based on their status:
 
 - `published`: returns only the published version of documents (default)

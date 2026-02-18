@@ -4834,6 +4834,120 @@ File path: N/A
 ```
 
 
+## Find never-published documents
+Description: Code example from "Find never-published documents"
+(Source: https://docs.strapi.io/cms/api/document-service/status#find-never-published-documents)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'draft',
+  hasPublishedVersion: false,
+});
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "ln1gkzs6ojl9d707xn6v86mw",
+    name: "Restaurant B",
+    publishedAt: null, // never published
+    locale: "en",
+    // …
+  },
+  // … other never-published documents
+]
+```
+
+
+## Find drafts of published documents
+Description: Code example from "Find drafts of published documents"
+(Source: https://docs.strapi.io/cms/api/document-service/status#find-drafts-of-published-documents)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'draft',
+  hasPublishedVersion: true,
+});
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "a1b2c3d4e5f6g7h8i9j0klm",
+    name: "Biscotte Restaurant",
+    publishedAt: null, // draft version is returned, but a published version exists
+    locale: "en",
+    // …
+  },
+  // …
+]
+```
+
+
+## Count never-published documents
+Description: Combine hasPublishedVersion: false with count() to count documents that have never been published:
+(Source: https://docs.strapi.io/cms/api/document-service/status#count-never-published-documents)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const neverPublishedCount = await strapi.documents("api::restaurant.restaurant").count({
+  status: 'draft',
+  hasPublishedVersion: false,
+});
+```
+
+
+## Combine with other parameters
+Description: Code example from "Combine with other parameters"
+(Source: https://docs.strapi.io/cms/api/document-service/status#combine-with-other-parameters)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const documents = await strapi.documents("api::restaurant.restaurant").findMany({
+  status: 'draft',
+  hasPublishedVersion: false,
+  locale: 'en',
+  filters: {
+    name: { $startsWith: 'Pizzeria' },
+  },
+});
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+[
+  {
+    documentId: "j9k8l7m6n5o4p3q2r1s0tuv",
+    name: "Pizzeria Napoli",
+    publishedAt: null,
+    locale: "en",
+    // …
+  },
+]
+```
+
+
 
 # Entity Service API
 Source: https://docs.strapi.io/cms/api/entity-service
@@ -6037,6 +6151,55 @@ query Query($status: PublicationStatus) {
     documentId
     name
     publishedAt
+  }
+}
+```
+
+
+## Filter by publication history with hasPublishedVersion
+Description: Use hasPublishedVersion with status: DRAFT to distinguish between documents that have never been published and drafts of already-published documents:
+(Source: https://docs.strapi.io/cms/api/graphql#haspublishedversion)
+
+Language: JSON
+File path: Example:
+
+```json
+{
+  restaurants(status: DRAFT, hasPublishedVersion: false) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+---
+Language: JSON
+File path: Example:
+
+```json
+{
+  restaurants(status: DRAFT, hasPublishedVersion: true) {
+    documentId
+    name
+    publishedAt
+  }
+}
+```
+
+Language: JSON
+File path: Example:
+
+```json
+{
+  restaurants_connection(status: DRAFT, hasPublishedVersion: false) {
+    nodes {
+      documentId
+      name
+    }
+    pageInfo {
+      total
+    }
   }
 }
 ```
@@ -10625,9 +10788,9 @@ File path: ./config/api.js
 # Status
 Source: https://docs.strapi.io/cms/api/rest/status
 
-## REST API: status
-Description: Code example from "REST API: status"
-(Source: https://docs.strapi.io/cms/api/rest/status#rest-api-status)
+## REST API: status and hasPublishedVersion
+Description: Code example from "REST API: status and hasPublishedVersion"
+(Source: https://docs.strapi.io/cms/api/rest/status#rest-api-status-and-haspublishedversion)
 
 Language: JavaScript
 File path: N/A
@@ -10679,6 +10842,98 @@ File path: N/A
       "pageSize": 25,
       "pageCount": 1,
       "total": 4
+    }
+  }
+}
+```
+
+
+## hasPublishedVersion
+Description: Code example from "hasPublishedVersion"
+(Source: https://docs.strapi.io/cms/api/rest/status#haspublishedversion)
+
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  hasPublishedVersion: false,
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 8,
+      "documentId": "ln1gkzs6ojl9d707xn6v86mw",
+      "Name": "Restaurant B",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+---
+Language: JavaScript
+File path: N/A
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  hasPublishedVersion: true,
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+---
+Language: JSON
+File path: N/A
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
     }
   }
 }
