@@ -1,6 +1,6 @@
 ---
 title: Status
-description: Use Strapi's REST API to work with draft or published versions of your documents.
+description: Use Strapi's REST API to work with draft or published versions of your documents and filter by publication history with hasPublishedVersion.
 sidebarDepth: 3
 sidebar_label:  Status
 displayed_sidebar: cmsSidebar
@@ -8,6 +8,7 @@ tags:
 - API
 - Content API
 - find
+- hasPublishedVersion
 - interactive query builder
 - REST API
 - qs library
@@ -18,9 +19,9 @@ import QsIntroFull from '/docs/snippets/qs-intro-full.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 
-# REST API: `status`
+# REST API: `status` and `hasPublishedVersion`
 
-The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published.
+The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published, and by whether they have a published version.
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature should be enabled.
@@ -107,3 +108,132 @@ await request(`/api/articles?${query}`);
 
 </Response>
 </ApiCall>
+
+## `hasPublishedVersion` <NewBadge />
+
+Queries can accept a `hasPublishedVersion` parameter to filter documents by whether a published version exists. Use `hasPublishedVersion` with `status=draft` to distinguish documents that have never been published from drafts of already-published documents.
+
+- `hasPublishedVersion=false`: returns only documents that have never been published
+- `hasPublishedVersion=true`: returns only drafts of documents that have a published version
+
+<br />
+
+<ApiCall>
+<Request title="Get drafts that have never been published">
+
+`GET /api/articles?status=draft&hasPublishedVersion=false`
+
+</Request>
+
+<details>
+<summary>JavaScript query (built with the qs library):</summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  hasPublishedVersion: false,
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+</details>
+
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    {
+      "id": 8,
+      "documentId": "ln1gkzs6ojl9d707xn6v86mw",
+      "Name": "Restaurant B",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+<br />
+
+<ApiCall>
+<Request title="Get drafts of already-published documents">
+
+`GET /api/articles?status=draft&hasPublishedVersion=true`
+
+</Request>
+
+<details>
+<summary>JavaScript query (built with the qs library):</summary>
+
+<QsForQueryBody />
+
+```js
+const qs = require('qs');
+const query = qs.stringify({
+  status: 'draft',
+  hasPublishedVersion: true,
+}, {
+  encodeValuesOnly: true, // prettify URL
+});
+
+await request(`/api/articles?${query}`);
+```
+
+</details>
+
+<Response title="Example response">
+
+```json
+{
+  "data": [
+    {
+      "id": 5,
+      "documentId": "znrlzntu9ei5onjvwfaalu2v",
+      "Name": "Biscotte Restaurant",
+      "createdAt": "2024-03-06T13:43:30.172Z",
+      "updatedAt": "2024-03-06T21:38:46.353Z",
+      "publishedAt": null,
+      "locale": "en"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</Response>
+</ApiCall>
+
+:::note
+Because the draft version is returned, `publishedAt` is `null` even when a published version exists.
+:::
+
+:::caution
+Passing an invalid value for `hasPublishedVersion` (anything other than `true` or `false`) returns a `400 Bad Request` error.
+:::

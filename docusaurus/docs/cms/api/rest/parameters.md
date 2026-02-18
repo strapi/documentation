@@ -25,6 +25,7 @@ The following API parameters are available:
 | `filters`          | Object        | [Filter the response](/cms/api/rest/filters) |
 | `locale`           | String        | [Select a locale](/cms/api/rest/locale) |
 | `status`           | String        | [Select the Draft & Publish status](/cms/api/rest/status) |
+| `hasPublishedVersion` | Boolean    | [Filter by whether the document has a published version](/cms/api/rest/status#haspublishedversion) |
 | `populate`         | String or Object | [Populate relations, components, or dynamic zones](/cms/api/rest/populate-select#population) |
 | `fields`           | Array         | [Select only specific fields to display](/cms/api/rest/populate-select#field-selection) |
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
