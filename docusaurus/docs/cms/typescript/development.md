@@ -97,6 +97,7 @@ To do that, edit the `tsconfig.json` of the Strapi project and add `types/genera
     "dist/",
     ".cache/",
     ".tmp/",
+    ".strapi/",
     "src/admin/",
     "**/*.test.ts",
     "src/plugins/**",
