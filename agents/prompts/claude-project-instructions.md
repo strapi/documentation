@@ -122,9 +122,9 @@ If GitHub MCP is unavailable, ask the user to paste the PR diff. Let me know tha
 | **Outliner** | `outliner.md` | ✅ Available | Routes to Outline Generator, Outline Checker, or UX Analyzer |
 | ↳ Outline Checker | `outline-checker.md` | ✅ Available | Checks template compliance, frontmatter, heading hierarchy, required components |
 | ↳ Outline UX Analyzer | `outline-ux-analyzer.md` | ✅ Available | Checks reader experience, section order, navigability, cognitive load |
-| ↳ Outline Generator | `outline-generator.md` | 🔜 Coming soon | Creates outlines from source material (Notion, GitHub) |
+| ↳ Outline Generator | `outline-generator.md` | ✅ Available | Creates outlines from source material (Notion, GitHub) |
 | **Style Checker** | `style-checker.md` | ✅ Available | Checks compliance to 12 Rules of Technical Writing and Strapi style conventions |
-| **Drafter** | — | 🔜 Coming soon | Generates content from an outline and source material |
+| **Drafter** | `drafter-interface.md` | ✅ Available | Generates content from an outline and source material (3 modes: Compose, Patch, Micro-edit) |
 | **Integrity Checker** | — | 🔜 Coming soon | Checks for broken links, invalid paths, code block formatting, anchor consistency |
 
 ### Shared Resources
@@ -161,18 +161,21 @@ The `shared/` folder contains guides used by multiple prompts:
 
 ### Outliner
 
-**Purpose:** Handle all documentation structure tasks.
+**Purpose:** Handle all documentation structure tasks — both reviewing existing structure and planning new content.
 
 **Sub-prompts:**
 - **Outline Checker** — Verify structure against templates (technical compliance)
 - **Outline UX Analyzer** — Evaluate structure from reader's perspective
-- **Outline Generator** — Create new structure from source material
+- **Outline Generator** *(WIP)* — Create new structure from source material, producing a YAML outline for the Drafter
 
 **Review modes:**
 - **Quick Check** (Outline Checker only) — For minor changes, small PRs
 - **Full Review** (Checker + UX Analyzer) — For new pages, major restructuring
 
-**Full specification:** See `outliner.md`, `outline-checker.md`, `outline-ux-analyzer.md` in project knowledge.
+**Create mode:**
+- **Outline Generator** → produces YAML outline → consumed by the **Drafter** (see `drafter-interface.md` for the contract)
+
+**Full specification:** See `outliner.md`, `outline-checker.md`, `outline-ux-analyzer.md`, `outline-generator.md` in project knowledge.
 
 ---
 
