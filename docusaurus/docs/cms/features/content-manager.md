@@ -111,15 +111,15 @@ When active, filters are displayed next to the <Icon name="funnel-simple" classe
 
 ## Configuration
 
-Both the list view and the edit view can be configured, and the former can either be configured temporarily or permanently.
+Both the list view and the edit view can be configured.
 
 ### Configuring the list view {#list-view-settings}
 
-<br/>
+The list view table can be configured in 2 ways: with a quick configuration directly from the list view, or with a permanent and advanced configuration for more options. Both configurations persist and are specific to each content type.
 
-#### Temporary configuration
+#### Quick configuration
 
-By configuring temporarily the list view, the configurations will be reset as soon as the page is refreshed or when navigating outside the Content Manager. This configuration allows to temporarily choose which fields to display in the list view's table.
+The list view can be configured on the fly to choose which fields to display in the table. These display preferences are saved in the browser and persist across page refreshes and navigation.
 
 1. Click on the settings button <Icon name="gear-six" />.
 2. Tick the boxes associated with the field you want to be displayed in the table.
@@ -142,7 +142,7 @@ Relational fields can also be displayed in the list view. Please refer to <Exter
 
 #### Permanent & advanced configuration
 
-By configuring permanently the list view, you not only ensure that they are not reset at every page refresh or navigation, but you also have access to more options (e.g., enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.).
+For more advanced list view options (e.g., enablement/disablement of search, filters and bulk actions, reordering of the list view table's fields etc.), use the full configuration interface.
 
 :::note
 The configurations only apply to the list view of the collection type from which the settings are accessed (i.e., disabling the filters or search options for a collection type will not automatically also disable these same options for all other collection types).
