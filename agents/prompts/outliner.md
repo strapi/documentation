@@ -2,7 +2,7 @@
 
 ### Overview
 
-The Outliner is a **wrapper prompt** that handles all documentation structure tasks. It routes requests to specialized sub-prompts based on the user's intent and the review depth required.
+The Outliner is a **wrapper prompt** that handles all documentation structure tasks. It routes requests to specialized sub-prompts based on the user's intent: reviewing existing structure, evaluating reader experience, or creating new outlines from source material.
 
 ### How to Fetch GitHub Pull Requests
 
@@ -12,36 +12,61 @@ When the user provides a GitHub PR, use the GitHub MCP tools to fetch the conten
 
 ### Sub-prompts
 
-| Sub-prompt | File | Purpose |
-|------------|------|---------|
-| **Outline Checker** | `outline-checker.md` | Verify structure against templates (technical compliance) |
-| **UX Analyzer** | `outline-ux-analyzer.md` | Evaluate structure from reader's perspective |
-| **Outline Generator** | `outline-generator.md` | Create new structure from source material |
+| Sub-prompt | File | Status | Purpose |
+|------------|------|--------|---------|
+| **Outline Checker** | `outline-checker.md` | ✅ Available | Verify structure against templates (technical compliance) |
+| **UX Analyzer** | `outline-ux-analyzer.md` | ✅ Available | Evaluate structure from reader's perspective |
+| **Outline Generator** | `outline-generator.md` | ✅ Available | Create new structure from source material |
 
 ---
 
-### Review Modes
+### Workflows
 
-The Outliner supports two review modes based on the scope of changes:
+The Outliner serves two distinct workflows: **Review** (analyzing existing content) and **Create** (planning new content).
+
+#### Review Workflow
+
+For reviewing existing documentation, the Outliner supports two modes:
 
 | Mode | Sub-prompts Used | When to Use | Trigger Phrases |
 |------|------------------|-------------|-----------------|
 | **Quick Check** | Outline Checker only | Minor changes, small PRs, adding sections to existing pages | "quick check", "check outline", "verify structure" |
 | **Full Review** | Outline Checker + UX Analyzer | New pages, major restructuring, pages >300 lines | "full review", "full outline check", "review structure and UX" |
 
-#### Mode Selection Logic
+#### Create Workflow
+
+For creating new documentation, the Outliner routes to the Outline Generator, which produces a structured YAML outline consumed by the Drafter.
+
+| Step | Sub-prompt | Output |
+|------|-----------|--------|
+| 1. Plan structure | Outline Generator | YAML outline with sections, content hints, and drafter notes |
+| 2. Write content | Drafter *(downstream, not an Outliner sub-prompt)* | Full Markdown content |
+
+The Outline Generator only processes **primary targets** from the Router output. Non-primary targets (required, optional, conditional) go directly to the Drafter in Patch or Micro-edit mode.
+
+---
+
+### Mode Selection Logic
 
 ```
 User request
     │
-    ├─► New page OR major restructuring OR explicit "full review"?
-    │       └─► Run **Full Review** (Checker + UX Analyzer)
+    ├─► Contains source material (Notion, Jira, specs) to transform?
+    │       └─► Route to **Outline Generator** (Create workflow)
     │
-    ├─► Minor changes OR quick check requested?
-    │       └─► Run **Quick Check** (Checker only)
+    ├─► Contains existing content/PR to review?
+    │       │
+    │       ├─► New page OR major restructuring OR explicit "full review"?
+    │       │       └─► Run **Full Review** (Checker + UX Analyzer)
+    │       │
+    │       ├─► Minor changes OR quick check requested?
+    │       │       └─► Run **Quick Check** (Checker only)
+    │       │
+    │       └─► Ambiguous?
+    │               └─► Ask user: "Quick check or full review?"
     │
-    └─► Ambiguous?
-            └─► Ask user: "Quick check or full review?"
+    └─► Ambiguous intent?
+            └─► Ask user what they need
 ```
 
 #### Automatic Full Review Triggers
@@ -51,25 +76,6 @@ Run Full Review automatically when:
 - PR diff shows **>50% of file changed**
 - Document exceeds **300 lines**
 - User explicitly requests "full review" or "UX analysis"
-
----
-
-### Routing Logic
-
-```
-User request
-    │
-    ├─► Contains existing content/PR to review?
-    │       │
-    │       ├─► Quick Check mode
-    │       │       └─► Route to **Outline Checker**
-    │       │
-    │       └─► Full Review mode
-    │               └─► Route to **Outline Checker** → then **UX Analyzer**
-    │
-    └─► Contains source material (Notion, Jira, specs) to transform?
-            └─► Route to **Outline Generator** (coming soon)
-```
 
 ---
 
@@ -147,6 +153,10 @@ User request
 6. **[ux-low]** [Nice-to-have UX improvements]
 ```
 
+#### Outline Generator Output
+
+The Outline Generator produces a YAML outline conforming to the Drafter interface contract (`drafter-interface.md`). See `outline-generator.md` for the full output specification.
+
 ---
 
 ### Trigger Patterns
@@ -166,6 +176,7 @@ User request
 - User provides source material (Notion doc, Jira ticket, GitHub issue, specs)
 - User says: "create outline", "draft structure", "what sections should this have?"
 - User wants to start a new documentation page from scratch
+- Router output indicates `action: create_page` or `action: add_section` for a `primary` target
 
 ---
 
@@ -223,19 +234,19 @@ User: "I need to document the new Scheduler feature. Here's the Notion spec: [li
 Outliner: 
   → Detects: Source material provided, no existing content
   → Routes to: Outline Generator
-  → Returns: Recommended outline with sections and content hints
+  → Returns: YAML outline with sections, content hints, and drafter notes
 ```
 
 ---
 
 ### Integration with Other Prompts
 
-The Outliner works within the broader documentation review system:
+The Outliner works within the broader documentation system across two workflows:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     REVIEW SYSTEM                           │
-└─────────────────────────────┬───────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                     DOCUMENTATION SYSTEM                         │
+└─────────────────────────────┬───────────────────────────────────┘
                               │
         ┌─────────────────────┼─────────────────────┐
         │                     │                     │
@@ -249,38 +260,50 @@ The Outliner works within the broader documentation review system:
 ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
 │   Outline     │    │   Outline     │    │   Outline     │
 │   Checker     │    │   Checker     │    │   Generator   │
-└───────┬───────┘    └───────┬───────┘    └───────────────┘
-        │                    │
-        │                    ▼
-        │            ┌───────────────┐
-        │            │ UX Analyzer  │
-        │            └───────┬───────┘
-        │                    │
-        ▼                    ▼
-┌───────────────┐    ┌───────────────┐
-│ Style Checker │    │ Style Checker │
-│  (optional)   │    │  (optional)   │
-└───────────────┘    └───────────────┘
+└───────┬───────┘    └───────┬───────┘    └───────┬───────┘
+        │                    │                     │
+        │                    ▼                     ▼
+        │            ┌───────────────┐    ┌───────────────┐
+        │            │  UX Analyzer  │    │   Drafter     │
+        │            └───────┬───────┘    │  (downstream) │
+        │                    │            └───────┬───────┘
+        ▼                    ▼                     ▼
+┌───────────────┐    ┌───────────────┐    ┌───────────────┐
+│ Style Checker │    │ Style Checker │    │ Style Checker │
+│  (optional)   │    │  (optional)   │    │  (optional)   │
+└───────────────┘    └───────────────┘    └───────────────┘
 ```
 
 #### Prompt Responsibilities
 
 | Prompt | Responsibility | Does NOT handle |
 |--------|----------------|-----------------|
-| **Outline Checker** | Template compliance, frontmatter, heading hierarchy, components, Diataxis | Prose quality, UX evaluation |
-| **UX Analyzer** | Reader perspective, section order, navigability, proportions, cognitive load | Technical compliance, prose quality |
-| **Style Checker** | Prose quality, 12 Rules, formatting, tone | Structure, UX |
+| **Outline Checker** | Template compliance, frontmatter, heading hierarchy, components, Diataxis | Prose quality, UX evaluation, content planning |
+| **UX Analyzer** | Reader perspective, section order, navigability, proportions, cognitive load | Technical compliance, prose quality, content planning |
+| **Outline Generator** | Structure planning from source material, YAML outline for Drafter | Prose writing, template validation, UX evaluation |
+| **Style Checker** | Prose quality, 12 Rules, formatting, tone | Structure, UX, content planning |
+
+#### Downstream: Drafter
+
+The Outline Generator's YAML output feeds directly into the Drafter, which operates in 3 modes:
+
+- **Compose** — writes full content from an outline (requires Outline Generator output)
+- **Patch** — makes targeted edits to existing pages (no outline needed)
+- **Micro-edit** — inserts a single line or cross-reference (no outline needed)
+
+The interface contract between Outline Generator and Drafter is defined in `drafter-interface.md`.
 
 ---
 
 ### Behavioral Notes
 
-1. **Determine review mode first**: Before analyzing, decide if this is a Quick Check or Full Review based on the triggers above.
+1. **Determine workflow first**: Before analyzing, decide if this is a Review (Quick Check / Full Review) or a Create (Outline Generator) based on the triggers above.
 
 2. **State the mode explicitly**: Always tell the user which mode you're using and why.
    > "Running a **Full Review** because this is a new page."
+   > "Routing to the **Outline Generator** because you provided source material for a new feature."
 
-3. **Ask when ambiguous**: If the user's intent is unclear, ask whether they want a quick check or full review.
+3. **Ask when ambiguous**: If the user's intent is unclear, ask whether they want a review or want to create an outline.
 
 4. **Respect context limits**: For LLMs with limited context, Quick Check mode allows useful analysis without loading the UX Analyzer prompt.
 
@@ -293,3 +316,5 @@ The Outliner works within the broader documentation review system:
 8. **Stay in scope**: Structure and UX only — no prose quality (Style Checker), no link checking (Integrity Checker).
 
 9. **Use GitHub MCP when available**: When the source is a GitHub PR, use the GitHub MCP tools to fetch the PR content directly. See [GitHub MCP Usage Guide](shared/github-mcp-usage.md).
+
+10. **Outline Generator is WIP**: The Outline Generator (`outline-generator.md`) is functional but still being refined. Its output schema and the Drafter interface contract (`drafter-interface.md`) are stabilized; behavioral rules may still evolve based on real-world testing.
