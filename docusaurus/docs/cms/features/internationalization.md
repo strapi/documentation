@@ -110,6 +110,10 @@ A `STRAPI_PLUGIN_I18N_INIT_LOCALE_CODE` [environment variable](/cms/configuratio
 
 In the [Content Manager](/cms/features/content-manager), when the Internationalization feature is enabled for the content-type, a locale drop-down list is added to the top right of the edit view and allows to switch locales.
 
+:::info
+The selected locale persists when navigating between content types. For instance, if you select the Spanish locale while editing a content-type, switching to another content type will keep the Spanish locale selected, even if that content type does not have Internationalization enabled. This makes it easier to work in a specific locale across your content.
+:::
+
 The Internationalization feature also allows dynamic zones and components to differ from one locale to another. Depending on the locale, dynamic zones can indeed have different structures depending on the locale, and repeatable components can have different entries and be organized differently as well.
 
 :::caution
