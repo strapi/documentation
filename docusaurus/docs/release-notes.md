@@ -27,6 +27,51 @@ New versions (minor or patch) are generally released weekly, on Wednesdays.
 
 </details>
 
+
+## 6.16.1
+
+<br />
+### <Icon name='pen-nib' /> Updated content
+
+<br />
+
+#### CMS
+- [Update docs with persistent list view settings for the Content Manager](https://github.com/strapi/documentation/pull/2959)
+- [Add extended AWS S3 provider configuration](https://github.com/strapi/documentation/pull/2949)
+
+### <Icon name='broom' /> Chore, fixes, typos, and other improvements
+
+<br />
+
+#### CMS
+- [Add `.strapi/` folder to "fix build issues with the generated types" TypeScript code example](https://github.com/strapi/documentation/pull/2963)
+- [Add `--non-interactive` and `--enable-ab-tests` flags for CLI installation](https://github.com/strapi/documentation/pull/2957)
+- [Update findOne method to use new document structure](https://github.com/strapi/documentation/pull/2950)
+- [Update locale.md (POST requests)](https://github.com/strapi/documentation/pull/2948)
+- [Add new `--no-build-admin` parameter for `strapi-develop` CLI](https://github.com/strapi/documentation/pull/2946)
+
+#### Repository
+- [Add instructions for URLs validation to Router tool](https://github.com/strapi/documentation/pull/2960)
+- [Improve Router output (tables, instructions for pipeline)](https://github.com/strapi/documentation/pull/2956)
+- [Improve Drafter tool for API pages](https://github.com/strapi/documentation/pull/2955)
+- [Clarify CMS vs.  Docs version numbers in release notes](https://github.com/strapi/documentation/pull/2954)
+
+***
+This release was made possible thanks to the following contributors. Thank you! 🫶
+<div>
+<a href="https://github.com/Bellian" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/2890554?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="Bellian"/>
+</a>
+<a href="https://github.com/bart-webleads" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4990499?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="bart-webleads"/>
+</a>
+<a href="https://github.com/pwizla" target="_blank">
+    <img className="no-zoom" src="https://avatars.githubusercontent.com/u/4233866?v=4" width="40" height="40" style={{borderRadius: '50%'}} alt="pwizla"/>
+</a>
+</div>
+<br/>
+<br/>
+
 <br/>
 
 _Reminder: Version numbers on this page are for the Strapi Docs package. The latest Strapi CMS version is [**5.36.0**](https://github.com/strapi/strapi/releases/tag/v5.36.0)._
