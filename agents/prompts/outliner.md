@@ -16,7 +16,7 @@ When the user provides a GitHub PR, use the GitHub MCP tools to fetch the conten
 |------------|------|---------|
 | **Outline Checker** | `outline-checker.md` | Verify structure against templates (technical compliance) |
 | **UX Analyzer** | `outline-ux-analyzer.md` | Evaluate structure from reader's perspective |
-| **Outline Generator** | `outline-generator.md` *(coming soon)* | Create new structure from source material |
+| **Outline Generator** | `outline-generator.md` | Create new structure from source material |
 
 ---
 
