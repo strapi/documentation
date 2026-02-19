@@ -60,6 +60,28 @@ Branch and History Safety
 - Prefer creating a new branch over rewriting history unless asked otherwise.
 - When asked to stay low profile, do not open PRs; share progress in the chat only.
 
+Branch Naming
+- Every branch must be prefixed based on the documentation area it touches:
+  - `/cms` — branch touches only files under `docs/cms/` and/or `static/`
+  - `/cloud` — branch touches only files under `docs/cloud/` and/or `static/`
+  - `/repo` — branch touches files outside those two areas, or across both
+- Do NOT invent other prefixes (`/doc`, `/docs`, `/feat`, `/fix`, etc.).
+- Format: `/<prefix>/<short-description>` (e.g., `/cms/add-transfer-tokens-page`, `/cloud/fix-deployment-steps`, `/repo/update-sidebar-config`).
+- If a branch touches both `docs/cms/` and `docs/cloud/`, use `/repo` or ask the user.
+- User choice always supersedes auto-branch naming.
+
+Examples (good)
+- /cms/add-transfer-tokens-page
+- /cloud/update-deployment-guide
+- /repo/fix-sidebar-layout-shift
+- /repo/add-agents-md
+
+Anti-examples (and why)
+- /doc/update-middlewares — `/doc` is not a valid prefix; use `/cms`
+- /docs/new-feature — `/docs` is not a valid prefix; use `/cms` or `/cloud`
+- /feat/add-page — `/feat` is not a valid prefix; use the area-based prefix
+- update-middlewares — missing prefix entirely
+
 Pushing and PRs
 - When pushing a new branch, set upstream: `git push -u origin <branch>` (this does not create a PR).
 - Open PRs only when explicitly requested and follow the title/description rules above.
