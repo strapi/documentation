@@ -9,6 +9,8 @@ tags:
   - plugins development
 ---
 
+import UsingSDKplugin5 from '/docs/snippets/sdk-plugin-v5-v6.md'
+
 # Plugin SDK reference
 
 The Plugin SDK is set of commands provided by the package <ExternalLink to="https://github.com/strapi/sdk-plugin" text="@strapi/sdk-plugin"/> orientated around developing plugins to use them as local plugins or to publish them on NPM and/or submit them to the Marketplace.
@@ -45,8 +47,14 @@ strapi-plugin build
 | `--force`      | string | Automatically answer "yes" to all prompts, including potentially destructive requests, and run non-interactively. | -       |
 | `-d, --debug`  |   -    | Enable debugging mode with verbose logs                                                                           | false   |
 | `--silent`     |   -    | Do not log anything                                                                                               | false   |
-| `--minify`     |   -    | Minify the output                                                                                                 | true    |
-| `--sourcemaps` |   -    | Produce sourcemaps                                                                                                | false   |
+| `--minify`     |   -    | Minify the output                                                                                                 | false   |
+| `--sourcemap`  |   -    | Produce sourcemaps                                                                                                | false   |
+
+:::note
+As of v6, the build configuration is automatically derived from your `package.json` exports field. No configuration file (such as `vite.config.ts` or `rollup.config.ts`) is needed.
+:::
+
+<UsingSDKplugin5 />
 
 ## strapi-plugin watch:link
 

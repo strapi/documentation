@@ -9,6 +9,8 @@ tags:
   - plugins development
 ---
 
+import UsingSDKplugin5 from '/docs/snippets/sdk-plugin-v5-v6.md'
+
 # Plugin creation
 
 <Tldr>
@@ -131,6 +133,17 @@ npm run build && npm run verify
 
 The above commands will not only build the plugin, but also verify that the output is valid and ready to be published. You can then publish your plugin to NPM as you would any other package.
 
+:::tip Upgrading from SDK Plugin v5
+If you're upgrading from `@strapi/sdk-plugin` v5 to v6:
+* Delete any `packup.config.ts` file from your plugin (it is no longer used).
+* Rely on `package.json#exports` for build configuration (it is now derived automatically).
+* Add `--sourcemap` to your build command if you need sourcemaps (they now default to off).
+
+No other changes are required.
+:::
+
+<UsingSDKplugin5 />
+
 ## Working with the Plugin SDK in a monorepo environment {#monorepo}
 
 If you are working with a monorepo environment to develop your plugin, you don't need to use the `watch:link` command because the monorepo workspace setup will handle the symlink. You can use the `watch` command instead.
@@ -183,7 +196,7 @@ This error often occurs when your plugin attempts to import core Strapi function
 import { unstable_useContentManagerContext as useContentManagerContext } from '@strapi/strapi/admin';
 ```
 
-To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi’s core modules as the main application, preventing conflicts and the associated errors.
+To resolve the issue, remove `@strapi/strapi` as a dev dependency from your plugin. This ensures that your plugin uses the same instance of Strapi's core modules as the main application, preventing conflicts and the associated errors.
 
 ## Setting a local plugin in a monorepo environment without the Plugin SDK
 
@@ -194,7 +207,7 @@ In a monorepo, you can configure your local plugin without using the Plugin SDK 
 
 ### Server entry point
 
-The server entry point file initializes your plugin’s server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
+The server entry point file initializes your plugin's server-side functionalities. The expected structure for `strapi-server.js` (or its TypeScript variant) is:
 
 ```js
 module.exports = () => {
