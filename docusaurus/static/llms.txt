@@ -39,7 +39,7 @@
 - [Extending the Document Service behavior](https://docs.strapi.io/cms/api/document-service/middlewares): This document provides information about the middlewares in the Document Service API.
 - [Using Populate with the Document Service API](https://docs.strapi.io/cms/api/document-service/populate): Use Strapi's Document Service API to populate or select some fields.
 - [Using Sort & Pagination with the Document Service API](https://docs.strapi.io/cms/api/document-service/sort-pagination): Use Strapi's Document Service API to sort and paginate query results
-- [Using Draft & Publish with the Document Service API](https://docs.strapi.io/cms/api/document-service/status): Use Strapi's Document Service API to return either the draft or the published version of a document
+- [Using Draft & Publish with the Document Service API](https://docs.strapi.io/cms/api/document-service/status): Use Strapi's Document Service API to return draft or published versions of a document and filter by publication history with hasPublishedVersion.
 - [GraphQL API](https://docs.strapi.io/cms/api/graphql): import DeepFilteringBlogLink from '/docs/snippets/deep-filtering-blog.md'
 - [OpenAPI specification](https://docs.strapi.io/cms/api/openapi): Learn how to generate OpenAPI specifications for your Strapi applications using the @strapi/openapi package
 - [REST API reference](https://docs.strapi.io/cms/api/rest): Interact with your Content-Types using the REST API endpoints Strapi generates for you.
@@ -51,7 +51,7 @@
 - [Populate and Select](https://docs.strapi.io/cms/api/rest/populate-select): Use Strapi's REST API to populate or select certain fields.
 - [Relations](https://docs.strapi.io/cms/api/rest/relations): Use the REST API to manage the order of relations
 - [Sort and Pagination](https://docs.strapi.io/cms/api/rest/sort-pagination): Use Strapi's REST API to sort or paginate your data.
-- [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents.
+- [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents and filter by publication history with hasPublishedVersion.
 - [Upload files](https://docs.strapi.io/cms/api/rest/upload): Learn how to use the /api/upload endpoints to upload files to Strapi with the REST API.
 - [Back-end customization](https://docs.strapi.io/cms/backend-customization): Strapi’s back end is a Koa-based server where requests pass through global middlewares, routes, controllers, services, and models before the Document Service returns responses.
 - [Controllers](https://docs.strapi.io/cms/backend-customization/controllers): Controllers bundle actions that handle business logic for each route within Strapi’s MVC pattern. This documentation demonstrates generating controllers, extending core ones with createCoreController, and delegating heavy logic to services.

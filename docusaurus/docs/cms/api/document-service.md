@@ -86,6 +86,7 @@ Syntax: `findOne(parameters: Params) => Document`
 | `documentId` | Document id | | `ID` |
 | [`locale`](/cms/api/document-service/locale#find-one)|  Locale of the document to find. | Default locale | String or `undefined` |
 | [`status`](/cms/api/document-service/status#find-one) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`fields`](/cms/api/document-service/fields#findone)   | [Select fields](/cms/api/document-service/fields#findone) to return   | All fields<br/>(except those not populated by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
 
@@ -135,6 +136,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#find-first) |  Locale of the documents to find. | Default locale | String or `undefined` |
 | [`status`](/cms/api/document-service/status#find-first) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#findfirst)   | [Select fields](/cms/api/document-service/fields#findfirst) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -225,6 +227,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#find-many) |  Locale of the documents to find. | Default locale | String or `undefined` |
 | [`status`](/cms/api/document-service/status#find-many) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#findmany)   | [Select fields](/cms/api/document-service/fields#findmany) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -732,12 +735,13 @@ Syntax: `count(parameters: Params) => number`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#count) | Locale of the documents to count | Default locale | String or `null` |
 | [`status`](/cms/api/document-service/status#count) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. To count only documents that have never been published, use the [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) parameter.
 :::
 
 #### Examples
@@ -746,7 +750,7 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 ##### Generic example
 
-If no parameter is passed, the `count()` method the total number of documents for the default locale:
+If no parameter is passed, the `count()` method returns the total number of documents for the default locale:
 <ApiCall>
 
 <Request>

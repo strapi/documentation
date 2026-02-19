@@ -2180,6 +2180,7 @@ Syntax:  `findFirst(parameters: Params) => Document`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#find-first) |  Locale of the documents to find. | Default locale | String or `undefined` |
 | [`status`](/cms/api/document-service/status#find-first) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#findfirst)   | [Select fields](/cms/api/document-service/fields#findfirst) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -2214,6 +2215,7 @@ Syntax: `findMany(parameters: Params) => Document[]`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#find-many) |  Locale of the documents to find. | Default locale | String or `undefined` |
 | [`status`](/cms/api/document-service/status#find-many) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents</li><li>`'draft'` to find only draft documents</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 | [`fields`](/cms/api/document-service/fields#findmany)   | [Select fields](/cms/api/document-service/fields#findmany) to return   | All fields<br/>(except those not populate by default)  | Object |
 | [`populate`](/cms/api/document-service/populate) | [Populate](/cms/api/document-service/populate) results with additional fields. | `null` | Object |
@@ -2441,12 +2443,13 @@ Syntax: `count(parameters: Params) => number`
 |-----------|-------------|---------|------|
 | [`locale`](/cms/api/document-service/locale#count) | Locale of the documents to count | Default locale | String or `null` |
 | [`status`](/cms/api/document-service/status#count) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Publication status, can be: <ul><li>`'published'` to find only published documents </li><li>`'draft'` to find draft documents (will return all documents)</li></ul> | `'draft'` | `'published'` or `'draft'` |
+| [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) | _If [Draft & Publish](/cms/features/draft-and-publish) is enabled for the content-type_:<br/>Filter by whether the document has a published version. Ignored when not set. | `undefined` | Boolean |
 | [`filters`](/cms/api/document-service/filters) | [Filters](/cms/api/document-service/filters) to use | `null` | Object |
 
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. To count only documents that have never been published, use the [`hasPublishedVersion`](/cms/api/document-service/status#has-published-version) parameter.
 :::
 
 #### Examples
@@ -2455,7 +2458,7 @@ This means that counting with the `status: 'draft'` parameter still returns the 
 
 ##### Generic example
 
-If no parameter is passed, the `count()` method the total number of documents for the default locale:
+If no parameter is passed, the `count()` method returns the total number of documents for the default locale:
 
 </ApiCall>
 
@@ -3425,11 +3428,12 @@ Source: https://docs.strapi.io/cms/api/document-service/status
 
 # Document Service API: Usage with Draft & Publish
 
-By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` parameter to:
+By default the [Document Service API](/cms/api/document-service) returns the draft version of a document when the [Draft & Publish](/cms/features/draft-and-publish) feature is enabled. This page describes how to use the `status` and `hasPublishedVersion` parameters to:
 
 - return the published version of a document,
-- count documents depending on their status, 
-- and directly publish a document while creating it or updating it.
+- filter documents by whether they have ever been published,
+- count documents depending on their status,
+- directly publish a document while creating it or updating it.
 
 :::note
 Passing `{ status: 'draft' }` to a Document Service API query returns the same results as not passing any `status` parameter.
@@ -3480,7 +3484,7 @@ const publishedCount = await strapi.documents("api::restaurant.restaurant").coun
 :::note
 Since published documents necessarily also have a draft counterpart, a published document is still counted as having a draft version.
 
-This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. There currently is no way to prevent already published documents from being counted.
+This means that counting with the `status: 'draft'` parameter still returns the total number of documents matching other parameters, even if some documents have already been published and are not displayed as "draft" or "modified" in the Content Manager anymore. To count only documents that have never been published, use the [`hasPublishedVersion`](#has-published-version) parameter.
 :::
 
 ## Create a draft and publish it {#create}
@@ -3494,6 +3498,41 @@ To automatically publish a document while creating it, add `status: 'published'`
 To automatically publish a document while updating it, add `status: 'published'` to parameters passed to `update()`:
 
 </ApiCall>
+
+## Filter by publication history with `hasPublishedVersion` {#has-published-version}
+
+</ApiCall>
+
+### Find drafts of published documents
+
+Pass `hasPublishedVersion: true` with `status: 'draft'` to return only drafts of documents that have been published at least once:
+
+</ApiCall>
+
+:::note
+Because the draft version is returned, `publishedAt` is `null` even when a published version exists.
+:::
+
+### Count never-published documents
+
+Combine `hasPublishedVersion: false` with `count()` to count documents that have never been published:
+
+```js
+const neverPublishedCount = await strapi.documents("api::restaurant.restaurant").count({
+  status: 'draft',
+  hasPublishedVersion: false,
+});
+```
+
+### Combine with other parameters
+
+`hasPublishedVersion` can be combined with [`locale`](/cms/api/document-service/locale), [`filters`](/cms/api/document-service/filters), and [`populate`](/cms/api/document-service/populate):
+
+</ApiCall>
+
+:::tip
+When `hasPublishedVersion` is used with [`populate`](/cms/api/document-service/populate), the filter also applies to populated relations. Each related document is filtered based on whether a published version exists for it.
+:::
 
 
 
@@ -4125,6 +4164,7 @@ The following API parameters are available:
 | `filters`          | Object        | [Filter the response](/cms/api/rest/filters) |
 | `locale`           | String        | [Select a locale](/cms/api/rest/locale) |
 | `status`           | String        | [Select the Draft & Publish status](/cms/api/rest/status) |
+| `hasPublishedVersion` | Boolean    | [Filter by whether the document has a published version](/cms/api/rest/status#has-published-version) |
 | `populate`         | String or Object | [Populate relations, components, or dynamic zones](/cms/api/rest/populate-select#population) |
 | `fields`           | Array         | [Select only specific fields to display](/cms/api/rest/populate-select#field-selection) |
 | `sort`             | String or Array  | [Sort the response](/cms/api/rest/sort-pagination.md#sorting) |
@@ -4462,9 +4502,9 @@ The default and maximum values for `pagination[limit]` can be [configured in the
 # Status
 Source: https://docs.strapi.io/cms/api/rest/status
 
-# REST API: `status`
+# REST API: `status` and `hasPublishedVersion`
 
-The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published.
+The [REST API](/cms/api/rest) offers the ability to filter results based on their status, draft or published, and by whether they have a published version.
 
 :::prerequisites
 The [Draft & Publish](/cms/features/draft-and-publish) feature should be enabled.
@@ -4489,6 +4529,28 @@ Since published versions are returned by default, passing no status parameter is
 <summary>JavaScript query (built with the qs library):</summary>
 
 </ApiCall>
+
+## `hasPublishedVersion` 
+
+<details>
+<summary>JavaScript query (built with the qs library):</summary>
+
+</ApiCall>
+
+<br />
+
+<details>
+<summary>JavaScript query (built with the qs library):</summary>
+
+</ApiCall>
+
+:::note
+Because the draft version is returned, `publishedAt` is `null` even when a published version exists.
+:::
+
+:::caution
+Passing an invalid value for `hasPublishedVersion` (anything other than `true` or `false`) returns a `400 Bad Request` error.
+:::
 
 
 
