@@ -3,7 +3,7 @@ If you need to continue using the previous build system with `@strapi/pack-up`, 
 
 <Tabs groupId="yarn-npm">
 
-<TabItem value="yarn" label="Yarn">
+<TabItem value="yarn" label="Yarn" default>
 
 ```bash
 yarn add @strapi/sdk-plugin@5
