@@ -17,23 +17,26 @@ jobs:
     permissions:
       pull-requests: write
       contents: read
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Analyze PR and add labels
         uses: actions/github-script@v7
         with:
           script: |
+            // -------------------------------------------------------
+            // 1. Resolve PR to process
+            // -------------------------------------------------------
             let prToProcess;
-            
+
             if (context.eventName === 'pull_request') {
               prToProcess = context.payload.pull_request;
             } else if (context.eventName === 'workflow_dispatch') {
               const prNumber = '${{ inputs.pr_number }}';
               console.log(`Manual trigger for PR #${prNumber}`);
-              
+
               const { data: pr } = await github.rest.pulls.get({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -41,60 +44,105 @@ jobs:
               });
               prToProcess = pr;
             }
-            
+
             const prNumber = prToProcess.number;
             console.log(`Processing PR #${prNumber}`);
-            
+
+            // -------------------------------------------------------
+            // 2. Fetch changed files
+            // -------------------------------------------------------
             const { data: files } = await github.rest.pulls.listFiles({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: prNumber
             });
-            
+
             console.log(`Found ${files.length} files changed`);
-            
+
+            // -------------------------------------------------------
+            // 3. Classify each file into a documentation area
+            //
+            //    Repo-relative paths look like:
+            //      docusaurus/docs/cms/features/content-manager.md
+            //      docusaurus/docs/cloud/getting-started/deployment.md
+            //      docusaurus/static/img/assets/cloud/settings.png
+            //
+            //    Rules (aligned with AGENTS.md branch naming):
+            //      - Path contains /docs/cms/  → CMS
+            //      - Path contains /docs/cloud/ → Cloud
+            //      - Path is under static/      → neutral (shared assets)
+            //      - Anything else              → Other
+            // -------------------------------------------------------
             let touchesCMS = false;
             let touchesCloud = false;
             let touchesOther = false;
             let hasNewFile = false;
             let totalChanges = 0;
-            
-            const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.ico', '.bmp'];
-            
+
+            /**
+             * Determine the documentation area for a file path.
+             * Returns 'cms', 'cloud', 'static' (neutral), or 'other'.
+             */
+            function classifyFile(filepath) {
+              // Normalize: strip leading slash if any
+              const f = filepath.replace(/^\//, '');
+
+              // Documentation content
+              if (f.includes('/docs/cms/') || f.startsWith('docs/cms/')) return 'cms';
+              if (f.includes('/docs/cloud/') || f.startsWith('docs/cloud/')) return 'cloud';
+
+              // Shared static assets — neutral, should not influence source label
+              if (f.includes('/static/') || f.startsWith('static/')) return 'static';
+
+              // Snippets live under docs/ and are shared — treat as CMS by convention
+              if (f.includes('/docs/snippets/') || f.startsWith('docs/snippets/')) return 'cms';
+
+              // Everything else (src/, scripts, config, .github/, agents/, etc.)
+              return 'other';
+            }
+
             for (const file of files) {
               console.log(`File: ${file.filename}, status: ${file.status}, +${file.additions} -${file.deletions}`);
-              
-              const isImage = imageExtensions.some(ext => file.filename.toLowerCase().endsWith(ext));
-              
-              if (!isImage) {
-                if (file.filename.startsWith('cms/')) {
-                  touchesCMS = true;
-                } else if (file.filename.startsWith('cloud/')) {
-                  touchesCloud = true;
-                } else {
-                  touchesOther = true;
-                }
+
+              const area = classifyFile(file.filename);
+              console.log(`  → area: ${area}`);
+
+              switch (area) {
+                case 'cms':   touchesCMS = true; break;
+                case 'cloud': touchesCloud = true; break;
+                case 'static': /* neutral — does not influence source */ break;
+                default:      touchesOther = true; break;
               }
-              
+
               if (file.status === 'added') {
                 hasNewFile = true;
               }
-              
+
               totalChanges += file.additions + file.deletions;
             }
-            
+
             console.log(`Summary: CMS=${touchesCMS}, Cloud=${touchesCloud}, Other=${touchesOther}`);
             console.log(`Has new file: ${hasNewFile}, Total changes: ${totalChanges}`);
-            
+
+            // -------------------------------------------------------
+            // 4. Determine source label
+            //
+            //    /cms prefix   → CMS only (+ optional static)
+            //    /cloud prefix → Cloud only (+ optional static)
+            //    /repo prefix  → anything else or mixed
+            // -------------------------------------------------------
             let sourceLabel;
-            if ((touchesCMS && !touchesCloud && !touchesOther)) {
+            if (touchesCMS && !touchesCloud && !touchesOther) {
               sourceLabel = 'source: CMS';
-            } else if ((touchesCloud && !touchesCMS && !touchesOther)) {
+            } else if (touchesCloud && !touchesCMS && !touchesOther) {
               sourceLabel = 'source: Strapi Cloud';
             } else {
               sourceLabel = 'source: repo';
             }
-            
+
+            // -------------------------------------------------------
+            // 5. Determine PR type label
+            // -------------------------------------------------------
             let prTypeLabel;
             if (hasNewFile) {
               prTypeLabel = 'pr: new content';
@@ -103,32 +151,35 @@ jobs:
             } else {
               prTypeLabel = 'pr: chore';
             }
-            
+
             console.log(`Determined labels: ${sourceLabel}, ${prTypeLabel}`);
-            
+
+            // -------------------------------------------------------
+            // 6. Apply labels (skip categories that already have one)
+            // -------------------------------------------------------
             const existingLabels = prToProcess.labels.map(label => label.name);
             const hasSourceLabel = existingLabels.some(label => label.startsWith('source:'));
             const hasPrTypeLabel = existingLabels.some(label => label.startsWith('pr:'));
-            
+
             const labelsToAdd = [];
-            
+
             if (!hasSourceLabel) {
               labelsToAdd.push(sourceLabel);
             } else {
-              console.log(`PR #${prNumber} already has a source label, skipping source label`);
+              console.log(`PR #${prNumber} already has a source label, skipping`);
             }
-            
+
             if (!hasPrTypeLabel) {
               labelsToAdd.push(prTypeLabel);
             } else {
-              console.log(`PR #${prNumber} already has a pr type label, skipping pr type label`);
+              console.log(`PR #${prNumber} already has a pr type label, skipping`);
             }
-            
+
             if (labelsToAdd.length === 0) {
               console.log(`No labels to add to PR #${prNumber}`);
               return;
             }
-            
+
             try {
               await github.rest.issues.addLabels({
                 owner: context.repo.owner,
@@ -136,9 +187,9 @@ jobs:
                 issue_number: prNumber,
                 labels: labelsToAdd
               });
-              
+
               console.log(`Successfully added labels to PR #${prNumber}: ${labelsToAdd.join(', ')}`);
-              
+
             } catch (error) {
               console.error(`Error adding labels to PR #${prNumber}:`, error);
               core.setFailed(`Failed to add labels to PR #${prNumber}: ${error.message}`);
