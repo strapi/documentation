@@ -27042,10 +27042,10 @@ npm run build && npm run verify
 Description: However, if you are writing admin code, you might add an alias that targets the source code of your plugin to make it easier to work with within the context of the admin panel:
 (Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#monorepo)
 
-Language: JavaScript
-File path: N/A
+Language: TypeScript
+File path: .config.ts
 
-```js
+```ts
 import path from 'node:path';
 
 export default (config, webpack) => {
@@ -27093,7 +27093,7 @@ import { unstable_useContentManagerContext as useContentManagerContext } from '@
 
 
 ## Server entry point
-Description: The server entry point file initializes your plugin’s server-side functionalities.
+Description: The server entry point file initializes your plugin's server-side functionalities.
 (Source: https://docs.strapi.io/cms/plugins-development/create-a-plugin#server-entry-point)
 
 Language: TypeScript
@@ -27626,7 +27626,7 @@ Description: For testing purposes, it is very convenient to link your plugin to 
 (Source: https://docs.strapi.io/cms/plugins-development/plugin-sdk#strapi-plugin-watch-link)
 
 Language: Bash
-File path: N/A
+File path: .config.ts
 
 ```bash
 strapi-plugin watch:link
@@ -27638,7 +27638,7 @@ Description: Watch the plugin source code for any change and rebuild it everytim
 (Source: https://docs.strapi.io/cms/plugins-development/plugin-sdk#strapi-plugin-watch)
 
 Language: Bash
-File path: N/A
+File path: .config.ts
 
 ```bash
 strapi-plugin watch
@@ -27650,7 +27650,7 @@ Description: Verify the output of the plugin before publishing it.
 (Source: https://docs.strapi.io/cms/plugins-development/plugin-sdk#strapi-plugin-verify)
 
 Language: Bash
-File path: N/A
+File path: .config.ts
 
 ```bash
 strapi-plugin verify
