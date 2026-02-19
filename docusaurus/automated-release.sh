@@ -392,6 +392,7 @@ integrate_release_notes() {
     echo -e "${GREEN}✅ Release notes integrated${NC}"
 }
 
+# Function to update Strapi CMS version in release notes
 update_cms_version_link() {
     echo -e "${BLUE}🔄 Checking latest Strapi CMS version...${NC}"
     
@@ -414,17 +415,24 @@ update_cms_version_link() {
     
     echo -e "${BLUE}Latest Strapi CMS version: $cms_version${NC}"
     
+    # Detect OS for sed -i compatibility (macOS requires '' argument)
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        SED_INPLACE=(sed -i '')
+    else
+        SED_INPLACE=(sed -i)
+    fi
+    
     # Update the reminder line in release-notes.md
     if grep -q "The latest Strapi CMS version is" "$RELEASE_NOTES_FILE"; then
         # Try __bold__ syntax first
-        sed -i "s|\(The latest Strapi CMS version is \)\[__[^]]*__\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[__${cms_version}__](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
+        "${SED_INPLACE[@]}" "s|\(The latest Strapi CMS version is \)\[__[^]]*__\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[__${cms_version}__](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
         
         if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
             echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version in release notes${NC}"
         else
             echo -e "${YELLOW}⚠️  Sed replacement may not have matched. Trying alternate pattern...${NC}"
             # Fallback: handle **bold** markdown syntax
-            sed -i "s|\(The latest Strapi CMS version is \)\[\*\*[^]]*\*\*\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[**${cms_version}**](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
+            "${SED_INPLACE[@]}" "s|\(The latest Strapi CMS version is \)\[\*\*[^]]*\*\*\](https://github.com/strapi/strapi/releases/tag/v[^)]*)\(.*\)|\1[**${cms_version}**](https://github.com/strapi/strapi/releases/tag/v${cms_version})\2|" "$RELEASE_NOTES_FILE"
             
             if grep -q "$cms_version" "$RELEASE_NOTES_FILE"; then
                 echo -e "${GREEN}✅ Updated Strapi CMS version to $cms_version (fallback pattern)${NC}"
@@ -438,6 +446,7 @@ update_cms_version_link() {
         echo -e "${BLUE}The line might not have been added yet.${NC}"
     fi
 }
+
 # Function to commit and push changes
 commit_and_push() {
     echo -e "${BLUE}💾 Committing and pushing changes...${NC}"
