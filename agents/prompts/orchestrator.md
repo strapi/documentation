@@ -136,6 +136,29 @@ Router → Outliner (Generator) → Drafter → Style Checker → Integrity Chec
 
 ---
 
+### Branch and PR Conventions
+
+When a workflow involves creating a branch or opening a PR (typically in Create Mode), the Orchestrator must enforce the repository's branch naming and PR conventions.
+
+**Branch prefix derivation** — The Router identifies the target documentation area. Use this to determine the prefix:
+
+| Router identifies target under… | Branch prefix |
+|--------------------------------|---------------|
+| `docs/cms/` (with or without `static/`) | `/cms` |
+| `docs/cloud/` (with or without `static/`) | `/cloud` |
+| Files in both areas, or outside both | `/repo` |
+
+**Format:** `/<prefix>/<short-kebab-description>` (e.g., `/cms/add-transfer-tokens-page`)
+
+**Rules:**
+1. Only `/cms`, `/cloud`, and `/repo` are valid prefixes. Never invent others.
+2. If the Router output is ambiguous (e.g., touches both areas), ask the user.
+3. User choice always supersedes automatic prefix derivation.
+
+**Commit messages and PR titles** must follow `git-rules.md` — the canonical reference for all Git conventions in this repository.
+
+---
+
 ### Trigger Patterns
 
 #### Review Mode Triggers
