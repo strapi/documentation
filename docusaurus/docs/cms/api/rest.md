@@ -237,7 +237,7 @@ In Strapi 5, a specific document is reached by its `documentId`.
 
 <Request title="Example request">
 
-`GET http://localhost:1337/api/restaurants/j964065dnjrdr4u89weh79xl`
+`GET http://localhost:1337/api/restaurants/znrlzntu9ei5onjvwfaalu2v`
 
 </Request>
 
