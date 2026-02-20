@@ -48,7 +48,7 @@
 - [Interactive Query Builder](https://docs.strapi.io/cms/api/rest/interactive-query-builder): Use an interactive tool that leverages the querystring library to build your query URL
 - [Locale](https://docs.strapi.io/cms/api/rest/locale): Browse the REST API reference for the locale parameter to take advantage of the Internationalization feature through REST.
 - [Parameters](https://docs.strapi.io/cms/api/rest/parameters): Use API parameters to refine your Strapi REST API queries.
-- [Populate and Select](https://docs.strapi.io/cms/api/rest/populate-select): Use Strapi's REST API to populate or select certain fields.
+- [Populate and Select](https://docs.strapi.io/cms/api/rest/populate-select): Use the populate parameter to include relations, media fields, components, and dynamic zones in REST API responses. Use the fields parameter to return only specific fields.
 - [Relations](https://docs.strapi.io/cms/api/rest/relations): Use the REST API to manage the order of relations
 - [Sort and Pagination](https://docs.strapi.io/cms/api/rest/sort-pagination): Use Strapi's REST API to sort or paginate your data.
 - [Status](https://docs.strapi.io/cms/api/rest/status): Use Strapi's REST API to work with draft or published versions of your documents.

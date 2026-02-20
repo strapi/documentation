@@ -4143,7 +4143,7 @@ Source: https://docs.strapi.io/cms/api/rest/populate-select
 
 # REST API: Population & Field Selection
 
-The [REST API](/cms/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields and the [`select` parameter](#field-selection) to return only specific fields with the query results.
+The [REST API](/cms/api/rest) by default does not populate any relations, media fields, components, or dynamic zones. Use the [`populate` parameter](#population) to populate specific fields. Use the [`fields` parameter](#field-selection) to return only specific fields with the query results.
 
 :::tip
 
@@ -4151,28 +4151,19 @@ The [REST API](/cms/api/rest) by default does not populate any relations, media 
 
 ## Population
 
-The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types.
+The REST API by default does not populate any type of fields, so it will not populate relations, media fields, components, or dynamic zones unless you pass a `populate` parameter to populate various field types. Populated relations always return full objects; the REST API currently cannot return just an array of IDs.
 
-The `populate` parameter can be used alone or [in combination with multiple operators](#combining-population-with-other-operators) to have much more control over the population.
-
-:::caution
-The `find` permission must be enabled for the content-types that are being populated. If a role doesn't have access to a content-type it will not be populated (see [User Guide](/cms/features/users-permissions#editing-a-role) for additional information on how to enable `find` permissions for content-types).
+:::prerequisites
+The `find` permission must be enabled for the content-types that are being populated. If a role does not have access to a content-type, the content-type will not be populated (see [Users & Permissions](/cms/features/users-permissions#editing-a-role) for additional information on how to enable `find` permissions for content-types).
 :::
 
-:::note
-It's currently not possible to return just an array of ids with a request.
+You can use the `populate` parameter alone or [in combination with multiple operators](#combining-population-with-other-operators) for more control over the population.
+
+:::caution 
+`populate=deep` plugins are [not recommended in Strapi](https://support.strapi.io/articles/8544110758-why-populate-deep-plugins-are-not-recommended-in-strapi).
 :::
 
-:::strapi Populating guides
-
-The [REST API guides](/cms/api/rest/guides/intro) section includes more detailed information about various possible use cases for the populate parameter:
-
-- The [Understanding populate](/cms/api/rest/guides/understanding-populate) guide explains in details how populate works, with diagrams, comparisons, and real-world examples.
-- The [How to populate creator fields](/cms/api/rest/guides/populate-creator-fields) guide provides step-by-step instructions on how to add `createdBy` and `updatedBy` fields to your queries responses.
-
-:::
-
-The following table sums up possible populate use cases and their associated parameter syntaxes, and links to sections of the Understanding populate guide which includes more detailed explanations:
+The following table lists populate use cases with example syntax. Each row links to the Understanding populate guide for details:
 
 | Use case  | Example parameter syntax | Detailed explanations to read |
 |-----------| ---------------|-----------------------|
@@ -4186,14 +4177,14 @@ The following table sums up possible populate use cases and their associated par
 | Populate a dynamic zone and its nested elements and relations, using a precisely defined, detailed population strategy | `populate[dynamic-zone-name][on][component-category.component-name][populate][relation-name][populate][0]=field-name`| [Populate dynamic zones](/cms/api/rest/guides/understanding-populate#populate-dynamic-zones) |
 
 :::tip
-The easiest way to build complex queries with multiple-level population is to use our [interactive query builder](/cms/api/rest/interactive-query-builder) tool.
+To build complex queries with multiple-level population, use the [interactive query builder](/cms/api/rest/interactive-query-builder) tool. For more detailed explanations and examples, see the [REST API guides](/cms/api/rest/guides/intro).
 :::
 
-### Combining Population with other operators
+### Combining population with other operators
 
-By utilizing the `populate` operator it is possible to combine other operators such as [field selection](/cms/api/rest/populate-select#field-selection), [filters](/cms/api/rest/filters), and [sort](/cms/api/rest/sort-pagination) in the population queries.
+You can combine the `populate` operator with other operators such as [field selection](/cms/api/rest/populate-select#field-selection), [filters](/cms/api/rest/filters), and [sort](/cms/api/rest/sort-pagination) in the population queries.
 
-:::caution
+:::note
 The population and pagination operators cannot be combined.
 :::
 
@@ -4201,16 +4192,12 @@ The population and pagination operators cannot be combined.
 
 `fields` and `populate` can be combined.
 
-<details>
-<summary>
 </ApiCall>
 
 #### Populate with filtering
 
 `filters` and `populate` can be combined.
 
-<details>
-<summary>
 </ApiCall>
 
 
