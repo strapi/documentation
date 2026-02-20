@@ -16,7 +16,6 @@ tags:
 ---
 
 import QsIntroFull from '/docs/snippets/qs-intro-full.md'
-import QsForQueryTitle from '/docs/snippets/qs-for-query-title.md'
 import QsForQueryBody from '/docs/snippets/qs-for-query-body.md'
 
 # REST API: Population & Field Selection
@@ -57,7 +56,7 @@ Field selection does not work on relational, media, component, or dynamic zone f
 `GET /api/restaurants?fields[0]=name&fields[1]=description`
 
 <details>
-<summary><QsForQueryTitle/></summary>
+<summary>JavaScript query (built with the qs library)</summary>
 
 <QsForQueryBody />
 
@@ -75,6 +74,7 @@ const query = qs.stringify(
 await request(`/api/users?${query}`);
 ```
 
+<br/>
 </details>
 </Request>
 
@@ -187,6 +187,7 @@ const query = qs.stringify(
 await request(`/api/articles?${query}`);
 ```
 
+<br/>
 </details>
 </Request>
 
@@ -253,6 +254,8 @@ const query = qs.stringify(
 
 await request(`/api/articles?${query}`);
 ```
+
+<br/>
 
 </details>
 </Request>
