@@ -45,6 +45,10 @@ Additional information on how to migrate from the Entity Service API to the Docu
 Relations can also be connected, disconnected, and set through the Document Service API, just like with the REST API (see the [REST API relations documentation](/cms/api/rest/relations) for examples).
 :::
 
+## Configuration
+
+Strict validation of params passed to Document Service methods (e.g. `findMany`, `findOne`) is configured via `documents.strictParams` in the [API configuration](/cms/configurations/api) file (`./config/api.js` or `./config/api.ts`). See the [API configuration](/cms/configurations/api) table and examples for that option.
+
 ## Document objects
 
 Document methods return a document object or a list of document objects, which represent a version of a content entry grouped under a stable `documentId`. Returned objects typically include:

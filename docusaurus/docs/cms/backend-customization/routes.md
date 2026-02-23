@@ -645,3 +645,71 @@ export default  {
 </TabItem>
 
 </Tabs>
+
+## Custom Content API parameters {#custom-content-api-parameters}
+
+You can extend the **query** and **body** parameters allowed on Content API routes by registering them in the [register](/cms/configurations/functions#register) lifecycle. Those params are then validated and sanitized like core params. This is useful when you want clients to send extra query keys (e.g. `?search=...`) or JSON body keys (e.g. `clientMutationId`) without defining custom routes or controllers.
+
+| What | Where |
+|------|--------|
+| **Enable strict params** (reject unknown query/body keys) | [API configuration](/cms/configurations/api): set `rest.strictParams: true` in `./config/api.js` (or `./config/api.ts`). |
+| **Add allowed params** | **App:** call `addQueryParams` / `addBodyParams` in [register](/cms/configurations/functions#register) in `./src/index.js` or `./src/index.ts`. **Plugin:** call in the plugin's [register](/cms/plugins-development/server-api#register) lifecycle. |
+
+When `rest.strictParams` is enabled, only core params and params on each route's request schema are accepted; the params you register are merged into that schema. Use the `z` instance from `@strapi/utils` (or `zod/v4`) for schemas.
+
+### addQueryParams
+
+`strapi.contentAPI.addQueryParams(options)` registers extra **query** parameters. Schemas must be scalar or array-of-scalars (string, number, boolean, enum). For nested structures, use `addBodyParams` instead. Each entry can have optional `matchRoute: (route) => boolean` to add the param only to routes for which it returns true.
+
+### addBodyParams
+
+`strapi.contentAPI.addBodyParams(options)` registers extra **body** parameters (any Zod type). Same optional `matchRoute` as above.
+
+### Scoping with matchRoute
+
+The `matchRoute` callback receives a **route** object. Useful properties: `route.method` (`'GET'`, `'POST'`, etc.), `route.path`, `route.handler`, `route.info`. For example, only GET routes: `matchRoute: (route) => route.method === 'GET'`. Only routes whose path includes `articles`: `matchRoute: (route) => route.path.includes('articles')`.
+
+<Tabs groupId="js-ts">
+<TabItem value="js" label="JavaScript">
+
+```js title="./src/index.js"
+module.exports = {
+  register({ strapi }) {
+    strapi.contentAPI.addQueryParams({
+      search: {
+        schema: (z) => z.string().max(200).optional(),
+        matchRoute: (route) => route.path.includes('articles'),
+      },
+    });
+    strapi.contentAPI.addBodyParams({
+      clientMutationId: {
+        schema: (z) => z.string().max(100).optional(),
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+<TabItem value="ts" label="TypeScript">
+
+```ts title="./src/index.ts"
+export default {
+  register({ strapi }) {
+    strapi.contentAPI.addQueryParams({
+      search: {
+        schema: (z) => z.string().max(200).optional(),
+        matchRoute: (route) => route.path.includes('articles'),
+      },
+    });
+    strapi.contentAPI.addBodyParams({
+      clientMutationId: {
+        schema: (z) => z.string().max(100).optional(),
+      },
+    });
+  },
+};
+```
+
+</TabItem>
+</Tabs>
