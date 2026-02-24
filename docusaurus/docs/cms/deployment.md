@@ -194,7 +194,7 @@ For more information, consult the [TypeScript documentation](/cms/typescript/dev
 :::
 
 :::tip Health check endpoint
-Strapi exposes a lightweight health check route at `/_health` for uptime monitors and load balancers. When the server is ready, it responds with an HTTP `204 No Content` status and a `strapi: You are so French!` header value, which you can use to confirm the application is reachable.
+Strapi exposes a lightweight health check route at `/_health` for uptime monitors and load balancers. When the server is ready, it responds with an HTTP `204 No Content` status and a `strapi: You are so French!` header value, which you can use to confirm the application is reachable. Hosting providers like Render can use this endpoint for automated health checks.
 :::
 
 ### Advanced configurations
@@ -217,6 +217,62 @@ The <ExternalLink to="https://strapi.io/integrations" text="integrations page"/>
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on DigitalOcean App Platform"  link="https://strapi.io/integrations/digital-ocean" />
 
 <CustomDocCard emoji="🔗" small title="Deploy Strapi on Heroku" link="https://strapi.io/integrations/heroku" />
+
+<CustomDocCard emoji="🔗" small title="Deploy Strapi on Render" link="https://strapi.io/integrations/render" />
+
+<br/>
+
+### One-click deploy to Render
+
+Render offers a streamlined deployment experience for Strapi using Infrastructure-as-Code Blueprints. Click the button below to deploy a Strapi instance with a PostgreSQL database:
+
+<a href="https://dashboard.render.com/blueprint/new?repo=https://github.com/strapi/strapi&branch=develop&rootDir=templates/website">
+  <img src="https://render.com/images/deploy-to-render-button.svg" alt="Deploy to Render" />
+</a>
+
+This Blueprint provisions:
+- A Node.js web service running Strapi (Starter plan)
+- A PostgreSQL database (Free plan)
+- Auto-generated secrets (`APP_KEYS`, `JWT_SECRET`, `API_TOKEN_SALT`, etc.)
+
+For manual Render deployment, create a `render.yaml` file in your repository root:
+
+```yaml title="render.yaml"
+services:
+  - type: web
+    name: strapi
+    runtime: node
+    plan: starter
+    buildCommand: yarn install && yarn build
+    startCommand: yarn start
+    healthCheckPath: /_health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_CLIENT
+        value: postgres
+      - key: DATABASE_URL
+        fromDatabase:
+          name: strapi-db
+          property: connectionString
+      - key: APP_KEYS
+        generateValue: true
+      - key: API_TOKEN_SALT
+        generateValue: true
+      - key: ADMIN_JWT_SECRET
+        generateValue: true
+      - key: TRANSFER_TOKEN_SALT
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+
+databases:
+  - name: strapi-db
+    databaseName: strapi
+    plan: free
+```
 
 <br/>
 
