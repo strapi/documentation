@@ -47,7 +47,7 @@ Relations can also be connected, disconnected, and set through the Document Serv
 
 ## Configuration
 
-Strict validation of params passed to Document Service methods (e.g. `findMany`, `findOne`) is configured via `documents.strictParams` in the [API configuration](/cms/configurations/api) file (`./config/api.js` or `./config/api.ts`). See the [API configuration](/cms/configurations/api) table and examples for that option.
+The `documents.strictParams` option enables strict validation of parameters passed to Document Service methods such as `findMany` and `findOne`. Configure it in the [API configuration](/cms/configurations/api) file (`./config/api.js` or `./config/api.ts`). See the [API configuration](/cms/configurations/api) table for details on `documents.strictParams`.
 
 ## Document objects
 

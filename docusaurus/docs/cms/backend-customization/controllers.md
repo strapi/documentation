@@ -339,7 +339,6 @@ export default factories.createCoreController('api::restaurant.restaurant', ({ s
 
 Within custom controllers, Strapi exposes the following functions via `strapi.contentAPI` for sanitization and validation. To add custom query or body parameters to Content API routes (e.g. in `register`), see [Custom Content API parameters](/cms/backend-customization/routes#custom-content-api-parameters).
 
-
 | Function Name                | Parameters         | Description                                             |
 |------------------------------|--------------------|---------------------------------------------------------|
 | `strapi.contentAPI.sanitize.input`  | `data`, `schema`, `auth`      | Sanitizes the request input including non-writable fields, removing restricted relations, and other nested "visitors" added by plugins |

@@ -648,26 +648,34 @@ export default  {
 
 ## Custom Content API parameters {#custom-content-api-parameters}
 
-You can extend the **query** and **body** parameters allowed on Content API routes by registering them in the [register](/cms/configurations/functions#register) lifecycle. Those params are then validated and sanitized like core params. This is useful when you want clients to send extra query keys (e.g. `?search=...`) or JSON body keys (e.g. `clientMutationId`) without defining custom routes or controllers.
+You can extend the `query` and `body` parameters allowed on Content API routes by registering them in the [register](/cms/configurations/functions#register) lifecycle. Registered parameters are then validated and sanitized like core parameters. Clients can send extra query keys (e.g., `?search=...`) or body keys (e.g., `clientMutationId`) without requiring custom routes or controllers.
 
 | What | Where |
 |------|--------|
-| **Enable strict params** (reject unknown query/body keys) | [API configuration](/cms/configurations/api): set `rest.strictParams: true` in `./config/api.js` (or `./config/api.ts`). |
-| **Add allowed params** | **App:** call `addQueryParams` / `addBodyParams` in [register](/cms/configurations/functions#register) in `./src/index.js` or `./src/index.ts`. **Plugin:** call in the plugin's [register](/cms/plugins-development/server-api#register) lifecycle. |
+| Enable strict parameters (reject unknown query/body keys) | [API configuration](/cms/configurations/api): set `rest.strictParams: true` in `./config/api.js` (or `./config/api.ts`). |
+| Add allowed parameters (app) | Call `addQueryParams` / `addBodyParams` in [register](/cms/configurations/functions#register) in `./src/index.js` or `./src/index.ts`. |
+| Add allowed parameters (plugin) | Call `addQueryParams` / `addBodyParams` in the plugin's [register](/cms/plugins-development/server-api#register) lifecycle. |
 
-When `rest.strictParams` is enabled, only core params and params on each route's request schema are accepted; the params you register are merged into that schema. Use the `z` instance from `@strapi/utils` (or `zod/v4`) for schemas.
+When `rest.strictParams` is enabled, only core parameters and parameters on each route's request schema are accepted; the parameters you register are merged into that schema. Use the `z` instance from `@strapi/utils` (or `zod/v4`) for schemas.
 
-### addQueryParams
+### `addQueryParams`
 
-`strapi.contentAPI.addQueryParams(options)` registers extra **query** parameters. Schemas must be scalar or array-of-scalars (string, number, boolean, enum). For nested structures, use `addBodyParams` instead. Each entry can have optional `matchRoute: (route) => boolean` to add the param only to routes for which it returns true.
+`strapi.contentAPI.addQueryParams(options)` registers extra `query` parameters. Schemas must be scalar or array-of-scalars (string, number, boolean, enum). For nested structures, use `addBodyParams` instead. Each entry can have an optional `matchRoute: (route) => boolean` callback to add the parameter only to routes for which the callback returns true.
 
-### addBodyParams
+### `addBodyParams`
 
-`strapi.contentAPI.addBodyParams(options)` registers extra **body** parameters (any Zod type). Same optional `matchRoute` as above.
+`strapi.contentAPI.addBodyParams(options)` registers extra `body` parameters (any Zod type). The optional `matchRoute` callback works the same way as for `addQueryParams`.
 
-### Scoping with matchRoute
+### `matchRoute`
 
-The `matchRoute` callback receives a **route** object. Useful properties: `route.method` (`'GET'`, `'POST'`, etc.), `route.path`, `route.handler`, `route.info`. For example, only GET routes: `matchRoute: (route) => route.method === 'GET'`. Only routes whose path includes `articles`: `matchRoute: (route) => route.path.includes('articles')`.
+The `matchRoute` callback receives a `route` object with the following properties:
+
+- `route.method`: the HTTP method (`'GET'`, `'POST'`, etc.)
+- `route.path`: the route path
+- `route.handler`: the controller action string
+- `route.info`: metadata about the route
+
+For example, to target only GET routes, use `matchRoute: (route) => route.method === 'GET'`. To target only routes whose path includes `articles`, use `matchRoute: (route) => route.path.includes('articles')`.
 
 <Tabs groupId="js-ts">
 <TabItem value="js" label="JavaScript">
