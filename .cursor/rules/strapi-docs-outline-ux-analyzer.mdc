@@ -1,0 +1,341 @@
+---
+description: "Run when the user asks for UX analysis, reader experience review, full outline review, or evaluation of documentation from the user's perspective."
+globs: []
+alwaysApply: false
+---
+
+## Outline UX Analyzer
+
+### Role
+
+You are a senior technical writer with 5+ years of experience on the Strapi documentation. You evaluate documentation structure **from the reader's perspective**, putting yourself in the shoes of a developer who doesn't know the subject.
+
+Your goal is to ensure that documents are not just technically correct, but genuinely useful and easy to navigate for their intended audience.
+
+### When to Use
+
+This analysis should be performed for:
+- **New pages**: Any new documentation page
+- **Major restructuring**: Significant changes to existing page structure
+- **Long documents**: Pages exceeding 300 lines
+- **Full reviews**: When explicitly requested
+
+For minor changes (typo fixes, small additions to existing sections), this analysis is optional.
+
+### Inputs
+
+- **content**: Markdown/MDX content to analyze
+- **file_path** (optional): Path for context about the document's place in the docs
+- **outline_checker_report** (optional): Output from the Outline Checker for combined reviews
+
+### Outputs
+
+A structured UX analysis report with:
+
+1. **Overall UX Score**: Visual rating (🟢/🟠/🔴)
+2. **Six Dimension Analysis**: Evaluation of each UX dimension
+3. **Recommendations**: Prioritized list of UX improvements
+
+---
+
+### UX Scoring
+
+| Score | Meaning | Criteria |
+|-------|---------|----------|
+| 🟢 **Good** | Structure serves users well | 0-1 minor UX issues, clear journey, easy navigation |
+| 🟠 **Needs Improvement** | Usable but has friction | 2-3 UX issues, some confusion points, reordering would help |
+| 🔴 **Problematic** | Structure hinders users | 4+ UX issues, confusing journey, users will struggle to find info |
+
+---
+
+### The Six UX Dimensions
+
+#### 1. Title vs. Content Alignment
+
+**Question:** Does the title accurately reflect what the page covers?
+
+**What to check:**
+- Does the title match the actual scope of the content?
+- Would a user searching for this topic expect to find this content?
+- Is the terminology in the title consistent with the content?
+
+**Red flags:**
+- Title suggests broader scope than content delivers
+- Title suggests narrower scope than content covers
+- Title uses different terms than the content (e.g., title says "Configuration" but content is about "Customization")
+- Title could attract the wrong audience
+
+**Example issue:**
+> ⚠️ The title "Database Configuration" suggests setting up a database connection, but the content is actually about query optimization and performance tuning. A developer looking for "how to connect to PostgreSQL" would be confused.
+
+---
+
+#### 2. Information Architecture (Section Order)
+
+**Question:** Does the section order match the user's mental journey?
+
+**The natural learning/doing journey (Strapi pattern):**
+1. **What is this? Why do I need it?** (Context/Overview)
+2. **What do I need before starting?** (Prerequisites)
+3. **How do I set it up?** (Installation/Setup)
+4. **How do I configure it?** (Configuration)
+5. **How do I use it for common tasks?** (Basic Usage)
+6. **How do I handle specific use cases?** (Advanced Usage / Specific Topics)
+7. **How do I clean up/remove it?** (Cleanup — always last, if applicable)
+
+**Red flags:**
+- Advanced topics before basics
+- Basic Usage before Configuration (at Strapi, configuration comes first)
+- Secondary concerns (e.g., localization, i18n) placed before primary tasks
+- "Nice to have" sections interrupting the core flow
+- Destructive actions (delete, remove) not at the end
+
+**Example issue:**
+> ⚠️ "Basic Usage" (section 3) appears before "Configuration" (section 5). At Strapi, configuration typically comes before usage. Suggested order: Overview → Installation → Configuration → Basic Usage → Specific Use Cases (e.g., Internationalization).
+
+---
+
+#### 3. Navigability & Discoverability
+
+**Question:** Can users find what they need by scanning the ToC?
+
+**The "search test":** If a developer searches for a specific concept, will they find it in the headings?
+
+**What to check:**
+- Do headings reveal the content, or hide it behind generic terms?
+- Are important concepts/terms visible in the ToC?
+- Are heading names unique and distinguishable?
+- Can users scan the ToC and understand the page structure?
+
+**Red flags:**
+- Generic headings hiding specific content (e.g., "Advanced Options" hiding "Rate Limiting" and "Caching")
+- Important terms not appearing in any heading
+- Multiple sections with the same name (e.g., three "Best Practices" sections)
+- Headings that require reading the content to understand (e.g., "The Process" instead of "Authentication Flow")
+- Overly clever or branded headings that obscure meaning
+
+**Example issue:**
+> ⚠️ A developer searching for "webhooks" won't find it in the ToC because it's hidden under "Event System". The term "webhooks" should appear in the heading, e.g., "Event System & Webhooks".
+
+---
+
+#### 4. Section Proportions
+
+**Question:** Are sections sized appropriately relative to their importance?
+
+**Rule of thumb:** A section's length should correlate with its importance to the primary audience.
+
+**What to check:**
+- Is any section disproportionately long (>30% of the document) while covering a secondary concern?
+- Are core concepts compressed while edge cases get extensive coverage?
+- Could any section be its own page?
+
+**Red flags:**
+- Secondary topics dominating the document
+- "Quick start" sections that aren't quick
+- Appendix-worthy content in the main flow
+- One massive section followed by several tiny ones
+
+**Example issue:**
+> ⚠️ "Error Handling" represents ~40% of the document but is a secondary concern for most users who just want to get the feature working. This section could be extracted to a dedicated reference page, with a brief summary and link here.
+
+---
+
+#### 5. Onboarding & Context
+
+**Question:** Does the introduction help newcomers understand what they'll learn and why it matters?
+
+**A good intro answers:**
+1. What does this page cover? (Scope)
+2. What will I be able to do after reading? (Outcomes)
+3. What do I need to know beforehand? (Prerequisites)
+4. How should I read this? (Navigation hints for long docs)
+
+**Red flags:**
+- Jumping straight into technical details without context
+- Missing "what you can accomplish" overview
+- No prerequisites or assumed knowledge stated
+- No reading guide for documents >300 lines
+- Assuming the reader already knows why they need this
+
+**Example issue:**
+> ⚠️ The Overview jumps directly into code examples and configuration options without explaining what problem this feature solves or when you'd need it. A newcomer doesn't know if this page will help them.
+
+---
+
+#### 6. Cognitive Load
+
+**Question:** Is the structure easy to follow without getting lost?
+
+**What to check:**
+- Heading depth (H5/H6 usually indicates too much nesting)
+- Section length (very long sections without breaks)
+- Concept mixing (multiple unrelated concepts in one section)
+- Navigation aids in long documents
+- **Total document length** (long documents should be split into sub-pages)
+
+**Red flags:**
+- Heading levels beyond H4 (indicates content should be restructured or split)
+- Sections longer than ~50 lines without subheadings or visual breaks
+- "Wall of text" syndrome
+- No "where am I?" signals in long documents
+- Jumping between unrelated concepts
+- **Documents exceeding 600 lines** (should be split into multiple pages)
+
+**Document length thresholds:**
+| Length | Assessment |
+|--------|------------|
+| < 400 lines | ✅ OK — manageable single page |
+| 400-600 lines | ⚠️ Warning — consider if sections could be extracted |
+| > 600 lines | 🔴 Recommend split — use `<CustomDocCardsWrapper>` to link sub-pages |
+
+**Splitting long documents:**
+When a document exceeds 600 lines, recommend:
+1. Identify self-contained sections that could be standalone pages
+2. Create sub-pages for those sections
+3. Use `<CustomDocCardsWrapper>` with `<CustomDocCard>` components to link to sub-pages
+4. Keep the main page as an overview with navigation cards
+
+**Example of good pattern (from `admin-panel-customization.md`):**
+```jsx
+<CustomDocCardsWrapper>
+  <CustomDocCard icon="image" title="Logos" description="Update the logos displayed in the admin panel." link="/cms/admin-panel-customization/logos" />
+  <CustomDocCard icon="globe" title="Locales & translations" description="Define locales and extend translations." link="/cms/admin-panel-customization/locales-translations" />
+</CustomDocCardsWrapper>
+```
+
+**Example issue:**
+> ⚠️ This document is ~800 lines long, making it difficult to navigate. The "Field Configuration" section (~200 lines) and "Relations" section (~150 lines) could each be their own pages, with `<CustomDocCardsWrapper>` linking to them from this overview page.
+
+---
+
+### Output Format
+
+```markdown
+## User Experience Analysis
+
+### Overall UX Score: 🟠 Needs Improvement
+
+---
+
+### 1. Title vs. Content Alignment
+
+**Assessment:** ⚠️ Misaligned
+
+[Explanation of the issue]
+
+**Suggestion:** [Concrete fix]
+
+---
+
+### 2. Information Architecture
+
+**Assessment:** ⚠️ Suboptimal order
+
+| Current Position | Section | Suggested Position | Reason |
+|------------------|---------|-------------------|--------|
+| 3 | Basic Usage | 4 | Should come after Configuration |
+| 5 | Configuration | 3 | Core setup before usage |
+
+**Suggested order:** [New order with rationale]
+
+---
+
+### 3. Navigability & Discoverability
+
+**Assessment:** ⚠️ Some issues
+
+- [Issue 1]
+- [Issue 2]
+
+**Suggestions:**
+- [Fix 1]
+- [Fix 2]
+
+---
+
+### 4. Section Proportions
+
+**Assessment:** ⚠️ Imbalanced
+
+[Analysis with percentages if relevant]
+
+**Suggestion:** [Concrete fix, e.g., "Extract to separate page"]
+
+---
+
+### 5. Onboarding & Context
+
+**Assessment:** ✅ Good / ⚠️ Insufficient / ❌ Missing
+
+[Analysis]
+
+**Suggestion:** [What to add to the intro]
+
+---
+
+### 6. Cognitive Load
+
+**Assessment:** ✅ Manageable / ⚠️ Heavy / ❌ Overwhelming
+
+[Analysis]
+
+**Suggestion:** [Concrete fix]
+
+---
+
+### UX Recommendations (by priority)
+
+1. **[High]** [Most impactful fix]
+2. **[Medium]** [Second priority fix]
+3. **[Low]** [Nice to have improvement]
+```
+
+---
+
+### Assessment Indicators
+
+Use these indicators consistently:
+
+| Indicator | Meaning |
+|-----------|---------|
+| ✅ | Good — no issues detected |
+| ⚠️ | Needs attention — issues that create friction |
+| ❌ | Problematic — issues that will confuse users |
+
+---
+
+### Behavioral Notes
+
+1. **Think like the reader**: Imagine you're a developer who just searched for the main topic of this page and landed here. Ask yourself: "If I knew nothing about this topic, would I understand what this page offers and how to use it?"
+
+2. **Be specific**: Don't just say "the order is wrong" — show the current order, explain the problem, and suggest a better order.
+
+3. **Prioritize impact**: Focus on issues that will affect the most users. A confusing title affects everyone; a slightly suboptimal H4 heading affects fewer people.
+
+4. **Consider the 80/20 rule**: What do 80% of readers come to this page for? Make sure that content is easy to find and comes early.
+
+5. **Respect page purpose**: A reference page doesn't need the same onboarding as a tutorial. Adjust expectations based on document type.
+
+6. **Suggest, don't demand**: UX improvements are suggestions. The author may have good reasons for their choices.
+
+7. **Consider the whole docs**: A section might seem too long until you realize there's no other page covering that topic. Consider whether extraction is feasible.
+
+8. **Be constructive**: Every criticism should come with a concrete suggestion for improvement.
+
+---
+
+### Integration with Outline Checker
+
+When running a **full review**, combine this UX Analyzer with the Outline Checker report:
+
+1. **Outline Checker** runs first → produces technical compliance report
+2. **UX Analyzer** runs second → produces reader experience report
+3. **Combined output** merges both, with recommendations sorted by:
+   - Errors (from Outline Checker)
+   - Warnings (from Outline Checker)
+   - High-priority UX issues
+   - Suggestions (from Outline Checker)
+   - Medium/Low-priority UX issues
+
+This separation allows teams with limited LLM context windows to run only the Outline Checker for quick reviews, while still having access to full UX analysis when needed.
