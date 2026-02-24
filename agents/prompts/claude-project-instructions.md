@@ -119,6 +119,8 @@ Read the full prompt file before doing any analysis. Each prompt is a self-conta
 
 **How to read these files depends on your platform** — see [Platform Integration](#platform-integration) below.
 
+**If you cannot load the prompt file** (e.g., file not in context, no filesystem access), use the output contracts in [Appendix: Output Contracts](#appendix-output-contracts) as a fallback. They contain enough structure to produce a correctly formatted report. But always prefer the full spec when available — it contains detection rules, behavioral notes, and edge cases that the contracts omit.
+
 ### Step 2 — Gather required inputs
 
 Each prompt specifies its required inputs. Fetch them before proceeding. For example:
@@ -172,11 +174,43 @@ The `AGENTS.md` file at the repo root can serve as an alternative entry point, b
 
 Add the prompt files to the workspace context. Depending on the IDE:
 
-- **Cursor**: Reference prompt files with `@file` (e.g., `@agents/prompts/router.md`) or add them to `.cursor/rules/`.
+- **Cursor**: Reference prompt files with `@file` (e.g., `@agents/prompts/router.md`) or add them to `.cursor/rules/`. See [Cursor Rules Setup](#cursor-rules-setup) below.
 - **Windsurf**: Add to `.windsurfrules` or reference in workspace context.
 - **Other IDE agents**: Add the prompt files to whatever context/knowledge mechanism the IDE provides.
 
 The key requirement is that the agent can read the full prompt spec before executing.
+
+#### Cursor Rules Setup
+
+Cursor supports `.mdc` rules files with conditional loading via frontmatter:
+
+```markdown
+---
+description: "Run this when the user provides a spec, user story, or ticket and asks how to update or create documentation"
+globs: []
+alwaysApply: false
+---
+
+[contents of router.md]
+```
+
+With `alwaysApply: false`, Cursor loads the rule only when the user's request matches the `description`. This avoids polluting the context with all prompt specs at once.
+
+Recommended `.cursor/rules/` files:
+
+| File | `description` | `alwaysApply` |
+|------|---------------|---------------|
+| `strapi-docs-orchestrator.mdc` | — | `true` |
+| `strapi-docs-router.mdc` | `"Run when user provides a spec, story, ticket, or PR and asks where/how to update docs"` | `false` |
+| `strapi-docs-style-checker.mdc` | `"Run when user asks for a style check, style review, or 12 Rules compliance check"` | `false` |
+| `strapi-docs-outline-checker.mdc` | `"Run when user asks to check structure, template compliance, or outline review"` | `false` |
+| `strapi-docs-ux-analyzer.mdc` | `"Run when user asks for UX analysis, reader experience review, or full outline review"` | `false` |
+| `strapi-docs-outline-generator.mdc` | `"Run when user needs an outline for new documentation from source material"` | `false` |
+| `strapi-docs-drafter.mdc` | `"Run when user asks to draft, write, or compose documentation content from an outline"` | `false` |
+
+The `strapi-docs-orchestrator.mdc` file should contain this entire `claude-project-instructions.md` (including the appendix) with `alwaysApply: true`. It acts as the routing table and fallback. The individual prompt rules are loaded on-demand when Cursor detects a matching intent.
+
+**Important limitation:** Cursor's conditional loading is best-effort. The `description` matching is approximate and varies by model. The appendix output contracts serve as a safety net — even if a conditional rule fails to load, the orchestrator rule (always loaded) contains enough structure for a correct output.
 
 ### ChatGPT / other LLMs
 
@@ -239,7 +273,7 @@ The `shared/` folder contains guides used by multiple prompts:
 
 **Inputs:** GitHub PR, Notion spec, raw Markdown, or any source material. Also requires `sidebars.js` and `llms.txt` from the repository.
 
-**Outputs:** 
+**Outputs:**
 - Routing report with placement decision (create page, update section, etc.)
 - Template and authoring guide references
 - Machine-readable YAML for downstream prompts
@@ -327,3 +361,370 @@ The `shared/` folder contains guides used by multiple prompts:
 - **Templates:** [`agents/templates/` in the repository](https://github.com/strapi/documentation/tree/main/agents/templates)
 - **Authoring guides:** [`agents/authoring/AGENTS.*.md` in the repository](https://github.com/strapi/documentation/tree/main/agents/authoring)
 - **Root agent guide:** [`AGENTS.md` in the repository](https://github.com/strapi/documentation/blob/main/AGENTS.md)
+
+---
+---
+
+## Appendix: Output Contracts {#appendix-output-contracts}
+
+These are abbreviated output structures for each prompt. They guarantee a correctly formatted report **even when the full prompt spec file cannot be loaded**. When the full spec IS available, always prefer it — it contains detection rules, behavioral notes, and edge cases that this appendix omits.
+
+---
+
+### Router — Output contract
+
+**Required inputs:** source material + `sidebars.js` + `llms.txt`
+
+**Output:** A 3-section Markdown report titled `# Routing Report — [short description]`.
+
+**Section 1 — Summary for everyone:**
+- `### Content understanding` — 1-3 sentences: what the source is about.
+- `**Key topics:** topic1, topic2, topic3`
+- `### tl;dr: How to update docs?` — A table with columns: Page, What to do. Each row shows the file path, action (Create/Update/Later), and links to the relevant template and authoring guide.
+
+**Section 2 — Details for documentation specialists:**
+- `### Documentation map analysis` — What was searched, what was found, rationale.
+- `**Existing pages found:**` table with columns: Page, Path, Relevance, Action, Priority, Template, Authoring guide.
+- `**Confidence:** high / medium / low`
+- `### Placement decision` — 2-5 sentence rationale.
+- `### Cross-linking suggestions` — Optional.
+
+**Section 3 — Machine-readable summary:**
+- `### Next step {#next-step}` — Pipeline handoff: which prompt to run next and which targets go where.
+- `### YAML` block:
+
+```yaml
+doc_type: feature | plugin | configuration | guide | api | breaking-change | cloud | ...
+template: path or null
+guide: path or null
+confidence: high | medium | low
+key_topics: [topic1, topic2]
+
+targets:
+  - path: file/path.md
+    action: update_section | add_section | create_page | create_category
+    priority: primary | required | optional | conditional
+    existing_section: "heading" or null
+    condition: null or "explanation"
+    notes: "context for downstream"
+
+cross_links:
+  - path: file/path.md
+    action: add_link | update_text
+    description: "what to change"
+
+ask_user: null or "question"
+```
+
+**Pipeline handoff rules:**
+- No `create_page` targets → next step is **Drafter** (Patch mode)
+- All `create_page` targets → next step is **Outline Generator**, then **Drafter** (Compose mode)
+- Mixed → list which targets go to Outline Generator, which go to Drafter directly
+
+---
+
+### Style Checker — Output contract
+
+**Required inputs:** Markdown content to analyze
+
+**Output:** A Markdown report:
+
+```markdown
+## Summary
+
+- Errors: X
+- Warnings: Y
+- Suggestions: Z
+
+## Violations
+
+### [severity] Section "Name" — Rule N: Short rule name
+**Found:** "quoted problematic text"
+**Issue:** What's wrong.
+**Suggestion:** How to fix it.
+
+## Recommended fixes (sorted by priority)
+
+1. **[error]** Most critical fix
+2. **[warning]** Next fix
+3. **[suggestion]** Nice to have
+```
+
+**Severity rules:** error = clear rule violation, warning = likely issue, suggestion = stylistic improvement. Location by section heading, not line numbers.
+
+**Key detection targets (from the 12 Rules):**
+1. Missing context for newcomers (warning)
+2. Inconsistent formatting with Strapi patterns (warning)
+3. Jokes, rhetorical questions, casual language (error)
+4. Jargon without explanation, complex words (warning)
+5. Sentences > ~25 words, long paragraphs (warning)
+6. "easy", "simple", "difficult", "straightforward" for tasks (error)
+7. Procedures not in numbered lists, multi-action steps (error/warning)
+8. Inline enumerations > 3 items not in bullet lists (suggestion)
+9. Ambiguous pronouns, undefined abbreviations (warning)
+10. Long UI procedures without screenshots (suggestion)
+11. Excessive pronoun repetition (suggestion)
+12. ALL CAPS for emphasis, excessive bold (warning)
+
+Also check: code formatting (backticks for paths/commands/params), heading sentence case, terminology consistency.
+
+---
+
+### Outline Checker — Output contract
+
+**Required inputs:** Markdown content + document type (auto-detected from path or explicit)
+
+**Output:** A Markdown report:
+
+```markdown
+## Document Type
+
+Detected: **[Type]** (from path `[path]`)
+
+## Summary
+
+- Errors: X
+- Warnings: Y
+- Suggestions: Z
+
+## Violations
+
+### [severity] Category — Issue description
+**Expected:** What should be there
+**Found:** What was found instead
+**Fix:** How to fix it
+
+## Recommended Fixes (by priority)
+
+1. **[error]** Most critical
+2. **[warning]** Next priority
+3. **[suggestion]** Nice to have
+```
+
+**What to check:**
+- Frontmatter: `title`, `description`, `displayed_sidebar`, `tags` (error if missing)
+- Required sections present and in correct order per template (error/warning)
+- Required components: `<Tldr>`, `<IdentityCard>`, etc. (warning if missing)
+- Heading hierarchy: no H3 without H2, no H4 without H3 (warning)
+- Parallel structure in sibling headings (suggestion)
+
+**Document type → template mapping:**
+
+| Path pattern | Type | Template |
+|-------------|------|----------|
+| `cms/features/*` | Feature | `agents/templates/feature-template.md` |
+| `cms/plugins/*` | Plugin | `agents/templates/plugin-template.md` |
+| `cms/configurations/*` | Configuration | `agents/templates/configuration-template.md` |
+| `cms/api/*` | API | `agents/templates/api-template.md` |
+| `cms/migration/**/breaking-changes/*` | Breaking Change | `agents/templates/breaking-change-template.md` |
+| `**/guides/*` or "How to..." | Guide | `agents/templates/guide-template.md` |
+
+---
+
+### Outline UX Analyzer — Output contract
+
+**Required inputs:** Markdown content
+
+**Output:** A Markdown report:
+
+```markdown
+## User Experience Analysis
+
+### Overall UX Score: 🟢/🟠/🔴
+
+### 1. Title vs. Content Alignment
+**Assessment:** ✅/⚠️/❌
+[Analysis and suggestion]
+
+### 2. Information Architecture
+**Assessment:** ✅/⚠️/❌
+[Current vs. suggested section order]
+
+### 3. Navigability & Discoverability
+**Assessment:** ✅/⚠️/❌
+[Can users find what they need from the ToC?]
+
+### 4. Section Proportions
+**Assessment:** ✅/⚠️/❌
+[Are sections sized appropriately?]
+
+### 5. Onboarding & Context
+**Assessment:** ✅/⚠️/❌
+[Does the intro orient the reader?]
+
+### 6. Cognitive Load
+**Assessment:** ✅/⚠️/❌
+[Is the structure manageable?]
+
+### UX Recommendations (by priority)
+
+1. **[High]** Most impactful fix
+2. **[Medium]** Second priority
+3. **[Low]** Nice to have
+```
+
+**Scoring:** 🟢 Good (0-1 minor issues) · 🟠 Needs improvement (2-3 issues) · 🔴 Problematic (4+ issues)
+
+**Document length thresholds:** < 400 lines = OK · 400-600 = consider extraction · > 600 = recommend split with `<CustomDocCardsWrapper>`
+
+---
+
+### Outline Generator — Output contract
+
+**Required inputs:** Source material + Router YAML (`doc_type`, `template`, `guide`, `targets`)
+
+**Output:** A Markdown report titled `# Outline Report — [target path]`:
+
+```markdown
+**Action:** create_page | add_section
+**Document type:** [type]
+**Template:** [path or "None"]
+
+## Source analysis
+
+[2-4 sentences: what the source contains, key info extracted, gaps identified]
+
+## Outline
+
+[YAML block — see schema below]
+
+## Notes for Drafter
+
+1. **[Gap/Ambiguity/Cross-link]** — Details...
+```
+
+**Outline YAML schema:**
+
+```yaml
+action: create_page | add_section
+insert_after: "## Heading" or null
+
+frontmatter:        # only for create_page
+  title: "..."
+  description: "..."
+  displayed_sidebar: cmsSidebar
+  tags: [...]
+
+sections:
+  - heading: "# Page title"
+    level: 1
+    intent: "Why this section exists."
+    content_hints:
+      - "Directive for the Drafter (not prose)."
+    source_refs:
+      - "Pointer to source material section."
+    components:
+      - "<Tldr>"
+    subsections:
+      - heading: "## Section name"
+        level: 2
+        intent: "..."
+        content_hints: [...]
+        subsections: [...]
+```
+
+**Key rules:** `content_hints` are directives ("Explain X", "List Y in a table"), not prose. Flag gaps with "⚠️ Gap:" prefix. H2 sections come from the template (immutable); H3/H4 are decided by the Outline Generator.
+
+---
+
+### Drafter — Output contract
+
+**Required inputs vary by mode:**
+- **Compose:** Router YAML + Outline Generator YAML + source material
+- **Patch:** Router YAML + source material + existing page content
+- **Micro-edit:** `micro_instruction` block
+
+**Mode selection:** Outline provided → Compose. `micro_instruction` provided → Micro-edit. Otherwise → Patch.
+
+**Compose output (`create_page`):** A complete `.md` file:
+
+```markdown
+<!-- drafter:mode=compose target=[path] action=create_page -->
+
+---
+title: ...
+description: ...
+displayed_sidebar: cmsSidebar
+tags: [...]
+---
+
+# Title
+
+<Tldr>Summary.</Tldr>
+
+[page content]
+
+<!-- drafter:notes
+- TODO items
+-->
+```
+
+**Compose output (`add_section`):** A content block with insertion marker:
+
+```markdown
+<!-- drafter:mode=compose target=[path] action=add_section -->
+<!-- Insert after: "## Existing heading" -->
+
+## New section heading
+
+[section content]
+```
+
+**Patch output (≤ 3 edits):** A patch list:
+
+```markdown
+<!-- drafter:mode=patch target=[path] action=update_section -->
+**File:** `[path]`  **Section:** "[heading]"  **Edits:** N
+
+### Edit 1: replace | add_row | add_text | remove | update_code
+**Reason:** Why.
+**Find:** > old text
+**Replace with:** > new text
+```
+
+**Patch output (> 3 edits):** Full rewritten section/page with all edits applied, preceded by a change summary.
+
+**Micro-edit output:** A single insertion instruction: which file, where, what to insert.
+
+**Key writing rules:** Direct neutral tone. Short sentences (< 25 words). "Use" not "utilize". No "easy/simple/difficult". Numbers as numerals. Sentence case headings. One action per numbered step. JS + TS variants for config files.
+
+---
+
+### Orchestrator — Output contract
+
+**Required inputs:** User request + outputs from all prompts in the sequence
+
+**Output:** A consolidated Markdown report:
+
+```markdown
+# Documentation Review Report
+
+**File:** [filename or PR]
+**Mode:** Review / Create
+**Date:** [timestamp]
+
+## Summary
+
+| Check | Errors | Warnings | Suggestions |
+|-------|--------|----------|-------------|
+| Structure (Outliner) | X | Y | Z |
+| Style (12 Rules) | X | Y | Z |
+| Integrity (Links) | X | Y | Z |
+| **Total** | **X** | **Y** | **Z** |
+
+## Structure Issues
+[from Outline Checker]
+
+## Style Issues
+[from Style Checker]
+
+## Integrity Issues
+[from Integrity Checker]
+
+## Recommended Fixes (by priority)
+1. **[error]** Most critical
+2. **[warning]** Next priority
+3. **[suggestion]** Nice to have
+```
+
+**Behavioral rules:** Determine mode first. State mode explicitly. Execute prompts in sequence. Deduplicate issues across prompts. Prioritize errors → warnings → suggestions.
