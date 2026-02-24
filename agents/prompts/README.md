@@ -8,14 +8,14 @@ These prompts are LLM‑agnostic, though the best results so far have been with 
 
 | Prompt | File | Status | Purpose |
 |--------|------|--------|---------|
-| **Orchestrator** | `orchestrator.md` | 🔜 Coming soon | Coordinates prompts in sequence for Review and Create workflows |
+| **Orchestrator** | `orchestrator.md` | ✅ Available | Coordinates prompts in sequence for Review and Create workflows |
 | **Router** | `router.md` | ✅ Available | Identifies doc type, loads the right template and authoring guide |
-| **Outliner** | `outliner.md` | 🏗 (partly) Available | Wrapper that routes to Outline Generator, Outline Checker, or UX Analyzer |
+| **Outliner** | `outliner.md` | ✅ Available | Wrapper that routes to Outline Generator, Outline Checker, or UX Analyzer |
 | ↳ Outline Checker | `outline-checker.md` | ✅ Available | Template compliance, frontmatter, heading hierarchy, required components |
 | ↳ Outline UX Analyzer | `outline-ux-analyzer.md` | ✅ Available | Reader experience, section order, navigability, cognitive load |
-| ↳ Outline Generator | — | 🏗 Available but WIP | Creates outlines from source material (Notion, Jira, specs) |
+| ↳ Outline Generator | `outline-generator.md` | ✅ Available | Creates outlines from source material (Notion, Jira, specs) |
 | **Style Checker** | `style-checker.md` | ✅ Available | 12 Rules of Technical Writing, Strapi style conventions |
-| **Drafter** | — | 🏗 Available but WIP | Generates content from an outline and source material |
+| **Drafter** | `drafter.md` | ✅ Available | Generates content from an outline and source material (3 modes: Compose, Patch, Micro-edit) |
 | **Integrity Checker** | — | 🔜 Coming soon | Broken links, invalid paths, code block formatting, anchor consistency |
 
 ## Shared Resources
@@ -44,14 +44,21 @@ Prompts marked "Coming soon" can be skipped; run the available ones in order.
 
 These prompts can be used in several ways:
 
-- **Claude Projects** — import the `.md` files as project knowledge. The project‑level system prompt (the custom instructions field) can reference them to route user requests to the right prompt.
-- **Claude.ai / ChatGPT** — copy the prompt content into the conversation or attach the file.
-- **API integrations** — use as system prompts or tool definitions.
+- **Claude Projects** — import the `.md` files as project knowledge. Use `claude-project-instructions.md` as the custom instructions (system prompt).
+- **Claude Code** — the prompt files live in `agents/prompts/`. Claude Code reads them directly from disk. `AGENTS.md` at the repo root serves as an alternative entry point.
+- **Cursor / Windsurf / IDE agents** — add prompt files to workspace context (e.g., `.cursor/rules/`, `@file` references, or equivalent). The agent must be able to read the full prompt spec before executing.
+- **ChatGPT / other LLMs** — upload prompt files to the conversation or copy the relevant prompt's content when needed.
+- **API integrations** — use as system prompts or tool definitions. For machine-only consumers, the Router can return only the YAML block.
 
 Each prompt file is self‑contained: it includes its role, inputs, detection rules, output format, and behavioral notes. No external dependencies beyond the authoring guides and templates in sibling folders.
 
+### Critical: Execution Protocol
+
+Regardless of platform, the agent must **read the full prompt file before executing**. The Quick Reference table in `claude-project-instructions.md` maps user intents to prompt files. The agent must not produce an informal analysis in place of the structured output defined in the prompt spec. See the "Execution Protocol" section of `claude-project-instructions.md` for details.
+
 ## References
 
+- Entry point (system prompt): `claude-project-instructions.md`
 - Root agent guide: `AGENTS.md`
 - Authoring area guides: `agents/authoring/AGENTS.*.md`
 - Templates catalog: `agents/templates/README.md`

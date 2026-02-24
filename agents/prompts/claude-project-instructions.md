@@ -67,7 +67,7 @@ Router → Outliner (Checker) → Style Checker → Integrity Checker
 
 ### Create Mode (new content)
 
-**Trigger:** User provides source material to transform into documentation
+**Trigger:** User provides source material to transform into documentation (spec, user story, ticket, PR)
 
 **Sequence:**
 ```
@@ -166,16 +166,16 @@ The `shared/` folder contains guides used by multiple prompts:
 **Sub-prompts:**
 - **Outline Checker** — Verify structure against templates (technical compliance)
 - **Outline UX Analyzer** — Evaluate structure from reader's perspective
-- **Outline Generator** *(WIP)* — Create new structure from source material, producing a YAML outline for the Drafter
+- **Outline Generator** — Create new structure from source material, producing a YAML outline for the Drafter
 
 **Review modes:**
 - **Quick Check** (Outline Checker only) — For minor changes, small PRs
 - **Full Review** (Checker + UX Analyzer) — For new pages, major restructuring
 
 **Create mode:**
-- **Outline Generator** → produces YAML outline → consumed by the **Drafter** (see `drafter-interface.md` for the contract)
+- **Outline Generator** → produces YAML outline → consumed by the **Drafter**
 
-**Full specification:** See `outliner.md`, `outline-checker.md`, `outline-ux-analyzer.md`, `outline-generator.md` in project knowledge.
+**Full specification:** `outliner.md`, `outline-checker.md`, `outline-ux-analyzer.md`, `outline-generator.md`
 
 ---
 
@@ -183,20 +183,26 @@ The `shared/` folder contains guides used by multiple prompts:
 
 **Purpose:** Check prose quality against the 12 Rules of Technical Writing and Strapi style conventions.
 
-**What it checks:**
-- The 12 Rules of Technical Writing
-- Code formatting (backticks for paths, commands, parameters)
-- Terminology consistency
-- Heading capitalization (sentence case)
-- Badge placement rules
-- NPM/Yarn casing conventions
+**What it checks:** The 12 Rules, code formatting, terminology consistency, heading capitalization, badge placement, NPM/Yarn casing.
 
-**What it does NOT check:**
-- Structure/template compliance → Outline Checker
-- Reader experience/UX → UX Analyzer
-- Links and paths → Integrity Checker
+**What it does NOT check:** Structure/template compliance (→ Outline Checker), reader experience (→ UX Analyzer), links and paths (→ Integrity Checker).
 
-**Full specification:** See `style-checker.md` in project knowledge.
+**Full specification:** `style-checker.md`
+
+---
+
+### Drafter
+
+**Purpose:** Write publication-ready Markdown/MDX content in 3 modes.
+
+**Modes:**
+- **Compose** — Full new page from an Outline Generator YAML
+- **Patch** — Targeted edits to existing pages
+- **Micro-edit** — Minimal insertions (links, tips, cross-references)
+
+**Key behavior:** The Drafter does not decide structure — it receives its instructions from the Router (targets, actions) and Outline Generator (section tree). "The Router decides where. The Outline Generator decides what. The Drafter writes."
+
+**Full specification:** `drafter.md`
 
 ---
 
@@ -204,19 +210,14 @@ The `shared/` folder contains guides used by multiple prompts:
 
 **Purpose:** Verify technical accuracy and formatting of links, paths, and code blocks.
 
-**Will check:**
-- Internal links (relative paths)
-- Code block language identifiers
-- File path consistency
-- Anchor references
-- Potential broken external links
+**Will check:** Internal links, code block language identifiers, file path consistency, anchor references, potential broken external links.
 
 ---
 
 ## Response Guidelines
 
 - **Always output reports as standalone Markdown documents**
-  - **In Claude.ai**: Create a Markdown artifact with a descriptive title (e.g., "Style Check Report — admin-configuration.md"). Create the artifact FIRST, then optionally add a brief summary after.
+  - **In Claude.ai**: Create a Markdown artifact with a descriptive title (e.g., "Routing Report — VAT/Tax ID feature"). Create the artifact FIRST, then optionally add a brief summary after.
   - **In other platforms**: Output the full report in a fenced Markdown code block or use the platform's file/canvas feature if available, then generate a quick summary in the discussion.
 - Do NOT summarize or discuss findings before outputting the full report
 - Use tables for summaries
